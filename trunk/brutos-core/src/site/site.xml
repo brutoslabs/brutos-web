@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="windows-1252"?>
+
+<!--
+    Document   : site.xml
+    Created on : 1 de Outubro de 2010, 13:31
+    Author     : Neto
+    Description:
+        Purpose of the document follows.
+-->
+
+<project  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns='http://maven.apache.org/DECORATION/1.0.0'
+   xsi:schemaLocation='http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd' name="Brutos application framework">
+    <bannerLeft>
+        <name>Brutos Application Framework</name>
+        <src>./img/logo.png</src>
+        <href>http://brutos.sourceforge.net/</href>
+    </bannerLeft>
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-stylus-skin</artifactId>
+        <version>1.2</version>
+    </skin>
+    <poweredBy>
+        <logo name="Maven " href="http://maven.apache.org/"
+                  img="http://maven.apache.org/images/logos/maven-feather.png"/>
+        <logo name="Sourceforge" href="http://sourceforge.net"
+              img="http://sflogo.sourceforge.net/sflogo.php?group_id=262591&amp;type=2"/>
+    </poweredBy>
+
+    <body>
+        <menu name="Geral">
+          <item name="Introdução" href="index.html"/>
+          <item name="Dependências" href="dependencies.html"/>
+          <item name="Licença" href="license.html"/>
+          <item name="Quick Start" href="quickstart.html"/>
+          <item name="Download" href="http://sourceforge.net/projects/brutos/files/"/>
+          <item name="Source Code" href="http://brutos.svn.sourceforge.net/viewvc/brutos/"/>
+          <item name="ChangLog" href="changelog.html"/>
+        </menu>
+        <menu name="Documentação">
+          <item name="Interceptor" href="interceptor.html"/>
+          <item name="IOC/DI" href="ioc.html"/>
+          <item name="File Upload" href="fileupload.html"/>
+        </menu>
+        <menu name="Exemplos">
+          <item name="Brutos+PicoContainer" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+PicoContainer.zip/download"/>
+          <item name="Brutos+Spring" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+Spring.zip/download"/>
+          <item name="File upload" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosFileUpload.zip/download"/>
+          <item name="Brutos+JSF" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+JSF.zip/download"/>
+          <item name="Interceptor" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosInterceptor.zip/download"/>
+          <item name="Mapping Bean" href="http://http//sourceforge.net/projects/brutos/files/brutos/examples/BrutosMappingBean.zip/download"/>
+          <item name="CustomTypes" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosCustomType.zip/download"/>
+          <item name="Serializing Bean to XML" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosSerializingBeanToXML.zip/download"/>
+          <item name="Serializing Bean to Json" href="http://http//sourceforge.net/projects/brutos/files/brutos/examples/BrutosJson.zip/download"/>
+        </menu>
+    </body>
+</project>

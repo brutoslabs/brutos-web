@@ -1,0 +1,159 @@
+Quick Start
+
+ Para podermos trabalhar com o Brutos web MVC em um projeto Java web,
+ temos que seguir os seguintes passos:
+
+ * Fazer o download da última versão do Brutos.
+
+ * Colocar o arquivo Brutos-x.x-x.jar e suas dependências na pasta /WEB-INF/lib da sua aplicação.
+
+ * Registrar o ContextLoadListener no /WEB-INF/web.xml
+
+------
+<listener>
+   <listener-class>org.brandao.brutos.ContextLoaderListener</listener-class>
+</listener>
+------
+
+ * Registrar o servlet BrutosAction no /WEB-INF/web.xml
+
+------
+<servlet>
+  <servlet-name>BRUTOS SERVLET</servlet-name>
+  <servlet-class>org.brandao.brutos.BrutosAction</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>BRUTOS SERVLET</servlet-name>
+  <url-pattern>*.jbrs</url-pattern>
+</servlet-mapping>
+------
+
+ * Gerar o arquivo brutos-config.xml na pasta /WEB-INF ou no default package.
+
+------
+<brutos-configuration
+   xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns='http://brutos.sourceforge.net/targetNS'
+   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS
+   http://brutos.sourceforge.net/brutos_1_0.xsd'>
+ 
+</brutos-configuration>
+------
+
+O primeiro projeto
+
+ Nesse projeto nós iremos utilizar como container IOC o {{{http://www.picocontainer.org/}PicoContainer}}.Tendo como
+ objetivo exibir uma mensagem. O download pode ser feito {{{http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+PicoContainer.zip/download}aqui}}.
+ Depois de fazer o download e configurar o Brutos web MVC, 
+ temos que gerar um controlador. Perceba que o controlador, mostrado logo abaixo,
+ nada mais é que uma simples classe que não está vinculada as classes Servlet,
+ HttpServletRequest, HttpServletResponse e a nenhum classe do framework Brutos
+ web MVC.
+
+------
+/*
+ * Brutos Web MVC http://brutos.sourceforge.net/
+ * Copyright (C) 2009 Afonso Brandão. (afonso.rbn@gmail.com)
+*/
+
+package br.brandao.controller;
+
+/**
+ *
+ * @author Afonso Brandão
+ */
+public class IndexController {
+
+    private String text;
+    private String title;
+
+    public IndexController(){
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+}
+------
+
+ Após gerado o controlador, vamos gerar a página que irá exibir a mensagem. Note
+ que, a página é uma simples página jsp.
+
+------
+<%--
+  Brutos Web MVC http://brutos.sourceforge.net/
+  Copyright (C) 2009 Afonso Brandão. (afonso.rbn@gmail.com)
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>${title}</title>
+    </head>
+    <body>
+        <h1>${text}</h1>
+    </body>
+</html>
+------
+
+ Agora que já geramos o controlador e a página, vamos associar o controlador
+ IndexController a página index.jsp e o URI index.jbrs.
+
+------
+<web-frames>
+  <web-frame uri="/index.jbrs" page="/WEB-INF/jsp/index.jsp"
+  class="br.brandao.controller.IndexController"/>
+</web-frames>
+
+<beans>
+  <bean name="IndexController" class="br.brandao.controller.IndexController">
+    <property name="text">
+      <value>Hello World!</value>
+    </property>
+    <property name="title">
+      <value>My Hello World</value>
+    </property>
+  </bean>
+</beans>
+------
+
+ Perceba que, a configuração do container IOC é feita no próprio arquivo de
+ configuração do Brutos web MVC. Se desejar trocar o container PicoContainer
+ pelo Spring, basta incluir as dependências relativas ao Spring e o seguinte
+ trecho XML antes da tag \<web-frames/\>.
+
+------
+<context-params>
+  <context-param name="org.brandao.brutos.ioc.provider"
+   value="org.brandao.brutos.ioc.SpringIOCProvider"/>
+  <context-param name="org.brandao.brutos.ioc.spring.auto"
+   value="true"/>
+</context-params>
+------
+
+ O trecho XML acima irá  automaticamente gerar o arquivo
+ applicationContext.xml na pasta /WEB-INF/. Caso queira utilizar a sua
+ própria configuração do Spring, basta remover o seguinte trecho XML:
+
+------
+<context-param name="org.brandao.brutos.ioc.spring.auto"
+   value="true"/>
+------
+
+ Para exibir a página, você deve acessar a uri /index.jbrs.
