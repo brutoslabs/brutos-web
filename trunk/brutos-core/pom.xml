@@ -67,6 +67,12 @@
             <artifactId>el-api</artifactId>
             <version>2.2.1-b03</version>
         </dependency>
+        <dependency>
+            <groupId>com.mockrunner</groupId>
+            <artifactId>mockrunner-jdk1.4-j2ee1.3</artifactId>
+            <version>0.4</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -78,6 +84,7 @@
     </repositories>
 
 </project>
+
 
 
 
