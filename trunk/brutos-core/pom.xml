@@ -69,8 +69,20 @@
         </dependency>
         <dependency>
             <groupId>com.mockrunner</groupId>
-            <artifactId>mockrunner-jdk1.4-j2ee1.3</artifactId>
+            <artifactId>mockrunner-jdk1.3-j2ee1.3</artifactId>
             <version>0.4</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jboss-jee</artifactId>
+                    <groupId>jboss</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>jboss</groupId>
+            <artifactId>jboss-j2ee</artifactId>
+            <version>4.2.0.GA</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -81,16 +93,19 @@
             <name>Java.net Repository for Maven</name>
             <url>http://download.java.net/maven/2</url>
         </repository>
+        <repository>
+            <id>ibiblio.org</id>
+            <name>ibiblio Mirror of http://repo1.maven.org/maven2/</name>
+            <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+        </repository>
+        <repository>
+            <id>repository.jboss.org</id>
+            <name>repository.jboss.org</name>
+            <url>http://repository.jboss.org/maven2</url>
+        </repository>
     </repositories>
 
 </project>
-
-
-
-
-
-
-
 
 
 
