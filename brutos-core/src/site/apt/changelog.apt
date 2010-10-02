@@ -1,0 +1,25 @@
+ChangeLog
+
+* 1.3-SNAPSHOT-20100706-100437
+
+ * Corrigidos bugs do mapeamento de beans.
+
+ * Corrigidos bugs da obtenção de dados da requisição.
+
+ * Corrigidos bugs do redirecionamento entre controladores.
+
+ * Corrigidos bugs do interceptor.
+
+ * adicionado flash scope.
+
+ * adicionado suporte à customização de escopos.
+
+ * adicionado ioc scope.
+
+ * Adicionado suporte ao escopo no mapeamento de beans.
+
+------
+<mapping ...>
+<property-mapping property-name="cliente" name="client" scope="session"/>
+</mapping>
+------

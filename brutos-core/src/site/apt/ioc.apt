@@ -1,0 +1,234 @@
+Inversão de controle e injeção de dependência
+
+ Brutos possui uma interface IOC/DI baseada no Spring. Seu objetivo é permitir
+ o total desacoplamento do container IOC/DI. Assim, se existir a necessidade
+ de mudar o container, não será necessário refazer a configuração.
+
+ Para usar o container IOC é necessário configurar, essa configuração nada
+ mais é do que informar como você quer instanciar os objetos.
+
+ Ao configurar você está definindo os beans que você quer que o container
+ gerencie, deixando assim a responsabilidade de instanciar os objetos com o
+ container IOC.
+
+ Veja abaixo um exemplo:
+
+------
+<beans>
+    <bean name="MyBean" class="..."/>
+</beans>
+------
+
+* Injeção de dependência
+
+ Um aplicativo normalmente não é composto de um objeto. Mesmo um aplicativo
+ simples possui um monte de objetos que trabalham em conjunto para atingir
+ um mesmo objetivo.
+
+ O princípio básica da injeção de dependência, é que os objetos definem suas
+ próprias dependências. Podendo ser por construtor, propriedades definidas após
+ o objeto ser criado, método estático ou por uma fábrica.
+
+* Injeção de dependência por método
+
+ A injeção de dependência por método é feita chamando o método de um bean depois
+ de chamado o construtor.
+
+ Veja abaixo um exemplo de uma classe que somente pode receber a injeção de
+ dependência por método:
+
+------
+public class MySimpleClass{
+
+    private Child child;
+
+    public MySimpleClass(){
+    }
+
+    public void setChild( Child value ){
+        this.child = value;
+    }
+
+    public Child getChild(){
+        return this.child;
+    }
+
+}
+------
+
+------
+<bean name="MyBean" class="MySimpleClass">
+    <property name="child">
+        ...
+    </property>
+</bean>
+------
+
+* Injeção de dependência por construtor
+
+ A injeção de dependência por construtor é feita chamando um construtor com um
+ número específico de argumentos.
+ Veja abaixo um exemplo de uma classe que somente pode receber a injeção de
+ dependência por construtor:
+
+------
+public class MySimpleClass{
+
+    private Child child;
+
+    public MySimpleClass(  Child value  ){
+        this.child = value;
+    }
+
+    public Child getChild(){
+        return this.child;
+    }
+
+}
+------
+
+------
+<bean name="MyBean" class="MySimpleClass">
+    <constructor-arg>
+        ...
+    </constructor-arg>
+</bean>
+------
+
+* Injetando valores primitivos e String
+
+ A injeção de valores primitivos ou string é feita com o elemento \<value/\>.
+ Somente é permitido o seu uso nos elementos \<constructor-arg/\> e \<property/\>.
+ Veja alguns exemplos:
+
+------
+<bean name="MyBean" class="...">
+    <constructor-arg>
+        <value>100.0</value>
+    </constructor-arg>
+</bean>
+------
+
+------
+<bean name="MyBean" class="...">
+    <constructor-arg>
+        <value>My value</value>
+    </constructor-arg>
+</bean>
+------
+
+------
+<bean name="MyBean" class="...">
+    <constructor-arg>
+        <value>1</value>
+    </constructor-arg>
+</bean>
+------
+
+* Referência a outros beans
+
+ A injeção de beans é feita com o elemento \<ref/\>. Somente é permitido o seu
+ uso nos elementos \<constructor-arg/\> e \<property/\>.
+
+------
+<bean name="MyBean" class="...">
+    <constructor-arg>
+        <ref bean="beanName"/>
+    </constructor-arg>
+</bean>
+------
+
+* Coleções
+
+ A injeção dos tipos List, Set, Map e Properties são feitas respectivamente com
+ os elementos \<list/\>, \<set/\>, \<map/\> e \<props/\>. Somente é permitido o seu uso
+ nos elementos \<constructor-arg/\> e \<property/\>. Veja alguns exemplos:
+
+------
+<bean name="..." class="...">
+    <constructor-arg>
+        <list>
+            <value>1</value>
+            <value>2</value>
+            <value>3</value>
+        </list>
+    </constructor-arg>
+</bean>
+
+<bean name="..." class="...">
+    <constructor-arg>
+        <set>
+            <value>1</value>
+            <value>2</value>
+            <value>3</value>
+        </set>
+    </constructor-arg>
+</bean>
+
+<bean name="..." class="...">
+    <constructor-arg>
+        <map>
+            <entry>
+                <key>
+                    <value>1</value>
+                </key>
+                <value>Value</value>
+            </entry>
+        </map>
+    </constructor-arg>
+</bean>
+
+<bean name="..." class="...">
+    <constructor-arg>
+        <props>
+            <prop name="..." value="..."/>
+            <prop name="...">
+                <value>...</value>
+            </prop>
+        </props>
+    </constructor-arg>
+</bean>
+------
+
+* Inner bean
+
+ O elemento \<bean/\> pode ser usando dentro dos elementos \<constructor-arg/\> e
+ \<property/\>. Por ser um bean interno (inner bean) o nome não é necessário.
+
+------
+<bean name="IndexController" class="br.brandao.controller.IndexController">
+   <constructor-arg>
+       <bean class="Configuration">
+           <constructor-arg>
+               <props>
+                   <prop name="prop1" value="value1"/>
+                   <prop name="prop2">
+                       <value>value2</value>
+                   </prop>
+               </props>
+           </constructor-arg>
+       </bean>
+   </constructor-arg>
+</bean>
+------
+
+* Fábrica de beans
+
+ Uma fábrica de beans nada mais é que uma classe que tem a finalidade  de
+ instanciar objetos de um determinado tipo. Veja um exemplo:
+
+------
+public class MyFactory {
+
+    public MyType getInstance(){
+        ...
+    }
+
+}
+------
+
+------
+<bean name="myFactory" class="MyFactory"/>
+<bean name="MyBeanType" class="MyType" factory-bean="myFactory"
+factory-method="getInstance"/>
+------
