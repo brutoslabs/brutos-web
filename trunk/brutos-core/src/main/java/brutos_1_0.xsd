@@ -427,7 +427,7 @@
         <xsd:element name="bean" type="bean"/>
         <xsd:element name="null"/>
     </xsd:choice>
-    <xsd:attribute name="type" type="class"/>
+    <xsd:attribute name="type" type="xsd:string"/>
   </xsd:complexType>
   
   <xsd:complexType name="value">
