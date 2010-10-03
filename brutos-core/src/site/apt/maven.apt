@@ -1,0 +1,26 @@
+Download com o Maven
+
+ Se você estiver utilizando o {{{http://maven.apache.org/}Maven 2}} para compilar o seu projeto,
+ o download do Brutos pode ser gerenciado via dependência do Maven:
+
+------
+<dependencies>
+    ...
+    <dependency>
+            <groupId>org.brandao</groupId>
+            <artifactId>brutos</artifactId>
+            <version>1.3-SNAPSHOT</version>
+    </dependency>
+    ...
+</dependencies>
+
+<repositories>
+    ...
+    <repository>
+        <id>maven2-brutos.sourceforge.net</id>
+        <name>Repository for Maven</name>
+        <url>http://brutos.sourceforge.net/maven/2</url>
+    </repository>
+    ...
+</repositories>
+------

@@ -11,37 +11,57 @@
 <project  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
    xmlns='http://maven.apache.org/DECORATION/1.0.0'
    xsi:schemaLocation='http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd' name="Brutos application framework">
-    <bannerLeft>
-        <name>Brutos Application Framework</name>
-        <src>./img/logo.png</src>
-        <href>http://brutos.sourceforge.net/</href>
-    </bannerLeft>
+       
     <skin>
         <groupId>org.apache.maven.skins</groupId>
         <artifactId>maven-stylus-skin</artifactId>
         <version>1.2</version>
     </skin>
-    <poweredBy>
-        <logo name="Maven " href="http://maven.apache.org/"
-                  img="http://maven.apache.org/images/logos/maven-feather.png"/>
-        <logo name="Sourceforge" href="http://sourceforge.net"
-              img="http://sflogo.sourceforge.net/sflogo.php?group_id=262591&amp;type=2"/>
-    </poweredBy>
+
+    <bannerLeft>
+        <name>Brutos Application Framework</name>
+        <src>images/brutos-titulo.png</src>
+        <href>http://brutos.sourceforge.net/</href>
+    </bannerLeft>
+
+    <bannerRight>
+        <name>Sourceforge</name>
+        <src>http://sflogo.sourceforge.net/sflogo.php?group_id=262591&amp;type=2</src>
+        <href>http://sourceforge.net</href>
+    </bannerRight>
 
     <body>
+        <head>
+            <script type="text/javascript">
+               var _gaq = _gaq || [];
+              _gaq.push(['_setAccount', 'UA-16487808-3']);
+              _gaq.push(['_trackPageview']);
+
+              (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+              })();
+
+            </script>
+        </head>
+
         <menu name="Geral">
           <item name="Introdução" href="index.html"/>
           <item name="Dependências" href="dependencies.html"/>
           <item name="Licença" href="license.html"/>
-          <item name="Quick Start" href="quickstart.html"/>
+          <item name="Quick Start" href="quick.html"/>
           <item name="Download" href="http://sourceforge.net/projects/brutos/files/"/>
           <item name="Source Code" href="http://brutos.svn.sourceforge.net/viewvc/brutos/"/>
           <item name="ChangLog" href="changelog.html"/>
+          <item name="Maven" href="maven.html"/>
         </menu>
         <menu name="Documentação">
-          <item name="Interceptor" href="interceptor.html"/>
-          <item name="IOC/DI" href="ioc.html"/>
+          <item name="Javadoc" href="javadoc/"/>
+          <item name="Controller" href="controller.html"/>
           <item name="File Upload" href="fileupload.html"/>
+          <item name="IOC/DI" href="iocdi.html"/>
+          <item name="Interceptor" href="interceptor.html"/>
         </menu>
         <menu name="Exemplos">
           <item name="Brutos+PicoContainer" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+PicoContainer.zip/download"/>

@@ -1,0 +1,368 @@
+O controlador
+
+ O controlador é responsável por receber os dados e determinar qual objeto do
+ modelo e visão será usada.
+ Ele também é responsável por converter, validar e filtrar a entrada de dados.
+ No Brutos web MVC o controlador já está implementado, podendo ser usado também
+ como front controller. Nos dois casos, somente é necessário fazer respectivamente
+ o mapeamento do modelo ou controlador.
+ Esse mapeamento nada mais é que, informar ao controlador como os dados de
+ entrada serão disponibilizados no modelo (atributos ou parâmetros de um método)
+ e como seu resultado será exibido (visão).
+ Todo o processamento de uma aplicação usando o Brutos web MVC é baseada no
+ seguinte ciclo:
+
+[./images/image002.gif]
+
+ * Obter modelo: O controlador recebe a requisição, examina-o e extrai a
+ ID do modelo, que é determinado pelo URI. O Brutos web MVC usa essa ID para
+ localizar o modelo atual. Se o modelo não for encontrado, a requisição é
+ finalizada.
+
+ * Gerar manipulador: Nesta etapa é gerado o manipulador da requisição. O
+ manipulador é composto por: modelo; requisição (ServletRequest); resposta
+ (ServletResponse); contexto (ServletContext) e a ação a ser executada, caso
+ exista uma. É neste momento que é identificada a ação a ser executada.
+
+ * Processar interceptadores: Ocorre o processamento da pilha de interceptadores.
+ Essa pilha de interceptadores pode ser criada pelo desenvolvedor. Se a pilha de
+ interceptadores estiver vazia, o Brutos web MVC automaticamente irá avançar
+ para a próxima etapa.
+
+ * Processar validações: É nesta etapa que ocorrem as validações. Essa validação
+ pode ser criada pelo desenvolvedor ou obtida diretamente do Brutos web MVC. Os
+ valores são validados de acordo com as regras de validação da aplicação. Se o
+ valor for considerado errado será marcado como inválido. Mesmo existindo um
+ valor inválido, a próxima etapa, atualizar valores do modelo, será executada.
+
+ * Atualizar valores do modelo: Esta é a etapa onde são atualizados os valores
+ no lado do servidor, ou seja, a atualização das propriedades do modelo. Somente
+ as propriedades mapeadas serão atualizadas. Se na etapa anterior, algum
+ valor foi marcado como inválido, o Brutos web MVC automaticamente irá para
+ a etapa final, processar visão, ignorando a etapa invocar aplicação.
+
+ * Invocar aplicação: Nesta etapa o controlador do Brutos web MVC invoca a
+ aplicação. Os valores foram convertidos, validados e aplicados no modelo,
+ então estará pronto para utilizar suas regras de negócio. Se ocorrer um problema,
+ o Brutos web MVC automaticamente irá para a próxima etapa. Tanto um erro
+ (exception) quanto o tipo de resultado poderá alterar o fluxo lógico da aplicação.
+
+ * Processar visão: Nesta etapa será exibida a tela com o resultado obtido do modelo.
+
+* O web-frame
+
+ Para o mapeamento do modelo ou controlador é usada a tag \<web-frame/\>. Com essa
+ tag definimos a ID (URI), a página, a classe e entre outros recursos. Somente
+ é permitido o seu uso no elemento \<web-frames/\>. O elemento \<web-frame/\> possui
+ os seguintes atributos:
+
+*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
+| Atributo              | Explicação                                                                                                            |
+*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
+| nome                  | Nome que identifica o mapeamento. Usado na configuração do container IOC.                                             |
+*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
+| uri                   | Identificação do modelo.                                                                                              |
+*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
+| page                  | Identificação da visão.                                                                                               |
+*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
+| redirect              | Se verdadeiro, após o processamento do modelo é feito um redirecionamento para o endereço informado no atributo page. |
+*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
+| class                 | Nome completo da classe.                                                                                              |
+*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
+| scope                 | Escopo do modelo.                                                                                                     |
+*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
+| method-parameter-name | Nome do parâmetro que contém a identificação da ação.                                                                 |
+*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
+| default-method-name   | Ação executado por padrão.                                                                                            |
+*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
+
+ Veja abaixo um trecho de XML da configuração que deve ser incluído no
+ brutos-config.xml.
+
+------
+<?xml version="1.0" encoding="UTF-8"?>
+
+<brutos-configuration  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns='http://brutos.sourceforge.net/targetNS'
+   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS
+   http://brutos.sourceforge.net/brutos_1_0.xsd' >
+
+   <web-frames>
+       <web-frame uri="/index.jbrs" page="/WEB-INF/jsp/index.jsf"
+           class="br.model.Index"/>
+   </web-frames>
+
+</brutos-configuration>
+------
+
+ No trecho acima o modelo não possui método mapeado. Quando o uri /index.jbrs
+ é requisitado o construtor da classe br.model.Index é invocado e é exibida
+ a página /WEB-INF/jsf/index.jsf.
+
+ No próximo exemplo o método defMethod() sempre será executado.
+
+------
+<?xml version="1.0" encoding="UTF-8"?>
+
+<brutos-configuration  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns='http://brutos.sourceforge.net/targetNS'
+   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS
+   http://brutos.sourceforge.net/brutos_1_0.xsd' >
+
+   <web-frames>
+       <web-frame uri="/index.jbrs" page="/WEB-INF/jsp/index.jsf"
+           class="br.model.Index" default-method-name="default">
+           <method name="default" method-name="defMethod"/>
+       </web-frame>
+   </web-frames>
+
+</brutos-configuration>
+------
+
+* Mapeamento de propriedades
+
+ Uma propriedade é um atributo de um objeto cujo seu acesso é feito por métodos.
+ O método para atualizar o atributo deve ter a seguinte nomenclatura:
+ set\<atributo\>, onde: \<atributo\> é o nome do atributo com a primeira letra
+ maiúscula. O método para obter o valor do atributo deve ter a seguinte
+ nomenclatura: get<atributo> ou is<atributo>, no caso do tipo booleano.
+
+ Os valores das propriedades podem ser obtidos tanto da requisição, sessão ou
+ do contexto. Podendo ser do tipo primitivo ou não. No caso de um objeto,
+ é possível usar um mapeamento predefinido. Além de ser possível o mapeamento
+ de propriedades do tipo Enum e Date.
+
+ O mapeamento de um atributo é feito com a tag \<property-webframe/\>. Somente
+ é permitido o seu uso no elemento \<web-frame/\>. O elemento
+ \<property-webframe/\> possui os seguintes atributos:
+
+*------------------+--------------------------------------------------------------------+
+|Atributo          | Explicação                                                         |
+*------------------+--------------------------------------------------------------------+
+|Nome              | Identificação do valor.                                            |
+*------------------+--------------------------------------------------------------------+
+|property-name     | Nome da propriedade.                                               |
+*------------------+--------------------------------------------------------------------+
+|enum-property     | Usado no mapeamento de enum. Permite dois valores:                 |
+|                  | ordinal: o enum é representado por um inteiro;                     |
+|                  | string: o enum é representado por uma string.                      |
+*------------------+--------------------------------------------------------------------+
+|temporal-property | Usado no mapeamento de datas. É o formato com que a data está      |
+|                  | representada.                                                      |
+|                  | O formato é descrito na classe java.text.SimpleDateFormat.         |
+*------------------+--------------------------------------------------------------------+
+|mapping-name      | Identificação de um mapeamento predefinido.                        |
+*------------------+--------------------------------------------------------------------+
+|scope             | Determina o escopo de origem do valor.                             |
+*------------------+--------------------------------------------------------------------+
+|factory           | Determina a classe responsável por processar o valor recebido.     |
+|                  | A classe deve implementar a interface org.brandao.brutos.type.Type.|
+*------------------+--------------------------------------------------------------------+
+
+ No exemplo a seguir é feito o mapeamento de duas propriedades.
+
+------
+<web-frame uri="/index.jbrs" page="/WEB-INF/jsp/index.jsf"
+  class="br.model.Index">
+  <property-webframe name=”cli” property-name=”client” scope=”session”/>
+  <property-webframe name=”invoke” property-name=”actionName”/>
+</web-frame>
+------
+
+ No exemplo acima, o controlador recebe a requisição, obtém o valor com a
+ identificação “invoke” da requisição e o valor com a identificação “cli” da
+ sessão e envia ao objeto por meio dos seus respectivos métodos. O diagrama
+ abaixo ilustra o exemplo acima.
+
+[images/image003.gif]
+
+* Mapeamento de métodos
+
+ Uma ação é representada por um método. Esse método pode ter ou não parâmetros.
+ Os parâmetros podem ser obtidos tanto da requisição, sessão ou do contexto.
+ Podendo ser do tipo primitivo ou não. No caso de um objeto, é possível usar
+ um mapeamento predefinido. Além de ser possível o mapeamento de propriedades
+ do tipo Enum e Date.
+
+ Se o método retornar algum valor, este será processado e incluído na requisição,
+ para posteriormente ser usada na visão. As exceções lançadas dentro do método
+ podem alterar o fluxo lógico da aplicação.
+
+ O mapeamento de um método é feito com a tag \<method/\>. Somente é permitido
+ o seu uso no elemento <web-frame/>. O elemento <method/> possui os seguintes
+ atributos:
+
+*------------+------------------------------------------------------------------+
+| Atributo   | Explicação                                                       |
+*------------+------------------------------------------------------------------+
+|name        | Identificação da ação.                                           |
+*------------+------------------------------------------------------------------+
+|method-name | Nome do método.                                                  |
+*------------+------------------------------------------------------------------+
+|return-in   | Identificação do resultado de uma ação. Se a ação retornar algum |
+|            | valor, esse valor será disponibilizado na visão com essa         |
+|            | identificação.                                                   |
+*------------+------------------------------------------------------------------+
+|page        | Identificação da visão.                                          |
+*------------+------------------------------------------------------------------+
+|redirect    | Se verdadeiro, após o processamento do modelo é feito um         |
+|            | redirecionamento para o endereço informado no atributo page.     |
+*------------+------------------------------------------------------------------+
+
+ Veja o exemplo a seguir:
+
+------
+<web-frame uri="/index.jbrs" page="/WEB-INF/jsp/index.jsf"
+  class="br.model.Index" default-method-name="default">
+  <method name=”add” method-name=”addClient”/>
+</web-frame>
+------
+
+ No exemplo acima a classe Index possui o método addClient, que não retorna
+ nenhum valor e não possui parâmetros. Esse método está associada à ação “add”
+ do uri /index.jbrs.
+
+ No próximo exemplo é feito o mapeamento de um método que retorna um valor
+ booleano com a identificação result.
+
+------
+<method name="add" method-name="addClient" return-in="result"
+  page="/WEB-INF/jsp/add_cli.jsf"/>
+------
+
+ No exemplo acima, o controlador recebe a requisição, executa a ação "add",
+ ou seja, invoca o método addClient e exibe a página add_client.jsf, onde é
+ usado o resultado obtido da execução da ação "add". O diagrama abaixo ilustra
+ a execução dessa ação.
+
+[images/image004.gif]
+
+ No próximo exemplo a visão irá depender de qual ação será executada.
+
+------
+<web-frame uri="/index.jbrs" page="/WEB-INF/jsp/show_cli.jsf"
+           class="br.model.Index">
+          <method name="add" method-name="addClient"
+               page="/WEB-INF/jsp/add_cli.jsf"/>
+          <method name="remove" method-name="removeClient"
+               page="/WEB-INF/jsp/remove_cli.jsf"/>
+</web-frame>
+------
+
+ No exemplo acima, o controlador recebe a requisição e identifica qual ação será
+ executada. Se a ação identificada for "add", então o método addClient da classe
+ Index é invocado e a página add_cli.jsf é exibida. Se a ação identificada for
+ "remove", então o método removeClient é invocado e a página remove_cli.jsf é
+ exibida. Caso não seja executada nenhuma ação a página show_cli.jsf é exibida.
+ O diagrama abaixo ilustra o funcionamento do controlador.
+
+[images/image005.gif]
+
+* Mapeamento de parâmetros
+
+ Os valores dos parâmetros podem ser obtidos tanto da requisição, sessão ou do
+ contexto. Podendo ser do tipo primitivo ou não. No caso de um objeto, é possível
+ usar um mapeamento predefinido. Além de ser possível o mapeamento de parâmetros
+ do tipo Enum e Date. O mapeamento de um parâmetro é feito com a tag
+ \<method-param/\>. Somente é permitido o seu uso no elemento \<method/\>.
+ O elemento \<method-param/\> possui os seguintes atributos:
+
+*------------------+-----------------------------------------------------------+
+| Atributo         | Explicação
+*------------------+-----------------------------------------------------------+
+| nome             | Identificação do valor.
+*------------------+-----------------------------------------------------------+
+| enum-property    | Usado no mapeamento de enum. Permite dois valores:        |
+|                  | ordinal: o enum é representado por um inteiro;            |
+|                  | string: o enum é representado por uma string.             |
+*------------------+-----------------------------------------------------------+
+| temporal-property| Usado no mapeamento de datas. Formato com que a data está |
+|                  | representada. O formato é descrito na classe              |
+|                  | java.text.SimpleDateFormat.                               |
+*------------------+-----------------------------------------------------------+
+| mapping-name     | Identificação de um mapeamento predefinido.               |
+*------------------+-----------------------------------------------------------+
+| scope            | Determina o escopo de origem do valor.                    |
+*------------------+-----------------------------------------------------------+
+| factory          | Determina a classe responsável por processar o valor      |
+|                  | recebido. A classe deve implementar a interface           |
+|                  | org.brandao.brutos.type.Type.                             |
+*------------------+-----------------------------------------------------------+
+| type	           | Tipo do parâmetro.                                        |
+*------------------+-----------------------------------------------------------+
+
+ Veja abaixo um exemplo:
+
+------
+<web-frame uri="/index.jbrs" page="/WEB-INF/jsp/show_cli.jsf"
+           class="br.model.Index">
+          <method name="add" method-name="addClient"
+               page="/WEB-INF/jsp/add_cli.jsf">
+               <method-param name="nome" type="java.lang.String"/>
+               <method-param name="idade" type="int"/>
+               <method-param name="userId" type="User" scope="session"/>
+          </method>
+</web-frame>
+------
+
+ No exemplo acima o controlador recebe a requisição, invoca o método addClient
+ passado os valores nome, idade e userId respectivamente para os parâmetros p1,
+ p2 e p3 do método. Os valores nome e idade são obtidos da requisição e o userId
+ é obtido da sessão. O diagrama abaixo ilustra o exemplo acima.
+
+[images/image006.gif]
+
+* Tratando exceções
+
+ As exceções lançadas na execução de uma ação podem ser tratadas e também
+ podem influenciar no fluxo lógico da aplicação. È possível determinar qual
+ visão será utilizada, se exigirá um redirecionamento, além de ser possível
+ atribuir uma identificação ao objeto, exception, obtido. O tratamento das
+ exceções é feito com a tag <throw-safe/>. Somente é permitido o seu uso no
+ elemento \<method/\> e \<web-frame/\>. O elemento \<throw-safe/\> possui os
+ seguintes atributos:
+
+*----------+--------------------------------------------------------------+
+| Atributo | Explicação                                                   |
+*----------+--------------------------------------------------------------+
+| name     | Identificação da exceção.                                    |
+*----------+--------------------------------------------------------------+
+| target   | A exceção alvo da configuração.                              |
+*----------+--------------------------------------------------------------+
+| uri      | Identificação da visão.                                      |
+*----------+--------------------------------------------------------------+
+| redirect | Se verdadeiro, após o processamento do modelo é feito um     |
+|          | redirecionamento para o endereço informado no atributo uri.  |
+*----------+--------------------------------------------------------------+
+
+ Veja abaixo um exemplo:
+
+------
+<method name="login" method-name="login" redirect="true"
+    page="/index.jbrs">
+    <method-param name="e-mail" type="java.lang.String"/>
+    <method-param name="senha" type="java.lang.String"/>
+    <throw-safe target="java.lang.NullPointerException" name="exception"
+        uri="/WEB-INF/jsp/login.jsf"/>
+    <throw-safe target="LoginException" name="exception"
+        uri="/WEB-INF/jsp/login.jsf"/>
+</method>
+------
+
+ No exemplo acima, o usuário fará o login. Se for o primeiro acesso, será
+ lançado NullPointerException, pois ainda não possui os dados necessários
+ para o login, e é exibida a página de login. Se a identificação ou a senha
+ estiver errada, então será lançado LoginException sendo exibida a página de
+ login. Se a identificação e a senha estiverem corretas, então será redirecionado
+ para a página inicial.
+
+[images/image007.gif]
+
+ No diagrama acima foram considerados três fluxos de execução. São eles:
+
+ * ocorre NullPointerException e a página login.jsf é exibida.
+
+ * ocorre LoginException e a página login.jsf é exibida, caso o login ou a senha
+   estejam errados.
+
+ * não ocorre nenhum exceção e o controlador redireciona para a página /index.jbrs.
