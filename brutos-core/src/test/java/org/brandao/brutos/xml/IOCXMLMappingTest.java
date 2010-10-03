@@ -30,6 +30,7 @@ import org.brandao.brutos.ioc.picocontainer.PicoContainerScopes;
 import org.brandao.brutos.ioc.picocontainer.SingletonScope;
 import org.brandao.brutos.programatic.IOCManager;
 import org.brandao.brutos.xml.TestHelper.MyBean;
+import org.brandao.brutos.xml.TestHelper.MyBeanFactory;
 import org.brandao.brutos.xml.TestHelper.MyBeanTypes;
 import org.brandao.brutos.xml.TestHelper.MyEnum;
 import org.brandao.brutos.xml.TestHelper.MyType;
@@ -49,7 +50,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myType\" class=\"org.brandao.brutos.feature.MyType\" singleton=\"true\"/>" +
+        "       <bean name=\"myType\" class=\""+MyType.class.getName()+"\" singleton=\"true\"/>" +
         "   </beans>" +
         "</brutos-configuration>";
 
@@ -73,7 +74,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg>" +
         "              <value>123456</value>" +
         "           </constructor-arg>" +
@@ -107,7 +108,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property1\">" +
         "              <value>123456</value>" +
         "           </property>" +
@@ -141,7 +142,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg>" +
         "              <value>123456</value>" +
         "           </constructor-arg>" +
@@ -178,8 +179,8 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBeanFactory\" class=\"org.brandao.brutos.feature.MyBeanFactory\" singleton=\"true\"/>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" factory-method=\"createInstance\" factory-bean=\"myBeanFactory\" singleton=\"true\"/>" +
+        "       <bean name=\"myBeanFactory\" class=\""+MyBeanFactory.class.getName()+"\" singleton=\"true\"/>" +
+        "       <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" factory-method=\"createInstance\" factory-bean=\"myBeanFactory\" singleton=\"true\"/>" +
         "   </beans>" +
         "</brutos-configuration>";
 
@@ -206,7 +207,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyEnum\" factory-method=\"valueOf\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyEnum.class.getName()+"\" factory-method=\"valueOf\" singleton=\"true\">" +
         "           <constructor-arg>" +
         "               <value>VALUE2</value>" +
         "           </constructor-arg>" +
@@ -236,9 +237,9 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property21\">" +
-        "               <bean class=\"org.brandao.brutos.feature.MyEnum\" factory-method=\"valueOf\" singleton=\"true\">" +
+        "               <bean class=\""+MyEnum.class.getName()+"\" factory-method=\"valueOf\" singleton=\"true\">" +
         "                   <constructor-arg>" +
         "                       <value>VALUE2</value>" +
         "                   </constructor-arg>" +
@@ -270,7 +271,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property1\">" +
         "               <value>java.lang.Integer</value>" +
         "           </property>" +
@@ -300,7 +301,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property2\">" +
         "               <value>true</value>" +
         "           </property>" +
@@ -330,7 +331,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property3\">" +
         "               <value>127</value>" +
         "           </property>" +
@@ -360,7 +361,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property4\">" +
         "               <value>A</value>" +
         "           </property>" +
@@ -390,7 +391,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property5\">" +
         "               <value>2.3</value>" +
         "           </property>" +
@@ -420,7 +421,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property6\">" +
         "               <value>2.3</value>" +
         "           </property>" +
@@ -450,7 +451,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property7\">" +
         "               <value>100</value>" +
         "           </property>" +
@@ -480,7 +481,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property8\">" +
         "               <value>123456789</value>" +
         "           </property>" +
@@ -510,7 +511,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property9\">" +
         "               <value>123</value>" +
         "           </property>" +
@@ -540,7 +541,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property10\">" +
         "               <value>String Test</value>" +
         "           </property>" +
@@ -576,7 +577,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property11\">" +
         "               <value>true</value>" +
         "           </property>" +
@@ -606,7 +607,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property12\">" +
         "               <value>127</value>" +
         "           </property>" +
@@ -636,7 +637,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property13\">" +
         "               <value>A</value>" +
         "           </property>" +
@@ -666,7 +667,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property14\">" +
         "               <value>2.3</value>" +
         "           </property>" +
@@ -696,7 +697,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property15\">" +
         "               <value>2.3</value>" +
         "           </property>" +
@@ -726,7 +727,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property16\">" +
         "               <value>100</value>" +
         "           </property>" +
@@ -756,7 +757,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property17\">" +
         "               <value>123456789</value>" +
         "           </property>" +
@@ -786,7 +787,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property18\">" +
         "               <value>123</value>" +
         "           </property>" +
@@ -816,7 +817,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property19\">" +
         "               <list>" +
         "               <value>100</value>" +
@@ -852,7 +853,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property20\">" +
         "               <set>" +
         "               <value>100</value>" +
@@ -891,12 +892,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myEnum\" class=\"org.brandao.brutos.feature.MyEnum\" factory-method=\"valueOf\" singleton=\"true\">" +
+        "       <bean name=\"myEnum\" class=\""+MyEnum.class.getName()+"\" factory-method=\"valueOf\" singleton=\"true\">" +
         "           <constructor-arg>" +
         "               <value>VALUE2</value>" +
         "           </constructor-arg>" +
         "       </bean>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property21\">" +
         "               <ref bean=\"myEnum\"/>" +
         "           </property>" +
@@ -926,7 +927,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property23\">" +
         "               <props>" +
         "                   <prop name=\"id1\" value=\"value1\"/>" +
@@ -961,12 +962,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property22\">" +
         "               <map>" +
         "                   <entry>" +
         "                    <key><value>1</value></key>" +
-        "                     <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                     <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                         <constructor-arg>" +
         "                            <value>1</value>" +
         "                         </constructor-arg>" +
@@ -977,7 +978,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                   </entry>" +
         "                   <entry>" +
         "                    <key><value>2</value></key>" +
-        "                     <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                     <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                         <constructor-arg>" +
         "                            <value>2</value>" +
         "                         </constructor-arg>" +
@@ -988,7 +989,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                   </entry>" +
         "                   <entry>" +
         "                    <key><value>3</value></key>" +
-        "                     <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                     <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                         <constructor-arg>" +
         "                            <value>3</value>" +
         "                         </constructor-arg>" +
@@ -1040,12 +1041,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property24\">" +
         "               <map>" +
         "                   <entry>" +
         "                    <key>" +
-        "                     <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                     <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                         <constructor-arg>" +
         "                            <value>1</value>" +
         "                         </constructor-arg>" +
@@ -1054,7 +1055,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                         </constructor-arg>" +
         "                     </bean>" +
         "                    </key>" +
-        "                     <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                     <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                         <constructor-arg>" +
         "                            <value>1</value>" +
         "                         </constructor-arg>" +
@@ -1096,12 +1097,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property25\">" +
         "               <map>" +
         "                   <entry>" +
         "                        <key>" +
-        "                            <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                            <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -1111,7 +1112,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                             </bean>" +
         "                        </key>" +
         "                        <list>" +
-        "                             <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                             <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -1119,7 +1120,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                                    <value>um</value>" +
         "                                 </constructor-arg>" +
         "                             </bean>" +
-        "                             <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                             <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>2</value>" +
         "                                 </constructor-arg>" +
@@ -1165,12 +1166,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property26\">" +
         "               <map>" +
         "                   <entry>" +
         "                        <key>" +
-        "                            <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                            <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -1184,7 +1185,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                                <key>" +
         "                                    <value>1</value>" +
         "                                </key>" +
-        "                                <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                                <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                    <constructor-arg>" +
         "                                       <value>2</value>" +
         "                                    </constructor-arg>" +
@@ -1231,12 +1232,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property27\">" +
         "               <map>" +
         "                   <entry>" +
         "                        <key>" +
-        "                            <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                            <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -1246,7 +1247,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                             </bean>" +
         "                        </key>" +
         "                        <set>" +
-        "                             <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                             <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -1254,7 +1255,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                                    <value>um</value>" +
         "                                 </constructor-arg>" +
         "                             </bean>" +
-        "                             <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                             <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>2</value>" +
         "                                 </constructor-arg>" +
@@ -1301,12 +1302,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <property name=\"property28\">" +
         "               <map>" +
         "                   <entry>" +
         "                        <key>" +
-        "                            <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                            <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -1356,9 +1357,9 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
-        "           <constructor-arg type=\"org.brandao.brutos.feature.MyEnum\">" +
-        "               <bean class=\"org.brandao.brutos.feature.MyEnum\" factory-method=\"valueOf\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
+        "           <constructor-arg type=\""+MyEnum.class.getName()+"\">" +
+        "               <bean class=\""+MyEnum.class.getName()+"\" factory-method=\"valueOf\" singleton=\"true\">" +
         "                   <constructor-arg>" +
         "                       <value>VALUE2</value>" +
         "                   </constructor-arg>" +
@@ -1390,7 +1391,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.lang.Class\">" +
         "               <value>java.lang.Integer</value>" +
         "           </constructor-arg>" +
@@ -1420,7 +1421,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"boolean\">" +
         "               <value>true</value>" +
         "           </constructor-arg>" +
@@ -1450,7 +1451,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"byte\">" +
         "               <value>127</value>" +
         "           </constructor-arg>" +
@@ -1480,7 +1481,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"char\">" +
         "               <value>A</value>" +
         "           </constructor-arg>" +
@@ -1510,7 +1511,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"double\">" +
         "               <value>2.3</value>" +
         "           </constructor-arg>" +
@@ -1540,7 +1541,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"float\">" +
         "               <value>2.3</value>" +
         "           </constructor-arg>" +
@@ -1570,7 +1571,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"int\">" +
         "               <value>100</value>" +
         "           </constructor-arg>" +
@@ -1600,7 +1601,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"long\">" +
         "               <value>123456789</value>" +
         "           </constructor-arg>" +
@@ -1630,7 +1631,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"short\">" +
         "               <value>123</value>" +
         "           </constructor-arg>" +
@@ -1660,7 +1661,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.lang.String\">" +
         "               <value>String Test</value>" +
         "           </constructor-arg>" +
@@ -1696,7 +1697,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.lang.Boolean\">" +
         "               <value>true</value>" +
         "           </constructor-arg>" +
@@ -1726,7 +1727,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.lang.Byte\">" +
         "               <value>127</value>" +
         "           </constructor-arg>" +
@@ -1756,7 +1757,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.lang.Character\">" +
         "               <value>A</value>" +
         "           </constructor-arg>" +
@@ -1786,7 +1787,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.lang.Double\">" +
         "               <value>2.3</value>" +
         "           </constructor-arg>" +
@@ -1816,7 +1817,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.lang.Float\">" +
         "               <value>2.3</value>" +
         "           </constructor-arg>" +
@@ -1846,7 +1847,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.lang.Integer\">" +
         "               <value>100</value>" +
         "           </constructor-arg>" +
@@ -1876,7 +1877,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.lang.Long\">" +
         "               <value>123456789</value>" +
         "           </constructor-arg>" +
@@ -1906,7 +1907,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.lang.Short\">" +
         "               <value>123</value>" +
         "           </constructor-arg>" +
@@ -1936,7 +1937,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.util.List\">" +
         "               <list>" +
         "               <value>100</value>" +
@@ -1972,7 +1973,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.util.Set\">" +
         "               <set>" +
         "               <value>100</value>" +
@@ -2011,13 +2012,13 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myEnum\" class=\"org.brandao.brutos.feature.MyEnum\" factory-method=\"valueOf\" singleton=\"true\">" +
+        "       <bean name=\"myEnum\" class=\""+MyEnum.class.getName()+"\" factory-method=\"valueOf\" singleton=\"true\">" +
         "           <constructor-arg>" +
         "               <value>VALUE2</value>" +
         "           </constructor-arg>" +
         "       </bean>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
-        "           <constructor-arg type=\"org.brandao.brutos.feature.MyEnum\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
+        "           <constructor-arg type=\""+MyEnum.class.getName()+"\">" +
         "               <ref bean=\"myEnum\"/>" +
         "           </constructor-arg>" +
         "       </bean>" +
@@ -2046,7 +2047,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.util.Properties\">" +
         "               <props>" +
         "                   <prop name=\"id1\" value=\"value1\"/>" +
@@ -2081,12 +2082,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >\n" +
         "\n" +
         "   <beans>\n" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">\n" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">\n" +
         "           <constructor-arg type=\"java.util.Map\">\n" +
         "               <map>\n" +
         "                   <entry>\n" +
         "                    <key><value>1</value></key>\n" +
-        "                     <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">\n" +
+        "                     <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">\n" +
         "                         <constructor-arg>\n" +
         "                            <value>1</value>\n" +
         "                         </constructor-arg>\n" +
@@ -2097,7 +2098,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                   </entry>\n" +
         "                   <entry>\n" +
         "                    <key><value>2</value></key>\n" +
-        "                     <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">\n" +
+        "                     <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">\n" +
         "                         <constructor-arg>\n" +
         "                            <value>2</value>\n" +
         "                         </constructor-arg>\n" +
@@ -2108,7 +2109,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                   </entry>\n" +
         "                   <entry>\n" +
         "                    <key><value>3</value></key>\n" +
-        "                     <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">\n" +
+        "                     <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">\n" +
         "                         <constructor-arg>\n" +
         "                            <value>3</value>\n" +
         "                         </constructor-arg>\n" +
@@ -2163,12 +2164,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.util.Map\">" +
         "               <map>" +
         "                   <entry>" +
         "                    <key>" +
-        "                     <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                     <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                         <constructor-arg>" +
         "                            <value>1</value>" +
         "                         </constructor-arg>" +
@@ -2177,7 +2178,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                         </constructor-arg>" +
         "                     </bean>" +
         "                    </key>" +
-        "                     <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                     <bean name=\"myBean\" class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                         <constructor-arg>" +
         "                            <value>1</value>" +
         "                         </constructor-arg>" +
@@ -2222,12 +2223,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.util.Map\">" +
         "               <map>" +
         "                   <entry>" +
         "                        <key>" +
-        "                            <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                            <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -2237,7 +2238,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                             </bean>" +
         "                        </key>" +
         "                        <list>" +
-        "                             <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                             <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -2245,7 +2246,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                                    <value>um</value>" +
         "                                 </constructor-arg>" +
         "                             </bean>" +
-        "                             <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                             <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>2</value>" +
         "                                 </constructor-arg>" +
@@ -2294,12 +2295,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.util.Map\">" +
         "               <map>" +
         "                   <entry>" +
         "                        <key>" +
-        "                            <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                            <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -2313,7 +2314,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                                <key>" +
         "                                    <value>1</value>" +
         "                                </key>" +
-        "                                <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                                <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                    <constructor-arg>" +
         "                                       <value>2</value>" +
         "                                    </constructor-arg>" +
@@ -2363,12 +2364,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.util.Map\">" +
         "               <map>" +
         "                   <entry>" +
         "                        <key>" +
-        "                            <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                            <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -2378,7 +2379,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                             </bean>" +
         "                        </key>" +
         "                        <set>" +
-        "                             <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                             <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
@@ -2386,7 +2387,7 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "                                    <value>um</value>" +
         "                                 </constructor-arg>" +
         "                             </bean>" +
-        "                             <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                             <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>2</value>" +
         "                                 </constructor-arg>" +
@@ -2436,12 +2437,12 @@ public class IOCXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <beans>" +
-        "       <bean name=\"myBean\" class=\"org.brandao.brutos.feature.MyBeanTypes\" singleton=\"true\">" +
+        "       <bean name=\"myBean\" class=\""+MyBeanTypes.class.getName()+"\" singleton=\"true\">" +
         "           <constructor-arg type=\"java.util.Map\">" +
         "               <map>" +
         "                   <entry>" +
         "                        <key>" +
-        "                            <bean class=\"org.brandao.brutos.feature.MyBean\" singleton=\"true\">" +
+        "                            <bean class=\""+MyBean.class.getName()+"\" singleton=\"true\">" +
         "                                 <constructor-arg>" +
         "                                    <value>1</value>" +
         "                                 </constructor-arg>" +
