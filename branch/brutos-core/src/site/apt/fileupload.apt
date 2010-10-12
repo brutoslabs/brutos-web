@@ -1,0 +1,112 @@
+File upload
+
+ O Brutos possui suporte nativo ao upload de arquivos. Sendo possível configurar
+ o tamanho máximo dos dados a serem recebidos e o local que os arquivos serão
+ gravados. Se preferir é possível usar uma API para fazer o upload, como por
+ exemplo o Jakarta Commons-FileUpload.
+
+* Definindo o tamanho máximo e o repositório de arquivos
+
+ Para definir o tamanho máximo você deve informar a variável
+ org.brandao.brutos.request.max_length dentro da tag \<context-params/\> no
+ arquivo brutos-config.xml.
+
+ ex:
+
+------
+<context-params>
+      ...
+      <context-param name="org.brandao.brutos.request.max_length"
+                     value="3145728"/> <!-- 3 MB -->
+</context-params>
+------
+
+ Para definir o repositório de arquivos você deve informar a variável
+ org.brandao.brutos.request.path dentro da tag \<context-params/\> no arquivo
+ brutos-config.xml. Se omitido será gerado um arquivo temporário.
+
+ ex:
+
+------
+<context-params>
+      ...
+      <context-param name="org.brandao.brutos.request.path"
+                     value="${web.root}/WEB-INF/files/"/>
+</context-params>
+------
+
+ Perceba no exemplo abaixo como é fácil fazer o upload de arquivos.
+
+ O controlador a seguir tem dois métodos. O primeiro recebe o arquivo
+ ( upload )  e o segundo envia o arquivo ( download ).
+
+ Controlador:
+
+------
+public class FileController{
+
+    private String repositoryPath;
+
+    public FileController( String repositoryPath ){
+        this.repositoryPath = repositoryPath;
+    }
+
+    public void uploadFile( File file ){
+        ...
+    }
+
+    public File download( String fileName ){
+        File file = new File( repositoryPath + "/" + fileName );
+        return file;
+    }
+
+}
+------
+
+ Configuração:
+
+------
+<web-frame uri="/filemanager.jbrs" page="filemanager.jsp"
+class="FileController" method-parameter-name="action" >
+
+   <method name="upload" method-name="upload">
+       <method-param type="java.io.File" name="arq"/>
+   </method>
+
+   <method name="download" method-name="download">
+       <method-param type="java.lang.String" name="name"/>
+   </method>
+
+</web-frame>
+------
+
+ Página:
+
+------
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+    </head>
+    <body>
+            <form method="POST" enctype="multipart/form-data" action="filemanager.jbrs">
+                <table width="100%" cellpadding="0" cellspacing="0" >
+                    <tr>
+                        <td width="100%">File:</td>
+                    </tr>
+                    <tr>
+                        <td width="100%"><input type="file"
+                        name="arq" size="20"></td>
+                    </tr>
+                    <tr>
+                        <td width="100%"><input type="submit"
+                        name="action" value="upload"></td>
+                    </tr>
+                </table>
+            </form>
+    </body>
+</html>
+------
+
+ Para fazer o download do arquivo é só acessar a uri:
+ /filemanager.jbrs?action=download&name=nome_do_arquivo
