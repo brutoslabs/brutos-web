@@ -47,7 +47,7 @@ public class TypeXMLMappingTest  extends TestCase implements Test{
         "   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS http://brutos.sourceforge.net/brutos_1_0.xsd' >" +
         "" +
         "   <types>" +
-        "       <type class-type=\"int\" factory=\"org.brandao.brutos.feature.MyType\"/>" +
+        "       <type class-type=\"int\" factory=\""+TestHelper.MyType.class.getName()+"\"/>" +
         "   </types>" +
         "</brutos-configuration>";
 

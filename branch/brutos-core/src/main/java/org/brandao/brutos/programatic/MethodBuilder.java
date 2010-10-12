@@ -47,49 +47,49 @@ public class MethodBuilder {
         this.methodForm = methodForm;
     }
 
-    public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty ){
+    public MethodBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty ){
         return addParameter( name, scope, enumProperty, null, null, null );
     }
     
-    public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty ){
+    public MethodBuilder addParameter( String name, ScopeType scope, String temporalProperty ){
         return addParameter( name, scope, EnumerationType.ORDINAL, temporalProperty, null, null );
     }
     
-    public ParameterBuilder addParameter( String name, ScopeType scope, Type type ){
+    public MethodBuilder addParameter( String name, ScopeType scope, Type type ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, type );
     }
     
-    public ParameterBuilder addParameter( String name, EnumerationType enumProperty ){
+    public MethodBuilder addParameter( String name, EnumerationType enumProperty ){
         return addParameter( name, ScopeType.REQUEST, enumProperty, null, null, null );
     }
     
-    public ParameterBuilder addParameter( String name, ScopeType scope ){
+    public MethodBuilder addParameter( String name, ScopeType scope ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy", 
                 null, null );
     }
     
-    public ParameterBuilder addParameter( String name, String temporalProperty ){
+    public MethodBuilder addParameter( String name, String temporalProperty ){
         return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, temporalProperty, null, null );
     }
     
-    public ParameterBuilder addParameter( String name, Type type ){
+    public MethodBuilder addParameter( String name, Type type ){
         return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, type );
     }
     
-    public ParameterBuilder addParameterMapping( String mapping ){
+    public MethodBuilder addParameterMapping( String mapping ){
         return addParameter( null, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy", 
                 mapping, null );
     }
     
-    public ParameterBuilder addParameter( String name ){
+    public MethodBuilder addParameter( String name ){
         return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy", 
                 null, null );
     }
 
 
-    public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
+    public MethodBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
             String temporalProperty, String mapping, Type type ){
         
         name = name == null || name.replace( " ", "" ).length() == 0? null : name;
@@ -146,7 +146,7 @@ public class MethodBuilder {
         pmm.setParameterName( methodForm.getParameters().size() + 1 );
         
         methodForm.getParameters().add( pmm );
-        return new ParameterBuilder( validatorConfig, methodForm, webFrame );
+        return this;//new ParameterBuilder( validatorConfig, methodForm, webFrame );
     }
 
     public MethodBuilder addThrowable( Class target, String parameterName ){

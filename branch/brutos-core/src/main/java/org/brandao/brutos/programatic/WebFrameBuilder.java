@@ -298,33 +298,33 @@ public class WebFrameBuilder {
     }
 
 
-    public PropertyBuilder addProperty( String propertyName, String name, ScopeType scope, EnumerationType enumProperty ){
+    public WebFrameBuilder addProperty( String propertyName, String name, ScopeType scope, EnumerationType enumProperty ){
         return addProperty( propertyName, name, scope, enumProperty, null, null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, ScopeType scope, String temporalProperty ){
+    public WebFrameBuilder addProperty( String propertyName, String name, ScopeType scope, String temporalProperty ){
         return addProperty( propertyName, name, scope, EnumerationType.ORDINAL, temporalProperty, null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, ScopeType scope, Type type ){
+    public WebFrameBuilder addProperty( String propertyName, String name, ScopeType scope, Type type ){
         return addProperty( propertyName, name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, type );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, EnumerationType enumProperty ){
+    public WebFrameBuilder addProperty( String propertyName, String name, EnumerationType enumProperty ){
         return addProperty( propertyName, name, ScopeType.REQUEST, enumProperty, null, null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, ScopeType scope ){
+    public WebFrameBuilder addProperty( String propertyName, String name, ScopeType scope ){
         return addProperty( propertyName, name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, String temporalProperty ){
+    public WebFrameBuilder addProperty( String propertyName, String name, String temporalProperty ){
         return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, temporalProperty, null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, Type type ){
+    public WebFrameBuilder addProperty( String propertyName, String name, Type type ){
         return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, type );
     }
@@ -334,17 +334,17 @@ public class WebFrameBuilder {
                 mapping, null );
     }
 
-    public PropertyBuilder addPropertyMapping( String propertyName, String name, String mapping ){
+    public WebFrameBuilder addPropertyMapping( String propertyName, String name, String mapping ){
         return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name ){
+    public WebFrameBuilder addProperty( String propertyName, String name ){
         return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, ScopeType scope, EnumerationType enumProperty,
+    public WebFrameBuilder addProperty( String propertyName, String name, ScopeType scope, EnumerationType enumProperty,
             String temporalProperty, String mapping, Type type ){
 
         name =
@@ -428,7 +428,7 @@ public class WebFrameBuilder {
 
         webFrame.getFields().add( fieldBean );
 
-        return new PropertyBuilder( validatorConfig, webFrame, webFrameManager, interceptorManager );
+        return this;//new PropertyBuilder( validatorConfig, webFrame, webFrameManager, interceptorManager );
     }
 
     public Class<?> getClassType(){
