@@ -11,6 +11,16 @@ Brutos application framework
 
 Notícias
 
+* 12/10/2010
+
+ Está disponível para download versão 1.3-RC1 do Brutos.
+ O download pode ser feito na página de {{{https://sourceforge.net/projects/brutos/files/brutos/1.3/Brutos-1.3-Full-SNAPSHOT-20100511-175858.jar/download}downloads}} e as alterações
+ feitas estão descritas logo abaixo:
+
+ * Incluido suporte ao {{{http://sourceforge.net/projects/jgates/files/}JBRGates}}.
+
+ * Corrigidos alguns bugs.
+
 * 06/07/2010
 
  Está disponível para download o último snapshot da versão 1.3 do Brutos.
