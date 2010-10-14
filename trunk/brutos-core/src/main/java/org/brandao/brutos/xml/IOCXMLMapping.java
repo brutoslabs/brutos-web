@@ -36,13 +36,13 @@ import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.ioc.IOCProviderFactory;
 import org.brandao.brutos.ioc.RequestFactory;
 import org.brandao.brutos.mapping.MappingException;
-import org.brandao.brutos.programatic.Bean;
-import org.brandao.brutos.programatic.BeanNotFoundException;
-import org.brandao.brutos.programatic.CollectionBean;
-import org.brandao.brutos.programatic.ConstructorBean;
-import org.brandao.brutos.programatic.IOCManager;
-import org.brandao.brutos.programatic.MapBean;
-import org.brandao.brutos.programatic.PropertiesBean;
+import org.brandao.brutos.old.programatic.Bean;
+import org.brandao.brutos.old.programatic.BeanNotFoundException;
+import org.brandao.brutos.old.programatic.CollectionBean;
+import org.brandao.brutos.old.programatic.ConstructorBean;
+import org.brandao.brutos.old.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.MapBean;
+import org.brandao.brutos.old.programatic.PropertiesBean;
 import org.brandao.brutos.type.Types;
 
 /**

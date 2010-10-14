@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSessionEvent;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.ioc.spring.XMLParser;
-import org.brandao.brutos.programatic.Bean;
+import org.brandao.brutos.old.programatic.Bean;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextListener;
 

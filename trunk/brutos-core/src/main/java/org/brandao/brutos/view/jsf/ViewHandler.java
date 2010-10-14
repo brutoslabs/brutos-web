@@ -30,7 +30,7 @@ import org.brandao.brutos.http.DataInput;
 import org.brandao.brutos.http.DataOutput;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.IOCManager;
 
 /**
  *

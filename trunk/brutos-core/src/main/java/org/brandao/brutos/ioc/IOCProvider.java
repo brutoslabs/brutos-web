@@ -26,7 +26,7 @@ import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpSessionEvent;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
-import org.brandao.brutos.programatic.Bean;
+import org.brandao.brutos.old.programatic.Bean;
 
 /**
  *

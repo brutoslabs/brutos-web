@@ -14,18 +14,29 @@
  * either express or implied.
  *
  */
+package org.brandao.brutos.old.programatic;
 
-package org.brandao.brutos.programatic;
-
-import org.brandao.brutos.mapping.ioc.Injectable;
+import org.brandao.brutos.BrutosException;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class PropertiesBean extends MapBean<String,String>{
+public class BeanNotFoundException extends BrutosException{
     
-    public PropertiesBean( Injectable inject, IOCManager manager ) {
-        super( inject, manager );
+    public BeanNotFoundException() {
+	super();
+    }
+
+    public BeanNotFoundException(String message) {
+	super(message);
+    }
+
+    public BeanNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public BeanNotFoundException(Throwable cause) {
+        super(cause);
     }
 }

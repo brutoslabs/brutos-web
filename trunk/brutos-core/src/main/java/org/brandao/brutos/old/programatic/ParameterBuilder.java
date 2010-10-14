@@ -15,7 +15,7 @@
  *
  */
 
-package org.brandao.brutos.programatic;
+package org.brandao.brutos.old.programatic;
 
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.mapping.Form;
@@ -26,21 +26,21 @@ import org.brandao.brutos.validator.RestrictionRules;
  *
  * @author Afonso Brandao
  */
-public class PropertyBuilder extends WebFrameBuilder{
+public class ParameterBuilder extends MethodBuilder{
 
     private Configuration config;
     
-    public PropertyBuilder( Configuration config, Form webFrame, WebFrameManager webFrameManager, InterceptorManager interceptorManager ){
-        super( webFrame, webFrameManager, interceptorManager );
+    public ParameterBuilder( Configuration config, MethodForm methodForm, Form webFrame ){
+        super( methodForm, webFrame );
         this.config = config;
     }
     
-    public PropertyBuilder addRestriction( RestrictionRules ruleId, Object value ){
+    public ParameterBuilder addRestriction( RestrictionRules ruleId, Object value ){
         config.put( ruleId.toString(), value );
         return this;
     }
 
-    public PropertyBuilder setMessage( String message ){
+    public ParameterBuilder setMessage( String message ){
         config.setProperty("message", message );
         return this;
     }

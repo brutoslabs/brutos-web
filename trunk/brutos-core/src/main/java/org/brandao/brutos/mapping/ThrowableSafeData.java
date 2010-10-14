@@ -17,6 +17,8 @@
 
 package org.brandao.brutos.mapping;
 
+import org.brandao.brutos.DispatcherType;
+
 /**
  *
  * @author Afonso Brandao
@@ -30,6 +32,8 @@ public class ThrowableSafeData {
     private String parameterName;
 
     private boolean redirect;
+
+    private DispatcherType dispatcher;
 
     public ThrowableSafeData() {
     }
@@ -64,6 +68,14 @@ public class ThrowableSafeData {
 
     public void setRedirect(boolean redirect) {
         this.redirect = redirect;
+    }
+
+    public DispatcherType getDispatcher() {
+        return dispatcher;
+    }
+
+    public void setDispatcher(DispatcherType dispatcher) {
+        this.dispatcher = dispatcher;
     }
 
 }

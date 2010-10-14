@@ -17,8 +17,10 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.programatic.InterceptorManager;
+import java.util.Properties;
 import javax.servlet.ServletContextEvent;
-import org.brandao.brutos.programatic.*;
+import org.brandao.brutos.old.programatic.*;
 
 /**
  *
@@ -34,51 +36,48 @@ public abstract class ApplicationContext {
     
     public ApplicationContext() {
     }
-    
+
+    /**
+     * @deprecated 
+     * @param config
+     * @param sce
+     */
     public void configure( Configuration config, ServletContextEvent sce ){
+    }
+
+    public void configure( Properties config ){
     }
     
     public abstract void destroy();
-    /*
-    public static ApplicationContext getApplicationContext( Configuration configuration, ServletContextEvent sce ){
-        String amName = 
-            configuration
-                .getProperty(
-                    "org.brandao.brutos.mapping", 
-                    "org.brandao.brutos.programatic.AnnotationMapping"
-                );
-        
-        ApplicationContext mapping;
-        
 
-        try{
-            Class<?> appManager = Class.forName( amName, true, Thread.currentThread().getContextClassLoader() );
-            mapping = (ApplicationContext)appManager.newInstance();
-            return mapping;
-        }
-        catch( ClassNotFoundException e ){
-            throw new BrutosException( e );
-        }
-        catch( InstantiationException e ){
-            throw new BrutosException( e );
-        }
-        catch( IllegalAccessException e ){
-            throw new BrutosException( e );
-        }
-    }
-    */
+    /**
+     * @deprecated 
+     * @return
+     */
     public IOCManager getIocManager() {
         return iocManager;
     }
 
+    /**
+     * @deprecated 
+     * @param iocManager
+     */
     public void setIocManager(IOCManager iocManager) {
         this.iocManager = iocManager;
     }
 
+    /**
+     * @deprecated 
+     * @return
+     */
     public WebFrameManager getWebFrameManager() {
         return webFrameManager;
     }
 
+    /**
+     * @deprecated 
+     * @param webFrameManager
+     */
     public void setWebFrameManager(WebFrameManager webFrameManager) {
         this.webFrameManager = webFrameManager;
     }
@@ -90,9 +89,17 @@ public abstract class ApplicationContext {
     public void setInterceptorManager(InterceptorManager interceptorManager) {
         this.interceptorManager = interceptorManager;
     }
-    
+
+    /**
+     * @deprecated 
+     * @param iocManager
+     */
     public abstract void loadIOCManager( IOCManager iocManager );
-    
+
+    /**
+     * @deprecated 
+     * @param webFrameManager
+     */
     public abstract void loadWebFrameManager( WebFrameManager webFrameManager );
     
     public abstract void loadInterceptorManager( InterceptorManager interceptorManager );

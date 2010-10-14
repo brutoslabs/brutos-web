@@ -25,7 +25,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.mapping.MappingException;
-import org.brandao.brutos.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.mapping.Mapping;
 import org.brandao.brutos.programatic.InterceptorManager;
 

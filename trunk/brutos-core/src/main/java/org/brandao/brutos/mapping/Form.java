@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
@@ -33,7 +34,10 @@ import org.brandao.brutos.interceptor.InterceptorProcess;
  * @author Afonso Brandao
  */
 public class Form {
-    
+
+    /**
+     *
+     */
     private String id;
     
     private String uri;
@@ -65,16 +69,18 @@ public class Form {
     private List<Interceptor> interceptorStack;
     
     private InterceptorProcess interceptorProcess;
-    
+
+    private DispatcherType dispatcherType;
+
     public Form() {
-        this.setFields(new ArrayList<FieldForm>());
-        this.setMappingBeans(new HashMap<String, MappingBean>());
-        this.setMethods(new HashMap<String, MethodForm>());
-        this.setInterceptorStack(new ArrayList<Interceptor>());
-        this.setInterceptorProcess(new InterceptorProcess());
-        this.getInterceptorProcess().setForm( this );
+        fields = new ArrayList();
+        mappingBeans = new HashMap();
+        methods = new HashMap();
+        interceptorStack = new ArrayList();
         this.alias = new ArrayList<String>();
         this.throwsSafe = new HashMap<Class, ThrowableSafeData>();
+        interceptorProcess = new InterceptorProcess();
+        interceptorProcess.setForm( this );
     }
 
     public String getMethodId() {
@@ -271,6 +277,14 @@ public class Form {
 
     public void setRedirect(boolean redirect) {
         this.redirect = redirect;
+    }
+
+    public DispatcherType getDispatcherType() {
+        return dispatcherType;
+    }
+
+    public void setDispatcherType(DispatcherType dispatcherType) {
+        this.dispatcherType = dispatcherType;
     }
 
 }

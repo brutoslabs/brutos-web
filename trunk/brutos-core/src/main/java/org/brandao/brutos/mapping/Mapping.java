@@ -17,10 +17,11 @@
 
 package org.brandao.brutos.mapping;
 
+import org.brandao.brutos.programatic.InterceptorManager;
 import javax.servlet.ServletContextEvent;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
-import org.brandao.brutos.programatic.*;
+import org.brandao.brutos.old.programatic.*;
 
 /**
  *
