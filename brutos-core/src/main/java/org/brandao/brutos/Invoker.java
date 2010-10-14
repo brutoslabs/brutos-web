@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.programatic.IOCManager;
-import org.brandao.brutos.programatic.WebFrameManager;
+import org.brandao.brutos.old.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
  *

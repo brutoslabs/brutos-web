@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.programatic;
 
+import org.brandao.brutos.old.programatic.Bean;
+import org.brandao.brutos.old.programatic.WebFrameBuilder;
+import org.brandao.brutos.old.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.WebFrameManager;
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 import com.mockrunner.mock.web.MockHttpSession;

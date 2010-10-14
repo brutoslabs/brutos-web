@@ -15,7 +15,7 @@
  *
  */
 
-package org.brandao.brutos.programatic;
+package org.brandao.brutos.old.programatic;
 
 import org.brandao.brutos.mapping.ioc.ComplexObjectInject;
 import org.brandao.brutos.mapping.ioc.Injectable;

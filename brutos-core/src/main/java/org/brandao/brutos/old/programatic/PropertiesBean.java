@@ -15,29 +15,17 @@
  *
  */
 
-package org.brandao.brutos.programatic;
+package org.brandao.brutos.old.programatic;
 
-import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.mapping.ioc.Injectable;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class BeanExistException extends BrutosException{
+public class PropertiesBean extends MapBean<String,String>{
     
-    public BeanExistException() {
-	super();
-    }
-
-    public BeanExistException(String message) {
-	super(message);
-    }
-
-    public BeanExistException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public BeanExistException(Throwable cause) {
-        super(cause);
+    public PropertiesBean( Injectable inject, IOCManager manager ) {
+        super( inject, manager );
     }
 }

@@ -24,15 +24,15 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.programatic.InterceptorBuilder;
 import org.brandao.brutos.programatic.InterceptorManager;
-import org.brandao.brutos.programatic.BeanBuilder;
-import org.brandao.brutos.programatic.CollectionBuilder;
-import org.brandao.brutos.programatic.MapBuilder;
-import org.brandao.brutos.programatic.MethodBuilder;
-import org.brandao.brutos.programatic.WebFrameBuilder;
-import org.brandao.brutos.programatic.WebFrameManager;
+import org.brandao.brutos.old.programatic.BeanBuilder;
+import org.brandao.brutos.old.programatic.CollectionBuilder;
+import org.brandao.brutos.old.programatic.MapBuilder;
+import org.brandao.brutos.old.programatic.MethodBuilder;
+import org.brandao.brutos.old.programatic.WebFrameBuilder;
+import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.type.Type;
 
 /**

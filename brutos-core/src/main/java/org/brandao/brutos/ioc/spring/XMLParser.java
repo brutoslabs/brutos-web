@@ -31,7 +31,7 @@ import org.brandao.brutos.mapping.ioc.Property;
 import org.brandao.brutos.mapping.ioc.PropertyInject;
 import org.brandao.brutos.mapping.ioc.SetInject;
 import org.brandao.brutos.mapping.ioc.ValueInject;
-import org.brandao.brutos.programatic.Bean;
+import org.brandao.brutos.old.programatic.Bean;
 
 /**
  *

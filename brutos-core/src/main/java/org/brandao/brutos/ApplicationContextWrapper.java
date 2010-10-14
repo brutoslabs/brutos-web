@@ -17,9 +17,9 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.programatic.InterceptorManager;
-import org.brandao.brutos.programatic.WebFrameManager;
+import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
  *

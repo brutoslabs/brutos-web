@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ContextLoaderListener;
-import org.brandao.brutos.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.IOCManager;
 
 /**
  *

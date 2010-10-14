@@ -28,7 +28,7 @@ import org.brandao.brutos.ioc.picocontainer.PicoContainerScopes;
 import org.brandao.brutos.ioc.picocontainer.Scope;
 import org.brandao.brutos.mapping.ioc.ComplexObjectInject;
 import org.brandao.brutos.mapping.ioc.Injectable;
-import org.brandao.brutos.programatic.Bean;
+import org.brandao.brutos.old.programatic.Bean;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
 

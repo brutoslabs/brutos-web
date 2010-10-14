@@ -14,7 +14,8 @@
  * either express or implied.
  *
  */
-package org.brandao.brutos.programatic;
+
+package org.brandao.brutos.old.programatic;
 
 import org.brandao.brutos.BrutosException;
 
@@ -22,21 +23,21 @@ import org.brandao.brutos.BrutosException;
  *
  * @author Afonso Brandao
  */
-public class BeanNotFoundException extends BrutosException{
+public class BeanExistException extends BrutosException{
     
-    public BeanNotFoundException() {
+    public BeanExistException() {
 	super();
     }
 
-    public BeanNotFoundException(String message) {
+    public BeanExistException(String message) {
 	super(message);
     }
 
-    public BeanNotFoundException(String message, Throwable cause) {
+    public BeanExistException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public BeanNotFoundException(Throwable cause) {
+    public BeanExistException(Throwable cause) {
         super(cause);
     }
 }

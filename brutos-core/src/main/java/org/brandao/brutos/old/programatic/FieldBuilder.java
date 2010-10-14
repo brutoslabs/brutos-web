@@ -15,7 +15,7 @@
  *
  */
 
-package org.brandao.brutos.programatic;
+package org.brandao.brutos.old.programatic;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.type.UnknownTypeException;

@@ -15,8 +15,9 @@
  *
  */
 
-package org.brandao.brutos.programatic;
+package org.brandao.brutos.old.programatic;
 
+import org.brandao.brutos.programatic.InterceptorManager;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;

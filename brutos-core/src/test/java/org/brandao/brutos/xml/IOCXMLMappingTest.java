@@ -28,7 +28,7 @@ import junit.framework.TestCase;
 import org.brandao.brutos.ioc.PicoContainerIOCProvider;
 import org.brandao.brutos.ioc.picocontainer.PicoContainerScopes;
 import org.brandao.brutos.ioc.picocontainer.SingletonScope;
-import org.brandao.brutos.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.xml.TestHelper.MyBean;
 import org.brandao.brutos.xml.TestHelper.MyBeanFactory;
 import org.brandao.brutos.xml.TestHelper.MyBeanTypes;

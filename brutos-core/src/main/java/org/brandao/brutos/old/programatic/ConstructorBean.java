@@ -15,7 +15,7 @@
  *
  */
 
-package org.brandao.brutos.programatic;
+package org.brandao.brutos.old.programatic;
 
 import java.lang.reflect.Constructor;
 import org.brandao.brutos.BrutosException;

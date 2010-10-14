@@ -15,7 +15,7 @@
  *
  */
 
-package org.brandao.brutos.programatic;
+package org.brandao.brutos.old.programatic;
 
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;

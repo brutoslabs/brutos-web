@@ -27,7 +27,7 @@ import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
-import org.brandao.brutos.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.IOCManager;
 
 /**
  * 

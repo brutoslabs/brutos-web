@@ -15,69 +15,100 @@
  *
  */
 
-package org.brandao.brutos.programatic;
+package org.brandao.brutos.old.programatic;
 
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.mapping.CollectionMapping;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.MapMapping;
 import org.brandao.brutos.mapping.MappingBean;
+import org.brandao.brutos.type.Type;
+import org.brandao.brutos.type.Types;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class CollectionBuilder {
+public class MapBuilder {
 
-    CollectionMapping mappingBean;
+    MapMapping mappingBean;
     Form webFrame;
     WebFrameBuilder webFrameBuilder;
 
-    public CollectionBuilder( CollectionMapping mappingBean, Form webFrame, WebFrameBuilder webFrameBuilder ) {
+    public MapBuilder( MapMapping mappingBean, Form webFrame, WebFrameBuilder webFrameBuilder ) {
         this.mappingBean = mappingBean;
         this.webFrame = webFrame;
         this.webFrameBuilder = webFrameBuilder;
     }
 
-    
-    public CollectionBuilder beanRef( String name ){
-        name = name == null || name.replace( " ", "" ).length() == 0? null : name;
+    public MapBuilder setKey( Class clazz ){
+        return setKey( "key", clazz, ScopeType.REQUEST );
+    }
 
+    public MapBuilder setKey( String name, Class<?> clazz, ScopeType scope ){
+        name = name == null || name.replace(" ", "").length() == 0? null : name;
+        
+        if( name == null )
+            throw new NullPointerException( "mapping key is required" );
+        
+        if( clazz == null )
+            throw new NullPointerException( "key type is required" );
+
+        Type type = Types.getType(clazz);
+
+        if( type == null )
+            throw new BrutosException( "invalid type: " + clazz.getName() );
+
+        mappingBean.setKey( name, type, scope );
+        return this;
+    }
+
+    
+    public MapBuilder beanRef( String name ){
+        name = name == null || name.replace( " ", "" ).length() == 0? null : name;
+        
         if( !webFrame.getMappingBeans().containsKey( name ) )
             throw new BrutosException( 
                     "mapping " + name + " not found: " +
                     webFrame.getClassType().getName() );
 
-        MappingBean bean = webFrame.getMappingBeans().get( name );
         
+        MappingBean bean = webFrame.getMappingBeans().get( name );
+
         if( !bean.isBean() )
             throw new BrutosException(
                     "not allowed: " +
                     webFrame.getClassType().getName() );
 
         mappingBean.setBean( bean );
+
         return this;
     }
+    
     
     public BeanBuilder bean( Class type ){
         mappingBean.setClassType(type);
         return new BeanBuilder( mappingBean, webFrame, webFrameBuilder );
         //return webFrameBuilder.addMappingBean(mappingBean.getName() + "#bean", type);
     }
+
     /*
     public CollectionBuilder collection( Class<? extends Collection> type ){
         CollectionBuilder cb =
                 webFrameBuilder.addMappingCollection(mappingBean.getName() + "#bean", type);
         beanRef( mappingBean.getName() + "#bean" );
         return cb;
+        //return webFrameBuilder.addMappingCollection(mappingBean.getName() + "#bean", type);
     }
 
     public MapBuilder map( Class<? extends Map> type ){
-        MapBuilder mb = 
+        MapBuilder mb =
                 webFrameBuilder.addMappingMap(mappingBean.getName() + "#bean", type);
 
         beanRef( mappingBean.getName() + "#bean" );
 
         return mb;
+        //return webFrameBuilder.addMappingMap(mappingBean.getName() + "#bean", type);
     }
     */
 }

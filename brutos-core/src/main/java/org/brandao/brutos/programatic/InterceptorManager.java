@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 
@@ -34,12 +33,10 @@ public class InterceptorManager {
     
     private Map<String, Interceptor> interceptors;
     private List<Interceptor> defaultInterceptors;
-    private IOCManager iocManager;
     
-    public InterceptorManager( IOCManager iocManager ) {
-        this.interceptors = new HashMap<String, Interceptor>();
-        this.defaultInterceptors = new ArrayList<Interceptor>();
-        this.iocManager = iocManager;
+    public InterceptorManager() {
+        this.interceptors = new HashMap();
+        this.defaultInterceptors = new ArrayList();
     }
 
     public InterceptorStackBuilder addInterceptorStack( String name, boolean isDefault ){
@@ -87,9 +84,6 @@ public class InterceptorManager {
         
         if( isDefault )
             defaultInterceptors.add( in );
-        
-        //IOC/DI
-        iocManager.addBean( name, interceptor, ScopeType.valueOf("prototype") );
         
         in.setType( interceptor );
         in.setName( name );

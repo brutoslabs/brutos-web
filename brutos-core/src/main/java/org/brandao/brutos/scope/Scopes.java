@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.brandao.brutos.BrutosContext;
-import org.brandao.brutos.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.IOCManager;
 
 /**
  *
