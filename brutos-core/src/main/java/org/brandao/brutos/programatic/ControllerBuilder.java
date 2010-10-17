@@ -17,8 +17,6 @@
 
 package org.brandao.brutos.programatic;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,12 +28,10 @@ import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.mapping.CollectionMapping;
 import org.brandao.brutos.mapping.FieldForm;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
-import org.brandao.brutos.mapping.MapMapping;
 import org.brandao.brutos.mapping.MappingBean;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ThrowableSafeData;
@@ -130,135 +126,81 @@ public class ControllerBuilder {
         
         if( name == null )
             throw new BrutosException( "name is required: " +
-                    webFrame.getClassType().getName() );
+                    controller.getClassType().getName() );
             
         if( target == null )
             throw new BrutosException( "target is required: " +
-                    webFrame.getClassType().getName() );
+                    controller.getClassType().getName() );
         
-        if( webFrame.getMappingBeans().containsKey( name ) )
-            throw new BrutosException( "duplicate mapping name " + name + " in the " + webFrame.getClassType().getName() );
+        if( controller.getMappingBeans().containsKey( name ) )
+            throw new BrutosException( "duplicate mapping name " + name + " in the " + controller.getClassType().getName() );
         
         if( Map.class.isAssignableFrom( target ) ||
             Collection.class.isAssignableFrom( target ) )
             throw new BrutosException( "target is not allowed: " + target.getName() );
 
-        MappingBean mappingBean = new MappingBean(webFrame);
+        MappingBean mappingBean = new MappingBean(controller);
         mappingBean.setClassType( target );
         mappingBean.setName( name );
-        webFrame.getMappingBeans().put( name, mappingBean );
+        controller.getMappingBeans().put( name, mappingBean );
         BeanBuilder mb = new BeanBuilder( mappingBean, webFrame, this );
         return mb;
     }
-    
-    public MapBuilder addMappingMap( String name, Class target ){
 
-        name =
-            name == null || name.replace( " ", "" ).length() == 0?
-                null :
-                name;
-
-        if( name == null )
-            throw new BrutosException( "name is required: " +
-                webFrame.getClassType().getName() );
-
-        if( target == null )
-            throw new BrutosException( "class type is required: " +
-                webFrame.getClassType().getName() );
-
-        if( !Map.class.isAssignableFrom( target ) )
-            throw new BrutosException( "invalid class type: " + target.getName() );
-
-        if( webFrame.getMappingBeans().containsKey( name ) )
-            throw new BrutosException( "duplicate mapping name " + name + 
-                ": " + webFrame.getClassType().getName() );
-
-        MapMapping mappingBean = new MapMapping(webFrame);
-        mappingBean.setCollectionType(target);
-        mappingBean.setName( name );
-        webFrame.getMappingBeans().put( name, mappingBean );
-        MapBuilder mb = new MapBuilder( mappingBean, webFrame, this );
-        return mb;
-    }
-
-    public CollectionBuilder addMappingCollection( String name, Class target ){
-        name =
-            name == null || name.replace( " ", "" ).length() == 0?
-                null :
-                name;
-
-        if( name == null )
-            throw new BrutosException( "name is required: " +
-                webFrame.getClassType().getName() );
-
-        if( target == null )
-            throw new BrutosException( "class type is required: " +
-                webFrame.getClassType().getName() );
-
-        if( !Collection.class.isAssignableFrom( target ) )
-            throw new BrutosException( "invalid class type: " + target.getName() );
-
-        if( webFrame.getMappingBeans().containsKey( name ) )
-            throw new BrutosException( "duplicate mapping name " + name + ": " +
-                webFrame.getClassType().getName() );
-
-        CollectionMapping mappingBean = new CollectionMapping(webFrame);
-        mappingBean.setCollectionType(target);
-        mappingBean.setName( name );
-        webFrame.getMappingBeans().put( name, mappingBean );
-        CollectionBuilder mb = new CollectionBuilder( mappingBean, webFrame, this );
-        return mb;
-    }
-
-    public MethodBuilder addMethod( String name, String methodName, Class<?> ... parametersType ){
-        return addMethod( name, null, null, methodName, parametersType );
-    }
-
-    public MethodBuilder addMethod( String name, String methodName, String returnPage, Class<?> ... parametersType ){
-        return addMethod( name, null, returnPage, methodName, parametersType );
+    public ActionBuilder addMethod( String name ){
+        return addAction( name, null, null, null );
     }
     
-    public MethodBuilder addMethod( String name, String returnIn, String returnPage, String methodName, Class<?> ... parametersType ){
-        return addMethod( name, returnIn, returnPage, false, methodName, parametersType );
+    public ActionBuilder addMethod( String name, String methodName ){
+        return addAction( name, null, null, methodName );
     }
-    public MethodBuilder addMethod( String name, String returnIn, String returnPage, boolean redirect, String methodName, Class<?> ... parametersType ){
+
+    public ActionBuilder addMethod( String name, String methodName, String viewResult ){
+        return addAction( name, null, viewResult, methodName );
+    }
+    
+    public ActionBuilder addMethod( String name, String resultId, String viewResult, String methodName ){
+        return addAction( name, resultId, viewResult, false, methodName );
+    }
+    public ActionBuilder addAction( String name, String resultId, String viewResult, DispatcherType dispatcherType, String methodName ){
         
         name =
             name == null || name.replace( " ", "" ).length() == 0?
                 null :
                 name;
-        returnIn =
-            returnIn == null || returnIn.replace( " ", "" ).length() == 0?
+        resultId =
+            resultId == null || resultId.replace( " ", "" ).length() == 0?
                 null :
-                returnIn;
+                resultId;
 
-        returnPage =
-            returnPage == null || returnPage.replace( " ", "" ).length() == 0?
+        viewResult =
+            viewResult == null || viewResult.replace( " ", "" ).length() == 0?
                 null :
-                returnPage;
+                viewResult;
 
         methodName =
             methodName == null || methodName.replace( " ", "" ).length() == 0?
                 null :
                 methodName;
         
-        if( webFrame.getMethods().containsKey( name ) )
-            throw new BrutosException( "duplicate method " + name + ": " +
-                webFrame.getClassType().getName() );
+        if( controller.getMethods().containsKey( name ) )
+            throw new BrutosException( "duplicate action " + name + ": " +
+                controller.getClassType().getName() );
      
         MethodForm mp = new MethodForm();
         mp.setName( name );
-        mp.setRedirect(redirect);
-        
+        mp.setRedirect(false);
+        mp.setDispatcherType(dispatcherType);
+        /*
         try{
-            Class<?> classType = webFrame.getClassType();
+            Class<?> classType = controller.getClassType();
             Method method = classType.getMethod( methodName, parametersType );
             mp.setParametersType( Arrays.asList( method.getParameterTypes() ) );
 
             Class<?> returnType = method.getReturnType();
-            if( returnPage != null ){
-                mp.setReturnPage( returnPage );
-                mp.setReturnIn( returnIn == null? "result" : returnIn );
+            if( viewResult != null ){
+                mp.setReturnPage( viewResult );
+                mp.setReturnIn( resultId == null? "result" : resultId );
             }
             else
             if( returnType != void.class )
@@ -273,10 +215,11 @@ public class ControllerBuilder {
         catch( Exception e ){
             throw new BrutosException( e );
         }
+        */
         
-        mp.setForm( webFrame );
-        webFrame.getMethods().put( name, mp );
-        return new MethodBuilder( mp, webFrame );
+        mp.setForm( controller );
+        controller.getMethods().put( name, mp );
+        return new ActionBuilder( mp, controller );
     }
     
     public InterceptorBuilder addInterceptor( String name ){
@@ -297,64 +240,64 @@ public class ControllerBuilder {
             it.getProperties().put( /*parent.getName() + "." +*/ key, value );
         }
         
-        webFrame.addInterceptor( it );
+        controller.addInterceptor( it );
         return new InterceptorBuilder( it, interceptorManager );
     }
 
 
-    public PropertyBuilder addProperty( String propertyName, String name, ScopeType scope, EnumerationType enumProperty ){
-        return addProperty( propertyName, name, scope, enumProperty, null, null, null );
+    public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, EnumerationType enumProperty ){
+        return addProperty( propertyName, id, scope, enumProperty, null, null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, ScopeType scope, String temporalProperty ){
-        return addProperty( propertyName, name, scope, EnumerationType.ORDINAL, temporalProperty, null, null );
+    public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, String temporalProperty ){
+        return addProperty( propertyName, id, scope, EnumerationType.ORDINAL, temporalProperty, null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, ScopeType scope, Type type ){
-        return addProperty( propertyName, name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
+    public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, Type type ){
+        return addProperty( propertyName, id, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, type );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, EnumerationType enumProperty ){
-        return addProperty( propertyName, name, ScopeType.REQUEST, enumProperty, null, null, null );
+    public PropertyBuilder addProperty( String propertyName, String id, EnumerationType enumProperty ){
+        return addProperty( propertyName, id, ScopeType.REQUEST, enumProperty, null, null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, ScopeType scope ){
-        return addProperty( propertyName, name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
+    public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope ){
+        return addProperty( propertyName, id, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, String temporalProperty ){
-        return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, temporalProperty, null, null );
+    public PropertyBuilder addProperty( String propertyName, String id, String temporalProperty ){
+        return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, temporalProperty, null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, Type type ){
-        return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+    public PropertyBuilder addProperty( String propertyName, String id, Type type ){
+        return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, type );
     }
 
-    public ControllerBuilder addPropertyMapping( String propertyName, String mapping ){
+    public PropertyBuilder addPropertyMapping( String propertyName, String mapping ){
         return addProperty( propertyName, null, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null );
     }
 
-    public PropertyBuilder addPropertyMapping( String propertyName, String name, String mapping ){
-        return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+    public PropertyBuilder addPropertyMapping( String propertyName, String id, String mapping ){
+        return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name ){
-        return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+    public PropertyBuilder addProperty( String propertyName, String id ){
+        return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null );
     }
 
-    public PropertyBuilder addProperty( String propertyName, String name, ScopeType scope, EnumerationType enumProperty,
+    public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, EnumerationType enumProperty,
             String temporalProperty, String mapping, Type type ){
 
-        name =
-            name == null || name.replace( " ", "" ).length() == 0?
+        id =
+            id == null || id.replace( " ", "" ).length() == 0?
                 null :
-                name;
+                id;
         propertyName =
             propertyName == null || propertyName.replace( " ", "" ).length() == 0?
                 null :
@@ -370,18 +313,18 @@ public class ControllerBuilder {
                 null :
                 mapping;
 
-        if( name == null )
+        if( id == null )
             throw new BrutosException( "name is required: " +
-                    webFrame.getClassType().getName() );
+                    controller.getClassType().getName() );
 
         if( propertyName == null )
             throw new BrutosException( "property name is required: " +
-                    webFrame.getClassType().getName() );
+                    controller.getClassType().getName() );
 
         Configuration validatorConfig = new Configuration();
         
         UseBeanData useBean = new UseBeanData();
-        useBean.setNome( name );
+        useBean.setNome( id );
         useBean.setScopeType( scope );
         useBean.setValidate( BrutosContext
                     .getCurrentInstance().getValidatorProvider()
@@ -392,16 +335,16 @@ public class ControllerBuilder {
         fieldBean.setName(propertyName);
 
 
-        BeanInstance bean = new BeanInstance( null, webFrame.getClassType() );
+        BeanInstance bean = new BeanInstance( null, controller.getClassType() );
 
         if( !bean.containProperty(propertyName) )
             throw new BrutosException( "no such property: " +
-                webFrame.getClassType().getName() + "." + propertyName );
+                controller.getClassType().getName() + "." + propertyName );
 
 
         if( mapping != null ){
-            if( webFrame.getMappingBeans().containsKey( mapping ) )
-                useBean.setMapping( webFrame.getMappingBean( mapping ) );
+            if( controller.getMappingBeans().containsKey( mapping ) )
+                useBean.setMapping( controller.getMappingBean( mapping ) );
             else
                 throw new BrutosException( "mapping not found: " + mapping );
 
@@ -420,23 +363,23 @@ public class ControllerBuilder {
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException(
                         String.format( "%s.%s : %s" ,
-                            webFrame.getClassType().getName(),
+                            controller.getClassType().getName(),
                             propertyName,
                             e.getMessage() ) );
             }
         }
 
-        if( webFrame.getFields().contains( fieldBean ) )
+        if( controller.getFields().contains( fieldBean ) )
             throw new BrutosException( "property already defined: " +
-                    webFrame.getClassType().getName() + "." + propertyName );
+                    controller.getClassType().getName() + "." + propertyName );
 
-        webFrame.getFields().add( fieldBean );
+        controller.getFields().add( fieldBean );
 
-        return new PropertyBuilder( validatorConfig, webFrame, webFrameManager, interceptorManager );
+        return new PropertyBuilder( validatorConfig, controller, controllerManager, interceptorManager );
     }
 
     public Class<?> getClassType(){
-        return webFrame.getClassType();
+        return controller.getClassType();
     }
     
 }
