@@ -17,23 +17,19 @@
 
 package org.brandao.brutos.programatic;
 
-import org.brandao.brutos.old.programatic.*;
-import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class PropertyBuilder extends WebFrameBuilder{
+public class PropertyBuilder{
 
     private Configuration config;
     
-    public PropertyBuilder( Configuration config, Form webFrame, WebFrameManager webFrameManager, InterceptorManager interceptorManager ){
-        super( webFrame, webFrameManager, interceptorManager );
+    public PropertyBuilder( Configuration config){
         this.config = config;
     }
     

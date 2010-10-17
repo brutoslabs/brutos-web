@@ -30,6 +30,7 @@ import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  *
@@ -39,10 +40,12 @@ public class ActionBuilder {
     
     Form webFrame;
     MethodForm methodForm;
-    
-    public ActionBuilder( MethodForm methodForm, Form webFrame ) {
-        this.webFrame = webFrame;
+    ValidatorProvider validatorProvider;
+
+    public ActionBuilder( MethodForm methodForm, Form controller, ValidatorProvider validatorProvider ) {
+        this.webFrame = controller;
         this.methodForm = methodForm;
+        this.validatorProvider = validatorProvider;
     }
 
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty ){
@@ -106,9 +109,8 @@ public class ActionBuilder {
 
         useBean.setNome( name );
         useBean.setScopeType( scope );
-        useBean.setValidate( BrutosContext
-                    .getCurrentInstance().getValidatorProvider()
-                        .getValidator( validatorConfig ) );
+        useBean.setValidate( validatorProvider.getValidator( validatorConfig ) );
+        
         if( mapping != null ){
             if( webFrame.getMappingBeans().containsKey( mapping ) )
                 useBean.setMapping( webFrame.getMappingBean( mapping ) );
@@ -144,7 +146,7 @@ public class ActionBuilder {
         pmm.setParameterName( methodForm.getParameters().size() + 1 );
         
         methodForm.getParameters().add( pmm );
-        return new ParameterBuilder( validatorConfig, methodForm, webFrame );
+        return new ParameterBuilder( validatorConfig );
     }
 
     public ActionBuilder addThrowable( Class target, String parameterName ){
