@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.Type;
 
 /**
@@ -52,7 +53,9 @@ public class MethodForm {
     private Class<?> returnClass;
 
     private boolean redirect;
-    
+
+    private DispatcherType dispatcherType;
+
     public MethodForm() {
         this.parameters = new ArrayList();
         this.parametersType = new ArrayList();
@@ -159,5 +162,13 @@ public class MethodForm {
 
     public void setRedirect(boolean redirect) {
         this.redirect = redirect;
+    }
+
+    public DispatcherType getDispatcherType() {
+        return dispatcherType;
+    }
+
+    public void setDispatcherType(DispatcherType dispatcherType) {
+        this.dispatcherType = dispatcherType;
     }
 }
