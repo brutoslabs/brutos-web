@@ -19,24 +19,27 @@ package org.brandao.brutos.programatic;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.mapping.CollectionMapping;
 import org.brandao.brutos.mapping.FieldForm;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
+import org.brandao.brutos.mapping.MapMapping;
 import org.brandao.brutos.mapping.MappingBean;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.*;
+import org.brandao.brutos.validator.ValidatorProvider;
 /**
  *
  * @author Afonso Brandao
@@ -46,11 +49,14 @@ public class ControllerBuilder {
     private Form controller;
     private ControllerManager controllerManager;
     private InterceptorManager interceptorManager;
-    
-    public ControllerBuilder( Form controller, ControllerManager controllerManager, InterceptorManager interceptorManager ) {
+    private ValidatorProvider validatorProvider;
+
+    public ControllerBuilder( Form controller, ControllerManager controllerManager, 
+            InterceptorManager interceptorManager, ValidatorProvider validatorProvider ) {
         this.controller = controller;
         this.controllerManager  = controllerManager;
         this.interceptorManager = interceptorManager;
+        this.validatorProvider  = validatorProvider;
     }
 
     public ControllerBuilder addAlias( String id ){
@@ -139,28 +145,37 @@ public class ControllerBuilder {
             Collection.class.isAssignableFrom( target ) )
             throw new BrutosException( "target is not allowed: " + target.getName() );
 
-        MappingBean mappingBean = new MappingBean(controller);
+        MappingBean mappingBean;
+
+        if( Map.class.isAssignableFrom(target) )
+            mappingBean = new MapMapping(controller);
+        else
+        if( List.class.isAssignableFrom(target) )
+            mappingBean = new CollectionMapping(controller);
+        else
+            mappingBean = new MappingBean(controller);
+        
         mappingBean.setClassType( target );
         mappingBean.setName( name );
         controller.getMappingBeans().put( name, mappingBean );
-        BeanBuilder mb = new BeanBuilder( mappingBean, webFrame, this );
+        BeanBuilder mb = new BeanBuilder( mappingBean, controller, this, validatorProvider );
         return mb;
     }
 
     public ActionBuilder addMethod( String name ){
-        return addAction( name, null, null, null );
+        return addAction( name, null, null, DispatcherType.FORWARD, null );
     }
     
     public ActionBuilder addMethod( String name, String methodName ){
-        return addAction( name, null, null, methodName );
+        return addAction( name, null, null, DispatcherType.FORWARD, methodName );
     }
 
     public ActionBuilder addMethod( String name, String methodName, String viewResult ){
-        return addAction( name, null, viewResult, methodName );
+        return addAction( name, null, viewResult, DispatcherType.FORWARD, methodName );
     }
     
     public ActionBuilder addMethod( String name, String resultId, String viewResult, String methodName ){
-        return addAction( name, resultId, viewResult, false, methodName );
+        return addAction( name, resultId, viewResult, DispatcherType.FORWARD, methodName );
     }
     public ActionBuilder addAction( String name, String resultId, String viewResult, DispatcherType dispatcherType, String methodName ){
         
@@ -219,7 +234,7 @@ public class ControllerBuilder {
         
         mp.setForm( controller );
         controller.getMethods().put( name, mp );
-        return new ActionBuilder( mp, controller );
+        return new ActionBuilder( mp, controller, validatorProvider );
     }
     
     public InterceptorBuilder addInterceptor( String name ){
@@ -326,9 +341,7 @@ public class ControllerBuilder {
         UseBeanData useBean = new UseBeanData();
         useBean.setNome( id );
         useBean.setScopeType( scope );
-        useBean.setValidate( BrutosContext
-                    .getCurrentInstance().getValidatorProvider()
-                        .getValidator( validatorConfig ) );
+        useBean.setValidate( validatorProvider.getValidator( validatorConfig ) );
 
         FieldForm fieldBean = new FieldForm();
         fieldBean.setBean( useBean );
@@ -375,7 +388,7 @@ public class ControllerBuilder {
 
         controller.getFields().add( fieldBean );
 
-        return new PropertyBuilder( validatorConfig, controller, controllerManager, interceptorManager );
+        return new PropertyBuilder( validatorConfig );
     }
 
     public Class<?> getClassType(){

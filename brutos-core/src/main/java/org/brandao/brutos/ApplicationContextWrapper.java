@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.old.programatic.IOCManager;
+import org.brandao.brutos.programatic.ControllerManager;
 import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
@@ -37,16 +38,20 @@ public class ApplicationContextWrapper extends ApplicationContext{
         applicationContext.destroy();
     }
 
-    public void loadIOCManager(IOCManager iocManager) {
+    protected void loadIOCManager(IOCManager iocManager) {
         applicationContext.loadIOCManager(iocManager);
     }
 
-    public void loadWebFrameManager(WebFrameManager webFrameManager) {
+    protected void loadWebFrameManager(WebFrameManager webFrameManager) {
         applicationContext.loadWebFrameManager(webFrameManager);
     }
 
-    public void loadInterceptorManager(InterceptorManager interceptorManager) {
+    protected void loadInterceptorManager(InterceptorManager interceptorManager) {
         applicationContext.loadInterceptorManager(interceptorManager);
+    }
+
+    protected void loadController(ControllerManager controllerManager) {
+        applicationContext.loadController(controllerManager);
     }
 
 }

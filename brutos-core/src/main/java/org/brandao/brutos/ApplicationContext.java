@@ -21,6 +21,7 @@ import org.brandao.brutos.programatic.InterceptorManager;
 import java.util.Properties;
 import javax.servlet.ServletContextEvent;
 import org.brandao.brutos.old.programatic.*;
+import org.brandao.brutos.programatic.ControllerManager;
 
 /**
  *
@@ -94,14 +95,16 @@ public abstract class ApplicationContext {
      * @deprecated 
      * @param iocManager
      */
-    public abstract void loadIOCManager( IOCManager iocManager );
+    protected abstract void loadIOCManager( IOCManager iocManager );
 
     /**
      * @deprecated 
      * @param webFrameManager
      */
-    public abstract void loadWebFrameManager( WebFrameManager webFrameManager );
+    protected abstract void loadWebFrameManager( WebFrameManager webFrameManager );
+
+    protected abstract void loadInterceptorManager( InterceptorManager interceptorManager );
     
-    public abstract void loadInterceptorManager( InterceptorManager interceptorManager );
+    protected abstract void loadController( ControllerManager controllerManager );
     
 }

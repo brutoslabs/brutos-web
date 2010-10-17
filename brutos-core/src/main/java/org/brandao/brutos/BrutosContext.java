@@ -165,7 +165,7 @@ public class BrutosContext {
         
         this.iocManager.getProvider().configure( config , sce);
 
-        this.interceptorManager =  new InterceptorManager( iocManager );
+        this.interceptorManager =  new InterceptorManager();
 
         this.webFrameManager = new WebFrameManager( interceptorManager, iocManager );
 

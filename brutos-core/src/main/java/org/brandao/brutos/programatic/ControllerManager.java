@@ -27,6 +27,7 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.Interceptor;
+import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  *
@@ -36,15 +37,16 @@ public class ControllerManager {
     
     private Map forms;
     private Map revForms;
-    
+    private ValidatorProvider validatorProvider;
     private ControllerBuilder current;
     
     private InterceptorManager interceptorManager;
     
-    public ControllerManager( InterceptorManager interceptorManager ) {
+    public ControllerManager( InterceptorManager interceptorManager, ValidatorProvider validatorProvider ) {
         this.forms              = new HashMap();
         this.revForms           = new HashMap();
         this.interceptorManager = interceptorManager;
+        this.validatorProvider  = validatorProvider;
     }
 
     public ControllerBuilder addController( String id, Class classtype ){
@@ -103,7 +105,7 @@ public class ControllerManager {
         //forms.put( fr.getUri(), fr );
         //revForms.put( fr.getClassType(), fr );
         addForm( fr.getUri(), fr );
-        this.current = new ControllerBuilder( fr, this, interceptorManager );
+        this.current = new ControllerBuilder( fr, this, interceptorManager, validatorProvider );
         
         for( Interceptor in: interceptorManager.getDefaultInterceptors() )
             current.addInterceptor( in.getName() );

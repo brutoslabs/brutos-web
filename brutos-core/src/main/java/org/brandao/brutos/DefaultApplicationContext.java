@@ -23,6 +23,7 @@ import org.brandao.brutos.ioc.ContextFactory;
 import org.brandao.brutos.ioc.IOCProviderFactory;
 import org.brandao.brutos.ioc.RequestFactory;
 import org.brandao.brutos.old.programatic.IOCManager;
+import org.brandao.brutos.programatic.ControllerManager;
 import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
@@ -35,7 +36,7 @@ public class DefaultApplicationContext extends ApplicationContext{
     public void destroy() {
     }
 
-    public void loadIOCManager(IOCManager iocManager){
+    protected void loadIOCManager(IOCManager iocManager){
         iocManager.addBean( "servletContextFactory",
                 ContextFactory.class, ScopeType.APPLICATION, false, null );
                 
@@ -59,10 +60,13 @@ public class DefaultApplicationContext extends ApplicationContext{
                 "requestFactory" ).setFactoryMethod( "createInstance" );
     }
 
-    public void loadWebFrameManager(WebFrameManager webFrameManager){
+    protected void loadWebFrameManager(WebFrameManager webFrameManager){
     }
 
-    public void loadInterceptorManager(InterceptorManager interceptorManager){
+    protected void loadInterceptorManager(InterceptorManager interceptorManager){
+    }
+
+    protected void loadController(ControllerManager controllerManager) {
     }
 
 }
