@@ -27,16 +27,36 @@ import javax.servlet.http.HttpServletResponse;
  * @author Afonso Brandao
  */
 public interface InterceptorHandler {
-    
+
+    /**
+     * @deprecated
+     * @return
+     */
     public ServletContext getContext();
     
+    /**
+     * @deprecated
+     * @return
+     */
     public HttpServletRequest getRequest();
     
+    /**
+     * @deprecated
+     * @return
+     */
     public HttpServletResponse getResponse();
     
+    /**
+     * @deprecated
+     * @return
+     */
     public String getURI();
     
     public ResourceMethod getResourceMethod();
     
     public Object getResource();
+
+    public String view();
+
+    
 }
