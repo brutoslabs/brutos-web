@@ -35,7 +35,9 @@ public class ImpInterceptorHandler implements InterceptorHandler{
     private HttpServletResponse response;
     
     private String URI;
-    
+
+    private String view;
+
     private ResourceMethod resourceMethod;
     
     private Object resource;
@@ -89,6 +91,14 @@ public class ImpInterceptorHandler implements InterceptorHandler{
 
     public HttpServletRequest getRequest() {
         return this.request;
+    }
+
+    public void setView(String view) {
+        this.view = view;
+    }
+
+    public String view() {
+        return this.view;
     }
     
 }
