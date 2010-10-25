@@ -24,6 +24,8 @@ import java.util.Map;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.Interceptor;
@@ -34,7 +36,8 @@ import org.brandao.brutos.validator.ValidatorProvider;
  * @author Afonso Brandao
  */
 public class ControllerManager {
-    
+
+    private static Logger logger = LoggerProvider.getCurrentLoggerProvider().getLogger(ControllerManager.class.getName());
     private Map forms;
     private Map revForms;
     private ValidatorProvider validatorProvider;
@@ -42,7 +45,7 @@ public class ControllerManager {
     
     private InterceptorManager interceptorManager;
     
-    public ControllerManager( InterceptorManager interceptorManager, ValidatorProvider validatorProvider ) {
+    public ControllerManager( InterceptorManager interceptorManager, ValidatorProvider validatorProvider) {
         this.forms              = new HashMap();
         this.revForms           = new HashMap();
         this.interceptorManager = interceptorManager;

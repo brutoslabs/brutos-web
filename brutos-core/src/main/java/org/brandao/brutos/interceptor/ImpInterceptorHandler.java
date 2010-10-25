@@ -36,7 +36,7 @@ public class ImpInterceptorHandler implements InterceptorHandler{
     
     private String URI;
 
-    private String view;
+    private String requestId;
 
     private ResourceMethod resourceMethod;
     
@@ -93,12 +93,12 @@ public class ImpInterceptorHandler implements InterceptorHandler{
         return this.request;
     }
 
-    public void setView(String view) {
-        this.view = view;
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
     }
 
-    public String view() {
-        return this.view;
+    public String requestId() {
+        return this.requestId;
     }
     
 }

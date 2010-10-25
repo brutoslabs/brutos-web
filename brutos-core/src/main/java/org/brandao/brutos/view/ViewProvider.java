@@ -18,6 +18,7 @@
 package org.brandao.brutos.view;
 
 import java.io.IOException;
+import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -34,7 +35,7 @@ public abstract class ViewProvider {
     public ViewProvider() {
     }
     
-    public static ViewProvider getProvider( Configuration properties ){
+    public static ViewProvider getProvider( Properties properties ){
         String viewProviderName = properties.getProperty("org.brandao.brutos.view.provider");
         ViewProvider view       = null;
         
@@ -59,7 +60,7 @@ public abstract class ViewProvider {
         return view;
     }
     
-    public abstract void configure( Configuration properties );
+    public abstract void configure( Properties properties );
 
     @Deprecated
     public abstract void show( String page, ServletRequest request, HttpServletResponse response, ServletContext context ) throws ServletException, IOException;

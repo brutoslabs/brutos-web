@@ -37,10 +37,8 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.mapping.Mapping;
 import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
-import org.brandao.brutos.programatic.ControllerManager;
 import org.brandao.brutos.scope.ApplicationScope;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.FlashScope;
@@ -57,18 +55,13 @@ import org.brandao.brutos.view.ViewProvider;
  * @author Afonso Brandao
  */
 public class BrutosContext {
-
-    private static BrutosContext instance;
-
-    static{
-        instance = new BrutosContext();
-    }
     
     private Configuration configuration;
-    private ControllerManager controllerManager;
+    private IOCManager iocManager;
+    private WebFrameManager webFrameManager;
     private ViewProvider viewProvider;
     private InterceptorManager interceptorManager;
-    private List services = new ArrayList();
+    private List<ApplicationContext> services = new ArrayList<ApplicationContext>();
     private LoggerProvider loggerProvider;
     private Logger logger;
     private Invoker invoker;
@@ -77,8 +70,8 @@ public class BrutosContext {
     public BrutosContext(){
     }
 
-    public synchronized void start(){
-        /*
+    public synchronized void start( ServletContextEvent sce ){
+        
         if( sce.getServletContext().getAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE ) != null ){
             throw new IllegalStateException(
                             "Cannot initialize context because there is already a root application context present - " +
@@ -86,12 +79,10 @@ public class BrutosContext {
         }
         
         sce.getServletContext().setAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this );
-         */
-        
-        loadContext();
+        loadContext( sce );
     }
 
-    private void loadContext(){
+    private void loadContext( ServletContextEvent sce ){
         long time = System.currentTimeMillis();
         try{
             loadParameters( sce );
@@ -148,13 +139,54 @@ public class BrutosContext {
         }
     }
 
-    private void loadInvoker(){
+    private void loadInvoker( ServletContext sc ){
         this.invoker = new Invoker();
+
+        sc.setAttribute( BrutosConstants.INVOKER,this.getInvoker());
     }
 
     private void loadLogger( ServletContext sc ){
         this.loggerProvider = LoggerProvider.getProvider(configuration);
+
+        sc.setAttribute( BrutosConstants.LOGGER,
+                                            this.loggerProvider );
+
         this.logger = this.loggerProvider.getLogger( BrutosContext.class.getName() );
+
+    }
+
+    private void loadManager( Configuration config, ServletContextEvent sce ){
+        this.iocManager =  new IOCManager(
+                            IOCProvider.getProvider(
+                                config,
+                                sce )
+                            );
+        
+        this.iocManager.getProvider().configure( config , sce);
+
+        this.interceptorManager =  new InterceptorManager( iocManager );
+
+        this.webFrameManager = new WebFrameManager( interceptorManager, iocManager );
+
+        this.viewProvider       = ViewProvider.getProvider( configuration );
+
+        this.validatorProvider = ValidatorProvider.getValidatorProvider(configuration);
+
+        ServletContext sc = sce.getServletContext();
+
+        sc.setAttribute( BrutosConstants.IOC_MANAGER,
+                                            this.iocManager );
+        sc.setAttribute( BrutosConstants.IOC_PROVIDER,
+                                            this.iocManager.getProvider() );
+        sc.setAttribute( BrutosConstants.WEBFRAME_MANAGER,
+                                            this.webFrameManager );
+        sc.setAttribute( BrutosConstants.INTERCEPTOR_MANAGER,
+                                            this.interceptorManager );
+        sc.setAttribute( BrutosConstants.VIEW_PROVIDER,
+                                            this.viewProvider );
+        sc.setAttribute( BrutosConstants.VALIDATOR_PROVIDER,
+                                            this.viewProvider );
+
     }
 
     private void loadServices() throws IOException{
@@ -213,13 +245,13 @@ public class BrutosContext {
         }
     }
 
-    private void loadServices( Configuration config ) throws IOException{
+    private void loadServices( Configuration config, ServletContextEvent sce ) throws IOException{
         logger.info( "Loading services" );
         loadServices();
-        loadService( config );
+        loadService( config, sce );
     }
 
-    private void loadService( Configuration config ){
+    private void loadService( Configuration config, ServletContextEvent sce ){
         for( ApplicationContext provider: services ){
             logger.info( String.format("Starting %s", provider.getClass().getName() ) );
             provider.configure(config, sce);
@@ -289,30 +321,54 @@ public class BrutosContext {
         }
     }
     
-    private void loadParameters(){
+    private void loadParameters( ServletContextEvent sce ){
         setConfiguration(new Configuration());
+        
+        ServletContext context = sce.getServletContext();
+        Enumeration initParameters = context.getInitParameterNames();
+        
+        while( initParameters.hasMoreElements() ){
+            String name = (String) initParameters.nextElement();
+            getConfiguration().setProperty( name, context.getInitParameter( name ) );
+        }
     }
     
-    public synchronized void stop(){
+    public synchronized void stop( ServletContextEvent sce ){
 
         if( services != null ){
-            for( int i=0;i<services.size();i++ ){
+            for( ApplicationContext provider: services ){
                 try{
-                    ((ApplicationContext)services.get(i)).destroy();
+                    provider.destroy();
                 }
                 catch( Exception e ){}
             }
         }
         
+        ServletContext sc = sce.getServletContext();
+        sc.removeAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
+        sc.removeAttribute( BrutosConstants.IOC_MANAGER );
+        sc.removeAttribute( BrutosConstants.IOC_PROVIDER );
+        sc.removeAttribute( BrutosConstants.WEBFRAME_MANAGER );
+        sc.removeAttribute( BrutosConstants.INTERCEPTOR_MANAGER );
+        sc.removeAttribute( BrutosConstants.LOGGER );
+        sc.removeAttribute( BrutosConstants.METHOD_RESOLVER );
+        sc.removeAttribute( BrutosConstants.CONTROLLER_RESOLVER );
+        sc.removeAttribute( BrutosConstants.INVOKER );
+
+        if( this.iocManager != null && this.iocManager.getProvider() != null )
+            this.iocManager.getProvider().destroy();
+
         if( this.loggerProvider != null )
             this.loggerProvider.destroy();
 
         this.configuration      = null;
         this.interceptorManager = null;
+        this.iocManager         = null;
         this.logger             = null;
         this.loggerProvider     = null;
         this.services           = null;
         this.viewProvider       = null;
+        this.webFrameManager    = null;
         this.invoker            = null;
     }
     
@@ -324,6 +380,21 @@ public class BrutosContext {
         return configuration;
     }
 
+    public IOCManager getIocManager() {
+        return iocManager;
+    }
+
+    public void setIocManager(IOCManager iocManager) {
+        this.iocManager = iocManager;
+    }
+
+    public WebFrameManager getWebFrameManager() {
+        return webFrameManager;
+    }
+
+    public void setWebFrameManager(WebFrameManager webFrameManager) {
+        this.webFrameManager = webFrameManager;
+    }
 
     public ViewProvider getViewProvider() {
         return viewProvider;
