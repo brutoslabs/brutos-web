@@ -29,7 +29,7 @@ import org.brandao.brutos.mapping.ioc.PropertiesInject;
 import org.brandao.brutos.mapping.ioc.SetInject;
 
 /**
- *
+ * @deprecated 
  * @author Afonso Brandao
  */
 public class IOCManager {

@@ -18,8 +18,10 @@
 package org.brandao.brutos;
 
 import javax.servlet.http.HttpServletRequest;
+import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.WebFrameManager;
+import org.brandao.brutos.programatic.ControllerManager;
 
 /**
  * 
@@ -27,6 +29,14 @@ import org.brandao.brutos.old.programatic.WebFrameManager;
  */
 public interface ControllerResolver {
 
+    /**
+     * @deprecated
+     * @param webFrameManager
+     * @param request
+     * @return
+     */
     public Form getController( WebFrameManager webFrameManager, HttpServletRequest request );
+
+    public Form getController( ControllerManager controllerManager, InterceptorHandler handler );
     
 }

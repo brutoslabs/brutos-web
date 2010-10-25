@@ -21,10 +21,15 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
+import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
+import org.brandao.brutos.programatic.ControllerManager;
+import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.scope.Scopes;
 
 /**
  *
@@ -32,14 +37,30 @@ import org.brandao.brutos.old.programatic.WebFrameManager;
  */
 public class Invoker {
 
-    private Logger logger;
+    private static Logger logger = LoggerProvider.getCurrentLoggerProvider().getLogger(Invoker.class.getName());
+    private ControllerResolver controllerResolver;
+    private IOCProvider iocProvider;
+    private ControllerManager controllerManager;
+    private MethodResolver methodResolver;
 
     public Invoker() {
-        this.logger = BrutosContext
-                        .getCurrentInstance().getLoggerProvider()
-                            .getLogger( Invoker.class.getName() );
     }
-    
+
+    public Invoker( ControllerResolver controllerResolver, IOCProvider iocProvider, 
+            ControllerManager controllerManager, MethodResolver methodResolver ){
+        this.controllerResolver = controllerResolver;
+        this.iocProvider        = iocProvider;
+        this.controllerManager  = controllerManager;
+        this.methodResolver     = methodResolver;
+    }
+
+    /**
+     * @deprecated 
+     * @param brutosContext
+     * @param response
+     * @return
+     * @throws IOException
+     */
     public boolean invoke( BrutosContext brutosContext, HttpServletResponse response ) throws IOException{
 
         //Form form = brutosContext.getController();
@@ -104,4 +125,48 @@ public class Invoker {
 
         return true;
     }
+
+    public boolean invoke( String requestId ) throws IOException{
+
+        Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
+        ImpInterceptorHandler ih = new ImpInterceptorHandler();
+        ih.setRequestId(requestId);
+        
+        Form form = controllerResolver.getController(controllerManager, ih);
+
+
+        if( form == null )
+            return false;
+
+        long time = System.currentTimeMillis();
+        try{
+            if( logger.isDebugEnabled() )
+                logger.debug( "Received a new request: " + requestId );
+
+            ih.setResource( iocProvider.getBean(form.getId()) );
+            
+            ih.setResourceMethod( methodResolver.getResourceMethod(form, requestScope) );
+
+            if( logger.isDebugEnabled() ){
+                logger.debug(
+                    String.format(
+                        "Controller: %s Method: %s",
+                        form.getClass().getName() ,
+                        ih.getResourceMethod() == null?  "" : ih.getResourceMethod().getMethod().getName() )
+                );
+
+
+            }
+            form.proccessBrutosAction( ih );
+        }
+        finally{
+            if( logger.isDebugEnabled() )
+                logger.debug(
+                        String.format( "Request processed in %d ms",
+                            (System.currentTimeMillis()-time) ) );
+        }
+
+        return true;
+    }
+
 }

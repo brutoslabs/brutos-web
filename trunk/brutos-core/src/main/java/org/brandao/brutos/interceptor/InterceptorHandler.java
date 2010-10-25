@@ -56,7 +56,7 @@ public interface InterceptorHandler {
     
     public Object getResource();
 
-    public String view();
+    public String requestId();
 
     
 }

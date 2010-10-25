@@ -18,6 +18,8 @@
 package org.brandao.brutos;
 
 import javax.servlet.http.HttpServletRequest;
+import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.scope.Scope;
 
 /**
  * 
@@ -25,6 +27,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface MethodResolver {
 
+    /**
+     * @deprecated 
+     * @param request
+     * @return
+     */
     public ResourceMethod getResourceMethod( HttpServletRequest request );
     
+    public ResourceMethod getResourceMethod( Form controller, Scope scope );
+
 }

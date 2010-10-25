@@ -29,7 +29,7 @@ import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.Interceptor;
 
 /**
- *
+ * @deprecated 
  * @author Afonso Brandao
  */
 public class WebFrameManager {

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpSessionEvent;
@@ -40,7 +41,7 @@ public abstract class IOCProvider {
         this.beans = new HashMap<String, Bean>();
     }
     
-    public static IOCProvider getProvider( Configuration properties, ServletContextEvent sce ){
+    public static IOCProvider getProvider( Properties properties ){
         String iocProviderName = 
                 properties
                     .getProperty(
@@ -94,7 +95,7 @@ public abstract class IOCProvider {
 
     public abstract Object getBean( String name );
     
-    public abstract void configure( Configuration properties, ServletContextEvent sce );
+    public abstract void configure( Properties properties );
 
     public Object getInstance( String name ){
         throw new UnsupportedOperationException( "use getBean(String)" );

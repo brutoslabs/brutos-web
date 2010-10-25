@@ -20,8 +20,8 @@ package org.brandao.brutos.scope;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import org.brandao.brutos.BrutosContext;
-import org.brandao.brutos.old.programatic.IOCManager;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 
 /**
  *
@@ -29,6 +29,7 @@ import org.brandao.brutos.old.programatic.IOCManager;
  */
 public class Scopes{
 
+    private static Logger logger = LoggerProvider.getCurrentLoggerProvider().getLogger(Scopes.class.getName());
     private static Map<String,Scope> scopes;
 
     static{
@@ -39,10 +40,17 @@ public class Scopes{
     }
 
     public static void register( String id, Scope scope ){
+
+        if( logger.isInfoEnabled() )
+            logger.info( (scopes.containsKey(id)? "override scope: " : "registred scope: ") + id );
+        
         scopes.put( id, scope );
     }
 
     public static void remove( String id ){
+        if( logger.isInfoEnabled() )
+            logger.info( "removed scope: " + id );
+
         scopes.remove( id );
     }
 
