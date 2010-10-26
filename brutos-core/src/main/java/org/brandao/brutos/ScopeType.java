@@ -27,6 +27,7 @@ import java.util.Map;
 public class ScopeType {
 
     public static final ScopeType APPLICATION = new ScopeType( "application" );
+    public static final ScopeType PARAM       = new ScopeType( "param" );
     public static final ScopeType REQUEST     = new ScopeType( "request" );
     public static final ScopeType SESSION     = new ScopeType( "session" );
     public static final ScopeType FLASH       = new ScopeType( "flash" );

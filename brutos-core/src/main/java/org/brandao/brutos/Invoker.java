@@ -128,6 +128,7 @@ public class Invoker {
 
     public boolean invoke( String requestId ) throws IOException{
 
+        Scope paramScope = Scopes.get(ScopeType.PARAM.toString());
         Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
         ImpInterceptorHandler ih = new ImpInterceptorHandler();
         ih.setRequestId(requestId);
@@ -140,12 +141,14 @@ public class Invoker {
 
         long time = System.currentTimeMillis();
         try{
+            requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
+            
             if( logger.isDebugEnabled() )
                 logger.debug( "Received a new request: " + requestId );
 
             ih.setResource( iocProvider.getBean(form.getId()) );
             
-            ih.setResourceMethod( methodResolver.getResourceMethod(form, requestScope) );
+            ih.setResourceMethod( methodResolver.getResourceMethod(form, paramScope) );
 
             if( logger.isDebugEnabled() ){
                 logger.debug(
@@ -160,6 +163,7 @@ public class Invoker {
             form.proccessBrutosAction( ih );
         }
         finally{
+            requestScope.remove( BrutosConstants.IOC_PROVIDER );
             if( logger.isDebugEnabled() )
                 logger.debug(
                         String.format( "Request processed in %d ms",

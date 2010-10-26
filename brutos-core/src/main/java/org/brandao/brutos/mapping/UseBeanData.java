@@ -73,6 +73,12 @@ public class UseBeanData {
         this.mapping = mapping;
     }
 
+    /**
+     * @deprecated
+     * @param context
+     * @param request
+     * @return
+     */
     public Object getValue( ServletContext context, HttpServletRequest request ){
 
         Object value = null;
@@ -84,6 +90,24 @@ public class UseBeanData {
             value = type.getValue(request, context, getScope().getCollection(nome) );
         else
             value = type.getValue(request, context, getScope().get(nome) );
+
+        if( validate != null )
+            validate.validate(this, value);
+
+        return value;
+    }
+
+    public Object getValue(){
+
+        Object value = null;
+
+        if( mapping != null )
+            value = mapping.getValue();
+        else
+        if( type instanceof CollectionType || type instanceof ArrayType )
+            value = type.getValue( getScope().getCollection(nome) );
+        else
+            value = type.getValue( getScope().get(nome) );
 
         if( validate != null )
             validate.validate(this, value);

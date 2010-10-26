@@ -168,6 +168,10 @@ public abstract class ApplicationContext {
     
     protected abstract void loadController( ControllerManager controllerManager );
 
+    public Object getController( Class controllerClass ){
+        return null;
+    }
+    
     public ControllerManager getControllerManager() {
         return controllerManager;
     }

@@ -43,8 +43,27 @@ public class DataInput {
         this.response = response;
         this.context  = context;
     }
+
+    public DataInput() {
+    }
     
     public void read( Form form, Object object ){
+        try{
+            for( FieldForm ff: form.getFields() ){
+                //Object val = ff.getBean().getValue( context, request );
+                Object val = ff.getBean().getValue();
+                if( val != null )
+                    ff.setValue( object, val );
+            }
+            setDataWebFrame( form, object, context, request, response );
+        }
+        catch( BrutosException e ){
+            throw e;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+ /*
         try{
             for( FieldForm ff: form.getFields() ){
                 Object val = ff.getBean().getValue( context, request );
@@ -59,6 +78,7 @@ public class DataInput {
         catch( Exception e ){
             throw new BrutosException( e );
         }
+*/
     }
     
     private void setDataWebFrame( Form form, Object wf, ServletContext context, HttpServletRequest request, HttpServletResponse response ){
