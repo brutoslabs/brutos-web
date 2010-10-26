@@ -75,6 +75,10 @@ public class MappingBean {
         this.fields = fields;
     }
 
+    public Object getValue(){
+        return getValue( null, null );
+    }
+
     public Object getValue( HttpServletRequest request ){
         return getValue( request, null );
     }
@@ -87,7 +91,10 @@ public class MappingBean {
         return getValue( request, instance, prefix, -1 );
     }
 
-    public Object getValue( HttpServletRequest request, Object instance, String prefix, long index ){
+    public Object getValue( /**
+                             * @deprecated
+                             */
+            HttpServletRequest request, Object instance, String prefix, long index ){
         try{
             //bean
             Object obj;
@@ -113,7 +120,8 @@ public class MappingBean {
                         exist = true;
 
                     Type type = fb.getType();
-                    Object o = type.getValue( request, request.getSession().getServletContext(), value );
+                    //Object o = type.getValue( request, request.getSession().getServletContext(), value );
+                    Object o = type.getValue( value );
 
 
                     if( validator != null )

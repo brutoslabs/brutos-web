@@ -43,6 +43,16 @@ public interface Type {
     public Object getValue( HttpServletRequest request, ServletContext context, Object value );
 
     /**
+     * Converts a value to a defined type.
+     *
+     * @param value Value to be converted. If the
+     * value comes from the request is a string
+     * otherwise you do not need the conversion.
+     * @return Converted value.
+     */
+    public Object getValue( Object value );
+
+    /**
      * Converts the value to be sent by the response object.
      * @param response Response object.
      * @param context Context object.
@@ -50,6 +60,13 @@ public interface Type {
      * @throws IOException Thrown if there is a problem to send.
      */
     public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException;
+
+    /**
+     * Converts the value to be sent by the response object.
+     * @param value Value to be converted.
+     * @throws IOException Thrown if there is a problem to send.
+     */
+    public void setValue( Object value ) throws IOException;
 
     /**
      * Get the type of class

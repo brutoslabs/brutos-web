@@ -27,6 +27,8 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.FieldForm;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.UseBeanData;
+import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.scope.Scopes;
 
 /**
  *
@@ -43,9 +45,12 @@ public class DataOutput {
         this.context = context;
     }
     
+    public DataOutput() {
+    }
+
     public void write( Form form, Object object ){
        try{
-           HttpSession session = request.getSession();
+           //HttpSession session = request.getSession();
            
             for( FieldForm ff: form.getFields() ){
                 if( ff.getBean() != null ){
@@ -76,11 +81,12 @@ public class DataOutput {
     }
     
     public void writeFields( Form form, Object object ){
+        Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
         try{
             Field[] fields = form.getClassType().getDeclaredFields();
             for( Field f: fields ){
                 f.setAccessible( true );
-                request.setAttribute( f.getName(), f.get( object ) );
+                requestScope.put( f.getName(), f.get( object ) );
             }
         }
         catch( Exception e ){

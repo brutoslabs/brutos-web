@@ -31,16 +31,21 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.RedirectException;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.WebFrame;
 import org.brandao.brutos.http.DataInput;
 import org.brandao.brutos.http.DataOutput;
 import org.brandao.brutos.ioc.IOCProvider;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ParameterMethodMapping;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
+import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.view.ViewProvider;
 
 /**
@@ -48,7 +53,8 @@ import org.brandao.brutos.view.ViewProvider;
  * @author Afonso Brandao
  */
 public class InterceptorProcess implements InterceptorStack{
-    
+
+    private static Logger logger = LoggerProvider.getCurrentLoggerProvider().getLogger(InterceptorProcess.class.getName());
     private Form form;
     private List<org.brandao.brutos.mapping.Interceptor> stack;
     private ThreadLocal<Integer> stackPos;
@@ -166,18 +172,24 @@ public class InterceptorProcess implements InterceptorStack{
     public void next(InterceptorHandler handler) throws InterceptedException{
         int pos = stackPos.get();
         stackPos.set( pos + 1 );
-        
+
         if( pos < this.stack.size() ){
+            Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
             org.brandao.brutos.mapping.Interceptor i = stack.get( pos );
-            IOCProvider iocProvider = (IOCProvider)handler.getContext().getAttribute( BrutosConstants.IOC_PROVIDER );
+            //IOCProvider iocProvider = (IOCProvider)handler.getContext().getAttribute( BrutosConstants.IOC_PROVIDER );
+            IOCProvider iocProvider = (IOCProvider)requestScope.get( BrutosConstants.IOC_PROVIDER );
 
             Interceptor interceptor = interceptor = (Interceptor) iocProvider.getBean( i.getName() );
             
             if( !interceptor.isConfigured() )
                 interceptor.setProperties( (Map<String, Object>) i.getProperty( String.valueOf( form.hashCode()  )  ) );
 
-            if( interceptor.accept( handler ) )
+            if( interceptor.accept( handler ) ){
+                if( logger.isDebugEnabled() )
+                    logger.debug( this.form.getClassType().getName() + " intercepted by: " + i.getName() );
+
                 interceptor.intercepted( this, handler );
+            }
             else
                 next( handler );
         }
@@ -202,15 +214,22 @@ public class InterceptorProcess implements InterceptorStack{
     }
 
     public Object invoke( InterceptorHandler handler ) {
-        HttpServletRequest request   = handler.getRequest();
-        ServletContext context       = handler.getContext();
+        Scope paramScope = Scopes.get(ScopeType.PARAM.toString());
+        Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
+        //HttpServletRequest request   = handler.getRequest();
+        //ServletContext context       = handler.getContext();
         Object source                = handler.getResource();
+        //MethodForm method            = form.getMethodByName(
+        //                                    request.getParameter( form.getMethodId() ) );
         MethodForm method            = form.getMethodByName(
-                                            request.getParameter( form.getMethodId() ) );
+                                             String.valueOf( paramScope.get( form.getMethodId() ) ) );
+
         try{
-            DataInput input = new DataInput( handler.getRequest(),
-                                           handler.getResponse(),
-                                           handler.getContext() );
+            //DataInput input = new DataInput( handler.getRequest(),
+            //                               handler.getResponse(),
+            //                               handler.getContext() );
+            DataInput input = new DataInput();
+            
             input.read( form , handler.getResource() );
 
             preAction( source );
@@ -218,13 +237,15 @@ public class InterceptorProcess implements InterceptorStack{
             if( handler.getResourceMethod() != null )
                 return handler
                     .getResourceMethod()
-                        .invoke( source, getParameters( method, request, context ) );
+                        //.invoke( source, getParameters( method, request, context ) );
+                        .invoke( source, getParameters( method, null, null ) );
             else
                 return null;
         }
         catch( InvocationTargetException e ){
             if( e.getTargetException() instanceof RedirectException ){
-                request.setAttribute( BrutosConstants.REDIRECT, ((RedirectException)e.getTargetException()).getPage() );
+                //request.setAttribute( BrutosConstants.REDIRECT, ((RedirectException)e.getTargetException()).getPage() );
+                requestScope.put( BrutosConstants.REDIRECT, ((RedirectException)e.getTargetException()).getPage() );
             }
             else{
                 ThrowableSafeData tdata = method == null?
@@ -234,11 +255,13 @@ public class InterceptorProcess implements InterceptorStack{
                         e.getTargetException().getClass() );
 
                 if( tdata != null ){
-                    request.setAttribute(
+                    //request.setAttribute(
+                    requestScope.put(
                             BrutosConstants.EXCEPTION,
                             e.getTargetException() );
 
-                    request.setAttribute(
+                    //request.setAttribute(
+                    requestScope.put(
                             BrutosConstants.EXCEPTION_DATA, tdata );
                 }
                 else
@@ -257,7 +280,8 @@ public class InterceptorProcess implements InterceptorStack{
 
             postAction( source );
 
-            DataOutput dataOutput = new DataOutput( handler.getRequest(), handler.getContext() );
+            //DataOutput dataOutput = new DataOutput( handler.getRequest(), handler.getContext() );
+            DataOutput dataOutput = new DataOutput();
             dataOutput.write( form, handler.getResource() );
             dataOutput.writeFields( form, handler.getResource() );
         }
@@ -272,7 +296,8 @@ public class InterceptorProcess implements InterceptorStack{
 
             for( ParameterMethodMapping p: method.getParameters() ){
                 UseBeanData bean = p.getBean();
-                values[ p.getParameterName() - 1 ] = bean.getValue( context, request );
+                //values[ p.getParameterName() - 1 ] = bean.getValue( context, request );
+                values[ p.getParameterName() - 1 ] = bean.getValue();
             }
 
             return values;
