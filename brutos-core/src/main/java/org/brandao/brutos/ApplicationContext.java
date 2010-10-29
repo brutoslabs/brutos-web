@@ -48,6 +48,7 @@ public abstract class ApplicationContext {
     private LoggerProvider loggerProvider;
     
     public ApplicationContext() {
+        this.configuration = new Configuration();
     }
 
     /**
@@ -58,6 +59,10 @@ public abstract class ApplicationContext {
     public void configure( Configuration config, ServletContextEvent sce ){
     }
 
+    public void configure(){
+        configure( this.configuration );
+    }
+    
     public void configure( Properties config ){
         this.configuration = config;
         this.iocManager = new IOCManager();
@@ -65,7 +70,7 @@ public abstract class ApplicationContext {
         this.iocProvider.configure(config);
         this.interceptorManager = new InterceptorManager();
         this.webFrameManager = new WebFrameManager( this.interceptorManager, this.iocManager );
-        this.invoker = new Invoker( getControllerResolver(), iocProvider, controllerManager, getMethodResolver() );
+        this.invoker = new Invoker( getControllerResolver(), iocProvider, controllerManager, getMethodResolver(), this );
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
         this.controllerManager = new ControllerManager(this.interceptorManager, this.getValidatorProvider());

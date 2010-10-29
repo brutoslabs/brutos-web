@@ -49,6 +49,7 @@ import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.scope.SessionScope;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
+import org.brandao.brutos.xml.XMLApplicationContext;
 
 /**
  *
@@ -56,18 +57,11 @@ import org.brandao.brutos.view.ViewProvider;
  */
 public class BrutosContext {
     
-    private Configuration configuration;
-    private IOCManager iocManager;
-    private WebFrameManager webFrameManager;
-    private ViewProvider viewProvider;
-    private InterceptorManager interceptorManager;
-    private List<ApplicationContext> services = new ArrayList<ApplicationContext>();
-    private LoggerProvider loggerProvider;
+    private ApplicationContext appContext;
     private Logger logger;
-    private Invoker invoker;
-    private ValidatorProvider validatorProvider;
-
+    
     public BrutosContext(){
+        this.appContext = new XMLApplicationContext();
     }
 
     public synchronized void start( ServletContextEvent sce ){
@@ -89,7 +83,6 @@ public class BrutosContext {
             loadLogger( sce.getServletContext() );
             logger.info( "Initializing Brutos root WebApplicationContext" );
             loadInvoker( sce.getServletContext() );
-            loadServices( configuration, sce );
             resolveController( sce.getServletContext() );
             methodResolver( sce.getServletContext() );
             registerCustomEditors();
@@ -140,8 +133,6 @@ public class BrutosContext {
     }
 
     private void loadInvoker( ServletContext sc ){
-        this.invoker = new Invoker();
-
         sc.setAttribute( BrutosConstants.INVOKER,this.getInvoker());
     }
 
@@ -322,8 +313,6 @@ public class BrutosContext {
     }
     
     private void loadParameters( ServletContextEvent sce ){
-        setConfiguration(new Configuration());
-        
         ServletContext context = sce.getServletContext();
         Enumeration initParameters = context.getInitParameterNames();
         
@@ -372,12 +361,8 @@ public class BrutosContext {
         this.invoker            = null;
     }
     
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
-    }
-
-    public Configuration getConfiguration() {
-        return configuration;
+    public Properties getConfiguration() {
+        return appContext.getConfiguration();
     }
 
     public IOCManager getIocManager() {
