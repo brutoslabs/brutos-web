@@ -42,16 +42,18 @@ public class Invoker {
     private IOCProvider iocProvider;
     private ControllerManager controllerManager;
     private MethodResolver methodResolver;
-
+    private ApplicationContext applicationContext;
+    
     public Invoker() {
     }
 
     public Invoker( ControllerResolver controllerResolver, IOCProvider iocProvider, 
-            ControllerManager controllerManager, MethodResolver methodResolver ){
+            ControllerManager controllerManager, MethodResolver methodResolver, ApplicationContext applicationContext ){
         this.controllerResolver = controllerResolver;
         this.iocProvider        = iocProvider;
         this.controllerManager  = controllerManager;
         this.methodResolver     = methodResolver;
+        this.applicationContext = applicationContext;
     }
 
     /**
@@ -142,6 +144,7 @@ public class Invoker {
         long time = System.currentTimeMillis();
         try{
             requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
+            requestScope.put( BrutosConstants.APPLICATION_CONTEXT, this.applicationContext );
             
             if( logger.isDebugEnabled() )
                 logger.debug( "Received a new request: " + requestId );

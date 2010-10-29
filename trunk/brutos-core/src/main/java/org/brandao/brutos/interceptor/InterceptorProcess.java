@@ -27,9 +27,11 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.RedirectException;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.WebFrame;
@@ -335,29 +337,42 @@ public class InterceptorProcess implements InterceptorStack{
 
     private void show( InterceptorHandler handler, Object returnValue ){
         try{
-            HttpServletRequest request   = handler.getRequest();
-            HttpServletResponse response = handler.getResponse();
-            BrutosContext brutosContext     = BrutosContext.getCurrentInstance();
-            ServletContext context       = handler.getContext();
-            Object source                = handler.getResource();
-            String redirectPage          = (String)request.getAttribute( BrutosConstants.REDIRECT );
-            Throwable objectThrow        = (Throwable)request.getAttribute( BrutosConstants.EXCEPTION );
-            ThrowableSafeData thr        = (ThrowableSafeData)request.getAttribute( BrutosConstants.EXCEPTION_DATA );
-            MethodForm method            = form.getMethodByName(
-                                                request.getParameter( form.getMethodId() ) );
-            ViewProvider viewProvider    = brutosContext.getViewProvider();
+            Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
+            Scope paramScope = Scopes.get(ScopeType.PARAM.toString());
+            //HttpServletRequest request   = handler.getRequest();
+            //HttpServletResponse response = handler.getResponse();
+            //BrutosContext brutosContext     = BrutosContext.getCurrentInstance();
+            //ServletContext context       = handler.getContext();
+            ApplicationContext appContext = (ApplicationContext) requestScope.get( BrutosConstants.APPLICATION_CONTEXT );
+            Object source                 = handler.getResource();
+            String redirectView           = (String)requestScope.get( BrutosConstants.REDIRECT );
+            Throwable objectThrow         = (Throwable)requestScope.get( BrutosConstants.EXCEPTION );
+            ThrowableSafeData thr         = (ThrowableSafeData)requestScope.get( BrutosConstants.EXCEPTION_DATA );
+            MethodForm method             = form.getMethodByName(
+                                                String.valueOf(paramScope.get( form.getMethodId() )) );
+            ViewProvider viewProvider     = appContext.getViewProvider();
 
-            if( redirectPage != null ){
-                viewProvider.show( redirectPage, true, request, response, context );
+            //String redirectPage          = (String)request.getAttribute( BrutosConstants.REDIRECT );
+            //Throwable objectThrow        = (Throwable)request.getAttribute( BrutosConstants.EXCEPTION );
+            //ThrowableSafeData thr        = (ThrowableSafeData)request.getAttribute( BrutosConstants.EXCEPTION_DATA );
+            //MethodForm method            = form.getMethodByName(
+            //                                    request.getParameter( form.getMethodId() ) );
+            //ViewProvider viewProvider    = brutosContext.getViewProvider();
+
+            if( redirectView != null ){
+                //viewProvider.show( redirectPage, true, request, response, context );
+                viewProvider.show(redirectView, DispatcherType.REDIRECT);
                 return;
             }
 
             if( thr != null ){
                 if( thr.getParameterName() != null )
-                    request.setAttribute( thr.getParameterName(), objectThrow );
+                    requestScope.put(thr.getParameterName(), objectThrow);
+                    //request.setAttribute( thr.getParameterName(), objectThrow );
 
                 if( thr.getUri() != null ){
-                    viewProvider.show( thr.getUri(), thr.isRedirect(), request, response, context );
+                    viewProvider.show(thr.getUri(), thr.getDispatcher());
+                    //viewProvider.show( thr.getUri(), thr.isRedirect(), request, response, context );
                     return;
                 }
             }
@@ -371,26 +386,30 @@ public class InterceptorProcess implements InterceptorStack{
                             method.getReturnIn() == null?
                                 BrutosConstants.DEFAULT_RETURN_NAME :
                                 method.getReturnIn();
-                        request.setAttribute( var, returnValue);
+                        //request.setAttribute( var, returnValue);
+                        requestScope.put(var, returnValue);
                     }
 
                     if( method.getReturnPage() != null ){
-                        viewProvider.show( method.getReturnPage(), 
-                                method.isRedirect(), request,
-                                response, context );
+                        //viewProvider.show( method.getReturnPage(),
+                        //        method.isRedirect(), request,
+                        //        response, context );
+                        viewProvider.show(method.getReturnPage(), method.getDispatcherType());
                         return;
                     }
                     else
                     if( method.getReturnType() != null ){
-                        method.getReturnType().setValue( response, context, returnValue );
+                        //method.getReturnType().setValue( response, context, returnValue );
+                        method.getReturnType().setValue(returnValue);
                         return;
                     }
                 }
                 
-                String page = getPage( source );
-                page = page == null? form.getPage() : page;
+                String view = getView( source );
+                view = view == null? form.getPage() : view;
                 boolean redirect = form.isRedirect();
-                viewProvider.show( page, redirect, request, response, context );
+                //viewProvider.show( page, redirect, request, response, context );
+                viewProvider.show(view, form.getDispatcherType());
 
             }
 
@@ -401,7 +420,7 @@ public class InterceptorProcess implements InterceptorStack{
         }
     }
 
-    private String getPage( MethodForm method ){
+    private String getView( MethodForm method ){
         
         if( method != null && method.getReturnPage() != null )
             return method.getReturnPage();
@@ -409,7 +428,7 @@ public class InterceptorProcess implements InterceptorStack{
             return null;
     }
 
-    private String getPage( Object source ){
+    private String getView( Object source ){
         if( source instanceof WebFrame && ((WebFrame)source).isUpdatable() )
             return ((WebFrame)source).getPage();
         else

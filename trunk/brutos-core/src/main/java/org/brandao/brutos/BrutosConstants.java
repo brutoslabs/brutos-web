@@ -25,6 +25,8 @@ public interface BrutosConstants {
     
     public final String WEBFRAME    = "Controller";
 
+    public final String APPLICATION_CONTEXT = "application-context";
+
     public final String CUSTOM_TYPES = "customTypes";
 
     public final String EXCEPTION   = "brutos_exception";
