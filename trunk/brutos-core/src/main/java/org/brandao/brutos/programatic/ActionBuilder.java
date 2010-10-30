@@ -17,7 +17,7 @@
 
 package org.brandao.brutos.programatic;
 
-import org.brandao.brutos.BrutosContext;
+import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.type.UnknownTypeException;

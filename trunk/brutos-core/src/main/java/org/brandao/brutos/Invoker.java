@@ -17,6 +17,8 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.ContextLoaderListener;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +65,7 @@ public class Invoker {
      * @return
      * @throws IOException
      */
-    public boolean invoke( BrutosContext brutosContext, HttpServletResponse response ) throws IOException{
+    public boolean invoke( WebApplicationContext brutosContext, HttpServletResponse response ) throws IOException{
 
         //Form form = brutosContext.getController();
         Form form = brutosContext

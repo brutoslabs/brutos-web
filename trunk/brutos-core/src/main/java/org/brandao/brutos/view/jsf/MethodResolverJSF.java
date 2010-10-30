@@ -25,7 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.BrutosContext;
+import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.DefaultMethodResolver;
 import org.brandao.brutos.ResourceMethod;
 import org.brandao.brutos.http.MutableRequest;
@@ -44,7 +44,7 @@ public class MethodResolverJSF extends DefaultMethodResolver{
 
     @Override
     public ResourceMethod getResourceMethod(HttpServletRequest request) {
-        BrutosContext brutosContext = BrutosContext.getCurrentInstance();
+        WebApplicationContext brutosContext = WebApplicationContext.getCurrentInstance();
         FacesContext context = FacesContext.getCurrentInstance();
 
         ActionEvent event = (ActionEvent) request.getAttribute(
@@ -56,7 +56,7 @@ public class MethodResolverJSF extends DefaultMethodResolver{
             return super.getResourceMethod( request );
     }
 
-    private ResourceMethod getResourceMethod( FacesContext context, BrutosContext brutosContext, ActionEvent event ){
+    private ResourceMethod getResourceMethod( FacesContext context, WebApplicationContext brutosContext, ActionEvent event ){
         Form controller = brutosContext.getController();
         MethodForm methodController;
         

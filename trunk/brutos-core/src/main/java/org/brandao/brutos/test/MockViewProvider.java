@@ -17,6 +17,8 @@
 
 package org.brandao.brutos.test;
 
+import java.util.Properties;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.view.*;
 import java.io.IOException;
 import javax.servlet.ServletContext;
@@ -96,6 +98,13 @@ public class MockViewProvider extends ViewProvider{
 
     public void setContext(ServletContext context) {
         this.context = context;
+    }
+
+    public void configure(Properties properties) {
+    }
+
+    public void show(String view, DispatcherType dispatcherType) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

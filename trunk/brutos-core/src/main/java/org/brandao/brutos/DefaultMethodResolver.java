@@ -17,6 +17,8 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.web.WebApplicationContext;
 import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
@@ -27,9 +29,8 @@ import org.brandao.brutos.mapping.MethodForm;
  */
 public class DefaultMethodResolver implements MethodResolver{
     
-    @Override
     public ResourceMethod getResourceMethod( HttpServletRequest request ){
-        BrutosContext brutosContext = BrutosContext.getCurrentInstance();
+        WebApplicationContext brutosContext = WebApplicationContext.getCurrentWebApplicationContext();
         Form controller = brutosContext.getController();
         MethodForm method = controller
                 .getMethodByName( request.getParameter( controller.getMethodId() ) );
@@ -39,6 +40,12 @@ public class DefaultMethodResolver implements MethodResolver{
 
     private ResourceMethod getResourceMethod( MethodForm methodForm ){
         return new DefaultResourceMethod( methodForm );
+    }
+
+    public ResourceMethod getResourceMethod(Form controller, Scope scope) {
+        MethodForm method = controller
+                .getMethodByName( String.valueOf( scope.get( controller.getMethodId() ) ) );
+        return method == null? null : getResourceMethod( method );
     }
 
 }

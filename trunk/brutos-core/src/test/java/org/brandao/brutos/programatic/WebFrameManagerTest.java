@@ -36,8 +36,8 @@ import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpSession;
 import junit.framework.TestCase;
 import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.BrutosContext;
-import org.brandao.brutos.ContextLoaderListener;
+import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.test.MockApplicationContext;
@@ -52,7 +52,7 @@ public class WebFrameManagerTest extends TestCase{
     public static class TestController{
 
         public TestController(){
-            BrutosContext context = BrutosContext.getCurrentInstance();
+            WebApplicationContext context = WebApplicationContext.getCurrentInstance();
             context.getContext().setAttribute("status", "OK");
         }
 
@@ -81,7 +81,7 @@ public class WebFrameManagerTest extends TestCase{
         }
 
         public void testMethod(){
-            BrutosContext context = BrutosContext.getCurrentInstance();
+            WebApplicationContext context = WebApplicationContext.getCurrentInstance();
             context.getContext().setAttribute("status", "OK");
         }
 
@@ -285,7 +285,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals( "OK" , servletContext.getAttribute( "status" ));
             }
@@ -339,7 +339,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals( "OK" , servletContext.getAttribute( "status" ));
                 assertEquals( "/test.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
@@ -402,7 +402,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals( "OK" , servletContext.getAttribute( "status" ));
                 assertEquals( "/test.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
@@ -462,7 +462,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals( "/method.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
             }
@@ -521,7 +521,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals( "/throw.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
                 assertNotNull( request.getAttribute( "methodException" ) );
@@ -580,7 +580,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals( "/method.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
             }
@@ -640,7 +640,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
 
                 Bean b = bc.getIocManager().getBean("instanceController");
@@ -703,7 +703,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertNotNull( request.getAttribute( "instanceController" ) );
             }
@@ -763,7 +763,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertNotNull( servletContext.getAttribute( "instanceController" ) );
             }
@@ -825,7 +825,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setSession( session );
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertNotNull( session.getAttribute( "instanceController" ) );
             }
@@ -887,7 +887,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setSession( session );
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 fail("expected exception");
             }
@@ -948,7 +948,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "testAction");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertNotNull( "OK", servletContext.getAttribute( "status" ) );
             }
@@ -1011,7 +1011,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("_method", "testAction");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertNotNull( "OK", servletContext.getAttribute( "status" ) );
             }
@@ -1070,7 +1070,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertNotNull( "OK", servletContext.getAttribute( "status" ) );
             }
@@ -1126,7 +1126,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("testValue", "20");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestInheritanceController" );
@@ -1185,7 +1185,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("testValue", "20");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
@@ -1248,7 +1248,7 @@ public class WebFrameManagerTest extends TestCase{
                 session.setAttribute("testValue", "20.0");
                 
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
@@ -1311,7 +1311,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
 
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
@@ -1377,7 +1377,7 @@ public class WebFrameManagerTest extends TestCase{
 
                 Scopes.get("flash").put("testValue", "Teste");
 
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
@@ -1436,7 +1436,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 servletContext.setAttribute( "testValue", 10L );
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
@@ -1498,7 +1498,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("testValue", "20");
                 request.setupAddParameter( "invoke" , "method" );
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
@@ -1563,7 +1563,7 @@ public class WebFrameManagerTest extends TestCase{
                 session.setAttribute("testValue", "20.0");
 
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
@@ -1627,7 +1627,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter( "invoke", "method" );
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
@@ -1694,7 +1694,7 @@ public class WebFrameManagerTest extends TestCase{
 
                 Scopes.get("flash").put("testValue", "Teste");
 
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
@@ -1755,7 +1755,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "method");
                 servletContext.setAttribute( "testValue", 10L );
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
@@ -1811,7 +1811,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpServletResponse response = new MockHttpServletResponse();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -1892,7 +1892,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpServletResponse response = new MockHttpServletResponse();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -1950,7 +1950,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpServletResponse response = new MockHttpServletResponse();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2009,7 +2009,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpServletResponse response = new MockHttpServletResponse();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2077,7 +2077,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpServletResponse response = new MockHttpServletResponse();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2136,7 +2136,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpServletResponse response = new MockHttpServletResponse();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2197,7 +2197,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpServletResponse response = new MockHttpServletResponse();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2259,7 +2259,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpServletResponse response = new MockHttpServletResponse();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2328,7 +2328,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpSession session = new MockHttpSession();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2404,7 +2404,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpSession session = new MockHttpSession();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2480,7 +2480,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpSession session = new MockHttpSession();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2557,7 +2557,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpSession session = new MockHttpSession();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2644,7 +2644,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpSession session = new MockHttpSession();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2733,7 +2733,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpSession session = new MockHttpSession();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2825,7 +2825,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpSession session = new MockHttpSession();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2913,7 +2913,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpSession session = new MockHttpSession();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");
@@ -2999,7 +2999,7 @@ public class WebFrameManagerTest extends TestCase{
             MockHttpSession session = new MockHttpSession();
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
-            BrutosContext bc = BrutosContext.getCurrentInstance();
+            WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
             request.setContextPath("");
             try{
                 request.setRequestURI("/test.jbrs");

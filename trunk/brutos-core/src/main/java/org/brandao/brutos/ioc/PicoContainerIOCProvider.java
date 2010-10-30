@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.ioc;
 
+import java.util.Properties;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpSessionEvent;
@@ -97,6 +98,10 @@ public class PicoContainerIOCProvider extends IOCProvider{
 
     public Object getBean(String name) {
         return applicationContainer.getComponent( name );
+    }
+
+    public void configure(Properties properties) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

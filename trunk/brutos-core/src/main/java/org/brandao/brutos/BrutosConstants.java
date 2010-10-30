@@ -17,6 +17,8 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.web.WebApplicationContext;
+
 /**
  *
  * @author Afonso Brandao
@@ -47,32 +49,32 @@ public interface BrutosConstants {
     
     public final String VALIDATOR_PROVIDER = "validator-provider";
 
-    public final String REDIRECT = BrutosContext.class.getName() + ".REDIRECT";
+    public final String REDIRECT = WebApplicationContext.class.getName() + ".REDIRECT";
 
-    public final String EXCEPTION_DATA = BrutosContext.class.getName() + ".EXCEPTION_DATA";
+    public final String EXCEPTION_DATA = WebApplicationContext.class.getName() + ".EXCEPTION_DATA";
 
-    public final String ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE = BrutosContext.class.getName() + ".ROOT";
+    public final String ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE = WebApplicationContext.class.getName() + ".ROOT";
 
-    public final String FLASH_INSTRUMENT = BrutosContext.class.getName() + ".FLASH_INSTRUMENT";
+    public final String FLASH_INSTRUMENT = WebApplicationContext.class.getName() + ".FLASH_INSTRUMENT";
 
-    public final String LOGGER = BrutosContext.class.getName() + ".LOGGER";
+    public final String LOGGER = WebApplicationContext.class.getName() + ".LOGGER";
 
-    public final String DEFAULT_RETURN_NAME = BrutosContext.class.getName() + ".RETURN";
+    public final String DEFAULT_RETURN_NAME = WebApplicationContext.class.getName() + ".RETURN";
     
-    public final String METHOD_RESOLVER = BrutosContext.class.getName() + ".METHOD_RESOLVER";
+    public final String METHOD_RESOLVER = WebApplicationContext.class.getName() + ".METHOD_RESOLVER";
 
-    public final String CONTROLLER_RESOLVER = BrutosContext.class.getName() + ".CONTROLLER_RESOLVER";
+    public final String CONTROLLER_RESOLVER = WebApplicationContext.class.getName() + ".CONTROLLER_RESOLVER";
 
-    public final String CONTROLLER = BrutosContext.class.getName() + ".CONTROLLER";
+    public final String CONTROLLER = WebApplicationContext.class.getName() + ".CONTROLLER";
 
-    public final String INVOKER = BrutosContext.class.getName() + ".INVOKER";
+    public final String INVOKER = WebApplicationContext.class.getName() + ".INVOKER";
 
-    public final String JSF_HANDLER = BrutosContext.class.getName() + ".JSF_Handler";
+    public final String JSF_HANDLER = WebApplicationContext.class.getName() + ".JSF_Handler";
     
-    public final String JSF_CONTEXT = BrutosContext.class.getName() + ".JSF_Context";
+    public final String JSF_CONTEXT = WebApplicationContext.class.getName() + ".JSF_Context";
     
-    public final String JSF_UI_VIEW_ROOT = BrutosContext.class.getName() + ".JSF_viewRoot";
+    public final String JSF_UI_VIEW_ROOT = WebApplicationContext.class.getName() + ".JSF_viewRoot";
 
-    public final String JSF_ACTION_LISTENER = BrutosContext.class.getName() + ".JSF_Action_Listener";
+    public final String JSF_ACTION_LISTENER = WebApplicationContext.class.getName() + ".JSF_Action_Listener";
 
 }

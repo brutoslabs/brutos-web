@@ -18,8 +18,10 @@
 package org.brandao.brutos;
 
 import javax.servlet.http.HttpServletRequest;
+import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.WebFrameManager;
+import org.brandao.brutos.programatic.ControllerManager;
 
 /**
  *
@@ -38,6 +40,10 @@ public class DefaultResolveController implements ControllerResolver{
         
         path = path.replace( "\\", "/" );
         return webFrameManager.getForm( path );
+    }
+
+    public Form getController(ControllerManager controllerManager, InterceptorHandler handler) {
+        return controllerManager.getForm( handler.requestId() );
     }
     
 }

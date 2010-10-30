@@ -15,12 +15,13 @@
  *
  */
 
-package org.brandao.brutos.scope;
+package org.brandao.brutos.web.scope;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.brandao.brutos.ContextLoaderListener;
+import org.brandao.brutos.web.ContextLoaderListener;
+import org.brandao.brutos.scope.Scope;
 
 /**
  *

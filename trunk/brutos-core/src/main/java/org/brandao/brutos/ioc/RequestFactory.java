@@ -18,7 +18,7 @@
 package org.brandao.brutos.ioc;
 
 import javax.servlet.ServletRequest;
-import org.brandao.brutos.ContextLoaderListener;
+import org.brandao.brutos.web.ContextLoaderListener;
 
 /**
  *

@@ -15,9 +15,10 @@
  *
  */
 
-package org.brandao.brutos.scope;
+package org.brandao.brutos.web.scope;
 
 import javax.servlet.ServletContext;
+import org.brandao.brutos.scope.Scope;
 
 /**
  *
