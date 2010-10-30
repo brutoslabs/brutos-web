@@ -21,7 +21,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ContextLoaderListener;
+import org.brandao.brutos.web.ContextLoaderListener;
 
 /**
  *

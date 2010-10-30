@@ -24,7 +24,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.brandao.brutos.BrutosContext;
+import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.http.ParameterList;
 
@@ -46,7 +46,7 @@ public class ListType implements CollectionType{
     private Type serializableType;
     
     public ListType(){
-        BrutosContext context = BrutosContext.getCurrentInstance();
+        WebApplicationContext context = WebApplicationContext.getCurrentInstance();
         String className = context
                 .getConfiguration()
                     .getProperty( "org.brandao.brutos.type.list",

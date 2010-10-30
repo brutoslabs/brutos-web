@@ -30,8 +30,8 @@ import javax.servlet.ServletRequestEvent;
 import junit.framework.TestCase;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.BrutosContext;
-import org.brandao.brutos.ContextLoaderListener;
+import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.interceptor.AbstractInterceptor;
 import org.brandao.brutos.interceptor.InterceptedException;
@@ -142,7 +142,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertNotNull( servletContext.getAttribute( "OK" ) );
             }
@@ -194,7 +194,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertNotNull( servletContext.getAttribute( "OK" ) );
             }
@@ -255,7 +255,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertNotNull( servletContext.getAttribute( "OK" ) );
             }
@@ -317,7 +317,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertNull( servletContext.getAttribute( "OK" ) );
             }
@@ -379,7 +379,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals("value1", servletContext.getAttribute( "testProperty" ) );
             }
@@ -446,7 +446,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals("value2", servletContext.getAttribute( "testProperty" ) );
             }
@@ -514,7 +514,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals("value3", servletContext.getAttribute( "testProperty" ) );
             }
@@ -576,7 +576,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                BrutosContext bc = BrutosContext.getCurrentInstance();
+                WebApplicationContext bc = WebApplicationContext.getCurrentInstance();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals("value1", servletContext.getAttribute( "testProperty" ) );
             }

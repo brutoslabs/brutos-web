@@ -17,14 +17,19 @@
 
 package org.brandao.brutos;
 
+import java.util.Map;
 import org.brandao.brutos.programatic.InterceptorManager;
 import java.util.Properties;
+import java.util.Set;
 import javax.servlet.ServletContextEvent;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.old.programatic.*;
 import org.brandao.brutos.programatic.ControllerManager;
+import org.brandao.brutos.scope.CustomScopeConfigurer;
+import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
@@ -46,6 +51,8 @@ public abstract class ApplicationContext {
     private Invoker invoker;
     private Properties configuration;
     private LoggerProvider loggerProvider;
+    private ControllerResolver controllerResolver;
+    private MethodResolver MethodResolver;
     
     public ApplicationContext() {
         this.configuration = new Configuration();
@@ -64,21 +71,34 @@ public abstract class ApplicationContext {
     }
     
     public void configure( Properties config ){
+        
         this.configuration = config;
         this.iocManager = new IOCManager();
-        this.iocProvider = IOCProvider.getProvider(config);
-        this.iocProvider.configure(config);
+        this.setIocProvider(IOCProvider.getProvider(config));
+        this.getIocProvider().configure(config);
         this.interceptorManager = new InterceptorManager();
         this.webFrameManager = new WebFrameManager( this.interceptorManager, this.iocManager );
-        this.invoker = new Invoker( getControllerResolver(), iocProvider, controllerManager, getMethodResolver(), this );
+        this.controllerResolver = getNewControllerResolver();
+        this.MethodResolver = getNewMethodResolver();
+        this.invoker = new Invoker(  this.getControllerResolver(), getIocProvider(), controllerManager, this.getMethodResolver(), this );
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
         this.controllerManager = new ControllerManager(this.interceptorManager, this.getValidatorProvider());
+
+        if( iocProvider.containsBeanDefinition("customScopes") ){
+            CustomScopeConfigurer customScopes =
+                    (CustomScopeConfigurer)iocProvider.getInstance("customScopes");
+            Map scopes = customScopes.getCustomScopes();
+            Set i = scopes.keySet();
+            for( Object key: i )
+                Scopes.register( (String)key,(Scope)scopes.get(key) );
+        }
+
         this.loadInterceptorManager(interceptorManager);
         this.loadController(getControllerManager());
     }
 
-    protected ControllerResolver getControllerResolver(){
+    protected ControllerResolver getNewControllerResolver(){
         try{
             ControllerResolver instance = (ControllerResolver) Class.forName(
                     configuration.getProperty(
@@ -97,7 +117,7 @@ public abstract class ApplicationContext {
         }
     }
 
-    protected MethodResolver getMethodResolver(){
+    protected MethodResolver getNewMethodResolver(){
         try{
             MethodResolver instance = (MethodResolver) Class.forName(
                     configuration.getProperty(
@@ -199,6 +219,22 @@ public abstract class ApplicationContext {
 
     public LoggerProvider getLoggerProvider() {
         return loggerProvider;
+    }
+
+    public IOCProvider getIocProvider() {
+        return iocProvider;
+    }
+
+    public void setIocProvider(IOCProvider iocProvider) {
+        this.iocProvider = iocProvider;
+    }
+
+    public ControllerResolver getControllerResolver() {
+        return controllerResolver;
+    }
+
+    public MethodResolver getMethodResolver() {
+        return MethodResolver;
     }
     
 }

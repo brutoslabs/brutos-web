@@ -18,6 +18,7 @@
 package org.brandao.brutos.ioc.spring;
 
 import java.util.List;
+import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.ScopeType;
@@ -39,7 +40,7 @@ import org.brandao.brutos.old.programatic.Bean;
  */
 public class XMLParser {
     
-    private Configuration config;
+    private Properties config;
     
     public XMLParser() {
     }
@@ -359,11 +360,11 @@ public class XMLParser {
         return result;
     }
 
-    public Configuration getConfig() {
+    public Properties getConfig() {
         return config;
     }
 
-    public void setConfig(Configuration config) {
+    public void setConfig(Properties config) {
         this.config = config;
     }
 }

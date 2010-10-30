@@ -25,7 +25,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.BrutosContext;
+import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.http.DataInput;
 import org.brandao.brutos.http.DataOutput;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
@@ -57,7 +57,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
 
     @Override
     public UIViewRoot createView(FacesContext context, String viewName) {
-        BrutosContext brutosContext = BrutosContext.getCurrentInstance();
+        WebApplicationContext brutosContext = WebApplicationContext.getCurrentInstance();
         Form controller = brutosContext.getController();
 
         if( controller != null )
@@ -81,7 +81,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     public void renderView(FacesContext context, UIViewRoot viewRoot)
         throws IOException, FacesException {
 
-        BrutosContext brutosContext = BrutosContext.getCurrentInstance();
+        WebApplicationContext brutosContext = WebApplicationContext.getCurrentInstance();
         Form controller = brutosContext.getController();
         
 
@@ -92,7 +92,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     }
 
     private void invokeController( Form controller, FacesContext context, UIViewRoot viewRoot ){
-        BrutosContext brutosContext     = BrutosContext.getCurrentInstance();
+        WebApplicationContext brutosContext     = WebApplicationContext.getCurrentInstance();
         HttpServletRequest request   = brutosContext.getRequest();
         HttpServletResponse response = (HttpServletResponse)context
                     .getExternalContext().getResponse();
@@ -122,7 +122,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     @Override
     public UIViewRoot restoreView(FacesContext context, String arg1) {
         
-        BrutosContext brutosContext = BrutosContext.getCurrentInstance();
+        WebApplicationContext brutosContext = WebApplicationContext.getCurrentInstance();
         Form controller = brutosContext.getController();
 
         if( controller != null )
@@ -132,7 +132,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     }
 
     private void loadController( Form controller, FacesContext context ){
-        BrutosContext brutosContext = BrutosContext.getCurrentInstance();
+        WebApplicationContext brutosContext = WebApplicationContext.getCurrentInstance();
         IOCManager iocManager = brutosContext.getIocManager();
         Object instance = iocManager.getInstance( controller.getId() );
         

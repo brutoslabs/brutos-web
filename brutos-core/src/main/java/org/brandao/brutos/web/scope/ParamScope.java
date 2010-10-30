@@ -15,25 +15,28 @@
  *
  */
 
-package org.brandao.brutos.scope;
+package org.brandao.brutos.web.scope;
 
 import javax.servlet.ServletRequest;
-import org.brandao.brutos.ContextLoaderListener;
+import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.http.BrutosRequest;
 import org.brandao.brutos.http.MutableRequest;
+import org.brandao.brutos.scope.Scope;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class RequestScope implements Scope{
+public class ParamScope implements Scope{
     
-    public RequestScope() {
+    public ParamScope() {
     }
 
     public void put(String name, Object value) {
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
-        request.setAttribute(name, value);
+        BrutosRequest request = (BrutosRequest) ContextLoaderListener.currentRequest.get();
+        request.setObject(name, value);
+        //ServletRequest request = ContextLoaderListener.currentRequest.get();
+        //request.setAttribute(name, value);
     }
 
     public Object get(String name) {
@@ -47,7 +50,7 @@ public class RequestScope implements Scope{
     }
 
     public void remove( String name ){
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
-        request.removeAttribute(name);
+        //ServletRequest request = ContextLoaderListener.currentRequest.get();
+        //request.removeAttribute(name);
     }
 }

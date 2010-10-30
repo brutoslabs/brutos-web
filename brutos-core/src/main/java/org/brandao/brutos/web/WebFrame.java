@@ -14,12 +14,16 @@
  * either express or implied.
  *
  */
-package org.brandao.brutos;
+package org.brandao.brutos.web;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.RedirectException;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 

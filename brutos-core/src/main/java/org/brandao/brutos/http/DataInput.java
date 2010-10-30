@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.WebFrame;
+import org.brandao.brutos.web.WebFrame;
 import org.brandao.brutos.mapping.FieldForm;
 import org.brandao.brutos.mapping.Form;
 

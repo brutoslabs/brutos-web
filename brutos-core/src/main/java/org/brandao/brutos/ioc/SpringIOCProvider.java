@@ -18,6 +18,7 @@
 package org.brandao.brutos.ioc;
 
 import java.io.FileOutputStream;
+import java.util.Properties;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestEvent;
@@ -39,7 +40,7 @@ public class SpringIOCProvider extends IOCProvider{
     private ServletContextListener springServletContex;
     private ServletContextEvent sce;
     private RequestContextListener rcl;
-    private Configuration properties;
+    private Properties properties;
 
     public SpringIOCProvider() {
         this.rcl = new RequestContextListener();
@@ -63,7 +64,7 @@ public class SpringIOCProvider extends IOCProvider{
         contextClassLoader( properties, sce );
     }
 
-    private void contextClassLoader( Configuration properties, ServletContextEvent sce ){
+    private void contextClassLoader( Properties properties, ServletContextEvent sce ){
         String contextClassName = 
                 properties.getProperty( 
                     "org.brandao.brutos.ioc.spring.context_loader_listener",
@@ -100,7 +101,7 @@ public class SpringIOCProvider extends IOCProvider{
             springServletContex.contextDestroyed( sce );
     }
     
-    public void loadBeans( Configuration properties ){
+    public void loadBeans( Properties properties ){
         XMLParser parser = new XMLParser();
         parser.setConfig( properties );
         StringBuffer xml = parser.getBeans( getBeansDefinition() );
@@ -154,5 +155,9 @@ public class SpringIOCProvider extends IOCProvider{
 
         return context.getBean( name );
     }
+
+    public void configure(Properties properties) {
+         this.properties = properties;
+   }
     
 }
