@@ -29,24 +29,23 @@ import org.brandao.brutos.Invoker;
  * 
  * @author Afonso Brandao
  */
-public class BrutosAction extends HttpServlet {
+public class DispatcherServlet extends HttpServlet {
     
-    private WebApplicationContext brutosCore;
+    private WebApplicationContext webApplicationContext;
     private Invoker invoker;
 
-    @Override
     public void init() throws ServletException{
         super.init();
-        brutosCore = (WebApplicationContext) getServletContext().getAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
+        webApplicationContext = (WebApplicationContext) getServletContext().getAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
 
-        if( brutosCore == null ){
+        if( webApplicationContext == null ){
             throw new IllegalStateException(
                     "Unable to initialize the servlet was not configured for the application context root - " +
                     "make sure you have defined in your web.xml ContextLoader!"
             );
         }
         else
-            invoker = brutosCore.getInvoker();
+            invoker = webApplicationContext.getInvoker();
 
         Throwable ex = (Throwable)getServletContext().getAttribute( BrutosConstants.EXCEPTION );
 
@@ -55,29 +54,34 @@ public class BrutosAction extends HttpServlet {
 
     }
     
-    @Override
     public void destroy(){
         super.destroy();
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        brutosCore.getInvoker().invoke( brutosCore, response );
+        try{
+            RequestInfo requestInfo = new RequestInfo();
+            requestInfo.setRequest( request );
+            requestInfo.setResponse(response);
+            RequestInfo.setCurrent(requestInfo);
+            invoker.invoke(request.getRequestURI());
+        }
+        finally{
+            RequestInfo.removeCurrent();
+        }
     }
     
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     }
     
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     }
     
-    @Override
     public String getServletInfo() {
         return "Brutos Servlet";
     }

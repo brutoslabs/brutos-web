@@ -2,15 +2,15 @@
  * Brutos Web MVC http://brutos.sourceforge.net/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
+ * This library is free software. You can redistribute it
  * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
+ * License (GPL) version 3.0 or (at your option) any later
  * version.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ *
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied.
  *
  */
@@ -37,41 +37,48 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
-import org.brandao.brutos.scope.ApplicationScope;
+import org.brandao.brutos.old.programatic.InterceptorManager;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
-import org.brandao.brutos.scope.FlashScope;
 import org.brandao.brutos.scope.IOCScope;
-import org.brandao.brutos.scope.RequestScope;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
-import org.brandao.brutos.scope.SessionScope;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
-import org.brandao.brutos.xml.XMLApplicationContext;
+import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.scope.ApplicationScope;
+import org.brandao.brutos.web.scope.FlashScope;
+import org.brandao.brutos.web.scope.RequestScope;
+import org.brandao.brutos.web.scope.SessionScope;
 
 /**
- *
+ * @deprecated 
  * @author Afonso Brandao
  */
-public class BrutosContext {
-    
-    private ApplicationContext appContext;
+public class BrutosContext extends WebApplicationContext{
+
+    private Configuration configuration;
+    private IOCManager iocManager;
+    private WebFrameManager webFrameManager;
+    private ViewProvider viewProvider;
+    private InterceptorManager interceptorManager;
+    private List<ApplicationContext> services = new ArrayList<ApplicationContext>();
+    private LoggerProvider loggerProvider;
     private Logger logger;
-    
+    private Invoker invoker;
+    private ValidatorProvider validatorProvider;
+
     public BrutosContext(){
-        this.appContext = new XMLApplicationContext();
     }
 
     public synchronized void start( ServletContextEvent sce ){
-        
+
         if( sce.getServletContext().getAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE ) != null ){
             throw new IllegalStateException(
                             "Cannot initialize context because there is already a root application context present - " +
                             "check whether you have multiple ContextLoader definitions in your web.xml!");
         }
-        
+
         sce.getServletContext().setAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this );
         loadContext( sce );
     }
@@ -83,6 +90,7 @@ public class BrutosContext {
             loadLogger( sce.getServletContext() );
             logger.info( "Initializing Brutos root WebApplicationContext" );
             loadInvoker( sce.getServletContext() );
+            loadServices( configuration, sce );
             resolveController( sce.getServletContext() );
             methodResolver( sce.getServletContext() );
             registerCustomEditors();
@@ -133,6 +141,8 @@ public class BrutosContext {
     }
 
     private void loadInvoker( ServletContext sc ){
+        this.invoker = new Invoker();
+
         sc.setAttribute( BrutosConstants.INVOKER,this.getInvoker());
     }
 
@@ -149,11 +159,10 @@ public class BrutosContext {
     private void loadManager( Configuration config, ServletContextEvent sce ){
         this.iocManager =  new IOCManager(
                             IOCProvider.getProvider(
-                                config,
-                                sce )
+                                config )
                             );
-        
-        this.iocManager.getProvider().configure( config , sce);
+
+        this.iocManager.getProvider().configure( config );
 
         this.interceptorManager =  new InterceptorManager( iocManager );
 
@@ -202,7 +211,7 @@ public class BrutosContext {
         serviceNames.addAll( getCustomServices() );
         logger.info( String.format( "Contexts: %s", serviceNames.toString()) );
         loadServices(serviceNames);
-        
+
     }
 
     private List<String> getCustomServices(){
@@ -273,13 +282,13 @@ public class BrutosContext {
     private void resolveController( ServletContext context ){
         try{
             ControllerResolver instance = (ControllerResolver) Class.forName(
-                    configuration.getProperty( 
-                    "org.brandao.brutos.controller.class", 
-                    "org.brandao.brutos.DefaultResolveController" 
-                ), 
-                    true, 
-                    Thread.currentThread().getContextClassLoader() 
-             
+                    configuration.getProperty(
+                    "org.brandao.brutos.controller.class",
+                    "org.brandao.brutos.DefaultResolveController"
+                ),
+                    true,
+                    Thread.currentThread().getContextClassLoader()
+
             ).newInstance();
 
             context
@@ -311,17 +320,19 @@ public class BrutosContext {
             throw new BrutosException( e );
         }
     }
-    
+
     private void loadParameters( ServletContextEvent sce ){
+        setConfiguration(new Configuration());
+
         ServletContext context = sce.getServletContext();
         Enumeration initParameters = context.getInitParameterNames();
-        
+
         while( initParameters.hasMoreElements() ){
             String name = (String) initParameters.nextElement();
             getConfiguration().setProperty( name, context.getInitParameter( name ) );
         }
     }
-    
+
     public synchronized void stop( ServletContextEvent sce ){
 
         if( services != null ){
@@ -332,7 +343,7 @@ public class BrutosContext {
                 catch( Exception e ){}
             }
         }
-        
+
         ServletContext sc = sce.getServletContext();
         sc.removeAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
         sc.removeAttribute( BrutosConstants.IOC_MANAGER );
@@ -360,9 +371,13 @@ public class BrutosContext {
         this.webFrameManager    = null;
         this.invoker            = null;
     }
-    
-    public Properties getConfiguration() {
-        return appContext.getConfiguration();
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
     }
 
     public IOCManager getIocManager() {
@@ -413,7 +428,7 @@ public class BrutosContext {
 
         return brutosCore;
     }
-    
+
     public ServletContext getContext(){
         return ContextLoaderListener.currentContext;
     }
@@ -421,7 +436,7 @@ public class BrutosContext {
     public HttpServletRequest getRequest(){
         return (HttpServletRequest) ContextLoaderListener.currentRequest.get();
     }
-    
+
     public Form getController(){
         BrutosContext brutosInstance = BrutosContext.getCurrentInstance();
         return (Form) brutosInstance.getRequest()

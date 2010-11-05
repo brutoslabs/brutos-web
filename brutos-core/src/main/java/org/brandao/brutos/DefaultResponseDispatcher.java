@@ -15,29 +15,26 @@
  *
  */
 
-package org.brandao.brutos.validator;
+package org.brandao.brutos;
 
-import java.util.Properties;
-import org.brandao.brutos.Configuration;
+import java.io.OutputStream;
+import javax.swing.JOptionPane;
 
 /**
- * Validation of a value.
- * 
+ *
  * @author Afonso Brandao
  */
-public interface Validator {
+public class DefaultResponseDispatcher implements ResponseDispatcher{
 
-    /**
-     * Configure the validator.
-     * @param config Configuration.
-     */
-    public void configure( Properties config );
+    public void process( Object object ){
+        JOptionPane.showMessageDialog(null, String.valueOf( object ) );
+    }
 
-    /**
-     * Checks if the value is valid.
-     * @param source Source value.
-     * @param value Value to be checked.
-     */
-    public void validate( Object source, Object value );
+    public void setProperty( String name, Object value ){
+    }
 
+    public OutputStream processStream() {
+        return null;
+    }
+    
 }

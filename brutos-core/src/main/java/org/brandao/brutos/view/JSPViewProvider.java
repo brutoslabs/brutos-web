@@ -18,11 +18,15 @@
 package org.brandao.brutos.view;
 
 import java.io.IOException;
+import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
+import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.web.RequestInfo;
 
 /**
  *
@@ -33,7 +37,7 @@ public class JSPViewProvider extends ViewProvider{
     public JSPViewProvider() {
     }
 
-    public void configure(Configuration properties) {
+    public void configure(Properties properties) {
         //not used
     }
 
@@ -55,4 +59,26 @@ public class JSPViewProvider extends ViewProvider{
         }
     }
 
+    public void show(String view, DispatcherType dispatcherType) throws ServletException, IOException {
+
+        if( view == null )
+            return;
+        
+        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
+
+        if( dispatcherType == DispatcherType.FORWARD ){
+            requestInfo.getRequest().getRequestDispatcher( view )
+                        .forward( requestInfo.getRequest(), requestInfo.getResponse() );
+        }
+        else
+        if( dispatcherType == DispatcherType.INCLUDE ){
+            requestInfo.getRequest().getRequestDispatcher( view )
+                        .include( requestInfo.getRequest(), requestInfo.getResponse() );
+        }
+        else
+        if( dispatcherType == DispatcherType.REDIRECT )
+            ((HttpServletResponse)requestInfo.getResponse()).sendRedirect(view);
+        else
+            throw new BrutosException( "invalid dispatcher type: " + dispatcherType );
+    }
 }

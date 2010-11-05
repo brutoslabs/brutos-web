@@ -113,6 +113,12 @@ public class WebApplicationContext {
         config.put( "org.brandao.brutos.controller.class" ,
                     controllerResolverName );
 
+        String responseDispatcher = config
+                .getProperty( "org.brandao.brutos.controller.response_dispatcher",
+                              WebResponseDispatcher.class.getName() );
+
+        config.put( "org.brandao.brutos.controller.response_dispatcher" ,
+                    responseDispatcher );
         
     }
 
@@ -133,8 +139,6 @@ public class WebApplicationContext {
 
         sc.setAttribute( BrutosConstants.IOC_PROVIDER,
                                             appContext.getIocProvider() );
-        sc.setAttribute( BrutosConstants.WEBFRAME_MANAGER,
-                                            appContext.getWebFrameManager() );
         sc.setAttribute( BrutosConstants.INTERCEPTOR_MANAGER,
                                             this.getInterceptorManager() );
         sc.setAttribute( BrutosConstants.VIEW_PROVIDER,
@@ -175,14 +179,6 @@ public class WebApplicationContext {
     
     public Properties getConfiguration() {
         return this.config;
-    }
-
-    public IOCManager getIocManager() {
-        return appContext.getIocManager();
-    }
-
-    public WebFrameManager getWebFrameManager() {
-        return appContext.getWebFrameManager();
     }
 
     public ViewProvider getViewProvider() {

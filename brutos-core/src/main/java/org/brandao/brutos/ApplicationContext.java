@@ -53,7 +53,8 @@ public abstract class ApplicationContext {
     private LoggerProvider loggerProvider;
     private ControllerResolver controllerResolver;
     private MethodResolver MethodResolver;
-    
+    private ResponseDispatcher responseDispatcher;
+
     public ApplicationContext() {
         this.configuration = new Configuration();
     }
@@ -80,6 +81,7 @@ public abstract class ApplicationContext {
         this.webFrameManager = new WebFrameManager( this.interceptorManager, this.iocManager );
         this.controllerResolver = getNewControllerResolver();
         this.MethodResolver = getNewMethodResolver();
+        this.responseDispatcher = getNewResponseDispatcher();
         this.invoker = new Invoker(  this.getControllerResolver(), getIocProvider(), controllerManager, this.getMethodResolver(), this );
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
@@ -94,8 +96,10 @@ public abstract class ApplicationContext {
                 Scopes.register( (String)key,(Scope)scopes.get(key) );
         }
 
+        this.loadIOCManager(iocManager);
         this.loadInterceptorManager(interceptorManager);
         this.loadController(getControllerManager());
+        this.loadWebFrameManager(webFrameManager);
     }
 
     protected ControllerResolver getNewControllerResolver(){
@@ -104,6 +108,25 @@ public abstract class ApplicationContext {
                     configuration.getProperty(
                     "org.brandao.brutos.controller.class",
                     "org.brandao.brutos.DefaultResolveController"
+                ),
+                    true,
+                    Thread.currentThread().getContextClassLoader()
+
+            ).newInstance();
+
+            return instance;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected ResponseDispatcher getNewResponseDispatcher(){
+        try{
+            ResponseDispatcher instance = (ResponseDispatcher) Class.forName(
+                    configuration.getProperty(
+                    "org.brandao.brutos.controller.response_dispatcher",
+                    "org.brandao.brutos.DefaultResponseDispatcher"
                 ),
                     true,
                     Thread.currentThread().getContextClassLoader()
@@ -193,6 +216,18 @@ public abstract class ApplicationContext {
     
     protected abstract void loadController( ControllerManager controllerManager );
 
+    public static ApplicationContext getCurrentApplicationContext(){
+        Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
+
+        if( requestScope == null )
+            throw new BrutosException( "scope not configured: " + ScopeType.REQUEST.toString() );
+
+        ApplicationContext app = (ApplicationContext)
+                        requestScope.get( BrutosConstants.APPLICATION_CONTEXT );
+
+        return app;
+    }
+
     public Object getController( Class controllerClass ){
         return null;
     }
@@ -236,5 +271,9 @@ public abstract class ApplicationContext {
     public MethodResolver getMethodResolver() {
         return MethodResolver;
     }
-    
+
+    public ResponseDispatcher getResponseDispatcher() {
+        return responseDispatcher;
+    }
+
 }

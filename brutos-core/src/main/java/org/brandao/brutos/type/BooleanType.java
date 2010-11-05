@@ -22,6 +22,8 @@ import java.io.PrintWriter;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.ResponseDispatcher;
 
 /**
  *
@@ -48,5 +50,18 @@ public class BooleanType implements Type{
             PrintWriter out = response.getWriter();
             out.print( String.valueOf( value ) );
         }
+    }
+
+    public Object getValue(Object value) {
+        if( value instanceof Boolean )
+            return value;
+        else
+            return "true".equals( value );
+    }
+
+    public void setValue(Object value) throws IOException {
+        ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+        ResponseDispatcher response = app.getResponseDispatcher();
+        response.process(value);
     }
 }

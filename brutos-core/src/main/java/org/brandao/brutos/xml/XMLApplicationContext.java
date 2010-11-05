@@ -24,8 +24,10 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import javax.servlet.ServletContextEvent;
 import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.programatic.ControllerManager;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
@@ -98,12 +100,12 @@ public class XMLApplicationContext extends ApplicationContext{
 
     }
 
-    public void configure( Configuration config, ServletContextEvent sce ){
+    public void configure( Properties config, ServletContextEvent sce ){
         loadData( sce );
         preLoad( config );
     }
 
-    private void preLoad( Configuration config ){
+    private void preLoad( Properties config ){
         try{
             if( !existXML )
                 return;
@@ -187,7 +189,7 @@ public class XMLApplicationContext extends ApplicationContext{
             throw new BrutosException( "unsupported version: " + version );
     }
 
-    private void contextParams( Map<String,Object> data, Configuration config ){
+    private void contextParams( Map<String,Object> data, Properties config ){
         ConfigurationXMLMapping configurationMapping = new ConfigurationXMLMapping( config );
         configurationMapping.setData( data );
     }
@@ -195,6 +197,9 @@ public class XMLApplicationContext extends ApplicationContext{
     private void loadTypes( List<Map<String,String>> data ) throws ClassNotFoundException{
         TypeXMLMapping typeMapping = new TypeXMLMapping();
         typeMapping.processData( data );
+    }
+
+    protected void loadController(ControllerManager controllerManager) {
     }
 
 }

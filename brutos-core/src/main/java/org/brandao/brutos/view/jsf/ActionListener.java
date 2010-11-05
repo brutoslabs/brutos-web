@@ -36,7 +36,7 @@ public class ActionListener extends ActionListenerImpl{
 
     @Override
     public void processAction(ActionEvent event) throws AbortProcessingException {
-        WebApplicationContext brutosContext = WebApplicationContext.getCurrentInstance();
+        WebApplicationContext brutosContext = WebApplicationContext.getCurrentWebApplicationContext();
         Form controller = brutosContext.getController();
         
         if( controller != null ){
