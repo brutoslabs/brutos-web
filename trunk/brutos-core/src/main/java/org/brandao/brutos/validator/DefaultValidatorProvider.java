@@ -18,6 +18,7 @@
 package org.brandao.brutos.validator;
 
 import java.util.List;
+import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.mapping.FieldBean;
@@ -35,9 +36,9 @@ public class DefaultValidatorProvider extends ValidatorProvider{
 
         private Type integerType = Types.getType(Integer.class);
 
-        private Configuration config;
+        private Properties config;
 
-        public void configure(Configuration config) {
+        public void configure(Properties config) {
             this.config = config;
         }
 
@@ -145,7 +146,7 @@ public class DefaultValidatorProvider extends ValidatorProvider{
 
     }
 
-    public void configure(Configuration config) {
+    public void configure(Properties config) {
     }
 
     public Validator getValidator(Configuration config) {

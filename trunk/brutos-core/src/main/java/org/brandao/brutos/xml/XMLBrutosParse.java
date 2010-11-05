@@ -27,7 +27,7 @@ import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.mapping.Mapping;
-import org.brandao.brutos.programatic.InterceptorManager;
+import org.brandao.brutos.old.programatic.InterceptorManager;
 
 /**
  *
@@ -82,8 +82,8 @@ public class XMLBrutosParse {
         iocMapping = new IOCXMLMapping( 
                         new IOCManager( 
                             IOCProvider.getProvider( 
-                                configurationMapping.getConfiguration(), 
-                                contextEvent ) 
+                                configurationMapping.getConfiguration()/*,
+                                contextEvent*/ )
                             ) 
                     );
     }

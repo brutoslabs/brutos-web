@@ -22,9 +22,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.web.RequestInfo;
 
 /**
- * 
+ * @deprecated 
  * @author Afonso Brandao
  */
 public class BrutosAction extends HttpServlet {
@@ -60,7 +61,17 @@ public class BrutosAction extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        brutosCore.getInvoker().invoke( brutosCore, response );
+        try{
+            RequestInfo requestInfo = new RequestInfo();
+            requestInfo.setRequest( request );
+            requestInfo.setResponse(response);
+            RequestInfo.setCurrent(requestInfo);
+            brutosCore.getInvoker().invoke( brutosCore, response );
+        }
+        finally{
+            RequestInfo.removeCurrent();
+        }
+
     }
     
     @Override

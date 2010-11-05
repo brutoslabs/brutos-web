@@ -18,7 +18,7 @@
 package org.brandao.brutos.xml;
 
 import java.util.Map;
-import org.brandao.brutos.Configuration;
+import java.util.Properties;
 
 /**
  *
@@ -26,9 +26,9 @@ import org.brandao.brutos.Configuration;
  */
 public class ConfigurationXMLMapping {
     
-    private Configuration configuration;
+    private Properties configuration;
     
-    public ConfigurationXMLMapping( Configuration configuration ) {
+    public ConfigurationXMLMapping( Properties configuration ) {
         this.setConfiguration(configuration);
     }
     
@@ -42,11 +42,11 @@ public class ConfigurationXMLMapping {
         }
     }
 
-    public Configuration getConfiguration() {
+    public Properties getConfiguration() {
         return configuration;
     }
 
-    public void setConfiguration(Configuration configuration) {
+    public void setConfiguration(Properties configuration) {
         this.configuration = configuration;
     }
 }

@@ -65,7 +65,7 @@ public class Invoker {
      * @return
      * @throws IOException
      */
-    public boolean invoke( WebApplicationContext brutosContext, HttpServletResponse response ) throws IOException{
+    public boolean invoke( BrutosContext brutosContext, HttpServletResponse response ) throws IOException{
 
         //Form form = brutosContext.getController();
         Form form = brutosContext

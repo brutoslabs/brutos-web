@@ -44,7 +44,7 @@ public class MethodResolverJSF extends DefaultMethodResolver{
 
     @Override
     public ResourceMethod getResourceMethod(HttpServletRequest request) {
-        WebApplicationContext brutosContext = WebApplicationContext.getCurrentInstance();
+        WebApplicationContext brutosContext = WebApplicationContext.getCurrentWebApplicationContext();
         FacesContext context = FacesContext.getCurrentInstance();
 
         ActionEvent event = (ActionEvent) request.getAttribute(
