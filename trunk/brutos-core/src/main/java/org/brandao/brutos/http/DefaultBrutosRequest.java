@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.type.json.JSONDecoder;
 
 
 
@@ -77,6 +78,14 @@ public class DefaultBrutosRequest extends HttpServletRequestWrapper implements B
                     this.setObject( input.getName() , input.getValue() );
                 }
 
+            }
+            else
+            if( this.getContentType().equals( "application/json" ) ){
+                JSONDecoder decoder = new JSONDecoder( this.getInputStream() );
+                Map data = decoder.getInstance(null);
+                for( Object o: data.keySet() ){
+                    this.setParameter(String.valueOf(o), String.valueOf(data.get(o)));
+                }
             }
         }
         catch( BrutosException e ){

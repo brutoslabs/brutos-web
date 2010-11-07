@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 import java.io.OutputStream;
+import java.util.Map;
 
 /**
  *
@@ -25,10 +26,8 @@ import java.io.OutputStream;
  */
 public interface ResponseDispatcher {
 
-    public void process( Object object );
+    public void process( Object object, Map config, Map info );
 
-    public OutputStream processStream();
+    public OutputStream processStream( Map config, Map info );
 
-    public void setProperty( String name, Object value );
-    
 }
