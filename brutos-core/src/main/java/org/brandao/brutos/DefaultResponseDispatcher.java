@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 import java.io.OutputStream;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,10 +31,14 @@ public class DefaultResponseDispatcher implements ResponseDispatcher{
         JOptionPane.showMessageDialog(null, String.valueOf( object ) );
     }
 
-    public void setProperty( String name, Object value ){
+    public OutputStream processStream() {
+        return null;
     }
 
-    public OutputStream processStream() {
+    public void process(Object object, Map config, Map info) {
+    }
+
+    public OutputStream processStream(Map config, Map info) {
         return null;
     }
     

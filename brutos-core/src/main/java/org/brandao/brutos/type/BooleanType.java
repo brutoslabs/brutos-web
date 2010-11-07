@@ -62,6 +62,6 @@ public class BooleanType implements Type{
     public void setValue(Object value) throws IOException {
         ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
         ResponseDispatcher response = app.getResponseDispatcher();
-        response.process(value);
+        response.process(value,null,null);
     }
 }

@@ -21,10 +21,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.ResponseDispatcher;
 import org.brandao.brutos.http.BrutosFile;
+import org.brandao.brutos.web.WebResponseDispatcher;
 
 /**
  *
@@ -73,5 +78,49 @@ public class BrutosFileType implements Type{
     
     public Class getClassType() {
         return BrutosFile.class;
+    }
+
+    public Object getValue(Object value) {
+        if( value instanceof BrutosFile )
+            return value;
+        else
+            return null;
+    }
+
+    public void setValue(Object value) throws IOException {
+        if( value instanceof BrutosFile ){
+            ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+            ResponseDispatcher response = app.getResponseDispatcher();
+
+            BrutosFile f = (BrutosFile)value;
+
+            Map config = new HashMap();
+            Map info = new HashMap();
+            
+            if( f.getFile() != null ){
+                info.put(
+                    "Content-Disposition",
+                    "attachment;filename=" + f.getFileName() + ";"
+                );
+            }
+
+            config.put( WebResponseDispatcher.CONTENT_LENGTH, (int)f.getFile().length() );
+
+            InputStream in   = new FileInputStream( f.getFile() );
+            OutputStream out = response.processStream(config, info);
+
+
+            try{
+                byte[] buffer = new byte[ 3072 ];
+                int length;
+
+                while( (length = in.read( buffer )) != -1 )
+                    out.write( buffer, 0, length );
+            }
+            finally{
+                if( in != null )
+                    in.close();
+            }
+        }
     }
 }

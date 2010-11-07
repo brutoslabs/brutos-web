@@ -19,10 +19,12 @@ package org.brandao.brutos.web;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.*;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,39 +32,35 @@ import javax.swing.JOptionPane;
  */
 public class WebResponseDispatcher implements ResponseDispatcher{
 
-    Properties config;
+    public static final String CONTENT_TYPE       = "ContentType";
+    public static final String CONTENT_LENGTH     = "ContentLength";
+    public static final String BUFFER_SIZE        = "BufferSize";
+    public static final String CHARACTER_ENCODING = "CharacterEncoding";
+    public static final String LOCALE             = "Locale";
 
+    private Properties config;
+    
     public WebResponseDispatcher(){
         this.config = new Properties();
     }
 
-    public void process( Object object ){
-        String contentType = config.getProperty( "contentType", "text/html" );
-
+    public void process( Object object, Map config, Map info ){
         RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-
         ServletResponse response = requestInfo.getResponse();
-        response.setContentType(contentType);
-        
+        configure( response, config, info );
         try{
             PrintWriter out = response.getWriter();
             out.print( String.valueOf( object ) );
         }
         catch( Exception e ){
-            throw new BrutosException(e);
+            throw new BrutosException( e );
         }
     }
 
-    public void setProperty( String name, Object value ){
-        this.config.setProperty(name, String.valueOf( value ) );
-    }
-
-    public OutputStream processStream() {
-        String contentType = config.getProperty( "contentType", "text/html" );
+    public OutputStream processStream( Map config, Map info ){
         RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
         ServletResponse response = requestInfo.getResponse();
-        response.setContentType(contentType);
-
+        configure( response, config, info );
         try{
             return response.getOutputStream();
         }
@@ -70,5 +68,31 @@ public class WebResponseDispatcher implements ResponseDispatcher{
             throw new BrutosException( e );
         }
     }
-    
+
+    private void configure( ServletResponse response, Map config, Map info ){
+        if( config != null ){
+            response.setContentType( config.containsKey(CONTENT_TYPE)? (String)config.get( CONTENT_TYPE ) : "text/html"  );
+
+            if( config.containsKey( CONTENT_LENGTH ) )
+                response.setContentLength( ((Integer)config.get(CONTENT_LENGTH)).intValue() );
+
+            if( config.containsKey( BUFFER_SIZE ) )
+                response.setBufferSize( ((Integer)config.get(BUFFER_SIZE)).intValue() );
+
+            if( config.containsKey( CHARACTER_ENCODING ) )
+                response.setCharacterEncoding( (String)config.get(CHARACTER_ENCODING) );
+
+            if( config.containsKey( LOCALE ) )
+                response.setLocale( (Locale)config.get(LOCALE) );
+        }
+
+        if( info != null && response instanceof HttpServletResponse ){
+            HttpServletResponse httpResponse = (HttpServletResponse)response;
+            for(Object o: info.keySet() ){
+                String key = String.valueOf( o );
+                String value = String.valueOf(info.get( o ));
+                httpResponse.addHeader(key, value);
+            }
+        }
+    }
 }
