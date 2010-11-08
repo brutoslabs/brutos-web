@@ -23,7 +23,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.ResponseDispatcher;
+import org.brandao.brutos.MvcResponse;
 
 /**
  *
@@ -61,7 +61,7 @@ public class BooleanType implements Type{
 
     public void setValue(Object value) throws IOException {
         ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
-        ResponseDispatcher response = app.getResponseDispatcher();
-        response.process(value,null,null);
+        MvcResponse response = app.getMvcResponse();
+        response.process(value);
     }
 }

@@ -17,17 +17,28 @@
 
 package org.brandao.brutos;
 
-import java.io.OutputStream;
-import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Locale;
 
 /**
  *
  * @author Afonso Brandao
  */
-public interface ResponseDispatcher {
+public interface MvcRequest {
 
-    public void process( Object object, Map config, Map info );
+    public Object getValue( String name );
 
-    public OutputStream processStream( Map config, Map info );
+    public Object getProperty( String name );
+    
+    public InputStream getStream() throws IOException;
+
+    public String getType();
+
+    public int getLength();
+
+    public String getCharacterEncoding();
+
+    public Locale getLocale();
 
 }

@@ -24,8 +24,10 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.http.ParameterList;
 
 /**
@@ -46,7 +48,7 @@ public class ListType implements CollectionType{
     private Type serializableType;
     
     public ListType(){
-        WebApplicationContext context = WebApplicationContext.getCurrentInstance();
+        WebApplicationContext context = WebApplicationContext.getCurrentWebApplicationContext();
         String className = context
                 .getConfiguration()
                     .getProperty( "org.brandao.brutos.type.list",
@@ -94,7 +96,8 @@ public class ListType implements CollectionType{
             List objList = this.listType.newInstance();
             
             for( Object o: (ParameterList)value )
-                objList.add( this.primitiveType.getValue(request, context, o) );
+                objList.add( this.primitiveType.getValue(o) );
+                //objList.add( this.primitiveType.getValue(request, context, o) );
 
             return objList;
         }
@@ -111,6 +114,18 @@ public class ListType implements CollectionType{
     @Override
     public Class getClassType() {
         return List.class;
+    }
+
+    public Object getValue(Object value) {
+        if( value instanceof ParameterList )
+            return getList(null,null,value);
+
+        else
+            return value;
+    }
+
+    public void setValue(Object value) throws IOException {
+        this.serializableType.setValue( value );
     }
 
 

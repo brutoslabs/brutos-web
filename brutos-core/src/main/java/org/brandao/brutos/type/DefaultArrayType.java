@@ -24,7 +24,9 @@ import java.lang.reflect.Type;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.http.ParameterList;
 
 /**
@@ -72,7 +74,8 @@ public class DefaultArrayType implements ArrayType{
                 Array.set( 
                     objList,
                     i,
-                    componentType.getValue(request, context, param.get( i ) )
+                    componentType.getValue( param.get( i ) )
+                    //componentType.getValue(request, context, param.get( i ) )
                 );
 
             return objList;
@@ -84,6 +87,20 @@ public class DefaultArrayType implements ArrayType{
 
     public void setClassType(Class classType) {
         this.classType = classType;
+    }
+
+    public Object getValue(Object value) {
+        if( value instanceof ParameterList )
+            return getList(null, null, value);
+
+        else
+            return value;
+    }
+
+    public void setValue(Object value) throws IOException {
+        ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+        MvcResponse response = app.getMvcResponse();
+        response.process(value);
     }
 
 }

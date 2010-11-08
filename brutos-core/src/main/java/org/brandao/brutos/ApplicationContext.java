@@ -53,7 +53,8 @@ public abstract class ApplicationContext {
     private LoggerProvider loggerProvider;
     private ControllerResolver controllerResolver;
     private MethodResolver MethodResolver;
-    private ResponseDispatcher responseDispatcher;
+    private MvcResponseFactory responseFactory;
+    private MvcRequestFactory requestFactory;
 
     public ApplicationContext() {
         this.configuration = new Configuration();
@@ -81,7 +82,8 @@ public abstract class ApplicationContext {
         this.webFrameManager = new WebFrameManager( this.interceptorManager, this.iocManager );
         this.controllerResolver = getNewControllerResolver();
         this.MethodResolver = getNewMethodResolver();
-        this.responseDispatcher = getNewResponseDispatcher();
+        this.responseFactory = getMvcResponseFactory();
+        this.responseFactory = getMvcResponseFactory();
         this.invoker = new Invoker(  this.getControllerResolver(), getIocProvider(), controllerManager, this.getMethodResolver(), this );
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
@@ -121,12 +123,31 @@ public abstract class ApplicationContext {
         }
     }
 
-    protected ResponseDispatcher getNewResponseDispatcher(){
+    protected MvcResponseFactory getMvcResponseFactory(){
         try{
-            ResponseDispatcher instance = (ResponseDispatcher) Class.forName(
+            MvcResponseFactory instance = (MvcResponseFactory) Class.forName(
                     configuration.getProperty(
-                    "org.brandao.brutos.controller.response_dispatcher",
-                    "org.brandao.brutos.DefaultResponseDispatcher"
+                    "org.brandao.brutos.controller.response_factory",
+                    "org.brandao.brutos.DefaultMvcResponseFactory"
+                ),
+                    true,
+                    Thread.currentThread().getContextClassLoader()
+
+            ).newInstance();
+
+            return instance;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected MvcRequestFactory getMvcRequestFactory(){
+        try{
+            MvcRequestFactory instance = (MvcRequestFactory) Class.forName(
+                    configuration.getProperty(
+                    "org.brandao.brutos.controller.request_factory",
+                    "org.brandao.brutos.DefaultMvcRequestFactory"
                 ),
                     true,
                     Thread.currentThread().getContextClassLoader()
@@ -272,8 +293,12 @@ public abstract class ApplicationContext {
         return MethodResolver;
     }
 
-    public ResponseDispatcher getResponseDispatcher() {
-        return responseDispatcher;
+    public MvcResponse getMvcResponse() {
+        return this.responseFactory.getCurrentResponse();
+    }
+
+    public MvcRequest getMvcRequest() {
+        return this.requestFactory.getCurrentRequest();
     }
 
 }

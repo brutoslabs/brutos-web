@@ -30,8 +30,8 @@ import org.brandao.brutos.mapping.MethodForm;
 public class DefaultMethodResolver implements MethodResolver{
     
     public ResourceMethod getResourceMethod( HttpServletRequest request ){
-        WebApplicationContext brutosContext = WebApplicationContext.getCurrentWebApplicationContext();
-        Form controller = brutosContext.getController();
+        ApplicationContext brutosContext = ApplicationContext.getCurrentApplicationContext();
+        Form controller = brutosContext.getC
         MethodForm method = controller
                 .getMethodByName( request.getParameter( controller.getMethodId() ) );
         

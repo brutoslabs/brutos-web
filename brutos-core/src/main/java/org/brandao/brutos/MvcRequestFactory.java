@@ -15,31 +15,33 @@
  *
  */
 
-package org.brandao.brutos;
 
-import java.io.OutputStream;
-import java.util.Map;
-import javax.swing.JOptionPane;
+package org.brandao.brutos;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class DefaultResponseDispatcher implements ResponseDispatcher{
+public abstract class MvcRequestFactory {
 
-    public void process( Object object ){
-        JOptionPane.showMessageDialog(null, String.valueOf( object ) );
+    private static ThreadLocal requests = new ThreadLocal();
+
+    public MvcRequest getCurrentRequest(){
+
+        MvcRequest request = (MvcRequest) requests.get();
+        
+        if( request == null ){
+            request = getNewRequest();
+            requests.set(request);
+        }
+
+        return request;
     }
 
-    public OutputStream processStream() {
-        return null;
-    }
-
-    public void process(Object object, Map config, Map info) {
-    }
-
-    public OutputStream processStream(Map config, Map info) {
-        return null;
+    public void destroyRequest(){
+        requests.remove();
     }
     
+    protected abstract MvcRequest getNewRequest();
+
 }

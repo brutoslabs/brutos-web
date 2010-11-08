@@ -22,7 +22,9 @@ import java.io.PrintWriter;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.MvcResponse;
 
 /**
  *
@@ -34,9 +36,9 @@ public class DefaultEnumType implements EnumType{
     
     private Class<?> classType;
     
-    private IntegerType intType;
+    private Type intType;
     
-    private StringType stringType;
+    private Type stringType;
     
     public DefaultEnumType() {
         intType    = new IntegerType();
@@ -74,6 +76,24 @@ public class DefaultEnumType implements EnumType{
 
     public void setClassType(Class classType) {
         this.classType = classType;
+    }
+
+    public Object getValue(Object value) {
+        try{
+            if( type == EnumerationType.ORDINAL )
+                return classType.getEnumConstants()[ (Integer)intType.getValue( value ) ];
+            else
+                return Enum.valueOf( (Class)classType, (String)stringType.getValue( value ) );
+        }
+        catch( Exception e ){
+            return null;
+        }
+    }
+
+    public void setValue(Object value) throws IOException {
+        ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+        MvcResponse response = app.getMvcResponse();
+        response.process(value);
     }
 
 }

@@ -41,5 +41,12 @@ public class NullType implements Type{
     public Class getClassType() {
         return null;
     }
+
+    public Object getValue(Object value) {
+        return null;
+    }
+
+    public void setValue(Object value) throws IOException {
+    }
     
 }

@@ -18,12 +18,16 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.http.Download;
+import org.brandao.brutos.web.WebMvcResponse;
 
 /**
  *
@@ -63,5 +67,34 @@ public class DownloadType implements Type{
     
     public Class getClassType() {
         return Download.class;
+    }
+
+    public Object getValue(Object value) {
+        if( value instanceof Download )
+            return value;
+        else
+            return null;
+    }
+
+    public void setValue(Object value) throws IOException {
+        if( value instanceof Download ){
+            ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+            MvcResponse response = app.getMvcResponse();
+
+            Download download = (Download)value;
+            Map info = download.getHeader();
+            if( info != null ){
+                Iterator<String> keys = download.getHeader().keySet().iterator();
+                while( keys.hasNext() ){
+                    String key = keys.next();
+                    info.put( key, info.get( key ) );
+                }
+            }
+
+            if( download.getContentLength() != -1 )
+                response.setLength( (int)download.getContentLength() );
+
+            download.write( response.processStream() );
+        }
     }
 }

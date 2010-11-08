@@ -49,5 +49,13 @@ public class ObjectType implements Type{
     public Class getClassType() {
         return Object.class;
     }
+
+    public Object getValue(Object value) {
+        return value;
+    }
+
+    public void setValue(Object value) throws IOException {
+        serializableType.setValue(value);
+    }
     
 }

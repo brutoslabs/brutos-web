@@ -24,6 +24,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.DefaultMethodResolver;
@@ -44,7 +45,7 @@ public class MethodResolverJSF extends DefaultMethodResolver{
 
     @Override
     public ResourceMethod getResourceMethod(HttpServletRequest request) {
-        WebApplicationContext brutosContext = WebApplicationContext.getCurrentWebApplicationContext();
+        WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
         FacesContext context = FacesContext.getCurrentInstance();
 
         ActionEvent event = (ActionEvent) request.getAttribute(
