@@ -22,10 +22,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.http.BrutosFile;
+import org.brandao.brutos.web.WebMvcResponse;
 
 /**
  *
@@ -71,6 +76,44 @@ public class FileType implements Type{
     
     public Class getClassType() {
         return File.class;
+    }
+
+    public Object getValue(Object value) {
+        if( value instanceof BrutosFile )
+            return ((BrutosFile)value).getFile();
+        else
+            return null;
+    }
+
+    public void setValue(Object value) throws IOException {
+        if( value instanceof BrutosFile ){
+            ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+            MvcResponse response = app.getMvcResponse();
+
+            File f = (File)value;
+
+            response.setInfo(
+                "Content-Disposition",
+                "attachment;filename=" + f.getName() + ";"
+            );
+
+            response.setLength( (int)f.length() );
+
+            InputStream in   = new FileInputStream( f );
+            OutputStream out = response.processStream();
+
+            try{
+                byte[] buffer = new byte[ 3072 ];
+                int length;
+
+                while( (length = in.read( buffer )) != -1 )
+                    out.write( buffer, 0, length );
+            }
+            finally{
+                if( in != null )
+                    in.close();
+            }
+        }
     }
     
 }

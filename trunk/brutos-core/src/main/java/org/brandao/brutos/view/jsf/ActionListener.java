@@ -20,6 +20,7 @@ package org.brandao.brutos.view.jsf;
 import com.sun.faces.application.ActionListenerImpl;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.mapping.Form;
@@ -36,7 +37,7 @@ public class ActionListener extends ActionListenerImpl{
 
     @Override
     public void processAction(ActionEvent event) throws AbortProcessingException {
-        WebApplicationContext brutosContext = WebApplicationContext.getCurrentWebApplicationContext();
+        WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
         Form controller = brutosContext.getController();
         
         if( controller != null ){

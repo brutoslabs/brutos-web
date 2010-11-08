@@ -24,7 +24,7 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.http.ParameterList;
 
@@ -46,7 +46,7 @@ public class SetType implements CollectionType{
     private Type serializableType;
 
     public SetType(){
-        WebApplicationContext context = WebApplicationContext.getCurrentInstance();
+        ApplicationContext context = ApplicationContext.getCurrentApplicationContext();
         String className = context
                 .getConfiguration()
                     .getProperty( "org.brandao.brutos.type.set",
@@ -111,6 +111,18 @@ public class SetType implements CollectionType{
     @Override
     public Class getClassType() {
         return Set.class;
+    }
+
+    public Object getValue(Object value) {
+        if( value instanceof ParameterList )
+            return getList(null, null, value);
+
+        else
+            return value;
+    }
+
+    public void setValue(Object value) throws IOException {
+        this.serializableType.setValue( value );
     }
 
 

@@ -25,7 +25,12 @@ import org.brandao.brutos.type.json.JSONDecoder;
 import org.brandao.brutos.type.json.JSONEncoder;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
+import java.util.Map;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.MvcResponse;
+import org.brandao.brutos.web.WebMvcResponse;
 
 /**
 *
@@ -70,6 +75,28 @@ public class JSONType implements SerializableType {
             return (Class)((ParameterizedType)type).getRawType();
         else
             return (Class)type;
+    }
+
+    public Object getValue(Object value) {
+         try{
+            if( value instanceof String ){
+                JSONDecoder decoder = new JSONDecoder( (String)value );
+                return decoder.decode( classType );
+            }
+            else
+                return value;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+   }
+
+    public void setValue(Object value) throws IOException {
+        ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+        MvcResponse response = app.getMvcResponse();
+        response.setType( "application/json" );
+        response.setCharacterEncoding( "UTF-8" );
+        response.process(value);
     }
 
 }

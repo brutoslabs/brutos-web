@@ -27,9 +27,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.ResponseDispatcher;
+import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.http.BrutosFile;
-import org.brandao.brutos.web.WebResponseDispatcher;
+import org.brandao.brutos.web.WebMvcResponse;
 
 /**
  *
@@ -90,24 +90,21 @@ public class BrutosFileType implements Type{
     public void setValue(Object value) throws IOException {
         if( value instanceof BrutosFile ){
             ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
-            ResponseDispatcher response = app.getResponseDispatcher();
+            MvcResponse response = app.getMvcResponse();
 
             BrutosFile f = (BrutosFile)value;
 
-            Map config = new HashMap();
-            Map info = new HashMap();
-            
             if( f.getFile() != null ){
-                info.put(
+                response.setInfo(
                     "Content-Disposition",
                     "attachment;filename=" + f.getFileName() + ";"
                 );
             }
 
-            config.put( WebResponseDispatcher.CONTENT_LENGTH, (int)f.getFile().length() );
+            response.setLength( (int)f.getFile().length() );
 
             InputStream in   = new FileInputStream( f.getFile() );
-            OutputStream out = response.processStream(config, info);
+            OutputStream out = response.processStream();
 
 
             try{

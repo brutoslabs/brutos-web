@@ -22,6 +22,8 @@ import java.io.PrintWriter;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.MvcResponse;
 
 /**
  *
@@ -50,6 +52,22 @@ public class StringType implements Type{
     
     public Class getClassType() {
         return String.class;
+    }
+
+    public Object getValue(Object value) {
+        if( value == null )
+            return null;
+        else
+        if( value instanceof String )
+            return value;
+        else
+            throw new UnknownTypeException();
+    }
+
+    public void setValue(Object value) throws IOException {
+        ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+        MvcResponse response = app.getMvcResponse();
+        response.process(value);
     }
     
 }

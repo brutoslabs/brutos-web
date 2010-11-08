@@ -21,7 +21,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.*;
@@ -30,24 +29,23 @@ import org.brandao.brutos.*;
  *
  * @author Afonso Brandao
  */
-public class WebResponseDispatcher implements ResponseDispatcher{
+public class WebMvcResponse implements MvcResponse{
 
+    private ServletResponse response;
+
+    /*
     public static final String CONTENT_TYPE       = "ContentType";
     public static final String CONTENT_LENGTH     = "ContentLength";
     public static final String BUFFER_SIZE        = "BufferSize";
     public static final String CHARACTER_ENCODING = "CharacterEncoding";
     public static final String LOCALE             = "Locale";
-
-    private Properties config;
+    */
     
-    public WebResponseDispatcher(){
-        this.config = new Properties();
+    public WebMvcResponse( ServletResponse response ){
+        this.response = response;
     }
 
-    public void process( Object object, Map config, Map info ){
-        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-        ServletResponse response = requestInfo.getResponse();
-        configure( response, config, info );
+    public void process( Object object ){
         try{
             PrintWriter out = response.getWriter();
             out.print( String.valueOf( object ) );
@@ -57,10 +55,7 @@ public class WebResponseDispatcher implements ResponseDispatcher{
         }
     }
 
-    public OutputStream processStream( Map config, Map info ){
-        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-        ServletResponse response = requestInfo.getResponse();
-        configure( response, config, info );
+    public OutputStream processStream(){
         try{
             return response.getOutputStream();
         }
@@ -69,6 +64,7 @@ public class WebResponseDispatcher implements ResponseDispatcher{
         }
     }
 
+    /*
     private void configure( ServletResponse response, Map config, Map info ){
         if( config != null ){
             response.setContentType( config.containsKey(CONTENT_TYPE)? (String)config.get( CONTENT_TYPE ) : "text/html"  );
@@ -94,5 +90,43 @@ public class WebResponseDispatcher implements ResponseDispatcher{
                 httpResponse.addHeader(key, value);
             }
         }
+    }
+    */
+
+    public void setInfo(String name, String value) {
+        if( response instanceof HttpServletResponse )
+            ((HttpServletResponse)response).addHeader(name, value);
+    }
+
+    public String getType() {
+        return response.getContentType();
+    }
+
+    public int getLength() {
+        return -1;
+    }
+
+    public String getCharacterEncoding() {
+        return response.getCharacterEncoding();
+    }
+
+    public Locale getLocale() {
+        return response.getLocale();
+    }
+
+    public void setLocale(Locale value) {
+        response.setLocale(value);
+    }
+
+    public void setType(String value) {
+        response.setContentType(value);
+    }
+
+    public void setLength(int value) {
+        response.setContentLength(value);
+    }
+
+    public void setCharacterEncoding(String value) {
+        response.setCharacterEncoding(value);
     }
 }

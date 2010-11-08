@@ -18,7 +18,6 @@
 package org.brandao.brutos.web;
 
 import java.util.Enumeration;
-import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -27,14 +26,13 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.ControllerResolver;
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.MethodResolver;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
+import org.brandao.brutos.programatic.ControllerManager;
 import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.IOCScope;
@@ -44,18 +42,15 @@ import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
-import org.brandao.brutos.validator.ValidatorProvider;
-import org.brandao.brutos.view.ViewProvider;
-import org.brandao.brutos.xml.XMLApplicationContext;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class WebApplicationContext {
+public class WebApplicationContext extends ApplicationContext{
 
     private Configuration config;
-    private ApplicationContext appContext;
+    //private ApplicationContext appContext;
     private Logger logger;
     
     public WebApplicationContext(){
@@ -83,8 +78,8 @@ public class WebApplicationContext {
             loadInvoker( sce.getServletContext() );
             overrideConfig( sce );
 
-            this.appContext = new XMLApplicationContext();
-            this.appContext.configure(config);
+            //this.appContext = new XMLApplicationContext();
+            configure(config);
         }
         catch( Throwable e ){
             sce.getServletContext().setAttribute( BrutosConstants.EXCEPTION, e );
@@ -97,7 +92,7 @@ public class WebApplicationContext {
 
     private void overrideConfig( ServletContextEvent sce ){
 
-        IOCProvider iocProvider = appContext.getIocProvider();
+        IOCProvider iocProvider = getIocProvider();
         Scopes.register( ScopeType.APPLICATION.toString(), new ApplicationScope( sce.getServletContext() ) );
         Scopes.register( ScopeType.FLASH.toString() , new FlashScope() );
         Scopes.register( ScopeType.IOC.toString() , new IOCScope( iocProvider ) );
@@ -113,13 +108,20 @@ public class WebApplicationContext {
         config.put( "org.brandao.brutos.controller.class" ,
                     controllerResolverName );
 
-        String responseDispatcher = config
-                .getProperty( "org.brandao.brutos.controller.response_dispatcher",
-                              WebResponseDispatcher.class.getName() );
+        String responseFactory = config
+                .getProperty( "org.brandao.brutos.controller.response_factory",
+                              WebMvcResponseFactory.class.getName() );
 
-        config.put( "org.brandao.brutos.controller.response_dispatcher" ,
-                    responseDispatcher );
-        
+        config.put( "org.brandao.brutos.controller.response_factory",
+                    responseFactory );
+
+        String requestFactory = config
+                .getProperty( "org.brandao.brutos.controller.request_factory",
+                              WebMvcRequestFactory.class.getName() );
+
+        config.put( "org.brandao.brutos.controller.request_factory",
+                    requestFactory );
+
     }
 
     private void loadInvoker( ServletContext sc ){
@@ -127,7 +129,7 @@ public class WebApplicationContext {
     }
 
     private void loadLogger( ServletContext sc ){
-        LoggerProvider loggerProvider = LoggerProvider.getProvider(appContext.getConfiguration());
+        LoggerProvider loggerProvider = LoggerProvider.getProvider(getConfiguration());
         LoggerProvider.setCurrentLoggerProvider(loggerProvider);
         sc.setAttribute( BrutosConstants.LOGGER,
                                             loggerProvider );
@@ -138,19 +140,19 @@ public class WebApplicationContext {
         ServletContext sc = sce.getServletContext();
 
         sc.setAttribute( BrutosConstants.IOC_PROVIDER,
-                                            appContext.getIocProvider() );
+                                            getIocProvider() );
         sc.setAttribute( BrutosConstants.INTERCEPTOR_MANAGER,
                                             this.getInterceptorManager() );
         sc.setAttribute( BrutosConstants.VIEW_PROVIDER,
-                                            appContext.getViewProvider() );
+                                            getViewProvider() );
         sc.setAttribute( BrutosConstants.VALIDATOR_PROVIDER,
-                                            appContext.getValidatorProvider() );
+                                            getValidatorProvider() );
 
         sc.setAttribute( BrutosConstants.CONTROLLER_RESOLVER,
-                                            appContext.getControllerResolver() );
+                                            getControllerResolver() );
 
         sc.setAttribute( BrutosConstants.METHOD_RESOLVER,
-                                            appContext.getMethodResolver() );
+                                            getMethodResolver() );
     }
 
     private void loadParameters( ServletContextEvent sce ){
@@ -174,17 +176,35 @@ public class WebApplicationContext {
         sc.removeAttribute( BrutosConstants.METHOD_RESOLVER );
         sc.removeAttribute( BrutosConstants.CONTROLLER_RESOLVER );
         sc.removeAttribute( BrutosConstants.INVOKER );
-        appContext.destroy();
-    }
-    
-    public Properties getConfiguration() {
-        return this.config;
+        destroy();
     }
 
-    public ViewProvider getViewProvider() {
-        return appContext.getViewProvider();
+    public static ApplicationContext getCurrentApplicationContext(){
+        ApplicationContext app =
+            (ApplicationContext)ContextLoaderListener
+                .currentContext
+                    .getAttribute(
+                        BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
+
+        if( app == null ){
+            throw new IllegalStateException(
+                    "Unable to initialize the servlet was not configured for the application context root - " +
+                    "make sure you have defined in your web.xml ContextLoader!"
+            );
+        }
+
+        Throwable ex =
+            (Throwable)ContextLoaderListener
+                .currentContext
+                    .getAttribute( BrutosConstants.EXCEPTION );
+
+        if( ex != null )
+            throw new BrutosException( ex );
+
+        return app;
     }
 
+    /*
     public static WebApplicationContext getCurrentWebApplicationContext(){
         WebApplicationContext brutosCore =
             (WebApplicationContext)ContextLoaderListener
@@ -209,6 +229,7 @@ public class WebApplicationContext {
 
         return brutosCore;
     }
+    */
     
     public ServletContext getContext(){
         return ContextLoaderListener.currentContext;
@@ -219,39 +240,37 @@ public class WebApplicationContext {
     }
     
     public Form getController(){
-        WebApplicationContext brutosInstance = WebApplicationContext.getCurrentWebApplicationContext();
+        WebApplicationContext brutosInstance = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
         return (Form) brutosInstance.getRequest()
                 .getAttribute( BrutosConstants.CONTROLLER );
     }
 
-    public MethodResolver getMethodResolver(){
-        WebApplicationContext brutosInstance = WebApplicationContext.getCurrentWebApplicationContext();
-        return (MethodResolver) brutosInstance
-                .getContext()
-                    .getAttribute( BrutosConstants.METHOD_RESOLVER );
-    }
-
-    public InterceptorManager getInterceptorManager(){
-        WebApplicationContext brutosInstance = WebApplicationContext.getCurrentWebApplicationContext();
-        return (InterceptorManager) brutosInstance
-                .getContext()
-                    .getAttribute( BrutosConstants.INTERCEPTOR_MANAGER );
-    }
-
     public ControllerResolver getResolveController() {
-        WebApplicationContext brutosInstance = WebApplicationContext.getCurrentWebApplicationContext();
+        WebApplicationContext brutosInstance = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
         return (ControllerResolver) brutosInstance
                 .getContext()
                     .getAttribute( BrutosConstants.CONTROLLER_RESOLVER );
     }
 
-
-    public Invoker getInvoker() {
-        return appContext.getInvoker();
+    @Override
+    public void destroy() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public ValidatorProvider getValidatorProvider() {
-        return appContext.getValidatorProvider();
+    protected void loadIOCManager(IOCManager iocManager) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void loadWebFrameManager(WebFrameManager webFrameManager) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void loadInterceptorManager(InterceptorManager interceptorManager) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected void loadController(ControllerManager controllerManager) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
