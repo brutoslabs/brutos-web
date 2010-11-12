@@ -48,7 +48,7 @@ public class ListType implements CollectionType{
     private Type serializableType;
     
     public ListType(){
-        WebApplicationContext context = WebApplicationContext.getCurrentWebApplicationContext();
+        ApplicationContext context = ApplicationContext.getCurrentApplicationContext();
         String className = context
                 .getConfiguration()
                     .getProperty( "org.brandao.brutos.type.list",

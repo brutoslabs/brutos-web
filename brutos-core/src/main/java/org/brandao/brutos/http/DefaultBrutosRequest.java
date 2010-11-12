@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.type.json.JSONDecoder;
@@ -53,7 +54,7 @@ public class DefaultBrutosRequest extends HttpServletRequestWrapper implements B
 
     
     private void initialize(){
-        WebApplicationContext context = WebApplicationContext.getCurrentWebApplicationContext();
+        ApplicationContext context = WebApplicationContext.getCurrentApplicationContext();
         if( context != null ){
             maxLength =
                 Long.parseLong(

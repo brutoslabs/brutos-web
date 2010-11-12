@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.old.programatic;
 
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
@@ -108,8 +109,8 @@ public class MethodBuilder {
 
         useBean.setNome( name );
         useBean.setScopeType( scope );
-        useBean.setValidate( WebApplicationContext
-                    .getCurrentWebApplicationContext().getValidatorProvider()
+        useBean.setValidate( ApplicationContext
+                    .getCurrentApplicationContext().getValidatorProvider()
                         .getValidator( validatorConfig ) );
         if( mapping != null ){
             if( webFrame.getMappingBeans().containsKey( mapping ) )
