@@ -22,19 +22,22 @@ package org.brandao.brutos.mapping;
  * @author Afonso Brandao
  */
 public class ParameterMethodMapping {
-    
+
+    /**
+     * @deprecated 
+     */
     private int parameterId;
     
     private UseBeanData bean;
-    
+
     public ParameterMethodMapping() {
     }
 
-    public int getParameterName() {
+    public int getParameterId() {
         return parameterId;
     }
 
-    public void setParameterName(int parameterId) {
+    public void setParameterId(int parameterId) {
         this.parameterId = parameterId;
     }
 
@@ -45,5 +48,5 @@ public class ParameterMethodMapping {
     public void setBean(UseBeanData bean) {
         this.bean = bean;
     }
-
+    
 }

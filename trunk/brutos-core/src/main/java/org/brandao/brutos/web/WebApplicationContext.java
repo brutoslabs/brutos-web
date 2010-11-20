@@ -49,10 +49,9 @@ import org.brandao.brutos.web.scope.SessionScope;
  */
 public class WebApplicationContext extends ApplicationContext{
 
-    private Configuration config;
-    //private ApplicationContext appContext;
     private Logger logger;
-    
+    Configuration config;
+
     public WebApplicationContext(){
         this.config = new Configuration();
     }
@@ -75,6 +74,7 @@ public class WebApplicationContext extends ApplicationContext{
             loadParameters( sce );
             loadLogger( sce.getServletContext() );
             logger.info( "Initializing Brutos root WebApplicationContext" );
+            logger.info( "Configuration: " + config.toString() );
             loadInvoker( sce.getServletContext() );
             overrideConfig( sce );
 
@@ -129,7 +129,7 @@ public class WebApplicationContext extends ApplicationContext{
     }
 
     private void loadLogger( ServletContext sc ){
-        LoggerProvider loggerProvider = LoggerProvider.getProvider(getConfiguration());
+        LoggerProvider loggerProvider = LoggerProvider.getProvider(config);
         LoggerProvider.setCurrentLoggerProvider(loggerProvider);
         sc.setAttribute( BrutosConstants.LOGGER,
                                             loggerProvider );
@@ -161,7 +161,7 @@ public class WebApplicationContext extends ApplicationContext{
         
         while( initParameters.hasMoreElements() ){
             String name = (String) initParameters.nextElement();
-            getConfiguration().setProperty( name, context.getInitParameter( name ) );
+            config.setProperty( name, context.getInitParameter( name ) );
         }
     }
     
@@ -252,25 +252,19 @@ public class WebApplicationContext extends ApplicationContext{
                     .getAttribute( BrutosConstants.CONTROLLER_RESOLVER );
     }
 
-    @Override
     public void destroy() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     protected void loadIOCManager(IOCManager iocManager) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     protected void loadWebFrameManager(WebFrameManager webFrameManager) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     protected void loadInterceptorManager(InterceptorManager interceptorManager) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     protected void loadController(ControllerManager controllerManager) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

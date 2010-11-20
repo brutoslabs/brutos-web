@@ -77,9 +77,6 @@ public class ControllerManager {
         id = id == null || id.replace( " ", "" ).length() == 0? null : id;
         view = view == null || view.replace( " ", "" ).length() == 0 ? null : view;
 
-        if( view == null )
-            throw new BrutosException( "view is required!" );
-        
         if( scope == null )
             throw new BrutosException( "scope is required!" );
             

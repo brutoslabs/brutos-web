@@ -84,10 +84,10 @@ public abstract class ApplicationContext {
         this.MethodResolver = getNewMethodResolver();
         this.responseFactory = getMvcResponseFactory();
         this.responseFactory = getMvcResponseFactory();
-        this.invoker = new Invoker(  this.getControllerResolver(), getIocProvider(), controllerManager, this.getMethodResolver(), this );
-        this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
         this.controllerManager = new ControllerManager(this.interceptorManager, this.getValidatorProvider());
+        this.invoker = new Invoker(  this.getControllerResolver(), getIocProvider(), controllerManager, this.getMethodResolver(), this );
+        this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
 
         if( iocProvider.containsBeanDefinition("customScopes") ){
             CustomScopeConfigurer customScopes =

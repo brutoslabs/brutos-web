@@ -17,6 +17,8 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.interceptor.InterceptorHandler;
+import org.brandao.brutos.programatic.ControllerManager;
 import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.web.WebApplicationContext;
 import com.mockrunner.mock.web.MockServletContext;
@@ -78,11 +80,19 @@ public class TestBrutosContext extends TestCase{
             return null;
         }
 
+        public Form getController(ControllerManager controllerManager, InterceptorHandler handler) {
+            return null;
+        }
+
     }
 
     public static class TestMethodResolver implements MethodResolver{
 
         public ResourceMethod getResourceMethod(HttpServletRequest request) {
+            return null;
+        }
+
+        public ResourceMethod getResourceMethod(Form controller, Scope scope) {
             return null;
         }
 
@@ -210,7 +220,7 @@ public class TestBrutosContext extends TestCase{
                 listener.contextInitialized(sce);
                 TestEditors o = 
                     (TestEditors)WebApplicationContext
-                        .getCurrentInstance()
+                        .getCurrentApplicationContext()
                             .getIocManager().getInstance( "testEditor" );
                 SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy" );
                 assertEquals( sdf.parse( "29/08/1984" ), o.getValue() );
