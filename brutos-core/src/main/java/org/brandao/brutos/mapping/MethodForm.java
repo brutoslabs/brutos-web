@@ -19,12 +19,16 @@ package org.brandao.brutos.mapping;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.type.Type;
+import org.brandao.brutos.type.Types;
 
 /**
  *
@@ -56,6 +60,8 @@ public class MethodForm {
 
     private DispatcherType dispatcherType;
 
+    private boolean load = false;
+
     public MethodForm() {
         this.parameters = new ArrayList();
         this.parametersType = new ArrayList();
@@ -70,11 +76,21 @@ public class MethodForm {
         this.name = name;
     }
 
+    public void addParameter( ParameterMethodMapping value ){
+        load = false;
+        parameters.add(value);
+    }
+    
     public List<ParameterMethodMapping> getParameters() {
+
+        if( !load )
+            this.lazyLoad();
+
         return parameters;
     }
 
     public void setParameters(List<ParameterMethodMapping> parameters) {
+        load = false;
         this.parameters = parameters;
     }
 
@@ -101,6 +117,10 @@ public class MethodForm {
     }
 
     public Method getMethod() {
+
+        if( !load )
+            this.lazyLoad();
+        
         return method;
     }
 
@@ -170,5 +190,44 @@ public class MethodForm {
 
     public void setDispatcherType(DispatcherType dispatcherType) {
         this.dispatcherType = dispatcherType;
+    }
+
+    public synchronized void lazyLoad(){
+        try{
+            
+            if( load )
+                return;
+            
+            Class<?> classType = form.getClassType();
+            method = classType.getMethod( this.name, this.getParameterClass() );
+            setParametersType( Arrays.asList( method.getParameterTypes() ) );
+
+            Class<?> returnClassType = method.getReturnType();
+
+            if( returnClassType != void.class )
+                setReturnType( Types.getType( returnClassType ) );
+
+            setMethod( method );
+            setReturnClass( returnClassType );
+        }
+        catch( BrutosException e ){
+            throw e;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+
+    }
+
+    private Class[] getParameterClass(){
+        int length = this.parameters.size();
+        Class[] result = new Class[length];
+
+        for( int i=0;i<length;i++ ){
+            ParameterMethodMapping p = this.parameters.get(i);
+            result[i] =  p.getBean().getClassType();
+        }
+
+        return result;
     }
 }

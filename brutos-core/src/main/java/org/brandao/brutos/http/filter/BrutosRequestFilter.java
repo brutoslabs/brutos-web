@@ -32,6 +32,7 @@ import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.Invoker;
+import org.brandao.brutos.web.RequestInfo;
 
 /**
  *
@@ -62,6 +63,10 @@ public class BrutosRequestFilter implements Filter{
             throw new ServletException( "Portlets are not supported.");
 
         try{
+            RequestInfo requestInfo = new RequestInfo();
+            requestInfo.setRequest( request );
+            requestInfo.setResponse(response);
+            RequestInfo.setCurrent(requestInfo);
             currentFilter.set(chain);
             if( context instanceof BrutosContext ){
                 if( !invoker.invoke((BrutosContext)context, (HttpServletResponse)response ) )
@@ -73,6 +78,7 @@ public class BrutosRequestFilter implements Filter{
             }
         }
         finally{
+            RequestInfo.removeCurrent();
             currentFilter.remove();
         }
     }

@@ -20,6 +20,7 @@ package org.brandao.brutos.programatic;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
@@ -48,60 +49,60 @@ public class ActionBuilder {
         this.validatorProvider = validatorProvider;
     }
 
-    public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty ){
-        return addParameter( name, scope, enumProperty, null, null, null );
+    public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty, Class classType ){
+        return addParameter( name, scope, enumProperty, null, null, null, classType );
     }
     
-    public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty ){
-        return addParameter( name, scope, EnumerationType.ORDINAL, temporalProperty, null, null );
+    public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty, Class classType ){
+        return addParameter( name, scope, EnumerationType.ORDINAL, temporalProperty, null, null, classType );
     }
     
     public ParameterBuilder addParameter( String name, ScopeType scope, Type type ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, type );
+                null, type, type.getClassType() );
     }
     
-    public ParameterBuilder addParameter( String name, EnumerationType enumProperty ){
-        return addParameter( name, ScopeType.REQUEST, enumProperty, null, null, null );
+    public ParameterBuilder addParameter( String name, EnumerationType enumProperty, Class classType ){
+        return addParameter( name, ScopeType.REQUEST, enumProperty, null, null, null, classType );
     }
     
-    public ParameterBuilder addParameter( String name, ScopeType scope ){
+    public ParameterBuilder addParameter( String name, ScopeType scope, Class classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy", 
-                null, null );
+                null, null, classType );
     }
     
-    public ParameterBuilder addParameter( String name, String temporalProperty ){
-        return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, temporalProperty, null, null );
+    public ParameterBuilder addParameter( String name, String temporalProperty, Class classType ){
+        return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, temporalProperty, null, null, classType );
     }
     
     public ParameterBuilder addParameter( String name, Type type ){
         return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, type );
+                null, type, type.getClassType() );
     }
     
-    public ParameterBuilder addParameterMapping( String mapping ){
+    public ParameterBuilder addParameterMapping( String mapping, Class classType ){
         return addParameter( null, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy", 
-                mapping, null );
+                mapping, null, classType );
     }
     
-    public ParameterBuilder addParameter( String name ){
+    public ParameterBuilder addParameter( String name, Class classType ){
         return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy", 
-                null, null );
+                null, null, classType );
     }
 
 
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
-            String temporalProperty, String mapping, Type type ){
+            String temporalProperty, String mapping, Type type, Class classType ){
         
         name = name == null || name.replace( " ", "" ).length() == 0? null : name;
         temporalProperty = temporalProperty == null || temporalProperty.replace( " ", "" ).length() == 0? null : temporalProperty;
         mapping = mapping == null || mapping.replace( " ", "" ).length() == 0? null : mapping;
         
-        if( methodForm.getParameters().size() > methodForm.getParametersType().size() )
-            throw new BrutosException( "index > " + methodForm.getParametersType().size() );
+        //if( methodForm.getParameters().size() > methodForm.getParametersType().size() )
+        //    throw new BrutosException( "index > " + methodForm.getParametersType().size() );
         
-        Class classType = methodForm.
-                    getParametersType().get( methodForm.getParamterSize() );
+        /*Class classType = methodForm.
+                    getParametersType().get( methodForm.getParamterSize() );*/
 
         Configuration validatorConfig = new Configuration();
         
@@ -126,7 +127,8 @@ public class ActionBuilder {
         }
         else{
             try{
-                useBean.setType( Types.getType( methodForm.getGenericParameterType( methodForm.getParamterSize() ), enumProperty, temporalProperty ) );
+                /*useBean.setType( Types.getType( methodForm.getGenericParameterType( methodForm.getParamterSize() ), enumProperty, temporalProperty ) );*/
+                useBean.setType( Types.getType( classType ));
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException( 
@@ -143,19 +145,19 @@ public class ActionBuilder {
 
         ParameterMethodMapping pmm = new ParameterMethodMapping();
         pmm.setBean( useBean );
-        pmm.setParameterName( methodForm.getParameters().size() + 1 );
+        pmm.setParameterId( 0 );
         
-        methodForm.getParameters().add( pmm );
+        methodForm.addParameter( pmm );
         return new ParameterBuilder( validatorConfig );
     }
 
-    public ActionBuilder addThrowable( Class target, String parameterName ){
-        return addThrowable( target, null, parameterName, false );
+    public ActionBuilder addThrowable( Class target, String name ){
+        return addThrowable( target, null, name, DispatcherType.FORWARD );
     }
 
-    public ActionBuilder addThrowable( Class target, String uri, String parameterName, boolean redirect ){
-        uri = uri == null || uri.replace( " ", "" ).length() == 0? null : uri;
-        parameterName = parameterName == null || parameterName.replace( " ", "" ).length() == 0? null : parameterName;
+    public ActionBuilder addThrowable( Class target, String view, String name, DispatcherType dispatcher ){
+        view = view == null || view.replace( " ", "" ).length() == 0? null : view;
+        name = name == null || name.replace( " ", "" ).length() == 0? null : name;
 
         if( target == null )
             throw new BrutosException( "target is required: " + webFrame.getClassType().getName() );
@@ -164,10 +166,11 @@ public class ActionBuilder {
             throw new BrutosException( "target is not allowed: " +target.getName() );
 
         ThrowableSafeData thr = new ThrowableSafeData();
-        thr.setParameterName(parameterName);
+        thr.setParameterName(name);
         thr.setTarget(target);
-        thr.setUri(uri);
-        thr.setRedirect( redirect );
+        thr.setUri(view);
+        thr.setRedirect( false );
+        thr.setDispatcher(dispatcher);
         methodForm.setThrowsSafe(thr);
         return this;
     }

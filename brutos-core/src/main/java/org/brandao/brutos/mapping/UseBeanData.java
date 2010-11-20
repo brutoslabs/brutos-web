@@ -115,6 +115,12 @@ public class UseBeanData {
         return value;
     }
 
+    public Class getClassType(){
+        if( mapping != null )
+            return mapping.getClassType();
+        else
+            return type.getClassType();
+    }
     /*
     public Object getValue( ServletContext context, HttpServletRequest request ) throws InstantiationException, IllegalAccessException, ParseException{
         if( scope == ScopeType.REQUEST ){

@@ -299,7 +299,7 @@ public class InterceptorProcess implements InterceptorStack{
             for( ParameterMethodMapping p: method.getParameters() ){
                 UseBeanData bean = p.getBean();
                 //values[ p.getParameterName() - 1 ] = bean.getValue( context, request );
-                values[ p.getParameterName() - 1 ] = bean.getValue();
+                values[ p.getParameterId() - 1 ] = bean.getValue();
             }
 
             return values;

@@ -28,13 +28,9 @@ import org.brandao.brutos.mapping.MethodForm;
 public class DefaultResourceMethod implements ResourceMethod{
 
     MethodForm method;
-    private Class resourceClass;
 
     public DefaultResourceMethod( MethodForm method ){
         this.method = method;
-        this.resourceClass = method.getMethod() == null?
-                                null :
-                                method.getMethod().getDeclaringClass();
    }
 
     public Object invoke(Object source, Object[] args)
@@ -45,7 +41,9 @@ public class DefaultResourceMethod implements ResourceMethod{
     }
 
     public Class getResourceClass() {
-        return resourceClass;
+        return method.getMethod() == null?
+                                null :
+                                method.getMethod().getDeclaringClass();
     }
 
     public Method getMethod() {

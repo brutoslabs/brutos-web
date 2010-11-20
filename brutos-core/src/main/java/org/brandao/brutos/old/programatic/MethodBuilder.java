@@ -144,7 +144,7 @@ public class MethodBuilder {
 
         ParameterMethodMapping pmm = new ParameterMethodMapping();
         pmm.setBean( useBean );
-        pmm.setParameterName( methodForm.getParameters().size() + 1 );
+        pmm.setParameterId( methodForm.getParameters().size() + 1 );
         
         methodForm.getParameters().add( pmm );
         return new ParameterBuilder( validatorConfig, methodForm, webFrame );

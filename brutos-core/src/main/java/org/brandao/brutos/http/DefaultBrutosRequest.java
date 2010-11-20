@@ -81,7 +81,7 @@ public class DefaultBrutosRequest extends HttpServletRequestWrapper implements B
 
             }
             else
-            if( this.getContentType().equals( "application/json" ) ){
+            if( "application/json".equals( this.getContentType() ) ){
                 JSONDecoder decoder = new JSONDecoder( this.getInputStream() );
                 Map data = decoder.getInstance(null);
                 for( Object o: data.keySet() ){
