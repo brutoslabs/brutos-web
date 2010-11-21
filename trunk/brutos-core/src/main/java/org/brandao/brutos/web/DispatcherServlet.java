@@ -65,7 +65,12 @@ public class DispatcherServlet extends HttpServlet {
             requestInfo.setRequest( request );
             requestInfo.setResponse(response);
             RequestInfo.setCurrent(requestInfo);
-            invoker.invoke(request.getRequestURI());
+
+            String path         = request.getRequestURI();
+            String contextPath  = request.getContextPath();
+            path = path.substring( contextPath.length(), path.length() );
+
+            invoker.invoke(path);
         }
         finally{
             RequestInfo.removeCurrent();
