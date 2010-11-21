@@ -73,7 +73,7 @@ public class BrutosRequestFilter implements Filter{
                     chain.doFilter( ContextLoaderListener.currentRequest.get(), response);
             }
             else{
-                if( !invoker.invoke( ((HttpServletRequest)request).getRequestURI() ) )
+                if( !invoker.invoke( this.getRequestId((HttpServletRequest)request ) ) )
                     chain.doFilter( ContextLoaderListener.currentRequest.get(), response);
             }
         }
@@ -83,6 +83,12 @@ public class BrutosRequestFilter implements Filter{
         }
     }
 
+    private String getRequestId(HttpServletRequest request){
+        String path         = request.getRequestURI();
+        String contextPath  = request.getContextPath();
+        path = path.substring( contextPath.length(), path.length() );
+        return path;
+    }
     public void destroy() {
         this.filterConfig = null;
     }

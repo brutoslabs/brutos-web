@@ -170,7 +170,7 @@ class URIMap{
         if( uri == null )
             throw new NullPointerException();
 
-        String regex = ".*";
+        String regex = "";
 
         int index = uri.indexOf("{");
         int index2 = -1;
