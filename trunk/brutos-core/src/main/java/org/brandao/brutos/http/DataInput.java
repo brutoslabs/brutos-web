@@ -27,6 +27,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.web.WebFrame;
 import org.brandao.brutos.mapping.FieldForm;
 import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.scope.Scope;
 
 /**
  *
@@ -37,14 +38,16 @@ public class DataInput {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private ServletContext context;
-    
+    private Scope scope;
+
     public DataInput( HttpServletRequest request, HttpServletResponse response, ServletContext context ) {
         this.request  = request;
         this.response = response;
         this.context  = context;
     }
 
-    public DataInput() {
+    public DataInput( Scope requestScope ) {
+        this.scope = requestScope;
     }
     
     public void read( Form form, Object object ){
@@ -94,6 +97,7 @@ public class DataInput {
             w.setServletContext( context );
             w.setUpdatable( true );
         }
-        request.setAttribute( BrutosConstants.WEBFRAME, wf );
+        //request.setAttribute( BrutosConstants.WEBFRAME, wf );
+        scope.put( BrutosConstants.WEBFRAME, wf );
     }
 }
