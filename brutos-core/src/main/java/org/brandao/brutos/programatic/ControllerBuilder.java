@@ -207,6 +207,7 @@ public class ControllerBuilder {
         mp.setRedirect(false);
         mp.setDispatcherType(dispatcherType);
         mp.setReturnPage(viewResult);
+        mp.setMethodName(methodName);
         mp.setReturnIn( resultId == null? "result" : resultId );
         /*
         try{

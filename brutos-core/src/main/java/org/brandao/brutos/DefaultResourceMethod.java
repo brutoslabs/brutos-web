@@ -37,7 +37,7 @@ public class DefaultResourceMethod implements ResourceMethod{
         throws IllegalAccessException, IllegalArgumentException,
         InvocationTargetException {
 
-        return method.getMethod().invoke( source , args);
+        return method.invoke( source , args);
     }
 
     public Class getResourceClass() {

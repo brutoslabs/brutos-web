@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.mapping;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +40,9 @@ public class MethodForm {
     private Form form;
     
     private String name;
-    
+
+    private String methodName;
+
     private List<ParameterMethodMapping> parameters;
     
     private Map<Class<? extends Throwable>, ThrowableSafeData> throwsSafe;
@@ -198,8 +201,13 @@ public class MethodForm {
             if( load )
                 return;
             
+            if( this.methodName == null ){
+                load = true;
+                return;
+            }
+            
             Class<?> classType = form.getClassType();
-            method = classType.getMethod( this.name, this.getParameterClass() );
+            method = classType.getMethod( this.methodName, this.getParameterClass() );
             setParametersType( Arrays.asList( method.getParameterTypes() ) );
 
             Class<?> returnClassType = method.getReturnType();
@@ -209,6 +217,7 @@ public class MethodForm {
 
             setMethod( method );
             setReturnClass( returnClassType );
+            load = true;
         }
         catch( BrutosException e ){
             throw e;
@@ -229,5 +238,20 @@ public class MethodForm {
         }
 
         return result;
+    }
+
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
+
+    public Object invoke( Object source, Object[] args )
+        throws IllegalAccessException, IllegalArgumentException,
+                InvocationTargetException{
+        return getMethod() != null?
+            method.invoke( source , args) : null;
     }
 }

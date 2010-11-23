@@ -230,7 +230,7 @@ public class InterceptorProcess implements InterceptorStack{
             //DataInput input = new DataInput( handler.getRequest(),
             //                               handler.getResponse(),
             //                               handler.getContext() );
-            DataInput input = new DataInput();
+            DataInput input = new DataInput( requestScope );
             
             input.read( form , handler.getResource() );
 
