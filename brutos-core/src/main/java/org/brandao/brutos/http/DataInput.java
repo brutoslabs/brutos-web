@@ -99,5 +99,6 @@ public class DataInput {
         }
         //request.setAttribute( BrutosConstants.WEBFRAME, wf );
         scope.put( BrutosConstants.WEBFRAME, wf );
+        scope.put( BrutosConstants.CONTROLLER, wf );
     }
 }
