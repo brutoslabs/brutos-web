@@ -70,11 +70,11 @@ public class BrutosRequestFilter implements Filter{
             currentFilter.set(chain);
             if( context instanceof BrutosContext ){
                 if( !invoker.invoke((BrutosContext)context, (HttpServletResponse)response ) )
-                    chain.doFilter( ContextLoaderListener.currentRequest.get(), response);
+                    chain.doFilter( request, response);
             }
             else{
                 if( !invoker.invoke( this.getRequestId((HttpServletRequest)request ) ) )
-                    chain.doFilter( ContextLoaderListener.currentRequest.get(), response);
+                    chain.doFilter( request, response);
             }
         }
         finally{
