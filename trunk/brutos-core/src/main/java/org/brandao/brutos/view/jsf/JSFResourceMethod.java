@@ -86,4 +86,8 @@ public class JSFResourceMethod implements ResourceMethod{
         return this.resourceClass;
     }
 
+    public boolean isAbstract() {
+        return this.method == null;
+    }
+
 }

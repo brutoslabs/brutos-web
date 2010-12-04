@@ -38,4 +38,5 @@ public interface ResourceMethod {
 
     public Class getResourceClass();
 
+    public boolean isAbstract();
 }

@@ -65,6 +65,10 @@ public class InterceptorProcess implements InterceptorStack{
         this.stackPos = new ThreadLocal();
     }
 
+    public synchronized void reset(){
+        this.stack = null;
+    }
+    
     public void process( InterceptorHandler handler ){
         if( stack == null )
             createStack();
@@ -81,23 +85,30 @@ public class InterceptorProcess implements InterceptorStack{
         }
     }
             
-    @Deprecated
-    private void createStack(){
-        synchronized( this ){
-            if( stack != null )
-                return;
-            
-            createStackInterceptor0();
-        }
+    private synchronized void createStack(){
+        if( stack != null )
+            return;
+
+        createStackInterceptor0();
     }
     
-    @Deprecated
     public void createStackInterceptor0(){
         this.stack = new LinkedList();
         
         List<org.brandao.brutos.mapping.Interceptor> interceptors = 
-            form.getInterceptors();
+            form.getDefaultInterceptorList();
                 
+        for( org.brandao.brutos.mapping.Interceptor i: interceptors ){
+            processInterceptor( 
+                    new StringBuffer()/*new StringBuffer( String.valueOf( form.hashCode() ) )*/,
+                    i.getProperties(), 
+                    i 
+            );
+        }
+
+        interceptors =
+            form.getInterceptors();
+
         for( org.brandao.brutos.mapping.Interceptor i: interceptors ){
             processInterceptor( 
                     new StringBuffer()/*new StringBuffer( String.valueOf( form.hashCode() ) )*/,

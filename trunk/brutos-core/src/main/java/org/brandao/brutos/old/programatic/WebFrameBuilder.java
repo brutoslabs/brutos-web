@@ -294,7 +294,7 @@ public class WebFrameBuilder {
             it.getProperties().put( /*parent.getName() + "." +*/ key, value );
         }
         
-        webFrame.addInterceptor( it );
+        webFrame.addInterceptor( new Interceptor[]{it} );
         return new InterceptorBuilder( it, interceptorManager );
     }
 

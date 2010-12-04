@@ -72,6 +72,8 @@ public class Form {
 
     private DispatcherType dispatcherType;
 
+    private List defaultInterceptorList;
+
     public Form() {
         fields = new ArrayList();
         mappingBeans = new HashMap();
@@ -145,7 +147,7 @@ public class Form {
         this.methods = methods;
     }
     
-    public void addInterceptor( Interceptor ... interceptor ){
+    public void addInterceptor( Interceptor[] interceptor ){
         getInterceptorStack().addAll( Arrays.asList( interceptor ) );
     }
     
@@ -285,6 +287,14 @@ public class Form {
 
     public void setDispatcherType(DispatcherType dispatcherType) {
         this.dispatcherType = dispatcherType;
+    }
+
+    public List getDefaultInterceptorList() {
+        return defaultInterceptorList;
+    }
+
+    public void setDefaultInterceptorList(List defaultInterceptorList) {
+        this.defaultInterceptorList = defaultInterceptorList;
     }
 
 }
