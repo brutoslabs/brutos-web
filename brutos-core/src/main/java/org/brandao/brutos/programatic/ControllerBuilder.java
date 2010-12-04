@@ -258,7 +258,7 @@ public class ControllerBuilder {
             it.getProperties().put( /*parent.getName() + "." +*/ key, value );
         }
         
-        controller.addInterceptor( it );
+        controller.addInterceptor( new Interceptor[]{it} );
         return new InterceptorBuilder( it, interceptorManager );
     }
 

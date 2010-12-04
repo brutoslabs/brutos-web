@@ -105,11 +105,13 @@ public class ControllerManager {
         //forms.put( fr.getUri(), fr );
         //revForms.put( fr.getClassType(), fr );
         addForm( fr.getUri(), fr );
+        fr.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
+        
         this.current = new ControllerBuilder( fr, this, interceptorManager, validatorProvider );
         
-        for( Interceptor in: interceptorManager.getDefaultInterceptors() )
-            current.addInterceptor( in.getName() );
-        
+        //for( Interceptor in: interceptorManager.getDefaultInterceptors() )
+        //    current.addInterceptor( in.getName() );
+
         return this.getCurrent();
     }
     

@@ -57,5 +57,9 @@ public class DefaultResourceMethod implements ResourceMethod{
     public Class[] getParametersType() {
         return method.getMethod().getParameterTypes();
     }
+
+    public boolean isAbstract() {
+        return this.method.isAbstract();
+    }
     
 }

@@ -254,4 +254,8 @@ public class MethodForm {
         return getMethod() != null?
             method.invoke( source , args) : null;
     }
+
+    public boolean isAbstract(){
+        return this.method == null;
+    }
 }
