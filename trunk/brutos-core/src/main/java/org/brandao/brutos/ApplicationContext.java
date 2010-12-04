@@ -238,7 +238,7 @@ public abstract class ApplicationContext {
     protected abstract void loadController( ControllerManager controllerManager );
 
     public static ApplicationContext getCurrentApplicationContext(){
-        Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
+        Scope requestScope = Scopes.get(ScopeType.REQUEST);
 
         if( requestScope == null )
             throw new BrutosException( "scope not configured: " + ScopeType.REQUEST.toString() );

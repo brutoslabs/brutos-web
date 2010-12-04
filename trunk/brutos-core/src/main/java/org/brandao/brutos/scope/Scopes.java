@@ -20,6 +20,7 @@ package org.brandao.brutos.scope;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 
@@ -56,6 +57,10 @@ public class Scopes{
 
     public static Scope get( String id ){
         return scopes.get( id );
+    }
+
+    public static Scope get( ScopeType scopeId ){
+        return get( scopeId.toString() );
     }
 
     public static Map getScopes(){

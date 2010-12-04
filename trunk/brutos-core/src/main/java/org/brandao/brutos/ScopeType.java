@@ -33,7 +33,7 @@ public class ScopeType {
     public static final ScopeType FLASH       = new ScopeType( "flash" );
     public static final ScopeType IOC         = new ScopeType( "ioc" );
 
-    private static Map defaultScopes = new HashMap();
+    private final static Map defaultScopes = new HashMap();
 
     static{
         defaultScopes.put( APPLICATION.toString() , APPLICATION );

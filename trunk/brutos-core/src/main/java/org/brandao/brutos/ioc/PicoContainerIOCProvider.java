@@ -25,8 +25,6 @@ import org.brandao.brutos.Configuration;
 import org.brandao.brutos.ioc.picocontainer.ComplexComponentFactory;
 import org.brandao.brutos.ioc.picocontainer.ObjectComponentFactory;
 import org.brandao.brutos.ioc.picocontainer.PicoContainerContextLoaderListener;
-import org.brandao.brutos.ioc.picocontainer.PicoContainerScopes;
-import org.brandao.brutos.ioc.picocontainer.Scope;
 import org.brandao.brutos.mapping.ioc.ComplexObjectInject;
 import org.brandao.brutos.mapping.ioc.Injectable;
 import org.brandao.brutos.old.programatic.Bean;
@@ -101,7 +99,6 @@ public class PicoContainerIOCProvider extends IOCProvider{
     }
 
     public void configure(Properties properties) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }
