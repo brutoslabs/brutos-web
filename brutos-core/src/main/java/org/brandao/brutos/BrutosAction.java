@@ -36,7 +36,7 @@ public class BrutosAction extends HttpServlet {
     @Override
     public void init() throws ServletException{
         super.init();
-        brutosCore = (BrutosContext) getServletContext().getAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
+        brutosCore = (BrutosContext) getServletContext().getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
 
         if( brutosCore == null ){
             throw new IllegalStateException(

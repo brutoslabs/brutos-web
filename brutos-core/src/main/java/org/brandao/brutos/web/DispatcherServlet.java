@@ -22,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.Invoker;
 
@@ -31,12 +32,12 @@ import org.brandao.brutos.Invoker;
  */
 public class DispatcherServlet extends HttpServlet {
     
-    private WebApplicationContext webApplicationContext;
+    private ApplicationContext webApplicationContext;
     private Invoker invoker;
 
     public void init() throws ServletException{
         super.init();
-        webApplicationContext = (WebApplicationContext) getServletContext().getAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
+        webApplicationContext = (WebApplicationContext) getServletContext().getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
 
         if( webApplicationContext == null ){
             throw new IllegalStateException(

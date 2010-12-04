@@ -488,6 +488,14 @@ public class TestHelper {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
+        public Object getValue(Object value) {
+            return value;
+        }
+
+        public void setValue(Object value) throws IOException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
     }
 
 }

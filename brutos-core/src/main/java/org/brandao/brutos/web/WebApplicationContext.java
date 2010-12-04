@@ -36,6 +36,7 @@ import org.brandao.brutos.programatic.ControllerManager;
 import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.IOCScope;
+import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
@@ -58,13 +59,13 @@ public class WebApplicationContext extends ApplicationContext{
 
     public synchronized void start( ServletContextEvent sce ){
         
-        if( sce.getServletContext().getAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE ) != null ){
+        if( sce.getServletContext().getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE ) != null ){
             throw new IllegalStateException(
                             "Cannot initialize context because there is already a root application context present - " +
                             "check whether you have multiple ContextLoader definitions in your web.xml!");
         }
         
-        sce.getServletContext().setAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this );
+        sce.getServletContext().setAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE, this );
         loadContext( sce );
     }
 
@@ -167,7 +168,7 @@ public class WebApplicationContext extends ApplicationContext{
     
     public synchronized void stop( ServletContextEvent sce ){
         ServletContext sc = sce.getServletContext();
-        sc.removeAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
+        sc.removeAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
         sc.removeAttribute( BrutosConstants.IOC_MANAGER );
         sc.removeAttribute( BrutosConstants.IOC_PROVIDER );
         sc.removeAttribute( BrutosConstants.WEBFRAME_MANAGER );
@@ -180,11 +181,18 @@ public class WebApplicationContext extends ApplicationContext{
     }
 
     public static ApplicationContext getCurrentApplicationContext(){
-        ApplicationContext app =
+        Scope contextScope = Scopes.get(ScopeType.APPLICATION);
+
+        ApplicationContext app = 
+            (ApplicationContext) contextScope
+                .get( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
+
+        /*
             (ApplicationContext)ContextLoaderListener
                 .currentContext
                     .getAttribute(
                         BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
+        */
 
         if( app == null ){
             throw new IllegalStateException(
@@ -193,10 +201,7 @@ public class WebApplicationContext extends ApplicationContext{
             );
         }
 
-        Throwable ex =
-            (Throwable)ContextLoaderListener
-                .currentContext
-                    .getAttribute( BrutosConstants.EXCEPTION );
+        Throwable ex = (Throwable) contextScope.get( BrutosConstants.EXCEPTION );
 
         if( ex != null )
             throw new BrutosException( ex );

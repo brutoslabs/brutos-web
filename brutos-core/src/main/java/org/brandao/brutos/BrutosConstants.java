@@ -53,7 +53,7 @@ public interface BrutosConstants {
 
     public final String EXCEPTION_DATA = ApplicationContext.class.getName() + ".EXCEPTION_DATA";
 
-    public final String ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE = ApplicationContext.class.getName() + ".ROOT";
+    public final String ROOT_APPLICATION_CONTEXT_ATTRIBUTE = ApplicationContext.class.getName() + ".ROOT";
 
     public final String FLASH_INSTRUMENT = ApplicationContext.class.getName() + ".FLASH_INSTRUMENT";
 

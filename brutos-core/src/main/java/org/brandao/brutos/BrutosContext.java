@@ -73,13 +73,13 @@ public class BrutosContext extends WebApplicationContext{
 
     public synchronized void start( ServletContextEvent sce ){
 
-        if( sce.getServletContext().getAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE ) != null ){
+        if( sce.getServletContext().getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE ) != null ){
             throw new IllegalStateException(
                             "Cannot initialize context because there is already a root application context present - " +
                             "check whether you have multiple ContextLoader definitions in your web.xml!");
         }
 
-        sce.getServletContext().setAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this );
+        sce.getServletContext().setAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE, this );
         loadContext( sce );
     }
 
@@ -345,7 +345,7 @@ public class BrutosContext extends WebApplicationContext{
         }
 
         ServletContext sc = sce.getServletContext();
-        sc.removeAttribute( BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
+        sc.removeAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
         sc.removeAttribute( BrutosConstants.IOC_MANAGER );
         sc.removeAttribute( BrutosConstants.IOC_PROVIDER );
         sc.removeAttribute( BrutosConstants.WEBFRAME_MANAGER );
@@ -409,7 +409,7 @@ public class BrutosContext extends WebApplicationContext{
             (BrutosContext)ContextLoaderListener
                 .currentContext
                     .getAttribute(
-                        BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
+                        BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
 
         if( brutosCore == null ){
             throw new IllegalStateException(

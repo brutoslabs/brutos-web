@@ -145,6 +145,9 @@ public class TestBrutosContext extends TestCase{
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
                 }
+
+                protected void loadController(ControllerManager controllerManager) {
+                }
             };
 
         servletContext
@@ -208,6 +211,9 @@ public class TestBrutosContext extends TestCase{
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
                 }
+
+                protected void loadController(ControllerManager controllerManager) {
+                }
             };
 
             servletContext
@@ -243,10 +249,10 @@ public class TestBrutosContext extends TestCase{
         
         try{
             cll.contextInitialized(sce);
-            WebApplicationContext c = WebApplicationContext.getCurrentInstance();
+            ApplicationContext c = ApplicationContext.getCurrentApplicationContext();
             assertEquals(
                 TestControllerResolver.class,
-                c.getResolveController().getClass() );
+                c.getControllerResolver().getClass() );
         }
         finally{
             cll.contextDestroyed(sce);
@@ -264,7 +270,7 @@ public class TestBrutosContext extends TestCase{
 
         try{
             cll.contextInitialized(sce);
-            WebApplicationContext c = WebApplicationContext.getCurrentInstance();
+            ApplicationContext c = ApplicationContext.getCurrentApplicationContext();
             assertEquals(
                 TestMethodResolver.class,
                 c.getMethodResolver().getClass() );
