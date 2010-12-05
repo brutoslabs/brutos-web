@@ -33,11 +33,11 @@ import org.brandao.brutos.old.programatic.IOCManager;
  * 
  * @author Afonso Brandao
  */
-public class ContextLoaderListener implements ServletContextListener, HttpSessionListener, ServletRequestListener{
+public class ContextLoaderListener extends org.brandao.brutos.web.ContextLoaderListener/*implements ServletContextListener, HttpSessionListener, ServletRequestListener*/{
     
     private BrutosContext brutosInstance;
-    public static ThreadLocal<ServletRequest> currentRequest;
-    public static ServletContext currentContext;
+    //public static ThreadLocal<ServletRequest> currentRequest;
+    //public static ServletContext currentContext;
     
     public ContextLoaderListener() {
         currentRequest = new ThreadLocal<ServletRequest>();

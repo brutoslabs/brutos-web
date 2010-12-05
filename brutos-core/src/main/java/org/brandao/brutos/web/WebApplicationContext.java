@@ -181,18 +181,19 @@ public class WebApplicationContext extends ApplicationContext{
     }
 
     public static ApplicationContext getCurrentApplicationContext(){
+        /*
         Scope contextScope = Scopes.get(ScopeType.APPLICATION);
-
-        ApplicationContext app = 
+*/
+        ApplicationContext app = /*
             (ApplicationContext) contextScope
                 .get( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
-
-        /*
+            */
+        
             (ApplicationContext)ContextLoaderListener
                 .currentContext
                     .getAttribute(
-                        BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
-        */
+                        BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
+        
 
         if( app == null ){
             throw new IllegalStateException(
@@ -201,7 +202,9 @@ public class WebApplicationContext extends ApplicationContext{
             );
         }
 
-        Throwable ex = (Throwable) contextScope.get( BrutosConstants.EXCEPTION );
+        Throwable ex = (Throwable)ContextLoaderListener
+                .currentContext
+                .getAttribute( BrutosConstants.EXCEPTION );
 
         if( ex != null )
             throw new BrutosException( ex );

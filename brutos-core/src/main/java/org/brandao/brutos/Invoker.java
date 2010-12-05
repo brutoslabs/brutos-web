@@ -68,12 +68,13 @@ public class Invoker {
     public boolean invoke( BrutosContext brutosContext, HttpServletResponse response ) throws IOException{
 
         //Form form = brutosContext.getController();
+        WebFrameManager wfm = brutosContext.getWebFrameManager();
+
         Form form = brutosContext
                 .getResolveController()
                     .getController(
-                        (WebFrameManager)ContextLoaderListener.currentContext
-                            .getAttribute( BrutosConstants.WEBFRAME_MANAGER ),
-                        (HttpServletRequest)ContextLoaderListener.currentRequest.get()
+                        wfm,
+                        (HttpServletRequest)org.brandao.brutos.ContextLoaderListener.currentRequest.get()
                 );
 
         long time = 0;
@@ -86,7 +87,12 @@ public class Invoker {
                     .setAttribute( BrutosConstants.CONTROLLER , form);
 
 
+        Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
         try{
+            //compatibilidade com a versão 2.0
+            requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
+            requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE, brutosContext );
+
             if( logger.isDebugEnabled() ){
                 logger.debug( "Received a new request" );
             }
@@ -121,6 +127,7 @@ public class Invoker {
             form.proccessBrutosAction( ih );
         }
         finally{
+            requestScope.remove( BrutosConstants.IOC_PROVIDER );
             if( logger.isDebugEnabled() )
                 logger.debug(
                         String.format( "Request processed in %d ms",
@@ -146,7 +153,7 @@ public class Invoker {
         long time = System.currentTimeMillis();
         try{
             requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
-            requestScope.put( BrutosConstants.APPLICATION_CONTEXT, this.applicationContext );
+            requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE, this.applicationContext );
             
             if( logger.isDebugEnabled() )
                 logger.debug( "Received a new request: " + requestId );

@@ -97,16 +97,39 @@ public abstract class IOCProvider {
     
     public abstract void configure( Properties properties );
 
+    /**
+     * @deprecated 
+     * @param properties
+     * @param sce
+     */
+    public abstract void configure( Configuration properties, ServletContextEvent sce );
+
     public Object getInstance( String name ){
         throw new UnsupportedOperationException( "use getBean(String)" );
     }
-    
+
+    /**
+     * @deprecated
+     * @param sre
+     */
     public abstract void requestDestroyed(ServletRequestEvent sre);
 
+    /**
+     * @deprecated
+     * @param sre
+     */
     public abstract void requestInitialized(ServletRequestEvent sre);
     
+    /**
+     * @deprecated
+     * @param se
+     */
     public abstract void sessionCreated(HttpSessionEvent se);
 
+    /**
+     * @deprecated
+     * @param se
+     */
     public abstract void sessionDestroyed(HttpSessionEvent se);
     
     public abstract void destroy();

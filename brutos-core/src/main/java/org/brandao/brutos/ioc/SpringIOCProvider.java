@@ -159,5 +159,5 @@ public class SpringIOCProvider extends IOCProvider{
     public void configure(Properties properties) {
          this.properties = properties;
    }
-    
+
 }

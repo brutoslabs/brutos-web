@@ -57,7 +57,12 @@ public class MockViewProvider extends ViewProvider{
     }
 
     public void show(String page, ServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException, IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.context = context;
+        this.redirect = false;
+        this.request = request;
+        this.response = response;
+        this.view = page;
+        
     }
 
     public String getView() {
@@ -104,7 +109,11 @@ public class MockViewProvider extends ViewProvider{
     }
 
     public void show(String view, DispatcherType dispatcherType) throws ServletException, IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.context = null;
+        this.redirect = dispatcherType == DispatcherType.REDIRECT? true : false;
+        this.request = null;
+        this.response = null;
+        this.view = view;
     }
 
 }

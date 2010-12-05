@@ -244,7 +244,7 @@ public abstract class ApplicationContext {
             throw new BrutosException( "scope not configured: " + ScopeType.REQUEST.toString() );
 
         ApplicationContext app = (ApplicationContext)
-                        requestScope.get( BrutosConstants.APPLICATION_CONTEXT );
+                        requestScope.get( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
 
         return app;
     }

@@ -97,13 +97,16 @@ public class InterceptorProcess implements InterceptorStack{
         
         List<org.brandao.brutos.mapping.Interceptor> interceptors = 
             form.getDefaultInterceptorList();
-                
-        for( org.brandao.brutos.mapping.Interceptor i: interceptors ){
-            processInterceptor( 
-                    new StringBuffer()/*new StringBuffer( String.valueOf( form.hashCode() ) )*/,
-                    i.getProperties(), 
-                    i 
-            );
+
+
+        if( interceptors != null ){
+            for( org.brandao.brutos.mapping.Interceptor i: interceptors ){
+                processInterceptor(
+                        new StringBuffer()/*new StringBuffer( String.valueOf( form.hashCode() ) )*/,
+                        i.getProperties(),
+                        i
+                );
+            }
         }
 
         interceptors =
@@ -354,7 +357,7 @@ public class InterceptorProcess implements InterceptorStack{
             //HttpServletResponse response = handler.getResponse();
             //BrutosContext brutosContext     = BrutosContext.getCurrentInstance();
             //ServletContext context       = handler.getContext();
-            ApplicationContext appContext = (ApplicationContext) requestScope.get( BrutosConstants.APPLICATION_CONTEXT );
+            ApplicationContext appContext = (ApplicationContext) requestScope.get( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
             Object source                 = handler.getResource();
             String redirectView           = (String)requestScope.get( BrutosConstants.REDIRECT );
             Throwable objectThrow         = (Throwable)requestScope.get( BrutosConstants.EXCEPTION );
