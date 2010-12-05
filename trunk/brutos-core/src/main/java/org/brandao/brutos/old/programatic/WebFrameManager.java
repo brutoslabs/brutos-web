@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Form;
@@ -98,6 +99,7 @@ public class WebFrameManager {
         fr.setScope( scope );
         fr.setMethodId( methodParameterName );
         fr.setRedirect(redirect);
+        fr.setDispatcherType(redirect? DispatcherType.REDIRECT : DispatcherType.INCLUDE );
         
         //Action
         Action ac = new Action();

@@ -71,6 +71,7 @@ public class ImpInterceptorHandler implements InterceptorHandler{
 
     public void setURI(String URI) {
         this.URI = URI;
+        this.setRequestId(URI);
     }
 
     public ResourceMethod getResourceMethod() {
