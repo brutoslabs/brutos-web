@@ -42,7 +42,7 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.test.MockApplicationContext;
 import org.brandao.brutos.test.MockViewProvider;
-
+import org.brandao.brutos.scope.Scope;
 /**
  *
  * @author Afonso Brandao
@@ -539,7 +539,8 @@ public class WebFrameManagerTest extends TestCase{
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
                 bc.getInvoker().invoke(bc, response);
                 assertEquals( "/throw.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
-                assertNotNull( request.getAttribute( "methodException" ) );
+                Scope requestScope = Scopes.get(ScopeType.REQUEST);
+                assertNotNull( requestScope.get( "methodException" ) );
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -1980,7 +1981,9 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
                 bc.getInvoker().invoke(bc, response);
-                assertNotNull( request.getAttribute( "ex" ) );
+                Scope requestScope = Scopes.get(ScopeType.REQUEST);
+
+                assertNotNull( requestScope.get( "ex" ) );
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -2041,7 +2044,8 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
                 bc.getInvoker().invoke(bc, response);
-                assertNotNull( request.getAttribute( "methodException" ) );
+                Scope requestScope = Scopes.get(ScopeType.REQUEST);
+                assertNotNull( requestScope.get( "methodException" ) );
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -2103,7 +2107,8 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
                 bc.getInvoker().invoke(bc, response);
-                assertNotNull( request.getAttribute( "methodException" ) );
+                Scope requestScope = Scopes.get(ScopeType.REQUEST);
+                assertNotNull( requestScope.get( "methodException" ) );
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -2174,7 +2179,8 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
                 bc.getInvoker().invoke(bc, response);
-                assertNotNull( request.getAttribute( "methodException" ) );
+                Scope requestScope = Scopes.get(ScopeType.REQUEST);
+                assertNotNull( requestScope.get( "methodException" ) );
                 assertEquals( "/throw.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
                 assertTrue( ((MockViewProvider)bc.getViewProvider()).isRedirect() );
             }
@@ -2301,7 +2307,8 @@ public class WebFrameManagerTest extends TestCase{
                 listener.requestInitialized(sre);
                 bc.getInvoker().invoke(bc, response);
                 assertEquals( "/method.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
-                assertNotNull( request.getAttribute( "result" ) );
+                Scope requestScope = Scopes.get(ScopeType.REQUEST);
+                assertNotNull( requestScope.get( "result" ) );
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -2366,7 +2373,8 @@ public class WebFrameManagerTest extends TestCase{
                 listener.requestInitialized(sre);
                 bc.getInvoker().invoke(bc, response);
                 assertEquals( "/method.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
-                assertNotNull( request.getAttribute( "result" ) );
+                Scope requestScope = Scopes.get(ScopeType.REQUEST);
+                assertNotNull( requestScope.get( "result" ) );
                 assertTrue( ((MockViewProvider)bc.getViewProvider()).isRedirect() );
             }
             finally{
