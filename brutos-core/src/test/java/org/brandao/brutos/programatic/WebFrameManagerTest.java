@@ -2227,6 +2227,10 @@ public class WebFrameManagerTest extends TestCase{
             .setInitParameter(
                 "org.brandao.brutos.applicationcontext",
                 "org.brandao.brutos.test.MockApplicationContext");
+        servletContext
+            .setInitParameter(
+                "org.brandao.brutos.view.provider",
+                "org.brandao.brutos.test.MockViewProvider");
 
         try{
             MockApplicationContext.setCurrentApplicationContext(app);
@@ -2242,7 +2246,8 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
                 bc.getInvoker().invoke(bc, response);
-                assertNotNull( request.getAttribute( "result" ) );
+                Scope requestScope = Scopes.get(ScopeType.REQUEST);
+                assertNotNull( requestScope.get( "result" ) );
             }
             finally{
                 listener.requestDestroyed(sre);

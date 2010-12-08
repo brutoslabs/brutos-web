@@ -74,6 +74,10 @@ public class CollectionMapping extends MappingBean{
     }
     */
 
+    public Object getValue(){
+        return getValue( null );
+    }
+
     public Object getValue( HttpServletRequest request ){
         return getValue( request, null, null );
     }

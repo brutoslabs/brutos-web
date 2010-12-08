@@ -93,10 +93,11 @@ public class MapMapping extends MappingBean{
     }
     
     private Object getKey( HttpServletRequest request, long index, String prefix ){
-        return keyType.getValue(
+        /*return keyType.getValue(
             request,
             request.getSession().getServletContext(),
-            getKeyScope().get( getKeyName( index, prefix ) ) );
+            getKeyScope().get( getKeyName( index, prefix ) ) );*/
+        return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
     }
     /*
     private Object getKey( HttpServletRequest request, long index ){
@@ -114,6 +115,10 @@ public class MapMapping extends MappingBean{
         return context.getAttribute( getKeyName( index ) );
     }
     */
+
+    public Object getValue(){
+        return getValue( null );
+    }
 
     public Object getValue( HttpServletRequest request ){
         return getValue( request, null, null );
