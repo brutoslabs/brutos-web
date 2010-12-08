@@ -29,6 +29,7 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
@@ -98,6 +99,7 @@ public class WebFrameBuilder {
         thr.setTarget(target);
         thr.setUri(viewId);
         thr.setRedirect( redirect );
+        thr.setDispatcher( redirect? DispatcherType.REDIRECT : DispatcherType.INCLUDE );
         webFrame.setThrowsSafe(thr);
         return this;
     }
@@ -247,7 +249,7 @@ public class WebFrameBuilder {
         MethodForm mp = new MethodForm();
         mp.setName( name );
         mp.setRedirect(redirect);
-        
+        mp.setDispatcherType( redirect? DispatcherType.REDIRECT : DispatcherType.INCLUDE );
         try{
             Class<?> classType = webFrame.getClassType();
             Method method = classType.getMethod( methodName, parametersType );

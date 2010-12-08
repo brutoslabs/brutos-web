@@ -69,6 +69,7 @@ public class MethodForm {
         this.parameters = new ArrayList();
         this.parametersType = new ArrayList();
         this.throwsSafe = new HashMap();
+        this.dispatcherType = DispatcherType.INCLUDE;
     }
 
     public String getName() {

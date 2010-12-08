@@ -22,6 +22,7 @@ import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
@@ -170,6 +171,7 @@ public class MethodBuilder {
         thr.setTarget(target);
         thr.setUri(uri);
         thr.setRedirect( redirect );
+        thr.setDispatcher( redirect? DispatcherType.REDIRECT : DispatcherType.INCLUDE );
         methodForm.setThrowsSafe(thr);
         return this;
     }

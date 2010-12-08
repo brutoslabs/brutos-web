@@ -48,6 +48,7 @@ import org.brandao.brutos.view.ViewProvider;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
+import org.brandao.brutos.web.scope.OldRequestScope;
 import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
@@ -114,7 +115,7 @@ public class BrutosContext extends WebApplicationContext{
         //Scopes.register( "request" , new RequestScope() );
         Scopes.register( "session" , new SessionScope() );
         Scopes.register( ScopeType.PARAM.toString(), new ParamScope() );
-        Scopes.register( ScopeType.REQUEST.toString(), new ParamScope() );
+        Scopes.register( ScopeType.REQUEST.toString(), new OldRequestScope() );
         if( iocManager.getProvider().containsBeanDefinition("customScopes") ){
             CustomScopeConfigurer customScopes =
                     (CustomScopeConfigurer)iocManager.getInstance("customScopes");
