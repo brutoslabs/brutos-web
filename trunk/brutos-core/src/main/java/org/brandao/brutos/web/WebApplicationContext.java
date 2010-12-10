@@ -253,13 +253,15 @@ public class WebApplicationContext extends ApplicationContext{
                 .getAttribute( BrutosConstants.CONTROLLER );
     }
 
+    /*
     public ControllerResolver getResolveController() {
         WebApplicationContext brutosInstance = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
         return (ControllerResolver) brutosInstance
                 .getContext()
                     .getAttribute( BrutosConstants.CONTROLLER_RESOLVER );
     }
-
+    */
+    
     public void destroy() {
     }
 

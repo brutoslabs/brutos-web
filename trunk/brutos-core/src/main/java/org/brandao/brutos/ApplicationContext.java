@@ -104,6 +104,10 @@ public abstract class ApplicationContext {
         this.loadWebFrameManager(webFrameManager);
     }
 
+    protected void setControllerResolver( ControllerResolver controllerResolver ){
+        this.controllerResolver = controllerResolver;
+    }
+    
     protected ControllerResolver getNewControllerResolver(){
         try{
             ControllerResolver instance = (ControllerResolver) Class.forName(
@@ -269,6 +273,9 @@ public abstract class ApplicationContext {
         return invoker;
     }
 
+    protected void setConfiguration( Properties config ){
+        this.configuration = config;
+    }
     public Properties getConfiguration() {
         return configuration;
     }

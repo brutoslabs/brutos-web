@@ -19,8 +19,8 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.programatic.ControllerManager;
-import org.brandao.brutos.web.ContextLoaderListener;
-import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.ContextLoaderListener;
+import org.brandao.brutos.BrutosContext;
 import com.mockrunner.mock.web.MockServletContext;
 import java.beans.PropertyEditorSupport;
 import java.text.ParseException;
@@ -225,7 +225,7 @@ public class TestBrutosContext extends TestCase{
                 MockApplicationContext.setCurrentApplicationContext(app);
                 listener.contextInitialized(sce);
                 TestEditors o = 
-                    (TestEditors)WebApplicationContext
+                    (TestEditors)BrutosContext
                         .getCurrentApplicationContext()
                             .getIocManager().getInstance( "testEditor" );
                 SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy" );
@@ -249,7 +249,7 @@ public class TestBrutosContext extends TestCase{
         
         try{
             cll.contextInitialized(sce);
-            ApplicationContext c = ApplicationContext.getCurrentApplicationContext();
+            BrutosContext c = (BrutosContext) BrutosContext.getCurrentApplicationContext();
             assertEquals(
                 TestControllerResolver.class,
                 c.getControllerResolver().getClass() );
@@ -270,7 +270,7 @@ public class TestBrutosContext extends TestCase{
 
         try{
             cll.contextInitialized(sce);
-            ApplicationContext c = ApplicationContext.getCurrentApplicationContext();
+            ApplicationContext c = BrutosContext.getCurrentApplicationContext();
             assertEquals(
                 TestMethodResolver.class,
                 c.getMethodResolver().getClass() );
