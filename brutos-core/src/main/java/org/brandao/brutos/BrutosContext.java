@@ -93,6 +93,7 @@ public class BrutosContext extends WebApplicationContext{
             logger.info( "Initializing Brutos root WebApplicationContext" );
             loadInvoker( sce.getServletContext() );
             loadServices( configuration, sce );
+            super.setConfiguration( configuration );
             resolveController( sce.getServletContext() );
             methodResolver( sce.getServletContext() );
             registerCustomEditors();
@@ -284,24 +285,12 @@ public class BrutosContext extends WebApplicationContext{
     }
 
     private void resolveController( ServletContext context ){
-        try{
-            ControllerResolver instance = (ControllerResolver) Class.forName(
-                    configuration.getProperty(
-                    "org.brandao.brutos.controller.class",
-                    "org.brandao.brutos.DefaultResolveController"
-                ),
-                    true,
-                    Thread.currentThread().getContextClassLoader()
 
-            ).newInstance();
-
-            context
-                .setAttribute(
-                    BrutosConstants.CONTROLLER_RESOLVER , instance );
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
+        ControllerResolver instance = super.getNewControllerResolver();
+        super.setControllerResolver(instance);
+        context
+            .setAttribute(
+                BrutosConstants.CONTROLLER_RESOLVER , instance );
     }
 
     private void methodResolver( ServletContext context ){
