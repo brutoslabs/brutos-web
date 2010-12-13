@@ -28,6 +28,8 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.ContextLoaderListener;
 import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.old.programatic.IOCManager;
+import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.test.MockApplicationContext;
 import org.brandao.brutos.validator.RestrictionRules;
 
@@ -82,7 +84,10 @@ public class ValidatorTest extends TestCase {
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
                 }
-            };
+
+            protected void loadController(ControllerManager controllerManager) {
+            }
+        };
 
         servletContext
             .setInitParameter(
@@ -134,6 +139,9 @@ public class ValidatorTest extends TestCase {
                 }
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
+                }
+
+                protected void loadController(ControllerManager controllerManager) {
                 }
             };
 
@@ -192,6 +200,9 @@ public class ValidatorTest extends TestCase {
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
                 }
+
+                protected void loadController(ControllerManager controllerManager) {
+                }
             };
 
         servletContext
@@ -244,6 +255,9 @@ public class ValidatorTest extends TestCase {
                 }
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
+                }
+
+                protected void loadController(ControllerManager controllerManager) {
                 }
             };
 
@@ -302,6 +316,9 @@ public class ValidatorTest extends TestCase {
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
                 }
+
+                protected void loadController(ControllerManager controllerManager) {
+                }
             };
 
         servletContext
@@ -354,6 +371,9 @@ public class ValidatorTest extends TestCase {
                 }
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
+                }
+
+                protected void loadController(ControllerManager controllerManager) {
                 }
             };
 
@@ -412,6 +432,9 @@ public class ValidatorTest extends TestCase {
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
                 }
+
+                protected void loadController(ControllerManager controllerManager) {
+                }
             };
 
         servletContext
@@ -464,6 +487,9 @@ public class ValidatorTest extends TestCase {
                 }
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
+                }
+
+                protected void loadController(ControllerManager controllerManager) {
                 }
             };
 
@@ -522,6 +548,9 @@ public class ValidatorTest extends TestCase {
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
                 }
+
+                protected void loadController(ControllerManager controllerManager) {
+                }
             };
 
         servletContext
@@ -574,6 +603,9 @@ public class ValidatorTest extends TestCase {
                 }
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
+                }
+
+                protected void loadController(ControllerManager controllerManager) {
                 }
             };
 
@@ -632,6 +664,9 @@ public class ValidatorTest extends TestCase {
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
                 }
+
+                protected void loadController(ControllerManager controllerManager) {
+                }
             };
 
         servletContext
@@ -684,6 +719,9 @@ public class ValidatorTest extends TestCase {
                 }
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
+                }
+
+                protected void loadController(ControllerManager controllerManager) {
                 }
             };
 
@@ -742,6 +780,9 @@ public class ValidatorTest extends TestCase {
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
                 }
+
+                protected void loadController(ControllerManager controllerManager) {
+                }
             };
 
         servletContext
@@ -794,6 +835,9 @@ public class ValidatorTest extends TestCase {
                 }
 
                 public void loadInterceptorManager(InterceptorManager interceptorManager) {
+                }
+
+                protected void loadController(ControllerManager controllerManager) {
                 }
             };
 

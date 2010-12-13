@@ -17,7 +17,6 @@
 package org.brandao.brutos.mapping;
 
 
-import java.lang.reflect.Field;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
@@ -48,6 +47,8 @@ public class FieldBean {
 
     private Validator validator;
 
+    private Object value;
+    
     public FieldBean() {
     }
 
@@ -122,5 +123,17 @@ public class FieldBean {
 
     public void setValidator(Validator validator) {
         this.validator = validator;
+    }
+
+    public boolean isStatic(){
+        return getValue() != null;
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public void setValue(Object value) {
+        this.value = value;
     }
 }
