@@ -56,6 +56,10 @@ public class FieldForm {
     }
 
     public void setValue( Object source, Object value ){
+
+        if( this.name == null )
+            return;
+        
         BeanInstance instance = null;
         try{
             instance = new BeanInstance( source );

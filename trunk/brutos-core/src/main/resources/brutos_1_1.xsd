@@ -90,7 +90,7 @@
             <xsd:element name="action" type="action" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
 
-        <xsd:attribute name="id" type="xsd:string" use="required"/>
+        <xsd:attribute name="id" type="xsd:string"/>
         <xsd:attribute name="dispatcher" type="dispatcher" default="forward"/>
         <xsd:attribute name="view" type="xsd:string"/>
         <xsd:attribute name="name" type="xsd:string"/>
@@ -107,8 +107,8 @@
             <xsd:element name="throwable" minOccurs="0"
                      type="throw-safe" maxOccurs="unbounded"/>
         </xsd:sequence>
-        <xsd:attribute name="name" type="xsd:string" use="required"/>
-        <xsd:attribute name="method" type="xsd:string"/>
+        <xsd:attribute name="id" type="xsd:string" use="required"/>
+        <xsd:attribute name="executor" type="xsd:string"/>
         <xsd:attribute name="result" type="xsd:string"/>
         <xsd:attribute name="view" type="xsd:string"/>
         <xsd:attribute name="dispatcher" type="dispatcher" default="forward"/>
@@ -124,9 +124,13 @@
     <xsd:complexType name="mapping-bean">
         <xsd:sequence>
             <xsd:element name="property" type="property" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="extend" type="extend-mapping-bean"  minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="bean" type="mapping-bean" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="ref" type="mapping-ref" minOccurs="1" maxOccurs="1"/>
+            <!--<xsd:element name="extend" type="extend-mapping-bean"  minOccurs="0" maxOccurs="1"/>-->
         </xsd:sequence>
         <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="separator" type="xsd:string" default="."/>
+        <xsd:attribute name="index-format" type="xsd:string" default="[$index]"/>
         <xsd:attribute name="target" type="class" use="required"/>
     </xsd:complexType>
 
@@ -134,8 +138,8 @@
         <xsd:sequence>
             <xsd:element name="key" type="mapping-key" minOccurs="0" maxOccurs="1"/>
             <xsd:choice>
-                <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="ref" type="mapping-ref" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="bean" type="mapping-bean" minOccurs="1" maxOccurs="1"/>
+                <xsd:element name="ref" type="mapping-ref" minOccurs="1" maxOccurs="1"/>
             </xsd:choice>
         </xsd:sequence>
         <xsd:attribute name="ref" type="xsd:string"/>

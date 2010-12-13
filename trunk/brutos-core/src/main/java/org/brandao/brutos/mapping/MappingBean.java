@@ -17,8 +17,12 @@
 
 package org.brandao.brutos.mapping;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.BrutosException;
@@ -44,11 +48,16 @@ public class MappingBean {
 
     private String separator;
 
+    private ConstructorBean constructor;
+
+    private String factory;
+
     public MappingBean( Form form ) {
         this.fields = new HashMap();
         this.form = form;
         this.hierarchy = true;
         this.separator = ".";
+        this.constructor = new ConstructorBean(this);
     }
 
     public String getName() {
@@ -100,16 +109,27 @@ public class MappingBean {
             Object obj;
             //se true o bean existe
             boolean exist = false;
-            obj = instance == null? classType.newInstance() : instance;
+            obj = instance == null? /*classType.newInstance()*/ getInstanceByConstructor( prefix, index, request ) : instance;
             Iterator<FieldBean> fds = fields.values().iterator();
             BeanInstance beanInstance = new BeanInstance( obj, classType );
+            
             while( fds.hasNext() ){
                 FieldBean fb = fds.next();
                 //Field f = fb.getField();
+
+                Object value = this.getValueField(beanInstance, prefix, index, request, fb);
+
+                if( !exist && value != null )
+                    exist = true;
+
+                beanInstance.getSetter( fb.getName() ).set( value );
+
+                /*
                 Validator validator = fb.getValidator();
-                
+
                 if( fb.getMapping() == null ){
-                    Object value =
+                    Object value = fb.isStatic()?
+                        fb.getValue() :
                         fb.getScope().get(
                                 (prefix != null? prefix : "") +
                                 fb.getParameterName() +
@@ -160,6 +180,7 @@ public class MappingBean {
                     beanInstance.getSetter( fb.getName() )
                         .set( property );
                 }
+                */
             }
             //se nao existir nenhuma propriedade do bean, então o bean não existe
             return exist || instance != null? obj : null;
@@ -168,6 +189,90 @@ public class MappingBean {
             return null;
         }
 
+    }
+
+    private Object getValueField( BeanInstance beanInstance, String prefix, long index, HttpServletRequest request, FieldBean fb ) throws Exception{
+        Validator validator = fb.getValidator();
+        Object property;
+
+        if( fb.getMapping() == null ){
+            Object value = fb.isStatic()?
+                fb.getValue() :
+                fb.getScope().get(
+                        (prefix != null? prefix : "") +
+                        fb.getParameterName() +
+                            ( index < 0? "" : "[" + index + "]" ) );
+
+            Type type = fb.getType();
+            property = type.getValue( value );
+        }
+        else{
+            //obtem o atual valor da propriedade
+            property = beanInstance.getGetter( fb.getName() ).get();
+
+            //obtem o objeto resultante
+            MappingBean mappingBean = form.getMappingBean( fb.getMapping() );
+
+            if( mappingBean == null )
+                throw new BrutosException( "mapping name " + fb.getMapping() + " not found!" );
+
+            property = mappingBean.getValue(
+                request,
+                property,
+                isHierarchy()?
+                    prefix != null?
+                        prefix + fb.getParameterName() + getSeparator() :
+                        fb.getParameterName() + getSeparator()
+                    :
+                    null );
+
+        }
+
+        if( validator != null )
+            validator.validate(fb, property);
+
+        return property;
+    }
+
+    private Object getConstructorArg( String prefix, long index, HttpServletRequest request, FieldBean fb ) throws Exception{
+        Validator validator = fb.getValidator();
+        Object property;
+
+        if( fb.getMapping() == null ){
+            Object value = fb.isStatic()?
+                fb.getValue() :
+                fb.getScope().get(
+                        (prefix != null? prefix : "") +
+                        fb.getParameterName() +
+                            ( index < 0? "" : "[" + index + "]" ) );
+
+            Type type = fb.getType();
+            property = type.getValue( value );
+        }
+        else{
+
+            //obtem o objeto resultante
+            MappingBean mappingBean = form.getMappingBean( fb.getMapping() );
+
+            if( mappingBean == null )
+                throw new BrutosException( "mapping name " + fb.getMapping() + " not found!" );
+
+            property = mappingBean.getValue(
+                request,
+                null,
+                isHierarchy()?
+                    prefix != null?
+                        prefix + fb.getParameterName() + getSeparator() :
+                        fb.getParameterName() + getSeparator()
+                    :
+                    null );
+
+        }
+
+        if( validator != null )
+            validator.validate(fb, property);
+
+        return property;
     }
 
     public boolean isBean(){
@@ -204,6 +309,68 @@ public class MappingBean {
 
     public void setSeparator(String separator) {
         this.separator = separator;
+    }
+
+    public ConstructorBean getConstructor() {
+        return constructor;
+    }
+
+    public void setConstructor(ConstructorBean constructor) {
+        this.constructor = constructor;
+    }
+
+    private Object getInstanceByConstructor( String prefix, long index, HttpServletRequest request ) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, Exception{
+        ConstructorBean cons = this.getConstructor();
+        ConstructorBean conInject = this.getConstructor();
+        if( conInject.isConstructor() ){
+            Constructor insCons = this.getConstructor().getContructor();
+            return insCons.newInstance( this.getValues(cons.getArgs(), prefix, index, request ) );
+        }
+        else{
+            MappingBean factoryBean =
+                this.getFactory() != null?
+                    form.getMappingBean(factory) :
+                    null;
+
+            Object factoryInstance = factoryBean.getValue();
+
+            Method method = this.getConstructor().getMethod( factoryInstance );
+
+            return method.invoke(
+                    factory == null?
+                        this.getClassType() :
+                        factory,
+                    getValues(cons.getArgs(), prefix, index, request ) );
+        }
+    }
+
+    private Object[] getValues( List args, String prefix, long index, HttpServletRequest request ) throws Exception{
+
+        Object[] values = new Object[ args.size() ];
+
+        for( int i=0;i<args.size();i++ ){
+            FieldBean arg = (FieldBean) args.get(i);
+            values[i] = this.getConstructorArg( prefix, index, request, arg);
+            /*
+            if( arg instanceof ValueInject )
+                values[i] = getValueInject( (ValueInject)arg );
+            else
+            if( arg instanceof GenericValueInject )
+                values[i] = container.getBean( ClassType.getWrapper(arg.getTarget()) );
+            else
+                values[i] = container.getBean( arg.getName() );
+            */
+        }
+
+        return values;
+    }
+
+    public String getFactory() {
+        return factory;
+    }
+
+    public void setFactory(String factory) {
+        this.factory = factory;
     }
 
     /*
