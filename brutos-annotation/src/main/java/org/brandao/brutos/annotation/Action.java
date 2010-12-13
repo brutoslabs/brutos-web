@@ -50,6 +50,18 @@ import java.lang.annotation.Target;
  * No exemplo acima a ação terá o nome de testAction e a view será
  * /MyController/testAction.jsp.
  * 
+ * <pre>
+ * Ex3:
+ * &#64;Controller
+ * public class MyController{
+ *
+ *     &#64;Action( id="/testAction.jbrs" )
+ *     public void testAction(){
+ *         ...
+ *     }
+ * }
+ * </pre>
+ * 
  * @author Afonso Brandao
  */
 @Target(ElementType.METHOD)
@@ -57,10 +69,10 @@ import java.lang.annotation.Target;
 public @interface Action {
     
     /**
-     * Nome da ação. Se não informado, será usado o nome do método.
-     * @return Nome da ação.
+     * Identificação da ação. Se não informado, será usado o nome do método.
+     * @return Identificação da ação.
      */
-    String name() default "";
+    String id();
 
     /**
      * Parâmetros da ação. Se não informado, os parâmetros serão automaticamente

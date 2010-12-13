@@ -139,7 +139,7 @@ public class WebFrameAnnotationMapping {
                     
                     MethodBuilder mBuilder = 
                         wfb.addMethod( 
-                            mb.name(), 
+                            mb.id(),
                             null/*mb.returnIn()*/,
                             null/*mb.returnPage()*/ ,
                             m.getName(),
