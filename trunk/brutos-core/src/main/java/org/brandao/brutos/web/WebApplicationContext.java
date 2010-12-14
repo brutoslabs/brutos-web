@@ -76,11 +76,10 @@ public class WebApplicationContext extends ApplicationContext{
             loadLogger( sce.getServletContext() );
             logger.info( "Initializing Brutos root WebApplicationContext" );
             logger.info( "Configuration: " + config.toString() );
-            loadInvoker( sce.getServletContext() );
             overrideConfig( sce );
-
             //this.appContext = new XMLApplicationContext();
             configure(config);
+            loadInvoker( sce.getServletContext() );
         }
         catch( Throwable e ){
             sce.getServletContext().setAttribute( BrutosConstants.EXCEPTION, e );
