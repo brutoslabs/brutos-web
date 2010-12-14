@@ -137,7 +137,7 @@ public class Invoker {
         return true;
     }
 
-    public boolean invoke( String requestId ) throws IOException{
+    public boolean invoke( String requestId ){
 
         Scope paramScope = Scopes.get(ScopeType.PARAM.toString());
         Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
