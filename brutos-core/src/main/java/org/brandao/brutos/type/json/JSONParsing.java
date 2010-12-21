@@ -60,7 +60,10 @@ class JSONParsing implements JSONConstants{
 
     public Object object( Type clazz ) throws IOException{
 
-        char v = next( true );back();
+        Character v = next( true );back();
+
+        if( v == null )
+            return null;
         
         switch (v){
             case START_OBJECT_STR:

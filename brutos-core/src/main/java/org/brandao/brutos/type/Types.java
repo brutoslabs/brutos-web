@@ -96,7 +96,7 @@ public class Types {
         if( typeClass != null )
             return (Type) getInstance( typeClass, classType, enumType, maskDate );
         else
-            return new ObjectType();
+            return new ObjectType((Class)classType);
     }
 
     private static Object getInstance( Class clazz, java.lang.reflect.Type classType, EnumerationType enumType, String maskDate ){
