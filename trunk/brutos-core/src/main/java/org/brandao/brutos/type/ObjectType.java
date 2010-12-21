@@ -30,24 +30,23 @@ import javax.servlet.http.HttpServletResponse;
 public class ObjectType implements Type{
 
     private Type serializableType;
-    
-    public ObjectType() {
+    private Class classType;
+
+    public ObjectType( Class classType ) {
         this.serializableType = Types.getType( Serializable.class );
+        this.classType = classType;
     }
 
-    @Override
     public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
         return value;
     }
     
-    @Override
     public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
         serializableType.setValue(response, context, value);
     }
     
-    @Override
     public Class getClassType() {
-        return Object.class;
+        return classType;
     }
 
     public Object getValue(Object value) {

@@ -48,6 +48,7 @@ import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.view.ViewProvider;
 
 /**
@@ -258,12 +259,18 @@ public class InterceptorProcess implements InterceptorStack{
             else
                 return null;
         }
+        catch( ValidatorException e ){
+            processException( e, method, requestScope );
+            return null;
+        }
         catch( InvocationTargetException e ){
             if( e.getTargetException() instanceof RedirectException ){
                 //request.setAttribute( BrutosConstants.REDIRECT, ((RedirectException)e.getTargetException()).getPage() );
                 requestScope.put( BrutosConstants.REDIRECT, ((RedirectException)e.getTargetException()).getPage() );
             }
             else{
+                processException( e.getTargetException(), method, requestScope );
+                /*
                 ThrowableSafeData tdata = method == null?
                     form.getThrowsSafe(
                         e.getTargetException().getClass() ) :
@@ -282,6 +289,7 @@ public class InterceptorProcess implements InterceptorStack{
                 }
                 else
                     throw new InterceptedException( e.getTargetException() );
+                 */
             }
 
             return null;
@@ -302,6 +310,25 @@ public class InterceptorProcess implements InterceptorStack{
             dataOutput.writeFields( form, handler.getResource() );
         }
 
+    }
+
+    private void processException( Throwable e, MethodForm method, Scope requestScope ){
+            ThrowableSafeData tdata = method == null?
+                form.getThrowsSafe(
+                    e.getClass() ) :
+                method.getThrowsSafe(
+                    e.getClass() );
+
+            if( tdata != null ){
+                requestScope.put(
+                        BrutosConstants.EXCEPTION,
+                        e );
+
+                requestScope.put(
+                        BrutosConstants.EXCEPTION_DATA, tdata );
+            }
+            else
+                throw new InterceptedException( e );
     }
 
     private Object[] getParameters( MethodForm method, HttpServletRequest request,
