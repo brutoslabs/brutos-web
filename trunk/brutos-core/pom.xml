@@ -93,6 +93,12 @@
             <version>4.2.0.GA</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.brandao</groupId>
+            <artifactId>ioc-di</artifactId>
+            <version>1.0-RC2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <repositories>

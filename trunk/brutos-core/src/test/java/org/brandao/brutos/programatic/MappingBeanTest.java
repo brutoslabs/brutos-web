@@ -21,15 +21,27 @@ import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 import com.mockrunner.mock.web.MockHttpSession;
 import com.mockrunner.mock.web.MockServletContext;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import junit.framework.TestCase;
 import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.TestHelper;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
+import org.brandao.brutos.programatic.MappingBeanTestHelper.TestController;
+import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.test.MockApplicationContext;
 import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.ioc.RootContainer;
 
 /**
  *
@@ -38,77 +50,50 @@ import org.brandao.brutos.web.WebApplicationContext;
 public class MappingBeanTest extends TestCase {
 
     public void testProperty(){
-        MockServletContext servletContext = new MockServletContext();
-        ServletContextEvent sce = new ServletContextEvent( servletContext );
-        ContextLoaderListener listener = new ContextLoaderListener();
-        ApplicationContext app = new ApplicationContext(){
+        
+        Map initParams = new HashMap();
+        initParams
+            .put(
+                "org.brandao.brutos.applicationcontext",
+                "org.brandao.brutos.test.MockApplicationContext");
+        initParams
+            .put(
+                "org.brandao.brutos.view.provider",
+                "org.brandao.brutos.test.MockViewProvider");
 
+        TestHelper.executeTest(null, initParams, "/test.jbrs", new TestHelper.TestExecutor() {
 
-                public void destroy() {
-                }
+            public void execute(MockHttpServletRequest request, MockHttpServletResponse response, 
+                    MockHttpSession session, MockServletContext context) {
 
-                public void loadIOCManager(IOCManager iocManager) {
-                    iocManager
-                        .addBean("TestController", MappingBeanTestHelper.TestController.class );
-                }
+                ApplicationContext app = WebApplicationContext
+                        .getCurrentApplicationContext();
 
-                public void loadWebFrameManager(WebFrameManager webFrameManager) {
-                }
-
-                public void loadInterceptorManager(InterceptorManager interceptorManager) {
-                }
-
-                protected void loadController(ControllerManager controllerManager) {
+                RootContainer.getInstance().addBean(
+                        "controllerInstance",
+                        MappingBeanTestHelper.TestController.class,
+                        org.brandao.ioc.ScopeType.REQUEST);
+                
+                ControllerManager controllerManager = app.getControllerManager();
                     ControllerBuilder cb = controllerManager.addController("/test.jbrs",
-                            MappingBeanTestHelper.TestController.class );
+                            null, "controllerInstance",
+                            MappingBeanTestHelper.TestController.class, "invoke" );
 
-                    cb
-                        .addMappingBean("bean",MappingBeanTestHelper.MyBean.class )
+                    cb.addMappingBean("bean",MappingBeanTestHelper.MyBean.class )
                             .addProperty("intValue", "intProperty");
 
                     cb.addAction("testAction", "testAction")
                             .addParameterMapping("bean", MappingBeanTestHelper.MyBean.class );
-                }
-            };
 
-        servletContext
-            .setInitParameter(
-                "org.brandao.brutos.applicationcontext",
-                "org.brandao.brutos.test.MockApplicationContext");
-        servletContext
-            .setInitParameter(
-                "org.brandao.brutos.view.provider",
-                "org.brandao.brutos.test.MockViewProvider");
-
-        try{
-            MockApplicationContext.setCurrentApplicationContext(app);
-            listener.contextInitialized(sce);
-            MockHttpServletRequest request = new MockHttpServletRequest();
-            MockHttpServletResponse response = new MockHttpServletResponse();
-            MockHttpSession session = new MockHttpSession();
-            ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
-
-            ApplicationContext bc = WebApplicationContext.getCurrentApplicationContext();
-            request.setContextPath("");
-            try{
-                request.setRequestURI("/test.jbrs");
-                request.setSession(session);
                 request.setupAddParameter("intValue", "100");
-                listener.requestInitialized(sre);
-                bc.getInvoker().invoke("/test.jbrs");
-                MappingBeanTestHelper.TestController controller =
-                    (MappingBeanTestHelper.TestController)request.getAttribute( "TestController" );
+                request.setupAddParameter("invoke", "testAction");
+                app.getInvoker().invoke(request.getRequestURI());
+                TestController controller = (TestController) Scopes
+                        .get(ScopeType.REQUEST).get("controllerInstance");
 
-                assertNotNull( controller );
-                assertEquals( 100 , controller.getMyBeanProperty().getIntProperty() );
+                assertNotNull( controller.getMyBeanProperty() );
+                assertEquals(100,controller.getMyBeanProperty().getIntProperty());
             }
-            finally{
-                listener.requestDestroyed(sre);
-            }
-
-        }
-        finally{
-            listener.contextDestroyed(sce);
-        }
+        });
     }
 }

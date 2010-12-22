@@ -46,6 +46,7 @@ public class BeanBuilder {
         this.webFrameBuilder = controllerBuilder;
         this.mappingBean = mappingBean;
         this.webFrame = webFrame;
+        this.validatorProvider = validatorProvider;
     }
 
     public BeanBuilder setFactory( String factory ){
@@ -60,28 +61,30 @@ public class BeanBuilder {
 
     public PropertyBuilder addProperty( String name, String propertyName,
             EnumerationType enumProperty ){
-        return addProperty( name, propertyName, enumProperty, null, null, ScopeType.REQUEST, null, null );
+        return addProperty( name, propertyName, enumProperty, null, null, 
+                ScopeType.PARAM, null, null );
     }
     
     public PropertyBuilder addProperty( String name, String propertyName,
             String temporalProperty ){
-        return addProperty( name, propertyName, EnumerationType.ORDINAL, temporalProperty, null, ScopeType.REQUEST, null, null );
+        return addProperty( name, propertyName, EnumerationType.ORDINAL, 
+                temporalProperty, null, ScopeType.PARAM, null, null );
     }
     
     public PropertyBuilder addProperty( String name, String propertyName,
             Type type ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null,ScopeType.REQUEST, null, type );
+                null,ScopeType.PARAM, null, type );
     }
     
     public PropertyBuilder addMappedProperty( String name, String propertyName, String mapping ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, ScopeType.REQUEST, null, null );
+                mapping, ScopeType.PARAM, null, null );
     }
     
     public PropertyBuilder addProperty( String name, String propertyName ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy", 
-                null, ScopeType.REQUEST, null, null );
+                null, ScopeType.PARAM, null, null );
     }
 
     public PropertyBuilder addProperty( String name, String propertyName, ScopeType scope ){
@@ -91,7 +94,7 @@ public class BeanBuilder {
 
     public PropertyBuilder addStaticProperty( String name, String propertyName, Object value ){
         return addProperty( null, propertyName,
-            EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.REQUEST, value, null );
+            EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM, value, null );
     }
 
     public PropertyBuilder addProperty( String name, String propertyName,
@@ -168,28 +171,28 @@ public class BeanBuilder {
 
     public BeanBuilder addContructorArg( String name,
             EnumerationType enumProperty ){
-        return addContructorArg( name, enumProperty, null, null, ScopeType.REQUEST, null, null );
+        return addContructorArg( name, enumProperty, null, null, ScopeType.PARAM, null, null );
     }
 
     public BeanBuilder addContructorArg( String name,
             String temporalProperty ){
-        return addContructorArg( name, EnumerationType.ORDINAL, temporalProperty, null, ScopeType.REQUEST, null, null );
+        return addContructorArg( name, EnumerationType.ORDINAL, temporalProperty, null, ScopeType.PARAM, null, null );
     }
 
     public BeanBuilder addContructorArg( String name,
             Type type ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null,ScopeType.REQUEST, null, type );
+                null,ScopeType.PARAM, null, type );
     }
 
     public BeanBuilder addStaticContructorArg( String name, String mapping ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, ScopeType.REQUEST, null, null );
+                mapping, ScopeType.PARAM, null, null );
     }
 
     public BeanBuilder addContructorArg( String name ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, ScopeType.REQUEST, null, null );
+                null, ScopeType.PARAM, null, null );
     }
 
     public BeanBuilder addContructorArg( String name, ScopeType scope ){
@@ -199,7 +202,7 @@ public class BeanBuilder {
 
     public BeanBuilder addContructorArg( String name, Object value ){
         return addContructorArg( name,
-            EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.REQUEST, value, null );
+            EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM, value, null );
     }
 
     public BeanBuilder addContructorArg( String name,
