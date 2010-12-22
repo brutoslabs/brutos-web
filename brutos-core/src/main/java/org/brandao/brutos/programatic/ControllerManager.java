@@ -53,33 +53,24 @@ public class ControllerManager {
     }
 
     public ControllerBuilder addController( String id, Class classtype ){
-        return addController( id, null, null, classtype, ScopeType.valueOf("prototype"), "invoke" );
+        return addController( id, null, null, classtype, "invoke" );
     }
     
-    public ControllerBuilder addController( String id, Class classtype, ScopeType scope ){
-        return addController( id, null, null, classtype, scope, "invoke" );
-    }
-
     public ControllerBuilder addController( String id, String view, Class classtype ){
-        return addController( id, view, null, classtype, ScopeType.valueOf("prototype"), "invoke" );
+        return addController( id, view, null, classtype, "invoke" );
     }
     
     public ControllerBuilder addController( String id, String view,
-           String name, Class classType, ScopeType scope,
-           String actionId ){
-        return addController( id, view, DispatcherType.FORWARD, name, classType, scope, actionId );
+           String name, Class classType, String actionId ){
+        return addController( id, view, DispatcherType.FORWARD, name, classType, actionId );
     }
 
     public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
-            String name, Class classType, ScopeType scope,
-            String actionId ){
+            String name, Class classType, String actionId ){
 
         id = id == null || id.replace( " ", "" ).length() == 0? null : id;
         view = view == null || view.replace( " ", "" ).length() == 0 ? null : view;
 
-        if( scope == null )
-            throw new BrutosException( "scope is required!" );
-            
         if( actionId == null )
             actionId = "invoke";
         
@@ -91,7 +82,7 @@ public class ControllerManager {
         fr.setId( name );
         fr.setPage( view );
         fr.setClassType( classType );
-        fr.setScope( scope );
+        fr.setScope( ScopeType.REQUEST );
         fr.setMethodId( actionId );
         fr.setRedirect(false);
         fr.setDispatcherType(dispatcherType);

@@ -58,6 +58,9 @@ public class Form {
 
     private List<String> alias;
 
+    /**
+     * @deprecated 
+     */
     private ScopeType scope;
     
     private String page;
@@ -209,10 +212,18 @@ public class Form {
         return this.alias;
     }
 
+    /**
+     * @deprecated
+     * @return
+     */
     public ScopeType getScope() {
         return scope;
     }
 
+    /**
+     * @deprecated 
+     * @param scope
+     */
     public void setScope(ScopeType scope) {
         this.scope = scope;
     }

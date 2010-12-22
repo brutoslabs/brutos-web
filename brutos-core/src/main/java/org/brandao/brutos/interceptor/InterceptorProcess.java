@@ -337,10 +337,11 @@ public class InterceptorProcess implements InterceptorStack{
         if( method != null ){
             Object[] values = new Object[ method.getParameters().size() ];
 
+            int index = 0;
             for( ParameterMethodMapping p: method.getParameters() ){
                 UseBeanData bean = p.getBean();
                 //values[ p.getParameterName() - 1 ] = bean.getValue( context, request );
-                values[ p.getParameterId() - 1 ] = bean.getValue();
+                values[ index++ ] = bean.getValue();
             }
 
             return values;
