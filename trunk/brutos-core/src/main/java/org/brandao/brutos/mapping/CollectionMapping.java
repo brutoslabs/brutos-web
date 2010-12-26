@@ -61,7 +61,7 @@ public class CollectionMapping extends MappingBean{
         this.bean = bean;
     }
 
-    private Object get( HttpServletRequest request, String prefix, long index ){
+    protected Object get( HttpServletRequest request, String prefix, long index ){
         /*
          * A partir da versão 2.0 o bean sempre será diferente de null.
          */
@@ -113,7 +113,7 @@ public class CollectionMapping extends MappingBean{
         }
     }
 
-    private Object getInstance( Object instance ) 
+    protected Object getInstance( Object instance )
             throws InstantiationException, IllegalAccessException{
 
         instance = instance == null?

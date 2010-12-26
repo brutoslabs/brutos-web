@@ -79,7 +79,7 @@ public class MappingBeanTest extends TestCase {
                             null, "controllerInstance",
                             MappingBeanTestHelper.TestController.class, "invoke" );
 
-                    cb.addMappingBean("bean",MappingBeanTestHelper.MyBean.class )
+                    cb.buildMappingBean("bean",MappingBeanTestHelper.MyBean.class )
                             .addProperty("intValue", "intProperty");
 
                     cb.addAction("testAction", "testAction")

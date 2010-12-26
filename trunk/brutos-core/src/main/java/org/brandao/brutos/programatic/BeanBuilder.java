@@ -27,6 +27,7 @@ import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.mapping.CollectionMapping;
 import org.brandao.brutos.mapping.FieldBean;
 import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.MapMapping;
 import org.brandao.brutos.mapping.MappingBean;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
@@ -85,24 +86,47 @@ public class BeanBuilder {
     }
 
     /**
-     * Constroi o mapeamento do elemento da coleção ou mapeamento.
-     *
+     * Controi o mapeamento da chave usada para acessar o elemento na coleção.
+     * 
      * @param type Classe alvo do mapeamento.
      * @return Construtor do mapeamento.
+     * @throws org.brandao.brutos.BrutosException Lançado se a classe alvo do
+     * mapeamento não for uma coleção.
      */
-    public BeanBuilder setElementType( Class type ){
+    public BeanBuilder buildKey( Class type ){
+
+        if( !this.mappingBean.isMap() )
+            throw new BrutosException(
+                String.format("is not allowed for this type: %s",
+                    this.mappingBean.getClassType() ) );
+        
+        String beanName = mappingBean.getName() + "#key";
+        BeanBuilder bb = controllerBuilder
+                    .buildMappingBean(beanName, type);
+
+        MapMapping map = (MapMapping)webFrame.getMappingBean(beanName);
+        map.setMappingKey(mappingBean);
+        return bb;
+    }
+    /**
+     * Constroi o mapeamento do elemento da coleção.
+     *
+     * @param type Classe alvo do mapeamento.
+     * @return Construtor do mapeamento do elemento.
+     */
+    public BeanBuilder buildElement( Class type ){
 
         String beanName = mappingBean.getName() + "#bean";
         BeanBuilder bb = controllerBuilder
-                    .addMappingBean(beanName, type);
+                    .buildMappingBean(beanName, type);
 
-        setElementType( beanName );
+        setElement( beanName );
 
         return bb;
     }
 
     /**
-     * Define o tipo da coleção ou mapeamento.
+     * Define o tipo da coleção.
      * 
      * @param ref Nome do mapeamento.
      * @return Construtor do mapeamento.
@@ -110,9 +134,9 @@ public class BeanBuilder {
      * @throws org.brandao.brutos.NotFoundMappingBeanException Lançado se o
      * mapeamento não for encontrado.
      * @throws org.brandao.brutos.BrutosException Lançado se a classe alvo do
-     * mapeamento não for uma coleção ou mapeamento.
+     * mapeamento não for uma coleção.
      */
-    public BeanBuilder setElementType( String ref ){
+    public BeanBuilder setElement( String ref ){
 
         if( ref == null )
             throw new NullPointerException();
@@ -126,8 +150,9 @@ public class BeanBuilder {
 
         if( !webFrame.getMappingBeans().containsKey( ref ) )
             throw new NotFoundMappingBeanException(
-                    "mapping " + ref + " not found: " +
-                    webFrame.getClassType().getName() );
+                    String.format(
+                        "mapping %s not found: %s",
+                        ref, webFrame.getClassType().getName() ) );
 
         MappingBean bean = webFrame.getMappingBeans().get( ref );
 
@@ -142,8 +167,23 @@ public class BeanBuilder {
         return this;
     }
 
-    public BeanBuilder addMappedProperty( String name, String propertyName, Class target ){
-        return null;
+    /**
+     * Constroi o mapeamento de uma propriedade.
+     * 
+     * @param name Identificação no escopo.
+     * @param propertyName Noma da propriedade
+     * @param target Classe alvo do mapeamento.
+     * @return Construtor da propriedade.
+     */
+    public BeanBuilder buildProperty( String name, String propertyName, Class target ){
+        String beanName = this.mappingBean.getName() + "#" + propertyName;
+        
+        BeanBuilder beanBuilder = 
+                this.controllerBuilder.buildMappingBean(beanName, target);
+
+        this.addMappedProperty(name, propertyName, beanName);
+        
+        return beanBuilder;
     }
 
     public PropertyBuilder addProperty( String name, String propertyName ){
@@ -231,6 +271,25 @@ public class BeanBuilder {
         this.mappingBean.getFields().put( propertyName, fieldBean );
 
         return new PropertyBuilder( validatorConfig );
+    }
+
+    /**
+     * Constroi o mapeamento de um argumento do construtor.
+     *
+     * @param name Identificação no escopo.
+     * @param target Classe alvo do mapeamento.
+     * @return Construtor do argumento.
+     */
+    public BeanBuilder buildConstructorArg( String name, Class target ){
+        String beanName = this.mappingBean.getName()
+                + "#[" + this.mappingBean.getConstructor().getArgs().size() + "]";
+
+        BeanBuilder beanBuilder =
+                this.controllerBuilder.buildMappingBean(beanName, target);
+
+        this.addMappedContructorArg(name, beanName);
+
+        return beanBuilder;
     }
 
     public BeanBuilder addContructorArg( String name,

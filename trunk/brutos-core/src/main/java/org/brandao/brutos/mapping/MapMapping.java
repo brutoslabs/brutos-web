@@ -31,22 +31,41 @@ import org.brandao.brutos.type.Type;
  */
 public class MapMapping extends CollectionMapping{
 
-    private MappingBean keyMapping;
-    
+    private MappingBean mappingKey;
+
+    /**
+     * @deprecated
+     */
     private Class<?> collectionType;
 
+    /**
+     * @deprecated
+     */
     private MappingBean bean;
 
+    /**
+     * @deprecated
+     */
     private String key;
 
+    /**
+     * @deprecated
+     */
     private Type keyType;
 
+    /**
+     * @deprecated
+     */
     private ScopeType keyScopeType;
 
     public MapMapping( Form form ){
         super(form);
     }
-    
+
+    public void setMappingKey( MappingBean mappingKey ){
+        this.mappingKey = mappingKey;
+    }
+
     public void setKey( String name, Type type, ScopeType scope ){
         this.key = name;
         this.keyType = type;
@@ -69,12 +88,15 @@ public class MapMapping extends CollectionMapping{
         this.bean = bean;
     }
 
+    /*
     private Object get( HttpServletRequest request, String prefix, long index ){
         if( bean == null )
             return super.getValue(request, null, prefix, index );
         else
             return bean.getValue(request, null, prefix, index );
     }
+    */
+    
     /*
     private Object get( HttpSession session, long index ){
         if( bean == null )
@@ -99,7 +121,17 @@ public class MapMapping extends CollectionMapping{
             request,
             request.getSession().getServletContext(),
             getKeyScope().get( getKeyName( index, prefix ) ) );*/
-        return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
+        /*
+         * A partir da versão 2.0 mappingKey sempre será diferente de null.
+         */
+        if( mappingKey != null )
+            return mappingKey.getValue(request, index, prefix, index);
+        else
+        if( keyType != null )
+            return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
+        else
+            throw new BrutosException(
+                String.format("key mapping not defined: %s", this.getName() ) );
     }
     /*
     private Object getKey( HttpServletRequest request, long index ){
@@ -128,14 +160,24 @@ public class MapMapping extends CollectionMapping{
 
     public Object getValue( HttpServletRequest request, Object instance, String prefix ){
         try{
-            instance = instance == null? collectionType.newInstance() : instance;
+            /*
+             instance = instance == null? collectionType.newInstance() : instance;
+             Map map = (Map)instance;
+            */
+
+            instance = getInstance( instance );
             Map map = (Map)instance;
 
             long index = 0;
-            Object bean;
+            Object beanInstance;
             
-            while( (bean = get( request, prefix, index )) != null ){
-                map.put( getKey( request, index, prefix ), bean );
+            while( (beanInstance = get( request, prefix, index )) != null ){
+
+                Object keyInstance = getKey( request, index, prefix );
+
+                if( keyInstance != null )
+                    map.put( keyInstance, beanInstance );
+                
                 index++;
             }
             return map.size() == 0? null : map;
