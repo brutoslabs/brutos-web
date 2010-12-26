@@ -21,8 +21,10 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.NotFoundMappingBeanException;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.mapping.CollectionMapping;
 import org.brandao.brutos.mapping.FieldBean;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MappingBean;
@@ -37,13 +39,13 @@ import org.brandao.brutos.validator.ValidatorProvider;
 public class BeanBuilder {
 
     Form webFrame;
-    ControllerBuilder webFrameBuilder;
+    ControllerBuilder controllerBuilder;
     MappingBean mappingBean;
     ValidatorProvider validatorProvider;
 
     public BeanBuilder( MappingBean mappingBean, Form webFrame, ControllerBuilder controllerBuilder,
             ValidatorProvider validatorProvider ) {
-        this.webFrameBuilder = controllerBuilder;
+        this.controllerBuilder = controllerBuilder;
         this.mappingBean = mappingBean;
         this.webFrame = webFrame;
         this.validatorProvider = validatorProvider;
@@ -81,7 +83,69 @@ public class BeanBuilder {
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, ScopeType.PARAM, null, null );
     }
-    
+
+    /**
+     * Constroi o mapeamento do elemento da coleção ou mapeamento.
+     *
+     * @param type Classe alvo do mapeamento.
+     * @return Construtor do mapeamento.
+     */
+    public BeanBuilder setElementType( Class type ){
+
+        String beanName = mappingBean.getName() + "#bean";
+        BeanBuilder bb = controllerBuilder
+                    .addMappingBean(beanName, type);
+
+        setElementType( beanName );
+
+        return bb;
+    }
+
+    /**
+     * Define o tipo da coleção ou mapeamento.
+     * 
+     * @param ref Nome do mapeamento.
+     * @return Construtor do mapeamento.
+     * @throws java.lang.NullPointerException Lançado se ref for igual a null.
+     * @throws org.brandao.brutos.NotFoundMappingBeanException Lançado se o
+     * mapeamento não for encontrado.
+     * @throws org.brandao.brutos.BrutosException Lançado se a classe alvo do
+     * mapeamento não for uma coleção ou mapeamento.
+     */
+    public BeanBuilder setElementType( String ref ){
+
+        if( ref == null )
+            throw new NullPointerException();
+
+        if( !this.mappingBean.isCollection() && !this.mappingBean.isMap() )
+            throw new BrutosException(
+                String.format("is not allowed for this type: %s",
+                    this.mappingBean.getClassType() ) );
+        
+        ref = ref == null || ref.replace( " ", "" ).length() == 0? null : ref;
+
+        if( !webFrame.getMappingBeans().containsKey( ref ) )
+            throw new NotFoundMappingBeanException(
+                    "mapping " + ref + " not found: " +
+                    webFrame.getClassType().getName() );
+
+        MappingBean bean = webFrame.getMappingBeans().get( ref );
+
+        /*
+        if( !bean.isBean() )
+            throw new BrutosException(
+                    "not allowed: " +
+                    webFrame.getClassType().getName() );
+        */
+
+        ((CollectionMapping)mappingBean).setBean( bean );
+        return this;
+    }
+
+    public BeanBuilder addMappedProperty( String name, String propertyName, Class target ){
+        return null;
+    }
+
     public PropertyBuilder addProperty( String name, String propertyName ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy", 
                 null, ScopeType.PARAM, null, null );
@@ -185,7 +249,7 @@ public class BeanBuilder {
                 null,ScopeType.PARAM, null, type );
     }
 
-    public BeanBuilder addStaticContructorArg( String name, String mapping ){
+    public BeanBuilder addMappedContructorArg( String name, String mapping ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, ScopeType.PARAM, null, null );
     }
@@ -200,7 +264,7 @@ public class BeanBuilder {
                 null, scope, null, null );
     }
 
-    public BeanBuilder addContructorArg( String name, Object value ){
+    public BeanBuilder addStaticContructorArg( String name, Object value ){
         return addContructorArg( name,
             EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM, value, null );
     }

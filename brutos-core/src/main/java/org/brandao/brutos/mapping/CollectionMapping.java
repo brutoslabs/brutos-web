@@ -18,9 +18,7 @@
 package org.brandao.brutos.mapping;
 
 import java.util.Collection;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -28,6 +26,9 @@ import javax.servlet.http.HttpSession;
  */
 public class CollectionMapping extends MappingBean{
 
+    /**
+     * @deprecated 
+     */
     private Class<?> collectionType;
 
     private MappingBean bean;
@@ -36,10 +37,18 @@ public class CollectionMapping extends MappingBean{
         super( form );
     }
 
+    /**
+     * @deprecated
+     * @return
+     */
     public Class<?> getCollectionType() {
         return collectionType;
     }
 
+    /**
+     * @deprecated 
+     * @param collectionType
+     */
     public void setCollectionType(Class<?> collectionType) {
         this.collectionType = collectionType;
     }
@@ -53,6 +62,9 @@ public class CollectionMapping extends MappingBean{
     }
 
     private Object get( HttpServletRequest request, String prefix, long index ){
+        /*
+         * A partir da versão 2.0 o bean sempre será diferente de null.
+         */
         if( bean == null )
             return super.getValue(request, null, prefix, index );
         else
@@ -84,14 +96,14 @@ public class CollectionMapping extends MappingBean{
 
     public Object getValue( HttpServletRequest request, Object instance, String prefix ){
         try{
-            instance = instance == null? collectionType.newInstance() : instance;
+            instance = getInstance( instance );
             Collection collection = (Collection)instance;
 
             long index = 0;
-            Object bean;
+            Object beanInstance;
 
-            while( (bean = get( request, prefix, index )) != null ){
-                collection.add(bean);
+            while( (beanInstance = get( request, prefix, index )) != null ){
+                collection.add(beanInstance);
                 index++;
             }
             return collection.size() == 0? null : collection;
@@ -99,6 +111,18 @@ public class CollectionMapping extends MappingBean{
         catch( Exception e ){
             return null;
         }
+    }
+
+    private Object getInstance( Object instance ) 
+            throws InstantiationException, IllegalAccessException{
+
+        instance = instance == null?
+            (collectionType != null?
+                   collectionType.newInstance() :
+                   super.getValue()) :
+            instance;
+
+        return instance;
     }
 
     public boolean isBean(){
