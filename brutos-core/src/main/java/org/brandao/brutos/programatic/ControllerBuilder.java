@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.programatic;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,7 +123,7 @@ import org.brandao.brutos.validator.ValidatorProvider;
  * Ex:
  * 
  * <pre>
- * BeanBuilder beanBuilder = controllerBuilder.addMappingBean( "myBeanMapping", MyBean.class );
+ * BeanBuilder beanBuilder = controllerBuilder.buildMappingBean( "myBeanMapping", MyBean.class );
  * beanBuilder
  *   .addProperty( "name-client", "name", ScopeType.REQUEST )
  *   .addProperty( "country-client", "country", ScopeType.REQUEST )
@@ -268,7 +267,7 @@ public class ControllerBuilder {
      * @throws org.brandao.brutos.BrutosException Lançado se o target for uma
      * coleção ou um mapeamento.
      */
-    public BeanBuilder addMappingBean( String name, Class target ){
+    public BeanBuilder buildMappingBean( String name, Class target ){
 
         if( target == null )
             throw new NullPointerException();
