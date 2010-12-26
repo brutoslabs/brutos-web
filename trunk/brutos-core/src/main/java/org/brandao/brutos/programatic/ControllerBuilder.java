@@ -259,13 +259,19 @@ public class ControllerBuilder {
 
     /**
      * Gera o mapeamento de um bean. Esse mapeamento é usado para converter e injetar os
-     * dado da requisição ou de qualquer outro escopo nas pro´priedades do bean.
+     * dado da requisição ou de qualquer outro escopo nas propriedades do bean.
      * 
      * @param name Nome do mapeamento.
      * @param target Alvo do mapeamento.
      * @return Construtor do mapeamento.
+     * @throws java.lang.NullPointerException Lançado se target for igual a null.
+     * @throws org.brandao.brutos.BrutosException Lançado se o target for uma
+     * coleção ou um mapeamento.
      */
     public BeanBuilder addMappingBean( String name, Class target ){
+
+        if( target == null )
+            throw new NullPointerException();
 
         name =
             name == null || name.replace( " ", "" ).length() == 0?
@@ -282,11 +288,13 @@ public class ControllerBuilder {
         
         if( controller.getMappingBeans().containsKey( name ) )
             throw new BrutosException( "duplicate mapping name " + name + " in the " + controller.getClassType().getName() );
-        
+
+        /*
         if( Map.class.isAssignableFrom( target ) ||
             Collection.class.isAssignableFrom( target ) )
             throw new BrutosException( "target is not allowed: " + target.getName() );
-
+        */
+        
         MappingBean mappingBean;
 
         if( Map.class.isAssignableFrom(target) )

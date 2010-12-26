@@ -29,8 +29,10 @@ import org.brandao.brutos.type.Type;
  *
  * @author Afonso Brandao
  */
-public class MapMapping extends MappingBean{
+public class MapMapping extends CollectionMapping{
 
+    private MappingBean keyMapping;
+    
     private Class<?> collectionType;
 
     private MappingBean bean;
