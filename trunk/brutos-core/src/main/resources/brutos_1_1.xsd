@@ -161,7 +161,11 @@
     </xsd:complexType>
 -->
     <xsd:complexType name="mapping-ref">
-        <xsd:attribute name="name" type="xsd:string" use="required"/>
+        <xsd:complexContent>
+            <xsd:extension base="constructor-arg">
+                <xsd:attribute name="bean" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:complexContent>
     </xsd:complexType>
 
     <xsd:simpleType name="class">
