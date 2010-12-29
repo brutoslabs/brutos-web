@@ -235,6 +235,7 @@
         </xsd:choice>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="property-name" type="xsd:string" use="required"/>
+        <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <!--<xsd:attribute name="mapping-name" type="xsd:string"/>-->
@@ -261,6 +262,7 @@
         </xsd:choice>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <!--<xsd:attribute name="mapping-name" type="xsd:string"/>-->
         <xsd:attribute name="ref" type="xsd:string"/>
