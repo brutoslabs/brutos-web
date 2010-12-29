@@ -34,6 +34,113 @@ import org.brandao.brutos.type.Types;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
+ * Constroi o mapemanto de um bean.<br>
+ * Com essa classe é possível definir as dependências do bean tanto por contrutor
+ * quanto por método. É possível também obter a instância do bean por meio de
+ * uma fábrica ou método estático. <br>
+ * Sua instância é obtida a partir da classe ControllerBuilder.<br>
+ * Essa classe não tem a mesma função que um container IOC, ela apenas faz o
+ * mapeamento de uma requisição em um determinado bean.
+ *
+ * <p>No exemplo abaixo a dependência do bean é mapeada no construtor.</p>
+ *
+ * Ex:
+ * <pre>
+ *
+ * &lt;html&gt;
+ *   &lt;body&gt;
+ *    &lt;a href="/index.jbrs?idBean=100"&gt;show&lt;/a&gt;
+ *   &lt;/body&gt;
+ * &lt;/html&gt;
+ *
+ * public class MyBean{
+ *
+ *   private int id;
+ *
+ *   public MyBean( int val ){
+ *     this.id = id;
+ *   }
+ *   ...
+ * }
+ *
+ * beanBuilder.addContructorArg( "idBean" );
+ * 
+ * </pre>
+ *
+ * No próximo exemplo o mesmo parâmetro é mapeado em uma propriedade.
+ *
+ * Ex:
+ * <pre>
+ * public class MyBean{
+ *
+ *   private int id;
+ *
+ *   public MyBean(){
+ *   }
+ *
+ *   public void setId( int id ){
+ *     this.id = id;
+ *   }
+ *   ...
+ * }
+ *
+ * beanBuilder.addProperty( "id","idBean" );
+ *
+ * </pre>
+ *
+ * Nesse exemplo é feito o mapeamento de um atributo do tipo enum.
+ * <pre>
+ *
+ * &lt;html&gt;
+ *   &lt;body&gt;
+ *    &lt;a href="/index.jbrs?idBean=VALUE2"&gt;show&lt;/a&gt;
+ *   &lt;/body&gt;
+ * &lt;/html&gt;
+ * 
+ * public enum MyEnum{
+ *   VALUE1("Valor 1"),
+ *   VALUE2("Valor 2"),
+ *   VALUE3("Valor 3");
+ *
+ *   ...
+ * 
+ * }
+ *
+ * public class MyBean{
+ *
+ *   private MyEnum id;
+ *
+ *   public MyBean(){
+ *   }
+ *
+ *   public void setId( MyEnum id ){
+ *     this.id = id;
+ *   }
+ *   ...
+ * }
+ *
+ * beanBuilder.addProperty( "idBean","id", EnumerationType.ORDINAL );
+ *
+ * </pre>
+ *
+ * O mapeamento do enum pode também ser feito da seguinte forma:
+ * <pre>
+ * 
+ * &lt;html&gt;
+ *   &lt;body&gt;
+ *    &lt;a href="/index.jbrs?enumName=VALUE2"&gt;show&lt;/a&gt;
+ *   &lt;/body&gt;
+ * &lt;/html&gt;
+ *
+ * controllerBuilder
+ *      .buildMappingBean( "myEnumMapping", MyEnum.class )
+ *      .setMethodfactory( "valueOf" )
+ *      .addConstructorArg( "enumName" );
+ *
+ * beanBuilder.addMappedProperty( "id", "myEnumMapping" );
+ *
+ * </pre>
+ *
  *
  * @author Afonso Brandao
  */
@@ -52,36 +159,90 @@ public class BeanBuilder {
         this.validatorProvider = validatorProvider;
     }
 
+    /**
+     * Define o nome da fábrica do bean.
+     * @param factory Nome da fábrica.
+     * @return Construtor do mapeamento.
+     */
     public BeanBuilder setFactory( String factory ){
         mappingBean.setFactory(factory);
         return this;
     }
 
+    /**
+     * Define o nome do método da fábrica.
+     * @param methodFactory Nome do método.
+     * @return Construtor do mapeamento.
+     */
     public BeanBuilder setMethodfactory( String methodFactory ){
         mappingBean.getConstructor().setMethodFactory(methodFactory);
         return this;
     }
 
+    /**
+     * Faz o mapeamento de uma propriedade.
+     *
+     * @param name Nome do parâmetro.
+     * @param propertyName Nome da propriedade
+     * @param enumProperty Usado no mapeamento de enum.
+     * @return Construtor do mapeamento.
+     */
     public PropertyBuilder addProperty( String name, String propertyName,
             EnumerationType enumProperty ){
         return addProperty( name, propertyName, enumProperty, null, null, 
                 ScopeType.PARAM, null, null );
     }
     
+    /**
+     * Faz o mapeamento de uma propriedade.
+     *
+     * @param name Nome do parâmetro.
+     * @param propertyName Nome da propriedade
+     * @param temporalProperty Usado no mapeamento de datas.
+     * @return Construtor do mapeamento.
+     */
     public PropertyBuilder addProperty( String name, String propertyName,
             String temporalProperty ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, 
                 temporalProperty, null, ScopeType.PARAM, null, null );
     }
     
+    /**
+     * Faz o mapeamento de uma propriedade.
+     *
+     * @param name Nome do parâmetro.
+     * @param propertyName Nome da propriedade
+     * @param type Conversor do valor obtida do escopo.
+     * @return Construtor do mapeamento.
+     */
     public PropertyBuilder addProperty( String name, String propertyName,
             Type type ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null,ScopeType.PARAM, null, type );
     }
     
+    /**
+     * Faz o mapeamento de uma propriedade.
+     *
+     * @param name Nome do parâmetro.
+     * @param propertyName Nome da propriedade
+     * @param mapping Usado em propriedade mapeadas.
+     * @return Construtor do mapeamento.
+     */
     public PropertyBuilder addMappedProperty( String name, String propertyName, String mapping ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
+                mapping, ScopeType.PARAM, null, null );
+    }
+
+    /**
+     * Faz o mapeamento de uma propriedade.
+     *
+     * @param propertyName Nome da propriedade
+     * @param mapping Usado em propriedade mapeadas.
+     * @return Construtor do mapeamento.
+     */
+    public PropertyBuilder addMappedProperty( String propertyName, String mapping ){
+        return addProperty( null, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, ScopeType.PARAM, null, null );
     }
 
@@ -108,6 +269,7 @@ public class BeanBuilder {
         map.setMappingKey(mappingBean);
         return bb;
     }
+    
     /**
      * Constroi o mapeamento do elemento da coleção.
      *
@@ -186,21 +348,57 @@ public class BeanBuilder {
         return beanBuilder;
     }
 
+    /**
+     * Faz o mapeamento de uma propriedade.
+     *
+     * @param name Nome do parâmetro.
+     * @param propertyName Nome da propriedade
+     * @return Construtor do mapeamento.
+     */
     public PropertyBuilder addProperty( String name, String propertyName ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy", 
                 null, ScopeType.PARAM, null, null );
     }
 
+    /**
+     * Faz o mapeamento de uma propriedade.
+     *
+     * @param name Nome do parâmetro.
+     * @param propertyName Nome da propriedade
+     * @param scope Escopo do valor.
+     * @return Construtor do mapeamento.
+     */
     public PropertyBuilder addProperty( String name, String propertyName, ScopeType scope ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, scope, null, null );
     }
 
+    /**
+     * Faz o mapeamento de uma propriedade.
+     *
+     * @param name Nome do parâmetro.
+     * @param propertyName Nome da propriedade
+     * @param value Valor da propriedade. Tem a mesma função do modificador final.
+     * @return Construtor do mapeamento.
+     */
     public PropertyBuilder addStaticProperty( String name, String propertyName, Object value ){
         return addProperty( null, propertyName,
             EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM, value, null );
     }
 
+    /**
+     * Faz o mapeamento de uma propriedade.
+     * 
+     * @param name Nome do parâmetro.
+     * @param propertyName Nome da propriedade
+     * @param enumProperty Usado no mapeamento de enum.
+     * @param temporalProperty Usado no mapeamento de datas.
+     * @param mapping Usado em propriedade mapeadas.
+     * @param scope Escopo do valor.
+     * @param value Valor da propriedade. Tem a mesma função do modificador final.
+     * @param type Conversor do valor obtida do escopo.
+     * @return Construtor do mapeamento.
+     */
     public PropertyBuilder addProperty( String name, String propertyName,
             EnumerationType enumProperty, String temporalProperty, String mapping, 
             ScopeType scope, Object value, Type type ){
@@ -292,42 +490,102 @@ public class BeanBuilder {
         return beanBuilder;
     }
 
+    /**
+     * Faz o mapeamento de um argumento do construtor.
+     *
+     * @param name Nome do parâmetro.
+     * @param enumProperty Usado no mapeamento de enum.
+     * @return Construtor do mapeamento.
+     */
     public BeanBuilder addContructorArg( String name,
             EnumerationType enumProperty ){
         return addContructorArg( name, enumProperty, null, null, ScopeType.PARAM, null, null );
     }
 
+    /**
+     * Faz o mapeamento de um argumento do construtor.
+     *
+     * @param name Nome do parâmetro.
+     * @param temporalProperty Usado no mapeamento de datas.
+     * @return Construtor do mapeamento.
+     */
     public BeanBuilder addContructorArg( String name,
             String temporalProperty ){
         return addContructorArg( name, EnumerationType.ORDINAL, temporalProperty, null, ScopeType.PARAM, null, null );
     }
 
+    /**
+     * Faz o mapeamento de um argumento do construtor.
+     *
+     * @param name Nome do parâmetro.
+     * @param type Conversor do valor obtida do escopo.
+     * @return Construtor do mapeamento.
+     */
     public BeanBuilder addContructorArg( String name,
             Type type ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null,ScopeType.PARAM, null, type );
     }
 
+    /**
+     * Faz o mapeamento de um argumento do construtor.
+     *
+     * @param name Nome do parâmetro.
+     * @param mapping Usado em propriedade mapeadas.
+     * @return Construtor do mapeamento.
+     */
     public BeanBuilder addMappedContructorArg( String name, String mapping ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, ScopeType.PARAM, null, null );
     }
 
+    /**
+     * Faz o mapeamento de um argumento do construtor.
+     *
+     * @param name Nome do parâmetro.
+     * @return Construtor do mapeamento.
+     */
     public BeanBuilder addContructorArg( String name ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, ScopeType.PARAM, null, null );
     }
 
+    /**
+     * Faz o mapeamento de um argumento do construtor.
+     *
+     * @param name Nome do parâmetro.
+     * @param scope Escopo do valor.
+     * @return Construtor do mapeamento.
+     */
     public BeanBuilder addContructorArg( String name, ScopeType scope ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, scope, null, null );
     }
 
+    /**
+     * Faz o mapeamento de um argumento do construtor.
+     *
+     * @param name Nome do parâmetro.
+     * @param value Valor da propriedade. Tem a mesma função do modificador final.
+     * @return Construtor do mapeamento.
+     */
     public BeanBuilder addStaticContructorArg( String name, Object value ){
         return addContructorArg( name,
             EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM, value, null );
     }
 
+    /**
+     * Faz o mapeamento de um argumento do construtor.
+     *
+     * @param name Nome do parâmetro.
+     * @param enumProperty Usado no mapeamento de enum.
+     * @param temporalProperty Usado no mapeamento de datas.
+     * @param mapping Usado em propriedade mapeadas.
+     * @param scope Escopo do valor.
+     * @param value Valor da propriedade. Tem a mesma função do modificador final.
+     * @param type Conversor do valor obtida do escopo.
+     * @return Construtor do mapeamento.
+     */
     public BeanBuilder addContructorArg( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, Type type ){
