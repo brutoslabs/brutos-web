@@ -24,6 +24,26 @@ import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 
 /**
+ * Classe usada para construir uma pilha de interceptadores. Com essa classe é possível
+ * determinar os parâmetros de configuração do interceptador.
+ *
+ * <pre>
+ * Ex:
+ *
+ * interceptorManager
+ *     .addInterceptor( "myInterceptorName", MyInterceptor.class, false );
+ *
+ * interceptorManager
+ *     .addInterceptor( "myInterceptorName2", MyInterceptor2.class, false )
+ *          .addParameter( "param", "value2" );
+ *
+ * interceptorManager.addInterceptorStack( "myStack", false )
+ *      .addInterceptor( "myInterceptorName" )
+ *          .addParameter( "param", "value" );
+ *      .addInterceptor( "myInterceptorName2" )
+ *          .addParameter( "param", "value" );
+ *
+ * </pre>
  *
  * @author Afonso Brandao
  */
@@ -38,7 +58,13 @@ public class InterceptorStackBuilder {
         this.manager     = manager;
         this.current     = interceptor;
     }
-    
+
+    /**
+     * Inclui um novo interceptador na pilha. O interceptador deve ser previamente
+     * criado.
+     * @param interceptorName Nome do interceptador.
+     * @return Construtor da pilha de interceptadores.
+     */
     public InterceptorStackBuilder addInterceptor( String interceptorName ){
         Interceptor in = manager.getInterceptor( interceptorName );
         
@@ -56,6 +82,12 @@ public class InterceptorStackBuilder {
         return this;
     }
     
+    /**
+     * Inclui um novo parâmetro.
+     * @param name Nome do parâmetro.
+     * @param value Valor do Parâmetro
+     * @return Construtor da pilha de interceptadores.
+     */
     public InterceptorStackBuilder addParameter( String name, String value ){
         
         if( current == null )
