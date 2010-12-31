@@ -26,6 +26,41 @@ import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 
 /**
+ * Classe usada para configurar interceptadores.
+ * O uso de interceptadores é necessário quando precisamos executar tarefas
+ * antes e/ou depois do controlador ser executado, normalmente usado para
+ * controle de acesso, validação de dados, controle de transação e geração
+ * de log.
+ * <p>É possível trabalhar com um ou mais interceptadores, podendo definir
+ * quais recursos serão interceptados, a ordem com que serão executados e os
+ * parâmetros necessários para a sua configuração.</p>
+ * <p>Sua instância é controlada pelo container IOC, podendo assim, receber a
+ * injeção de objetos por construtor ou método.</p>
+ *
+ * <pre>
+ * Ex:
+ *
+ * public class MyInterceptor extends AbstractInterceptor{
+ *
+ *     public void intercepted( InterceptorStack stack,
+ *        InterceptorHandler handler ) throws InterceptedException{
+ *         ...
+ *     }
+ *
+ * }
+ * interceptorManager
+ *     .addInterceptor( "myInterceptorName", MyInterceptor.class, false );
+ * </pre>
+ * 
+ * <pre>
+ * Ex2:
+ * 
+ * interceptorManager
+ *     .addInterceptor( "myInterceptorName", MyInterceptor.class, false );
+ * interceptorManager
+ *     .addInterceptorStack( "myStack", false )
+ *     .addInterceptor( "myInterceptorName" );
+ * </pre>
  *
  * @author Afonso Brandao
  */
