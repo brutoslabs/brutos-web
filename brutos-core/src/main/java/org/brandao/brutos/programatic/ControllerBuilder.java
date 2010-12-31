@@ -118,7 +118,7 @@ import org.brandao.brutos.validator.ValidatorProvider;
  *
  * <p>O mapeamento de beans permite injetar os dados obtidos da requisição, sessão,
  * contexto ou de qualquer outro escopo nas propriedades do bean. A configuração do
- * mapeamento é feita usando o método addMappingBean(...).</p>
+ * mapeamento é feita usando o método buildMappingBean(...).</p>
  *
  * Ex:
  * 
@@ -556,7 +556,7 @@ public class ControllerBuilder {
      *
      * @param propertyName Nome da propriedade no controlador.
      * @param mapping nome do mapeamento do valor da propriedade. Esse mapemanto
-     * deve ser previamente criado com o método addMappingBean(...).
+     * deve ser previamente criado com o método buildMappingBean(...).
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addPropertyMapping( String propertyName, String mapping ){
@@ -570,7 +570,7 @@ public class ControllerBuilder {
      * @param propertyName Nome da propriedade no controlador.
      * @param id Identificação da propriedade.
      * @param mapping nome do mapeamento do valor da propriedade. Esse mapemanto
-     * deve ser previamente criado com o método addMappingBean(...).
+     * deve ser previamente criado com o método buildMappingBean(...).
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addPropertyMapping( String propertyName, String id, String mapping ){
@@ -598,7 +598,7 @@ public class ControllerBuilder {
      * @param scope Escopo do volor da propriedade.
      * @param enumProperty Usado na configuração de propriedades do tipo enum.
      * @param mapping nome do mapeamento do valor da propriedade. Esse mapemanto
-     * deve ser previamente criado com o método addMappingBean(...).
+     * deve ser previamente criado com o método buildMappingBean(...).
      * @param temporalProperty Usado na configuração de datas.
      * @param type Faz o processamento do valor da propriedade.
      * @return Contrutor da propriedade.

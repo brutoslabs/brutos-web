@@ -18,7 +18,6 @@
 package org.brandao.brutos.programatic;
 
 import org.brandao.brutos.Configuration;
-import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
@@ -32,7 +31,14 @@ public class PropertyBuilder{
     public PropertyBuilder( Configuration config){
         this.config = config;
     }
-    
+
+    /**
+     * Adiciona uma nova restrição.
+     *
+     * @param ruleId Tipo da restrição. Os valores são obtido em RestrictionRules.
+     * @param value Valor da restrição.
+     * @return Construtor da restrição.
+     */
     public PropertyBuilder addRestriction( RestrictionRules ruleId, Object value ){
         config.put( ruleId.toString(), value );
         return this;
