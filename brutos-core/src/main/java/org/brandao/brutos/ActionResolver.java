@@ -21,11 +21,20 @@ import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.scope.Scope;
 
 /**
+ * Essa interface é usada para identificar a ação a ser executada em um
+ * determinado controlador. Toda classe que tem essa função deve implementar
+ * essa interface.
  * 
  * @author Afonso Brandao
  */
 public interface ActionResolver {
 
+    /**
+     * Obtém a ação a ser executada.
+     * @param controller Controlador.
+     * @param scope Esopo onde se enconta a identifiação da ação.
+     * @return Ação a ser executada.
+     */
     public ResourceAction getResourceAction( Form controller, Scope scope );
 
 }

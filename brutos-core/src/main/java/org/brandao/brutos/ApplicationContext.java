@@ -79,10 +79,18 @@ public abstract class ApplicationContext {
     public void configure( Configuration config, ServletContextEvent sce ){
     }
 
+    /**
+     * Inicia o processo de configuração da aplicação.
+     */
     public void configure(){
         configure( this.configuration );
     }
-    
+
+    /**
+     * Inicia o processo de configuração da aplicação.
+     *
+     * @param config Configuração.
+     */
     public void configure( Properties config ){
         
         this.configuration = config;
@@ -115,10 +123,18 @@ public abstract class ApplicationContext {
         this.loadWebFrameManager(webFrameManager);
     }
 
+    /**
+     * Define o responsável por resolver os controladores.
+     * @param controllerResolver Responsável por resolver os controladores
+     */
     protected void setControllerResolver( ControllerResolver controllerResolver ){
         this.controllerResolver = controllerResolver;
     }
     
+    /**
+     * Obtém o responsável por resolver os controladores.
+     * @return controllerResolver Responsável por resolver os controladores
+     */
     protected ControllerResolver getNewControllerResolver(){
         try{
             ControllerResolver instance = (ControllerResolver) Class.forName(
@@ -138,6 +154,10 @@ public abstract class ApplicationContext {
         }
     }
 
+    /**
+     * Obtém a fábrica de respostas.
+     * @return Fábria de respostas.
+     */
     protected MvcResponseFactory getMvcResponseFactory(){
         try{
             MvcResponseFactory instance = (MvcResponseFactory) Class.forName(
@@ -157,6 +177,10 @@ public abstract class ApplicationContext {
         }
     }
 
+    /**
+     * Obtém a fábrica de requisições.
+     * @return Fábrica de requisições.
+     */
     protected MvcRequestFactory getMvcRequestFactory(){
         try{
             MvcRequestFactory instance = (MvcRequestFactory) Class.forName(
@@ -176,6 +200,10 @@ public abstract class ApplicationContext {
         }
     }
 
+    /**
+     * Obtém o responsável por resolver as ações.
+     * @return Responsável por resolver as ações.
+     */
     protected ActionResolver getNewMethodResolver(){
         try{
             ActionResolver instance = (ActionResolver) Class.forName(
@@ -194,6 +222,9 @@ public abstract class ApplicationContext {
         }
     }
 
+    /**
+     * Método invocado quando a aplicação é finalizada.
+     */
     public abstract void destroy();
 
     /**
@@ -228,10 +259,18 @@ public abstract class ApplicationContext {
         this.webFrameManager = webFrameManager;
     }
 
+    /**
+     * Obtém o gestor dos interceptadores.
+     * @return Gestor dos interceptadores.
+     */
     public InterceptorManager getInterceptorManager() {
         return interceptorManager;
     }
 
+    /**
+     * Define o gestor dos interceptadores.
+     * @param interceptorManager Gestor dos interceptadores.
+     */
     public void setInterceptorManager(InterceptorManager interceptorManager) {
         this.interceptorManager = interceptorManager;
     }
@@ -248,10 +287,22 @@ public abstract class ApplicationContext {
      */
     protected abstract void loadWebFrameManager( WebFrameManager webFrameManager );
 
+    /**
+     * Carrega todas a configuração dos interceptadores.
+     * @param interceptorManager Gestor dos interceptadores.
+     */
     protected abstract void loadInterceptorManager( InterceptorManager interceptorManager );
     
+    /**
+     * Carrega todas a configuração dos controladores.
+     * @param interceptorManager Gestor dos controladores.
+     */
     protected abstract void loadController( ControllerManager controllerManager );
 
+    /**
+     * Obtém a aplicação corrente.
+     * @return Aplicação
+     */
     public static ApplicationContext getCurrentApplicationContext(){
         Scope requestScope = Scopes.get(ScopeType.REQUEST);
 
@@ -264,57 +315,115 @@ public abstract class ApplicationContext {
         return app;
     }
 
+    /**
+     * Obtém um determinado controlador.
+     * @param controllerClass Classe do controlador
+     * @return Controlador.
+     */
     public Object getController( Class controllerClass ){
         return null;
     }
-    
+
+    /**
+     * Obtém o gestor dos controladores.
+     * @return Gestor dos controladores.
+     */
     public ControllerManager getControllerManager() {
         return controllerManager;
     }
 
+    /**
+     * Obtém o provedor da visão.
+     * @return Provedor da visão.
+     */
     public ViewProvider getViewProvider() {
         return viewProvider;
     }
 
+    /**
+     * Obtém o provedor de validações.
+     * @return Provedor de validações.
+     */
     public ValidatorProvider getValidatorProvider() {
         return validatorProvider;
     }
 
+    /**
+     * Obtém o responsável por executar as ações.
+     * @return Responsável por executar as ações.
+     */
     public Invoker getInvoker() {
         return invoker;
     }
 
+    /**
+     * Define as configurações da aplicação.
+     * @param config Configuração.
+     */
     protected void setConfiguration( Properties config ){
         this.configuration = config;
     }
+
+    /**
+     * Obtém a configuração da aplicação.
+     * @return Configuração da aplicação.
+     */
     public Properties getConfiguration() {
         return configuration;
     }
 
+    /**
+     * Obtém o provedor do diario de bordo.
+     * @return Provedor de diario de bordo.
+     */
     public LoggerProvider getLoggerProvider() {
         return loggerProvider;
     }
 
+    /**
+     * Obtém o provedor do container IOC.
+     * @return Provedor do container IOC.
+     */
     public IOCProvider getIocProvider() {
         return iocProvider;
     }
 
+    /**
+     * Define o provedor do container IOC.
+     * @param iocProvider Provedor do container IOC.
+     */
     public void setIocProvider(IOCProvider iocProvider) {
         this.iocProvider = iocProvider;
     }
 
+    /**
+     * Obtém o responsável por resolver os controladores.
+     * @return Responsável por resolver os controladores.
+     */
     public ControllerResolver getControllerResolver() {
         return controllerResolver;
     }
 
+    /**
+     * Obtém o responsável por resolver as ações.
+     * @return Responsável por resolver as ações.
+     */
     public ActionResolver getActionResolver() {
         return actionResolver;
     }
 
+    /**
+     * Obtém a resposta.
+     * @return Resposta.
+     */
     public MvcResponse getMvcResponse() {
         return this.responseFactory.getCurrentResponse();
     }
 
+    /**
+     * Obtém a requisição
+     * @return Requisição.
+     */
     public MvcRequest getMvcRequest() {
         return this.requestFactory.getCurrentRequest();
     }
