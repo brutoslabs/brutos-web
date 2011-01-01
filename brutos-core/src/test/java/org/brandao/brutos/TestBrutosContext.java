@@ -96,6 +96,10 @@ public class TestBrutosContext extends TestCase{
             return null;
         }
 
+        public ResourceAction getResourceAction(Form controller, Scope scope) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
     }
 
     public void testNaturalLoad(){
@@ -273,7 +277,7 @@ public class TestBrutosContext extends TestCase{
             ApplicationContext c = BrutosContext.getCurrentApplicationContext();
             assertEquals(
                 TestMethodResolver.class,
-                c.getMethodResolver().getClass() );
+                c.getActionResolver().getClass() );
         }
         finally{
             cll.contextDestroyed(sce);

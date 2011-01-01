@@ -34,7 +34,18 @@ import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
 /**
- *
+ * Classe central que permite a configuração de um aplicativo. Com essa classe
+ * é possível:
+ * <ul>
+ * <li>configurar os interceptadores;</li>
+ * <li>incluir novos controladores;</li>
+ * <li>obter os controladores;</li>
+ * <li>obter os controladores;</li>
+ * <li>determinar como os controladores serão obtidos;</li>
+ * <li>determinar como uma ação será executada;</li>
+ * <li>determinar novas regras de validação</li>
+ * </ul>
+ * 
  * @author Afonso Brandao
  */
 public abstract class ApplicationContext {
@@ -52,7 +63,7 @@ public abstract class ApplicationContext {
     private Properties configuration;
     private LoggerProvider loggerProvider;
     private ControllerResolver controllerResolver;
-    private MethodResolver MethodResolver;
+    private ActionResolver actionResolver;
     private MvcResponseFactory responseFactory;
     private MvcRequestFactory requestFactory;
 
@@ -81,12 +92,12 @@ public abstract class ApplicationContext {
         this.interceptorManager = new InterceptorManager();
         this.webFrameManager = new WebFrameManager( this.interceptorManager, this.iocManager );
         this.controllerResolver = getNewControllerResolver();
-        this.MethodResolver = getNewMethodResolver();
+        this.actionResolver = getNewMethodResolver();
         this.responseFactory = getMvcResponseFactory();
         this.responseFactory = getMvcResponseFactory();
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
         this.controllerManager = new ControllerManager(this.interceptorManager, this.getValidatorProvider());
-        this.invoker = new Invoker(  this.getControllerResolver(), getIocProvider(), controllerManager, this.getMethodResolver(), this );
+        this.invoker = new Invoker(  this.getControllerResolver(), getIocProvider(), controllerManager, this.getActionResolver(), this );
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
 
         if( iocProvider.containsBeanDefinition("customScopes") ){
@@ -165,12 +176,12 @@ public abstract class ApplicationContext {
         }
     }
 
-    protected MethodResolver getNewMethodResolver(){
+    protected ActionResolver getNewMethodResolver(){
         try{
-            MethodResolver instance = (MethodResolver) Class.forName(
+            ActionResolver instance = (ActionResolver) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.method_resolver",
-                    "org.brandao.brutos.DefaultMethodResolver"
+                    "org.brandao.brutos.DefaultActionResolver"
                 ),
                     true,
                     Thread.currentThread().getContextClassLoader()
@@ -296,8 +307,8 @@ public abstract class ApplicationContext {
         return controllerResolver;
     }
 
-    public MethodResolver getMethodResolver() {
-        return MethodResolver;
+    public ActionResolver getActionResolver() {
+        return actionResolver;
     }
 
     public MvcResponse getMvcResponse() {

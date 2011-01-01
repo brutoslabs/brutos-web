@@ -25,6 +25,7 @@ import org.brandao.brutos.mapping.MethodForm;
 
 /**
  *
+ * @deprecated 
  * @author Afonso Brandao
  */
 public class DefaultMethodResolver implements MethodResolver{
@@ -42,7 +43,7 @@ public class DefaultMethodResolver implements MethodResolver{
         return new DefaultResourceMethod( methodForm );
     }
 
-    public ResourceMethod getResourceMethod(Form controller, Scope scope) {
+    public ResourceAction getResourceAction(Form controller, Scope scope) {
         MethodForm method = controller
                 .getMethodByName( String.valueOf( scope.get( controller.getMethodId() ) ) );
         return method == null? null : getResourceMethod( method );

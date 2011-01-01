@@ -30,7 +30,7 @@ import javax.servlet.http.HttpSessionListener;
 import org.brandao.brutos.old.programatic.IOCManager;
 
 /**
- * 
+ * @deprecated 
  * @author Afonso Brandao
  */
 public class ContextLoaderListener extends org.brandao.brutos.web.ContextLoaderListener/*implements ServletContextListener, HttpSessionListener, ServletRequestListener*/{

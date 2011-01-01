@@ -26,7 +26,7 @@ import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 
 /**
- * Classe usada para configurar interceptadores.
+ * Classe usada para criar interceptadores ou pilhas de interceptadores.
  * O uso de interceptadores é necessário quando precisamos executar tarefas
  * antes e/ou depois do controlador ser executado, normalmente usado para
  * controle de acesso, validação de dados, controle de transação e geração
@@ -74,6 +74,13 @@ public class InterceptorManager {
         this.defaultInterceptors = new ArrayList();
     }
 
+    /**
+     * Cria uma pilha de interceptadores com uma determinada identificação.
+     * @param name Identificação da pilha de interceptadores.
+     * @param isDefault Se verdadeiro, todos os controladores e suas ações serão
+     * interceptados.
+     * @return Construtor da pilha de interceptadores.
+     */
     public InterceptorStackBuilder addInterceptorStack( String name, boolean isDefault ){
         Interceptor in;
         
@@ -98,6 +105,13 @@ public class InterceptorManager {
         return new InterceptorStackBuilder( in, this );
     }
     
+    /**
+     * Cria um interceptador com uma determinada identificação.
+     * @param name Identificação do interceptador.
+     * @param isDefault Se verdadeiro, todos os controladores e suas ações serão
+     * interceptados.
+     * @return Construtor do interceptador.
+     */
     public InterceptorBuilder addInterceptor( String name, Class interceptor, boolean isDefault ){
         Interceptor in;
         
@@ -128,16 +142,26 @@ public class InterceptorManager {
         return new InterceptorBuilder( in, this );
         
     }
-    
+
+    /**
+     * Obtém a configuração de um determinado interceptador.
+     * @param name Identificação do interceptador.
+     * @return Configuração do interceptador.
+     */
     public Interceptor getInterceptor( String name ){
         if( !interceptors.containsKey( name ) )
             throw new BrutosException( "interceptor not found: " + name );
         else
             return interceptors.get( name );
     }
-    
+
+    /**
+     * @deprecated 
+     * @return
+     */
     public List<Interceptor> getDefaultInterceptors(){
-        return this.defaultInterceptors;
+        throw new UnsupportedOperationException();
+        //return this.defaultInterceptors;
     }
     
 }

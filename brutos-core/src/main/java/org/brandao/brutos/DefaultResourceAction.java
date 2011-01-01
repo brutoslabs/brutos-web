@@ -22,14 +22,14 @@ import java.lang.reflect.Method;
 import org.brandao.brutos.mapping.MethodForm;
 
 /**
- * @deprecated 
+ *
  * @author Afonso Brandao
  */
-public class DefaultResourceMethod implements ResourceMethod{
+public class DefaultResourceAction implements ResourceAction{
 
     MethodForm method;
 
-    public DefaultResourceMethod( MethodForm method ){
+    public DefaultResourceAction( MethodForm method ){
         this.method = method;
    }
 

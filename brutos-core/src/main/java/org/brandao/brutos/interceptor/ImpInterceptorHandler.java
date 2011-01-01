@@ -21,6 +21,7 @@ import org.brandao.brutos.ResourceMethod;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ResourceAction;
 
 /**
  *
@@ -38,7 +39,8 @@ public class ImpInterceptorHandler implements InterceptorHandler{
 
     private String requestId;
 
-    private ResourceMethod resourceMethod;
+    private ResourceAction resourceAction;
+
     
     private Object resource;
     
@@ -74,12 +76,12 @@ public class ImpInterceptorHandler implements InterceptorHandler{
         this.setRequestId(URI);
     }
 
-    public ResourceMethod getResourceMethod() {
-        return resourceMethod;
+    public ResourceAction getResourceAction() {
+        return resourceAction;
     }
 
-    public void setResourceMethod(ResourceMethod resourceMethod) {
-        this.resourceMethod = resourceMethod;
+    public void setResourceAction(ResourceAction resourceAction) {
+        this.resourceAction = resourceAction;
     }
 
     public Object getResource() {
