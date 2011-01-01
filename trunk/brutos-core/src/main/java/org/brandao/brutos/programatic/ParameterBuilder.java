@@ -18,15 +18,25 @@
 package org.brandao.brutos.programatic;
 
 import org.brandao.brutos.Configuration;
+import org.brandao.brutos.validator.RestrictionRules;
 
 /**
+ * Constroi um parâmetro de uma ação.
  *
  * @author Afonso Brandao
  */
-public class ParameterBuilder extends PropertyBuilder{
+public class ParameterBuilder extends RestrictionBuilder{
 
     public ParameterBuilder( Configuration config){
         super( config );
+    }
+
+    public ParameterBuilder addRestriction( RestrictionRules ruleId, Object value ){
+        return (ParameterBuilder)super.addRestriction( ruleId, value );
+    }
+
+    public ParameterBuilder setMessage( String message ){
+        return (ParameterBuilder)super.setMessage(message);
     }
 
 }

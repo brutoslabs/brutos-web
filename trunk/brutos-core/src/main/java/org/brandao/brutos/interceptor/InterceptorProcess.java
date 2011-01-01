@@ -251,9 +251,9 @@ public class InterceptorProcess implements InterceptorStack{
 
             preAction( source );
 
-            if( handler.getResourceMethod() != null )
+            if( handler.getResourceAction() != null )
                 return handler
-                    .getResourceMethod()
+                    .getResourceAction()
                         //.invoke( source, getParameters( method, request, context ) );
                         .invoke( source, getParameters( method, null, null ) );
             else

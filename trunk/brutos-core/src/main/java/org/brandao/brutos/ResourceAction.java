@@ -17,21 +17,26 @@
 
 package org.brandao.brutos;
 
-import javax.servlet.http.HttpServletRequest;
-import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.scope.Scope;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
- * @deprecated 
+ *
  * @author Afonso Brandao
  */
-public interface MethodResolver extends ActionResolver{
+public interface ResourceAction {
 
-    /**
-     * @deprecated 
-     * @param request
-     * @return
-     */
-    public ResourceMethod getResourceMethod( HttpServletRequest request );
+    public Object invoke( Object source, Object[] args )
+            throws IllegalAccessException, IllegalArgumentException,
+                InvocationTargetException;
 
+    public Method getMethod();
+
+    public Class returnType();
+
+    public Class[] getParametersType();
+
+    public Class getResourceClass();
+
+    public boolean isAbstract();
 }

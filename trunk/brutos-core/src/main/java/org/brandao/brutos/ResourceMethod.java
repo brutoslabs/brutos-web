@@ -17,26 +17,10 @@
 
 package org.brandao.brutos;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 /**
- * 
+ * @deprecated 
  * @author Afonso Brandao
  */
-public interface ResourceMethod {
+public interface ResourceMethod extends ResourceAction{
 
-    public Object invoke( Object source, Object[] args )
-            throws IllegalAccessException, IllegalArgumentException,
-                InvocationTargetException;
-
-    public Method getMethod();
-
-    public Class returnType();
-
-    public Class[] getParametersType();
-
-    public Class getResourceClass();
-
-    public boolean isAbstract();
 }

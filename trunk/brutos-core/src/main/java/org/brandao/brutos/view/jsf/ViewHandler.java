@@ -27,12 +27,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.http.DataInput;
 import org.brandao.brutos.http.DataOutput;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
+import org.brandao.brutos.scope.Scopes;
 
 /**
  *
@@ -113,10 +115,20 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
         ih.setResource( iocManager.getInstance( controller.getId() ) );
         ih.setResponse( response );
         ih.setURI( ih.getRequest().getRequestURI() );
-        ih.setResourceMethod(
-            brutosContext
-                .getMethodResolver()
-                    .getResourceMethod( brutosContext.getRequest() ) );
+
+        if( brutosContext instanceof BrutosContext ){
+            ih.setResourceAction(
+                ((BrutosContext)brutosContext
+                        ).getMethodResolver()
+                            .getResourceMethod( brutosContext.getRequest() ) );
+        }
+        else{
+            ih.setResourceAction(
+                brutosContext
+                        .getActionResolver()
+                            .getResourceAction( controller,
+                                        Scopes.get(ScopeType.PARAM.toString())));
+        }
 
             controller.proccessBrutosAction( ih );
     }

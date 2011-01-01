@@ -21,6 +21,7 @@ import org.brandao.brutos.ResourceMethod;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.ResourceAction;
 
 /**
  *
@@ -52,7 +53,7 @@ public interface InterceptorHandler {
      */
     public String getURI();
     
-    public ResourceMethod getResourceMethod();
+    public ResourceAction getResourceAction();
     
     public Object getResource();
 

@@ -17,21 +17,15 @@
 
 package org.brandao.brutos;
 
-import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.scope.Scope;
 
 /**
- * @deprecated 
+ * 
  * @author Afonso Brandao
  */
-public interface MethodResolver extends ActionResolver{
+public interface ActionResolver {
 
-    /**
-     * @deprecated 
-     * @param request
-     * @return
-     */
-    public ResourceMethod getResourceMethod( HttpServletRequest request );
+    public ResourceAction getResourceAction( Form controller, Scope scope );
 
 }

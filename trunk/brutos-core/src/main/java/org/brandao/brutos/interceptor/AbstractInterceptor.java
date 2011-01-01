@@ -21,6 +21,7 @@ import org.brandao.brutos.ResourceMethod;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import org.brandao.brutos.ResourceAction;
 
 /**
  *
@@ -36,7 +37,7 @@ public abstract class AbstractInterceptor implements Interceptor{
 
 
     public boolean accept(InterceptorHandler handler) {
-        ResourceMethod rm = handler.getResourceMethod();
+        ResourceAction rm = handler.getResourceAction();
         if( rm != null && excludeMethods != null )
             return !excludeMethods.contains( rm.getMethod().getName() );
         else

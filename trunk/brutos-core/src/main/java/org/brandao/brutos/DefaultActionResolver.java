@@ -17,21 +17,24 @@
 
 package org.brandao.brutos;
 
-import javax.servlet.http.HttpServletRequest;
-import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.MethodForm;
 
 /**
- * @deprecated 
+ *
  * @author Afonso Brandao
  */
-public interface MethodResolver extends ActionResolver{
+public class DefaultActionResolver implements ActionResolver{
+    
+    private ResourceAction getResourceMethod( MethodForm methodForm ){
+        return new DefaultResourceAction( methodForm );
+    }
 
-    /**
-     * @deprecated 
-     * @param request
-     * @return
-     */
-    public ResourceMethod getResourceMethod( HttpServletRequest request );
+    public ResourceAction getResourceAction(Form controller, Scope scope) {
+        MethodForm method = controller
+                .getMethodByName( String.valueOf( scope.get( controller.getMethodId() ) ) );
+        return method == null? null : getResourceMethod( method );
+    }
 
 }

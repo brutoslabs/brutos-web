@@ -21,32 +21,23 @@ import org.brandao.brutos.Configuration;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
- *
+ * Constroi uma propriedade de um controlador.
+ * 
  * @author Afonso Brandao
  */
-public class PropertyBuilder{
+public class PropertyBuilder extends RestrictionBuilder{
 
-    private Configuration config;
-    
     public PropertyBuilder( Configuration config){
-        this.config = config;
+        super( config );
     }
 
-    /**
-     * Adiciona uma nova restrição.
-     *
-     * @param ruleId Tipo da restrição. Os valores são obtido em RestrictionRules.
-     * @param value Valor da restrição.
-     * @return Construtor da restrição.
-     */
     public PropertyBuilder addRestriction( RestrictionRules ruleId, Object value ){
-        config.put( ruleId.toString(), value );
-        return this;
+        return (PropertyBuilder)super.addRestriction( ruleId, value );
     }
 
     public PropertyBuilder setMessage( String message ){
-        config.setProperty("message", message );
-        return this;
+        return (PropertyBuilder)super.setMessage(message);
     }
+
 
 }

@@ -43,18 +43,18 @@ public class Invoker {
     private ControllerResolver controllerResolver;
     private IOCProvider iocProvider;
     private ControllerManager controllerManager;
-    private MethodResolver methodResolver;
+    private ActionResolver actionResolver;
     private ApplicationContext applicationContext;
     
     public Invoker() {
     }
 
     public Invoker( ControllerResolver controllerResolver, IOCProvider iocProvider, 
-            ControllerManager controllerManager, MethodResolver methodResolver, ApplicationContext applicationContext ){
+            ControllerManager controllerManager, ActionResolver actionResolver, ApplicationContext applicationContext ){
         this.controllerResolver = controllerResolver;
         this.iocProvider        = iocProvider;
         this.controllerManager  = controllerManager;
-        this.methodResolver     = methodResolver;
+        this.actionResolver     = actionResolver;
         this.applicationContext = applicationContext;
     }
 
@@ -109,7 +109,7 @@ public class Invoker {
             ih.setResource( iocManager.getInstance( form.getId() ) );
             ih.setResponse( response );
             ih.setURI( ih.getRequest().getRequestURI() );
-            ih.setResourceMethod(
+            ih.setResourceAction(
                 brutosContext
                     .getMethodResolver()
                         .getResourceMethod( brutosContext.getRequest() ) );
@@ -119,7 +119,7 @@ public class Invoker {
                     String.format(
                         "Controller: %s Method: %s",
                         form.getClass().getName() ,
-                        ih.getResourceMethod() == null?  "" : ih.getResourceMethod().getMethod().getName() )
+                        ih.getResourceAction() == null?  "" : ih.getResourceAction().getMethod().getName() )
                 );
 
 
@@ -160,14 +160,14 @@ public class Invoker {
 
             ih.setResource( iocProvider.getBean(form.getId()) );
             
-            ih.setResourceMethod( methodResolver.getResourceMethod(form, paramScope) );
+            ih.setResourceAction( actionResolver.getResourceAction(form, paramScope) );
 
             if( logger.isDebugEnabled() ){
                 logger.debug(
                     String.format(
                         "Controller: %s Method: %s",
                         form.getClass().getName() ,
-                        ih.getResourceMethod() == null?  "" : ih.getResourceMethod().getMethod().getName() )
+                        ih.getResourceAction() == null?  "" : ih.getResourceAction().getMethod().getName() )
                 );
 
 

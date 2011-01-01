@@ -25,7 +25,6 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
-import org.brandao.brutos.ControllerResolver;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
@@ -36,7 +35,6 @@ import org.brandao.brutos.programatic.ControllerManager;
 import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.IOCScope;
-import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
@@ -136,25 +134,6 @@ public class WebApplicationContext extends ApplicationContext{
         this.logger = loggerProvider.getLogger( WebApplicationContext.class.getName() );
     }
 
-    private void loadManager( Configuration config, ServletContextEvent sce ){
-        ServletContext sc = sce.getServletContext();
-
-        sc.setAttribute( BrutosConstants.IOC_PROVIDER,
-                                            getIocProvider() );
-        sc.setAttribute( BrutosConstants.INTERCEPTOR_MANAGER,
-                                            this.getInterceptorManager() );
-        sc.setAttribute( BrutosConstants.VIEW_PROVIDER,
-                                            getViewProvider() );
-        sc.setAttribute( BrutosConstants.VALIDATOR_PROVIDER,
-                                            getValidatorProvider() );
-
-        sc.setAttribute( BrutosConstants.CONTROLLER_RESOLVER,
-                                            getControllerResolver() );
-
-        sc.setAttribute( BrutosConstants.METHOD_RESOLVER,
-                                            getMethodResolver() );
-    }
-
     private void loadParameters( ServletContextEvent sce ){
         ServletContext context = sce.getServletContext();
         Enumeration initParameters = context.getInitParameterNames();
@@ -166,16 +145,6 @@ public class WebApplicationContext extends ApplicationContext{
     }
     
     public synchronized void stop( ServletContextEvent sce ){
-        ServletContext sc = sce.getServletContext();
-        sc.removeAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
-        sc.removeAttribute( BrutosConstants.IOC_MANAGER );
-        sc.removeAttribute( BrutosConstants.IOC_PROVIDER );
-        sc.removeAttribute( BrutosConstants.WEBFRAME_MANAGER );
-        sc.removeAttribute( BrutosConstants.INTERCEPTOR_MANAGER );
-        sc.removeAttribute( BrutosConstants.LOGGER );
-        sc.removeAttribute( BrutosConstants.METHOD_RESOLVER );
-        sc.removeAttribute( BrutosConstants.CONTROLLER_RESOLVER );
-        sc.removeAttribute( BrutosConstants.INVOKER );
         destroy();
     }
 
