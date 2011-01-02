@@ -18,7 +18,7 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.programatic.ControllerManager;
+import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ContextLoaderListener;
 import org.brandao.brutos.BrutosContext;
 import com.mockrunner.mock.web.MockServletContext;
@@ -32,7 +32,7 @@ import org.brandao.brutos.ioc.CustomEditorConfigurer;
 import org.brandao.brutos.ioc.editors.DateEditorSupport;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.programatic.InterceptorManager;
+import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.Scope;

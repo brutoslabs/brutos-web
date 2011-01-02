@@ -18,11 +18,11 @@
 package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.programatic.InterceptorManager;
+import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
- *
+ * @deprecated 
  * @author Afonso Brandao
  */
 public class MappingWrapper extends Mapping{

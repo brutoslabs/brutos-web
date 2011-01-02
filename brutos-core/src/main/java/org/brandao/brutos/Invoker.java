@@ -29,7 +29,7 @@ import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
-import org.brandao.brutos.programatic.ControllerManager;
+import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
 

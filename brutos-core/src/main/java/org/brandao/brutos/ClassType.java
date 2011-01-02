@@ -21,8 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
-* @author Afonso Brandao
+ * Classe usada para obter empacotar tipos primitivos e obter uma classe a partir
+ * de seu nome.
+ * 
+ * @author Afonso Brandao
  */
 public final class ClassType {
     
@@ -50,14 +52,27 @@ public final class ClassType {
         primitiveType.put(short.class,java.lang.Short.class);
         primitiveType.put(void.class,java.lang.Void.class);
     }
-    
+
+    /**
+     * Obtém o tipo empacotado, caso seja um tipo primitivo.
+     *
+     * @param clazz Classe primitiva.
+     * @return Classe empacotada.
+     */
     public static Class<?> getWrapper( Class<?> clazz ){
         Class<?> classe = primitiveType.get( clazz );
         
         return classe == null? clazz : classe;
         
     }
-    
+
+    /**
+     * Obtém uma classe a partir se seu nome.
+     * @param name Nome da classe.
+     * @return Classe.
+     * @throws ClassNotFoundException Lançada se não for possível carregar a
+     * classe.
+     */
     public static Class<?> get( String name ) throws ClassNotFoundException{
         Class<?> classe = primitiveType.get( name );
         

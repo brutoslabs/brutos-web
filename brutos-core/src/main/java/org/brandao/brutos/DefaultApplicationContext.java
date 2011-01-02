@@ -23,8 +23,6 @@ import org.brandao.brutos.ioc.ContextFactory;
 import org.brandao.brutos.ioc.IOCProviderFactory;
 import org.brandao.brutos.ioc.RequestFactory;
 import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.programatic.ControllerManager;
-import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**

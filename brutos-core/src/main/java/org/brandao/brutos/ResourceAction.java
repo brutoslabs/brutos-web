@@ -21,22 +21,53 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
+ * Representa uma ação.
  *
  * @author Afonso Brandao
  */
 public interface ResourceAction {
 
+    /**
+     * Invoca o método associado a ação.
+     * @param source Objeto a ter o método invocado.
+     * @param args Argumentos necessários para invocar o método.
+     * @return Resultado obtido da invocação do método.
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws InvocationTargetException
+     */
     public Object invoke( Object source, Object[] args )
             throws IllegalAccessException, IllegalArgumentException,
                 InvocationTargetException;
 
+    /**
+     * Obtém o método associado a ação.
+     * @return Método.
+     */
     public Method getMethod();
 
+    /**
+     * Obtém o tipo de retorno da ação.
+     * @return Tipo.
+     */
     public Class returnType();
 
+    /**
+     * Obtém os tipos do argumentos necessários para invocar o método.
+     * @return Matriz de tipos.
+     */
     public Class[] getParametersType();
 
+    /**
+     * Obtém a classe proprietária do método associado a ação.
+     * @return Classe.
+     */
     public Class getResourceClass();
 
+    /**
+     * Verifica se é uma ação abstrata.
+     * @return Verdadeiro se existe um método associado a ação, caso
+     * contrário falso.
+     */
     public boolean isAbstract();
 }

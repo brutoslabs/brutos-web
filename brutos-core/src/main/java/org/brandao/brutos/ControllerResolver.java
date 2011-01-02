@@ -21,10 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.WebFrameManager;
-import org.brandao.brutos.programatic.ControllerManager;
 
 /**
- * 
+ * Interface usada na resolução de controladores.
+ *
  * @author Afonso Brandao
  */
 public interface ControllerResolver {
@@ -37,6 +37,12 @@ public interface ControllerResolver {
      */
     public Form getController( WebFrameManager webFrameManager, HttpServletRequest request );
 
+    /**
+     * Obtém um controlador dependendo da requisição.
+     * @param controllerManager Gestor dos controladores.
+     * @param handler Mnipulador da requisição.
+     * @return Controlador.
+     */
     public Form getController( ControllerManager controllerManager, InterceptorHandler handler );
     
 }

@@ -17,12 +17,10 @@
 
 package org.brandao.brutos.old.programatic;
 
-import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.validator.RestrictionRules;
-
+import org.brandao.brutos.InterceptorManager;
 /**
  *
  * @author Afonso Brandao
