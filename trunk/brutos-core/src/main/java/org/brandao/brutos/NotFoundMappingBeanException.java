@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 /**
+ * Lançado quando não encontra um mapeamento.
  * 
  * @author Afonso Brandao
  */

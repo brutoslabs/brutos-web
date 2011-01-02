@@ -20,7 +20,8 @@ package org.brandao.brutos;
 import java.util.Properties;
 
 /**
- *
+ * Classe usada na configuração de uma aplicação.
+ * 
  * @author Afonso Brandao
  */
 public class Configuration extends Properties{
@@ -32,6 +33,7 @@ public class Configuration extends Properties{
     public Configuration( Properties props ){
         super( props );
     }
+    
     public String getProperty(String key, String defaultValue){
         String value = super.getProperty( key, defaultValue );
         value = ( value == null )? System.getProperty( key ) : value;

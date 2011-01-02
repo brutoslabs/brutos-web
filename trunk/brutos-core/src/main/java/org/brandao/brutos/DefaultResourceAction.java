@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 import org.brandao.brutos.mapping.MethodForm;
 
 /**
- *
+ * Implementação padrão do ResourceAction.
  * @author Afonso Brandao
  */
 public class DefaultResourceAction implements ResourceAction{

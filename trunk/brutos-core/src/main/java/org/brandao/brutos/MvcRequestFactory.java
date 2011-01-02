@@ -19,13 +19,18 @@
 package org.brandao.brutos;
 
 /**
- *
+ * Fábria de requisições.
+ * 
  * @author Afonso Brandao
  */
 public abstract class MvcRequestFactory {
 
     private static ThreadLocal requests = new ThreadLocal();
 
+    /**
+     * Obtém a atual requisição.
+     * @return Requisição.
+     */
     public MvcRequest getCurrentRequest(){
 
         MvcRequest request = (MvcRequest) requests.get();
@@ -38,10 +43,17 @@ public abstract class MvcRequestFactory {
         return request;
     }
 
+    /**
+     * Destrói a requisição.
+     */
     public void destroyRequest(){
         requests.remove();
     }
-    
+
+    /**
+     * Cria uma nova requisição.
+     * @return Nova requisição.
+     */
     protected abstract MvcRequest getNewRequest();
 
 }

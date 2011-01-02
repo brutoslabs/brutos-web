@@ -21,13 +21,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Descreve as opções existentes para encaminhar a requisição para a visão.
+ * 
  * @author Afonso Brandao
  */
 public class DispatcherType {
 
+    /**
+     * Inclui a visão no resultado.
+     */
     public static final DispatcherType INCLUDE  = new DispatcherType( "include" );
+
+    /**
+     *  A requisição é encaminhada para a visão.
+     */
     public static final DispatcherType FORWARD  = new DispatcherType( "forward" );
+
+    /**
+     *  A requisição é redirecionada para a visão.
+     */
     public static final DispatcherType REDIRECT = new DispatcherType( "redirect" );
 
     private static final Map defaultDispatcher = new HashMap();

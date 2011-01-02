@@ -19,6 +19,7 @@
 package org.brandao.brutos;
 
 /**
+ * Fábrica de respostas.
  *
  * @author Afonso Brandao
  */
@@ -26,6 +27,10 @@ public abstract class MvcResponseFactory {
 
     private static ThreadLocal responses = new ThreadLocal();
 
+    /**
+     * Obtém a atual resposta.
+     * @return
+     */
     public MvcResponse getCurrentResponse(){
 
         MvcResponse request = (MvcResponse) responses.get();
@@ -38,10 +43,17 @@ public abstract class MvcResponseFactory {
         return request;
     }
 
+    /**
+     * Destrói a resposta.
+     */
     public void destroyResponse(){
         responses.remove();
     }
-    
+
+    /**
+     * Obtém uma nova resposta.
+     * @return
+     */
     protected abstract MvcResponse getNewResponse();
 
 }

@@ -21,14 +21,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Descreve os tipos de mapeamento para enum.
  *
- *  @author Afonso Brandao
+ * @author Afonso Brandao
  */
 public class EnumerationType {
-    
+
+    /**
+     * O enum é mapeado como um inteiro.
+     */
     public static final EnumerationType ORDINAL = new EnumerationType( "ordinal" );
+
+    /**
+     * O enum é mapeado como uma string.
+     */
     public static final EnumerationType STRING = new EnumerationType( "string" );
-    private static Map defaultTypes = new HashMap();
+
+    private final static Map defaultTypes = new HashMap();
 
     static{
         defaultTypes.put( ORDINAL.toString(), ORDINAL );

@@ -21,7 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Descreve os escopos.
+ * 
  * @author Afonso Brandao
  */
 public class ScopeType {
