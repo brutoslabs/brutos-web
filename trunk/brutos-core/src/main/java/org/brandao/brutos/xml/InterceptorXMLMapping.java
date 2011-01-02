@@ -20,7 +20,7 @@ package org.brandao.brutos.xml;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.brandao.brutos.programatic.InterceptorManager;
+import org.brandao.brutos.InterceptorManager;
 
 /**
  *

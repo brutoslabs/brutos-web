@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 /**
+ * Lançada quando ocorre algum problema na configuração e execução da aplicação.
  * 
  * @author Afonso Brandao
  */

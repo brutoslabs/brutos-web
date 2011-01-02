@@ -17,10 +17,9 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.web.WebApplicationContext;
-
 /**
- *
+ * Contém informações importantes para o funcionamento interno.
+ * 
  * @author Afonso Brandao
  */
 public interface BrutosConstants {

@@ -25,14 +25,14 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
-import org.brandao.brutos.programatic.InterceptorBuilder;
-import org.brandao.brutos.programatic.InterceptorStackBuilder;
+import org.brandao.brutos.InterceptorBuilder;
+import org.brandao.brutos.InterceptorStackBuilder;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class InterceptorManager extends org.brandao.brutos.programatic.InterceptorManager{
+public class InterceptorManager extends org.brandao.brutos.InterceptorManager{
 
     private Map<String, Interceptor> interceptors;
     private List<Interceptor> defaultInterceptors;

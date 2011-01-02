@@ -18,7 +18,6 @@
 package org.brandao.brutos;
 
 import java.util.Map;
-import org.brandao.brutos.programatic.InterceptorManager;
 import java.util.Properties;
 import java.util.Set;
 import javax.servlet.ServletContextEvent;
@@ -26,7 +25,6 @@ import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.old.programatic.*;
-import org.brandao.brutos.programatic.ControllerManager;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
@@ -373,8 +371,8 @@ public abstract class ApplicationContext {
     }
 
     /**
-     * Obtém o provedor do diario de bordo.
-     * @return Provedor de diario de bordo.
+     * Obtém o provedor do diario.
+     * @return Provedor de diario.
      */
     public LoggerProvider getLoggerProvider() {
         return loggerProvider;

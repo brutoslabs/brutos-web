@@ -18,11 +18,19 @@
 package org.brandao.brutos;
 
 /**
+ * Classe usada na busca por classes no classpath.
  *
  * @author Afonso Brandao
  */
 public interface CheckSearch {
-    
-    public boolean checkClass( Class<?> classe );
+
+    /**
+     * Verifica se a classe encontrada segue um critério pré-estabelecido.
+     *
+     * @param classe Classe a ser verificada.
+     * @return Verdadeiro se a classe se o critério estabelecido, caso contrário
+     * falso.
+     */
+    public boolean checkClass( Class classe );
     
 }

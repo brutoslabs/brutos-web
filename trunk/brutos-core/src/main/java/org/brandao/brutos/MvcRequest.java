@@ -22,23 +22,56 @@ import java.io.InputStream;
 import java.util.Locale;
 
 /**
- *
+ * Representa uma requisição.
+ * 
  * @author Afonso Brandao
  */
 public interface MvcRequest {
 
+    /**
+     * Obtém um valor da requisição.
+     * @param name Identificação
+     * @return Valor.
+     */
     public Object getValue( String name );
 
+    /**
+     * Obtém uma propriedade da requisição.
+     * @param name Identificação.
+     * @return Propriedade.
+     */
     public Object getProperty( String name );
-    
+
+    /**
+     * Obtém o stream da requisição.
+     * @return Stream.
+     * @throws IOException Lançado caso ocorra algum problema ao obter o stream.
+     */
     public InputStream getStream() throws IOException;
 
+    /**
+     * Tipo da requisição. Normalmente usado em aplicações web.
+     * @return Tipo.
+     */
     public String getType();
 
+    /**
+     * Obtém o tamanho da requisição. Normalmente usado em aplicações web.
+     * @return Tamanho.
+     */
     public int getLength();
 
+    /**
+     * Obtém em qual formato está codificado a requisição. Normalmente usado
+     * em aplicações web.
+     * @return Codificação.
+     */
     public String getCharacterEncoding();
 
+    /**
+     * Obtém a localidade. Normalmente usado em aplicações web.
+     * @return Localidade.
+     */
     public Locale getLocale();
 
 }

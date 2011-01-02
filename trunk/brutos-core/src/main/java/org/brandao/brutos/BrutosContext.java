@@ -50,7 +50,6 @@ import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.OldRequestScope;
 import org.brandao.brutos.web.scope.ParamScope;
-import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
 
 /**

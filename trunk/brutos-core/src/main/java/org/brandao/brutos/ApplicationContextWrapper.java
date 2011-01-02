@@ -18,20 +18,24 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.programatic.ControllerManager;
-import org.brandao.brutos.programatic.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
- *
+ * Classe usada em testes.
+ * 
  * @author Afonso Brandao
  */
 public class ApplicationContextWrapper extends ApplicationContext{
 
     protected ApplicationContext applicationContext;
-    
-    public ApplicationContextWrapper( ApplicationContext mapping ){
-        this.applicationContext = mapping;
+
+    /**
+     * Define a aplicação a ser testada.
+     *
+     * @param mapping Aplicação.
+     */
+    public ApplicationContextWrapper( ApplicationContext app ){
+        this.applicationContext = app;
     }
 
     public void destroy() {
