@@ -23,7 +23,8 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Implementação padrão do MvcResponse.
+ * 
  * @author Afonso Brandao
  */
 public class DefaultMvcResponse implements MvcResponse{

@@ -23,6 +23,7 @@ import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
+ * Implementação padrão do ControllerResolver.
  *
  * @author Afonso Brandao
  */
@@ -31,7 +32,6 @@ public class DefaultResolveController implements ControllerResolver{
     public DefaultResolveController() {
     }
 
-    @Override
     public Form getController(WebFrameManager webFrameManager, HttpServletRequest request) {
         String path         = request.getRequestURI();
         String contextPath  = request.getContextPath();

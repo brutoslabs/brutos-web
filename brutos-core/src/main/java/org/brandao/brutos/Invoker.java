@@ -17,8 +17,6 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.web.WebApplicationContext;
-import org.brandao.brutos.web.ContextLoaderListener;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,12 +27,12 @@ import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
-import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
 
 /**
- *
+ * Classe usada para invocar a aplicação.
+ * 
  * @author Afonso Brandao
  */
 public class Invoker {
@@ -137,6 +135,12 @@ public class Invoker {
         return true;
     }
 
+    /**
+     * Executa uma ação.
+     *
+     * @param requestId Identificação da ação.
+     * @return Verdadeiro se foi executada a ação, coso contrário é falso.
+     */
     public boolean invoke( String requestId ){
 
         Scope paramScope = Scopes.get(ScopeType.PARAM.toString());

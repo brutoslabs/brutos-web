@@ -26,7 +26,7 @@ import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
- *
+ * @deprecated 
  * @author Afonso Brandao
  */
 public class DefaultApplicationContext extends ApplicationContext{

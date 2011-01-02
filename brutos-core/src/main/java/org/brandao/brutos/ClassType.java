@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Classe usada para obter empacotar tipos primitivos e obter uma classe a partir
+ * Classe usada para empacotar tipos primitivos e obter uma classe a partir
  * de seu nome.
  * 
  * @author Afonso Brandao

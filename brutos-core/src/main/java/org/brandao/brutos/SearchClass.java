@@ -32,7 +32,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import org.brandao.brutos.mapping.MappingException;
 /**
- *
+ * Usado para encontrar classes que atendam um determinado critério.
+ * 
  * @author Afonso Brandao
  */
 public class SearchClass {

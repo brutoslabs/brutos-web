@@ -22,7 +22,8 @@ import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
 
 /**
- *
+ * Implementação padrão do ActionResolver.
+ * 
  * @author Afonso Brandao
  */
 public class DefaultActionResolver implements ActionResolver{
