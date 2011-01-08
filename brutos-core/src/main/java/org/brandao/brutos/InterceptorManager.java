@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 
@@ -144,7 +143,7 @@ public class InterceptorManager {
     }
 
     /**
-     * Obtém a configuração de um determinado interceptador.
+     * Obtém um determinado interceptador.
      * @param name Identificação do interceptador.
      * @return Configuração do interceptador.
      */
@@ -156,12 +155,11 @@ public class InterceptorManager {
     }
 
     /**
-     * @deprecated 
-     * @return
+     * Obtém os interceptadores globais.
+     * @return Interceptadores globais.
      */
     public List<Interceptor> getDefaultInterceptors(){
-        throw new UnsupportedOperationException();
-        //return this.defaultInterceptors;
+        return this.defaultInterceptors;
     }
     
 }
