@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.*;
 import javax.servlet.http.HttpServletRequest;
-import org.brandao.brutos.http.BrutosRequest;
+import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.WebFrameManager;

@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.http.filter.BrutosRequestFilter;
+import org.brandao.brutos.web.http.BrutosRequestFilter;
 import org.brandao.brutos.web.RequestInfo;
 
 /**

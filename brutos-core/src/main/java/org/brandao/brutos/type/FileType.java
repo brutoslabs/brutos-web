@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.MvcResponse;
-import org.brandao.brutos.http.BrutosFile;
+import org.brandao.brutos.web.http.BrutosFile;
 import org.brandao.brutos.web.WebMvcResponse;
 
 /**

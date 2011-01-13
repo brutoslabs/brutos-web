@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.util.Locale;
 import javax.servlet.ServletRequest;
 import org.brandao.brutos.*;
-import org.brandao.brutos.http.BrutosRequest;
+import org.brandao.brutos.web.http.BrutosRequest;
 
 /**
  *

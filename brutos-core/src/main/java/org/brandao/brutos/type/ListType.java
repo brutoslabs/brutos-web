@@ -28,7 +28,7 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MvcResponse;
-import org.brandao.brutos.http.ParameterList;
+import org.brandao.brutos.web.http.ParameterList;
 
 /**
  * Allows the creation of type List.
