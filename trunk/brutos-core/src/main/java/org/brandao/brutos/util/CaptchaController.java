@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.Random;
 import javax.imageio.ImageIO;
-import org.brandao.brutos.http.Download;
+import org.brandao.brutos.web.http.Download;
 import org.brandao.brutos.util.captcha.Imagem;
 
 /**

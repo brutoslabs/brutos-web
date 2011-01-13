@@ -20,9 +20,9 @@ package org.brandao.brutos.web.scope;
 import java.util.Arrays;
 import javax.servlet.ServletRequest;
 import org.brandao.brutos.web.ContextLoaderListener;
-import org.brandao.brutos.http.BrutosRequest;
-import org.brandao.brutos.http.MutableRequest;
-import org.brandao.brutos.http.ParameterList;
+import org.brandao.brutos.web.http.BrutosRequest;
+import org.brandao.brutos.web.http.MutableRequest;
+import org.brandao.brutos.web.http.ParameterList;
 import org.brandao.brutos.scope.Scope;
 
 /**

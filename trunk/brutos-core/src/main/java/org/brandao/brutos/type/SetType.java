@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.http.ParameterList;
+import org.brandao.brutos.web.http.ParameterList;
 
 /**
  * Allows the creation of type Set.

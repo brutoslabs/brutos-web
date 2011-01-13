@@ -29,7 +29,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.DefaultMethodResolver;
 import org.brandao.brutos.ResourceMethod;
-import org.brandao.brutos.http.MutableRequest;
+import org.brandao.brutos.web.http.MutableRequest;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
 
