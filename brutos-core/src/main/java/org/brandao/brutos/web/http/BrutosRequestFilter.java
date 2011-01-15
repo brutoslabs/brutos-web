@@ -19,6 +19,7 @@
 package org.brandao.brutos.web.http;
 
 import java.io.IOException;
+import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -28,10 +29,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.web.WebApplicationContext;
-import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.Invoker;
+import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.web.RequestInfo;
 
 /**
@@ -62,22 +66,33 @@ public class BrutosRequestFilter implements Filter{
         if (!( request instanceof HttpServletRequest && response instanceof HttpServletResponse ) )
             throw new ServletException( "Portlets are not supported.");
 
+        Scope scope = Scopes.get(ScopeType.SESSION);
+
+        Map mappedUploadStats =
+                (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
+
+        String requestId = this.getRequestId((HttpServletRequest)request );
         try{
             RequestInfo requestInfo = new RequestInfo();
             requestInfo.setRequest( request );
             requestInfo.setResponse(response);
             RequestInfo.setCurrent(requestInfo);
+
+            UploadListener listener = ((BrutosRequest)request).getUploadListener();
+            mappedUploadStats.put( requestId, listener.getUploadStats() );
+
             currentFilter.set(chain);
             if( context instanceof BrutosContext ){
                 if( !invoker.invoke((BrutosContext)context, (HttpServletResponse)response ) )
                     chain.doFilter( request, response);
             }
             else{
-                if( !invoker.invoke( this.getRequestId((HttpServletRequest)request ) ) )
+                if( !invoker.invoke( requestId ) )
                     chain.doFilter( request, response);
             }
         }
         finally{
+            mappedUploadStats.remove( requestId );
             RequestInfo.removeCurrent();
             currentFilter.remove();
         }

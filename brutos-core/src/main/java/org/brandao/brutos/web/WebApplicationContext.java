@@ -18,6 +18,7 @@
 package org.brandao.brutos.web;
 
 import java.util.Enumeration;
+import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,10 @@ import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.IOCScope;
+import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
+import org.brandao.brutos.web.http.UploadListenerFactory;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.ParamScope;
@@ -75,7 +79,6 @@ public class WebApplicationContext extends ApplicationContext{
             logger.info( "Initializing Brutos root WebApplicationContext" );
             logger.info( "Configuration: " + config.toString() );
             overrideConfig( sce );
-            //this.appContext = new XMLApplicationContext();
             configure(config);
             loadInvoker( sce.getServletContext() );
         }
@@ -88,6 +91,31 @@ public class WebApplicationContext extends ApplicationContext{
         }
     }
 
+    public void configure( Properties config ){
+        
+        try{
+            String uploadListenerFactoryName = 
+                config.getProperty( "org.brandao.brutos.upload_listener_factory",
+                    DefaultUploadListenerFactory.class.getName() );
+
+            Class ulfClass = Class.forName(
+                uploadListenerFactoryName,
+                true,
+                Thread.currentThread().getContextClassLoader() );
+
+            Scope contextScope = Scopes.get( ScopeType.APPLICATION );
+            contextScope.put(
+                BrutosConstants.UPLOAD_LISTENER_FACTORY,
+                ulfClass.newInstance() );
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+
+        super.configure(config);
+        
+    }
+    
     private void overrideConfig( ServletContextEvent sce ){
 
         IOCProvider iocProvider = getIocProvider();

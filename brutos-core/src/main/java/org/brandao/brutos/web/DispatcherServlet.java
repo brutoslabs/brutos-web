@@ -18,13 +18,20 @@
 package org.brandao.brutos.web;
 
 import java.io.IOException;
+import java.util.Map;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.Invoker;
+import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.web.http.BrutosRequest;
+import org.brandao.brutos.web.http.UploadListener;
 
 /**
  * 
@@ -61,19 +68,34 @@ public class DispatcherServlet extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+
+        Scope scope = Scopes.get(ScopeType.SESSION);
+        
+        Map mappedUploadStats =
+                (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
+
+        String path         = request.getRequestURI();
+        String contextPath  = request.getContextPath();
+        path = path.substring( contextPath.length(), path.length() );
+
         try{
             RequestInfo requestInfo = new RequestInfo();
-            requestInfo.setRequest( request );
+
+            BrutosRequest brutosRequest = (BrutosRequest)request;
+
+            requestInfo.setRequest( (ServletRequest)brutosRequest);
             requestInfo.setResponse(response);
             RequestInfo.setCurrent(requestInfo);
 
-            String path         = request.getRequestURI();
-            String contextPath  = request.getContextPath();
-            path = path.substring( contextPath.length(), path.length() );
+            UploadListener listener = brutosRequest.getUploadListener();
+
+
+            mappedUploadStats.put( path, listener.getUploadStats() );
 
             invoker.invoke(path);
         }
         finally{
+            mappedUploadStats.remove( path );
             RequestInfo.removeCurrent();
         }
     }
