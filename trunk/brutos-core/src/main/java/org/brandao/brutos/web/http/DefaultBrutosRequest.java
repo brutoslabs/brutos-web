@@ -30,8 +30,12 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.type.json.JSONDecoder;
 
 
@@ -43,17 +47,34 @@ import org.brandao.brutos.type.json.JSONDecoder;
 public class DefaultBrutosRequest extends HttpServletRequestWrapper implements BrutosRequest{
 
     private Map parameters;
-    LoadRequestData loadData;
+    private DefaultUploadEvent uploadEvent;
+    private UploadListener uploadListener;
+
     private long maxLength;
     private String path;
     
     public DefaultBrutosRequest( HttpServletRequest request ){
         super( request );
         this.parameters = new HashMap();
+        uploadEvent = new DefaultUploadEvent( this );
         initialize();
-        loadData();
     }
 
+    public UploadListener getUploadListener(){
+
+        if( uploadListener == null ){
+            Scope contextScope = Scopes.get( ScopeType.APPLICATION );
+
+            UploadListenerFactory uploadListenerFactory =
+                    (UploadListenerFactory) contextScope
+                        .get( BrutosConstants.UPLOAD_LISTENER_FACTORY );
+
+            this.uploadListener =
+                    uploadListenerFactory.getNewUploadListener(uploadEvent);
+        }
+
+        return this.uploadListener;
+    }
     
     private void initialize(){
         ApplicationContext context = WebApplicationContext.getCurrentApplicationContext();
@@ -66,21 +87,28 @@ public class DefaultBrutosRequest extends HttpServletRequestWrapper implements B
             path = context
                     .getConfiguration()
                         .getProperty( "org.brandao.brutos.request.path", null );
+
         }
+
+
     }
     
-    private void loadData(){
+    public void parseRequest(){
         try{
-            loadData = new LoadRequestData( this );
-            if( loadData.isMultipart() ){
-                loadData.setMaxLength( maxLength );
-                loadData.setPath(path);
-                loadData.start();
-                while( loadData.hasMoreElements() ){
-                    Input input = loadData.nextElement();
-                    this.setObject( input.getName() , input.getValue() );
+            if( uploadEvent.isMultipart() ){
+                try{
+                    uploadListener.uploadStarted();
+                    uploadEvent.setMaxLength( maxLength );
+                    uploadEvent.setPath(path);
+                    uploadEvent.start();
+                    while( uploadEvent.hasMoreElements() ){
+                        Input input = uploadEvent.nextElement();
+                        this.setObject( input.getName(), input.getValue() );
+                    }
                 }
-
+                finally{
+                    uploadListener.uploadFinished();
+                }
             }
             else
             if( "application/json".equals( this.getContentType() ) ){
@@ -109,7 +137,7 @@ public class DefaultBrutosRequest extends HttpServletRequestWrapper implements B
     }
 
     public long getCurrentDataSize(){
-        return loadData.isMultipart()? loadData.getCurrentDataSize() : super.getContentLength();
+        return uploadEvent.isMultipart()? uploadEvent.getCurrentDataSize() : super.getContentLength();
     }
     
     public Object getObject(String name) {
@@ -188,260 +216,270 @@ public class DefaultBrutosRequest extends HttpServletRequestWrapper implements B
             this.setObject(name, value);
     }
 
-}
-class LoadRequestData implements java.util.Enumeration<Input>{
 
-    private DefaultBrutosRequest request;
-    private byte[] buffer;
-    private int len;
-    //private long length;
-    private ServletInputStream in;
-    private String boundary;
-    private boolean noFields;
 
-    private long maxLength;
-    private String path;
-    private long currentDataSize;
-    
-    public LoadRequestData( DefaultBrutosRequest request ){
-        this.request  = request;
-        this.buffer   = new byte[ 8192 ];
-        this.noFields = false;
-    }
 
-    public boolean isMultipart(){
-        String tmp = request.getHeader( "content-type" );
-        if( tmp == null )
-            return false;
+    private class DefaultUploadEvent implements java.util.Enumeration<Input>, UploadEvent{
 
-        int i = tmp.indexOf( "multipart/form-data" );
-        return i != -1;
-    }
+        private DefaultBrutosRequest request;
+        private byte[] buffer;
+        private int len;
+        //private long length;
+        private ServletInputStream in;
+        private String boundary;
+        private boolean noFields;
 
-    private String getboundary() throws IOException{
+        private long maxLength;
+        private String path;
+        private long currentDataSize;
 
-        String content_type = request.getHeader( "content-type" );
-
-        int posboundary = content_type.indexOf( "boundary" );
-
-        if( posboundary == -1 )
-            throw new IOException("Boundary not found");
-
-        return "--" + content_type.substring( posboundary + 9 );
-
-    }
-
-    private int readData( byte[] buf, ServletInputStream in ) throws IOException{
-        len = in.readLine( buf, 0, buf.length );
-        currentDataSize += len;
-        
-        if( maxLength > 0 && getCurrentDataSize() > maxLength )
-            throw new BrutosException( "data too large" );
-        
-        return len;
-    }
-
-    public void start() throws IOException {
-        in       = request.getInputStream();
-        len      = -1;
-        boundary = getboundary();
-
-        if( ( len = readData( buffer, in ) ) != 0 ){
-            String s = new String( buffer, 0, len-2 );
-            noFields = !s.endsWith( boundary );
+        public DefaultUploadEvent( DefaultBrutosRequest request ){
+            this.request         = request;
+            this.buffer          = new byte[ 8192 ];
+            this.noFields        = false;
+            this.currentDataSize = 0;
         }
-        else
-            noFields = true;
 
-    }
-
-    @Override
-    public boolean hasMoreElements(){
-        if( noFields )
-            return false;
-        
-        try{
-            len = -1;
-            len = readData( buffer, in );
-            if( len == -1 )
+        public boolean isMultipart(){
+            String tmp = request.getHeader( "content-type" );
+            if( tmp == null )
                 return false;
+
+            int i = tmp.indexOf( "multipart/form-data" );
+            return i != -1;
+        }
+
+        private String getboundary() throws IOException{
+
+            String content_type = request.getHeader( "content-type" );
+
+            int posboundary = content_type.indexOf( "boundary" );
+
+            if( posboundary == -1 )
+                throw new IOException("Boundary not found");
+
+            return "--" + content_type.substring( posboundary + 9 );
+
+        }
+
+        private int readData( byte[] buf, ServletInputStream in ) throws IOException{
+            len = in.readLine( buf, 0, buf.length );
+            currentDataSize += len;
+
+            if( maxLength > 0 && getCurrentDataSize() > maxLength )
+                throw new BrutosException( "data too large" );
+
+            return len;
+        }
+
+        public void start() throws IOException {
+            in       = request.getInputStream();
+            len      = -1;
+            boundary = getboundary();
+
+            if( ( len = readData( buffer, in ) ) != 0 ){
+                String s = new String( buffer, 0, len-2 );
+                noFields = !s.endsWith( boundary );
+            }
             else
-                return true;
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
+                noFields = true;
 
-    @Override
-    public Input nextElement() {
-        try{
-            String header = new String( buffer, 0, len-2 );
-            String name   = null;
-            Object value  = null;
-
-            if( header.indexOf( "filename" ) != -1 ){
-                name  = getName( header, "name" );
-                value = getFieldFile( boundary, header, in );
-            }
-            else{
-                name  = getName( header, "name" );
-                value = getField( boundary, in );
-            }
-
-            return new Input( name, value );
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
-
-    private String getName( String cab, String name ){
-        int initId = cab.indexOf( name );
-        int initValor = cab.indexOf( "\"", initId );
-        int endValor = cab.indexOf( "\"", initValor + 1 );
-        String id = cab.substring( initValor + 1, endValor);
-        return id;
-    }
-
-    private BrutosFile getFieldFile( String boundary, String header, ServletInputStream in ) throws IOException{
-        len = -1;
-        String fileName  = getName( header, "filename" );
-
-        len = readData( buffer, in );
-
-        if( len == -1 )
-            throw new IOException( "not found type of the file!" );
-
-        String typeFile  = (new String( buffer, 0, len-2 ));
-        typeFile = typeFile.length() < 14? "" : typeFile.substring( 14 );
-
-
-        String file = "";
-        String dir = fileName;
-        char c;
-        while( dir.length() > 0 && ( c = dir.charAt( dir.length() - 1 ) )!= '\\' && c != '/' ){
-            file = c + file;
-            dir = dir.substring( 0, dir.length() - 1 );
         }
 
-        file = "".equals(file)? null : file;
+        public boolean hasMoreElements(){
+            if( noFields )
+                return false;
 
-        len = readData( buffer, in );
-        String s = new String( buffer, 0, len-2 );
-
-        int filesize = 0;
-
-        FileOutputStream fout = null;
-        BrutosFile f = null;
-        try{
-            while( s.indexOf( boundary ) == -1 ){
-
+            try{
+                len = -1;
                 len = readData( buffer, in );
-                s = new String( buffer, 0, len);
+                if( len == -1 )
+                    return false;
+                else
+                    return true;
+            }
+            catch( Exception e ){
+                throw new BrutosException( e );
+            }
+        }
 
-                if ( file != null && s.indexOf( boundary ) == -1 ){
+        public Input nextElement() {
+            try{
+                String header = new String( buffer, 0, len-2 );
+                String name   = null;
+                Object value  = null;
 
-                    if( fout == null ){
-                        File arquivo = getFile( this.path, file );
-                        f = new BrutosFile( arquivo );
-                        f.setFileName( file );
-                        fout = new FileOutputStream( arquivo );
+                if( header.indexOf( "filename" ) != -1 ){
+                    name  = getName( header, "name" );
+                    value = getFieldFile( boundary, header, in );
+                }
+                else{
+                    name  = getName( header, "name" );
+                    value = getField( boundary, in );
+                }
+
+                return new Input( name, value );
+            }
+            catch( Exception e ){
+                throw new BrutosException( e );
+            }
+        }
+
+        private String getName( String cab, String name ){
+            int initId = cab.indexOf( name );
+            int initValor = cab.indexOf( "\"", initId );
+            int endValor = cab.indexOf( "\"", initValor + 1 );
+            String id = cab.substring( initValor + 1, endValor);
+            return id;
+        }
+
+        private BrutosFile getFieldFile( String boundary, String header, 
+                ServletInputStream in ) throws IOException{
+            
+            len = -1;
+            String fileName  = getName( header, "filename" );
+
+            len = readData( buffer, in );
+
+            if( len == -1 )
+                throw new IOException( "not found type of the file!" );
+
+            String typeFile  = (new String( buffer, 0, len-2 ));
+            typeFile = typeFile.length() < 14? "" : typeFile.substring( 14 );
+
+
+            String file = "";
+            String dir = fileName;
+            char c;
+            while( dir.length() > 0 && ( c = dir.charAt( dir.length() - 1 ) )!= '\\' && c != '/' ){
+                file = c + file;
+                dir = dir.substring( 0, dir.length() - 1 );
+            }
+
+            file = "".equals(file)? null : file;
+
+            len = readData( buffer, in );
+            String s = new String( buffer, 0, len-2 );
+
+            int filesize = 0;
+
+            FileOutputStream fout = null;
+            BrutosFile f = null;
+            try{
+                while( s.indexOf( boundary ) == -1 ){
+
+                    len = readData( buffer, in );
+                    s = new String( buffer, 0, len);
+
+                    if ( file != null && s.indexOf( boundary ) == -1 ){
+
+                        if( fout == null ){
+                            File arquivo = getFile( this.path, file );
+                            f = new BrutosFile( arquivo );
+                            f.setFileName( file );
+                            fout = new FileOutputStream( arquivo );
+                        }
+
+                        fout.write( buffer, 0, len );
+                        filesize = filesize + len;
                     }
-                    
-                    fout.write( buffer, 0, len );
-                    filesize = filesize + len;
                 }
             }
+            finally{
+                if( fout != null )
+                    fout.close();
+            }
+
+            return f;
+
         }
-        finally{
-            if( fout != null )
-                fout.close();
+
+        private File getFile( String dir, String file ) throws IOException{
+            java.io.File arquivo;
+
+            if( dir != null ){
+                arquivo = new File( new File(dir), file );
+                arquivo.createNewFile();
+            }
+            else{
+                arquivo = File.createTempFile("multpart",".tmp");
+                arquivo.deleteOnExit();
+            }
+            return arquivo;
         }
 
-        return f;
-
-    }
-
-    private File getFile( String dir, String file ) throws IOException{
-        java.io.File arquivo;
-
-        if( dir != null ){
-            arquivo = new File( new File(dir), file );
-            arquivo.createNewFile();
-        }
-        else{
-            arquivo = File.createTempFile("multpart",".tmp");
-            arquivo.deleteOnExit();
-        }
-        return arquivo;
-    }
-    
-    private String getField( String boundary, ServletInputStream in ) throws IOException{
-        len          = -1;
-        String value = "";
-
-        len = readData( buffer, in );
-        String s = new String( buffer, 0, len-2 );
-
-        while( !s.equals( boundary ) && !s.equals( boundary + "--" ) ){
-            if( s.length() != 0 )
-                value += ( value.length() == 0 )? s : s + "\n";
+        private String getField( String boundary, ServletInputStream in ) throws IOException{
+            len          = -1;
+            String value = "";
 
             len = readData( buffer, in );
-            s = new String( buffer, 0, len-2);
+            String s = new String( buffer, 0, len-2 );
+
+            while( !s.equals( boundary ) && !s.equals( boundary + "--" ) ){
+                if( s.length() != 0 )
+                    value += ( value.length() == 0 )? s : s + "\n";
+
+                len = readData( buffer, in );
+                s = new String( buffer, 0, len-2);
+            }
+            return value;
         }
-        return value;
+
+        public long getMaxLength() {
+            return maxLength;
+        }
+
+        public void setMaxLength(long maxLength) {
+            this.maxLength = maxLength;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
+            this.path = path;
+        }
+
+        public long getCurrentDataSize() {
+            return currentDataSize;
+        }
+
+        public long getContentLength() {
+            return request.getContentLength();
+        }
+
+        public long getBytesRead() {
+            return this.getCurrentDataSize();
+        }
+
     }
 
-    public long getMaxLength() {
-        return maxLength;
+    private class Input{
+
+        private String name;
+        private Object value;
+
+        public Input( String name, Object value ){
+            this.name  = name;
+            this.value = value;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public void setValue(Object value) {
+            this.value = value;
+        }
+
     }
-
-    public void setMaxLength(long maxLength) {
-        this.maxLength = maxLength;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    /**
-     * @return the currentDataSize
-     */
-    public long getCurrentDataSize() {
-        return currentDataSize;
-    }
-
-}
-class Input{
-
-    private String name;
-    private Object value;
-
-    public Input( String name, Object value ){
-        this.name  = name;
-        this.value = value;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Object getValue() {
-        return value;
-    }
-
-    public void setValue(Object value) {
-        this.value = value;
-    }
-    
 }

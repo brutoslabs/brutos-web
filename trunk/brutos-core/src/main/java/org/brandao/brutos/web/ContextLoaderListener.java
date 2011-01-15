@@ -17,6 +17,8 @@
 
 package org.brandao.brutos.web;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -27,13 +29,15 @@ import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 
 /**
  * 
  * @author Afonso Brandao
  */
-public class ContextLoaderListener implements ServletContextListener, HttpSessionListener, ServletRequestListener{
+public class ContextLoaderListener implements ServletContextListener,
+        HttpSessionListener, ServletRequestListener{
     
     private WebApplicationContext brutosInstance;
     public static ThreadLocal<ServletRequest> currentRequest;
@@ -57,9 +61,19 @@ public class ContextLoaderListener implements ServletContextListener, HttpSessio
     }
 
     public void sessionCreated(HttpSessionEvent se) {
+
+        Map mappedUploadStats = new HashMap();
+
+        se.getSession()
+            .setAttribute(
+                BrutosConstants.SESSION_UPLOAD_STATS,
+                mappedUploadStats );
     }
 
     public void sessionDestroyed(HttpSessionEvent se) {
+        se.getSession()
+            .removeAttribute(
+                BrutosConstants.SESSION_UPLOAD_STATS );
     }
 
     public void requestDestroyed(ServletRequestEvent sre) {

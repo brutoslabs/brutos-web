@@ -24,9 +24,13 @@ import java.util.List;
  * @author Afonso Brandao
  */
 public interface BrutosRequest extends MutableRequest{
-    
+
     public Object getObject( String name );
     
     public List<Object> getObjects( String name );
 
+    public UploadListener getUploadListener();
+
+    public void parseRequest();
+    
 }

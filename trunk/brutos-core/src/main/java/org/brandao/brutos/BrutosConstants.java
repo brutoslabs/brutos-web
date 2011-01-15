@@ -50,6 +50,10 @@ public interface BrutosConstants {
 
     public final String REDIRECT = ApplicationContext.class.getName() + ".REDIRECT";
 
+    public final String UPLOAD_LISTENER_FACTORY = ApplicationContext.class.getName() + ".UPLOAD_LISTENER_FACTORY";
+
+    public final String SESSION_UPLOAD_STATS = ApplicationContext.class.getName() + ".SESSION_UPLOAD_STATS";
+
     public final String EXCEPTION_DATA = ApplicationContext.class.getName() + ".EXCEPTION_DATA";
 
     public final String ROOT_APPLICATION_CONTEXT_ATTRIBUTE = ApplicationContext.class.getName() + ".ROOT";

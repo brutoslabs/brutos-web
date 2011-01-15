@@ -322,5 +322,13 @@ public class DefaultRequest extends HttpServletRequestWrapper implements BrutosR
     public void setObjects(String name, Object[] value) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public UploadListener getUploadListener() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void parseRequest() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }
