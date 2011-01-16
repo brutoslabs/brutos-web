@@ -17,12 +17,7 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.Configuration;
-import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.UnknownTypeException;
-import org.brandao.brutos.EnumerationType;
-import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ParameterMethodMapping;
@@ -33,11 +28,10 @@ import org.brandao.brutos.type.Types;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
- * Constroi uma ação. A ação pode ter ou não parâmetros. Os parâmetros podem ser
- * obtidos tanto da requisição, sessão ou do contexto. Podendo ser do tipo primitivo
+ * Constrói uma ação. A ação pode ter ou não parâmetros. Os parâmetros podem ser
+ * obtidos tanto da requisição, sessão ou do contexto. Podendo ser de tipo primitivo
  * ou não. No caso de um objeto complexo, é possível usar um mapeamento predefinido.
- * Além de ser possível o mapeamento de propriedades do tipo Enum e Date.
- * Se o ação retornar algum valor, este será processado e incluído na requisição,
+ * Se a ação retornar algum valor, este será processado e incluído na requisição,
  * para posteriormente ser usada na visão.
  * As exceções lançadas durante a execução da ação, podem alterar o fluxo lógico
  * da aplicação.
@@ -79,7 +73,7 @@ public class ActionBuilder {
      * Configura um novo parâmetro.
      *
      * @param name Identificação do parâmetro.
-     * @param scope Escopo do volor do parâmetro.
+     * @param scope Escopo do valor do parâmetro.
      * @param enumProperty Usado na configuração de parâmetros do tipo enum.
      * @param classType Tipo do parâmetro.
      * @return Contrutor do parâmetro.
@@ -131,7 +125,7 @@ public class ActionBuilder {
      * Configura um novo parâmetro.
      *
      * @param name Identificação do parâmetro.
-     * @param scope Escopo do volor do parâmetro.
+     * @param scope Escopo do valor do parâmetro.
      * @param classType Tipo do parâmetro.
      * @return Contrutor do parâmetro.
      */
@@ -167,7 +161,7 @@ public class ActionBuilder {
     /**
      * Configura um novo parâmetro.
      *
-     * @param mapping Nome do mapeamento do valor do parâmetro. Esse mapemanto
+     * @param mapping Nome do mapeamento do valor do parâmetro. Esse mapeamento
      * deve ser previamente criado com o método buildMappingBean(...).
      * @param classType Tipo do parâmetro.
      * @return Contrutor do parâmetro.
@@ -194,9 +188,9 @@ public class ActionBuilder {
      * Configura um novo parâmetro.
      * 
      * @param name Identificação do parâmetro.
-     * @param scope Escopo do volor do parâmetro.
+     * @param scope Escopo do valor do parâmetro.
      * @param enumProperty Usado na configuração de parâmetros do tipo enum.
-     * @param mapping Nome do mapeamento do valor do parâmetro. Esse mapemanto
+     * @param mapping Nome do mapeamento do valor do parâmetro. Esse mapeamento
      * deve ser previamente criado com o método buildMappingBean(...).
      * @param temporalProperty Usado na configuração de datas.
      * @param type Faz o processamento do valor do parâmetro.
@@ -268,9 +262,8 @@ public class ActionBuilder {
      * objeto resultante da exceção pode ser usando na visão.
      *
      * @param target Exceção alvo.
-     * @param view Visão. Se omitido, será usado a visão do controlador.
+     * @param view Visão. Se omitido, será usada a visão do controlador.
      * @param id Identificação.
-     * @param dispatcher Modo como será direcionado o fluxo para a visão.
      * @return Contrutor do controlador.
      */
     public ActionBuilder addThrowable( Class target, String id ){
@@ -282,7 +275,7 @@ public class ActionBuilder {
      * objeto resultante da exceção pode ser usando na visão.
      *
      * @param target Exceção alvo.
-     * @param view Visão. Se omitido, será usado a visão da ação.
+     * @param view Visão. Se omitido, será usada a visão da ação.
      * @param id Identificação.
      * @param dispatcher Modo como será direcionado o fluxo para a visão.
      * @return Contrutor do controlador.

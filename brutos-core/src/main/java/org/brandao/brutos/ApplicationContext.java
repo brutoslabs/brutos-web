@@ -35,10 +35,9 @@ import org.brandao.brutos.view.ViewProvider;
  * Classe central que permite a configuração de um aplicativo. Com essa classe
  * é possível:
  * <ul>
- * <li>configurar os interceptadores;</li>
+ * <li>configurar interceptadores;</li>
  * <li>incluir novos controladores;</li>
- * <li>obter os controladores;</li>
- * <li>obter os controladores;</li>
+ * <li>obter controladores;</li>
  * <li>determinar como os controladores serão obtidos;</li>
  * <li>determinar como uma ação será executada;</li>
  * <li>determinar novas regras de validação</li>
@@ -154,7 +153,7 @@ public abstract class ApplicationContext {
 
     /**
      * Obtém a fábrica de respostas.
-     * @return Fábria de respostas.
+     * @return Fábrica de respostas.
      */
     protected MvcResponseFactory getMvcResponseFactory(){
         try{
@@ -258,16 +257,16 @@ public abstract class ApplicationContext {
     }
 
     /**
-     * Obtém o gestor dos interceptadores.
-     * @return Gestor dos interceptadores.
+     * Obtém o gestor de interceptadores.
+     * @return Gestor de interceptadores.
      */
     public InterceptorManager getInterceptorManager() {
         return interceptorManager;
     }
 
     /**
-     * Define o gestor dos interceptadores.
-     * @param interceptorManager Gestor dos interceptadores.
+     * Define o gestor de interceptadores.
+     * @param interceptorManager Gestor de interceptadores.
      */
     public void setInterceptorManager(InterceptorManager interceptorManager) {
         this.interceptorManager = interceptorManager;
@@ -286,20 +285,20 @@ public abstract class ApplicationContext {
     protected abstract void loadWebFrameManager( WebFrameManager webFrameManager );
 
     /**
-     * Carrega todas a configuração dos interceptadores.
-     * @param interceptorManager Gestor dos interceptadores.
+     * Configura os interceptadores.
+     * @param interceptorManager Gestor de interceptadores.
      */
     protected abstract void loadInterceptorManager( InterceptorManager interceptorManager );
     
     /**
-     * Carrega todas a configuração dos controladores.
+     * Configura os controladores.
      * @param interceptorManager Gestor dos controladores.
      */
     protected abstract void loadController( ControllerManager controllerManager );
 
     /**
      * Obtém a aplicação corrente.
-     * @return Aplicação
+     * @return Aplicação.
      */
     public static ApplicationContext getCurrentApplicationContext(){
         Scope requestScope = Scopes.get(ScopeType.REQUEST);
@@ -323,8 +322,8 @@ public abstract class ApplicationContext {
     }
 
     /**
-     * Obtém o gestor dos controladores.
-     * @return Gestor dos controladores.
+     * Obtém o gestor de controladores.
+     * @return Gestor de controladores.
      */
     public ControllerManager getControllerManager() {
         return controllerManager;
@@ -339,8 +338,8 @@ public abstract class ApplicationContext {
     }
 
     /**
-     * Obtém o provedor de validações.
-     * @return Provedor de validações.
+     * Obtém o provedor das regras de validação.
+     * @return Provedor das regras de validação
      */
     public ValidatorProvider getValidatorProvider() {
         return validatorProvider;
@@ -371,8 +370,8 @@ public abstract class ApplicationContext {
     }
 
     /**
-     * Obtém o provedor do diario.
-     * @return Provedor de diario.
+     * Obtém o provedor de log.
+     * @return Provedor de log.
      */
     public LoggerProvider getLoggerProvider() {
         return loggerProvider;
@@ -411,7 +410,7 @@ public abstract class ApplicationContext {
     }
 
     /**
-     * Obtém a resposta.
+     * Obtém o objeto responsável por enviar a resposta ao cliente.
      * @return Resposta.
      */
     public MvcResponse getMvcResponse() {
@@ -419,7 +418,7 @@ public abstract class ApplicationContext {
     }
 
     /**
-     * Obtém a requisição
+     * Obtém o objeto responsável por receber a requisição do cliente.
      * @return Requisição.
      */
     public MvcRequest getMvcRequest() {

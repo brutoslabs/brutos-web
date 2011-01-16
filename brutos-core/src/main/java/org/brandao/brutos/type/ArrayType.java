@@ -18,7 +18,6 @@
 package org.brandao.brutos.type;
 
 /**
- * Allows the creation array types.
  *
  * @author Afonso Brandao
  */

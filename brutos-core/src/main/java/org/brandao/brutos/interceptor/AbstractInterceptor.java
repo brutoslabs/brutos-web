@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.interceptor;
 
-import org.brandao.brutos.ResourceMethod;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

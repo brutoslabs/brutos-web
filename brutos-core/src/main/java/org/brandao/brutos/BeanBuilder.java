@@ -17,12 +17,7 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.Configuration;
 import org.brandao.brutos.type.UnknownTypeException;
-import org.brandao.brutos.EnumerationType;
-import org.brandao.brutos.NotFoundMappingBeanException;
-import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.mapping.CollectionMapping;
 import org.brandao.brutos.mapping.FieldBean;
@@ -34,15 +29,15 @@ import org.brandao.brutos.type.Types;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
- * Constroi o mapemanto de um bean.<br>
- * Com essa classe é possível definir as dependências do bean tanto por contrutor
+ * Constrói o mapeamento de um bean.<br>
+ * Com essa classe é possível definir as dependências do bean, tanto por construtor
  * quanto por método. É possível também obter a instância do bean por meio de
  * uma fábrica ou método estático. <br>
  * Sua instância é obtida a partir da classe ControllerBuilder.<br>
- * Essa classe não tem a mesma função que um container IOC, ela apenas faz o
+ * BeanBuilder não tem a mesma função que um container IOC, ela apenas faz o
  * mapeamento de uma requisição em um determinado bean.
  *
- * <p>No exemplo abaixo a dependência do bean é mapeada no construtor.</p>
+ * <p>No exemplo abaixo a dependência do bean é mapeada por construtor.</p>
  *
  * Ex:
  * <pre>
@@ -64,7 +59,7 @@ import org.brandao.brutos.validator.ValidatorProvider;
  * }
  *
  * beanBuilder.addContructorArg( "idBean" );
- * 
+ *
  * </pre>
  *
  * No próximo exemplo o mesmo parâmetro é mapeado em uma propriedade.
@@ -96,14 +91,14 @@ import org.brandao.brutos.validator.ValidatorProvider;
  *    &lt;a href="/index.jbrs?idBean=VALUE2"&gt;show&lt;/a&gt;
  *   &lt;/body&gt;
  * &lt;/html&gt;
- * 
+ *
  * public enum MyEnum{
  *   VALUE1("Valor 1"),
  *   VALUE2("Valor 2"),
  *   VALUE3("Valor 3");
  *
  *   ...
- * 
+ *
  * }
  *
  * public class MyBean{
@@ -123,9 +118,9 @@ import org.brandao.brutos.validator.ValidatorProvider;
  *
  * </pre>
  *
- * O mapeamento do enum pode também ser feito da seguinte forma:
+ * O mapeamento do enum pode também ser feito da seguinte maneira:
  * <pre>
- * 
+ *
  * &lt;html&gt;
  *   &lt;body&gt;
  *    &lt;a href="/index.jbrs?enumName=VALUE2"&gt;show&lt;/a&gt;
@@ -247,7 +242,7 @@ public class BeanBuilder {
     }
 
     /**
-     * Controi o mapeamento da chave usada para acessar o elemento na coleção.
+     * Contrói o mapeamento da chave usada para acessar o elemento na coleção.
      * 
      * @param type Classe alvo do mapeamento.
      * @return Construtor do mapeamento.
@@ -271,7 +266,7 @@ public class BeanBuilder {
     }
     
     /**
-     * Constroi o mapeamento do elemento da coleção.
+     * Constrói o mapeamento do elemento da coleção.
      *
      * @param type Classe alvo do mapeamento.
      * @return Construtor do mapeamento do elemento.
@@ -292,7 +287,7 @@ public class BeanBuilder {
      * 
      * @param ref Nome do mapeamento.
      * @return Construtor do mapeamento.
-     * @throws java.lang.NullPointerException Lançado se ref for igual a null.
+     * @throws java.lang.NullPointerException Lançado se o nome do mapeamento for igual a null.
      * @throws org.brandao.brutos.NotFoundMappingBeanException Lançado se o
      * mapeamento não for encontrado.
      * @throws org.brandao.brutos.BrutosException Lançado se a classe alvo do
@@ -330,10 +325,10 @@ public class BeanBuilder {
     }
 
     /**
-     * Constroi o mapeamento de uma propriedade.
+     * Constrói o mapeamento de uma propriedade.
      * 
      * @param name Identificação no escopo.
-     * @param propertyName Noma da propriedade
+     * @param propertyName Nome da propriedade
      * @param target Classe alvo do mapeamento.
      * @return Construtor da propriedade.
      */
@@ -396,7 +391,7 @@ public class BeanBuilder {
      * @param mapping Usado em propriedade mapeadas.
      * @param scope Escopo do valor.
      * @param value Valor da propriedade. Tem a mesma função do modificador final.
-     * @param type Conversor do valor obtida do escopo.
+     * @param type Conversor.
      * @return Construtor do mapeamento.
      */
     public PropertyBuilder addProperty( String name, String propertyName,
@@ -472,9 +467,9 @@ public class BeanBuilder {
     }
 
     /**
-     * Constroi o mapeamento de um argumento do construtor.
+     * Constrói o mapeamento de um argumento do construtor.
      *
-     * @param name Identificação no escopo.
+     * @param name Identificação.
      * @param target Classe alvo do mapeamento.
      * @return Construtor do argumento.
      */
@@ -518,7 +513,7 @@ public class BeanBuilder {
      * Faz o mapeamento de um argumento do construtor.
      *
      * @param name Nome do parâmetro.
-     * @param type Conversor do valor obtida do escopo.
+     * @param type Conversor.
      * @return Construtor do mapeamento.
      */
     public BeanBuilder addContructorArg( String name,
@@ -554,7 +549,7 @@ public class BeanBuilder {
      * Faz o mapeamento de um argumento do construtor.
      *
      * @param name Nome do parâmetro.
-     * @param scope Escopo do valor.
+     * @param scope Escopo.
      * @return Construtor do mapeamento.
      */
     public BeanBuilder addContructorArg( String name, ScopeType scope ){
@@ -581,7 +576,7 @@ public class BeanBuilder {
      * @param enumProperty Usado no mapeamento de enum.
      * @param temporalProperty Usado no mapeamento de datas.
      * @param mapping Usado em propriedade mapeadas.
-     * @param scope Escopo do valor.
+     * @param scope Escopo.
      * @param value Valor da propriedade. Tem a mesma função do modificador final.
      * @param type Conversor do valor obtida do escopo.
      * @return Construtor do mapeamento.

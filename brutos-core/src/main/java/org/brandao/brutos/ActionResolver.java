@@ -32,7 +32,7 @@ public interface ActionResolver {
     /**
      * Obtém a ação a ser executada.
      * @param controller Controlador.
-     * @param scope Esopo onde se enconta a identifiação da ação.
+     * @param scope Escopo da identificação.
      * @return Ação a ser executada.
      */
     public ResourceAction getResourceAction( Form controller, Scope scope );
