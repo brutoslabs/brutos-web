@@ -61,5 +61,9 @@ public class DefaultResourceMethod implements ResourceMethod{
     public boolean isAbstract() {
         return this.method.isAbstract();
     }
+
+    public MethodForm getMethodForm() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

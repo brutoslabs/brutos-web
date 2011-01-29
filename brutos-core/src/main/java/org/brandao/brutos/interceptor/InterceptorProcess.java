@@ -238,8 +238,9 @@ public class InterceptorProcess implements InterceptorStack{
         Object source                = handler.getResource();
         //MethodForm method            = form.getMethodByName(
         //                                    request.getParameter( form.getMethodId() ) );
-        MethodForm method            = form.getMethodByName(
-                                             String.valueOf( paramScope.get( form.getMethodId() ) ) );
+        //MethodForm method            = form.getMethodByName(
+        //                                     String.valueOf( paramScope.get( form.getMethodId() ) ) );
+        MethodForm method            = handler.getResourceAction().getMethodForm();
 
         try{
             //DataInput input = new DataInput( handler.getRequest(),

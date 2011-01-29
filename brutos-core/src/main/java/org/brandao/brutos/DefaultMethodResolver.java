@@ -20,8 +20,10 @@ package org.brandao.brutos;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.WebApplicationContext;
 import javax.servlet.http.HttpServletRequest;
+import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.scope.Scopes;
 
 /**
  *
@@ -43,7 +45,8 @@ public class DefaultMethodResolver implements MethodResolver{
         return new DefaultResourceMethod( methodForm );
     }
 
-    public ResourceAction getResourceAction(Form controller, Scope scope) {
+    public ResourceAction getResourceAction(Form controller, InterceptorHandler handler) {
+        Scope scope = Scopes.get(ScopeType.PARAM);
         MethodForm method = controller
                 .getMethodByName( String.valueOf( scope.get( controller.getMethodId() ) ) );
         return method == null? null : getResourceMethod( method );

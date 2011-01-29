@@ -21,11 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.Configuration;
-import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.EnumerationType;
-import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.mapping.CollectionMapping;
 import org.brandao.brutos.mapping.FieldForm;
@@ -170,7 +165,7 @@ public class ControllerBuilder {
      */
     public ControllerBuilder addAlias( String id ){
 
-        id = id == null || id.replace( " ", "" ).length() == 0? null : id;
+        //id = id == null || id.replace( " ", "" ).length() == 0? null : id;
 
         if( id == null )
             throw new NullPointerException();
@@ -369,11 +364,11 @@ public class ControllerBuilder {
      * @return Contrutor da ação.
      */
     public ActionBuilder addAction( String id, String resultId, String view, DispatcherType dispatcher, String executor ){
-        
+        /*
         id =
             id == null || id.replace( " ", "" ).length() == 0?
                 null :
-                id;
+                id;*/
         resultId =
             resultId == null || resultId.replace( " ", "" ).length() == 0?
                 null :

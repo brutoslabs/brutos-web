@@ -96,7 +96,7 @@ public class TestBrutosContext extends TestCase{
             return null;
         }
 
-        public ResourceAction getResourceAction(Form controller, Scope scope) {
+        public ResourceAction getResourceAction(Form controller, InterceptorHandler handler) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 

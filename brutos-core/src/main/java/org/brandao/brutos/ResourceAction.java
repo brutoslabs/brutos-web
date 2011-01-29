@@ -19,6 +19,7 @@ package org.brandao.brutos;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import org.brandao.brutos.mapping.MethodForm;
 
 /**
  * Representa uma ação.
@@ -39,6 +40,12 @@ public interface ResourceAction {
     public Object invoke( Object source, Object[] args )
             throws IllegalAccessException, IllegalArgumentException,
                 InvocationTargetException;
+
+    /**
+     * Obtém o mapeamento da ação.
+     * @return Método.
+     */
+    public MethodForm getMethodForm();
 
     /**
      * Obtém o método associado a ação.
