@@ -39,7 +39,6 @@ import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
-import org.brandao.brutos.web.http.UploadListenerFactory;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.ParamScope;
@@ -147,6 +146,13 @@ public class WebApplicationContext extends ApplicationContext{
 
         config.put( "org.brandao.brutos.controller.request_factory",
                     requestFactory );
+
+        String actionResolverName = config
+                .getProperty( "org.brandao.brutos.controller.method_resolver",
+                              WebActionResolver.class.getName() );
+
+        config.put( "org.brandao.brutos.controller.method_resolver",
+                    actionResolverName );
 
     }
 

@@ -17,8 +17,8 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.scope.Scope;
 
 /**
  * Essa interface é usada para identificar a ação a ser executada em um
@@ -32,9 +32,9 @@ public interface ActionResolver {
     /**
      * Obtém a ação a ser executada.
      * @param controller Controlador.
-     * @param scope Escopo da identificação.
+     * @param handler Mnipulador da requisição.
      * @return Ação a ser executada.
      */
-    public ResourceAction getResourceAction( Form controller, Scope scope );
+    public ResourceAction getResourceAction( Form controller, InterceptorHandler handler );
 
 }

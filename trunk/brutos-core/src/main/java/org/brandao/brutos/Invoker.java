@@ -143,7 +143,7 @@ public class Invoker {
      */
     public boolean invoke( String requestId ){
 
-        Scope paramScope = Scopes.get(ScopeType.PARAM.toString());
+        //Scope paramScope = Scopes.get(ScopeType.PARAM.toString());
         Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
         ImpInterceptorHandler ih = new ImpInterceptorHandler();
         ih.setRequestId(requestId);
@@ -164,7 +164,7 @@ public class Invoker {
 
             ih.setResource( iocProvider.getBean(form.getId()) );
             
-            ih.setResourceAction( actionResolver.getResourceAction(form, paramScope) );
+            ih.setResourceAction( actionResolver.getResourceAction(form, ih) );
 
             if( logger.isDebugEnabled() ){
                 logger.debug(

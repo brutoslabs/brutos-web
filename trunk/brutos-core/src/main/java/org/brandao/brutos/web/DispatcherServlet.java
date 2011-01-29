@@ -69,6 +69,8 @@ public class DispatcherServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
+        request = (HttpServletRequest) ContextLoaderListener.currentRequest.get();
+
         Scope scope = Scopes.get(ScopeType.SESSION);
         
         Map mappedUploadStats =

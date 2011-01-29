@@ -143,7 +143,7 @@ public class ActionBuilder {
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, String temporalProperty, Class classType ){
-        return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, temporalProperty, null, null, classType );
+        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, temporalProperty, null, null, classType );
     }
     
     /**
@@ -154,7 +154,7 @@ public class ActionBuilder {
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, Type type ){
-        return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, type, type.getClassType() );
     }
     
@@ -167,7 +167,7 @@ public class ActionBuilder {
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameterMapping( String mapping, Class classType ){
-        return addParameter( null, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy", 
+        return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, classType );
     }
     
@@ -179,7 +179,7 @@ public class ActionBuilder {
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, Class classType ){
-        return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy", 
+        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null, classType );
     }
 

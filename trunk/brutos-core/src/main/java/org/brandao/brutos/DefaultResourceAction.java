@@ -61,5 +61,9 @@ public class DefaultResourceAction implements ResourceAction{
     public boolean isAbstract() {
         return this.method.isAbstract();
     }
+
+    public MethodForm getMethodForm() {
+        return method;
+    }
     
 }

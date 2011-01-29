@@ -86,7 +86,7 @@ public class ContextLoaderListener implements ServletContextListener,
             HttpServletRequest brutosRequest = (HttpServletRequest) Class.forName( 
                     brutosInstance.getConfiguration().getProperty( 
                     "org.brandao.brutos.request", 
-                    "org.brandao.brutos.http.DefaultBrutosRequest"
+                    "org.brandao.brutos.web.http.DefaultBrutosRequest"
                 ), 
                     true, 
                     Thread.currentThread().getContextClassLoader() 
