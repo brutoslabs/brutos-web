@@ -60,7 +60,7 @@ public interface ResourceAction {
     public Class returnType();
 
     /**
-     * Obtém os tipos do argumentos necessários para invocar o método.
+     * Obtém os argumentos necessários para invocar o método.
      * @return Matriz de tipos.
      */
     public Class[] getParametersType();

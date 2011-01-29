@@ -60,7 +60,7 @@ public interface MvcResponse {
     public int getLength();
 
     /**
-     * Obtém o tipo de codificação da resposta. Normalmente usado em aplicações
+     * Obtém a codificação da resposta. Normalmente usado em aplicações
      * web.
      * @return Codificação.
      */
@@ -91,7 +91,7 @@ public interface MvcResponse {
     public void setLength( int value );
 
     /**
-     * Define o tipo de codificação. Normalmente usado em aplicações web.
+     * Define a codificação. Normalmente usado em aplicações web.
      * @param value Codificação.
      */
     public void setCharacterEncoding( String value );

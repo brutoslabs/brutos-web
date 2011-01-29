@@ -29,14 +29,14 @@ import java.util.Locale;
 public interface MvcRequest {
 
     /**
-     * Obtém um valor da requisição.
+     * Obtém um valor.
      * @param name Identificação
      * @return Valor.
      */
     public Object getValue( String name );
 
     /**
-     * Obtém uma propriedade da requisição.
+     * Obtém uma propriedade.
      * @param name Identificação.
      * @return Propriedade.
      */
@@ -62,7 +62,7 @@ public interface MvcRequest {
     public int getLength();
 
     /**
-     * Obtém em qual formato está codificado a requisição. Normalmente usado
+     * Obtém a codificado da requisição. Normalmente usado
      * em aplicações web.
      * @return Codificação.
      */
