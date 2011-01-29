@@ -18,7 +18,7 @@
 package org.brandao.brutos;
 
 /**
- * Contém informações importantes para o funcionamento interno.
+ * Contém informações importantes para o funcionamento interno do Brutos.
  * 
  * @author Afonso Brandao
  */

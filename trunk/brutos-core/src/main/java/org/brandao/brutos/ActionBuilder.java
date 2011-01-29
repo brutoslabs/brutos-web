@@ -32,13 +32,10 @@ import org.brandao.brutos.validator.ValidatorProvider;
  * obtidos tanto da requisição, sessão ou do contexto. Podendo ser de tipo primitivo
  * ou não. No caso de um objeto complexo, é possível usar um mapeamento predefinido.
  * Se a ação retornar algum valor, este será processado e incluído na requisição,
- * para posteriormente ser usada na visão.
- * As exceções lançadas durante a execução da ação, podem alterar o fluxo lógico
- * da aplicação.
- *
- * No exemplo a seguir, depois de executar a ação showPerson é exibido a
- * visão personView.jsp, e se for lançada a exceção NotExistPerson a visão
- * error.jsp será exibida.
+ * para posteriormente ser usada na visão. As exceções lançadas durante a execução
+ * da ação podem alterar o fluxo lógico da aplicação. <p>No exemplo a seguir, depois
+ * de executar a ação showPerson é exibido a visão personView.jsp e se for lançada
+ * a exceção NotExistPerson a visão error.jsp será exibida</p>.
  * 
  * <pre>
  * public class MyController{
@@ -73,7 +70,7 @@ public class ActionBuilder {
      * Configura um novo parâmetro.
      *
      * @param name Identificação do parâmetro.
-     * @param scope Escopo do valor do parâmetro.
+     * @param scope Escopo.
      * @param enumProperty Usado na configuração de parâmetros do tipo enum.
      * @param classType Tipo do parâmetro.
      * @return Contrutor do parâmetro.
@@ -86,7 +83,7 @@ public class ActionBuilder {
      * Configura um novo parâmetro.
      *
      * @param name Identificação do parâmetro.
-     * @param scope Escopo do volor do parâmetro.
+     * @param scope Escopo.
      * @param enumProperty Usado na configuração de parâmetros do tipo enum.
      * @param temporalProperty Usado na configuração de datas.
      * @param classType Tipo do parâmetro.
@@ -100,8 +97,8 @@ public class ActionBuilder {
      * Configura um novo parâmetro.
      *
      * @param name Identificação do parâmetro.
-     * @param scope Escopo do volor do parâmetro.
-     * @param type Faz o processamento do valor do parâmetro.
+     * @param scope Escopo.
+     * @param type Faz o processamento do parâmetro.
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, Type type ){
@@ -125,7 +122,7 @@ public class ActionBuilder {
      * Configura um novo parâmetro.
      *
      * @param name Identificação do parâmetro.
-     * @param scope Escopo do valor do parâmetro.
+     * @param scope Escopo.
      * @param classType Tipo do parâmetro.
      * @return Contrutor do parâmetro.
      */
@@ -150,7 +147,7 @@ public class ActionBuilder {
      * Configura um novo parâmetro.
      *
      * @param name Identificação do parâmetro.
-     * @param type Faz o processamento do valor do parâmetro.
+     * @param type Faz o processamento do parâmetro.
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, Type type ){
@@ -161,7 +158,7 @@ public class ActionBuilder {
     /**
      * Configura um novo parâmetro.
      *
-     * @param mapping Nome do mapeamento do valor do parâmetro. Esse mapeamento
+     * @param mapping Nome do mapeamento do parâmetro. Esse mapeamento
      * deve ser previamente criado com o método buildMappingBean(...).
      * @param classType Tipo do parâmetro.
      * @return Contrutor do parâmetro.
@@ -188,12 +185,12 @@ public class ActionBuilder {
      * Configura um novo parâmetro.
      * 
      * @param name Identificação do parâmetro.
-     * @param scope Escopo do valor do parâmetro.
+     * @param scope Escopo.
      * @param enumProperty Usado na configuração de parâmetros do tipo enum.
-     * @param mapping Nome do mapeamento do valor do parâmetro. Esse mapeamento
+     * @param mapping Nome do mapeamento do parâmetro. Esse mapeamento
      * deve ser previamente criado com o método buildMappingBean(...).
      * @param temporalProperty Usado na configuração de datas.
-     * @param type Faz o processamento do valor do parâmetro.
+     * @param type Faz o processamento do parâmetro.
      * @param classType Tipo do parâmetro.
      * @return Contrutor do parâmetro.
      */

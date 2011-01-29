@@ -38,9 +38,9 @@ public interface ControllerResolver {
     public Form getController( WebFrameManager webFrameManager, HttpServletRequest request );
 
     /**
-     * Obtém um controlador dependendo da requisição.
+     * Obtém um controlador de acordo com a requisição.
      * @param controllerManager Gestor dos controladores.
-     * @param handler Mnipulador da requisição.
+     * @param handler Manipulador da requisição.
      * @return Controlador.
      */
     public Form getController( ControllerManager controllerManager, InterceptorHandler handler );

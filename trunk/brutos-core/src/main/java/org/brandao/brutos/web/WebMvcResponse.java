@@ -20,7 +20,6 @@ package org.brandao.brutos.web;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
-import java.util.Map;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.*;
