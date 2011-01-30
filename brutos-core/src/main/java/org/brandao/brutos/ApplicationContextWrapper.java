@@ -32,7 +32,7 @@ public class ApplicationContextWrapper extends ApplicationContext{
     /**
      * Define a aplicação a ser testada.
      *
-     * @param mapping Aplicação.
+     * @param app Aplicação.
      */
     public ApplicationContextWrapper( ApplicationContext app ){
         this.applicationContext = app;

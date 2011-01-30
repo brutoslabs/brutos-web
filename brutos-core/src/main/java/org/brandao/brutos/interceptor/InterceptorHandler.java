@@ -30,25 +30,25 @@ public interface InterceptorHandler {
 
     /**
      * @deprecated
-     * @return
+     * @return .
      */
     public ServletContext getContext();
     
     /**
      * @deprecated
-     * @return
+     * @return .
      */
     public HttpServletRequest getRequest();
     
     /**
      * @deprecated
-     * @return
+     * @return .
      */
     public HttpServletResponse getResponse();
     
     /**
      * @deprecated
-     * @return
+     * @return .
      */
     public String getURI();
     

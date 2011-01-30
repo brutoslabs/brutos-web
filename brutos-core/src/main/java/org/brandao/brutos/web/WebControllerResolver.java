@@ -56,12 +56,6 @@ public class WebControllerResolver implements ControllerResolver{
         }
     }
 
-    /**
-     * @deprecated 
-     * @param webFrameManager
-     * @param request
-     * @return
-     */
     public Form getController(WebFrameManager webFrameManager, HttpServletRequest request) {
         String path         = request.getRequestURI();
         String contextPath  = request.getContextPath();
