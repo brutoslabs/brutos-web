@@ -34,7 +34,7 @@ import org.brandao.brutos.mapping.InterceptorStack;
  * quais recursos serão interceptados, a ordem com que serão executados e os
  * parâmetros necessários para a sua configuração.</p>
  * <p>Sua instância é controlada pelo container IOC, podendo assim, receber a
- * injeção de objetos por construtor ou método.</p>
+ * injeção por construtor ou método.</p>
  *
  * <pre>
  * Ex:
@@ -77,7 +77,7 @@ public class InterceptorManager {
      * Cria uma pilha de interceptadores com uma determinada identificação.
      * @param name Identificação da pilha de interceptadores.
      * @param isDefault Se verdadeiro, todos os controladores e suas ações serão
-     * interceptados.
+     * interceptadas.
      * @return Construtor da pilha de interceptadores.
      */
     public InterceptorStackBuilder addInterceptorStack( String name, boolean isDefault ){
@@ -108,7 +108,7 @@ public class InterceptorManager {
      * Cria um interceptador com uma determinada identificação.
      * @param name Identificação do interceptador.
      * @param isDefault Se verdadeiro, todos os controladores e suas ações serão
-     * interceptados.
+     * interceptadas.
      * @return Construtor do interceptador.
      */
     public InterceptorBuilder addInterceptor( String name, Class interceptor, boolean isDefault ){
@@ -143,9 +143,9 @@ public class InterceptorManager {
     }
 
     /**
-     * Obtém um determinado interceptador.
+     * Obtém o mapeamento de um determinado interceptador.
      * @param name Identificação do interceptador.
-     * @return Configuração do interceptador.
+     * @return Mapeamento.
      */
     public Interceptor getInterceptor( String name ){
         if( !interceptors.containsKey( name ) )

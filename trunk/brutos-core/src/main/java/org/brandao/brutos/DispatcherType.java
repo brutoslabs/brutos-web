@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Descreve as opções existentes para encaminhar a requisição para a visão.
+ * Descreve as opções de direcionamento de fluxo para a visão.
  * 
  * @author Afonso Brandao
  */

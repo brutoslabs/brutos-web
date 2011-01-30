@@ -19,14 +19,13 @@ package org.brandao.brutos;
 
 import java.util.HashMap;
 import java.util.Set;
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 
 /**
- * Classe usada para construir uma pilha de interceptadores. Com essa classe é possível
- * determinar os parâmetros de configuração do interceptador.
- *
+ * Classe usada para construir uma pilha de interceptadores. Com essa classe é
+ * possível determinar os parâmetros de configuração de cada interceptador da
+ * pilha.
  * <pre>
  * Ex:
  *

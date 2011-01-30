@@ -17,11 +17,10 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.Configuration;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
- * Constroi um parâmetro de uma ação.
+ * Constrói um parâmetro de uma ação.
  *
  * @author Afonso Brandao
  */

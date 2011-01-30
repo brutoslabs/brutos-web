@@ -18,7 +18,7 @@
 package org.brandao.brutos;
 
 /**
- * Lançado quando ocorre um redirecionamento.
+ * Lançada quando ocorre um redirecionamento.
  * 
  * @author Afonso Brandao
  */
