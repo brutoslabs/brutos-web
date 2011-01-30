@@ -28,47 +28,57 @@ import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
- * Classe usada para configurar controladores ou front controllers. O controlador é responsável por
- * receber os dados e determinar qual objeto do modelo e visão será usada.
- * Ele também é responsável por converter, validar e filtrar a entrada de dados.
- * <p>O controlador já está implementado, podendo ser usado também como front
- * controller. Nos dois casos, somente é necessário fazer respectivamente o
- * mapeamento do modelo ou controlador. Esse mapeamento nada mais é que, informar
- * ao controlador como os dados de entrada serão disponibilizados no modelo
- * (atributos ou parâmetros de um método) e como seu resultado será exibido
- * (visão).
- * Todo o processamento de uma aplicação segue as seguintes etapas:</p>
+ * Classe usada para configurar controladores ou front controllers.
+ * <p>O controlador é responsável por receber os dados e determinar qual objeto
+ * do modelo e visão serão usados. Ele também é responsável por converter,
+ * validar e filtrar a entrada de dados.</p>
+ * <p>O Brutos pode ser usando como controlador ou front controller. Nos dois
+ * casos, somente é necessário fazer respectivamente o mapeamento do modelo ou
+ * controlador. Esse mapeamento nada mais é que, informar ao controlador como os
+ * dados de entrada serão disponibilizados no modelo (atributos ou parâmetros de
+ * um método) e como seu resultado será exibido (visão). Todo o processamento de
+ * uma aplicação segue as seguintes etapas:</p>
+ * 
  * <ul>
- * <li>Obter modelo. O controlador recebe a requisição, examina-o e extrai a ID do modelo,
- * que é determinado pelo URI,no caso de uma aplicação web, ou nome da classe, no
- * uma aplicação desktop. Essa ID é usada para localizar o atual modelo.
+ * 
+ * <li><b>Obter modelo.</b> O controlador recebe a requisição, examina-o e extrai a ID
+ * do modelo, que é determinado pelo URI, no caso de uma aplicação web, ou nome 
+ * da classe, em uma aplicação desktop. Essa ID é usada para localizar o modelo. 
  * Se o modelo não for encontrado, a requisição é finalizada.</li>
- * <li>Gera o manipulador. Nessa etapa é gerado o manipulador da requisição.
- * O manipulador é composto por: modelo; requisição; resposta contexto e a
- * identificação da ação a ser executada, caso exista uma. É neste momento que é 
- * identificado o controlador e a ação a ser executada.</li>
- * <li>Processar interceptadores. Ocorre o processamento da pilha de interceptadores.
- * Essa pilha de interceptadores pode ser criada pelo desenvolvedor. Se a pilha
- * de interceptadores estiver vazia, irá automaticamente avançar para a próxima etapa.</li>
- * <li>Processar validações. É nesta etapa que ocorrem as validações.
- * Essa validação pode ser criada pelo desenvolvedor ou obtida diretamente
- * do controlador. Os valores são validados de acordo com as regras de
- * validação da aplicação. Se o valor for considerado errado, será marcado
- * como inválido. Mesmo existindo um valor inválido, a próxima etapa,
- * atualizar valores do modelo, será executada.</li>
- * <li>Atualizar valores do modelo. Esta é a etapa onde são atualizados os valores
- * no lado do servidor, ou seja, a atualização das propriedades do modelo.
- * Somente as propriedades mapeadas serão atualizadas. Se na etapa anterior,
- * algum valor foi marcado como inválido, o controlador automaticamente irá
- * para a etapa final, processar visão, ignorando a etapa invocar aplicação.</li>
- * <li>Invocar aplicação. Nessa etapa o controlador invoca a aplicação.
- * Os valores foram convertidos, validados e aplicados no modelo,
- * então estará pronto para utilizar suas regras de negócio. Se ocorrer um
- * problema, o controlador automaticamente irá para a próxima etapa.
- * Tanto um erro (exception) quanto o tipo de resultado poderá alterar o fluxo
- * lógico da aplicação.</li>
- * <li>Processar visão. Nessa etapa será exibida a tela com o resultado obtido do
- * modelo.</li>
+ * 
+ * <li><b>Gerar manipulador.</b> Nessa etapa é gerado o manipulador da requisição. O
+ * manipulador é composto por: modelo; ação e a identificação da requisição. É 
+ * nesse momento que é identificado o controlador e a ação a ser executada.</li>
+ * 
+ * <li><b>Processar interceptadores.</b> Ocorre o processamento da pilha de
+ * interceptadores. Essa pilha de interceptadores pode ser criada pelo 
+ * desenvolvedor. Se a pilha de interceptadores estiver vazia, irá 
+ * automaticamente avançar para a próxima etapa.</li>
+ * 
+ * <li><b>Processar validações.</b> É nessa etapa que ocorrem as validações. Essa
+ * validação pode ser criada pelo desenvolvedor ou obtida diretamente do 
+ * controlador. Os valores são validados de acordo com as regras de validação 
+ * da aplicação. Se o valor for considerado inválido, será marcado como inválido. 
+ * Mesmo existindo um valor inválido, a próxima etapa, atualizar valores do
+ * modelo, será executada.</li>
+ * 
+ * <li><b>Atualizar valores do modelo.</b> Esta é a etapa onde são atualizados os
+ * valores no lado do servidor, ou seja, a atualização das propriedades do 
+ * modelo. Somente as propriedades mapeadas serão atualizadas. Se na etapa 
+ * anterior, algum valor foi marcado como inválido, o controlador 
+ * automaticamente irá para a etapa final, processar visão, ignorando a etapa 
+ * invocar aplicação.</li>
+ * 
+ * <li><b>Invocar aplicação.</b> Nessa etapa o controlador invoca a aplicação. Os
+ * valores foram convertidos, validados e aplicados no modelo, então estará 
+ * pronto para utilizar suas regras de negócio. Se ocorrer um problema, o 
+ * controlador automaticamente irá para a próxima etapa. Tanto um 
+ * erro (exception) quanto o resultado poderá alterar o fluxo lógico da 
+ * aplicação.</li>
+ * 
+ * <li><b>Processar visão.</b> Nessa etapa será exibida a tela com o resultado obtido
+ * do modelo.</li>
+ * 
  * </ul>
  *
  * Ex:
@@ -87,7 +97,10 @@ import org.brandao.brutos.validator.ValidatorProvider;
  */
 public class ControllerManager {
 
-    private static Logger logger = LoggerProvider.getCurrentLoggerProvider().getLogger(ControllerManager.class.getName());
+    private static Logger logger = LoggerProvider
+            .getCurrentLoggerProvider()
+                .getLogger(ControllerManager.class.getName());
+    
     private Map forms;
     private Map revForms;
     private ValidatorProvider validatorProvider;
@@ -103,7 +116,7 @@ public class ControllerManager {
     }
 
     /**
-     * Constroi um novo controlador.
+     * Constrói um novo controlador.
      *
      * @param classType Classe do controlador.
      * @return Construtor do controlador.
@@ -113,7 +126,7 @@ public class ControllerManager {
     }
 
     /**
-     * Constroi um novo controlador.
+     * Constrói um novo controlador.
      *
      * @param id Identificação do controlador.
      * @param classType Classe do controlador.
@@ -124,7 +137,7 @@ public class ControllerManager {
     }
     
     /**
-     * Constroi um novo controlador.
+     * Constrói um novo controlador.
      *
      * @param id Identificação do controlador.
      * @param view Visão associada ao controlador.
@@ -136,7 +149,7 @@ public class ControllerManager {
     }
     
     /**
-     * Constroi um novo controlador.
+     * Constrói um novo controlador.
      *
      * @param id Identificação do controlador.
      * @param view Visão associada ao controlador.
@@ -153,7 +166,7 @@ public class ControllerManager {
     }
 
     /**
-     * Constroi um novo controlador.
+     * Constrói um novo controlador.
      *
      * @param id Identificação do controlador.
      * @param view Visão associada ao controlador.
@@ -228,7 +241,7 @@ public class ControllerManager {
     }
     
     /**
-     * Obtém o mapeamento do um controlador específico.
+     * Obtém o mapeamento de um controlador.
      * @param controllerClass Identificação do controlador.
      * @return Mapeamento do controlador.
      */
@@ -246,7 +259,7 @@ public class ControllerManager {
     }
 
     /**
-     * Obtém o mapeamento do um controlador específico.
+     * Obtém o mapeamento de um controlador.
      * @param controllerClass Classe do controlador.
      * @return Mapeamento do controlador.
      */
