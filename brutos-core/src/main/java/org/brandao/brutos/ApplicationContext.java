@@ -37,9 +37,9 @@ import org.brandao.brutos.view.ViewProvider;
  * <ul>
  * <li>configurar interceptadores;</li>
  * <li>incluir novos controladores;</li>
- * <li>obter controladores;</li>
- * <li>determinar como os controladores serão obtidos;</li>
- * <li>determinar como uma ação será executada;</li>
+ * <li>manipular os controladores;</li>
+ * <li>manipular a resolução de controladores;</li>
+ * <li>manipular a execução de ações;</li>
  * <li>determinar novas regras de validação</li>
  * </ul>
  * 
@@ -47,7 +47,9 @@ import org.brandao.brutos.view.ViewProvider;
  */
 public abstract class ApplicationContext {
 
-    private static Logger logger = LoggerProvider.getCurrentLoggerProvider().getLogger(ApplicationContext.class.getName());
+    private static Logger logger = LoggerProvider
+        .getCurrentLoggerProvider()
+            .getLogger(ApplicationContext.class.getName());
 
     private IOCManager iocManager;
     private IOCProvider iocProvider;
@@ -130,7 +132,7 @@ public abstract class ApplicationContext {
     
     /**
      * Obtém o responsável por resolver os controladores.
-     * @return controllerResolver Responsável por resolver os controladores
+     * @return Responsável por resolver os controladores
      */
     protected ControllerResolver getNewControllerResolver(){
         try{

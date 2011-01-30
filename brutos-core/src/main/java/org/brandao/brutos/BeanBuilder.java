@@ -88,7 +88,7 @@ import org.brandao.brutos.validator.ValidatorProvider;
  *
  * &lt;html&gt;
  *   &lt;body&gt;
- *    &lt;a href="/index.jbrs?idBean=VALUE2"&gt;show&lt;/a&gt;
+ *    &lt;a href="/index.jbrs?idBean=1"&gt;show&lt;/a&gt;
  *   &lt;/body&gt;
  * &lt;/html&gt;
  *
@@ -207,7 +207,7 @@ public class BeanBuilder {
      *
      * @param name Nome do parâmetro.
      * @param propertyName Nome da propriedade
-     * @param type Conversor do valor obtida do escopo.
+     * @param type Faz o processamento da propriedade.
      * @return Construtor do mapeamento.
      */
     public PropertyBuilder addProperty( String name, String propertyName,
@@ -221,7 +221,7 @@ public class BeanBuilder {
      *
      * @param name Nome do parâmetro.
      * @param propertyName Nome da propriedade
-     * @param mapping Usado em propriedade mapeadas.
+     * @param mapping Mapeamento customizado.
      * @return Construtor do mapeamento.
      */
     public PropertyBuilder addMappedProperty( String name, String propertyName, String mapping ){
@@ -233,7 +233,7 @@ public class BeanBuilder {
      * Faz o mapeamento de uma propriedade.
      *
      * @param propertyName Nome da propriedade
-     * @param mapping Usado em propriedade mapeadas.
+     * @param mapping Mapeamento customizado.
      * @return Construtor do mapeamento.
      */
     public PropertyBuilder addMappedProperty( String propertyName, String mapping ){
@@ -242,7 +242,7 @@ public class BeanBuilder {
     }
 
     /**
-     * Contrói o mapeamento da chave usada para acessar o elemento na coleção.
+     * Contrói o mapeamento da chave usada para acessar os elementos de uma coleção.
      * 
      * @param type Classe alvo do mapeamento.
      * @return Construtor do mapeamento.
@@ -266,10 +266,10 @@ public class BeanBuilder {
     }
     
     /**
-     * Constrói o mapeamento do elemento da coleção.
+     * Constrói o mapeamento dos elementos de uma coleção.
      *
      * @param type Classe alvo do mapeamento.
-     * @return Construtor do mapeamento do elemento.
+     * @return Construtor do mapeamento dos elementos.
      */
     public BeanBuilder buildElement( Class type ){
 
@@ -327,7 +327,7 @@ public class BeanBuilder {
     /**
      * Constrói o mapeamento de uma propriedade.
      * 
-     * @param name Identificação no escopo.
+     * @param name Identificação.
      * @param propertyName Nome da propriedade
      * @param target Classe alvo do mapeamento.
      * @return Construtor da propriedade.
@@ -360,7 +360,7 @@ public class BeanBuilder {
      *
      * @param name Nome do parâmetro.
      * @param propertyName Nome da propriedade
-     * @param scope Escopo do valor.
+     * @param scope Escopo.
      * @return Construtor do mapeamento.
      */
     public PropertyBuilder addProperty( String name, String propertyName, ScopeType scope ){
@@ -388,10 +388,10 @@ public class BeanBuilder {
      * @param propertyName Nome da propriedade
      * @param enumProperty Usado no mapeamento de enum.
      * @param temporalProperty Usado no mapeamento de datas.
-     * @param mapping Usado em propriedade mapeadas.
-     * @param scope Escopo do valor.
+     * @param mapping Mapeamento customizado.
+     * @param scope Escopo.
      * @param value Valor da propriedade. Tem a mesma função do modificador final.
-     * @param type Conversor.
+     * @param type Faz o processamento da propriedade.
      * @return Construtor do mapeamento.
      */
     public PropertyBuilder addProperty( String name, String propertyName,
@@ -489,7 +489,7 @@ public class BeanBuilder {
      * Faz o mapeamento de um argumento do construtor.
      *
      * @param name Nome do parâmetro.
-     * @param enumProperty Usado no mapeamento de enum.
+     * @param enumProperty Usado no mapeamento argumentos do tipo enum.
      * @return Construtor do mapeamento.
      */
     public BeanBuilder addContructorArg( String name,
@@ -513,7 +513,7 @@ public class BeanBuilder {
      * Faz o mapeamento de um argumento do construtor.
      *
      * @param name Nome do parâmetro.
-     * @param type Conversor.
+     * @param type Faz o processamento do argumento.
      * @return Construtor do mapeamento.
      */
     public BeanBuilder addContructorArg( String name,
@@ -526,7 +526,7 @@ public class BeanBuilder {
      * Faz o mapeamento de um argumento do construtor.
      *
      * @param name Nome do parâmetro.
-     * @param mapping Usado em propriedade mapeadas.
+     * @param mapping Mapeamento customizado.
      * @return Construtor do mapeamento.
      */
     public BeanBuilder addMappedContructorArg( String name, String mapping ){
@@ -573,12 +573,12 @@ public class BeanBuilder {
      * Faz o mapeamento de um argumento do construtor.
      *
      * @param name Nome do parâmetro.
-     * @param enumProperty Usado no mapeamento de enum.
+     * @param enumProperty Usado no mapeamento argumentos do tipo enum.
      * @param temporalProperty Usado no mapeamento de datas.
-     * @param mapping Usado em propriedade mapeadas.
+     * @param mapping Mapeamento customizado.
      * @param scope Escopo.
      * @param value Valor da propriedade. Tem a mesma função do modificador final.
-     * @param type Conversor do valor obtida do escopo.
+     * @param type Faz o processamento do argumento.
      * @return Construtor do mapeamento.
      */
     public BeanBuilder addContructorArg( String name,
