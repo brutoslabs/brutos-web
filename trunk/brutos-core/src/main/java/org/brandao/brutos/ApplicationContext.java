@@ -228,7 +228,7 @@ public abstract class ApplicationContext {
 
     /**
      * @deprecated 
-     * @return
+     * @return .
      */
     public IOCManager getIocManager() {
         return iocManager;
@@ -244,7 +244,7 @@ public abstract class ApplicationContext {
 
     /**
      * @deprecated 
-     * @return
+     * @return .
      */
     public WebFrameManager getWebFrameManager() {
         return webFrameManager;
@@ -294,7 +294,7 @@ public abstract class ApplicationContext {
     
     /**
      * Configura os controladores.
-     * @param interceptorManager Gestor dos controladores.
+     * @param controllerManager Gestor dos controladores.
      */
     protected abstract void loadController( ControllerManager controllerManager );
 

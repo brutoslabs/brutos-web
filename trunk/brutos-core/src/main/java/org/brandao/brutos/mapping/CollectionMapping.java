@@ -39,7 +39,7 @@ public class CollectionMapping extends MappingBean{
 
     /**
      * @deprecated
-     * @return
+     * @return .
      */
     public Class<?> getCollectionType() {
         return collectionType;

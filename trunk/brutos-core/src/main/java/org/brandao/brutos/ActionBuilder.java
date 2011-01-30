@@ -84,7 +84,6 @@ public class ActionBuilder {
      *
      * @param name Identificação do parâmetro.
      * @param scope Escopo.
-     * @param enumProperty Usado na configuração de parâmetros do tipo enum.
      * @param temporalProperty Usado na configuração de datas.
      * @param classType Tipo do parâmetro.
      * @return Contrutor do parâmetro.
@@ -259,7 +258,6 @@ public class ActionBuilder {
      * objeto resultante da exceção pode ser usando na visão.
      *
      * @param target Exceção alvo.
-     * @param view Visão. Se omitido, será usada a visão do controlador.
      * @param id Identificação.
      * @return Contrutor do controlador.
      */

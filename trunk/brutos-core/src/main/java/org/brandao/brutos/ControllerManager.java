@@ -118,7 +118,7 @@ public class ControllerManager {
     /**
      * Constrói um novo controlador.
      *
-     * @param classType Classe do controlador.
+     * @param classtype Classe do controlador.
      * @return Construtor do controlador.
      */
     public ControllerBuilder addController( Class classtype ){
@@ -242,7 +242,7 @@ public class ControllerManager {
     
     /**
      * Obtém o mapeamento de um controlador.
-     * @param controllerClass Identificação do controlador.
+     * @param id Identificação do controlador.
      * @return Mapeamento do controlador.
      */
     public Form getController( String id ){
@@ -252,7 +252,7 @@ public class ControllerManager {
     /**
      * @deprecated
      * @param uri
-     * @return
+     * @return .
      */
     public Form getForm( String uri ){
         return (Form)forms.get( uri );
@@ -270,7 +270,7 @@ public class ControllerManager {
     /**
      * @deprecated 
      * @param controllerClass
-     * @return
+     * @return .
      */
     public Form getForm( Class controllerClass ){
         return (Form)revForms.get( controllerClass );
@@ -286,7 +286,7 @@ public class ControllerManager {
 
     /**
      * @deprecated 
-     * @return
+     * @return .
      */
     public Map<String, Form> getForms() {
         return Collections.unmodifiableMap( forms );

@@ -60,7 +60,7 @@ public class Invoker {
      * @deprecated 
      * @param brutosContext
      * @param response
-     * @return
+     * @return .
      * @throws IOException
      */
     public boolean invoke( BrutosContext brutosContext, HttpServletResponse response ) throws IOException{

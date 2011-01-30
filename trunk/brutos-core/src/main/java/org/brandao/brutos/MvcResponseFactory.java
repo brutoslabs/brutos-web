@@ -29,7 +29,7 @@ public abstract class MvcResponseFactory {
 
     /**
      * Obtém a atual resposta.
-     * @return
+     * @return Resposta.
      */
     public MvcResponse getCurrentResponse(){
 
@@ -52,7 +52,7 @@ public abstract class MvcResponseFactory {
 
     /**
      * Obtém uma nova resposta.
-     * @return
+     * @return Nova resposta.
      */
     protected abstract MvcResponse getNewResponse();
 

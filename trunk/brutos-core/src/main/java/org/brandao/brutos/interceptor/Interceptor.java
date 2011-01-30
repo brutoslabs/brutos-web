@@ -57,7 +57,8 @@ public interface Interceptor {
     /**
      * Verifica se o interceptador será executado na ação interceptada.
      * @param handler Manipulador da requisição.
-     * @return
+     * @return Verdadeiro se é permitido o acesso ao recurso interceptado,
+     * caso contrário falso.
      */
     public boolean accept( InterceptorHandler handler );
     
