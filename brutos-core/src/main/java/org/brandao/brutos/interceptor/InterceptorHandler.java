@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.interceptor;
 
-import org.brandao.brutos.ResourceMethod;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
