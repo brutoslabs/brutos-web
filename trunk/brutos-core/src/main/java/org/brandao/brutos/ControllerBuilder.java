@@ -36,16 +36,16 @@ import org.brandao.brutos.type.*;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
- * Classe usada para contruir um controlador.
- * Com essa classe é possível incluir ações, atribuir multiplas identificações
- * ao controlador, capturar exceções e processa-las, definir uma ação padrão, determinar
- * os interceptadores do controlador, criar mapeamentos de beans, configurar as
- * propriedades do controlador e obter a classe que representa o controlador.
+ * Classe usada para construir um controlador. Com essa classe é possível incluir
+ * ações, atribuir múltiplas identificações ao controlador, capturar exceções e
+ * processa-las, definir uma ação padrão, determinar os interceptadores do
+ * controlador, criar mapeamentos de beans, configurar as propriedades do
+ * controlador e obter a classe que representa o controlador.
  *
  * <p>A inclusão de uma ação é feita usando o método addAction(...). É possivel
  * definir sua identificação, o método responsável pelo seu processamento,
- * identificação do objeto resultante da ação. Além de ser possível definir a visão
- * e como seu fluxo será direcionado para a visão.</p>
+ * identificação do objeto resultante da ação. Além de ser possível definir a
+ * visão e como seu fluxo será direcionado para a visão.</p>
  *
  * Ex:
  *
@@ -142,7 +142,7 @@ public class ControllerBuilder {
     private ValidatorProvider validatorProvider;
 
     /**
-     * Constroi um novo controlador.
+     * Constrói um novo controlador.
      * 
      * @param controller 
      * @param controllerManager
@@ -252,15 +252,15 @@ public class ControllerBuilder {
     }
 
     /**
-     * Gera o mapeamento de um bean. Esse mapeamento é usado para converter e injetar os
-     * dado da requisição ou de qualquer outro escopo nas propriedades do bean.
+     * Cria o mapeamento de um bean. Esse mapeamento é usado para converter e injetar os
+     * dados da requisição ou de qualquer outro escopo nas propriedades do bean.
      * 
      * @param name Nome do mapeamento.
      * @param target Alvo do mapeamento.
      * @return Construtor do mapeamento.
      * @throws java.lang.NullPointerException Lançado se target for igual a null.
      * @throws org.brandao.brutos.BrutosException Lançado se o target for uma
-     * coleção ou um mapeamento.
+     * coleção.
      */
     public BeanBuilder buildMappingBean( String name, Class target ){
 
@@ -345,8 +345,7 @@ public class ControllerBuilder {
      * @param id Identificação da ação.
      * @param executor Nome do método que processa a ação.
      * @param view Visão. Se omitido, será usado a visão do controldor.
-     * @param resultId Identificação do resultado da ação. Essa identificação
-     * serve para se obter o resultado na visão.
+     * @param resultId Identificação do resultado da ação.
      * @return Contrutor da ação.
      */
     public ActionBuilder addAction( String id, String resultId, String view, String executor ){
@@ -359,8 +358,7 @@ public class ControllerBuilder {
      * @param executor Nome do método que processa a ação.
      * @param view Visão. Se omitido, será usado a visão do controldor.
      * @param dispatcher Modo como será alterado o fluxo para a visão.
-     * @param resultId Identificação do resultado da ação. Essa identificação
-     * serve para se obter o resultado na visão.
+     * @param resultId Identificação do resultado da ação.
      * @return Contrutor da ação.
      */
     public ActionBuilder addAction( String id, String resultId, String view, DispatcherType dispatcher, String executor ){
@@ -427,8 +425,8 @@ public class ControllerBuilder {
     }
 
     /**
-     * Adiciona um novo interceptador ao controlador. Se o interceptador for
-     * definido como "default" será lançada uma exceção. O interceptador deverá
+     * Define um novo interceptador do controlador. Se o interceptador for
+     * definido como "default", será lançada uma exceção. O interceptador deverá
      * ser previamente criado.
      * @param name Nome do interceptador. Se não encontrado, será lançada uma exceção.
      * @return Construtor do interceptador.
@@ -459,9 +457,9 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
+     * @param propertyName Nome da propriedade.
      * @param id Identificação da propriedade.
-     * @param scope Escopo do volor da propriedade.
+     * @param scope Escopo.
      * @param enumProperty Usado na configuração de propriedades do tipo enum.
      * @return Contrutor da propriedade.
      */
@@ -472,9 +470,9 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
+     * @param propertyName Nome da propriedade.
      * @param id Identificação da propriedade.
-     * @param scope Escopo do volor da propriedade.
+     * @param scope Escopo.
      * @param temporalProperty Usado na configuração de datas.
      * @return Contrutor da propriedade.
      */
@@ -485,10 +483,10 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
+     * @param propertyName Nome da propriedade.
      * @param id Identificação da propriedade.
-     * @param scope Escopo do volor da propriedade.
-     * @param type Faz o processamento do valor da propriedade.
+     * @param scope Escopo.
+     * @param type Faz o processamento da propriedade.
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, Type type ){
@@ -499,7 +497,7 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
+     * @param propertyName Nome da propriedade.
      * @param id Identificação da propriedade.
      * @param enumProperty Usado na configuração de propriedades do tipo enum.
      * @return Contrutor da propriedade.
@@ -511,9 +509,9 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
+     * @param propertyName Nome da propriedade.
      * @param id Identificação da propriedade.
-     * @param scope Escopo do volor da propriedade.
+     * @param scope Escopo.
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope ){
@@ -524,7 +522,7 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
+     * @param propertyName Nome da propriedade.
      * @param id Identificação da propriedade.
      * @param temporalProperty Usado na configuração de datas.
      * @return Contrutor da propriedade.
@@ -536,9 +534,9 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
+     * @param propertyName Nome da propriedade.
      * @param id Identificação da propriedade.
-     * @param type Faz o processamento do valor da propriedade.
+     * @param type Faz o processamento da propriedade.
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, Type type ){
@@ -549,9 +547,8 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
-     * @param mapping nome do mapeamento do valor da propriedade. Esse mapemanto
-     * deve ser previamente criado com o método buildMappingBean(...).
+     * @param propertyName Nome da propriedade.
+     * @param mapping Mapeamento customizado.
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addPropertyMapping( String propertyName, String mapping ){
@@ -562,10 +559,9 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
+     * @param propertyName Nome da propriedade.
      * @param id Identificação da propriedade.
-     * @param mapping nome do mapeamento do valor da propriedade. Esse mapemanto
-     * deve ser previamente criado com o método buildMappingBean(...).
+     * @param mapping Mapeamento customizado.
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addPropertyMapping( String propertyName, String id, String mapping ){
@@ -576,7 +572,7 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
+     * @param propertyName Nome da propriedade.
      * @param id Identificação da propriedade.
      * @return Contrutor da propriedade.
      */
@@ -588,14 +584,13 @@ public class ControllerBuilder {
     /**
      * Configura uma propriedade do controlador.
      *
-     * @param propertyName Nome da propriedade no controlador.
+     * @param propertyName Nome da propriedade.
      * @param id Identificação da propriedade.
-     * @param scope Escopo do volor da propriedade.
+     * @param scope Escopo.
      * @param enumProperty Usado na configuração de propriedades do tipo enum.
-     * @param mapping nome do mapeamento do valor da propriedade. Esse mapemanto
-     * deve ser previamente criado com o método buildMappingBean(...).
+     * @param mapping Mapeamento customizado.
      * @param temporalProperty Usado na configuração de datas.
-     * @param type Faz o processamento do valor da propriedade.
+     * @param type Faz o processamento da propriedade.
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, EnumerationType enumProperty,

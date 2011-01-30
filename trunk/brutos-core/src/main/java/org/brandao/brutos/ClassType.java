@@ -59,8 +59,8 @@ public final class ClassType {
      * @param clazz Classe primitiva.
      * @return Classe empacotada.
      */
-    public static Class<?> getWrapper( Class<?> clazz ){
-        Class<?> classe = primitiveType.get( clazz );
+    public static Class getWrapper( Class clazz ){
+        Class classe = primitiveType.get( clazz );
         
         return classe == null? clazz : classe;
         
@@ -70,17 +70,17 @@ public final class ClassType {
      * Obtém uma classe a partir se seu nome.
      * @param name Nome da classe.
      * @return Classe.
-     * @throws ClassNotFoundException Lançada se não for possível carregar a
+     * @throws ClassNotFoundException Lançada se não for possível obter a
      * classe.
      */
-    public static Class<?> get( String name ) throws ClassNotFoundException{
-        Class<?> classe = primitiveType.get( name );
+    public static Class get( String name ) throws ClassNotFoundException{
+        Class classe = primitiveType.get( name );
         
         return classe == null? getClasse( name ) : classe;
         
     }
     
-    private static Class<?> getClasse( String name ) throws ClassNotFoundException{
+    private static Class getClasse( String name ) throws ClassNotFoundException{
         return Class.forName( name, true, Thread.currentThread().getContextClassLoader() );
     }
 }
