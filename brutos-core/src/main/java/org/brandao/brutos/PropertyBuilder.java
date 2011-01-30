@@ -17,11 +17,10 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.Configuration;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
- * Constroi uma propriedade de um controlador.
+ * Constrói uma propriedade de um controlador.
  * 
  * @author Afonso Brandao
  */

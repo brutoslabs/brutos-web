@@ -17,7 +17,6 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.Configuration;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
@@ -36,7 +35,7 @@ public class RestrictionBuilder{
     /**
      * Adiciona uma nova restrição.
      *
-     * @param ruleId Tipo da restrição. Os valores são obtido em RestrictionRules.
+     * @param ruleId Tipo da restrição. Os valores estão descritos em RestrictionRules.
      * @param value Valor da restrição.
      * @return Construtor da restrição.
      */
@@ -46,7 +45,7 @@ public class RestrictionBuilder{
     }
 
     /**
-     * Define a mensagem a ser exibida caso o valor obtido não seja considerado
+     * Define a mensagem a ser exibida caso o valor testado não seja considerado
      * válido.
      * @param message Mensagem.
      * @return Construtor da propriedade.
