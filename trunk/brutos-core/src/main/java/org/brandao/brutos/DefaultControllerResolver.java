@@ -27,9 +27,9 @@ import org.brandao.brutos.old.programatic.WebFrameManager;
  *
  * @author Afonso Brandao
  */
-public class DefaultResolveController implements ControllerResolver{
+public class DefaultControllerResolver implements ControllerResolver{
     
-    public DefaultResolveController() {
+    public DefaultControllerResolver() {
     }
 
     public Form getController(WebFrameManager webFrameManager, HttpServletRequest request) {

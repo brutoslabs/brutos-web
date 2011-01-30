@@ -139,7 +139,7 @@ public abstract class ApplicationContext {
             ControllerResolver instance = (ControllerResolver) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.class",
-                    "org.brandao.brutos.DefaultResolveController"
+                    DefaultControllerResolver.class.getName()
                 ),
                     true,
                     Thread.currentThread().getContextClassLoader()
@@ -208,7 +208,7 @@ public abstract class ApplicationContext {
             ActionResolver instance = (ActionResolver) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.method_resolver",
-                    "org.brandao.brutos.DefaultActionResolver"
+                    DefaultActionResolver.class.getName()
                 ),
                     true,
                     Thread.currentThread().getContextClassLoader()
