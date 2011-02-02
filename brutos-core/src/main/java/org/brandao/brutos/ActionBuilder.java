@@ -166,7 +166,35 @@ public class ActionBuilder {
         return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, classType );
     }
+
+    /**
+     * Configura um novo parâmetro.
+     *
+     * @param name Identificação do parâmetro.
+     * @param mapping Nome do mapeamento do parâmetro. Esse mapeamento
+     * deve ser previamente criado com o método buildMappingBean(...).
+     * @param classType Tipo do parâmetro.
+     * @return Contrutor do parâmetro.
+     */
+    public ParameterBuilder addParameterMapping( String name, String mapping, Class classType ){
+        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
+                mapping, null, classType );
+    }
     
+    /**
+     * Configura um novo parâmetro.
+     *
+     * @param name Identificação do parâmetro.
+     * @param scope Escopo.
+     * @param mapping Nome do mapeamento do parâmetro. Esse mapeamento
+     * deve ser previamente criado com o método buildMappingBean(...).
+     * @param classType Tipo do parâmetro.
+     * @return Contrutor do parâmetro.
+     */
+    public ParameterBuilder addParameterMapping( String name, String mapping, ScopeType scope, Class classType ){
+        return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
+                mapping, null, classType );
+    }
     /**
      * Configura um novo parâmetro.
      *
