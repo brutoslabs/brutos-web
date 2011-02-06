@@ -26,10 +26,8 @@ import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.RedirectException;
@@ -240,7 +238,7 @@ public class InterceptorProcess implements InterceptorStack{
         //                                    request.getParameter( form.getMethodId() ) );
         //MethodForm method            = form.getMethodByName(
         //                                     String.valueOf( paramScope.get( form.getMethodId() ) ) );
-        MethodForm method            = handler.getResourceAction().getMethodForm();
+        //MethodForm method            = handler.getResourceAction().getMethodForm();
 
         try{
             //DataInput input = new DataInput( handler.getRequest(),
@@ -256,21 +254,31 @@ public class InterceptorProcess implements InterceptorStack{
                 return handler
                     .getResourceAction()
                         //.invoke( source, getParameters( method, request, context ) );
-                        .invoke( source, getParameters( method, null, null ) );
+                        .invoke(
+                            source,
+                            getParameters(
+                                handler.getResourceAction().getMethodForm(),
+                                null,
+                                null ) );
             else
                 return null;
         }
         catch( ValidatorException e ){
-            processException( e, method, requestScope );
+            processException( e, handler.getResourceAction().getMethodForm(), requestScope );
             return null;
         }
         catch( InvocationTargetException e ){
             if( e.getTargetException() instanceof RedirectException ){
                 //request.setAttribute( BrutosConstants.REDIRECT, ((RedirectException)e.getTargetException()).getPage() );
-                requestScope.put( BrutosConstants.REDIRECT, ((RedirectException)e.getTargetException()).getPage() );
+                requestScope.put( 
+                    BrutosConstants.REDIRECT,
+                    ((RedirectException)e.getTargetException()).getPage() );
             }
             else{
-                processException( e.getTargetException(), method, requestScope );
+                processException(
+                    e.getTargetException(),
+                    handler.getResourceAction().getMethodForm(),
+                    requestScope );
                 /*
                 ThrowableSafeData tdata = method == null?
                     form.getThrowsSafe(
