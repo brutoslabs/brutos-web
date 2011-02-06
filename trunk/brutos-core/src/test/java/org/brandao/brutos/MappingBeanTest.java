@@ -55,7 +55,7 @@ public class MappingBeanTest extends TestCase {
             public void execute(MockHttpServletRequest request, MockHttpServletResponse response, 
                     MockHttpSession session, MockServletContext context) {
 
-                ApplicationContext app = WebApplicationContext
+                HandlerApplicationContext app = (HandlerApplicationContext) WebApplicationContext
                         .getCurrentApplicationContext();
 
                 RootContainer.getInstance().addBean(

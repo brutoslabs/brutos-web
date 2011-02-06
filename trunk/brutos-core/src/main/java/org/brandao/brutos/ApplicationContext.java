@@ -51,20 +51,20 @@ public abstract class ApplicationContext {
         .getCurrentLoggerProvider()
             .getLogger(ApplicationContext.class.getName());
 
-    private IOCManager iocManager;
-    private IOCProvider iocProvider;
-    private WebFrameManager webFrameManager;
-    private InterceptorManager interceptorManager;
-    private ControllerManager controllerManager;
-    private ViewProvider viewProvider;
-    private ValidatorProvider validatorProvider;
-    private Invoker invoker;
-    private Properties configuration;
-    private LoggerProvider loggerProvider;
-    private ControllerResolver controllerResolver;
-    private ActionResolver actionResolver;
-    private MvcResponseFactory responseFactory;
-    private MvcRequestFactory requestFactory;
+    protected IOCManager iocManager;
+    protected IOCProvider iocProvider;
+    protected WebFrameManager webFrameManager;
+    protected InterceptorManager interceptorManager;
+    protected ControllerManager controllerManager;
+    protected ViewProvider viewProvider;
+    protected ValidatorProvider validatorProvider;
+    protected Invoker invoker;
+    protected Properties configuration;
+    protected LoggerProvider loggerProvider;
+    protected ControllerResolver controllerResolver;
+    protected ActionResolver actionResolver;
+    protected MvcResponseFactory responseFactory;
+    protected MvcRequestFactory requestFactory;
 
     public ApplicationContext() {
         this.configuration = new Configuration();
@@ -94,17 +94,17 @@ public abstract class ApplicationContext {
         
         this.configuration = config;
         this.iocManager = new IOCManager();
-        this.setIocProvider(IOCProvider.getProvider(config));
-        this.getIocProvider().configure(config);
+        this.iocProvider = IOCProvider.getProvider(config);
+        this.iocProvider.configure(config);
         this.interceptorManager = new InterceptorManager();
         this.webFrameManager = new WebFrameManager( this.interceptorManager, this.iocManager );
         this.controllerResolver = getNewControllerResolver();
         this.actionResolver = getNewMethodResolver();
-        this.responseFactory = getMvcResponseFactory();
+        this.requestFactory = getMvcRequestFactory();
         this.responseFactory = getMvcResponseFactory();
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
-        this.controllerManager = new ControllerManager(this.interceptorManager, this.getValidatorProvider());
-        this.invoker = new Invoker(  this.getControllerResolver(), getIocProvider(), controllerManager, this.getActionResolver(), this );
+        this.controllerManager = new ControllerManager(this.interceptorManager, validatorProvider);
+        this.invoker = new Invoker(  controllerResolver, iocProvider, controllerManager, actionResolver, this );
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
 
         if( iocProvider.containsBeanDefinition("customScopes") ){
@@ -118,7 +118,7 @@ public abstract class ApplicationContext {
 
         this.loadIOCManager(iocManager);
         this.loadInterceptorManager(interceptorManager);
-        this.loadController(getControllerManager());
+        this.loadController(controllerManager);
         this.loadWebFrameManager(webFrameManager);
     }
 
@@ -226,53 +226,6 @@ public abstract class ApplicationContext {
      */
     public abstract void destroy();
 
-    /**
-     * @deprecated 
-     * @return .
-     */
-    public IOCManager getIocManager() {
-        return iocManager;
-    }
-
-    /**
-     * @deprecated 
-     * @param iocManager
-     */
-    public void setIocManager(IOCManager iocManager) {
-        this.iocManager = iocManager;
-    }
-
-    /**
-     * @deprecated 
-     * @return .
-     */
-    public WebFrameManager getWebFrameManager() {
-        return webFrameManager;
-    }
-
-    /**
-     * @deprecated 
-     * @param webFrameManager
-     */
-    public void setWebFrameManager(WebFrameManager webFrameManager) {
-        this.webFrameManager = webFrameManager;
-    }
-
-    /**
-     * Obtém o gestor de interceptadores.
-     * @return Gestor de interceptadores.
-     */
-    public InterceptorManager getInterceptorManager() {
-        return interceptorManager;
-    }
-
-    /**
-     * Define o gestor de interceptadores.
-     * @param interceptorManager Gestor de interceptadores.
-     */
-    public void setInterceptorManager(InterceptorManager interceptorManager) {
-        this.interceptorManager = interceptorManager;
-    }
 
     /**
      * @deprecated 
@@ -324,50 +277,10 @@ public abstract class ApplicationContext {
     }
 
     /**
-     * Obtém o gestor de controladores.
-     * @return Gestor de controladores.
-     */
-    public ControllerManager getControllerManager() {
-        return controllerManager;
-    }
-
-    /**
-     * Obtém o provedor da visão.
-     * @return Provedor da visão.
-     */
-    public ViewProvider getViewProvider() {
-        return viewProvider;
-    }
-
-    /**
-     * Obtém o provedor das regras de validação.
-     * @return Provedor das regras de validação
-     */
-    public ValidatorProvider getValidatorProvider() {
-        return validatorProvider;
-    }
-
-    /**
-     * Obtém o responsável por executar as ações.
-     * @return Responsável por executar as ações.
-     */
-    public Invoker getInvoker() {
-        return invoker;
-    }
-
-    /**
-     * Define as configurações da aplicação.
-     * @param config Configuração.
-     */
-    protected void setConfiguration( Properties config ){
-        this.configuration = config;
-    }
-
-    /**
      * Obtém a configuração da aplicação.
      * @return Configuração da aplicação.
      */
-    public Properties getConfiguration() {
+    public Properties getConfiguration(){
         return configuration;
     }
 
@@ -375,40 +288,8 @@ public abstract class ApplicationContext {
      * Obtém o provedor de log.
      * @return Provedor de log.
      */
-    public LoggerProvider getLoggerProvider() {
+    public LoggerProvider getLoggerProvider(){
         return loggerProvider;
-    }
-
-    /**
-     * Obtém o provedor do container IOC.
-     * @return Provedor do container IOC.
-     */
-    public IOCProvider getIocProvider() {
-        return iocProvider;
-    }
-
-    /**
-     * Define o provedor do container IOC.
-     * @param iocProvider Provedor do container IOC.
-     */
-    public void setIocProvider(IOCProvider iocProvider) {
-        this.iocProvider = iocProvider;
-    }
-
-    /**
-     * Obtém o responsável por resolver os controladores.
-     * @return Responsável por resolver os controladores.
-     */
-    public ControllerResolver getControllerResolver() {
-        return controllerResolver;
-    }
-
-    /**
-     * Obtém o responsável por resolver as ações.
-     * @return Responsável por resolver as ações.
-     */
-    public ActionResolver getActionResolver() {
-        return actionResolver;
     }
 
     /**

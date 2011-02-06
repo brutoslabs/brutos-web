@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.HandlerApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
@@ -53,7 +54,7 @@ public class DispatcherServlet extends HttpServlet {
             );
         }
         else
-            invoker = webApplicationContext.getInvoker();
+            invoker = ((HandlerApplicationContext)webApplicationContext).getInvoker();
 
         Throwable ex = (Throwable)getServletContext().getAttribute( BrutosConstants.EXCEPTION );
 
@@ -69,7 +70,11 @@ public class DispatcherServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
-        request = (HttpServletRequest) ContextLoaderListener.currentRequest.get();
+        WebApplicationContext app =
+            (WebApplicationContext)WebApplicationContext
+                .getCurrentApplicationContext();
+
+        request = app.getRequest();
 
         Scope scope = Scopes.get(ScopeType.SESSION);
         
@@ -85,7 +90,7 @@ public class DispatcherServlet extends HttpServlet {
 
             BrutosRequest brutosRequest = (BrutosRequest)request;
 
-            requestInfo.setRequest( (ServletRequest)brutosRequest);
+            requestInfo.setRequest(request);
             requestInfo.setResponse(response);
             RequestInfo.setCurrent(requestInfo);
 
@@ -98,6 +103,8 @@ public class DispatcherServlet extends HttpServlet {
         }
         finally{
             mappedUploadStats.remove( path );
+            ((HandlerApplicationContext)app).getRequestFactory().destroyRequest();
+            ((HandlerApplicationContext)app).getResponseFactory().destroyResponse();
             RequestInfo.removeCurrent();
         }
     }
