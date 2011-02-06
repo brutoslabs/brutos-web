@@ -120,7 +120,7 @@ public class WebApplicationContext extends ApplicationContext{
         IOCProvider iocProvider = getIocProvider();
         Scopes.register( ScopeType.APPLICATION.toString(), new ApplicationScope( sce.getServletContext() ) );
         Scopes.register( ScopeType.FLASH.toString() , new FlashScope() );
-        Scopes.register( ScopeType.IOC.toString() , new IOCScope( iocProvider ) );
+        Scopes.register( ScopeType.IOC.toString() , new IOCScope( this ) );
         Scopes.register( ScopeType.REQUEST.toString() , new RequestScope() );
         Scopes.register( ScopeType.SESSION.toString() , new SessionScope() );
         Scopes.register( ScopeType.PARAM.toString() , new ParamScope() );

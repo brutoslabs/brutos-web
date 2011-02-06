@@ -94,7 +94,7 @@ public class CollectionMapping extends MappingBean{
         return getValue( request, null, null );
     }
 
-    public Object getValue( HttpServletRequest request, Object instance, String prefix ){
+    public Object getValue( HttpServletRequest request, Object instance, String prefix){
         try{
             instance = getInstance( instance );
             Collection collection = (Collection)instance;
@@ -106,7 +106,7 @@ public class CollectionMapping extends MappingBean{
                 collection.add(beanInstance);
                 index++;
             }
-            return collection.size() == 0? null : collection;
+            return collection.size() != 0? collection : null;
         }
         catch( Exception e ){
             return null;

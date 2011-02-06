@@ -125,7 +125,7 @@ public class MapMapping extends CollectionMapping{
          * A partir da versão 2.0 mappingKey sempre será diferente de null.
          */
         if( mappingKey != null )
-            return mappingKey.getValue(request, index, prefix, index);
+            return mappingKey.getValue(request, index, prefix, index );
         else
         if( keyType != null )
             return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
@@ -180,7 +180,7 @@ public class MapMapping extends CollectionMapping{
                 
                 index++;
             }
-            return map.size() == 0? null : map;
+            return map.size() != 0? map : null;
         }
         catch( Exception e ){
             return null;

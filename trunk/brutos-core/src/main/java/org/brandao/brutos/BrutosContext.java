@@ -107,11 +107,15 @@ public class BrutosContext extends WebApplicationContext{
         }
     }
 
+    public IOCProvider getIocProvider(){
+        return iocManager.getProvider();
+    }
+    
     private void registerDefaultScopes( ServletContextEvent sce ){
         logger.info( "Register scopes..." );
         Scopes.register( "application" , new ApplicationScope( sce.getServletContext() ) );
         Scopes.register( "flash" , new FlashScope() );
-        Scopes.register( "ioc" , new IOCScope( iocManager.getProvider() ) );
+        Scopes.register( "ioc" , new IOCScope( this ) );
         //Scopes.register( "request" , new RequestScope() );
         Scopes.register( "session" , new SessionScope() );
         Scopes.register( ScopeType.PARAM.toString(), new ParamScope() );
