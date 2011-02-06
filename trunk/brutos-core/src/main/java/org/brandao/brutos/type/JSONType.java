@@ -96,7 +96,9 @@ public class JSONType implements SerializableType {
         MvcResponse response = app.getMvcResponse();
         response.setType( "application/json" );
         response.setCharacterEncoding( "UTF-8" );
-        response.process(value);
+        JSONEncoder encoder = new JSONEncoder( response.processStream() );
+        encoder.writeObject( value );
+        encoder.close();
     }
 
 }

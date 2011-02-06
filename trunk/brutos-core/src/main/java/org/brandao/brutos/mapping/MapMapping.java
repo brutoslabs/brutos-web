@@ -125,7 +125,7 @@ public class MapMapping extends CollectionMapping{
          * A partir da versão 2.0 mappingKey sempre será diferente de null.
          */
         if( mappingKey != null )
-            return mappingKey.getValue(request, index, prefix, index );
+            return mappingKey.getValue(request, index, prefix, index, false );
         else
         if( keyType != null )
             return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
@@ -158,7 +158,11 @@ public class MapMapping extends CollectionMapping{
         return getValue( request, null, null );
     }
 
-    public Object getValue( HttpServletRequest request, Object instance, String prefix ){
+    public Object getValue( boolean force ){
+        return getValue( null, null, null, force );
+   }
+    
+    public Object getValue( HttpServletRequest request, Object instance, String prefix, boolean force ){
         try{
             /*
              instance = instance == null? collectionType.newInstance() : instance;
@@ -180,7 +184,7 @@ public class MapMapping extends CollectionMapping{
                 
                 index++;
             }
-            return map.size() != 0? map : null;
+            return force || map.size() != 0? map : null;
         }
         catch( Exception e ){
             return null;

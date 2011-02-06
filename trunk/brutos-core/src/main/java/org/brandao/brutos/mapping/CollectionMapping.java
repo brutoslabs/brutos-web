@@ -66,9 +66,9 @@ public class CollectionMapping extends MappingBean{
          * A partir da versão 2.0 o bean sempre será diferente de null.
          */
         if( bean == null )
-            return super.getValue(request, null, prefix, index );
+            return super.getValue(request, null, prefix, index, false );
         else
-            return bean.getValue(request, null, prefix, index );
+            return bean.getValue(request, null, prefix, index, false );
     }
     /*
     private Object get( HttpSession session, long index ){
@@ -86,6 +86,10 @@ public class CollectionMapping extends MappingBean{
     }
     */
 
+    public Object getValue( boolean force ){
+        return getValue( null, null, null, force );
+   }
+
     public Object getValue(){
         return getValue( null );
     }
@@ -94,7 +98,7 @@ public class CollectionMapping extends MappingBean{
         return getValue( request, null, null );
     }
 
-    public Object getValue( HttpServletRequest request, Object instance, String prefix){
+    public Object getValue( HttpServletRequest request, Object instance, String prefix, boolean force){
         try{
             instance = getInstance( instance );
             Collection collection = (Collection)instance;
@@ -106,7 +110,7 @@ public class CollectionMapping extends MappingBean{
                 collection.add(beanInstance);
                 index++;
             }
-            return collection.size() != 0? collection : null;
+            return force || collection.size() != 0? collection : null;
         }
         catch( Exception e ){
             return null;
