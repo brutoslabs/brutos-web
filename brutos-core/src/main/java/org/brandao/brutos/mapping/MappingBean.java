@@ -88,34 +88,49 @@ public class MappingBean {
         return getValue( null, null );
     }
 
+    public Object getValue(boolean force){
+        return getValue( null, null, null, -1, force );
+    }
+
     public Object getValue( HttpServletRequest request ){
         return getValue( request, null );
     }
 
     public Object getValue( HttpServletRequest request, Object instance ){
-        return getValue( request, instance, null, -1 );
+        return getValue( request, instance, null, -1, false );
     }
 
     public Object getValue( HttpServletRequest request, Object instance, String prefix ){
-        return getValue( request, instance, prefix, -1 );
+        return getValue( request, instance, prefix, -1, false );
     }
 
+    /*
+    public Object getValue(HttpServletRequest request, Object instance, String prefix, long index ){
+        return getValue(request, instance, prefix, index, false );
+    }
+    */
     public Object getValue( /**
                              * @deprecated
                              */
-            HttpServletRequest request, Object instance, String prefix, long index ){
+            HttpServletRequest request, Object instance, String prefix, long index, boolean force ){
         try{
-            //bean
             Object obj;
-            //se true o bean existe
-            boolean exist = false;
-            obj = instance == null? /*classType.newInstance()*/ getInstanceByConstructor( prefix, index, request ) : instance;
+
+            obj = instance == null? getInstanceByConstructor( prefix, index, request ) : instance;
+
+            if( obj == null )
+                return null;
+
+
+            boolean exist = instance != null ||
+                    this.getConstructor().getArgs().size() != 0 ||
+                    this.getConstructor().isMethodFactory();
+
             Iterator<FieldBean> fds = fields.values().iterator();
             BeanInstance beanInstance = new BeanInstance( obj, classType );
             
             while( fds.hasNext() ){
                 FieldBean fb = fds.next();
-                //Field f = fb.getField();
 
                 Object value = this.getValueField(beanInstance, prefix, index, request, fb);
 
@@ -124,71 +139,12 @@ public class MappingBean {
 
                 beanInstance.getSetter( fb.getName() ).set( value );
 
-                /*
-                Validator validator = fb.getValidator();
-
-                if( fb.getMapping() == null ){
-                    Object value = fb.isStatic()?
-                        fb.getValue() :
-                        fb.getScope().get(
-                                (prefix != null? prefix : "") +
-                                fb.getParameterName() +
-                                    ( index < 0? "" : "[" + index + "]" ) );
-
-                    //se value for diferente null, entao existe uma propriedade do bean
-                    if( !exist && value != null )
-                        exist = true;
-
-                    Type type = fb.getType();
-                    //Object o = type.getValue( request, request.getSession().getServletContext(), value );
-                    Object o = type.getValue( value );
-
-
-                    if( validator != null )
-                        validator.validate(fb, value);
-                    
-                    beanInstance.getSetter( fb.getName() ).set( o );
-                }
-                else{
-                    //obtem o atual valor da propriedade
-                    Object property = beanInstance.getGetter( fb.getName() ).get();
-
-                    //obtem o objeto resultante
-                    MappingBean mappingBean = form.getMappingBean( fb.getMapping() );
-
-                    if( mappingBean == null )
-                        throw new BrutosException( "mapping name " + fb.getMapping() + " not found!" );
-
-                    //property = fb.getMapping().getValue( request, property, index );
-                    property = mappingBean.getValue(
-                        request,
-                        property,
-                        isHierarchy()?
-                            prefix != null? 
-                                prefix + fb.getParameterName() + getSeparator() :
-                                fb.getParameterName() + getSeparator()
-                            :
-                            null );
-
-                    //se property for diferente null, entao existe uma propriedade do bean
-                    if( !exist && property != null )
-                        exist = true;
-
-                    if( validator != null )
-                        validator.validate(fb, property);
-
-                    beanInstance.getSetter( fb.getName() )
-                        .set( property );
-                }
-                */
             }
-            //se nao existir nenhuma propriedade do bean, então o bean não existe
-            return exist || instance != null? obj : null;
+            return exist || force? obj : null;
         }
         catch( Exception e ){
             return null;
         }
-
     }
 
     private Object getValueField( BeanInstance beanInstance, String prefix, long index, HttpServletRequest request, FieldBean fb ) throws Exception{
@@ -323,8 +279,14 @@ public class MappingBean {
         ConstructorBean cons = this.getConstructor();
         ConstructorBean conInject = this.getConstructor();
         if( conInject.isConstructor() ){
+            
+            Object[] args = this.getValues(cons.getArgs(), prefix, index, request );
+
+            if( args == null )
+                return null;
+
             Constructor insCons = this.getConstructor().getContructor();
-            return insCons.newInstance( this.getValues(cons.getArgs(), prefix, index, request ) );
+            return insCons.newInstance( args );
         }
         else{
             MappingBean factoryBean =
@@ -332,14 +294,17 @@ public class MappingBean {
                     form.getMappingBean(factory) :
                     null;
 
-            Object factoryInstance = factoryBean.getValue();
+            Object factoryInstance = factoryBean.getValue(true);
+
+            if( factoryInstance == null )
+                return null;
 
             Method method = this.getConstructor().getMethod( factoryInstance );
 
             return method.invoke(
                     factory == null?
                         this.getClassType() :
-                        factory,
+                        factoryInstance,
                     getValues(cons.getArgs(), prefix, index, request ) );
         }
     }
@@ -348,21 +313,15 @@ public class MappingBean {
 
         Object[] values = new Object[ args.size() ];
 
+        boolean exist = false;
         for( int i=0;i<args.size();i++ ){
             FieldBean arg = (FieldBean) args.get(i);
             values[i] = this.getConstructorArg( prefix, index, request, arg);
-            /*
-            if( arg instanceof ValueInject )
-                values[i] = getValueInject( (ValueInject)arg );
-            else
-            if( arg instanceof GenericValueInject )
-                values[i] = container.getBean( ClassType.getWrapper(arg.getTarget()) );
-            else
-                values[i] = container.getBean( arg.getName() );
-            */
+            if( values[i] != null )
+                exist = true;
         }
 
-        return values;
+        return exist || args.size() == 0? values : null;
     }
 
     public String getFactory() {
