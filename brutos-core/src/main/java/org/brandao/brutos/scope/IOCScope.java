@@ -18,6 +18,7 @@
 package org.brandao.brutos.scope;
 
 import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.HandlerApplicationContext;
 
 /**
  *
@@ -25,9 +26,9 @@ import org.brandao.brutos.ApplicationContext;
  */
 public class IOCScope implements Scope{
 
-    private ApplicationContext app;
+    private HandlerApplicationContext app;
     
-    public IOCScope( ApplicationContext app ) {
+    public IOCScope( HandlerApplicationContext app ) {
         this.app = app;
     }
 

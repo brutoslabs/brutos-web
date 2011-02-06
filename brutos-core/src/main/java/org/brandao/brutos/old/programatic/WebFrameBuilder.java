@@ -30,6 +30,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.HandlerApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.mapping.CollectionMapping;
@@ -382,8 +383,8 @@ public class WebFrameBuilder {
         UseBeanData useBean = new UseBeanData();
         useBean.setNome( name );
         useBean.setScopeType( scope );
-        useBean.setValidate( BrutosContext
-                    .getCurrentApplicationContext().getValidatorProvider()
+        useBean.setValidate( ((HandlerApplicationContext)BrutosContext
+                    .getCurrentApplicationContext()).getValidatorProvider()
                         .getValidator( validatorConfig ) );
 
         FieldForm fieldBean = new FieldForm();

@@ -25,6 +25,7 @@ import org.brandao.brutos.Configuration;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.HandlerApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
@@ -111,8 +112,8 @@ public class MethodBuilder {
 
         useBean.setNome( name );
         useBean.setScopeType( scope );
-        useBean.setValidate( BrutosContext
-                    .getCurrentApplicationContext().getValidatorProvider()
+        useBean.setValidate( ((HandlerApplicationContext)BrutosContext
+                    .getCurrentApplicationContext()).getValidatorProvider()
                         .getValidator( validatorConfig ) );
         if( mapping != null ){
             if( webFrame.getMappingBeans().containsKey( mapping ) )
