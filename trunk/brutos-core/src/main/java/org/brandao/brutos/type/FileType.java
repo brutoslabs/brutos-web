@@ -86,7 +86,7 @@ public class FileType implements Type{
     }
 
     public void setValue(Object value) throws IOException {
-        if( value instanceof BrutosFile ){
+        if( value instanceof File ){
             ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
             MvcResponse response = app.getMvcResponse();
 
