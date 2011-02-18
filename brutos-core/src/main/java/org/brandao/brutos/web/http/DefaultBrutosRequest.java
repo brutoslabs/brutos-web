@@ -27,8 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletRequestWrapper;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.WebApplicationContext;
@@ -44,7 +44,7 @@ import org.brandao.brutos.type.json.JSONDecoder;
  *
  * @author Afonso Brandao
  */
-public class DefaultBrutosRequest extends HttpServletRequestWrapper implements BrutosRequest{
+public class DefaultBrutosRequest extends ServletRequestWrapper implements BrutosRequest{
 
     private Map parameters;
     private DefaultUploadEvent uploadEvent;
@@ -53,7 +53,7 @@ public class DefaultBrutosRequest extends HttpServletRequestWrapper implements B
     private long maxLength;
     private String path;
     
-    public DefaultBrutosRequest( HttpServletRequest request ){
+    public DefaultBrutosRequest( ServletRequest request ){
         super( request );
         this.parameters = new HashMap();
         uploadEvent = new DefaultUploadEvent( this );
@@ -241,7 +241,7 @@ public class DefaultBrutosRequest extends HttpServletRequestWrapper implements B
         }
 
         public boolean isMultipart(){
-            String tmp = request.getHeader( "content-type" );
+            String tmp = request.getContentType();//.getHeader( "content-type" );
             if( tmp == null )
                 return false;
 
@@ -251,7 +251,7 @@ public class DefaultBrutosRequest extends HttpServletRequestWrapper implements B
 
         private String getboundary() throws IOException{
 
-            String content_type = request.getHeader( "content-type" );
+            String content_type = request.getContentType();//.getHeader( "content-type" );
 
             int posboundary = content_type.indexOf( "boundary" );
 
