@@ -86,6 +86,12 @@ public interface HandlerApplicationContext {
     public void setConfiguration( Properties config );
 
     /**
+     * Obtém a configuração da aplicação.
+     * @param config Configuração.
+     */
+    public Properties getConfiguration();
+
+    /**
      * Define o provedor do container IOC.
      * @param iocProvider Provedor do container IOC.
      */
