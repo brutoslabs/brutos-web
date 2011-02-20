@@ -27,14 +27,21 @@
             <xsd:all>
 
           <!-- *************************************************************** -->
+                <xsd:element name="auto-config" minOccurs="0" maxOccurs="1"/>
 
+                <xsd:element name="annotation-config" minOccurs="0" maxOccurs="1"/>
+                
                 <xsd:element name="context-params" minOccurs="0" maxOccurs="1">
                     <xsd:complexType>
                         <xsd:sequence>
                             <xsd:element name="context-param" maxOccurs="unbounded">
                                 <xsd:complexType>
-                                    <xsd:attribute name="name" type="xsd:string" use="required"/>
-                                    <xsd:attribute name="value" type="xsd:string" use="required"/>
+                                    <xsd:simpleContent>
+                                        <xsd:extension base="xsd:string">
+                                        <xsd:attribute name="name" type="xsd:string" use="required"/>
+                                        <xsd:attribute name="value" type="xsd:string"/>
+                                        </xsd:extension>
+                                    </xsd:simpleContent>
                                 </xsd:complexType>
                             </xsd:element>
                         </xsd:sequence>
@@ -48,8 +55,12 @@
                         <xsd:sequence>
                             <xsd:element name="type" maxOccurs="unbounded">
                                 <xsd:complexType>
-                                    <xsd:attribute name="class-type" type="xsd:string" use="required"/>
-                                    <xsd:attribute name="factory" type="xsd:string" use="required"/>
+                                    <xsd:simpleContent>
+                                        <xsd:extension base="xsd:string">
+                                            <xsd:attribute name="class-type" type="xsd:string" use="required"/>
+                                            <xsd:attribute name="factory" type="xsd:string"/>
+                                        </xsd:extension>
+                                    </xsd:simpleContent>
                                 </xsd:complexType>
                             </xsd:element>
                         </xsd:sequence>
@@ -161,12 +172,24 @@
     </xsd:complexType>
 -->
     <xsd:complexType name="mapping-ref">
+        <xsd:attribute name="bean" type="xsd:string"/>
+        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="value" type="xsd:string"/>
+        <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
+        <xsd:attribute name="mapping" type="xsd:boolean"/>
+        <xsd:attribute name="scope" type="xsd:string" default="param"/>
+        <xsd:attribute name="factory" type="class"/>
+    </xsd:complexType>
+
+    <!--
+    <xsd:complexType name="mapping-ref">
         <xsd:complexContent>
             <xsd:extension base="constructor-arg">
                 <xsd:attribute name="bean" type="xsd:string"/>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
+    -->
 
     <xsd:simpleType name="class">
         <xsd:restriction base="xsd:token">
@@ -233,15 +256,16 @@
             <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
-        <xsd:attribute name="name" type="xsd:string"/>
-        <xsd:attribute name="property-name" type="xsd:string" use="required"/>
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
         <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
-        <!--<xsd:attribute name="mapping-name" type="xsd:string"/>-->
         <xsd:attribute name="ref" type="xsd:string"/>
         <xsd:attribute name="scope" type="xsd:string" default="request"/>
         <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="bean" type="xsd:string"/>
+        <xsd:attribute name="mapping" type="xsd:boolean"/>
+        <!--<xsd:attribute name="mapping-name" type="xsd:string"/>-->
         <!--<xsd:sequence>
             <xsd:element name="bean" type="mapping-bean"  minOccurs="1" maxOccurs="1"/>
         </xsd:sequence>
@@ -260,24 +284,31 @@
             <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
-        <xsd:attribute name="name" type="xsd:string"/>
+        <!--<xsd:attribute name="name" type="xsd:string"/>-->
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
         <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
-        <!--<xsd:attribute name="mapping-name" type="xsd:string"/>-->
-        <xsd:attribute name="ref" type="xsd:string"/>
+        <xsd:attribute name="bean" type="xsd:string"/>
+        <xsd:attribute name="mapping" type="xsd:boolean"/>
         <xsd:attribute name="scope" type="xsd:string" default="request"/>
         <xsd:attribute name="factory" type="class"/>
+        <!--<xsd:attribute name="mapping-name" type="xsd:string"/>-->
     </xsd:complexType>
 
   <!-- *************************************************************** -->
 
     <xsd:complexType name="controller-property">
+        <xsd:choice>
+            <xsd:element name="ref" type="mapping-ref" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:choice>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="property-name" type="xsd:string" use="required"/>
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
-        <xsd:attribute name="ref" type="xsd:string"/>
+        <xsd:attribute name="bean" type="xsd:string"/>
+        <xsd:attribute name="mapping" type="xsd:boolean"/>
         <xsd:attribute name="scope" type="xsd:string" default="request"/>
         <xsd:attribute name="factory" type="xsd:string"/>
     </xsd:complexType>
@@ -285,13 +316,26 @@
   <!-- *************************************************************** -->
 
     <xsd:complexType name="parameter">
+        <xsd:choice>
+            <xsd:element name="ref" type="mapping-ref" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:choice>
+        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="value" type="xsd:string"/>
+        <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
+        <xsd:attribute name="bean" type="xsd:string"/>
+        <xsd:attribute name="mapping" type="xsd:boolean"/>
+        <xsd:attribute name="scope" type="xsd:string" default="request"/>
+        <xsd:attribute name="factory" type="class"/>
+        <!--
         <xsd:attribute name="name" type="xsd:string" use="required"/>
         <xsd:attribute name="type" type="xsd:string" use="required"/>
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="ref" type="xsd:string"/>
         <xsd:attribute name="scope" type="xsd:string" default="request"/>
-        <xsd:attribute name="factory" type="xsd:string"/>
+        <xsd:attribute name="factory" type="xsd:string"/>-->
     </xsd:complexType>
 
     <xsd:complexType name="props">
@@ -336,6 +380,7 @@
         <xsd:simpleContent>
             <xsd:extension base="xsd:string">
                 <xsd:attribute name="name" type="xsd:string" use="required"/>
+                <xsd:attribute name="value" type="xsd:string"/>
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
