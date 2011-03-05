@@ -29,8 +29,11 @@ public interface XMLBrutosConstants {
     public static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
     public static final String XML_BRUTOS = "brutos-configuration";
     public static final String XML_BRUTOS_VERSION = "version";
+    public static final String XML_BRUTOS_IMPORTERS = "imorters";
+    public static final String XML_BRUTOS_IMPORTER = "importer";
     public static final String XML_BRUTOS_CONTEXT_PARAMS = "context-params";
     public static final String XML_BRUTOS_CONTEXT_PARAM = "context-param";
+    
     public static final String XML_BRUTOS_WEB_FRAMES = "web-frames";
     public static final String XML_BRUTOS_WEB_FRAME = "web-frame";
     public static final String XML_BRUTOS_MAPPING = "mapping";
