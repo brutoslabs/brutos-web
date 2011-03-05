@@ -18,12 +18,15 @@
 package org.brandao.brutos.xml;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.HandlerApplicationContext;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
+import org.brandao.brutos.type.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -38,6 +41,7 @@ public class BuildApplication {
     private InputSource source;
     private HandlerApplicationContext handler;
     private XMLParseUtil parseUtil;
+    private List importers;
 
     public BuildApplication( InputSource source, HandlerApplicationContext handler ){
         this.source = source;
@@ -83,6 +87,15 @@ public class BuildApplication {
             parseUtil.getElement(
                 document, 
                 XMLBrutosConstants.XML_BRUTOS_CONTEXT_PARAMS ) );
+
+        loadImporters( parseUtil.getElement(
+                document,
+                XMLBrutosConstants.XML_BRUTOS_IMPORTERS ) );
+
+        loadTypes( parseUtil.getElement(
+                document,
+                XMLBrutosConstants.XML_BRUTOS_TYPES ) );
+
     }
 
     private void loadContextParams( Element cp ){
@@ -97,8 +110,65 @@ public class BuildApplication {
             Element c = (Element) list.item(i);
             String name  = c.getAttribute( "name" );
             String value = c.getAttribute("value");
+
+            value = value == null? c.getTextContent() : value;
+            
             config.setProperty(name, value);
         }
         
     }
+    
+    private void loadImporters( Element e ){
+        this.importers = new ArrayList();
+
+        NodeList list = parseUtil
+            .getElements(
+                e,
+                XMLBrutosConstants.XML_BRUTOS_IMPORTER );
+
+        for( int i=0;i<list.getLength();i++ ){
+            Element c = (Element) list.item(i);
+            String resource = c.getAttribute( "resource" );
+
+            if( resource != null && resource.length() != 0 )
+                this.importers.add(resource);
+            
+        }
+    }
+
+    private void loadTypes( Element cp ){
+        NodeList list = parseUtil
+            .getElements(
+                cp,
+                XMLBrutosConstants.XML_BRUTOS_TYPE );
+
+        for( int i=0;i<list.getLength();i++ ){
+            Element c = (Element) list.item(i);
+            String name  = c.getAttribute( "class-type" );
+            String value = c.getAttribute("factory");
+
+            value = value == null? c.getTextContent() : value;
+
+            Class type = null;
+            Class factory = null;
+
+            try{
+                type = Class.forName(
+                            name,
+                            true,
+                            Thread.currentThread().getContextClassLoader() );
+                factory = Class.forName(
+                            value,
+                            true,
+                            Thread.currentThread().getContextClassLoader() );
+            }
+            catch( Exception e ){
+                throw new BrutosException( e );
+            }
+
+            Types.setType(type, factory);
+        }
+
+    }
+
 }
