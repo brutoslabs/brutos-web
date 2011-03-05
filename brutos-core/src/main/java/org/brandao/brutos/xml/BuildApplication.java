@@ -25,6 +25,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.HandlerApplicationContext;
+import org.brandao.brutos.InterceptorBuilder;
+import org.brandao.brutos.InterceptorManager;
+import org.brandao.brutos.InterceptorStackBuilder;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
 import org.brandao.brutos.type.*;
 import org.w3c.dom.Document;
@@ -61,7 +64,7 @@ public class BuildApplication {
 
         try{
             documentBuilderFactory.setNamespaceAware( true);
-            documentBuilderFactory.setValidating( true);
+            documentBuilderFactory.setValidating(true);
             documentBuilderFactory.setAttribute(
                     XMLBrutosConstants.JAXP_SCHEMA_LANGUAGE,
                     XMLBrutosConstants.W3C_XML_SCHEMA
@@ -95,6 +98,10 @@ public class BuildApplication {
         loadTypes( parseUtil.getElement(
                 document,
                 XMLBrutosConstants.XML_BRUTOS_TYPES ) );
+
+        loadInterceptors( parseUtil.getElement(
+                document,
+                XMLBrutosConstants.XML_BRUTOS_INTERCEPTORS ) );
 
     }
 
@@ -171,4 +178,123 @@ public class BuildApplication {
 
     }
 
+    private void loadInterceptors( Element e ){
+        NodeList list = parseUtil
+            .getElements(
+                e,
+                XMLBrutosConstants.XML_BRUTOS_INTERCEPTOR );
+
+        loadInterceptor( list );
+
+        NodeList listStack = parseUtil
+            .getElements(
+                e,
+                XMLBrutosConstants.XML_BRUTOS_INTERCEPTOR_STACK );
+
+        loadInterceptorStack( listStack );
+
+    }
+
+    private void loadInterceptor( NodeList list ){
+        for( int i=0;i<list.getLength();i++ ){
+            Element c = (Element) list.item(i);
+
+            String name       = c.getAttribute( "name" );
+            String clazzName  = c.getAttribute( "class" );
+            Boolean isDefault = Boolean.valueOf(c.getAttribute( "default" ));
+            Class clazz;
+
+            try{
+                clazz = Class.forName(
+                            clazzName,
+                            true,
+                            Thread.currentThread().getContextClassLoader() );
+            }
+            catch( Exception ex ){
+                throw new BrutosException( ex );
+            }
+
+            InterceptorManager interceptorManager =
+                handler.getInterceptorManager();
+
+            InterceptorBuilder interceptorBuilder =
+                interceptorManager.addInterceptor(
+                    name,
+                    clazz,
+                    isDefault.booleanValue());
+
+            NodeList listParam = parseUtil
+                .getElements(
+                    c,
+                    XMLBrutosConstants.XML_BRUTOS_PARAM );
+
+            for( int k=0;k<listParam.getLength();k++ ){
+                Element paramNode = (Element) listParam.item(k);
+
+                String paramName  = paramNode.getAttribute( "name" );
+                String paramValue = paramNode.getAttribute( "value" );
+
+                paramValue =
+                    paramValue == null?
+                        paramNode.getTextContent() :
+                        paramValue;
+
+                interceptorBuilder.addParameter(paramName, paramValue);
+            }
+
+        }
+    }
+
+    private void loadInterceptorStack( NodeList list ){
+        for( int i=0;i<list.getLength();i++ ){
+            Element c = (Element) list.item(i);
+
+            String name       = c.getAttribute( "name" );
+            Boolean isDefault = Boolean.valueOf(c.getAttribute( "default" ));
+
+            InterceptorManager interceptorManager =
+                handler.getInterceptorManager();
+
+            InterceptorStackBuilder interceptorStackBuilder =
+                interceptorManager.addInterceptorStack(
+                    name,
+                    isDefault.booleanValue());
+
+            NodeList listInterceptorRef = parseUtil
+                .getElements(
+                    c,
+                    XMLBrutosConstants.XML_BRUTOS_INTERCEPTOR_REF );
+
+            for( int j=0;j<listInterceptorRef.getLength();j++ ){
+                Element interceptorRefNode =
+                    (Element) listInterceptorRef.item(j);
+
+                String interceptorRefName = 
+                        interceptorRefNode.getAttribute( "name" );
+
+                interceptorStackBuilder.addInterceptor( interceptorRefName );
+
+                NodeList listParam = parseUtil
+                    .getElements(
+                        interceptorRefNode,
+                        XMLBrutosConstants.XML_BRUTOS_PARAM );
+
+                for( int k=0;k<listParam.getLength();k++ ){
+                    Element paramNode = (Element) listParam.item(k);
+
+                    String paramName  = paramNode.getAttribute( "name" );
+                    String paramValue = paramNode.getAttribute( "value" );
+
+                    paramValue =
+                        paramValue == null?
+                            paramNode.getTextContent() :
+                            paramValue;
+
+                    interceptorStackBuilder.addParameter(paramName, paramValue);
+                }
+
+            }
+
+        }
+    }
 }
