@@ -23,11 +23,16 @@ import java.util.List;
 import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.brandao.brutos.BeanBuilder;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ControllerBuilder;
+import org.brandao.brutos.ControllerManager;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.HandlerApplicationContext;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.InterceptorStackBuilder;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
 import org.brandao.brutos.type.*;
 import org.w3c.dom.Document;
@@ -102,6 +107,10 @@ public class BuildApplication {
         loadInterceptors( parseUtil.getElement(
                 document,
                 XMLBrutosConstants.XML_BRUTOS_INTERCEPTORS ) );
+
+        loadControllers( parseUtil.getElement(
+                document,
+                XMLBrutosConstants.XML_BRUTOS_CONTROLLERS ) );
 
     }
 
@@ -294,7 +303,161 @@ public class BuildApplication {
                 }
 
             }
-
         }
+    }
+
+    private  void loadControllers( Element controllersNode ){
+
+        NodeList controllers = parseUtil
+            .getElements(
+                controllersNode,
+                XMLBrutosConstants.XML_BRUTOS_CONTROLLER );
+
+
+        for( int i=0;i<controllers.getLength();i++ ){
+            Element controllerNode = (Element) controllers.item(i);
+            loadController( controllerNode );
+        }
+    }
+
+    private void loadController( Element controller ){
+        String id = controller.getAttribute( "id" );
+        DispatcherType dispatcher =
+            DispatcherType.valueOf( controller.getAttribute( "dispatcher" ) );
+        String view = controller.getAttribute( "view" );
+        String name = controller.getAttribute( "name" );
+        String clazzName = controller.getAttribute( "class" );
+        ScopeType scope = 
+            ScopeType.valueOf( controller.getAttribute( "scope" ) );
+        String actionId = controller.getAttribute( "action-id" );
+        String defaultAction = controller.getAttribute( "default-action" );
+
+        Class clazz = null;
+        try{
+            clazz = Class.forName(
+                        clazzName,
+                        true,
+                        Thread.currentThread().getContextClassLoader() );
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+        ControllerManager controllerMaanger = handler.getControllerManager();
+
+        ControllerBuilder controllerBuilder =
+            controllerMaanger.addController(
+                id,
+                view,
+                dispatcher,
+                name,
+                clazz,
+                actionId);
+
+        controllerBuilder.setDefaultAction(defaultAction);
+
+        loadAliasController(
+            parseUtil
+                .getElements(
+                    controller,
+                    XMLBrutosConstants.XML_BRUTOS_ALIAS ),
+            controllerBuilder );
+
+        addInterceptorController(
+            parseUtil
+                .getElements(
+                    controller,
+                    XMLBrutosConstants.XML_BRUTOS_INTERCEPTOR_REF ),
+            controllerBuilder );
+
+        addBeans(
+            parseUtil
+                .getElements(
+                    controller,
+                    XMLBrutosConstants.XML_BRUTOS_BEAN ),
+            controllerBuilder );
+    }
+
+    private void loadAliasController( NodeList aliasNode, 
+            ControllerBuilder controllerBuilder ){
+
+        for( int i=0;i<aliasNode.getLength();i++ ){
+            Element c = (Element) aliasNode.item(i);
+            controllerBuilder.addAlias( c.getTextContent() );
+        }
+        
+    }
+
+    private void addInterceptorController( NodeList interceptorList,
+            ControllerBuilder controllerBuilder ){
+
+        for( int j=0;j<interceptorList.getLength();j++ ){
+            Element interceptorRefNode =
+                (Element) interceptorList.item(j);
+
+            String interceptorRefName =
+                    interceptorRefNode.getAttribute( "name" );
+
+            InterceptorBuilder interceptorBuilder = 
+                    controllerBuilder.addInterceptor( interceptorRefName );
+
+            NodeList listParam = parseUtil
+                .getElements(
+                    interceptorRefNode,
+                    XMLBrutosConstants.XML_BRUTOS_PARAM );
+
+            for( int k=0;k<listParam.getLength();k++ ){
+                Element paramNode = (Element) listParam.item(k);
+
+                String paramName  = paramNode.getAttribute( "name" );
+                String paramValue = paramNode.getAttribute( "value" );
+
+                paramValue =
+                    paramValue == null?
+                        paramNode.getTextContent() :
+                        paramValue;
+
+                interceptorBuilder.addParameter(paramName, paramValue);
+            }
+        }
+    }
+
+    private void addBeans( NodeList beanList,
+            ControllerBuilder controllerBuilder ){
+
+        for( int k=0;k<beanList.getLength();k++ ){
+            Element beanNode = (Element) beanList.item(k);
+            addBean(beanNode, controllerBuilder);
+        }
+
+    }
+
+    private void addBean( Element beanNode,
+            ControllerBuilder controllerBuilder ){
+
+        String name          = beanNode.getAttribute( "name" );
+        String separator     = beanNode.getAttribute( "separator" );
+        String indexFormat   = beanNode.getAttribute( "index-format" );
+        String factory       = beanNode.getAttribute( "factory" );
+        String methodFactory = beanNode.getAttribute( "method-factory" );
+        String target        = beanNode.getAttribute( "target" );
+
+        Class clazz = null;
+        try{
+            clazz = Class.forName(
+                        target,
+                        true,
+                        Thread.currentThread().getContextClassLoader() );
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+
+        BeanBuilder beanBuilder =
+            controllerBuilder.buildMappingBean(name, clazz);
+
+        beanBuilder.setFactory(factory);
+        beanBuilder.setMethodfactory(methodFactory);
+        beanBuilder.setSeparator(separator);
+        beanBuilder.setIndexFormat(indexFormat);
     }
 }

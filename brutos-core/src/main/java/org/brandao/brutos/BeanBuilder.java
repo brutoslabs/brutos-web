@@ -175,6 +175,16 @@ public class BeanBuilder {
     }
 
     /**
+     * Define o separador. Se não informado, o separador será ".".
+     * @param separator Separador
+     * @return Construtor do mapeamento.
+     */
+    public BeanBuilder setSeparator( String separator ){
+        mappingBean.setSeparator(separator);
+        return this;
+    }
+
+    /**
      * Faz o mapeamento de uma propriedade.
      *
      * @param name Nome do parâmetro.
@@ -280,6 +290,16 @@ public class BeanBuilder {
         setElement( beanName );
 
         return bb;
+    }
+
+    /**
+     * Define a representação do índice do objeto em uma coleção.
+     * @param indexFormat Representação.
+     * @return Construtor do mapeamento.
+     */
+    public BeanBuilder setIndexFormat( String indexFormat ){
+        mappingBean.setIndexFormat(indexFormat);
+        return this;
     }
 
     /**
