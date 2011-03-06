@@ -52,11 +52,14 @@ public class MappingBean {
 
     private String factory;
 
+    private String indexFormat;
+
     public MappingBean( Form form ) {
         this.fields = new HashMap();
         this.form = form;
         this.hierarchy = true;
         this.separator = ".";
+        this.indexFormat = "[$index]";
         this.constructor = new ConstructorBean(this);
     }
 
@@ -157,7 +160,12 @@ public class MappingBean {
                 fb.getScope().get(
                         (prefix != null? prefix : "") +
                         fb.getParameterName() +
-                            ( index < 0? "" : "[" + index + "]" ) );
+                            //( index < 0? "" : "[" + index + "]" ) );
+                            ( index < 0?
+                                "" :
+                                indexFormat.replace(
+                                    "$index",
+                                    String.valueOf(index) ) ) );
 
             Type type = fb.getType();
             property = type.getValue( value );
@@ -200,7 +208,12 @@ public class MappingBean {
                 fb.getScope().get(
                         (prefix != null? prefix : "") +
                         fb.getParameterName() +
-                            ( index < 0? "" : "[" + index + "]" ) );
+                            //( index < 0? "" : "[" + index + "]" ) );
+                            ( index < 0?
+                                "" :
+                                indexFormat.replace(
+                                    "$index",
+                                    String.valueOf(index) ) ) );
 
             Type type = fb.getType();
             property = type.getValue( value );
@@ -330,6 +343,14 @@ public class MappingBean {
 
     public void setFactory(String factory) {
         this.factory = factory;
+    }
+
+    public String getIndexFormat() {
+        return indexFormat;
+    }
+
+    public void setIndexFormat(String indexFormat) {
+        this.indexFormat = indexFormat;
     }
 
     /*

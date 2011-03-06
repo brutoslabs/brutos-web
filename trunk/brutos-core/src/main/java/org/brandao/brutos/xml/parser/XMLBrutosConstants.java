@@ -33,9 +33,18 @@ public interface XMLBrutosConstants {
     public static final String XML_BRUTOS_IMPORTER = "importer";
     public static final String XML_BRUTOS_CONTEXT_PARAMS = "context-params";
     public static final String XML_BRUTOS_CONTEXT_PARAM = "context-param";
-    
+
+    /**
+     * @deprecated
+     */
     public static final String XML_BRUTOS_WEB_FRAMES = "web-frames";
+    /**
+     * @deprecated
+     */
     public static final String XML_BRUTOS_WEB_FRAME = "web-frame";
+
+    public static final String XML_BRUTOS_CONTROLLERS = "controllers";
+    public static final String XML_BRUTOS_CONTROLLER = "controller";
     public static final String XML_BRUTOS_MAPPING = "mapping";
     public static final String XML_BRUTOS_THROWS = "throw-safe";
     public static final String XML_BRUTOS_ALIAS = "alias";
@@ -56,9 +65,13 @@ public interface XMLBrutosConstants {
     public static final String XML_BRUTOS_BEAN_CONSTRUCTOR_ARG = "constructor-arg";
     public static final String XML_BRUTOS_BEAN_PROPERY = "property";
     
-    @Deprecated
+    /**
+     * @deprecated
+     */
     public static final String XML_BRUTOS_PROPERTIES = "properties";
-    @Deprecated
+    /**
+     * @deprecated
+     */
     public static final String XML_BRUTOS_PROPERTIES_PROP = "prop";
     
     public static final String XML_BRUTOS_PROPS = "props";

@@ -225,7 +225,7 @@ public class ControllerBuilder {
     }
 
     /**
-     * Define um ação a ser executado caso o controlador seja chamado sem que seja 
+     * Define uma ação a ser executado caso o controlador seja chamado sem que seja
      * determinada a execução de alguma ação.
      * 
      * @param id Identificação da ção.
