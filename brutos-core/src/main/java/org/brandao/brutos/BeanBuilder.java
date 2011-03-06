@@ -476,8 +476,8 @@ public class BeanBuilder {
         }
         */
 
-        FieldBean fieldBean = this.createFieldBean(name, propertyName, enumProperty,
-                temporalProperty, mapping, scope, value, type);
+        FieldBean fieldBean = this.createDependencyBean(name, propertyName, true,
+                enumProperty, temporalProperty, mapping, scope, value, type);
 
         Configuration validatorConfig = new Configuration();
         fieldBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
@@ -605,8 +605,8 @@ public class BeanBuilder {
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, Type type ){
 
-        FieldBean fieldBean = this.createFieldBean(name, name, enumProperty,
-                temporalProperty, mapping, scope, value, type);
+        FieldBean fieldBean = this.createDependencyBean(name, null, false,
+                enumProperty, temporalProperty, mapping, scope, value, type);
 
         Configuration validatorConfig = new Configuration();
         fieldBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
@@ -614,16 +614,17 @@ public class BeanBuilder {
         return this;
     }
 
-    private FieldBean createFieldBean( String name, String propertyName,
-            EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, Type type ){
+    private FieldBean createDependencyBean( String name, String propertyName,
+            boolean propertyNameRequired, EnumerationType enumProperty,
+            String temporalProperty, String mapping, ScopeType scope,
+            Object value, Type type ){
 
         name = name == null || name.replace( " ", "" ).length() == 0? null : name;
         propertyName = propertyName == null || propertyName.replace( " ", "" ).length() == 0? null : propertyName;
         temporalProperty = temporalProperty == null || temporalProperty.replace( " ", "" ).length() == 0? null : temporalProperty;
         mapping = mapping == null || mapping.replace( " ", "" ).length() == 0? null : mapping;
 
-        if( propertyName == null )
+        if( propertyNameRequired && propertyName == null )
             throw new BrutosException( "the property name is required!" );
         else
         if( this.mappingBean.getFields().containsKey( propertyName ) )
@@ -677,4 +678,22 @@ public class BeanBuilder {
         fieldBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
         return fieldBean;
     }
+
+    /**
+     * Verifica se é o mapeamento de um Map.
+     * @return Verdadeiro se é o mapeamento de um Map, caso contrário falso.
+     */
+    public boolean isMap(){
+        return this.mappingBean.isMap();
+    }
+
+    /**
+     * Verifica se é o mapeamento de uma Collection.
+     * @return Verdadeiro se é o mapeamento de uma Collection,
+     * caso contrário falso.
+     */
+    public boolean isCollection(){
+        return this.mappingBean.isCollection();
+    }
+
 }

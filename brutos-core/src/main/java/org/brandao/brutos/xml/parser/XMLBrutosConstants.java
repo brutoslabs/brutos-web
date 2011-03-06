@@ -79,6 +79,7 @@ public interface XMLBrutosConstants {
     public static final String XML_BRUTOS_MAP = "map";
     public static final String XML_BRUTOS_MAP_ENTRY = "entry";
     public static final String XML_BRUTOS_MAP_KEY = "key";
+    public static final String XML_BRUTOS_COLLECTION_ELEMENT = "element";
     public static final String XML_BRUTOS_LIST = "list";
     public static final String XML_BRUTOS_SET = "set";
     public static final String XML_BRUTOS_EXTEND_CONFIGURATION = "extend-configuration";
