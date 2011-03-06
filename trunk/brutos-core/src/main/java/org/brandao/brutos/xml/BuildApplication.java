@@ -28,6 +28,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.HandlerApplicationContext;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.InterceptorManager;
@@ -459,5 +460,233 @@ public class BuildApplication {
         beanBuilder.setMethodfactory(methodFactory);
         beanBuilder.setSeparator(separator);
         beanBuilder.setIndexFormat(indexFormat);
+
+        buildBean( beanNode, beanBuilder );
+
     }
+
+    private void addBean( Element beanNode,
+            BeanBuilder bean, String propertyName, boolean key, boolean element ){
+
+        String name          = beanNode.getAttribute( "name" );
+        String separator     = beanNode.getAttribute( "separator" );
+        String indexFormat   = beanNode.getAttribute( "index-format" );
+        String factory       = beanNode.getAttribute( "factory" );
+        String methodFactory = beanNode.getAttribute( "method-factory" );
+        String target        = beanNode.getAttribute( "target" );
+
+        Class clazz = null;
+        try{
+            clazz = Class.forName(
+                        target,
+                        true,
+                        Thread.currentThread().getContextClassLoader() );
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+
+        BeanBuilder beanBuilder;
+
+        if( key )
+            beanBuilder = bean.buildKey( clazz );
+        else
+        if( element )
+            beanBuilder = bean.buildElement( clazz );
+        else
+            beanBuilder =
+                propertyName == null?
+                    bean.buildConstructorArg(name, clazz) :
+                    bean.buildProperty(name, propertyName, clazz);
+
+        beanBuilder.setFactory(factory);
+        beanBuilder.setMethodfactory(methodFactory);
+        beanBuilder.setSeparator(separator);
+        beanBuilder.setIndexFormat(indexFormat);
+
+        buildBean( beanNode, beanBuilder );
+
+    }
+
+    private void buildBean( Element beanNode, BeanBuilder beanBuilder ){
+        buildConstructorBean(
+            parseUtil
+                .getElements(
+                    beanNode,
+                    XMLBrutosConstants.XML_BRUTOS_BEAN_CONSTRUCTOR_ARG ),
+            beanBuilder
+                );
+
+        buildPropertiesBean(
+            parseUtil
+                .getElements(
+                    beanNode,
+                    XMLBrutosConstants.XML_BRUTOS_BEAN_PROPERY ),
+            beanBuilder
+                );
+
+
+        Element keyNode =
+            parseUtil
+                .getElement(
+                    beanNode,
+                    XMLBrutosConstants.XML_BRUTOS_MAP_KEY );
+
+        if( keyNode != null )
+            addBean(keyNode, beanBuilder, null, true, false);
+        else
+        if( beanBuilder.isMap() )
+            throw new BrutosException("key node is required in Map" );
+
+        Element elementNode =
+            parseUtil
+                .getElement(
+                    beanNode,
+                    XMLBrutosConstants.XML_BRUTOS_COLLECTION_ELEMENT );
+        
+        if( elementNode != null )
+            addBean(elementNode, beanBuilder, null, false, true);
+        else
+        if( beanBuilder.isMap() )
+            throw new BrutosException("element node is required in Collection" );
+        
+    }
+
+    private void buildConstructorBean( NodeList consList,
+            BeanBuilder beanBuilder ){
+
+        for( int k=0;k<consList.getLength();k++ ){
+            Element conNode = (Element) consList.item(k);
+
+            EnumerationType enumProperty =
+                EnumerationType.valueOf( conNode.getAttribute( "enum-property" ) );
+            String value = conNode.getAttribute( "value" );
+            String temporalProperty = conNode.getAttribute( "temporal-property" );
+            String bean = conNode.getAttribute( "bean" );
+            boolean mapping = Boolean
+                .valueOf(conNode.getAttribute( "mapping" )).booleanValue();
+            ScopeType scope = ScopeType.valueOf( conNode.getAttribute( "scope" ) );
+            String factoryName = conNode.getAttribute( "factory" );
+            Type factory = null;
+
+            Element mappingRef = parseUtil.getElement( conNode, "ref");
+            Element beanNode   = parseUtil.getElement( conNode, "bean");
+            Element valueNode  = parseUtil.getElement( conNode, "value");
+            if( mappingRef != null ){
+                enumProperty =
+                    EnumerationType.valueOf( conNode.getAttribute( "enum-property" ) );
+                value = conNode.getAttribute( "value" );
+                temporalProperty = conNode.getAttribute( "temporal-property" );
+                bean = conNode.getAttribute( "bean" );
+                mapping = Boolean
+                    .valueOf(conNode.getAttribute( "mapping" )).booleanValue();
+                scope = ScopeType.valueOf( conNode.getAttribute( "scope" ) );
+                factoryName = conNode.getAttribute( "factory" );
+            }
+            else
+            if( beanNode != null ){
+                addBean( beanNode, beanBuilder, null, false, false );
+                continue;
+            }
+            else
+            if( valueNode != null ){
+                beanBuilder.addStaticContructorArg(bean, value);
+                continue;
+            }
+
+            try{
+                if( factoryName != null ){
+                    factory = (Type)Class.forName(
+                                factoryName,
+                                true,
+                                Thread.currentThread().getContextClassLoader() )
+                                    .newInstance();
+                }
+            }
+            catch( Exception ex ){
+                throw new BrutosException( ex );
+            }
+
+            beanBuilder.addContructorArg(
+                bean,
+                enumProperty,
+                temporalProperty,
+                mapping? bean : null,
+                scope,
+                value,
+                factory);
+            
+        }
+
+    }
+
+    private void buildPropertiesBean( NodeList consList,
+            BeanBuilder beanBuilder ){
+
+        for( int k=0;k<consList.getLength();k++ ){
+            Element propNode = (Element) consList.item(k);
+
+            String propertyName = propNode.getAttribute( "name" );
+            EnumerationType enumProperty =
+                EnumerationType.valueOf( propNode.getAttribute( "enum-property" ) );
+            String value = propNode.getAttribute( "value" );
+            String temporalProperty = propNode.getAttribute( "temporal-property" );
+            String bean = propNode.getAttribute( "bean" );
+            boolean mapping = Boolean
+                .valueOf(propNode.getAttribute( "mapping" )).booleanValue();
+            ScopeType scope = ScopeType.valueOf( propNode.getAttribute( "scope" ) );
+            String factoryName = propNode.getAttribute( "factory" );
+            Type factory = null;
+
+            Element mappingRef = parseUtil.getElement( propNode, "ref");
+            Element beanNode   = parseUtil.getElement( propNode, "bean");
+            Element valueNode  = parseUtil.getElement( propNode, "value");
+            if( mappingRef != null ){
+                enumProperty =
+                    EnumerationType.valueOf( propNode.getAttribute( "enum-property" ) );
+                value = propNode.getAttribute( "value" );
+                temporalProperty = propNode.getAttribute( "temporal-property" );
+                bean = propNode.getAttribute( "bean" );
+                mapping = Boolean
+                    .valueOf(propNode.getAttribute( "mapping" )).booleanValue();
+                scope = ScopeType.valueOf( propNode.getAttribute( "scope" ) );
+                factoryName = propNode.getAttribute( "factory" );
+            }
+            else
+            if( beanNode != null ){
+                addBean( beanNode, beanBuilder, propertyName, false, false );
+                continue;
+            }
+            else
+            if( valueNode != null ){
+                beanBuilder.addStaticProperty(bean, propertyName, value);
+                continue;
+            }
+
+            try{
+                if( factoryName != null ){
+                    factory = (Type)Class.forName(
+                                factoryName,
+                                true,
+                                Thread.currentThread().getContextClassLoader() )
+                                    .newInstance();
+                }
+            }
+            catch( Exception ex ){
+                throw new BrutosException( ex );
+            }
+
+            beanBuilder.addProperty(
+                bean,
+                propertyName,
+                enumProperty,
+                temporalProperty,
+                mapping? bean : null,
+                scope,
+                value,
+                factory);
+
+        }
+    }
+
 }
