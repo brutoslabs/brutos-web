@@ -391,6 +391,14 @@ public class BuildApplication {
                     controller,
                     XMLBrutosConstants.XML_BRUTOS_ACTION ),
             controllerBuilder );
+
+        addThrowSafe(
+            parseUtil.getElements(
+                controller,
+                XMLBrutosConstants.XML_BRUTOS_THROWS),
+            controllerBuilder
+            );
+
     }
 
     private void loadAliasController( NodeList aliasNode, 
@@ -638,8 +646,7 @@ public class BuildApplication {
             }
             else
             if( valueNode != null ){
-                beanBuilder.addStaticContructorArg(bean, value);
-                continue;
+                value = valueNode.getTextContent();
             }
 
             try{
@@ -707,8 +714,7 @@ public class BuildApplication {
             }
             else
             if( valueNode != null ){
-                beanBuilder.addStaticProperty(bean, propertyName, value);
-                continue;
+                value = valueNode.getTextContent();
             }
 
             try{
@@ -839,6 +845,13 @@ public class BuildApplication {
             actionBuilder
             );
 
+        addThrowSafe(
+            parseUtil.getElements(
+                actionNode,
+                XMLBrutosConstants.XML_BRUTOS_THROWS),
+            actionBuilder
+            );
+
     }
 
     private void addParametersAction( NodeList params,
@@ -927,4 +940,75 @@ public class BuildApplication {
             typeClass);
         
     }
+
+    private void addThrowSafe( NodeList throwSafeNodeList,
+            ControllerBuilder controllerBuilder ){
+
+        for( int i=0;i<throwSafeNodeList.getLength();i++ ){
+            Element throwSafeNode = (Element) throwSafeNodeList.item(i);
+            addThrowSafe( throwSafeNode,controllerBuilder );
+        }
+    }
+
+    private void addThrowSafe( Element throwSafeNode,
+            ControllerBuilder controllerBuilder ){
+
+        String view = throwSafeNode.getAttribute("view");
+        String target = throwSafeNode.getAttribute("target");
+        String name = throwSafeNode.getAttribute("name");
+        DispatcherType dispatcher =
+            DispatcherType.valueOf(throwSafeNode.getAttribute("dispatcher"));
+        Class targetClass;
+
+        try{
+            targetClass = Class.forName(
+                        target,
+                        true,
+                        Thread.currentThread().getContextClassLoader() );
+        }
+        catch( BrutosException ex ){
+            throw ex;
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+
+        controllerBuilder.addThrowable(targetClass, view, name, dispatcher);
+    }
+
+    private void addThrowSafe( NodeList throwSafeNodeList,
+            ActionBuilder actionBuilder ){
+
+        for( int i=0;i<throwSafeNodeList.getLength();i++ ){
+            Element throwSafeNode = (Element) throwSafeNodeList.item(i);
+            addThrowSafe(throwSafeNode,actionBuilder);
+        }
+    }
+
+    private void addThrowSafe( Element throwSafeNode,
+            ActionBuilder actionBuilder ){
+
+        String view = throwSafeNode.getAttribute("view");
+        String target = throwSafeNode.getAttribute("target");
+        String name = throwSafeNode.getAttribute("name");
+        DispatcherType dispatcher =
+            DispatcherType.valueOf(throwSafeNode.getAttribute("dispatcher"));
+        Class targetClass;
+
+        try{
+            targetClass = Class.forName(
+                        target,
+                        true,
+                        Thread.currentThread().getContextClassLoader() );
+        }
+        catch( BrutosException ex ){
+            throw ex;
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+
+        actionBuilder.addThrowable(targetClass, view, name, dispatcher);
+    }
+
 }
