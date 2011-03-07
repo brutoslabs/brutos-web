@@ -340,6 +340,7 @@
         <xsd:attribute name="mapping" type="xsd:boolean"/>
         <xsd:attribute name="scope" type="xsd:string" default="request"/>
         <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="type" type="xsd:string"/>
         <!--
         <xsd:attribute name="name" type="xsd:string" use="required"/>
         <xsd:attribute name="type" type="xsd:string" use="required"/>
