@@ -376,6 +376,14 @@ public class BuildApplication {
                     controller,
                     XMLBrutosConstants.XML_BRUTOS_BEAN ),
             controllerBuilder );
+
+        addProperties(
+            parseUtil
+                .getElements(
+                    controller,
+                    XMLBrutosConstants.XML_BRUTOS_CONTROLLER_PROPERTY ),
+            controllerBuilder );
+
     }
 
     private void loadAliasController( NodeList aliasNode, 
@@ -427,13 +435,13 @@ public class BuildApplication {
 
         for( int k=0;k<beanList.getLength();k++ ){
             Element beanNode = (Element) beanList.item(k);
-            addBean(beanNode, controllerBuilder);
+            addBean(beanNode, controllerBuilder, null);
         }
 
     }
 
     private void addBean( Element beanNode,
-            ControllerBuilder controllerBuilder ){
+            ControllerBuilder controllerBuilder, String propertyName ){
 
         String name          = beanNode.getAttribute( "name" );
         String separator     = beanNode.getAttribute( "separator" );
@@ -454,7 +462,9 @@ public class BuildApplication {
         }
 
         BeanBuilder beanBuilder =
-            controllerBuilder.buildMappingBean(name, clazz);
+            propertyName != null?
+                controllerBuilder.buildProperty(propertyName, clazz) :
+                controllerBuilder.buildMappingBean(name, clazz);
 
         beanBuilder.setFactory(factory);
         beanBuilder.setMethodfactory(methodFactory);
@@ -687,6 +697,80 @@ public class BuildApplication {
                 factory);
 
         }
+    }
+
+    private void addProperties(
+        NodeList properrties,
+        ControllerBuilder controllerBuilder ){
+
+        for( int k=0;k<properrties.getLength();k++ ){
+            Element propNode = (Element) properrties.item(k);
+            buildPropertyController(propNode, controllerBuilder);
+        }
+    }
+
+    private void buildPropertyController( Element propNode,
+            ControllerBuilder controllerBuilder ){
+
+        String propertyName = propNode.getAttribute( "name" );
+        EnumerationType enumProperty =
+            EnumerationType.valueOf( propNode.getAttribute( "enum-property" ) );
+        String value = propNode.getAttribute( "value" );
+        String temporalProperty = propNode.getAttribute( "temporal-property" );
+        String bean = propNode.getAttribute( "bean" );
+        boolean mapping = Boolean
+            .valueOf(propNode.getAttribute( "mapping" )).booleanValue();
+        ScopeType scope = ScopeType.valueOf( propNode.getAttribute( "scope" ) );
+        String factoryName = propNode.getAttribute( "factory" );
+        Type factory = null;
+
+        Element mappingRef = parseUtil.getElement( propNode, "ref");
+        Element beanNode   = parseUtil.getElement( propNode, "bean");
+        Element valueNode  = parseUtil.getElement( propNode, "value");
+        if( mappingRef != null ){
+            enumProperty =
+                EnumerationType.valueOf( propNode.getAttribute( "enum-property" ) );
+            value = propNode.getAttribute( "value" );
+            temporalProperty = propNode.getAttribute( "temporal-property" );
+            bean = propNode.getAttribute( "bean" );
+            mapping = Boolean
+                .valueOf(propNode.getAttribute( "mapping" )).booleanValue();
+            scope = ScopeType.valueOf( propNode.getAttribute( "scope" ) );
+            factoryName = propNode.getAttribute( "factory" );
+        }
+        else
+        if( beanNode != null ){
+            addBean( beanNode, controllerBuilder, propertyName );
+            return;
+        }
+        else
+        if( valueNode != null ){
+            controllerBuilder.addStaticProperty(propertyName, value);
+            return;
+        }
+
+        try{
+            if( factoryName != null ){
+                factory = (Type)Class.forName(
+                            factoryName,
+                            true,
+                            Thread.currentThread().getContextClassLoader() )
+                                .newInstance();
+            }
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+
+        controllerBuilder.addProperty(
+            propertyName,
+            bean,
+            scope,
+            enumProperty,
+            temporalProperty,
+            mapping? bean : null,
+            value,
+            factory);
     }
 
 }
