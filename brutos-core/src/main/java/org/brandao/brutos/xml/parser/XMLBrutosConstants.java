@@ -54,6 +54,7 @@ public interface XMLBrutosConstants {
     public static final String XML_BRUTOS_MAPPING_MAP_KEY = "mapping-key";
     public static final String XML_BRUTOS_MAPPING_REF = "mapping-ref";
     public static final String XML_BRUTOS_PROPERTY = "property-webframe";
+    public static final String XML_BRUTOS_CONTROLLER_PROPERTY = "property";
     public static final String XML_BRUTOS_METHOD = "method";
     public static final String XML_BRUTOS_METHOD_PARAM = "method-param";
     public static final String XML_BRUTOS_BEAN_VALUE = "value";

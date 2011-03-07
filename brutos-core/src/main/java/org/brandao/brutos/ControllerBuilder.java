@@ -464,7 +464,8 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, EnumerationType enumProperty ){
-        return addProperty( propertyName, id, scope, enumProperty, null, null, null );
+        return addProperty( propertyName, id, scope, enumProperty, null, null, 
+                null, null );
     }
 
     /**
@@ -477,7 +478,8 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, String temporalProperty ){
-        return addProperty( propertyName, id, scope, EnumerationType.ORDINAL, temporalProperty, null, null );
+        return addProperty( propertyName, id, scope, EnumerationType.ORDINAL,
+                temporalProperty, null, null, null );
     }
 
     /**
@@ -491,7 +493,7 @@ public class ControllerBuilder {
      */
     public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, Type type ){
         return addProperty( propertyName, id, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, type );
+                null, null, type );
     }
 
     /**
@@ -503,7 +505,8 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, EnumerationType enumProperty ){
-        return addProperty( propertyName, id, ScopeType.REQUEST, enumProperty, null, null, null );
+        return addProperty( propertyName, id, ScopeType.REQUEST, enumProperty,
+                null, null, null, null );
     }
 
     /**
@@ -516,7 +519,7 @@ public class ControllerBuilder {
      */
     public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope ){
         return addProperty( propertyName, id, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, null );
+                null, null, null );
     }
 
     /**
@@ -528,7 +531,8 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, String temporalProperty ){
-        return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, temporalProperty, null, null );
+        return addProperty( propertyName, id, ScopeType.REQUEST, 
+                EnumerationType.ORDINAL, temporalProperty, null, null, null );
     }
 
     /**
@@ -541,7 +545,7 @@ public class ControllerBuilder {
      */
     public PropertyBuilder addProperty( String propertyName, String id, Type type ){
         return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, type );
+                null, null, type );
     }
 
     /**
@@ -553,7 +557,7 @@ public class ControllerBuilder {
      */
     public PropertyBuilder addPropertyMapping( String propertyName, String mapping ){
         return addProperty( propertyName, null, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null );
+                mapping, null, null );
     }
 
     /**
@@ -566,7 +570,7 @@ public class ControllerBuilder {
      */
     public PropertyBuilder addPropertyMapping( String propertyName, String id, String mapping ){
         return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null );
+                mapping, null, null );
     }
 
     /**
@@ -578,7 +582,19 @@ public class ControllerBuilder {
      */
     public PropertyBuilder addProperty( String propertyName, String id ){
         return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, null );
+                null, null, null );
+    }
+
+    /**
+     * Configura uma propriedade do controlador com valor estático.
+     * 
+     * @param propertyName Nome da propriedade.
+     * @param value Valor da propriedade.
+     * @return Contrutor da propriedade.
+     */
+    public PropertyBuilder addStaticProperty( String propertyName, Object value ){
+        return addProperty( propertyName, null, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+                null, value, null );
     }
 
     /**
@@ -591,10 +607,11 @@ public class ControllerBuilder {
      * @param mapping Mapeamento customizado.
      * @param temporalProperty Usado na configuração de datas.
      * @param type Faz o processamento da propriedade.
+     * @param value Valor da propriedade.
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, EnumerationType enumProperty,
-            String temporalProperty, String mapping, Type type ){
+            String temporalProperty, String mapping, Object value, Type type ){
 
         id =
             id == null || id.replace( " ", "" ).length() == 0?
@@ -629,6 +646,7 @@ public class ControllerBuilder {
         useBean.setNome( id );
         useBean.setScopeType( scope );
         useBean.setValidate( validatorProvider.getValidator( validatorConfig ) );
+        useBean.setStaticValue( value );
 
         FieldForm fieldBean = new FieldForm();
         fieldBean.setBean( useBean );
@@ -676,6 +694,23 @@ public class ControllerBuilder {
         controller.getFields().add( fieldBean );
 
         return new PropertyBuilder( validatorConfig );
+    }
+
+    /**
+     * Constrói uma propriedade do controlador.
+     * @param propertyName Nome da propriedade.
+     * @param clazz Tipo da propriedade.
+     * @return Construtor da propriedade.
+     */
+    public BeanBuilder buildProperty( String propertyName, Class clazz ){
+        String beanName = this.controller.getId() + "Controller#" + propertyName;
+
+        BeanBuilder beanBuilder =
+                buildMappingBean(beanName, clazz);
+
+        this.addPropertyMapping(propertyName, beanName);
+
+        return beanBuilder;
     }
 
     /**

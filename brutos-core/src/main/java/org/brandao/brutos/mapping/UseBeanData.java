@@ -39,7 +39,9 @@ public class UseBeanData {
     private ScopeType scopeType;
 
     private MappingBean mapping;
-    
+
+    private Object staticValue;
+
     private Type type;
 
     private Validator validate;
@@ -103,6 +105,9 @@ public class UseBeanData {
 
         if( mapping != null )
             value = mapping.getValue();
+        else
+        if(staticValue!= null)
+            value = type.getValue( staticValue );
         else
         if( type instanceof CollectionType || type instanceof ArrayType )
             value = type.getValue( getScope().getCollection(nome) );
@@ -202,5 +207,13 @@ public class UseBeanData {
 
     public void setValidate(Validator validate) {
         this.validate = validate;
+    }
+
+    public Object getStaticValue() {
+        return staticValue;
+    }
+
+    public void setStaticValue(Object staticValue) {
+        this.staticValue = staticValue;
     }
 }
