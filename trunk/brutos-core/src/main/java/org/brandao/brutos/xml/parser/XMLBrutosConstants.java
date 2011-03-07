@@ -75,6 +75,8 @@ public interface XMLBrutosConstants {
      */
     public static final String XML_BRUTOS_PROPERTIES_PROP = "prop";
     
+    public static final String XML_BRUTOS_PARAMETER = "parameter";
+    public static final String XML_BRUTOS_ACTION = "action";
     public static final String XML_BRUTOS_PROPS = "props";
     public static final String XML_BRUTOS_PROPS_PROP = "prop";
     public static final String XML_BRUTOS_MAP = "map";

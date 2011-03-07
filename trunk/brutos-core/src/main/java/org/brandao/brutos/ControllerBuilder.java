@@ -421,7 +421,7 @@ public class ControllerBuilder {
         
         mp.setForm( controller );
         controller.getMethods().put( id, mp );
-        return new ActionBuilder( mp, controller, validatorProvider );
+        return new ActionBuilder( mp, controller, validatorProvider, this );
     }
 
     /**

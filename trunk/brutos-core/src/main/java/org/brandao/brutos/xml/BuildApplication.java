@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BeanBuilder;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ControllerBuilder;
@@ -384,6 +385,12 @@ public class BuildApplication {
                     XMLBrutosConstants.XML_BRUTOS_CONTROLLER_PROPERTY ),
             controllerBuilder );
 
+        addActions(
+            parseUtil
+                .getElements(
+                    controller,
+                    XMLBrutosConstants.XML_BRUTOS_ACTION ),
+            controllerBuilder );
     }
 
     private void loadAliasController( NodeList aliasNode, 
@@ -508,6 +515,37 @@ public class BuildApplication {
                 propertyName == null?
                     bean.buildConstructorArg(name, clazz) :
                     bean.buildProperty(name, propertyName, clazz);
+
+        beanBuilder.setFactory(factory);
+        beanBuilder.setMethodfactory(methodFactory);
+        beanBuilder.setSeparator(separator);
+        beanBuilder.setIndexFormat(indexFormat);
+
+        buildBean( beanNode, beanBuilder );
+
+    }
+
+    private void addBean( Element beanNode,
+            ActionBuilder actionBuilder ){
+
+        String separator     = beanNode.getAttribute( "separator" );
+        String indexFormat   = beanNode.getAttribute( "index-format" );
+        String factory       = beanNode.getAttribute( "factory" );
+        String methodFactory = beanNode.getAttribute( "method-factory" );
+        String target        = beanNode.getAttribute( "target" );
+
+        Class clazz = null;
+        try{
+            clazz = Class.forName(
+                        target,
+                        true,
+                        Thread.currentThread().getContextClassLoader() );
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+
+        BeanBuilder beanBuilder = actionBuilder.buildParameter(clazz);
 
         beanBuilder.setFactory(factory);
         beanBuilder.setMethodfactory(methodFactory);
@@ -745,8 +783,7 @@ public class BuildApplication {
         }
         else
         if( valueNode != null ){
-            controllerBuilder.addStaticProperty(propertyName, value);
-            return;
+            value = valueNode.getTextContent();
         }
 
         try{
@@ -773,4 +810,121 @@ public class BuildApplication {
             factory);
     }
 
+    private void addActions( NodeList actionList,
+            ControllerBuilder controllerBuilder ){
+
+        for( int k=0;k<actionList.getLength();k++ ){
+            Element actionNodeNode = (Element) actionList.item(k);
+            addAction( actionNodeNode, controllerBuilder );
+        }
+    }
+
+    private void addAction( Element actionNode,
+            ControllerBuilder controllerBuilder ){
+
+        String id = actionNode.getAttribute( "id" );
+        String executor = actionNode.getAttribute( "executor" );
+        String result = actionNode.getAttribute( "result" );
+        String view = actionNode.getAttribute( "view" );
+        DispatcherType dispatcher =
+            DispatcherType.valueOf( actionNode.getAttribute( "result" ) );
+
+        ActionBuilder actionBuilder =
+            controllerBuilder.addAction(id, result, view, dispatcher, executor);
+
+        addParametersAction(
+            parseUtil.getElements(
+                actionNode,
+                XMLBrutosConstants.XML_BRUTOS_PARAMETER),
+            actionBuilder
+            );
+
+    }
+
+    private void addParametersAction( NodeList params,
+            ActionBuilder actionBuilder ){
+        for( int k=0;k<params.getLength();k++ ){
+            Element paramNode = (Element) params.item(k);
+            addParameterAction( paramNode, actionBuilder );
+        }
+
+    }
+
+    private void addParameterAction( Element paramNode,
+            ActionBuilder actionBuilder ){
+
+        EnumerationType enumProperty =
+            EnumerationType.valueOf( paramNode.getAttribute( "enum-property" ) );
+        String value = paramNode.getAttribute( "value" );
+        String temporalProperty = paramNode.getAttribute( "temporal-property" );
+        String bean = paramNode.getAttribute( "bean" );
+        boolean mapping = Boolean
+            .valueOf(paramNode.getAttribute( "mapping" )).booleanValue();
+        ScopeType scope = ScopeType.valueOf( paramNode.getAttribute( "scope" ) );
+        String factoryName = paramNode.getAttribute( "factory" );
+        String type = paramNode.getAttribute( "type" );
+        Type factory = null;
+        Class typeClass = null;
+        
+        Element mappingRef = parseUtil.getElement( paramNode, "ref");
+        Element beanNode   = parseUtil.getElement( paramNode, "bean");
+        Element valueNode  = parseUtil.getElement( paramNode, "value");
+        if( mappingRef != null ){
+            enumProperty =
+                EnumerationType.valueOf( paramNode.getAttribute( "enum-property" ) );
+            value = paramNode.getAttribute( "value" );
+            temporalProperty = paramNode.getAttribute( "temporal-property" );
+            bean = paramNode.getAttribute( "bean" );
+            mapping = Boolean
+                .valueOf(paramNode.getAttribute( "mapping" )).booleanValue();
+            scope = ScopeType.valueOf( paramNode.getAttribute( "scope" ) );
+            factoryName = paramNode.getAttribute( "factory" );
+        }
+        else
+        if( beanNode != null ){
+            addBean( beanNode, actionBuilder );
+            return;
+        }
+        else
+        if( valueNode != null ){
+            value = valueNode.getTextContent();
+        }
+
+        try{
+            if( factoryName != null ){
+                factory = (Type)Class.forName(
+                            factoryName,
+                            true,
+                            Thread.currentThread().getContextClassLoader() )
+                                .newInstance();
+            }
+
+            if( type == null )
+                throw new BrutosException( "tag type is required in parameter" );
+
+            typeClass = Class.forName(
+                        factoryName,
+                        true,
+                        Thread.currentThread().getContextClassLoader() );
+
+
+        }
+        catch( BrutosException ex ){
+            throw ex;
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+
+        actionBuilder.addParameter(
+            bean,
+            scope,
+            enumProperty,
+            temporalProperty,
+            mapping? bean : null,
+            factory,
+            value,
+            typeClass);
+        
+    }
 }

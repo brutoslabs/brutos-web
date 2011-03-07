@@ -59,11 +59,15 @@ public class ActionBuilder {
     Form webFrame;
     MethodForm methodForm;
     ValidatorProvider validatorProvider;
+    ControllerBuilder controllerBuilder;
 
-    public ActionBuilder( MethodForm methodForm, Form controller, ValidatorProvider validatorProvider ) {
+    public ActionBuilder( MethodForm methodForm, 
+            Form controller, ValidatorProvider validatorProvider,
+            ControllerBuilder controllerBuilder ) {
         this.webFrame = controller;
         this.methodForm = methodForm;
         this.validatorProvider = validatorProvider;
+        this.controllerBuilder = controllerBuilder;
     }
 
     /**
@@ -76,7 +80,8 @@ public class ActionBuilder {
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty, Class classType ){
-        return addParameter( name, scope, enumProperty, null, null, null, classType );
+        return addParameter( name, scope, enumProperty, null, null, null, 
+                null, classType );
     }
     
     /**
@@ -89,7 +94,8 @@ public class ActionBuilder {
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty, Class classType ){
-        return addParameter( name, scope, EnumerationType.ORDINAL, temporalProperty, null, null, classType );
+        return addParameter( name, scope, EnumerationType.ORDINAL, 
+                temporalProperty, null, null, null, classType );
     }
     
     /**
@@ -102,7 +108,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, Type type ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, type, type.getClassType() );
+                null, type, null, type.getClassType() );
     }
     
     /**
@@ -114,7 +120,8 @@ public class ActionBuilder {
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, EnumerationType enumProperty, Class classType ){
-        return addParameter( name, ScopeType.REQUEST, enumProperty, null, null, null, classType );
+        return addParameter( name, ScopeType.REQUEST, enumProperty, null, null,
+                null, null, classType );
     }
     
     /**
@@ -127,7 +134,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, Class classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy", 
-                null, null, classType );
+                null, null, null, classType );
     }
     
     /**
@@ -139,7 +146,8 @@ public class ActionBuilder {
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, String temporalProperty, Class classType ){
-        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, temporalProperty, null, null, classType );
+        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL,
+                temporalProperty, null, null, null, classType );
     }
     
     /**
@@ -151,7 +159,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, Type type ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, type, type.getClassType() );
+                null, type, null, type.getClassType() );
     }
     
     /**
@@ -164,7 +172,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameterMapping( String mapping, Class classType ){
         return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null, classType );
+                mapping, null, null, classType );
     }
 
     /**
@@ -178,7 +186,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameterMapping( String name, String mapping, Class classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null, classType );
+                mapping, null, null, classType );
     }
     
     /**
@@ -193,7 +201,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameterMapping( String name, String mapping, ScopeType scope, Class classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null, classType );
+                mapping, null, null, classType );
     }
     /**
      * Configura um novo parâmetro.
@@ -204,9 +212,36 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, Class classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, null, classType );
+                null, null, null, classType );
     }
 
+    /**
+     * Constrói um novo parâmetro.
+     *
+     * @param classType Tipo do parâmetro.
+     * @return Contrutor do parâmetro.
+     */
+
+    public BeanBuilder buildParameter( Class classType ){
+        String beanName = this.methodForm.getName() + "#Action#bean";
+        BeanBuilder bb = this.controllerBuilder
+                    .buildMappingBean(beanName, classType);
+
+        this.addParameterMapping(beanName, classType);
+        return bb;
+    }
+
+    /**
+     * Configura um novo parâmetro.
+     *
+     * @param classType Tipo do parâmetro.
+     * @param value Valor do Parâmetro.
+     * @return Contrutor do parâmetro.
+     */
+    public ParameterBuilder addStaticParameter( Class classType, Object value ){
+        return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
+                null, null, value, classType );
+    }
 
     /**
      * Configura um novo parâmetro.
@@ -222,7 +257,7 @@ public class ActionBuilder {
      * @return Contrutor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
-            String temporalProperty, String mapping, Type type, Class classType ){
+            String temporalProperty, String mapping, Type type, Object value, Class classType ){
         
         name = name == null || name.replace( " ", "" ).length() == 0? null : name;
         temporalProperty = temporalProperty == null || temporalProperty.replace( " ", "" ).length() == 0? null : temporalProperty;
@@ -241,6 +276,7 @@ public class ActionBuilder {
         useBean.setNome( name );
         useBean.setScopeType( scope );
         useBean.setValidate( validatorProvider.getValidator( validatorConfig ) );
+        useBean.setStaticValue(value);
         
         if( mapping != null ){
             if( webFrame.getMappingBeans().containsKey( mapping ) )
