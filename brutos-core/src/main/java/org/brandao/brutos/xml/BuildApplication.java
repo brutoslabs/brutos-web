@@ -308,7 +308,7 @@ public class BuildApplication {
         }
     }
 
-    private  void loadControllers( Element controllersNode ){
+    private void loadControllers( Element controllersNode ){
 
         NodeList controllers = parseUtil
             .getElements(
@@ -625,19 +625,22 @@ public class BuildApplication {
             String factoryName = conNode.getAttribute( "factory" );
             Type factory = null;
 
-            Element mappingRef = parseUtil.getElement( conNode, "ref");
-            Element beanNode   = parseUtil.getElement( conNode, "bean");
-            Element valueNode  = parseUtil.getElement( conNode, "value");
+            Element mappingRef     = parseUtil.getElement( conNode, "ref");
+            Element beanNode       = parseUtil.getElement( conNode, "bean");
+            Element valueNode      = parseUtil.getElement( conNode, "value");
+            Element validatorNode  = parseUtil.getElement( conNode, "validator");
+            
             if( mappingRef != null ){
                 enumProperty =
-                    EnumerationType.valueOf( conNode.getAttribute( "enum-property" ) );
-                value = conNode.getAttribute( "value" );
-                temporalProperty = conNode.getAttribute( "temporal-property" );
-                bean = conNode.getAttribute( "bean" );
+                    EnumerationType.valueOf( mappingRef.getAttribute( "enum-property" ) );
+                value = mappingRef.getAttribute( "value" );
+                temporalProperty = mappingRef.getAttribute( "temporal-property" );
+                bean = mappingRef.getAttribute( "bean" );
                 mapping = Boolean
-                    .valueOf(conNode.getAttribute( "mapping" )).booleanValue();
-                scope = ScopeType.valueOf( conNode.getAttribute( "scope" ) );
-                factoryName = conNode.getAttribute( "factory" );
+                    .valueOf(mappingRef.getAttribute( "mapping" )).booleanValue();
+                scope = ScopeType.valueOf( mappingRef.getAttribute( "scope" ) );
+                factoryName = mappingRef.getAttribute( "factory" );
+                validatorNode = parseUtil.getElement( mappingRef, "validator");
             }
             else
             if( beanNode != null ){
