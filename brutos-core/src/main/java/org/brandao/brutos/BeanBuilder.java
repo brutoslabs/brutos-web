@@ -510,9 +510,9 @@ public class BeanBuilder {
      *
      * @param name Nome do parâmetro.
      * @param enumProperty Usado no mapeamento argumentos do tipo enum.
-     * @return Construtor do mapeamento.
+     * @return Construtor do argumento.
      */
-    public BeanBuilder addContructorArg( String name,
+    public ConstructorBuilder addContructorArg( String name,
             EnumerationType enumProperty ){
         return addContructorArg( name, enumProperty, null, null, ScopeType.PARAM, null, null );
     }
@@ -522,9 +522,9 @@ public class BeanBuilder {
      *
      * @param name Nome do parâmetro.
      * @param temporalProperty Usado no mapeamento de datas.
-     * @return Construtor do mapeamento.
+     * @return Construtor do argumento.
      */
-    public BeanBuilder addContructorArg( String name,
+    public ConstructorBuilder addContructorArg( String name,
             String temporalProperty ){
         return addContructorArg( name, EnumerationType.ORDINAL, temporalProperty, null, ScopeType.PARAM, null, null );
     }
@@ -534,9 +534,9 @@ public class BeanBuilder {
      *
      * @param name Nome do parâmetro.
      * @param type Faz o processamento do argumento.
-     * @return Construtor do mapeamento.
+     * @return Construtor do argumento.
      */
-    public BeanBuilder addContructorArg( String name,
+    public ConstructorBuilder addContructorArg( String name,
             Type type ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null,ScopeType.PARAM, null, type );
@@ -547,9 +547,9 @@ public class BeanBuilder {
      *
      * @param name Nome do parâmetro.
      * @param mapping Mapeamento customizado.
-     * @return Construtor do mapeamento.
+     * @return Construtor do argumento.
      */
-    public BeanBuilder addMappedContructorArg( String name, String mapping ){
+    public ConstructorBuilder addMappedContructorArg( String name, String mapping ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, ScopeType.PARAM, null, null );
     }
@@ -558,9 +558,9 @@ public class BeanBuilder {
      * Faz o mapeamento de um argumento do construtor.
      *
      * @param name Nome do parâmetro.
-     * @return Construtor do mapeamento.
+     * @return Construtor do argumento.
      */
-    public BeanBuilder addContructorArg( String name ){
+    public ConstructorBuilder addContructorArg( String name ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, ScopeType.PARAM, null, null );
     }
@@ -570,9 +570,9 @@ public class BeanBuilder {
      *
      * @param name Nome do parâmetro.
      * @param scope Escopo.
-     * @return Construtor do mapeamento.
+     * @return Construtor do argumento.
      */
-    public BeanBuilder addContructorArg( String name, ScopeType scope ){
+    public ConstructorBuilder addContructorArg( String name, ScopeType scope ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, scope, null, null );
     }
@@ -582,9 +582,9 @@ public class BeanBuilder {
      *
      * @param name Nome do parâmetro.
      * @param value Valor da propriedade. Tem a mesma função do modificador final.
-     * @return Construtor do mapeamento.
+     * @return Construtor do argumento.
      */
-    public BeanBuilder addStaticContructorArg( String name, Object value ){
+    public ConstructorBuilder addStaticContructorArg( String name, Object value ){
         return addContructorArg( name,
             EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM, value, null );
     }
@@ -599,9 +599,9 @@ public class BeanBuilder {
      * @param scope Escopo.
      * @param value Valor da propriedade. Tem a mesma função do modificador final.
      * @param type Faz o processamento do argumento.
-     * @return Construtor do mapeamento.
+     * @return Construtor do argumento.
      */
-    public BeanBuilder addContructorArg( String name,
+    public ConstructorBuilder addContructorArg( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, Type type ){
 
@@ -611,7 +611,7 @@ public class BeanBuilder {
         Configuration validatorConfig = new Configuration();
         fieldBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
         this.mappingBean.getConstructor().getArgs().add(fieldBean);
-        return this;
+        return new ConstructorBuilder( validatorConfig );
     }
 
     private FieldBean createDependencyBean( String name, String propertyName,

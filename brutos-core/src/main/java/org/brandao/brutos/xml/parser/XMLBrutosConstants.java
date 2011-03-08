@@ -94,6 +94,8 @@ public interface XMLBrutosConstants {
     public static final String XML_BRUTOS_PARAM = "param";
     public static final String XML_BRUTOS_TYPES = "types";
     public static final String XML_BRUTOS_TYPE = "type";
+    public static final String XML_BRUTOS_VALIDATOR_RULE = "rule";
+    public static final String XML_BRUTOS_VALIDATOR = "validator";
     
     public static final String[] XML_SUPPORTED_VERSION = new String[]{ "1.0", "1.1" };
    

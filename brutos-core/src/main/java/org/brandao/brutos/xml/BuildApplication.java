@@ -26,6 +26,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BeanBuilder;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ConstructorBuilder;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.DispatcherType;
@@ -34,9 +35,13 @@ import org.brandao.brutos.HandlerApplicationContext;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.InterceptorStackBuilder;
+import org.brandao.brutos.ParameterBuilder;
+import org.brandao.brutos.PropertyBuilder;
+import org.brandao.brutos.RestrictionBuilder;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
 import org.brandao.brutos.type.*;
+import org.brandao.brutos.validator.RestrictionRules;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -665,15 +670,17 @@ public class BuildApplication {
                 throw new BrutosException( ex );
             }
 
-            beanBuilder.addContructorArg(
-                bean,
-                enumProperty,
-                temporalProperty,
-                mapping? bean : null,
-                scope,
-                value,
-                factory);
-            
+            ConstructorBuilder constructorBuilder =
+                    beanBuilder.addContructorArg(
+                        bean,
+                        enumProperty,
+                        temporalProperty,
+                        mapping? bean : null,
+                        scope,
+                        value,
+                        factory);
+
+            addValidator(validatorNode, constructorBuilder);
         }
 
     }
@@ -699,6 +706,7 @@ public class BuildApplication {
             Element mappingRef = parseUtil.getElement( propNode, "ref");
             Element beanNode   = parseUtil.getElement( propNode, "bean");
             Element valueNode  = parseUtil.getElement( propNode, "value");
+            Element validatorNode = parseUtil.getElement( propNode, "validator" );
             if( mappingRef != null ){
                 enumProperty =
                     EnumerationType.valueOf( propNode.getAttribute( "enum-property" ) );
@@ -709,6 +717,7 @@ public class BuildApplication {
                     .valueOf(propNode.getAttribute( "mapping" )).booleanValue();
                 scope = ScopeType.valueOf( propNode.getAttribute( "scope" ) );
                 factoryName = propNode.getAttribute( "factory" );
+                validatorNode = parseUtil.getElement( mappingRef, "validator");
             }
             else
             if( beanNode != null ){
@@ -733,16 +742,18 @@ public class BuildApplication {
                 throw new BrutosException( ex );
             }
 
-            beanBuilder.addProperty(
-                bean,
-                propertyName,
-                enumProperty,
-                temporalProperty,
-                mapping? bean : null,
-                scope,
-                value,
-                factory);
+            PropertyBuilder propertyBuilder =
+                    beanBuilder.addProperty(
+                        bean,
+                        propertyName,
+                        enumProperty,
+                        temporalProperty,
+                        mapping? bean : null,
+                        scope,
+                        value,
+                        factory);
 
+            addValidator(validatorNode, propertyBuilder);
         }
     }
 
@@ -774,6 +785,7 @@ public class BuildApplication {
         Element mappingRef = parseUtil.getElement( propNode, "ref");
         Element beanNode   = parseUtil.getElement( propNode, "bean");
         Element valueNode  = parseUtil.getElement( propNode, "value");
+        Element validatorNode = parseUtil.getElement( propNode, "validator" );
         if( mappingRef != null ){
             enumProperty =
                 EnumerationType.valueOf( propNode.getAttribute( "enum-property" ) );
@@ -784,6 +796,7 @@ public class BuildApplication {
                 .valueOf(propNode.getAttribute( "mapping" )).booleanValue();
             scope = ScopeType.valueOf( propNode.getAttribute( "scope" ) );
             factoryName = propNode.getAttribute( "factory" );
+            validatorNode = parseUtil.getElement( mappingRef, "validator");
         }
         else
         if( beanNode != null ){
@@ -808,15 +821,19 @@ public class BuildApplication {
             throw new BrutosException( ex );
         }
 
-        controllerBuilder.addProperty(
-            propertyName,
-            bean,
-            scope,
-            enumProperty,
-            temporalProperty,
-            mapping? bean : null,
-            value,
-            factory);
+        PropertyBuilder propertyBuilder =
+                controllerBuilder.addProperty(
+                    propertyName,
+                    bean,
+                    scope,
+                    enumProperty,
+                    temporalProperty,
+                    mapping? bean : null,
+                    value,
+                    factory);
+
+        addValidator(validatorNode, propertyBuilder);
+
     }
 
     private void addActions( NodeList actionList,
@@ -885,6 +902,7 @@ public class BuildApplication {
         Element mappingRef = parseUtil.getElement( paramNode, "ref");
         Element beanNode   = parseUtil.getElement( paramNode, "bean");
         Element valueNode  = parseUtil.getElement( paramNode, "value");
+        Element validatorNode = parseUtil.getElement( paramNode, "validator" );
         if( mappingRef != null ){
             enumProperty =
                 EnumerationType.valueOf( paramNode.getAttribute( "enum-property" ) );
@@ -895,6 +913,7 @@ public class BuildApplication {
                 .valueOf(paramNode.getAttribute( "mapping" )).booleanValue();
             scope = ScopeType.valueOf( paramNode.getAttribute( "scope" ) );
             factoryName = paramNode.getAttribute( "factory" );
+            validatorNode = parseUtil.getElement( mappingRef, "validator");
         }
         else
         if( beanNode != null ){
@@ -932,15 +951,18 @@ public class BuildApplication {
             throw new BrutosException( ex );
         }
 
-        actionBuilder.addParameter(
-            bean,
-            scope,
-            enumProperty,
-            temporalProperty,
-            mapping? bean : null,
-            factory,
-            value,
-            typeClass);
+        ParameterBuilder parameterBuilder =
+                actionBuilder.addParameter(
+                    bean,
+                    scope,
+                    enumProperty,
+                    temporalProperty,
+                    mapping? bean : null,
+                    factory,
+                    value,
+                    typeClass);
+
+        addValidator(validatorNode, parameterBuilder);
         
     }
 
@@ -1014,4 +1036,36 @@ public class BuildApplication {
         actionBuilder.addThrowable(targetClass, view, name, dispatcher);
     }
 
+    private void addValidator( Element validatorNode,
+            RestrictionBuilder restrictionBuilder ){
+
+        if( validatorNode == null )
+            return;
+
+        String msg = validatorNode.getAttribute( "message" );
+
+        restrictionBuilder.setMessage(msg);
+
+        NodeList rules =
+            parseUtil.getElements(
+                validatorNode,
+                XMLBrutosConstants.XML_BRUTOS_VALIDATOR_RULE );
+
+        for( int i=0;i<rules.getLength();i++ ){
+            Element rule = (Element) rules.item(i);
+            String name = rule.getAttribute( "name" );
+            String value = rule.getAttribute( "value" );
+
+            value = value == null?
+                rule.getTextContent() :
+                value;
+
+            restrictionBuilder
+                .addRestriction(
+                    RestrictionRules.valueOf( name ),
+                    value);
+            
+        }
+
+    }
 }
