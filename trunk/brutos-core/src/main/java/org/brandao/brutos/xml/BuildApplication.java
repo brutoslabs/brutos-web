@@ -334,8 +334,8 @@ public class BuildApplication {
         String view = controller.getAttribute( "view" );
         String name = controller.getAttribute( "name" );
         String clazzName = controller.getAttribute( "class" );
-        ScopeType scope = 
-            ScopeType.valueOf( controller.getAttribute( "scope" ) );
+        //ScopeType scope =
+        //    ScopeType.valueOf( controller.getAttribute( "scope" ) );
         String actionId = controller.getAttribute( "action-id" );
         String defaultAction = controller.getAttribute( "default-action" );
 
@@ -496,7 +496,8 @@ public class BuildApplication {
     }
 
     private void addBean( Element beanNode,
-            BeanBuilder bean, String propertyName, boolean key, boolean element ){
+            BeanBuilder bean, String propertyName, boolean key,
+            boolean element ){
 
         String name          = beanNode.getAttribute( "name" );
         String separator     = beanNode.getAttribute( "separator" );
@@ -609,7 +610,7 @@ public class BuildApplication {
             addBean(elementNode, beanBuilder, null, false, true);
         else
         if( beanBuilder.isMap() )
-            throw new BrutosException("element node is required in Collection" );
+            throw new BrutosException("element node is required in Collection");
         
     }
 
@@ -620,24 +621,26 @@ public class BuildApplication {
             Element conNode = (Element) consList.item(k);
 
             EnumerationType enumProperty =
-                EnumerationType.valueOf( conNode.getAttribute( "enum-property" ) );
-            String value = conNode.getAttribute( "value" );
-            String temporalProperty = conNode.getAttribute( "temporal-property" );
-            String bean = conNode.getAttribute( "bean" );
+                EnumerationType.valueOf(conNode.getAttribute("enum-property"));
+            String value = conNode.getAttribute("value");
+            String temporalProperty = conNode.getAttribute("temporal-property");
+            String bean = conNode.getAttribute("bean");
             boolean mapping = Boolean
-                .valueOf(conNode.getAttribute( "mapping" )).booleanValue();
-            ScopeType scope = ScopeType.valueOf( conNode.getAttribute( "scope" ) );
-            String factoryName = conNode.getAttribute( "factory" );
+                .valueOf(conNode.getAttribute("mapping")).booleanValue();
+            ScopeType scope = ScopeType.valueOf(conNode.getAttribute("scope"));
+            String factoryName = conNode.getAttribute("factory");
             Type factory = null;
 
-            Element mappingRef     = parseUtil.getElement( conNode, "ref");
-            Element beanNode       = parseUtil.getElement( conNode, "bean");
-            Element valueNode      = parseUtil.getElement( conNode, "value");
-            Element validatorNode  = parseUtil.getElement( conNode, "validator");
+            Element mappingRef     = parseUtil.getElement(conNode,"ref");
+            Element beanNode       = parseUtil.getElement(conNode,"bean");
+            Element valueNode      = parseUtil.getElement(conNode,"value");
+            Element validatorNode  = parseUtil.getElement(conNode,"validator");
             
             if( mappingRef != null ){
                 enumProperty =
-                    EnumerationType.valueOf( mappingRef.getAttribute( "enum-property" ) );
+                    EnumerationType.valueOf(
+                        mappingRef.getAttribute("enum-property"));
+                
                 value = mappingRef.getAttribute( "value" );
                 temporalProperty = mappingRef.getAttribute( "temporal-property" );
                 bean = mappingRef.getAttribute( "bean" );
