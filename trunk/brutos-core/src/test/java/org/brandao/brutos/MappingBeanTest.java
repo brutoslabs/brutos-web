@@ -58,10 +58,11 @@ public class MappingBeanTest extends TestCase {
                 HandlerApplicationContext app = (HandlerApplicationContext) WebApplicationContext
                         .getCurrentApplicationContext();
 
-                RootContainer.getInstance().addBean(
+                /*RootContainer.getInstance().addBean(
                         "controllerInstance",
                         MappingBeanTestHelper.TestController.class,
                         org.brandao.ioc.ScopeType.REQUEST);
+                */
                 
                 ControllerManager controllerManager = app.getControllerManager();
                     ControllerBuilder cb = controllerManager.addController("/test.jbrs",

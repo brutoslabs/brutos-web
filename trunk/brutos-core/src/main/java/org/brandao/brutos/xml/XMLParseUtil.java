@@ -20,6 +20,7 @@ package org.brandao.brutos.xml;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+
 /**
  *
  * @author Brandao
@@ -27,7 +28,12 @@ import org.w3c.dom.NodeList;
 public class XMLParseUtil {
 
     public Element getElement( Element e, String name ){
-        return (Element)e.getElementsByTagName(name);
+        NodeList elements = e.getElementsByTagName( name );
+
+        if( elements.getLength() > 0 )
+            return (Element)elements.item(0);
+        else
+            return null;
     }
 
     public NodeList getElements( Element e, String name ){

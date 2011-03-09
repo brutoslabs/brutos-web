@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.xml;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,15 +54,18 @@ import org.xml.sax.InputSource;
  */
 public class BuildApplication {
 
-    private InputSource source;
+    private URL source;
     private HandlerApplicationContext handler;
     private XMLParseUtil parseUtil;
     private List importers;
-
-    public BuildApplication( InputSource source, HandlerApplicationContext handler ){
+    private List blackList;
+    
+    public BuildApplication( URL source,
+            HandlerApplicationContext handler, List blackList ){
         this.source = source;
         this.handler = handler;
         this.parseUtil = new XMLParseUtil();
+        this.blackList = blackList;
     }
 
     public void build(){
@@ -88,7 +92,7 @@ public class BuildApplication {
             );
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
             
-            xmlDocument = documentBuilder.parse(source);
+            xmlDocument = documentBuilder.parse(new InputSource(source.openStream()));
         }
         catch (Exception e) {
             throw new BrutosException(e);
@@ -122,6 +126,10 @@ public class BuildApplication {
     }
 
     private void loadContextParams( Element cp ){
+
+        if( cp == null )
+            return;
+        
         Properties config = handler.getConfiguration();
 
         NodeList list = parseUtil
@@ -144,6 +152,9 @@ public class BuildApplication {
     private void loadImporters( Element e ){
         this.importers = new ArrayList();
 
+        if( e == null )
+            return;
+        
         NodeList list = parseUtil
             .getElements(
                 e,
@@ -153,13 +164,68 @@ public class BuildApplication {
             Element c = (Element) list.item(i);
             String resource = c.getAttribute( "resource" );
 
-            if( resource != null && resource.length() != 0 )
-                this.importers.add(resource);
-            
+            if( resource != null && resource.length() != 0 ){
+
+                if( resource.indexOf( "../" ) != -1 )
+                    throw new BrutosException( "invalid import: " + resource );
+                
+                String path = source.getPath();
+                path = path.replace( "\\" , "/");
+                String[] parts = path.split( "/+" );
+                int length = parts.length -1;
+
+                String newPath = "";
+                for( int k=0;k<length;k++ ){
+                    newPath += parts[k] + "/";
+                }
+
+                String importer = resource;
+                importer = importer.replace( "\\" , "/");
+                importer = importer.replaceAll( "/+" , "/");
+                importer = importer.startsWith("/")?
+                    importer.substring(1,importer.length()):
+                    importer;
+
+                newPath += importer;
+
+                try{
+                    importers.add(
+                        new URL( this.source.getProtocol()+":"+newPath ) );
+                }
+                catch( Exception ex ){
+                    throw new BrutosException(ex);
+                }
+
+            }
+                
         }
+
+        //this.blackList.addAll( importers );
+
+        for( int i=0;i<importers.size();i++ ){
+            URL importerURL = (URL)importers.get(i);
+            
+            if( blackList.contains(importerURL) )
+                continue;
+            else
+                blackList.add( importerURL );
+            
+            BuildApplication importerApp =
+                new BuildApplication( (URL)importerURL,
+                    this.handler, this.blackList );
+            
+            importerApp.build();
+
+        }
+
+
     }
 
     private void loadTypes( Element cp ){
+
+        if( cp == null )
+            return;
+        
         NodeList list = parseUtil
             .getElements(
                 cp,
@@ -195,6 +261,10 @@ public class BuildApplication {
     }
 
     private void loadInterceptors( Element e ){
+
+        if( e == null )
+            return;
+        
         NodeList list = parseUtil
             .getElements(
                 e,
@@ -212,6 +282,10 @@ public class BuildApplication {
     }
 
     private void loadInterceptor( NodeList list ){
+
+        if( list == null )
+            return;
+        
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
 
@@ -262,6 +336,10 @@ public class BuildApplication {
     }
 
     private void loadInterceptorStack( NodeList list ){
+
+        if( list == null )
+            return;
+        
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
 
@@ -315,6 +393,9 @@ public class BuildApplication {
 
     private void loadControllers( Element controllersNode ){
 
+        if( controllersNode == null )
+            return;
+        
         NodeList controllers = parseUtil
             .getElements(
                 controllersNode,
@@ -328,6 +409,7 @@ public class BuildApplication {
     }
 
     private void loadController( Element controller ){
+
         String id = controller.getAttribute( "id" );
         DispatcherType dispatcher =
             DispatcherType.valueOf( controller.getAttribute( "dispatcher" ) );
