@@ -31,7 +31,7 @@
 
                 <xsd:element name="annotation-config" minOccurs="0" maxOccurs="1"/>
 
-                <xsd:element name="importers" minOccurs="0" maxOccurs="1">
+                <xsd:element name="imports" minOccurs="0" maxOccurs="1">
                     <xsd:complexType>
                         <xsd:sequence>
                             <xsd:element name="import" minOccurs="0" maxOccurs="unbounded">
