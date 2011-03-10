@@ -57,7 +57,6 @@ public class BuildApplication {
     private URL source;
     private HandlerApplicationContext handler;
     private XMLParseUtil parseUtil;
-    private List importers;
     private List blackList;
     
     public BuildApplication( URL source,
@@ -150,7 +149,6 @@ public class BuildApplication {
     }
     
     private void loadImporters( Element e ){
-        this.importers = new ArrayList();
 
         if( e == null )
             return;
@@ -160,15 +158,42 @@ public class BuildApplication {
                 e,
                 XMLBrutosConstants.XML_BRUTOS_IMPORTER );
 
+
+        List resources = new ArrayList();
+
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
             String resource = c.getAttribute( "resource" );
 
             if( resource != null && resource.length() != 0 ){
-
-                if( resource.indexOf( "../" ) != -1 )
-                    throw new BrutosException( "invalid import: " + resource );
+                resources.add( resource );
+            }
                 
+        }
+
+        //this.blackList.addAll( importers );
+
+        for( int i=0;i<resources.size();i++ ){
+            String resource = (String)resources.get(i);
+
+            URL resourceURL;
+
+            boolean isClassPath = resource.startsWith( "classpath:" );
+            String tmpResource = resource.replace("classpath:", "");
+            tmpResource = tmpResource.replace( "\\" , "/");
+            tmpResource = tmpResource.replaceAll( "/+" , "/");
+            tmpResource = tmpResource.startsWith("/")?
+                tmpResource.substring(1,tmpResource.length()):
+                tmpResource;
+
+            if( isClassPath ){
+                resourceURL = Thread.currentThread()
+                    .getContextClassLoader().getResource(tmpResource);
+
+                if( resourceURL == null )
+                    throw new BrutosException( "not found: " + resource );
+            }
+            else{
                 String path = source.getPath();
                 path = path.replace( "\\" , "/");
                 String[] parts = path.split( "/+" );
@@ -179,43 +204,30 @@ public class BuildApplication {
                     newPath += parts[k] + "/";
                 }
 
-                String importer = resource;
-                importer = importer.replace( "\\" , "/");
-                importer = importer.replaceAll( "/+" , "/");
-                importer = importer.startsWith("/")?
-                    importer.substring(1,importer.length()):
-                    importer;
 
-                newPath += importer;
+                newPath += tmpResource;
 
                 try{
-                    importers.add(
-                        new URL( this.source.getProtocol()+":"+newPath ) );
+                    resourceURL = new URL( this.source.getProtocol()+":"+newPath );
                 }
                 catch( Exception ex ){
                     throw new BrutosException(ex);
                 }
-
             }
-                
-        }
+            tmpResource = isClassPath?
+                "classpath:"+tmpResource :
+                tmpResource;
 
-        //this.blackList.addAll( importers );
-
-        for( int i=0;i<importers.size();i++ ){
-            URL importerURL = (URL)importers.get(i);
-            
-            if( blackList.contains(importerURL) )
+            if( blackList.contains(tmpResource) )
                 continue;
             else
-                blackList.add( importerURL );
-            
-            BuildApplication importerApp =
-                new BuildApplication( (URL)importerURL,
-                    this.handler, this.blackList );
-            
-            importerApp.build();
+                blackList.add(tmpResource);
 
+            BuildApplication importerApp =
+                new BuildApplication( (URL)resourceURL,
+                    this.handler, this.blackList );
+
+            importerApp.build();
         }
 
 
