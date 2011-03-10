@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Brutos Web MVC http://brutos.sourceforge.net/
+  Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+
+  This library is free software. You can redistribute it
+  and/or modify it under the terms of the GNU General Public
+  License (GPL) version 3.0 or (at your option) any later
+  version.
+  You may obtain a copy of the License at
+
+  http://www.gnu.org/licenses/gpl.html
+
+  Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+  either express or implied.
+-->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:ns="http://brutos.sourceforge.net/targetNS"
+            targetNamespace="http://brutos.sourceforge.net/targetNS"
+            xmlns="http://brutos.sourceforge.net/targetNS"
+           elementFormDefault="qualified">
+
+    <xsd:element name="brutos-configuration">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element name="auto-config" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="annotation-config" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="params" type="params" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="types" type="types" minOccurs="0" maxOccurs="1"/>
+            </xsd:all>
+            <xsd:attribute name="encoding" default="UTF-8"/>
+            <xsd:attribute name="version" default="1.1">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:token">
+                        <xsd:pattern value="[0-9]+(\.[0-9]+)*"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:attribute>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="types">
+        <xsd:sequence>
+            <xsd:element name="type" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                            <xsd:attribute name="class-type" type="xsd:string" use="required"/>
+                            <xsd:attribute name="factory" type="xsd:string"/>
+                        </xsd:extension>
+                    </xsd:simpleContent>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="params">
+        <xsd:sequence>
+            <xsd:element name="param" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                        <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        <xsd:attribute name="value" type="xsd:string"/>
+                        </xsd:extension>
+                    </xsd:simpleContent>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>
