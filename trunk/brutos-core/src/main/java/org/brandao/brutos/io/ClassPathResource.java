@@ -51,7 +51,7 @@ public class ClassPathResource extends AbstractResource{
             classLoader :
             Thread.currentThread().getContextClassLoader();
 
-        this.path = path;
+        this.path = this.cleanPath(path);
     }
 
     public URL getURL() throws IOException {
