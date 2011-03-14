@@ -229,7 +229,7 @@ public class TestBrutosContext extends TestCase{
                 MockApplicationContext.setCurrentApplicationContext(app);
                 listener.contextInitialized(sce);
                 TestEditors o = 
-                    (TestEditors)((HandlerApplicationContext)BrutosContext
+                    (TestEditors)((ConfigurableApplicationContext)BrutosContext
                         .getCurrentApplicationContext())
                             .getIocManager().getInstance( "testEditor" );
                 SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy" );
@@ -274,7 +274,7 @@ public class TestBrutosContext extends TestCase{
 
         try{
             cll.contextInitialized(sce);
-            HandlerApplicationContext c = (HandlerApplicationContext) BrutosContext.getCurrentApplicationContext();
+            ConfigurableApplicationContext c = (ConfigurableApplicationContext) BrutosContext.getCurrentApplicationContext();
             assertEquals(
                 TestMethodResolver.class,
                 c.getActionResolver().getClass() );

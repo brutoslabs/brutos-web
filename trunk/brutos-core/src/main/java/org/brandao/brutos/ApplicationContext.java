@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import javax.servlet.ServletContextEvent;
+import org.brandao.brutos.io.DefaultResourceLoader;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -45,7 +46,7 @@ import org.brandao.brutos.view.ViewProvider;
  * 
  * @author Afonso Brandao
  */
-public abstract class ApplicationContext {
+public abstract class ApplicationContext extends DefaultResourceLoader{
 
     private static Logger logger = LoggerProvider
         .getCurrentLoggerProvider()
@@ -66,8 +67,18 @@ public abstract class ApplicationContext {
     protected MvcResponseFactory responseFactory;
     protected MvcRequestFactory requestFactory;
 
+    private ApplicationContext parent;
+
     public ApplicationContext() {
         this.configuration = new Configuration();
+    }
+
+    public ApplicationContext( ApplicationContext parent ) {
+        this.parent = parent;
+        this.configuration = parent == null?
+            new Configuration() :
+            parent.configuration;
+
     }
 
     /**
@@ -92,6 +103,29 @@ public abstract class ApplicationContext {
      */
     public void configure( Properties config ){
         
+        if( parent != null )
+            loadParentConfig( parent );
+        else
+            loadLocalConfig(config);
+    }
+
+    private void loadParentConfig( ApplicationContext parent ){
+        this.configuration = parent.getConfiguration();
+        this.iocManager = parent.iocManager;
+        this.iocProvider = parent.iocProvider;
+        this.interceptorManager = parent.interceptorManager;
+        this.webFrameManager = parent.webFrameManager;
+        this.controllerResolver = parent.controllerResolver;
+        this.actionResolver = parent.actionResolver;
+        this.requestFactory = parent.requestFactory;
+        this.responseFactory = parent.responseFactory;
+        this.validatorProvider = parent.validatorProvider;
+        this.controllerManager = parent.controllerManager;
+        this.invoker = parent.invoker;
+        this.viewProvider = parent.viewProvider;
+    }
+    
+    private void loadLocalConfig(Properties config){
         this.configuration = config;
         this.iocManager = new IOCManager();
         this.iocProvider = IOCProvider.getProvider(config);
@@ -207,7 +241,7 @@ public abstract class ApplicationContext {
         try{
             ActionResolver instance = (ActionResolver) Class.forName(
                     configuration.getProperty(
-                    "org.brandao.brutos.controller.method_resolver",
+                    "org.brandao.brutos.controller.action_resolver",
                     DefaultActionResolver.class.getName()
                 ),
                     true,
@@ -224,32 +258,36 @@ public abstract class ApplicationContext {
     /**
      * Método invocado quando a aplicação é finalizada.
      */
-    public abstract void destroy();
-
+    public void destroy(){
+    }
 
     /**
      * @deprecated 
      * @param iocManager
      */
-    protected abstract void loadIOCManager( IOCManager iocManager );
+    protected void loadIOCManager( IOCManager iocManager ){
+    }
 
     /**
      * @deprecated 
      * @param webFrameManager
      */
-    protected abstract void loadWebFrameManager( WebFrameManager webFrameManager );
+    protected void loadWebFrameManager( WebFrameManager webFrameManager ){
+    }
 
     /**
      * Configura os interceptadores.
      * @param interceptorManager Gestor de interceptadores.
      */
-    protected abstract void loadInterceptorManager( InterceptorManager interceptorManager );
+    protected void loadInterceptorManager( InterceptorManager interceptorManager ){
+    }
     
     /**
      * Configura os controladores.
      * @param controllerManager Gestor dos controladores.
      */
-    protected abstract void loadController( ControllerManager controllerManager );
+    protected void loadController( ControllerManager controllerManager ){
+    }
 
     /**
      * Obtém a aplicação corrente.

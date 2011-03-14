@@ -14,25 +14,26 @@
  * either express or implied.
  *
  */
-package org.brandao.brutos.io;
 
-import java.io.IOException;
-import java.net.URL;
+package org.brandao.brutos.xml;
+
+import org.brandao.brutos.io.Resource;
+import org.brandao.brutos.io.ResourceLoader;
 
 /**
  *
  * @author Brandao
  */
-public interface Resource extends InputStreamSource{
+public interface DefinitionReader {
 
-    URL getURL() throws IOException;
+    void loadDefinitions( Resource resource );
 
-    Resource getRelativeResource( String relativePath ) throws IOException;
+    void loadDefinitions( Resource[] resource );
 
-    boolean exists();
+    void loadDefinitions( String[] locations );
 
-    boolean isOpen();
+    void loadDefinitions( String location );
 
-    String getName();
-
+    ResourceLoader getResourceLoader();
+    
 }

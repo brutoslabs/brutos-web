@@ -14,25 +14,20 @@
  * either express or implied.
  *
  */
-package org.brandao.brutos.io;
 
-import java.io.IOException;
-import java.net.URL;
+package org.brandao.brutos.test;
+
+import org.brandao.brutos.MvcResponse;
+import org.brandao.brutos.MvcResponseFactory;
 
 /**
  *
  * @author Brandao
  */
-public interface Resource extends InputStreamSource{
+public class MockMvcResponseFactory extends MvcResponseFactory{
 
-    URL getURL() throws IOException;
-
-    Resource getRelativeResource( String relativePath ) throws IOException;
-
-    boolean exists();
-
-    boolean isOpen();
-
-    String getName();
+    protected MvcResponse getNewResponse() {
+        return new MockMvcResponse();
+    }
 
 }

@@ -14,25 +14,21 @@
  * either express or implied.
  *
  */
-package org.brandao.brutos.io;
 
-import java.io.IOException;
-import java.net.URL;
+package org.brandao.brutos.io;
 
 /**
  *
  * @author Brandao
  */
-public interface Resource extends InputStreamSource{
+public interface ResourceLoader {
 
-    URL getURL() throws IOException;
+    String FILE_URL_PREFIX = "file:/";
 
-    Resource getRelativeResource( String relativePath ) throws IOException;
+    String CLASSPATH_URL_PREFIX = "classpath:";
 
-    boolean exists();
+    Resource getResource( String path );
 
-    boolean isOpen();
-
-    String getName();
+    ClassLoader getClassloader();
 
 }

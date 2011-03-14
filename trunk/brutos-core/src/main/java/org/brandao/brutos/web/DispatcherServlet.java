@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.HandlerApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
@@ -54,7 +54,7 @@ public class DispatcherServlet extends HttpServlet {
             );
         }
         else
-            invoker = ((HandlerApplicationContext)webApplicationContext).getInvoker();
+            invoker = ((ConfigurableApplicationContext)webApplicationContext).getInvoker();
 
         Throwable ex = (Throwable)getServletContext().getAttribute( BrutosConstants.EXCEPTION );
 
@@ -103,8 +103,8 @@ public class DispatcherServlet extends HttpServlet {
         }
         finally{
             mappedUploadStats.remove( path );
-            ((HandlerApplicationContext)app).getRequestFactory().destroyRequest();
-            ((HandlerApplicationContext)app).getResponseFactory().destroyResponse();
+            ((ConfigurableApplicationContext)app).getRequestFactory().destroyRequest();
+            ((ConfigurableApplicationContext)app).getResponseFactory().destroyResponse();
             RequestInfo.removeCurrent();
         }
     }

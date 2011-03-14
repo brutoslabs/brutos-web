@@ -22,8 +22,6 @@ package org.brandao.brutos.io;
  */
 public abstract class AbstractResource implements Resource{
 
-    public static final String FILE_URL_PREFIX = "file:/";
-    
     protected String createRelativePath( String path, String relativePath ){
 
         path = cleanPath( path );
@@ -51,5 +49,8 @@ public abstract class AbstractResource implements Resource{
     public boolean isOpen(){
         return false;
     }
-    
+
+    public String toString(){
+        return getName();
+    }
 }

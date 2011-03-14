@@ -56,7 +56,7 @@ import org.brandao.brutos.web.scope.SessionScope;
  * @deprecated 
  * @author Afonso Brandao
  */
-public class BrutosContext extends WebApplicationContext implements HandlerApplicationContext{
+public class BrutosContext extends WebApplicationContext implements ConfigurableApplicationContext{
 
     private Configuration configuration;
     private IOCManager iocManager;

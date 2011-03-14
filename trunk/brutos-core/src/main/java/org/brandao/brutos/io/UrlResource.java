@@ -14,52 +14,62 @@
  * either express or implied.
  *
  */
+
 package org.brandao.brutos.io;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  *
  * @author Brandao
  */
-public class ByteArrayResource extends AbstractResource{
+public class UrlResource extends AbstractResource{
 
-    private byte[] byteArray;
+    private String path;
 
-    public ByteArrayResource( byte[] byteArray ){
-        this.byteArray = byteArray;
+    private URL url;
+    
+    public UrlResource( String path ) throws MalformedURLException{
+        this.path = path;
+        this.url = new URL( path );
+    }
+    
+    public UrlResource( URL url ) throws MalformedURLException{
+        this.url = url;
+        this.path = url.toString();
     }
 
     public URL getURL() throws IOException {
-            throw new FileNotFoundException  (
-                 " URL does not exist");
+        return new URL(this.path);
     }
 
     public Resource getRelativeResource(String relativePath) throws IOException {
-        throw new FileNotFoundException(
-            "Cannot create a relative resource: " + relativePath );
+        return new UrlResource(
+                new URL(this.url, relativePath) );
     }
 
     public boolean exists() {
-        return true;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public InputStream getInputStream() throws IOException {
-        return new ByteArrayInputStream( byteArray );
+        URLConnection con = this.url.openConnection();
+        con.setUseCaches(false);
+        return con.getInputStream();
     }
 
     public boolean equals( Object e ){
-        return e instanceof ByteArrayResource?
-            ((ByteArrayResource)e).byteArray.hashCode() == this.byteArray.hashCode() :
+        return e instanceof UrlResource?
+            ((UrlResource)e).path.equals( this.path ) :
             false;
     }
 
     public String getName() {
-        return "Byte array";
+        return this.path;
     }
 
 }
