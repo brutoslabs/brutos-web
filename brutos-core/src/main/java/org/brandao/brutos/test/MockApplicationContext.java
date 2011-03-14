@@ -1,9 +1,3 @@
-package org.brandao.brutos.test;
-
-
-import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.ApplicationContextWrapper;
-
 /*
  * Brutos Web MVC http://brutos.sourceforge.net/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
@@ -20,6 +14,13 @@ import org.brandao.brutos.ApplicationContextWrapper;
  * either express or implied.
  *
  */
+package org.brandao.brutos.test;
+
+
+import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.ApplicationContextWrapper;
+
+
 
 /**
  *

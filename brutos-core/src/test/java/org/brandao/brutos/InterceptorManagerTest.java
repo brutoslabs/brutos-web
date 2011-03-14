@@ -268,7 +268,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                HandlerApplicationContext bc = (HandlerApplicationContext) ApplicationContext.getCurrentApplicationContext();
+                ConfigurableApplicationContext bc = (ConfigurableApplicationContext) ApplicationContext.getCurrentApplicationContext();
                 bc.getInvoker().invoke((BrutosContext)bc, response);
                 assertNotNull( servletContext.getAttribute( "OK" ) );
             }
@@ -333,7 +333,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                HandlerApplicationContext bc = (HandlerApplicationContext) ApplicationContext.getCurrentApplicationContext();
+                ConfigurableApplicationContext bc = (ConfigurableApplicationContext) ApplicationContext.getCurrentApplicationContext();
                 bc.getInvoker().invoke((BrutosContext)bc, response);
                 assertNull( servletContext.getAttribute( "OK" ) );
             }
@@ -398,7 +398,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                HandlerApplicationContext bc = (HandlerApplicationContext) WebApplicationContext.getCurrentApplicationContext();
+                ConfigurableApplicationContext bc = (ConfigurableApplicationContext) WebApplicationContext.getCurrentApplicationContext();
                 bc.getInvoker().invoke((BrutosContext)bc, response);
                 assertEquals("value1", servletContext.getAttribute( "testProperty" ) );
             }
@@ -468,7 +468,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                HandlerApplicationContext bc = (HandlerApplicationContext) WebApplicationContext.getCurrentApplicationContext();
+                ConfigurableApplicationContext bc = (ConfigurableApplicationContext) WebApplicationContext.getCurrentApplicationContext();
                 bc.getInvoker().invoke((BrutosContext)bc, response);
                 assertEquals("value2", servletContext.getAttribute( "testProperty" ) );
             }
@@ -539,7 +539,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                HandlerApplicationContext bc = (HandlerApplicationContext) WebApplicationContext.getCurrentApplicationContext();
+                ConfigurableApplicationContext bc = (ConfigurableApplicationContext) WebApplicationContext.getCurrentApplicationContext();
                 bc.getInvoker().invoke((BrutosContext)bc, response);
                 assertEquals("value3", servletContext.getAttribute( "testProperty" ) );
             }
@@ -604,7 +604,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
-                HandlerApplicationContext bc = (HandlerApplicationContext) WebApplicationContext.getCurrentApplicationContext();
+                ConfigurableApplicationContext bc = (ConfigurableApplicationContext) WebApplicationContext.getCurrentApplicationContext();
                 bc.getInvoker().invoke((BrutosContext)bc, response);
                 assertEquals("value1", servletContext.getAttribute( "testProperty" ) );
             }

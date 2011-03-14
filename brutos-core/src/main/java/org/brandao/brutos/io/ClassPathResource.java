@@ -105,4 +105,14 @@ public class ClassPathResource extends AbstractResource{
 
     }
 
+    public boolean equals( Object e ){
+        return e instanceof ClassPathResource?
+            ((ClassPathResource)e).path.equals( this.path ) :
+            false;
+    }
+
+    public String getName() {
+        return this.path;
+    }
+
 }

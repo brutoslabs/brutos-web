@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
-import org.brandao.brutos.HandlerApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
@@ -53,7 +53,7 @@ public class BrutosRequestFilter implements Filter{
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig   = filterConfig;
         this.context        = WebApplicationContext.getCurrentApplicationContext();
-        this.invoker        = ((HandlerApplicationContext)context).getInvoker();
+        this.invoker        = ((ConfigurableApplicationContext)context).getInvoker();
         this.currentFilter  = new ThreadLocal<FilterChain>();
     }
 

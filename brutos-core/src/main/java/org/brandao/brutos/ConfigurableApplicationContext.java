@@ -28,7 +28,7 @@ import org.brandao.brutos.view.ViewProvider;
  *
  * @author Afonso Brandao
  */
-public interface HandlerApplicationContext {
+public interface ConfigurableApplicationContext {
 
     /**
      * Obtém a fábrica de requisição.

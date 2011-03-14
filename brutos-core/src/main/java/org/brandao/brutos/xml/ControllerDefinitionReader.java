@@ -17,13 +17,12 @@
 
 package org.brandao.brutos.xml;
 
-import java.net.URI;
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BeanBuilder;
 import org.brandao.brutos.BrutosException;
@@ -32,7 +31,7 @@ import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.EnumerationType;
-import org.brandao.brutos.HandlerApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.InterceptorStackBuilder;
@@ -40,6 +39,8 @@ import org.brandao.brutos.ParameterBuilder;
 import org.brandao.brutos.PropertyBuilder;
 import org.brandao.brutos.RestrictionBuilder;
 import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.io.Resource;
+import org.brandao.brutos.io.ResourceLoader;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
 import org.brandao.brutos.type.*;
 import org.brandao.brutos.validator.RestrictionRules;
@@ -47,38 +48,36 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  *
  * @author Brandao
  */
-public class BuildApplication {
+public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
-    private URL source;
-    private HandlerApplicationContext handler;
     private XMLParseUtil parseUtil;
     private List blackList;
     
-    public BuildApplication( URL source,
-            HandlerApplicationContext handler, List blackList ){
-        this.source = source;
-        this.handler = handler;
+    public ControllerDefinitionReader( ConfigurableApplicationContext handler,
+            List blackList, ResourceLoader resourceLoader ){
+        super( handler, resourceLoader );
         this.parseUtil = new XMLParseUtil();
         this.blackList = blackList;
     }
 
-    public void build(){
+    public Element validate(Resource resource){
         DocumentBuilderFactory documentBuilderFactory =
                 DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
-        Document xmlDocument = null;
 
         URL schemaURL = Thread.currentThread()
             .getContextClassLoader()
-                .getResource( XMLBrutosConstants.XML_BRUTOS_SCHEMA );
+                .getResource( XMLBrutosConstants.XML_BRUTOS_CONTEXT_SCHEMA );
 
         try{
-            documentBuilderFactory.setNamespaceAware( true);
+            documentBuilderFactory.setNamespaceAware(true);
             documentBuilderFactory.setValidating(true);
             documentBuilderFactory.setAttribute(
                     XMLBrutosConstants.JAXP_SCHEMA_LANGUAGE,
@@ -90,29 +89,45 @@ public class BuildApplication {
                     schemaURL.toString()
             );
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            
-            xmlDocument = documentBuilder.parse(new InputSource(source.openStream()));
+
+            Document xmlDocument =
+                documentBuilder
+                    .parse(new InputSource(resource.getInputStream()));
+            xmlDocument.getDocumentElement().normalize();
+           return xmlDocument.getDocumentElement();
         }
-        catch (Exception e) {
-            throw new BrutosException(e);
+        catch (BrutosException ex) {
+            throw ex;
         }
+        catch (SAXParseException ex) {
+            throw new BrutosException(
+                     "Line " + ex.getLineNumber() + " in XML document from "
+                     + resource + " is invalid", ex);
+        }
+        catch (SAXException ex) {
+             throw new BrutosException("XML document from " + resource +
+                     " is invalid", ex);
+        }
+        catch (ParserConfigurationException ex) {
+             throw new BrutosException("Parser configuration exception parsing "
+                     + "XML from " + resource, ex);
+        }
+        catch (IOException ex) {
+             throw new BrutosException("IOException parsing XML document from "
+                     + resource, ex);
+        }
+        catch (Throwable ex) {
+             throw new BrutosException("Unexpected exception parsing XML document "
+                     + "from " + resource, ex);
+        }
+    }
 
-        xmlDocument.getDocumentElement().normalize();
 
-        Element document = xmlDocument.getDocumentElement();
-
-        loadContextParams(
-            parseUtil.getElement(
-                document, 
-                XMLBrutosConstants.XML_BRUTOS_CONTEXT_PARAMS ) );
-
-        loadImporters( parseUtil.getElement(
+    public void build(Element document, Resource resource){
+        
+        loadImporters( parseUtil.getElements(
                 document,
-                XMLBrutosConstants.XML_BRUTOS_IMPORTERS ) );
-
-        loadTypes( parseUtil.getElement(
-                document,
-                XMLBrutosConstants.XML_BRUTOS_TYPES ) );
+                XMLBrutosConstants.XML_BRUTOS_IMPORTER ), resource );
 
         loadInterceptors( parseUtil.getElement(
                 document,
@@ -124,150 +139,34 @@ public class BuildApplication {
 
     }
 
-    private void loadContextParams( Element cp ){
-
-        if( cp == null )
-            return;
-        
-        Properties config = handler.getConfiguration();
-
-        NodeList list = parseUtil
-            .getElements(
-                cp,
-                XMLBrutosConstants.XML_BRUTOS_CONTEXT_PARAM );
+    private void loadImporters( NodeList list, Resource resource ){
 
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
-            String name  = c.getAttribute( "name" );
-            String value = c.getAttribute("value");
+            String dependencyName = c.getAttribute( "resource" );
 
-            value = value == null? c.getTextContent() : value;
-            
-            config.setProperty(name, value);
-        }
-        
-    }
-    
-    private void loadImporters( Element e ){
-
-        if( e == null )
-            return;
-        
-        NodeList list = parseUtil
-            .getElements(
-                e,
-                XMLBrutosConstants.XML_BRUTOS_IMPORTER );
-
-
-        List resources = new ArrayList();
-
-        for( int i=0;i<list.getLength();i++ ){
-            Element c = (Element) list.item(i);
-            String resource = c.getAttribute( "resource" );
-
-            if( resource != null && resource.length() != 0 ){
-                resources.add( resource );
-            }
-                
-        }
-
-        //this.blackList.addAll( importers );
-
-        for( int i=0;i<resources.size();i++ ){
-            String resource = (String)resources.get(i);
-
-            URL resourceURL;
-
-            boolean isClassPath = resource.startsWith( "classpath:" );
-            String tmpResource = resource.replace("classpath:", "");
-            tmpResource = tmpResource.replace( "\\" , "/");
-            tmpResource = tmpResource.replaceAll( "/+" , "/");
-            tmpResource = tmpResource.startsWith("/")?
-                tmpResource.substring(1,tmpResource.length()):
-                tmpResource;
-
-            if( isClassPath ){
-                resourceURL = Thread.currentThread()
-                    .getContextClassLoader().getResource(tmpResource);
-
-                if( resourceURL == null )
-                    throw new BrutosException( "not found: " + resource );
-            }
-            else{
-                String path = source.getPath();
-                path = path.replace( "\\" , "/");
-                String[] parts = path.split( "/+" );
-                int length = parts.length -1;
-
-                String newPath = "";
-                for( int k=0;k<length;k++ ){
-                    newPath += parts[k] + "/";
-                }
-
-
-                newPath += tmpResource;
+            if( dependencyName != null && dependencyName.length() != 0 ){
 
                 try{
-                    resourceURL = new URL( this.source.getProtocol()+":"+newPath );
+                    Resource dependencyResource =
+                            resource.getRelativeResource(dependencyName);
+                    
+                    if( blackList.contains(dependencyResource) )
+                        continue;
+                    else
+                        blackList.add(dependencyResource);
+
+                    this.loadDefinitions( dependencyResource );
                 }
-                catch( Exception ex ){
-                    throw new BrutosException(ex);
+                catch( BrutosException ex ){
+                    throw ex;
                 }
+                catch( Throwable ex ){
+                    throw new BrutosException( ex );
+                }
+
             }
-            tmpResource = isClassPath?
-                "classpath:"+tmpResource :
-                tmpResource;
-
-            if( blackList.contains(tmpResource) )
-                continue;
-            else
-                blackList.add(tmpResource);
-
-            BuildApplication importerApp =
-                new BuildApplication( (URL)resourceURL,
-                    this.handler, this.blackList );
-
-            importerApp.build();
-        }
-
-
-    }
-
-    private void loadTypes( Element cp ){
-
-        if( cp == null )
-            return;
-        
-        NodeList list = parseUtil
-            .getElements(
-                cp,
-                XMLBrutosConstants.XML_BRUTOS_TYPE );
-
-        for( int i=0;i<list.getLength();i++ ){
-            Element c = (Element) list.item(i);
-            String name  = c.getAttribute( "class-type" );
-            String value = c.getAttribute("factory");
-
-            value = value == null? c.getTextContent() : value;
-
-            Class type = null;
-            Class factory = null;
-
-            try{
-                type = Class.forName(
-                            name,
-                            true,
-                            Thread.currentThread().getContextClassLoader() );
-                factory = Class.forName(
-                            value,
-                            true,
-                            Thread.currentThread().getContextClassLoader() );
-            }
-            catch( Exception e ){
-                throw new BrutosException( e );
-            }
-
-            Types.setType(type, factory);
+                
         }
 
     }
@@ -1164,5 +1063,31 @@ public class BuildApplication {
             
         }
 
+    }
+
+    public void loadDefinitions(Resource resource) {
+        Element document = this.validate(resource);
+        this.build(document, resource);
+    }
+
+    public void loadDefinitions(Resource[] resource) {
+        if( resource != null )
+            for( int i=0;i<resource.length;i++ )
+                this.loadDefinitions(resource[i]);
+    }
+
+    public void loadDefinitions(String[] locations) {
+        if( locations != null )
+            for( int i=0;i<locations.length;i++ )
+                this.loadDefinitions(locations[i]);
+    }
+
+    public void loadDefinitions(String location) {
+        Resource resource = this.resourceLoader.getResource(location);
+        this.loadDefinitions(resource);
+    }
+
+    public ResourceLoader getResourceLoader() {
+        return this.resourceLoader;
     }
 }

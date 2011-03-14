@@ -39,7 +39,7 @@ public class FileSystemResource extends AbstractResource{
     
     public URL getURL() throws IOException {
         return
-            new URL( AbstractResource.FILE_URL_PREFIX
+            new URL( ResourceLoader.FILE_URL_PREFIX
                 + this.file.getAbsolutePath() );
     }
 
@@ -54,6 +54,16 @@ public class FileSystemResource extends AbstractResource{
 
     public boolean exists() {
         return this.file.exists();
+    }
+
+    public boolean equals( Object e ){
+        return e instanceof FileSystemResource?
+            ((FileSystemResource)e).path.equals( this.path ) :
+            false;
+    }
+
+    public String getName() {
+        return this.path;
     }
 
 }

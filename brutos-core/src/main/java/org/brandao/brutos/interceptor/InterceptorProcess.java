@@ -30,7 +30,7 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.HandlerApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.RedirectException;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.web.WebFrame;
@@ -391,8 +391,8 @@ public class InterceptorProcess implements InterceptorStack{
         try{
             Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
             Scope paramScope = Scopes.get(ScopeType.PARAM.toString());
-            HandlerApplicationContext appContext =
-                    (HandlerApplicationContext)requestScope.get( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
+            ConfigurableApplicationContext appContext =
+                    (ConfigurableApplicationContext)requestScope.get( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
             Object source                 = handler.getResource();
             String redirectView           = (String)requestScope.get( BrutosConstants.REDIRECT );
             Throwable objectThrow         = (Throwable)requestScope.get( BrutosConstants.EXCEPTION );

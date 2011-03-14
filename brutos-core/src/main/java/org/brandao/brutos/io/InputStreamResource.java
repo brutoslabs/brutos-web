@@ -51,4 +51,8 @@ public class InputStreamResource extends AbstractResource{
         return input;
     }
 
+    public String getName() {
+        return "InputStream";
+    }
+
 }

@@ -21,7 +21,7 @@ import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
- * Classe usada em testes.
+ * 
  * 
  * @author Afonso Brandao
  */
@@ -30,7 +30,7 @@ public class ApplicationContextWrapper extends ApplicationContext{
     protected ApplicationContext applicationContext;
 
     /**
-     * Define a aplicação a ser testada.
+     * Define a aplicação.
      *
      * @param app Aplicação.
      */

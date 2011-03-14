@@ -39,9 +39,9 @@ import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ControllerResolver;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.HandlerApplicationContext;
-import org.brandao.brutos.MvcRequest;
-import org.brandao.brutos.MvcResponse;
+import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.io.Resource;
+import org.brandao.brutos.io.ServletContextResource;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
@@ -59,10 +59,12 @@ import org.brandao.brutos.web.scope.SessionScope;
  *
  * @author Afonso Brandao
  */
-public class WebApplicationContext extends ApplicationContext implements HandlerApplicationContext{
+public class WebApplicationContext extends ApplicationContext implements ConfigurableApplicationContext{
 
     private Logger logger;
-    Configuration config;
+    private Configuration config;
+    private ServletContext servletContext;
+    private ServletContextResource resource;
 
     public WebApplicationContext(){
         this.config = new Configuration();
@@ -83,6 +85,12 @@ public class WebApplicationContext extends ApplicationContext implements Handler
     private void loadContext( ServletContextEvent sce ){
         long time = System.currentTimeMillis();
         try{
+            this.servletContext = sce.getServletContext();
+            this.resource =
+                new ServletContextResource(
+                    servletContext,
+                    "/" );
+            
             loadParameters( sce );
             loadLogger( sce.getServletContext() );
             logger.info( "Initializing Brutos root WebApplicationContext" );
@@ -158,7 +166,7 @@ public class WebApplicationContext extends ApplicationContext implements Handler
                     requestFactory );
 
         String actionResolverName = config
-                .getProperty( "org.brandao.brutos.controller.method_resolver",
+                .getProperty( "org.brandao.brutos.controller.action_resolver",
                               WebActionResolver.class.getName() );
 
         config.put( "org.brandao.brutos.controller.method_resolver",
@@ -356,6 +364,15 @@ public class WebApplicationContext extends ApplicationContext implements Handler
 
     public ActionResolver getActionResolver() {
         return this.actionResolver;
+    }
+
+    protected Resource getContextResource( String path ){
+        try{
+            return this.resource.getRelativeResource(path);
+        }
+        catch( Exception e ){
+            throw new BrutosException(e);
+        }
     }
 
 }
