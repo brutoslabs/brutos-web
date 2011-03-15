@@ -28,9 +28,9 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.interceptor.DataInput;
+import org.brandao.brutos.interceptor.DataOutput;
 import org.brandao.brutos.web.WebApplicationContext;
-import org.brandao.brutos.web.http.DataInput;
-import org.brandao.brutos.web.http.DataOutput;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
@@ -149,12 +149,17 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
         WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
         IOCManager iocManager = ((BrutosContext)brutosContext).getIocManager();
         Object instance = iocManager.getInstance( controller.getId() );
-        
+
+        /*
         DataInput input = new DataInput( brutosContext.getRequest(),
                                        (HttpServletResponse)context.getExternalContext().getResponse(),
                                        brutosContext.getContext() );
         DataOutput output = new DataOutput( brutosContext.getRequest(),
                                        brutosContext.getContext() );
+        */
+
+        DataInput input = new DataInput( Scopes.get(ScopeType.PARAM) );
+        DataOutput output = new DataOutput();
         
         //brutosContext.getRequest().setAttribute( BrutosConstants.WEBFRAME, instance );
         input.read( controller , instance);

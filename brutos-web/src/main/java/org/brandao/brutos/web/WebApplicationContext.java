@@ -38,8 +38,8 @@ import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ControllerResolver;
 import org.brandao.brutos.InterceptorManager;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ServletContextResource;
 import org.brandao.brutos.old.programatic.WebFrameManager;
@@ -59,7 +59,8 @@ import org.brandao.brutos.web.scope.SessionScope;
  *
  * @author Afonso Brandao
  */
-public class WebApplicationContext extends ApplicationContext implements ConfigurableApplicationContext{
+public class WebApplicationContext extends ApplicationContext
+        implements ConfigurableApplicationContext{
 
     private Logger logger;
     private Configuration config;

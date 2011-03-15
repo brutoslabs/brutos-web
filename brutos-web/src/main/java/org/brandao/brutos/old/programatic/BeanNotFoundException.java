@@ -14,23 +14,29 @@
  * either express or implied.
  *
  */
+package org.brandao.brutos.old.programatic;
 
-package org.brandao.brutos.web.http;
-
-import java.util.List;
+import org.brandao.brutos.BrutosException;
 
 /**
  *
  * @author Afonso Brandao
  */
-public interface BrutosRequest extends MutableRequest{
-
-    public Object getObject( String name );
+public class BeanNotFoundException extends BrutosException{
     
-    public List<Object> getObjects( String name );
+    public BeanNotFoundException() {
+	super();
+    }
 
-    public UploadListener getUploadListener();
+    public BeanNotFoundException(String message) {
+	super(message);
+    }
 
-    public void parseRequest();
-    
+    public BeanNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public BeanNotFoundException(Throwable cause) {
+        super(cause);
+    }
 }

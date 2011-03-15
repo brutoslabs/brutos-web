@@ -107,7 +107,7 @@ public class ValidatorTest extends TestCase {
                 request.setupAddParameter("number", "10");
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -164,7 +164,7 @@ public class ValidatorTest extends TestCase {
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
                 try{
-                    bc.getInvoker().invoke(bc, response);
+                    bc.getInvoker().invoke(null);
                     fail("expected: ValidatoException");
                 }
                 catch( Exception e ){}
@@ -223,7 +223,7 @@ public class ValidatorTest extends TestCase {
                 request.setupAddParameter("number", "10");
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -280,7 +280,7 @@ public class ValidatorTest extends TestCase {
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
                 try{
-                    bc.getInvoker().invoke(bc, response);
+                    bc.getInvoker().invoke(null);
                     fail("expected: ValidatoException");
                 }
                 catch( Exception e ){}
@@ -339,7 +339,7 @@ public class ValidatorTest extends TestCase {
                 request.setupAddParameter("number", "10");
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -396,7 +396,7 @@ public class ValidatorTest extends TestCase {
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
                 try{
-                    bc.getInvoker().invoke(bc, response);
+                    bc.getInvoker().invoke(null);
                     fail("expected: ValidatoException");
                 }
                 catch( Exception e ){}
@@ -455,7 +455,7 @@ public class ValidatorTest extends TestCase {
                 request.setupAddParameter("text", "Hi");
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -512,7 +512,7 @@ public class ValidatorTest extends TestCase {
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
                 try{
-                    bc.getInvoker().invoke(bc, response);
+                    bc.getInvoker().invoke(null);
                     fail("expected: ValidatoException");
                 }
                 catch( Exception e ){}
@@ -571,7 +571,7 @@ public class ValidatorTest extends TestCase {
                 request.setupAddParameter("text", "kkk");
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -628,7 +628,7 @@ public class ValidatorTest extends TestCase {
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
                 try{
-                    bc.getInvoker().invoke(bc, response);
+                    bc.getInvoker().invoke(null);
                     fail("expected: ValidatoException");
                 }
                 catch( Exception e ){}
@@ -687,7 +687,7 @@ public class ValidatorTest extends TestCase {
                 request.setupAddParameter("text", "kkkkkk");
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -744,7 +744,7 @@ public class ValidatorTest extends TestCase {
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
                 try{
-                    bc.getInvoker().invoke(bc, response);
+                    bc.getInvoker().invoke(null);
                     fail("expected: ValidatoException");
                 }
                 catch( Exception e ){}
@@ -803,7 +803,7 @@ public class ValidatorTest extends TestCase {
                 request.setupAddParameter("text", "14.940-000");
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
             }
             finally{
                 listener.requestDestroyed(sre);
@@ -860,7 +860,7 @@ public class ValidatorTest extends TestCase {
                 listener.requestInitialized(sre);
                 BrutosContext bc = BrutosContext.getCurrentInstance();
                 try{
-                    bc.getInvoker().invoke(bc, response);
+                    bc.getInvoker().invoke(null);
                     fail("expected: ValidatoException");
                 }
                 catch( Exception e ){}
