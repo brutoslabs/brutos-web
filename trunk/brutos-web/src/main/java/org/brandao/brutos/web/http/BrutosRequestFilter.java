@@ -32,8 +32,8 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.Invoker;
+import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
@@ -84,7 +84,7 @@ public class BrutosRequestFilter implements Filter{
 
             currentFilter.set(chain);
             if( context instanceof BrutosContext ){
-                if( !invoker.invoke((BrutosContext)context, (HttpServletResponse)response ) )
+                if( !invoker.invoke(null) )
                     chain.doFilter( request, response);
             }
             else{

@@ -150,7 +150,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 WebApplicationContext bc = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke((BrutosContext)bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( servletContext.getAttribute( "OK" ) );
             }
             finally{
@@ -205,7 +205,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 WebApplicationContext bc = (WebApplicationContext) WebApplicationContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke((BrutosContext)bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( servletContext.getAttribute( "OK" ) );
             }
             finally{
@@ -269,7 +269,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
                 ConfigurableApplicationContext bc = (ConfigurableApplicationContext) ApplicationContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke((BrutosContext)bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( servletContext.getAttribute( "OK" ) );
             }
             finally{
@@ -334,7 +334,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
                 ConfigurableApplicationContext bc = (ConfigurableApplicationContext) ApplicationContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke((BrutosContext)bc, response);
+                bc.getInvoker().invoke(null);
                 assertNull( servletContext.getAttribute( "OK" ) );
             }
             finally{
@@ -399,7 +399,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
                 ConfigurableApplicationContext bc = (ConfigurableApplicationContext) WebApplicationContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke((BrutosContext)bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals("value1", servletContext.getAttribute( "testProperty" ) );
             }
             finally{
@@ -469,7 +469,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
                 ConfigurableApplicationContext bc = (ConfigurableApplicationContext) WebApplicationContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke((BrutosContext)bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals("value2", servletContext.getAttribute( "testProperty" ) );
             }
             finally{
@@ -540,7 +540,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
                 ConfigurableApplicationContext bc = (ConfigurableApplicationContext) WebApplicationContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke((BrutosContext)bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals("value3", servletContext.getAttribute( "testProperty" ) );
             }
             finally{
@@ -605,7 +605,7 @@ public class InterceptorManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "methodI");
                 listener.requestInitialized(sre);
                 ConfigurableApplicationContext bc = (ConfigurableApplicationContext) WebApplicationContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke((BrutosContext)bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals("value1", servletContext.getAttribute( "testProperty" ) );
             }
             finally{

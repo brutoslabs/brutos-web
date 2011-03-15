@@ -15,20 +15,29 @@
  *
  */
 
-package org.brandao.brutos.web.http;
+package org.brandao.brutos.old.programatic;
+
+import org.brandao.brutos.BrutosException;
 
 /**
  *
  * @author Afonso Brandao
  */
-public interface MutableRequest {
+public class BeanExistException extends BrutosException{
     
-    public void setParameter( String name, String value );
-    
-    public void setParameters( String name, String[] values );
+    public BeanExistException() {
+	super();
+    }
 
-    public void setObject( String name, Object value );
-    
-    public void setObjects( String name, Object[] value );
+    public BeanExistException(String message) {
+	super(message);
+    }
 
+    public BeanExistException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public BeanExistException(Throwable cause) {
+        super(cause);
+    }
 }

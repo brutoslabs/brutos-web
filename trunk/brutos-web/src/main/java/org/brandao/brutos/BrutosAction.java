@@ -15,47 +15,37 @@
  *
  */
 
-package org.brandao.brutos.web;
+package org.brandao.brutos;
 
 import java.io.IOException;
-import java.util.Map;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.Invoker1_3;
-import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
-import org.brandao.brutos.web.http.BrutosRequest;
-import org.brandao.brutos.web.http.UploadListener;
+import org.brandao.brutos.web.RequestInfo;
 
 /**
- * 
+ * @deprecated 
  * @author Afonso Brandao
  */
-public class DispatcherServlet extends HttpServlet {
+public class BrutosAction extends HttpServlet {
     
-    private ApplicationContext webApplicationContext;
+    private BrutosContext brutosCore;
     private Invoker invoker;
 
+    @Override
     public void init() throws ServletException{
         super.init();
-        webApplicationContext = (WebApplicationContext) getServletContext().getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
+        brutosCore = (BrutosContext) getServletContext().getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
 
-        if( webApplicationContext == null ){
+        if( brutosCore == null ){
             throw new IllegalStateException(
                     "Unable to initialize the servlet was not configured for the application context root - " +
                     "make sure you have defined in your web.xml ContextLoader!"
             );
         }
         else
-            invoker = ((ConfigurableApplicationContext)webApplicationContext).getInvoker();
+            invoker = brutosCore.getInvoker();
 
         Throwable ex = (Throwable)getServletContext().getAttribute( BrutosConstants.EXCEPTION );
 
@@ -64,62 +54,39 @@ public class DispatcherServlet extends HttpServlet {
 
     }
     
+    @Override
     public void destroy(){
         super.destroy();
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-
-        WebApplicationContext app =
-            (WebApplicationContext)WebApplicationContext
-                .getCurrentApplicationContext();
-
-        request = app.getRequest();
-
-        Scope scope = Scopes.get(ScopeType.SESSION);
-        
-        Map mappedUploadStats =
-                (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
-
-        String path         = request.getRequestURI();
-        String contextPath  = request.getContextPath();
-        path = path.substring( contextPath.length(), path.length() );
-
         try{
             RequestInfo requestInfo = new RequestInfo();
-
-            BrutosRequest brutosRequest = (BrutosRequest)request;
-
-            requestInfo.setRequest(request);
+            requestInfo.setRequest( request );
             requestInfo.setResponse(response);
             RequestInfo.setCurrent(requestInfo);
-
-            UploadListener listener = brutosRequest.getUploadListener();
-
-
-            mappedUploadStats.put( path, listener.getUploadStats() );
-
-            invoker.invoke(path);
+            brutosCore.getInvoker().invoke( null );
         }
         finally{
-            mappedUploadStats.remove( path );
-            ((ConfigurableApplicationContext)app).getRequestFactory().destroyRequest();
-            ((ConfigurableApplicationContext)app).getResponseFactory().destroyResponse();
             RequestInfo.removeCurrent();
         }
+
     }
     
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     }
     
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
     }
     
+    @Override
     public String getServletInfo() {
         return "Brutos Servlet";
     }

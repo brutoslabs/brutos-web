@@ -289,7 +289,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals( "OK" , servletContext.getAttribute( "status" ));
             }
             finally{
@@ -346,7 +346,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals( "OK" , servletContext.getAttribute( "status" ));
                 assertEquals( "/test.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
             }
@@ -412,7 +412,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals( "OK" , servletContext.getAttribute( "status" ));
                 assertEquals( "/test.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
                 assertTrue( ((MockViewProvider)bc.getViewProvider()).isRedirect() );
@@ -475,7 +475,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals( "/method.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
             }
             finally{
@@ -537,7 +537,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals( "/throw.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
                 Scope requestScope = Scopes.get(ScopeType.REQUEST);
                 assertNotNull( requestScope.get( "methodException" ) );
@@ -600,7 +600,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals( "/method.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
             }
             finally{
@@ -663,7 +663,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
 
                 Bean b = bc.getIocManager().getBean("instanceController");
                 
@@ -729,7 +729,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( request.getAttribute( "instanceController" ) );
             }
             finally{
@@ -792,7 +792,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( servletContext.getAttribute( "instanceController" ) );
             }
             finally{
@@ -857,7 +857,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setSession( session );
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( session.getAttribute( "instanceController" ) );
             }
             finally{
@@ -922,7 +922,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setSession( session );
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 fail("expected exception");
             }
             catch( Exception e ){
@@ -986,7 +986,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("invoke", "testAction");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( "OK", servletContext.getAttribute( "status" ) );
             }
             finally{
@@ -1052,7 +1052,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("_method", "testAction");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( "OK", servletContext.getAttribute( "status" ) );
             }
             finally{
@@ -1114,7 +1114,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( "OK", servletContext.getAttribute( "status" ) );
             }
             finally{
@@ -1173,7 +1173,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("testValue", "20");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestInheritanceController" );
 
@@ -1235,7 +1235,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("testValue", "20");
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
 
@@ -1301,7 +1301,7 @@ public class WebFrameManagerTest extends TestCase{
                 
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
 
@@ -1367,7 +1367,7 @@ public class WebFrameManagerTest extends TestCase{
 
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
 
@@ -1436,7 +1436,7 @@ public class WebFrameManagerTest extends TestCase{
                 Scopes.get("flash").put("testValue", "Teste");
 
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
 
@@ -1498,7 +1498,7 @@ public class WebFrameManagerTest extends TestCase{
                 servletContext.setAttribute( "testValue", 10L );
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
 
@@ -1563,7 +1563,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter( "invoke" , "method" );
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
 
@@ -1631,7 +1631,7 @@ public class WebFrameManagerTest extends TestCase{
 
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
 
@@ -1698,7 +1698,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter( "invoke", "method" );
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
 
@@ -1768,7 +1768,7 @@ public class WebFrameManagerTest extends TestCase{
                 Scopes.get("flash").put("testValue", "Teste");
 
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
 
@@ -1832,7 +1832,7 @@ public class WebFrameManagerTest extends TestCase{
                 servletContext.setAttribute( "testValue", 10L );
                 listener.requestInitialized(sre);
                 BrutosContext bc = (BrutosContext) BrutosContext.getCurrentApplicationContext();
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestController2 controller =
                     (TestController2)request.getAttribute( "TestController2" );
 
@@ -1895,7 +1895,7 @@ public class WebFrameManagerTest extends TestCase{
             try{
                 request.setRequestURI("/test.jbrs");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( "OK", servletContext.getAttribute( "status" ) );
             }
             finally{
@@ -1907,7 +1907,7 @@ public class WebFrameManagerTest extends TestCase{
             try{
                 request.setRequestURI("/test2.jbrs");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( "OK", servletContext.getAttribute( "status" ) );
             }
             finally{
@@ -1919,7 +1919,7 @@ public class WebFrameManagerTest extends TestCase{
             try{
                 request.setRequestURI("/test3.jbrs");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertNotNull( "OK", servletContext.getAttribute( "status" ) );
             }
             finally{
@@ -1980,7 +1980,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 Scope requestScope = Scopes.get(ScopeType.REQUEST);
 
                 assertNotNull( requestScope.get( "ex" ) );
@@ -2043,7 +2043,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 Scope requestScope = Scopes.get(ScopeType.REQUEST);
                 assertNotNull( requestScope.get( "methodException" ) );
             }
@@ -2106,7 +2106,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 Scope requestScope = Scopes.get(ScopeType.REQUEST);
                 assertNotNull( requestScope.get( "methodException" ) );
             }
@@ -2178,7 +2178,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 Scope requestScope = Scopes.get(ScopeType.REQUEST);
                 assertNotNull( requestScope.get( "methodException" ) );
                 assertEquals( "/throw.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
@@ -2245,7 +2245,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 Scope requestScope = Scopes.get(ScopeType.REQUEST);
                 assertNotNull( requestScope.get( "result" ) );
             }
@@ -2310,7 +2310,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals( "/method.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
                 Scope requestScope = Scopes.get(ScopeType.REQUEST);
                 assertNotNull( requestScope.get( "result" ) );
@@ -2376,7 +2376,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setRequestURI("/test.jbrs");
                 request.setupAddParameter("invoke", "method");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 assertEquals( "/method.jsp" , ((MockViewProvider)bc.getViewProvider()).getView() );
                 Scope requestScope = Scopes.get(ScopeType.REQUEST);
                 assertNotNull( requestScope.get( "result" ) );
@@ -2452,7 +2452,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("name", "Test");
                 request.setupAddParameter("message", "message test");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestMappingBeanController controller =
                     (TestMappingBeanController)request.getAttribute( "TestMappingBeanController" );
 
@@ -2531,7 +2531,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("name", "Test");
                 request.setupAddParameter("message", "message test");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestMappingBeanController controller =
                     (TestMappingBeanController)request.getAttribute( "TestMappingBeanController" );
 
@@ -2610,7 +2610,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("name", "Test");
                 request.setupAddParameter("message", "message test");
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestMappingBeanController controller =
                     (TestMappingBeanController)request.getAttribute( "TestMappingBeanController" );
 
@@ -2694,7 +2694,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("message[1]", "message test2");
 
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestMappingBeanController controller =
                     (TestMappingBeanController)request.getAttribute( "TestMappingBeanController" );
 
@@ -2786,7 +2786,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("message[1]", "message test2");
 
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestMappingBeanController controller =
                     (TestMappingBeanController)request.getAttribute( "TestMappingBeanController" );
 
@@ -2878,7 +2878,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("message[1]", "message test2");
 
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestMappingBeanController controller =
                     (TestMappingBeanController)request.getAttribute( "TestMappingBeanController" );
 
@@ -2970,7 +2970,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("testinheritance.nome", "jose");
 
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestMappingBeanController controller =
                     (TestMappingBeanController)request.getAttribute( "TestMappingBeanController" );
 
@@ -3062,7 +3062,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("testhierarchy.name[1]", "Test2");
 
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestMappingBeanController controller =
                     (TestMappingBeanController)request.getAttribute( "TestMappingBeanController" );
 
@@ -3151,7 +3151,7 @@ public class WebFrameManagerTest extends TestCase{
                 request.setupAddParameter("testhierarchy.name[1]", "Test2");
 
                 listener.requestInitialized(sre);
-                bc.getInvoker().invoke(bc, response);
+                bc.getInvoker().invoke(null);
                 TestMappingBeanController controller =
                     (TestMappingBeanController)request.getAttribute( "TestMappingBeanController" );
 
