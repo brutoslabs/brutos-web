@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.Download;
-import org.brandao.brutos.web.WebMvcResponse;
 
 /**
  *

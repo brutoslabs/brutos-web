@@ -20,9 +20,7 @@ package org.brandao.brutos.ioc;
 import java.beans.PropertyEditor;
 import java.util.HashMap;
 import java.util.Map;
-import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.ioc.editors.*;
-import org.brandao.brutos.old.programatic.IOCManager;
 
 /**
  *
@@ -30,7 +28,7 @@ import org.brandao.brutos.old.programatic.IOCManager;
  */
 public class EditorConfigurer {
 
-    private static Map editors;
+    private static final Map editors;
 
     static{
         editors = new HashMap<Class, PropertyEditor>();

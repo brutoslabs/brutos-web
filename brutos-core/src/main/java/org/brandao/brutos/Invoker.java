@@ -17,16 +17,11 @@
 
 package org.brandao.brutos;
 
-import java.io.IOException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
 
@@ -37,12 +32,12 @@ import org.brandao.brutos.scope.Scopes;
  */
 public class Invoker {
 
-    private static Logger logger = LoggerProvider.getCurrentLoggerProvider().getLogger(Invoker.class.getName());
-    private ControllerResolver controllerResolver;
-    private IOCProvider iocProvider;
-    private ControllerManager controllerManager;
-    private ActionResolver actionResolver;
-    private ApplicationContext applicationContext;
+    protected static Logger logger = LoggerProvider.getCurrentLoggerProvider().getLogger(Invoker.class.getName());
+    protected ControllerResolver controllerResolver;
+    protected IOCProvider iocProvider;
+    protected ControllerManager controllerManager;
+    protected ActionResolver actionResolver;
+    protected ApplicationContext applicationContext;
     
     public Invoker() {
     }
@@ -54,85 +49,6 @@ public class Invoker {
         this.controllerManager  = controllerManager;
         this.actionResolver     = actionResolver;
         this.applicationContext = applicationContext;
-    }
-
-    /**
-     * @deprecated 
-     * @param brutosContext
-     * @param response
-     * @return .
-     * @throws IOException
-     */
-    public boolean invoke( BrutosContext brutosContext, HttpServletResponse response ) throws IOException{
-
-        //Form form = brutosContext.getController();
-        WebFrameManager wfm = brutosContext.getWebFrameManager();
-
-        Form form = brutosContext
-                .getResolveController()
-                    .getController(
-                        wfm,
-                        (HttpServletRequest)org.brandao.brutos.ContextLoaderListener.currentRequest.get()
-                );
-
-        long time = 0;
-        if( form == null )
-            //response.setStatus( response.SC_NOT_FOUND );
-            return false;
-        else
-            brutosContext
-                .getRequest()
-                    .setAttribute( BrutosConstants.CONTROLLER , form);
-
-
-        Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
-        try{
-            //compatibilidade com a versão 2.0
-            requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
-            requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE, brutosContext );
-
-            if( logger.isDebugEnabled() ){
-                logger.debug( "Received a new request" );
-            }
-
-            time = System.currentTimeMillis();
-
-            IOCManager iocManager =
-                    (IOCManager)brutosContext.getContext()
-                        .getAttribute( BrutosConstants.IOC_MANAGER );
-
-            ImpInterceptorHandler ih = new ImpInterceptorHandler();
-            ih.setContext( brutosContext.getContext() );
-            ih.setRequest( brutosContext.getRequest() );
-            ih.setResource( iocManager.getInstance( form.getId() ) );
-            ih.setResponse( response );
-            ih.setURI( ih.getRequest().getRequestURI() );
-            ih.setResourceAction(
-                brutosContext
-                    .getMethodResolver()
-                        .getResourceMethod( brutosContext.getRequest() ) );
-
-            if( logger.isDebugEnabled() ){
-                logger.debug(
-                    String.format(
-                        "Controller: %s Method: %s",
-                        form.getClass().getName() ,
-                        ih.getResourceAction() == null?  "" : ih.getResourceAction().getMethod().getName() )
-                );
-
-
-            }
-            form.proccessBrutosAction( ih );
-        }
-        finally{
-            requestScope.remove( BrutosConstants.IOC_PROVIDER );
-            if( logger.isDebugEnabled() )
-                logger.debug(
-                        String.format( "Request processed in %d ms",
-                            (System.currentTimeMillis()-time) ) );
-        }
-
-        return true;
     }
 
     /**

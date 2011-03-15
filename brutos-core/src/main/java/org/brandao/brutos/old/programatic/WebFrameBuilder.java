@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.DispatcherType;
@@ -383,9 +382,9 @@ public class WebFrameBuilder {
         UseBeanData useBean = new UseBeanData();
         useBean.setNome( name );
         useBean.setScopeType( scope );
-        useBean.setValidate( ((ConfigurableApplicationContext)BrutosContext
-                    .getCurrentApplicationContext()).getValidatorProvider()
-                        .getValidator( validatorConfig ) );
+        /*useBean.setValidate( ((ConfigurableApplicationContext)BrutosContext
+                    .getCurrentInstance()).getValidatorProvider()
+                        .getValidator( validatorConfig ) );*/
 
         FieldForm fieldBean = new FieldForm();
         fieldBean.setBean( useBean );
