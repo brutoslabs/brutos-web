@@ -25,9 +25,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
 
 /**

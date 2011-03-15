@@ -29,12 +29,9 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ioc.ContextFactory;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.ioc.IOCProviderFactory;
-import org.brandao.brutos.ioc.RequestFactory;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.old.programatic.Bean;
 import org.brandao.brutos.old.programatic.BeanNotFoundException;
@@ -64,19 +61,6 @@ public class IOCXMLMapping {
         return "Bean" + (id++);
     }
 
-    @Deprecated
-    private void loadDefaultBeans(){
-        iocManager.addBean( "servletContextFactory", ContextFactory.class, ScopeType.APPLICATION, false, null );
-        iocManager.addBean( "servletContext", ServletContext.class, ScopeType.APPLICATION, false, "servletContextFactory" );
-        
-        iocManager.addBean( "iocManagerFactory", IOCProviderFactory.class, ScopeType.APPLICATION, false, null );
-        iocManager.addBean( "iocManager", IOCManager.class, ScopeType.APPLICATION, false, "iocManagerFactory" );
-
-        iocManager.addBean( "requestFactory", RequestFactory.class, ScopeType.REQUEST, false, null );
-        iocManager.addBean( "request", ServletRequest.class, ScopeType.REQUEST, false, "requestFactory" );
-
-    }
-    
     public void setBeans( Map<String, Map<String,Object>> beans ) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException{
         this.beans = beans;
         //loadDefaultBeans();

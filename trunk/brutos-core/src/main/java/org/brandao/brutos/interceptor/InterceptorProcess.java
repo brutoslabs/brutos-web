@@ -26,16 +26,12 @@ import java.util.Map;
 import java.util.Set;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.RedirectException;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.web.WebFrame;
-import org.brandao.brutos.web.http.DataInput;
-import org.brandao.brutos.web.http.DataOutput;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -416,7 +412,7 @@ public class InterceptorProcess implements InterceptorStack{
                 }
             }
             
-            if( isUpdatable( source ) ){
+            //if( isUpdatable( source ) ){
 
                 if( method != null ){
 
@@ -439,12 +435,13 @@ public class InterceptorProcess implements InterceptorStack{
                     }
                 }
                 
-                String view = getView( source );
-                view = view == null? form.getPage() : view;
+                //String view = getView( source );
+                //view = view == null? form.getPage() : view;
+                String view = form.getPage();
                 boolean redirect = form.isRedirect();
                 viewProvider.show(view, form.getDispatcherType());
 
-            }
+            //}
 
             
         }
@@ -461,6 +458,7 @@ public class InterceptorProcess implements InterceptorStack{
             return null;
     }
 
+    /*
     private String getView( Object source ){
         if( source instanceof WebFrame && ((WebFrame)source).isUpdatable() )
             return ((WebFrame)source).getPage();
@@ -471,4 +469,5 @@ public class InterceptorProcess implements InterceptorStack{
     private boolean isUpdatable( Object source ){
         return source instanceof WebFrame? ((WebFrame)source).isUpdatable() : true;
     }
+    */
 }

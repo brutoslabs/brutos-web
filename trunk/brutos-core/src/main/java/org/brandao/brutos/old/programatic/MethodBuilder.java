@@ -17,9 +17,6 @@
 
 package org.brandao.brutos.old.programatic;
 
-import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.BrutosContext;
-import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.DispatcherType;
@@ -32,8 +29,6 @@ import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ParameterMethodMapping;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
-import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
 
@@ -112,9 +107,9 @@ public class MethodBuilder {
 
         useBean.setNome( name );
         useBean.setScopeType( scope );
-        useBean.setValidate( ((ConfigurableApplicationContext)BrutosContext
-                    .getCurrentApplicationContext()).getValidatorProvider()
-                        .getValidator( validatorConfig ) );
+        /*useBean.setValidate( ((ConfigurableApplicationContext)BrutosContext
+                    .getCurrentInstance()).getValidatorProvider()
+                        .getValidator( validatorConfig ) );*/
         if( mapping != null ){
             if( webFrame.getMappingBeans().containsKey( mapping ) )
                 useBean.setMapping( webFrame.getMappingBean( mapping ) );

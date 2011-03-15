@@ -20,9 +20,6 @@ package org.brandao.brutos.mapping;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.ioc.ContextFactory;
-import org.brandao.brutos.ioc.IOCProviderFactory;
-import org.brandao.brutos.ioc.RequestFactory;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
@@ -41,6 +38,7 @@ public class DefaultMapping extends Mapping{
     }
 
     public void loadIOCManager(IOCManager iocManager){
+        /*
         iocManager.addBean( "servletContextFactory",
                 ContextFactory.class, ScopeType.APPLICATION, false, null );
                 
@@ -62,6 +60,7 @@ public class DefaultMapping extends Mapping{
         iocManager.addBean( "request",
                 ServletRequest.class, ScopeType.REQUEST, false,
                 "requestFactory" ).setFactoryMethod( "createInstance" );
+         */
     }
 
     public void loadWebFrameManager(WebFrameManager webFrameManager){
