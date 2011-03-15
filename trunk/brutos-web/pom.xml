@@ -39,5 +39,29 @@
             <version>6.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.mockrunner</groupId>
+            <artifactId>mockrunner-jdk1.3-j2ee1.3</artifactId>
+            <version>0.4</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jboss-jee</artifactId>
+                    <groupId>jboss</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>jboss</groupId>
+            <artifactId>jboss-j2ee</artifactId>
+            <version>4.2.0.GA</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.brandao</groupId>
+            <artifactId>ioc-di</artifactId>
+            <version>1.0-RC2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
