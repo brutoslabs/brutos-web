@@ -18,7 +18,6 @@
 package org.brandao.brutos;
 
 import java.io.InputStream;
-import org.brandao.brutos.io.FileSystemResource;
 import org.brandao.brutos.io.InputStreamResource;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.xml.AbstractXMLApplicationContext;
