@@ -47,6 +47,11 @@ public class ByteArrayXMLApplicationContext
         this(new byte[][]{array}, null);
     }
 
+    public ByteArrayXMLApplicationContext( byte[] array,
+            ApplicationContext parent ){
+        this(new byte[][]{array}, parent);
+    }
+
     protected Resource[] getContextResources() {
         return resources;
     }

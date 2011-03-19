@@ -55,6 +55,12 @@ public class ClassPathXMLApplicationContext
                 Thread.currentThread().getContextClassLoader(), null );
     }
 
+    public ClassPathXMLApplicationContext( String location,
+            ApplicationContext parent ){
+        this( new String[]{location}, parent,
+                Thread.currentThread().getContextClassLoader(), null );
+    }
+
     public ClassPathXMLApplicationContext( String[] locations,
             Class clazz ){
         this( locations, null, null, clazz );
