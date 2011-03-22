@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -92,6 +93,13 @@
             <version>2.2.1-b03</version>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>maven2-repository.ioc-di.sourceforge.net</id>
+            <name>IoC-DI Repository for Maven</name>
+            <url>http://ioc-di.sourceforge.net/maven/2</url>
+        </repository>
+    </repositories>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
