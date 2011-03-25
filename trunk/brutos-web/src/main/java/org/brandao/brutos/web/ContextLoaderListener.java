@@ -31,7 +31,7 @@ import javax.servlet.http.HttpSessionListener;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.web.http.BrutosRequest;
-import org.brandao.brutos.web.http.DefaultBrutosRequest;
+import org.brandao.brutos.web.http.BrutosRequestImp;
 
 /**
  * 
@@ -87,7 +87,7 @@ public class ContextLoaderListener implements ServletContextListener,
             ServletRequest brutosRequest = (ServletRequest) Class.forName( 
                     brutosInstance.getConfiguration().getProperty( 
                     "org.brandao.brutos.web.request",
-                    DefaultBrutosRequest.class.getName()
+                    BrutosRequestImp.class.getName()
                 ), 
                     true, 
                     Thread.currentThread().getContextClassLoader() 
