@@ -17,7 +17,9 @@
 
 package org.brandao.brutos.web.http;
 
+import java.io.IOException;
 import java.util.List;
+import javax.servlet.ServletRequest;
 
 /**
  *
@@ -31,6 +33,8 @@ public interface BrutosRequest extends MutableRequest{
 
     public UploadListener getUploadListener();
 
-    public void parseRequest();
+    public void parseRequest() throws IOException;
+
+    public ServletRequest getServletRequest();
     
 }
