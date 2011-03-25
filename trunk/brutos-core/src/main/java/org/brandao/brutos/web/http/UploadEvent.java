@@ -18,28 +18,29 @@
 package org.brandao.brutos.web.http;
 
 /**
+ * Usado para observar uma requisi√ß√£o.
  * 
  * @author Brandao
  */
 public interface UploadEvent {
 
     /**
-     * Verifica a existÍncia de arquivos no formul·rio.
+     * Verifica a exist√™ncia de arquivos no formul√°rio.
      *
-     * @return Verdadeiro se existir arquivos no formul·rio, caso contr·rio
+     * @return Verdadeiro se existir arquivos no formul√°rio, caso contr√°rio
      * falso.
      */
     public boolean isMultipart();
 
     /**
-     * ObtÈm o tamanho total da requisiÁ„o.
+     * Obt√©m o tamanho total da requisi√ß√£o.
      *
-     * @return Tamanho total da requisiÁ„o.
+     * @return Tamanho total da requisi√ß√£o.
      */
     public long getContentLength();
 
     /**
-     * ObtÈm a quantidade de bytes carregados atÈ o momento.
+     * Obt√©m a quantidade de bytes carregados at√© o momento.
      *
      * @return Quantidade de bytes carregados.
      */

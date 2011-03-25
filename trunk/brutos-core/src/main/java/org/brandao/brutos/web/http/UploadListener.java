@@ -21,25 +21,26 @@ import java.io.Serializable;
 import java.util.EventListener;
 
 /**
- *
+ * Usado para ouvir uma requisi√ß√£o.
+ * 
  * @author Brandao
  */
 public interface UploadListener extends EventListener,Serializable{
 
     /**
-     * ObtÈm o evendo de upload associado.
+     * Obt√©m o evendo de upload associado.
      *
      * @return Evento de upload.
      */
     public UploadEvent getUploadEvent();
 
     /**
-     * MÈtodo chamado no inicio do processamento do upload.
+     * M√©todo chamado no inicio do processamento do upload.
      */
     public void uploadStarted();
 
     /**
-     * MÈtodo chamado no fim do processamento do upload.
+     * M√©todo chamado no fim do processamento do upload.
      */
     public void uploadFinished();
 

@@ -18,7 +18,7 @@
 package org.brandao.brutos;
 
 /**
- * Contém informações importantes para o funcionamento interno do Brutos.
+ * Contï¿½m informaï¿½ï¿½es importantes para o funcionamento interno do Brutos.
  * 
  * @author Afonso Brandao
  */
@@ -51,6 +51,10 @@ public interface BrutosConstants {
     public final String REDIRECT = ApplicationContext.class.getName() + ".REDIRECT";
 
     public final String UPLOAD_LISTENER_FACTORY = ApplicationContext.class.getName() + ".UPLOAD_LISTENER_FACTORY";
+
+    public final String HTTP_REQUEST_PARSER_FACTORY = ApplicationContext.class.getName() + ".HTTP_REQUEST_PARSER_FACTORY";
+
+    public final String HTTP_REQUEST_PARSER = ApplicationContext.class.getName() + ".HTTP_REQUEST_PARSER";
 
     public final String SESSION_UPLOAD_STATS = ApplicationContext.class.getName() + ".SESSION_UPLOAD_STATS";
 
