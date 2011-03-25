@@ -38,7 +38,7 @@ import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ControllerResolver;
 import org.brandao.brutos.InterceptorManager;
-import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.DefaultConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ServletContextResource;
@@ -59,8 +59,7 @@ import org.brandao.brutos.web.scope.SessionScope;
  *
  * @author Afonso Brandao
  */
-public class WebApplicationContext extends ApplicationContext
-        implements ConfigurableApplicationContext{
+public class WebApplicationContext extends ApplicationContext{
 
     private Logger logger;
     private Configuration config;
@@ -136,13 +135,18 @@ public class WebApplicationContext extends ApplicationContext
     
     private void overrideConfig( ServletContextEvent sce ){
 
-        IOCProvider iocProvider = getIocProvider();
-        Scopes.register( ScopeType.APPLICATION.toString(), new ApplicationScope( sce.getServletContext() ) );
-        Scopes.register( ScopeType.FLASH.toString() , new FlashScope() );
-        Scopes.register( ScopeType.IOC.toString() , new IOCScope( this ) );
-        Scopes.register( ScopeType.REQUEST.toString() , new RequestScope() );
-        Scopes.register( ScopeType.SESSION.toString() , new SessionScope() );
-        Scopes.register( ScopeType.PARAM.toString() , new ParamScope() );
+        Scopes.register( ScopeType.APPLICATION.toString(),
+                new ApplicationScope( sce.getServletContext() ) );
+        Scopes.register( ScopeType.FLASH.toString(),
+                new FlashScope() );
+        Scopes.register( ScopeType.IOC.toString(),
+                new IOCScope( new DefaultConfigurableApplicationContext(this) ) );
+        Scopes.register( ScopeType.REQUEST.toString(),
+                new RequestScope() );
+        Scopes.register( ScopeType.SESSION.toString(),
+                new SessionScope() );
+        Scopes.register( ScopeType.PARAM.toString(),
+                new ParamScope() );
 
 
         String controllerResolverName = config

@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import org.brandao.brutos.*;
@@ -328,6 +329,10 @@ public class DefaultRequest extends HttpServletRequestWrapper implements BrutosR
     }
 
     public void parseRequest() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public ServletRequest getServletRequest() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

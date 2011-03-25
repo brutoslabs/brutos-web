@@ -2,15 +2,15 @@
  * Brutos Web MVC http://brutos.sourceforge.net/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
+ * This library is free software. You can redistribute it
  * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
+ * License (GPL) version 3.0 or (at your option) any later
  * version.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ *
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
  * either express or implied.
  *
  */
@@ -22,211 +22,83 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
-import javax.servlet.ServletRequestWrapper;
-import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.type.json.JSONDecoder;
-
-
 
 /**
  *
- * @deprecated
- * @author Afonso Brandao
+ * @author Brandao
  */
-public class DefaultBrutosRequest extends ServletRequestWrapper implements BrutosRequest{
+public class HttpRequestParserImp implements HttpRequestParser{
 
-    private Map parameters;
-    private DefaultUploadEvent uploadEvent;
-    private UploadListener uploadListener;
-
-    private long maxLength;
-    private String path;
-    
-    public DefaultBrutosRequest( ServletRequest request ){
-        super( request );
-        this.parameters = new HashMap();
-        uploadEvent = new DefaultUploadEvent( this );
-        initialize();
+    public boolean isMultipart(BrutosRequest request, 
+            UploadListener uploadListener) throws IOException {
+        return uploadListener.getUploadEvent().isMultipart();
     }
 
-    public UploadListener getUploadListener(){
+    public void parserMultipart(BrutosRequest request, Properties config,
+            UploadListener uploadListener) throws IOException{
 
-        if( uploadListener == null ){
-            Scope contextScope = Scopes.get( ScopeType.APPLICATION );
+        Long maxLength =
+            Long.parseLong(
+                config
+                    .getProperty( "org.brandao.brutos.request.max_length", "0" ) );
 
-            UploadListenerFactory uploadListenerFactory =
-                    (UploadListenerFactory) contextScope
-                        .get( BrutosConstants.UPLOAD_LISTENER_FACTORY );
-
-            this.uploadListener =
-                    uploadListenerFactory.getNewUploadListener(uploadEvent);
-        }
-
-        return this.uploadListener;
-    }
-    
-    private void initialize(){
-        ApplicationContext context = WebApplicationContext.getCurrentApplicationContext();
-        if( context != null ){
-            maxLength =
-                Long.parseLong(
-                    context.getConfiguration()
-                        .getProperty( "org.brandao.brutos.request.max_length", "0" ) );
-
-            path = context
-                    .getConfiguration()
-                        .getProperty( "org.brandao.brutos.request.path", null );
-
-        }
+        String path = config
+                    .getProperty( "org.brandao.brutos.request.path", null );
 
 
-    }
-    
-    public void parseRequest(){
         try{
-            if( uploadEvent.isMultipart() ){
-                try{
-                    uploadListener.uploadStarted();
-                    uploadEvent.setMaxLength( maxLength );
-                    uploadEvent.setPath(path);
-                    uploadEvent.start();
-                    while( uploadEvent.hasMoreElements() ){
-                        Input input = uploadEvent.nextElement();
-                        this.setObject( input.getName(), input.getValue() );
-                    }
-                }
-                finally{
-                    uploadListener.uploadFinished();
-                }
-            }
-            else
-            if( "application/json".equals( this.getContentType() ) ){
-                BufferedReader reader = super.getReader();
-                String line = null;
-                StringBuilder result = new StringBuilder();
-                while( (line = reader.readLine()) != null ){
-                    result.append( line );
-                }
-                String json = URLDecoder.decode(result.toString(), "UTF-8");
-                JSONDecoder decoder = new JSONDecoder( json );
-                Map data = (Map) decoder.decode(Map.class);
-                if( data != null ){
-                    for( Object o: data.keySet() ){
-                        this.setParameter(String.valueOf(o), String.valueOf(data.get(o)));
-                    }
-                }
+            DefaultUploadEvent uploadEvent = (DefaultUploadEvent)uploadListener
+                    .getUploadEvent();
+            uploadListener.uploadStarted();
+            uploadEvent.setMaxLength( maxLength );
+            uploadEvent.setPath(path);
+            uploadEvent.start();
+            while( uploadEvent.hasMoreElements() ){
+                Input input = uploadEvent.nextElement();
+                request.setObject( input.getName(), input.getValue() );
             }
         }
-        catch( BrutosException e ){
-            parameters.clear();
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
+        finally{
+            uploadListener.uploadFinished();
         }
     }
 
-    public long getCurrentDataSize(){
-        return uploadEvent.isMultipart()? uploadEvent.getCurrentDataSize() : super.getContentLength();
-    }
-    
-    public Object getObject(String name) {
-        if( parameters.containsKey( name ) )
-            return getParameter0( name );
-        else
-            return super.getParameter( name );
-    }
-
-    private Object getParameter0( String value ){
-        List<Object> values = (List)parameters.get( value );
-        return values.get( 0 );
-    }
-
-    
-    public String getParameter( String name ){
-        if( parameters.containsKey( name ) )
-            return String.valueOf( getParameter0( name ) );
-        else
-            return super.getParameter( name );
-    }
-
-    public String[] getParameterValues( String name ){
-        if( parameters.containsKey( name ) )
-            return getParameterValues0( name );
-        else
-            return super.getParameterValues(name);
-
-    }
-    
-    private String[] getParameterValues0( String name ){
-        List<Object> values = (List<Object>) parameters.get( name );
-        String[] result = new String[ values.size() ];
-        for( int i=0;i<values.size();i++ )
-            result[i] = String.valueOf( values.get( i ) );
-
-        return result;
-    }
-
-    public void setObject(String name, Object value) {
-        if( value != null ){
-            List<Object> values = (List)parameters.get( name );
-            if( values == null ){
-                values = new ParameterList<Object>();
-                parameters.put( name, values );
+    public void parserContentType(BrutosRequest request, String contentType) 
+            throws IOException {
+        ServletRequest httpRequest = request.getServletRequest();
+        if( "application/json".equals( httpRequest.getContentType() ) ){
+            BufferedReader reader = httpRequest.getReader();
+            String line = null;
+            StringBuilder result = new StringBuilder();
+            while( (line = reader.readLine()) != null ){
+                result.append( line );
             }
-
-            if( value != null )
-                values.add( value );
+            String json = URLDecoder.decode(result.toString(), "UTF-8");
+            JSONDecoder decoder = new JSONDecoder( json );
+            Map data = (Map) decoder.decode(Map.class);
+            if( data != null ){
+                for( Object o: data.keySet() ){
+                    request.setParameter(
+                        String.valueOf(o),
+                        String.valueOf(data.get(o)));
+                }
+            }
         }
     }
 
-    public void setParameter(String name, String value) {
-        setObject( name, value );
+    public UploadEvent getUploadEvent(BrutosRequest request) {
+        return new DefaultUploadEvent( request );
     }
 
-    public List<Object> getObjects(String name) {
-        if( parameters.containsKey( name ) )
-            return (List<Object>) parameters.get( name );
-        else{
-            String[] values = super.getParameterValues( name );
-            if( values == null )
-                return null;
-            else
-                return new ParameterList( Arrays.asList( values ) );
-        }
-    }
+    private class DefaultUploadEvent implements java.util.Enumeration, UploadEvent{
 
-    public void setParameters(String name, String[] values) {
-        for( String value: values )
-            this.setParameter(name, value);
-    }
-
-    public void setObjects(String name, Object[] values) {
-        for( Object value: values )
-            this.setObject(name, value);
-    }
-
-    public ServletRequest getServletRequest() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-
-
-
-    private class DefaultUploadEvent implements java.util.Enumeration<Input>, UploadEvent{
-
-        private DefaultBrutosRequest request;
+        private ServletRequest request;
         private byte[] buffer;
         private int len;
         //private long length;
@@ -238,8 +110,8 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
         private String path;
         private long currentDataSize;
 
-        public DefaultUploadEvent( DefaultBrutosRequest request ){
-            this.request         = request;
+        public DefaultUploadEvent( BrutosRequest request ){
+            this.request         = request.getServletRequest();
             this.buffer          = new byte[ 8192 ];
             this.noFields        = false;
             this.currentDataSize = 0;
@@ -338,9 +210,9 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
             return id;
         }
 
-        private BrutosFile getFieldFile( String boundary, String header, 
+        private BrutosFile getFieldFile( String boundary, String header,
                 ServletInputStream in ) throws IOException{
-            
+
             len = -1;
             String fileName  = getName( header, "filename" );
 
@@ -487,4 +359,5 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
         }
 
     }
+
 }
