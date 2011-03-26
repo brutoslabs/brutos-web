@@ -95,5 +95,7 @@ public @interface Action {
      * por um URI.
      */
     String view() default "";
+
+    String dispatcher() default "forward";
     
 }
