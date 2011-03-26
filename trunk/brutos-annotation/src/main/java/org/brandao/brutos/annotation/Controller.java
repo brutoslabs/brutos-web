@@ -74,7 +74,7 @@ public @interface Controller{
      * do nome da classe e .jbrs.
      * @return Arranjo de identificações.
      */
-    String[] id() default "";
+    String id() default "";
 
     /**
      * Nome do parâmetro que contém a identificação da ação.
@@ -87,6 +87,6 @@ public @interface Controller{
      * @return Se verdadeiro, após o processamento do controlador é executado o
      * redirecionamento para a visão.
      */
-    boolean redirect() default false;
+    String dispatcher() default "forward";
 
 }

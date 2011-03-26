@@ -17,10 +17,13 @@
 
 package org.brandao.brutos.annotation;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.Configuration;
+import org.brandao.brutos.ControllerBuilder;
+import org.brandao.brutos.DispatcherType;
 
 /**
  *
@@ -46,6 +49,7 @@ public class AnnotationApplicationContext extends ApplicationContext{
     public void configure( Configuration config ) {
         super.configure(configuration);
         loadClass();
+        loadControllers();
     }
 
     @Override
@@ -61,7 +65,7 @@ public class AnnotationApplicationContext extends ApplicationContext{
         this.types = new ArrayList<Class>();
 
         for( Class classe: allClazz ){
-            
+
             if( classe.isAnnotationPresent( Controller.class ) )
                 this.controllers.add(classe);
 
@@ -73,5 +77,38 @@ public class AnnotationApplicationContext extends ApplicationContext{
 
         }
     }
-        
+
+
+    protected void loadControllers(){
+
+        for( Class clazz: controllers ){
+            Controller annotationController =
+                    (Controller) clazz.getAnnotation(Controller.class);
+
+            ControllerBuilder controllerBuilder =
+                    controllerManager.addController(
+                        annotationController.id(),
+                        annotationController.view(),
+                        DispatcherType.valueOf(annotationController.dispatcher()),
+                        annotationController.name(), clazz,
+                        annotationController.actionId());
+
+            addActions( controllerBuilder, clazz );
+        }
+    }
+
+    protected void addActions( ControllerBuilder controllerBuilder, Class clazz ){
+        Method[] methods = clazz.getMethods();
+
+        for( Method m: methods ){
+
+            if( m.isAnnotationPresent(Action.class) ){
+                Action aAction = m.getAnnotation( Action.class );
+                controllerBuilder
+                    .addAction(aAction.id(), aAction.resultName(),
+                    aAction.view(), DispatcherType.valueOf(aAction.dispatcher()),
+                    m.getName());
+            }
+        }
+    }
 }
