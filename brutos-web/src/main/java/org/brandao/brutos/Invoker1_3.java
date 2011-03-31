@@ -31,7 +31,7 @@ import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.Scopes;
 
 /**
- * Classe usada para invocar a aplicação.
+ * Classe usada para invocar a aplicaï¿½ï¿½o.
  * 
  * @author Afonso Brandao
  */
@@ -68,8 +68,8 @@ public class Invoker1_3 extends Invoker{
         //Form form = brutosContext.getController();
         WebFrameManager wfm = brutosContext.getWebFrameManager();
 
-        Form form = brutosContext
-                .getResolveController()
+        Form form = ((DefaultControllerResolver)brutosContext
+                .getResolveController())
                     .getController(
                         wfm,
                         (HttpServletRequest)org.brandao.brutos.ContextLoaderListener.currentRequest.get()
@@ -87,7 +87,7 @@ public class Invoker1_3 extends Invoker{
 
         Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
         try{
-            //compatibilidade com a versão 2.0
+            //compatibilidade com a versï¿½o 2.0
             requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
             requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE, brutosContext );
 
@@ -102,11 +102,11 @@ public class Invoker1_3 extends Invoker{
                         .getAttribute( BrutosConstants.IOC_MANAGER );
 
             ImpInterceptorHandler ih = new ImpInterceptorHandler();
-            ih.setContext( brutosContext.getContext() );
-            ih.setRequest( brutosContext.getRequest() );
+            //ih.setContext( brutosContext.getContext() );
+            //ih.setRequest( brutosContext.getRequest() );
             ih.setResource( iocManager.getInstance( form.getId() ) );
-            ih.setResponse( response );
-            ih.setURI( ih.getRequest().getRequestURI() );
+            //ih.setResponse( response );
+            //ih.setURI( ih.getRequest().getRequestURI() );
             ih.setResourceAction(
                 brutosContext
                     .getMethodResolver()

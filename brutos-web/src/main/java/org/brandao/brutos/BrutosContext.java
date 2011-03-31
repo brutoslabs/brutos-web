@@ -170,7 +170,7 @@ public class BrutosContext extends WebApplicationContext implements Configurable
                                 config )
                             );
 
-        this.iocManager.getProvider().configure(config, sce);
+        this.iocManager.getProvider().configure(config);
 
         this.interceptorManager =  new InterceptorManager( iocManager );
 
@@ -262,7 +262,7 @@ public class BrutosContext extends WebApplicationContext implements Configurable
     private void loadService( Configuration config, ServletContextEvent sce ){
         for( ApplicationContext provider: services ){
             logger.info( String.format("Starting %s", provider.getClass().getName() ) );
-            provider.configure(config, sce);
+            provider.configure(config);
         }
 
         logger.info( "Starting Brutos Application Context" );

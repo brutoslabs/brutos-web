@@ -19,16 +19,12 @@ package org.brandao.brutos.view;
 
 import java.io.IOException;
 import java.util.Properties;
-import javax.faces.application.ViewHandler;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.Configuration;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.web.http.BrutosRequestFilter;
 import org.brandao.brutos.web.RequestInfo;
@@ -77,10 +73,15 @@ public class JSFViewProvider extends ViewProvider{
         show(page, request, response, context);
     }
 
-    public void show(String view, DispatcherType dispatcherType) throws ServletException, IOException {
+    public void show(String view, DispatcherType dispatcherType) throws IOException {
         RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
         FilterChain filter = BrutosRequestFilter.getCurrentFilterChain();
-        filter.doFilter( requestInfo.getRequest(), requestInfo.getResponse() );
+        try {
+            filter.doFilter(requestInfo.getRequest(), requestInfo.getResponse());
+        }
+        catch (ServletException ex) {
+            throw new BrutosException( ex );
+        }
     }
 
 }

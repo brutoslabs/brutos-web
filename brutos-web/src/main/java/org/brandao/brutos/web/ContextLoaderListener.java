@@ -40,25 +40,23 @@ import org.brandao.brutos.web.http.BrutosRequestImp;
 public class ContextLoaderListener implements ServletContextListener,
         HttpSessionListener, ServletRequestListener{
     
-    private WebApplicationContext brutosInstance;
+    private ContextLoader contextLoader;
     public static ThreadLocal<ServletRequest> currentRequest;
     public static ServletContext currentContext;
     
     public ContextLoaderListener() {
         currentRequest = new ThreadLocal<ServletRequest>();
-        brutosInstance = new WebApplicationContext();
+        contextLoader = new ContextLoader();
     }
 
     public void contextInitialized(ServletContextEvent sce) {
         currentContext = sce.getServletContext();
-        brutosInstance.start( sce );
+        contextLoader.init(currentContext);
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
         currentRequest = null;
-        
-        if( brutosInstance != null )
-            brutosInstance.stop( sce );
+        contextLoader.destroy(currentContext);
     }
 
     public void sessionCreated(HttpSessionEvent se) {
@@ -85,7 +83,8 @@ public class ContextLoaderListener implements ServletContextListener,
     public ServletRequest getRequest( ServletRequest request ){
         try{
             ServletRequest brutosRequest = (ServletRequest) Class.forName( 
-                    brutosInstance.getConfiguration().getProperty( 
+                    ContextLoader.getCurrentwebApplicationContext()
+                    .getConfiguration().getProperty(
                     "org.brandao.brutos.web.request",
                     BrutosRequestImp.class.getName()
                 ), 
@@ -105,12 +104,6 @@ public class ContextLoaderListener implements ServletContextListener,
     
     public void requestInitialized(ServletRequestEvent sre) {
         currentRequest.set( getRequest( sre.getServletRequest() ) );
-    }
-    
-    public void servletInitialized( Servlet servlet ){
-    }
-    
-    public void servletDestroyed( Servlet servlet ){
     }
     
 }

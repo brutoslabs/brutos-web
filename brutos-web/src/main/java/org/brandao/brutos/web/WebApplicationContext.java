@@ -41,7 +41,6 @@ import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.DefaultConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.io.ServletContextResource;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
@@ -63,48 +62,29 @@ public class WebApplicationContext extends ApplicationContext{
 
     private Logger logger;
     private Configuration config;
-    private ServletContext servletContext;
-    private ServletContextResource resource;
 
     public WebApplicationContext(){
         this.config = new Configuration();
     }
 
-    public synchronized void start( ServletContextEvent sce ){
-        
-        if( sce.getServletContext().getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE ) != null ){
-            throw new IllegalStateException(
-                            "Cannot initialize context because there is already a root application context present - " +
-                            "check whether you have multiple ContextLoader definitions in your web.xml!");
-        }
-        
-        sce.getServletContext().setAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE, this );
-        loadContext( sce );
-    }
-
-    private void loadContext( ServletContextEvent sce ){
+    public void initApplicationContext( ServletContext servletContext ){
         long time = System.currentTimeMillis();
         try{
-            this.servletContext = sce.getServletContext();
-            this.resource =
-                new ServletContextResource(
-                    servletContext,
-                    "/" );
-            
-            loadParameters( sce );
-            loadLogger( sce.getServletContext() );
+            loadParameters( servletContext );
+            loadLogger( servletContext );
             logger.info( "Initializing Brutos root WebApplicationContext" );
             logger.info( "Configuration: " + config.toString() );
-            overrideConfig( sce );
+            overrideConfig( servletContext );
             configure(config);
-            loadInvoker( sce.getServletContext() );
+            loadInvoker( servletContext );
         }
         catch( Throwable e ){
-            sce.getServletContext().setAttribute( BrutosConstants.EXCEPTION, e );
+            servletContext.setAttribute( BrutosConstants.EXCEPTION, e );
         }
         finally{
             if( logger != null )
-                logger.info( String.format( "Initialization processed in %d ms", (System.currentTimeMillis()-time) ) );
+                logger.info( String.format( "Initialization processed in %d ms",
+                        (System.currentTimeMillis()-time) ) );
         }
     }
 
@@ -133,10 +113,10 @@ public class WebApplicationContext extends ApplicationContext{
         
     }
     
-    private void overrideConfig( ServletContextEvent sce ){
+    private void overrideConfig( ServletContext sce ){
 
         Scopes.register( ScopeType.APPLICATION.toString(),
-                new ApplicationScope( sce.getServletContext() ) );
+                new ApplicationScope( sce ) );
         Scopes.register( ScopeType.FLASH.toString(),
                 new FlashScope() );
         Scopes.register( ScopeType.IOC.toString(),
@@ -191,13 +171,12 @@ public class WebApplicationContext extends ApplicationContext{
         this.logger = loggerProvider.getLogger( WebApplicationContext.class.getName() );
     }
 
-    private void loadParameters( ServletContextEvent sce ){
-        ServletContext context = sce.getServletContext();
-        Enumeration initParameters = context.getInitParameterNames();
+    private void loadParameters( ServletContext sce ){
+        Enumeration initParameters = sce.getInitParameterNames();
         
         while( initParameters.hasMoreElements() ){
             String name = (String) initParameters.nextElement();
-            config.setProperty( name, context.getInitParameter( name ) );
+            config.setProperty( name, sce.getInitParameter( name ) );
         }
     }
     
@@ -205,65 +184,6 @@ public class WebApplicationContext extends ApplicationContext{
         destroy();
     }
 
-    public static ApplicationContext getCurrentApplicationContext(){
-        /*
-        Scope contextScope = Scopes.get(ScopeType.APPLICATION);
-*/
-        ApplicationContext app = /*
-            (ApplicationContext) contextScope
-                .get( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
-            */
-        
-            (ApplicationContext)ContextLoaderListener
-                .currentContext
-                    .getAttribute(
-                        BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
-        
-
-        if( app == null ){
-            throw new IllegalStateException(
-                    "Unable to initialize the servlet was not configured for the application context root - " +
-                    "make sure you have defined in your web.xml ContextLoader!"
-            );
-        }
-
-        Throwable ex = (Throwable)ContextLoaderListener
-                .currentContext
-                .getAttribute( BrutosConstants.EXCEPTION );
-
-        if( ex != null )
-            throw new BrutosException( ex );
-
-        return app;
-    }
-
-    /*
-    public static WebApplicationContext getCurrentWebApplicationContext(){
-        WebApplicationContext brutosCore =
-            (WebApplicationContext)ContextLoaderListener
-                .currentContext
-                    .getAttribute(
-                        BrutosConstants.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE );
-
-        if( brutosCore == null ){
-            throw new IllegalStateException(
-                    "Unable to initialize the servlet was not configured for the application context root - " +
-                    "make sure you have defined in your web.xml ContextLoader!"
-            );
-        }
-
-        Throwable ex =
-            (Throwable)ContextLoaderListener
-                .currentContext
-                    .getAttribute( BrutosConstants.EXCEPTION );
-
-        if( ex != null )
-            throw new BrutosException( ex );
-
-        return brutosCore;
-    }
-    */
-    
     public ServletContext getContext(){
         return ContextLoaderListener.currentContext;
     }
@@ -273,19 +193,12 @@ public class WebApplicationContext extends ApplicationContext{
     }
     
     public Form getController(){
-        WebApplicationContext brutosInstance = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
+        WebApplicationContext brutosInstance = (WebApplicationContext) 
+                ApplicationContext.getCurrentApplicationContext();
+        
         return (Form) brutosInstance.getRequest()
                 .getAttribute( BrutosConstants.CONTROLLER );
     }
-
-    /*
-    public ControllerResolver getResolveController() {
-        WebApplicationContext brutosInstance = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
-        return (ControllerResolver) brutosInstance
-                .getContext()
-                    .getAttribute( BrutosConstants.CONTROLLER_RESOLVER );
-    }
-    */
 
     public void destroy() {
     }
@@ -372,12 +285,7 @@ public class WebApplicationContext extends ApplicationContext{
     }
 
     protected Resource getContextResource( String path ){
-        try{
-            return this.resource.getRelativeResource(path);
-        }
-        catch( Exception e ){
-            throw new BrutosException(e);
-        }
+        return null;
     }
 
 }

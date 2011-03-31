@@ -110,11 +110,11 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
                     .getAttribute( BrutosConstants.IOC_MANAGER );
 
         ImpInterceptorHandler ih = new ImpInterceptorHandler();
-        ih.setContext( brutosContext.getContext() );
-        ih.setRequest( brutosContext.getRequest() );
+        //ih.setContext( brutosContext.getContext() );
+        //ih.setRequest( brutosContext.getRequest() );
         ih.setResource( iocManager.getInstance( controller.getId() ) );
-        ih.setResponse( response );
-        ih.setURI( ih.getRequest().getRequestURI() );
+        //ih.setResponse( response );
+        //ih.setURI( ih.getRequest().getRequestURI() );
 
         if( brutosContext instanceof BrutosContext ){
             ih.setResourceAction(
