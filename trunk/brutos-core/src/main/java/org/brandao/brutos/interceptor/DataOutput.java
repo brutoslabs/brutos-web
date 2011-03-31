@@ -19,9 +19,6 @@
 package org.brandao.brutos.interceptor;
 
 import java.lang.reflect.Field;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.FieldForm;

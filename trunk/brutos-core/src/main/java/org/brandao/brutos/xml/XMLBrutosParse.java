@@ -20,7 +20,6 @@ package org.brandao.brutos.xml;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.ServletContextEvent;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.ioc.IOCProvider;
@@ -35,7 +34,7 @@ import org.brandao.brutos.old.programatic.InterceptorManager;
  */
 @Deprecated
 public class XMLBrutosParse {
-    
+    /*
     private double version;
     private String encoding;
     private ConfigurationXMLMapping configurationMapping;
@@ -59,11 +58,9 @@ public class XMLBrutosParse {
             loadTypes( (List<Map<String,String>>)data.get( "types" ) );
             extendConfiguration( (List<String>)data.get( "extend-configuration" ) );
             loadIOCMapping();
-            /* XMLMapping */
             interceptors( (List<Map<String,Object>>)data.get( "interceptors" ) );
             webFrames( (List<Map<String,Object>>)data.get( "web-frames" ) );
             beans( (Map<String,Map<String,Object>>)data.get( "beans" ) );
-            /* XMLMapping - fim */
         }
         catch( BrutosException e ){
             throw e;
@@ -82,8 +79,7 @@ public class XMLBrutosParse {
         iocMapping = new IOCXMLMapping( 
                         new IOCManager( 
                             IOCProvider.getProvider( 
-                                configurationMapping.getConfiguration()/*,
-                                contextEvent*/ )
+                                configurationMapping.getConfiguration() )
                             ) 
                     );
     }
@@ -198,5 +194,5 @@ public class XMLBrutosParse {
     public void setInterceptorManager(InterceptorManager interceptorManager) {
         this.interceptorManager = interceptorManager;
     }
-    
+*/
 }

@@ -18,9 +18,6 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -31,13 +28,14 @@ public class NullType implements Type{
     public NullType() {
     }
 
+    /*
     public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
         return null;
     }
 
     public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
     }
-    
+    */
     public Class getClassType() {
         return null;
     }

@@ -23,11 +23,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
+import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.scope.Scopes;
 
 /**
  *
@@ -179,12 +180,13 @@ public class Form {
         getInterceptorProcess().process( handler );
     }
     
-    public void fieldsToRequest( HttpServletRequest request, Object webFrame ) {
+    public void fieldsToRequest( Object webFrame ) {
         try{
             Field[] fields = getClassType().getDeclaredFields();
+            Scope scope = Scopes.get(ScopeType.REQUEST);
             for( Field f: fields ){
                 f.setAccessible( true );
-                request.setAttribute( f.getName(), f.get( webFrame ) );
+                scope.put( f.getName(), f.get( webFrame ) );
             }
         }
         catch( Exception e ){

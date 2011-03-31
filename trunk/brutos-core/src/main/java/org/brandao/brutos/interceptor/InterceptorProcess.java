@@ -24,8 +24,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
@@ -254,9 +252,7 @@ public class InterceptorProcess implements InterceptorStack{
                         .invoke(
                             source,
                             getParameters(
-                                handler.getResourceAction().getMethodForm(),
-                                null,
-                                null ) );
+                                handler.getResourceAction().getMethodForm() ) );
             else
                 return null;
         }
@@ -337,8 +333,7 @@ public class InterceptorProcess implements InterceptorStack{
                 throw new InterceptedException( e );
     }
 
-    private Object[] getParameters( MethodForm method, HttpServletRequest request,
-        ServletContext context ) throws InstantiationException, IllegalAccessException,
+    private Object[] getParameters( MethodForm method ) throws InstantiationException, IllegalAccessException,
         ParseException {
         if( method != null ){
             Object[] values = new Object[ method.getParameters().size() ];

@@ -18,9 +18,6 @@
 package org.brandao.brutos.type;
 
 import java.lang.reflect.Type;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletContext;
 import org.brandao.brutos.type.json.JSONDecoder;
 import org.brandao.brutos.type.json.JSONEncoder;
 import java.io.IOException;
@@ -37,7 +34,7 @@ import org.brandao.brutos.MvcResponse;
 public class JSONType implements SerializableType {
 
     private Type classType;
-
+    /*
     public Object getValue(HttpServletRequest arg0, ServletContext arg1, Object arg2) {
         try{
             if( arg2 instanceof String ){
@@ -58,7 +55,7 @@ public class JSONType implements SerializableType {
         encoder.writeObject( arg2 );
         encoder.close();
     }
-
+    */
     public Class getClassType() {
         return getClass(classType);
     }

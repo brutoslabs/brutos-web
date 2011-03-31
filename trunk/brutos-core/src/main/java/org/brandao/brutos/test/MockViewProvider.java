@@ -21,10 +21,6 @@ import java.util.Properties;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.view.*;
 import java.io.IOException;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.Configuration;
 
 /**
@@ -35,9 +31,6 @@ public class MockViewProvider extends ViewProvider{
     
     private String view;
     private boolean redirect;
-    private ServletRequest request;
-    private HttpServletResponse response;
-    private ServletContext context;
 
     public MockViewProvider() {
     }
@@ -45,25 +38,6 @@ public class MockViewProvider extends ViewProvider{
     public void configure(Configuration properties) {
     }
 
-    public void show(String page, boolean redirect,
-            ServletRequest request, HttpServletResponse response,
-            ServletContext context) throws ServletException, IOException {
-
-        this.context = context;
-        this.redirect = redirect;
-        this.request = request;
-        this.response = response;
-        this.view = page;
-    }
-
-    public void show(String page, ServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException, IOException {
-        this.context = context;
-        this.redirect = false;
-        this.request = request;
-        this.response = response;
-        this.view = page;
-        
-    }
 
     public String getView() {
         return view;
@@ -81,6 +55,7 @@ public class MockViewProvider extends ViewProvider{
         this.redirect = redirect;
     }
 
+    /*
     public ServletRequest getRequest() {
         return request;
     }
@@ -104,15 +79,16 @@ public class MockViewProvider extends ViewProvider{
     public void setContext(ServletContext context) {
         this.context = context;
     }
-
+    */
+    
     public void configure(Properties properties) {
     }
 
-    public void show(String view, DispatcherType dispatcherType) throws ServletException, IOException {
-        this.context = null;
+    public void show(String view, DispatcherType dispatcherType) throws IOException {
+        //this.context = null;
         this.redirect = dispatcherType == DispatcherType.REDIRECT? true : false;
-        this.request = null;
-        this.response = null;
+        //this.request = null;
+        //this.response = null;
         this.view = view;
     }
 

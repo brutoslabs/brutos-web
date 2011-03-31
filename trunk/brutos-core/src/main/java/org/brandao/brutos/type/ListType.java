@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.web.http.ParameterList;
@@ -78,7 +75,7 @@ public class ListType implements CollectionType{
             throw new UnknownTypeException( "is not allowed the use the List or List<?>" );
     }
 
-    @Override
+    /*
     public Object getValue(HttpServletRequest request, ServletContext context, Object value) {
         //Se value for instancia de ParameterList significa que
         //os dados ainda nao foram processados.
@@ -108,15 +105,30 @@ public class ListType implements CollectionType{
     public void setValue(HttpServletResponse response, ServletContext context, Object value) throws IOException {
         this.serializableType.setValue( response, context, value );
     }
+    */
 
-    @Override
+    private List getList(Object value){
+        try{
+            List objList = this.listType.newInstance();
+
+            for( Object o: (ParameterList)value )
+                objList.add( this.primitiveType.getValue(o) );
+                //objList.add( this.primitiveType.getValue(request, context, o) );
+
+            return objList;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+    
     public Class getClassType() {
         return List.class;
     }
 
     public Object getValue(Object value) {
         if( value instanceof ParameterList )
-            return getList(null,null,value);
+            return getList(value);
 
         else
             return value;

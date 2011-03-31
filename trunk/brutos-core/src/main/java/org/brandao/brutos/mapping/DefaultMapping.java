@@ -17,9 +17,6 @@
 
 package org.brandao.brutos.mapping;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;

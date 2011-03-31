@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import javax.servlet.ServletContextEvent;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
@@ -37,10 +36,11 @@ import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
  *
+ * @deprecated 
  * @author Afonso Brandao
  */
-public class XMLApplicationContext extends ApplicationContext{
-
+public class XMLApplicationContext /*extends ApplicationContext*/{
+/*
     private Map<String,Object> xmlData;
     private String version;
     private boolean existXML;
@@ -201,5 +201,5 @@ public class XMLApplicationContext extends ApplicationContext{
 
     protected void loadController(ControllerManager controllerManager) {
     }
-
+*/
 }

@@ -19,9 +19,6 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.MvcResponse;
 
@@ -33,7 +30,7 @@ public class StringType implements Type{
 
     public StringType() {
     }
-
+    /*
     public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
         if( value == null )
             return null;
@@ -49,7 +46,7 @@ public class StringType implements Type{
         PrintWriter out = response.getWriter();
         out.print( String.valueOf( value ) );
     }
-    
+    */
     public Class getClassType() {
         return String.class;
     }

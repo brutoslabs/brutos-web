@@ -19,9 +19,6 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.io.Serializable;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -37,6 +34,7 @@ public class ObjectType implements Type{
         this.classType = classType;
     }
 
+    /*
     public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
         return value;
     }
@@ -44,7 +42,7 @@ public class ObjectType implements Type{
     public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
         serializableType.setValue(response, context, value);
     }
-    
+    */
     public Class getClassType() {
         return classType;
     }

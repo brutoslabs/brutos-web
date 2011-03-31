@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Set;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.web.http.ParameterList;
@@ -78,6 +75,7 @@ public class SetType implements CollectionType{
             throw new UnknownTypeException( "is not allowed the use the Set or Set<?>" );
     }
 
+    /*
     @Override
     public Object getValue(HttpServletRequest request, ServletContext context, Object value) {
         //Se value for instancia de ParameterList significa que
@@ -107,15 +105,15 @@ public class SetType implements CollectionType{
     public void setValue(HttpServletResponse response, ServletContext context, Object value) throws IOException {
         this.serializableType.setValue( response, context, value );
     }
-
-    @Override
+    */
+    
     public Class getClassType() {
         return Set.class;
     }
 
     public Object getValue(Object value) {
         if( value instanceof ParameterList )
-            return getList(null, null, value);
+            return getList(value);
 
         else
             return value;
@@ -125,5 +123,18 @@ public class SetType implements CollectionType{
         this.serializableType.setValue( value );
     }
 
+    private Set getList(Object value){
+        try{
+            Set objList = this.listType.newInstance();
+
+            for( Object o: (ParameterList)value )
+                objList.add( this.primitiveType.getValue(o) );
+
+            return objList;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
 
 }

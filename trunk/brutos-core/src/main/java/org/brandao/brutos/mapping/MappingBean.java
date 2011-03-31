@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.type.Type;
@@ -88,23 +87,19 @@ public class MappingBean {
     }
 
     public Object getValue(){
-        return getValue( null, null );
+        return getValue( null );
     }
 
     public Object getValue(boolean force){
-        return getValue( null, null, null, -1, force );
+        return getValue( null, null, -1, force );
     }
 
-    public Object getValue( HttpServletRequest request ){
-        return getValue( request, null );
+    public Object getValue( Object instance ){
+        return getValue( instance, null, -1, false );
     }
 
-    public Object getValue( HttpServletRequest request, Object instance ){
-        return getValue( request, instance, null, -1, false );
-    }
-
-    public Object getValue( HttpServletRequest request, Object instance, String prefix ){
-        return getValue( request, instance, prefix, -1, false );
+    public Object getValue( Object instance, String prefix ){
+        return getValue( instance, prefix, -1, false );
     }
 
     /*
@@ -112,14 +107,11 @@ public class MappingBean {
         return getValue(request, instance, prefix, index, false );
     }
     */
-    public Object getValue( /**
-                             * @deprecated
-                             */
-            HttpServletRequest request, Object instance, String prefix, long index, boolean force ){
+    public Object getValue( Object instance, String prefix, long index, boolean force ){
         try{
             Object obj;
 
-            obj = instance == null? getInstanceByConstructor( prefix, index, request ) : instance;
+            obj = instance == null? getInstanceByConstructor( prefix, index ) : instance;
 
             if( obj == null )
                 return null;
@@ -135,7 +127,7 @@ public class MappingBean {
             while( fds.hasNext() ){
                 FieldBean fb = fds.next();
 
-                Object value = this.getValueField(beanInstance, prefix, index, request, fb);
+                Object value = this.getValueField(beanInstance, prefix, index, fb);
 
                 if( !exist && value != null )
                     exist = true;
@@ -150,7 +142,7 @@ public class MappingBean {
         }
     }
 
-    private Object getValueField( BeanInstance beanInstance, String prefix, long index, HttpServletRequest request, FieldBean fb ) throws Exception{
+    private Object getValueField( BeanInstance beanInstance, String prefix, long index, FieldBean fb ) throws Exception{
         Validator validator = fb.getValidator();
         Object property;
 
@@ -181,7 +173,6 @@ public class MappingBean {
                 throw new BrutosException( "mapping name " + fb.getMapping() + " not found!" );
 
             property = mappingBean.getValue(
-                request,
                 property,
                 isHierarchy()?
                     prefix != null?
@@ -198,7 +189,7 @@ public class MappingBean {
         return property;
     }
 
-    private Object getConstructorArg( String prefix, long index, HttpServletRequest request, FieldBean fb ) throws Exception{
+    private Object getConstructorArg( String prefix, long index, FieldBean fb ) throws Exception{
         Validator validator = fb.getValidator();
         Object property;
 
@@ -227,7 +218,6 @@ public class MappingBean {
                 throw new BrutosException( "mapping name " + fb.getMapping() + " not found!" );
 
             property = mappingBean.getValue(
-                request,
                 null,
                 isHierarchy()?
                     prefix != null?
@@ -288,12 +278,12 @@ public class MappingBean {
         this.constructor = constructor;
     }
 
-    private Object getInstanceByConstructor( String prefix, long index, HttpServletRequest request ) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, Exception{
+    private Object getInstanceByConstructor( String prefix, long index ) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, Exception{
         ConstructorBean cons = this.getConstructor();
         ConstructorBean conInject = this.getConstructor();
         if( conInject.isConstructor() ){
             
-            Object[] args = this.getValues(cons.getArgs(), prefix, index, request );
+            Object[] args = this.getValues(cons.getArgs(), prefix, index );
 
             if( args == null )
                 return null;
@@ -318,18 +308,18 @@ public class MappingBean {
                     factory == null?
                         this.getClassType() :
                         factoryInstance,
-                    getValues(cons.getArgs(), prefix, index, request ) );
+                    getValues(cons.getArgs(), prefix, index ) );
         }
     }
 
-    private Object[] getValues( List args, String prefix, long index, HttpServletRequest request ) throws Exception{
+    private Object[] getValues( List args, String prefix, long index ) throws Exception{
 
         Object[] values = new Object[ args.size() ];
 
         boolean exist = false;
         for( int i=0;i<args.size();i++ ){
             FieldBean arg = (FieldBean) args.get(i);
-            values[i] = this.getConstructorArg( prefix, index, request, arg);
+            values[i] = this.getConstructorArg( prefix, index, arg);
             if( values[i] != null )
                 exist = true;
         }
@@ -404,7 +394,7 @@ public class MappingBean {
                         .set( property );
                 }
             }
-            //se nao existir nenhuma propriedade do bean, então o bean não existe
+            //se nao existir nenhuma propriedade do bean, entï¿½o o bean nï¿½o existe
             return exist || instance != null? obj : null;
         }
         catch( Exception e ){
@@ -458,7 +448,7 @@ public class MappingBean {
                 }
             }
 
-            //se nao existir nenhuma propriedade do bean, entao o bean não existe
+            //se nao existir nenhuma propriedade do bean, entao o bean nï¿½o existe
             return exist? obj : null;
         }
         catch( Exception e ){
@@ -511,7 +501,7 @@ public class MappingBean {
                 }
             }
 
-            //se nao existir nenhuma propriedade do bean, entao o bean não existe
+            //se nao existir nenhuma propriedade do bean, entao o bean nï¿½o existe
             return exist? obj : null;
         }
         catch( Exception e ){

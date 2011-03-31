@@ -18,10 +18,6 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.MvcResponse;
 
@@ -34,24 +30,26 @@ public class BooleanType implements Type{
     public BooleanType() {
     }
 
+    /*
     public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
         if( value instanceof Boolean )
             return value;
         else
             return "true".equals( value );
     }
-
+    */
     public Class getClassType() {
         return Boolean.TYPE;
     }
 
+    /*
     public void setValue(HttpServletResponse response, ServletContext context, Object value) throws IOException {
         if( value instanceof Boolean ){
             PrintWriter out = response.getWriter();
             out.print( String.valueOf( value ) );
         }
     }
-
+    */
     public Object getValue(Object value) {
         if( value instanceof Boolean )
             return value;
