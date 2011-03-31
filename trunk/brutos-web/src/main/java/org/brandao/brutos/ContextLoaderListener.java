@@ -53,22 +53,25 @@ public class ContextLoaderListener extends org.brandao.brutos.web.ContextLoaderL
     }
 
     public void sessionCreated(HttpSessionEvent se) {
-        if( brutosInstance.getIocManager().getProvider() != null )
+        /*if( brutosInstance.getIocManager().getProvider() != null )
             brutosInstance.getIocManager().getProvider()
                 .sessionCreated( se );
+         */
     }
 
     public void sessionDestroyed(HttpSessionEvent se) {
-        if( brutosInstance.getIocManager().getProvider() != null )
+        /*if( brutosInstance.getIocManager().getProvider() != null )
             brutosInstance.getIocManager().getProvider()
                 .sessionDestroyed( se );
+         */
     }
 
     public void requestDestroyed(ServletRequestEvent sre) {
 
         if( currentRequest != null )
             currentRequest.remove();
-        
+
+        /*
         if( brutosInstance.getIocManager() != null ){
             IOCManager iocManager = brutosInstance.getIocManager();
             if( iocManager.getProvider() != null )
@@ -76,6 +79,7 @@ public class ContextLoaderListener extends org.brandao.brutos.web.ContextLoaderL
                     .requestDestroyed( sre );
             
         }
+         */
     }
 
     public HttpServletRequest getRequest( ServletRequest request ){
@@ -100,14 +104,14 @@ public class ContextLoaderListener extends org.brandao.brutos.web.ContextLoaderL
     public void requestInitialized(ServletRequestEvent sre) {
         
         currentRequest.set( getRequest( sre.getServletRequest() ) );
-
+        /*
         if( brutosInstance.getIocManager() != null ){
             IOCManager iocManager = brutosInstance.getIocManager();
             if( iocManager.getProvider() != null )
                 brutosInstance.getIocManager().getProvider()
                     .requestInitialized( sre );
         }
-
+        */
         /*
         Form form = brutosInstance
                 .getResolveController()

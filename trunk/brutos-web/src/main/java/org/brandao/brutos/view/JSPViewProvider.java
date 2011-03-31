@@ -24,7 +24,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.Configuration;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.web.RequestInfo;
 
@@ -59,7 +58,19 @@ public class JSPViewProvider extends ViewProvider{
         }
     }
 
-    public void show(String view, DispatcherType dispatcherType) throws ServletException, IOException {
+    public void show(String view, DispatcherType dispatcherType) throws IOException {
+        try{
+            show0(view, dispatcherType);
+        }
+        catch( BrutosException e ){
+            throw e;
+        }
+        catch( ServletException e ){
+            throw new BrutosException(e);
+        }
+
+    }
+    public void show0(String view, DispatcherType dispatcherType) throws IOException, ServletException {
 
         if( view == null )
             return;
