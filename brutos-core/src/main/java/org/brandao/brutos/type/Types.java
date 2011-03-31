@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.BrutosFile;
 import org.brandao.brutos.EnumerationType;
-import org.brandao.brutos.web.http.Download;
 import java.lang.reflect.Array;
+import org.brandao.brutos.web.http.BrutosFile;
+import org.brandao.brutos.web.http.Download;
 
 /**
  *

@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.MvcResponse;
-import org.brandao.brutos.BrutosFile;
+import org.brandao.brutos.web.http.BrutosFile;
 
 /**
  *
