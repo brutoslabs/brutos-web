@@ -19,9 +19,6 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.MvcResponse;
@@ -52,7 +49,7 @@ public class DefaultEnumType implements EnumType{
     public void setEnumType(EnumerationType type) {
         this.type = type;
     }
-
+    /*
     public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
         try{
             if( type == EnumerationType.ORDINAL )
@@ -69,7 +66,7 @@ public class DefaultEnumType implements EnumType{
         PrintWriter out = response.getWriter();
         out.print( String.valueOf( value ) );
     }
-    
+    */
     public Class<?> getClassType() {
         return classType;
     }

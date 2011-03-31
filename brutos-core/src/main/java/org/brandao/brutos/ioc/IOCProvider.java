@@ -22,11 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletRequestEvent;
-import javax.servlet.http.HttpSessionEvent;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.Configuration;
 import org.brandao.brutos.old.programatic.Bean;
 
 /**
@@ -34,7 +30,10 @@ import org.brandao.brutos.old.programatic.Bean;
  * @author Afonso Brandao
  */
 public abstract class IOCProvider {
-    
+
+    /**
+     * @deprecated 
+     */
     private Map<String, Bean> beans;
     
     public IOCProvider(){
@@ -69,26 +68,49 @@ public abstract class IOCProvider {
         //ioc.configure( properties, sce );
         return ioc;
     }
-    
+
+    /**
+     * @deprecated
+     * @param name
+     * @return
+     */
     public boolean containsBeanDefinition( String name ){
         return beans.containsKey( name );
     }
-    
+
+    /**
+     * @deprecated
+     * @param bean
+     */
     public void addBeanDefinition( Bean bean ){
         beans.put( bean.getInjectable().getName(), bean );
     }
-    
+
+    /**
+     * @deprecated 
+     * @param bean
+     * @return
+     */
     public Bean removeBeanDefinition( Bean bean ){
         if( bean != null )
             return beans.remove( bean.getInjectable().getName() );
         else
             return null;
     }
-    
+
+    /**
+     * @deprecated 
+     * @param name
+     * @return
+     */
     public Bean getBeanDefinition( String name ){
         return beans.get( name );
     }
-    
+
+    /**
+     * @deprecated 
+     * @return
+     */
     public List<Bean> getBeansDefinition(){
         return new ArrayList( beans.values() );
     }
@@ -99,39 +121,13 @@ public abstract class IOCProvider {
 
     /**
      * @deprecated 
-     * @param properties
-     * @param sce
+     * @param name
+     * @return
      */
-    public abstract void configure( Configuration properties, ServletContextEvent sce );
-
     public Object getInstance( String name ){
         throw new UnsupportedOperationException( "use getBean(String)" );
     }
 
-    /**
-     * @deprecated
-     * @param sre
-     */
-    public abstract void requestDestroyed(ServletRequestEvent sre);
-
-    /**
-     * @deprecated
-     * @param sre
-     */
-    public abstract void requestInitialized(ServletRequestEvent sre);
-    
-    /**
-     * @deprecated
-     * @param se
-     */
-    public abstract void sessionCreated(HttpSessionEvent se);
-
-    /**
-     * @deprecated
-     * @param se
-     */
-    public abstract void sessionDestroyed(HttpSessionEvent se);
-    
     public abstract void destroy();
     
 }

@@ -18,7 +18,6 @@
 package org.brandao.brutos.mapping;
 
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
@@ -116,16 +115,16 @@ public class MapMapping extends CollectionMapping{
         return (prefix != null? prefix : "") + key + ( index < 0? "" : "[" + index + "]" );
     }
     
-    private Object getKey( HttpServletRequest request, long index, String prefix ){
+    private Object getKey( long index, String prefix ){
         /*return keyType.getValue(
             request,
             request.getSession().getServletContext(),
             getKeyScope().get( getKeyName( index, prefix ) ) );*/
         /*
-         * A partir da versão 2.0 mappingKey sempre será diferente de null.
+         * A partir da versï¿½o 2.0 mappingKey sempre serï¿½ diferente de null.
          */
         if( mappingKey != null )
-            return mappingKey.getValue(request, index, prefix, index, false );
+            return mappingKey.getValue( index, prefix, index, false );
         else
         if( keyType != null )
             return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
@@ -154,15 +153,11 @@ public class MapMapping extends CollectionMapping{
         return getValue( null );
     }
 
-    public Object getValue( HttpServletRequest request ){
-        return getValue( request, null, null );
-    }
-
     public Object getValue( boolean force ){
-        return getValue( null, null, null, force );
+        return getValue( null, null, force );
    }
     
-    public Object getValue( HttpServletRequest request, Object instance, String prefix, boolean force ){
+    public Object getValue( Object instance, String prefix, boolean force ){
         try{
             /*
              instance = instance == null? collectionType.newInstance() : instance;
@@ -175,9 +170,9 @@ public class MapMapping extends CollectionMapping{
             long index = 0;
             Object beanInstance;
             
-            while( (beanInstance = get( request, prefix, index )) != null ){
+            while( (beanInstance = get( prefix, index )) != null ){
 
-                Object keyInstance = getKey( request, index, prefix );
+                Object keyInstance = getKey( index, prefix );
 
                 if( keyInstance != null )
                     map.put( keyInstance, beanInstance );

@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
@@ -44,7 +42,7 @@ import org.brandao.brutos.type.Types;
 
 /**
  *
- * @author Afonso Brand�o
+ * @author Afonso Brandao
  */
 public class IOCXMLMapping {
     
@@ -279,7 +277,7 @@ public class IOCXMLMapping {
             org.brandao.brutos.type.Type type = Types.getType( (Class)argType, EnumerationType.ORDINAL, "yyyy-MM-dd hh:mm:ss" );
             if( type == null )
                 throw new BrutosException( "invalid type" );
-            cb.addValueArg( type.getValue( null, null, arg.get( "value" ) ) );
+            cb.addValueArg( type.getValue( arg.get( "value" ) ) );
         }
         else
         if( "null-type".equals( arg.get( "value-type" ) ) ){
@@ -608,7 +606,7 @@ public class IOCXMLMapping {
                 if( type == null )
                     throw new MappingException( "use <ref bean=''/>" );
                 
-                mb.addValue( type.getValue( null, null, item.get( "value" ) ) );
+                mb.addValue( type.getValue( item.get( "value" ) ) );
             }
             else
             if( "ref".equals( item.get( "type" ) ) ){

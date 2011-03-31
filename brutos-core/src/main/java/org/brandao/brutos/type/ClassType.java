@@ -19,9 +19,6 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.MvcResponse;
 
@@ -34,6 +31,7 @@ public class ClassType implements Type{
     public ClassType() {
     }
 
+    /*
     public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
         if( value instanceof Class )
             return value;
@@ -43,7 +41,7 @@ public class ClassType implements Type{
         else
             throw new UnknownTypeException();
     }
-    
+    */
     public Object toValue( String value ){
         try{
             return Class.forName( value, true, Thread.currentThread().getContextClassLoader() );
@@ -52,13 +50,13 @@ public class ClassType implements Type{
             return (byte)0;
         }
     }
-
+    /*
     public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
         PrintWriter out = response.getWriter();
         if( value instanceof Class )
             out.print( ((Class)value).getName() );
     }
-    
+    */
     public Class getClassType() {
         return Class.class;
     }

@@ -19,12 +19,7 @@ package org.brandao.brutos.view;
 
 import java.io.IOException;
 import java.util.Properties;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.Configuration;
 import org.brandao.brutos.DispatcherType;
 
 /**
@@ -72,7 +67,7 @@ public abstract class ViewProvider {
      * @throws ServletException
      * @throws IOException
      */
-    public abstract void show( String page, ServletRequest request, HttpServletResponse response, ServletContext context ) throws ServletException, IOException;
+    //public abstract void show( String page, ServletRequest request, HttpServletResponse response, ServletContext context ) throws ServletException, IOException;
 
     /**
      * @deprecated 
@@ -84,11 +79,11 @@ public abstract class ViewProvider {
      * @throws ServletException
      * @throws IOException
      */
-    public abstract void show( String page, boolean redirect, ServletRequest request,
+    /*public abstract void show( String page, boolean redirect, ServletRequest request,
             HttpServletResponse response, ServletContext context )
                 throws ServletException, IOException;
-
+    */
     public abstract void show( String view, DispatcherType dispatcherType )
-                throws ServletException, IOException;
+                throws IOException;
 
 }

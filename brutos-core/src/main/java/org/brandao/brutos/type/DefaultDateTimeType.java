@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.MvcResponse;
 
@@ -42,7 +39,7 @@ public class DefaultDateTimeType implements DateTimeType{
         sdf = new SimpleDateFormat( value );
         sdf.setLenient( false );
     }
-    
+    /*
     public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
         if( value instanceof Date )
             return value;
@@ -52,7 +49,7 @@ public class DefaultDateTimeType implements DateTimeType{
         else
             throw new UnknownTypeException();
     }
-    
+    */
     public Object toValue( String value ){
         try{
             return sdf.parse( value );
@@ -61,12 +58,12 @@ public class DefaultDateTimeType implements DateTimeType{
             return null;
         }
     }
-
+    /*
     public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
         PrintWriter out = response.getWriter();
         out.print( sdf.format( value ) );
     }
-    
+    */
     public Class getClassType() {
         return Date.class;
     }

@@ -18,9 +18,6 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -28,11 +25,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface Type {
 
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value );
+    //public Object getValue( HttpServletRequest request, ServletContext context, Object value );
 
     public Object getValue( Object value );
 
-    public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException;
+    //public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException;
 
     public void setValue( Object value ) throws IOException;
 

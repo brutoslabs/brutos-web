@@ -19,9 +19,6 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.MvcResponse;
 
@@ -33,7 +30,7 @@ public class IntegerType implements Type{
 
     public IntegerType() {
     }
-
+    /*
     public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
         if( value instanceof Integer )
             return value;
@@ -43,7 +40,7 @@ public class IntegerType implements Type{
         else
             throw new UnknownTypeException();
     }
-    
+    */
     public Object toValue( String value ){
         try{
            return Integer.parseInt( value );
@@ -53,12 +50,12 @@ public class IntegerType implements Type{
         }
     }
 
-    @Override
+    /*
     public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
         PrintWriter out = response.getWriter();
         out.print( String.valueOf( value ) );
     }
-    
+    */
     @Override
     public Class getClassType() {
         return Integer.TYPE;

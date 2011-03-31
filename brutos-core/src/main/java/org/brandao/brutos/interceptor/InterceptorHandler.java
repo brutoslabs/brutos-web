@@ -17,9 +17,6 @@
 
 package org.brandao.brutos.interceptor;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ResourceAction;
 
 /**
@@ -28,30 +25,6 @@ import org.brandao.brutos.ResourceAction;
  */
 public interface InterceptorHandler {
 
-    /**
-     * @deprecated
-     * @return .
-     */
-    public ServletContext getContext();
-    
-    /**
-     * @deprecated
-     * @return .
-     */
-    public HttpServletRequest getRequest();
-    
-    /**
-     * @deprecated
-     * @return .
-     */
-    public HttpServletResponse getResponse();
-    
-    /**
-     * @deprecated
-     * @return .
-     */
-    public String getURI();
-    
     public ResourceAction getResourceAction();
     
     public Object getResource();

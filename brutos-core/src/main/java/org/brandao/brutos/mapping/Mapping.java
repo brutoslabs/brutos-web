@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.mapping;
 
-import javax.servlet.ServletContextEvent;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.old.programatic.*;
@@ -37,12 +36,13 @@ public abstract class Mapping {
     public Mapping() {
         throw new UnsupportedOperationException( "deprecated: use ApplicationContext" );
     }
-    
+
+    /*
     public void configure( Configuration config, ServletContextEvent sce ){
     }
-    
+    */
     public abstract void destroy();
-
+    /*
     public static Mapping getMapping( Configuration configuration, ServletContextEvent sce ){
         String amName = 
             configuration
@@ -69,7 +69,8 @@ public abstract class Mapping {
             throw new BrutosException( e );
         }
     }
-
+    */
+    
     public IOCManager getIocManager() {
         return iocManager;
     }

@@ -17,8 +17,6 @@
 
 package org.brandao.brutos.mapping;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
@@ -81,6 +79,7 @@ public class UseBeanData {
      * @param request
      * @return .
      */
+    /*
     public Object getValue( ServletContext context, HttpServletRequest request ){
 
         Object value = null;
@@ -98,7 +97,8 @@ public class UseBeanData {
 
         return value;
     }
-
+    */
+    
     public Object getValue(){
 
         Object value = null;

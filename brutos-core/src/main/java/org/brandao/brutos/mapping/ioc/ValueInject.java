@@ -18,7 +18,6 @@
 package org.brandao.brutos.mapping.ioc;
 
 import java.beans.PropertyEditor;
-import org.brandao.brutos.ioc.EditorConfigurer;
 
 /**
  *
@@ -52,7 +51,7 @@ public class ValueInject extends Injectable{
         this.converted = true;
 
         if( value instanceof String && getTarget() != String.class ){
-            PropertyEditor editor = EditorConfigurer.getPropertyEditor(getTarget().getName());
+            /*PropertyEditor editor = EditorConfigurer.getPropertyEditor(getTarget().getName());
             if( editor != null ){
                 synchronized( editor ){
                     editor.setAsText( (String)value );
@@ -62,6 +61,8 @@ public class ValueInject extends Injectable{
             }
             else
                 return value;
+             */
+            return null;
         }
         else
             return value;

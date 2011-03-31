@@ -18,7 +18,6 @@
 package org.brandao.brutos.mapping;
 
 import java.util.Collection;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -61,14 +60,14 @@ public class CollectionMapping extends MappingBean{
         this.bean = bean;
     }
 
-    protected Object get( HttpServletRequest request, String prefix, long index ){
+    protected Object get( String prefix, long index ){
         /*
-         * A partir da versão 2.0 o bean sempre será diferente de null.
+         * A partir da versï¿½o 2.0 o bean sempre serï¿½ diferente de null.
          */
         if( bean == null )
-            return super.getValue(request, null, prefix, index, false );
+            return super.getValue( null, prefix, index, false );
         else
-            return bean.getValue(request, null, prefix, index, false );
+            return bean.getValue( null, prefix, index, false );
     }
     /*
     private Object get( HttpSession session, long index ){
@@ -87,18 +86,14 @@ public class CollectionMapping extends MappingBean{
     */
 
     public Object getValue( boolean force ){
-        return getValue( null, null, null, force );
+        return getValue( null, null, force );
    }
 
     public Object getValue(){
         return getValue( null );
     }
 
-    public Object getValue( HttpServletRequest request ){
-        return getValue( request, null, null );
-    }
-
-    public Object getValue( HttpServletRequest request, Object instance, String prefix, boolean force){
+    public Object getValue( Object instance, String prefix, boolean force){
         try{
             instance = getInstance( instance );
             Collection collection = (Collection)instance;
@@ -106,7 +101,7 @@ public class CollectionMapping extends MappingBean{
             long index = 0;
             Object beanInstance;
 
-            while( (beanInstance = get( request, prefix, index )) != null ){
+            while( (beanInstance = get( prefix, index )) != null ){
                 collection.add(beanInstance);
                 index++;
             }
@@ -179,4 +174,5 @@ public class CollectionMapping extends MappingBean{
         }
     }
     */
+
 }

@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MvcResponse;
@@ -48,7 +45,7 @@ public class DefaultArrayType implements ArrayType{
         this.arrayComponentType = type;
         this.componentType = Types.getType( type );
    }
-
+   /*
     public Object getValue(HttpServletRequest request, ServletContext context, Object value) {
         if( value instanceof ParameterList )
             return getList(request, context, value);
@@ -56,15 +53,16 @@ public class DefaultArrayType implements ArrayType{
         else
             return value;
     }
-
+    
     public void setValue(HttpServletResponse response, ServletContext context, Object value) throws IOException {
         this.serializableType.setValue( response, context, value );
     }
-
+    */
     public Class getClassType() {
         return this.classType;
     }
 
+    /*
     private Object getList(HttpServletRequest request, ServletContext context, Object value){
         try{
             ParameterList param = (ParameterList)value;
@@ -84,6 +82,27 @@ public class DefaultArrayType implements ArrayType{
             throw new BrutosException( e );
         }
     }
+    */
+
+    private Object getList(Object value){
+        try{
+            ParameterList param = (ParameterList)value;
+            Object objList = Array.newInstance( (Class)arrayComponentType , param.size() );
+
+            for( int i=0;i<param.size();i++ )
+                Array.set(
+                    objList,
+                    i,
+                    componentType.getValue( param.get( i ) )
+                    //componentType.getValue(request, context, param.get( i ) )
+                );
+
+            return objList;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
 
     public void setClassType(Class classType) {
         this.classType = classType;
@@ -91,7 +110,7 @@ public class DefaultArrayType implements ArrayType{
 
     public Object getValue(Object value) {
         if( value instanceof ParameterList )
-            return getList(null, null, value);
+            return getList(value);
 
         else
             return value;

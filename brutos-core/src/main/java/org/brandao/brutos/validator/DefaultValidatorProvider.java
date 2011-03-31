@@ -74,8 +74,6 @@ public class DefaultValidatorProvider extends ValidatorProvider{
             if( config.containsKey( RestrictionRules.EQUAL.toString() ) ){
                 Object tmp = valueType
                                 .getValue(
-                                null,
-                                null,
                                 config.get(RestrictionRules.EQUAL.toString()));
 
                 if( tmp != null && !tmp.equals( value ) )
@@ -86,8 +84,6 @@ public class DefaultValidatorProvider extends ValidatorProvider{
                 if( config.containsKey( RestrictionRules.MAX.toString() ) ){
                     Number tmp = (Number) valueType
                                     .getValue(
-                                    null,
-                                    null,
                                     config.get(RestrictionRules.MAX.toString()));
 
                     if( ((Number)value).doubleValue() > tmp.doubleValue() )
@@ -97,8 +93,6 @@ public class DefaultValidatorProvider extends ValidatorProvider{
                 if( config.containsKey( RestrictionRules.MIN.toString() ) ){
                     Number tmp = (Number) valueType
                                     .getValue(
-                                    null,
-                                    null,
                                     config.get(RestrictionRules.MIN.toString()));
 
                     if( ((Number)value).doubleValue() < tmp.doubleValue() )
@@ -110,8 +104,6 @@ public class DefaultValidatorProvider extends ValidatorProvider{
                 if( config.containsKey( RestrictionRules.MAX_LENGTH.toString() ) ){
                     Number tmp = (Number) integerType
                                     .getValue(
-                                    null,
-                                    null,
                                     config.get(RestrictionRules.MAX_LENGTH.toString()));
 
                     if( ((String)value).length() > tmp.intValue() )
@@ -121,8 +113,6 @@ public class DefaultValidatorProvider extends ValidatorProvider{
                 if( config.containsKey( RestrictionRules.MIN_LENGTH.toString() ) ){
                     Number tmp = (Number) integerType
                                     .getValue(
-                                    null,
-                                    null,
                                     config.get(RestrictionRules.MIN_LENGTH.toString()));
 
                     if( ((String)value).length() < tmp.intValue() )
@@ -132,8 +122,6 @@ public class DefaultValidatorProvider extends ValidatorProvider{
                 if( config.containsKey( RestrictionRules.MATCHES.toString() ) ){
                     String tmp = (String) valueType
                                     .getValue(
-                                    null,
-                                    null,
                                     config.get(RestrictionRules.MATCHES.toString()));
 
                     if( !((String)value).matches(tmp) )

@@ -22,12 +22,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.MvcResponse;
-import org.brandao.brutos.web.http.BrutosFile;
+import org.brandao.brutos.BrutosFile;
 
 /**
  *
@@ -37,7 +34,7 @@ public class FileType implements Type{
 
     public FileType() {
     }
-
+    /*
     public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
         if( value instanceof BrutosFile )
             return ((BrutosFile)value).getFile();
@@ -70,6 +67,7 @@ public class FileType implements Type{
             }
         }
     }
+    */
     
     public Class getClassType() {
         return File.class;

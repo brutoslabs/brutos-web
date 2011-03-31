@@ -20,7 +20,6 @@ package org.brandao.brutos;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import javax.servlet.ServletContextEvent;
 import org.brandao.brutos.io.DefaultResourceLoader;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
@@ -34,15 +33,15 @@ import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
 /**
- * Classe central que permite a configuração de um aplicativo. Com essa classe
- * é possível:
+ * Classe central que permite a configuraï¿½ï¿½o de um aplicativo. Com essa classe
+ * ï¿½ possï¿½vel:
  * <ul>
  * <li>configurar interceptadores;</li>
  * <li>incluir novos controladores;</li>
  * <li>manipular os controladores;</li>
- * <li>manipular a resolução de controladores;</li>
- * <li>manipular a execução de ações;</li>
- * <li>determinar novas regras de validação</li>
+ * <li>manipular a resoluï¿½ï¿½o de controladores;</li>
+ * <li>manipular a execuï¿½ï¿½o de aï¿½ï¿½es;</li>
+ * <li>determinar novas regras de validaï¿½ï¿½o</li>
  * </ul>
  * 
  * @author Afonso Brandao
@@ -83,24 +82,16 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * @deprecated 
-     * @param config
-     * @param sce
-     */
-    public void configure( Configuration config, ServletContextEvent sce ){
-    }
-
-    /**
-     * Inicia o processo de configuração da aplicação.
+     * Inicia o processo de configuraï¿½ï¿½o da aplicaï¿½ï¿½o.
      */
     public void configure(){
         configure( this.configuration );
     }
 
     /**
-     * Inicia o processo de configuração da aplicação.
+     * Inicia o processo de configuraï¿½ï¿½o da aplicaï¿½ï¿½o.
      *
-     * @param config Configuração.
+     * @param config Configuraï¿½ï¿½o.
      */
     public void configure( Properties config ){
         
@@ -158,23 +149,23 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Define o responsável por resolver os controladores.
-     * @param controllerResolver Responsável por resolver os controladores
+     * Define o responsï¿½vel por resolver os controladores.
+     * @param controllerResolver Responsï¿½vel por resolver os controladores
      */
     protected void setControllerResolver( ControllerResolver controllerResolver ){
         this.controllerResolver = controllerResolver;
     }
     
     /**
-     * Obtém o responsável por resolver os controladores.
-     * @return Responsável por resolver os controladores
+     * Obtï¿½m o responsï¿½vel por resolver os controladores.
+     * @return Responsï¿½vel por resolver os controladores
      */
     protected ControllerResolver getNewControllerResolver(){
         try{
             ControllerResolver instance = (ControllerResolver) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.class",
-                    DefaultControllerResolver.class.getName()
+                    null
                 ),
                     true,
                     Thread.currentThread().getContextClassLoader()
@@ -189,8 +180,8 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Obtém a fábrica de respostas.
-     * @return Fábrica de respostas.
+     * Obtï¿½m a fï¿½brica de respostas.
+     * @return Fï¿½brica de respostas.
      */
     protected MvcResponseFactory getMvcResponseFactory(){
         try{
@@ -212,8 +203,8 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Obtém a fábrica de requisições.
-     * @return Fábrica de requisições.
+     * Obtï¿½m a fï¿½brica de requisiï¿½ï¿½es.
+     * @return Fï¿½brica de requisiï¿½ï¿½es.
      */
     protected MvcRequestFactory getMvcRequestFactory(){
         try{
@@ -235,8 +226,8 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Obtém o responsável por resolver as ações.
-     * @return Responsável por resolver as ações.
+     * Obtï¿½m o responsï¿½vel por resolver as aï¿½ï¿½es.
+     * @return Responsï¿½vel por resolver as aï¿½ï¿½es.
      */
     protected ActionResolver getNewMethodResolver(){
         try{
@@ -257,7 +248,7 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Método invocado quando a aplicação é finalizada.
+     * Mï¿½todo invocado quando a aplicaï¿½ï¿½o ï¿½ finalizada.
      */
     public void destroy(){
     }
@@ -291,8 +282,8 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Obtém a aplicação corrente.
-     * @return Aplicação.
+     * Obtï¿½m a aplicaï¿½ï¿½o corrente.
+     * @return Aplicaï¿½ï¿½o.
      */
     public static ApplicationContext getCurrentApplicationContext(){
         Scope requestScope = Scopes.get(ScopeType.REQUEST);
@@ -307,7 +298,7 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Obtém um determinado controlador.
+     * Obtï¿½m um determinado controlador.
      * @param controllerClass Classe do controlador
      * @return Controlador.
      */
@@ -316,15 +307,15 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Obtém a configuração da aplicação.
-     * @return Configuração da aplicação.
+     * Obtï¿½m a configuraï¿½ï¿½o da aplicaï¿½ï¿½o.
+     * @return Configuraï¿½ï¿½o da aplicaï¿½ï¿½o.
      */
     public Properties getConfiguration(){
         return configuration;
     }
 
     /**
-     * Obtém o provedor de log.
+     * Obtï¿½m o provedor de log.
      * @return Provedor de log.
      */
     public LoggerProvider getLoggerProvider(){
@@ -332,7 +323,7 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Obtém o objeto responsável por enviar a resposta ao cliente.
+     * Obtï¿½m o objeto responsï¿½vel por enviar a resposta ao cliente.
      * @return Resposta.
      */
     public MvcResponse getMvcResponse() {
@@ -340,8 +331,8 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Obtém o objeto responsável por receber a requisição do cliente.
-     * @return Requisição.
+     * Obtï¿½m o objeto responsï¿½vel por receber a requisiï¿½ï¿½o do cliente.
+     * @return Requisiï¿½ï¿½o.
      */
     public MvcRequest getMvcRequest() {
         return this.requestFactory.getCurrentRequest();
