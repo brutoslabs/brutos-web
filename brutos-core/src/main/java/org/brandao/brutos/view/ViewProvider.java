@@ -58,7 +58,7 @@ public abstract class ViewProvider {
     
     public abstract void configure( Properties properties );
 
-    /**
+    /*
      * @deprecated
      * @param page
      * @param request
@@ -69,7 +69,7 @@ public abstract class ViewProvider {
      */
     //public abstract void show( String page, ServletRequest request, HttpServletResponse response, ServletContext context ) throws ServletException, IOException;
 
-    /**
+    /*
      * @deprecated 
      * @param page
      * @param redirect

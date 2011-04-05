@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.BrutosFile;
 
@@ -82,7 +83,7 @@ public class FileType implements Type{
 
     public void setValue(Object value) throws IOException {
         if( value instanceof File ){
-            ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+            ApplicationContext app = Invoker.getCurrentApplicationContext();
             MvcResponse response = app.getMvcResponse();
 
             File f = (File)value;

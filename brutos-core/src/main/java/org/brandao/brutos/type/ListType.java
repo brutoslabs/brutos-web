@@ -23,6 +23,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.web.http.ParameterList;
 
 /**
@@ -43,7 +44,16 @@ public class ListType implements CollectionType{
     private Type serializableType;
     
     public ListType(){
-        ApplicationContext context = ApplicationContext.getCurrentApplicationContext();
+    }
+
+    private Class getListType(){
+
+        if( this.listType != null )
+            return this.listType;
+
+        ApplicationContext context = Invoker
+                .getCurrentApplicationContext();
+
         String className = context
                 .getConfiguration()
                     .getProperty( "org.brandao.brutos.type.list",
@@ -57,10 +67,12 @@ public class ListType implements CollectionType{
         catch( Exception e ){
             throw new BrutosException( e );
         }
-        
+
         this.serializableType = Types.getType( Serializable.class );
+
+        return this.listType;
     }
-    
+
     @Override
     public void setGenericType(java.lang.reflect.Type type) {
         java.lang.reflect.Type classType = type;
@@ -109,7 +121,7 @@ public class ListType implements CollectionType{
 
     private List getList(Object value){
         try{
-            List objList = this.listType.newInstance();
+            List objList = (List)this.getListType().newInstance();
 
             for( Object o: (ParameterList)value )
                 objList.add( this.primitiveType.getValue(o) );

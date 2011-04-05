@@ -36,6 +36,10 @@ public class JavaLoggerProvider extends LoggerProvider{
     public void configure( Properties config ){
     }
 
+    public Logger getLogger( Class clazz ){
+        return getLogger( clazz.getSimpleName() );
+    }
+
     public Logger getLogger( String name ){
         if( !cacheLoggers.containsKey(name) ){
             java.util.logging.Logger jLogger =

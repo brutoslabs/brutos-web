@@ -28,7 +28,7 @@ import org.brandao.brutos.old.programatic.WebFrameManager;
  */
 public interface ControllerResolver {
 
-    /**
+    /*
      * @deprecated
      * @param webFrameManager
      * @param request

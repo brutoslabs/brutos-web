@@ -21,7 +21,7 @@ import java.util.Map;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
 import org.brandao.brutos.type.Type;
 
 /**
@@ -187,7 +187,8 @@ public class MapMapping extends CollectionMapping{
     }
 
     public Scope getKeyScope() {
-        Scope objectScope = Scopes.get( keyScopeType.toString() );
+        Scope objectScope = Scopes.getScopesOfCurrentApplicationContext()
+                .get( keyScopeType.toString() );
 
         if( objectScope == null )
             throw new BrutosException( "scope not allowed in context: " + keyScopeType );

@@ -25,10 +25,10 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.Scopes;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
 
 /**
  *
@@ -183,7 +183,9 @@ public class Form {
     public void fieldsToRequest( Object webFrame ) {
         try{
             Field[] fields = getClassType().getDeclaredFields();
-            Scope scope = Scopes.get(ScopeType.REQUEST);
+            Scope scope = Scopes.getScopesOfCurrentApplicationContext()
+                    .get(ScopeType.REQUEST);
+
             for( Field f: fields ){
                 f.setAccessible( true );
                 scope.put( f.getName(), f.get( webFrame ) );

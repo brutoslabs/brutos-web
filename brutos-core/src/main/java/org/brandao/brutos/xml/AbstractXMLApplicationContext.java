@@ -19,7 +19,7 @@ package org.brandao.brutos.xml;
 
 import java.util.ArrayList;
 import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.DefaultConfigurableApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContextImp;
 import org.brandao.brutos.io.Resource;
 import java.util.Properties;
 /**
@@ -45,7 +45,7 @@ public abstract class AbstractXMLApplicationContext
     protected void load(){
         ControllerDefinitionReader cdr = 
             new ControllerDefinitionReader(
-                new DefaultConfigurableApplicationContext(this),
+                new ConfigurableApplicationContextImp(this),
                 new ArrayList(),
                 this);
 

@@ -20,6 +20,7 @@ package org.brandao.brutos.type;
 import java.io.IOException;
 import java.io.PrintWriter;
 import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 /**
@@ -70,7 +71,7 @@ public class FloatType implements Type{
     }
 
     public void setValue(Object value) throws IOException {
-        ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+        ApplicationContext app = Invoker.getCurrentApplicationContext();
         MvcResponse response = app.getMvcResponse();
         response.process(value);
     }

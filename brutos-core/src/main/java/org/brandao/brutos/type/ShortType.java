@@ -19,6 +19,7 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 /**
@@ -70,7 +71,7 @@ public class ShortType implements Type{
     }
 
     public void setValue(Object value) throws IOException {
-        ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+        ApplicationContext app = Invoker.getCurrentApplicationContext();
         MvcResponse response = app.getMvcResponse();
         response.process(value);
     }

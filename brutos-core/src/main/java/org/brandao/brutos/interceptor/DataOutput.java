@@ -20,20 +20,22 @@ package org.brandao.brutos.interceptor;
 
 import java.lang.reflect.Field;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.FieldForm;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
 
 /**
  *
  * @author Afonso Brandao
  */
 public class DataOutput {
-    
-    public DataOutput() {
+
+    private Scope scope;
+
+    public DataOutput(Scope scope) {
+        this.scope = scope;
     }
 
     public void write( Form form, Object object ){
@@ -60,12 +62,12 @@ public class DataOutput {
     }
     
     public void writeFields( Form form, Object object ){
-        Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
+        //Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
         try{
             Field[] fields = form.getClassType().getDeclaredFields();
             for( Field f: fields ){
                 f.setAccessible( true );
-                requestScope.put( f.getName(), f.get( object ) );
+                scope.put( f.getName(), f.get( object ) );
             }
         }
         catch( Exception e ){
