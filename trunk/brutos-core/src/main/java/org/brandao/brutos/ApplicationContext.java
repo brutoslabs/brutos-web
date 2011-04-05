@@ -28,7 +28,7 @@ import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
@@ -39,9 +39,9 @@ import org.brandao.brutos.view.ViewProvider;
  * <li>configurar interceptadores;</li>
  * <li>incluir novos controladores;</li>
  * <li>manipular os controladores;</li>
- * <li>manipular a resolu��o de controladores;</li>
- * <li>manipular a execu��o de a��es;</li>
- * <li>determinar novas regras de valida��o</li>
+ * <li>manipular a resolução de controladores;</li>
+ * <li>manipular a execução de ações;</li>
+ * <li>determinar novas regras de validação.</li>
  * </ul>
  * 
  * @author Afonso Brandao
@@ -66,6 +66,7 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     protected ActionResolver actionResolver;
     protected MvcResponseFactory responseFactory;
     protected MvcRequestFactory requestFactory;
+    private Scopes scopes;
 
     private ApplicationContext parent;
 
@@ -82,7 +83,7 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Inicia o processo de configura��o da aplica��o.
+     * Inicia o processo de configuração da aplicaçao.
      */
     public void configure(){
         configure( this.configuration );
@@ -134,12 +135,12 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
 
         if( iocProvider.containsBeanDefinition("customScopes") ){
-            CustomScopeConfigurer customScopes =
-                    (CustomScopeConfigurer)iocProvider.getInstance("customScopes");
-            Map scopes = customScopes.getCustomScopes();
-            Set i = scopes.keySet();
+            CustomScopeConfigurer customScopesConfigurer =
+                    (CustomScopeConfigurer)iocProvider.getBean("customScopes");
+            Map customScopes = customScopesConfigurer.getCustomScopes();
+            Set i = customScopes.keySet();
             for( Object key: i )
-                Scopes.register( (String)key,(Scope)scopes.get(key) );
+                scopes.register( (String)key,(Scope)customScopes.get(key) );
         }
 
         this.loadIOCManager(iocManager);
@@ -282,22 +283,6 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Obt�m a aplica��o corrente.
-     * @return Aplica��o.
-     */
-    public static ApplicationContext getCurrentApplicationContext(){
-        Scope requestScope = Scopes.get(ScopeType.REQUEST);
-
-        if( requestScope == null )
-            throw new BrutosException( "scope not configured: " + ScopeType.REQUEST.toString() );
-
-        ApplicationContext app = (ApplicationContext)
-                        requestScope.get( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
-
-        return app;
-    }
-
-    /**
      * Obt�m um determinado controlador.
      * @param controllerClass Classe do controlador
      * @return Controlador.
@@ -336,6 +321,10 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
      */
     public MvcRequest getMvcRequest() {
         return this.requestFactory.getCurrentRequest();
+    }
+
+    public Scopes getScopes() {
+        return scopes;
     }
 
 }

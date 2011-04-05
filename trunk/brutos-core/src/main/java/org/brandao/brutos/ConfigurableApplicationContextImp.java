@@ -16,10 +16,10 @@ import org.brandao.brutos.view.ViewProvider;
  *
  * @author Brandao
  */
-public class DefaultConfigurableApplicationContext extends ApplicationContextWrapper
+public class ConfigurableApplicationContextImp extends ApplicationContextWrapper
         implements ConfigurableApplicationContext{
 
-    public DefaultConfigurableApplicationContext( ApplicationContext app ){
+    public ConfigurableApplicationContextImp( ApplicationContext app ){
         super(app);
     }
     

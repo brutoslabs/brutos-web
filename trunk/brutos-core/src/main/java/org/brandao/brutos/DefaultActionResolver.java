@@ -21,10 +21,10 @@ import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
 
 /**
- * ImplementaÁ„o padr„o do ActionResolver.
+ * Implementa√ß√£o padr√£o do ActionResolver.
  * 
  * @author Afonso Brandao
  */
@@ -34,8 +34,9 @@ public class DefaultActionResolver implements ActionResolver{
         return new DefaultResourceAction( methodForm );
     }
 
-    public ResourceAction getResourceAction(Form controller, InterceptorHandler handler) {
-        Scope scope = Scopes.get(ScopeType.PARAM);
+    public ResourceAction getResourceAction(Form controller, Scopes scopes,
+            InterceptorHandler handler) {
+        Scope scope = scopes.get(ScopeType.PARAM);
         MethodForm method = controller
                 .getMethodByName( String.valueOf( scope.get( controller.getMethodId() ) ) );
         return method == null? null : getResourceMethod( method );

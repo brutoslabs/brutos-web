@@ -74,4 +74,6 @@ public abstract class LoggerProvider {
 
     public abstract Logger getLogger( String name );
     
+    public abstract Logger getLogger( Class clazz );
+
 }

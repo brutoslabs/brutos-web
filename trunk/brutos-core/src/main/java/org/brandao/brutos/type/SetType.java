@@ -23,6 +23,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Set;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.web.http.ParameterList;
 
 /**
@@ -43,22 +44,6 @@ public class SetType implements CollectionType{
     private Type serializableType;
 
     public SetType(){
-        ApplicationContext context = ApplicationContext.getCurrentApplicationContext();
-        String className = context
-                .getConfiguration()
-                    .getProperty( "org.brandao.brutos.type.set",
-                                  "java.util.HashSet" );
-
-        try{
-            this.listType = (Class<? extends Set>)
-                    Class.forName( className, true,
-                                Thread.currentThread().getContextClassLoader());
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-
-        this.serializableType = Types.getType( Serializable.class );
     }
     
     @Override
@@ -123,9 +108,36 @@ public class SetType implements CollectionType{
         this.serializableType.setValue( value );
     }
 
+    private Class getListType(){
+
+        if( this.listType != null )
+            return this.listType;
+
+        ApplicationContext context = Invoker
+                .getCurrentApplicationContext();
+
+        String className = context
+                .getConfiguration()
+                    .getProperty( "org.brandao.brutos.type.set",
+                                  "java.util.HashSet" );
+
+        try{
+            this.listType = (Class<? extends Set>)
+                    Class.forName( className, true,
+                                Thread.currentThread().getContextClassLoader());
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+
+        this.serializableType = Types.getType( Serializable.class );
+
+        return this.listType;
+    }
+
     private Set getList(Object value){
         try{
-            Set objList = this.listType.newInstance();
+            Set objList = (Set) this.getListType().newInstance();
 
             for( Object o: (ParameterList)value )
                 objList.add( this.primitiveType.getValue(o) );

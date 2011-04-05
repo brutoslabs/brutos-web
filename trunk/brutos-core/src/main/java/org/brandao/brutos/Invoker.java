@@ -23,16 +23,25 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
 
 /**
- * Classe usada para invocar a aplicaÁ„o.
+ * Classe usada para invocar a aplica√ß√£o.
  * 
  * @author Afonso Brandao
  */
 public class Invoker {
 
-    protected static Logger logger = LoggerProvider.getCurrentLoggerProvider().getLogger(Invoker.class.getName());
+    private static final ThreadLocal currentApp;
+
+    static{
+        currentApp = new ThreadLocal();
+    }
+    
+    protected Logger logger = 
+            LoggerProvider.getCurrentLoggerProvider()
+            .getLogger(Invoker.class);
+    
     protected ControllerResolver controllerResolver;
     protected IOCProvider iocProvider;
     protected ControllerManager controllerManager;
@@ -43,7 +52,9 @@ public class Invoker {
     }
 
     public Invoker( ControllerResolver controllerResolver, IOCProvider iocProvider, 
-            ControllerManager controllerManager, ActionResolver actionResolver, ApplicationContext applicationContext ){
+            ControllerManager controllerManager, ActionResolver actionResolver, 
+            ApplicationContext applicationContext ){
+        
         this.controllerResolver = controllerResolver;
         this.iocProvider        = iocProvider;
         this.controllerManager  = controllerManager;
@@ -52,17 +63,18 @@ public class Invoker {
     }
 
     /**
-     * Executa uma aÁ„o.
+     * Executa uma a√ß√£o.
      *
-     * @param requestId IdentificaÁ„o da aÁ„o.
-     * @return Verdadeiro se foi executada a aÁ„o, coso contr·rio È falso.
+     * @param requestId Identifica√ß√£o da a√ß√£o.
+     * @return Verdadeiro se foi executada a a√ß√£o, coso contr√°rio √© falso.
      */
     public boolean invoke( String requestId ){
 
-        //Scope paramScope = Scopes.get(ScopeType.PARAM.toString());
-        Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
+        Scopes scopes = applicationContext.getScopes();
+        Scope requestScope = scopes.get(ScopeType.REQUEST);
         ImpInterceptorHandler ih = new ImpInterceptorHandler();
         ih.setRequestId(requestId);
+        ih.setContext(applicationContext);
         
         Form form = controllerResolver.getController(controllerManager, ih);
 
@@ -72,15 +84,17 @@ public class Invoker {
 
         long time = System.currentTimeMillis();
         try{
+            currentApp.set( this.applicationContext );
             requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
-            requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE, this.applicationContext );
+            requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE,
+                    this.applicationContext );
             
             if( logger.isDebugEnabled() )
                 logger.debug( "Received a new request: " + requestId );
 
             ih.setResource( iocProvider.getBean(form.getId()) );
             
-            ih.setResourceAction( actionResolver.getResourceAction(form, ih) );
+            ih.setResourceAction( actionResolver.getResourceAction(form, scopes, ih) );
 
             if( logger.isDebugEnabled() ){
                 logger.debug(
@@ -95,6 +109,7 @@ public class Invoker {
             form.proccessBrutosAction( ih );
         }
         finally{
+            currentApp.remove();
             requestScope.remove( BrutosConstants.IOC_PROVIDER );
             if( logger.isDebugEnabled() )
                 logger.debug(
@@ -105,4 +120,7 @@ public class Invoker {
         return true;
     }
 
+    public static ApplicationContext getCurrentApplicationContext(){
+        return (ApplicationContext) currentApp.get();
+    }
 }

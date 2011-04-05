@@ -15,8 +15,9 @@
  *
  */
 
-package org.brandao.brutos.scope;
+package org.brandao.brutos;
 
+import org.brandao.brutos.scope.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,40 +31,48 @@ import org.brandao.brutos.logger.LoggerProvider;
  */
 public class Scopes{
 
-    private static Logger logger = LoggerProvider.getCurrentLoggerProvider().getLogger(Scopes.class.getName());
-    private static Map<String,Scope> scopes;
+    private Logger logger =
+        LoggerProvider.getCurrentLoggerProvider()
+            .getLogger(Scopes.class.getName());
+    
+    private Map<String,Scope> scopes;
 
-    static{
+    public Scopes() {
         scopes = new HashMap<String,Scope>();
     }
-    
-    public Scopes() {
-    }
 
-    public static void register( String id, Scope scope ){
+    public void register( String id, Scope scope ){
 
         if( logger.isInfoEnabled() )
-            logger.info( (scopes.containsKey(id)? "override scope: " : "registred scope: ") + id );
+            logger.info(
+                (scopes.containsKey(id)?
+                    "override scope: " :
+                    "registred scope: ") + id );
         
         scopes.put( id, scope );
     }
 
-    public static void remove( String id ){
+    public void remove( String id ){
         if( logger.isInfoEnabled() )
             logger.info( "removed scope: " + id );
 
         scopes.remove( id );
     }
 
-    public static Scope get( String id ){
+    public Scope get( String id ){
         return scopes.get( id );
     }
 
-    public static Scope get( ScopeType scopeId ){
+    public Scope get( ScopeType scopeId ){
         return get( scopeId.toString() );
     }
 
-    public static Map getScopes(){
+    public Map getScopes(){
         return Collections.unmodifiableMap(scopes);
+    }
+
+    public static Scopes getScopesOfCurrentApplicationContext(){
+        return Invoker
+                .getCurrentApplicationContext().getScopes();
     }
 }

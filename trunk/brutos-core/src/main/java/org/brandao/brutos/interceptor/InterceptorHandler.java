@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.interceptor;
 
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.ResourceAction;
 
 /**
@@ -31,5 +32,6 @@ public interface InterceptorHandler {
 
     public String requestId();
 
+    public ApplicationContext getContext();
     
 }

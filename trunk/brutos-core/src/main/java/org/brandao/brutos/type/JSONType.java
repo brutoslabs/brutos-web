@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 /**
@@ -86,7 +87,7 @@ public class JSONType implements SerializableType {
    }
 
     public void setValue(Object value) throws IOException {
-        ApplicationContext app = ApplicationContext.getCurrentApplicationContext();
+        ApplicationContext app = Invoker.getCurrentApplicationContext();
         MvcResponse response = app.getMvcResponse();
         response.setType( "application/json" );
         response.setCharacterEncoding( "UTF-8" );

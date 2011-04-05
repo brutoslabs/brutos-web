@@ -19,10 +19,11 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.Scopes;
 
 /**
- * Essa interface È usada para identificar a aÁ„o a ser executada em um
- * determinado controlador. Toda classe que tem essa funÁ„o deve implementar
+ * Essa interface √© usada para identificar a a√ß√£o a ser executada em um
+ * determinado controlador. Toda classe que tem essa fun√ß√£o deve implementar
  * essa interface.
  * 
  * @author Afonso Brandao
@@ -30,11 +31,13 @@ import org.brandao.brutos.mapping.Form;
 public interface ActionResolver {
 
     /**
-     * ObtÈm a aÁ„o a ser executada.
+     * Obt√©m a a√ß√£o a ser executada.
      * @param controller Controlador.
-     * @param handler Mnipulador da requisiÁ„o.
-     * @return AÁ„o a ser executada.
+     * @param handler Mnipulador da requisi√ß√£o.
+     * @param scopes Escopos da aplica√ß√£o.
+     * @return A√ß√£o a ser executada.
      */
-    public ResourceAction getResourceAction( Form controller, InterceptorHandler handler );
+    public ResourceAction getResourceAction( Form controller, Scopes scopes,
+            InterceptorHandler handler );
 
 }
