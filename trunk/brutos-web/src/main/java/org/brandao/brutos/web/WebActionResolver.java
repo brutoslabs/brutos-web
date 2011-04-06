@@ -23,11 +23,11 @@ import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
 import org.brandao.brutos.web.WebControllerResolver.URIMap;
 
 /**
- * Implementação padrão do ActionResolver.
+ * Implementaï¿½ï¿½o padrï¿½o do ActionResolver.
  * 
  * @author Afonso Brandao
  */
@@ -37,10 +37,11 @@ public class WebActionResolver implements ActionResolver{
         return new DefaultResourceAction( methodForm );
     }
 
-    public ResourceAction getResourceAction(Form controller, InterceptorHandler handler) {
+    public ResourceAction getResourceAction(Form controller,
+            Scopes scopes, InterceptorHandler handler) {
 
         if( controller.getUri() != null ){
-            Scope scope = Scopes.get(ScopeType.PARAM.toString());
+            Scope scope = scopes.get(ScopeType.PARAM.toString());
 
             MethodForm method = controller
                     .getMethodByName( 
@@ -49,7 +50,7 @@ public class WebActionResolver implements ActionResolver{
             return method == null? null : getResourceMethod( method );
         }
         else{
-            Scope request = Scopes.get( ScopeType.PARAM );
+            Scope request = scopes.get( ScopeType.PARAM );
             for( String u: controller.getMethods().keySet() ){
 
                 URIMap uriMap = WebControllerResolver.getURIMapping( u );

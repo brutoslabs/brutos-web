@@ -6,12 +6,9 @@
 package org.brandao.brutos.web;
 
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.logger.LoggerProvider;
 
 /**
  *
@@ -45,6 +42,8 @@ public class ContextLoader {
                 createApplicationContext(servletContext);
 
         app.initApplicationContext(servletContext);
+
+        app.configure();
         
         currentWebApplicationContext
                     .put(classLoader, app);
@@ -91,9 +90,10 @@ public class ContextLoader {
         }
     }
 
-    public static WebApplicationContext getCurrentwebApplicationContext(){
+    public static WebApplicationContext getCurrentWebApplicationContext(){
         
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        ClassLoader classLoader = Thread.currentThread()
+                .getContextClassLoader();
 
         if( currentWebApplicationContext.containsKey(classLoader) )
             return currentWebApplicationContext.get(classLoader);

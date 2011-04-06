@@ -24,6 +24,7 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.web.ContextLoader;
 
 /**
  *
@@ -37,7 +38,8 @@ public class ActionListener extends ActionListenerImpl{
 
     @Override
     public void processAction(ActionEvent event) throws AbortProcessingException {
-        WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
+        WebApplicationContext brutosContext = ContextLoader
+                .getCurrentWebApplicationContext();
         Form controller = brutosContext.getController();
         
         if( controller != null ){

@@ -28,10 +28,8 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.Invoker1_3;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.web.http.UploadListener;
 
@@ -72,12 +70,12 @@ public class DispatcherServlet extends HttpServlet {
     throws ServletException, IOException {
 
         WebApplicationContext app =
-            (WebApplicationContext)WebApplicationContext
-                .getCurrentApplicationContext();
+            ContextLoader.getCurrentWebApplicationContext();
+                
 
         request = app.getRequest();
 
-        Scope scope = Scopes.get(ScopeType.SESSION);
+        Scope scope = app.getScopes().get(ScopeType.SESSION);
         
         Map mappedUploadStats =
                 (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
