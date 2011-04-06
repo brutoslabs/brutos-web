@@ -22,13 +22,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.ioc.IOCProvider;
-import org.brandao.brutos.logger.Logger;
-import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
 
 /**
  * Classe usada para invocar a aplica��o.
@@ -85,7 +83,8 @@ public class Invoker1_3 extends Invoker{
                     .setAttribute( BrutosConstants.CONTROLLER , form);
 
 
-        Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
+        Scope requestScope = brutosContext.getScopes()
+                .get(ScopeType.REQUEST.toString());
         try{
             //compatibilidade com a vers�o 2.0
             requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );

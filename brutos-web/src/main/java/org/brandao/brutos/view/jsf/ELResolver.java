@@ -27,6 +27,7 @@ import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.web.ContextLoader;
 
 /**
  *
@@ -43,7 +44,8 @@ public class ELResolver extends javax.el.ELResolver{
 
         if( base == null ){
             String propertyName = (String)property;
-            WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
+            WebApplicationContext brutosContext =
+                    ContextLoader.getCurrentWebApplicationContext();
             if( propertyName.equals( BrutosConstants.WEBFRAME ) ){
                 Form controller = brutosContext.getController();
                 if( controller != null ){
@@ -69,7 +71,8 @@ public class ELResolver extends javax.el.ELResolver{
     }
 
     protected IOCProvider getIOCProvider(){
-        WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
+        WebApplicationContext brutosContext = 
+                ContextLoader.getCurrentWebApplicationContext();
         return (IOCProvider) brutosContext
                 .getContext().getAttribute( BrutosConstants.IOC_PROVIDER );
     }

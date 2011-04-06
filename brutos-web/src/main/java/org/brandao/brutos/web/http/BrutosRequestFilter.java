@@ -36,7 +36,8 @@ import org.brandao.brutos.Invoker;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
+import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.RequestInfo;
 
 /**
@@ -46,14 +47,14 @@ import org.brandao.brutos.web.RequestInfo;
 public class BrutosRequestFilter implements Filter{
 
     private FilterConfig filterConfig = null;
-    private Invoker invoker;
-    private ApplicationContext context;
+    //private Invoker invoker;
+    //private ApplicationContext context;
     private static ThreadLocal<FilterChain> currentFilter;
 
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig   = filterConfig;
-        this.context        = WebApplicationContext.getCurrentApplicationContext();
-        this.invoker        = ((ConfigurableApplicationContext)context).getInvoker();
+        //this.context        = ContextLoader.getCurrentWebApplicationContext();
+        //this.invoker        = ((ConfigurableApplicationContext)context).getInvoker();
         this.currentFilter  = new ThreadLocal<FilterChain>();
     }
 
@@ -64,10 +65,16 @@ public class BrutosRequestFilter implements Filter{
         if( filterConfig == null )
             return;
 
+        ApplicationContext context =
+                ContextLoader.getCurrentWebApplicationContext();
+
+        Invoker invoker =
+                ((ConfigurableApplicationContext)context).getInvoker();
+        
         if (!( request instanceof HttpServletRequest && response instanceof HttpServletResponse ) )
             throw new ServletException( "Portlets are not supported.");
 
-        Scope scope = Scopes.get(ScopeType.SESSION);
+        Scope scope = context.getScopes().get(ScopeType.SESSION);
 
         Map mappedUploadStats =
                 (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );

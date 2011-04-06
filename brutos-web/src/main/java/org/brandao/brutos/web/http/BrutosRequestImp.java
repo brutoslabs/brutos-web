@@ -29,7 +29,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.web.ContextLoader;
 
 /**
  *
@@ -40,6 +40,7 @@ public class BrutosRequestImp extends ServletRequestWrapper implements BrutosReq
     private Map parameters;
     private UploadListener uploadListener;
     private HttpRequestParser httpRequestParser;
+    private WebApplicationContext context;
 
     public BrutosRequestImp( ServletRequest request ){
         super( request );
@@ -51,7 +52,8 @@ public class BrutosRequestImp extends ServletRequestWrapper implements BrutosReq
 
         if( uploadListener == null ){
 
-            Scope contextScope = Scopes.get( ScopeType.APPLICATION );
+            Scope contextScope = context.getScopes()
+                    .get( ScopeType.APPLICATION );
 
             UploadListenerFactory uploadListenerFactory =
                     (UploadListenerFactory) contextScope
@@ -69,10 +71,12 @@ public class BrutosRequestImp extends ServletRequestWrapper implements BrutosReq
     }
     
     private void initialize(){
-        ApplicationContext context = WebApplicationContext.
-                getCurrentApplicationContext();
+        this.context = ContextLoader
+                .getCurrentWebApplicationContext();
+                
         if( context != null ){
-            Scope contextScope = Scopes.get( ScopeType.APPLICATION );
+            Scope contextScope = context.getScopes()
+                    .get( ScopeType.APPLICATION );
 
             httpRequestParser =
                     (HttpRequestParser) contextScope
@@ -84,8 +88,6 @@ public class BrutosRequestImp extends ServletRequestWrapper implements BrutosReq
     
     public void parseRequest() throws IOException{
 
-        ApplicationContext context =
-                WebApplicationContext.getCurrentApplicationContext();
         UploadListener uploadListener = getUploadListener();
 
         boolean isMultPart = httpRequestParser.isMultipart(this,uploadListener);

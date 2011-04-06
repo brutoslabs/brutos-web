@@ -26,6 +26,7 @@ import org.brandao.brutos.ActionResolver;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ConfigurableApplicationContextImp;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.MvcRequestFactory;
 import org.brandao.brutos.MvcResponseFactory;
@@ -38,13 +39,11 @@ import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ControllerResolver;
 import org.brandao.brutos.InterceptorManager;
-import org.brandao.brutos.DefaultConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
@@ -100,7 +99,9 @@ public class WebApplicationContext extends ApplicationContext{
                 true,
                 Thread.currentThread().getContextClassLoader() );
 
-            Scope contextScope = Scopes.get( ScopeType.APPLICATION );
+            Scope contextScope = getScopes()
+                    .get( ScopeType.APPLICATION );
+            
             contextScope.put(
                 BrutosConstants.UPLOAD_LISTENER_FACTORY,
                 ulfClass.newInstance() );
@@ -115,17 +116,17 @@ public class WebApplicationContext extends ApplicationContext{
     
     private void overrideConfig( ServletContext sce ){
 
-        Scopes.register( ScopeType.APPLICATION.toString(),
+        getScopes().register( ScopeType.APPLICATION.toString(),
                 new ApplicationScope( sce ) );
-        Scopes.register( ScopeType.FLASH.toString(),
+        getScopes().register( ScopeType.FLASH.toString(),
                 new FlashScope() );
-        Scopes.register( ScopeType.IOC.toString(),
-                new IOCScope( new DefaultConfigurableApplicationContext(this) ) );
-        Scopes.register( ScopeType.REQUEST.toString(),
+        getScopes().register( ScopeType.IOC.toString(),
+                new IOCScope( new ConfigurableApplicationContextImp(this) ) );
+        getScopes().register( ScopeType.REQUEST.toString(),
                 new RequestScope() );
-        Scopes.register( ScopeType.SESSION.toString(),
+        getScopes().register( ScopeType.SESSION.toString(),
                 new SessionScope() );
-        Scopes.register( ScopeType.PARAM.toString(),
+        getScopes().register( ScopeType.PARAM.toString(),
                 new ParamScope() );
 
 
@@ -193,10 +194,8 @@ public class WebApplicationContext extends ApplicationContext{
     }
     
     public Form getController(){
-        WebApplicationContext brutosInstance = (WebApplicationContext) 
-                ApplicationContext.getCurrentApplicationContext();
         
-        return (Form) brutosInstance.getRequest()
+        return (Form) this.getRequest()
                 .getAttribute( BrutosConstants.CONTROLLER );
     }
 

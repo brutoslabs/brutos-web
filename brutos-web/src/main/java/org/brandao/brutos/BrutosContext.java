@@ -42,7 +42,7 @@ import org.brandao.brutos.old.programatic.InterceptorManager;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 import org.brandao.brutos.web.WebApplicationContext;
@@ -113,24 +113,24 @@ public class BrutosContext extends WebApplicationContext implements Configurable
     
     private void registerDefaultScopes( ServletContextEvent sce ){
         logger.info( "Register scopes..." );
-        Scopes.register( "application" , new ApplicationScope( sce.getServletContext() ) );
-        Scopes.register( "flash" , new FlashScope() );
-        Scopes.register( "ioc" , new IOCScope( this ) );
+        getScopes().register( "application" , new ApplicationScope( sce.getServletContext() ) );
+        getScopes().register( "flash" , new FlashScope() );
+        getScopes().register( "ioc" , new IOCScope( this ) );
         //Scopes.register( "request" , new RequestScope() );
-        Scopes.register( "session" , new SessionScope() );
-        Scopes.register( ScopeType.PARAM.toString(), new ParamScope() );
-        Scopes.register( ScopeType.REQUEST.toString(), new OldRequestScope() );
+        getScopes().register( "session" , new SessionScope() );
+        getScopes().register( ScopeType.PARAM.toString(), new ParamScope() );
+        getScopes().register( ScopeType.REQUEST.toString(), new OldRequestScope() );
         if( iocManager.getProvider().containsBeanDefinition("customScopes") ){
             CustomScopeConfigurer customScopes =
                     (CustomScopeConfigurer)iocManager.getInstance("customScopes");
             Map scopes = customScopes.getCustomScopes();
             Set i = scopes.keySet();
             for( Object key: i )
-                Scopes.register( (String)key,(Scope)scopes.get(key) );
+                getScopes().register( (String)key,(Scope)scopes.get(key) );
         }
 
         logger.info( "Scopes:" );
-            Map scopes = Scopes.getScopes();
+            Map scopes = getScopes().getScopes();
             Set i = scopes.keySet();
             for( Object key: i )
                 logger.info( String.valueOf(key) );

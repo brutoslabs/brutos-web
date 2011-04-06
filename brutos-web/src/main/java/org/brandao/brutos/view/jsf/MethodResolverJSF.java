@@ -32,6 +32,7 @@ import org.brandao.brutos.ResourceMethod;
 import org.brandao.brutos.web.http.MutableRequest;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.web.ContextLoader;
 
 
 /**
@@ -45,7 +46,8 @@ public class MethodResolverJSF extends DefaultMethodResolver{
 
     @Override
     public ResourceMethod getResourceMethod(HttpServletRequest request) {
-        WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
+        WebApplicationContext brutosContext = ContextLoader
+                    .getCurrentWebApplicationContext();
         FacesContext context = FacesContext.getCurrentInstance();
 
         ActionEvent event = (ActionEvent) request.getAttribute(

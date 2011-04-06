@@ -34,7 +34,8 @@ import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
+import org.brandao.brutos.web.ContextLoader;
 
 /**
  *
@@ -61,7 +62,8 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
 
     @Override
     public UIViewRoot createView(FacesContext context, String viewName) {
-        WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
+        WebApplicationContext brutosContext = ContextLoader
+                    .getCurrentWebApplicationContext();
         Form controller = brutosContext.getController();
 
         if( controller != null )
@@ -85,7 +87,8 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     public void renderView(FacesContext context, UIViewRoot viewRoot)
         throws IOException, FacesException {
 
-        WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
+        WebApplicationContext brutosContext = ContextLoader
+                    .getCurrentWebApplicationContext();
         Form controller = brutosContext.getController();
         
 
@@ -96,7 +99,8 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     }
 
     private void invokeController( Form controller, FacesContext context, UIViewRoot viewRoot ){
-        WebApplicationContext brutosContext     = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
+        WebApplicationContext brutosContext     = ContextLoader
+                    .getCurrentWebApplicationContext();
         HttpServletRequest request   = brutosContext.getRequest();
         HttpServletResponse response = (HttpServletResponse)context
                     .getExternalContext().getResponse();
@@ -127,7 +131,8 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
                 brutosContext
                         .getActionResolver()
                             .getResourceAction( controller,
-                                        ih));
+                                    brutosContext.getScopes(),
+                                    ih));
         }
 
             controller.proccessBrutosAction( ih );
@@ -136,7 +141,8 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     @Override
     public UIViewRoot restoreView(FacesContext context, String arg1) {
         
-        WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
+        WebApplicationContext brutosContext = ContextLoader
+                    .getCurrentWebApplicationContext();
         Form controller = brutosContext.getController();
 
         if( controller != null )
@@ -146,7 +152,8 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     }
 
     private void loadController( Form controller, FacesContext context ){
-        WebApplicationContext brutosContext = (WebApplicationContext) ApplicationContext.getCurrentApplicationContext();
+        WebApplicationContext brutosContext = ContextLoader
+                    .getCurrentWebApplicationContext();
         IOCManager iocManager = ((BrutosContext)brutosContext).getIocManager();
         Object instance = iocManager.getInstance( controller.getId() );
 
@@ -157,9 +164,10 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
         DataOutput output = new DataOutput( brutosContext.getRequest(),
                                        brutosContext.getContext() );
         */
-
-        DataInput input = new DataInput( Scopes.get(ScopeType.PARAM) );
-        DataOutput output = new DataOutput();
+            WebApplicationContext app = ContextLoader
+                    .getCurrentWebApplicationContext();
+        DataInput input = new DataInput( app.getScopes().get(ScopeType.PARAM) );
+        DataOutput output = new DataOutput(app.getScopes().get(ScopeType.REQUEST));
         
         //brutosContext.getRequest().setAttribute( BrutosConstants.WEBFRAME, instance );
         input.read( controller , instance);

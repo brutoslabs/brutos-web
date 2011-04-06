@@ -35,7 +35,7 @@ import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.Scopes;
+import org.brandao.brutos.Scopes;
 import org.brandao.brutos.type.json.JSONDecoder;
 
 
@@ -62,7 +62,7 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
     }
 
     public UploadListener getUploadListener(){
-
+    /*
         if( uploadListener == null ){
             Scope contextScope = Scopes.get( ScopeType.APPLICATION );
 
@@ -75,10 +75,14 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
         }
 
         return this.uploadListener;
+     */
+        throw new UnsupportedOperationException();
     }
     
     private void initialize(){
-        ApplicationContext context = WebApplicationContext.getCurrentApplicationContext();
+        throw new UnsupportedOperationException();
+        /*
+         ApplicationContext context = WebApplicationContext.getCurrentApplicationContext();
         if( context != null ){
             maxLength =
                 Long.parseLong(
@@ -90,8 +94,7 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
                         .getProperty( "org.brandao.brutos.request.path", null );
 
         }
-
-
+        */
     }
     
     public void parseRequest(){

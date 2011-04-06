@@ -19,7 +19,6 @@ package org.brandao.brutos.web;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -83,7 +82,7 @@ public class ContextLoaderListener implements ServletContextListener,
     public ServletRequest getRequest( ServletRequest request ){
         try{
             ServletRequest brutosRequest = (ServletRequest) Class.forName( 
-                    ContextLoader.getCurrentwebApplicationContext()
+                    ContextLoader.getCurrentWebApplicationContext()
                     .getConfiguration().getProperty(
                     "org.brandao.brutos.web.request",
                     BrutosRequestImp.class.getName()
