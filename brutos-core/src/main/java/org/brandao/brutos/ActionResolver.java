@@ -19,7 +19,6 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.Scopes;
 
 /**
  * Essa interface é usada para identificar a ação a ser executada em um
