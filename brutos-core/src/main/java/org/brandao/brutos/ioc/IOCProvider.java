@@ -52,7 +52,8 @@ public abstract class IOCProvider {
             return null;
 
         try{
-            Class<?> iocProvider = Class.forName( iocProviderName, true, Thread.currentThread().getContextClassLoader() );
+            Class<?> iocProvider = Class.forName( iocProviderName, true,
+                    Thread.currentThread().getContextClassLoader() );
             ioc = (IOCProvider)iocProvider.newInstance();
         }
         catch( ClassNotFoundException e ){
