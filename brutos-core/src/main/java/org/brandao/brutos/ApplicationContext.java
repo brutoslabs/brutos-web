@@ -28,7 +28,6 @@ import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.Scopes;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
@@ -48,7 +47,7 @@ import org.brandao.brutos.view.ViewProvider;
  */
 public abstract class ApplicationContext extends DefaultResourceLoader{
 
-    private static Logger logger = LoggerProvider
+    private Logger logger = LoggerProvider
         .getCurrentLoggerProvider()
             .getLogger(ApplicationContext.class.getName());
 
