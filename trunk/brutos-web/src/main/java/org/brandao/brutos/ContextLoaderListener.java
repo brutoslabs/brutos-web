@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
@@ -32,8 +33,8 @@ import org.brandao.brutos.old.programatic.IOCManager;
 public class ContextLoaderListener extends org.brandao.brutos.web.ContextLoaderListener/*implements ServletContextListener, HttpSessionListener, ServletRequestListener*/{
     
     private BrutosContext brutosInstance;
-    //public static ThreadLocal<ServletRequest> currentRequest;
-    //public static ServletContext currentContext;
+    public static ThreadLocal<ServletRequest> currentRequest;
+    public static ServletContext currentContext;
     
     public ContextLoaderListener() {
         currentRequest = new ThreadLocal<ServletRequest>();

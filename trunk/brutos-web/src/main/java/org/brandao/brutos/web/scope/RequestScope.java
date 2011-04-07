@@ -19,11 +19,13 @@ package org.brandao.brutos.web.scope;
 
 import java.util.Arrays;
 import javax.servlet.ServletRequest;
-import org.brandao.brutos.web.ContextLoaderListener;
-import org.brandao.brutos.web.http.BrutosRequest;
-import org.brandao.brutos.web.http.MutableRequest;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.MvcRequest;
 import org.brandao.brutos.web.http.ParameterList;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.WebMvcRequest;
 
 /**
  *
@@ -35,22 +37,36 @@ public class RequestScope implements Scope{
     }
 
     public void put(String name, Object value) {
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        ServletRequest request = getServletRequest();
         request.setAttribute(name, value);
     }
 
     public Object get(String name) {
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        ServletRequest request = getServletRequest();
         return request.getAttribute(name);
     }
 
     public Object getCollection( String name ){
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
-        return new ParameterList(Arrays.asList(request.getParameterValues(name)));
+        ServletRequest request = getServletRequest();
+        return new ParameterList(
+                Arrays.asList(request.getParameterValues(name)));
     }
 
     public void remove( String name ){
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        ServletRequest request = getServletRequest();
         request.removeAttribute(name);
     }
+
+    private ServletRequest getServletRequest(){
+        WebApplicationContext context =
+                ContextLoader.getCurrentWebApplicationContext();
+
+        MvcRequest request = context.getMvcRequest();
+        if( !(request instanceof WebMvcRequest) )
+            throw new BrutosException( "invalid web request: " +
+                    request.getClass() );
+
+        return ((WebMvcRequest)request).getServletRequest();
+    }
+
 }

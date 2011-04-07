@@ -101,7 +101,8 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     private void invokeController( Form controller, FacesContext context, UIViewRoot viewRoot ){
         WebApplicationContext brutosContext     = ContextLoader
                     .getCurrentWebApplicationContext();
-        HttpServletRequest request   = brutosContext.getRequest();
+        HttpServletRequest request   = (HttpServletRequest)context
+                    .getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse)context
                     .getExternalContext().getResponse();
         
@@ -124,7 +125,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
             ih.setResourceAction(
                 ((BrutosContext)brutosContext
                         ).getMethodResolver()
-                            .getResourceMethod( brutosContext.getRequest() ) );
+                            .getResourceMethod( null ) );
         }
         else{
             ih.setResourceAction(

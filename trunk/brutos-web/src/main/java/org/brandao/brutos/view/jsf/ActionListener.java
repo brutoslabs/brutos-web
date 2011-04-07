@@ -22,6 +22,7 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.web.ContextLoader;
@@ -43,9 +44,8 @@ public class ActionListener extends ActionListenerImpl{
         Form controller = brutosContext.getController();
         
         if( controller != null ){
-                brutosContext
-                    .getRequest()
-                        .setAttribute(
+                brutosContext.getScopes().get(ScopeType.REQUEST)
+                        .put(
                             BrutosConstants.JSF_ACTION_LISTENER, event );
         }
         else

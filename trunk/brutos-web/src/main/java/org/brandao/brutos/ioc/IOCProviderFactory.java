@@ -34,12 +34,13 @@ public class IOCProviderFactory implements FactoryBean<IOCManager>{
     private IOCManager provider;
     
     public IOCProviderFactory() {
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        /*ServletRequest request = ContextLoaderListener.currentRequest.get();
         if( !(request instanceof HttpServletRequest) )
             throw new BrutosException( "the current request is not instance HttpServletRequest!" );
         
         ServletContext sc = ((HttpServletRequest)request).getSession().getServletContext();
         this.provider = (IOCManager)sc.getAttribute( BrutosConstants.IOC_MANAGER );
+         */
     }
 
     public IOCManager createInstance() {

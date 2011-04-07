@@ -186,17 +186,21 @@ public class WebApplicationContext extends ApplicationContext{
     }
 
     public ServletContext getContext(){
-        return ContextLoaderListener.currentContext;
+        return null;
     }
 
+    /*
     public HttpServletRequest getRequest(){
+        this.
         return (HttpServletRequest) ContextLoaderListener.currentRequest.get();
     }
+    */
     
     public Form getController(){
         
-        return (Form) this.getRequest()
-                .getAttribute( BrutosConstants.CONTROLLER );
+        return (Form) getScopes()
+                .get(ScopeType.REQUEST)
+                    .get( BrutosConstants.CONTROLLER );
     }
 
     public void destroy() {

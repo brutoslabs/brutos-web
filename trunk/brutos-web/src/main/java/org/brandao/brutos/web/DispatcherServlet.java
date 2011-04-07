@@ -73,8 +73,6 @@ public class DispatcherServlet extends HttpServlet {
             ContextLoader.getCurrentWebApplicationContext();
                 
 
-        request = app.getRequest();
-
         Scope scope = app.getScopes().get(ScopeType.SESSION);
         
         Map mappedUploadStats =

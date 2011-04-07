@@ -29,6 +29,7 @@ import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.ControllerManager;
+import org.brandao.brutos.scope.Scope;
 
 /**
  *
@@ -68,9 +69,11 @@ public class WebControllerResolver implements ControllerResolver{
     public Form getController(ControllerManager controllerManager, InterceptorHandler handler) {
         String uri = handler.requestId();
         Map<String, Form> forms = controllerManager.getForms();
-        BrutosRequest request = (BrutosRequest) ContextLoaderListener
+        /*BrutosRequest request = (BrutosRequest) ContextLoaderListener
                                     .currentRequest.get();
-
+        */
+        Scope paramScope =
+                handler.getContext().getScopes().get(ScopeType.PARAM);
         for( Form  form: forms.values() ){
             List<String> uriList = new ArrayList<String>();
 
@@ -87,7 +90,7 @@ public class WebControllerResolver implements ControllerResolver{
 
                     Map<String,String> params = uriMap.getParameters(uri);
                     for(String key: params.keySet() )
-                        request.setParameter(key, params.get(key) );
+                        paramScope.put(key, params.get(key) );
                     return forms.get(u);
                 }
                 
