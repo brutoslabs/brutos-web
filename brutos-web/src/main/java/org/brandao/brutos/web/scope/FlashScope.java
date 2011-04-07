@@ -19,12 +19,11 @@ package org.brandao.brutos.web.scope;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.web.ContextLoaderListener;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.WebApplicationContext;
 
 /**
  *
@@ -36,21 +35,28 @@ public class FlashScope implements Scope{
     }
 
     public void put(String name, Object value) {
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        WebApplicationContext context =
+                ContextLoader.getCurrentWebApplicationContext();
+        //ServletRequest request = ContextLoaderListener.currentRequest.get();
+
+        Scope session = context.getScopes().get(ScopeType.SESSION);
 
         FlashInstrument instrument =
-                getInstrument(
-                    ((HttpServletRequest)request).getSession() );
+                getInstrument( session );
 
         instrument.put(name, value);
     }
 
     public Object get(String name){
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        WebApplicationContext context =
+                ContextLoader.getCurrentWebApplicationContext();
+        //ServletRequest request = ContextLoaderListener.currentRequest.get();
+
+        Scope session = context.getScopes().get(ScopeType.SESSION);
 
         FlashInstrument instrument =
-                getInstrument(
-                    ((HttpServletRequest)request).getSession() );
+                getInstrument( session );
+                    
         
         return instrument.get( name );
     }
@@ -60,57 +66,61 @@ public class FlashScope implements Scope{
     }
 
     public void remove( String name ){
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        WebApplicationContext context =
+                ContextLoader.getCurrentWebApplicationContext();
+        //ServletRequest request = ContextLoaderListener.currentRequest.get();
+
+        Scope session = context.getScopes().get(ScopeType.SESSION);
 
         FlashInstrument instrument =
-                getInstrument(
-                    ((HttpServletRequest)request).getSession() );
+                getInstrument( session );
 
         instrument.remove( name );
     }
 
-    private FlashInstrument getInstrument( HttpSession session ){
-        if( session.getAttribute( BrutosConstants.FLASH_INSTRUMENT ) == null ){
+    private FlashInstrument getInstrument( Scope session){
+        if( session.get( BrutosConstants.FLASH_INSTRUMENT ) == null ){
             FlashInstrument instrument = create();
-            session.setAttribute( BrutosConstants.FLASH_INSTRUMENT , instrument);
+            session.put( BrutosConstants.FLASH_INSTRUMENT , instrument);
             return instrument;
         }
         else
             return (FlashInstrument)
-                    session.getAttribute( BrutosConstants.FLASH_INSTRUMENT );
+                    session.get( BrutosConstants.FLASH_INSTRUMENT );
     }
 
     private FlashInstrument create(){
         return new FlashInstrument();
     }
-}
 
-class FlashInstrument implements Scope{
+    class FlashInstrument implements Scope{
 
-    private final Map<String,Object> data;
+        private final Map<String,Object> data;
 
-    public FlashInstrument() {
-        this.data = new HashMap<String,Object>();
-    }
-
-    public void put(String name, Object value) {
-        data.put( name, value );
-    }
-
-    public Object get(String name) {
-        try{
-            return data.get( name );
+        public FlashInstrument() {
+            this.data = new HashMap<String,Object>();
         }
-        finally{
+
+        public void put(String name, Object value) {
+            data.put( name, value );
+        }
+
+        public Object get(String name) {
+            try{
+                return data.get( name );
+            }
+            finally{
+                data.remove(name);
+            }
+        }
+
+        public Object getCollection( String name ){
+            return get(name);
+        }
+
+        public void remove( String name ){
             data.remove(name);
         }
     }
-
-    public Object getCollection( String name ){
-        return get(name);
-    }
-
-    public void remove( String name ){
-        data.remove(name);
-    }
 }
+

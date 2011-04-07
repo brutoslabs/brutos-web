@@ -40,22 +40,22 @@ public class ContextLoaderListener implements ServletContextListener,
         HttpSessionListener, ServletRequestListener{
     
     private ContextLoader contextLoader;
-    public static ThreadLocal<ServletRequest> currentRequest;
-    public static ServletContext currentContext;
+    //public static ThreadLocal<ServletRequest> currentRequest;
+    //public static ServletContext currentContext;
     
     public ContextLoaderListener() {
-        currentRequest = new ThreadLocal<ServletRequest>();
+        //currentRequest = new ThreadLocal<ServletRequest>();
         contextLoader = new ContextLoader();
     }
 
     public void contextInitialized(ServletContextEvent sce) {
-        currentContext = sce.getServletContext();
-        contextLoader.init(currentContext);
+        //currentContext = sce.getServletContext();
+        contextLoader.init(sce.getServletContext());
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
-        currentRequest = null;
-        contextLoader.destroy(currentContext);
+        //currentRequest = null;
+        contextLoader.destroy(sce.getServletContext());
     }
 
     public void sessionCreated(HttpSessionEvent se) {
@@ -75,11 +75,11 @@ public class ContextLoaderListener implements ServletContextListener,
     }
 
     public void requestDestroyed(ServletRequestEvent sre) {
-        if( currentRequest != null )
-            currentRequest.remove();
+        //if( currentRequest != null )
+        //    currentRequest.remove();
     }
 
-    public ServletRequest getRequest( ServletRequest request ){
+    private ServletRequest getRequest( ServletRequest request ){
         try{
             ServletRequest brutosRequest = (ServletRequest) Class.forName( 
                     ContextLoader.getCurrentWebApplicationContext()
@@ -102,7 +102,7 @@ public class ContextLoaderListener implements ServletContextListener,
     }
     
     public void requestInitialized(ServletRequestEvent sre) {
-        currentRequest.set( getRequest( sre.getServletRequest() ) );
+        //currentRequest.set( getRequest( sre.getServletRequest() ) );
     }
     
 }

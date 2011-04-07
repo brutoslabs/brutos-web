@@ -30,7 +30,8 @@ public class RequestFactory implements FactoryBean<ServletRequest>{
     }
 
     public ServletRequest createInstance() {
-        return ContextLoaderListener.currentRequest.get();
+        //return ContextLoaderListener.currentRequest.get();
+        return null;
     }
 
     public Class<ServletRequest> getClassType() {

@@ -32,11 +32,12 @@ public class ContextFactory implements FactoryBean<ServletContext>{
     private ServletContext context;
     
     public ContextFactory() {
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        /*ServletRequest request = ContextLoaderListener.currentRequest.get();
         if( !(request instanceof HttpServletRequest) )
             throw new BrutosException( "the current request is not instance HttpServletRequest!" );
         
         this.context = ((HttpServletRequest)request).getSession().getServletContext();
+         */
     }
 
     public ServletContext createInstance() {

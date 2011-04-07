@@ -28,7 +28,7 @@ public class WebMvcResponseFactory extends MvcResponseFactory{
 
     protected MvcResponse getNewResponse() {
         RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-        return new WebMvcResponse( requestInfo.getResponse() );
+        return new WebMvcResponseImp( requestInfo.getResponse() );
     }
 
 }

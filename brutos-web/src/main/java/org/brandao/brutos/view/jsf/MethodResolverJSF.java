@@ -29,6 +29,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.DefaultMethodResolver;
 import org.brandao.brutos.ResourceMethod;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.web.http.MutableRequest;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
@@ -76,10 +77,10 @@ public class MethodResolverJSF extends DefaultMethodResolver{
                 methodController = controller.getMethodByName( parts[1] );
 
                 if( methodController != null ){
-                    ((MutableRequest)brutosContext.getRequest())
-                            .setParameter( controller.getMethodId(), parts[1] );
+                    brutosContext.getScopes().get(ScopeType.PARAM)
+                            .put( controller.getMethodId(), parts[1] );
                     
-                    return super.getResourceMethod( brutosContext.getRequest() );
+                    return super.getResourceMethod( null );
                 }
             }
         }

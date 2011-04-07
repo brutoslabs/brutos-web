@@ -20,8 +20,13 @@ package org.brandao.brutos.web.scope;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.MvcRequest;
 import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.WebMvcRequest;
 
 /**
  *
@@ -33,13 +38,13 @@ public class SessionScope implements Scope{
     }
 
     public void put(String name, Object value) {
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        ServletRequest request = getServletRequest();
         HttpSession session = ((HttpServletRequest)request).getSession();
         session.setAttribute( name, value );
     }
 
     public Object get(String name) {
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        ServletRequest request = getServletRequest();
         HttpSession session = ((HttpServletRequest)request).getSession();
         return session.getAttribute( name );
     }
@@ -49,8 +54,21 @@ public class SessionScope implements Scope{
     }
 
     public void remove( String name ){
-        ServletRequest request = ContextLoaderListener.currentRequest.get();
+        ServletRequest request = getServletRequest();
         HttpSession session = ((HttpServletRequest)request).getSession();
         session.removeAttribute( name );
     }
+
+    private ServletRequest getServletRequest(){
+        WebApplicationContext context =
+                ContextLoader.getCurrentWebApplicationContext();
+
+        MvcRequest request = context.getMvcRequest();
+        if( !(request instanceof WebMvcRequest) )
+            throw new BrutosException( "invalid web request: " +
+                    request.getClass() );
+
+        return ((WebMvcRequest)request).getServletRequest();
+    }
+
 }
