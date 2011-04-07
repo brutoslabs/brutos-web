@@ -23,7 +23,6 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.Scopes;
 
 /**
  * Classe usada para invocar a aplicação.
