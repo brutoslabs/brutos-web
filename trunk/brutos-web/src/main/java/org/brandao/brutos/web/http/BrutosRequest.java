@@ -25,7 +25,7 @@ import javax.servlet.ServletRequest;
  *
  * @author Afonso Brandao
  */
-public interface BrutosRequest extends MutableRequest{
+public interface BrutosRequest extends MutableRequest,ServletRequest{
 
     public Object getObject( String name );
     

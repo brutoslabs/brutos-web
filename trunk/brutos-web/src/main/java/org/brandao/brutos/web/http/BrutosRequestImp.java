@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestWrapper;
-import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.ScopeType;
@@ -35,7 +34,8 @@ import org.brandao.brutos.web.ContextLoader;
  *
  * @author Afonso Brandao
  */
-public class BrutosRequestImp extends ServletRequestWrapper implements BrutosRequest{
+public class BrutosRequestImp extends ServletRequestWrapper
+        implements BrutosRequest{
 
     private Map parameters;
     private UploadListener uploadListener;
