@@ -35,6 +35,7 @@ import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.Scopes;
+import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 
 /**
@@ -99,7 +100,8 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     }
 
     private void invokeController( Form controller, FacesContext context, UIViewRoot viewRoot ){
-        WebApplicationContext brutosContext     = ContextLoader
+        ConfigurableWebApplicationContext brutosContext     = 
+                (ConfigurableWebApplicationContext) ContextLoader
                     .getCurrentWebApplicationContext();
         HttpServletRequest request   = (HttpServletRequest)context
                     .getExternalContext().getRequest();

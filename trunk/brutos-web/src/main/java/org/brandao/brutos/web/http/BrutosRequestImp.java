@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestWrapper;
+import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.ScopeType;
@@ -178,6 +179,19 @@ public class BrutosRequestImp extends ServletRequestWrapper
 
     public ServletRequest getServletRequest() {
         return super.getRequest();
+    }
+
+    public String getRequestId() {
+
+        if( getRequest() instanceof HttpServletRequest ){
+            HttpServletRequest httpRequest = (HttpServletRequest)getRequest();
+            String path         = httpRequest.getRequestURI();
+            String contextPath  = httpRequest.getContextPath();
+            path = path.substring( contextPath.length(), path.length() );
+            return path;
+        }
+        else
+            throw new UnsupportedOperationException();
     }
 
 }

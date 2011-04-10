@@ -29,13 +29,7 @@ import java.util.Map;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestWrapper;
-import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.Scopes;
 import org.brandao.brutos.type.json.JSONDecoder;
 
 
@@ -221,6 +215,10 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
     }
 
     public ServletRequest getServletRequest() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public String getRequestId() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

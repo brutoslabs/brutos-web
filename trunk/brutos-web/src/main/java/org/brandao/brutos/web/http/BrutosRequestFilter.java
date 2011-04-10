@@ -65,38 +65,37 @@ public class BrutosRequestFilter implements Filter{
         if( filterConfig == null )
             return;
 
+        StaticBrutosRequest staticRequest = new StaticBrutosRequest( request );
+        
         ApplicationContext context =
                 ContextLoader.getCurrentWebApplicationContext();
 
         Invoker invoker =
                 ((ConfigurableApplicationContext)context).getInvoker();
         
-        if (!( request instanceof HttpServletRequest && response instanceof HttpServletResponse ) )
-            throw new ServletException( "Portlets are not supported.");
-
         Scope scope = context.getScopes().get(ScopeType.SESSION);
 
         Map mappedUploadStats =
                 (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
 
-        String requestId = this.getRequestId((HttpServletRequest)request );
+        String requestId = staticRequest.getRequestId(); //this.getRequestId((HttpServletRequest)request );
         try{
             RequestInfo requestInfo = new RequestInfo();
-            requestInfo.setRequest( request );
+            requestInfo.setRequest( staticRequest );
             requestInfo.setResponse(response);
             RequestInfo.setCurrent(requestInfo);
 
-            UploadListener listener = ((BrutosRequest)request).getUploadListener();
+            UploadListener listener = staticRequest.getUploadListener();
             mappedUploadStats.put( requestId, listener.getUploadStats() );
 
             currentFilter.set(chain);
             if( context instanceof BrutosContext ){
                 if( !invoker.invoke(null) )
-                    chain.doFilter( request, response);
+                    chain.doFilter( staticRequest, response);
             }
             else{
                 if( !invoker.invoke( requestId ) )
-                    chain.doFilter( request, response);
+                    chain.doFilter( staticRequest, response);
             }
         }
         finally{
@@ -106,12 +105,14 @@ public class BrutosRequestFilter implements Filter{
         }
     }
 
+    /*
     private String getRequestId(HttpServletRequest request){
         String path         = request.getRequestURI();
         String contextPath  = request.getContextPath();
         path = path.substring( contextPath.length(), path.length() );
         return path;
     }
+    */
     public void destroy() {
         this.filterConfig = null;
     }

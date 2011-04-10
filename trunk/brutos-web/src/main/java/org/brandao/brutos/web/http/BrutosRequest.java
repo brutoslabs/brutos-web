@@ -36,5 +36,7 @@ public interface BrutosRequest extends MutableRequest,ServletRequest{
     public void parseRequest() throws IOException;
 
     public ServletRequest getServletRequest();
+
+    public String getRequestId();
     
 }

@@ -55,7 +55,7 @@ public class ContextLoader {
 
         Class clazz = getApplicationContextClass(servletContext);
 
-        if(WebApplicationContext.class.isAssignableFrom(clazz)){
+        if(ConfigurableWebApplicationContext.class.isAssignableFrom(clazz)){
             try{
                 WebApplicationContext app = 
                         (WebApplicationContext) clazz.newInstance();

@@ -45,6 +45,7 @@ import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
+import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
@@ -56,7 +57,7 @@ import org.brandao.brutos.web.scope.SessionScope;
  * @deprecated 
  * @author Afonso Brandao
  */
-public class BrutosContext extends WebApplicationContext implements ConfigurableApplicationContext{
+public class BrutosContext extends ConfigurableWebApplicationContext {
 
     private Configuration configuration;
     private IOCManager iocManager;
