@@ -28,14 +28,14 @@ import org.brandao.brutos.type.Types;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
- * Constrói uma ação. A ação pode ter ou não parâmetros. Os parâmetros podem ser
- * obtidos tanto da requisição, sessão ou do contexto. Podendo ser de tipo primitivo
- * ou não. No caso de um objeto complexo, é possível usar um mapeamento predefinido.
- * Se a ação retornar algum valor, este será processado e incluído na requisição,
- * para posteriormente ser usada na visão. As exceções lançadas durante a execução
- * da ação podem alterar o fluxo lógico da aplicação. <p>No exemplo a seguir, depois
- * de executar a ação showPerson é exibido a visão personView.jsp e se for lançada
- * a exceção NotExistPerson a visão error.jsp será exibida</p>.
+ * Constrï¿½i uma aï¿½ï¿½o. A aï¿½ï¿½o pode ter ou nï¿½o parï¿½metros. Os parï¿½metros podem ser
+ * obtidos tanto da requisiï¿½ï¿½o, sessï¿½o ou do contexto. Podendo ser de tipo primitivo
+ * ou nï¿½o. No caso de um objeto complexo, ï¿½ possï¿½vel usar um mapeamento predefinido.
+ * Se a aï¿½ï¿½o retornar algum valor, este serï¿½ processado e incluï¿½do na requisiï¿½ï¿½o,
+ * para posteriormente ser usada na visï¿½o. As exceï¿½ï¿½es lanï¿½adas durante a execuï¿½ï¿½o
+ * da aï¿½ï¿½o podem alterar o fluxo lï¿½gico da aplicaï¿½ï¿½o. <p>No exemplo a seguir, depois
+ * de executar a aï¿½ï¿½o showPerson ï¿½ exibido a visï¿½o personView.jsp e se for lanï¿½ada
+ * a exceï¿½ï¿½o NotExistPerson a visï¿½o error.jsp serï¿½ exibida</p>.
  * 
  * <pre>
  * public class MyController{
@@ -71,13 +71,13 @@ public class ActionBuilder {
     }
 
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param name Identificação do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
      * @param scope Escopo.
-     * @param enumProperty Usado na configuração de parâmetros do tipo enum.
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param enumProperty Usado na configuraï¿½ï¿½o de parï¿½metros do tipo enum.
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty, Class classType ){
         return addParameter( name, scope, enumProperty, null, null, null, 
@@ -85,13 +85,13 @@ public class ActionBuilder {
     }
     
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param name Identificação do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
      * @param scope Escopo.
-     * @param temporalProperty Usado na configuração de datas.
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param temporalProperty Usado na configuraï¿½ï¿½o de datas.
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty, Class classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, 
@@ -99,12 +99,12 @@ public class ActionBuilder {
     }
     
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param name Identificação do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
      * @param scope Escopo.
-     * @param type Faz o processamento do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param type Faz o processamento do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, Type type ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
@@ -112,12 +112,12 @@ public class ActionBuilder {
     }
     
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param name Identificação do parâmetro.
-     * @param enumProperty Usado na configuração de parâmetros do tipo enum.
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
+     * @param enumProperty Usado na configuraï¿½ï¿½o de parï¿½metros do tipo enum.
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameter( String name, EnumerationType enumProperty, Class classType ){
         return addParameter( name, ScopeType.REQUEST, enumProperty, null, null,
@@ -125,12 +125,12 @@ public class ActionBuilder {
     }
     
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param name Identificação do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
      * @param scope Escopo.
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, Class classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy", 
@@ -138,12 +138,12 @@ public class ActionBuilder {
     }
     
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param name Identificação do parâmetro.
-     * @param temporalProperty Usado na configuração de datas.
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
+     * @param temporalProperty Usado na configuraï¿½ï¿½o de datas.
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameter( String name, String temporalProperty, Class classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL,
@@ -151,11 +151,11 @@ public class ActionBuilder {
     }
     
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param name Identificação do parâmetro.
-     * @param type Faz o processamento do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
+     * @param type Faz o processamento do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameter( String name, Type type ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
@@ -163,12 +163,12 @@ public class ActionBuilder {
     }
     
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param mapping Nome do mapeamento do parâmetro. Esse mapeamento
-     * deve ser previamente criado com o método buildMappingBean(...).
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param mapping Nome do mapeamento do parï¿½metro. Esse mapeamento
+     * deve ser previamente criado com o mï¿½todo buildMappingBean(...).
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameterMapping( String mapping, Class classType ){
         return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
@@ -176,13 +176,13 @@ public class ActionBuilder {
     }
 
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param name Identificação do parâmetro.
-     * @param mapping Nome do mapeamento do parâmetro. Esse mapeamento
-     * deve ser previamente criado com o método buildMappingBean(...).
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
+     * @param mapping Nome do mapeamento do parï¿½metro. Esse mapeamento
+     * deve ser previamente criado com o mï¿½todo buildMappingBean(...).
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameterMapping( String name, String mapping, Class classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
@@ -190,25 +190,25 @@ public class ActionBuilder {
     }
     
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param name Identificação do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
      * @param scope Escopo.
-     * @param mapping Nome do mapeamento do parâmetro. Esse mapeamento
-     * deve ser previamente criado com o método buildMappingBean(...).
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param mapping Nome do mapeamento do parï¿½metro. Esse mapeamento
+     * deve ser previamente criado com o mï¿½todo buildMappingBean(...).
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameterMapping( String name, String mapping, ScopeType scope, Class classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, null, classType );
     }
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param name Identificação do parâmetro.
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameter( String name, Class classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
@@ -216,10 +216,10 @@ public class ActionBuilder {
     }
 
     /**
-     * Constrói um novo parâmetro.
+     * Constrï¿½i um novo parï¿½metro.
      *
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
 
     public BeanBuilder buildParameter( Class classType ){
@@ -232,11 +232,11 @@ public class ActionBuilder {
     }
 
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      *
-     * @param classType Tipo do parâmetro.
-     * @param value Valor do Parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param classType Tipo do parï¿½metro.
+     * @param value Valor do Parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addStaticParameter( Class classType, Object value ){
         return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
@@ -244,17 +244,17 @@ public class ActionBuilder {
     }
 
     /**
-     * Configura um novo parâmetro.
+     * Configura um novo parï¿½metro.
      * 
-     * @param name Identificação do parâmetro.
+     * @param name Identificaï¿½ï¿½o do parï¿½metro.
      * @param scope Escopo.
-     * @param enumProperty Usado na configuração de parâmetros do tipo enum.
-     * @param mapping Nome do mapeamento do parâmetro. Esse mapeamento
-     * deve ser previamente criado com o método buildMappingBean(...).
-     * @param temporalProperty Usado na configuração de datas.
-     * @param type Faz o processamento do parâmetro.
-     * @param classType Tipo do parâmetro.
-     * @return Contrutor do parâmetro.
+     * @param enumProperty Usado na configuraï¿½ï¿½o de parï¿½metros do tipo enum.
+     * @param mapping Nome do mapeamento do parï¿½metro. Esse mapeamento
+     * deve ser previamente criado com o mï¿½todo buildMappingBean(...).
+     * @param temporalProperty Usado na configuraï¿½ï¿½o de datas.
+     * @param type Faz o processamento do parï¿½metro.
+     * @param classType Tipo do parï¿½metro.
+     * @return Contrutor do parï¿½metro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
             String temporalProperty, String mapping, Type type, Object value, Class classType ){
@@ -318,11 +318,11 @@ public class ActionBuilder {
     }
 
     /**
-     * Intercepta e atribui uma identificação a uma determinada exceção. O
-     * objeto resultante da exceção pode ser usando na visão.
+     * Intercepta e atribui uma identificaï¿½ï¿½o a uma determinada exceï¿½ï¿½o. O
+     * objeto resultante da exceï¿½ï¿½o pode ser usando na visï¿½o.
      *
-     * @param target Exceção alvo.
-     * @param id Identificação.
+     * @param target Exceï¿½ï¿½o alvo.
+     * @param id Identificaï¿½ï¿½o.
      * @return Contrutor do controlador.
      */
     public ActionBuilder addThrowable( Class target, String id ){
@@ -330,13 +330,13 @@ public class ActionBuilder {
     }
 
     /**
-     * Intercepta e atribui uma identificação a uma determinada exceção. O
-     * objeto resultante da exceção pode ser usando na visão.
+     * Intercepta e atribui uma identificaï¿½ï¿½o a uma determinada exceï¿½ï¿½o. O
+     * objeto resultante da exceï¿½ï¿½o pode ser usando na visï¿½o.
      *
-     * @param target Exceção alvo.
-     * @param view Visão. Se omitido, será usada a visão da ação.
-     * @param id Identificação.
-     * @param dispatcher Modo como será direcionado o fluxo para a visão.
+     * @param target Exceï¿½ï¿½o alvo.
+     * @param view Visï¿½o. Se omitido, serï¿½ usada a visï¿½o da aï¿½ï¿½o.
+     * @param id Identificaï¿½ï¿½o.
+     * @param dispatcher Modo como serï¿½ direcionado o fluxo para a visï¿½o.
      * @return Contrutor do controlador.
      */
     public ActionBuilder addThrowable( Class target, String view, String id, DispatcherType dispatcher ){

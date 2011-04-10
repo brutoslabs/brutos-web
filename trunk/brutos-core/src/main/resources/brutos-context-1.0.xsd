@@ -25,7 +25,7 @@
     <xsd:element name="brutos-configuration">
         <xsd:complexType>
             <xsd:all>
-                <xsd:element name="auto-config" minOccurs="0" maxOccurs="1"/>
+                <!--<xsd:element name="auto-config" minOccurs="0" maxOccurs="1"/>-->
                 <xsd:element name="annotation-config" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="params" type="params" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="types" type="types" minOccurs="0" maxOccurs="1"/>
