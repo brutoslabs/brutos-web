@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +31,7 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.web.http.BrutosRequest;
+import org.brandao.brutos.web.http.StaticBrutosRequest;
 import org.brandao.brutos.web.http.UploadListener;
 
 /**
@@ -44,7 +45,8 @@ public class DispatcherServlet extends HttpServlet {
 
     public void init() throws ServletException{
         super.init();
-        webApplicationContext = (WebApplicationContext) getServletContext().getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
+        webApplicationContext = (WebApplicationContext) getServletContext()
+                .getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
 
         if( webApplicationContext == null ){
             throw new IllegalStateException(
@@ -66,8 +68,15 @@ public class DispatcherServlet extends HttpServlet {
         super.destroy();
     }
     
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(ServletRequest request, ServletResponse response)
     throws ServletException, IOException {
+
+        StaticBrutosRequest staticRequest;
+
+        if( request instanceof StaticBrutosRequest )
+            staticRequest = (StaticBrutosRequest)request;
+        else
+            staticRequest = new StaticBrutosRequest(request);
 
         WebApplicationContext app =
             ContextLoader.getCurrentWebApplicationContext();
@@ -78,30 +87,30 @@ public class DispatcherServlet extends HttpServlet {
         Map mappedUploadStats =
                 (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
 
-        String path         = request.getRequestURI();
-        String contextPath  = request.getContextPath();
-        path = path.substring( contextPath.length(), path.length() );
-
+        String requestId = staticRequest.getRequestId();
+        
         try{
             RequestInfo requestInfo = new RequestInfo();
 
-            BrutosRequest brutosRequest = (BrutosRequest)request;
-
-            requestInfo.setRequest(request);
+            requestInfo.setRequest(staticRequest);
             requestInfo.setResponse(response);
             RequestInfo.setCurrent(requestInfo);
 
-            UploadListener listener = brutosRequest.getUploadListener();
+            UploadListener listener = staticRequest.getUploadListener();
 
 
-            mappedUploadStats.put( path, listener.getUploadStats() );
+            mappedUploadStats.put( requestId, listener.getUploadStats() );
 
-            invoker.invoke(path);
+            invoker.invoke(requestId);
         }
         finally{
-            mappedUploadStats.remove( path );
-            ((ConfigurableApplicationContext)app).getRequestFactory().destroyRequest();
-            ((ConfigurableApplicationContext)app).getResponseFactory().destroyResponse();
+            mappedUploadStats.remove(requestId);
+            ConfigurableApplicationContext capp =
+                    (ConfigurableApplicationContext)app;
+
+            capp.getRequestFactory().destroyRequest();
+            capp.getResponseFactory().destroyResponse();
+
             RequestInfo.removeCurrent();
         }
     }

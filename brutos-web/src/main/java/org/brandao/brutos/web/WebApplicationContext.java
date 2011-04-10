@@ -20,32 +20,17 @@ package org.brandao.brutos.web;
 import java.util.Enumeration;
 import java.util.Properties;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.http.HttpServletRequest;
-import org.brandao.brutos.ActionResolver;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContextImp;
 import org.brandao.brutos.Configuration;
-import org.brandao.brutos.MvcRequestFactory;
-import org.brandao.brutos.MvcResponseFactory;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.ControllerManager;
-import org.brandao.brutos.ControllerResolver;
-import org.brandao.brutos.InterceptorManager;
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.validator.ValidatorProvider;
-import org.brandao.brutos.view.ViewProvider;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
@@ -57,7 +42,11 @@ import org.brandao.brutos.web.scope.SessionScope;
  *
  * @author Afonso Brandao
  */
-public class WebApplicationContext extends ApplicationContext{
+public abstract class WebApplicationContext extends ApplicationContext{
+
+    public static final String defaultConfigContext = "brutos-config.xml";
+
+    public static final String  contextConfigName   = "contextConfig";
 
     private Logger logger;
     private Configuration config;
@@ -161,7 +150,7 @@ public class WebApplicationContext extends ApplicationContext{
     }
 
     private void loadInvoker( ServletContext sc ){
-        sc.setAttribute( BrutosConstants.INVOKER,this.getInvoker());
+        sc.setAttribute( BrutosConstants.INVOKER,this.invoker);
     }
 
     private void loadLogger( ServletContext sc ){
@@ -181,21 +170,10 @@ public class WebApplicationContext extends ApplicationContext{
         }
     }
     
-    public synchronized void stop( ServletContextEvent sce ){
-        destroy();
-    }
-
     public ServletContext getContext(){
         return null;
     }
 
-    /*
-    public HttpServletRequest getRequest(){
-        this.
-        return (HttpServletRequest) ContextLoaderListener.currentRequest.get();
-    }
-    */
-    
     public Form getController(){
         
         return (Form) getScopes()
@@ -204,91 +182,6 @@ public class WebApplicationContext extends ApplicationContext{
     }
 
     public void destroy() {
-    }
-
-    protected void loadIOCManager(IOCManager iocManager) {
-    }
-
-    protected void loadWebFrameManager(WebFrameManager webFrameManager) {
-    }
-
-    protected void loadInterceptorManager(InterceptorManager interceptorManager) {
-    }
-
-    protected void loadController(ControllerManager controllerManager) {
-    }
-
-
-    public void setIocManager(IOCManager iocManager) {
-        this.iocManager = iocManager;
-    }
-
-    public WebFrameManager getWebFrameManager() {
-        return webFrameManager;
-    }
-
-    public void setWebFrameManager(WebFrameManager webFrameManager) {
-        this.webFrameManager = webFrameManager;
-    }
-
-    public InterceptorManager getInterceptorManager() {
-        return interceptorManager;
-    }
-
-    public void setInterceptorManager(InterceptorManager interceptorManager) {
-        this.interceptorManager = interceptorManager;
-    }
-
-    public ControllerManager getControllerManager() {
-        return controllerManager;
-    }
-
-    public void setConfiguration( Properties config ){
-        this.configuration = config;
-    }
-
-    public void setIocProvider(IOCProvider iocProvider) {
-        this.iocProvider = iocProvider;
-    }
-
-    public MvcRequestFactory getRequestFactory() {
-        return this.requestFactory;
-    }
-
-    public MvcResponseFactory getResponseFactory() {
-        return this.responseFactory;
-    }
-
-    public ViewProvider getViewProvider() {
-        return this.viewProvider;
-    }
-
-    public ValidatorProvider getValidatorProvider() {
-        return this.validatorProvider;
-    }
-
-    public Invoker getInvoker() {
-        return this.invoker;
-    }
-
-    public IOCManager getIocManager() {
-        return this.iocManager;
-    }
-
-    public IOCProvider getIocProvider() {
-        return this.iocProvider;
-    }
-
-    public ControllerResolver getControllerResolver() {
-        return this.controllerResolver;
-    }
-
-    public ActionResolver getActionResolver() {
-        return this.actionResolver;
-    }
-
-    protected Resource getContextResource( String path ){
-        return null;
     }
 
 }

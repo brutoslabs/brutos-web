@@ -20,18 +20,19 @@ package org.brandao.brutos.web.http;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletRequest;
-import javax.servlet.ServletRequestWrapper;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  *
  * @author Brandao
  */
-public class BrutosRequestWrapper extends ServletRequestWrapper implements BrutosRequest{
+public class BrutosRequestWrapper extends HttpServletRequestWrapper implements BrutosRequest{
 
     private BrutosRequest request;
 
     public BrutosRequestWrapper( BrutosRequest request ){
-        super( (ServletRequest)request );
+        super( (HttpServletRequest)request.getServletRequest() );
         this.request = request;
     }
 
@@ -69,6 +70,10 @@ public class BrutosRequestWrapper extends ServletRequestWrapper implements Bruto
 
     public void setObjects(String name, Object[] value) {
         request.setObjects(name, value);
+    }
+
+    public String getRequestId() {
+        return request.getRequestId();
     }
 
 }
