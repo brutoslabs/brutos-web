@@ -22,6 +22,7 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.ConfigurableApplicationContextImp;
 import org.brandao.brutos.io.Resource;
 import java.util.Properties;
+import org.brandao.brutos.DefinitionReader;
 /**
  *
  * @author Brandao

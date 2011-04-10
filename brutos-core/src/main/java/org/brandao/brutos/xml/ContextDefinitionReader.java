@@ -25,6 +25,7 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.io.Resource;
@@ -45,6 +46,9 @@ import org.xml.sax.SAXParseException;
 public class ContextDefinitionReader extends AbstractDefinitionReader{
 
     private XMLParseUtil parseUtil;
+
+    public static final String AnnotationApplicationContext =
+            "org.brandao.brutos.annotation.AnnotationApplicationContext";
     
     public ContextDefinitionReader( ConfigurableApplicationContext handler,
             List blackList, ResourceLoader resourceLoader ){
@@ -119,6 +123,54 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
                 document,
                 XMLBrutosConstants.XML_BRUTOS_TYPES ) );
 
+        loadAnnotationDefinition( parseUtil.getElement(
+                document,
+                XMLBrutosConstants.XML_BRUTOS_ANNOTATION_CONFIG ) );
+    }
+
+    private void loadAnnotationDefinition( Element cp ){
+
+        if( cp == null )
+            return;
+
+        ApplicationContext aac = createApplicationContext();
+        aac.configure();
+        
+    }
+
+    private ApplicationContext createApplicationContext(){
+
+        Class clazz = getApplicationContextClass();
+
+        if(ApplicationContext.class.isAssignableFrom(clazz)){
+            try{
+                ApplicationContext app =
+                    (ApplicationContext) clazz
+                        .getConstructor(ApplicationContext.class)
+                            .newInstance(this.handler);
+                return app;
+            }
+            catch( Exception e ){
+                throw new BrutosException("unable to create instance: " +
+                        clazz.getName(),e);
+            }
+        }
+        else
+            throw new BrutosException("annotation application is not valid:"+
+                    clazz.getName());
+    }
+
+    private Class getApplicationContextClass(){
+        return this.getContextClass(AnnotationApplicationContext);
+    }
+
+    private Class getContextClass( String contextClassName ){
+        try {
+            return Thread.currentThread().getContextClassLoader()
+                    .loadClass(contextClassName);
+        } catch (ClassNotFoundException ex) {
+            throw new BrutosException( "Failed to load: " + contextClassName, ex );
+        }
     }
 
     private void loadContextParams( Element cp ){

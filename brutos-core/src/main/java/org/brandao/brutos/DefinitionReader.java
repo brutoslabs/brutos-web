@@ -15,7 +15,7 @@
  *
  */
 
-package org.brandao.brutos.xml;
+package org.brandao.brutos;
 
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
