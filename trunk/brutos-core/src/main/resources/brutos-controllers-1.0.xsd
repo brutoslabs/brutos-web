@@ -17,25 +17,24 @@
 -->
 
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:ns="http://brutos.sourceforge.net/targetNS"
-            targetNamespace="http://brutos.sourceforge.net/targetNS"
-            xmlns="http://brutos.sourceforge.net/targetNS"
-           elementFormDefault="qualified">
+            targetNamespace="http://brutos.sourceforge.net/schema/controllers"
+            xmlns="http://brutos.sourceforge.net/schema/controllers"
+           elementFormDefault="unqualified">
 
-    <xsd:element name="controllers">
-        <xsd:complexType>
-            <xsd:sequence>
-                <xsd:element name="import" minOccurs="0" maxOccurs="unbounded">
-                    <xsd:complexType>
-                      <xsd:attribute name="resource" type="xsd:string"/>
-                    </xsd:complexType>
-                </xsd:element>
-                <xsd:element name="interceptors" type="interceptors" minOccurs="0" maxOccurs="1"/>
-                <xsd:element name="controller" type="controller" minOccurs="0" maxOccurs="unbounded"/>
-            </xsd:sequence>
-        </xsd:complexType>
-    </xsd:element>
-
+        <xsd:element name="controllers">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="import" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:complexType>
+                          <xsd:attribute name="resource" type="xsd:string"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="interceptors" type="interceptors" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="controller" type="controller" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
   <!-- *************************************************************** -->
 
     <xsd:complexType name="controller">
