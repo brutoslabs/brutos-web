@@ -16,22 +16,28 @@
   either express or implied.
 -->
 
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:ns="http://brutos.sourceforge.net/targetNS"
-            targetNamespace="http://brutos.sourceforge.net/targetNS"
-            xmlns="http://brutos.sourceforge.net/targetNS"
-           elementFormDefault="qualified">
+<xsd:schema xmlns="http://brutos.sourceforge.net/schema/context"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+        xmlns:controllers="http://brutos.sourceforge.net/schema/controllers"
+	targetNamespace="http://brutos.sourceforge.net/schema/context"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
+	<xsd:import namespace="http://brutos.sourceforge.net/schema/controllers"
+		schemaLocation="http://brutos.sourceforge.net/schema/controllers/brutos-controllers-1.0.xsd" />
+    
+    <xsd:element name="annotation-config"/>
+    <xsd:element name="params" type="params"/>
+    <xsd:element name="types" type="types"/>
+    <!--
     <xsd:element name="brutos-configuration">
         <xsd:complexType>
-            <xsd:all>
-                <!--<xsd:element name="auto-config" minOccurs="0" maxOccurs="1"/>-->
+            <xsd:sequence>
                 <xsd:element name="annotation-config" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="params" type="params" minOccurs="0" maxOccurs="1"/>
                 <xsd:element name="types" type="types" minOccurs="0" maxOccurs="1"/>
-            </xsd:all>
+            </xsd:sequence>
             <xsd:attribute name="encoding" default="UTF-8"/>
-            <xsd:attribute name="version" default="1.1">
+            <xsd:attribute name="version" default="1.0">
                 <xsd:simpleType>
                     <xsd:restriction base="xsd:token">
                         <xsd:pattern value="[0-9]+(\.[0-9]+)*"/>
@@ -40,7 +46,7 @@
             </xsd:attribute>
         </xsd:complexType>
     </xsd:element>
-
+    -->
     <xsd:complexType name="types">
         <xsd:sequence>
             <xsd:element name="type" maxOccurs="unbounded">
