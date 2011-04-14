@@ -70,7 +70,7 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     private ApplicationContext parent;
 
     public ApplicationContext() {
-        this.configuration = new Configuration();
+        this(null);
     }
 
     public ApplicationContext( ApplicationContext parent ) {
@@ -78,7 +78,7 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
         this.configuration = parent == null?
             new Configuration() :
             parent.configuration;
-
+        this.scopes = new Scopes();
     }
 
     /**
