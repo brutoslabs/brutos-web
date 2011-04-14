@@ -137,6 +137,10 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 document,
                 XMLBrutosConstants.XML_BRUTOS_CONTROLLERS ) );
 
+        loadControllers( parseUtil.getElements(
+                document,
+                XMLBrutosConstants.XML_BRUTOS_CONTROLLER ) );
+
     }
 
     private void loadImporters( NodeList list, Resource resource ){
@@ -313,12 +317,15 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 XMLBrutosConstants.XML_BRUTOS_CONTROLLER );
 
 
+        loadControllers( controllers );
+    }
+
+    private void loadControllers( NodeList controllers ){
         for( int i=0;i<controllers.getLength();i++ ){
             Element controllerNode = (Element) controllers.item(i);
             loadController( controllerNode );
         }
     }
-
     private void loadController( Element controller ){
 
         String id = controller.getAttribute( "id" );
@@ -849,7 +856,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         String result = actionNode.getAttribute( "result" );
         String view = actionNode.getAttribute( "view" );
         DispatcherType dispatcher =
-            DispatcherType.valueOf( actionNode.getAttribute( "result" ) );
+            DispatcherType.valueOf( actionNode.getAttribute( "dispatcher" ) );
 
         ActionBuilder actionBuilder =
             controllerBuilder.addAction(id, result, view, dispatcher, executor);

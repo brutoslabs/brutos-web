@@ -45,7 +45,7 @@ public abstract class IOCProvider {
                 properties
                     .getProperty(
                         "org.brandao.brutos.ioc.provider",
-                        "org.brandao.brutos.ioc.PicoContainerIOCProvider");
+                        null);
         IOCProvider ioc        = null;
         
         if( iocProviderName == null )
