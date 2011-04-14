@@ -1,14 +1,31 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Brutos Web MVC http://brutos.sourceforge.net/
+ * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ *
+ * This library is free software. You can redistribute it
+ * and/or modify it under the terms of the GNU General Public
+ * License (GPL) version 3.0 or (at your option) any later
+ * version.
+ * You may obtain a copy of the License at
+ *
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied.
+ *
  */
 
 package org.brandao.brutos.web;
 
+import java.util.Enumeration;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.Configuration;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 
 /**
  *
@@ -17,6 +34,7 @@ import org.brandao.brutos.BrutosException;
 public class ContextLoader {
 
     public static final String CONTEXT_CLASS = "context_class";
+    private Logger logger;
 
     private static final ConcurrentHashMap<ClassLoader,WebApplicationContext>
             currentWebApplicationContext;
@@ -38,12 +56,17 @@ public class ContextLoader {
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-        WebApplicationContext app =
+        ConfigurableWebApplicationContext app =
                 createApplicationContext(servletContext);
 
-        app.initApplicationContext(servletContext);
+        app.setServletContext(servletContext);
 
-        app.configure();
+        Properties config = getConfiguration(servletContext);
+        initLogger(config);
+
+        logger.info( "Initializing Brutos root WebApplicationContext" );
+        logger.info( "Configuration: " + config.toString() );
+        app.configure(config);
         
         currentWebApplicationContext
                     .put(classLoader, app);
@@ -51,14 +74,34 @@ public class ContextLoader {
         
     }
 
-    private WebApplicationContext createApplicationContext(ServletContext servletContext){
+    private void initLogger(Properties config){
+        LoggerProvider loggerProvider = LoggerProvider.getProvider(config);
+        LoggerProvider.setCurrentLoggerProvider(loggerProvider);
+        this.logger = loggerProvider.getLogger( ContextLoader.class.getName() );
+    }
+
+    private Properties getConfiguration( ServletContext servletContext ){
+        Configuration config = new Configuration();
+
+        Enumeration initParameters = servletContext.getInitParameterNames();
+
+        while( initParameters.hasMoreElements() ){
+            String name = (String) initParameters.nextElement();
+            config.setProperty( name, servletContext.getInitParameter( name ) );
+        }
+
+        return config;
+    }
+
+    private ConfigurableWebApplicationContext createApplicationContext(
+            ServletContext servletContext){
 
         Class clazz = getApplicationContextClass(servletContext);
 
         if(ConfigurableWebApplicationContext.class.isAssignableFrom(clazz)){
             try{
-                WebApplicationContext app = 
-                        (WebApplicationContext) clazz.newInstance();
+                ConfigurableWebApplicationContext app =
+                        (ConfigurableWebApplicationContext) clazz.newInstance();
 
 
                 return app;
@@ -79,7 +122,7 @@ public class ContextLoader {
         if( contextClassName != null )
             return this.getContextClass(contextClassName);
         else
-            return this.getContextClass(contextClassName);
+            return this.getContextClass(XMLWebApplicationContext.class.getName());
     }
 
     private Class getContextClass( String contextClassName ){

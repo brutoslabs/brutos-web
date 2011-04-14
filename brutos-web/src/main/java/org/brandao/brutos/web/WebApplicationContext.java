@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.web;
 
-import java.util.Enumeration;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.ApplicationContext;
@@ -26,6 +25,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContextImp;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.ioc.SpringIOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
@@ -44,42 +44,25 @@ import org.brandao.brutos.web.scope.SessionScope;
  */
 public abstract class WebApplicationContext extends ApplicationContext{
 
-    public static final String defaultConfigContext = "brutos-config.xml";
+    public static final String defaultConfigContext = "WEB-INF/brutos-config.xml";
 
     public static final String  contextConfigName   = "contextConfig";
 
     private Logger logger;
-    private Configuration config;
+    protected ServletContext servletContext;
 
     public WebApplicationContext(){
-        this.config = new Configuration();
-    }
-
-    public void initApplicationContext( ServletContext servletContext ){
-        long time = System.currentTimeMillis();
-        try{
-            loadParameters( servletContext );
-            loadLogger( servletContext );
-            logger.info( "Initializing Brutos root WebApplicationContext" );
-            logger.info( "Configuration: " + config.toString() );
-            overrideConfig( servletContext );
-            configure(config);
-            loadInvoker( servletContext );
-        }
-        catch( Throwable e ){
-            servletContext.setAttribute( BrutosConstants.EXCEPTION, e );
-        }
-        finally{
-            if( logger != null )
-                logger.info( String.format( "Initialization processed in %d ms",
-                        (System.currentTimeMillis()-time) ) );
-        }
     }
 
     public void configure( Properties config ){
-        
+        overrideConfig(config);
+        initUploadListener(config);
+        super.configure(config);
+    }
+
+    private void initUploadListener(Properties config){
         try{
-            String uploadListenerFactoryName = 
+            String uploadListenerFactoryName =
                 config.getProperty( "org.brandao.brutos.upload_listener_factory",
                     DefaultUploadListenerFactory.class.getName() );
 
@@ -90,7 +73,7 @@ public abstract class WebApplicationContext extends ApplicationContext{
 
             Scope contextScope = getScopes()
                     .get( ScopeType.APPLICATION );
-            
+
             contextScope.put(
                 BrutosConstants.UPLOAD_LISTENER_FACTORY,
                 ulfClass.newInstance() );
@@ -98,15 +81,12 @@ public abstract class WebApplicationContext extends ApplicationContext{
         catch( Exception e ){
             throw new BrutosException( e );
         }
-
-        super.configure(config);
-        
     }
-    
-    private void overrideConfig( ServletContext sce ){
+
+    private void overrideConfig(Properties config){
 
         getScopes().register( ScopeType.APPLICATION.toString(),
-                new ApplicationScope( sce ) );
+                new ApplicationScope( getContext() ) );
         getScopes().register( ScopeType.FLASH.toString(),
                 new FlashScope() );
         getScopes().register( ScopeType.IOC.toString(),
@@ -147,31 +127,17 @@ public abstract class WebApplicationContext extends ApplicationContext{
         config.put( "org.brandao.brutos.controller.method_resolver",
                     actionResolverName );
 
+        String iocProvider = config
+                .getProperty( "org.brandao.brutos.controller.action_resolver",
+                              SpringIOCProvider.class.getName() );
+
+        config.put( "org.brandao.brutos.ioc.provider",
+                    iocProvider );
+
     }
 
-    private void loadInvoker( ServletContext sc ){
-        sc.setAttribute( BrutosConstants.INVOKER,this.invoker);
-    }
-
-    private void loadLogger( ServletContext sc ){
-        LoggerProvider loggerProvider = LoggerProvider.getProvider(config);
-        LoggerProvider.setCurrentLoggerProvider(loggerProvider);
-        sc.setAttribute( BrutosConstants.LOGGER,
-                                            loggerProvider );
-        this.logger = loggerProvider.getLogger( WebApplicationContext.class.getName() );
-    }
-
-    private void loadParameters( ServletContext sce ){
-        Enumeration initParameters = sce.getInitParameterNames();
-        
-        while( initParameters.hasMoreElements() ){
-            String name = (String) initParameters.nextElement();
-            config.setProperty( name, sce.getInitParameter( name ) );
-        }
-    }
-    
     public ServletContext getContext(){
-        return null;
+        return this.servletContext;
     }
 
     public Form getController(){
