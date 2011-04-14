@@ -18,6 +18,7 @@
 package org.brandao.brutos.web;
 
 import java.util.Properties;
+import javax.servlet.ServletContext;
 import org.brandao.brutos.ActionResolver;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerManager;
@@ -51,7 +52,10 @@ public  abstract class ConfigurableWebApplicationContext
     protected void loadController(ControllerManager controllerManager) {
     }
 
-
+    public void setServletContext( ServletContext servletContext ){
+        this.servletContext = servletContext;
+    }
+    
     public void setIocManager(IOCManager iocManager) {
         this.iocManager = iocManager;
     }
