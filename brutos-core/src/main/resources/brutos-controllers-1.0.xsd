@@ -19,20 +19,22 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             targetNamespace="http://brutos.sourceforge.net/schema/controllers"
             xmlns="http://brutos.sourceforge.net/schema/controllers"
-           elementFormDefault="unqualified">
+           elementFormDefault="qualified">
 
         <xsd:element name="controllers">
             <xsd:complexType>
                 <xsd:sequence>
-                    <xsd:any namespace="http://brutos.sourceforge.net/schema/context" processContents="strict"
-                                         minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:any namespace="##other" processContents="strict"
+                            minOccurs="0" maxOccurs="unbounded"/>
                     <xsd:element name="import" minOccurs="0" maxOccurs="unbounded">
                         <xsd:complexType>
                           <xsd:attribute name="resource" type="xsd:string"/>
                         </xsd:complexType>
                     </xsd:element>
-                    <xsd:element name="interceptors" type="interceptors" minOccurs="0" maxOccurs="unbounded"/>
-                    <xsd:element name="controller" type="controller" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="interceptors" type="interceptors"
+                            minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="controller" type="controller"
+                            minOccurs="0" maxOccurs="unbounded"/>
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:element>
