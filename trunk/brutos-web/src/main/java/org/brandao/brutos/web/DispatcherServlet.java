@@ -45,8 +45,7 @@ public class DispatcherServlet extends HttpServlet {
 
     public void init() throws ServletException{
         super.init();
-        webApplicationContext = (WebApplicationContext) getServletContext()
-                .getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE );
+        webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
 
         if( webApplicationContext == null ){
             throw new IllegalStateException(
@@ -81,20 +80,19 @@ public class DispatcherServlet extends HttpServlet {
         WebApplicationContext app =
             ContextLoader.getCurrentWebApplicationContext();
                 
-
-        Scope scope = app.getScopes().get(ScopeType.SESSION);
-        
-        Map mappedUploadStats =
-                (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
-
         String requestId = staticRequest.getRequestId();
-        
+        Map mappedUploadStats = null;
         try{
             RequestInfo requestInfo = new RequestInfo();
 
             requestInfo.setRequest(staticRequest);
             requestInfo.setResponse(response);
             RequestInfo.setCurrent(requestInfo);
+
+            Scope scope = app.getScopes().get(ScopeType.SESSION);
+
+            mappedUploadStats =
+                    (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
 
             UploadListener listener = staticRequest.getUploadListener();
 

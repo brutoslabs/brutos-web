@@ -76,10 +76,7 @@ public class StaticBrutosRequest extends BrutosRequestWrapper{
                     BrutosRequestImp.class.getName()
                 );
 
-        if( brutosRequestClassName != null )
-            return getBrutosRequestClass(brutosRequestClassName);
-        else
-            return getBrutosRequestClass(brutosRequestClassName);
+        return getBrutosRequestClass(brutosRequestClassName);
     }
 
     private static Class getBrutosRequestClass( String contextClassName ){

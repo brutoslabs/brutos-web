@@ -91,7 +91,7 @@ public class WebControllerResolver implements ControllerResolver{
                     Map<String,String> params = uriMap.getParameters(uri);
                     for(String key: params.keySet() )
                         paramScope.put(key, params.get(key) );
-                    return forms.get(u);
+                    return form;
                 }
                 
             }
