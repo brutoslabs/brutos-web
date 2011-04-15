@@ -32,6 +32,7 @@ import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
+import org.brandao.brutos.web.http.HttpRequestParserImp;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.ParamScope;
@@ -57,6 +58,7 @@ public abstract class WebApplicationContext extends ApplicationContext{
     public void configure( Properties config ){
         overrideConfig(config);
         initUploadListener(config);
+        initRequestParser(config);
         super.configure(config);
     }
 
@@ -77,6 +79,29 @@ public abstract class WebApplicationContext extends ApplicationContext{
             contextScope.put(
                 BrutosConstants.UPLOAD_LISTENER_FACTORY,
                 ulfClass.newInstance() );
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    private void initRequestParser(Properties config){
+        try{
+            String requestParserName =
+                config.getProperty( "org.brandao.brutos.request_parser",
+                    HttpRequestParserImp.class.getName() );
+
+            Class rpClass = Class.forName(
+                requestParserName,
+                true,
+                Thread.currentThread().getContextClassLoader() );
+
+            Scope contextScope = getScopes()
+                    .get( ScopeType.APPLICATION );
+
+            contextScope.put(
+                BrutosConstants.HTTP_REQUEST_PARSER,
+                rpClass.newInstance() );
         }
         catch( Exception e ){
             throw new BrutosException( e );
