@@ -149,15 +149,22 @@ public abstract class WebApplicationContext extends ApplicationContext{
                 .getProperty( "org.brandao.brutos.controller.action_resolver",
                               WebActionResolver.class.getName() );
 
-        config.put( "org.brandao.brutos.controller.method_resolver",
+        config.put( "org.brandao.brutos.controller.action_resolver",
                     actionResolverName );
 
         String iocProvider = config
-                .getProperty( "org.brandao.brutos.controller.action_resolver",
+                .getProperty( "org.brandao.brutos.ioc.provider",
                               SpringIOCProvider.class.getName() );
 
         config.put( "org.brandao.brutos.ioc.provider",
                     iocProvider );
+
+        String viewProvider = config
+                .getProperty( "org.brandao.brutos.ioc.provider",
+                              SpringIOCProvider.class.getName() );
+
+        config.put( "org.brandao.brutos.ioc.provider",
+                    viewProvider );
 
     }
 
