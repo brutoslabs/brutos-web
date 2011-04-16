@@ -24,75 +24,75 @@ public class ConfigurableApplicationContextImp extends ApplicationContextWrapper
     }
     
     public MvcRequestFactory getRequestFactory() {
-        return this.requestFactory;
+        return applicationContext.requestFactory;
     }
 
     public MvcResponseFactory getResponseFactory() {
-        return this.responseFactory;
+        return applicationContext.responseFactory;
     }
 
     public void setIocManager(IOCManager iocManager) {
-        this.iocManager = iocManager;
+        applicationContext.iocManager = iocManager;
     }
 
     public void setWebFrameManager(WebFrameManager webFrameManager) {
-        this.webFrameManager = webFrameManager;
+        applicationContext.webFrameManager = webFrameManager;
     }
 
     public void setInterceptorManager(InterceptorManager interceptorManager) {
-        this.interceptorManager = interceptorManager;
+        applicationContext.interceptorManager = interceptorManager;
     }
 
     public ViewProvider getViewProvider() {
-        return this.viewProvider;
+        return applicationContext.viewProvider;
     }
 
     public ValidatorProvider getValidatorProvider() {
-        return this.validatorProvider;
+        return applicationContext.validatorProvider;
     }
 
     public Invoker getInvoker() {
-        return this.invoker;
+        return applicationContext.invoker;
     }
 
     public void setConfiguration(Properties config) {
-        this.configuration = config;
+        applicationContext.configuration = config;
     }
 
     public Properties getConfiguration() {
-        return this.configuration;
+        return applicationContext.configuration;
     }
 
     public void setIocProvider(IOCProvider iocProvider) {
-        this.iocProvider = iocProvider;
+        applicationContext.iocProvider = iocProvider;
     }
 
     public InterceptorManager getInterceptorManager() {
-        return this.interceptorManager;
+        return applicationContext.interceptorManager;
     }
 
     public ControllerManager getControllerManager() {
-        return this.controllerManager;
+        return applicationContext.controllerManager;
     }
 
     public IOCManager getIocManager() {
-        return this.iocManager;
+        return applicationContext.iocManager;
     }
 
     public WebFrameManager getWebFrameManager() {
-        return this.webFrameManager;
+        return applicationContext.webFrameManager;
     }
 
     public IOCProvider getIocProvider() {
-        return this.iocProvider;
+        return applicationContext.iocProvider;
     }
 
     public ControllerResolver getControllerResolver() {
-        return this.controllerResolver;
+        return applicationContext.controllerResolver;
     }
 
     public ActionResolver getActionResolver() {
-        return this.actionResolver;
+        return applicationContext.actionResolver;
     }
 
 }

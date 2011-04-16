@@ -411,9 +411,12 @@ public class InterceptorProcess implements InterceptorStack{
                     .get( BrutosConstants.EXCEPTION );
             ThrowableSafeData thr         = (ThrowableSafeData)requestScope
                     .get( BrutosConstants.EXCEPTION_DATA );
-            MethodForm method             = form.getMethodByName(
+            MethodForm method             = handler
+                                                .getResourceAction()
+                                                    .getMethodForm();
+                    /*form.getMethodByName(
                                                 String.valueOf(paramScope
-                                                .get( form.getMethodId() )) );
+                                                .get( form.getMethodId() )) );*/
             
             ViewProvider viewProvider     = appContext.getViewProvider();
 
