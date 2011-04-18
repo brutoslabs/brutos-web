@@ -18,6 +18,7 @@
 package org.brandao.brutos.mapping;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -52,6 +53,8 @@ public class Form {
     private List<FieldForm> fields;
     
     private Map<String, MethodForm> methods;
+
+    private Map<String, MethodForm> reverseMethods;
     
     private Action action;
 
@@ -147,6 +150,18 @@ public class Form {
         return methods;
     }
 
+    public void addMethod( String id, MethodForm method ){
+
+        if( method.getMethod() != null )
+            this.reverseMethods.put(method.getMethodName().toString(), method);
+        
+        this.methods.put(id, method);
+    }
+
+    public MethodForm getMethod( Method method ){
+        return reverseMethods.get(method.toString());
+    }
+    
     public void setMethods(Map<String, MethodForm> methods) {
         this.methods = methods;
     }

@@ -73,7 +73,7 @@ public class UseBeanData {
         this.mapping = mapping;
     }
 
-    /**
+    /*
      * @deprecated
      * @param context
      * @param request

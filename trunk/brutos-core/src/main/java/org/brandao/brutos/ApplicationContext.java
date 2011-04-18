@@ -20,12 +20,15 @@ package org.brandao.brutos;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.io.DefaultResourceLoader;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
+import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
+import org.brandao.brutos.proxy.ProxyFactory;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.validator.ValidatorProvider;
@@ -66,7 +69,8 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     protected MvcResponseFactory responseFactory;
     protected MvcRequestFactory requestFactory;
     private Scopes scopes;
-
+    protected CodeGeneratorProvider codeGeneratorProvider;
+    
     private ApplicationContext parent;
 
     public ApplicationContext() {
@@ -115,6 +119,7 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
         this.controllerManager = parent.controllerManager;
         this.invoker = parent.invoker;
         this.viewProvider = parent.viewProvider;
+        this.codeGeneratorProvider = parent.codeGeneratorProvider;
     }
     
     private void loadLocalConfig(Properties config){
@@ -132,7 +137,8 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
         this.controllerManager = new ControllerManager(this.interceptorManager, validatorProvider);
         this.invoker = new Invoker(  controllerResolver, iocProvider, controllerManager, actionResolver, this );
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
-
+        this.codeGeneratorProvider = CodeGeneratorProvider.getProvider(this.getConfiguration());
+        
         if( iocProvider.containsBeanDefinition("customScopes") ){
             CustomScopeConfigurer customScopesConfigurer =
                     (CustomScopeConfigurer)iocProvider.getBean("customScopes");
@@ -287,7 +293,14 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
      * @return Controlador.
      */
     public Object getController( Class controllerClass ){
-        return null;
+        Form controller = this.controllerManager.getController(controllerClass);
+        Object resource = this.iocProvider.getBean(controller.getId());
+        ProxyFactory proxyFactory =
+                this.codeGeneratorProvider.getProxyFactory(controllerClass);
+
+        Object proxy =
+                proxyFactory.getNewProxy(resource, controller, this, invoker);
+        return proxy;
     }
 
     /**

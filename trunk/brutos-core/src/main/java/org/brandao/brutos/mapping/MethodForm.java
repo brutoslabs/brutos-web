@@ -27,7 +27,6 @@ import java.util.Map;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
 
