@@ -19,6 +19,7 @@
 package org.brandao.brutos.web;
 
 import java.util.Properties;
+import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ServletContextResource;
 
@@ -49,6 +50,14 @@ public class XMLWebApplicationContext
 
     protected Resource[] getContextResources() {
         return this.resources;
+    }
+
+    public CodeGeneratorProvider getCodeGeneratorProvider() {
+        return this.codeGeneratorProvider;
+    }
+
+    public void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider) {
+        this.codeGeneratorProvider = codeGeneratorProvider;
     }
 
 }

@@ -66,7 +66,7 @@ public class BrutosAction extends HttpServlet {
             requestInfo.setRequest( request );
             requestInfo.setResponse(response);
             RequestInfo.setCurrent(requestInfo);
-            brutosCore.getInvoker().invoke( null );
+            brutosCore.getInvoker().invoke( (String)null );
         }
         finally{
             RequestInfo.removeCurrent();

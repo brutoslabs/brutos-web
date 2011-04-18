@@ -90,7 +90,7 @@ public class BrutosRequestFilter implements Filter{
 
             currentFilter.set(chain);
             if( context instanceof BrutosContext ){
-                if( !invoker.invoke(null) )
+                if( !invoker.invoke((String)null) )
                     chain.doFilter( staticRequest, response);
             }
             else{
