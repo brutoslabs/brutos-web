@@ -26,12 +26,14 @@ import org.brandao.brutos.ResourceAction;
  */
 public interface InterceptorHandler {
 
-    public ResourceAction getResourceAction();
+    ResourceAction getResourceAction();
     
-    public Object getResource();
+    Object getResource();
 
-    public String requestId();
+    String requestId();
 
-    public ApplicationContext getContext();
+    ApplicationContext getContext();
+
+    Object[] getPreprocessedParameters();
     
 }

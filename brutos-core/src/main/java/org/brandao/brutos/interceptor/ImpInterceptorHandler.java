@@ -18,7 +18,6 @@
 package org.brandao.brutos.interceptor;
 
 import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.ResourceMethod;
 import org.brandao.brutos.ResourceAction;
 
 /**
@@ -36,7 +35,9 @@ public class ImpInterceptorHandler implements InterceptorHandler{
     private ApplicationContext context;
     
     private Object resource;
-    
+
+    private Object[] args;
+
     public ImpInterceptorHandler() {
     }
 
@@ -80,4 +81,12 @@ public class ImpInterceptorHandler implements InterceptorHandler{
     public void setContext(ApplicationContext context) {
         this.context = context;
     }
+
+    public void setPreprocessedParameters(Object[] args) {
+        this.args = args;
+    }
+    public Object[] getPreprocessedParameters() {
+        return args;
+    }
+    
 }

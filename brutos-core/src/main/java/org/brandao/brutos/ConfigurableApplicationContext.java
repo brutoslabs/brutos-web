@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 import java.util.Properties;
+import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
@@ -31,14 +32,14 @@ import org.brandao.brutos.view.ViewProvider;
 public interface ConfigurableApplicationContext {
 
     /**
-     * Obtém a fábrica de requisição.
-     * @return Fábrica.
+     * Obtï¿½m a fï¿½brica de requisiï¿½ï¿½o.
+     * @return Fï¿½brica.
      */
     public MvcRequestFactory getRequestFactory();
 
     /**
-     * Obtém a fábrica de resposta.
-     * @return Fábrica.
+     * Obtï¿½m a fï¿½brica de resposta.
+     * @return Fï¿½brica.
      */
     public MvcResponseFactory getResponseFactory();
 
@@ -62,32 +63,32 @@ public interface ConfigurableApplicationContext {
 
 
     /**
-     * Obtém o provedor da visão.
-     * @return Provedor da visão.
+     * Obtï¿½m o provedor da visï¿½o.
+     * @return Provedor da visï¿½o.
      */
     public ViewProvider getViewProvider();
 
     /**
-     * Obtém o provedor das regras de validação.
-     * @return Provedor das regras de validação
+     * Obtï¿½m o provedor das regras de validaï¿½ï¿½o.
+     * @return Provedor das regras de validaï¿½ï¿½o
      */
     public ValidatorProvider getValidatorProvider();
 
     /**
-     * Obtém o responsável por executar as ações.
-     * @return Responsável por executar as ações.
+     * Obtï¿½m o responsï¿½vel por executar as aï¿½ï¿½es.
+     * @return Responsï¿½vel por executar as aï¿½ï¿½es.
      */
     public Invoker getInvoker();
 
     /**
-     * Define as configurações da aplicação.
-     * @param config Configuração.
+     * Define as configuraï¿½ï¿½es da aplicaï¿½ï¿½o.
+     * @param config Configuraï¿½ï¿½o.
      */
     public void setConfiguration( Properties config );
 
     /**
-     * Obtém a configuração da aplicação.
-     * @param config Configuração.
+     * Obtï¿½m a configuraï¿½ï¿½o da aplicaï¿½ï¿½o.
+     * @param config Configuraï¿½ï¿½o.
      */
     public Properties getConfiguration();
 
@@ -99,13 +100,13 @@ public interface ConfigurableApplicationContext {
 
 
     /**
-     * Obtém o gestor de interceptadores.
+     * Obtï¿½m o gestor de interceptadores.
      * @return Gestor de interceptadores.
      */
     public InterceptorManager getInterceptorManager();
 
     /**
-     * Obtém o gestor de controladores.
+     * Obtï¿½m o gestor de controladores.
      * @return Gestor de controladores.
      */
     public ControllerManager getControllerManager();
@@ -123,21 +124,25 @@ public interface ConfigurableApplicationContext {
     public WebFrameManager getWebFrameManager();
 
     /**
-     * Obtém o provedor do container IOC.
+     * Obtï¿½m o provedor do container IOC.
      * @return Provedor do container IOC.
      */
     public IOCProvider getIocProvider();
 
     /**
-     * Obtém o responsável por resolver os controladores.
-     * @return Responsável por resolver os controladores.
+     * Obtï¿½m o responsï¿½vel por resolver os controladores.
+     * @return Responsï¿½vel por resolver os controladores.
      */
     public ControllerResolver getControllerResolver();
 
     /**
-     * Obtém o responsável por resolver as ações.
-     * @return Responsável por resolver as ações.
+     * Obtï¿½m o responsï¿½vel por resolver as aï¿½ï¿½es.
+     * @return Responsï¿½vel por resolver as aï¿½ï¿½es.
      */
     public ActionResolver getActionResolver();
+
+    public CodeGeneratorProvider getCodeGeneratorProvider();
+
+    public void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider);
 
 }

@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
+import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -70,7 +71,7 @@ public class Invoker {
     public boolean invoke( String requestId ){
 
         Scopes scopes = applicationContext.getScopes();
-        Scope requestScope = scopes.get(ScopeType.REQUEST);
+        //Scope requestScope = scopes.get(ScopeType.REQUEST);
         ImpInterceptorHandler ih = new ImpInterceptorHandler();
         ih.setRequestId(requestId);
         ih.setContext(applicationContext);
@@ -81,6 +82,10 @@ public class Invoker {
         if( form == null )
             return false;
 
+        ih.setResource( iocProvider.getBean(form.getId()) );
+        ih.setResourceAction( actionResolver.getResourceAction(form, scopes, ih) );
+
+        /*
         long time = System.currentTimeMillis();
         try{
             currentApp.set( this.applicationContext );
@@ -91,9 +96,6 @@ public class Invoker {
             if( logger.isDebugEnabled() )
                 logger.debug( "Received a new request: " + requestId );
 
-            ih.setResource( iocProvider.getBean(form.getId()) );
-            
-            ih.setResourceAction( actionResolver.getResourceAction(form, scopes, ih) );
 
             if( logger.isDebugEnabled() ){
                 logger.debug(
@@ -117,6 +119,36 @@ public class Invoker {
         }
 
         return true;
+        */
+
+        return invoke(ih);
+    }
+
+    public boolean invoke( InterceptorHandler i ){
+
+        Scopes scopes = applicationContext.getScopes();
+        Scope requestScope = scopes.get(ScopeType.REQUEST);
+
+        long time = System.currentTimeMillis();
+        try{
+            currentApp.set( this.applicationContext );
+            requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
+            requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE,
+                    this.applicationContext );
+            i.getResourceAction().getMethodForm().getForm()
+                    .proccessBrutosAction( i );
+            return true;
+        }
+        finally{
+            currentApp.remove();
+            requestScope.remove( BrutosConstants.IOC_PROVIDER );
+            if( logger.isDebugEnabled() )
+                logger.debug(
+                        String.format( "Request processed in %d ms",
+                            (System.currentTimeMillis()-time) ) );
+        }
+
+        
     }
 
     public static ApplicationContext getCurrentApplicationContext(){

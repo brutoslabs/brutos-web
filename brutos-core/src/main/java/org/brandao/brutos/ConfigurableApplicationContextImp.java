@@ -6,6 +6,7 @@
 package org.brandao.brutos;
 
 import java.util.Properties;
+import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
@@ -93,6 +94,14 @@ public class ConfigurableApplicationContextImp extends ApplicationContextWrapper
 
     public ActionResolver getActionResolver() {
         return applicationContext.actionResolver;
+    }
+
+    public CodeGeneratorProvider getCodeGeneratorProvider() {
+        return applicationContext.codeGeneratorProvider;
+    }
+
+    public void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider) {
+        this.applicationContext.codeGeneratorProvider = codeGeneratorProvider;
     }
 
 }
