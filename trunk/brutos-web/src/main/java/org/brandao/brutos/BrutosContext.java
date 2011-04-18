@@ -30,6 +30,7 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.http.HttpServletRequest;
+import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.ioc.CustomEditorConfigurer;
 import org.brandao.brutos.ioc.EditorConfigurer;
 import org.brandao.brutos.ioc.IOCProvider;
@@ -502,5 +503,13 @@ public class BrutosContext extends ConfigurableWebApplicationContext {
 
     public Invoker getInvoker(){
         return this.invoker;
+    }
+
+    public CodeGeneratorProvider getCodeGeneratorProvider() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
