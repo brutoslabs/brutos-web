@@ -36,8 +36,6 @@ public class ImpInterceptorHandler implements InterceptorHandler{
     
     private Object resource;
 
-    private Object[] args;
-
     public ImpInterceptorHandler() {
     }
 
@@ -82,11 +80,4 @@ public class ImpInterceptorHandler implements InterceptorHandler{
         this.context = context;
     }
 
-    public void setPreprocessedParameters(Object[] args) {
-        this.args = args;
-    }
-    public Object[] getPreprocessedParameters() {
-        return args;
-    }
-    
 }

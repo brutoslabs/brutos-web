@@ -34,6 +34,4 @@ public interface InterceptorHandler {
 
     ApplicationContext getContext();
 
-    Object[] getPreprocessedParameters();
-    
 }

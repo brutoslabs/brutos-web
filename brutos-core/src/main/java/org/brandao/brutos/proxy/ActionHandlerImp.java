@@ -63,7 +63,6 @@ public abstract class ActionHandlerImp implements ActionHandler{
         ImpInterceptorHandler handler = new ImpInterceptorHandler();
 
         handler.setContext((ApplicationContext)app);
-        handler.setPreprocessedParameters(args);
         handler.setResourceAction(resourceAction);
         handler.setResource( resource );
         

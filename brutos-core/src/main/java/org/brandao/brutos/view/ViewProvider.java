@@ -19,8 +19,17 @@ package org.brandao.brutos.view;
 
 import java.io.IOException;
 import java.util.Properties;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.ParameterizedRequest;
+import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.Scopes;
+import org.brandao.brutos.ViewException;
+import org.brandao.brutos.interceptor.InterceptorHandler;
+import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.ThrowableSafeData;
+import org.brandao.brutos.scope.Scope;
 
 /**
  *
@@ -83,7 +92,70 @@ public abstract class ViewProvider {
             HttpServletResponse response, ServletContext context )
                 throws ServletException, IOException;
     */
-    public abstract void show( String view, DispatcherType dispatcherType )
+    protected abstract void show( String view, DispatcherType dispatcherType )
                 throws IOException;
+
+    public void show( ParameterizedRequest request ) throws IOException,
+            ViewException{
+
+        InterceptorHandler handler = request.getHandler();
+        
+        if( request.isHasViewProcessed() )
+            throw new ViewException("view has been processed");
+
+        try{
+            Scopes scopes         =
+                handler.getContext().getScopes();
+            Scope requestScope    =
+                scopes.get(ScopeType.REQUEST.toString());
+            MethodForm method     =
+                handler.getResourceAction().getMethodForm();
+
+            ThrowableSafeData throwableSafeData =
+                    request.getThrowableSafeData();
+
+            Object objectThrow = request.getObjectThrow();
+            if( throwableSafeData != null ){
+                if( throwableSafeData.getParameterName() != null )
+                    requestScope.put(throwableSafeData.getParameterName(), objectThrow);
+
+                if( throwableSafeData.getUri() != null ){
+                    this.show(
+                        throwableSafeData.getUri(),
+                        throwableSafeData.getDispatcher());
+                    return;
+                }
+            }
+
+            if( method != null ){
+
+                if( method.getReturnClass() != void.class ){
+                    String var =
+                        method.getReturnIn() == null?
+                            BrutosConstants.DEFAULT_RETURN_NAME :
+                            method.getReturnIn();
+                    requestScope.put(var, request.getResultAction());
+                }
+
+                if( method.getReturnPage() != null ){
+                    this.show(method.getReturnPage(),
+                            method.getDispatcherType());
+                    return;
+                }
+                else
+                if( method.getReturnType() != null ){
+                    method.getReturnType().setValue(request.getResultAction());
+                    return;
+                }
+            }
+
+            this.show(request.getController().getPage(),
+                    request.getController().getDispatcherType());
+
+        }
+        finally{
+            request.setHasViewProcessed(true);
+        }
+    }
 
 }
