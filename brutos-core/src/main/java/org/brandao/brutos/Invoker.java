@@ -18,12 +18,12 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
-import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.view.ViewProvider;
 
 /**
@@ -143,6 +143,7 @@ public class Invoker {
         StackRequest stackRequest = (StackRequest)requestInstrument;
         
         long time = System.currentTimeMillis();
+        boolean createdThreadScope = ThreadScope.create();
         try{
             currentApp.set( this.applicationContext );
 
@@ -155,6 +156,8 @@ public class Invoker {
             return true;
         }
         finally{
+            if(createdThreadScope)
+                ThreadScope.destroy();
             stackRequest.pop();
             currentApp.remove();
             //requestScope.remove( BrutosConstants.IOC_PROVIDER );

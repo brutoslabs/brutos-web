@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.interceptor.InterceptorHandler;
@@ -194,9 +195,9 @@ public class Form {
     
     public void fieldsToRequest( Object webFrame ) {
         try{
+            Scopes scopes = Invoker.getCurrentApplicationContext().getScopes();
             Field[] fields = getClassType().getDeclaredFields();
-            Scope scope = Scopes.getScopesOfCurrentApplicationContext()
-                    .get(ScopeType.REQUEST);
+            Scope scope = scopes.get(ScopeType.REQUEST);
 
             for( Field f: fields ){
                 f.setAccessible( true );

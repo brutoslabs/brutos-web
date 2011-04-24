@@ -29,8 +29,11 @@ import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.proxy.ProxyFactory;
+import org.brandao.brutos.scope.ApplicationScope;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.scope.SingletonScope;
+import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
@@ -147,6 +150,8 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
         
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
         this.codeGeneratorProvider = CodeGeneratorProvider.getProvider(this.getConfiguration());
+
+        loadScopes();
         
         if( iocProvider.containsBeanDefinition("customScopes") ){
             CustomScopeConfigurer customScopesConfigurer =
@@ -163,6 +168,28 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
         this.loadWebFrameManager(webFrameManager);
     }
 
+    private void loadScopes(){
+        getScopes()
+            .register(
+                ScopeType.APPLICATION.toString(),
+                new ApplicationScope());
+
+        getScopes()
+            .register(
+                ScopeType.SINGLETON.toString(),
+                new SingletonScope());
+
+        getScopes()
+            .register(
+                ScopeType.THREAD.toString(),
+                new ThreadScope());
+
+        getScopes()
+            .register(
+                ScopeType.REQUEST.toString(),
+                getScopes().get(ScopeType.THREAD));
+
+    }
     /**
      * Define o respons�vel por resolver os controladores.
      * @param controllerResolver Respons�vel por resolver os controladores
@@ -297,18 +324,34 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
     }
 
     /**
-     * Obt�m um determinado controlador.
+     * Obtém um determinado controlador.
      * @param controllerClass Classe do controlador
      * @return Controlador.
      */
     public Object getController( Class controllerClass ){
-        Form controller = this.controllerManager.getController(controllerClass);
-        Object resource = this.iocProvider.getBean(controller.getId());
+        Form controller =
+                controllerManager.getController(controllerClass);
+
+        if( controller == null )
+            throw new BrutosException(
+                String.format(
+                    "controller not configured: %s",
+                    controllerClass.getName() ));
+        
+        Object resource = 
+                iocProvider.getBean(controller.getId());
+
         ProxyFactory proxyFactory =
-                this.codeGeneratorProvider.getProxyFactory(controllerClass);
+                codeGeneratorProvider
+                    .getProxyFactory(controllerClass);
 
         Object proxy =
-                proxyFactory.getNewProxy(resource, controller, this, invoker);
+                proxyFactory
+                    .getNewProxy(
+                        resource,
+                        controller,
+                        this, invoker);
+        
         return proxy;
     }
 

@@ -17,25 +17,47 @@
 
 package org.brandao.brutos.scope;
 
-import org.brandao.brutos.ConfigurableApplicationContext;
+import java.util.HashMap;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class IOCScope implements Scope{
+public class ThreadScope implements Scope{
 
-    private ConfigurableApplicationContext app;
-    
-    public IOCScope( ConfigurableApplicationContext app ) {
-        this.app = app;
+    private static final ThreadLocal threadLocal;
+
+    static{
+        threadLocal = new ThreadLocal();
+    }
+
+    public ThreadScope() {
+    }
+
+    public static boolean create(){
+        
+        if( threadLocal.get() == null ){
+            threadLocal.set(new HashMap());
+            return true;
+        }
+        else
+            return false;
+
+
+    }
+
+    public static void destroy(){
+        threadLocal.remove();
     }
 
     public void put(String name, Object value){
+        HashMap map = (HashMap) threadLocal.get();
+        map.put(name, value);
     }
 
     public Object get(String name) {
-        return app.getIocProvider().getBean(name);
+        HashMap map = (HashMap) threadLocal.get();
+        return map.get(name);
     }
 
     public Object getCollection( String name ){
@@ -43,6 +65,8 @@ public class IOCScope implements Scope{
     }
 
     public void remove( String name ){
+        HashMap map = (HashMap) threadLocal.get();
+        map.remove(name);
     }
     
 }

@@ -19,6 +19,7 @@ package org.brandao.brutos.mapping;
 
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
@@ -187,7 +188,7 @@ public class MapMapping extends CollectionMapping{
     }
 
     public Scope getKeyScope() {
-        Scopes scopes = Scopes.getScopesOfCurrentApplicationContext();
+        Scopes scopes = Invoker.getCurrentApplicationContext().getScopes();
 
         Scope objectScope = scopes
                 .get( keyScopeType.toString() );

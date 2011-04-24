@@ -20,6 +20,7 @@ package org.brandao.brutos.mapping;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.scope.Scope;
@@ -97,7 +98,7 @@ public class FieldBean {
     }
 
     public Scope getScope() {
-        Scopes scopes = Scopes.getScopesOfCurrentApplicationContext();
+        Scopes scopes = Invoker.getCurrentApplicationContext().getScopes();
 
         Scope objectScope = scopes
                 .get( scopeType.toString() );
