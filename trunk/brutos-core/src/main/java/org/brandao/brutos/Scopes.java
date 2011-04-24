@@ -70,10 +70,10 @@ public class Scopes{
         return Collections.unmodifiableMap(scopes);
     }
 
-    
+    /*
     public static Scopes getScopesOfCurrentApplicationContext(){
         return Invoker
                 .getCurrentApplicationContext().getScopes();
     }
-    
+    */
 }

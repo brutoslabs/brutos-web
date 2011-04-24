@@ -18,6 +18,7 @@
 package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
@@ -186,8 +187,8 @@ public class UseBeanData {
 
     public Scope getScope() {
 
-        Scope objectScope = Scopes.getScopesOfCurrentApplicationContext()
-                .get( scopeType.toString() );
+        Scopes scopes = Invoker.getCurrentApplicationContext().getScopes();
+        Scope objectScope = scopes.get( scopeType.toString() );
 
         if( objectScope == null )
             throw new BrutosException( "scope not allowed in context: " + scopeType );
