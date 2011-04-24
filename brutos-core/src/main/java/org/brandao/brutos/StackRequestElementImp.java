@@ -18,31 +18,26 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.ThrowableSafeData;
-import org.brandao.brutos.view.ViewProvider;
 
 /**
  *
  * @author Brandao
  */
-public class ParameterizedRequest {
+public class StackRequestElementImp implements StackRequestElement{
 
     private Throwable objectThrow;
     private ThrowableSafeData throwableSafeData;
     private Object[] parameters;
-    private String view;
-    private DispatcherType dispatcherType;
-    private ApplicationContext context;
     private Form controller;
     private ResourceAction action;
-    private boolean hasViewProcessed;
     private Object resultAction;
     private InterceptorHandler handler;
-    private IOCProvider iocProvider;
-    private ViewProvider viewProvider;
-
+    private Object resource;
+    private String view;
+    private DispatcherType dispatcherType;
+    
     public Throwable getObjectThrow() {
         return objectThrow;
     }
@@ -67,30 +62,6 @@ public class ParameterizedRequest {
         this.parameters = parameters;
     }
 
-    public String getView() {
-        return view;
-    }
-
-    public void setView(String view) {
-        this.view = view;
-    }
-
-    public DispatcherType getDispatcherType() {
-        return dispatcherType;
-    }
-
-    public void setDispatcherType(DispatcherType dispatcherType) {
-        this.dispatcherType = dispatcherType;
-    }
-
-    public ApplicationContext getContext() {
-        return context;
-    }
-
-    public void setContext(ApplicationContext context) {
-        this.context = context;
-    }
-
     public Form getController() {
         return controller;
     }
@@ -105,14 +76,6 @@ public class ParameterizedRequest {
 
     public void setAction(ResourceAction action) {
         this.action = action;
-    }
-
-    public boolean isHasViewProcessed(){
-        return hasViewProcessed;
-    }
-
-    public void setHasViewProcessed(boolean hasViewProcessed) {
-        this.hasViewProcessed = hasViewProcessed;
     }
 
     public Object getResultAction() {
@@ -131,21 +94,28 @@ public class ParameterizedRequest {
         this.handler = handler;
     }
 
-    public IOCProvider getIocProvider() {
-        return iocProvider;
+    public Object getResource() {
+        return resource;
     }
 
-    public void setIocProvider(IOCProvider iocProvider) {
-        this.iocProvider = iocProvider;
+    public void setResource(Object resource) {
+        this.resource = resource;
     }
 
-    public ViewProvider getViewProvider() {
-        return viewProvider;
+    public String getView() {
+        return view;
     }
 
-    public void setViewProvider(ViewProvider viewProvider) {
-        this.viewProvider = viewProvider;
+    public void setView(String view) {
+        this.view = view;
     }
-    
+
+    public DispatcherType getDispatcherType() {
+        return dispatcherType;
+    }
+
+    public void setDispatcherType(DispatcherType dispatcherType) {
+        this.dispatcherType = dispatcherType;
+    }
 
 }

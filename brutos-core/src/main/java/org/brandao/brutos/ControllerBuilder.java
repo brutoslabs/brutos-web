@@ -298,7 +298,8 @@ public class ControllerBuilder {
             mappingBean = new CollectionMapping(controller);
         else
             mappingBean = new MappingBean(controller);
-        
+
+
         mappingBean.setClassType( target );
         mappingBean.setName( name );
         controller.getMappingBeans().put( name, mappingBean );

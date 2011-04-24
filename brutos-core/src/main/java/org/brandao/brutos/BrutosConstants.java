@@ -52,7 +52,7 @@ public interface BrutosConstants {
 
     public final String UPLOAD_LISTENER_FACTORY = ApplicationContext.class.getName() + ".UPLOAD_LISTENER_FACTORY";
 
-    public final String PARAMETERIZED_REQUEST = ApplicationContext.class.getName() + ".PARAMETERIZED_REQUEST";
+    public final String REQUEST_INSTRUMENT = ApplicationContext.class.getName() + ".REQUEST_INSTRUMENT";
 
     public final String HTTP_REQUEST_PARSER_FACTORY = ApplicationContext.class.getName() + ".HTTP_REQUEST_PARSER_FACTORY";
 

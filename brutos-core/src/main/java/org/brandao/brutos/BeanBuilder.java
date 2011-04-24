@@ -29,15 +29,15 @@ import org.brandao.brutos.type.Types;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
- * Constrói o mapeamento de um bean.<br>
- * Com essa classe é possível definir as dependências do bean, tanto por construtor
- * quanto por método. É possível também obter a instância do bean por meio de
- * uma fábrica ou método estático. <br>
- * Sua instância é obtida a partir da classe ControllerBuilder.<br>
- * BeanBuilder não tem a mesma função que um container IOC, ela apenas faz o
- * mapeamento de uma requisição em um determinado bean.
+ * Constrï¿½i o mapeamento de um bean.<br>
+ * Com essa classe ï¿½ possï¿½vel definir as dependï¿½ncias do bean, tanto por construtor
+ * quanto por mï¿½todo. ï¿½ possï¿½vel tambï¿½m obter a instï¿½ncia do bean por meio de
+ * uma fï¿½brica ou mï¿½todo estï¿½tico. <br>
+ * Sua instï¿½ncia ï¿½ obtida a partir da classe ControllerBuilder.<br>
+ * BeanBuilder nï¿½o tem a mesma funï¿½ï¿½o que um container IOC, ela apenas faz o
+ * mapeamento de uma requisiï¿½ï¿½o em um determinado bean.
  *
- * <p>No exemplo abaixo a dependência do bean é mapeada por construtor.</p>
+ * <p>No exemplo abaixo a dependï¿½ncia do bean ï¿½ mapeada por construtor.</p>
  *
  * Ex:
  * <pre>
@@ -62,7 +62,7 @@ import org.brandao.brutos.validator.ValidatorProvider;
  *
  * </pre>
  *
- * No próximo exemplo o mesmo parâmetro é mapeado em uma propriedade.
+ * No prï¿½ximo exemplo o mesmo parï¿½metro ï¿½ mapeado em uma propriedade.
  *
  * Ex:
  * <pre>
@@ -83,7 +83,7 @@ import org.brandao.brutos.validator.ValidatorProvider;
  *
  * </pre>
  *
- * Nesse exemplo é feito o mapeamento de um atributo do tipo enum.
+ * Nesse exemplo ï¿½ feito o mapeamento de um atributo do tipo enum.
  * <pre>
  *
  * &lt;html&gt;
@@ -118,7 +118,7 @@ import org.brandao.brutos.validator.ValidatorProvider;
  *
  * </pre>
  *
- * O mapeamento do enum pode também ser feito da seguinte maneira:
+ * O mapeamento do enum pode tambï¿½m ser feito da seguinte maneira:
  * <pre>
  *
  * &lt;html&gt;
@@ -155,8 +155,8 @@ public class BeanBuilder {
     }
 
     /**
-     * Define o nome da fábrica do bean.
-     * @param factory Nome da fábrica.
+     * Define o nome da fï¿½brica do bean.
+     * @param factory Nome da fï¿½brica.
      * @return Construtor do mapeamento.
      */
     public BeanBuilder setFactory( String factory ){
@@ -165,8 +165,8 @@ public class BeanBuilder {
     }
 
     /**
-     * Define o nome do método da fábrica.
-     * @param methodFactory Nome do método.
+     * Define o nome do mï¿½todo da fï¿½brica.
+     * @param methodFactory Nome do mï¿½todo.
      * @return Construtor do mapeamento.
      */
     public BeanBuilder setMethodfactory( String methodFactory ){
@@ -175,7 +175,7 @@ public class BeanBuilder {
     }
 
     /**
-     * Define o separador. Se não informado, o separador será ".".
+     * Define o separador. Se nï¿½o informado, o separador serï¿½ ".".
      * @param separator Separador
      * @return Construtor do mapeamento.
      */
@@ -187,7 +187,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de uma propriedade.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param propertyName Nome da propriedade
      * @param enumProperty Usado no mapeamento de enum.
      * @return Construtor do mapeamento.
@@ -201,7 +201,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de uma propriedade.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param propertyName Nome da propriedade
      * @param temporalProperty Usado no mapeamento de datas.
      * @return Construtor do mapeamento.
@@ -215,7 +215,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de uma propriedade.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param propertyName Nome da propriedade
      * @param type Faz o processamento da propriedade.
      * @return Construtor do mapeamento.
@@ -229,7 +229,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de uma propriedade.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param propertyName Nome da propriedade
      * @param mapping Mapeamento customizado.
      * @return Construtor do mapeamento.
@@ -252,12 +252,12 @@ public class BeanBuilder {
     }
 
     /**
-     * Contrói o mapeamento da chave usada para acessar os elementos de uma coleção.
+     * Contrï¿½i o mapeamento da chave usada para acessar os elementos de uma coleï¿½ï¿½o.
      * 
      * @param type Classe alvo do mapeamento.
      * @return Construtor do mapeamento.
-     * @throws org.brandao.brutos.BrutosException Lançado se a classe alvo do
-     * mapeamento não for uma coleção.
+     * @throws org.brandao.brutos.BrutosException Lanï¿½ado se a classe alvo do
+     * mapeamento nï¿½o for uma coleï¿½ï¿½o.
      */
     public BeanBuilder buildKey( Class type ){
 
@@ -276,7 +276,7 @@ public class BeanBuilder {
     }
     
     /**
-     * Constrói o mapeamento dos elementos de uma coleção.
+     * Constrï¿½i o mapeamento dos elementos de uma coleï¿½ï¿½o.
      *
      * @param type Classe alvo do mapeamento.
      * @return Construtor do mapeamento dos elementos.
@@ -293,8 +293,8 @@ public class BeanBuilder {
     }
 
     /**
-     * Define a representação do índice do objeto em uma coleção.
-     * @param indexFormat Representação.
+     * Define a representaï¿½ï¿½o do ï¿½ndice do objeto em uma coleï¿½ï¿½o.
+     * @param indexFormat Representaï¿½ï¿½o.
      * @return Construtor do mapeamento.
      */
     public BeanBuilder setIndexFormat( String indexFormat ){
@@ -303,15 +303,15 @@ public class BeanBuilder {
     }
 
     /**
-     * Define o tipo da coleção.
+     * Define o tipo da coleï¿½ï¿½o.
      * 
      * @param ref Nome do mapeamento.
      * @return Construtor do mapeamento.
-     * @throws java.lang.NullPointerException Lançado se o nome do mapeamento for igual a null.
-     * @throws org.brandao.brutos.NotFoundMappingBeanException Lançado se o
-     * mapeamento não for encontrado.
-     * @throws org.brandao.brutos.BrutosException Lançado se a classe alvo do
-     * mapeamento não for uma coleção.
+     * @throws java.lang.NullPointerException Lanï¿½ado se o nome do mapeamento for igual a null.
+     * @throws org.brandao.brutos.NotFoundMappingBeanException Lanï¿½ado se o
+     * mapeamento nï¿½o for encontrado.
+     * @throws org.brandao.brutos.BrutosException Lanï¿½ado se a classe alvo do
+     * mapeamento nï¿½o for uma coleï¿½ï¿½o.
      */
     public BeanBuilder setElement( String ref ){
 
@@ -345,9 +345,9 @@ public class BeanBuilder {
     }
 
     /**
-     * Constrói o mapeamento de uma propriedade.
+     * Constrï¿½i o mapeamento de uma propriedade.
      * 
-     * @param name Identificação.
+     * @param name Identificaï¿½ï¿½o.
      * @param propertyName Nome da propriedade
      * @param target Classe alvo do mapeamento.
      * @return Construtor da propriedade.
@@ -366,7 +366,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de uma propriedade.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param propertyName Nome da propriedade
      * @return Construtor do mapeamento.
      */
@@ -378,7 +378,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de uma propriedade.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param propertyName Nome da propriedade
      * @param scope Escopo.
      * @return Construtor do mapeamento.
@@ -391,9 +391,9 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de uma propriedade.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param propertyName Nome da propriedade
-     * @param value Valor da propriedade. Tem a mesma função do modificador final.
+     * @param value Valor da propriedade. Tem a mesma funï¿½ï¿½o do modificador final.
      * @return Construtor do mapeamento.
      */
     public PropertyBuilder addStaticProperty( String name, String propertyName, Object value ){
@@ -404,13 +404,13 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de uma propriedade.
      * 
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param propertyName Nome da propriedade
      * @param enumProperty Usado no mapeamento de enum.
      * @param temporalProperty Usado no mapeamento de datas.
      * @param mapping Mapeamento customizado.
      * @param scope Escopo.
-     * @param value Valor da propriedade. Tem a mesma função do modificador final.
+     * @param value Valor da propriedade. Tem a mesma funï¿½ï¿½o do modificador final.
      * @param type Faz o processamento da propriedade.
      * @return Construtor do mapeamento.
      */
@@ -487,9 +487,9 @@ public class BeanBuilder {
     }
 
     /**
-     * Constrói o mapeamento de um argumento do construtor.
+     * Constrï¿½i o mapeamento de um argumento do construtor.
      *
-     * @param name Identificação.
+     * @param name Identificaï¿½ï¿½o.
      * @param target Classe alvo do mapeamento.
      * @return Construtor do argumento.
      */
@@ -508,7 +508,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de um argumento do construtor.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param enumProperty Usado no mapeamento argumentos do tipo enum.
      * @return Construtor do argumento.
      */
@@ -520,7 +520,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de um argumento do construtor.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param temporalProperty Usado no mapeamento de datas.
      * @return Construtor do argumento.
      */
@@ -532,7 +532,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de um argumento do construtor.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param type Faz o processamento do argumento.
      * @return Construtor do argumento.
      */
@@ -545,7 +545,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de um argumento do construtor.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param mapping Mapeamento customizado.
      * @return Construtor do argumento.
      */
@@ -557,7 +557,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de um argumento do construtor.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @return Construtor do argumento.
      */
     public ConstructorBuilder addContructorArg( String name ){
@@ -568,7 +568,7 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de um argumento do construtor.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param scope Escopo.
      * @return Construtor do argumento.
      */
@@ -580,8 +580,8 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de um argumento do construtor.
      *
-     * @param name Nome do parâmetro.
-     * @param value Valor da propriedade. Tem a mesma função do modificador final.
+     * @param name Nome do parï¿½metro.
+     * @param value Valor da propriedade. Tem a mesma funï¿½ï¿½o do modificador final.
      * @return Construtor do argumento.
      */
     public ConstructorBuilder addStaticContructorArg( String name, Object value ){
@@ -592,12 +592,12 @@ public class BeanBuilder {
     /**
      * Faz o mapeamento de um argumento do construtor.
      *
-     * @param name Nome do parâmetro.
+     * @param name Nome do parï¿½metro.
      * @param enumProperty Usado no mapeamento argumentos do tipo enum.
      * @param temporalProperty Usado no mapeamento de datas.
      * @param mapping Mapeamento customizado.
      * @param scope Escopo.
-     * @param value Valor da propriedade. Tem a mesma função do modificador final.
+     * @param value Valor da propriedade. Tem a mesma funï¿½ï¿½o do modificador final.
      * @param type Faz o processamento do argumento.
      * @return Construtor do argumento.
      */
@@ -635,7 +635,7 @@ public class BeanBuilder {
             throw new BrutosException( "name is required: " +
                     mappingBean.getClassType().getName() );
         */
-        FieldBean fieldBean = new FieldBean();
+        FieldBean fieldBean = new FieldBean(this.mappingBean);
         fieldBean.setEnumProperty( enumProperty );
         fieldBean.setParameterName( name );
         fieldBean.setName(propertyName);
@@ -680,17 +680,17 @@ public class BeanBuilder {
     }
 
     /**
-     * Verifica se é o mapeamento de um Map.
-     * @return Verdadeiro se é o mapeamento de um Map, caso contrário falso.
+     * Verifica se ï¿½ o mapeamento de um Map.
+     * @return Verdadeiro se ï¿½ o mapeamento de um Map, caso contrï¿½rio falso.
      */
     public boolean isMap(){
         return this.mappingBean.isMap();
     }
 
     /**
-     * Verifica se é o mapeamento de uma Collection.
-     * @return Verdadeiro se é o mapeamento de uma Collection,
-     * caso contrário falso.
+     * Verifica se ï¿½ o mapeamento de uma Collection.
+     * @return Verdadeiro se ï¿½ o mapeamento de uma Collection,
+     * caso contrï¿½rio falso.
      */
     public boolean isCollection(){
         return this.mappingBean.isCollection();

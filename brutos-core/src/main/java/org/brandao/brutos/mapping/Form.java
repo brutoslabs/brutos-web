@@ -37,9 +37,6 @@ import org.brandao.brutos.scope.Scope;
  */
 public class Form {
 
-    /**
-     *
-     */
     private String id;
     
     private String uri;

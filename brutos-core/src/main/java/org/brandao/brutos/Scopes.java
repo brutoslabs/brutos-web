@@ -21,7 +21,6 @@ import org.brandao.brutos.scope.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 
@@ -71,8 +70,10 @@ public class Scopes{
         return Collections.unmodifiableMap(scopes);
     }
 
+    
     public static Scopes getScopesOfCurrentApplicationContext(){
         return Invoker
                 .getCurrentApplicationContext().getScopes();
     }
+    
 }

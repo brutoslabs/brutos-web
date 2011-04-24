@@ -22,9 +22,11 @@ import java.util.Properties;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.ParameterizedRequest;
+import org.brandao.brutos.RequestInstrument;
+import org.brandao.brutos.RequestInstrumentImp;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
+import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.ViewException;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.MethodForm;
@@ -95,29 +97,31 @@ public abstract class ViewProvider {
     protected abstract void show( String view, DispatcherType dispatcherType )
                 throws IOException;
 
-    public void show( ParameterizedRequest request ) throws IOException,
+    public void show( RequestInstrument requestInstrument,
+            StackRequestElement stackRequestElement ) throws IOException,
             ViewException{
 
-        InterceptorHandler handler = request.getHandler();
-        
-        if( request.isHasViewProcessed() )
+        if( requestInstrument.isHasViewProcessed() )
             throw new ViewException("view has been processed");
 
         try{
             Scopes scopes         =
-                handler.getContext().getScopes();
+                requestInstrument.getContext().getScopes();
             Scope requestScope    =
                 scopes.get(ScopeType.REQUEST.toString());
             MethodForm method     =
-                handler.getResourceAction().getMethodForm();
+                stackRequestElement.getAction().getMethodForm();
 
             ThrowableSafeData throwableSafeData =
-                    request.getThrowableSafeData();
+                    stackRequestElement.getThrowableSafeData();
 
-            Object objectThrow = request.getObjectThrow();
+            Object objectThrow = stackRequestElement.getObjectThrow();
+
             if( throwableSafeData != null ){
                 if( throwableSafeData.getParameterName() != null )
-                    requestScope.put(throwableSafeData.getParameterName(), objectThrow);
+                    requestScope.put(
+                        throwableSafeData.getParameterName(),
+                        objectThrow);
 
                 if( throwableSafeData.getUri() != null ){
                     this.show(
@@ -127,6 +131,11 @@ public abstract class ViewProvider {
                 }
             }
 
+            if( stackRequestElement.getView() != null ){
+                this.show(stackRequestElement.getView(),
+                    stackRequestElement.getDispatcherType());
+            }
+
             if( method != null ){
 
                 if( method.getReturnClass() != void.class ){
@@ -134,7 +143,7 @@ public abstract class ViewProvider {
                         method.getReturnIn() == null?
                             BrutosConstants.DEFAULT_RETURN_NAME :
                             method.getReturnIn();
-                    requestScope.put(var, request.getResultAction());
+                    requestScope.put(var, stackRequestElement.getResultAction());
                 }
 
                 if( method.getReturnPage() != null ){
@@ -144,17 +153,19 @@ public abstract class ViewProvider {
                 }
                 else
                 if( method.getReturnType() != null ){
-                    method.getReturnType().setValue(request.getResultAction());
+                    method.getReturnType().setValue(stackRequestElement.getResultAction());
                     return;
                 }
             }
 
-            this.show(request.getController().getPage(),
-                    request.getController().getDispatcherType());
+            this.show(stackRequestElement.getController().getPage(),
+                    stackRequestElement.getController().getDispatcherType());
 
         }
         finally{
-            request.setHasViewProcessed(true);
+            ((RequestInstrumentImp)requestInstrument)
+                    .setHasViewProcessed(true);
+
         }
     }
 
