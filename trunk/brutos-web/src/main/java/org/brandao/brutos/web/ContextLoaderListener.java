@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.web.http.BrutosRequestImp;
 
@@ -74,10 +75,12 @@ public class ContextLoaderListener implements ServletContextListener,
     }
 
     public void requestDestroyed(ServletRequestEvent sre) {
+        ThreadScope.destroy();
         //if( currentRequest != null )
         //    currentRequest.remove();
     }
 
+    /*
     private ServletRequest getRequest( ServletRequest request ){
         try{
             ServletRequest brutosRequest = (ServletRequest) Class.forName( 
@@ -99,9 +102,11 @@ public class ContextLoaderListener implements ServletContextListener,
             throw new BrutosException( e );
         }
     }
+    */
     
     public void requestInitialized(ServletRequestEvent sre) {
         //currentRequest.set( getRequest( sre.getServletRequest() ) );
+        ThreadScope.create();
     }
     
 }
