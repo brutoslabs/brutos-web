@@ -24,6 +24,7 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.view.ViewProvider;
 
 /**
  * Classe usada para invocar a aplicação.
@@ -47,19 +48,20 @@ public class Invoker {
     protected ControllerManager controllerManager;
     protected ActionResolver actionResolver;
     protected ApplicationContext applicationContext;
-    
+    protected ViewProvider viewProvider;
     public Invoker() {
     }
 
     public Invoker( ControllerResolver controllerResolver, IOCProvider iocProvider, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
-            ApplicationContext applicationContext ){
+            ApplicationContext applicationContext, ViewProvider viewProvider ){
         
         this.controllerResolver = controllerResolver;
         this.iocProvider        = iocProvider;
         this.controllerManager  = controllerManager;
         this.actionResolver     = actionResolver;
         this.applicationContext = applicationContext;
+        this.viewProvider       = viewProvider;
     }
 
     /**
@@ -85,6 +87,12 @@ public class Invoker {
         ih.setResource( iocProvider.getBean(form.getId()) );
         ih.setResourceAction( actionResolver.getResourceAction(form, scopes, ih) );
 
+
+        StackRequestElement element = createStackRequestElement();
+
+        element.setAction(ih.getResourceAction());
+        element.setController(form);
+        element.setHandler(ih);
         /*
         long time = System.currentTimeMillis();
         try{
@@ -121,27 +129,35 @@ public class Invoker {
         return true;
         */
 
-        return invoke(ih);
+        return invoke(element);
     }
 
-    public boolean invoke( InterceptorHandler i ){
+    public boolean invoke( StackRequestElement element ){
 
         Scopes scopes = applicationContext.getScopes();
         Scope requestScope = scopes.get(ScopeType.REQUEST);
+        
+        RequestInstrument requestInstrument =
+                getRequestInstrument(requestScope);
 
+        StackRequest stackRequest = (StackRequest)requestInstrument;
+        
         long time = System.currentTimeMillis();
         try{
             currentApp.set( this.applicationContext );
-            requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
-            requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE,
-                    this.applicationContext );
-            i.getResourceAction().getMethodForm().getForm()
-                    .proccessBrutosAction( i );
+
+            stackRequest.push(element);
+            //requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
+            //requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE,
+            //        this.applicationContext );
+            element.getController()
+                    .proccessBrutosAction( element.getHandler() );
             return true;
         }
         finally{
+            stackRequest.pop();
             currentApp.remove();
-            requestScope.remove( BrutosConstants.IOC_PROVIDER );
+            //requestScope.remove( BrutosConstants.IOC_PROVIDER );
             if( logger.isDebugEnabled() )
                 logger.debug(
                         String.format( "Request processed in %d ms",
@@ -151,7 +167,31 @@ public class Invoker {
         
     }
 
+    private RequestInstrument getRequestInstrument(Scope scope){
+        RequestInstrument requestInstrument = 
+                (RequestInstrument)
+                    scope.get(BrutosConstants.REQUEST_INSTRUMENT);
+
+        if( requestInstrument == null ){
+            requestInstrument =
+                    new RequestInstrumentImp(
+                        this.applicationContext,
+                        this.iocProvider,
+                        this.viewProvider);
+
+            scope.put(BrutosConstants.REQUEST_INSTRUMENT, requestInstrument);
+        }
+
+        return requestInstrument;
+    }
+
+    protected StackRequestElement createStackRequestElement(){
+        return new StackRequestElementImp();
+    }
+
+    
     public static ApplicationContext getCurrentApplicationContext(){
         return (ApplicationContext) currentApp.get();
     }
+    
 }

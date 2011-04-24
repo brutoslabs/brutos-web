@@ -135,7 +135,16 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
         this.responseFactory = getMvcResponseFactory();
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
         this.controllerManager = new ControllerManager(this.interceptorManager, validatorProvider);
-        this.invoker = new Invoker(  controllerResolver, iocProvider, controllerManager, actionResolver, this );
+
+        this.invoker =
+                new Invoker(
+                    controllerResolver,
+                    iocProvider,
+                    controllerManager,
+                    actionResolver,
+                    this,
+                    viewProvider );
+        
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
         this.codeGeneratorProvider = CodeGeneratorProvider.getProvider(this.getConfiguration());
         

@@ -187,7 +187,9 @@ public class MapMapping extends CollectionMapping{
     }
 
     public Scope getKeyScope() {
-        Scope objectScope = Scopes.getScopesOfCurrentApplicationContext()
+        Scopes scopes = Scopes.getScopesOfCurrentApplicationContext();
+
+        Scope objectScope = scopes
                 .get( keyScopeType.toString() );
 
         if( objectScope == null )

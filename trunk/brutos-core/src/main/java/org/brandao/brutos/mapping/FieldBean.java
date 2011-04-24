@@ -49,8 +49,11 @@ public class FieldBean {
     private Validator validator;
 
     private Object value;
-    
-    public FieldBean() {
+
+    private MappingBean mappingBean;
+
+    public FieldBean(MappingBean mappingBean) {
+        this.mappingBean = mappingBean;
     }
 
     public String getParameterName() {
@@ -94,8 +97,9 @@ public class FieldBean {
     }
 
     public Scope getScope() {
+        Scopes scopes = Scopes.getScopesOfCurrentApplicationContext();
 
-        Scope objectScope = Scopes.getScopesOfCurrentApplicationContext()
+        Scope objectScope = scopes
                 .get( scopeType.toString() );
 
         if( objectScope == null )
@@ -139,5 +143,13 @@ public class FieldBean {
 
     public void setValue(Object value) {
         this.value = value;
+    }
+
+    public MappingBean getMappingBean() {
+        return mappingBean;
+    }
+
+    public void setMappingBean(MappingBean mappingBean) {
+        this.mappingBean = mappingBean;
     }
 }

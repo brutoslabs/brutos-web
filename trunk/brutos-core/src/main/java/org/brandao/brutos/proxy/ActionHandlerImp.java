@@ -20,14 +20,12 @@ package org.brandao.brutos.proxy;
 
 import java.lang.reflect.Method;
 import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.DefaultResourceAction;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.StackRequestElementImp;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.mapping.Form;
 import org.brandao.brutos.mapping.MethodForm;
-import org.brandao.brutos.scope.Scope;
 
 /**
  *
@@ -40,8 +38,8 @@ public abstract class ActionHandlerImp implements ActionHandler{
     private ApplicationContext app;
     private Invoker invoker;
 
-    public ActionHandlerImp(Object resource, Form form, ApplicationContext app,
-            Invoker invoker){
+    public ActionHandlerImp(Object resource, Form form,
+            ApplicationContext app, Invoker invoker){
         this.resource = resource;
         this.app = app;
         this.form = form;
@@ -51,10 +49,6 @@ public abstract class ActionHandlerImp implements ActionHandler{
     public Object invoke(Object self, Method thisMethod, Method proceed,
             Object[] args) throws Throwable {
 
-        Scope requestScope =
-            app.getScopes()
-                .get(ScopeType.REQUEST.toString());
-        
         MethodForm methodForm = form.getMethod(thisMethod);
 
         DefaultResourceAction resourceAction =
@@ -62,17 +56,21 @@ public abstract class ActionHandlerImp implements ActionHandler{
 
         ImpInterceptorHandler handler = new ImpInterceptorHandler();
 
-        handler.setContext((ApplicationContext)app);
+        handler.setContext(app);
         handler.setResourceAction(resourceAction);
         handler.setResource( resource );
         
-        invoker.invoke(handler);
+        StackRequestElementImp stackRequestElementImp =
+                new StackRequestElementImp();
 
-        String var =
-            methodForm.getReturnIn() == null?
-                BrutosConstants.DEFAULT_RETURN_NAME :
-                methodForm.getReturnIn();
+        stackRequestElementImp.setAction(resourceAction);
+        stackRequestElementImp.setController(form);
+        stackRequestElementImp.setHandler(handler);
+        stackRequestElementImp.setParameters(args);
+        stackRequestElementImp.setResource(resource);
 
-        return requestScope.get(var);
+        invoker.invoke(stackRequestElementImp);
+
+        return stackRequestElementImp.getResultAction();
     }
 }

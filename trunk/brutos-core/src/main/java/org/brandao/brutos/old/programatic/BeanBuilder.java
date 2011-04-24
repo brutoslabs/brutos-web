@@ -94,7 +94,7 @@ public class BeanBuilder {
             throw new BrutosException( "name is required: " +
                     mappingBean.getClassType().getName() );
 
-        FieldBean fieldBean = new FieldBean();
+        FieldBean fieldBean = new FieldBean(null);
         fieldBean.setEnumProperty( enumProperty );
         fieldBean.setParameterName( name );
         fieldBean.setName(propertyName);
