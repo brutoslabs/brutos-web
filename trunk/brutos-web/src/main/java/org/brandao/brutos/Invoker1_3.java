@@ -27,6 +27,7 @@ import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
+import org.brandao.brutos.view.ViewProvider;
 
 /**
  * Classe usada para invocar a aplica��o.
@@ -40,9 +41,9 @@ public class Invoker1_3 extends Invoker{
 
     public Invoker1_3( ControllerResolver controllerResolver, IOCProvider iocProvider,
             ControllerManager controllerManager, ActionResolver actionResolver,
-            ApplicationContext applicationContext ){
+            ApplicationContext applicationContext, ViewProvider viewProvider ){
             super( controllerResolver, iocProvider,
-            controllerManager, actionResolver, applicationContext );
+            controllerManager, actionResolver, applicationContext, viewProvider );
     }
 
     public boolean invoke( String requestId ){
