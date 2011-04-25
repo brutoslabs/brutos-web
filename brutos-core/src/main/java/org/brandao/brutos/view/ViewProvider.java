@@ -28,7 +28,6 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.ViewException;
-import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
@@ -94,7 +93,8 @@ public abstract class ViewProvider {
             HttpServletResponse response, ServletContext context )
                 throws ServletException, IOException;
     */
-    protected abstract void show( String view, DispatcherType dispatcherType )
+    protected abstract void show( RequestInstrument requestInstrument,
+            String view, DispatcherType dispatcherType )
                 throws IOException;
 
     public void show( RequestInstrument requestInstrument,
@@ -125,6 +125,7 @@ public abstract class ViewProvider {
 
                 if( throwableSafeData.getUri() != null ){
                     this.show(
+                        requestInstrument,
                         throwableSafeData.getUri(),
                         throwableSafeData.getDispatcher());
                     return;
@@ -132,7 +133,7 @@ public abstract class ViewProvider {
             }
 
             if( stackRequestElement.getView() != null ){
-                this.show(stackRequestElement.getView(),
+                this.show(requestInstrument, stackRequestElement.getView(),
                     stackRequestElement.getDispatcherType());
             }
 
@@ -147,7 +148,7 @@ public abstract class ViewProvider {
                 }
 
                 if( method.getReturnPage() != null ){
-                    this.show(method.getReturnPage(),
+                    this.show(requestInstrument, method.getReturnPage(),
                             method.getDispatcherType());
                     return;
                 }
@@ -158,7 +159,8 @@ public abstract class ViewProvider {
                 }
             }
 
-            this.show(stackRequestElement.getController().getPage(),
+            this.show(requestInstrument,
+                    stackRequestElement.getController().getPage(),
                     stackRequestElement.getController().getDispatcherType());
 
         }
