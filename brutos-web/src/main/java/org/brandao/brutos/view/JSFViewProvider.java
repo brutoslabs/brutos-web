@@ -26,6 +26,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.web.http.BrutosRequestFilter;
 import org.brandao.brutos.web.RequestInfo;
 
@@ -73,7 +74,8 @@ public class JSFViewProvider extends ViewProvider{
         show(page, request, response, context);
     }
 
-    public void show(String view, DispatcherType dispatcherType) throws IOException {
+    public void show(RequestInstrument requestInstrument,
+            String view, DispatcherType dispatcherType) throws IOException {
         RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
         FilterChain filter = BrutosRequestFilter.getCurrentFilterChain();
         try {
