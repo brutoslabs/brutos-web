@@ -22,6 +22,7 @@ import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.view.*;
 import java.io.IOException;
 import org.brandao.brutos.Configuration;
+import org.brandao.brutos.RequestInstrument;
 
 /**
  *
@@ -84,7 +85,8 @@ public class MockViewProvider extends ViewProvider{
     public void configure(Properties properties) {
     }
 
-    public void show(String view, DispatcherType dispatcherType) throws IOException {
+    public void show(RequestInstrument requestInstrument,
+            String view, DispatcherType dispatcherType) throws IOException {
         //this.context = null;
         this.redirect = dispatcherType == DispatcherType.REDIRECT? true : false;
         //this.request = null;
