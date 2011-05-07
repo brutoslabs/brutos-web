@@ -19,11 +19,13 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.mapping.CollectionMapping;
-import org.brandao.brutos.mapping.FieldBean;
-import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.mapping.MapMapping;
-import org.brandao.brutos.mapping.MappingBean;
+import org.brandao.brutos.mapping.CollectionBean;
+import org.brandao.brutos.mapping.PropertyBean;
+import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MapBean;
+import org.brandao.brutos.mapping.Bean;
+import org.brandao.brutos.mapping.ConstructorArgBean;
+import org.brandao.brutos.mapping.DependencyBean;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
 import org.brandao.brutos.validator.ValidatorProvider;
@@ -141,17 +143,24 @@ import org.brandao.brutos.validator.ValidatorProvider;
  */
 public class BeanBuilder {
 
-    Form webFrame;
+    Controller controller;
     ControllerBuilder controllerBuilder;
-    MappingBean mappingBean;
+    Bean mappingBean;
     ValidatorProvider validatorProvider;
+    ApplicationContext applicationContext;
 
-    public BeanBuilder( MappingBean mappingBean, Form webFrame, ControllerBuilder controllerBuilder,
-            ValidatorProvider validatorProvider ) {
+    public BeanBuilder(
+            Bean mappingBean,
+            Controller controller,
+            ControllerBuilder controllerBuilder,
+            ValidatorProvider validatorProvider,
+            ApplicationContext applicationContext) {
+
         this.controllerBuilder = controllerBuilder;
         this.mappingBean = mappingBean;
-        this.webFrame = webFrame;
+        this.controller = controller;
         this.validatorProvider = validatorProvider;
+        this.applicationContext = applicationContext;
     }
 
     /**
@@ -270,7 +279,7 @@ public class BeanBuilder {
         BeanBuilder bb = controllerBuilder
                     .buildMappingBean(beanName, type);
 
-        MapMapping map = (MapMapping)webFrame.getMappingBean(beanName);
+        MapBean map = (MapBean)controller.getMappingBean(beanName);
         map.setMappingKey(mappingBean);
         return bb;
     }
@@ -325,13 +334,13 @@ public class BeanBuilder {
         
         ref = ref == null || ref.replace( " ", "" ).length() == 0? null : ref;
 
-        if( !webFrame.getMappingBeans().containsKey( ref ) )
+        if( !controller.getMappingBeans().containsKey( ref ) )
             throw new NotFoundMappingBeanException(
                     String.format(
                         "mapping %s not found: %s",
-                        ref, webFrame.getClassType().getName() ) );
+                        ref, controller.getClassType().getName() ) );
 
-        MappingBean bean = webFrame.getMappingBeans().get( ref );
+        Bean bean = controller.getMappingBeans().get( ref );
 
         /*
         if( !bean.isBean() )
@@ -340,7 +349,7 @@ public class BeanBuilder {
                     webFrame.getClassType().getName() );
         */
 
-        ((CollectionMapping)mappingBean).setBean( bean );
+        ((CollectionBean)mappingBean).setBean( bean );
         return this;
     }
 
@@ -476,12 +485,13 @@ public class BeanBuilder {
         }
         */
 
-        FieldBean fieldBean = this.createDependencyBean(name, propertyName, true,
+        PropertyBean propertyBean =
+            (PropertyBean) this.createDependencyBean(name, propertyName, true,
                 enumProperty, temporalProperty, mapping, scope, value, type);
 
         Configuration validatorConfig = new Configuration();
-        fieldBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
-        this.mappingBean.getFields().put( propertyName, fieldBean );
+        propertyBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
+        this.mappingBean.getFields().put( propertyName, propertyBean );
 
         return new PropertyBuilder( validatorConfig );
     }
@@ -495,7 +505,7 @@ public class BeanBuilder {
      */
     public BeanBuilder buildConstructorArg( String name, Class target ){
         String beanName = this.mappingBean.getName()
-                + "#[" + this.mappingBean.getConstructor().getArgs().size() + "]";
+                + "#[" + this.mappingBean.getConstructor().size() + "]";
 
         BeanBuilder beanBuilder =
                 this.controllerBuilder.buildMappingBean(beanName, target);
@@ -605,78 +615,100 @@ public class BeanBuilder {
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, Type type ){
 
-        FieldBean fieldBean = this.createDependencyBean(name, null, false,
+        ConstructorArgBean arg =
+            (ConstructorArgBean) this.createDependencyBean(name, null, false,
                 enumProperty, temporalProperty, mapping, scope, value, type);
 
         Configuration validatorConfig = new Configuration();
-        fieldBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
-        this.mappingBean.getConstructor().getArgs().add(fieldBean);
+        arg.setValidator( validatorProvider.getValidator( validatorConfig ) );
+        this.mappingBean.getConstructor().addConstructorArg(arg);
         return new ConstructorBuilder( validatorConfig );
     }
 
-    private FieldBean createDependencyBean( String name, String propertyName,
+    private DependencyBean createDependencyBean( String name, String propertyName,
             boolean propertyNameRequired, EnumerationType enumProperty,
             String temporalProperty, String mapping, ScopeType scope,
             Object value, Type type ){
 
-        name = name == null || name.replace( " ", "" ).length() == 0? null : name;
-        propertyName = propertyName == null || propertyName.replace( " ", "" ).length() == 0? null : propertyName;
-        temporalProperty = temporalProperty == null || temporalProperty.replace( " ", "" ).length() == 0? null : temporalProperty;
-        mapping = mapping == null || mapping.replace( " ", "" ).length() == 0? null : mapping;
+        name = 
+            name == null || name.replace( " ", "" ).length() == 0?
+                null :
+                name;
 
-        if( propertyNameRequired && propertyName == null )
-            throw new BrutosException( "the property name is required!" );
-        else
-        if( this.mappingBean.getFields().containsKey( propertyName ) )
-            throw new BrutosException( "duplicate property name: " + propertyName );
+        propertyName =
+            propertyName == null || propertyName.replace( " ", "" ).length() == 0?
+                null :
+                propertyName;
 
-        /*
-        if( name == null )
-            throw new BrutosException( "name is required: " +
-                    mappingBean.getClassType().getName() );
-        */
-        FieldBean fieldBean = new FieldBean(this.mappingBean);
-        fieldBean.setEnumProperty( enumProperty );
-        fieldBean.setParameterName( name );
-        fieldBean.setName(propertyName);
-        fieldBean.setTemporalType( temporalProperty );
-        fieldBean.setValue(value);
-        fieldBean.setScopeType( scope );
+        temporalProperty = 
+            temporalProperty == null || temporalProperty.replace( " ", "" ).length() == 0?
+                null :
+                temporalProperty;
+
+        mapping =
+            mapping == null || mapping.replace( " ", "" ).length() == 0?
+                null :
+                mapping;
+
+        if( propertyNameRequired ){
+            if( propertyName == null )
+                throw new BrutosException( "the property name is required!" );
+            else
+            if( this.mappingBean.getFields().containsKey( propertyName ) )
+                throw new BrutosException( "duplicate property name: " + propertyName );
+        }
+
+        DependencyBean dependencyBean =
+                propertyNameRequired? 
+                    new PropertyBean(this.mappingBean) :
+                    new ConstructorArgBean(this.mappingBean);
+        
+        dependencyBean.setEnumProperty( enumProperty );
+        dependencyBean.setParameterName( name );
+
+        if( propertyNameRequired )
+            ((PropertyBean)dependencyBean).setName(propertyName);
+        
+        dependencyBean.setTemporalType( temporalProperty );
+        dependencyBean.setValue(value);
+        dependencyBean.setScope( applicationContext.getScopes().get(scope) );
 
         BeanInstance bean = new BeanInstance( null, mappingBean.getClassType() );
 
-        if( !bean.containProperty(propertyName) )
+        if( propertyName != null && !bean.containProperty(propertyName) )
             throw new BrutosException( "no such property: " +
                 mappingBean.getClassType().getName() + "." + propertyName );
 
         if( mapping != null ){
-            fieldBean.setMapping( mapping );
+            dependencyBean.setMapping( mapping );
 
         }
         else
         if( type != null ){
-            fieldBean.setType( type );
+            dependencyBean.setType( type );
         }
         else{
             try{
-                fieldBean.setType(
-                        Types.getType(
-                            bean.getGenericType(propertyName),
-                            enumProperty,
-                            temporalProperty ) );
+                if( propertyNameRequired ){
+                    dependencyBean.setType(
+                            Types.getType(
+                                bean.getGenericType(propertyName),
+                                enumProperty,
+                                temporalProperty ) );
+                }
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException(
                         String.format( "%s.%s : %s" ,
-                            webFrame.getClassType().getName(),
+                            controller.getClassType().getName(),
                             propertyName,
                             e.getMessage() ) );
             }
         }
 
         Configuration validatorConfig = new Configuration();
-        fieldBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
-        return fieldBean;
+        dependencyBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
+        return dependencyBean;
     }
 
     /**

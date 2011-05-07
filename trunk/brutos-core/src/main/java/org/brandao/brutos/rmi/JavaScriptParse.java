@@ -17,7 +17,7 @@
 
 package org.brandao.brutos.rmi;
 
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 
 /**
  *
@@ -25,10 +25,10 @@ import org.brandao.brutos.mapping.Form;
  */
 public class JavaScriptParse {
 
-    private Form controller;
+    private Controller controller;
     private String uri;
 
-    public JavaScriptParse( Form controller, String uri ){
+    public JavaScriptParse( Controller controller, String uri ){
         this.controller = controller;
     }
 

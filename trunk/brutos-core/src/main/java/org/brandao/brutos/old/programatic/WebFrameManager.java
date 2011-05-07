@@ -26,7 +26,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
 
 /**
@@ -35,8 +35,8 @@ import org.brandao.brutos.mapping.Interceptor;
  */
 public class WebFrameManager {
     
-    private Map<String, Form> forms;
-    private Map<Class, Form> revForms;
+    private Map<String, Controller> forms;
+    private Map<Class, Controller> revForms;
     
     private WebFrameBuilder current;
     
@@ -91,7 +91,7 @@ public class WebFrameManager {
         //IOC-Manager
         iocManager.addBean( name, classType, scope, false, null );
         
-        Form fr = new Form();
+        Controller fr = new Controller();
         fr.setUri( uri );
         fr.setId( name );
         fr.setPage( page );
@@ -133,19 +133,19 @@ public class WebFrameManager {
         return this.forms.containsKey( uri );
     }
     
-    public Form getForm( String uri ){
+    public Controller getForm( String uri ){
         return forms.get( uri );
     }
     
-    public Form getForm( Class controllerClass ){
+    public Controller getForm( Class controllerClass ){
         return revForms.get( controllerClass );
     }
     
-    public Map<String, Form> getForms() {
+    public Map<String, Controller> getForms() {
         return Collections.unmodifiableMap( forms );
     }
 
-    void addForm( String uri, Form form ) {
+    void addForm( String uri, Controller form ) {
         if( contains(uri) )
             throw new BrutosException( "duplicate uri: " + uri );
 

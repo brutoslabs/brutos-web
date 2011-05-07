@@ -21,7 +21,8 @@ import java.util.List;
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
-import org.brandao.brutos.mapping.FieldBean;
+import org.brandao.brutos.mapping.DependencyBean;
+import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
@@ -45,8 +46,8 @@ public class DefaultValidatorProvider extends ValidatorProvider{
         public void validate(Object source, Object value) {
             Type valueType = null;
 
-            if( source instanceof FieldBean )
-                valueType = ((FieldBean)source).getType();
+            if( source instanceof DependencyBean )
+                valueType = ((DependencyBean)source).getType();
             else
             if( source instanceof UseBeanData )
                 valueType = ((UseBeanData)source).getType();
@@ -56,8 +57,9 @@ public class DefaultValidatorProvider extends ValidatorProvider{
             String message = config.getProperty( "message" );
             if( message != null ){
                 List rules = RestrictionRules.getRestrictionRules();
-                for( Object rule: rules ){
-                    RestrictionRules r = (RestrictionRules)rule;
+                int size = rules.size();
+                for( int i=0;i<size;i++ ){
+                    RestrictionRules r = (RestrictionRules)rules.get(i);
                     String name = r.toString();
                     String val  = String.valueOf(config.get( name ));
                     message = message.replace( "${"+name+"}" , val );

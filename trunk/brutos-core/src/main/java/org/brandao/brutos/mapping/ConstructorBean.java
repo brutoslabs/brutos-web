@@ -38,9 +38,9 @@ public class ConstructorBean {
 
     private String methodFactory;
 
-    private MappingBean bean;
+    private Bean bean;
 
-    public ConstructorBean( MappingBean bean ){
+    public ConstructorBean( Bean bean ){
         this.args = new ArrayList();
         this.bean = bean;
     }
@@ -72,11 +72,23 @@ public class ConstructorBean {
         return getMethod();
     }
 
-    private Constructor getContructor( Class clazz ){
-        Class[] classArgs = new Class[ getArgs().size() ];
+    public void addConstructorArg( ConstructorArgBean arg ){
+        this.args.add(arg);
+    }
 
-        for( int i=0;i<getArgs().size();i++ ){
-            MappingBean arg = (MappingBean) getArgs().get(i);
+    public ConstructorArgBean getConstructorArg(int index){
+        return (ConstructorArgBean)args.get(index);
+    }
+
+    public int size(){
+        return this.args.size();
+    }
+    
+    private Constructor getContructor( Class clazz ){
+        int size = size();
+        Class[] classArgs = new Class[ size ];
+        for( int i=0;i<size;i++ ){
+            ConstructorArgBean arg = getConstructorArg(i);
             classArgs[ i ] = arg.getClassType();
         }
 
@@ -101,12 +113,11 @@ public class ConstructorBean {
     }
 
     private Method getMethod( String name, Class clazz ){
-        Class[] classArgs = new Class[ getArgs().size() ];
-
-        for( int i=0;i<getArgs().size();i++ ){
-            MappingBean arg = (MappingBean) getArgs().get(i);
-            //if( arg.getTarget() != null )
-                classArgs[ i ] = arg.getClassType();
+        int size = size();
+        Class[] classArgs = new Class[ size ];
+        for( int i=0;i<size;i++ ){
+            ConstructorArgBean arg = getConstructorArg(i);
+            classArgs[ i ] = arg.getClassType();
         }
 
         Method[] methods = clazz.getDeclaredMethods();
@@ -118,7 +129,7 @@ public class ConstructorBean {
             }
         }
 
-        String msg = "not found: " + clazz.getName() + "( ";
+        String msg = "not found: " + clazz.getName() + "." + name + "( ";
 
         for( int i=0;i<classArgs.length;i++ ){
             Class arg = classArgs[i];
@@ -135,7 +146,6 @@ public class ConstructorBean {
         if( params.length == classArgs.length ){
             for( int i=0;i<params.length;i++ ){
                 if( classArgs[i] != null && !params[i].isAssignableFrom( classArgs[i] ) )
-                //if( classArgs[i] != null && !ClassType.getWrapper( params[i] ).isAssignableFrom( ClassType.getWrapper( classArgs[i] ) ) )
                     return false;
             }
             return true;
@@ -149,8 +159,9 @@ public class ConstructorBean {
         Class[] params = m.getParameterTypes();
         if( params.length == classArgs.length ){
             for( int i=0;i<params.length;i++ ){
-                //if( classArgs[i] != null && !params[i].isAssignableFrom( classArgs[i] ) )
-                if( classArgs[i] != null && !ClassType.getWrapper( params[i] ).isAssignableFrom( ClassType.getWrapper( classArgs[i] ) ) )
+                if( classArgs[i] != null && 
+                        !ClassType.getWrapper( params[i] )
+                            .isAssignableFrom( ClassType.getWrapper( classArgs[i] ) ) )
                     return false;
             }
             return true;
@@ -160,13 +171,6 @@ public class ConstructorBean {
 
     }
 
-    public List getArgs() {
-        return args;
-    }
-
-    public void setArgs(List args) {
-        this.args = args;
-    }
 
     public void setContructor(Constructor contructor) {
         this.contructor = contructor;
@@ -188,11 +192,11 @@ public class ConstructorBean {
         this.methodFactory = methodFactory;
     }
 
-    public MappingBean getBean() {
+    public Bean getBean() {
         return bean;
     }
 
-    public void setBean(MappingBean bean) {
+    public void setBean(Bean bean) {
         this.bean = bean;
     }
 

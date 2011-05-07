@@ -36,7 +36,7 @@ import org.brandao.brutos.type.Types;
  */
 public class MethodForm {
     
-    private Form form;
+    private Controller controller;
     
     private String name;
 
@@ -100,7 +100,7 @@ public class MethodForm {
     public ThrowableSafeData getThrowsSafe( Class<? extends Throwable> thr ) {
         return throwsSafe.containsKey(thr)?
                 throwsSafe.get(thr) :
-                form.getThrowsSafe(thr);
+                controller.getThrowsSafe(thr);
     }
 
     public void setThrowsSafe(ThrowableSafeData thr) {
@@ -155,12 +155,12 @@ public class MethodForm {
         this.returnPage = returnPage;
     }
 
-    public Form getForm() {
-        return form;
+    public Controller getController() {
+        return controller;
     }
 
-    public void setForm(Form form) {
-        this.form = form;
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     public Type getReturnType() {
@@ -206,7 +206,7 @@ public class MethodForm {
                 return;
             }
             
-            Class<?> classType = form.getClassType();
+            Class<?> classType = controller.getClassType();
             method = classType.getMethod( this.methodName, this.getParameterClass() );
             setParametersType( Arrays.asList( method.getParameterTypes() ) );
 

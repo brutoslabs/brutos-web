@@ -32,13 +32,13 @@ import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.mapping.CollectionMapping;
+import org.brandao.brutos.mapping.CollectionBean;
 import org.brandao.brutos.mapping.FieldForm;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
-import org.brandao.brutos.mapping.MapMapping;
-import org.brandao.brutos.mapping.MappingBean;
+import org.brandao.brutos.mapping.MapBean;
+import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
@@ -49,11 +49,11 @@ import org.brandao.brutos.type.*;
  */
 public class WebFrameBuilder {
     
-    private Form webFrame;
+    private Controller webFrame;
     private WebFrameManager webFrameManager;
     private InterceptorManager interceptorManager;
     
-    public WebFrameBuilder( Form webFrame, WebFrameManager webFrameManager, InterceptorManager interceptorManager ) {
+    public WebFrameBuilder( Controller webFrame, WebFrameManager webFrameManager, InterceptorManager interceptorManager ) {
         this.webFrame = webFrame;
         this.webFrameManager  = webFrameManager;
         this.interceptorManager = interceptorManager;
@@ -142,7 +142,7 @@ public class WebFrameBuilder {
             Collection.class.isAssignableFrom( target ) )
             throw new BrutosException( "target is not allowed: " + target.getName() );
 
-        MappingBean mappingBean = new MappingBean(webFrame);
+        Bean mappingBean = new Bean(webFrame);
         mappingBean.setClassType( target );
         mappingBean.setName( name );
         webFrame.getMappingBeans().put( name, mappingBean );
@@ -172,7 +172,7 @@ public class WebFrameBuilder {
             throw new BrutosException( "duplicate mapping name " + name + 
                 ": " + webFrame.getClassType().getName() );
 
-        MapMapping mappingBean = new MapMapping(webFrame);
+        MapBean mappingBean = new MapBean(webFrame);
         mappingBean.setCollectionType(target);
         mappingBean.setName( name );
         webFrame.getMappingBeans().put( name, mappingBean );
@@ -201,7 +201,7 @@ public class WebFrameBuilder {
             throw new BrutosException( "duplicate mapping name " + name + ": " +
                 webFrame.getClassType().getName() );
 
-        CollectionMapping mappingBean = new CollectionMapping(webFrame);
+        CollectionBean mappingBean = new CollectionBean(webFrame);
         mappingBean.setCollectionType(target);
         mappingBean.setName( name );
         webFrame.getMappingBeans().put( name, mappingBean );
@@ -273,7 +273,7 @@ public class WebFrameBuilder {
             throw new BrutosException( e );
         }
         
-        mp.setForm( webFrame );
+        mp.setController( webFrame );
         webFrame.getMethods().put( name, mp );
         return new MethodBuilder( mp, webFrame );
     }

@@ -24,7 +24,7 @@ import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ParameterMethodMapping;
 import org.brandao.brutos.mapping.ThrowableSafeData;
@@ -38,10 +38,10 @@ import org.brandao.brutos.type.Types;
  */
 public class MethodBuilder {
     
-    Form webFrame;
+    Controller webFrame;
     MethodForm methodForm;
     
-    public MethodBuilder( MethodForm methodForm, Form webFrame ) {
+    public MethodBuilder( MethodForm methodForm, Controller webFrame ) {
         this.webFrame = webFrame;
         this.methodForm = methodForm;
     }

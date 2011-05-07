@@ -29,9 +29,9 @@ import org.brandao.brutos.type.Type;
  *
  * @author Afonso Brandao
  */
-public class MapMapping extends CollectionMapping{
+public class MapBean extends CollectionBean{
 
-    private MappingBean mappingKey;
+    private Bean mappingKey;
 
     /**
      * @deprecated
@@ -41,7 +41,7 @@ public class MapMapping extends CollectionMapping{
     /**
      * @deprecated
      */
-    private MappingBean bean;
+    private Bean bean;
 
     /**
      * @deprecated
@@ -58,11 +58,11 @@ public class MapMapping extends CollectionMapping{
      */
     private ScopeType keyScopeType;
 
-    public MapMapping( Form form ){
+    public MapBean( Controller form ){
         super(form);
     }
 
-    public void setMappingKey( MappingBean mappingKey ){
+    public void setMappingKey( Bean mappingKey ){
         this.mappingKey = mappingKey;
     }
 
@@ -80,11 +80,11 @@ public class MapMapping extends CollectionMapping{
         this.collectionType = collectionType;
     }
 
-    public MappingBean getBean() {
+    public Bean getBean() {
         return bean;
     }
 
-    public void setBean(MappingBean bean) {
+    public void setBean(Bean bean) {
         this.bean = bean;
     }
 

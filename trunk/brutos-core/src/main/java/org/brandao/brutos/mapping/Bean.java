@@ -22,26 +22,22 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.type.Type;
-import org.brandao.brutos.validator.Validator;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class MappingBean {
+public class Bean {
 
-    private Form form;
+    private Controller form;
 
     private String name;
     
     private Class<?> classType;
     
-    private Map<String, FieldBean> fields;
+    private Map<String, PropertyBean> fields;
 
     private boolean hierarchy;
 
@@ -53,7 +49,7 @@ public class MappingBean {
 
     private String indexFormat;
 
-    public MappingBean( Form form ) {
+    public Bean( Controller form ) {
         this.fields = new HashMap();
         this.form = form;
         this.hierarchy = true;
@@ -78,11 +74,11 @@ public class MappingBean {
         this.classType = classType;
     }
 
-    public Map<String, FieldBean> getFields() {
+    public Map<String, PropertyBean> getFields() {
         return fields;
     }
 
-    public void setFields(Map<String, FieldBean> fields) {
+    public void setFields(Map<String, PropertyBean> fields) {
         this.fields = fields;
     }
 
@@ -118,16 +114,17 @@ public class MappingBean {
 
 
             boolean exist = instance != null ||
-                    this.getConstructor().getArgs().size() != 0 ||
+                    this.getConstructor().size() != 0 ||
                     this.getConstructor().isMethodFactory();
 
-            Iterator<FieldBean> fds = fields.values().iterator();
+            Iterator<PropertyBean> fds = fields.values().iterator();
             BeanInstance beanInstance = new BeanInstance( obj, classType );
             
             while( fds.hasNext() ){
-                FieldBean fb = fds.next();
+                PropertyBean fb = fds.next();
 
-                Object value = this.getValueField(beanInstance, prefix, index, fb);
+                Object value = fb.getValue(prefix, index);
+                        //this.getValueField(beanInstance, prefix, index, fb);
 
                 if( !exist && value != null )
                     exist = true;
@@ -141,8 +138,8 @@ public class MappingBean {
             return null;
         }
     }
-
-    private Object getValueField( BeanInstance beanInstance, String prefix, long index, FieldBean fb ) throws Exception{
+    /*
+    private Object getValueField( BeanInstance beanInstance, String prefix, long index, PropertyBean fb ) throws Exception{
         Validator validator = fb.getValidator();
         Object property;
 
@@ -188,12 +185,12 @@ public class MappingBean {
 
         return property;
     }
-
-    private Object getConstructorArg( String prefix, long index, FieldBean fb ) throws Exception{
-        Validator validator = fb.getValidator();
+    
+    private Object getConstructorArg( String prefix, long index, ConstructorArgBean arg ) throws Exception{
+        Validator validator = arg.getValidator();
         Object property;
 
-        if( fb.getMapping() == null ){
+        if( arg.getMapping() == null ){
             Object value = fb.isStatic()?
                 fb.getValue() :
                 fb.getScope().get(
@@ -233,7 +230,8 @@ public class MappingBean {
 
         return property;
     }
-
+    */
+    
     public boolean isBean(){
         return true;
     }
@@ -246,11 +244,11 @@ public class MappingBean {
         return false;
     }
 
-    public Form getForm() {
+    public Controller getForm() {
         return form;
     }
 
-    public void setForm(Form form) {
+    public void setForm(Controller form) {
         this.form = form;
     }
 
@@ -283,7 +281,7 @@ public class MappingBean {
         ConstructorBean conInject = this.getConstructor();
         if( conInject.isConstructor() ){
             
-            Object[] args = this.getValues(cons.getArgs(), prefix, index );
+            Object[] args = this.getValues(cons, prefix, index );
 
             if( args == null )
                 return null;
@@ -292,7 +290,7 @@ public class MappingBean {
             return insCons.newInstance( args );
         }
         else{
-            MappingBean factoryBean =
+            Bean factoryBean =
                 this.getFactory() != null?
                     form.getMappingBean(factory) :
                     null;
@@ -308,23 +306,23 @@ public class MappingBean {
                     factory == null?
                         this.getClassType() :
                         factoryInstance,
-                    getValues(cons.getArgs(), prefix, index ) );
+                    getValues(cons, prefix, index ) );
         }
     }
 
-    private Object[] getValues( List args, String prefix, long index ) throws Exception{
-
-        Object[] values = new Object[ args.size() ];
+    private Object[] getValues( ConstructorBean constructorBean, String prefix, long index ) throws Exception{
+        int size = constructorBean.size();
+        Object[] values = new Object[ size ];
 
         boolean exist = false;
-        for( int i=0;i<args.size();i++ ){
-            FieldBean arg = (FieldBean) args.get(i);
-            values[i] = this.getConstructorArg( prefix, index, arg);
+        for( int i=0;i<size;i++ ){
+            ConstructorArgBean arg = constructorBean.getConstructorArg(i);
+            values[i] = arg.getValue(prefix, index);
             if( values[i] != null )
                 exist = true;
         }
 
-        return exist || args.size() == 0? values : null;
+        return exist || size == 0? values : null;
     }
 
     public String getFactory() {

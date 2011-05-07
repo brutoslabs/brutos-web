@@ -18,7 +18,6 @@
 package org.brandao.brutos.validator;
 
 import java.util.Properties;
-import org.brandao.brutos.Configuration;
 
 /**
  * Validation of a value.

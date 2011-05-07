@@ -15,24 +15,16 @@
  *
  */
 
-
-package org.brandao.brutos.proxy;
-
-import javassist.util.proxy.MethodHandler;
-import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.mapping.Controller;
+package org.brandao.brutos.mapping;
 
 /**
  *
  * @author Brandao
  */
-public class JavassistActionHandler extends ActionHandlerImp
-        implements MethodHandler{
+public class ConstructorArgBean extends DependencyBean{
 
-    public JavassistActionHandler(Object resource, Controller form,
-            ApplicationContext app, Invoker invoker){
-        super(resource,form,app,invoker);
+    public ConstructorArgBean( Bean mappingBean ){
+        super(mappingBean);
     }
-
+    
 }

@@ -37,7 +37,7 @@ public class UseBeanData {
     
     private ScopeType scopeType;
 
-    private MappingBean mapping;
+    private Bean mapping;
 
     private Object staticValue;
 
@@ -66,11 +66,11 @@ public class UseBeanData {
     }
     */
     
-    public MappingBean getMapping() {
+    public Bean getMapping() {
         return mapping;
     }
 
-    public void setMapping(MappingBean mapping) {
+    public void setMapping(Bean mapping) {
         this.mapping = mapping;
     }
 

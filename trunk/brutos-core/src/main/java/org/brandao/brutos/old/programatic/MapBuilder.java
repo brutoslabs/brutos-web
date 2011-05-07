@@ -19,9 +19,9 @@ package org.brandao.brutos.old.programatic;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.mapping.MapMapping;
-import org.brandao.brutos.mapping.MappingBean;
+import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MapBean;
+import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
 
@@ -31,11 +31,11 @@ import org.brandao.brutos.type.Types;
  */
 public class MapBuilder {
 
-    MapMapping mappingBean;
-    Form webFrame;
+    MapBean mappingBean;
+    Controller webFrame;
     WebFrameBuilder webFrameBuilder;
 
-    public MapBuilder( MapMapping mappingBean, Form webFrame, WebFrameBuilder webFrameBuilder ) {
+    public MapBuilder( MapBean mappingBean, Controller webFrame, WebFrameBuilder webFrameBuilder ) {
         this.mappingBean = mappingBean;
         this.webFrame = webFrame;
         this.webFrameBuilder = webFrameBuilder;
@@ -73,7 +73,7 @@ public class MapBuilder {
                     webFrame.getClassType().getName() );
 
         
-        MappingBean bean = webFrame.getMappingBeans().get( name );
+        Bean bean = webFrame.getMappingBeans().get( name );
 
         if( !bean.isBean() )
             throw new BrutosException(

@@ -35,7 +35,7 @@ import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ParameterMethodMapping;
 import org.brandao.brutos.mapping.ThrowableSafeData;
@@ -56,7 +56,7 @@ public class InterceptorProcess implements InterceptorStack{
             LoggerProvider.getCurrentLoggerProvider()
                 .getLogger(InterceptorProcess.class.getName());
     
-    private Form form;
+    private Controller form;
     private List<org.brandao.brutos.mapping.Interceptor> stack;
     private ThreadLocal<Integer> stackPos;
             
@@ -177,11 +177,11 @@ public class InterceptorProcess implements InterceptorStack{
         return props;
     }
 
-    public Form getForm() {
+    public Controller getForm() {
         return form;
     }
 
-    public void setForm(Form form) {
+    public void setForm(Controller form) {
         this.form = form;
     }
 

@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.mapping.CollectionMapping;
+import org.brandao.brutos.mapping.CollectionBean;
 import org.brandao.brutos.mapping.FieldForm;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
-import org.brandao.brutos.mapping.MapMapping;
-import org.brandao.brutos.mapping.MappingBean;
+import org.brandao.brutos.mapping.MapBean;
+import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
@@ -136,10 +136,11 @@ import org.brandao.brutos.validator.ValidatorProvider;
  */
 public class ControllerBuilder {
     
-    private Form controller;
+    private Controller controller;
     private ControllerManager controllerManager;
     private InterceptorManager interceptorManager;
     private ValidatorProvider validatorProvider;
+    private ApplicationContext applicationContext;
 
     /**
      * Constr�i um novo controlador.
@@ -149,12 +150,14 @@ public class ControllerBuilder {
      * @param interceptorManager
      * @param validatorProvider
      */
-    public ControllerBuilder( Form controller, ControllerManager controllerManager, 
-            InterceptorManager interceptorManager, ValidatorProvider validatorProvider ) {
+    public ControllerBuilder( Controller controller, ControllerManager controllerManager,
+            InterceptorManager interceptorManager, ValidatorProvider validatorProvider,
+            ApplicationContext applicationContext ) {
         this.controller = controller;
         this.controllerManager  = controllerManager;
         this.interceptorManager = interceptorManager;
         this.validatorProvider  = validatorProvider;
+        this.applicationContext = applicationContext;
     }
 
     /**
@@ -289,21 +292,22 @@ public class ControllerBuilder {
             throw new BrutosException( "target is not allowed: " + target.getName() );
         */
         
-        MappingBean mappingBean;
+        Bean mappingBean;
 
         if( Map.class.isAssignableFrom(target) )
-            mappingBean = new MapMapping(controller);
+            mappingBean = new MapBean(controller);
         else
         if( List.class.isAssignableFrom(target) )
-            mappingBean = new CollectionMapping(controller);
+            mappingBean = new CollectionBean(controller);
         else
-            mappingBean = new MappingBean(controller);
+            mappingBean = new Bean(controller);
 
 
         mappingBean.setClassType( target );
         mappingBean.setName( name );
         controller.getMappingBeans().put( name, mappingBean );
-        BeanBuilder mb = new BeanBuilder( mappingBean, controller, this, validatorProvider );
+        BeanBuilder mb = new BeanBuilder( mappingBean, controller, 
+                this, validatorProvider, applicationContext );
         return mb;
     }
 
@@ -420,7 +424,7 @@ public class ControllerBuilder {
         }
         */
         
-        mp.setForm( controller );
+        mp.setController( controller );
         controller.addMethod( id, mp );
         return new ActionBuilder( mp, controller, validatorProvider, this );
     }

@@ -20,7 +20,7 @@ package org.brandao.brutos.proxy;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 
 /**
  *
@@ -28,7 +28,7 @@ import org.brandao.brutos.mapping.Form;
  */
 public interface ProxyFactory {
 
-    public Object getNewProxy(Object resource,Form form,
+    public Object getNewProxy(Object resource,Controller form,
             ApplicationContext app, Invoker invoker) throws BrutosException;
     
 }

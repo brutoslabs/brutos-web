@@ -23,16 +23,16 @@ import java.util.Collection;
  *
  * @author Afonso Brandao
  */
-public class CollectionMapping extends MappingBean{
+public class CollectionBean extends Bean{
 
     /**
      * @deprecated 
      */
     private Class<?> collectionType;
 
-    private MappingBean bean;
+    private Bean bean;
 
-    public CollectionMapping( Form form ){
+    public CollectionBean( Controller form ){
         super( form );
     }
 
@@ -52,11 +52,11 @@ public class CollectionMapping extends MappingBean{
         this.collectionType = collectionType;
     }
 
-    public MappingBean getBean() {
+    public Bean getBean() {
         return bean;
     }
 
-    public void setBean(MappingBean bean) {
+    public void setBean(Bean bean) {
         this.bean = bean;
     }
 

@@ -24,59 +24,59 @@ import java.util.Map;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  * Classe usada para configurar controladores ou front controllers.
- * <p>O controlador é responsável por receber os dados e determinar qual objeto
- * do modelo e visão serão usados. Ele também é responsável por converter,
+ * <p>O controlador ï¿½ responsï¿½vel por receber os dados e determinar qual objeto
+ * do modelo e visï¿½o serï¿½o usados. Ele tambï¿½m ï¿½ responsï¿½vel por converter,
  * validar e filtrar a entrada de dados.</p>
  * <p>O Brutos pode ser usando como controlador ou front controller. Nos dois
- * casos, somente é necessário fazer respectivamente o mapeamento do modelo ou
- * controlador. Esse mapeamento nada mais é que, informar ao controlador como os
- * dados de entrada serão disponibilizados no modelo (atributos ou parâmetros de
- * um método) e como seu resultado será exibido (visão). Todo o processamento de
- * uma aplicação segue as seguintes etapas:</p>
+ * casos, somente ï¿½ necessï¿½rio fazer respectivamente o mapeamento do modelo ou
+ * controlador. Esse mapeamento nada mais ï¿½ que, informar ao controlador como os
+ * dados de entrada serï¿½o disponibilizados no modelo (atributos ou parï¿½metros de
+ * um mï¿½todo) e como seu resultado serï¿½ exibido (visï¿½o). Todo o processamento de
+ * uma aplicaï¿½ï¿½o segue as seguintes etapas:</p>
  * 
  * <ul>
  * 
- * <li><b>Obter modelo.</b> O controlador recebe a requisição, examina-o e extrai a ID
- * do modelo, que é determinado pelo URI, no caso de uma aplicação web, ou nome 
- * da classe, em uma aplicação desktop. Essa ID é usada para localizar o modelo. 
- * Se o modelo não for encontrado, a requisição é finalizada.</li>
+ * <li><b>Obter modelo.</b> O controlador recebe a requisiï¿½ï¿½o, examina-o e extrai a ID
+ * do modelo, que ï¿½ determinado pelo URI, no caso de uma aplicaï¿½ï¿½o web, ou nome 
+ * da classe, em uma aplicaï¿½ï¿½o desktop. Essa ID ï¿½ usada para localizar o modelo. 
+ * Se o modelo nï¿½o for encontrado, a requisiï¿½ï¿½o ï¿½ finalizada.</li>
  * 
- * <li><b>Gerar manipulador.</b> Nessa etapa é gerado o manipulador da requisição. O
- * manipulador é composto por: modelo; ação e a identificação da requisição. É 
- * nesse momento que é identificado o controlador e a ação a ser executada.</li>
+ * <li><b>Gerar manipulador.</b> Nessa etapa ï¿½ gerado o manipulador da requisiï¿½ï¿½o. O
+ * manipulador ï¿½ composto por: modelo; aï¿½ï¿½o e a identificaï¿½ï¿½o da requisiï¿½ï¿½o. ï¿½ 
+ * nesse momento que ï¿½ identificado o controlador e a aï¿½ï¿½o a ser executada.</li>
  * 
  * <li><b>Processar interceptadores.</b> Ocorre o processamento da pilha de
  * interceptadores. Essa pilha de interceptadores pode ser criada pelo 
- * desenvolvedor. Se a pilha de interceptadores estiver vazia, irá 
- * automaticamente avançar para a próxima etapa.</li>
+ * desenvolvedor. Se a pilha de interceptadores estiver vazia, irï¿½ 
+ * automaticamente avanï¿½ar para a prï¿½xima etapa.</li>
  * 
- * <li><b>Processar validações.</b> É nessa etapa que ocorrem as validações. Essa
- * validação pode ser criada pelo desenvolvedor ou obtida diretamente do 
- * controlador. Os valores são validados de acordo com as regras de validação 
- * da aplicação. Se o valor for considerado inválido, será marcado como inválido. 
- * Mesmo existindo um valor inválido, a próxima etapa, atualizar valores do
- * modelo, será executada.</li>
+ * <li><b>Processar validaï¿½ï¿½es.</b> ï¿½ nessa etapa que ocorrem as validaï¿½ï¿½es. Essa
+ * validaï¿½ï¿½o pode ser criada pelo desenvolvedor ou obtida diretamente do 
+ * controlador. Os valores sï¿½o validados de acordo com as regras de validaï¿½ï¿½o 
+ * da aplicaï¿½ï¿½o. Se o valor for considerado invï¿½lido, serï¿½ marcado como invï¿½lido. 
+ * Mesmo existindo um valor invï¿½lido, a prï¿½xima etapa, atualizar valores do
+ * modelo, serï¿½ executada.</li>
  * 
- * <li><b>Atualizar valores do modelo.</b> Esta é a etapa onde são atualizados os
- * valores no lado do servidor, ou seja, a atualização das propriedades do 
- * modelo. Somente as propriedades mapeadas serão atualizadas. Se na etapa 
- * anterior, algum valor foi marcado como inválido, o controlador 
- * automaticamente irá para a etapa final, processar visão, ignorando a etapa 
- * invocar aplicação.</li>
+ * <li><b>Atualizar valores do modelo.</b> Esta ï¿½ a etapa onde sï¿½o atualizados os
+ * valores no lado do servidor, ou seja, a atualizaï¿½ï¿½o das propriedades do 
+ * modelo. Somente as propriedades mapeadas serï¿½o atualizadas. Se na etapa 
+ * anterior, algum valor foi marcado como invï¿½lido, o controlador 
+ * automaticamente irï¿½ para a etapa final, processar visï¿½o, ignorando a etapa 
+ * invocar aplicaï¿½ï¿½o.</li>
  * 
- * <li><b>Invocar aplicação.</b> Nessa etapa o controlador invoca a aplicação. Os
- * valores foram convertidos, validados e aplicados no modelo, então estará 
- * pronto para utilizar suas regras de negócio. Se ocorrer um problema, o 
- * controlador automaticamente irá para a próxima etapa. Tanto um 
- * erro (exception) quanto o resultado poderá alterar o fluxo lógico da 
- * aplicação.</li>
+ * <li><b>Invocar aplicaï¿½ï¿½o.</b> Nessa etapa o controlador invoca a aplicaï¿½ï¿½o. Os
+ * valores foram convertidos, validados e aplicados no modelo, entï¿½o estarï¿½ 
+ * pronto para utilizar suas regras de negï¿½cio. Se ocorrer um problema, o 
+ * controlador automaticamente irï¿½ para a prï¿½xima etapa. Tanto um 
+ * erro (exception) quanto o resultado poderï¿½ alterar o fluxo lï¿½gico da 
+ * aplicaï¿½ï¿½o.</li>
  * 
- * <li><b>Processar visão.</b> Nessa etapa será exibida a tela com o resultado obtido
+ * <li><b>Processar visï¿½o.</b> Nessa etapa serï¿½ exibida a tela com o resultado obtido
  * do modelo.</li>
  * 
  * </ul>
@@ -105,18 +105,20 @@ public class ControllerManager {
     private Map revForms;
     private ValidatorProvider validatorProvider;
     private ControllerBuilder current;
-    
+    private ApplicationContext applicationContext;
     private InterceptorManager interceptorManager;
     
-    public ControllerManager( InterceptorManager interceptorManager, ValidatorProvider validatorProvider) {
+    public ControllerManager( InterceptorManager interceptorManager, 
+            ValidatorProvider validatorProvider, ApplicationContext applicationContext) {
         this.forms              = new HashMap();
         this.revForms           = new HashMap();
         this.interceptorManager = interceptorManager;
         this.validatorProvider  = validatorProvider;
+        this.applicationContext = applicationContext;
     }
 
     /**
-     * Constrói um novo controlador.
+     * Constrï¿½i um novo controlador.
      *
      * @param classtype Classe do controlador.
      * @return Construtor do controlador.
@@ -126,9 +128,9 @@ public class ControllerManager {
     }
 
     /**
-     * Constrói um novo controlador.
+     * Constrï¿½i um novo controlador.
      *
-     * @param id Identificação do controlador.
+     * @param id Identificaï¿½ï¿½o do controlador.
      * @param classType Classe do controlador.
      * @return Construtor do controlador.
      */
@@ -137,10 +139,10 @@ public class ControllerManager {
     }
     
     /**
-     * Constrói um novo controlador.
+     * Constrï¿½i um novo controlador.
      *
-     * @param id Identificação do controlador.
-     * @param view Visão associada ao controlador.
+     * @param id Identificaï¿½ï¿½o do controlador.
+     * @param view Visï¿½o associada ao controlador.
      * @param classType Classe do controlador.
      * @return Construtor do controlador.
      */
@@ -149,15 +151,15 @@ public class ControllerManager {
     }
     
     /**
-     * Constrói um novo controlador.
+     * Constrï¿½i um novo controlador.
      *
-     * @param id Identificação do controlador.
-     * @param view Visão associada ao controlador.
-     * @param name Nome do controlador, usado para obter sua instância no container
+     * @param id Identificaï¿½ï¿½o do controlador.
+     * @param view Visï¿½o associada ao controlador.
+     * @param name Nome do controlador, usado para obter sua instï¿½ncia no container
      * IOC.
      * @param classType Classe do controlador.
-     * @param actionId Nome do parâmetro que contém a identificação da ação.
-     * Normalmente usado em aplicações web.
+     * @param actionId Nome do parï¿½metro que contï¿½m a identificaï¿½ï¿½o da aï¿½ï¿½o.
+     * Normalmente usado em aplicaï¿½ï¿½es web.
      * @return Construtor do controlador.
      */
     public ControllerBuilder addController( String id, String view,
@@ -166,17 +168,17 @@ public class ControllerManager {
     }
 
     /**
-     * Constrói um novo controlador.
+     * Constrï¿½i um novo controlador.
      *
-     * @param id Identificação do controlador.
-     * @param view Visão associada ao controlador.
+     * @param id Identificaï¿½ï¿½o do controlador.
+     * @param view Visï¿½o associada ao controlador.
      * @param dispatcherType Determina como o fluxo deve ser direcionado para a
-     * visão.
-     * @param name Nome do controlador, usado para obter sua instância no container
+     * visï¿½o.
+     * @param name Nome do controlador, usado para obter sua instï¿½ncia no container
      * IOC.
      * @param classType Classe do controlador.
-     * @param actionId Nome do parâmetro que contém a identificação da ação.
-     * Normalmente usado em aplicações web.
+     * @param actionId Nome do parï¿½metro que contï¿½m a identificaï¿½ï¿½o da aï¿½ï¿½o.
+     * Normalmente usado em aplicaï¿½ï¿½es web.
      * @return Construtor do controlador.
      */
     public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
@@ -191,7 +193,7 @@ public class ControllerManager {
         if( name == null || name.length() == 0 )
             name = classType.getSimpleName();
         
-        Form fr = new Form();
+        Controller fr = new Controller();
         fr.setUri( id );
         fr.setId( name );
         fr.setPage( view );
@@ -212,7 +214,8 @@ public class ControllerManager {
         addForm( fr.getUri(), fr );
         fr.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
         
-        this.current = new ControllerBuilder( fr, this, interceptorManager, validatorProvider );
+        this.current = new ControllerBuilder( fr, this, 
+                interceptorManager, validatorProvider, applicationContext );
         
         //for( Interceptor in: interceptorManager.getDefaultInterceptors() )
         //    current.addInterceptor( in.getName() );
@@ -232,21 +235,21 @@ public class ControllerManager {
     }
 
     /**
-     * Verifica se existe um controlador mapeado para uma determinada identificação
-     * @param id Identificação.
-     * @return Verdadeiro se existir um mapeamento, coso contrário falso.
+     * Verifica se existe um controlador mapeado para uma determinada identificaï¿½ï¿½o
+     * @param id Identificaï¿½ï¿½o.
+     * @return Verdadeiro se existir um mapeamento, coso contrï¿½rio falso.
      */
     public boolean contains( String id ){
         return this.forms.containsKey( id );
     }
     
     /**
-     * Obtém o mapeamento de um controlador.
-     * @param id Identificação do controlador.
+     * Obtï¿½m o mapeamento de um controlador.
+     * @param id Identificaï¿½ï¿½o do controlador.
      * @return Mapeamento do controlador.
      */
-    public Form getController( String id ){
-        return (Form)forms.get( id );
+    public Controller getController( String id ){
+        return (Controller)forms.get( id );
     }
 
     /**
@@ -254,17 +257,17 @@ public class ControllerManager {
      * @param uri
      * @return .
      */
-    public Form getForm( String uri ){
-        return (Form)forms.get( uri );
+    public Controller getForm( String uri ){
+        return (Controller)forms.get( uri );
     }
 
     /**
-     * Obtém o mapeamento de um controlador.
+     * Obtï¿½m o mapeamento de um controlador.
      * @param controllerClass Classe do controlador.
      * @return Mapeamento do controlador.
      */
-    public Form getController( Class controllerClass ){
-        return (Form)revForms.get( controllerClass );
+    public Controller getController( Class controllerClass ){
+        return (Controller)revForms.get( controllerClass );
     }
 
     /**
@@ -272,15 +275,15 @@ public class ControllerManager {
      * @param controllerClass
      * @return .
      */
-    public Form getForm( Class controllerClass ){
-        return (Form)revForms.get( controllerClass );
+    public Controller getForm( Class controllerClass ){
+        return (Controller)revForms.get( controllerClass );
     }
 
     /**
-     * Obtém o mapeamento de todos os controladores.
+     * Obtï¿½m o mapeamento de todos os controladores.
      * @return Controladores.
      */
-    public Map<String, Form> getControllers() {
+    public Map<String, Controller> getControllers() {
         return Collections.unmodifiableMap( forms );
     }
 
@@ -288,11 +291,11 @@ public class ControllerManager {
      * @deprecated 
      * @return .
      */
-    public Map<String, Form> getForms() {
+    public Map<String, Controller> getForms() {
         return Collections.unmodifiableMap( forms );
     }
 
-    void addForm( String id, Form form ) {
+    void addForm( String id, Controller form ) {
         if( contains(id) )
             throw new BrutosException( String.format("duplicate id: %s", id ) );
 

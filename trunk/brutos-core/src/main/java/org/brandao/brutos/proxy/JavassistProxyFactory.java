@@ -25,7 +25,7 @@ import javassist.util.proxy.ProxyObject;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 
 /**
  *
@@ -44,7 +44,7 @@ public class JavassistProxyFactory extends AbstractProxyFactory{
         proxyClass = createProxyClass( superClass );
     }
 
-    public Object getNewProxy(Object resource,Form form,
+    public Object getNewProxy(Object resource,Controller form,
             ApplicationContext app, Invoker invoker) throws BrutosException{
         MethodHandler handler = 
                 new JavassistActionHandler(resource,form,app,invoker);

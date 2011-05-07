@@ -21,7 +21,7 @@ import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.view.ViewProvider;
@@ -78,7 +78,7 @@ public class Invoker {
         ih.setRequestId(requestId);
         ih.setContext(applicationContext);
         
-        Form form = controllerResolver.getController(controllerManager, ih);
+        Controller form = controllerResolver.getController(controllerManager, ih);
 
 
         if( form == null )

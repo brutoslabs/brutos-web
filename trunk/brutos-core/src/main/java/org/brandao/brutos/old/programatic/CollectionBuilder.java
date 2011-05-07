@@ -18,9 +18,9 @@
 package org.brandao.brutos.old.programatic;
 
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.mapping.CollectionMapping;
-import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.mapping.MappingBean;
+import org.brandao.brutos.mapping.CollectionBean;
+import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.Bean;
 
 /**
  *
@@ -28,11 +28,11 @@ import org.brandao.brutos.mapping.MappingBean;
  */
 public class CollectionBuilder {
 
-    CollectionMapping mappingBean;
-    Form webFrame;
+    CollectionBean mappingBean;
+    Controller webFrame;
     WebFrameBuilder webFrameBuilder;
 
-    public CollectionBuilder( CollectionMapping mappingBean, Form webFrame, WebFrameBuilder webFrameBuilder ) {
+    public CollectionBuilder( CollectionBean mappingBean, Controller webFrame, WebFrameBuilder webFrameBuilder ) {
         this.mappingBean = mappingBean;
         this.webFrame = webFrame;
         this.webFrameBuilder = webFrameBuilder;
@@ -47,7 +47,7 @@ public class CollectionBuilder {
                     "mapping " + name + " not found: " +
                     webFrame.getClassType().getName() );
 
-        MappingBean bean = webFrame.getMappingBeans().get( name );
+        Bean bean = webFrame.getMappingBeans().get( name );
         
         if( !bean.isBean() )
             throw new BrutosException(

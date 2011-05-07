@@ -18,7 +18,7 @@
 package org.brandao.brutos.old.programatic;
 
 import org.brandao.brutos.Configuration;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.validator.RestrictionRules;
 
@@ -30,7 +30,7 @@ public class ParameterBuilder extends MethodBuilder{
 
     private Configuration config;
     
-    public ParameterBuilder( Configuration config, MethodForm methodForm, Form webFrame ){
+    public ParameterBuilder( Configuration config, MethodForm methodForm, Controller webFrame ){
         super( methodForm, webFrame );
         this.config = config;
     }

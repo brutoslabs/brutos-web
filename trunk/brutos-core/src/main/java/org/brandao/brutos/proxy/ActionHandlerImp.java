@@ -24,7 +24,7 @@ import org.brandao.brutos.DefaultResourceAction;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.StackRequestElementImp;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 
 /**
@@ -34,11 +34,11 @@ import org.brandao.brutos.mapping.MethodForm;
 public abstract class ActionHandlerImp implements ActionHandler{
 
     private Object resource;
-    private Form form;
+    private Controller form;
     private ApplicationContext app;
     private Invoker invoker;
 
-    public ActionHandlerImp(Object resource, Form form,
+    public ActionHandlerImp(Object resource, Controller form,
             ApplicationContext app, Invoker invoker){
         this.resource = resource;
         this.app = app;

@@ -21,7 +21,7 @@ package org.brandao.brutos.interceptor;
 import java.lang.reflect.Field;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.FieldForm;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
@@ -38,7 +38,7 @@ public class DataOutput {
         this.scope = scope;
     }
 
-    public void write( Form form, Object object ){
+    public void write( Controller form, Object object ){
        try{
            //HttpSession session = request.getSession();
            
@@ -61,7 +61,7 @@ public class DataOutput {
         }
     }
     
-    public void writeFields( Form form, Object object ){
+    public void writeFields( Controller form, Object object ){
         //Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
         try{
             Field[] fields = form.getClassType().getDeclaredFields();

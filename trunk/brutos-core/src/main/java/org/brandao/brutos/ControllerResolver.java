@@ -18,7 +18,7 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
@@ -42,6 +42,6 @@ public interface ControllerResolver {
      * @param handler Manipulador da requisi��o.
      * @return Controlador.
      */
-    public Form getController( ControllerManager controllerManager, InterceptorHandler handler );
+    public Controller getController( ControllerManager controllerManager, InterceptorHandler handler );
     
 }
