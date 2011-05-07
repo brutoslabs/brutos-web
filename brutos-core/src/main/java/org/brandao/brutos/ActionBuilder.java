@@ -18,7 +18,7 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.type.UnknownTypeException;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ParameterMethodMapping;
 import org.brandao.brutos.mapping.ThrowableSafeData;
@@ -56,15 +56,15 @@ import org.brandao.brutos.validator.ValidatorProvider;
  */
 public class ActionBuilder {
     
-    Form webFrame;
+    Controller controller;
     MethodForm methodForm;
     ValidatorProvider validatorProvider;
     ControllerBuilder controllerBuilder;
 
     public ActionBuilder( MethodForm methodForm, 
-            Form controller, ValidatorProvider validatorProvider,
+            Controller controller, ValidatorProvider validatorProvider,
             ControllerBuilder controllerBuilder ) {
-        this.webFrame = controller;
+        this.controller = controller;
         this.methodForm = methodForm;
         this.validatorProvider = validatorProvider;
         this.controllerBuilder = controllerBuilder;
@@ -279,8 +279,8 @@ public class ActionBuilder {
         useBean.setStaticValue(value);
         
         if( mapping != null ){
-            if( webFrame.getMappingBeans().containsKey( mapping ) )
-                useBean.setMapping( webFrame.getMappingBean( mapping ) );
+            if( controller.getMappingBeans().containsKey( mapping ) )
+                useBean.setMapping( controller.getMappingBean( mapping ) );
             else
                 throw new BrutosException( "mapping name " + mapping + " not found!" );
                 
@@ -344,7 +344,7 @@ public class ActionBuilder {
         id = id == null || id.replace( " ", "" ).length() == 0? null : id;
 
         if( target == null )
-            throw new BrutosException( "target is required: " + webFrame.getClassType().getName() );
+            throw new BrutosException( "target is required: " + controller.getClassType().getName() );
 
         if( !Throwable.class.isAssignableFrom( target ) )
             throw new BrutosException( "target is not allowed: " +target.getName() );

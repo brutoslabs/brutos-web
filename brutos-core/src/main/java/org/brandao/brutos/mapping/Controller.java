@@ -36,7 +36,7 @@ import org.brandao.brutos.scope.Scope;
  *
  * @author Afonso Brandao
  */
-public class Form {
+public class Controller {
 
     private String id;
     
@@ -46,7 +46,7 @@ public class Form {
     
     private String methodId;
     
-    private Map<String, MappingBean> mappingBeans;
+    private Map<String, Bean> mappingBeans;
     
     private List<FieldForm> fields;
     
@@ -79,7 +79,7 @@ public class Form {
 
     private List defaultInterceptorList;
 
-    public Form() {
+    public Controller() {
         fields = new ArrayList();
         mappingBeans = new HashMap();
         methods = new HashMap();
@@ -98,11 +98,11 @@ public class Form {
         this.methodId = methodId;
     }
 
-    public Map<String, MappingBean> getMappingBeans() {
+    public Map<String, Bean> getMappingBeans() {
         return mappingBeans;
     }
 
-    public void setMappingBeans(Map<String, MappingBean> mappingBeans) {
+    public void setMappingBeans(Map<String, Bean> mappingBeans) {
         this.mappingBeans = mappingBeans;
     }
 
@@ -130,7 +130,7 @@ public class Form {
         this.classType = classType;
     }
     
-    public void addMappingBean( MappingBean mapping ){
+    public void addMappingBean( Bean mapping ){
         if( getMappingBeans() == null )
             setMappingBeans(new HashMap());
         
@@ -140,7 +140,7 @@ public class Form {
             getMappingBeans().put( mapping.getName(), mapping );
     }
 
-    public MappingBean getMappingBean( String name ){
+    public Bean getMappingBean( String name ){
         return getMappingBeans().get( name );
     }
     

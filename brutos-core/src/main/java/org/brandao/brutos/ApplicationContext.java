@@ -25,7 +25,7 @@ import org.brandao.brutos.io.DefaultResourceLoader;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.proxy.ProxyFactory;
@@ -137,7 +137,8 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
         this.requestFactory = getMvcRequestFactory();
         this.responseFactory = getMvcResponseFactory();
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
-        this.controllerManager = new ControllerManager(this.interceptorManager, validatorProvider);
+        this.controllerManager = new ControllerManager(
+                this.interceptorManager, validatorProvider,this);
 
         this.invoker =
                 new Invoker(
@@ -329,7 +330,7 @@ public abstract class ApplicationContext extends DefaultResourceLoader{
      * @return Controlador.
      */
     public Object getController( Class controllerClass ){
-        Form controller =
+        Controller controller =
                 controllerManager.getController(controllerClass);
 
         if( controller == null )

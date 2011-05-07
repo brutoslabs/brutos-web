@@ -19,7 +19,7 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.Scopes;
 
@@ -34,7 +34,7 @@ public class DefaultActionResolver implements ActionResolver{
         return new DefaultResourceAction( methodForm );
     }
 
-    public ResourceAction getResourceAction(Form controller, Scopes scopes,
+    public ResourceAction getResourceAction(Controller controller, Scopes scopes,
             InterceptorHandler handler) {
         Scope scope = scopes.get(ScopeType.PARAM);
         MethodForm method = controller

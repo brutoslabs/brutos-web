@@ -18,7 +18,7 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 
 /**
@@ -30,7 +30,7 @@ public class StackRequestElementImp implements StackRequestElement{
     private Throwable objectThrow;
     private ThrowableSafeData throwableSafeData;
     private Object[] parameters;
-    private Form controller;
+    private Controller controller;
     private ResourceAction action;
     private Object resultAction;
     private InterceptorHandler handler;
@@ -62,11 +62,11 @@ public class StackRequestElementImp implements StackRequestElement{
         this.parameters = parameters;
     }
 
-    public Form getController() {
+    public Controller getController() {
         return controller;
     }
 
-    public void setController(Form controller) {
+    public void setController(Controller controller) {
         this.controller = controller;
     }
 

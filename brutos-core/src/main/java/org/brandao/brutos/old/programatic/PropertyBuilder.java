@@ -18,7 +18,7 @@
 package org.brandao.brutos.old.programatic;
 
 import org.brandao.brutos.Configuration;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.brandao.brutos.InterceptorManager;
 /**
@@ -29,7 +29,7 @@ public class PropertyBuilder extends WebFrameBuilder{
 
     private Configuration config;
     
-    public PropertyBuilder( Configuration config, Form webFrame, WebFrameManager webFrameManager, InterceptorManager interceptorManager ){
+    public PropertyBuilder( Configuration config, Controller webFrame, WebFrameManager webFrameManager, InterceptorManager interceptorManager ){
         super( webFrame, webFrameManager, interceptorManager );
         this.config = config;
     }

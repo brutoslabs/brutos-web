@@ -21,7 +21,7 @@ package org.brandao.brutos.interceptor;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.FieldForm;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.Scope;
 
 /**
@@ -36,7 +36,7 @@ public class DataInput {
         this.scope = requestScope;
     }
     
-    public void read( Form form, Object object ){
+    public void read( Controller form, Object object ){
         try{
             for( FieldForm ff: form.getFields() ){
                 //Object val = ff.getBean().getValue( context, request );
@@ -54,7 +54,7 @@ public class DataInput {
         }
     }
     
-    private void setDataWebFrame( Form form, Object wf ){
+    private void setDataWebFrame( Controller form, Object wf ){
         /*
         if( wf instanceof WebFrame ){
             WebFrame w = (WebFrame)wf;

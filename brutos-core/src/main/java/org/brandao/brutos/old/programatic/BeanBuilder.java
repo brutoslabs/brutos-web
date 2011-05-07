@@ -23,9 +23,9 @@ import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.mapping.FieldBean;
-import org.brandao.brutos.mapping.Form;
-import org.brandao.brutos.mapping.MappingBean;
+import org.brandao.brutos.mapping.PropertyBean;
+import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
 
@@ -34,11 +34,11 @@ import org.brandao.brutos.type.Types;
  * @author Afonso Brandao
  */
 public class BeanBuilder {
-    Form webFrame;
+    Controller webFrame;
     WebFrameBuilder webFrameBuilder;
-    MappingBean mappingBean;
+    Bean mappingBean;
     
-    public BeanBuilder( MappingBean mappingBean, Form webFrame, WebFrameBuilder webFrameBuilder ) {
+    public BeanBuilder( Bean mappingBean, Controller webFrame, WebFrameBuilder webFrameBuilder ) {
         this.webFrameBuilder = webFrameBuilder;
         this.mappingBean = mappingBean;
         this.webFrame = webFrame;
@@ -94,12 +94,12 @@ public class BeanBuilder {
             throw new BrutosException( "name is required: " +
                     mappingBean.getClassType().getName() );
 
-        FieldBean fieldBean = new FieldBean(null);
+        PropertyBean fieldBean = new PropertyBean(null);
         fieldBean.setEnumProperty( enumProperty );
         fieldBean.setParameterName( name );
         fieldBean.setName(propertyName);
         fieldBean.setTemporalType( temporalProperty );
-        fieldBean.setScopeType( scope );
+        //fieldBean.setScopeType( scope );
         /*
         Field f = null;
         

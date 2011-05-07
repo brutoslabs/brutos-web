@@ -23,7 +23,7 @@ import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.mapping.FieldForm;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
@@ -34,10 +34,10 @@ import org.brandao.brutos.type.Types;
  */
 public class FieldBuilder {
     
-    Form webFrame;
+    Controller webFrame;
     private WebFrameBuilder webFrameManager;
     
-    public FieldBuilder( Form webFrame ) {
+    public FieldBuilder( Controller webFrame ) {
         this.webFrame = webFrame;
     }
     
