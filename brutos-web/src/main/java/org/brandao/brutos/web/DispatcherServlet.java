@@ -25,7 +25,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
@@ -40,7 +40,7 @@ import org.brandao.brutos.web.http.UploadListener;
  */
 public class DispatcherServlet extends HttpServlet {
     
-    private ApplicationContext webApplicationContext;
+    private WebApplicationContext webApplicationContext;
     private Invoker invoker;
 
     public void init() throws ServletException{

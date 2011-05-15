@@ -23,6 +23,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 
 /**

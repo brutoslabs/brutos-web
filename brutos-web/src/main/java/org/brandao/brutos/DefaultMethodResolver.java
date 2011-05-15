@@ -18,12 +18,13 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.AbstractWebApplicationContext;
 import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.WebApplicationContext;
 
 /**
  *
@@ -35,7 +36,7 @@ public class DefaultMethodResolver implements MethodResolver{
     public ResourceMethod getResourceMethod( HttpServletRequest request ){
         WebApplicationContext brutosContext = ContextLoader
                 .getCurrentWebApplicationContext();
-        Form controller = brutosContext.getController();
+        Controller controller = null;//brutosContext.getController();
         MethodForm method = controller
                 .getMethodByName( request.getParameter( controller.getMethodId() ) );
         
@@ -46,7 +47,7 @@ public class DefaultMethodResolver implements MethodResolver{
         return new DefaultResourceMethod( methodForm );
     }
 
-    public ResourceAction getResourceAction(Form controller, Scopes scopes,
+    public ResourceAction getResourceAction(Controller controller, Scopes scopes,
             InterceptorHandler handler) {
         Scope scope = scopes.get(ScopeType.PARAM);
         MethodForm method = controller

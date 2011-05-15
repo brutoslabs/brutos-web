@@ -24,19 +24,20 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.interceptor.DataInput;
 import org.brandao.brutos.interceptor.DataOutput;
-import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.WebApplicationContext;
 
 /**
  *
@@ -65,7 +66,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
     public UIViewRoot createView(FacesContext context, String viewName) {
         WebApplicationContext brutosContext = ContextLoader
                     .getCurrentWebApplicationContext();
-        Form controller = brutosContext.getController();
+        Controller controller = null;//brutosContext.getController();
 
         if( controller != null )
             loadController( controller, context );
@@ -90,7 +91,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
 
         WebApplicationContext brutosContext = ContextLoader
                     .getCurrentWebApplicationContext();
-        Form controller = brutosContext.getController();
+        Controller controller = null;//brutosContext.getController();
         
 
         if( controller != null )
@@ -99,9 +100,9 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
             baseViewHandler.renderView(context, viewRoot);
     }
 
-    private void invokeController( Form controller, FacesContext context, UIViewRoot viewRoot ){
-        ConfigurableWebApplicationContext brutosContext     = 
-                (ConfigurableWebApplicationContext) ContextLoader
+    private void invokeController( Controller controller, FacesContext context, UIViewRoot viewRoot ){
+        AbstractWebApplicationContext brutosContext     =
+                (AbstractWebApplicationContext) ContextLoader
                     .getCurrentWebApplicationContext();
         HttpServletRequest request   = (HttpServletRequest)context
                     .getExternalContext().getRequest();
@@ -131,7 +132,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
         }
         else{
             ih.setResourceAction(
-                brutosContext
+                ((ConfigurableWebApplicationContext)brutosContext)
                         .getActionResolver()
                             .getResourceAction( controller,
                                     brutosContext.getScopes(),
@@ -146,7 +147,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
         
         WebApplicationContext brutosContext = ContextLoader
                     .getCurrentWebApplicationContext();
-        Form controller = brutosContext.getController();
+        Controller controller = null;//brutosContext.getController();
 
         if( controller != null )
             loadController( controller, context );
@@ -154,7 +155,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
         return baseViewHandler.restoreView(context, arg1);
     }
 
-    private void loadController( Form controller, FacesContext context ){
+    private void loadController( Controller controller, FacesContext context ){
         WebApplicationContext brutosContext = ContextLoader
                     .getCurrentWebApplicationContext();
         IOCManager iocManager = ((BrutosContext)brutosContext).getIocManager();

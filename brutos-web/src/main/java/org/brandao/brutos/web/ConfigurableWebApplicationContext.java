@@ -17,111 +17,16 @@
 
 package org.brandao.brutos.web;
 
-import java.util.Properties;
 import javax.servlet.ServletContext;
-import org.brandao.brutos.ActionResolver;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.ControllerManager;
-import org.brandao.brutos.ControllerResolver;
-import org.brandao.brutos.InterceptorManager;
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.MvcRequestFactory;
-import org.brandao.brutos.MvcResponseFactory;
-import org.brandao.brutos.ioc.IOCProvider;
-import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.old.programatic.WebFrameManager;
-import org.brandao.brutos.validator.ValidatorProvider;
-import org.brandao.brutos.view.ViewProvider;
 
 /**
  *
  * @author Brandao
  */
-public  abstract class ConfigurableWebApplicationContext
-        extends WebApplicationContext implements ConfigurableApplicationContext{
+public interface ConfigurableWebApplicationContext 
+        extends ConfigurableApplicationContext{
 
-    protected void loadIOCManager(IOCManager iocManager) {
-    }
-
-    protected void loadWebFrameManager(WebFrameManager webFrameManager) {
-    }
-
-    protected void loadInterceptorManager(InterceptorManager interceptorManager) {
-    }
-
-    protected void loadController(ControllerManager controllerManager) {
-    }
-
-    public void setServletContext( ServletContext servletContext ){
-        this.servletContext = servletContext;
-    }
+    public void setServletContext( ServletContext servletContext );
     
-    public void setIocManager(IOCManager iocManager) {
-        this.iocManager = iocManager;
-    }
-
-    public WebFrameManager getWebFrameManager() {
-        return webFrameManager;
-    }
-
-    public void setWebFrameManager(WebFrameManager webFrameManager) {
-        this.webFrameManager = webFrameManager;
-    }
-
-    public InterceptorManager getInterceptorManager() {
-        return interceptorManager;
-    }
-
-    public void setInterceptorManager(InterceptorManager interceptorManager) {
-        this.interceptorManager = interceptorManager;
-    }
-
-    public ControllerManager getControllerManager() {
-        return controllerManager;
-    }
-
-    public void setConfiguration( Properties config ){
-        this.configuration = config;
-    }
-
-    public void setIocProvider(IOCProvider iocProvider) {
-        this.iocProvider = iocProvider;
-    }
-
-    public MvcRequestFactory getRequestFactory() {
-        return this.requestFactory;
-    }
-
-    public MvcResponseFactory getResponseFactory() {
-        return this.responseFactory;
-    }
-
-    public ViewProvider getViewProvider() {
-        return this.viewProvider;
-    }
-
-    public ValidatorProvider getValidatorProvider() {
-        return this.validatorProvider;
-    }
-
-    public Invoker getInvoker() {
-        return this.invoker;
-    }
-
-    public IOCManager getIocManager() {
-        return this.iocManager;
-    }
-
-    public IOCProvider getIocProvider() {
-        return this.iocProvider;
-    }
-
-    public ControllerResolver getControllerResolver() {
-        return this.controllerResolver;
-    }
-
-    public ActionResolver getActionResolver() {
-        return this.actionResolver;
-    }
-
 }

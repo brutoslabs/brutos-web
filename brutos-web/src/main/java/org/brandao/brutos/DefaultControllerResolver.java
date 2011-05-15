@@ -19,7 +19,7 @@ package org.brandao.brutos;
 
 import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
@@ -32,7 +32,7 @@ public class DefaultControllerResolver implements ControllerResolver{
     public DefaultControllerResolver() {
     }
 
-    public Form getController(WebFrameManager webFrameManager, HttpServletRequest request) {
+    public Controller getController(WebFrameManager webFrameManager, HttpServletRequest request) {
         String path         = request.getRequestURI();
         String contextPath  = request.getContextPath();
         path = path.substring( contextPath.length(), path.length() );
@@ -41,7 +41,7 @@ public class DefaultControllerResolver implements ControllerResolver{
         return webFrameManager.getForm( path );
     }
 
-    public Form getController(ControllerManager controllerManager, InterceptorHandler handler) {
+    public Controller getController(ControllerManager controllerManager, InterceptorHandler handler) {
         return controllerManager.getForm( handler.requestId() );
     }
     

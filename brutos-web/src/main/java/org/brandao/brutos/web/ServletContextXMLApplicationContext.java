@@ -35,7 +35,7 @@ public class ServletContextXMLApplicationContext
     private ServletContext servletContext;
     
     public ServletContextXMLApplicationContext( ServletContext servletContext,
-            String[] locations, ApplicationContext parent ){
+            String[] locations, AbstractApplicationContext parent ){
         super( parent );
 
         this.resources = new Resource[locations.length];

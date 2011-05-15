@@ -21,7 +21,7 @@ import java.util.Map;
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.web.WebControllerResolver.URIMap;
@@ -37,7 +37,7 @@ public class WebActionResolver implements ActionResolver{
         return new DefaultResourceAction( methodForm );
     }
 
-    public ResourceAction getResourceAction(Form controller,
+    public ResourceAction getResourceAction(Controller controller,
             Scopes scopes, InterceptorHandler handler) {
 
         if( controller.getUri() != null ){

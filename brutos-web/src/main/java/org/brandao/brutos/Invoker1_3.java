@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.ioc.IOCProvider;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.Scope;
@@ -41,7 +41,7 @@ public class Invoker1_3 extends Invoker{
 
     public Invoker1_3( ControllerResolver controllerResolver, IOCProvider iocProvider,
             ControllerManager controllerManager, ActionResolver actionResolver,
-            ApplicationContext applicationContext, ViewProvider viewProvider ){
+            AbstractApplicationContext applicationContext, ViewProvider viewProvider ){
             super( controllerResolver, iocProvider,
             controllerManager, actionResolver, applicationContext, viewProvider );
     }
@@ -67,7 +67,7 @@ public class Invoker1_3 extends Invoker{
         //Form form = brutosContext.getController();
         WebFrameManager wfm = brutosContext.getWebFrameManager();
 
-        Form form = ((DefaultControllerResolver)brutosContext
+        Controller form = ((DefaultControllerResolver)brutosContext
                 .getResolveController())
                     .getController(
                         wfm,

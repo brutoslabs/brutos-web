@@ -29,7 +29,7 @@ import org.brandao.brutos.xml.ControllerDefinitionReader;
  * @author Brandao
  */
 public abstract class AbstractXMLWebApplicationContext
-        extends ConfigurableWebApplicationContext{
+        extends AbstractWebApplicationContext {
 
     public void configure( Properties config ){
         super.configure(config);

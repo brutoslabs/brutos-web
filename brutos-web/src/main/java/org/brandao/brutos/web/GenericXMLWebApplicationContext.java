@@ -15,39 +15,25 @@
  *
  */
 
-
 package org.brandao.brutos.web;
 
-import java.util.Properties;
 import org.brandao.brutos.io.Resource;
-
 
 /**
  *
  * @author Brandao
  */
-public class XMLWebApplicationContext
+public class GenericXMLWebApplicationContext 
         extends AbstractXMLWebApplicationContext{
 
     private Resource[] resources;
 
-    public XMLWebApplicationContext(){
-    }
-
-    public void configure( Properties prop ){
-
-        String configContext = prop.getProperty(
-            AbstractWebApplicationContext.contextConfigName,
-            AbstractWebApplicationContext.defaultConfigContext);
-
-        this.resources = new Resource[]{
-                this.getResource(configContext) };
-        
-        super.configure( prop );
+    public GenericXMLWebApplicationContext( Resource[] resources ){
+        this.resources = resources;
     }
 
     protected Resource[] getContextResources() {
-        return this.resources;
+        return resources;
     }
 
 }

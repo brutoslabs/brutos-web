@@ -24,16 +24,17 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.DefaultMethodResolver;
 import org.brandao.brutos.ResourceMethod;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.web.http.MutableRequest;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.WebApplicationContext;
 
 
 /**
@@ -61,7 +62,7 @@ public class MethodResolverJSF extends DefaultMethodResolver{
     }
 
     private ResourceMethod getResourceMethod( FacesContext context, WebApplicationContext brutosContext, ActionEvent event ){
-        Form controller = brutosContext.getController();
+        Controller controller = null;//brutosContext.getController();
         MethodForm methodController;
         
         UIComponent component = event.getComponent();
