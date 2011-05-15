@@ -24,7 +24,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.RedirectException;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**
@@ -77,7 +77,7 @@ public class WebFrame {
         
         WebFrameManager wfm = (WebFrameManager)servletContext
                             .getAttribute( BrutosConstants.WEBFRAME_MANAGER );
-        Form wf = wfm.getForm( controller );
+        Controller wf = wfm.getForm( controller );
         
         if( wf == null )
             throw new BrutosException( "invalid controller: " + controller.getName() );

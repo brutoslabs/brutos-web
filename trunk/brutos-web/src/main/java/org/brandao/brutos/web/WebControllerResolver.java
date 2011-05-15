@@ -26,7 +26,7 @@ import org.brandao.brutos.*;
 import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.scope.Scope;
@@ -57,7 +57,7 @@ public class WebControllerResolver implements ControllerResolver{
         }
     }
 
-    public Form getController(WebFrameManager webFrameManager, HttpServletRequest request) {
+    public Controller getController(WebFrameManager webFrameManager, HttpServletRequest request) {
         String path         = request.getRequestURI();
         String contextPath  = request.getContextPath();
         path = path.substring( contextPath.length(), path.length() );
@@ -66,15 +66,15 @@ public class WebControllerResolver implements ControllerResolver{
         return webFrameManager.getForm( path );
     }
 
-    public Form getController(ControllerManager controllerManager, InterceptorHandler handler) {
+    public Controller getController(ControllerManager controllerManager, InterceptorHandler handler) {
         String uri = handler.requestId();
-        Map<String, Form> forms = controllerManager.getForms();
+        Map<String, Controller> forms = controllerManager.getForms();
         /*BrutosRequest request = (BrutosRequest) ContextLoaderListener
                                     .currentRequest.get();
         */
         Scope paramScope =
                 handler.getContext().getScopes().get(ScopeType.PARAM);
-        for( Form  form: forms.values() ){
+        for( Controller  form: forms.values() ){
             List<String> uriList = new ArrayList<String>();
 
             uriList.addAll( form.getAlias() );

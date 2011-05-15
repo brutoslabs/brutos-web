@@ -28,6 +28,7 @@ import org.brandao.brutos.web.http.MutableRequest;
 import org.brandao.brutos.web.http.ParameterList;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebMvcRequest;
 

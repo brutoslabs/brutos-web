@@ -21,11 +21,13 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.ServletContext;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
+import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 
 /**
  *
@@ -56,10 +58,11 @@ public class ContextLoader {
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-        ConfigurableWebApplicationContext app =
-                createApplicationContext(servletContext);
-
-        app.setServletContext(servletContext);
+        WebApplicationContext app =
+                    createApplicationContext(servletContext);
+        
+        ((ConfigurableWebApplicationContext)app)
+                .setServletContext(servletContext);
 
         Properties config = getConfiguration(servletContext);
         initLogger(config);
@@ -93,15 +96,15 @@ public class ContextLoader {
         return config;
     }
 
-    private ConfigurableWebApplicationContext createApplicationContext(
+    private WebApplicationContext createApplicationContext(
             ServletContext servletContext){
 
         Class clazz = getApplicationContextClass(servletContext);
 
         if(ConfigurableWebApplicationContext.class.isAssignableFrom(clazz)){
             try{
-                ConfigurableWebApplicationContext app =
-                        (ConfigurableWebApplicationContext) clazz.newInstance();
+                WebApplicationContext app =
+                        (WebApplicationContext) clazz.newInstance();
 
 
                 return app;

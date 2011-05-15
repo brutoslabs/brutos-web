@@ -28,17 +28,18 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.RequestInfo;
+import org.brandao.brutos.web.WebApplicationContext;
 
 /**
  *
@@ -67,7 +68,7 @@ public class BrutosRequestFilter implements Filter{
 
         StaticBrutosRequest staticRequest = new StaticBrutosRequest( request );
         
-        ApplicationContext context =
+        WebApplicationContext context =
                 ContextLoader.getCurrentWebApplicationContext();
 
         Invoker invoker =

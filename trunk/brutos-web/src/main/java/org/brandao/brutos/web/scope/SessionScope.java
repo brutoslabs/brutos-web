@@ -25,6 +25,7 @@ import org.brandao.brutos.MvcRequest;
 import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebMvcRequest;
 

@@ -29,7 +29,7 @@ import org.brandao.brutos.old.programatic.WebFrameManager;
  * @deprecated 
  * @author Afonso Brandao
  */
-public class DefaultApplicationContext extends ApplicationContext{
+public class DefaultApplicationContext extends AbstractApplicationContext{
 
     public void destroy() {
     }

@@ -36,7 +36,7 @@ import org.brandao.brutos.ioc.EditorConfigurer;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.old.programatic.InterceptorManager;
@@ -47,7 +47,7 @@ import org.brandao.brutos.Scopes;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.OldRequestScope;
@@ -58,14 +58,15 @@ import org.brandao.brutos.web.scope.SessionScope;
  * @deprecated 
  * @author Afonso Brandao
  */
-public class BrutosContext extends ConfigurableWebApplicationContext {
+public class BrutosContext extends AbstractWebApplicationContext
+    implements ConfigurableWebApplicationContext {
 
     private Configuration configuration;
     private IOCManager iocManager;
     private WebFrameManager webFrameManager;
     private ViewProvider viewProvider;
     private InterceptorManager interceptorManager;
-    private List<ApplicationContext> services = new ArrayList<ApplicationContext>();
+    private List<AbstractApplicationContext> services = new ArrayList<AbstractApplicationContext>();
     private LoggerProvider loggerProvider;
     private Logger logger;
     private Invoker invoker;
@@ -94,7 +95,7 @@ public class BrutosContext extends ConfigurableWebApplicationContext {
             logger.info( "Initializing Brutos root WebApplicationContext" );
             loadInvoker( sce.getServletContext() );
             loadServices( configuration, sce );
-            super.setConfiguration( configuration );
+            setConfiguration( configuration );
             resolveController( sce.getServletContext() );
             methodResolver( sce.getServletContext() );
             registerCustomEditors();
@@ -262,7 +263,7 @@ public class BrutosContext extends ConfigurableWebApplicationContext {
     }
 
     private void loadService( Configuration config, ServletContextEvent sce ){
-        for( ApplicationContext provider: services ){
+        for( AbstractApplicationContext provider: services ){
             logger.info( String.format("Starting %s", provider.getClass().getName() ) );
             provider.configure(config);
         }
@@ -272,19 +273,19 @@ public class BrutosContext extends ConfigurableWebApplicationContext {
 
         //load interceptors
         logger.info( "Loading interceptos" );
-        for( ApplicationContext provider: services ){
+        for( AbstractApplicationContext provider: services ){
             provider.loadInterceptorManager( interceptorManager );
         }
 
         //load controllers
         logger.info( "Loading controllers" );
-        for( ApplicationContext provider: services ){
+        for( AbstractApplicationContext provider: services ){
             provider.loadWebFrameManager( webFrameManager );
         }
 
         //load ioc/di
         logger.info( "Loading IOC" );
-        for( ApplicationContext provider: services ){
+        for( AbstractApplicationContext provider: services ){
             provider.loadIOCManager( iocManager );
         }
     }
@@ -334,7 +335,7 @@ public class BrutosContext extends ConfigurableWebApplicationContext {
     public synchronized void stop( ServletContextEvent sce ){
 
         if( services != null ){
-            for( ApplicationContext provider: services ){
+            for( AbstractApplicationContext provider: services ){
                 try{
                     provider.destroy();
                 }
@@ -435,9 +436,9 @@ public class BrutosContext extends ConfigurableWebApplicationContext {
         return (HttpServletRequest) ContextLoaderListener.currentRequest.get();
     }
 
-    public Form getController(){
+    public Controller getController(){
         BrutosContext brutosInstance = BrutosContext.getCurrentInstance();
-        return (Form) brutosInstance.getRequest()
+        return (Controller) brutosInstance.getRequest()
                 .getAttribute( BrutosConstants.CONTROLLER );
     }
 
@@ -468,7 +469,7 @@ public class BrutosContext extends ConfigurableWebApplicationContext {
             try{
                 logger.info( String.format( "Getting instance: %s", provider ) );
                 services.add(
-                        (ApplicationContext)Class.
+                        (AbstractApplicationContext)Class.
                         forName(
                             provider,
                             true,
@@ -489,7 +490,7 @@ public class BrutosContext extends ConfigurableWebApplicationContext {
             return loggerProvider;
     }
 
-    protected List<ApplicationContext> getServices(){
+    protected List<AbstractApplicationContext> getServices(){
         return this.services;
     }
 
@@ -510,6 +511,42 @@ public class BrutosContext extends ConfigurableWebApplicationContext {
     }
 
     public void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setServletContext(ServletContext servletContext) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public MvcRequestFactory getRequestFactory() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public MvcResponseFactory getResponseFactory() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setInterceptorManager(org.brandao.brutos.InterceptorManager interceptorManager) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setConfiguration(Properties config) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setIocProvider(IOCProvider iocProvider) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public ControllerManager getControllerManager() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public ControllerResolver getControllerResolver() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public ActionResolver getActionResolver() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

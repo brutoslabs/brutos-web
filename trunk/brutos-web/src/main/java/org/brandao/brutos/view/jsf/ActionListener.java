@@ -20,12 +20,13 @@ package org.brandao.brutos.view.jsf;
 import com.sun.faces.application.ActionListenerImpl;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.web.WebApplicationContext;
-import org.brandao.brutos.mapping.Form;
+import org.brandao.brutos.web.AbstractWebApplicationContext;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.WebApplicationContext;
 
 /**
  *
@@ -41,7 +42,7 @@ public class ActionListener extends ActionListenerImpl{
     public void processAction(ActionEvent event) throws AbortProcessingException {
         WebApplicationContext brutosContext = ContextLoader
                 .getCurrentWebApplicationContext();
-        Form controller = brutosContext.getController();
+        /*Controller controller = brutosContext.getController();
         
         if( controller != null ){
                 brutosContext.getScopes().get(ScopeType.REQUEST)
@@ -50,6 +51,7 @@ public class ActionListener extends ActionListenerImpl{
         }
         else
             super.processAction( event );
+         */
     }
     
 }

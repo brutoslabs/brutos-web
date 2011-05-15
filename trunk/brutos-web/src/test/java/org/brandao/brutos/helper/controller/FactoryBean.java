@@ -15,18 +15,19 @@
  *
  */
 
-
-package org.brandao.brutos.web;
-
-import javax.servlet.ServletContext;
-import org.brandao.brutos.ApplicationContext;
+package org.brandao.brutos.helper.controller;
 
 /**
  *
  * @author Brandao
  */
-public interface WebApplicationContext extends ApplicationContext{
+public class FactoryBean {
 
-    ServletContext getContext();
-    
+    public SimpleBean getInstance(){
+        return new SimpleBean();
+    }
+
+    public static SimpleBean getInstanceByStaticMethod(){
+        return new SimpleBean();
+    }
 }
