@@ -140,7 +140,7 @@ public class ControllerBuilder {
     private ControllerManager controllerManager;
     private InterceptorManager interceptorManager;
     private ValidatorProvider validatorProvider;
-    private ApplicationContext applicationContext;
+    private AbstractApplicationContext applicationContext;
 
     /**
      * Constr�i um novo controlador.
@@ -152,7 +152,7 @@ public class ControllerBuilder {
      */
     public ControllerBuilder( Controller controller, ControllerManager controllerManager,
             InterceptorManager interceptorManager, ValidatorProvider validatorProvider,
-            ApplicationContext applicationContext ) {
+            AbstractApplicationContext applicationContext ) {
         this.controller = controller;
         this.controllerManager  = controllerManager;
         this.interceptorManager = interceptorManager;

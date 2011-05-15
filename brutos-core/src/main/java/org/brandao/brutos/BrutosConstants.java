@@ -48,42 +48,42 @@ public interface BrutosConstants {
     
     public final String VALIDATOR_PROVIDER = "validator-provider";
 
-    public final String REDIRECT = ApplicationContext.class.getName() + ".REDIRECT";
+    public final String REDIRECT = AbstractApplicationContext.class.getName() + ".REDIRECT";
 
-    public final String UPLOAD_LISTENER_FACTORY = ApplicationContext.class.getName() + ".UPLOAD_LISTENER_FACTORY";
+    public final String UPLOAD_LISTENER_FACTORY = AbstractApplicationContext.class.getName() + ".UPLOAD_LISTENER_FACTORY";
 
-    public final String REQUEST_INSTRUMENT = ApplicationContext.class.getName() + ".REQUEST_INSTRUMENT";
+    public final String REQUEST_INSTRUMENT = AbstractApplicationContext.class.getName() + ".REQUEST_INSTRUMENT";
 
-    public final String HTTP_REQUEST_PARSER_FACTORY = ApplicationContext.class.getName() + ".HTTP_REQUEST_PARSER_FACTORY";
+    public final String HTTP_REQUEST_PARSER_FACTORY = AbstractApplicationContext.class.getName() + ".HTTP_REQUEST_PARSER_FACTORY";
 
-    public final String HTTP_REQUEST_PARSER = ApplicationContext.class.getName() + ".HTTP_REQUEST_PARSER";
+    public final String HTTP_REQUEST_PARSER = AbstractApplicationContext.class.getName() + ".HTTP_REQUEST_PARSER";
 
-    public final String SESSION_UPLOAD_STATS = ApplicationContext.class.getName() + ".SESSION_UPLOAD_STATS";
+    public final String SESSION_UPLOAD_STATS = AbstractApplicationContext.class.getName() + ".SESSION_UPLOAD_STATS";
 
-    public final String EXCEPTION_DATA = ApplicationContext.class.getName() + ".EXCEPTION_DATA";
+    public final String EXCEPTION_DATA = AbstractApplicationContext.class.getName() + ".EXCEPTION_DATA";
 
-    public final String ROOT_APPLICATION_CONTEXT_ATTRIBUTE = ApplicationContext.class.getName() + ".ROOT";
+    public final String ROOT_APPLICATION_CONTEXT_ATTRIBUTE = AbstractApplicationContext.class.getName() + ".ROOT";
 
-    public final String FLASH_INSTRUMENT = ApplicationContext.class.getName() + ".FLASH_INSTRUMENT";
+    public final String FLASH_INSTRUMENT = AbstractApplicationContext.class.getName() + ".FLASH_INSTRUMENT";
 
-    public final String LOGGER = ApplicationContext.class.getName() + ".LOGGER";
+    public final String LOGGER = AbstractApplicationContext.class.getName() + ".LOGGER";
 
-    public final String DEFAULT_RETURN_NAME = ApplicationContext.class.getName() + ".RETURN";
+    public final String DEFAULT_RETURN_NAME = AbstractApplicationContext.class.getName() + ".RETURN";
     
-    public final String METHOD_RESOLVER = ApplicationContext.class.getName() + ".METHOD_RESOLVER";
+    public final String METHOD_RESOLVER = AbstractApplicationContext.class.getName() + ".METHOD_RESOLVER";
 
-    public final String CONTROLLER_RESOLVER = ApplicationContext.class.getName() + ".CONTROLLER_RESOLVER";
+    public final String CONTROLLER_RESOLVER = AbstractApplicationContext.class.getName() + ".CONTROLLER_RESOLVER";
 
-    public final String CONTROLLER = ApplicationContext.class.getName() + ".CONTROLLER";
+    public final String CONTROLLER = AbstractApplicationContext.class.getName() + ".CONTROLLER";
 
-    public final String INVOKER = ApplicationContext.class.getName() + ".INVOKER";
+    public final String INVOKER = AbstractApplicationContext.class.getName() + ".INVOKER";
 
-    public final String JSF_HANDLER = ApplicationContext.class.getName() + ".JSF_Handler";
+    public final String JSF_HANDLER = AbstractApplicationContext.class.getName() + ".JSF_Handler";
     
-    public final String JSF_CONTEXT = ApplicationContext.class.getName() + ".JSF_Context";
+    public final String JSF_CONTEXT = AbstractApplicationContext.class.getName() + ".JSF_Context";
     
-    public final String JSF_UI_VIEW_ROOT = ApplicationContext.class.getName() + ".JSF_viewRoot";
+    public final String JSF_UI_VIEW_ROOT = AbstractApplicationContext.class.getName() + ".JSF_viewRoot";
 
-    public final String JSF_ACTION_LISTENER = ApplicationContext.class.getName() + ".JSF_Action_Listener";
+    public final String JSF_ACTION_LISTENER = AbstractApplicationContext.class.getName() + ".JSF_Action_Listener";
 
 }

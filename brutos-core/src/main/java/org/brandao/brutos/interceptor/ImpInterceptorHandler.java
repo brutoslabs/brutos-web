@@ -17,7 +17,7 @@
 
 package org.brandao.brutos.interceptor;
 
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ResourceAction;
 
 /**
@@ -32,7 +32,7 @@ public class ImpInterceptorHandler implements InterceptorHandler{
 
     private ResourceAction resourceAction;
 
-    private ApplicationContext context;
+    private AbstractApplicationContext context;
     
     private Object resource;
 
@@ -72,11 +72,11 @@ public class ImpInterceptorHandler implements InterceptorHandler{
         return this.requestId;
     }
 
-    public ApplicationContext getContext(){
+    public AbstractApplicationContext getContext(){
         return context;
     }
 
-    public void setContext(ApplicationContext context) {
+    public void setContext(AbstractApplicationContext context) {
         this.context = context;
     }
 

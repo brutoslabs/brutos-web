@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
 import org.brandao.brutos.BrutosException;

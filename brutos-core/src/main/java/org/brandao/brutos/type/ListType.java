@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.web.http.ParameterList;
@@ -51,7 +51,7 @@ public class ListType implements CollectionType{
         if( this.listType != null )
             return this.listType;
 
-        ApplicationContext context = Invoker
+        AbstractApplicationContext context = Invoker
                 .getCurrentApplicationContext();
 
         String className = context

@@ -47,14 +47,14 @@ public class Invoker {
     protected IOCProvider iocProvider;
     protected ControllerManager controllerManager;
     protected ActionResolver actionResolver;
-    protected ApplicationContext applicationContext;
+    protected AbstractApplicationContext applicationContext;
     protected ViewProvider viewProvider;
     public Invoker() {
     }
 
     public Invoker( ControllerResolver controllerResolver, IOCProvider iocProvider, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
-            ApplicationContext applicationContext, ViewProvider viewProvider ){
+            AbstractApplicationContext applicationContext, ViewProvider viewProvider ){
         
         this.controllerResolver = controllerResolver;
         this.iocProvider        = iocProvider;
@@ -193,8 +193,8 @@ public class Invoker {
     }
 
     
-    public static ApplicationContext getCurrentApplicationContext(){
-        return (ApplicationContext) currentApp.get();
+    public static AbstractApplicationContext getCurrentApplicationContext(){
+        return (AbstractApplicationContext) currentApp.get();
     }
     
 }

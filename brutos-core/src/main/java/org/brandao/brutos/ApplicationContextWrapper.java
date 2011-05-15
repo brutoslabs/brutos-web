@@ -17,45 +17,56 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.old.programatic.WebFrameManager;
+import java.util.Properties;
 
 /**
  * 
  * 
  * @author Afonso Brandao
  */
-public class ApplicationContextWrapper extends ApplicationContext{
+public class ApplicationContextWrapper 
+        extends AbstractApplicationContext{
 
     protected ApplicationContext applicationContext;
 
     /**
-     * Define a aplicação.
+     * Define a aplicaï¿½ï¿½o.
      *
-     * @param app Aplicação.
+     * @param app Aplicaï¿½ï¿½o.
      */
     public ApplicationContextWrapper( ApplicationContext app ){
         this.applicationContext = app;
     }
 
-    public void destroy() {
-        applicationContext.destroy();
+    public void configure( Properties config ){
+        this.applicationContext.configure(config);
     }
 
-    protected void loadIOCManager(IOCManager iocManager) {
-        applicationContext.loadIOCManager(iocManager);
+    public void destroy(){
+        this.applicationContext.destroy();
     }
 
-    protected void loadWebFrameManager(WebFrameManager webFrameManager) {
-        applicationContext.loadWebFrameManager(webFrameManager);
+    public Object getController( Class controllerClass ){
+        return this.applicationContext.getController(controllerClass);
     }
 
-    protected void loadInterceptorManager(InterceptorManager interceptorManager) {
-        applicationContext.loadInterceptorManager(interceptorManager);
+    public Properties getConfiguration(){
+        return this.applicationContext.getConfiguration();
     }
 
-    protected void loadController(ControllerManager controllerManager) {
-        applicationContext.loadController(controllerManager);
+    public MvcResponse getMvcResponse() {
+        return this.applicationContext.getMvcResponse();
     }
 
+    public MvcRequest getMvcRequest() {
+        return this.applicationContext.getMvcRequest();
+    }
+
+    public Scopes getScopes() {
+        return this.applicationContext.getScopes();
+    }
+
+    public void configure() {
+         this.applicationContext.configure();
+    }
 }

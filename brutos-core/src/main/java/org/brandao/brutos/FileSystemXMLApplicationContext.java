@@ -31,7 +31,7 @@ public class FileSystemXMLApplicationContext
     private Resource[] resources;
 
     public FileSystemXMLApplicationContext( String[] locations,
-            ApplicationContext parent ){
+            AbstractApplicationContext parent ){
         super( parent );
 
         resources = new Resource[locations.length];

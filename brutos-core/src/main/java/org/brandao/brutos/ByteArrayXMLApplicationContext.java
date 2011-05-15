@@ -31,7 +31,7 @@ public class ByteArrayXMLApplicationContext
     private Resource[] resources;
 
     public ByteArrayXMLApplicationContext( byte[][] arrays,
-            ApplicationContext parent ){
+            AbstractApplicationContext parent ){
         super( parent );
 
         resources = new Resource[arrays.length];
@@ -48,7 +48,7 @@ public class ByteArrayXMLApplicationContext
     }
 
     public ByteArrayXMLApplicationContext( byte[] array,
-            ApplicationContext parent ){
+            AbstractApplicationContext parent ){
         this(new byte[][]{array}, parent);
     }
 

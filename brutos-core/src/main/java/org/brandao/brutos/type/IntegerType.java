@@ -19,7 +19,7 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
@@ -73,7 +73,7 @@ public class IntegerType implements Type{
     }
 
     public void setValue(Object value) throws IOException {
-        ApplicationContext app = Invoker.getCurrentApplicationContext();
+        AbstractApplicationContext app = Invoker.getCurrentApplicationContext();
         MvcResponse response = app.getMvcResponse();
         response.process(value);
     }

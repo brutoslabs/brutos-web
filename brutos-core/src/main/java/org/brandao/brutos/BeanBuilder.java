@@ -147,14 +147,14 @@ public class BeanBuilder {
     ControllerBuilder controllerBuilder;
     Bean mappingBean;
     ValidatorProvider validatorProvider;
-    ApplicationContext applicationContext;
+    AbstractApplicationContext applicationContext;
 
     public BeanBuilder(
             Bean mappingBean,
             Controller controller,
             ControllerBuilder controllerBuilder,
             ValidatorProvider validatorProvider,
-            ApplicationContext applicationContext) {
+            AbstractApplicationContext applicationContext) {
 
         this.controllerBuilder = controllerBuilder;
         this.mappingBean = mappingBean;

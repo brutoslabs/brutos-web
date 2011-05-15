@@ -29,7 +29,8 @@ import org.brandao.brutos.view.ViewProvider;
  *
  * @author Afonso Brandao
  */
-public interface ConfigurableApplicationContext {
+public interface ConfigurableApplicationContext 
+        extends ApplicationContext{
 
     /**
      * Obt�m a f�brica de requisi��o.
