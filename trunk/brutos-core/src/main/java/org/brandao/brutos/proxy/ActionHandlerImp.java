@@ -19,7 +19,7 @@
 package org.brandao.brutos.proxy;
 
 import java.lang.reflect.Method;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.DefaultResourceAction;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.StackRequestElementImp;
@@ -35,11 +35,11 @@ public abstract class ActionHandlerImp implements ActionHandler{
 
     private Object resource;
     private Controller form;
-    private ApplicationContext app;
+    private AbstractApplicationContext app;
     private Invoker invoker;
 
     public ActionHandlerImp(Object resource, Controller form,
-            ApplicationContext app, Invoker invoker){
+            AbstractApplicationContext app, Invoker invoker){
         this.resource = resource;
         this.app = app;
         this.form = form;

@@ -208,6 +208,7 @@
             <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
         <xsd:attribute name="name" type="xsd:string" use="required"/>
         <xsd:attribute name="value" type="xsd:string"/>
@@ -237,6 +238,7 @@
             <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
         <!--<xsd:attribute name="name" type="xsd:string"/>-->
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
@@ -246,6 +248,7 @@
         <xsd:attribute name="mapping" type="xsd:boolean" default="false"/>
         <xsd:attribute name="scope" type="xsd:string" default="request"/>
         <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="type" type="xsd:string"/>
         <!--<xsd:attribute name="mapping-name" type="xsd:string"/>-->
     </xsd:complexType>
 
@@ -293,6 +296,7 @@
             <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
         <xsd:attribute name="value" type="xsd:string"/>

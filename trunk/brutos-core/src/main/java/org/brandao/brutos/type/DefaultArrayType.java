@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
@@ -118,7 +118,7 @@ public class DefaultArrayType implements ArrayType{
     }
 
     public void setValue(Object value) throws IOException {
-        ApplicationContext app = Invoker.getCurrentApplicationContext();
+        AbstractApplicationContext app = Invoker.getCurrentApplicationContext();
         MvcResponse response = app.getMvcResponse();
         response.process(value);
     }

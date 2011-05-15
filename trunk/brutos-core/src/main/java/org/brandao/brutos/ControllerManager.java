@@ -105,11 +105,11 @@ public class ControllerManager {
     private Map revForms;
     private ValidatorProvider validatorProvider;
     private ControllerBuilder current;
-    private ApplicationContext applicationContext;
+    private AbstractApplicationContext applicationContext;
     private InterceptorManager interceptorManager;
     
     public ControllerManager( InterceptorManager interceptorManager, 
-            ValidatorProvider validatorProvider, ApplicationContext applicationContext) {
+            ValidatorProvider validatorProvider, AbstractApplicationContext applicationContext) {
         this.forms              = new HashMap();
         this.revForms           = new HashMap();
         this.interceptorManager = interceptorManager;

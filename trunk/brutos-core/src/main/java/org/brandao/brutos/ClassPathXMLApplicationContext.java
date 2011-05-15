@@ -31,7 +31,7 @@ public class ClassPathXMLApplicationContext
     private Resource[] resources;
 
     public ClassPathXMLApplicationContext( String[] locations, 
-            ApplicationContext parent, ClassLoader classLoader, Class clazz ){
+            AbstractApplicationContext parent, ClassLoader classLoader, Class clazz ){
         super( parent );
 
         resources = new Resource[locations.length];
@@ -56,7 +56,7 @@ public class ClassPathXMLApplicationContext
     }
 
     public ClassPathXMLApplicationContext( String location,
-            ApplicationContext parent ){
+            AbstractApplicationContext parent ){
         this( new String[]{location}, parent,
                 Thread.currentThread().getContextClassLoader(), null );
     }

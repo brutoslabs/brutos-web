@@ -32,7 +32,7 @@ public class InputStreamXMLApplicationContext
     private Resource[] resources;
 
     public InputStreamXMLApplicationContext( InputStream[] inputs,
-            ApplicationContext parent ){
+            AbstractApplicationContext parent ){
         super( parent );
 
         resources = new Resource[inputs.length];

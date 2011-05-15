@@ -25,7 +25,7 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.io.Resource;
@@ -133,20 +133,20 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
         if( cp == null )
             return;
 
-        ApplicationContext aac = createApplicationContext();
+        AbstractApplicationContext aac = createApplicationContext();
         aac.configure();
         
     }
 
-    private ApplicationContext createApplicationContext(){
+    private AbstractApplicationContext createApplicationContext(){
 
         Class clazz = getApplicationContextClass();
 
-        if(ApplicationContext.class.isAssignableFrom(clazz)){
+        if(AbstractApplicationContext.class.isAssignableFrom(clazz)){
             try{
-                ApplicationContext app =
-                    (ApplicationContext) clazz
-                        .getConstructor(ApplicationContext.class)
+                AbstractApplicationContext app =
+                    (AbstractApplicationContext) clazz
+                        .getConstructor(AbstractApplicationContext.class)
                             .newInstance(this.handler);
                 return app;
             }
