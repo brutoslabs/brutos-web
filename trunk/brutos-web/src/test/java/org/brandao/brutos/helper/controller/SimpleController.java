@@ -20,6 +20,7 @@ package org.brandao.brutos.helper.controller;
 import java.util.Arrays;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.AbstractWebApplicationContext;
+import org.brandao.brutos.web.WebApplicationContext;
 
 /**
  *
@@ -62,7 +63,7 @@ public class SimpleController {
     }
 
     public void actionToOtherAction(){
-        AbstractWebApplicationContext context =
+        WebApplicationContext context =
                 ContextLoader.getCurrentWebApplicationContext();
 
         SimpleController otherController =
@@ -72,7 +73,7 @@ public class SimpleController {
     }
 
     public void actionToOtherActionWithReturn(){
-        AbstractWebApplicationContext context =
+        WebApplicationContext context =
                 ContextLoader.getCurrentWebApplicationContext();
 
         SimpleController otherController =
