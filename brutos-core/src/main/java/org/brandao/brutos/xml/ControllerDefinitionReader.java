@@ -147,7 +147,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
-            String dependencyName = c.getAttribute( "resource" );
+            String dependencyName = parseUtil.getAttribute(c, "resource" );
 
             if( dependencyName != null && dependencyName.length() != 0 ){
 
@@ -204,9 +204,9 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
 
-            String name       = c.getAttribute( "name" );
-            String clazzName  = c.getAttribute( "class" );
-            Boolean isDefault = Boolean.valueOf(c.getAttribute( "default" ));
+            String name       = parseUtil.getAttribute(c,"name" );
+            String clazzName  = parseUtil.getAttribute(c,"class" );
+            Boolean isDefault = Boolean.valueOf(parseUtil.getAttribute(c,"default" ));
             Class clazz;
 
             try{
@@ -236,8 +236,8 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             for( int k=0;k<listParam.getLength();k++ ){
                 Element paramNode = (Element) listParam.item(k);
 
-                String paramName  = paramNode.getAttribute( "name" );
-                String paramValue = paramNode.getAttribute( "value" );
+                String paramName  = parseUtil.getAttribute(paramNode,"name" );
+                String paramValue = parseUtil.getAttribute(paramNode,"value" );
 
                 paramValue =
                     paramValue == null?
@@ -258,8 +258,8 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
 
-            String name       = c.getAttribute( "name" );
-            Boolean isDefault = Boolean.valueOf(c.getAttribute( "default" ));
+            String name       = parseUtil.getAttribute(c,"name" );
+            Boolean isDefault = Boolean.valueOf(parseUtil.getAttribute(c,"default" ));
 
             InterceptorManager interceptorManager =
                 handler.getInterceptorManager();
@@ -279,7 +279,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                     (Element) listInterceptorRef.item(j);
 
                 String interceptorRefName = 
-                        interceptorRefNode.getAttribute( "name" );
+                        parseUtil.getAttribute(interceptorRefNode,  "name" );
 
                 interceptorStackBuilder.addInterceptor( interceptorRefName );
 
@@ -291,8 +291,8 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 for( int k=0;k<listParam.getLength();k++ ){
                     Element paramNode = (Element) listParam.item(k);
 
-                    String paramName  = paramNode.getAttribute( "name" );
-                    String paramValue = paramNode.getAttribute( "value" );
+                    String paramName  = parseUtil.getAttribute(paramNode,"name" );
+                    String paramValue = parseUtil.getAttribute(paramNode,"value" );
 
                     paramValue =
                         paramValue == null?
@@ -328,16 +328,16 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     }
     private void loadController( Element controller ){
 
-        String id = controller.getAttribute( "id" );
+        String id = parseUtil.getAttribute(controller,"id" );
         DispatcherType dispatcher =
-            DispatcherType.valueOf( controller.getAttribute( "dispatcher" ) );
-        String view = controller.getAttribute( "view" );
-        String name = controller.getAttribute( "name" );
-        String clazzName = controller.getAttribute( "class" );
+            DispatcherType.valueOf( parseUtil.getAttribute(controller,"dispatcher" ) );
+        String view = parseUtil.getAttribute(controller,"view" );
+        String name = parseUtil.getAttribute(controller,"name" );
+        String clazzName = parseUtil.getAttribute(controller,"class" );
         //ScopeType scope =
-        //    ScopeType.valueOf( controller.getAttribute( "scope" ) );
-        String actionId = controller.getAttribute( "action-id" );
-        String defaultAction = controller.getAttribute( "default-action" );
+        //    ScopeType.valueOf( controller.parseUtil.getAttribute(c,  "scope" ) );
+        String actionId = parseUtil.getAttribute(controller,"action-id" );
+        String defaultAction = parseUtil.getAttribute(controller,"default-action" );
 
         Class clazz = null;
         try{
@@ -424,7 +424,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 (Element) interceptorList.item(j);
 
             String interceptorRefName =
-                    interceptorRefNode.getAttribute( "name" );
+                    parseUtil.getAttribute(interceptorRefNode,"name" );
 
             InterceptorBuilder interceptorBuilder = 
                     controllerBuilder.addInterceptor( interceptorRefName );
@@ -437,8 +437,8 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             for( int k=0;k<listParam.getLength();k++ ){
                 Element paramNode = (Element) listParam.item(k);
 
-                String paramName  = paramNode.getAttribute( "name" );
-                String paramValue = paramNode.getAttribute( "value" );
+                String paramName  = parseUtil.getAttribute(paramNode,"name" );
+                String paramValue = parseUtil.getAttribute(paramNode,"value" );
 
                 paramValue =
                     paramValue == null?
@@ -463,12 +463,12 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     private void addBean( Element beanNode,
             ControllerBuilder controllerBuilder, String propertyName ){
 
-        String name          = beanNode.getAttribute( "name" );
-        String separator     = beanNode.getAttribute( "separator" );
-        String indexFormat   = beanNode.getAttribute( "index-format" );
-        String factory       = beanNode.getAttribute( "factory" );
-        String methodFactory = beanNode.getAttribute( "method-factory" );
-        String target        = beanNode.getAttribute( "target" );
+        String name          = parseUtil.getAttribute(beanNode,"name" );
+        String separator     = parseUtil.getAttribute(beanNode,"separator" );
+        String indexFormat   = parseUtil.getAttribute(beanNode,"index-format" );
+        String factory       = parseUtil.getAttribute(beanNode,"factory" );
+        String methodFactory = parseUtil.getAttribute(beanNode,"method-factory" );
+        String target        = parseUtil.getAttribute(beanNode,"target" );
 
         Class clazz = null;
         try{
@@ -499,12 +499,12 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             BeanBuilder bean, String propertyName, boolean key,
             boolean element ){
 
-        String name          = beanNode.getAttribute( "name" );
-        String separator     = beanNode.getAttribute( "separator" );
-        String indexFormat   = beanNode.getAttribute( "index-format" );
-        String factory       = beanNode.getAttribute( "factory" );
-        String methodFactory = beanNode.getAttribute( "method-factory" );
-        String target        = beanNode.getAttribute( "target" );
+        String name          = parseUtil.getAttribute(beanNode,"name" );
+        String separator     = parseUtil.getAttribute(beanNode,"separator" );
+        String indexFormat   = parseUtil.getAttribute(beanNode,"index-format" );
+        String factory       = parseUtil.getAttribute(beanNode,"factory" );
+        String methodFactory = parseUtil.getAttribute(beanNode,"method-factory" );
+        String target        = parseUtil.getAttribute(beanNode,"target" );
 
         Class clazz = null;
         try{
@@ -542,11 +542,11 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     private void addBean( Element beanNode,
             ActionBuilder actionBuilder ){
 
-        String separator     = beanNode.getAttribute( "separator" );
-        String indexFormat   = beanNode.getAttribute( "index-format" );
-        String factory       = beanNode.getAttribute( "factory" );
-        String methodFactory = beanNode.getAttribute( "method-factory" );
-        String target        = beanNode.getAttribute( "target" );
+        String separator     = parseUtil.getAttribute(beanNode,"separator" );
+        String indexFormat   = parseUtil.getAttribute(beanNode,"index-format" );
+        String factory       = parseUtil.getAttribute(beanNode,"factory" );
+        String methodFactory = parseUtil.getAttribute(beanNode,"method-factory" );
+        String target        = parseUtil.getAttribute(beanNode,"target" );
 
         Class clazz = null;
         try{
@@ -621,14 +621,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             Element conNode = (Element) consList.item(k);
 
             EnumerationType enumProperty =
-                EnumerationType.valueOf(conNode.getAttribute("enum-property"));
-            String value = conNode.getAttribute("value");
-            String temporalProperty = conNode.getAttribute("temporal-property");
-            String bean = conNode.getAttribute("bean");
+                EnumerationType.valueOf(parseUtil.getAttribute(conNode, "enum-property"));
+            String value = parseUtil.getAttribute(conNode, "value");
+            String temporalProperty = parseUtil.getAttribute(conNode, "temporal-property");
+            String bean = parseUtil.getAttribute(conNode, "bean");
             boolean mapping = Boolean
-                .valueOf(conNode.getAttribute("mapping")).booleanValue();
-            ScopeType scope = ScopeType.valueOf(conNode.getAttribute("scope"));
-            String factoryName = conNode.getAttribute("factory");
+                .valueOf(parseUtil.getAttribute(conNode, "mapping")).booleanValue();
+            ScopeType scope = ScopeType.valueOf(parseUtil.getAttribute(conNode, "scope"));
+            String factoryName = parseUtil.getAttribute(conNode, "factory");
             Type factory = null;
 
             Element mappingRef     = parseUtil.getElement(conNode,"ref");
@@ -639,15 +639,15 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             if( mappingRef != null ){
                 enumProperty =
                     EnumerationType.valueOf(
-                        mappingRef.getAttribute("enum-property"));
+                        parseUtil.getAttribute(mappingRef, "enum-property"));
                 
-                value = mappingRef.getAttribute( "value" );
-                temporalProperty = mappingRef.getAttribute( "temporal-property" );
-                bean = mappingRef.getAttribute( "bean" );
+                value = parseUtil.getAttribute(mappingRef,  "value" );
+                temporalProperty = parseUtil.getAttribute(mappingRef,  "temporal-property" );
+                bean = parseUtil.getAttribute(mappingRef,  "bean" );
                 mapping = Boolean
-                    .valueOf(mappingRef.getAttribute( "mapping" )).booleanValue();
-                scope = ScopeType.valueOf( mappingRef.getAttribute( "scope" ) );
-                factoryName = mappingRef.getAttribute( "factory" );
+                    .valueOf(parseUtil.getAttribute(mappingRef,  "mapping" )).booleanValue();
+                scope = ScopeType.valueOf( parseUtil.getAttribute(mappingRef,  "scope" ) );
+                factoryName = parseUtil.getAttribute(mappingRef,  "factory" );
                 validatorNode = parseUtil.getElement( mappingRef, "validator");
             }
             else
@@ -694,16 +694,16 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         for( int k=0;k<consList.getLength();k++ ){
             Element propNode = (Element) consList.item(k);
 
-            String propertyName = propNode.getAttribute( "name" );
+            String propertyName = parseUtil.getAttribute(propNode,  "name" );
             EnumerationType enumProperty =
-                EnumerationType.valueOf( propNode.getAttribute( "enum-property" ) );
-            String value = propNode.getAttribute( "value" );
-            String temporalProperty = propNode.getAttribute( "temporal-property" );
-            String bean = propNode.getAttribute( "bean" );
+                EnumerationType.valueOf( parseUtil.getAttribute(propNode,  "enum-property" ) );
+            String value = parseUtil.getAttribute(propNode,  "value" );
+            String temporalProperty = parseUtil.getAttribute(propNode,  "temporal-property" );
+            String bean = parseUtil.getAttribute(propNode,  "bean" );
             boolean mapping = Boolean
-                .valueOf(propNode.getAttribute( "mapping" )).booleanValue();
-            ScopeType scope = ScopeType.valueOf( propNode.getAttribute( "scope" ) );
-            String factoryName = propNode.getAttribute( "factory" );
+                .valueOf(parseUtil.getAttribute(propNode,  "mapping" )).booleanValue();
+            ScopeType scope = ScopeType.valueOf( parseUtil.getAttribute(propNode,  "scope" ) );
+            String factoryName = parseUtil.getAttribute(propNode,  "factory" );
             Type factory = null;
 
             Element mappingRef = parseUtil.getElement( propNode, "ref");
@@ -712,14 +712,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             Element validatorNode = parseUtil.getElement( propNode, "validator" );
             if( mappingRef != null ){
                 enumProperty =
-                    EnumerationType.valueOf( propNode.getAttribute( "enum-property" ) );
-                value = propNode.getAttribute( "value" );
-                temporalProperty = propNode.getAttribute( "temporal-property" );
-                bean = propNode.getAttribute( "bean" );
+                    EnumerationType.valueOf( parseUtil.getAttribute(propNode,  "enum-property" ) );
+                value = parseUtil.getAttribute(propNode,  "value" );
+                temporalProperty = parseUtil.getAttribute(propNode,  "temporal-property" );
+                bean = parseUtil.getAttribute(propNode,  "bean" );
                 mapping = Boolean
-                    .valueOf(propNode.getAttribute( "mapping" )).booleanValue();
-                scope = ScopeType.valueOf( propNode.getAttribute( "scope" ) );
-                factoryName = propNode.getAttribute( "factory" );
+                    .valueOf(parseUtil.getAttribute(propNode,  "mapping" )).booleanValue();
+                scope = ScopeType.valueOf( parseUtil.getAttribute(propNode,  "scope" ) );
+                factoryName = parseUtil.getAttribute(propNode,  "factory" );
                 validatorNode = parseUtil.getElement( mappingRef, "validator");
             }
             else
@@ -773,16 +773,16 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     private void buildPropertyController( Element propNode,
             ControllerBuilder controllerBuilder ){
 
-        String propertyName = propNode.getAttribute( "name" );
+        String propertyName = parseUtil.getAttribute(propNode,  "name" );
         EnumerationType enumProperty =
-            EnumerationType.valueOf( propNode.getAttribute( "enum-property" ) );
-        String value = propNode.getAttribute( "value" );
-        String temporalProperty = propNode.getAttribute( "temporal-property" );
-        String bean = propNode.getAttribute( "bean" );
+            EnumerationType.valueOf( parseUtil.getAttribute(propNode,  "enum-property" ) );
+        String value = parseUtil.getAttribute(propNode,  "value" );
+        String temporalProperty = parseUtil.getAttribute(propNode,  "temporal-property" );
+        String bean = parseUtil.getAttribute(propNode,  "bean" );
         boolean mapping = Boolean
-            .valueOf(propNode.getAttribute( "mapping" )).booleanValue();
-        ScopeType scope = ScopeType.valueOf( propNode.getAttribute( "scope" ) );
-        String factoryName = propNode.getAttribute( "factory" );
+            .valueOf(parseUtil.getAttribute(propNode,  "mapping" )).booleanValue();
+        ScopeType scope = ScopeType.valueOf( parseUtil.getAttribute(propNode,  "scope" ) );
+        String factoryName = parseUtil.getAttribute(propNode,  "factory" );
         Type factory = null;
 
         Element mappingRef = parseUtil.getElement( propNode, "ref");
@@ -791,14 +791,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         Element validatorNode = parseUtil.getElement( propNode, "validator" );
         if( mappingRef != null ){
             enumProperty =
-                EnumerationType.valueOf( propNode.getAttribute( "enum-property" ) );
-            value = propNode.getAttribute( "value" );
-            temporalProperty = propNode.getAttribute( "temporal-property" );
-            bean = propNode.getAttribute( "bean" );
+                EnumerationType.valueOf( parseUtil.getAttribute(propNode,  "enum-property" ) );
+            value = parseUtil.getAttribute(propNode,  "value" );
+            temporalProperty = parseUtil.getAttribute(propNode,  "temporal-property" );
+            bean = parseUtil.getAttribute(propNode,  "bean" );
             mapping = Boolean
-                .valueOf(propNode.getAttribute( "mapping" )).booleanValue();
-            scope = ScopeType.valueOf( propNode.getAttribute( "scope" ) );
-            factoryName = propNode.getAttribute( "factory" );
+                .valueOf(parseUtil.getAttribute(propNode,  "mapping" )).booleanValue();
+            scope = ScopeType.valueOf( parseUtil.getAttribute(propNode,  "scope" ) );
+            factoryName = parseUtil.getAttribute(propNode,  "factory" );
             validatorNode = parseUtil.getElement( mappingRef, "validator");
         }
         else
@@ -851,12 +851,12 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     private void addAction( Element actionNode,
             ControllerBuilder controllerBuilder ){
 
-        String id = actionNode.getAttribute( "id" );
-        String executor = actionNode.getAttribute( "executor" );
-        String result = actionNode.getAttribute( "result" );
-        String view = actionNode.getAttribute( "view" );
+        String id = parseUtil.getAttribute(actionNode,  "id" );
+        String executor = parseUtil.getAttribute(actionNode,  "executor" );
+        String result = parseUtil.getAttribute(actionNode,  "result" );
+        String view = parseUtil.getAttribute(actionNode,  "view" );
         DispatcherType dispatcher =
-            DispatcherType.valueOf( actionNode.getAttribute( "dispatcher" ) );
+            DispatcherType.valueOf( parseUtil.getAttribute(actionNode,  "dispatcher" ) );
 
         ActionBuilder actionBuilder =
             controllerBuilder.addAction(id, result, view, dispatcher, executor);
@@ -890,15 +890,15 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             ActionBuilder actionBuilder ){
 
         EnumerationType enumProperty =
-            EnumerationType.valueOf( paramNode.getAttribute( "enum-property" ) );
-        String value = paramNode.getAttribute( "value" );
-        String temporalProperty = paramNode.getAttribute( "temporal-property" );
-        String bean = paramNode.getAttribute( "bean" );
+            EnumerationType.valueOf( parseUtil.getAttribute(paramNode,  "enum-property" ) );
+        String value = parseUtil.getAttribute(paramNode,  "value" );
+        String temporalProperty = parseUtil.getAttribute(paramNode,  "temporal-property" );
+        String bean = parseUtil.getAttribute(paramNode,  "bean" );
         boolean mapping = Boolean
-            .valueOf(paramNode.getAttribute( "mapping" )).booleanValue();
-        ScopeType scope = ScopeType.valueOf( paramNode.getAttribute( "scope" ) );
-        String factoryName = paramNode.getAttribute( "factory" );
-        String type = paramNode.getAttribute( "type" );
+            .valueOf(parseUtil.getAttribute(paramNode,  "mapping" )).booleanValue();
+        ScopeType scope = ScopeType.valueOf( parseUtil.getAttribute(paramNode,  "scope" ) );
+        String factoryName = parseUtil.getAttribute(paramNode,  "factory" );
+        String type = parseUtil.getAttribute(paramNode,  "type" );
         Type factory = null;
         Class typeClass = null;
         
@@ -908,14 +908,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         Element validatorNode = parseUtil.getElement( paramNode, "validator" );
         if( mappingRef != null ){
             enumProperty =
-                EnumerationType.valueOf( paramNode.getAttribute( "enum-property" ) );
-            value = paramNode.getAttribute( "value" );
-            temporalProperty = paramNode.getAttribute( "temporal-property" );
-            bean = paramNode.getAttribute( "bean" );
+                EnumerationType.valueOf( parseUtil.getAttribute(paramNode,  "enum-property" ) );
+            value = parseUtil.getAttribute(paramNode,  "value" );
+            temporalProperty = parseUtil.getAttribute(paramNode,  "temporal-property" );
+            bean = parseUtil.getAttribute(paramNode,  "bean" );
             mapping = Boolean
-                .valueOf(paramNode.getAttribute( "mapping" )).booleanValue();
-            scope = ScopeType.valueOf( paramNode.getAttribute( "scope" ) );
-            factoryName = paramNode.getAttribute( "factory" );
+                .valueOf(parseUtil.getAttribute(paramNode,  "mapping" )).booleanValue();
+            scope = ScopeType.valueOf( parseUtil.getAttribute(paramNode,  "scope" ) );
+            factoryName = parseUtil.getAttribute(paramNode,  "factory" );
             validatorNode = parseUtil.getElement( mappingRef, "validator");
         }
         else
@@ -981,11 +981,11 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     private void addThrowSafe( Element throwSafeNode,
             ControllerBuilder controllerBuilder ){
 
-        String view = throwSafeNode.getAttribute("view");
-        String target = throwSafeNode.getAttribute("target");
-        String name = throwSafeNode.getAttribute("name");
+        String view = parseUtil.getAttribute(throwSafeNode, "view");
+        String target = parseUtil.getAttribute(throwSafeNode, "target");
+        String name = parseUtil.getAttribute(throwSafeNode, "name");
         DispatcherType dispatcher =
-            DispatcherType.valueOf(throwSafeNode.getAttribute("dispatcher"));
+            DispatcherType.valueOf(parseUtil.getAttribute(throwSafeNode, "dispatcher"));
         Class targetClass;
 
         try{
@@ -1016,11 +1016,11 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     private void addThrowSafe( Element throwSafeNode,
             ActionBuilder actionBuilder ){
 
-        String view = throwSafeNode.getAttribute("view");
-        String target = throwSafeNode.getAttribute("target");
-        String name = throwSafeNode.getAttribute("name");
+        String view = parseUtil.getAttribute(throwSafeNode, "view");
+        String target = parseUtil.getAttribute(throwSafeNode, "target");
+        String name = parseUtil.getAttribute(throwSafeNode, "name");
         DispatcherType dispatcher =
-            DispatcherType.valueOf(throwSafeNode.getAttribute("dispatcher"));
+            DispatcherType.valueOf(parseUtil.getAttribute(throwSafeNode, "dispatcher"));
         Class targetClass;
 
         try{
@@ -1045,7 +1045,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         if( validatorNode == null )
             return;
 
-        String msg = validatorNode.getAttribute( "message" );
+        String msg = parseUtil.getAttribute(validatorNode,  "message" );
 
         restrictionBuilder.setMessage(msg);
 
@@ -1056,8 +1056,8 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
         for( int i=0;i<rules.getLength();i++ ){
             Element rule = (Element) rules.item(i);
-            String name = rule.getAttribute( "name" );
-            String value = rule.getAttribute( "value" );
+            String name = parseUtil.getAttribute(rule,  "name" );
+            String value = parseUtil.getAttribute(rule,  "value" );
 
             value = value == null?
                 rule.getTextContent() :
