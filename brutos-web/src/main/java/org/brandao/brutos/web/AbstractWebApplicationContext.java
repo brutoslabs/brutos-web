@@ -187,4 +187,8 @@ public abstract class AbstractWebApplicationContext
     public void destroy() {
     }
 
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
+
 }

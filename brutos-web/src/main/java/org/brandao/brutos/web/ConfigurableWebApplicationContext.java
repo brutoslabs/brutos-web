@@ -18,14 +18,13 @@
 package org.brandao.brutos.web;
 
 import javax.servlet.ServletContext;
-import org.brandao.brutos.ConfigurableApplicationContext;
 
 /**
  *
  * @author Brandao
  */
 public interface ConfigurableWebApplicationContext 
-        extends ConfigurableApplicationContext{
+        extends WebApplicationContext{
 
     public void setServletContext( ServletContext servletContext );
     

@@ -30,7 +30,8 @@ import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.GenericXMLWebApplicationContext;
-import org.brandao.brutos.web.AbstractWebApplicationContext;
+import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.WebApplicationContextWrapper;
 
 /**
  *
@@ -38,7 +39,7 @@ import org.brandao.brutos.web.AbstractWebApplicationContext;
  */
 public class WebApplicationMappingBeanTest extends AbstractTester implements Test{
 
-    public AbstractApplicationContext getApplicationContext() {
+    public WebApplicationContext getApplicationContext() {
         return new GenericXMLWebApplicationContext(
                 new Resource[]{
                     new ClassPathResource( 
@@ -46,16 +47,20 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             "org/brandao/brutos/helper/xml/test-bean.xml" )});
     }
 
+    public void testInstance(){
+        WebApplicationContextWrapper a =
+                new WebApplicationContextWrapper(null);
+
+        boolean b = a instanceof ConfigurableApplicationContext;
+    }
+
     public void testSimpleMappingBean(){
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
-
+            public void run(ConfigurableApplicationContext app) {
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 Bean bean = controller.getMappingBean("bean1");
@@ -73,12 +78,10 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
+            public void run(ConfigurableApplicationContext app) {
 
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 Bean bean = controller.getMappingBean("bean2");
@@ -98,12 +101,10 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
+            public void run(ConfigurableApplicationContext app) {
 
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 Bean bean = controller.getMappingBean("bean3");
@@ -123,12 +124,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
-
+            public void run(ConfigurableApplicationContext app) {
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 Bean bean = controller.getMappingBean("bean4");
@@ -148,12 +146,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
-
+            public void run(ConfigurableApplicationContext app) {
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 Bean bean = controller.getMappingBean("bean5");
@@ -173,12 +168,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
-
+            public void run(ConfigurableApplicationContext app) {
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 Bean bean = controller.getMappingBean("bean6");
@@ -198,12 +190,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
-
+            public void run(ConfigurableApplicationContext app) {
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 Bean bean = controller.getMappingBean("bean12");
@@ -226,12 +215,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
-
+            public void run(ConfigurableApplicationContext app) {
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 Bean bean = controller.getMappingBean("bean7");
@@ -254,12 +240,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
-
+            public void run(ConfigurableApplicationContext app) {
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 Bean bean = controller.getMappingBean("bean8");
@@ -277,12 +260,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
-
+            public void run(ConfigurableApplicationContext app) {
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 Bean bean = controller.getMappingBean("bean9");
@@ -300,12 +280,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
-
+            public void run(ConfigurableApplicationContext app) {
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 app.getScopes().get(ScopeType.REQUEST).put("id[0]", "10");
@@ -336,12 +313,10 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         HandlerTest handler = new HandlerTest(){
 
-            public void run(AbstractApplicationContext app) {
-                ConfigurableApplicationContext conf =
-                        new ConfigurableApplicationContextImp(app);
+            public void run(ConfigurableApplicationContext app) {
 
                 Controller controller =
-                        conf.getControllerManager()
+                        app.getControllerManager()
                             .getController(SimpleController.class);
 
                 app.getScopes().get(ScopeType.REQUEST).put("arg[0]", "25");

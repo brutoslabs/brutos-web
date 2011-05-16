@@ -23,10 +23,12 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequestEvent;
 import junit.framework.TestCase;
 import org.brandao.brutos.AbstractApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.test.MockApplicationContext;
 import org.brandao.brutos.test.MockWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
+import org.brandao.brutos.web.WebApplicationContext;
 
 /**
  *
@@ -35,7 +37,7 @@ import org.brandao.brutos.web.ContextLoaderListener;
 public abstract class AbstractTester extends TestCase{
 
 
-    public abstract AbstractApplicationContext getApplicationContext();
+    public abstract WebApplicationContext getApplicationContext();
     
     public void execTest( HandlerTest handler ){
         MockServletContext servletContext = new MockServletContext();
@@ -58,7 +60,7 @@ public abstract class AbstractTester extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 handler.run(
-                ContextLoader
+                (ConfigurableApplicationContext)ContextLoader
                     .getCurrentWebApplicationContext());
             }
             finally{
@@ -72,7 +74,7 @@ public abstract class AbstractTester extends TestCase{
 
     public static interface HandlerTest{
 
-        void run( AbstractApplicationContext app );
+        void run( ConfigurableApplicationContext app );
 
     }
 }

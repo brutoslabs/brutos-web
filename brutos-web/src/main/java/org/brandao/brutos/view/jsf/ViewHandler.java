@@ -132,7 +132,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
         }
         else{
             ih.setResourceAction(
-                ((ConfigurableWebApplicationContext)brutosContext)
+                brutosContext
                         .getActionResolver()
                             .getResourceAction( controller,
                                     brutosContext.getScopes(),
