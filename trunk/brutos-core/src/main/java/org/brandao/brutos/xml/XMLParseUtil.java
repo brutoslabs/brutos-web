@@ -40,4 +40,11 @@ public class XMLParseUtil {
         return e.getElementsByTagName(name);
     }
 
+    public String getAttribute( Element e, String name ){
+        String value = e.getAttribute(name);
+        if( "".equals(value))
+            return null;
+        else
+            return value;
+    }
 }

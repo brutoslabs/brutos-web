@@ -187,8 +187,8 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
 
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
-            String name  = c.getAttribute( "name" );
-            String value = c.getAttribute("value");
+            String name  = parseUtil.getAttribute(c, "name" );
+            String value = parseUtil.getAttribute(c,"value");
 
             value = value == null? c.getTextContent() : value;
             
@@ -209,8 +209,8 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
 
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
-            String name  = c.getAttribute( "class-type" );
-            String value = c.getAttribute("factory");
+            String name  = parseUtil.getAttribute(c,"class-type" );
+            String value = parseUtil.getAttribute(c,"factory");
 
             value = value == null? c.getTextContent() : value;
 
