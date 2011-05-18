@@ -17,7 +17,9 @@
 
 package org.brandao.brutos.xml;
 
+import java.util.ArrayList;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 
@@ -37,7 +39,16 @@ public class XMLParseUtil {
     }
 
     public NodeList getElements( Element e, String name ){
-        return e.getElementsByTagName(name);
+        CustomNodeList list = new CustomNodeList();
+
+        NodeList es = e.getElementsByTagName(name);
+        for( int i=0;i<es.getLength();i++ ){
+            Element c = (Element) es.item(i);
+            if( c.getParentNode().equals(e) )
+                list.add(c);
+        }
+        
+        return list;
     }
 
     public String getAttribute( Element e, String name ){
@@ -46,5 +57,18 @@ public class XMLParseUtil {
             return null;
         else
             return value;
+    }
+
+    private static class CustomNodeList
+            extends ArrayList implements NodeList{
+
+        public Node item(int index) {
+            return (Node) get(index);
+        }
+
+        public int getLength() {
+            return size();
+        }
+
     }
 }

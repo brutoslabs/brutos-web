@@ -93,7 +93,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             Document xmlDocument =
                 documentBuilder
                     .parse(new InputSource(resource.getInputStream()));
-            xmlDocument.getDocumentElement().normalize();
+            
            return xmlDocument.getDocumentElement();
         }
         catch (BrutosException ex) {
