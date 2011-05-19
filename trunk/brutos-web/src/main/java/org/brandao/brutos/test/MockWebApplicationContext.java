@@ -18,6 +18,7 @@ package org.brandao.brutos.test;
 
 
 import org.brandao.brutos.web.AbstractWebApplicationContext;
+import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContextWrapper;
 
@@ -29,13 +30,13 @@ import org.brandao.brutos.web.WebApplicationContextWrapper;
  */
 public class MockWebApplicationContext extends WebApplicationContextWrapper{
 
-    private static WebApplicationContext app;
+    private static ConfigurableWebApplicationContext app;
 
     public MockWebApplicationContext(){
         super( app );
     }
 
-    public static void setCurrentApplicationContext( WebApplicationContext apps ){
+    public static void setCurrentApplicationContext( ConfigurableWebApplicationContext apps ){
         app = apps;
     }
 
