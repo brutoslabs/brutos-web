@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassType;
+import org.brandao.brutos.type.Types;
 
 /**
  * 
@@ -96,6 +97,12 @@ public class ConstructorBean {
         for( int i=0;i<cons.length;i++ ){
             Constructor con = cons[i];
             if( isCompatible( con, classArgs ) ){
+                Class[] params = con.getParameterTypes();
+                for( int k=0;k<params.length;k++ ){
+                    if( getConstructorArg(k).getType() == null )
+                        getConstructorArg(k)
+                                .setType(Types.getType(params[k]));
+                }
                 return con;
             }
         }

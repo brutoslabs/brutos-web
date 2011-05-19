@@ -129,8 +129,8 @@ public class DependencyBean {
 
     public Class getClassType(){
         return
-            this.mappingBean != null?
-                this.mappingBean.getClassType() :
+            this.mapping != null?
+                this.mappingBean.getForm().getMappingBean( mapping ).getClassType() :
                 this.type == null? null : this.type.getClassType();
     }
 
