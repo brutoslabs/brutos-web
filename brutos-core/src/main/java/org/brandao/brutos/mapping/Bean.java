@@ -280,13 +280,12 @@ public class Bean {
         ConstructorBean cons = this.getConstructor();
         ConstructorBean conInject = this.getConstructor();
         if( conInject.isConstructor() ){
-            
+            Constructor insCons = this.getConstructor().getContructor();
             Object[] args = this.getValues(cons, prefix, index );
 
             if( args == null )
                 return null;
 
-            Constructor insCons = this.getConstructor().getContructor();
             return insCons.newInstance( args );
         }
         else{

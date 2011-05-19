@@ -261,6 +261,41 @@ public class BeanBuilder {
     }
 
     /**
+     * Define o tipo da chave.
+     *
+     * @param ref Nome do mapeamento.
+     * @return Construtor do mapeamento.
+     * @throws java.lang.NullPointerException Lan�ado se o nome do mapeamento for igual a null.
+     * @throws org.brandao.brutos.NotFoundMappingBeanException Lan�ado se o
+     * mapeamento n�o for encontrado.
+     * @throws org.brandao.brutos.BrutosException Lançado se a classe alvo do
+     * mapeamento não for uma coleção.
+     */
+    public BeanBuilder setKey( String ref ){
+
+        if( ref == null )
+            throw new NullPointerException();
+
+        if( !this.mappingBean.isMap() )
+            throw new BrutosException(
+                String.format("is not allowed for this type: %s",
+                    this.mappingBean.getClassType() ) );
+
+        ref = ref == null || ref.replace( " ", "" ).length() == 0? null : ref;
+
+        if( !controller.getMappingBeans().containsKey( ref ) )
+            throw new NotFoundMappingBeanException(
+                    String.format(
+                        "mapping %s not found: %s",
+                        ref, controller.getClassType().getName() ) );
+
+
+        Bean key = (Bean)controller.getMappingBean(ref);
+        ((MapBean)mappingBean).setMappingKey(key);
+        return this;
+    }
+
+    /**
      * Contr�i o mapeamento da chave usada para acessar os elementos de uma cole��o.
      * 
      * @param type Classe alvo do mapeamento.
@@ -279,8 +314,7 @@ public class BeanBuilder {
         BeanBuilder bb = controllerBuilder
                     .buildMappingBean(beanName, type);
 
-        MapBean map = (MapBean)controller.getMappingBean(beanName);
-        map.setMappingKey(mappingBean);
+        setKey(beanName);
         return bb;
     }
     
