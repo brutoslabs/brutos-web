@@ -26,6 +26,7 @@ import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.test.MockApplicationContext;
 import org.brandao.brutos.test.MockWebApplicationContext;
+import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.web.WebApplicationContext;
@@ -37,7 +38,7 @@ import org.brandao.brutos.web.WebApplicationContext;
 public abstract class AbstractTester extends TestCase{
 
 
-    public abstract WebApplicationContext getApplicationContext();
+    public abstract ConfigurableWebApplicationContext getApplicationContext();
     
     public void execTest( HandlerTest handler ){
         MockServletContext servletContext = new MockServletContext();

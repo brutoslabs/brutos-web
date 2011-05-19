@@ -29,6 +29,7 @@ import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.validator.ValidatorException;
+import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.GenericXMLWebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContextWrapper;
@@ -39,7 +40,7 @@ import org.brandao.brutos.web.WebApplicationContextWrapper;
  */
 public class WebApplicationMappingBeanTest extends AbstractTester implements Test{
 
-    public WebApplicationContext getApplicationContext() {
+    public ConfigurableWebApplicationContext getApplicationContext() {
         return new GenericXMLWebApplicationContext(
                 new Resource[]{
                     new ClassPathResource( 
