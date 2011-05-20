@@ -70,26 +70,31 @@ public class DispatcherServlet extends HttpServlet {
     protected void processRequest(ServletRequest request, ServletResponse response)
     throws ServletException, IOException {
 
-        StaticBrutosRequest staticRequest;
-
+        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
+        StaticBrutosRequest staticRequest = 
+                (StaticBrutosRequest) requestInfo.getRequest();
+        
+        /*
         if( request instanceof StaticBrutosRequest )
             staticRequest = (StaticBrutosRequest)request;
         else
             staticRequest = new StaticBrutosRequest(request);
+        */
 
-        WebApplicationContext app =
-            ContextLoader.getCurrentWebApplicationContext();
+        ConfigurableWebApplicationContext context =
+            (ConfigurableWebApplicationContext)
+                ContextLoader.getCurrentWebApplicationContext();
                 
         String requestId = staticRequest.getRequestId();
         Map mappedUploadStats = null;
         try{
-            RequestInfo requestInfo = new RequestInfo();
+            //RequestInfo requestInfo = new RequestInfo();
 
-            requestInfo.setRequest(staticRequest);
+            //requestInfo.setRequest(staticRequest);
             requestInfo.setResponse(response);
-            RequestInfo.setCurrent(requestInfo);
+            //RequestInfo.setCurrent(requestInfo);
 
-            Scope scope = app.getScopes().get(ScopeType.SESSION);
+            Scope scope = context.getScopes().get(ScopeType.SESSION);
 
             mappedUploadStats =
                     (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
@@ -103,13 +108,11 @@ public class DispatcherServlet extends HttpServlet {
         }
         finally{
             mappedUploadStats.remove(requestId);
-            ConfigurableApplicationContext capp =
-                    (ConfigurableApplicationContext)app;
 
-            capp.getRequestFactory().destroyRequest();
-            capp.getResponseFactory().destroyResponse();
+            context.getRequestFactory().destroyRequest();
+            context.getResponseFactory().destroyResponse();
 
-            RequestInfo.removeCurrent();
+            //RequestInfo.removeCurrent();
         }
     }
     

@@ -37,6 +37,7 @@ import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
+import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.RequestInfo;
 import org.brandao.brutos.web.WebApplicationContext;
@@ -66,13 +67,16 @@ public class BrutosRequestFilter implements Filter{
         if( filterConfig == null )
             return;
 
-        StaticBrutosRequest staticRequest = new StaticBrutosRequest( request );
+        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
+        StaticBrutosRequest staticRequest =
+                (StaticBrutosRequest) requestInfo.getRequest();
         
-        WebApplicationContext context =
+        ConfigurableWebApplicationContext context =
+            (ConfigurableWebApplicationContext)
                 ContextLoader.getCurrentWebApplicationContext();
 
         Invoker invoker =
-                ((ConfigurableApplicationContext)context).getInvoker();
+                context.getInvoker();
         
         Scope scope = context.getScopes().get(ScopeType.SESSION);
 
@@ -81,10 +85,10 @@ public class BrutosRequestFilter implements Filter{
 
         String requestId = staticRequest.getRequestId(); //this.getRequestId((HttpServletRequest)request );
         try{
-            RequestInfo requestInfo = new RequestInfo();
-            requestInfo.setRequest( staticRequest );
+            //RequestInfo requestInfo = new RequestInfo();
+            //requestInfo.setRequest( staticRequest );
             requestInfo.setResponse(response);
-            RequestInfo.setCurrent(requestInfo);
+            //RequestInfo.setCurrent(requestInfo);
 
             UploadListener listener = staticRequest.getUploadListener();
             mappedUploadStats.put( requestId, listener.getUploadStats() );
@@ -101,7 +105,9 @@ public class BrutosRequestFilter implements Filter{
         }
         finally{
             mappedUploadStats.remove( requestId );
-            RequestInfo.removeCurrent();
+            context.getRequestFactory().destroyRequest();
+            context.getResponseFactory().destroyResponse();
+            //RequestInfo.removeCurrent();
             currentFilter.remove();
         }
     }
