@@ -138,7 +138,24 @@ public class DependencyBean {
         Object result;
 
         if( mapping == null ){
-            Object val = isStatic()?
+            Object val = null;
+            if( isStatic() )
+                val = getValue();
+            else{
+                String pre   = prefix != null? prefix : "";
+                String param = getParameterName();
+                String idx   = index < 0?
+                                    "" :
+                                    mappingBean.getIndexFormat().replace(
+                                        "$index",
+                                        String.valueOf(index) );
+
+                String key = pre + param + idx;
+
+                Scope scope = getScope();
+                val = scope.get(key);
+            }
+            /*Object val = isStatic()?
                 getValue() :
                 getScope().get(
                         (prefix != null? prefix : "") +
@@ -149,7 +166,7 @@ public class DependencyBean {
                                 mappingBean.getIndexFormat().replace(
                                     "$index",
                                     String.valueOf(index) ) ) );
-
+            */
             result = type.getValue( val );
         }
         else{
