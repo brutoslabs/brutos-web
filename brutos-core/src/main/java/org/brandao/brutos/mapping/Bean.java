@@ -294,13 +294,25 @@ public class Bean {
                     form.getMappingBean(factory) :
                     null;
 
-            Object factoryInstance = factoryBean.getValue(true);
+            Object factoryInstance = null;
+            
+            if( this.getFactory() != null ){
 
-            if( factoryInstance == null )
-                return null;
+                if( factoryBean == null )
+                    throw new MappingException("bean not found: " + factory);
+                
+                factoryInstance = factoryBean.getValue(true);
+
+                if( factoryInstance == null )
+                    return null;
+            }
 
             Method method = this.getConstructor().getMethod( factoryInstance );
 
+            if( index != -1 )
+                throw new MappingException("can infinite loop: " + 
+                        this.getName());
+            
             return method.invoke(
                     factory == null?
                         this.getClassType() :
