@@ -9,7 +9,7 @@
 
         <bean name="bean"
             target="org.brandao.brutos.helper.controller.SimpleBean">
-                <constructor-arg type="java.util.Calendar" value="29/08/1984"/>
+                <property name="enumTest" value="1" enum-property="ordinal"/>
         </bean>
 
     </controller>
