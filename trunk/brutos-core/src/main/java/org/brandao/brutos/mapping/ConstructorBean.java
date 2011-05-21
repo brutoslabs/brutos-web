@@ -132,6 +132,13 @@ public class ConstructorBean {
             Method m = methods[i];
             if( m.getName().equals(name) &&
                 isCompatible( m, classArgs ) ){
+                Class[] params = m.getParameterTypes();
+                for( int k=0;k<params.length;k++ ){
+                    if( getConstructorArg(k).getType() == null )
+                        getConstructorArg(k)
+                                .setType(Types.getType(params[k]));
+                }
+
                 return m;
             }
         }
