@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<controllers  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns='http://brutos.sourceforge.net/schema/controllers'
+   xsi:schemaLocation='http://brutos.sourceforge.net/schema/controllers http://brutos.sourceforge.net/schema/controllers/brutos-controllers-1.0.xsd'>
+
+    <controller
+        class="org.brandao.brutos.helper.controller.SimpleController">
+
+        <bean name="bean"
+            target="org.brandao.brutos.helper.controller.SimpleBean">
+                <constructor-arg>
+                    <bean target="java.util.Date">
+                        <constructor-arg>
+                            <value>29/08/1984</value>
+                        </constructor-arg>
+                    </bean>
+                    
+                </constructor-arg>
+        </bean>
+
+    </controller>
+
+</controllers>
