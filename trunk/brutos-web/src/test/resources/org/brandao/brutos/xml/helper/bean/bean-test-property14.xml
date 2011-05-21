@@ -9,7 +9,16 @@
 
         <bean name="bean"
             target="org.brandao.brutos.helper.controller.SimpleBean">
-                <constructor-arg type="java.util.Calendar" value="29/08/1984"/>
+                <property name="date">
+                    <ref bean="bean2" mapping="true"/>
+                </property>
+        </bean>
+
+        <bean name="bean2"
+            target="java.lang.String">
+                <constructor-arg>
+                    <value>29/08/1984</value>
+                </constructor-arg>
         </bean>
 
     </controller>

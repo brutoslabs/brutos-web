@@ -10,12 +10,7 @@
         <bean name="bean"
             target="org.brandao.brutos.helper.controller.SimpleBean">
                 <constructor-arg>
-                    <bean target="java.util.Calendar">
-                        <constructor-arg>
-                            <value>29/08/1984</value>
-                        </constructor-arg>
-                    </bean>
-
+                    <bean target="java.util.GregorianCalendar"/>
                 </constructor-arg>
         </bean>
 

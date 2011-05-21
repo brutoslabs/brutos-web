@@ -12,11 +12,7 @@
                 <constructor-arg bean="data" mapping="true"/>
         </bean>
 
-        <bean name="data" target="java.util.Date">
-            <constructor-arg>
-                <value>29/08/1984</value>
-            </constructor-arg>
-        </bean>
+        <bean name="data" target="java.util.Date"/>
 
     </controller>
 
