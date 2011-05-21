@@ -17,6 +17,9 @@
 
 package org.brandao.brutos.helper.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  *
  * @author Brandao
@@ -26,8 +29,35 @@ public class SimpleBean {
     private String arg;
     private int arg2;
     private SimpleBean bean;
+    private EnumTest enumTest;
+    private Calendar calendar;
+    private Date date;
 
     public SimpleBean(){
+    }
+
+    public SimpleBean(Calendar arg){
+        this.calendar = arg;
+    }
+
+    public SimpleBean(Date arg){
+        this.date = arg;
+    }
+
+    public SimpleBean(String arg){
+        this.arg = arg;
+    }
+
+    public SimpleBean(EnumTest enumTest){
+        this.enumTest = enumTest;
+    }
+
+    public SimpleBean(int arg2){
+        this.arg2 = arg2;
+    }
+
+    public SimpleBean(SimpleBean arg3){
+        this.bean = arg3;
     }
 
     public SimpleBean(String arg,int arg2,SimpleBean bean){
@@ -62,5 +92,29 @@ public class SimpleBean {
 
     public void setBean(SimpleBean bean) {
         this.bean = bean;
+    }
+
+    public EnumTest getEnumTest() {
+        return enumTest;
+    }
+
+    public void setEnumTest(EnumTest enumTest) {
+        this.enumTest = enumTest;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
