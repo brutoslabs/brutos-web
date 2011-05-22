@@ -65,7 +65,11 @@ public class CollectionBean extends Bean{
          * A partir da vers�o 2.0 o bean sempre ser� diferente de null.
          */
         if( bean == null )
-            return super.getValue( null, prefix, index, false );
+            //return super.getValue( null, prefix, index, false );
+            throw new MappingException(
+                String.format(
+                    "element of the collection is not defined: %s",
+                    this.getName()));
         else
             return bean.getValue( null, prefix, index, false );
     }
