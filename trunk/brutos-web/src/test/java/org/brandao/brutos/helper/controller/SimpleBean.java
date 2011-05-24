@@ -36,16 +36,16 @@ public class SimpleBean {
     public SimpleBean(){
     }
 
+    public SimpleBean(String arg){
+        this.arg = arg;
+    }
+
     public SimpleBean(Calendar arg){
         this.calendar = arg;
     }
 
     public SimpleBean(Date arg){
         this.date = arg;
-    }
-
-    public SimpleBean(String arg){
-        this.arg = arg;
     }
 
     public SimpleBean(EnumTest enumTest){
