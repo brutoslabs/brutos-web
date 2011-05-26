@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +37,7 @@ import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.GenericXMLWebApplicationContext;
@@ -1129,5 +1134,316 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
         });
     }
 
+    public void testProperty11(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-property11.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    try{
+                        Bean bean = controller.getMappingBean("bean");
+                        SimpleBean instance = (SimpleBean) bean.getValue();
+                        TestCase.fail("expected ValidatorException");
+                    }
+                    catch( ValidatorException e ){
+                    }
+                }
+
+        });
+    }
+
+    public void testProperty12(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-property12.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    Bean bean = controller.getMappingBean("bean");
+                    SimpleBean instance = (SimpleBean) bean.getValue();
+                    TestCase.assertNotNull(instance.getBean());
+                }
+
+        });
+    }
+
+    public void testProperty13(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-property13.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    Bean bean = controller.getMappingBean("bean");
+                    SimpleBean instance = (SimpleBean) bean.getValue();
+                    TestCase.assertNotNull(instance.getBean());
+                }
+
+        });
+    }
+
+    public void testProperty14(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-property14.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    Bean bean = controller.getMappingBean("bean");
+                    SimpleBean instance = (SimpleBean) bean.getValue();
+                    try {
+                        Date expected = (new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/1984");
+                        TestCase.assertEquals(expected, instance.getDate());
+                    }
+                    catch (ParseException ex) {
+                    }
+                }
+
+        });
+    }
+
+    public void testCollection1(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-collection1.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("arg[0]", "1");
+                    app.getScopes().get(ScopeType.PARAM).put("arg[1]", "2");
+                    app.getScopes().get(ScopeType.PARAM).put("arg[2]", "3");
+                    Bean bean = controller.getMappingBean("bean");
+                    List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
+                    TestCase.assertEquals(3,instance.size());
+                    TestCase.assertEquals(1,instance.get(0).getArg());
+                    TestCase.assertEquals(2,instance.get(1).getArg());
+                    TestCase.assertEquals(3,instance.get(2).getArg());
+                }
+
+        });
+    }
+
+    public void testCollection2(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-collection2.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    try{
+                        Bean bean = controller.getMappingBean("bean");
+                        List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
+                        TestCase.fail("expected MappingException");
+                    }
+                    catch( MappingException e ){
+                    }
+                }
+
+        });
+    }
+
+    public void testCollection3(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-collection3.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("arg[0]", "1");
+                    app.getScopes().get(ScopeType.PARAM).put("arg[1]", "2");
+                    app.getScopes().get(ScopeType.PARAM).put("arg[2]", "3");
+                    Bean bean = controller.getMappingBean("bean");
+                    List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
+                    TestCase.assertEquals(3,instance.size());
+                    TestCase.assertEquals(1,instance.get(0).getArg());
+                    TestCase.assertEquals(2,instance.get(1).getArg());
+                    TestCase.assertEquals(3,instance.get(2).getArg());
+                }
+
+        });
+    }
+
+    public void testCollection4(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-collection4.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("arg(0)", "1");
+                    app.getScopes().get(ScopeType.PARAM).put("arg(1)", "2");
+                    app.getScopes().get(ScopeType.PARAM).put("arg(2)", "3");
+                    Bean bean = controller.getMappingBean("bean");
+                    List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
+                    TestCase.assertEquals(3,instance.size());
+                    TestCase.assertEquals(1,instance.get(0).getArg());
+                    TestCase.assertEquals(2,instance.get(1).getArg());
+                    TestCase.assertEquals(3,instance.get(2).getArg());
+                }
+
+        });
+    }
+
+    public void testCollection5(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-collection5.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("arg[0]", "1");
+                    app.getScopes().get(ScopeType.PARAM).put("arg[1]", "2");
+                    app.getScopes().get(ScopeType.PARAM).put("arg[2]", "3");
+                    Bean bean = controller.getMappingBean("bean");
+                    Set<SimpleBean> instance = (Set<SimpleBean>) bean.getValue();
+                    TestCase.assertEquals(3,instance.size());
+                    SimpleBean[] arr = instance.toArray(new SimpleBean[]{});
+                    TestCase.assertEquals(1,arr[0].getArg());
+                    TestCase.assertEquals(2,arr[1].getArg());
+                    TestCase.assertEquals(3,arr[2].getArg());
+                }
+
+        });
+    }
+
+    public void testCollection6(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-collection6.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    try{
+                        Bean bean = controller.getMappingBean("bean");
+                        Map instance = (Map) bean.getValue();
+                        TestCase.fail("expected MappingException");
+                    }
+                    catch( MappingException e ){
+                    }
+                }
+
+        });
+    }
+
+    public void testCollection7(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-collection7.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("arg[0]", "1");
+                    app.getScopes().get(ScopeType.PARAM).put("arg[1]", "2");
+                    app.getScopes().get(ScopeType.PARAM).put("arg[2]", "3");
+                    Bean bean = controller.getMappingBean("bean");
+                    Map<String,SimpleBean> instance = (Map<String,SimpleBean>) bean.getValue();
+                    TestCase.assertEquals(3,instance.size());
+                    TestCase.assertEquals(1,instance.get("0").getArg());
+                    TestCase.assertEquals(2,instance.get("1").getArg());
+                    TestCase.assertEquals(3,instance.get("2").getArg());
+                }
+
+        });
+    }
 
 }
