@@ -26,7 +26,7 @@ import org.brandao.brutos.view.ViewProvider;
  */
 public interface RequestInstrument {
 
-    public AbstractApplicationContext getContext();
+    public ApplicationContext getContext();
 
     boolean isHasViewProcessed();
 
