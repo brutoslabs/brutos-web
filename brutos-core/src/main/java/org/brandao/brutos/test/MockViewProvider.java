@@ -29,7 +29,8 @@ import org.brandao.brutos.RequestInstrument;
  * @author Afonso Brandao
  */
 public class MockViewProvider extends ViewProvider{
-    
+
+    private DispatcherType dispatcherType;
     private String view;
     private boolean redirect;
 
@@ -89,9 +90,18 @@ public class MockViewProvider extends ViewProvider{
             String view, DispatcherType dispatcherType) throws IOException {
         //this.context = null;
         this.redirect = dispatcherType == DispatcherType.REDIRECT? true : false;
+        this.dispatcherType = dispatcherType;
         //this.request = null;
         //this.response = null;
         this.view = view;
+    }
+
+    public DispatcherType getDispatcherType() {
+        return dispatcherType;
+    }
+
+    public void setDispatcherType(DispatcherType dispatcherType) {
+        this.dispatcherType = dispatcherType;
     }
 
 }
