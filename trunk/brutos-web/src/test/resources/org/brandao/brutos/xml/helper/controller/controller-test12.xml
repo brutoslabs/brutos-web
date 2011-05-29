@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<controllers  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns='http://brutos.sourceforge.net/schema/controllers'
+   xsi:schemaLocation='http://brutos.sourceforge.net/schema/controllers http://brutos.sourceforge.net/schema/controllers/brutos-controllers-1.0.xsd'>
+
+    <controller id="/testController.htm"         
+        class="org.brandao.brutos.helper.controller.SimpleController">
+            <action id="testAction" view="/viewAction.jsp" dispatcher="redirect"
+            executor="actionWithParam">
+                <parameter type="String">
+                    <bean target="int">
+                        <constructor-arg value="100"/>
+                    </bean>
+                </parameter>
+            </action>
+    </controller>
+
+</controllers>

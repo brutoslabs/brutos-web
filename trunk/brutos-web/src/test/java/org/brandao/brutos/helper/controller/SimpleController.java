@@ -18,8 +18,8 @@
 package org.brandao.brutos.helper.controller;
 
 import java.util.Arrays;
+import junit.framework.TestCase;
 import org.brandao.brutos.web.ContextLoader;
-import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 
 /**
@@ -31,14 +31,18 @@ public class SimpleController {
     public void simpleAction(){
     }
 
+    public String defaultAction(){
+        return "OK";
+    }
+
     public void actionWithParam(int value){
-        assert(value==100);
+        TestCase.assertEquals(100,value);
     }
 
     public void actionWithParam( int[] value){
-        assert(value != null);
-        assert(value.length == 3);
-        assert(Arrays.equals(value, new int[]{1,6,111}));
+        TestCase.assertNotNull(value);
+        TestCase.assertEquals(3,value.length);
+        TestCase.assertTrue(Arrays.equals(value, new int[]{1,6,111}));
     }
 
     public String actionWithReturn(){
@@ -46,20 +50,17 @@ public class SimpleController {
     }
 
     public String actionWithReturnAndParam(String value){
-        assert("myvalue".equals(value));
+        TestCase.assertEquals("myvalue",value);
         return "MSG";
+    }
+
+    public void actionWithParams(String value, double value2){
+        TestCase.assertEquals("myvalue",value);
+        TestCase.assertEquals(20.3,value2);
     }
 
     public void actionWithSupportedException(){
         throw new UnsupportedOperationException();
-    }
-
-    public void actionWithUnsupportedException(){
-        throw new UnsupportedOperationException();
-    }
-
-    public void actionWithParamAndView( double value ){
-        assert(value==2.33);
     }
 
     public void actionToOtherAction(){
@@ -69,7 +70,7 @@ public class SimpleController {
         SimpleController otherController =
                 (SimpleController) context.getController(SimpleController.class);
 
-        otherController.actionWithParamAndView(2.33);
+        otherController.actionWithParam(100);
     }
 
     public void actionToOtherActionWithReturn(){
@@ -82,7 +83,7 @@ public class SimpleController {
         String result =
                 otherController.actionWithReturnAndParam("myvalue");
 
-        assert("MSG".equals(result));
+        TestCase.assertEquals("MSG",result);
     }
 
 }
