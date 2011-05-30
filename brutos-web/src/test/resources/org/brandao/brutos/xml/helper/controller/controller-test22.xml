@@ -6,11 +6,9 @@
 
     <controller id="/testController.htm"         
         class="org.brandao.brutos.helper.controller.SimpleController">
-            <throw-safe name="ex" dispatcher="redirect" view="/exception.jsp"
-                target="java.lang.UnsupportedOperationException"/>
             <action id="testAction" view="/viewAction.jsp" dispatcher="redirect"
                 executor="actionWithSupportedException">
-                <throw-safe name="ex" dispatcher="include" view="/exceptionAction.jsp"
+                <throw-safe name="exx" dispatcher="include" view="/exceptionAction.jsp"
                     target="java.lang.UnsupportedOperationException">
             </action>
     </controller>
