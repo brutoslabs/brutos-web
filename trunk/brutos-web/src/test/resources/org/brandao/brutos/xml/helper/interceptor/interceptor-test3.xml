@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<controllers  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns='http://brutos.sourceforge.net/schema/controllers'
+   xsi:schemaLocation='http://brutos.sourceforge.net/schema/controllers http://brutos.sourceforge.net/schema/controllers/brutos-controllers-1.0.xsd'>
+
+   <interceptors>
+       <interceptor name="testInterceptor" 
+                class="org.brandao.brutos.helper.controller.TestInterceptor">
+                <param name="param1">value1</param>
+                <param name="param1" value="value1"/>
+       </interceptor>
+       <interceptor-stack name="testStack">
+           <interceptor-ref name="testInterceptor">
+               <param name="param1">value3</param>
+           </interceptor-ref>
+       </interceptor-stack>
+   </interceptors>
+   
+    <controller action-id="action" id="/testController.htm"
+        class="org.brandao.brutos.helper.controller.SimpleController">
+
+            <interceptor-ref name="testStack">
+                <param name="param1">value4</param>
+            </interceptor-ref>
+            
+            <action id="defaultAction" result="result" executor="defaultAction"/>
+    </controller>
+
+</controllers>
