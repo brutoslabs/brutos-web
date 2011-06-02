@@ -31,7 +31,7 @@ import org.brandao.brutos.web.ContextLoader;
  *
  * @author Brandao
  */
-public class TestInterceptor extends AbstractInterceptor{
+public class SimpleInterceptor extends AbstractInterceptor{
 
     public void intercepted(InterceptorStack stack, InterceptorHandler handler)
             throws InterceptedException {
