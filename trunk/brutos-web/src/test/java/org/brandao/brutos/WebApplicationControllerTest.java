@@ -17,27 +17,13 @@
 
 package org.brandao.brutos;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import org.brandao.brutos.helper.controller.AbstractTester;
-import org.brandao.brutos.helper.controller.EnumTest;
-import org.brandao.brutos.helper.controller.SimpleBean;
-import org.brandao.brutos.helper.controller.SimpleController;
 import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.mapping.Bean;
-import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.test.MockViewProvider;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
