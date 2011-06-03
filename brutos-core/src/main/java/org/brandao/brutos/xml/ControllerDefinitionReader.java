@@ -622,8 +622,9 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         for( int k=0;k<consList.getLength();k++ ){
             Element conNode = (Element) consList.item(k);
 
+            String enumPropertyName = parseUtil.getAttribute(conNode, "enum-property");
             EnumerationType enumProperty =
-                EnumerationType.valueOf(parseUtil.getAttribute(conNode, "enum-property"));
+                EnumerationType.valueOf(enumPropertyName);
             String value = parseUtil.getAttribute(conNode, "value");
             String temporalProperty = parseUtil.getAttribute(conNode, "temporal-property");
             String bean = parseUtil.getAttribute(conNode, "bean");
@@ -675,7 +676,8 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 }
                 else
                 if(typeName != null)
-                    factory = Types.getType( ClassType.get(typeName) );
+                    factory = Types.getType( ClassType.get(typeName),
+                            enumProperty, temporalProperty );
             }
             catch( Exception ex ){
                 throw new BrutosException( ex );

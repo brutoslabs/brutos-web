@@ -77,6 +77,9 @@ public class DefaultEnumType implements EnumType{
 
     public Object getValue(Object value) {
         try{
+            if( value == null )
+                return null;
+            else
             if( type == EnumerationType.ORDINAL )
                 return classType.getEnumConstants()[ (Integer)intType.getValue( value ) ];
             else
