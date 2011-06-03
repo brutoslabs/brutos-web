@@ -10,7 +10,7 @@
         <bean name="bean"
             target="org.brandao.brutos.helper.controller.SimpleBean">
                 <constructor-arg bean="enum" enum-property="ordinal"
-                    type="org.brandao.brutos.helper.controller.EnumTest">
+                    type="org.brandao.brutos.helper.controller.EnumTest"/>
         </bean>
 
     </controller>
