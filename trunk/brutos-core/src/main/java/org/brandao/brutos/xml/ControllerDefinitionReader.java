@@ -26,6 +26,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BeanBuilder;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassType;
 import org.brandao.brutos.ConstructorBuilder;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManager;
@@ -41,8 +42,9 @@ import org.brandao.brutos.RestrictionBuilder;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
+import org.brandao.brutos.type.Type;
+import org.brandao.brutos.type.Types;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
-import org.brandao.brutos.type.*;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -627,8 +629,11 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             String bean = parseUtil.getAttribute(conNode, "bean");
             boolean mapping = Boolean
                 .valueOf(parseUtil.getAttribute(conNode, "mapping")).booleanValue();
-            ScopeType scope = ScopeType.valueOf(parseUtil.getAttribute(conNode, "scope"));
+
+            String scopeName = parseUtil.getAttribute(conNode, "scope");
+            ScopeType scope = ScopeType.valueOf(scopeName);
             String factoryName = parseUtil.getAttribute(conNode, "factory");
+            String typeName = parseUtil.getAttribute(conNode, "type");
             Type factory = null;
 
             Element mappingRef     = parseUtil.getElement(conNode,"ref");
@@ -668,6 +673,9 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                                 Thread.currentThread().getContextClassLoader() )
                                     .newInstance();
                 }
+                else
+                if(typeName != null)
+                    factory = Types.getType( ClassType.get(typeName) );
             }
             catch( Exception ex ){
                 throw new BrutosException( ex );
