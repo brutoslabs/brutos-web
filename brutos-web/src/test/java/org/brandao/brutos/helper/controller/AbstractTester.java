@@ -18,6 +18,7 @@ package org.brandao.brutos.helper.controller;
 
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
+import com.mockrunner.mock.web.MockHttpSession;
 import com.mockrunner.mock.web.MockServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequestEvent;
@@ -53,6 +54,8 @@ public abstract class AbstractTester extends TestCase{
             listener.contextInitialized(sce);
             MockHttpServletRequest request = new MockHttpServletRequest();
             MockHttpServletResponse response = new MockHttpServletResponse();
+            MockHttpSession session = new MockHttpSession();
+            request.setSession(session);
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
 
             try{

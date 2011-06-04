@@ -11,7 +11,7 @@
             target="org.brandao.brutos.helper.controller.SimpleBean">
                 <constructor-arg value="teste">
                     <validator message="Erro">
-                        <rule name="equals">Teste</rule>
+                        <rule name="equal">Teste</rule>
                     </validator>
                 </constructor-arg>
         </bean>
