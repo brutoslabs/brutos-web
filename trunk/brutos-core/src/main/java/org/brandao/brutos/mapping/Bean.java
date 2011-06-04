@@ -23,7 +23,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.validator.ValidatorException;
 
 /**
  *
@@ -135,8 +137,14 @@ public class Bean {
             }
             return exist || force? obj : null;
         }
+        catch( ValidatorException e ){
+            throw e;
+        }
+        catch( BrutosException e ){
+            throw e;
+        }
         catch( Exception e ){
-            return null;
+            throw new BrutosException(e);
         }
     }
     /*

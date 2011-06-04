@@ -20,7 +20,7 @@ package org.brandao.brutos;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
- * Classe usada para validar uma determinada propriedade ou par‚mentro.
+ * Classe usada para validar uma determinada propriedade ou par√£mentro.
  * 
  * @author Afonso Brandao
  */
@@ -33,11 +33,11 @@ public class RestrictionBuilder{
     }
 
     /**
-     * Adiciona uma nova restriÁ„o.
+     * Adiciona uma nova restri√ß√£o.
      *
-     * @param ruleId Tipo da restriÁ„o. Os valores est„o descritos em RestrictionRules.
-     * @param value Valor da restriÁ„o.
-     * @return Construtor da restriÁ„o.
+     * @param ruleId Tipo da restri√ß√£o. Os valores est√£o descritos em RestrictionRules.
+     * @param value Valor da restri√ß√£o.
+     * @return Construtor da restri√ß√£o.
      */
     public RestrictionBuilder addRestriction( RestrictionRules ruleId, Object value ){
         config.put( ruleId.toString(), value );
@@ -45,8 +45,8 @@ public class RestrictionBuilder{
     }
 
     /**
-     * Define a mensagem a ser exibida caso o valor testado n„o seja considerado
-     * v·lido.
+     * Define a mensagem a ser exibida caso o valor testado n√£o seja considerado
+     * v√°lido.
      * @param message Mensagem.
      * @return Construtor da propriedade.
      */
