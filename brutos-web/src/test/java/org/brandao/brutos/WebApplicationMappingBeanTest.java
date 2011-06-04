@@ -411,7 +411,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     try {
                         TestCase
                             .assertEquals(
-                                (new SimpleDateFormat()).parse("29/08/1984"),
+                                (new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/1984"),
                                 instance.getDate());
                     } catch (ParseException ex) {
                         TestCase.fail();
@@ -445,7 +445,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     try {
                         TestCase
                             .assertEquals(
-                                (new SimpleDateFormat()).parse("29/08/1984"),
+                                (new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/1984"),
                                 instance.getCalendar().getTime());
                     } catch (ParseException ex) {
                         TestCase.fail();
@@ -479,7 +479,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     try {
                         TestCase
                             .assertEquals(
-                                (new SimpleDateFormat()).parse("29/08/1984"),
+                                (new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/1984"),
                                 instance.getDate());
                     } catch (ParseException ex) {
                         TestCase.fail();
@@ -513,7 +513,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     try {
                         TestCase
                             .assertEquals(
-                                (new SimpleDateFormat()).parse("29/08/1984"),
+                                (new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/1984"),
                                 instance.getCalendar().getTime());
                     } catch (ParseException ex) {
                         TestCase.fail();
