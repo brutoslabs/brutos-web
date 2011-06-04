@@ -27,6 +27,8 @@ import java.util.Set;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
 import java.lang.reflect.Array;
+import java.util.Calendar;
+import java.util.Date;
 import org.brandao.brutos.web.http.BrutosFile;
 import org.brandao.brutos.web.http.Download;
 
@@ -65,6 +67,8 @@ public class Types {
         types.put( Set.class ,          SetType.class );
         types.put( Object.class ,       ObjectType.class );
         types.put( Serializable.class , JSONType.class );
+        types.put( Date.class,          DefaultDateTimeType.class );
+        types.put( Calendar.class,      CalendarType.class );
         types.put( Array.class,         DefaultArrayType.class );
     }
     

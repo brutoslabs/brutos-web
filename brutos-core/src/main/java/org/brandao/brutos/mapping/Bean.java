@@ -115,6 +115,7 @@ public class Bean {
 
             boolean exist = instance != null ||
                     this.getConstructor().size() != 0 ||
+                    (this.getConstructor().size() == 0 && fields.size() == 0) ||
                     this.getConstructor().isMethodFactory();
 
             Iterator<PropertyBean> fds = fields.values().iterator();
