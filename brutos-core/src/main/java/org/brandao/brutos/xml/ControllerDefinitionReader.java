@@ -1073,9 +1073,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 rule.getTextContent() :
                 value;
 
+            RestrictionRules r = RestrictionRules.valueOf( name );
+
+            if( r == null )
+                throw new BrutosException("invalid restriction rule: " + name);
+            
             restrictionBuilder
                 .addRestriction(
-                    RestrictionRules.valueOf( name ),
+                    r,
                     value);
             
         }

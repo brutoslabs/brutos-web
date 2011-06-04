@@ -66,7 +66,7 @@ public class RestrictionRules {
         if( defaultRules.containsKey(value) )
             return (RestrictionRules)defaultRules.get( value );
         else
-            return new RestrictionRules( value );
+            return null;//return new RestrictionRules( value );
     }
 
 
