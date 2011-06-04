@@ -26,21 +26,14 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
-import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.Scopes;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.RequestInfo;
-import org.brandao.brutos.web.WebApplicationContext;
 
 /**
  *
@@ -105,8 +98,8 @@ public class BrutosRequestFilter implements Filter{
         }
         finally{
             mappedUploadStats.remove( requestId );
-            context.getRequestFactory().destroyRequest();
-            context.getResponseFactory().destroyResponse();
+            //context.getRequestFactory().destroyRequest();
+            //context.getResponseFactory().destroyResponse();
             //RequestInfo.removeCurrent();
             currentFilter.remove();
         }

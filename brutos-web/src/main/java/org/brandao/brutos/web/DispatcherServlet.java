@@ -109,8 +109,8 @@ public class DispatcherServlet extends HttpServlet {
         finally{
             mappedUploadStats.remove(requestId);
 
-            context.getRequestFactory().destroyRequest();
-            context.getResponseFactory().destroyResponse();
+            //context.getRequestFactory().destroyRequest();
+            //context.getResponseFactory().destroyResponse();
 
             //RequestInfo.removeCurrent();
         }
