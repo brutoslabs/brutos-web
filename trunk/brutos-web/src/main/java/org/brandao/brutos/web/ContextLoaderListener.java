@@ -27,10 +27,7 @@ import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.scope.ThreadScope;
-import org.brandao.brutos.web.http.BrutosRequest;
-import org.brandao.brutos.web.http.BrutosRequestImp;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
 
 /**
@@ -78,6 +75,13 @@ public class ContextLoaderListener implements ServletContextListener,
     public void requestDestroyed(ServletRequestEvent sre) {
         ThreadScope.destroy();
         RequestInfo.removeCurrent();
+        ConfigurableWebApplicationContext context =
+            (ConfigurableWebApplicationContext)ContextLoader
+                .getCurrentWebApplicationContext();
+        context.getRequestFactory().destroyRequest();
+        context.getResponseFactory().destroyResponse();
+
+
         //if( currentRequest != null )
         //    currentRequest.remove();
     }

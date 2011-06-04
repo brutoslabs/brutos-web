@@ -381,7 +381,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
                     TestCase.assertNotNull(instance);
-                    TestCase.assertEquals("11", instance.getArg());
+                    TestCase.assertEquals("100", instance.getArg());
                 }
 
         });
