@@ -45,6 +45,8 @@ public class UseBeanData {
 
     private Validator validate;
 
+    private boolean nullable;
+
     public UseBeanData() {
     }
 
@@ -104,16 +106,18 @@ public class UseBeanData {
 
         Object value = null;
 
-        if( mapping != null )
-            value = mapping.getValue();
-        else
-        if(staticValue!= null)
-            value = type.getValue( staticValue );
-        else
-        if( type instanceof CollectionType || type instanceof ArrayType )
-            value = type.getValue( getScope().getCollection(nome) );
-        else
-            value = type.getValue( getScope().get(nome) );
+        if( !isNullable() ){
+            if( mapping != null )
+                value = mapping.getValue();
+            else
+            if(staticValue!= null)
+                value = type.getValue( staticValue );
+            else
+            if( type instanceof CollectionType || type instanceof ArrayType )
+                value = type.getValue( getScope().getCollection(nome) );
+            else
+                value = type.getValue( getScope().get(nome) );
+        }
 
         if( validate != null )
             validate.validate(this, value);
@@ -218,5 +222,13 @@ public class UseBeanData {
 
     public void setStaticValue(Object staticValue) {
         this.staticValue = staticValue;
+    }
+
+    public boolean isNullable() {
+        return nullable;
+    }
+
+    public void setNullable(boolean nullable) {
+        this.nullable = nullable;
     }
 }

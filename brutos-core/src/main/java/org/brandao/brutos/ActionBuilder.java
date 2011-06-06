@@ -81,7 +81,17 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty, Class classType ){
         return addParameter( name, scope, enumProperty, null, null, null, 
-                null, classType );
+                null, false, classType );
+    }
+
+    /**
+     * Configura um novo parâmetro que não possui valor.
+     *
+     * @return Contrutor do parâmetro.
+     */
+    public ParameterBuilder addNullParameter(){
+        return addParameter( null, null, null, null, null, null,
+                null, false, null );
     }
     
     /**
@@ -95,7 +105,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty, Class classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, 
-                temporalProperty, null, null, null, classType );
+                temporalProperty, null, null, null, false, classType );
     }
     
     /**
@@ -108,7 +118,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, Type type ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, type, null, type.getClassType() );
+                null, type, null, false, type.getClassType() );
     }
     
     /**
@@ -121,7 +131,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, EnumerationType enumProperty, Class classType ){
         return addParameter( name, ScopeType.REQUEST, enumProperty, null, null,
-                null, null, classType );
+                null, null, false, classType );
     }
     
     /**
@@ -134,7 +144,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, Class classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy", 
-                null, null, null, classType );
+                null, null, null, false, classType );
     }
     
     /**
@@ -147,7 +157,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, String temporalProperty, Class classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL,
-                temporalProperty, null, null, null, classType );
+                temporalProperty, null, null, null, false, classType );
     }
     
     /**
@@ -159,7 +169,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, Type type ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, type, null, type.getClassType() );
+                null, type, null, false, type.getClassType() );
     }
     
     /**
@@ -172,7 +182,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameterMapping( String mapping, Class classType ){
         return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null, null, classType );
+                mapping, null, null, false, classType );
     }
 
     /**
@@ -186,7 +196,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameterMapping( String name, String mapping, Class classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null, null, classType );
+                mapping, null, null, false, classType );
     }
     
     /**
@@ -201,7 +211,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameterMapping( String name, String mapping, ScopeType scope, Class classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null, null, classType );
+                mapping, null, null, false, classType );
     }
     /**
      * Configura um novo par�metro.
@@ -212,7 +222,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addParameter( String name, Class classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, null, null, classType );
+                null, null, null, false, classType );
     }
 
     /**
@@ -240,7 +250,7 @@ public class ActionBuilder {
      */
     public ParameterBuilder addStaticParameter( Class classType, Object value ){
         return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, null, value, classType );
+                null, null, value, false, classType );
     }
 
     /**
@@ -257,8 +267,9 @@ public class ActionBuilder {
      * @return Contrutor do par�metro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
-            String temporalProperty, String mapping, Type type, Object value, Class classType ){
-        
+            String temporalProperty, String mapping, Type type, Object value,
+            boolean nullable, Class classType ){
+
         name = name == null || name.replace( " ", "" ).length() == 0? null : name;
         temporalProperty = temporalProperty == null || temporalProperty.replace( " ", "" ).length() == 0? null : temporalProperty;
         mapping = mapping == null || mapping.replace( " ", "" ).length() == 0? null : mapping;
@@ -277,6 +288,7 @@ public class ActionBuilder {
         useBean.setScopeType( scope );
         useBean.setValidate( validatorProvider.getValidator( validatorConfig ) );
         useBean.setStaticValue(value);
+        useBean.setNullable(true);
         
         if( mapping != null ){
             if( controller.getMappingBeans().containsKey( mapping ) )
@@ -288,10 +300,14 @@ public class ActionBuilder {
         else
         if( type != null ){
             useBean.setType( type );
-            if( !classType.isAssignableFrom( useBean.getType().getClassType() ) )
-                throw new BrutosException( "expected " + classType.getName() + " found " + type.getClassType().getName() );
+            if( classType != null &&
+                    !classType.isAssignableFrom( useBean.getType().getClassType() ) )
+                throw new BrutosException( 
+                        "expected " + classType.getName() + " found " +
+                        type.getClassType().getName() );
         }
-        else{
+        else
+        if(classType != null){
             try{
                 /*useBean.setType( Types.getType( methodForm.getGenericParameterType( methodForm.getParamterSize() ), enumProperty, temporalProperty ) );*/
                 useBean.setType( Types.getType( classType ));
