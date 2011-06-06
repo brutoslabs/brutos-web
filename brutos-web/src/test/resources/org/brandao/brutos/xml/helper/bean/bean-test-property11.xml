@@ -11,7 +11,7 @@
             target="org.brandao.brutos.helper.controller.SimpleBean">
                 <property name="arg" value="Texto">
                     <validator message="Erro">
-                        <rule name="equals" value="texto"/>
+                        <rule name="equal" value="texto"/>
                     </validator>
                 </property>
                     

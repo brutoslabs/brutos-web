@@ -810,7 +810,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                         SimpleBean instance = (SimpleBean) bean.getValue();
                         TestCase.fail("expected NullPointerException");
                     }
-                    catch( NullPointerException e ){
+                    catch( BrutosException e ){
+                        if( !(e.getCause() instanceof IllegalArgumentException))
+                            TestCase.fail("expected NullPointerException");
                     }
                 }
 
@@ -1007,7 +1009,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     Bean bean = controller.getMappingBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     try {
-                        TestCase.assertEquals((new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/1984"), instance.getDate());
+                        TestCase.assertEquals((new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/2011"), instance.getDate());
                     } catch (ParseException ex) {
 
                     }
@@ -1036,7 +1038,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     try {
                         TestCase.assertEquals(
-                                (new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/1984"),
+                                (new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/2011"),
                                 instance.getCalendar().getTime());
                     } catch (ParseException ex) {
 
