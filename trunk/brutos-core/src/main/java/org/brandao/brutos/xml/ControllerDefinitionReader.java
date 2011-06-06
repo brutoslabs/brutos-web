@@ -42,6 +42,7 @@ import org.brandao.brutos.RestrictionBuilder;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
+import org.brandao.brutos.type.NullType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
@@ -636,12 +637,13 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             String factoryName = parseUtil.getAttribute(conNode, "factory");
             String typeName = parseUtil.getAttribute(conNode, "type");
             Type factory = null;
+            boolean nullable = false;
 
             Element mappingRef     = parseUtil.getElement(conNode,"ref");
             Element beanNode       = parseUtil.getElement(conNode,"bean");
             Element valueNode      = parseUtil.getElement(conNode,"value");
             Element validatorNode  = parseUtil.getElement(conNode,"validator");
-            
+            Element nullNode       = parseUtil.getElement(conNode, "null");
             if( mappingRef != null ){
                 enumProperty =
                     EnumerationType.valueOf(
@@ -665,6 +667,9 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             if( valueNode != null ){
                 value = valueNode.getTextContent();
             }
+            else
+            if( nullNode != null )
+                nullable = true;
 
             try{
                 if( factoryName != null ){
@@ -691,6 +696,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                         mapping? bean : null,
                         scope,
                         value,
+                        nullable,
                         factory);
 
             addValidator(validatorNode, constructorBuilder);
@@ -715,21 +721,23 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             ScopeType scope = ScopeType.valueOf( parseUtil.getAttribute(propNode,  "scope" ) );
             String factoryName = parseUtil.getAttribute(propNode,  "factory" );
             Type factory = null;
-
+            boolean nullable = false;
+            
             Element mappingRef = parseUtil.getElement( propNode, "ref");
             Element beanNode   = parseUtil.getElement( propNode, "bean");
             Element valueNode  = parseUtil.getElement( propNode, "value");
             Element validatorNode = parseUtil.getElement( propNode, "validator" );
+            Element nullNode      = parseUtil.getElement(propNode, "null");
             if( mappingRef != null ){
                 enumProperty =
-                    EnumerationType.valueOf( parseUtil.getAttribute(propNode,  "enum-property" ) );
-                value = parseUtil.getAttribute(propNode,  "value" );
-                temporalProperty = parseUtil.getAttribute(propNode,  "temporal-property" );
-                bean = parseUtil.getAttribute(propNode,  "bean" );
+                    EnumerationType.valueOf( parseUtil.getAttribute(mappingRef,  "enum-property" ) );
+                value = parseUtil.getAttribute(mappingRef,  "value" );
+                temporalProperty = parseUtil.getAttribute(mappingRef,  "temporal-property" );
+                bean = parseUtil.getAttribute(mappingRef,  "bean" );
                 mapping = Boolean
-                    .valueOf(parseUtil.getAttribute(propNode,  "mapping" )).booleanValue();
-                scope = ScopeType.valueOf( parseUtil.getAttribute(propNode,  "scope" ) );
-                factoryName = parseUtil.getAttribute(propNode,  "factory" );
+                    .valueOf(parseUtil.getAttribute(mappingRef,  "mapping" )).booleanValue();
+                scope = ScopeType.valueOf( parseUtil.getAttribute(mappingRef,  "scope" ) );
+                factoryName = parseUtil.getAttribute(mappingRef,  "factory" );
                 validatorNode = parseUtil.getElement( mappingRef, "validator");
             }
             else
@@ -741,6 +749,9 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             if( valueNode != null ){
                 value = valueNode.getTextContent();
             }
+        else
+        if( nullNode != null )
+            nullable = true;
 
             try{
                 if( factoryName != null ){
@@ -764,6 +775,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                         mapping? bean : null,
                         scope,
                         value,
+                        nullable,
                         factory);
 
             addValidator(validatorNode, propertyBuilder);
@@ -794,21 +806,23 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         ScopeType scope = ScopeType.valueOf( parseUtil.getAttribute(propNode,  "scope" ) );
         String factoryName = parseUtil.getAttribute(propNode,  "factory" );
         Type factory = null;
+        boolean nullable = false;
 
         Element mappingRef = parseUtil.getElement( propNode, "ref");
         Element beanNode   = parseUtil.getElement( propNode, "bean");
         Element valueNode  = parseUtil.getElement( propNode, "value");
         Element validatorNode = parseUtil.getElement( propNode, "validator" );
+        Element nullNode      = parseUtil.getElement(propNode, "null");
         if( mappingRef != null ){
             enumProperty =
-                EnumerationType.valueOf( parseUtil.getAttribute(propNode,  "enum-property" ) );
-            value = parseUtil.getAttribute(propNode,  "value" );
-            temporalProperty = parseUtil.getAttribute(propNode,  "temporal-property" );
-            bean = parseUtil.getAttribute(propNode,  "bean" );
+                EnumerationType.valueOf( parseUtil.getAttribute(mappingRef,  "enum-property" ) );
+            value = parseUtil.getAttribute(mappingRef,  "value" );
+            temporalProperty = parseUtil.getAttribute(mappingRef,  "temporal-property" );
+            bean = parseUtil.getAttribute(mappingRef,  "bean" );
             mapping = Boolean
-                .valueOf(parseUtil.getAttribute(propNode,  "mapping" )).booleanValue();
-            scope = ScopeType.valueOf( parseUtil.getAttribute(propNode,  "scope" ) );
-            factoryName = parseUtil.getAttribute(propNode,  "factory" );
+                .valueOf(parseUtil.getAttribute(mappingRef,  "mapping" )).booleanValue();
+            scope = ScopeType.valueOf( parseUtil.getAttribute(mappingRef,  "scope" ) );
+            factoryName = parseUtil.getAttribute(mappingRef,  "factory" );
             validatorNode = parseUtil.getElement( mappingRef, "validator");
         }
         else
@@ -820,6 +834,9 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         if( valueNode != null ){
             value = valueNode.getTextContent();
         }
+        else
+        if( nullNode != null )
+            nullable = true;
 
         try{
             if( factoryName != null ){
@@ -843,6 +860,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                     temporalProperty,
                     mapping? bean : null,
                     value,
+                    nullable,
                     factory);
 
         addValidator(validatorNode, propertyBuilder);
@@ -911,21 +929,23 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         String type = parseUtil.getAttribute(paramNode,  "type" );
         Type factory = null;
         Class typeClass = null;
-        
+        boolean nullable = false;
+
         Element mappingRef = parseUtil.getElement( paramNode, "ref");
         Element beanNode   = parseUtil.getElement( paramNode, "bean");
         Element valueNode  = parseUtil.getElement( paramNode, "value");
         Element validatorNode = parseUtil.getElement( paramNode, "validator" );
+        Element nullNode = parseUtil.getElement( paramNode, "null" );
         if( mappingRef != null ){
             enumProperty =
-                EnumerationType.valueOf( parseUtil.getAttribute(paramNode,  "enum-property" ) );
-            value = parseUtil.getAttribute(paramNode,  "value" );
-            temporalProperty = parseUtil.getAttribute(paramNode,  "temporal-property" );
-            bean = parseUtil.getAttribute(paramNode,  "bean" );
+                EnumerationType.valueOf( parseUtil.getAttribute(mappingRef,  "enum-property" ) );
+            value = parseUtil.getAttribute(mappingRef,  "value" );
+            temporalProperty = parseUtil.getAttribute(mappingRef,  "temporal-property" );
+            bean = parseUtil.getAttribute(mappingRef,  "bean" );
             mapping = Boolean
-                .valueOf(parseUtil.getAttribute(paramNode,  "mapping" )).booleanValue();
-            scope = ScopeType.valueOf( parseUtil.getAttribute(paramNode,  "scope" ) );
-            factoryName = parseUtil.getAttribute(paramNode,  "factory" );
+                .valueOf(parseUtil.getAttribute(mappingRef,  "mapping" )).booleanValue();
+            scope = ScopeType.valueOf( parseUtil.getAttribute(mappingRef,  "scope" ) );
+            factoryName = parseUtil.getAttribute(mappingRef,  "factory" );
             validatorNode = parseUtil.getElement( mappingRef, "validator");
         }
         else
@@ -937,7 +957,10 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         if( valueNode != null ){
             value = valueNode.getTextContent();
         }
-
+        else
+        if( nullNode != null )
+            nullable = true;
+        
         try{
             if( factoryName != null ){
                 factory = (Type)Class.forName(
@@ -947,13 +970,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                                 .newInstance();
             }
 
-            if( type == null )
-                throw new BrutosException( "tag type is required in parameter" );
+            //if( type == null )
+            //    throw new BrutosException( "tag type is required in parameter" );
 
-            typeClass = Class.forName(
-                        factoryName,
-                        true,
-                        Thread.currentThread().getContextClassLoader() );
+            if( type != null )
+                typeClass = Class.forName(
+                            factoryName,
+                            true,
+                            Thread.currentThread().getContextClassLoader() );
 
 
         }
@@ -973,6 +997,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                     mapping? bean : null,
                     factory,
                     value,
+                    nullable,
                     typeClass);
 
         addValidator(validatorNode, parameterBuilder);

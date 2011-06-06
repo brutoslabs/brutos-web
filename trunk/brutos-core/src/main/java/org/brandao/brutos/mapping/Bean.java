@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.type.NullType;
 import org.brandao.brutos.validator.ValidatorException;
 
 /**
@@ -129,7 +130,7 @@ public class Bean {
                 Object value = fb.getValue(prefix, index);
                         //this.getValueField(beanInstance, prefix, index, fb);
 
-                if( !exist && value != null )
+                if( !exist && (value != null || fb.isNullable()) )
                     exist = true;
 
                 beanInstance.getSetter( fb.getName() ).set( value );
@@ -338,7 +339,7 @@ public class Bean {
         for( int i=0;i<size;i++ ){
             ConstructorArgBean arg = constructorBean.getConstructorArg(i);
             values[i] = arg.getValue(prefix, index);
-            if( values[i] != null )
+            if( values[i] != null || arg.isNullable() )
                 exist = true;
         }
 

@@ -47,6 +47,8 @@ public class DependencyBean {
 
     private Bean mappingBean;
 
+    private boolean nullable;
+    
     public DependencyBean(Bean mappingBean) {
         this.mappingBean = mappingBean;
     }
@@ -139,6 +141,9 @@ public class DependencyBean {
 
         if( mapping == null ){
             Object val = null;
+            if(isNullable())
+                return null;
+            else
             if( isStatic() )
                 val = getValue();
             else{
@@ -192,5 +197,13 @@ public class DependencyBean {
             validator.validate(this, result);
 
         return result;
+    }
+
+    public boolean isNullable() {
+        return nullable;
+    }
+
+    public void setNullable(boolean nullable) {
+        this.nullable = nullable;
     }
 }
