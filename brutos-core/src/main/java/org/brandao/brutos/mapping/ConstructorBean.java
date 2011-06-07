@@ -127,22 +127,25 @@ public class ConstructorBean {
             classArgs[ i ] = arg.getClassType();
         }
 
-        Method[] methods = clazz.getDeclaredMethods();
-        for( int i=0;i<methods.length;i++ ){
-            Method m = methods[i];
-            if( m.getName().equals(name) &&
-                isCompatible( m, classArgs ) ){
-                Class[] params = m.getParameterTypes();
-                for( int k=0;k<params.length;k++ ){
-                    if( getConstructorArg(k).getType() == null )
-                        getConstructorArg(k)
-                                .setType(Types.getType(params[k]));
+        Class tmpClazz = clazz;
+        while( tmpClazz != Object.class ){
+            Method[] methods = tmpClazz.getDeclaredMethods();
+            for( int i=0;i<methods.length;i++ ){
+                Method m = methods[i];
+                if( m.getName().equals(name) &&
+                    isCompatible( m, classArgs ) ){
+                    Class[] params = m.getParameterTypes();
+                    for( int k=0;k<params.length;k++ ){
+                        if( getConstructorArg(k).getType() == null )
+                            getConstructorArg(k)
+                                    .setType(Types.getType(params[k]));
+                    }
+
+                    return m;
                 }
-
-                return m;
             }
+            tmpClazz = tmpClazz.getSuperclass();
         }
-
         String msg = "not found: " + clazz.getName() + "." + name + "( ";
 
         for( int i=0;i<classArgs.length;i++ ){
