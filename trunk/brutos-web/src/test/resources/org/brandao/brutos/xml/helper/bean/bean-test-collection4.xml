@@ -8,7 +8,7 @@
         class="org.brandao.brutos.helper.controller.SimpleController">
 
         <bean name="bean"
-            target="java.util.linkedList">
+            target="java.util.LinkedList">
                 <element 
                     index-format="($index)"
                     target="org.brandao.brutos.helper.controller.SimpleBean">

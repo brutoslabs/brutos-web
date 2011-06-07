@@ -1227,6 +1227,34 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
         });
     }
 
+    public void testProperty15(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-property15.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    try {
+                        Bean bean = controller.getMappingBean("bean");
+                        bean.getValue();
+                        TestCase.fail("expected BrutosException");
+                    }
+                    catch (BrutosException ex) {
+                    }
+                }
+
+        });
+    }
+
     public void testCollection1(){
         super.execTest(
             new HandlerTest(){
@@ -1394,10 +1422,10 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
                     try{
                         Bean bean = controller.getMappingBean("bean");
-                        Map instance = (Map) bean.getValue();
+                        bean.getValue();
                         TestCase.fail("expected MappingException");
                     }
-                    catch( MappingException e ){
+                    catch( BrutosException e ){
                     }
                 }
 
