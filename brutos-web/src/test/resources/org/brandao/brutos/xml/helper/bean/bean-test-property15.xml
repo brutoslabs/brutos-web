@@ -15,7 +15,7 @@
         </bean>
 
         <bean name="bean2"
-            target="java.util.Date" factory="factoryDate" method-factory="parse">
+            target="java.util.Date" factory="factoryDate" method-factory="xxxx">
                 <constructor-arg type="java.lang.String">
                     <value>29/08/1984</value>
                 </constructor-arg>

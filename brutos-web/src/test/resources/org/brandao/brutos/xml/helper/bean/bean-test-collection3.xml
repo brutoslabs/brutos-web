@@ -8,7 +8,7 @@
         class="org.brandao.brutos.helper.controller.SimpleController">
 
         <bean name="bean"
-            target="java.util.linkedList">
+            target="java.util.LinkedList">
                 <element factory="factory"
                     method-factory="getInstance"
                     target="org.brandao.brutos.helper.controller.SimpleBean">
