@@ -291,7 +291,7 @@ public class Bean {
         ConstructorBean conInject = this.getConstructor();
         if( conInject.isConstructor() ){
             Constructor insCons = this.getConstructor().getContructor();
-            Object[] args = this.getValues(cons, prefix, index );
+            Object[] args = this.getValues(cons, prefix, index, false );
 
             if( args == null )
                 return null;
@@ -319,7 +319,7 @@ public class Bean {
 
             Method method = this.getConstructor().getMethod( factoryInstance );
 
-            if( index != -1 )
+            if( index != -1 && this.getConstructor().size() == 0 )
                 throw new MappingException("can infinite loop: " + 
                         this.getName());
             
@@ -327,11 +327,11 @@ public class Bean {
                     factory == null?
                         this.getClassType() :
                         factoryInstance,
-                    getValues(cons, prefix, index ) );
+                    getValues(cons, prefix, index, true ) );
         }
     }
 
-    private Object[] getValues( ConstructorBean constructorBean, String prefix, long index ) throws Exception{
+    private Object[] getValues( ConstructorBean constructorBean, String prefix, long index, boolean force ) throws Exception{
         int size = constructorBean.size();
         Object[] values = new Object[ size ];
 
@@ -339,7 +339,7 @@ public class Bean {
         for( int i=0;i<size;i++ ){
             ConstructorArgBean arg = constructorBean.getConstructorArg(i);
             values[i] = arg.getValue(prefix, index);
-            if( values[i] != null || arg.isNullable() )
+            if( force || values[i] != null || arg.isNullable()  )
                 exist = true;
         }
 

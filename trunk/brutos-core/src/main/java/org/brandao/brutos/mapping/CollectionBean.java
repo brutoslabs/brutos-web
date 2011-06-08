@@ -90,16 +90,20 @@ public class CollectionBean extends Bean{
     */
 
     public Object getValue( boolean force ){
-        return getValue( null, null, force );
+        return getValue( null, null, -1, force );
    }
+
+    public Object getValue( Object instance ){
+        return getValue( instance, null, -1, false );
+    }
 
     public Object getValue(){
         return getValue( null );
     }
 
-    public Object getValue( Object instance, String prefix, boolean force){
+    public Object getValue( Object instance, String prefix, long otherIndex, boolean force){
         try{
-            instance = getInstance( instance );
+            instance = getInstance( instance,prefix,otherIndex,force);
             Collection collection = (Collection)instance;
 
             long index = 0;
@@ -116,15 +120,24 @@ public class CollectionBean extends Bean{
         }
     }
 
-    protected Object getInstance( Object instance )
+    protected Object getInstance( Object instance, String prefix, long index, boolean force )
             throws InstantiationException, IllegalAccessException{
 
+        if( instance == null ){
+            if( collectionType == null )
+                instance = super.getValue(instance,prefix,index,force);
+            else
+                instance = collectionType.newInstance();
+        }
+
+        /*
         instance = instance == null?
             (collectionType != null?
                    collectionType.newInstance() :
                    super.getValue()) :
             instance;
-
+        */
+        
         return instance;
     }
 

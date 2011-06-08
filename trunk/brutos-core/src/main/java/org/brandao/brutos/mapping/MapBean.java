@@ -154,18 +154,22 @@ public class MapBean extends CollectionBean{
         return getValue( null );
     }
 
+    public Object getValue( Object instance ){
+        return getValue( instance, null, -1, false );
+    }
+
     public Object getValue( boolean force ){
-        return getValue( null, null, force );
+        return getValue( null, null, -1, force );
    }
     
-    public Object getValue( Object instance, String prefix, boolean force ){
+    public Object getValue( Object instance, String prefix, long otherIndex, boolean force ){
         try{
             /*
              instance = instance == null? collectionType.newInstance() : instance;
              Map map = (Map)instance;
             */
 
-            instance = getInstance( instance );
+            instance = getInstance( instance,prefix,otherIndex,force);
             Map map = (Map)instance;
 
             long index = 0;
