@@ -1277,9 +1277,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     Bean bean = controller.getMappingBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
-                    TestCase.assertEquals(1,instance.get(0).getArg());
-                    TestCase.assertEquals(2,instance.get(1).getArg());
-                    TestCase.assertEquals(3,instance.get(2).getArg());
+                    TestCase.assertEquals("1",instance.get(0).getArg());
+                    TestCase.assertEquals("2",instance.get(1).getArg());
+                    TestCase.assertEquals("3",instance.get(2).getArg());
                 }
 
         });
@@ -1303,7 +1303,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
                     try{
                         Bean bean = controller.getMappingBean("bean");
-                        List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
+                        bean.getValue();
                         TestCase.fail("expected MappingException");
                     }
                     catch( MappingException e ){
@@ -1335,9 +1335,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     Bean bean = controller.getMappingBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
-                    TestCase.assertEquals(1,instance.get(0).getArg());
-                    TestCase.assertEquals(2,instance.get(1).getArg());
-                    TestCase.assertEquals(3,instance.get(2).getArg());
+                    TestCase.assertEquals("1",instance.get(0).getArg());
+                    TestCase.assertEquals("2",instance.get(1).getArg());
+                    TestCase.assertEquals("3",instance.get(2).getArg());
                 }
 
         });
@@ -1365,9 +1365,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     Bean bean = controller.getMappingBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
-                    TestCase.assertEquals(1,instance.get(0).getArg());
-                    TestCase.assertEquals(2,instance.get(1).getArg());
-                    TestCase.assertEquals(3,instance.get(2).getArg());
+                    TestCase.assertEquals("1",instance.get(0).getArg());
+                    TestCase.assertEquals("2",instance.get(1).getArg());
+                    TestCase.assertEquals("3",instance.get(2).getArg());
                 }
 
         });
@@ -1396,9 +1396,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     Set<SimpleBean> instance = (Set<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
                     SimpleBean[] arr = instance.toArray(new SimpleBean[]{});
-                    TestCase.assertEquals(1,arr[0].getArg());
-                    TestCase.assertEquals(2,arr[1].getArg());
-                    TestCase.assertEquals(3,arr[2].getArg());
+                    TestCase.assertEquals("1",arr[0].getArg());
+                    TestCase.assertEquals("2",arr[1].getArg());
+                    TestCase.assertEquals("3",arr[2].getArg());
                 }
 
         });
