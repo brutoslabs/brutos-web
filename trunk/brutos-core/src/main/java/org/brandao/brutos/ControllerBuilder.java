@@ -17,6 +17,7 @@
 
 package org.brandao.brutos;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -297,7 +298,7 @@ public class ControllerBuilder {
         if( Map.class.isAssignableFrom(target) )
             mappingBean = new MapBean(controller);
         else
-        if( List.class.isAssignableFrom(target) )
+        if( Collection.class.isAssignableFrom(target) )
             mappingBean = new CollectionBean(controller);
         else
             mappingBean = new Bean(controller);

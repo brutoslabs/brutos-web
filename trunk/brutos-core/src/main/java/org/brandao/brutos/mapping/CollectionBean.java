@@ -18,6 +18,8 @@
 package org.brandao.brutos.mapping;
 
 import java.util.Collection;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.validator.ValidatorException;
 
 /**
  *
@@ -115,8 +117,14 @@ public class CollectionBean extends Bean{
             }
             return force || collection.size() != 0? collection : null;
         }
+        catch( ValidatorException e ){
+            throw e;
+        }
+        catch( BrutosException e ){
+            throw e;
+        }
         catch( Exception e ){
-            return null;
+            throw new BrutosException(e);
         }
     }
 
