@@ -24,6 +24,7 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.type.Type;
+import org.brandao.brutos.validator.ValidatorException;
 
 /**
  *
@@ -79,7 +80,7 @@ public class MapBean extends CollectionBean{
     public void setCollectionType(Class<?> collectionType) {
         this.collectionType = collectionType;
     }
-
+    /*
     public Bean getBean() {
         return bean;
     }
@@ -87,7 +88,7 @@ public class MapBean extends CollectionBean{
     public void setBean(Bean bean) {
         this.bean = bean;
     }
-
+    */
     /*
     private Object get( HttpServletRequest request, String prefix, long index ){
         if( bean == null )
@@ -186,8 +187,14 @@ public class MapBean extends CollectionBean{
             }
             return force || map.size() != 0? map : null;
         }
+        catch( ValidatorException e ){
+            throw e;
+        }
+        catch( BrutosException e ){
+            throw e;
+        }
         catch( Exception e ){
-            return null;
+            throw new BrutosException(e);
         }
     }
 
