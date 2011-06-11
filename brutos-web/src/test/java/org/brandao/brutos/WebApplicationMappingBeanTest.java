@@ -1395,41 +1395,42 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     Bean bean = controller.getMappingBean("bean");
                     Set<SimpleBean> instance = (Set<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
-                    SimpleBean[] arr = instance.toArray(new SimpleBean[]{});
-                    TestCase.assertEquals("1",arr[0].getArg());
-                    TestCase.assertEquals("2",arr[1].getArg());
-                    TestCase.assertEquals("3",arr[2].getArg());
+                    boolean id1 = false;
+                    boolean id2 = false;
+                    boolean id3 = false;
+                    for( SimpleBean b: instance ){
+                        if( b.getArg().equals("1") )
+                            id1 = true;
+                        if( b.getArg().equals("2") )
+                            id2 = true;
+                        if( b.getArg().equals("3") )
+                            id3 = true;
+                    }
+                    TestCase.assertTrue(id1 && id2 && id3);
                 }
 
         });
     }
 
     public void testCollection6(){
-        super.execTest(
-            new HandlerTest(){
+        try{
+            super.execTest(
+                new HandlerTest(){
 
-                public String getResourceName() {
-                    return
-                        "org/brandao/brutos/xml/helper/bean/bean-test-collection6.xml";
-                }
-
-                public void run(ConfigurableApplicationContext app,
-                        HttpServletRequest request, HttpServletResponse response) {
-
-                    Controller controller =
-                            app.getControllerManager()
-                                .getController(SimpleController.class);
-
-                    try{
-                        Bean bean = controller.getMappingBean("bean");
-                        bean.getValue();
-                        TestCase.fail("expected MappingException");
+                    public String getResourceName() {
+                        return
+                            "org/brandao/brutos/xml/helper/bean/bean-test-collection6.xml";
                     }
-                    catch( BrutosException e ){
-                    }
-                }
 
-        });
+                    public void run(ConfigurableApplicationContext app,
+                            HttpServletRequest request, HttpServletResponse response) {
+                    }
+
+            });
+            TestCase.fail("expected BrutosException");
+        }
+        catch( BrutosException e ){
+        }
     }
 
     public void testCollection7(){
