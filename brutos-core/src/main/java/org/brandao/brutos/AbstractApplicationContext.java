@@ -286,6 +286,24 @@ public abstract class AbstractApplicationContext
      * M�todo invocado quando a aplica��o � finalizada.
      */
     public void destroy(){
+        this.actionResolver = null;
+        this.codeGeneratorProvider = null;
+        this.configuration = null;
+        this.controllerManager = null;
+        this.controllerResolver = null;
+        this.interceptorManager = null;
+        this.invoker = null;
+        this.iocManager = null;
+        this.iocProvider = null;
+        this.loggerProvider = null;
+        this.requestFactory = null;
+        this.responseFactory = null;
+        this.scopes.clear();
+        this.validatorProvider = null;
+        this.viewProvider = null;
+        this.viewProvider = null;
+        this.webFrameManager = null;
+
     }
 
     /**

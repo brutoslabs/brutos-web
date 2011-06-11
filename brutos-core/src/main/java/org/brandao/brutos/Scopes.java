@@ -70,6 +70,9 @@ public class Scopes{
         return Collections.unmodifiableMap(scopes);
     }
 
+    void clear(){
+        scopes.clear();
+    }
     /*
     public static Scopes getScopesOfCurrentApplicationContext(){
         return Invoker

@@ -126,7 +126,7 @@ public class MapBean extends CollectionBean{
          * A partir da vers�o 2.0 mappingKey sempre ser� diferente de null.
          */
         if( mappingKey != null )
-            return mappingKey.getValue( index, prefix, index, false );
+            return mappingKey.getValue( null, prefix, index, false );
         else
         if( keyType != null )
             return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
