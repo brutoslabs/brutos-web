@@ -92,7 +92,6 @@ public class ConstructorBean {
             ConstructorArgBean arg = getConstructorArg(i);
             classArgs[ i ] = arg.getClassType();
         }
-
         Constructor[] cons = clazz.getConstructors();
         for( int i=0;i<cons.length;i++ ){
             Constructor con = cons[i];

@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.type.NullType;
 import org.brandao.brutos.validator.ValidatorException;
 
 /**
@@ -295,7 +294,7 @@ public class Bean {
 
             if( args == null )
                 return null;
-
+            
             return insCons.newInstance( args );
         }
         else{
