@@ -23,8 +23,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import junit.framework.Test;
@@ -1455,9 +1453,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     Bean bean = controller.getMappingBean("bean");
                     Map<String,SimpleBean> instance = (Map<String,SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
-                    TestCase.assertEquals(1,instance.get("0").getArg());
-                    TestCase.assertEquals(2,instance.get("1").getArg());
-                    TestCase.assertEquals(3,instance.get("2").getArg());
+                    TestCase.assertEquals("1",instance.get("1").getArg());
+                    TestCase.assertEquals("2",instance.get("2").getArg());
+                    TestCase.assertEquals("3",instance.get("3").getArg());
                 }
 
         });
