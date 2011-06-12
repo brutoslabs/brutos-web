@@ -26,12 +26,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import junit.framework.TestCase;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.test.MockIOCProvider;
+import org.brandao.brutos.test.MockViewProvider;
 import org.brandao.brutos.test.MockWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
+import org.brandao.brutos.web.RequestInfo;
 
 /**
  *
@@ -53,6 +54,9 @@ public abstract class AbstractTester extends TestCase{
         servletContext.setInitParameter("org.brandao.brutos.ioc.provider",
                 MockIOCProvider.class.getName());
         
+        servletContext.setInitParameter("org.brandao.brutos.view.provider",
+                MockViewProvider.class.getName());
+
         MockWebApplicationContext
                 .setCurrentApplicationContext(getApplicationContext(handler.getResourceName()));
         try{
@@ -67,6 +71,10 @@ public abstract class AbstractTester extends TestCase{
                 request.setRequestURI("");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
+                RequestInfo requestInfo =
+                        RequestInfo.getCurrentRequestInfo();
+                requestInfo.setResponse(response);
+
                 handler.run(
                 (ConfigurableApplicationContext)ContextLoader
                     .getCurrentWebApplicationContext(), request, response);

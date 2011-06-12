@@ -25,8 +25,6 @@ import org.brandao.brutos.helper.controller.AbstractTester;
 import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.test.MockViewProvider;
-import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.GenericXMLWebApplicationContext;
 
@@ -63,8 +61,8 @@ public class WebApplicationInterceptorTest extends AbstractTester implements Tes
                             (String) app.getScopes().get(ScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("OK", result);
-                    TestCase.assertEquals("value1", r.get("value1"));
-                    TestCase.assertEquals("value2", r.get("value2"));
+                    TestCase.assertEquals("value1", r.get("param1"));
+                    TestCase.assertEquals("value2", r.get("param2"));
                 }
             
         });
@@ -89,8 +87,8 @@ public class WebApplicationInterceptorTest extends AbstractTester implements Tes
                             (String) app.getScopes().get(ScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("OK", result);
-                    TestCase.assertEquals("value1", r.get("value3"));
-                    TestCase.assertEquals("value2", r.get("value2"));
+                    TestCase.assertEquals("value3", r.get("param1"));
+                    TestCase.assertEquals("value2", r.get("param2"));
                 }
 
         });
@@ -115,8 +113,8 @@ public class WebApplicationInterceptorTest extends AbstractTester implements Tes
                             (String) app.getScopes().get(ScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("OK", result);
-                    TestCase.assertEquals("value1", r.get("value4"));
-                    TestCase.assertEquals("value2", r.get("value2"));
+                    TestCase.assertEquals("value4", r.get("param1"));
+                    TestCase.assertEquals("value2", r.get("param2"));
                 }
 
         });
@@ -141,8 +139,8 @@ public class WebApplicationInterceptorTest extends AbstractTester implements Tes
                             (String) app.getScopes().get(ScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("OK", result);
-                    TestCase.assertEquals("value1", r.get("value4"));
-                    TestCase.assertEquals("value2", r.get("value2"));
+                    TestCase.assertEquals("value4", r.get("param1"));
+                    TestCase.assertEquals("value2", r.get("param2"));
                 }
 
         });
