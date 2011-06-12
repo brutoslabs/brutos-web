@@ -93,6 +93,7 @@ public class Invoker {
         element.setAction(ih.getResourceAction());
         element.setController(form);
         element.setHandler(ih);
+        element.setResource(ih.getResource());
         /*
         long time = System.currentTimeMillis();
         try{

@@ -31,7 +31,6 @@ public class MockIOCProvider extends IOCProvider{
         return null;
     }
 
-    @Override
     public Object getBean(Class clazz) {
         try{
             return clazz.newInstance();

@@ -42,7 +42,6 @@ import org.brandao.brutos.RestrictionBuilder;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
-import org.brandao.brutos.type.NullType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
 import org.brandao.brutos.xml.parser.XMLBrutosConstants;
