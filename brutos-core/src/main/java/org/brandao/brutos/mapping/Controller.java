@@ -30,6 +30,7 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
+import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.scope.Scope;
 
 /**
@@ -80,18 +81,24 @@ public class Controller {
     private List defaultInterceptorList;
 
     public Controller() {
-        fields = new ArrayList();
-        mappingBeans = new HashMap();
-        methods = new HashMap();
-        interceptorStack = new ArrayList();
-        this.alias = new ArrayList<String>();
-        this.throwsSafe = new HashMap<Class, ThrowableSafeData>();
-        interceptorProcess = new InterceptorProcess();
-        interceptorProcess.setForm( this );
+        this.fields = new ArrayList();
+        this.mappingBeans = new HashMap();
+        this.methods = new HashMap();
+        this.interceptorStack = new ArrayList();
+        this.alias = new ArrayList();
+        this.reverseMethods = new HashMap();
+        this.throwsSafe = new HashMap();
+        this.interceptorProcess = new InterceptorProcess();
+        this.interceptorProcess.setForm( this );
     }
 
     public String getMethodId() {
         return methodId;
+    }
+
+    public Object getInstance(IOCProvider iocProvider){
+        Object instance = iocProvider.getBean(classType);
+        return instance == null? iocProvider.getBean(id) : instance;
     }
 
     public void setMethodId(String methodId) {

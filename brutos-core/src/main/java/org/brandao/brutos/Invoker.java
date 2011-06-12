@@ -84,7 +84,7 @@ public class Invoker {
         if( form == null )
             return false;
 
-        ih.setResource( iocProvider.getBean(form.getId()) );
+        ih.setResource( form.getInstance(iocProvider)/*iocProvider.getBean(form.getId())*/ );
         ih.setResourceAction( actionResolver.getResourceAction(form, scopes, ih) );
 
 
