@@ -101,4 +101,9 @@ public class PicoContainerIOCProvider extends IOCProvider{
     public void configure(Properties properties) {
     }
 
+    @Override
+    public Object getBean(Class clazz) {
+        return null;
+    }
+
 }
