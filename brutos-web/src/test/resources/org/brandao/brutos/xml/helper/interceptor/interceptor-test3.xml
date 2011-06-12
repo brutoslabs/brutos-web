@@ -21,7 +21,7 @@
         class="org.brandao.brutos.helper.controller.SimpleController">
 
             <interceptor-ref name="testStack">
-                <param name="param1">value4</param>
+                <param name="testInterceptor.param1">value4</param>
             </interceptor-ref>
             
             <action id="defaultAction" result="result" executor="defaultAction"/>

@@ -46,6 +46,9 @@ public class WebMvcResponseImp implements WebMvcResponse{
 
     public void process( Object object ){
         try{
+            if( object == null )
+                return;
+            
             PrintWriter out = response.getWriter();
             out.print( String.valueOf( object ) );
         }
