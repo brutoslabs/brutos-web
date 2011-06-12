@@ -39,6 +39,11 @@ public class SpringIOCProvider extends IOCProvider{
 
     public void destroy() {
     }
+
+    @Override
+    public Object getBean(Class clazz) {
+        return null;
+    }
     
 
 }

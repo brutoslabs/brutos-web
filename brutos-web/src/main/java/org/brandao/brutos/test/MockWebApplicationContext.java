@@ -17,9 +17,7 @@
 package org.brandao.brutos.test;
 
 
-import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContextWrapper;
 
 
