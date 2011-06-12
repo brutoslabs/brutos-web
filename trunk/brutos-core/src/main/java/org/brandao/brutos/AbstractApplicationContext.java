@@ -349,8 +349,8 @@ public abstract class AbstractApplicationContext
                     "controller not configured: %s",
                     controllerClass.getName() ));
         
-        Object resource = 
-                iocProvider.getBean(controller.getId());
+        Object resource = controller.getInstance(iocProvider);
+                //iocProvider.getBean(controller.getId());
 
         ProxyFactory proxyFactory =
                 codeGeneratorProvider

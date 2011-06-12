@@ -118,6 +118,8 @@ public abstract class IOCProvider {
 
     public abstract Object getBean( String name );
     
+    public abstract Object getBean( Class clazz );
+
     public abstract void configure( Properties properties );
 
     /**

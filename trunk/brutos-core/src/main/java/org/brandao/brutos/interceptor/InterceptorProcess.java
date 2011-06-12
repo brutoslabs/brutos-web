@@ -207,7 +207,8 @@ public class InterceptorProcess implements InterceptorStack{
             (IOCProvider)requestScope.get( BrutosConstants.IOC_PROVIDER );
 
         Interceptor interceptor =
-            interceptor = (Interceptor)iocProvider.getBean( i.getName() );
+            interceptor = (Interceptor)i.getInstance(iocProvider);
+            /*iocProvider.getBean( i.getName() );*/
 
         if( !interceptor.isConfigured() )
             interceptor.setProperties( (Map<String, Object>) i
