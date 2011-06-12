@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.RedirectException;
@@ -197,7 +198,7 @@ public class InterceptorProcess implements InterceptorStack{
 
     private void next0(InterceptorHandler handler, int pos)
             throws InterceptedException{
-        
+        /*
         Scope requestScope =
             handler.getContext().getScopes().get(ScopeType.REQUEST.toString());
 
@@ -205,9 +206,15 @@ public class InterceptorProcess implements InterceptorStack{
 
         IOCProvider iocProvider =
             (IOCProvider)requestScope.get( BrutosConstants.IOC_PROVIDER );
+        */
+
+        ConfigurableApplicationContext context =
+                (ConfigurableApplicationContext) handler.getContext();
+
+        org.brandao.brutos.mapping.Interceptor i = stack.get( pos );
 
         Interceptor interceptor =
-            interceptor = (Interceptor)i.getInstance(iocProvider);
+            interceptor = (Interceptor)i.getInstance(context.getIocProvider());
             /*iocProvider.getBean( i.getName() );*/
 
         if( !interceptor.isConfigured() )

@@ -131,6 +131,9 @@ public abstract class AbstractApplicationContext
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
         this.controllerManager = new ControllerManager(
                 this.interceptorManager, validatorProvider,this);
+        
+        this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
+        this.codeGeneratorProvider = CodeGeneratorProvider.getProvider(this.getConfiguration());
 
         this.invoker =
                 new Invoker(
@@ -141,8 +144,6 @@ public abstract class AbstractApplicationContext
                     this,
                     viewProvider );
         
-        this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
-        this.codeGeneratorProvider = CodeGeneratorProvider.getProvider(this.getConfiguration());
 
         loadScopes();
         
