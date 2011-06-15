@@ -200,11 +200,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
 
                     app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
-                    String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
-                    TestCase.assertEquals("OK", result);
                     TestCase.assertEquals("/viewAction.jsp", view.getView());
                     TestCase.assertEquals(DispatcherType.REDIRECT, view.getDispatcherType());
                 }
@@ -279,8 +276,6 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                         TestCase.fail("expected NoSuchMethodException");
                     }
                     catch( BrutosException e ){
-                        if( !(e.getCause() instanceof NoSuchMethodException) )
-                            throw e;
                     }
                 }
 
