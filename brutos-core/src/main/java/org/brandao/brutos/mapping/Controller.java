@@ -157,10 +157,14 @@ public class Controller {
 
     public void addMethod( String id, MethodForm method ){
 
-        if( method.getMethod() != null )
-            this.reverseMethods.put(method.getMethodName().toString(), method);
+        //if( method.getMethod() != null )
+        //    this.reverseMethods.put(method.getMethodName().toString(), method);
         
         this.methods.put(id, method);
+    }
+
+    Map getReverseMethods(){
+        return reverseMethods;
     }
 
     public MethodForm getMethod( Method method ){

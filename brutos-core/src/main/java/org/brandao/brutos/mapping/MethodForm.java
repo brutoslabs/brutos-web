@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassType;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
@@ -69,6 +70,7 @@ public class MethodForm {
         this.parametersType = new ArrayList();
         this.throwsSafe = new HashMap();
         this.dispatcherType = DispatcherType.INCLUDE;
+        this.returnClass = void.class;
     }
 
     public String getName() {
@@ -206,8 +208,10 @@ public class MethodForm {
                 return;
             }
             
-            Class<?> classType = controller.getClassType();
-            method = classType.getMethod( this.methodName, this.getParameterClass() );
+            //Class<?> classType = controller.getClassType();
+            method = getMethod( methodName, controller.getClassType() );//classType.getMethod( this.methodName, this.getParameterClass() );
+            controller.getReverseMethods()
+                    .put(method.toString(),method);
             setParametersType( Arrays.asList( method.getParameterTypes() ) );
 
             Class<?> returnClassType = method.getReturnType();
@@ -225,6 +229,62 @@ public class MethodForm {
         catch( Exception e ){
             throw new BrutosException( e );
         }
+
+    }
+
+    private Method getMethod( String name, Class clazz ){
+        int size = parameters.size();
+        Class[] classArgs = new Class[ size ];
+        for( int i=0;i<size;i++ ){
+            ParameterMethodMapping arg = parameters.get(i);
+            classArgs[ i ] = arg.getBean().getClassType();
+        }
+
+        Class tmpClazz = clazz;
+        while( tmpClazz != Object.class ){
+            Method[] methods = tmpClazz.getDeclaredMethods();
+            for( int i=0;i<methods.length;i++ ){
+                Method m = methods[i];
+                if( m.getName().equals(name) &&
+                    isCompatible( m, classArgs ) ){
+                    Class[] params = m.getParameterTypes();
+                    for( int k=0;k<params.length;k++ ){
+                        ParameterMethodMapping arg = parameters.get(k);
+                        if( arg.getBean().getType() == null )
+                            arg.getBean()
+                                    .setType(Types.getType(params[k]));
+                    }
+
+                    return m;
+                }
+            }
+            tmpClazz = tmpClazz.getSuperclass();
+        }
+        String msg = "not found: " + clazz.getName() + "." + name + "( ";
+
+        for( int i=0;i<classArgs.length;i++ ){
+            Class arg = classArgs[i];
+            msg += i != 0? ", " : "";
+            msg += arg == null? "?" : arg.getName();
+        }
+        msg += " )";
+
+        throw new BrutosException( msg );
+    }
+
+    private boolean isCompatible( Method m, Class[] classArgs ){
+        Class[] params = m.getParameterTypes();
+        if( params.length == classArgs.length ){
+            for( int i=0;i<params.length;i++ ){
+                if( classArgs[i] != null &&
+                        !ClassType.getWrapper( params[i] )
+                            .isAssignableFrom( ClassType.getWrapper( classArgs[i] ) ) )
+                    return false;
+            }
+            return true;
+        }
+        else
+            return false;
 
     }
 

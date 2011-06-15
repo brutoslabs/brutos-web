@@ -153,16 +153,24 @@ public abstract class ViewProvider {
                             method.getDispatcherType());
                     return;
                 }
-                else
+                /*else
                 if( method.getReturnType() != null ){
                     method.getReturnType().setValue(stackRequestElement.getResultAction());
                     return;
                 }
+                */
             }
 
-            this.show(requestInstrument,
-                    stackRequestElement.getController().getPage(),
-                    stackRequestElement.getController().getDispatcherType());
+            if( stackRequestElement.getController().getPage() != null ){
+                this.show(requestInstrument,
+                        stackRequestElement.getController().getPage(),
+                        stackRequestElement.getController().getDispatcherType());
+            }
+            else
+            if( method.getReturnType() != null ){
+                method.getReturnType().setValue(stackRequestElement.getResultAction());
+                return;
+            }
 
         }
         finally{

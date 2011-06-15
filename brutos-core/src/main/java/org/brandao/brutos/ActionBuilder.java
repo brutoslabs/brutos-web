@@ -288,7 +288,7 @@ public class ActionBuilder {
         useBean.setScopeType( scope );
         useBean.setValidate( validatorProvider.getValidator( validatorConfig ) );
         useBean.setStaticValue(value);
-        useBean.setNullable(true);
+        useBean.setNullable(nullable);
         
         if( mapping != null ){
             if( controller.getMappingBeans().containsKey( mapping ) )
