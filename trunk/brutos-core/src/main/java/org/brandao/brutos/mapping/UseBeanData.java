@@ -129,7 +129,7 @@ public class UseBeanData {
         if( mapping != null )
             return mapping.getClassType();
         else
-            return type.getClassType();
+            return type == null? null : type.getClassType();
     }
     /*
     public Object getValue( ServletContext context, HttpServletRequest request ) throws InstantiationException, IllegalAccessException, ParseException{

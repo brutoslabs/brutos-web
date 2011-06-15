@@ -973,10 +973,11 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             //    throw new BrutosException( "tag type is required in parameter" );
 
             if( type != null )
-                typeClass = Class.forName(
+                typeClass = ClassType.get(type);
+                        /*Class.forName(
                             factoryName,
                             true,
-                            Thread.currentThread().getContextClassLoader() );
+                            Thread.currentThread().getContextClassLoader() );*/
 
 
         }
