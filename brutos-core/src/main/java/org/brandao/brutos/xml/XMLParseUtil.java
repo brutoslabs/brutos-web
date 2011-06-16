@@ -32,10 +32,20 @@ public class XMLParseUtil {
     public Element getElement( Element e, String name ){
         NodeList elements = e.getElementsByTagName( name );
 
+        for(int i=0;i<elements.getLength();i++){
+            Element c = (Element) elements.item(i);
+            if( c.getParentNode().equals(e) )
+                return (Element)elements.item(0);
+        }
+
+        return null;
+
+        /*
         if( elements.getLength() > 0 )
             return (Element)elements.item(0);
         else
             return null;
+        */
     }
 
     public NodeList getElements( Element e, String name ){

@@ -542,26 +542,26 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     }
 
     private void addBean( Element beanNode,
-            ActionBuilder actionBuilder ){
+            ActionBuilder actionBuilder, Class paramType){
 
         String separator     = parseUtil.getAttribute(beanNode,"separator" );
         String indexFormat   = parseUtil.getAttribute(beanNode,"index-format" );
         String factory       = parseUtil.getAttribute(beanNode,"factory" );
         String methodFactory = parseUtil.getAttribute(beanNode,"method-factory" );
         String target        = parseUtil.getAttribute(beanNode,"target" );
-
+        
         Class clazz = null;
         try{
-            clazz = Class.forName(
+            clazz = ClassType.get(target);/*Class.forName(
                         target,
                         true,
-                        Thread.currentThread().getContextClassLoader() );
+                        Thread.currentThread().getContextClassLoader() );*/
         }
         catch( Exception ex ){
             throw new BrutosException( ex );
         }
 
-        BeanBuilder beanBuilder = actionBuilder.buildParameter(clazz);
+        BeanBuilder beanBuilder = actionBuilder.buildParameter(paramType,clazz);
 
         beanBuilder.setFactory(factory);
         beanBuilder.setMethodfactory(methodFactory);
@@ -659,7 +659,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             }
             else
             if( beanNode != null ){
-                addBean( beanNode, beanBuilder, null, false, false );
+                addBean( beanNode, beanBuilder, null, false, false);
                 continue;
             }
             else
@@ -930,6 +930,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         Class typeClass = null;
         boolean nullable = false;
 
+        try{
+            if( type != null )
+                typeClass = ClassType.get(type);
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+
         Element mappingRef = parseUtil.getElement( paramNode, "ref");
         Element beanNode   = parseUtil.getElement( paramNode, "bean");
         Element valueNode  = parseUtil.getElement( paramNode, "value");
@@ -949,7 +957,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         }
         else
         if( beanNode != null ){
-            addBean( beanNode, actionBuilder );
+            addBean( beanNode, actionBuilder, typeClass );
             return;
         }
         else
@@ -971,15 +979,6 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
             //if( type == null )
             //    throw new BrutosException( "tag type is required in parameter" );
-
-            if( type != null )
-                typeClass = ClassType.get(type);
-                        /*Class.forName(
-                            factoryName,
-                            true,
-                            Thread.currentThread().getContextClassLoader() );*/
-
-
         }
         catch( BrutosException ex ){
             throw ex;

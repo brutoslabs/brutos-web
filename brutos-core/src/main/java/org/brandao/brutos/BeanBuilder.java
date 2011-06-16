@@ -562,6 +562,26 @@ public class BeanBuilder {
     }
 
     /**
+     * Constrói o mapeamento de um argumento do construtor.
+     *
+     * @param name Identificação.
+     * @param target Classe alvo do mapeamento.
+     * @param classType Tipo do argumento do contrutor.
+     * @return Construtor do argumento.
+     */
+    public BeanBuilder buildConstructorArg( String name, Class classType, Class target ){
+        String beanName = this.mappingBean.getName()
+                + "#[" + this.mappingBean.getConstructor().size() + "]";
+
+        BeanBuilder beanBuilder =
+                this.controllerBuilder.buildMappingBean(beanName, target);
+
+        this.addMappedContructorArg(name, beanName);
+
+        return beanBuilder;
+    }
+
+    /**
      * Faz o mapeamento de um argumento do construtor.
      *
      * @param name Nome do par�metro.

@@ -233,9 +233,28 @@ public class ActionBuilder {
      */
 
     public BeanBuilder buildParameter( Class classType ){
-        String beanName = this.methodForm.getName() + "#Action#bean";
+        String beanName = 
+                this.methodForm.getName()+"#"+this.methodForm.getParamterSize();
         BeanBuilder bb = this.controllerBuilder
                     .buildMappingBean(beanName, classType);
+
+        this.addParameterMapping(beanName, classType);
+        return bb;
+    }
+
+    /**
+     * Constrói um novo parâmetro.
+     *
+     * @param classType Tipo do parâmetro.
+     * @param beanType Tipo do bean.
+     * @return Contrutor do par�metro.
+     */
+
+    public BeanBuilder buildParameter( Class classType, Class beanType ){
+        String beanName =
+                this.methodForm.getName()+"#"+this.methodForm.getParamterSize();
+        BeanBuilder bb = this.controllerBuilder
+                    .buildMappingBean(beanName, beanType);
 
         this.addParameterMapping(beanName, classType);
         return bb;
@@ -297,7 +316,7 @@ public class ActionBuilder {
                 throw new BrutosException( "mapping name " + mapping + " not found!" );
                 
         }
-        else
+        //else
         if( type != null ){
             useBean.setType( type );
             if( classType != null &&
