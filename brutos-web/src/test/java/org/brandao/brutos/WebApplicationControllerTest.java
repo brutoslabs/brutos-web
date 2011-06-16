@@ -321,11 +321,9 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                     app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
                     try{
                         app.getInvoker().invoke("/testController.htm");
-                        TestCase.fail("expected NoSuchMethodException");
+                        TestCase.fail("expected IllegalArgumentException");
                     }
-                    catch( BrutosException e ){
-                        if( !(e.getCause() instanceof NoSuchMethodException) )
-                            throw e;
+                    catch( IllegalArgumentException e ){
                     }
                 }
 

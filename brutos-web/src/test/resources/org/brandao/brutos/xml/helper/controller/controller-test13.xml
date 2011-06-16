@@ -8,7 +8,7 @@
         class="org.brandao.brutos.helper.controller.SimpleController">
             <action id="testAction" view="/viewAction.jsp" dispatcher="redirect"
             executor="actionWithParam">
-                <parameter>
+                <parameter type="int">
                     <ref bean="value" scope="session"/>
                 </parameter>
             </action>

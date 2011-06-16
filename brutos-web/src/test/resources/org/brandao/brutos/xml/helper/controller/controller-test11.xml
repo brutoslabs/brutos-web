@@ -9,7 +9,7 @@
             <action id="testAction" view="/viewAction.jsp" dispatcher="redirect"
             executor="actionWithParam">
                 <parameter>
-                    <bean target="int">
+                    <bean target="java.lang.Integer">
                         <constructor-arg>
                             <ref bean="value"/>
                         </constructor-arg>
