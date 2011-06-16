@@ -126,10 +126,13 @@ public class UseBeanData {
     }
 
     public Class getClassType(){
-        if( mapping != null )
-            return mapping.getClassType();
-        else
+        //if( type != null )
             return type == null? null : type.getClassType();
+        //else
+        //if( mapping != null )
+        //    return mapping.getClassType();
+        //else
+        //    return null;
     }
     /*
     public Object getValue( ServletContext context, HttpServletRequest request ) throws InstantiationException, IllegalAccessException, ParseException{
