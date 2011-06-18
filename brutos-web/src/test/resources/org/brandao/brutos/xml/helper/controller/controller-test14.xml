@@ -8,9 +8,9 @@
         class="org.brandao.brutos.helper.controller.SimpleController">
             <action id="testAction" view="/viewAction.jsp" dispatcher="redirect"
             executor="actionWithParam">
-                <parameter bean="value">
-                    <validator message="Invalid value: ${value}">
-                        <rule name="equals">100</rule>
+                <parameter bean="value" type="int">
+                    <validator message="expected ${equal} but found ${value}">
+                        <rule name="equal">100</rule>
                     </validator>
                 </parameter>
             </action>

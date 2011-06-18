@@ -323,7 +323,9 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                         app.getInvoker().invoke("/testController.htm");
                         TestCase.fail("expected IllegalArgumentException");
                     }
-                    catch( IllegalArgumentException e ){
+                    catch( BrutosException e ){
+                        if( !(e.getCause() instanceof IllegalArgumentException) )
+                            throw e;
                     }
                 }
 
@@ -492,7 +494,9 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                         app.getInvoker().invoke("/testController.htm");
                         TestCase.fail("expected UnsupportedOperationException");
                     }
-                    catch( UnsupportedOperationException e ){
+                    catch( BrutosException e ){
+                        if(!(e.getCause() instanceof UnsupportedOperationException))
+                            throw e;
                     }
 
                 }

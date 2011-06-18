@@ -8,7 +8,7 @@
         class="org.brandao.brutos.helper.controller.SimpleController">
             <action id="testAction" view="/viewAction.jsp" dispatcher="redirect"
             executor="actionWithParam">
-                <parameter>
+                <parameter type="int">
                     <value>100</value>
                 </parameter>
             </action>
