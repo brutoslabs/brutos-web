@@ -20,7 +20,7 @@ package org.brandao.brutos;
 import java.util.Properties;
 
 /**
- * Classe usada na configuração de uma aplicação.
+ * Classe usada na configuraï¿½ï¿½o de uma aplicaï¿½ï¿½o.
  * 
  * @author Afonso Brandao
  */
@@ -67,7 +67,7 @@ public class Configuration extends Properties{
         int index = value.indexOf( "${" );
         
         while( index != -1 ){
-            int end = value.indexOf( "}" );
+            int end = value.indexOf( "}", index );
             
             if( end != -1 ){
                 String key = value.substring( index + 2, end );
@@ -75,7 +75,7 @@ public class Configuration extends Properties{
                 if( prop != null )
                     value = value.replace( "${" + key + "}", prop );
             }
-            index = value.indexOf( "${" );
+            index = value.indexOf( "${", end );
         }
         return value;
     }
