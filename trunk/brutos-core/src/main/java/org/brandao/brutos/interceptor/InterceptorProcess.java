@@ -362,6 +362,9 @@ public class InterceptorProcess implements InterceptorStack{
                  */
             }
             else
+            if( e instanceof BrutosException )
+                throw (BrutosException)e;
+            else
                 throw new InterceptedException( e );
     }
 

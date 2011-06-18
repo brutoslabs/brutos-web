@@ -637,6 +637,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             String typeName = parseUtil.getAttribute(conNode, "type");
             Type factory = null;
             boolean nullable = false;
+            Class type = null;
 
             Element mappingRef     = parseUtil.getElement(conNode,"ref");
             Element beanNode       = parseUtil.getElement(conNode,"bean");
@@ -678,10 +679,10 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                                 Thread.currentThread().getContextClassLoader() )
                                     .newInstance();
                 }
-                else
+                
                 if(typeName != null)
-                    factory = Types.getType( ClassType.get(typeName),
-                            enumProperty, temporalProperty );
+                    type = ClassType.get(typeName);
+
             }
             catch( Exception ex ){
                 throw new BrutosException( ex );
@@ -696,7 +697,8 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                         scope,
                         value,
                         nullable,
-                        factory);
+                        factory,
+                        type);
 
             addValidator(validatorNode, constructorBuilder);
         }

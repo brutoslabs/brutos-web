@@ -473,67 +473,10 @@ public class BeanBuilder {
             EnumerationType enumProperty, String temporalProperty, String mapping, 
             ScopeType scope, Object value, boolean nullable, Type type ){
 
-        /*
-        name = name == null || name.replace( " ", "" ).length() == 0? null : name;
-        propertyName = propertyName == null || propertyName.replace( " ", "" ).length() == 0? null : propertyName;
-        temporalProperty = temporalProperty == null || temporalProperty.replace( " ", "" ).length() == 0? null : temporalProperty;
-        mapping = mapping == null || mapping.replace( " ", "" ).length() == 0? null : mapping;
-
-        if( propertyName == null )
-            throw new BrutosException( "the property name is required!" );
-        else
-        if( this.mappingBean.getFields().containsKey( propertyName ) )
-            throw new BrutosException( "duplicate property name: " + propertyName );
-
-        /*
-        if( name == null )
-            throw new BrutosException( "name is required: " +
-                    mappingBean.getClassType().getName() );
-        */
-        /*
-        FieldBean fieldBean = new FieldBean();
-        fieldBean.setEnumProperty( enumProperty );
-        fieldBean.setParameterName( name );
-        fieldBean.setName(propertyName);
-        fieldBean.setTemporalType( temporalProperty );
-        fieldBean.setValue(value);
-        fieldBean.setScopeType( scope );
-
-        BeanInstance bean = new BeanInstance( null, mappingBean.getClassType() );
-
-        if( !bean.containProperty(propertyName) )
-            throw new BrutosException( "no such property: " +
-                mappingBean.getClassType().getName() + "." + propertyName );
-
-        if( mapping != null ){
-            fieldBean.setMapping( mapping );
-                
-        }
-        else
-        if( type != null ){
-            fieldBean.setType( type );
-        }
-        else{
-            try{
-                fieldBean.setType(
-                        Types.getType(
-                            bean.getGenericType(propertyName),
-                            enumProperty,
-                            temporalProperty ) );
-            }
-            catch( UnknownTypeException e ){
-                throw new UnknownTypeException(
-                        String.format( "%s.%s : %s" ,
-                            webFrame.getClassType().getName(),
-                            propertyName,
-                            e.getMessage() ) );
-            }
-        }
-        */
-
         PropertyBean propertyBean =
             (PropertyBean) this.createDependencyBean(name, propertyName, true,
-                enumProperty, temporalProperty, mapping, scope, value, nullable, type);
+                enumProperty, temporalProperty, mapping, scope, value, nullable, 
+                type, null);
 
         Configuration validatorConfig = new Configuration();
         propertyBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
@@ -591,7 +534,7 @@ public class BeanBuilder {
     public ConstructorBuilder addContructorArg( String name,
             EnumerationType enumProperty ){
         return addContructorArg( name, enumProperty, null, null, 
-                ScopeType.PARAM, null, false, null );
+                ScopeType.PARAM, null, false, null, null );
     }
 
     /**
@@ -604,7 +547,7 @@ public class BeanBuilder {
     public ConstructorBuilder addContructorArg( String name,
             String temporalProperty ){
         return addContructorArg( name, EnumerationType.ORDINAL, 
-                temporalProperty, null, ScopeType.PARAM, null, false, null );
+                temporalProperty, null, ScopeType.PARAM, null, false, null, null );
     }
 
     /**
@@ -614,7 +557,7 @@ public class BeanBuilder {
      */
     public ConstructorBuilder addNullContructorArg(){
         return addContructorArg( null, EnumerationType.ORDINAL,
-                null, null, ScopeType.PARAM, null, true, null );
+                null, null, ScopeType.PARAM, null, true, null, null );
     }
 
     /**
@@ -627,7 +570,7 @@ public class BeanBuilder {
     public ConstructorBuilder addContructorArg( String name,
             Type type ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null,ScopeType.PARAM, null, false, type );
+                null,ScopeType.PARAM, null, false, type, null );
     }
 
     /**
@@ -639,7 +582,7 @@ public class BeanBuilder {
      */
     public ConstructorBuilder addMappedContructorArg( String name, String mapping ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, ScopeType.PARAM, null, false, null );
+                mapping, ScopeType.PARAM, null, false, null, null );
     }
 
     /**
@@ -650,7 +593,7 @@ public class BeanBuilder {
      */
     public ConstructorBuilder addContructorArg( String name ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, ScopeType.PARAM, null, false, null );
+                null, ScopeType.PARAM, null, false, null, null );
     }
 
     /**
@@ -662,7 +605,7 @@ public class BeanBuilder {
      */
     public ConstructorBuilder addContructorArg( String name, ScopeType scope ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, scope, null, false, null );
+                null, scope, null, false, null, null );
     }
 
     /**
@@ -674,7 +617,8 @@ public class BeanBuilder {
      */
     public ConstructorBuilder addStaticContructorArg( String name, Object value ){
         return addContructorArg( name,
-            EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM, value, false, null );
+            EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM, 
+            value, false, null, null );
     }
 
     /**
@@ -686,16 +630,17 @@ public class BeanBuilder {
      * @param mapping Mapeamento customizado.
      * @param scope Escopo.
      * @param value Valor do argumento do contrutor.
-     * @param type Faz o processamento do argumento.
+     * @param factory Faz o processamento do argumento.
+     * @param type Tipo do argumento do construtor.
      * @return Construtor do argumento.
      */
     public ConstructorBuilder addContructorArg( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, boolean nullable, Type type ){
+            ScopeType scope, Object value, boolean nullable, Type factory, Class type ){
 
         ConstructorArgBean arg =
             (ConstructorArgBean) this.createDependencyBean(name, null, false,
-                enumProperty, temporalProperty, mapping, scope, value, nullable, type);
+                enumProperty, temporalProperty, mapping, scope, value, nullable, factory, type);
 
         Configuration validatorConfig = new Configuration();
         arg.setValidator( validatorProvider.getValidator( validatorConfig ) );
@@ -706,7 +651,7 @@ public class BeanBuilder {
     private DependencyBean createDependencyBean( String name, String propertyName,
             boolean propertyNameRequired, EnumerationType enumProperty,
             String temporalProperty, String mapping, ScopeType scope,
-            Object value, boolean nullable, Type type ){
+            Object value, boolean nullable, Type factory, Class type ){
 
         name = 
             name == null || name.replace( " ", "" ).length() == 0?
@@ -758,14 +703,11 @@ public class BeanBuilder {
             throw new BrutosException( "no such property: " +
                 mappingBean.getClassType().getName() + "." + propertyName );
 
-        if( mapping != null ){
+        if( mapping != null )
             dependencyBean.setMapping( mapping );
 
-        }
-        else
-        if( type != null ){
-            dependencyBean.setType( type );
-        }
+        if( factory != null )
+            dependencyBean.setType( factory );
         else{
             try{
                 if( propertyNameRequired ){
@@ -775,6 +717,11 @@ public class BeanBuilder {
                                 enumProperty,
                                 temporalProperty ) );
                 }
+                else
+                if( type != null )
+                    dependencyBean.setType(Types.getType(type, enumProperty, 
+                            temporalProperty));
+                
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException(
@@ -784,7 +731,6 @@ public class BeanBuilder {
                             e.getMessage() ) );
             }
         }
-
         Configuration validatorConfig = new Configuration();
         dependencyBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
         return dependencyBean;

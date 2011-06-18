@@ -63,6 +63,7 @@ public class DefaultValidatorProvider extends ValidatorProvider{
                     String val  = String.valueOf(config.get( name ));
                     message = message.replace( "${"+name+"}" , val );
                 }
+                message = message.replace( "${value}" , String.valueOf(value) );
             }
             else
                 message = "";
