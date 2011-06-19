@@ -33,7 +33,7 @@ public abstract class CodeGeneratorProvider {
                 properties
                     .getProperty(
                         "org.brandao.brutos.proxy.provider",
-                        null);
+                        JavassistCodeGeneratorProvider.class.getName());
         CodeGeneratorProvider provider = null;
 
         if( providerName == null )

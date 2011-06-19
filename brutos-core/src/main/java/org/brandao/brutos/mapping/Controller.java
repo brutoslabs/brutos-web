@@ -22,8 +22,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
@@ -168,6 +170,16 @@ public class Controller {
     }
 
     public MethodForm getMethod( Method method ){
+        if( reverseMethods.size() != methods.size() ){
+            Iterator keys = methods.keySet().iterator();
+
+            while(keys.hasNext()){
+                String key = (String)keys.next();
+                MethodForm ac = methods.get(key);
+                if(!ac.isLoaded())
+                    ac.load();
+            }
+        }
         return reverseMethods.get(method.toString());
     }
     

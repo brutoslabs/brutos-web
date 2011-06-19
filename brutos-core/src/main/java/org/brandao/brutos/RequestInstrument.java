@@ -30,6 +30,8 @@ public interface RequestInstrument {
 
     boolean isHasViewProcessed();
 
+    void setHasViewProcessed(boolean value);
+
     public IOCProvider getIocProvider();
 
     public ViewProvider getViewProvider();

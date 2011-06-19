@@ -89,7 +89,7 @@ public class MethodForm {
     public List<ParameterMethodMapping> getParameters() {
 
         if( !load )
-            this.lazyLoad();
+            this.load();
 
         return parameters;
     }
@@ -124,7 +124,7 @@ public class MethodForm {
     public Method getMethod() {
 
         if( !load )
-            this.lazyLoad();
+            this.load();
         
         return method;
     }
@@ -197,7 +197,7 @@ public class MethodForm {
         this.dispatcherType = dispatcherType;
     }
 
-    public synchronized void lazyLoad(){
+    public synchronized void load(){
         try{
             
             if( load )
@@ -211,7 +211,7 @@ public class MethodForm {
             //Class<?> classType = controller.getClassType();
             method = getMethod( methodName, controller.getClassType() );//classType.getMethod( this.methodName, this.getParameterClass() );
             controller.getReverseMethods()
-                    .put(method.toString(),method);
+                    .put(method.toString(),this);
             setParametersType( Arrays.asList( method.getParameterTypes() ) );
 
             Class<?> returnClassType = method.getReturnType();
@@ -317,5 +317,9 @@ public class MethodForm {
 
     public boolean isAbstract(){
         return this.method == null;
+    }
+
+    public boolean isLoaded(){
+        return this.load;
     }
 }

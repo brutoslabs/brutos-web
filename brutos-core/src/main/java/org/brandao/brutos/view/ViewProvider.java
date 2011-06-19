@@ -28,6 +28,7 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.ViewException;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
@@ -97,87 +98,96 @@ public abstract class ViewProvider {
             String view, DispatcherType dispatcherType )
                 throws IOException;
 
+    private void showView( RequestInstrument requestInstrument,
+            String view, DispatcherType dispatcherType )
+                throws IOException{
+        requestInstrument.setHasViewProcessed(true);
+        show(requestInstrument,view,dispatcherType);
+    }
+
+    private void showView( RequestInstrument requestInstrument,
+            StackRequestElement stackRequestElement, MethodForm method )
+                throws IOException{
+        requestInstrument.setHasViewProcessed(true);
+        method.getReturnType().setValue(stackRequestElement.getResultAction());
+    }
+
     public void show( RequestInstrument requestInstrument,
             StackRequestElement stackRequestElement ) throws IOException,
             ViewException{
 
         if( requestInstrument.isHasViewProcessed() )
-            throw new ViewException("view has been processed");
+            return;
+            //throw new ViewException("view has been processed");
 
-        try{
-            Scopes scopes         =
-                requestInstrument.getContext().getScopes();
-            Scope requestScope    =
-                scopes.get(ScopeType.REQUEST.toString());
-            MethodForm method     =
-                stackRequestElement.getAction().getMethodForm();
+        Scopes scopes         =
+            requestInstrument.getContext().getScopes();
+        Scope requestScope    =
+            scopes.get(ScopeType.REQUEST.toString());
+        MethodForm method     =
+            stackRequestElement.getAction().getMethodForm();
 
-            ThrowableSafeData throwableSafeData =
-                    stackRequestElement.getThrowableSafeData();
+        ThrowableSafeData throwableSafeData =
+                stackRequestElement.getThrowableSafeData();
 
-            Object objectThrow = stackRequestElement.getObjectThrow();
+        Object objectThrow = stackRequestElement.getObjectThrow();
 
-            if( throwableSafeData != null ){
-                if( throwableSafeData.getParameterName() != null )
-                    requestScope.put(
-                        throwableSafeData.getParameterName(),
-                        objectThrow);
+        if( throwableSafeData != null ){
+            if( throwableSafeData.getParameterName() != null )
+                requestScope.put(
+                    throwableSafeData.getParameterName(),
+                    objectThrow);
 
-                if( throwableSafeData.getUri() != null ){
-                    this.show(
-                        requestInstrument,
-                        throwableSafeData.getUri(),
-                        throwableSafeData.getDispatcher());
-                    return;
-                }
-            }
-
-            if( stackRequestElement.getView() != null ){
-                this.show(requestInstrument, stackRequestElement.getView(),
-                    stackRequestElement.getDispatcherType());
+            if( throwableSafeData.getUri() != null ){
+                this.showView(
+                    requestInstrument,
+                    throwableSafeData.getUri(),
+                    throwableSafeData.getDispatcher());
                 return;
             }
-            
-            if( method != null ){
+        }
 
-                if( method.getReturnClass() != void.class ){
-                    String var =
-                        method.getReturnIn() == null?
-                            BrutosConstants.DEFAULT_RETURN_NAME :
-                            method.getReturnIn();
-                    requestScope.put(var, stackRequestElement.getResultAction());
-                }
+        if( stackRequestElement.getView() != null ){
+            this.showView(requestInstrument, stackRequestElement.getView(),
+                stackRequestElement.getDispatcherType());
+            return;
+        }
 
-                if( method.getReturnPage() != null ){
-                    this.show(requestInstrument, method.getReturnPage(),
-                            method.getDispatcherType());
-                    return;
-                }
-                /*else
-                if( method.getReturnType() != null ){
-                    method.getReturnType().setValue(stackRequestElement.getResultAction());
-                    return;
-                }
-                */
+        if( method != null ){
+
+            if( method.getReturnClass() != void.class ){
+                String var =
+                    method.getReturnIn() == null?
+                        BrutosConstants.DEFAULT_RETURN_NAME :
+                        method.getReturnIn();
+                requestScope.put(var, stackRequestElement.getResultAction());
             }
 
-            if( stackRequestElement.getController().getPage() != null ){
-                this.show(requestInstrument,
-                        stackRequestElement.getController().getPage(),
-                        stackRequestElement.getController().getDispatcherType());
+            if( method.getReturnPage() != null ){
+                this.showView(requestInstrument, method.getReturnPage(),
+                        method.getDispatcherType());
+                return;
             }
-            else
+            /*else
             if( method.getReturnType() != null ){
                 method.getReturnType().setValue(stackRequestElement.getResultAction());
                 return;
             }
-
+            */
         }
-        finally{
-            ((RequestInstrumentImp)requestInstrument)
-                    .setHasViewProcessed(true);
 
+        if( stackRequestElement.getController().getPage() != null ){
+            this.showView(requestInstrument,
+                    stackRequestElement.getController().getPage(),
+                    stackRequestElement.getController().getDispatcherType());
         }
+        else
+        if( method.getReturnType() != null ){
+            this.showView(requestInstrument, stackRequestElement, method);
+            //method.getReturnType().setValue(stackRequestElement.getResultAction());
+            return;
+        }
+
     }
 
 }
