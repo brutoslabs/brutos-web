@@ -4,17 +4,18 @@
    xmlns='http://brutos.sourceforge.net/schema/controllers'
    xsi:schemaLocation='http://brutos.sourceforge.net/schema/controllers http://brutos.sourceforge.net/schema/controllers/brutos-controllers-1.0.xsd'>
 
-    <controller 
+    <controller id="/testController.htm"         
         class="org.brandao.brutos.helper.controller.SimpleController">
+            <action id="testAction" view="/viewAction.jsp"
+                executor="actionToOtherAction"/>
 
-            <bean name="bean" target="java.lang.Integer">
-                <constructor-arg value="100"/>
-            </bean>
-
-            <action id="/test.htm" executor="actionWithParam">
-                <parameter bean="bean" mapping="true" type="int"/>
+            <action id="test2Action" executor="actionWithParam">
+                <parameter bean="value" type="int"/>
             </action>
 
+            <action id="test3Action" executor="actionWithParam">
+                <parameter bean="value" type="int"/>
+            </action>
     </controller>
 
 </controllers>

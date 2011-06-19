@@ -681,4 +681,27 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
         });
     }
 
+    public void testController28(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/controller/controller-test28.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    try{
+                        app.getInvoker().invoke("/testController.htm");
+                    }
+                    catch( BrutosException e ){
+                    }
+                }
+
+        });
+    }
+
 }
