@@ -72,13 +72,19 @@ public class InterceptorProcess implements InterceptorStack{
     public void process( InterceptorHandler handler ){
         if( stack == null )
             createStack();
+
+        Integer oldPos = null;
         
         try{
+            oldPos = stackPos.get();
             stackPos.set( 0 );
             next( handler );
         }
         finally{
-            stackPos.remove();
+            if( oldPos == null )
+                stackPos.remove();
+            else
+                stackPos.set(oldPos);
         }
     }
             
