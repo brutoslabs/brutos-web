@@ -210,8 +210,7 @@ public class MethodForm {
             
             //Class<?> classType = controller.getClassType();
             method = getMethod( methodName, controller.getClassType() );//classType.getMethod( this.methodName, this.getParameterClass() );
-            controller.getReverseMethods()
-                    .put(method.toString(),this);
+            controller.addReserveMethod(method, this);
             setParametersType( Arrays.asList( method.getParameterTypes() ) );
 
             Class<?> returnClassType = method.getReturnType();
