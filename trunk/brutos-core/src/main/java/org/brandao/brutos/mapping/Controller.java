@@ -23,9 +23,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
@@ -55,7 +57,7 @@ public class Controller {
     
     private Map<String, MethodForm> methods;
 
-    private Map<String, MethodForm> reverseMethods;
+    private Map reverseMethods;
     
     private Action action;
 
@@ -82,6 +84,8 @@ public class Controller {
 
     private List defaultInterceptorList;
 
+    private boolean loaded;
+
     public Controller() {
         this.fields = new ArrayList();
         this.mappingBeans = new HashMap();
@@ -91,6 +95,7 @@ public class Controller {
         this.reverseMethods = new HashMap();
         this.throwsSafe = new HashMap();
         this.interceptorProcess = new InterceptorProcess();
+        this.loaded = false;
         this.interceptorProcess.setForm( this );
     }
 
@@ -161,7 +166,7 @@ public class Controller {
 
         //if( method.getMethod() != null )
         //    this.reverseMethods.put(method.getMethodName().toString(), method);
-        
+        this.loaded = false;
         this.methods.put(id, method);
     }
 
@@ -169,18 +174,29 @@ public class Controller {
         return reverseMethods;
     }
 
-    public MethodForm getMethod( Method method ){
-        if( reverseMethods.size() != methods.size() ){
-            Iterator keys = methods.keySet().iterator();
+    void addReserveMethod( Method method, MethodForm action ){
+        
+        List list = (List)reverseMethods.get(method.toString());
 
-            while(keys.hasNext()){
-                String key = (String)keys.next();
-                MethodForm ac = methods.get(key);
-                if(!ac.isLoaded())
-                    ac.load();
-            }
+        if( list == null ){
+            list = new LinkedList();
+            reverseMethods.put(method.toString(), list);
         }
-        return reverseMethods.get(method.toString());
+
+        list.add( action );
+    }
+
+    public MethodForm getMethod( Method method ){
+        
+        List list = (List)reverseMethods.get(method.toString());
+
+        if(list == null || list.size() > 1)
+            throw new
+                BrutosException(
+                    String.format("Ambiguous reference to action: %s",
+                    method.getName()));
+        
+        return (MethodForm) list.get(0);
     }
     
     public void setMethods(Map<String, MethodForm> methods) {
@@ -195,7 +211,10 @@ public class Controller {
         return getInterceptorStack();
     }
 
-    @Deprecated
+    /**
+     * @deprecated 
+     * @return
+     */
     public Object getInstance(){
         try{
             return getClassType().newInstance();
@@ -213,7 +232,20 @@ public class Controller {
     }
 
     public void proccessBrutosAction( InterceptorHandler handler ){
-        getInterceptorProcess().process( handler );
+        if( !this.loaded ){
+            synchronized(this){
+                Iterator keys = methods.keySet().iterator();
+
+                while(keys.hasNext()){
+                    String key = (String)keys.next();
+                    MethodForm ac = methods.get(key);
+                    if(!ac.isLoaded())
+                        ac.load();
+                }
+            }
+            this.loaded = true;
+        }
+        interceptorProcess.process( handler );
     }
     
     public void fieldsToRequest( Object webFrame ) {
