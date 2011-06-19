@@ -11,7 +11,7 @@
             <action id="testAction" view="/viewAction.jsp" dispatcher="redirect"
                 executor="actionWithSupportedException">
                 <throw-safe name="exx" dispatcher="include" view="/exceptionAction.jsp"
-                    target="java.lang.UnsupportedOperationException">
+                    target="java.lang.UnsupportedOperationException"/>
             </action>
     </controller>
 
