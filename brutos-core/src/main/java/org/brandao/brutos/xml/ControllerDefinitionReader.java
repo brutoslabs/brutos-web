@@ -76,7 +76,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
         URL schemaURL = Thread.currentThread()
             .getContextClassLoader()
-                .getResource( XMLBrutosConstants.XML_BRUTOS_CONTEXT_SCHEMA );
+                .getResource( XMLBrutosConstants.XML_BRUTOS_CONTROLLER_SCHEMA );
 
         try{
             documentBuilderFactory.setNamespaceAware(true);
