@@ -66,7 +66,7 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
                 .getResource( XMLBrutosConstants.XML_BRUTOS_CONTEXT_SCHEMA );
 
         try{
-            //documentBuilderFactory.setNamespaceAware(true);
+            documentBuilderFactory.setNamespaceAware(true);
             documentBuilderFactory.setValidating(true);
             documentBuilderFactory.setAttribute(
                     XMLBrutosConstants.JAXP_SCHEMA_LANGUAGE,
@@ -83,7 +83,6 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
             Document xmlDocument =
                 documentBuilder
                     .parse(new InputSource(in));
-            xmlDocument.getDocumentElement().normalize();
             return xmlDocument.getDocumentElement();
         }
         catch (BrutosException ex) {
