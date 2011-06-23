@@ -549,4 +549,8 @@ public class BrutosContext extends AbstractWebApplicationContext
     public ActionResolver getActionResolver() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public void setInvoker(Invoker value) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
