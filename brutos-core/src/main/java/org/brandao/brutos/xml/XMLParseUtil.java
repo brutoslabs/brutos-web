@@ -30,7 +30,7 @@ import org.w3c.dom.NodeList;
 public class XMLParseUtil {
 
     public Element getElement( Element e, String name ){
-        NodeList elements = e.getElementsByTagName( name );
+        NodeList elements = e.getElementsByTagNameNS("*", name);
 
         for(int i=0;i<elements.getLength();i++){
             Element c = (Element) elements.item(i);
@@ -51,7 +51,7 @@ public class XMLParseUtil {
     public NodeList getElements( Element e, String name ){
         CustomNodeList list = new CustomNodeList();
 
-        NodeList es = e.getElementsByTagName(name);
+        NodeList es = e.getElementsByTagNameNS("*", name);
         for( int i=0;i<es.getLength();i++ ){
             Element c = (Element) es.item(i);
             if( c.getParentNode().equals(e) )

@@ -33,9 +33,9 @@ public interface XMLBrutosConstants {
     public static final String XML_BRUTOS_VERSION = "version";
     //public static final String XML_BRUTOS_IMPORTERS = "imports";
     public static final String XML_BRUTOS_IMPORTER = "import";
-    public static final String XML_BRUTOS_CONTEXT_PARAMS = "context-params";
+    public static final String XML_BRUTOS_CONTEXT_PARAMS = "params";
     public static final String XML_BRUTOS_ANNOTATION_CONFIG = "annotation-config";
-    public static final String XML_BRUTOS_CONTEXT_PARAM = "context-param";
+    public static final String XML_BRUTOS_CONTEXT_PARAM = "param";
 
     /**
      * @deprecated
