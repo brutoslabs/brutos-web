@@ -82,6 +82,12 @@ public interface ConfigurableApplicationContext
     public Invoker getInvoker();
 
     /**
+     * Define o responsável por executar as ações.
+     * @param value Responsável por executar as ações.
+     */
+    public void setInvoker(Invoker value);
+
+    /**
      * Define as configura��es da aplica��o.
      * @param config Configura��o.
      */

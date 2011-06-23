@@ -436,6 +436,10 @@ public abstract class AbstractApplicationContext
         return this.invoker;
     }
 
+    public void setInvoker( Invoker value) {
+        this.invoker = value;
+    }
+
     public void setConfiguration(Properties config) {
         this.configuration = config;
     }
