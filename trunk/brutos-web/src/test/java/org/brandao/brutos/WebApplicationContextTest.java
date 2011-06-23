@@ -27,7 +27,6 @@ import org.brandao.brutos.helper.controller.SimpleBean;
 import org.brandao.brutos.helper.controller.TypeTest;
 import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
