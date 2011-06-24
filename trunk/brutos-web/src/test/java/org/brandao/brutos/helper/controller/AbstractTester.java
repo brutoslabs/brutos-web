@@ -24,6 +24,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSessionEvent;
 import junit.framework.TestCase;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.test.MockIOCProvider;
@@ -66,11 +67,12 @@ public abstract class AbstractTester extends TestCase{
             MockHttpSession session = new MockHttpSession();
             request.setSession(session);
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
-
+            HttpSessionEvent hse = new HttpSessionEvent(session);
             try{
                 request.setRequestURI("");
                 request.setContextPath("");
                 listener.requestInitialized(sre);
+                listener.sessionCreated(hse);
                 RequestInfo requestInfo =
                         RequestInfo.getCurrentRequestInfo();
                 requestInfo.setResponse(response);
@@ -81,6 +83,7 @@ public abstract class AbstractTester extends TestCase{
             }
             finally{
                 listener.requestDestroyed(sre);
+                listener.sessionDestroyed(hse);
             }
         }
         finally{

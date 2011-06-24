@@ -114,6 +114,10 @@ public class WebApplicationContextWrapper
         return applicationContext.getInvoker();
     }
 
+    public void setInvoker(Invoker value){
+        applicationContext.setInvoker(value);
+    }
+
     public void setConfiguration( Properties config ){
         applicationContext.setConfiguration(config);
     }
