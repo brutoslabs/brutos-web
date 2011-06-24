@@ -58,9 +58,9 @@ public abstract class AbstractWebApplicationContext
 
     public void configure( Properties config ){
         overrideConfig(config);
+        super.configure(config);
         initUploadListener(config);
         initRequestParser(config);
-        super.configure(config);
     }
 
     private void initUploadListener(Properties config){
@@ -109,8 +109,7 @@ public abstract class AbstractWebApplicationContext
         }
     }
 
-    private void overrideConfig(Properties config){
-
+    protected void loadScopes(){
         getScopes().register( ScopeType.APPLICATION.toString(),
                 new ApplicationScope( getContext() ) );
         getScopes().register( ScopeType.FLASH.toString(),
@@ -123,7 +122,8 @@ public abstract class AbstractWebApplicationContext
                 new SessionScope() );
         getScopes().register( ScopeType.PARAM.toString(),
                 new ParamScope() );
-
+    }
+    private void overrideConfig(Properties config){
 
         String controllerResolverName = config
                 .getProperty( "org.brandao.brutos.controller.class", 

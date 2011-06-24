@@ -31,6 +31,7 @@ import org.brandao.brutos.helper.controller.AbstractTester;
 import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.test.MockInvoker;
+import org.brandao.brutos.web.http.StaticBrutosRequest;
 
 /**
  *
@@ -157,7 +158,7 @@ public class DispatcherServletTest extends AbstractTester implements Test{
 
                                 TestCase.assertNotNull(ri);
                                 TestCase.assertEquals(response, ri.getResponse());
-                                TestCase.assertEquals(request, ri.getRequest());
+                                TestCase.assertTrue(ri.getRequest() instanceof StaticBrutosRequest);
                                 return true;
                             }
                         };
