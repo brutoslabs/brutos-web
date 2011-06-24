@@ -125,7 +125,9 @@ public abstract class ViewProvider {
         Scope requestScope    =
             scopes.get(ScopeType.REQUEST.toString());
         MethodForm method     =
-            stackRequestElement.getAction().getMethodForm();
+            stackRequestElement.getAction() == null?
+                null :
+                stackRequestElement.getAction().getMethodForm();
 
         ThrowableSafeData throwableSafeData =
                 stackRequestElement.getThrowableSafeData();
