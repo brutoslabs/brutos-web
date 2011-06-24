@@ -113,10 +113,14 @@ public class UseBeanData {
             if(staticValue!= null)
                 value = type.getValue( staticValue );
             else
-            if( type instanceof CollectionType || type instanceof ArrayType )
-                value = type.getValue( getScope().getCollection(nome) );
-            else
-                value = type.getValue( getScope().get(nome) );
+            if( type instanceof CollectionType || type instanceof ArrayType ){
+                value = nome == null? null : getScope().getCollection(nome);
+                value = type.getValue( value );
+            }
+            else{
+                value = nome == null? null : getScope().get(nome);
+                value = type.getValue( value );
+            }
         }
 
         if( validate != null )
