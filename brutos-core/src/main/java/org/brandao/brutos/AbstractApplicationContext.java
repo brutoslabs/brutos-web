@@ -162,7 +162,7 @@ public abstract class AbstractApplicationContext
         this.loadWebFrameManager(webFrameManager);
     }
 
-    private void loadScopes(){
+    protected void loadScopes(){
         getScopes()
             .register(
                 ScopeType.APPLICATION.toString(),
