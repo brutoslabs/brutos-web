@@ -20,7 +20,6 @@ package org.brandao.brutos.web.http;
 import javax.servlet.ServletRequest;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.web.ContextLoader;
-import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
 
 /**
@@ -39,7 +38,8 @@ public class StaticBrutosRequest extends BrutosRequestWrapper{
                     createBrutosRequest(
                         ContextLoader.getCurrentWebApplicationContext(),
                         request );
-            
+
+            brutosRequest.parseRequest();
             return brutosRequest;
         }
         catch( Exception e ){

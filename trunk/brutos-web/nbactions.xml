@@ -8,6 +8,7 @@
             </goals>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
+                <createChecksum>true</createChecksum>
             </properties>
         </action>
         <action>
@@ -17,6 +18,7 @@
             </goals>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
+                <createChecksum>true</createChecksum>
             </properties>
         </action>
     </actions>
