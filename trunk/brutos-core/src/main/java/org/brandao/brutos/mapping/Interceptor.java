@@ -45,7 +45,7 @@ public class Interceptor {
 
     public Object getInstance(IOCProvider iocProvider){
         Object instance = iocProvider.getBean(getType());
-        return instance == null? iocProvider.getBean(name) : instance;
+        return instance == null? iocProvider.getBean(getName()) : instance;
     }
 
     public String getName() {
