@@ -32,11 +32,13 @@ public abstract class AbstractXMLWebApplicationContext
         extends AbstractWebApplicationContext {
 
     public void configure( Properties config ){
+        super.setConfiguration(config);
+        loadContextDefinition();
         super.configure(config);
-        load();
+        loadControllersDefinition();
     }
 
-    protected void load(){
+    protected void loadContextDefinition(){
         ContextDefinitionReader ccdr =
             new ContextDefinitionReader(
                 this,
@@ -44,7 +46,9 @@ public abstract class AbstractXMLWebApplicationContext
                 this);
 
         loadDefinitions(ccdr);
+    }
 
+    protected void loadControllersDefinition(){
         ControllerDefinitionReader cdr =
             new ControllerDefinitionReader(
                 this,
