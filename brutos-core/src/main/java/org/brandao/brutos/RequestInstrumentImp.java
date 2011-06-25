@@ -29,14 +29,14 @@ import org.brandao.brutos.view.ViewProvider;
 public class RequestInstrumentImp
         implements RequestInstrument,StackRequest{
 
-    private AbstractApplicationContext context;
+    private ApplicationContext context;
     private boolean hasViewProcessed;
     private IOCProvider iocProvider;
     private ViewProvider viewProvider;
     private List stackRequest;
 
     public RequestInstrumentImp(
-            AbstractApplicationContext context,
+            ApplicationContext context,
             IOCProvider iocProvider,
             ViewProvider viewProvider){
 
@@ -71,7 +71,7 @@ public class RequestInstrumentImp
             stackRequest.remove( stackRequest.size() -1 );
     }
 
-    public AbstractApplicationContext getContext() {
+    public ApplicationContext getContext() {
         return context;
     }
 

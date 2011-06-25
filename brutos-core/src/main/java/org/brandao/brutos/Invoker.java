@@ -47,7 +47,7 @@ public class Invoker {
     protected IOCProvider iocProvider;
     protected ControllerManager controllerManager;
     protected ActionResolver actionResolver;
-    protected AbstractApplicationContext applicationContext;
+    protected ApplicationContext applicationContext;
     protected ViewProvider viewProvider;
     public Invoker() {
     }
@@ -133,15 +133,29 @@ public class Invoker {
         return invoke(element);
     }
 
-    public boolean invoke( StackRequestElement element ){
-
+    public StackRequest getStackRequest(){
         Scopes scopes = applicationContext.getScopes();
         Scope requestScope = scopes.get(ScopeType.REQUEST);
-        
+
         RequestInstrument requestInstrument =
                 getRequestInstrument(requestScope);
 
-        StackRequest stackRequest = (StackRequest)requestInstrument;
+        return (StackRequest)requestInstrument;
+    }
+
+    public StackRequestElement getStackRequestElement(){
+        return getStackRequest().getCurrent();
+    }
+
+    public boolean invoke( StackRequestElement element ){
+
+        //Scopes scopes = applicationContext.getScopes();
+        //Scope requestScope = scopes.get(ScopeType.REQUEST);
+        
+        //RequestInstrument requestInstrument =
+        //        getRequestInstrument(requestScope);
+
+        StackRequest stackRequest = getStackRequest();//(StackRequest)requestInstrument;
         
         long time = System.currentTimeMillis();
         boolean createdThreadScope = ThreadScope.create();
@@ -189,13 +203,13 @@ public class Invoker {
         return requestInstrument;
     }
 
-    protected StackRequestElement createStackRequestElement(){
+    StackRequestElement createStackRequestElement(){
         return new StackRequestElementImp();
     }
 
     
-    public static AbstractApplicationContext getCurrentApplicationContext(){
-        return (AbstractApplicationContext) currentApp.get();
+    public static ConfigurableApplicationContext getCurrentApplicationContext(){
+        return (ConfigurableApplicationContext)currentApp.get();
     }
     
 }

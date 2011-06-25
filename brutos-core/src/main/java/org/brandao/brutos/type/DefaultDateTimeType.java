@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.brandao.brutos.AbstractApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
@@ -80,7 +81,7 @@ public class DefaultDateTimeType implements DateTimeType{
     }
 
     public void setValue(Object value) throws IOException {
-        AbstractApplicationContext app = Invoker.getCurrentApplicationContext();
+        ConfigurableApplicationContext app = Invoker.getCurrentApplicationContext();
         MvcResponse response = app.getMvcResponse();
         response.process(value);
     }
