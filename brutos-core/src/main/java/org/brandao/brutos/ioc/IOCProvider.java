@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.old.programatic.Bean;
 
 /**
@@ -41,6 +43,11 @@ public abstract class IOCProvider {
     }
     
     public static IOCProvider getProvider( Properties properties ){
+
+        Logger logger = LoggerProvider
+                .getCurrentLoggerProvider()
+                    .getLogger(IOCProvider.class.getName());
+        
         String iocProviderName = 
                 properties
                     .getProperty(
@@ -52,6 +59,7 @@ public abstract class IOCProvider {
             return null;
 
         try{
+            logger.info("IoC provider: " + iocProviderName );
             Class<?> iocProvider = Class.forName( iocProviderName, true,
                     Thread.currentThread().getContextClassLoader() );
             ioc = (IOCProvider)iocProvider.newInstance();
