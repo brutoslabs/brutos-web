@@ -23,6 +23,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
@@ -118,7 +119,7 @@ public class DefaultArrayType implements ArrayType{
     }
 
     public void setValue(Object value) throws IOException {
-        AbstractApplicationContext app = Invoker.getCurrentApplicationContext();
+        ConfigurableApplicationContext app = Invoker.getCurrentApplicationContext();
         MvcResponse response = app.getMvcResponse();
         response.process(value);
     }

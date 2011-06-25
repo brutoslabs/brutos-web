@@ -23,6 +23,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Set;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.web.http.ParameterList;
 
@@ -113,7 +114,7 @@ public class SetType implements CollectionType{
         if( this.listType != null )
             return this.listType;
 
-        AbstractApplicationContext context = Invoker
+        ConfigurableApplicationContext context = Invoker
                 .getCurrentApplicationContext();
 
         String className = context

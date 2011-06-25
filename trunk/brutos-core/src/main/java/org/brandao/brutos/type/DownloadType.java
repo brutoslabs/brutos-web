@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import org.brandao.brutos.AbstractApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.Download;
@@ -74,7 +75,7 @@ public class DownloadType implements Type{
 
     public void setValue(Object value) throws IOException {
         if( value instanceof Download ){
-            AbstractApplicationContext app = Invoker.getCurrentApplicationContext();
+            ConfigurableApplicationContext app = Invoker.getCurrentApplicationContext();
             MvcResponse response = app.getMvcResponse();
 
             Download download = (Download)value;

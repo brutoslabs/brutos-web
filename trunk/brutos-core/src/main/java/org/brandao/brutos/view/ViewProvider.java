@@ -184,7 +184,7 @@ public abstract class ViewProvider {
                     stackRequestElement.getController().getDispatcherType());
         }
         else
-        if( method.getReturnType() != null ){
+        if( method != null && method.getReturnType() != null ){
             this.showView(requestInstrument, stackRequestElement, method);
             //method.getReturnType().setValue(stackRequestElement.getResultAction());
             return;

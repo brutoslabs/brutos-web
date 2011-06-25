@@ -21,7 +21,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import org.brandao.brutos.AbstractApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.BrutosFile;
@@ -85,7 +85,7 @@ public class BrutosFileType implements Type{
 
     public void setValue(Object value) throws IOException {
         if( value instanceof BrutosFile ){
-            AbstractApplicationContext app = Invoker.getCurrentApplicationContext();
+            ConfigurableApplicationContext app = Invoker.getCurrentApplicationContext();
             MvcResponse response = app.getMvcResponse();
 
             BrutosFile f = (BrutosFile)value;
