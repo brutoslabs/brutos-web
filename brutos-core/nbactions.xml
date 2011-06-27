@@ -6,6 +6,12 @@
             <goals>
                 <goal>site:site</goal>
             </goals>
+            <properties>
+                
+                <outputEncoding>UTF-8</outputEncoding>
+                
+                <file.encoding>UTF-8</file.encoding>
+            </properties>
         </action>
         <action>
             <actionName>build</actionName>
