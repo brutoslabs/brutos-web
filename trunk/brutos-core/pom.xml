@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.brandao</groupId>
-  <artifactId>brutos-core</artifactId>
-  <packaging>jar</packaging>
-  <version>2.0-SNAPSHOT</version>
-  <name>brutos-core</name>
-  <url>http://maven.apache.org</url>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.brandao</groupId>
+    <artifactId>brutos-core</artifactId>
+    <packaging>jar</packaging>
+    <version>2.0-SNAPSHOT</version>
+    <name>brutos-core</name>
+    <url>http://maven.apache.org</url>
     <build>
         <plugins>
             <plugin>
@@ -24,7 +25,7 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>2.0-beta-6</version>
                 <configuration>
-                  <locales>en,pt-BR</locales>
+                    <locales>en,pt-BR</locales>
                 </configuration>
             </plugin>
             <plugin>
@@ -39,25 +40,25 @@
     </build>
     <dependencies>
         <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>3.8.1</version>
-          <scope>test</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-core</artifactId>
-          <version>3.0.4.RELEASE</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>3.0.4.RELEASE</version>
         </dependency>
         <dependency>
-          <groupId>org.picocontainer</groupId>
-          <artifactId>picocontainer</artifactId>
-          <version>2.8.3</version>
+            <groupId>org.picocontainer</groupId>
+            <artifactId>picocontainer</artifactId>
+            <version>2.8.3</version>
         </dependency>
         <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-web</artifactId>
-          <version>3.0.4.RELEASE</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>3.0.4.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.brandao</groupId>
