@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1252"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
     Document   : site.xml
@@ -32,7 +32,6 @@
 
     <body>
         <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
             <script type="text/javascript">
                var _gaq = _gaq || [];
               _gaq.push(['_setAccount', 'UA-16487808-3']);
@@ -48,16 +47,16 @@
         </head>
 
         <menu name="Geral">
-          <item name="Introdução" href="index.html"/>
-          <item name="Dependências" href="dependencies.html"/>
-          <item name="Licença" href="license.html"/>
+          <item name="IntroduÃ§Ã£o" href="index.html"/>
+          <item name="DependÃªncias" href="dependencies.html"/>
+          <item name="LicenÃ§a" href="license.html"/>
           <item name="Quick Start" href="quick.html"/>
           <item name="Download" href="http://sourceforge.net/projects/brutos/files/"/>
           <item name="Source Code" href="http://brutos.svn.sourceforge.net/viewvc/brutos/"/>
           <item name="ChangLog" href="changelog.html"/>
           <item name="Maven" href="maven.html"/>
         </menu>
-        <menu name="Documentação">
+        <menu name="DocumentaÃ§Ã£o">
           <item name="Javadoc" href="javadoc/"/>
           <item name="Controller" href="controller.html"/>
           <item name="File Upload" href="fileupload.html"/>
