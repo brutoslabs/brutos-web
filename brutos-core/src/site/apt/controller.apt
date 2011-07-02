@@ -5,8 +5,8 @@ O controlador
  Ele também é responsável por converter, validar e filtrar a entrada de dados.
  No Brutos MVC o controlador já está implementado, podendo ser usado também
  como front controller. Nos dois casos, somente é necessário fazer respectivamente
- o mapeamento do modelo ou controlador.
- Esse mapeamento nada mais é que, informar ao controlador como os dados de
+ a configuração do modelo ou controlador.
+ Esse configuração nada mais é que, informar ao Brutos MVC como os dados de
  entrada serão disponibilizados no modelo (atributos ou parâmetros de um método)
  e como seu resultado será exibido (visão).
  Todo o processamento de uma aplicação usando o Brutos MVC é baseada no
@@ -15,7 +15,7 @@ O controlador
 [./images/flow.jpg]
 
  * Obter modelo: O controlador recebe a requisição, examina-o e extrai a
- ID do modelo, que é determinado pelo URI. O Brutos MVC usa essa ID para
+ ID do modelo, que pode ser determinado por um URI. O Brutos MVC usa essa ID para
  localizar o modelo atual. Se o modelo não for encontrado, a requisição é
  finalizada.
 
@@ -393,3 +393,38 @@ Configurando uma aplicação
    esteja errada.
 
  * não ocorre nenhuma exceção e o controlador redireciona para a visão index.jbrs.
+
+* Incluindo parâmetros no caminho de uma URI
+
+ Em alguns casos é mais elegante que os parâmetros de uma requisição web faça
+ parte do caminho da URI. Por exemplo, tempo uma URI no formato /item.jbrs?id=100.
+ Não seria melhor se fosse assim /item/100-title_of_my_item.jbrs.
+
+ Com o Bruto MVC é possível e simples. Abaixo segue um trecho XML exemplificando
+ como seria a configuração de um controlador para a URI citada anteriormente.
+
+-----
+<controller class="br.myproject.MyController">
+  <action id="/item/{id}-{title}.jbrs">
+    <parameter bean="id" type="int"/>
+    <parameter bean="title" type="java.lang.String"/>
+  </action>
+</controller>
+-----
+
+ Também é possível impedir que certos valores sejam aceitos. Se no exemplo acima
+ quisermos que id aceite somente digitos 0-9, basta fazer como segue:
+
+-----
+<controller class="br.myproject.MyController">
+  <action id="/item/{id:\\d+}-{title}.jbrs">
+    <parameter bean="id" type="int"/>
+    <parameter bean="title" type="java.lang.String"/>
+  </action>
+</controller>
+-----
+
+ Note que no exemplo acima, apenas foi necessário incluir ":\\d+", onde
+ ":" é o delimitador entre a indentificação do parâmetro e a expressão regular,
+ que no exemplo acima é "\\d+".
+
