@@ -37,17 +37,17 @@ import org.brandao.brutos.scope.Scope;
  */
 public class WebControllerResolver implements ControllerResolver{
 
-    private static Map<String,URIMap> uris = new HashMap<String, URIMap>();;
+    private static Map<String,URIMapping> uris = new HashMap<String, URIMapping>();
 
     public WebControllerResolver() {
     }
 
-    public static URIMap getURIMapping( String uri ){
+    public static URIMapping getURIMapping( String uri ){
         try{
             if( uris.containsKey( uri ) )
                 return uris.get( uri );
             else{
-                URIMap map = new URIMap( uri );
+                URIMapping map = new URIMapping( uri );
                 uris.put( uri , map);
                 return map;
             }
@@ -85,7 +85,7 @@ public class WebControllerResolver implements ControllerResolver{
 
             for( String u: uriList ){
                 
-                URIMap uriMap = getURIMapping( u );
+                URIMapping uriMap = getURIMapping( u );
                 if( uriMap.matches(uri) ){
 
                     Map<String,String> params = uriMap.getParameters(uri);
@@ -113,168 +113,4 @@ public class WebControllerResolver implements ControllerResolver{
         return null;
     }
 
-
-    public static class URIMap{
-
-        String uriPattern;
-
-        List<Parameter> parameters;
-
-        public URIMap( String uri ) throws MalformedURLException{
-            createMap( uri );
-            this.uriPattern = getURIPattern( uri );
-        }
-
-        private void createMap( String uri ) throws MalformedURLException{
-            //fragmentos da uri
-            List<String> frags = new ArrayList<String>();
-            // identificados detectados
-            List<String> ids   = new ArrayList<String>();
-
-            //inicio de um identificador
-            int index = uri.indexOf("{");
-            //identificador
-            String id;
-
-            //se index for igual a -1 entao nao existe identificador. Sua definicao é null
-            //se index for diferente de null entao existe um identificador. E extraido o
-            //fragmento que inicia em 0 e termina em index
-            if( index == -1 )
-                frags.add( null );
-            else
-                frags.add( uri.substring( 0, index ) );
-
-            //enquanto index for diferente de -1, a procura por identificadores continua
-            while( index != -1 ){
-                //fim do identificador
-                int index2 = uri.indexOf("}", index );
-
-                id = index+1 < index2? uri.substring( index+1, index2 ) : null;
-
-
-                if( id == null )
-                    throw new MalformedURLException();
-
-                //adiciona o identificador
-                ids.add(id);
-
-                //procura o proximo identificador para obter o proximo fragmento
-                int nextIndex = uri.indexOf( "{", index2 );
-
-                if( nextIndex == -1 ){
-                    nextIndex = uri.length();
-                }
-
-                //fragmento atual
-                String frag = index2+1 < nextIndex? uri.substring(index2+1, nextIndex) : null;
-
-                //adiciona o fragmento
-                frags.add( frag );
-
-                index = uri.indexOf("{", index + 1 );
-            }
-
-            //se a quantidade de identificadores for impar, entao o ultimo identificador
-            // foi encontrado no fim da uri
-            if( frags.size() % 2 == 1 )
-                frags.add(null);
-
-            parameters = new ArrayList<Parameter>();
-
-            for( int i=0;i<ids.size();i++ ){
-                parameters.add(
-                        new Parameter(ids.get(i), frags.get(i), frags.get(i+1) ) );
-            }
-        }
-
-        private String getURIPattern( String uri ){
-
-            if( uri == null )
-                throw new NullPointerException();
-
-            String regex = "";
-
-            int index = uri.indexOf("{");
-            int index2 = -1;
-            int old = 0;
-            while( index != -1 ){
-                index2 = uri.indexOf("}", index );
-
-                String id = index+1 < index2? uri.substring( index+1, index2 ) : null;
-
-                if( id == null )
-                    return "";
-
-                String words = uri.substring( old, index );
-                regex += words+"\\w{1,}";
-                old = index2+1;
-                index = uri.indexOf("{", index + 1 );
-            }
-
-            if( index2 == -1 )
-                regex = uri;
-            else
-                regex += uri.substring( index2+1, uri.length() );
-
-            return regex;
-        }
-
-        public Map<String,String> getParameters( String uri ){
-            int start = 0;
-            int end   = 0;
-            Map<String,String> params = new HashMap<String,String>();
-
-            for( Parameter p: parameters ){
-                start = p.getStart() == null? 0 : uri.indexOf( p.getStart(), start ) + p.getStart().length();
-                end   = p.getEnd() == null? uri.length() : uri.indexOf( p.getEnd(), start + 1 );
-
-                params.put(p.getId(), uri.substring(start, end) );
-            }
-
-            return params;
-        }
-
-        public boolean matches( String uri ){
-            return uri.matches(this.uriPattern);
-        }
-    }
-
-    public static class Parameter{
-
-        private String start;
-        private String end;
-        private String id;
-
-        public Parameter( String id, String start, String end ){
-            this.id = id;
-            this.start = start;
-            this.end = end;
-        }
-
-        public String getStart() {
-            return start;
-        }
-
-        public void setStart(String start) {
-            this.start = start;
-        }
-
-        public String getEnd() {
-            return end;
-        }
-
-        public void setEnd(String end) {
-            this.end = end;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-    }
 }
-

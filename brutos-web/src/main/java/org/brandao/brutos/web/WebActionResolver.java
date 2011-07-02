@@ -24,7 +24,6 @@ import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.web.WebControllerResolver.URIMap;
 
 /**
  * Implementa��o padr�o do ActionResolver.
@@ -53,7 +52,7 @@ public class WebActionResolver implements ActionResolver{
             Scope request = scopes.get( ScopeType.PARAM );
             for( String u: controller.getMethods().keySet() ){
 
-                URIMap uriMap = WebControllerResolver.getURIMapping( u );
+                URIMapping uriMap = WebControllerResolver.getURIMapping( u );
                 if( uriMap.matches(handler.requestId()) ){
 
                     Map<String,String> params =
