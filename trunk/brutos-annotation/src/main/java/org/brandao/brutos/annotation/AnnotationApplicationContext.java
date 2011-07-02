@@ -20,7 +20,7 @@ package org.brandao.brutos.annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
@@ -29,7 +29,7 @@ import org.brandao.brutos.DispatcherType;
  *
  * @author Afonso Brandao
  */
-public class AnnotationApplicationContext extends ApplicationContext{
+public class AnnotationApplicationContext extends AbstractApplicationContext{
     
     private List<Class> types;
     private List<Class> controllers;
@@ -41,7 +41,7 @@ public class AnnotationApplicationContext extends ApplicationContext{
     }
 
     public AnnotationApplicationContext(Class[] clazz,
-            ApplicationContext parent) {
+            AbstractApplicationContext parent) {
         super(parent);
         this.allClazz = clazz;
     }
