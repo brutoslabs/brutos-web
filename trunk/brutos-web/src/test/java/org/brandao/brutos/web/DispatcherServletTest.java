@@ -20,7 +20,6 @@ package org.brandao.brutos.web;
 
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockServletConfig;
-import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import junit.framework.Test;
