@@ -37,7 +37,7 @@ O controlador
 
  * Atualizar valores do modelo: Esta é a etapa onde são atualizados os valores
  no lado do servidor, ou seja, a atualização das propriedades do modelo. Somente
- as propriedades mapeadas serão atualizadas. Se na etapa anterior, algum
+ as propriedades configuradas serão atualizadas. Se na etapa anterior, algum
  valor foi marcado como inválido, o Brutos MVC automaticamente irá para
  a etapa final, processar visão, ignorando a etapa invocar aplicação.
 
@@ -49,320 +49,347 @@ O controlador
 
  * Processar visão: Nesta etapa será exibida a tela com o resultado obtido do modelo.
 
-* O web-frame
+Configurando uma aplicação
 
- Para o mapeamento do modelo ou controlador � usada a tag \<web-frame/\>. Com essa
- tag definimos a ID (URI), a p�gina, a classe e entre outros recursos. Somente
- � permitido o seu uso no elemento \<web-frames/\>. O elemento \<web-frame/\> possui
+ Se ainda não sabe como cria uma aplicação web usando Brutos MVC, basta acessar
+ {{{quick.htm}Quick Start}}.
+
+* Controller
+
+ Para criar um controlador é usada a tag \<controller/\>. Com essa
+ tag definimos a identificação, view, a classe e entre outras recursos. Somente
+ é permitido o seu uso no elemento \<controllers/\>. O elemento \<controller/\> possui
  os seguintes atributos:
 
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| Atributo              | Explica��o                                                                                                            |
+| Atributo              | Descrição                                                                                                             |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| nome                  | Nome que identifica o mapeamento. Usado na configura��o do container IOC.                                             |
+| nome                  | Nome que identifica o bean. Usado na configuração do container IOC.                                                   |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| uri                   | Identifica��o do modelo.                                                                                              |
+| id                    | Identificação do controlador.                                                                                         |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| page                  | Identifica��o da vis�o.                                                                                               |
+| view                  | Identificação da visão.                                                                                               |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| redirect              | Se verdadeiro, ap�s o processamento do modelo � feito um redirecionamento para o endere�o informado no atributo page. |
+| dispatcher            | Define como o fluxo será direcionado para uma visão ou outro controlador, após a execução de uma ação.                |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
 | class                 | Nome completo da classe.                                                                                              |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| scope                 | Escopo do modelo.                                                                                                     |
+| action-id             | Nome do parâmetro que contém a identificação da ação.                                                                 |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| method-parameter-name | Nome do par�metro que cont�m a identifica��o da a��o.                                                                 |
-*-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| default-method-name   | A��o executado por padr�o.                                                                                            |
+| default-action        | Ação executado por padrão.                                                                                            |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
 
- Veja abaixo um trecho de XML da configura��o que deve ser inclu�do no
- brutos-config.xml.
+ Veja abaixo um trecho de XML da configuração que deve ser incluída.
 
 ------
-<?xml version="1.0" encoding="UTF-8"?>
-
-<brutos-configuration  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-   xmlns='http://brutos.sourceforge.net/targetNS'
-   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS
-   http://brutos.sourceforge.net/brutos_1_0.xsd' >
-
-   <web-frames>
-       <web-frame uri="/index.jbrs" page="/WEB-INF/jsp/index.jsf"
-           class="br.model.Index"/>
-   </web-frames>
-
-</brutos-configuration>
+   <controller id="/index.jbrs" view="/WEB-INF/jsp/index.jsf"
+       class="br.model.Index"/>
 ------
 
- No trecho acima o modelo n�o possui m�todo mapeado. Quando o uri /index.jbrs
- � requisitado o construtor da classe br.model.Index � invocado e � exibida
- a p�gina /WEB-INF/jsf/index.jsf.
+ No trecho acima o conrtolador não possui nenhuma ação. Quando o controlador
+ for requisitado o construtor da classe br.model.Index será invocado e será exibida
+ a view /WEB-INF/jsf/index.jsf.
 
- No pr�ximo exemplo o m�todo defMethod() sempre ser� executado.
+ No próximo exemplo a ação denominada "default" sempre será executada, caso não
+ seja requisitada a execução de nenhum ação.
 
 ------
-<?xml version="1.0" encoding="UTF-8"?>
-
-<brutos-configuration  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-   xmlns='http://brutos.sourceforge.net/targetNS'
-   xsi:schemaLocation='http://brutos.sourceforge.net/targetNS
-   http://brutos.sourceforge.net/brutos_1_0.xsd' >
-
-   <web-frames>
-       <web-frame uri="/index.jbrs" page="/WEB-INF/jsp/index.jsf"
-           class="br.model.Index" default-method-name="default">
-           <method name="default" method-name="defMethod"/>
-       </web-frame>
-   </web-frames>
-
-</brutos-configuration>
+   <controller id="/index.jbrs" view="/WEB-INF/jsp/index.jsf"
+       class="br.model.Index" default-action="default">
+       <action id="default" executor="defMethod"/>
+   </controller>
 ------
 
-* Mapeamento de propriedades
+* Configurando as propriedades de um controlador
 
- Uma propriedade � um atributo de um objeto cujo seu acesso � feito por m�todos.
- O m�todo para atualizar o atributo deve ter a seguinte nomenclatura:
- set\<atributo\>, onde: \<atributo\> � o nome do atributo com a primeira letra
- mai�scula. O m�todo para obter o valor do atributo deve ter a seguinte
- nomenclatura: get<atributo> ou is<atributo>, no caso do tipo booleano.
-
- Os valores das propriedades podem ser obtidos tanto da requisi��o, sess�o ou
- do contexto. Podendo ser do tipo primitivo ou n�o. No caso de um objeto,
- � poss�vel usar um mapeamento predefinido. Al�m de ser poss�vel o mapeamento
+ Uma propriedade pode ser de tipo primitivo ou um objeto. No caso de um objeto,
+ pode ser criado um mapeamento para defir como os valores da requisição serão 
+ injetadas nas propriedades do objeto. Além de ser possível a configuração
  de propriedades do tipo Enum e Date.
 
- O mapeamento de um atributo � feito com a tag \<property-webframe/\>. Somente
- � permitido o seu uso no elemento \<web-frame/\>. O elemento
- \<property-webframe/\> possui os seguintes atributos:
+ Também é possível fazer a validação de uma propriedade.
+
+ A configuração de um atributo é feita com a tag \<property/\>. Somente
+ é permitido o seu uso nos elementoa \<controller/\> e \<bean/\>. O elemento
+ \<property/\> possui os seguintes atributos:
 
 *------------------+--------------------------------------------------------------------+
-|Atributo          | Explica��o                                                         |
+|Atributo          | Descrição                                                          |
 *------------------+--------------------------------------------------------------------+
-|Nome              | Identifica��o do valor.                                            |
+|bean              | Identificação do valor.                                            |
 *------------------+--------------------------------------------------------------------+
-|property-name     | Nome da propriedade.                                               |
+|name              | Nome da propriedade.                                               |
+*------------------+--------------------------------------------------------------------+
+|value             | Valor da propriedade.                                              |
 *------------------+--------------------------------------------------------------------+
 |enum-property     | Usado no mapeamento de enum. Permite dois valores:                 |
-|                  | ordinal: o enum � representado por um inteiro;                     |
-|                  | string: o enum � representado por uma string.                      |
+|                  | ordinal: o enum é representado por um inteiro;                     |
+|                  | string: o enum é representado por uma string.                      |
 *------------------+--------------------------------------------------------------------+
-|temporal-property | Usado no mapeamento de datas. � o formato com que a data est�      |
+|temporal-property | Usado no mapeamento de datas. É o formato com que a data está      |
 |                  | representada.                                                      |
-|                  | O formato � descrito na classe java.text.SimpleDateFormat.         |
+|                  | O formato é descrito na classe java.text.SimpleDateFormat.         |
 *------------------+--------------------------------------------------------------------+
-|mapping-name      | Identifica��o de um mapeamento predefinido.                        |
+|mapping           | Se verdadeiro, o valor da propriedade é obtido a partir de um      |
+|                  | mapeamento pré-definido                                            |
 *------------------+--------------------------------------------------------------------+
-|scope             | Determina o escopo de origem do valor.                             |
+|scope             | Determina o escopo do valor.                                       |
 *------------------+--------------------------------------------------------------------+
-|factory           | Determina a classe respons�vel por processar o valor recebido.     |
+|factory           | Determina a classe responsável por processar o valor recebido.     |
 |                  | A classe deve implementar a interface org.brandao.brutos.type.Type.|
 *------------------+--------------------------------------------------------------------+
 
- No exemplo a seguir � feito o mapeamento de duas propriedades.
+ No exemplo a seguir é feita a configuração de duas propriedades.
 
 ------
-<web-frame uri="/index.jbrs" page="/WEB-INF/jsp/index.jsf"
+<controller id="/index.jbrs" view="/WEB-INF/jsp/index.jsf"
   class="br.model.Index">
-  <property-webframe name=�cli� property-name=�client� scope=�session�/>
-  <property-webframe name=�invoke� property-name=�actionName�/>
-</web-frame>
+  <property bean="cli" name="client" scope="session"/>
+  <property bean="invoke" name="actionName"/>
+</controller>
 ------
 
- No exemplo acima, o controlador recebe a requisi��o, obt�m o valor com a
- identifica��o �invoke� da requisi��o e o valor com a identifica��o �cli� da
- sess�o e envia ao objeto por meio dos seus respectivos m�todos. O diagrama
+ No exemplo acima, o controlador recebe a requisição, obtém o valor com a
+ identificação "invoke" da requisição e o valor com a identificação "cli" da
+ sessão e envia ao objeto por meio dos seus respectivos métodos. O diagrama
  abaixo ilustra o exemplo acima.
 
 [images/scopes.jpg]
 
-* Mapeamento de m�todos
+ Como citado anteriormente, é possível construir uma propriedade através de um
+ mapeamento.
 
- Uma a��o � representada por um m�todo. Esse m�todo pode ter ou n�o par�metros.
- Os par�metros podem ser obtidos tanto da requisi��o, sess�o ou do contexto.
- Podendo ser do tipo primitivo ou n�o. No caso de um objeto, � poss�vel usar
- um mapeamento predefinido. Al�m de ser poss�vel o mapeamento de propriedades
- do tipo Enum e Date.
+ No exemplo abaixo um controlador possui uma propriedade mapeada.
+ Essa propriedade é do tipo enum, sendo representada por uma string.
 
- Se o m�todo retornar algum valor, este ser� processado e inclu�do na requisi��o,
- para posteriormente ser usada na vis�o. As exce��es lan�adas dentro do m�todo
- podem alterar o fluxo l�gico da aplica��o.
+------
+<controller ...>
+   <property name="myEnum">
+     <bean class="br.myproject.MyEnum" method-factory="valueOf">
+       <constructor-arg>
+         <ref bean="enum_value" scope="param"/>
+       </constructor-arg>
+     </bean>
+   </property>
+</controller>
+------
 
- O mapeamento de um m�todo � feito com a tag \<method/\>. Somente � permitido
- o seu uso no elemento <web-frame/>. O elemento <method/> possui os seguintes
+* Configurando uma ação
+
+ Uma ação é representada por um método. Esse método pode ter ou não parãmetros.
+ Os parâmetros podem ser de tipo primitivo ou não. No caso de um objeto,
+ pode ser criado um mapeamento para defir como os valores da requisição serão
+ injetadas nas propriedades do objeto. Além de ser possível a configuração
+ de propriedades do tipo Enum e Date.
+
+ Também é possível fazer a validação dos parâmetros da ação.
+
+ Se o método retornar algum valor, este seré processado e incluído na requisição,
+ para posteriormente ser usada na visão. As exceções lançadas dentro do método
+ podem alterar o fluxo lógico da aplicação.
+
+ A configuração de uma ação é feita usando a tag \<action/\>. Somente é permitido
+ o seu uso no elemento \<controller/\>. O elemento \<action/\> possui os seguintes
  atributos:
 
 *------------+------------------------------------------------------------------+
-| Atributo   | Explica��o                                                       |
+| Atributo   | Descrição                                                        |
 *------------+------------------------------------------------------------------+
-|name        | Identifica��o da a��o.                                           |
+|id          | Identificação da ação.                                           |
 *------------+------------------------------------------------------------------+
-|method-name | Nome do m�todo.                                                  |
+|executor    | Nome do método associada a ação.                                 |
 *------------+------------------------------------------------------------------+
-|return-in   | Identifica��o do resultado de uma a��o. Se a a��o retornar algum |
-|            | valor, esse valor ser� disponibilizado na vis�o com essa         |
-|            | identifica��o.                                                   |
+|result      | Identificação do resultado da ação. Se a ação retornar algum     |
+|            | valor, esse valor será disponibilizado na visão com essa         |
+|            | identificação.                                                   |
 *------------+------------------------------------------------------------------+
-|page        | Identifica��o da vis�o.                                          |
+|view        | Identificação da visão a ser usada na ação.                      |
 *------------+------------------------------------------------------------------+
-|redirect    | Se verdadeiro, ap�s o processamento do modelo � feito um         |
-|            | redirecionamento para o endere�o informado no atributo page.     |
+|dispatcher  | Define como o fluxo será direcionado para uma visão ou outro     |
+|            | controlador, após a execução de uma ação.                        |
 *------------+------------------------------------------------------------------+
 
  Veja o exemplo a seguir:
 
 ------
-<web-frame uri="/index.jbrs" page="/WEB-INF/jsp/index.jsf"
-  class="br.model.Index" default-method-name="default">
-  <method name=�add� method-name=�addClient�/>
-</web-frame>
+<controller id="/index.jbrs" view="/WEB-INF/jsp/index.jsf"
+  class="br.model.Index">
+  <action id="add" executor="addClient"/>
+</controller>
 ------
 
- No exemplo acima a classe Index possui o m�todo addClient, que n�o retorna
- nenhum valor e n�o possui par�metros. Esse m�todo est� associada � a��o �add�
- do uri /index.jbrs.
+ No exemplo acima a classe Index possui o método addClient, que não retorna
+ nenhum valor e não possui parâmetros. Esse metodo está associada á ação "add".
 
- No pr�ximo exemplo � feito o mapeamento de um m�todo que retorna um valor
- booleano com a identifica��o result.
+ No próximo exemplo é feita a configuração de uma ação que retorna um valor
+ booleano com a identificação result.
 
 ------
-<method name="add" method-name="addClient" return-in="result"
-  page="/WEB-INF/jsp/add_cli.jsf"/>
+<action id="add" executor="addClient" result="result"
+  view="/WEB-INF/jsp/add_cli.jsf"/>
 ------
 
- No exemplo acima, o controlador recebe a requisi��o, executa a a��o "add",
- ou seja, invoca o m�todo addClient e exibe a p�gina add_client.jsf, onde �
- usado o resultado obtido da execu��o da a��o "add". O diagrama abaixo ilustra
- a execu��o dessa a��o.
+ No exemplo acima, o controlador recebe a requisição, executa a açao "add",
+ ou seja, invoca o método addClient e exibe a visão add_client.jsf, onde é
+ usado o resultado obtido da execução da ação "add". O diagrama abaixo ilustra
+ a execução dessa ação.
 
 [images/action1.jpg]
 
- No pr�ximo exemplo a vis�o ir� depender de qual a��o ser� executada.
+ No próximo exemplo a visão irá depender de qual ação seré executada.
 
 ------
-<web-frame uri="/index.jbrs" page="/WEB-INF/jsp/show_cli.jsf"
+<controller id="/index.jbrs" view="/WEB-INF/jsp/show_cli.jsf"
            class="br.model.Index">
-          <method name="add" method-name="addClient"
-               page="/WEB-INF/jsp/add_cli.jsf"/>
-          <method name="remove" method-name="removeClient"
-               page="/WEB-INF/jsp/remove_cli.jsf"/>
-</web-frame>
+          <action id="add" executor="addClient"
+               view="/WEB-INF/jsp/add_cli.jsf"/>
+          <action id="remove" executor="removeClient"
+               view="/WEB-INF/jsp/remove_cli.jsf"/>
+</controller>
 ------
 
- No exemplo acima, o controlador recebe a requisi��o e identifica qual a��o ser�
- executada. Se a a��o identificada for "add", ent�o o m�todo addClient da classe
- Index � invocado e a p�gina add_cli.jsf � exibida. Se a a��o identificada for
- "remove", ent�o o m�todo removeClient � invocado e a p�gina remove_cli.jsf �
- exibida. Caso n�o seja executada nenhuma a��o a p�gina show_cli.jsf � exibida.
+ No exemplo acima, o controlador recebe a requisição e identifica qual ação será
+ executada. Se a ação identificada for "add", então o método addClient da classe
+ Index é invocado e a visão add_cli.jsf é usada. Se a ação identificada for
+ "remove", então o método removeClient é invocado e a visão remove_cli.jsf é
+ usada. Caso não seja executada nenhuma ação a visão show_cli.jsf será usada.
  O diagrama abaixo ilustra o funcionamento do controlador.
 
 [images/views.jpg]
 
-* Mapeamento de par�metros
+* Configurando parâmetros de uma ação
 
- Os valores dos par�metros podem ser obtidos tanto da requisi��o, sess�o ou do
- contexto. Podendo ser do tipo primitivo ou n�o. No caso de um objeto, � poss�vel
- usar um mapeamento predefinido. Al�m de ser poss�vel o mapeamento de par�metros
- do tipo Enum e Date. O mapeamento de um par�metro � feito com a tag
- \<method-param/\>. Somente � permitido o seu uso no elemento \<method/\>.
- O elemento \<method-param/\> possui os seguintes atributos:
+ Um parâmetro de uma ação pode ser de tipo primitivo ou um objeto. No caso de um objeto,
+ pode ser criado um mapeamento para defir como os valores da requisição serão
+ injetadas nas propriedades do objeto. Além de ser possível a configuração
+ de propriedades do tipo Enum e Date.
 
-*------------------+-----------------------------------------------------------+
-| Atributo         | Explica��o
-*------------------+-----------------------------------------------------------+
-| nome             | Identifica��o do valor.
-*------------------+-----------------------------------------------------------+
-| enum-property    | Usado no mapeamento de enum. Permite dois valores:        |
-|                  | ordinal: o enum � representado por um inteiro;            |
-|                  | string: o enum � representado por uma string.             |
-*------------------+-----------------------------------------------------------+
-| temporal-property| Usado no mapeamento de datas. Formato com que a data est� |
-|                  | representada. O formato � descrito na classe              |
-|                  | java.text.SimpleDateFormat.                               |
-*------------------+-----------------------------------------------------------+
-| mapping-name     | Identifica��o de um mapeamento predefinido.               |
-*------------------+-----------------------------------------------------------+
-| scope            | Determina o escopo de origem do valor.                    |
-*------------------+-----------------------------------------------------------+
-| factory          | Determina a classe respons�vel por processar o valor      |
-|                  | recebido. A classe deve implementar a interface           |
-|                  | org.brandao.brutos.type.Type.                             |
-*------------------+-----------------------------------------------------------+
-| type	           | Tipo do par�metro.                                        |
-*------------------+-----------------------------------------------------------+
+ Também é possível fazer a validação de uma propriedade.
+
+ A configuração de um parâmetro é feita usando a tag
+ \<parameter/\>. Somente é permitido o seu uso no elemento \<action/\>.
+ O elemento \<parameter/\> possui os seguintes atributos:
+
+*------------------+--------------------------------------------------------------------+
+|Atributo          | Descrição                                                          |
+*------------------+--------------------------------------------------------------------+
+|bean              | Identificação do valor.                                            |
+*------------------+--------------------------------------------------------------------+
+|value             | Valor do parâmetro.                                                |
+*------------------+--------------------------------------------------------------------+
+|enum-property     | Usado no mapeamento de enum. Permite dois valores:                 |
+|                  | ordinal: o enum é representado por um inteiro;                     |
+|                  | string: o enum é representado por uma string.                      |
+*------------------+--------------------------------------------------------------------+
+|temporal-property | Usado no mapeamento de datas. É o formato com que a data está      |
+|                  | representada.                                                      |
+|                  | O formato é descrito na classe java.text.SimpleDateFormat.         |
+*------------------+--------------------------------------------------------------------+
+|mapping           | Se verdadeiro, o valor do parâmetro é obtido a partir de um        |
+|                  | mapeamento pré-definido                                            |
+*------------------+--------------------------------------------------------------------+
+|scope             | Determina o escopo do valor.                                       |
+*------------------+--------------------------------------------------------------------+
+|factory           | Determina a classe responsável por processar o valor recebido.     |
+|                  | A classe deve implementar a interface org.brandao.brutos.type.Type.|
+*------------------+--------------------------------------------------------------------+
+| type	           | Tipo do parâmetro.                                                 |
+*------------------+--------------------------------------------------------------------+
 
  Veja abaixo um exemplo:
 
 ------
-<web-frame uri="/index.jbrs" page="/WEB-INF/jsp/show_cli.jsf"
+<controller id="/index.jbrs" view="/WEB-INF/jsp/show_cli.jsf"
            class="br.model.Index">
-          <method name="add" method-name="addClient"
-               page="/WEB-INF/jsp/add_cli.jsf">
-               <method-param name="nome" type="java.lang.String"/>
-               <method-param name="idade" type="int"/>
-               <method-param name="userId" type="User" scope="session"/>
-          </method>
-</web-frame>
+          <action id="add" executor="addClient"
+               view="/WEB-INF/jsp/add_cli.jsf">
+               <parameter bean="nome" type="java.lang.String"/>
+               <parameter bean="idade" type="int"/>
+               <parameter bean="userId" type="User" scope="session"/>
+          </action>
+</controller>
 ------
 
- No exemplo acima o controlador recebe a requisi��o, invoca o m�todo addClient
- passado os valores nome, idade e userId respectivamente para os par�metros p1,
- p2 e p3 do m�todo. Os valores nome e idade s�o obtidos da requisi��o e o userId
- � obtido da sess�o. O diagrama abaixo ilustra o exemplo acima.
+ No exemplo acima o controlador recebe a requisiçãoo, invoca o método addClient
+ passado o nome, idade e userId, respectivamente para os parâmetros v1,
+ v2 e v3 do método. Os valores nome e idade são obtidos da requisição e o userId
+ é obtido da sessão. O diagrama abaixo ilustra o exemplo acima.
 
 [images/action2.jpg]
 
-* Tratando exce��es
+ Como citado anteriormente, é possível construir um parâmetro através de um 
+ mapeamento.
 
- As exce��es lan�adas na execu��o de uma a��o podem ser tratadas e tamb�m
- podem influenciar no fluxo l�gico da aplica��o. � poss�vel determinar qual
- vis�o ser� utilizada, se exigir� um redirecionamento, al�m de ser poss�vel
- atribuir uma identifica��o ao objeto, exception, obtido. O tratamento das
- exce��es � feito com a tag <throw-safe/>. Somente � permitido o seu uso no
- elemento \<method/\> e \<web-frame/\>. O elemento \<throw-safe/\> possui os
- seguintes atributos:
+ No exemplo abaixo uma ação possui um parâmetro mapeado.
+ Esse parâmetro é do tipo enum, sendo representado por uma string.
+
+------
+<controller ...>
+   <action id="myAction" executor="myMethod">
+     <parameter>
+         <bean class="br.myproject.MyEnum" method-factory="valueOf">
+           <constructor-arg>
+             <ref bean="enum_value" scope="param"/>
+           </constructor-arg>
+         </bean>
+     </parameter>
+   </action>
+</controller>
+------
+
+* Tratando exceções
+
+ As exceções lançadas na execução de uma ação podem ser tratadas e também
+ podem influenciar no fluxo lógico da aplicação. É possível determinar qual
+ visão será utilizada, como o fluxo da execução da ação será direcionada para uma visão
+ ou outro controlador, alem de ser possível atribuir uma identificação ao objeto,
+ exception, obtido. 
+
+ O tratamento das exceções são feitas com a tag \<throw-safe/\>. Somente é
+ permitido o seu uso nos elementos \<controller/\> e \<action/\>.
+ O elemento \<throw-safe/\> possui os seguintes atributos:
 
 *----------+--------------------------------------------------------------+
-| Atributo | Explica��o                                                   |
+| Atributo | Descrição                                                    |
 *----------+--------------------------------------------------------------+
-| name     | Identifica��o da exce��o.                                    |
+| name     | Identificação da exceção.                                    |
 *----------+--------------------------------------------------------------+
-| target   | A exce��o alvo da configura��o.                              |
+| target   | A exceção alvo da configuração.                              |
 *----------+--------------------------------------------------------------+
-| uri      | Identifica��o da vis�o.                                      |
+| view     | Identificação da visão.                                      |
 *----------+--------------------------------------------------------------+
-| redirect | Se verdadeiro, ap�s o processamento do modelo � feito um     |
-|          | redirecionamento para o endere�o informado no atributo uri.  |
+|dispatcher| Define como o fluxo será direcionado para uma visão ou outro |
+|          | controlador, após o lançamento da exceção.                   |
 *----------+--------------------------------------------------------------+
 
  Veja abaixo um exemplo:
 
 ------
-<method name="login" method-name="login" redirect="true"
-    page="/index.jbrs">
-    <method-param name="e-mail" type="java.lang.String"/>
-    <method-param name="senha" type="java.lang.String"/>
+<action id="login" executor="login" dispatcher="redirect"
+    view="/index.jbrs">
+    <parameter bean="e-mail" type="java.lang.String"/>
+    <parameter bean="senha" type="java.lang.String"/>
     <throw-safe target="java.lang.NullPointerException" name="exception"
-        uri="/WEB-INF/jsp/login.jsf"/>
+        view"/WEB-INF/jsp/login.jsf"/>
     <throw-safe target="LoginException" name="exception"
-        uri="/WEB-INF/jsp/login.jsf"/>
-</method>
+        view="/WEB-INF/jsp/login.jsf"/>
+</action>
 ------
 
- No exemplo acima, o usu�rio far� o login. Se for o primeiro acesso, ser�
- lan�ado NullPointerException, pois ainda n�o possui os dados necess�rios
- para o login, e � exibida a p�gina de login. Se a identifica��o ou a senha
- estiver errada, ent�o ser� lan�ado LoginException sendo exibida a p�gina de
- login. Se a identifica��o e a senha estiverem corretas, ent�o ser� redirecionado
- para a p�gina inicial.
+ No exemplo acima, o usuário fará o login. Se for o primeiro acesso, será
+ lançada NullPointerException, pois ainda não possui os dados necessários
+ para o login, e é usada a visão de login. Se a identificação ou a senha
+ estiver errada, então será lançada LoginException sendo usada a página de
+ login. Se a identificação e a senha estiverem corretas, então será redirecionado
+ para a visão index.jbrs.
 
 [images/exception.jpg]
 
- No diagrama acima foram considerados tr�s fluxos de execu��o. S�o eles:
+ No diagrama acima foram considerados três fluxos de execução. São eles:
 
- * ocorre NullPointerException e a p�gina login.jsf � exibida.
+ * ocorre NullPointerException e a vião login.jsf é exibida.
 
- * ocorre LoginException e a p�gina login.jsf � exibida, caso o login ou a senha
-   estejam errados.
+ * ocorre LoginException e a visão login.jsf é exibida, caso o login ou a senha
+   esteja errada.
 
- * n�o ocorre nenhum exce��o e o controlador redireciona para a p�gina /index.jbrs.
+ * não ocorre nenhuma exceção e o controlador redireciona para a visão index.jbrs.
