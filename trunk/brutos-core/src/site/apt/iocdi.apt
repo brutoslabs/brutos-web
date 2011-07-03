@@ -1,13 +1,13 @@
-Inversão de controle e injeção de dependência
+Inversï¿½o de controle e injeï¿½ï¿½o de dependï¿½ncia
 
- Brutos possui uma interface IOC/DI baseada no Spring. Seu objetivo é permitir
+ Brutos possui uma interface IOC/DI baseada no Spring. Seu objetivo ï¿½ permitir
  o total desacoplamento do container IOC/DI. Assim, se existir a necessidade
- de mudar o container, não será necessário refazer a configuração.
+ de mudar o container, nï¿½o serï¿½ necessï¿½rio refazer a configuraï¿½ï¿½o.
 
- Para usar o container IOC é necessário configurar, essa configuração nada
- mais é do que informar como você quer instanciar os objetos.
+ Para usar o container IOC ï¿½ necessï¿½rio configurar, essa configuraï¿½ï¿½o nada
+ mais ï¿½ do que informar como vocï¿½ quer instanciar os objetos.
 
- Ao configurar você está definindo os beans que você quer que o container
+ Ao configurar vocï¿½ estï¿½ definindo os beans que vocï¿½ quer que o container
  gerencie, deixando assim a responsabilidade de instanciar os objetos com o
  container IOC.
 
@@ -19,23 +19,23 @@ Inversão de controle e injeção de dependência
 </beans>
 ------
 
-* Injeção de dependência
+* Injeï¿½ï¿½o de dependï¿½ncia
 
- Um aplicativo normalmente não é composto de um objeto. Mesmo um aplicativo
+ Um aplicativo normalmente nï¿½o ï¿½ composto de um objeto. Mesmo um aplicativo
  simples possui um monte de objetos que trabalham em conjunto para atingir
  um mesmo objetivo.
 
- O princípio básica da injeção de dependência, é que os objetos definem suas
- próprias dependências. Podendo ser por construtor, propriedades definidas após
- o objeto ser criado, método estático ou por uma fábrica.
+ O princï¿½pio bï¿½sica da injeï¿½ï¿½o de dependï¿½ncia, ï¿½ que os objetos definem suas
+ prï¿½prias dependï¿½ncias. Podendo ser por construtor, propriedades definidas apï¿½s
+ o objeto ser criado, mï¿½todo estï¿½tico ou por uma fï¿½brica.
 
-* Injeção de dependência por método
+* Injeï¿½ï¿½o de dependï¿½ncia por mï¿½todo
 
- A injeção de dependência por método é feita chamando o método de um bean depois
+ A injeï¿½ï¿½o de dependï¿½ncia por mï¿½todo ï¿½ feita chamando o mï¿½todo de um bean depois
  de chamado o construtor.
 
- Veja abaixo um exemplo de uma classe que somente pode receber a injeção de
- dependência por método:
+ Veja abaixo um exemplo de uma classe que somente pode receber a injeï¿½ï¿½o de
+ dependï¿½ncia por mï¿½todo:
 
 ------
 public class MySimpleClass{
@@ -64,12 +64,12 @@ public class MySimpleClass{
 </bean>
 ------
 
-* Injeção de dependência por construtor
+* Injeï¿½ï¿½o de dependï¿½ncia por construtor
 
- A injeção de dependência por construtor é feita chamando um construtor com um
- número específico de argumentos.
- Veja abaixo um exemplo de uma classe que somente pode receber a injeção de
- dependência por construtor:
+ A injeï¿½ï¿½o de dependï¿½ncia por construtor ï¿½ feita chamando um construtor com um
+ nï¿½mero especï¿½fico de argumentos.
+ Veja abaixo um exemplo de uma classe que somente pode receber a injeï¿½ï¿½o de
+ dependï¿½ncia por construtor:
 
 ------
 public class MySimpleClass{
@@ -97,8 +97,8 @@ public class MySimpleClass{
 
 * Injetando valores primitivos e String
 
- A injeção de valores primitivos ou string é feita com o elemento \<value/\>.
- Somente é permitido o seu uso nos elementos \<constructor-arg/\> e \<property/\>.
+ A injeï¿½ï¿½o de valores primitivos ou string ï¿½ feita com o elemento \<value/\>.
+ Somente ï¿½ permitido o seu uso nos elementos \<constructor-arg/\> e \<property/\>.
  Veja alguns exemplos:
 
 ------
@@ -125,9 +125,9 @@ public class MySimpleClass{
 </bean>
 ------
 
-* Referência a outros beans
+* Referï¿½ncia a outros beans
 
- A injeção de beans é feita com o elemento \<ref/\>. Somente é permitido o seu
+ A injeï¿½ï¿½o de beans ï¿½ feita com o elemento \<ref/\>. Somente ï¿½ permitido o seu
  uso nos elementos \<constructor-arg/\> e \<property/\>.
 
 ------
@@ -138,10 +138,10 @@ public class MySimpleClass{
 </bean>
 ------
 
-* Coleções
+* Coleï¿½ï¿½es
 
- A injeção dos tipos List, Set, Map e Properties são feitas respectivamente com
- os elementos \<list/\>, \<set/\>, \<map/\> e \<props/\>. Somente é permitido o seu uso
+ A injeï¿½ï¿½o dos tipos List, Set, Map e Properties sï¿½o feitas respectivamente com
+ os elementos \<list/\>, \<set/\>, \<map/\> e \<props/\>. Somente ï¿½ permitido o seu uso
  nos elementos \<constructor-arg/\> e \<property/\>. Veja alguns exemplos:
 
 ------
@@ -193,7 +193,7 @@ public class MySimpleClass{
 * Inner bean
 
  O elemento \<bean/\> pode ser usando dentro dos elementos \<constructor-arg/\> e
- \<property/\>. Por ser um bean interno (inner bean) o nome não é necessário.
+ \<property/\>. Por ser um bean interno (inner bean) o nome nï¿½o ï¿½ necessï¿½rio.
 
 ------
 <bean name="IndexController" class="br.brandao.controller.IndexController">
@@ -212,9 +212,9 @@ public class MySimpleClass{
 </bean>
 ------
 
-* Fábrica de beans
+* Fï¿½brica de beans
 
- Uma fábrica de beans nada mais é que uma classe que tem a finalidade  de
+ Uma fï¿½brica de beans nada mais ï¿½ que uma classe que tem a finalidade  de
  instanciar objetos de um determinado tipo. Veja um exemplo:
 
 ------
