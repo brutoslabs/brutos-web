@@ -46,7 +46,7 @@ public interface HttpRequestParser {
             UploadListener uploadListener ) throws IOException;
 
     /**
-     * Analisa uma requisição de acordo com seu tipo de conteudo.
+     * Analisa uma requisição de acordo com o tipo do conteudo.
      * @param request Requisição.
      * @param contentType Tipo do conteudo.
      */
