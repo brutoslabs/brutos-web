@@ -1,32 +1,37 @@
 Mapeamento de beans
 
  Um recurso muito útil do Brutos MVC é o mapeamento de beans, bem parecido com
- IoC.
-
- Com ele é possível construir as propriedades de um controlador ou até mesmo
+ IoC. Com ele é possível construir as propriedades de um controlador ou até mesmo
  construir os parâmetros de uma ação.
 
- Esse mapeamento nada mais é que, informar ao Brutos MVC como os dados de
- entrada serão disponibilizados no bean.
+* Instanciando um bean
 
- Para fazer o mapeamento de um bean é usada a tag \<bean/\>. Somente
- é permitido o seu uso nos elementos \<controller/\>, \<property/\> e
- \<constructor-arg/\>. O elemento \<bean/\> possui
- os seguintes atributos:
+ O mapeamento de beans somente é permitido nas propriedades de um controlador e
+ nos parâmetros de uma ação. Para que o Brutos MVC possa instânciar um bean, é
+ necessário definir como. Essa definição nada mais é que informar ao Brutos MVC
+ como o bean deve ser criado.
+
+ O elemento usado para se definir um bean é \<bean/\>. Sendo que o tipo do bean
+ é denido pelo atributo target. Esse atributo é usado em dois casos.
+
+ No primeiro caso, define a classe do bean que será construido, que se equivale
+ ao new. Já no outro caso, é usado para invocar um método estático de uma
+ fábrica para criar o objeto. O tipo do objeto retornado por esse método
+ pode ser a mesma do bean ou não.
 
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
 | Atributo              | Descrição                                                                                                             |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| nome                  | Identifica o bean.                                                                                           |
+| nome                  | Identificação o bean.                                                                                                |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| separator             | Representação da separação do bean com suas dependências.                                                             |
+| separator             | Representação da separação do bean das suas dependências.                                                             |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
 | index-format          | Representação de um índice. Essa opção somente é usada em Map, List e Set. Por padrão é usado "[$index]", onde $index |
 |                       | representa o valor do índice                                                                                          |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| factory               | Nome da fábrica do bean.                                                                                              |
+| factory               | Fábrica do bean.                                                                                                      |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| method-factory        | Nome do método da fábrica que irá instânciar o bean.                                                                  |
+| method-factory        | Método da fábrica que irá instânciar o bean.                                                                          |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
 | target                | Classe alvo do mapeamento                                                                                             |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
@@ -35,7 +40,8 @@ Mapeamento de beans
 
 ------
 <controller ...>
-    <bean name="myBean" target="br.myproject.MyBean"/>
+  <bean name="myBean" target="br.myproject.MyBean"/>
+  <property bean="myBean" mapping="true"/>
 </controller>
 ------
 
@@ -51,12 +57,59 @@ Mapeamento de beans
 </controller>
 ------
 
-* Injeção de dependência por metodo
+* Injeção de dependência por construtor
 
- A injeção de dependência por método é feita chamando o método de um bean depois
- de chamado o construtor.
+ A injeção é feita ao invocar um construtor com um número específico de argumentos,
+ sendo que cada um representa uma dependência. Também é equivalente
+ a chamada de um metodo de uma fábrica com uma quantidade específica de
+ argumentos para a construção de um bean.
 
- A injeção de dependência por método é feita usanda a tag \<property/\>. Somente
+ Sua definiçao é feita usando o elemento \<constructor-arg/\>. Somente
+ é permitido o seu uso no elemento \<bean/\>.
+
+ O elemento \<constructor-arg/\> possui os seguintes atributos:
+
+*------------------+--------------------------------------------------------------------+
+|Atributo          | Descrição                                                          |
+*------------------+--------------------------------------------------------------------+
+|bean              | Identificação do bean.                                             |
+*------------------+--------------------------------------------------------------------+
+|value             | Valor do argumento.                                                |
+*------------------+--------------------------------------------------------------------+
+|enum-property     | Usado no mapeamento de enum. Permite dois valores:                 |
+|                  | ordinal: o enum é representado por um inteiro;                     |
+|                  | string: o enum é representado por uma string.                      |
+*------------------+--------------------------------------------------------------------+
+|temporal-property | Usado no mapeamento de datas. É o formato com que a data está      |
+|                  | representada.                                                      |
+|                  | O formato é descrito na classe java.text.SimpleDateFormat.         |
+*------------------+--------------------------------------------------------------------+
+|mapping           | Se verdadeiro, o valor do argumento é obtido a partir de um        |
+|                  | mapeamento pré-definido.                                           |
+*------------------+--------------------------------------------------------------------+
+|scope             | Escopo do bean.                                                   |
+*------------------+--------------------------------------------------------------------+
+|factory           | Classe responsável por processar o valor recebido.                 |
+|                  | A classe deve implementar a interface org.brandao.brutos.type.Type.|
+*------------------+--------------------------------------------------------------------+
+| type	           | Tipo do argumento.                                                 |
+*------------------+--------------------------------------------------------------------+
+
+ Veja abaixo um exemplo de como é feita a injeção de dependência por construtor:
+
+------
+<bean name="MyBean" class="MySimpleClass">
+    <constructor-arg>
+        <value>100</value>
+    </constructor-arg>
+</bean>
+------
+
+* Injeção de dependência por método
+
+ A injeção é feita ao invocar um método de um bean depois de instânciado.
+
+ A injeção de dependência por método é feita usando o elemento \<property/\>. Somente
  é permitido o seu uso nos elementos \<bean/\> e \<controller/\>.
  O elemento \<property/\> possui os seguintes atributos:
 
@@ -80,9 +133,9 @@ Mapeamento de beans
 |mapping           | Se verdadeiro, o valor da propriedade é obtido a partir de um      |
 |                  | mapeamento pré-definido                                            |
 *------------------+--------------------------------------------------------------------+
-|scope             | Determina o escopo do valor.                                       |
+|scope             | Escopo do bean.                                                   |
 *------------------+--------------------------------------------------------------------+
-|factory           | Determina a classe responsável por processar o valor recebido.     |
+|factory           | Classe responsável por processar o valor recebido.                 |
 |                  | A classe deve implementar a interface org.brandao.brutos.type.Type.|
 *------------------+--------------------------------------------------------------------+
 
@@ -96,55 +149,10 @@ Mapeamento de beans
 </bean>
 ------
 
-* Injeção de dependência por construtor
-
- A injeção de dependência por construtor é feita chamando um construtor com um
- número específico de argumentos.
-
- A injeção de dependência por construtor é feita usanda a tag \<constructor-arg/\>. Somente
- é permitido o seu uso no elemento \<bean/\>.
- O elemento \<constructor-arg/\> possui os seguintes atributos:
-
-*------------------+--------------------------------------------------------------------+
-|Atributo          | Descrição                                                          |
-*------------------+--------------------------------------------------------------------+
-|bean              | Identificação do bean.                                             |
-*------------------+--------------------------------------------------------------------+
-|value             | Valor do argumento.                                                |
-*------------------+--------------------------------------------------------------------+
-|enum-property     | Usado no mapeamento de enum. Permite dois valores:                 |
-|                  | ordinal: o enum é representado por um inteiro;                     |
-|                  | string: o enum é representado por uma string.                      |
-*------------------+--------------------------------------------------------------------+
-|temporal-property | Usado no mapeamento de datas. É o formato com que a data está      |
-|                  | representada.                                                      |
-|                  | O formato é descrito na classe java.text.SimpleDateFormat.         |
-*------------------+--------------------------------------------------------------------+
-|mapping           | Se verdadeiro, o valor do argumento é obtido a partir de um        |
-|                  | mapeamento pré-definido                                            |
-*------------------+--------------------------------------------------------------------+
-|scope             | Determina o escopo do valor.                                       |
-*------------------+--------------------------------------------------------------------+
-|factory           | Determina a classe responsável por processar o valor recebido.     |
-|                  | A classe deve implementar a interface org.brandao.brutos.type.Type.|
-*------------------+--------------------------------------------------------------------+
-| type	           | Tipo do argumento.                                                 |
-*------------------+--------------------------------------------------------------------+
-
- Veja abaixo um exemplo de como é feita a injeção de dependência por construtor:
-
-------
-<bean name="MyBean" class="MySimpleClass">
-    <constructor-arg>
-        <value>100</value>
-    </constructor-arg>
-</bean>
-------
-
 * Injetando valores primitivos e String
 
- A injeção de valores primitivos ou string é feita usando a tag \<value/\>.
- Somente é permitido o seu uso nas tags \<constructor-arg/\> e \<property/\>.
+ A injeção de valores primitivos e string é feita usando o elemento \<value/\>.
+ Somente é permitido o seu uso nos elementos \<constructor-arg/\> e \<property/\>.
 
  Veja alguns exemplos:
 
@@ -158,18 +166,18 @@ Mapeamento de beans
 
 ------
 <bean name="MyBean" class="...">
-    <constructor-arg>
+    <property name="myProperty">
         <value>My value</value>
-    </constructor-arg>
+    </property>
 </bean>
 ------
 
 ------
-<bean name="MyBean" class="...">
-    <constructor-arg>
-        <value>1</value>
-    </constructor-arg>
-</bean>
+<controller ...>
+    <property name="myProperty">
+        <value>My controller value</value>
+    </property>
+</controller>
 ------
 
 * Referência a outros beans
@@ -196,7 +204,7 @@ Mapeamento de beans
 |mapping           | Se verdadeiro, o valor do argumento é obtido a partir de um        |
 |                  | mapeamento pré-definido                                            |
 *------------------+--------------------------------------------------------------------+
-|scope             | Determina o escopo do valor.                                       |
+|scope             | Escopo do bean.                                                    |
 *------------------+--------------------------------------------------------------------+
 |factory           | Determina a classe responsável por processar o valor recebido.     |
 |                  | A classe deve implementar a interface org.brandao.brutos.type.Type.|
@@ -214,95 +222,41 @@ Mapeamento de beans
 
 * Coleções
 
- A inje��o dos tipos List, Set, Map e Properties s�o feitas respectivamente com
- os elementos \<list/\>, \<set/\>, \<map/\> e \<props/\>. Somente � permitido o seu uso
- nos elementos \<constructor-arg/\> e \<property/\>. Veja alguns exemplos:
+ A injeção dos tipos List, Set, Map e Properties também são feitos com o elemento
+ \<bean/\>. O que diferência é o uso dos elementos \<element/\> e \<key/\>. 
+ Somente é permitido o seu uso no elemento \<bean/\>.
+
+ O elemento \<key/\> somente é necessário para os tipos Map e Properties.
 
 ------
-<bean name="..." class="...">
-    <constructor-arg>
-        <list>
-            <value>1</value>
-            <value>2</value>
-            <value>3</value>
-        </list>
-    </constructor-arg>
+<bean name="..." target="java.util.LinkedList">
+    <element target="java.lang.Integer">
+        <constructor-arg bean="ids"/>
+    </element>
 </bean>
 
-<bean name="..." class="...">
-    <constructor-arg>
-        <set>
-            <value>1</value>
-            <value>2</value>
-            <value>3</value>
-        </set>
-    </constructor-arg>
+<bean name="..." target="java.util.HashSet">
+    <element target="java.lang.Integer">
+        <constructor-arg bean="ids"/>
+    </element>
 </bean>
 
-<bean name="..." class="...">
-    <constructor-arg>
-        <map>
-            <entry>
-                <key>
-                    <value>1</value>
-                </key>
-                <value>Value</value>
-            </entry>
-        </map>
-    </constructor-arg>
+<bean name="..." target="java.util.HashMap">
+    <key target="java.lang.Integer">
+        <constructor-arg bean="id_bean"/>
+    </key>
+    <element target="br.myproject.MyBean">
+        <property name="id" bean="id_bean"/>
+        <property name="name" bean="name_bean"/>
+    </element>
 </bean>
 
-<bean name="..." class="...">
-    <constructor-arg>
-        <props>
-            <prop name="..." value="..."/>
-            <prop name="...">
-                <value>...</value>
-            </prop>
-        </props>
-    </constructor-arg>
+<bean name="..." target="java.util.Properties">
+    <key target="java.lang.String">
+        <constructor-arg bean="id"/>
+    </key>
+    <element target="java.lang.String">
+        <constructor-arg bean="prop"/>
+    </element>
 </bean>
-------
-
-* Inner bean
-
- O elemento \<bean/\> pode ser usando dentro dos elementos \<constructor-arg/\> e
- \<property/\>. Por ser um bean interno (inner bean) o nome n�o � necess�rio.
-
-------
-<bean name="IndexController" class="br.brandao.controller.IndexController">
-   <constructor-arg>
-       <bean class="Configuration">
-           <constructor-arg>
-               <props>
-                   <prop name="prop1" value="value1"/>
-                   <prop name="prop2">
-                       <value>value2</value>
-                   </prop>
-               </props>
-           </constructor-arg>
-       </bean>
-   </constructor-arg>
-</bean>
-------
-
-* F�brica de beans
-
- Uma f�brica de beans nada mais � que uma classe que tem a finalidade  de
- instanciar objetos de um determinado tipo. Veja um exemplo:
-
-------
-public class MyFactory {
-
-    public MyType getInstance(){
-        ...
-    }
-
-}
-------
-
-------
-<bean name="myFactory" class="MyFactory"/>
-<bean name="MyBeanType" class="MyType" factory-bean="myFactory"
-factory-method="getInstance"/>
 ------
