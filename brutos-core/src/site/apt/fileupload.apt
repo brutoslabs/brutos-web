@@ -111,3 +111,100 @@ class="FileController" action-id="action" >
 
  Para fazer o download do arquivo é só acessar o URI:
  /filemanager.jbrs?action=download&name=nome_do_arquivo
+
+* Customizando file upload
+
+ Se preferir, é possível que você customize o processamento dos arquivos
+ recebisos em uma requisição.
+
+ O processamento de uma requisição no Brutos web MVC é feito por meio da implementação
+ dos métodos da interface org.brandao.brutos.web.http.HttpRequestParser. Mas é
+ aconselhavel herdar as características da classe org.brandao.brutos.web.http.HttpRequestParserImp.
+
+ Veja o exemplo abaixo:
+
+-----
+ package br.com.fileupload;
+
+ import java.io.File;
+ import java.io.IOException;
+ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Properties;
+ import java.util.logging.Level;
+ import java.util.logging.Logger;
+ import javax.servlet.http.HttpServletRequest;
+ import org.apache.commons.fileupload.FileItem;
+ import org.apache.commons.fileupload.FileUploadException;
+ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+ import org.apache.commons.fileupload.servlet.ServletFileUpload;
+ import org.brandao.brutos.BrutosException;
+
+ public class ApacheFileUploadsParser extends HttpRequestParserImp{
+
+     public void parserMultipart(BrutosRequest request, Properties config,
+             UploadListener uploadListener) throws IOException{
+
+         Long maxLength =
+             Long.parseLong(
+                 config
+                     .getProperty( "org.apache.fileupload.max_length", "0" ) );
+         String path = config
+                     .getProperty( "org.apache.fileupload.path", null );
+
+         DiskFileItemFactory factory = new DiskFileItemFactory();
+         factory.setRepository(new File(path));
+         ServletFileUpload upload = new ServletFileUpload(factory);
+         upload.setSizeMax(maxLength);
+         List list;
+
+         try {
+             list = upload
+                 .parseRequest(
+                     (HttpServletRequest) request.getServletRequest());
+         } catch (FileUploadException ex) {
+             throw new org.brandao.brutos.web.FileUploadException(ex);
+         }
+
+         Iterator iter = list.iterator();
+         while( iter.hasNext() ){
+              FileItem item = (FileItem) iter.next();
+
+              if( item.isFormField() ){
+                 String name = item.getFieldName();
+                 String value = item.getString();
+                 request.setObject(name, value);
+              }
+              else{
+                 String fieldName = item.getFieldName();
+                 String fileNameParts[] = item.getName().split("\\\\");
+                 String name = fileNameParts[ fileNameParts.length - 1 ];
+                 File file = new File( new File(path), name );
+                 file.createNewFile();
+                 try {
+                     item.write(file);
+                 } catch (Exception ex) {
+                     throw new BrutosException(ex);
+                 }
+                 BrutosFile f = new BrutosFile( file );
+                 f.setContentType( item.getContentType() );
+                 f.setFile(file);
+                 f.setFileName(item.getName());
+                 request.setObject(fieldName, f);
+              }
+         }
+
+     }
+
+ }
+-----
+
+ Depois de criado o parser, é necessário informar ao Brutos web MVC qual parser
+ usar e para isso basta incluir as seguintes linhas no web.xml:
+
+-----
+<context-param>
+    <param-name>org.brandao.brutos.request_parser</param-name>
+    <param-value>br.com.fileupload.ApacheFileUploadsParser</param-value>
+</context-param>
+-----
