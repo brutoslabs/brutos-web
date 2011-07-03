@@ -1,43 +1,44 @@
 File upload
 
- O Brutos possui suporte nativo ao upload de arquivos. Sendo possÌvel configurar
- o tamanho m·ximo dos dados a serem recebidos e o local que os arquivos ser„o
- gravados. Se preferir È possÌvel usar uma API para fazer o upload, como por
+ O Brutos possui suporte nativo ao upload de arquivos. Sendo poss√≠vel configurar
+ o tamanho m√°ximo dos dados a serem recebidos e o local que os arquivos ser√£o
+ gravados. Se preferir √© poss√≠vel usar uma API para fazer o upload, como por
  exemplo o Jakarta Commons-FileUpload.
 
-* Definindo o tamanho m·ximo e o repositÛrio de arquivos
+* Definindo o tamanho m√°ximo e o reposit√≥rio de arquivos
 
- Para definir o tamanho m·ximo vocÍ deve informar a vari·vel
- org.brandao.brutos.request.max_length dentro da tag \<context-params/\> no
+ Para definir o tamanho m√°ximo voc√™ deve informar a vari√°vel
+ org.brandao.brutos.request.max_length dentro da tag \<params/\> no
  arquivo brutos-config.xml.
 
  ex:
 
 ------
-<context-params>
+<params>
       ...
-      <context-param name="org.brandao.brutos.request.max_length"
+      <param name="org.brandao.brutos.request.max_length"
                      value="3145728"/> <!-- 3 MB -->
-</context-params>
+</params>
 ------
 
- Para definir o repositÛrio de arquivos vocÍ deve informar a vari·vel
- org.brandao.brutos.request.path dentro da tag \<context-params/\> no arquivo
- brutos-config.xml. Se omitido ser· gerado um arquivo tempor·rio.
+ Para definir o reposit√≥rio de arquivos voc√™ deve informar a vari√°vel
+ org.brandao.brutos.request.path dentro da tag \<params/\> no arquivo
+ brutos-config.xml. Se omitido ser√© gerado um arquivo tempor√°rio por arquivo
+ enviado.
 
  ex:
 
 ------
-<context-params>
+<params>
       ...
-      <context-param name="org.brandao.brutos.request.path"
+      <param name="org.brandao.brutos.request.path"
                      value="${web.root}/WEB-INF/files/"/>
-</context-params>
+</params>
 ------
 
- Perceba no exemplo abaixo como È f·cil fazer o upload de arquivos.
+ Perceba no exemplo abaixo como √© f√°cil fazer o upload de arquivos.
 
- O controlador a seguir tem dois mÈtodos. O primeiro recebe o arquivo
+ O controlador a seguir tem dois m√©todos. O primeiro recebe o arquivo
  ( upload )  e o segundo envia o arquivo ( download ).
 
  Controlador:
@@ -63,24 +64,24 @@ public class FileController{
 }
 ------
 
- ConfiguraÁ„o:
+ Configura√ß√£o:
 
 ------
-<web-frame uri="/filemanager.jbrs" page="filemanager.jsp"
-class="FileController" method-parameter-name="action" >
+<controller id="/filemanager.jbrs" view="filemanager.jsp"
+class="FileController" action-id="action" >
 
-   <method name="upload" method-name="upload">
-       <method-param type="java.io.File" name="arq"/>
+   <action id="upload" executor="upload">
+       <parameter type="java.io.File" bean="arq"/>
+   </action>
+
+   <action id="download" executor="download">
+       <parameter type="java.lang.String" bean="name"/>
    </method>
 
-   <method name="download" method-name="download">
-       <method-param type="java.lang.String" name="name"/>
-   </method>
-
-</web-frame>
+</controller>
 ------
 
- P·gina:
+ View:
 
 ------
 <html>
@@ -108,5 +109,5 @@ class="FileController" method-parameter-name="action" >
 </html>
 ------
 
- Para fazer o download do arquivo È sÛ acessar a uri:
+ Para fazer o download do arquivo √© s√≥ acessar o URI:
  /filemanager.jbrs?action=download&name=nome_do_arquivo
