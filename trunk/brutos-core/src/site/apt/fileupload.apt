@@ -112,7 +112,7 @@ class="FileController" action-id="action" >
  Para fazer o download do arquivo é só acessar o URI:
  /filemanager.jbrs?action=download&name=nome_do_arquivo
 
-* Customizando file upload
+* Customizando o upload de arquivos
 
  Se preferir, é possível que você customize o processamento dos arquivos
  recebisos em uma requisição.
