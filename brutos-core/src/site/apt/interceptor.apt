@@ -1,35 +1,35 @@
 Interceptadores
 
- O uso de interceptadores È necess·rio quando precisamos executar tarefas antes
+ O uso de interceptadores √© necess√°rio quando precisamos executar tarefas antes
  e/ou depois do controlador ser executado, normalmente usado para controle de
- acesso, validaÁ„o de dados, controle de transaÁ„o e geraÁ„o de log.
+ acesso, valida√ß√£o de dados, controle de transa√ß√£o e gera√ß√£o de log.
 
- No Brutos web MVC È possÌvel trabalhar com um ou mais interceptadores, podendo
- definir quais recursos ser„o interceptados, a ordem com que ser„o  executados
- e os par‚metros necess·rios para a sua configuraÁ„o.
+ No Brutos MVC √© poss√≠el trabalhar com um ou mais interceptadores, podendo
+ definir quais recursos ser√£o interceptados, a ordem com que ser√£o  executados
+ e os par√¢metros necess√°rios para a sua configura√ß√£o.
 
- Sua inst‚ncia È controlada pelo container IOC, podendo assim, receber a injeÁ„o
- de objetos por construtor ou mÈtodo.
+ Sua inst√¢ncia √© controlada pelo container IOC, podendo assim, receber a inje√ß√£o
+ de objetos por construtor ou m√©todo.
 
- Um interceptador È definido com a tag \<interceptor/\>. Somente È permitido o seu
+ Um interceptador √© definido usando o elemento \<interceptor/\>. Somente √© permitido o seu
  uso no elemento \<interceptors/\>. O elemento \<interceptor/\> possui os seguintes
  atributos:
 
 *----------+-------------------------------------------------------------+
-| Atributo | ExplicaÁ„o                                                  |
+| Atributo | Descri√ß√£o                                                   |
 *----------+-------------------------------------------------------------+
-| name 	   | Nome que identifica o                                       |
-|          | interceptador. Usado na configuraÁ„o do container IOC.      |
+| name 	   | Identifica do interceptador. Usado na configura√ß√£o do       |
+|          | container IOC.                                              |
 *----------+-------------------------------------------------------------+
 | class    | Nome completo da classe.                                    |
 *----------+-------------------------------------------------------------+
-| default  | Se verdadeiro, automaticamente todos os controladores ser„o |
+| default  | Se verdadeiro, automaticamente todos os controladores ser√£o |
 |          | interceptados pelo interceptador.                           |
 *----------+-------------------------------------------------------------+
 
- No exemplo a seguir, o interceptador È respons·vel por gerar um log e est·
+ No exemplo a seguir, o interceptador √© respons√°vel por gerar um log e est√°
  configurado para interceptar todos os controladores. Veja logo a baixo o
- interceptador LoggerInterceptor e o trecho XML da configuraÁ„o do mesmo:
+ interceptador LoggerInterceptor e o trecho XML da configura√ß√£o do mesmo:
 
 ------
 public class LoggerInterceptor extends AbstractInterceptor{
@@ -52,54 +52,44 @@ public class LoggerInterceptor extends AbstractInterceptor{
 <interceptors>
   <interceptor class="LoggerInterceptor" name="loggerInterceptor" default="true"/>
 </interceptors>
-
-...
-
-<beans>
-  <bean name="loggerInterceptor" class="LoggerInterceptor">
-    <constructor-arg>
-      <ref bean="loggerInstance"/>
-    </constructor-arg>
-  </bean>
-</beans>
 ------
 
 * Referenciando um interceptador
 
- Para interceptar um controlador ou gerar uma pilha de interceptadores È
- necess·rio fazer uma referÍncia a um interceptador. Essa referÍncia È feita
- com a tag \<interceptor-ref/\>. Somente È permitido o seu uso nos elementos
- \<web-frame/\> e \<interceptor-stack/\>. O elemento \<interseptor-ref/\>
+ Para interceptar um controlador ou gerar uma pilha de interceptadores √©
+ necess√°rio fazer uma refer√™ncia a um interceptador. Essa refer√™ncia √© feita
+ usando o elemento \<interceptor-ref/\>. Somente √© permitido o seu uso nos elementos
+ \<controller/\> e \<interceptor-stack/\>. O elemento \<interseptor-ref/\>
  possui o seguinte atributo:
 
 *----------+--------------------------------------+
-| Atributo | ExplicaÁ„o                           |
+| Atributo | Descri√ß√£o                            |
 *----------+--------------------------------------+
-| name 	   | Nome que identifica o interceptador. |
+| name 	   | Identifica√ß√£o do interceptador.      |
 *----------+--------------------------------------+
 
- No exemplo a seguir o controlador È interceptado pelo loggerInterceptor:
+ No exemplo a seguir as a√ß√µes do controlador ser√£o interceptadas pelo loggerInterceptor.
 
 ------
-<web-frame ...>
+<controller ...>
   <interceptor-ref name="loggerInterceptor"/>
-</web-frame>
+</controller>
 ------
 
 * Configurando o comportamento do interceptador
 
- … possÌvel definir configuraÁıes globais ou especÌficas para cada controlador.
- Essa configuraÁ„o È definida com a tag \<param/\>. Somente È permitido o seu
+ √â poss√≠vel definir configura√ß√µes globais ou espec√≠ficas para cada controlador.
+ Essa configura√ß√£o √© definida usando o elemento \<param/\>. Somente √© permitido o seu
  uso nos elementos \<interceptor/\> e \<interceptor-ref/\>. O elemento \<param/\>
  possui o seguinte atributo:
 
 *----------+--------------------+
-| Atributo | ExplicaÁ„o         |
+| Atributo | Descri√ß√£o          |
 *----------*--------------------+
-| name     | Nome do par‚metro. |
+| name     | Nome do par√¢metro. |
 *----------+--------------------+
 
- No exemplo a seguir È definido um par‚metro global que È substituÌdo em
+ No exemplo a seguir √© definido um par√¢metro global que √© substitu√≠do em
  alguns controladores.
 
 ------
@@ -111,42 +101,42 @@ public class LoggerInterceptor extends AbstractInterceptor{
 
 ...
 
-<web-frame name="controllerA"...>
+<controller name="controllerA"...>
   <interceptor-ref name="loggerInterceptor">
     <param name="id">controllerALogger</param> //local
   </interceptor-ref>
-</web-frame>
+</controller>
 
-<web-frame name="controllerB"...>
+<controller name="controllerB"...>
   <interceptor-ref name="loggerInterceptor">
     <param name="id">controllerBLogger</param> // local
   </interceptor-ref>
-</web-frame>
+</controller>
 
-<web-frame name="controllerC"...>
+<controller name="controllerC"...>
   <interceptor-ref name="loggerInterceptor"/>
-</web-frame>
+</controller>
 ------
 
 * Definindo a ordem dos interceptadores
 
- Em alguns casos È necess·rio definir uma ordem para a execuÁ„o dos
- interceptadores. Nesses casos ent„o È conveniente utilizar uma pilha de
- interceptadores ("interceptor stack"). A forma de se  usar uma pilha de
- interceptadores È a mesma de um interceptador.
+ Em alguns casos √© necess√°rio definir uma ordem para a execu√ß√£o dos
+ interceptadores. Nesses casos ent√£o √© conveniente utilizar uma pilha de
+ interceptadores ("interceptor stack"). A forma de se usar uma pilha de
+ interceptadores √© a mesma de um interceptador.
 
- Uma pilha de interceptadores È definida usando-se a tag \<interceptor-stack/\>.
- Somente È permitido o seu uso no elemento \<interceptors/\>. O elemento
+ Uma pilha de interceptadores √© definida usando-se o elemento \<interceptor-stack/\>.
+ Somente √© permitido o seu uso no elemento \<interceptors/\>. O elemento
  \<interceptor-stack/\> possui o seguinte atributo:
 
 *----------+-----------------------------------+
-| Atributo | ExplicaÁ„o                        |
+| Atributo | Descri√ß√£o                         |
 *----------+-----------------------------------+
 | name     | Nome da pilha de interceptadores. |
 *----------+-----------------------------------+
 
- No exemplo a seguir È gerado uma pilha de interceptadores com o nome myStack.
- Que È usada em um determinado controlador.
+ No exemplo a seguir √© gerado uma pilha de interceptadores com o nome myStack,
+ que √© usada em um determinado controlador.
 
 ------
 <interceptors>
@@ -160,29 +150,29 @@ public class LoggerInterceptor extends AbstractInterceptor{
     </interceptor-stack>
 </interceptors>
 ...
-<web-frame ...>
+<controller ...>
   <interceptor-ref name="myStack"/>
-</web-frame>
+</controller>
 ------
 
- Da mesma forma que È possÌvel configurar o comportamento de um interceptador,
- tambÈm È possÌvel configurar o comportamento de uma pilha de interceptadores.
- No exemplo a seguir, o interceptador "interceptor2" possui configuraÁıes
- distintas em dois controladores, enquanto que os demais interceptadores mantÍm
- a mesma configuraÁ„o.
+ Da mesma forma que √© poss√≠vel configurar o comportamento de um interceptador,
+ tamb√©m √© poss√≠vel configurar o comportamento de uma pilha de interceptadores.
+ No exemplo a seguir, o interceptador "interceptor2" possui configura√ß√µes
+ distintas em dois controladores, enquanto que os demais interceptadores mant√™m
+ a mesma configura√ß√£o.
 
 ------
-<web-frame name="controller1" ...>
+<controller name="controller1" ...>
   <interceptor-ref name="myStack">
     <param name="interceptor2.param">value1</param>
   </interceptor-ref>
   ...
-</web-frame>
+</controller>
 
-<web-frame name="controller2" ...>
+<controller name="controller2" ...>
   <interceptor-ref name="myStack">
     <param name="interceptor2.param">value2</param>
   </interceptor-ref>
   ...
-</web-frame>
+</controller>
 ------
