@@ -61,6 +61,8 @@
           <item name="Controller" href="controller.html"/>
           <item name="File Upload" href="fileupload.html"/>
           <!--<item name="IOC/DI" href="iocdi.html"/>-->
+          <item name="IoC" href="ioc.html"/>
+          <item name="Validação" href="validator.html"/>
           <item name="Beans" href="bean.html"/>
           <item name="Interceptor" href="interceptor.html"/>
         </menu>
