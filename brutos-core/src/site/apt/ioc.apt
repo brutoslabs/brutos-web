@@ -1,0 +1,19 @@
+Inversão de controle e injeção de dependência
+
+ O Brutos MVC pode ser integrado a qualquer container Ioc, desde que esteja
+ implementado.
+
+ Atualmente o Brutos MVC pode ser integrado a um dos containers IoC mais usados,
+ Spring. Para sua configuração não é necessário muito esforço, basta informar
+ o provedor IoC usando a variável org.brandao.brutos.ioc.provider.
+
+ No exemplo abaixo o provedor é informado no web.xml
+
+-----
+<context-param>
+    <param-name>org.brandao.brutos.ioc.provider</param-name>
+    <param-value>org.brandao.brutos.ioc.SpringIOCProvider</param-value>
+</context-param>
+-----
+
+* Customizando um provedor IoC
