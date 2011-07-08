@@ -1,0 +1,53 @@
+Validação
+
+ Antes de serem atualizadas as propriedades de um controlador, de um bean ou
+ mesmo os parâmetros de uma ação, podem ser feitas verificações para se determinar
+ se o valor deve ser aceito ou não. E caso não seja aceito uma mensagem pode ser
+ exibida.
+
+ Para validar é usado o elemento \<validator/\>. Somente é permitido o seu uso nos
+ elementos \<mapping-ref/\>, \<property/\>, \<constructor-arg/\> e \<parameter/\>.
+ O elemento \<validator/\> possui o seguinte atributo:
+
+*----------+--------------------------------------------------------------+
+| Atributo | Descrição                                                    |
+*----------+--------------------------------------------------------------+
+| message  | Mensagem que será exibida caso o valor seja considerado      |
+|          | inválido.                                                    |
+*----------+--------------------------------------------------------------+
+
+-----
+<bean name="myBean" target="br.myapp.MyBean">
+  <constructor-arg bean="val">
+    <validator message="The ${value} is invalid!">
+      <rule name="min_length">3</rule>
+      <rule name="max_length">60</rule>
+    </validator>
+  </contructor-arg>
+</bean>
+-----
+
+* Regras de validação pré-definidas.
+
+ No Brutos MVC existem algumas regras de validação pré-definidas. Se for necessário,
+ é possível criar novas regras de validação.
+
+ Segue abaixo as regras de validação pré-definidas:
+
+*------------+--------------------------------------------------------------+
+| Regra      | Descrição                                                    |
+*------------+--------------------------------------------------------------+
+| min        | Define o valor mínimo. Somente usado em valores numéricos    |
+*------------+--------------------------------------------------------------+
+| max        | Define o valor máximo. Somente usado em valores numéricos    |
+*------------+--------------------------------------------------------------+
+| min_length | Define o tamanho mínimo.                                     |
+*------------+--------------------------------------------------------------+
+| max_length | Define o tamanho maximo.                                     |
+*------------+--------------------------------------------------------------+
+| matches    | É validado a partir de uma expressão regular.                |
+*------------+--------------------------------------------------------------+
+| required   | O valor é obrigatório.                                       |
+*------------+--------------------------------------------------------------+
+| equal      | O valor tem que ser igual a outro pré-definido.              |
+*------------+--------------------------------------------------------------+
