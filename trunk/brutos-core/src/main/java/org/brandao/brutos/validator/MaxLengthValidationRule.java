@@ -25,7 +25,7 @@ import org.brandao.brutos.type.Types;
  *
  * @author Brandao
  */
-public class MaxlengthValidationRule implements ValidationRule{
+public class MaxLengthValidationRule implements ValidationRule{
 
     private Type integerType = Types.getType(Integer.class);
 
