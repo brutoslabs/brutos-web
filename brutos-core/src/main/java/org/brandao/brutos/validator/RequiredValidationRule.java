@@ -20,13 +20,16 @@ package org.brandao.brutos.validator;
 import java.util.Properties;
 
 /**
- * 
- * @author Afonso Brandao
+ *
+ * @author Brandao
  */
-public interface Validator {
+public class RequiredValidationRule implements ValidationRule{
 
-    public void configure( Properties config );
-
-    public void validate(Object source, Object value) throws ValidatorException;
+    public void validate(Properties config, Object source, Object value) {
+            if( config.containsKey( RestrictionRules.REQUIRED.toString() ) ){
+                if( value == null )
+                    throw new ValidatorException();
+            }
+    }
 
 }

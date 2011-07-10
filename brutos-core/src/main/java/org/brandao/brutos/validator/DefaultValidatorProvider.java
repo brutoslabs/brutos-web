@@ -17,8 +17,12 @@
 
 package org.brandao.brutos.validator;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.mapping.DependencyBean;
@@ -32,6 +36,7 @@ import org.brandao.brutos.type.Types;
  */
 public class DefaultValidatorProvider extends ValidatorProvider{
 
+    /*
     public static class DefaultValidator implements Validator{
 
         private Type integerType = Types.getType(Integer.class);
@@ -135,14 +140,64 @@ public class DefaultValidatorProvider extends ValidatorProvider{
         }
 
     }
+    */
 
-    public void configure(Properties config) {
+    public static final String PREFIX_NAME =
+                                "org.brandao.brutos.validator.rules.";
+
+    private Map rules;
+
+    public void configure(Properties config){
+        rules = new HashMap();
+        load(config);
     }
 
-    public Validator getValidator(Configuration config) {
-        Validator validator = new DefaultValidator();
+    private void load(Properties config){
+        List staticRules = RestrictionRules.getRestrictionRules();
+        int size = staticRules.size();
+        for( int i=0;i<size;i++ ){
+            RestrictionRules ruleId = (RestrictionRules) staticRules.get(i);
+            ValidationRule rule = getInstance(getClassName(ruleId.toString()));
+            rules.put(ruleId.toString(), rule);
+        }
+
+        Iterator keys = config.stringPropertyNames().iterator();
+
+        while( keys.hasNext() ){
+            String key = (String) keys.next();
+            if( key.startsWith(PREFIX_NAME) ){
+                String name = key.substring(PREFIX_NAME.length(),key.length());
+                ValidationRule rule = getInstance(config.getProperty(key));
+                rules.put(name.toLowerCase(), rule);
+            }
+        }
+    }
+
+    private ValidationRule getInstance(String name){
+        try{
+            Class clazz = Class.forName(name, true, Thread.currentThread().getContextClassLoader());
+            return (ValidationRule)clazz.newInstance();
+        }
+        catch( Exception e ){
+            throw new BrutosException(e);
+        }
+    }
+
+    private String getClassName(String name){
+        return "org.brandao.brutos.validator." +
+                getCanonicalName(name) + "ValidationRule";
+    }
+    
+    private String getCanonicalName(String name){
+        return
+            Character.toString(name.charAt(0)).toUpperCase() +
+            name.subSequence(1, name.length());
+    }
+
+    public Validator getValidator(Properties config) {
+        Validator validator = new DefaultValidator(this.rules);
         validator.configure(config);
         return validator;
     }
-    
+
 }
