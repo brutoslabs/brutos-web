@@ -29,9 +29,9 @@ import java.util.Map;
 public class RestrictionRules {
 
     public static final RestrictionRules MIN         = new RestrictionRules( "min" );
-    public static final RestrictionRules MIN_LENGTH  = new RestrictionRules( "min_length" );
+    public static final RestrictionRules MINLENGTH  = new RestrictionRules( "minlength" );
     public static final RestrictionRules MAX         = new RestrictionRules( "max" );
-    public static final RestrictionRules MAX_LENGTH  = new RestrictionRules( "max_length" );
+    public static final RestrictionRules MAXLENGTH  = new RestrictionRules( "maxlength" );
     public static final RestrictionRules MATCHES     = new RestrictionRules( "matches" );
     public static final RestrictionRules REQUIRED    = new RestrictionRules( "required" );
     public static final RestrictionRules EQUAL       = new RestrictionRules( "equal" );
@@ -40,9 +40,9 @@ public class RestrictionRules {
 
     static{
         defaultRules.put( RestrictionRules.MIN.toString(),        RestrictionRules.MIN );
-        defaultRules.put( RestrictionRules.MIN_LENGTH.toString(), RestrictionRules.MIN_LENGTH );
+        defaultRules.put( RestrictionRules.MINLENGTH.toString(), RestrictionRules.MINLENGTH );
         defaultRules.put( RestrictionRules.MAX.toString(),        RestrictionRules.MAX );
-        defaultRules.put( RestrictionRules.MAX_LENGTH.toString(), RestrictionRules.MAX_LENGTH );
+        defaultRules.put( RestrictionRules.MAXLENGTH.toString(), RestrictionRules.MAXLENGTH );
         defaultRules.put( RestrictionRules.MATCHES.toString(),    RestrictionRules.MATCHES );
         defaultRules.put( RestrictionRules.REQUIRED.toString(),   RestrictionRules.REQUIRED );
         defaultRules.put( RestrictionRules.EQUAL.toString(),      RestrictionRules.EQUAL );

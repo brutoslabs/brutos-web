@@ -15,18 +15,17 @@
  *
  */
 
+
 package org.brandao.brutos.validator;
 
 import java.util.Properties;
 
 /**
- * 
- * @author Afonso Brandao
+ *
+ * @author Brandao
  */
-public interface Validator {
+public interface ValidationRule {
 
-    public void configure( Properties config );
-
-    public void validate(Object source, Object value) throws ValidatorException;
-
+    public void validate(Properties config, Object source, Object value)
+            throws ValidatorException;
 }

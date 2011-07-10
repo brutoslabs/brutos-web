@@ -72,7 +72,7 @@ public abstract class ValidatorProvider {
      * @param config Configuration.
      * @return The validator.
      */
-    public abstract Validator getValidator( Configuration config );
+    public abstract Validator getValidator( Properties config );
 
     
 }
