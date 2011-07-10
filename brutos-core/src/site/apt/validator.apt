@@ -51,3 +51,56 @@ Validação
 *------------+--------------------------------------------------------------+
 | equal      | O valor tem que ser igual a outro pré-definido.              |
 *------------+--------------------------------------------------------------+
+
+* Customizando uma regra de validação
+
+ Se necessário, é possivel criar regras de validação.
+ Um validador tem que implementar a interface ValidationRule.
+
+ Veja o exemplo abaixo:
+
+-----
+public class RangeValidationRule implements ValidationRule{
+
+    public void validate(Properties config, Object source, Object value)
+            throws ValidatorException {
+
+        if( !(value instanceof Number) )
+            throw new ValidatorException("invalid type: " +  value.getClass());
+
+        String range = config.getProperty("range");
+        if( !range.matches("\\d+-\\d+") )
+            throw new ValidatorException("invalid range syntax: " +  range );
+
+        String[] vals = range.split("-");
+        Integer start = Integer.parseInt(vals[0]);
+        Integer end = Integer.parseInt(vals[1]);
+
+        Integer val = ((Number)value).intValue();
+        if( val<start || val>end )
+            throw new ValidatorException();
+    }
+
+}
+-----
+
+ A configuração deve ser como segue:
+
+-----
+<context:params>
+ <context:param name="org.brandao.brutos.validator.rules.range"
+   value="RangeValidationRule"/>
+<context:params>
+-----
+
+ e deve ser usado da seguine forma:
+
+-----
+<bean name="myBean" target="br.myapp.MyBean">
+  <constructor-arg bean="val">
+    <validator message="The ${value} is invalid!">
+      <rule name="range">3-60</rule>
+    </validator>
+  </contructor-arg>
+</bean>
+-----
