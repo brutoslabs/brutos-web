@@ -1,20 +1,21 @@
 Mapeamento de beans
 
- Um recurso muito útil do Brutos MVC é o mapeamento de beans, bem parecido com
+ Um recurso muito útil do Brutos MVC é o mapeamento de beans. Bem parecido com
  IoC. Com ele é possível construir as propriedades de um controlador ou até mesmo
  construir os parâmetros de uma ação.
 
 * Instanciando um bean
 
- O mapeamento de beans somente é permitido nas propriedades de um controlador e
- nos parâmetros de uma ação. Para que o Brutos MVC possa instânciar um bean, é
- necessário definir como. Essa definição nada mais é que informar ao Brutos MVC
- como o bean deve ser criado.
+ O mapeamento de beans somente é usado na criação das propriedades de um
+ controlador e dos parâmetros de uma ação.
+
+ Para que o Brutos MVC possa instanciar um bean, é  necessário definir como.
+ Essa definição nada mais é que informar ao Brutos MVC como o bean deve ser construído.
 
  O elemento usado para se definir um bean é \<bean/\>. Sendo que o tipo do bean
- é denido pelo atributo target. Esse atributo é usado em dois casos.
+ é definido pelo atributo target. Esse atributo é usado em dois casos:
 
- No primeiro caso, define a classe do bean que será construido, que se equivale
+ No primeiro caso, define a classe do bean que será construído, que se equivale
  ao new. Já no outro caso, é usado para invocar um método estático de uma
  fábrica para criar o objeto. O tipo do objeto retornado por esse método
  pode ser a mesma do bean ou não.
@@ -22,7 +23,7 @@ Mapeamento de beans
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
 | Atributo              | Descrição                                                                                                             |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| nome                  | Identificação o bean.                                                                                                |
+| name                  | Identificação o bean.                                                                                                |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
 | separator             | Representação da separação do bean das suas dependências.                                                             |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
@@ -31,7 +32,7 @@ Mapeamento de beans
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
 | factory               | Fábrica do bean.                                                                                                      |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
-| method-factory        | Método da fábrica que irá instânciar o bean.                                                                          |
+| method-factory        | Método da fábrica que irá instanciar o bean.                                                                          |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
 | target                | Classe alvo do mapeamento                                                                                             |
 *-----------------------+-----------------------------------------------------------------------------------------------------------------------+
@@ -45,7 +46,7 @@ Mapeamento de beans
 </controller>
 ------
 
- outro exemplo de como pode ser feito o mapeamento de um bean:
+ Veja outro exemplo de como pode ser feito o mapeamento de um bean:
 
 ------
 <controller ...>
@@ -59,13 +60,9 @@ Mapeamento de beans
 
 * Injeção de dependência por construtor
 
- A injeção é feita ao invocar um construtor com um número específico de argumentos,
- sendo que cada um representa uma dependência. Também é equivalente
- a chamada de um metodo de uma fábrica com uma quantidade específica de
- argumentos para a construção de um bean.
+ A injeção é feita invocando um construtor com um número específico de argumentos, sendo que cada um representa uma dependência. Também é equivalente a chamada de um método de uma fábrica com uma quantidade específica de argumentos para a construção de um bean.
 
- Sua definiçao é feita usando o elemento \<constructor-arg/\>. Somente
- é permitido o seu uso no elemento \<bean/\>.
+ Sua definição é feita usando o elemento \<constructor-arg/\>. Somente é permitido o seu uso no elemento \<bean/\>.
 
  O elemento \<constructor-arg/\> possui os seguintes atributos:
 
@@ -107,10 +104,10 @@ Mapeamento de beans
 
 * Injeção de dependência por método
 
- A injeção é feita ao invocar um método de um bean depois de instânciado.
+ A injeção é feita invocando um método de um bean depois de instanciado.
 
- A injeção de dependência por método é feita usando o elemento \<property/\>. Somente
- é permitido o seu uso nos elementos \<bean/\> e \<controller/\>.
+ Sua definição é feita usando o elemento \<property/\>. Somente é permitido o seu uso nos elementos \<bean/\> e \<controller/\>.
+
  O elemento \<property/\> possui os seguintes atributos:
 
 *------------------+--------------------------------------------------------------------+
@@ -151,7 +148,7 @@ Mapeamento de beans
 
 * Injetando valores primitivos e String
 
- A injeção de valores primitivos e string é feita usando o elemento \<value/\>.
+ A injeção de valores primitivos e string são feitas usando o elemento \<value/\>.
  Somente é permitido o seu uso nos elementos \<constructor-arg/\> e \<property/\>.
 
  Veja alguns exemplos:
@@ -182,8 +179,8 @@ Mapeamento de beans
 
 * Referência a outros beans
 
- A injeção de beans é feita usando a tag \<ref/\>. Somente é permitido o seu
- uso nos elementos \<constructor-arg/\> e \<property/\>.
+ A injeção de beans é feita usando a tag \<ref/\>. Somente é permitido o seu uso nos elementos \<constructor-arg/\> e \<property/\>.
+
  O elemento \<ref/\> possui os seguintes atributos:
 
 *------------------+--------------------------------------------------------------------+
@@ -191,7 +188,7 @@ Mapeamento de beans
 *------------------+--------------------------------------------------------------------+
 |bean              | Identificação do bean.                                             |
 *------------------+--------------------------------------------------------------------+
-|value             | Valor do argumento.                                                |
+|value             | Valor.                                                             |
 *------------------+--------------------------------------------------------------------+
 |enum-property     | Usado no mapeamento de enum. Permite dois valores:                 |
 |                  | ordinal: o enum é representado por um inteiro;                     |
@@ -210,7 +207,7 @@ Mapeamento de beans
 |                  | A classe deve implementar a interface org.brandao.brutos.type.Type.|
 *------------------+--------------------------------------------------------------------+
 
- veja abaixo um exemplo:
+ Veja abaixo um exemplo:
 
 ------
 <bean name="MyBean" class="...">
@@ -223,9 +220,7 @@ Mapeamento de beans
 * Coleções
 
  A injeção dos tipos List, Set, Map e Properties também são feitos com o elemento
- \<bean/\>. O que diferência é o uso dos elementos \<element/\> e \<key/\>. 
- Somente é permitido o seu uso no elemento \<bean/\>.
-
+ \<bean/\>. O que diferencia é o uso dos elementos \<element/\> e \<key/\>.
  O elemento \<key/\> somente é necessário para os tipos Map e Properties.
 
 ------
