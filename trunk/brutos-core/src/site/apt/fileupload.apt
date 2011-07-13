@@ -1,15 +1,15 @@
 File upload
 
- O Brutos possui suporte nativo ao upload de arquivos. Sendo possível configurar
+ O Brutos MVC possui suporte nativo ao upload de arquivos. Sendo possível configurar
  o tamanho máximo dos dados a serem recebidos e o local que os arquivos serão
  gravados. Se preferir é possível usar uma API para fazer o upload, como por
  exemplo o Jakarta Commons-FileUpload.
 
 * Definindo o tamanho máximo e o repositório de arquivos
 
- Para definir o tamanho máximo você deve informar a variável
+ Para definir o tamanho máximo você deve usar a variável
  org.brandao.brutos.request.max_length dentro da tag \<params/\> no
- arquivo brutos-config.xml.
+ arquivo brutos-config.xml ou se preferir pode ser informado no web.xml.
 
  ex:
 
@@ -21,10 +21,9 @@ File upload
 </params>
 ------
 
- Para definir o repositório de arquivos você deve informar a variável
+ Para definir o repositório de arquivos você deve usar a variável
  org.brandao.brutos.request.path dentro da tag \<params/\> no arquivo
- brutos-config.xml. Se omitido seré gerado um arquivo temporário por arquivo
- enviado.
+ brutos-config.xml ou se preferir pode ser informado no web.xml. Se omitido será gerado um arquivo temporário por arquivo enviado.
 
  ex:
 
@@ -81,7 +80,7 @@ class="FileController" action-id="action" >
 </controller>
 ------
 
- View:
+ Visão:
 
 ------
 <html>
@@ -114,12 +113,9 @@ class="FileController" action-id="action" >
 
 * Customizando o upload de arquivos
 
- Se preferir, é possível que você customize o processamento dos arquivos
- recebisos em uma requisição.
+ Se preferir, é possível que você customize o processamento dos arquivos recebidos em uma requisição.
 
- O processamento de uma requisição no Brutos web MVC é feito por meio da implementação
- dos métodos da interface org.brandao.brutos.web.http.HttpRequestParser. Mas é
- aconselhavel herdar as características da classe org.brandao.brutos.web.http.HttpRequestParserImp.
+ O processamento de uma requisição no Brutos web MVC é feito por meio da implementação dos métodos da interface org.brandao.brutos.web.http.HttpRequestParser. Mas é aconselhável herdar as características da classe org.brandao.brutos.web.http.HttpRequestParserImp.
 
  Veja o exemplo abaixo:
 

@@ -1,25 +1,19 @@
-Interceptadores
+Interceptadres
 
  O uso de interceptadores é necessário quando precisamos executar tarefas antes
- e/ou depois do controlador ser executado, normalmente usado para controle de
- acesso, validação de dados, controle de transação e geração de log.
+ e/ou depois de uma ação ser executada, normalmente usado para controle de acesso, validação de dados, controle de transação e geração de log.
 
- No Brutos MVC é possíel trabalhar com um ou mais interceptadores, podendo
- definir quais recursos serão interceptados, a ordem com que serão  executados
- e os parâmetros necessários para a sua configuração.
+ No Brutos MVC é possível trabalhar com um ou mais interceptadores, podendo definir quais ações serão interceptadas, a ordem com que serão  executados e os parâmetros necessários para a sua configuração.
 
- Sua instância é controlada pelo container IOC, podendo assim, receber a injeção
- de objetos por construtor ou método.
+ Sua instância é controlada pelo container IOC, podendo assim, receber a injeção de objetos por construtor ou método.
 
- Um interceptador é definido usando o elemento \<interceptor/\>. Somente é permitido o seu
- uso no elemento \<interceptors/\>. O elemento \<interceptor/\> possui os seguintes
- atributos:
+ Um interceptador é definido usando o elemento \<interceptor/\>. Somente é permitido o seu uso no elemento \<interceptors/\>. O elemento \<interceptor/\> possui os seguintes atributos:
 
 *----------+-------------------------------------------------------------+
 | Atributo | Descrição                                                   |
 *----------+-------------------------------------------------------------+
-| name 	   | Identifica do interceptador. Usado na configuração do       |
-|          | container IOC.                                              |
+| name 	   | Identificação do interceptador. Usado na configuração do       |
+|          | container IOC.                                           |
 *----------+-------------------------------------------------------------+
 | class    | Nome completo da classe.                                    |
 *----------+-------------------------------------------------------------+
@@ -27,9 +21,7 @@ Interceptadores
 |          | interceptados pelo interceptador.                           |
 *----------+-------------------------------------------------------------+
 
- No exemplo a seguir, o interceptador é responsável por gerar um log e está
- configurado para interceptar todos os controladores. Veja logo a baixo o
- interceptador LoggerInterceptor e o trecho XML da configuração do mesmo:
+ No exemplo a seguir, o interceptador irá gerar um log e está configurado para interceptar todos os controladores. Veja logo a baixo o interceptador LoggerInterceptor e o trecho XML da configuração do mesmo:
 
 ------
 public class LoggerInterceptor extends AbstractInterceptor{
@@ -81,12 +73,14 @@ public class LoggerInterceptor extends AbstractInterceptor{
  É possível definir configurações globais ou específicas para cada controlador.
  Essa configuração é definida usando o elemento \<param/\>. Somente é permitido o seu
  uso nos elementos \<interceptor/\> e \<interceptor-ref/\>. O elemento \<param/\>
- possui o seguinte atributo:
+ possui os seguintes atributos:
 
 *----------+--------------------+
 | Atributo | Descrição          |
 *----------*--------------------+
 | name     | Nome do parâmetro. |
+*----------+--------------------+
+| value    | Valor do parâmetro.|
 *----------+--------------------+
 
  No exemplo a seguir é definido um parâmetro global que é substituído em
