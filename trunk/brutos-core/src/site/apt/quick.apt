@@ -1,7 +1,6 @@
 Quick Start
 
- Para podermos trabalhar com o Brutos web MVC em um projeto Java web,
- temos que seguir os seguintes passos:
+ Para podermos trabalhar com o Brutos web MVC em um projeto Java web, temos que seguir os seguintes passos:
 
  * Fazer o download da última versão do Brutos.
 
@@ -28,7 +27,7 @@ Quick Start
 </servlet-mapping>
 ------
 
- * Gerar o arquivo brutos-config.xml na pasta /WEB-INF ou no default package.
+ * Gerar o arquivo brutos-config.xml na pasta /WEB-INF.
 
 ------
 <controllers  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
@@ -40,12 +39,10 @@ Quick Start
 
 O primeiro projeto
 
- Nesse projeto nós iremos utilizar como container IOC o {{{http://www.springsource.org//}Spring}}.Tendo como
- objetivo exibir uma mensagem. Depois de fazer o download e configurar o Brutos web MVC, 
- temos que gerar um controlador. Perceba que o controlador, mostrado logo abaixo,
- nada mais é que uma simples classe que não está vinculada as classes Servlet,
- HttpServletRequest, HttpServletResponse e a nenhum classe do framework Brutos
- MVC.
+ Nesse projeto nós iremos utilizar como container IOC o {{{http://www.springsource.org//}Spring}}.Tendo como objetivo exibir uma mensagem. Depois de fazer o download e configurar o Brutos web MVC,  temos que gerar um controlador.
+
+ Perceba que o controlador, mostrado logo abaixo, nada mais é que uma simples classe que não está vinculada as classes Servlet,
+ HttpServletRequest, HttpServletResponse e a nenhum classe do framework Brutos MVC.
 
 ------
 /*
@@ -85,8 +82,7 @@ public class IndexController {
 }
 ------
 
- Após gerado o controlador, vamos gerar a página que irá exibir a mensagem. Note
- que, a página é uma simples página jsp.
+ Depois de gerado o controlador, vamos gerar a visão que irá exibir a mensagem. Note que a visão é uma simples página jsp.
 
 ------
 <%--
@@ -109,8 +105,8 @@ public class IndexController {
 </html>
 ------
 
- Agora que já geramos o controlador e a página, vamos associar o controlador
- IndexController a página index.jsp e o URI index.jbrs.
+ Agora que já geramos o controlador e a visão, vamos associar o controlador
+ IndexController a visão index.jsp e o URI index.jbrs.
 
 ------
 <controller id="/index.jbrs" view="/WEB-INF/jsp/index.jsp"
