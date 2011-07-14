@@ -1,7 +1,7 @@
 Download com o Maven
 
- Se voc� estiver utilizando o {{{http://maven.apache.org/}Maven 2}} para compilar o seu projeto,
- o download do Brutos pode ser gerenciado via depend�ncia do Maven:
+ Se você estiver utilizando o {{{http://maven.apache.org/}Maven 2}} para compilar o seu projeto,
+ o download do Brutos pode ser gerenciado via dependência do Maven:
 
 ------
 <dependencies>

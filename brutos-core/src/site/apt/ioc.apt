@@ -31,15 +31,11 @@ Inversão de controle e injeção de dependência
 </controllers>
 -----
 
-* Usando o container IoC do Spring
+* Usando o Spring IoC.
 
-  Spring é um dos mais populares frameworks. Além disso, existem algumas características
-  surpreendentes como AOP. Então se você gostaria de aproveitar esses recursos do Spring
-  que não tem como reconstruir, você pode integrar sua aplicação Brutos com Spring sem
-  muito trabalho.
+  Spring é um dos mais populares frameworks. Além disso, existem algumas características surpreendentes como AOP. Então se você gostaria de aproveitar esses recursos do Spring que não tem como reconstruir, você pode integrar sua aplicação Brutos com Spring sem muito trabalho.
 
- Para intergar o Brutos MVC com Spring basta usar o provedor SpringIOCProvider. Veja o exemplo
- abaixo:
+ Para integrar o Brutos MVC com Spring basta usar o provedor SpringIOCProvider. Veja o exemplo abaixo:
 
 -----
 <controllers  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
@@ -61,14 +57,11 @@ Inversão de controle e injeção de dependência
 </controllers>
 -----
 
- Depois de feita essa configuração no Burtos MVC, basta fazer as configurações que
- você já está acostumado no Spring.
+ Depois de feita essa configuração no Burtos MVC, basta fazer as configurações que você já está acostumado no Spring.
 
 * Customizando um provedor IoC
 
- Se você precisa usar um container IoC que ainda o Brutos MVC não tem suporte, basta
- implementar os métodos abstratos da classe org.brandao.brutos.ioc.IOCProvider e
- configurar o Brutos MVC.
+ Se você precisa usar um container IoC que ainda o Brutos MVC não tem suporte, basta implementar os métodos abstratos da classe org.brandao.brutos.ioc.IOCProvider e configurar o Brutos MVC.
 
  Veja o exemplo abaixo:
 
@@ -102,7 +95,7 @@ public class MyIOCProvider extends IOCProvider{
 }
 -----
 
- Para usar o recem criado provedor basta fazer como o exemplo abaixo:
+ Para usar o recém criado provedor basta fazer como o exemplo abaixo:
 
 -----
    <context:params>
