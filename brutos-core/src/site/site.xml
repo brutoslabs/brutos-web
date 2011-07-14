@@ -66,7 +66,7 @@
           <item name="Beans" href="bean.html"/>
           <item name="Interceptor" href="interceptor.html"/>
         </menu>
-        <menu name="Exemplos">
+        <!--<menu name="Exemplos">
           <item name="Brutos+PicoContainer" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+PicoContainer.zip/download"/>
           <item name="Brutos+Spring" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+Spring.zip/download"/>
           <item name="File upload" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosFileUpload.zip/download"/>
@@ -76,6 +76,6 @@
           <item name="CustomTypes" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosCustomType.zip/download"/>
           <item name="Serializing Bean to XML" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosSerializingBeanToXML.zip/download"/>
           <item name="Serializing Bean to Json" href="http://http//sourceforge.net/projects/brutos/files/brutos/examples/BrutosJson.zip/download"/>
-        </menu>
+        </menu>-->
     </body>
 </project>
