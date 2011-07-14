@@ -1,10 +1,24 @@
 ChangeLog
 
+* 2.0-SNAPSHOT
+
+ Está disponível para download o último snapshot da versão 2.0 do Brutos.
+ O framework foi totalmente reformulado, não sendo possível manter a compatibilidade
+ com as versões anteriores.
+
+* 1.3-RC1
+
+ Está disponível para download versão 1.3-RC1 do Brutos. O download pode ser feito na
+ página de downloads e as alterações feitas estão descritas logo abaixo:
+
+ * Incluído suporte ao JBRGates.
+ * Corrigidos alguns bugs.
+
 * 1.3-SNAPSHOT-20100706-100437
 
  * Corrigidos bugs do mapeamento de beans.
 
- * Corrigidos bugs da obten��o de dados da requisi��o.
+ * Corrigidos bugs da obtenção de dados da requisição.
 
  * Corrigidos bugs do redirecionamento entre controladores.
 
@@ -12,7 +26,7 @@ ChangeLog
 
  * adicionado flash scope.
 
- * adicionado suporte � customiza��o de escopos.
+ * adicionado suporte à customização de escopos.
 
  * adicionado ioc scope.
 
