@@ -77,7 +77,7 @@ Configurando uma aplicação
 
  Uma propriedade pode ser de tipo primitivo ou não. No caso de um objeto, pode ser criado um mapeamento para definir como os valores da requisição serão injetados nas propriedades do controlador. Além de ser possível a configuração de propriedades do tipo Enum e Date.
 
-A configuração de uma propriedade é feita usando o elemento \<property/\>. Somente é permitido o seu uso nos elementos \<controller/\> e \<bean/\>. O elemento
+ A configuração de uma propriedade é feita usando o elemento \<property/\>. Somente é permitido o seu uso nos elementos \<controller/\> e \<bean/\>. O elemento
  \<property/\> possui os seguintes atributos:
 
 *------------------+--------------------------------------------------------------------+
@@ -208,7 +208,7 @@ A configuração de uma propriedade é feita usando o elemento \<property/\>. So
 
  Um parâmetro de uma ação pode ser de tipo primitivo ou não. No caso de um objeto, pode ser criado um mapeamento para definir como os valores da requisição serão injetados nas propriedades do objeto. Além de ser possível a configuração de propriedades do tipo Enum e Date.
 
-A configuração de um parâmetro é feita usando o elemento \<parameter/\>. Somente é permitido o seu uso no elemento \<action/\>.
+ A configuração de um parâmetro é feita usando o elemento \<parameter/\>. Somente é permitido o seu uso no elemento \<action/\>.
  O elemento \<parameter/\> possui os seguintes atributos:
 
 *------------------+--------------------------------------------------------------------+
