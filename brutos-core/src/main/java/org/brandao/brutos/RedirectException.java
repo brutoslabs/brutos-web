@@ -18,16 +18,23 @@
 package org.brandao.brutos;
 
 /**
- * Lançada quando ocorre um redirecionamento.
+ * Lanï¿½ada quando ocorre um redirecionamento.
  * 
  * @author Afonso Brandao
  */
 public class RedirectException extends BrutosException{
     
     private String page;
-    
+    private String view;
+    private DispatcherType dispatcher;
+
     public RedirectException() {
 	super();
+    }
+
+    public RedirectException(String view, DispatcherType dispatcher) {
+	this.dispatcher = dispatcher;
+        this.view = view;
     }
 
     public RedirectException(String message) {
@@ -42,12 +49,28 @@ public class RedirectException extends BrutosException{
         super(cause);
     }
 
+    /**
+     * @deprecated
+     * @return
+     */
     public String getPage() {
         return page;
     }
 
+    /**
+     * @deprecated
+     * @return
+     */
     public void setPage(String page) {
         this.page = page;
+    }
+
+    public String getView() {
+        return view;
+    }
+
+    public DispatcherType getDispatcher() {
+        return dispatcher;
     }
     
 }
