@@ -19,10 +19,10 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.old.programatic.WebFrameManager;
+import org.brandao.brutos.mapping.MethodForm;
 
 /**
- * Interface usada na resolu��o de controladores.
+ * Interface usada na resolução de controladores.
  *
  * @author Afonso Brandao
  */
@@ -37,11 +37,18 @@ public interface ControllerResolver {
     //public Form getController( WebFrameManager webFrameManager, HttpServletRequest request );
 
     /**
-     * Obt�m um controlador de acordo com a requisi��o.
+     * Obtém um controlador de acordo com a requisição.
      * @param controllerManager Gestor dos controladores.
-     * @param handler Manipulador da requisi��o.
+     * @param handler Manipulador da requisição.
      * @return Controlador.
      */
-    public Controller getController( ControllerManager controllerManager, InterceptorHandler handler );
+    Controller getController( ControllerManager controllerManager, InterceptorHandler handler );
+
+    /**
+     * Obtém a identificação do controlador.
+     * @param controller Controlador
+     * @return Identificação.
+     */
+    String getControllerId(Controller controller, MethodForm action);
     
 }

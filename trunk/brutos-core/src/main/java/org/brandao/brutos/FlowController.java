@@ -28,16 +28,16 @@ import org.brandao.brutos.mapping.MethodForm;
  */
 public class FlowController {
 
-    private StackRequestElement stackRequestElement;
     private ConfigurableApplicationContext context;
+    private DispatcherType dispatcher;
 
     public FlowController(){
         this(null, null);
     }
     
-    public FlowController(StackRequestElement stackRequestElement,
+    public FlowController(DispatcherType dispatcher,
             ConfigurableApplicationContext context){
-        this.stackRequestElement = stackRequestElement;
+        this.dispatcher = dispatcher;
         this.context = context;
     }
 
@@ -49,28 +49,36 @@ public class FlowController {
     public static FlowController dispatcher( DispatcherType dispatcher ){
         ConfigurableApplicationContext app =
                 Invoker.getCurrentApplicationContext();
-        Invoker invoker = app.getInvoker();
-        StackRequestElement element =
-                invoker.createStackRequestElement();
+        //Invoker invoker = app.getInvoker();
+        //StackRequestElement element =
+        //        invoker.createStackRequestElement();
 
-        element.setDispatcherType(dispatcher);
-        return new FlowController(element, app);
+        //element.setDispatcherType(dispatcher);
+        return new FlowController(dispatcher, app);
     }
 
-    private void to(Class clazz, String actionName, String view){
+    private static void to(Class clazz, String actionName, String view,
+            DispatcherType dispatcher, ConfigurableApplicationContext context){
         if( view != null ){
-            ConfigurableApplicationContext app =
+            throw new RedirectException(view,dispatcher);
+            /*ConfigurableApplicationContext app =
                     Invoker.getCurrentApplicationContext();
             
             StackRequestElement sre =
                     app.getInvoker().getStackRequestElement();
             sre.setDispatcherType(this.stackRequestElement.getDispatcherType());
             sre.setView(view);
+            */
         }
         else{
             ControllerManager cm = context.getControllerManager();
             Controller co = cm.getController(clazz);
             MethodForm action = co == null? null : co.getMethodByName(actionName);
+            String id =
+                    context.getControllerResolver().getControllerId(co, action);
+            throw new RedirectException(id,dispatcher);
+
+            /*
             ImpInterceptorHandler ih = new ImpInterceptorHandler();
             ih.setRequestId(null);
             ih.setContext(context);
@@ -82,16 +90,17 @@ public class FlowController {
             stackRequestElement.setView(view);
             stackRequestElement.setResource(ih.getResource());
             context.getInvoker().invoke(stackRequestElement);
+            */
         }
 
     }
     
     /**
-     * O fluxo é alterado para o controlador.
+     * O fluxo é alterado para o controlador. A ação default é executada.
      * @param clazz Clsse do controlador.
      */
     public void to( Class clazz ){
-        this.to(clazz, null, null);
+        to(clazz, null, null, dispatcher, context);
     }
 
     /**
@@ -99,10 +108,12 @@ public class FlowController {
      * informada.
      * @param value Identificação.
      */
-    public static void to( String value ){
-        ConfigurableApplicationContext app =
+    public void to( String value ){
+        /*ConfigurableApplicationContext app =
                 Invoker.getCurrentApplicationContext();
         app.getInvoker().invoke(value);
+        */
+        to(null,null,value,dispatcher,context);
     }
 
     /**
@@ -110,7 +121,7 @@ public class FlowController {
      * @param value
      */
     public void toView( String value ){
-        this.to(null, null, value);
+        to(null, null, value, dispatcher, context);
     }
 
     /**
@@ -119,6 +130,10 @@ public class FlowController {
      * @return Instância do controlador.
      */
     public Object toController( Class clazz ){
+        ConfigurableApplicationContext app =
+                Invoker.getCurrentApplicationContext();
+        StackRequestElement e = app.getInvoker().getStackRequestElement();
+        e.setDispatcherType(dispatcher);
         return context.getController(clazz);
     }
 
@@ -128,18 +143,20 @@ public class FlowController {
      * @param actionName Identificação da ação
      */
     public void toAction( Class clazz, String actionName ){
-        this.to(clazz, actionName, null);
+        to(clazz, actionName, null, dispatcher, context);
     }
 
-    /**
+    /*
      * Obtém o fluxo atual.
      * @return Fluxo.
      */
-    public FlowController getCurrentFlow(){
+    /*
+     public FlowController getCurrentFlow(){
         ConfigurableApplicationContext app =
                 Invoker.getCurrentApplicationContext();
         return new FlowController(
             app.getInvoker().getStackRequestElement(),
             app);
     }
+    */
 }
