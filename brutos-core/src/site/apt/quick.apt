@@ -48,7 +48,7 @@ O primeiro projeto
 ------
 /*
  * Brutos Web MVC http://brutos.sourceforge.net/
- * Copyright (C) 2009 Afonso Brand�o. (afonso.rbn@gmail.com)
+ * Copyright (C) 2009-2011 Afonso Brandao.
 */
 
 package br.brandao.controller;
