@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.*;
 import javax.servlet.http.HttpServletRequest;
+import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
@@ -111,6 +112,10 @@ public class WebControllerResolver implements ControllerResolver{
         */
 
         return null;
+    }
+
+    public String getControllerId(Controller controller, MethodForm action) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
