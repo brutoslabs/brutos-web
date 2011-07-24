@@ -17,9 +17,12 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
+import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.proxy.ProxyFactory;
 
 /**
  * Altera o fluxo de execução de uma ação.
@@ -47,36 +50,73 @@ public class FlowController {
      * @return Fluxo.
      */
     public static FlowController dispatcher( DispatcherType dispatcher ){
-        ConfigurableApplicationContext app =
+        ConfigurableApplicationContext context =
                 Invoker.getCurrentApplicationContext();
         //Invoker invoker = app.getInvoker();
         //StackRequestElement element =
         //        invoker.createStackRequestElement();
 
         //element.setDispatcherType(dispatcher);
-        return new FlowController(dispatcher, app);
+        return new FlowController(dispatcher, context);
     }
 
-    private static void to(Class clazz, String actionName, String view,
+    public static FlowController dispatcher(){
+        return dispatcher(DispatcherType.FORWARD);
+    }
+    private static Object to(Class clazz, String actionName, String view,
             DispatcherType dispatcher, ConfigurableApplicationContext context){
-        if( view != null ){
+        if( view != null )
             throw new RedirectException(view,dispatcher);
-            /*ConfigurableApplicationContext app =
-                    Invoker.getCurrentApplicationContext();
-            
-            StackRequestElement sre =
-                    app.getInvoker().getStackRequestElement();
-            sre.setDispatcherType(this.stackRequestElement.getDispatcherType());
-            sre.setView(view);
-            */
-        }
         else{
+            ControllerManager cm = context.getControllerManager();
+            Controller controller = cm.getController(clazz);
+
+            if( controller == null )
+                throw new BrutosException("can not find controller: " + clazz.getName());
+
+            MethodForm action =
+                controller == null?
+                    null :
+                    controller.getMethodByName(actionName);
+
+            if( dispatcher == DispatcherType.REDIRECT){
+                String id =
+                    context.getControllerResolver()
+                    .getControllerId(controller, action);
+                throw new RedirectException( id, dispatcher );
+            }
+
+            DefaultResourceAction resourceAction =
+                    new DefaultResourceAction(action);
+
+            ImpInterceptorHandler handler = new ImpInterceptorHandler();
+
+            handler.setContext(context);
+            handler.setResourceAction(resourceAction);
+            handler.setResource( 
+                controller == null?
+                    null :
+                    controller.getInstance(context.getIocProvider()));
+
+            StackRequestElementImp stackRequestElementImp =
+                    new StackRequestElementImp();
+
+            stackRequestElementImp.setAction(resourceAction);
+            stackRequestElementImp.setController(controller);
+            stackRequestElementImp.setHandler(handler);
+            stackRequestElementImp.setResource(handler.getResource());
+
+            context.getInvoker().invoke(stackRequestElementImp);
+            return stackRequestElementImp.getResultAction();
+
+            /*
             ControllerManager cm = context.getControllerManager();
             Controller co = cm.getController(clazz);
             MethodForm action = co == null? null : co.getMethodByName(actionName);
             String id =
                     context.getControllerResolver().getControllerId(co, action);
             throw new RedirectException(id,dispatcher);
+            */
 
             /*
             ImpInterceptorHandler ih = new ImpInterceptorHandler();
@@ -96,14 +136,6 @@ public class FlowController {
     }
     
     /**
-     * O fluxo é alterado para o controlador. A ação default é executada.
-     * @param clazz Clsse do controlador.
-     */
-    public void to( Class clazz ){
-        to(clazz, null, null, dispatcher, context);
-    }
-
-    /**
      * O fluxo é alterado para o controlador ou ação com a identificação
      * informada.
      * @param value Identificação.
@@ -117,24 +149,16 @@ public class FlowController {
     }
 
     /**
-     * O fluxo é alterado para uma determinada visão.
-     * @param value
-     */
-    public void toView( String value ){
-        to(null, null, value, dispatcher, context);
-    }
-
-    /**
      * O fluxo é alterado para uma ação associada a um método.
      * @param clazz Classe do controlador.
      * @return Instância do controlador.
      */
-    public Object toController( Class clazz ){
+    public Object to( Class clazz ){
         ConfigurableApplicationContext app =
                 Invoker.getCurrentApplicationContext();
         StackRequestElement e = app.getInvoker().getStackRequestElement();
         e.setDispatcherType(dispatcher);
-        return context.getController(clazz);
+        return getController(clazz);
     }
 
     /**
@@ -142,8 +166,8 @@ public class FlowController {
      * @param clazz Classe do controlador.
      * @param actionName Identificação da ação
      */
-    public void toAction( Class clazz, String actionName ){
-        to(clazz, actionName, null, dispatcher, context);
+    public Object to( Class clazz, String actionName ){
+        return to(clazz, actionName, null, dispatcher, context);
     }
 
     /*
@@ -159,4 +183,39 @@ public class FlowController {
             app);
     }
     */
+
+    private Object getController( Class controllerClass ){
+        ControllerManager controllerManager = context.getControllerManager();
+        IOCProvider iocProvider = context.getIocProvider();
+        CodeGeneratorProvider codeGeneratorProvider =
+                context.getCodeGeneratorProvider();
+
+        Controller controller =
+                controllerManager.getController(controllerClass);
+
+        if( controller == null )
+            throw new BrutosException(
+                String.format(
+                    "controller not configured: %s",
+                    controllerClass.getName() ));
+
+        Object resource = controller.getInstance(iocProvider);
+                //iocProvider.getBean(controller.getId());
+
+        ProxyFactory proxyFactory =
+                codeGeneratorProvider
+                    .getProxyFactory(controllerClass);
+
+        Object proxy =
+                proxyFactory
+                    .getNewProxy(
+                        resource,
+                        controller,
+                        dispatcher,
+                        context,
+                        context.getInvoker());
+
+        return proxy;
+    }
+
 }

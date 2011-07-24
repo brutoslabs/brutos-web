@@ -46,10 +46,6 @@ public class ApplicationContextWrapper
         this.applicationContext.destroy();
     }
 
-    public Object getController( Class controllerClass ){
-        return this.applicationContext.getController(controllerClass);
-    }
-
     public Properties getConfiguration(){
         return this.applicationContext.getConfiguration();
     }

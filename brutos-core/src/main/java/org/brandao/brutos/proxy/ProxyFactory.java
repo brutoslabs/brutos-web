@@ -17,8 +17,9 @@
 
 package org.brandao.brutos.proxy;
 
-import org.brandao.brutos.AbstractApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
 
@@ -28,7 +29,8 @@ import org.brandao.brutos.mapping.Controller;
  */
 public interface ProxyFactory {
 
-    public Object getNewProxy(Object resource,Controller form,
-            AbstractApplicationContext app, Invoker invoker) throws BrutosException;
+    public Object getNewProxy(Object resource,Controller form, 
+            DispatcherType dispatcherType,
+            ConfigurableApplicationContext app, Invoker invoker) throws BrutosException;
     
 }
