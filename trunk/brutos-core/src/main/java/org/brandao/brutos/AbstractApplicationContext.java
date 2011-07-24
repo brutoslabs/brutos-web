@@ -25,10 +25,8 @@ import org.brandao.brutos.io.DefaultResourceLoader;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
-import org.brandao.brutos.proxy.ProxyFactory;
 import org.brandao.brutos.scope.ApplicationScope;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.Scope;
@@ -333,38 +331,6 @@ public abstract class AbstractApplicationContext
      * @param controllerManager Gestor dos controladores.
      */
     protected void loadController( ControllerManager controllerManager ){
-    }
-
-    /**
-     * Obtém um determinado controlador.
-     * @param controllerClass Classe do controlador
-     * @return Controlador.
-     */
-    public Object getController( Class controllerClass ){
-        Controller controller =
-                controllerManager.getController(controllerClass);
-
-        if( controller == null )
-            throw new BrutosException(
-                String.format(
-                    "controller not configured: %s",
-                    controllerClass.getName() ));
-        
-        Object resource = controller.getInstance(iocProvider);
-                //iocProvider.getBean(controller.getId());
-
-        ProxyFactory proxyFactory =
-                codeGeneratorProvider
-                    .getProxyFactory(controllerClass);
-
-        Object proxy =
-                proxyFactory
-                    .getNewProxy(
-                        resource,
-                        controller,
-                        this, invoker);
-        
-        return proxy;
     }
 
     /**

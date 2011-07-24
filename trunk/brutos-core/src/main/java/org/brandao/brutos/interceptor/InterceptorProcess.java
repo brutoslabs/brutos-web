@@ -32,7 +32,6 @@ import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.RedirectException;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Action;
@@ -315,9 +314,10 @@ public class InterceptorProcess implements InterceptorStack{
         }
         catch( InvocationTargetException e ){
             if( e.getTargetException() instanceof RedirectException ){
+                RedirectException re = (RedirectException)e.getTargetException();
                 stackRequestElement.setView(
-                        ((RedirectException)e.getTargetException()).getPage());
-                stackRequestElement.setDispatcherType(DispatcherType.REDIRECT);
+                        re.getView());
+                stackRequestElement.setDispatcherType(re.getDispatcher());
                 /*
                 requestScope.put( 
                     BrutosConstants.REDIRECT,

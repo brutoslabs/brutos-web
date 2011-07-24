@@ -22,8 +22,9 @@ import javassist.*;
 import javassist.util.proxy.MethodHandler;
 import javassist.util.proxy.ProxyFactory;
 import javassist.util.proxy.ProxyObject;
-import org.brandao.brutos.AbstractApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
 
@@ -45,9 +46,17 @@ public class JavassistProxyFactory extends AbstractProxyFactory{
     }
 
     public Object getNewProxy(Object resource,Controller form,
-            AbstractApplicationContext app, Invoker invoker) throws BrutosException{
+            DispatcherType dispatcherType,
+            ConfigurableApplicationContext context, 
+            Invoker invoker) throws BrutosException{
+
         MethodHandler handler = 
-                new JavassistActionHandler(resource,form,app,invoker);
+                new JavassistActionHandler(
+                    resource,
+                    form,
+                    context,
+                    invoker,
+                    dispatcherType);
 
         try{
             ProxyObject instance = (ProxyObject)proxyClass.newInstance();

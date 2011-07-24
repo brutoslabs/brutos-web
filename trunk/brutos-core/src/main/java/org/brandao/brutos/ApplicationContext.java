@@ -59,13 +59,6 @@ public interface ApplicationContext {
     Properties getConfiguration();
 
     /**
-     * Obtém um determinado controlador.
-     * @param controllerClass Classe do controlador
-     * @return Controlador.
-     */
-    Object getController(Class controllerClass);
-
-    /**
      * Obtém o objeto responsável por receber a requisição do cliente.
      * @return Requisição.
      */

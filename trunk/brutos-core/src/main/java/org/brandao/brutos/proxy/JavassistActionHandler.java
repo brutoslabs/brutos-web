@@ -19,7 +19,8 @@
 package org.brandao.brutos.proxy;
 
 import javassist.util.proxy.MethodHandler;
-import org.brandao.brutos.AbstractApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
 
@@ -31,8 +32,9 @@ public class JavassistActionHandler extends ActionHandlerImp
         implements MethodHandler{
 
     public JavassistActionHandler(Object resource, Controller form,
-            AbstractApplicationContext app, Invoker invoker){
-        super(resource,form,app,invoker);
+            ConfigurableApplicationContext context, Invoker invoker,
+            DispatcherType dispatcherType){
+        super(resource,form,context,invoker,dispatcherType);
     }
 
 }
