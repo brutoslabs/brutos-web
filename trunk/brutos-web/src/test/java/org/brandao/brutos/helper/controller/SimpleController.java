@@ -19,6 +19,7 @@ package org.brandao.brutos.helper.controller;
 
 import java.util.Arrays;
 import junit.framework.TestCase;
+import org.brandao.brutos.FlowController;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 
@@ -64,21 +65,18 @@ public class SimpleController {
     }
 
     public void actionToOtherAction(){
-        WebApplicationContext context =
-                ContextLoader.getCurrentWebApplicationContext();
-
         SimpleController otherController =
-                (SimpleController) context.getController(SimpleController.class);
+                (SimpleController) FlowController
+                .dispatcher().to(SimpleController.class);
 
         otherController.actionWithParam(100);
     }
 
     public void actionToOtherActionWithReturn(){
-        WebApplicationContext context =
-                ContextLoader.getCurrentWebApplicationContext();
-
         SimpleController otherController =
-                (SimpleController) context.getController(SimpleController.class);
+                (SimpleController) FlowController
+                .dispatcher()
+                .to(SimpleController.class);
 
         String result =
                 otherController.actionWithReturnAndParam("myvalue");
