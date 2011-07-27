@@ -32,14 +32,18 @@ public class DefaultValidator implements Validator{
     private Properties config;
     private Map mappedRules;
     private Map rules;
-
+    private boolean initialized;
 
     public DefaultValidator(Map rules){
         this.mappedRules = rules;
     }
 
     public void configure(Properties config) {
-        this.config = config;
+        this.config      = config;
+        this.initialized = false;
+    }
+
+    private void init(){
         this.rules = new HashMap();
 
         Iterator keys = config.stringPropertyNames().iterator();
@@ -53,7 +57,7 @@ public class DefaultValidator implements Validator{
                     rules.put(key, rule);
             }
         }
-
+        this.initialized = true;
     }
 
     protected String getMessage(Object value, Properties config){
@@ -75,6 +79,10 @@ public class DefaultValidator implements Validator{
     }
 
     public void validate(Object source, Object value) throws ValidatorException {
+
+        if( !this.initialized )
+            this.init();
+        
         Iterator c = rules.values().iterator();
 
         try{
