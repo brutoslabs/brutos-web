@@ -72,6 +72,21 @@ public class SimpleController {
         otherController.actionWithParam(100);
     }
 
+    public void actionToOtherAction2(){
+        FlowController
+        .dispatcher()
+        .to( SimpleController.class, "test2ction" );
+    }
+
+    public void actionToOtherActionWithReturn2(){
+        String result =
+                (String) FlowController
+                .dispatcher()
+                .to(SimpleController.class,"test2ction");
+
+        TestCase.assertEquals( "MSG", result );
+    }
+
     public void actionToOtherActionWithReturn(){
         SimpleController otherController =
                 (SimpleController) FlowController
