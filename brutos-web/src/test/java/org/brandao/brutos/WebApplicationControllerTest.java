@@ -704,4 +704,50 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
         });
     }
 
+    public void testController29(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/controller/controller-test29.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(ScopeType.PARAM).put("value", "100");
+                    app.getInvoker().invoke("/testController.htm");
+
+                    MockViewProvider view = (MockViewProvider) app.getViewProvider();
+                    TestCase.assertEquals("/viewAction.jsp", view.getView());
+                }
+
+        });
+    }
+
+    public void testController30(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/controller/controller-test30.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(ScopeType.PARAM).put("value", "myvalue");
+                    app.getInvoker().invoke("/testController.htm");
+
+                    MockViewProvider view = (MockViewProvider) app.getViewProvider();
+                    TestCase.assertEquals("/viewAction2.jsp", view.getView());
+                }
+
+        });
+    }
+
 }
