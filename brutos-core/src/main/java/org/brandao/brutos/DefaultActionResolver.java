@@ -21,7 +21,6 @@ import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
-import org.brandao.brutos.Scopes;
 
 /**
  * Implementação padrão do ActionResolver.
@@ -30,16 +29,24 @@ import org.brandao.brutos.Scopes;
  */
 public class DefaultActionResolver implements ActionResolver{
     
-    private ResourceAction getResourceMethod( MethodForm methodForm ){
-        return new DefaultResourceAction( methodForm );
+    public ResourceAction getResourceAction(Controller controller,
+            InterceptorHandler handler) {
+        Scope scope = handler.getContext().getScopes().get(ScopeType.PARAM);
+        return getResourceAction(
+                controller,
+                String.valueOf( scope.get( controller.getMethodId() ) ),
+                handler );
     }
 
-    public ResourceAction getResourceAction(Controller controller, Scopes scopes,
+    public ResourceAction getResourceAction(Controller controller, String actionId,
             InterceptorHandler handler) {
-        Scope scope = scopes.get(ScopeType.PARAM);
         MethodForm method = controller
-                .getMethodByName( String.valueOf( scope.get( controller.getMethodId() ) ) );
-        return method == null? null : getResourceMethod( method );
+                .getMethodByName( actionId );
+        return method == null? null : getResourceAction( method );
+    }
+
+    public ResourceAction getResourceAction(MethodForm action) {
+        return new DefaultResourceAction( action );
     }
 
 }

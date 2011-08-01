@@ -75,7 +75,8 @@ public class DownloadType implements Type{
 
     public void setValue(Object value) throws IOException {
         if( value instanceof Download ){
-            ConfigurableApplicationContext app = Invoker.getCurrentApplicationContext();
+            ConfigurableApplicationContext app =
+                    (ConfigurableApplicationContext)Invoker.getApplicationContext();
             MvcResponse response = app.getMvcResponse();
 
             Download download = (Download)value;

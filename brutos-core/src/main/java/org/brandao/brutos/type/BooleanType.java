@@ -18,7 +18,6 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
@@ -60,7 +59,8 @@ public class BooleanType implements Type{
     }
 
     public void setValue(Object value) throws IOException {
-        ConfigurableApplicationContext app = Invoker.getCurrentApplicationContext();
+        ConfigurableApplicationContext app = 
+                (ConfigurableApplicationContext)Invoker.getApplicationContext();
         MvcResponse response = app.getMvcResponse();
         response.process(value);
     }

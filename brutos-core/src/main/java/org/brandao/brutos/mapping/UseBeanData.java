@@ -198,7 +198,7 @@ public class UseBeanData {
 
     public Scope getScope() {
 
-        Scopes scopes = Invoker.getCurrentApplicationContext().getScopes();
+        Scopes scopes = Invoker.getApplicationContext().getScopes();
         Scope objectScope = scopes.get( scopeType.toString() );
 
         if( objectScope == null )

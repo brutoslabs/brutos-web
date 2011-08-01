@@ -199,7 +199,7 @@ public class MapBean extends CollectionBean{
     }
 
     public Scope getKeyScope() {
-        Scopes scopes = Invoker.getCurrentApplicationContext().getScopes();
+        Scopes scopes = Invoker.getApplicationContext().getScopes();
 
         Scope objectScope = scopes
                 .get( keyScopeType.toString() );
