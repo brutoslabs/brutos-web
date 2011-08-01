@@ -46,8 +46,8 @@ public class DefaultControllerResolver implements ControllerResolver{
         return controllerManager.getForm( handler.requestId() );
     }
 
-    public String getControllerId(Controller controller, MethodForm action) {
+    public Controller getController(ControllerManager controllerManager, Class controllerClass) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
 }

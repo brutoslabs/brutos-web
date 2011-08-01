@@ -19,6 +19,7 @@ package org.brandao.brutos.helper.controller;
 
 import java.util.Arrays;
 import junit.framework.TestCase;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.FlowController;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
@@ -67,22 +68,20 @@ public class SimpleController {
     public void actionToOtherAction(){
         SimpleController otherController =
                 (SimpleController) FlowController
-                .dispatcher().to(SimpleController.class);
+                    .getController(SimpleController.class);
 
         otherController.actionWithParam(100);
     }
 
     public void actionToOtherAction2(){
         FlowController
-        .dispatcher()
-        .to( SimpleController.class, "test2ction" );
+        .execute( SimpleController.class, "test2Action" );
     }
 
     public void actionToOtherActionWithReturn2(){
         String result =
                 (String) FlowController
-                .dispatcher()
-                .to(SimpleController.class,"test2ction");
+                .execute(SimpleController.class,"test2Action");
 
         TestCase.assertEquals( "MSG", result );
     }
@@ -90,8 +89,7 @@ public class SimpleController {
     public void actionToOtherActionWithReturn(){
         SimpleController otherController =
                 (SimpleController) FlowController
-                .dispatcher()
-                .to(SimpleController.class);
+                    .getController(SimpleController.class);
 
         String result =
                 otherController.actionWithReturnAndParam("myvalue");
