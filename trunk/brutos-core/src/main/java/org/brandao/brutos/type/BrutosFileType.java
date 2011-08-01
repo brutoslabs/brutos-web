@@ -85,7 +85,8 @@ public class BrutosFileType implements Type{
 
     public void setValue(Object value) throws IOException {
         if( value instanceof BrutosFile ){
-            ConfigurableApplicationContext app = Invoker.getCurrentApplicationContext();
+            ConfigurableApplicationContext app =
+                    (ConfigurableApplicationContext)Invoker.getApplicationContext();
             MvcResponse response = app.getMvcResponse();
 
             BrutosFile f = (BrutosFile)value;

@@ -47,14 +47,14 @@ public class Invoker {
     protected IOCProvider iocProvider;
     protected ControllerManager controllerManager;
     protected ActionResolver actionResolver;
-    protected ApplicationContext applicationContext;
+    protected ConfigurableApplicationContext applicationContext;
     protected ViewProvider viewProvider;
     public Invoker() {
     }
 
     public Invoker( ControllerResolver controllerResolver, IOCProvider iocProvider, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
-            AbstractApplicationContext applicationContext, ViewProvider viewProvider ){
+            ConfigurableApplicationContext applicationContext, ViewProvider viewProvider ){
         
         this.controllerResolver = controllerResolver;
         this.iocProvider        = iocProvider;
@@ -72,8 +72,6 @@ public class Invoker {
      */
     public boolean invoke( String requestId ){
 
-        Scopes scopes = applicationContext.getScopes();
-        //Scope requestScope = scopes.get(ScopeType.REQUEST);
         ImpInterceptorHandler ih = new ImpInterceptorHandler();
         ih.setRequestId(requestId);
         ih.setContext(applicationContext);
@@ -84,8 +82,8 @@ public class Invoker {
         if( form == null )
             return false;
 
-        ih.setResource( form.getInstance(iocProvider)/*iocProvider.getBean(form.getId())*/ );
-        ih.setResourceAction( actionResolver.getResourceAction(form, scopes, ih) );
+        ih.setResource( form.getInstance(iocProvider) );
+        ih.setResourceAction( actionResolver.getResourceAction(form, ih) );
 
 
         StackRequestElement element = createStackRequestElement();
@@ -94,43 +92,65 @@ public class Invoker {
         element.setController(form);
         element.setHandler(ih);
         element.setResource(ih.getResource());
-        /*
-        long time = System.currentTimeMillis();
-        try{
-            currentApp.set( this.applicationContext );
-            requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
-            requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE,
-                    this.applicationContext );
-            
-            if( logger.isDebugEnabled() )
-                logger.debug( "Received a new request: " + requestId );
-
-
-            if( logger.isDebugEnabled() ){
-                logger.debug(
-                    String.format(
-                        "Controller: %s Method: %s",
-                        form.getClass().getName() ,
-                        ih.getResourceAction() == null?  "" : ih.getResourceAction().getMethod().getName() )
-                );
-
-
-            }
-            form.proccessBrutosAction( ih );
-        }
-        finally{
-            currentApp.remove();
-            requestScope.remove( BrutosConstants.IOC_PROVIDER );
-            if( logger.isDebugEnabled() )
-                logger.debug(
-                        String.format( "Request processed in %d ms",
-                            (System.currentTimeMillis()-time) ) );
-        }
-
-        return true;
-        */
-
         return invoke(element);
+    }
+
+    public Object invoke( Controller controller, ResourceAction action,
+            Object[] parameters ){
+        return invoke(controller, action, null, parameters);
+    }
+
+    public Object invoke( Controller controller, ResourceAction action, Object resource,
+            Object[] parameters ){
+
+        if( controller == null )
+            throw new NullPointerException("controller");
+
+        if( action == null )
+            throw new NullPointerException("action");
+
+        // create factory or other solution
+        ImpInterceptorHandler handler = new ImpInterceptorHandler();
+
+        handler.setContext(applicationContext);
+        handler.setResourceAction(action);
+        handler.setResource(
+            resource == null?
+                controller.getInstance(applicationContext.getIocProvider()) :
+                resource);
+
+        StackRequestElementImp stackRequestElementImp =
+                new StackRequestElementImp();
+
+        stackRequestElementImp.setAction(action);
+        stackRequestElementImp.setController(controller);
+        stackRequestElementImp.setHandler(handler);
+        stackRequestElementImp.setParameters(parameters);
+        stackRequestElementImp.setResource(handler.getResource());
+
+        invoke(stackRequestElementImp);
+        return stackRequestElementImp.getResultAction();
+    }
+
+
+    public Object invoke( Class controllerClass, String actionId ){
+        Controller controller =
+            applicationContext
+                .getControllerResolver()
+                    .getController(controllerManager, controllerClass);
+
+
+        // create factory or other solution
+        ImpInterceptorHandler ih = new ImpInterceptorHandler();
+        ih.setRequestId(controller.getUri());
+        ih.setContext(applicationContext);
+
+        ResourceAction action =
+                applicationContext
+                .getActionResolver()
+                .getResourceAction(controller, actionId, ih);
+
+        return this.invoke(controller, action, null);
     }
 
     public StackRequest getStackRequest(){
@@ -149,33 +169,31 @@ public class Invoker {
 
     public boolean invoke( StackRequestElement element ){
 
-        //Scopes scopes = applicationContext.getScopes();
-        //Scope requestScope = scopes.get(ScopeType.REQUEST);
+        StackRequest stackRequest = getStackRequest();
         
-        //RequestInstrument requestInstrument =
-        //        getRequestInstrument(requestScope);
-
-        StackRequest stackRequest = getStackRequest();//(StackRequest)requestInstrument;
-        
-        long time = System.currentTimeMillis();
+        long time                  = System.currentTimeMillis();
         boolean createdThreadScope = ThreadScope.create();
+        boolean isFirstCall        = stackRequest.isEmpty();
+
         try{
-            currentApp.set( this.applicationContext );
+            if( isFirstCall )
+                currentApp.set( this.applicationContext );
 
             stackRequest.push(element);
-            //requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );
-            //requestScope.put( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE,
-            //        this.applicationContext );
             element.getController()
                     .proccessBrutosAction( element.getHandler() );
             return true;
         }
         finally{
+
             if(createdThreadScope)
                 ThreadScope.destroy();
+            
             stackRequest.pop();
-            currentApp.remove();
-            //requestScope.remove( BrutosConstants.IOC_PROVIDER );
+
+            if( isFirstCall )
+                currentApp.remove();
+
             if( logger.isDebugEnabled() )
                 logger.debug(
                         String.format( "Request processed in %d ms",
@@ -208,8 +226,18 @@ public class Invoker {
     }
 
     
-    public static ConfigurableApplicationContext getCurrentApplicationContext(){
-        return (ConfigurableApplicationContext)currentApp.get();
+    public static ApplicationContext getApplicationContext(){
+        return (ApplicationContext) currentApp.get();
+    }
+
+    public static Invoker getInstance(){
+        ConfigurableApplicationContext context =
+                (ConfigurableApplicationContext)getApplicationContext();
+
+        if( context == null )
+            throw new BrutosException("can not get invoker");
+
+        return context.getInvoker();
     }
     
 }

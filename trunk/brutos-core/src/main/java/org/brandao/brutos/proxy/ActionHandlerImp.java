@@ -39,50 +39,22 @@ public abstract class ActionHandlerImp implements ActionHandler{
     private Controller controller;
     private ConfigurableApplicationContext context;
     private Invoker invoker;
-    private DispatcherType dispatcherType;
 
     public ActionHandlerImp(Object resource, Controller controller,
-            ConfigurableApplicationContext context, Invoker invoker,
-            DispatcherType dispatcherType){
+            ConfigurableApplicationContext context, Invoker invoker){
         this.resource = resource;
         this.context = context;
         this.controller = controller;
         this.invoker = invoker;
-        this.dispatcherType = dispatcherType;
     }
     
     public Object invoke(Object self, Method thisMethod, Method proceed,
             Object[] args) throws Throwable {
-
         MethodForm action = controller.getMethod(thisMethod);
-
-        if( dispatcherType == DispatcherType.REDIRECT){
-            String id =
-                context.getControllerResolver()
-                .getControllerId(controller, action);
-            throw new RedirectException( id, dispatcherType );
-        }
-        
-        DefaultResourceAction resourceAction =
-                new DefaultResourceAction(action);
-
-        ImpInterceptorHandler handler = new ImpInterceptorHandler();
-
-        handler.setContext(context);
-        handler.setResourceAction(resourceAction);
-        handler.setResource( resource );
-        
-        StackRequestElementImp stackRequestElementImp =
-                new StackRequestElementImp();
-
-        stackRequestElementImp.setAction(resourceAction);
-        stackRequestElementImp.setController(controller);
-        stackRequestElementImp.setHandler(handler);
-        stackRequestElementImp.setParameters(args);
-        stackRequestElementImp.setResource(resource);
-
-        invoker.invoke(stackRequestElementImp);
-
-        return stackRequestElementImp.getResultAction();
+        return invoker.invoke(
+            controller,
+            context.getActionResolver().getResourceAction(action),
+            resource,
+            args);
     }
 }

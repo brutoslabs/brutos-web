@@ -66,6 +66,10 @@ public class RequestInstrumentImp
                     null);
     }
 
+    public boolean isEmpty(){
+        return stackRequest.isEmpty();
+    }
+    
     public void pop(){
         if( stackRequest.size() > 0 )
             stackRequest.remove( stackRequest.size() -1 );

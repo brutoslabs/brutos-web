@@ -46,7 +46,6 @@ public class JavassistProxyFactory extends AbstractProxyFactory{
     }
 
     public Object getNewProxy(Object resource,Controller form,
-            DispatcherType dispatcherType,
             ConfigurableApplicationContext context, 
             Invoker invoker) throws BrutosException{
 
@@ -55,8 +54,7 @@ public class JavassistProxyFactory extends AbstractProxyFactory{
                     resource,
                     form,
                     context,
-                    invoker,
-                    dispatcherType);
+                    invoker);
 
         try{
             ProxyObject instance = (ProxyObject)proxyClass.newInstance();

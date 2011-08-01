@@ -52,8 +52,8 @@ public class ListType implements CollectionType{
         if( this.listType != null )
             return this.listType;
 
-        ConfigurableApplicationContext context = Invoker
-                .getCurrentApplicationContext();
+        ConfigurableApplicationContext context =
+                (ConfigurableApplicationContext)Invoker.getApplicationContext();
 
         String className = context
                 .getConfiguration()

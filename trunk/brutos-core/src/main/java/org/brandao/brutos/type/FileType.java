@@ -84,7 +84,8 @@ public class FileType implements Type{
 
     public void setValue(Object value) throws IOException {
         if( value instanceof File ){
-            ConfigurableApplicationContext app = Invoker.getCurrentApplicationContext();
+            ConfigurableApplicationContext app =
+                    (ConfigurableApplicationContext)Invoker.getApplicationContext();
             MvcResponse response = app.getMvcResponse();
 
             File f = (File)value;

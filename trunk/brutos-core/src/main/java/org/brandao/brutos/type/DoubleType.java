@@ -71,7 +71,8 @@ public class DoubleType implements Type{
     }
 
     public void setValue(Object value) throws IOException {
-        ConfigurableApplicationContext app = Invoker.getCurrentApplicationContext();
+        ConfigurableApplicationContext app =
+                (ConfigurableApplicationContext)Invoker.getApplicationContext();
         MvcResponse response = app.getMvcResponse();
         response.process(value);
     }

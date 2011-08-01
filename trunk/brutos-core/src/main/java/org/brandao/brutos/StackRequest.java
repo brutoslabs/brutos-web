@@ -29,6 +29,8 @@ public interface StackRequest {
 
     StackRequestElement getNext( StackRequestElement stackrequestElement );
 
+    boolean isEmpty();
+    
     void pop();
 
 }

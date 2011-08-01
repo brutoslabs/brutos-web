@@ -44,11 +44,5 @@ public interface ControllerResolver {
      */
     Controller getController( ControllerManager controllerManager, InterceptorHandler handler );
 
-    /**
-     * Obtém a identificação do controlador.
-     * @param controller Controlador
-     * @return Identificação.
-     */
-    String getControllerId(Controller controller, MethodForm action);
-    
+    Controller getController( ControllerManager controllerManager, Class controllerClass );
 }
