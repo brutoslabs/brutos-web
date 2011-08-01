@@ -55,4 +55,16 @@ public class DefaultMethodResolver implements MethodResolver{
         return method == null? null : getResourceMethod( method );
     }
 
+    public ResourceAction getResourceAction(Controller controller, InterceptorHandler handler) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public ResourceAction getResourceAction(Controller controller, String actionId, InterceptorHandler handler) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public ResourceAction getResourceAction(MethodForm action) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

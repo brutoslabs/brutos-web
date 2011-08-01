@@ -32,40 +32,55 @@ import org.brandao.brutos.Scopes;
  */
 public class WebActionResolver implements ActionResolver{
     
-    private ResourceAction getResourceMethod( MethodForm methodForm ){
-        return new DefaultResourceAction( methodForm );
-    }
-
     public ResourceAction getResourceAction(Controller controller,
-            Scopes scopes, InterceptorHandler handler) {
+            InterceptorHandler handler) {
 
         if( controller.getUri() != null ){
-            Scope scope = scopes.get(ScopeType.PARAM.toString());
+            Scope scope = handler.getContext().getScopes()
+                    .get(ScopeType.PARAM.toString());
 
+            return getResourceAction( 
+                    controller,
+                    String.valueOf(
+                            scope.get( controller.getMethodId() ) ),
+                    handler);
+        }
+        else
+            return getResourceAction( controller, handler.requestId(), handler );
+        
+    }
+
+    public ResourceAction getResourceAction(Controller controller, String actionId, 
+            InterceptorHandler handler) {
+
+        if( controller.getUri() != null ){
             MethodForm method = controller
-                    .getMethodByName( 
-                        String.valueOf(
-                            scope.get( controller.getMethodId() ) ) );
-            return method == null? null : getResourceMethod( method );
+                    .getMethodByName( actionId );
+            return method == null? null : getResourceAction( method );
         }
         else{
+            Scopes scopes = handler.getContext().getScopes();
             Scope request = scopes.get( ScopeType.PARAM );
             for( String u: controller.getMethods().keySet() ){
 
                 URIMapping uriMap = WebControllerResolver.getURIMapping( u );
-                if( uriMap.matches(handler.requestId()) ){
+                if( uriMap.matches(actionId) ){
 
                     Map<String,String> params =
-                            uriMap.getParameters(handler.requestId());
+                            uriMap.getParameters(actionId);
 
                     for(String key: params.keySet() )
                         request.put(key, params.get(key) );
-                    return getResourceMethod( controller.getMethods().get(u) );
+                    return getResourceAction( controller.getMethods().get(u) );
                 }
 
             }
             return null;
         }
+    }
+
+    public ResourceAction getResourceAction(MethodForm action) {
+        return new DefaultResourceAction( action );
     }
 
 }

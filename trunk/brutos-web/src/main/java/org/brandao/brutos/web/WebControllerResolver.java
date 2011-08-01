@@ -17,15 +17,12 @@
 
 package org.brandao.brutos.web;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.*;
 import javax.servlet.http.HttpServletRequest;
-import org.brandao.brutos.mapping.MethodForm;
-import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.WebFrameManager;
@@ -114,8 +111,14 @@ public class WebControllerResolver implements ControllerResolver{
         return null;
     }
 
-    public String getControllerId(Controller controller, MethodForm action) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Controller getController(ControllerManager controllerManager, Class controllerClass) {
+        Controller controller =
+                controllerManager.getController(controllerClass);
+
+        if(controller == null)
+            throw new BrutosException(
+                "controller not found: " + controllerClass.getName() );
+        return controller;
     }
 
 }

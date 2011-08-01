@@ -135,7 +135,6 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
                 brutosContext
                         .getActionResolver()
                             .getResourceAction( controller,
-                                    brutosContext.getScopes(),
                                     ih));
         }
 
