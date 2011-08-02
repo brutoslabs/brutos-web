@@ -119,17 +119,16 @@ public class Invoker {
                 controller.getInstance(applicationContext.getIocProvider()) :
                 resource);
 
-        StackRequestElementImp stackRequestElementImp =
-                new StackRequestElementImp();
+        StackRequestElement stackRequestElement = createStackRequestElement();
 
-        stackRequestElementImp.setAction(action);
-        stackRequestElementImp.setController(controller);
-        stackRequestElementImp.setHandler(handler);
-        stackRequestElementImp.setParameters(parameters);
-        stackRequestElementImp.setResource(handler.getResource());
+        stackRequestElement.setAction(action);
+        stackRequestElement.setController(controller);
+        stackRequestElement.setHandler(handler);
+        stackRequestElement.setParameters(parameters);
+        stackRequestElement.setResource(handler.getResource());
 
-        invoke(stackRequestElementImp);
-        return stackRequestElementImp.getResultAction();
+        invoke(stackRequestElement);
+        return stackRequestElement.getResultAction();
     }
 
 
