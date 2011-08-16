@@ -38,17 +38,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
-        </dependency>
-        <!--<dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>6.0</version>
-            <scope>provided</scope>
-        </dependency>-->
-        <dependency>
             <groupId>com.mockrunner</groupId>
             <artifactId>mockrunner-jdk1.3-j2ee1.3</artifactId>
             <version>0.4</version>
@@ -60,32 +49,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--<dependency>
-            <groupId>jboss</groupId>
-            <artifactId>jboss-j2ee</artifactId>
-            <version>4.2.0.GA</version>
-            <scope>test</scope>
-        </dependency>-->
         <dependency>
             <groupId>org.brandao</groupId>
             <artifactId>ioc-di</artifactId>
             <version>1.0-RC2</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>2.1.0-b04</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <version>1.2-b19</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
-            <version>2.2.1-b03</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -96,6 +64,41 @@
             <groupId>org.brandao</groupId>
             <artifactId>brutos-core</artifactId>
             <version>2.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>2.0.2-b10</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-imp</artifactId>
+            <version>2.0.2-b10</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>2.2.1-b03</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>3.0.4.RELEASE</version>
         </dependency>
     </dependencies>
     <repositories>
