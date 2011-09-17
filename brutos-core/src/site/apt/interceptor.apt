@@ -1,4 +1,4 @@
-Interceptadres
+Interceptadores
 
  O uso de interceptadores é necessário quando precisamos executar tarefas antes
  e/ou depois de uma ação ser executada, normalmente usado para controle de acesso, validação de dados, controle de transação e geração de log.
