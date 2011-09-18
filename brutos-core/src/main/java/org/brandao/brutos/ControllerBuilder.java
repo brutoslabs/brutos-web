@@ -650,10 +650,11 @@ public class ControllerBuilder {
                 null :
                 mapping;
 
-        if( id == null )
+        /*if( id == null )
             throw new BrutosException( "name is required: " +
                     controller.getClassType().getName() );
-
+        */
+        
         if( propertyName == null )
             throw new BrutosException( "property name is required: " +
                     controller.getClassType().getName() );

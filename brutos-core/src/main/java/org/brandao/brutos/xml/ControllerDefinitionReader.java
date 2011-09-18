@@ -796,7 +796,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     private void buildPropertyController( Element propNode,
             ControllerBuilder controllerBuilder ){
 
-        String propertyName = parseUtil.getAttribute(propNode,  "name" );
+        String propertyName = parseUtil.getAttribute(propNode,  "property-name" );
         EnumerationType enumProperty =
             EnumerationType.valueOf( parseUtil.getAttribute(propNode,  "enum-property" ) );
         String value = parseUtil.getAttribute(propNode,  "value" );
