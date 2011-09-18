@@ -19,10 +19,7 @@ package org.brandao.brutos.helper.controller;
 
 import java.util.Arrays;
 import junit.framework.TestCase;
-import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.FlowController;
-import org.brandao.brutos.web.ContextLoader;
-import org.brandao.brutos.web.WebApplicationContext;
 
 /**
  *
@@ -30,7 +27,19 @@ import org.brandao.brutos.web.WebApplicationContext;
  */
 public class SimpleController {
 
+    private String property1;
+
+    private Integer property2;
+
     public void simpleAction(){
+    }
+
+    public void testProperty1(){
+        TestCase.assertEquals("teste",this.property1);
+    }
+
+    public void testProperty2(){
+        TestCase.assertEquals(new Integer(101),this.property2);
     }
 
     public String defaultAction(){
@@ -95,6 +104,22 @@ public class SimpleController {
                 otherController.actionWithReturnAndParam("myvalue");
 
         TestCase.assertEquals("MSG",result);
+    }
+
+    public String getProperty1() {
+        return property1;
+    }
+
+    public void setProperty1(String property1) {
+        this.property1 = property1;
+    }
+
+    public Integer getProperty2() {
+        return property2;
+    }
+
+    public void setProperty2(Integer property2) {
+        this.property2 = property2;
     }
 
 }
