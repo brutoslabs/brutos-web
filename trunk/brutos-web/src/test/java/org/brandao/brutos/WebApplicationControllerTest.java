@@ -22,8 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import org.brandao.brutos.helper.controller.AbstractTester;
+import org.brandao.brutos.helper.controller.SimpleController;
+import org.brandao.brutos.interceptor.DataInput;
 import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.test.MockViewProvider;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
@@ -745,6 +748,46 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
                     TestCase.assertEquals("/viewAction2.jsp", view.getView());
+                }
+
+        });
+    }
+
+    public void testController31(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/controller/controller-test31.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testProperty1");
+                    app.getScopes().get(ScopeType.PARAM).put("value1", "teste");
+                    app.getInvoker().invoke("/testController.htm");
+                }
+
+        });
+    }
+
+    public void testController32(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/controller/controller-test32.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testProperty1");
+                    app.getScopes().get(ScopeType.PARAM).put("value1", "teste");
+                    app.getInvoker().invoke("/testController.htm");
                 }
 
         });

@@ -59,7 +59,7 @@ public class JSPViewProvider extends ViewProvider{
         }
     }
 
-    public void show(RequestInstrument requestInstrument,
+    protected void show(RequestInstrument requestInstrument,
             String view, DispatcherType dispatcherType) throws IOException {
         try{
             show0(view, dispatcherType);
