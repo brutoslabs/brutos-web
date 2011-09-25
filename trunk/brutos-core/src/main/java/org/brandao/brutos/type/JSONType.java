@@ -22,7 +22,6 @@ import org.brandao.brutos.type.json.JSONDecoder;
 import org.brandao.brutos.type.json.JSONEncoder;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;

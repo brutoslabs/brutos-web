@@ -105,7 +105,12 @@ public class Controller {
 
     public Object getInstance(IOCProvider iocProvider){
         Object instance = iocProvider.getBean(classType);
-        return instance == null? iocProvider.getBean(id) : instance;
+        instance = instance == null? iocProvider.getBean(id) : instance;
+
+        if( instance == null )
+            throw new BrutosException("can't get instance " + id + ":" + classType);
+        else
+            return instance;
     }
 
     public void setMethodId(String methodId) {

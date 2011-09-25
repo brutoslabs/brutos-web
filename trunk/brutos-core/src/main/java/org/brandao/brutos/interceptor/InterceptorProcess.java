@@ -27,7 +27,6 @@ import java.util.Set;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.RedirectException;
 import org.brandao.brutos.ResourceAction;
