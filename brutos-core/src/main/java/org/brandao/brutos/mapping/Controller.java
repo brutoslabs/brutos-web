@@ -104,8 +104,8 @@ public class Controller {
     }
 
     public Object getInstance(IOCProvider iocProvider){
-        Object instance = iocProvider.getBean(classType);
-        instance = instance == null? iocProvider.getBean(id) : instance;
+        Object instance = id == null? null : iocProvider.getBean(id);
+        instance = instance == null? iocProvider.getBean(classType) : instance;
 
         if( instance == null )
             throw new BrutosException("can't get instance " + id + ":" + classType);
