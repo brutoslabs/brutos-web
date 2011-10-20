@@ -30,7 +30,7 @@ public class SpringIOCProvider extends IOCProvider{
     WebApplicationContext context;
 
     public Object getBean(String name) {
-        return context.getBean(name);
+        return context.containsBeanDefinition(name)? context.getBean(name) : null;
     }
 
     public void configure(Properties properties) {
@@ -42,7 +42,7 @@ public class SpringIOCProvider extends IOCProvider{
 
     @Override
     public Object getBean(Class clazz) {
-        return null;
+        return context.getBean(clazz);
     }
     
 
