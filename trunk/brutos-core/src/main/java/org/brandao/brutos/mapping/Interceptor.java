@@ -45,9 +45,8 @@ public class Interceptor {
     }
 
     public Object getInstance(IOCProvider iocProvider){
-        Object instance = iocProvider.getBean(getType());
-        instance =
-            instance == null? iocProvider.getBean(getName()) : instance;
+        Object instance = getName() == null? null : iocProvider.getBean(getName());
+        instance = instance == null? iocProvider.getBean(getType()) : instance;
 
         if( instance == null )
             throw new BrutosException("can't get instance " + getName() + ":" + getType());
