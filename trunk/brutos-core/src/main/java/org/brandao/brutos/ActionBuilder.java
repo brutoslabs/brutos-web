@@ -334,10 +334,10 @@ public class ActionBuilder {
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException( 
                         String.format( "%s.%s(...) index %d : %s" ,
-                            methodForm.getMethod().getDeclaringClass().getName(),
-                            methodForm.getMethod().getName(),
+                            this.controller.getClassType().getName(),
+                            methodForm.getMethodName(),
                             methodForm.getParamterSize(),
-                            e.getMessage() ) );
+                            e.getMessage() ), e );
             }
             
             if( useBean.getType() == null )
