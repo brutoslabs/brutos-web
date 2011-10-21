@@ -249,7 +249,7 @@ public class MethodForm {
                     Class[] params = m.getParameterTypes();
                     for( int k=0;k<params.length;k++ ){
                         ParameterMethodMapping arg = parameters.get(k);
-                        if( arg.getBean().getType() == null )
+                        if( arg.getBean().getType() == null && arg.getBean().getMapping() == null )
                             arg.getBean()
                                     .setType(Types.getType(params[k]));
                     }
