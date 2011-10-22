@@ -31,31 +31,21 @@ public class BooleanType implements Type{
     public BooleanType() {
     }
 
-    /*
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
-        if( value instanceof Boolean )
-            return value;
-        else
-            return "true".equals( value );
-    }
-    */
     public Class getClassType() {
         return Boolean.TYPE;
     }
 
-    /*
-    public void setValue(HttpServletResponse response, ServletContext context, Object value) throws IOException {
-        if( value instanceof Boolean ){
-            PrintWriter out = response.getWriter();
-            out.print( String.valueOf( value ) );
-        }
-    }
-    */
     public Object getValue(Object value) {
         if( value instanceof Boolean )
             return value;
         else
-            return "true".equals( value );
+        if(value instanceof String)
+            return Boolean.parseBoolean((String)value);
+        else
+        if( value == null )
+            return null;
+        else
+            throw new UnknownTypeException(value.getClass().getName());
     }
 
     public void setValue(Object value) throws IOException {

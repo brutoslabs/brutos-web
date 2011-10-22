@@ -248,10 +248,15 @@ public class MethodForm {
                     isCompatible( m, classArgs ) ){
                     Class[] params = m.getParameterTypes();
                     for( int k=0;k<params.length;k++ ){
+                        
                         ParameterMethodMapping arg = parameters.get(k);
-                        if( arg.getBean().getType() == null && arg.getBean().getMapping() == null )
+                        Type type = arg.getBean().getType();
+                        Bean mapping = arg.getBean().getMapping();
+                        
+                        if( type == null && mapping == null ){
                             arg.getBean()
                                     .setType(Types.getType(params[k]));
+                        }
                     }
 
                     return m;

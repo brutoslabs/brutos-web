@@ -14,36 +14,44 @@
  * either express or implied.
  *
  */
-
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.io.Serializable;
+import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.Invoker;
+import org.brandao.brutos.MvcResponse;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class ObjectType implements Type{
+public class CharType implements Type{
 
-    private Type serializableType;
-    private Class classType;
-
-    public ObjectType( Class classType ) {
-        this.serializableType = Types.getType( Serializable.class );
-        this.classType = classType;
+    public CharType() {
     }
 
     public Class getClassType() {
-        return classType;
+        return Character.TYPE;
     }
 
     public Object getValue(Object value) {
-        return value;
+        if( value instanceof Character )
+            return value;
+        else
+        if( value instanceof String )
+            return ((String)value).charAt(0);
+        else
+        if( value == null)
+            return null;
+        else
+            throw new UnknownTypeException(value.getClass().getName());
     }
 
     public void setValue(Object value) throws IOException {
-        serializableType.setValue(value);
+        ConfigurableApplicationContext app =
+                (ConfigurableApplicationContext)Invoker.getApplicationContext();
+        MvcResponse response = app.getMvcResponse();
+        response.process(value);
     }
     
 }

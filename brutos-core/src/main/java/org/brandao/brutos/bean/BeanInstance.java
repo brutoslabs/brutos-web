@@ -17,8 +17,8 @@
 
 package org.brandao.brutos.bean;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
@@ -122,12 +122,32 @@ public class BeanInstance {
         return method.getReturnType();
     }
 
-    public Type getGenericType( String property ){
+    public Object getGenericType( String property ){
+        
         Method method = data.getGetter().get(property);
         if( method == null )
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
 
-        return method.getGenericReturnType();
+        try{
+            return getGenericReturnType( method );
+        }
+        catch( NoSuchMethodException ex ){
+            return this.getType(property);
+        }
+        catch( Exception ex ){
+            throw new BrutosException(ex);
+        }
+
+    }
+
+    private Object getGenericReturnType( Method method ) throws NoSuchMethodException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+        
+        Class methodClass = method.getClass();
+        Method getGenericReturnType =
+            methodClass.getMethod("getGenericReturnType");
+
+        return getGenericReturnType.invoke(method);
     }
 
     public Class getClassType(){

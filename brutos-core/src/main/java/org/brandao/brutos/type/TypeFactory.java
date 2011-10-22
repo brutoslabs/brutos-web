@@ -15,16 +15,18 @@
  *
  */
 
+
 package org.brandao.brutos.type;
+
+import org.brandao.brutos.EnumerationType;
 
 /**
  *
- * @author Afonso Brandao
+ * @author Brandao
  */
-public interface GenericType {
+public interface TypeFactory {
 
-    public void setGenericType( Object genericType );
+    Type getType( Class clazz, Class classType, EnumerationType enumType,
+            String maskDate );
 
-    public Object getGenericType();
-    
 }

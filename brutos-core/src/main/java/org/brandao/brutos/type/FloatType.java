@@ -18,8 +18,6 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
@@ -32,31 +30,7 @@ public class FloatType implements Type{
  
     public FloatType() {
     }
-    /*
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
-        if( value instanceof Float )
-            return value;
-        else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
-        else
-            throw new UnknownTypeException();
-    }
-    */
-    public Object toValue( String value ){
-        try{
-           return Float.parseFloat( value );
-        }
-        catch( Exception e ){
-            return 0.0f;
-        }
-    }
-    /*
-    public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
-        PrintWriter out = response.getWriter();
-        out.print( String.valueOf( value ) );
-    }
-    */
+
     public Class getClassType() {
         return Float.TYPE;
     }
@@ -65,8 +39,11 @@ public class FloatType implements Type{
         if( value instanceof Float )
             return value;
         else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
+        if( value instanceof String )
+            return Float.parseFloat( (String)value );
+        else
+        if( value == null )
+            return null;
         else
             throw new UnknownTypeException();
     }

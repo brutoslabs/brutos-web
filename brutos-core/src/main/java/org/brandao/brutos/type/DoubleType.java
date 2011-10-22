@@ -18,7 +18,6 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
@@ -31,31 +30,7 @@ public class DoubleType implements Type{
 
     public DoubleType() {
     }
-    /*
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
-        if( value instanceof Double )
-            return value;
-        else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
-        else
-            throw new UnknownTypeException();
-    }
-    */
-    public Object toValue( String value ){
-        try{
-           return Double.parseDouble( value );
-        }
-        catch( Exception e ){
-            return 0.0;
-        }
-    }
-    /*
-    public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
-        PrintWriter out = response.getWriter();
-        out.print( String.valueOf( value ) );
-    }
-    */
+    
     public Class getClassType() {
         return Double.TYPE;
     }
@@ -64,8 +39,11 @@ public class DoubleType implements Type{
         if( value instanceof Double )
             return value;
         else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
+        if( value instanceof String )
+            return Double.parseDouble( (String)value );
+        else
+        if( value == null )
+            return null;
         else
             throw new UnknownTypeException();
     }

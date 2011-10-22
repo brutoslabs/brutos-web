@@ -20,8 +20,6 @@ package org.brandao.brutos.type;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.lang.reflect.Type;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
@@ -37,59 +35,25 @@ public class DefaultArrayType implements ArrayType{
     private org.brandao.brutos.type.Type componentType;
     private org.brandao.brutos.type.Type serializableType;
     private Class classType;
-    private Type arrayComponentType;
+    private Class arrayComponentType;
 
     public DefaultArrayType(){
         this.serializableType = Types.getType( Serializable.class );
     }
 
-    public void setContentType(Type type) {
+    public void setContentType(Class type) {
         this.arrayComponentType = type;
         this.componentType = Types.getType( type );
    }
-   /*
-    public Object getValue(HttpServletRequest request, ServletContext context, Object value) {
-        if( value instanceof ParameterList )
-            return getList(request, context, value);
 
-        else
-            return value;
-    }
-    
-    public void setValue(HttpServletResponse response, ServletContext context, Object value) throws IOException {
-        this.serializableType.setValue( response, context, value );
-    }
-    */
     public Class getClassType() {
         return this.classType;
     }
 
-    /*
-    private Object getList(HttpServletRequest request, ServletContext context, Object value){
-        try{
-            ParameterList param = (ParameterList)value;
-            Object objList = Array.newInstance( (Class)arrayComponentType , param.size() );
-
-            for( int i=0;i<param.size();i++ )
-                Array.set( 
-                    objList,
-                    i,
-                    componentType.getValue( param.get( i ) )
-                    //componentType.getValue(request, context, param.get( i ) )
-                );
-
-            return objList;
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
-    */
-
     private Object getList(Object value){
         try{
             ParameterList param = (ParameterList)value;
-            Object objList = Array.newInstance( (Class)arrayComponentType , param.size() );
+            Object objList = Array.newInstance( arrayComponentType , param.size() );
 
             for( int i=0;i<param.size();i++ )
                 Array.set(

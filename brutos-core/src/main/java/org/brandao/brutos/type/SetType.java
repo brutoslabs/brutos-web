@@ -19,9 +19,7 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 import java.util.Set;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
@@ -48,17 +46,20 @@ public class SetType implements CollectionType{
     }
     
     @Override
-    public void setGenericType(java.lang.reflect.Type type) {
-        java.lang.reflect.Type classType = type;
-        if( classType instanceof ParameterizedType ){
-            this.type = (Class)((ParameterizedType)classType)
-                                    .getActualTypeArguments()[0];
+    public void setGenericType(Object classType) {
+        Class collectionType = Types.getCollectionType(classType);
+        if( collectionType != null ){
+            this.type = collectionType;
             this.primitiveType = Types.getType( this.type );
             if( this.primitiveType == null )
-                throw new UnknownTypeException( ((Class)type).getName() );
+                throw new UnknownTypeException( classType.toString() );
         }
         else
             throw new UnknownTypeException( "is not allowed the use the Set or Set<?>" );
+    }
+
+    public Object getGenericType(){
+        return this.type;
     }
 
     /*

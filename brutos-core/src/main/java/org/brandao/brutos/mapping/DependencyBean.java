@@ -157,21 +157,8 @@ public class DependencyBean {
 
                 String key = pre + param + idx;
 
-                Scope scope = getScope();
-                val = scope.get(key);
+                val = getScope().get(key);
             }
-            /*Object val = isStatic()?
-                getValue() :
-                getScope().get(
-                        (prefix != null? prefix : "") +
-                        getParameterName() +
-                            //( index < 0? "" : "[" + index + "]" ) );
-                            ( index < 0?
-                                "" :
-                                mappingBean.getIndexFormat().replace(
-                                    "$index",
-                                    String.valueOf(index) ) ) );
-            */
             result = type.getValue( val );
         }
         else{

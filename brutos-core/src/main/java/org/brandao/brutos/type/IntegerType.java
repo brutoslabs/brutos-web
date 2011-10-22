@@ -18,8 +18,6 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
@@ -32,32 +30,7 @@ public class IntegerType implements Type{
 
     public IntegerType() {
     }
-    /*
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
-        if( value instanceof Integer )
-            return value;
-        else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
-        else
-            throw new UnknownTypeException();
-    }
-    */
-    public Object toValue( String value ){
-        try{
-           return Integer.parseInt( value );
-        }
-        catch( Exception e ){
-            return 0;
-        }
-    }
 
-    /*
-    public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
-        PrintWriter out = response.getWriter();
-        out.print( String.valueOf( value ) );
-    }
-    */
     @Override
     public Class getClassType() {
         return Integer.TYPE;
@@ -67,8 +40,11 @@ public class IntegerType implements Type{
         if( value instanceof Integer )
             return value;
         else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
+        if( value instanceof String )
+            return Integer.parseInt( (String)value );
+        else
+        if( value == null )
+            return null;
         else
             throw new UnknownTypeException();
     }
