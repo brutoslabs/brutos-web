@@ -17,6 +17,8 @@
 
 package org.brandao.brutos;
 
+import java.util.LinkedList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import junit.framework.Test;
@@ -27,6 +29,7 @@ import org.brandao.brutos.interceptor.DataInput;
 import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.test.MockViewProvider;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
@@ -46,6 +49,59 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                             resourceName )});
     }
  
+    public void testController33(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/controller/controller-test33.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    MethodForm form =
+                            controller.getMethodByName("action");
+
+                    form.load();
+                    Class type = form.getParameterType(0);
+                    TestCase.assertEquals(List.class, type);
+                }
+
+        });
+    }
+
+    public void testController34(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/controller/controller-test34.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    MethodForm form =
+                            controller.getMethodByName("action");
+
+                    form.load();
+                    Class type = form.getParameterType(0);
+                    TestCase.assertEquals(List.class, type);
+                }
+
+        });
+    }
 
     public void testController1(){
         super.execTest(
@@ -792,5 +848,6 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
 
         });
     }
+
 
 }
