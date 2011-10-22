@@ -18,6 +18,7 @@
 package org.brandao.brutos.helper.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import junit.framework.TestCase;
 import org.brandao.brutos.FlowController;
 
@@ -104,6 +105,10 @@ public class SimpleController {
                 otherController.actionWithReturnAndParam("myvalue");
 
         TestCase.assertEquals("MSG",result);
+    }
+
+    public void actionWithCollectionParam( List list ){
+        throw new UnsupportedOperationException();
     }
 
     public String getProperty1() {
