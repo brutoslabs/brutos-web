@@ -18,10 +18,8 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
@@ -41,17 +39,7 @@ public class DefaultDateTimeType implements DateTimeType{
         sdf = new SimpleDateFormat( value );
         sdf.setLenient( false );
     }
-    /*
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
-        if( value instanceof Date )
-            return value;
-        else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
-        else
-            throw new UnknownTypeException();
-    }
-    */
+    
     public Object toValue( String value ){
         try{
             return sdf.parse( value );
@@ -60,12 +48,7 @@ public class DefaultDateTimeType implements DateTimeType{
             return null;
         }
     }
-    /*
-    public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
-        PrintWriter out = response.getWriter();
-        out.print( sdf.format( value ) );
-    }
-    */
+    
     public Class getClassType() {
         return Date.class;
     }
@@ -74,10 +57,12 @@ public class DefaultDateTimeType implements DateTimeType{
         if( value instanceof Date )
             return value;
         else
-        if( value == null || value instanceof String )
+        if( value instanceof String )
             return toValue( (String)value );
+        if( value == null )
+            return null;
         else
-            throw new UnknownTypeException();
+            throw new UnknownTypeException(value.getClass().getName());
     }
 
     public void setValue(Object value) throws IOException {

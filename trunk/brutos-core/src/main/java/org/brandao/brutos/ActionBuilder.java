@@ -326,7 +326,7 @@ public class ActionBuilder {
                         type.getClassType().getName() );
         }
         else
-        if(classType != null){
+        if(classType != null && mapping == null){
             try{
                 /*useBean.setType( Types.getType( methodForm.getGenericParameterType( methodForm.getParamterSize() ), enumProperty, temporalProperty ) );*/
                 useBean.setType( Types.getType( classType ));

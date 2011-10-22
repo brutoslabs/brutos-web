@@ -374,7 +374,7 @@ public class IOCXMLMapping {
     private void addProperty( Map<String,Object> property, Bean bean ) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException{
         BeanInstance beanInstance = new BeanInstance( null, bean.getInjectable().getTarget() );
         //Type argType = getType( bean.getInjectable().getTarget(), (String)property.get( "name" ) );
-        Type argType = beanInstance.getGenericType((String)property.get( "name" ));
+        Type argType = null;//beanInstance.getGenericType((String)property.get( "name" ));
         if( "ref".equals( property.get( "value-type" ) ) ){
             bean.addPropertyRef( 
                     (String)property.get( "name" ), 
@@ -602,7 +602,7 @@ public class IOCXMLMapping {
         for( Map<String,Object> item: data ){
             
             if( "value".equals( item.get( "type" ) ) ){
-                org.brandao.brutos.type.Type type = org.brandao.brutos.type.Types.getType( genericType, EnumerationType.ORDINAL, "yyyy-MM-dd hh:mm:ss" );
+                org.brandao.brutos.type.Type type = null;//org.brandao.brutos.type.Types.getType( genericType, EnumerationType.ORDINAL, "yyyy-MM-dd hh:mm:ss" );
                 if( type == null )
                     throw new MappingException( "use <ref bean=''/>" );
                 

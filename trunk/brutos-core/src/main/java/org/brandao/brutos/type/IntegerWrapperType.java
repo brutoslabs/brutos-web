@@ -18,32 +18,42 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.io.Serializable;
+import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.Invoker;
+import org.brandao.brutos.MvcResponse;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class ObjectType implements Type{
+public class IntegerWrapperType implements Type{
 
-    private Type serializableType;
-    private Class classType;
-
-    public ObjectType( Class classType ) {
-        this.serializableType = Types.getType( Serializable.class );
-        this.classType = classType;
+    public IntegerWrapperType() {
     }
 
+    @Override
     public Class getClassType() {
-        return classType;
+        return Integer.class;
     }
 
     public Object getValue(Object value) {
-        return value;
+        if( value instanceof Integer )
+            return value;
+        else
+        if( value instanceof String )
+            return Integer.valueOf( (String)value );
+        else
+        if( value == null )
+            return null;
+        else
+            throw new UnknownTypeException();
     }
 
     public void setValue(Object value) throws IOException {
-        serializableType.setValue(value);
+        ConfigurableApplicationContext app =
+                (ConfigurableApplicationContext)Invoker.getApplicationContext();
+        MvcResponse response = app.getMvcResponse();
+        response.process(value);
     }
     
 }

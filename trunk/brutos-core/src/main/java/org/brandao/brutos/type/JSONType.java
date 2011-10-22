@@ -17,11 +17,9 @@
 
 package org.brandao.brutos.type;
 
-import java.lang.reflect.Type;
 import org.brandao.brutos.type.json.JSONDecoder;
 import org.brandao.brutos.type.json.JSONEncoder;
 import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
@@ -34,29 +32,8 @@ import org.brandao.brutos.MvcResponse;
 */
 public class JSONType implements SerializableType {
 
-    private Type classType;
-    /*
-    public Object getValue(HttpServletRequest arg0, ServletContext arg1, Object arg2) {
-        try{
-            if( arg2 instanceof String ){
-                JSONDecoder decoder = new JSONDecoder( (String)arg2 );
-                return decoder.decode( classType );
-            }
-            else
-                return arg2;
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
+    private Class classType;
 
-    public void setValue(HttpServletResponse arg0, ServletContext arg1, Object arg2) throws IOException {
-        arg0.setContentType( "application/json; charset=UTF-8" );
-        JSONEncoder encoder = new JSONEncoder( arg0.getOutputStream() );
-        encoder.writeObject( arg2 );
-        encoder.close();
-    }
-    */
     public Class getClassType() {
         return getClass(classType);
     }
@@ -65,11 +42,8 @@ public class JSONType implements SerializableType {
         this.classType = classType;
     }
 
-    private Class getClass( java.lang.reflect.Type type ){
-        if( type instanceof ParameterizedType )
-            return (Class)((ParameterizedType)type).getRawType();
-        else
-            return (Class)type;
+    private Class getClass( Class type ){
+        return Types.getRawType(type);
     }
 
     public Object getValue(Object value) {

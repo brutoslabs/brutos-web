@@ -23,7 +23,7 @@ package org.brandao.brutos.type;
  */
 public interface ArrayType extends Type{
 
-    public void setContentType( java.lang.reflect.Type type );
+    public void setContentType( Class type );
 
     public void setClassType( Class classType );
 

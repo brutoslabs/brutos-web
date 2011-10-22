@@ -32,31 +32,6 @@ public class ShortType implements Type{
     public ShortType() {
     }
 
-    /*
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
-        if( value instanceof Double )
-            return value;
-        else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
-        else
-            throw new UnknownTypeException();
-    }
-    */
-    public Object toValue( String value ){
-        try{
-           return Short.parseShort( value );
-        }
-        catch( Exception e ){
-            return 0;
-        }
-    }
-    /*
-    public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
-        PrintWriter out = response.getWriter();
-        out.print( String.valueOf( value ) );
-    }
-    */
     public Class getClassType() {
         return Short.TYPE;
     }
@@ -65,8 +40,11 @@ public class ShortType implements Type{
         if( value instanceof Double )
             return value;
         else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
+        if( value instanceof String )
+            return Short.parseShort((String)value);
+        else
+        if( value == null )
+            return null;
         else
             throw new UnknownTypeException();
     }

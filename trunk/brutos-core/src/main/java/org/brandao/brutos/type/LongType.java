@@ -31,31 +31,6 @@ public class LongType implements Type{
     public LongType() {
     }
 
-    /*
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
-        if( value instanceof Long )
-            return value;
-        else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
-        else
-            throw new UnknownTypeException();
-    }
-    */
-    public Object toValue( String value ){
-        try{
-           return Long.parseLong( value );
-        }
-        catch( Exception e ){
-            return 0L;
-        }
-    }
-    /*
-    public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
-        PrintWriter out = response.getWriter();
-        out.print( String.valueOf( value ) );
-    }
-    */
     public Class getClassType() {
         return Long.TYPE;
     }
@@ -64,8 +39,11 @@ public class LongType implements Type{
         if( value instanceof Long )
             return value;
         else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
+        if( value instanceof String )
+            return Long.parseLong( (String)value );
+        else
+        if( value == null )
+            return null;
         else
             throw new UnknownTypeException();
     }
