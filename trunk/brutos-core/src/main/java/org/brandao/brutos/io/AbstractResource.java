@@ -25,8 +25,24 @@ public abstract class AbstractResource implements Resource{
     protected String createRelativePath( String path, String relativePath ){
 
         path = cleanPath( path );
+        //path = path.endsWith("/")? path.substring(0,path.length()-1) : path;
+
+        relativePath = this.cleanPath( relativePath );
+
+        int index = path.lastIndexOf("/");
+        
+        if( index != -1 ){
+            String newPath = path.substring(0,index);
+            if( !relativePath.startsWith("/") )
+                newPath += "/";
+            return newPath + relativePath;
+        }
+        else
+            return relativePath;
+        
+        /*
         String[] parts = path.split( "/+" );
-        int length = parts.length -1;
+        int length = parts.length;
 
         String newPath = "";
         for( int k=0;k<length;k++ ){
@@ -35,9 +51,9 @@ public abstract class AbstractResource implements Resource{
 
         newPath = newPath.substring(0, newPath.length()-1);
         
-        newPath += this.cleanPath( relativePath );
-
+        newPath += relativePath;
         return newPath;
+        */
     }
 
     protected String cleanPath( String path ){
