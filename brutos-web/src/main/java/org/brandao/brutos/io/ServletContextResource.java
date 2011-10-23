@@ -37,10 +37,10 @@ public class ServletContextResource extends AbstractResource{
     public ServletContextResource(ServletContext servletContext, String path) {
         this.servletContext = servletContext;
 
-        path = path.startsWith("/")?
-            path.substring(1,path.length()):
+        path = !path.startsWith("/")?
+            "/" + path:
             path;
-
+        
         this.path = this.cleanPath(path);
     }
 
