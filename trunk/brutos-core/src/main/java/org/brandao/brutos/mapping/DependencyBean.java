@@ -22,6 +22,7 @@ import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
+import org.brandao.brutos.validator.ValidatorException;
 
 /**
  *
@@ -136,7 +137,9 @@ public class DependencyBean {
                 this.type == null? null : this.type.getClassType();
     }
 
-    public Object getValue(String prefix, long index){
+    public Object getValue(String prefix, long index, 
+            ValidatorException exceptionHandler){
+        
         Object result;
 
         if( mapping == null ){
@@ -176,12 +179,23 @@ public class DependencyBean {
                         prefix + parameterName + mappingBean.getSeparator() :
                         parameterName + mappingBean.getSeparator()
                     :
-                    null );
+                    null,
+                exceptionHandler );
 
         }
 
-        if( validator != null )
-            validator.validate(this, result);
+        try{
+            if( validator != null )
+                validator.validate(this, result);
+        }
+        catch( ValidatorException vex ){
+            if( exceptionHandler == null )
+                throw vex;
+            else{
+                exceptionHandler.addCause(vex);
+                return null;
+            }
+        }
 
         return result;
     }

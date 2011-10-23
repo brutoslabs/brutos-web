@@ -117,7 +117,8 @@ public class MapBean extends CollectionBean{
         return (prefix != null? prefix : "") + key + ( index < 0? "" : "[" + index + "]" );
     }
     
-    private Object getKey( long index, String prefix ){
+    private Object getKey( long index, String prefix,
+            ValidatorException exceptionHandler ){
         /*return keyType.getValue(
             request,
             request.getSession().getServletContext(),
@@ -126,7 +127,7 @@ public class MapBean extends CollectionBean{
          * A partir da vers�o 2.0 mappingKey sempre ser� diferente de null.
          */
         if( mappingKey != null )
-            return mappingKey.getValue( null, prefix, index, false );
+            return mappingKey.getValue( null, prefix, index, exceptionHandler, false );
         else
         if( keyType != null )
             return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
@@ -156,36 +157,51 @@ public class MapBean extends CollectionBean{
     }
 
     public Object getValue( Object instance ){
-        return getValue( instance, null, -1, false );
+        return getValue( instance, null, -1, null, false );
     }
 
     public Object getValue( boolean force ){
-        return getValue( null, null, -1, force );
+        return getValue( null, null, -1, null, force );
    }
     
-    public Object getValue( Object instance, String prefix, long otherIndex, boolean force ){
+    public Object getValue( Object instance, String prefix, long otherIndex, 
+            ValidatorException exceptionHandler, boolean force ){
         try{
-            /*
-             instance = instance == null? collectionType.newInstance() : instance;
-             Map map = (Map)instance;
-            */
 
-            instance = getInstance( instance,prefix,otherIndex,force);
+            ValidatorException vex =
+                exceptionHandler == null?
+                    new ValidatorException() :
+                    exceptionHandler;
+
+            instance = getInstance( instance, prefix, otherIndex,
+                        vex, force);
+            
             Map map = (Map)instance;
 
             long index = 0;
             Object beanInstance;
             
-            while( (beanInstance = get( prefix, index )) != null ){
+            while( (beanInstance = get( prefix, index, vex )) != null ){
 
-                Object keyInstance = getKey( index, prefix );
+                Object keyInstance = getKey( index, prefix, vex );
 
                 if( keyInstance != null )
                     map.put( keyInstance, beanInstance );
                 
                 index++;
             }
-            return force || map.size() != 0? map : null;
+
+
+            if(!map.isEmpty() || force){
+                if( vex != exceptionHandler && !vex.getCauses().isEmpty())
+                    throw vex;
+                else
+                    return map;
+            }
+            else
+                return null;
+
+            //return force || !map.isEmpty()? map : null;
         }
         catch( ValidatorException e ){
             throw e;

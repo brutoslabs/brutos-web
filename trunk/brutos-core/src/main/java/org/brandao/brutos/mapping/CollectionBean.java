@@ -62,7 +62,7 @@ public class CollectionBean extends Bean{
         this.bean = bean;
     }
 
-    protected Object get( String prefix, long index ){
+    protected Object get( String prefix, long index, ValidatorException exceptionHandler ){
         /*
          * A partir da vers�o 2.0 o bean sempre ser� diferente de null.
          */
@@ -73,7 +73,7 @@ public class CollectionBean extends Bean{
                     "element of the collection is not defined: %s",
                     this.getName()));
         else
-            return bean.getValue( null, prefix, index, false );
+            return bean.getValue( null, prefix, index, exceptionHandler, false );
     }
     /*
     private Object get( HttpSession session, long index ){
@@ -92,30 +92,47 @@ public class CollectionBean extends Bean{
     */
 
     public Object getValue( boolean force ){
-        return getValue( null, null, -1, force );
+        return getValue( null, null, -1, null, force );
    }
 
     public Object getValue( Object instance ){
-        return getValue( instance, null, -1, false );
+        return getValue( instance, null, -1, null, false );
     }
 
     public Object getValue(){
         return getValue( null );
     }
 
-    public Object getValue( Object instance, String prefix, long otherIndex, boolean force){
+    public Object getValue( Object instance, String prefix, long otherIndex, 
+            ValidatorException exceptionHandler, boolean force){
         try{
-            instance = getInstance( instance,prefix,otherIndex,force);
+            
+            ValidatorException vex =
+                exceptionHandler == null?
+                    new ValidatorException() :
+                    exceptionHandler;
+
+            instance = getInstance( instance,prefix,otherIndex,vex,force);
             Collection collection = (Collection)instance;
 
             long index = 0;
             Object beanInstance;
 
-            while( (beanInstance = get( prefix, index )) != null ){
+            while( (beanInstance = get( prefix, index, vex )) != null ){
                 collection.add(beanInstance);
                 index++;
             }
-            return force || collection.size() != 0? collection : null;
+
+            if(!collection.isEmpty() || force){
+                if( vex != exceptionHandler && !vex.getCauses().isEmpty())
+                    throw vex;
+                else
+                    return collection;
+            }
+            else
+                return null;
+
+            //return force || !collection.isEmpty()? collection : null;
         }
         catch( ValidatorException e ){
             throw e;
@@ -128,12 +145,13 @@ public class CollectionBean extends Bean{
         }
     }
 
-    protected Object getInstance( Object instance, String prefix, long index, boolean force )
+    protected Object getInstance( Object instance, String prefix, long index, 
+            ValidatorException exceptionHandler, boolean force )
             throws InstantiationException, IllegalAccessException{
 
         if( instance == null ){
             if( collectionType == null )
-                instance = super.getValue(instance,prefix,index,force);
+                instance = super.getValue(instance,prefix,index,exceptionHandler,force);
             else
                 instance = collectionType.newInstance();
         }
