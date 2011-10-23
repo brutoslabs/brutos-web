@@ -17,6 +17,8 @@
 
 package org.brandao.brutos.validator;
 
+import java.util.LinkedList;
+import java.util.List;
 import org.brandao.brutos.BrutosException;
 
 /**
@@ -24,6 +26,8 @@ import org.brandao.brutos.BrutosException;
  * @author Afonso Brandao
  */
 public class ValidatorException extends BrutosException{
+
+    public List exceptions = new LinkedList();
 
     public ValidatorException() {
 	super();
@@ -39,6 +43,14 @@ public class ValidatorException extends BrutosException{
 
     public ValidatorException(Throwable cause) {
         super(cause);
+    }
+
+    public void addCause(ValidatorException vex){
+        exceptions.add(vex);
+    }
+
+    public List getCauses(){
+        return this.exceptions;
     }
 
 }

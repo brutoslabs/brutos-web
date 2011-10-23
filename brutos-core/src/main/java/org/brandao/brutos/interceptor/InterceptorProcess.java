@@ -249,13 +249,17 @@ public class InterceptorProcess implements InterceptorStack{
         StackRequestElement stackRequestElement =
                 ((StackRequest)requestInstrument).getCurrent();
         Object result = null;
-        try{
+        result = invoke0( requestInstrument, stackRequestElement );
+        stackRequestElement.setResultAction(result);
+        show(requestInstrument,stackRequestElement);
+        /*try{
             result = invoke0( requestInstrument, stackRequestElement );
             stackRequestElement.setResultAction(result);
         }
         finally{
-            show(requestInstrument,stackRequestElement);
+                show(requestInstrument,stackRequestElement);
         }
+        */
     }
 
     private void show(RequestInstrument requestInstrument,
