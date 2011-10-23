@@ -168,10 +168,7 @@ public class MapBean extends CollectionBean{
             ValidatorException exceptionHandler, boolean force ){
         try{
 
-            ValidatorException vex =
-                exceptionHandler == null?
-                    new ValidatorException() :
-                    exceptionHandler;
+            ValidatorException vex = new ValidatorException();
 
             instance = getInstance( instance, prefix, otherIndex,
                         vex, force);
@@ -193,10 +190,16 @@ public class MapBean extends CollectionBean{
 
 
             if(!map.isEmpty() || force){
-                if( vex != exceptionHandler && !vex.getCauses().isEmpty())
-                    throw vex;
-                else
+                if( exceptionHandler == null){
+                    if( !vex.getCauses().isEmpty() )
+                        throw vex;
+                    else
+                        return map;
+                }
+                else {
+                    exceptionHandler.addCauses(vex.getCauses());
                     return map;
+                }
             }
             else
                 return null;

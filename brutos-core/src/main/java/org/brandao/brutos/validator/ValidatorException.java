@@ -49,6 +49,10 @@ public class ValidatorException extends BrutosException{
         exceptions.add(vex);
     }
 
+    public void addCauses(List vex){
+        exceptions.addAll(vex);
+    }
+
     public List getCauses(){
         return this.exceptions;
     }

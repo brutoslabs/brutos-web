@@ -105,14 +105,11 @@ public class Bean {
                 ValidatorException exceptionHandler, boolean force ){
         try{
 
-            ValidatorException vex =
-                exceptionHandler == null?
-                    new ValidatorException() :
-                    exceptionHandler;
+            ValidatorException vex = new ValidatorException();
 
             Object obj =
                 instance == null?
-                    getInstanceByConstructor( prefix, index, vex ) :
+                    getInstanceByConstructor( prefix, index, vex, force ) :
                     instance;
 
             if( obj == null )
@@ -140,10 +137,17 @@ public class Bean {
             }
 
             if(exist || force){
-                if( vex != exceptionHandler && !vex.getCauses().isEmpty())
-                    throw vex;
-                else
+                if( exceptionHandler == null ){
+                    if( !vex.getCauses().isEmpty() )
+                        throw vex;
+                    else
+                        return obj;
+                }
+                else{
+
+                    exceptionHandler.addCauses(vex.getCauses());
                     return obj;
+                }
             }
             else
                 return null;
@@ -206,12 +210,12 @@ public class Bean {
     }
 
     private Object getInstanceByConstructor( String prefix, long index,
-            ValidatorException exceptionHandler ) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, Exception{
+            ValidatorException exceptionHandler, boolean force ) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, Exception{
         ConstructorBean cons = this.getConstructor();
         ConstructorBean conInject = this.getConstructor();
         if( conInject.isConstructor() ){
             Constructor insCons = this.getConstructor().getContructor();
-            Object[] args = this.getValues(cons, prefix, index, exceptionHandler, false );
+            Object[] args = this.getValues(cons, prefix, index, exceptionHandler, force );
 
             if( args == null )
                 return null;
