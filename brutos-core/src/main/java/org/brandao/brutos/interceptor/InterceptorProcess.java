@@ -288,7 +288,31 @@ public class InterceptorProcess implements InterceptorStack{
 
         ResourceAction action = stackRequestElement.getAction();
 
-        return action.invoke(source, args);
+        try{
+            return action.invoke(source, args);
+        }
+        catch( IllegalArgumentException ex ){
+
+            StringBuilder argsText = new StringBuilder();
+            for( Object arg: args ){
+                argsText =
+                    argsText.length() == 0?
+                        argsText.append(arg) :
+                        argsText.append(", ").append(arg);
+            }
+
+            StringBuilder exText = new StringBuilder();
+            exText
+                .append("can't invoke the action: ")
+                .append(source.getClass().getName())
+                .append(".")
+                .append(action.getMethod().getName())
+                .append("(")
+                .append(argsText)
+                .append(")");
+
+            throw new IllegalArgumentException(exText.toString(), ex);
+        }
     }
 
     public Object invoke0( RequestInstrument requestInstrument,
