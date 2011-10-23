@@ -816,8 +816,8 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
                     try{
                         Bean bean = controller.getMappingBean("bean");
-                        bean.getValue();
-                        TestCase.fail();
+                        bean.getValue(true);
+                        TestCase.fail("expected ValidatorException");
                     }
                     catch( ValidatorException e ){
                     }
@@ -904,6 +904,29 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                         if( !(e.getCause() instanceof IllegalArgumentException))
                             TestCase.fail("expected NullPointerException");
                     }
+                }
+
+        });
+    }
+
+    public void testConstructor25(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-constructor25.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    Bean bean = controller.getMappingBean("bean");
+                    TestCase.assertNull(bean.getValue());
                 }
 
         });
@@ -1230,7 +1253,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
                     try{
                         Bean bean = controller.getMappingBean("bean");
-                        SimpleBean instance = (SimpleBean) bean.getValue();
+                        bean.getValue(true);
                         TestCase.fail("expected ValidatorException");
                     }
                     catch( ValidatorException e ){
@@ -1340,6 +1363,29 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     }
                     catch (BrutosException ex) {
                     }
+                }
+
+        });
+    }
+
+    public void testProperty16(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-property16.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    Bean bean = controller.getMappingBean("bean");
+                    TestCase.assertNull(bean.getValue());
                 }
 
         });
