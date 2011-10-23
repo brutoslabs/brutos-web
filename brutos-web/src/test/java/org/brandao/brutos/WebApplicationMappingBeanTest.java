@@ -85,6 +85,68 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
         });
     }
 
+    public void testCollection9(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-collection9.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("arg(0)", "1");
+                    app.getScopes().get(ScopeType.PARAM).put("arg(1)", "2");
+                    app.getScopes().get(ScopeType.PARAM).put("arg(2)", "3");
+                    Bean bean = controller.getMappingBean("bean");
+                    List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
+                    TestCase.assertEquals(3,instance.size());
+                    TestCase.assertEquals(1,instance.get(0).getArg2());
+                    TestCase.assertEquals(2,instance.get(1).getArg2());
+                    TestCase.assertEquals(3,instance.get(2).getArg2());
+                }
+
+        });
+    }
+
+    public void testCollection10(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-collection10.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("arg(0)", "1");
+                    app.getScopes().get(ScopeType.PARAM).put("arg(1)", "2");
+                    app.getScopes().get(ScopeType.PARAM).put("arg(2)", "3");
+                    Bean bean = controller.getMappingBean("bean");
+
+                    try{
+                        bean.getValue();
+                        TestCase.fail("excepted ValidatorException");
+                    }
+                    catch( ValidatorException e ){
+                    }
+                }
+
+        });
+    }
+
     public void testConstructorArgRefScopeTag(){
         super.execTest(
             new HandlerTest(){
