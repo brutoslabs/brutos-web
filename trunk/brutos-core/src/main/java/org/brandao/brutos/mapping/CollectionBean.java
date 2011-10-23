@@ -107,10 +107,7 @@ public class CollectionBean extends Bean{
             ValidatorException exceptionHandler, boolean force){
         try{
             
-            ValidatorException vex =
-                exceptionHandler == null?
-                    new ValidatorException() :
-                    exceptionHandler;
+            ValidatorException vex = new ValidatorException();
 
             instance = getInstance( instance,prefix,otherIndex,vex,force);
             Collection collection = (Collection)instance;
@@ -124,10 +121,16 @@ public class CollectionBean extends Bean{
             }
 
             if(!collection.isEmpty() || force){
-                if( vex != exceptionHandler && !vex.getCauses().isEmpty())
-                    throw vex;
-                else
+                if( exceptionHandler == null){
+                    if( !vex.getCauses().isEmpty() )
+                        throw vex;
+                    else
+                        return collection;
+                }
+                else {
+                    exceptionHandler.addCauses(vex.getCauses());
                     return collection;
+                }
             }
             else
                 return null;
