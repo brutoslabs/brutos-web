@@ -81,8 +81,8 @@ public class ListType implements CollectionType{
             if( this.primitiveType == null )
                 throw new UnknownTypeException( classType.toString() );
         }
-        else
-            throw new UnknownTypeException( "is not allowed the use the List or List<?>" );
+        //else
+        //    throw new UnknownTypeException( "is not allowed the use the List or List<?>" );
     }
 
     public Object getGenericType(){
@@ -90,6 +90,10 @@ public class ListType implements CollectionType{
     }
     
     private List getList(Object value){
+
+        if( this.type == null )
+            throw new UnknownTypeException( "is not allowed the use the List or List<?>" );
+
         try{
             List objList = (List)this.getListType().newInstance();
 
