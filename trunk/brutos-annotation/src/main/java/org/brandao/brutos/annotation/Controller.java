@@ -84,8 +84,6 @@ public @interface Controller{
 
     /**
      * Determina como a visão será processada.
-     * @return Se verdadeiro, após o processamento do controlador é executado o
-     * redirecionamento para a visão.
      */
     String dispatcher() default "forward";
 
