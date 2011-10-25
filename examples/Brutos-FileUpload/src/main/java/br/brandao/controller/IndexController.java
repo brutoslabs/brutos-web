@@ -53,8 +53,7 @@ public class IndexController{
         }
         else{
             FlowController
-                .dispatcher(DispatcherType.REDIRECT)
-                .to(IndexController.class);
+                .execute(IndexController.class, null);
             return null;
         }
     }
