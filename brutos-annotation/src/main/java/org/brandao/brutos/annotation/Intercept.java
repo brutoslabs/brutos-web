@@ -21,6 +21,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import org.brandao.brutos.interceptor.Interceptor;
 
 /**
  * Usado na configuração de um interceptador.
@@ -32,10 +33,10 @@ import java.lang.annotation.Target;
 public @interface Intercept {
 
     /**
-     * Identificação do interceptador. O interceptador deve existir.
-     * @return Identificação.
+     * Inerceptador
+     * @return Interceptador.
      */
-    String name();
+    Class<? extends Interceptor> interceptor();
 
     /**
      * Parâmetros de configuração do interceptador.
