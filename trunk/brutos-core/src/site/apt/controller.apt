@@ -324,7 +324,7 @@ Configurando uma aplicação
 * Incluindo parâmetros no caminho de um URI
 
  Em alguns casos é mais elegante que os parâmetros de uma requisição web façam parte do caminho do URI. Por exemplo, temos um URI no formato /item.jbrs?id=100.
- Não seria melhor se fosse assim /item/100-title_of_my_item.jbrs.
+ Não seria melhor se fosse assim /item/100-title_of_my_item.jbrs?.
 
  Com o Bruto MVC é possível e simples. Abaixo segue um trecho XML exemplificando como seria a configuração de um controlador para o URI citada anteriormente.
 

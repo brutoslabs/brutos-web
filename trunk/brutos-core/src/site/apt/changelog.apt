@@ -1,15 +1,25 @@
 ChangeLog
 
+* 2.0-Beta
+
+ * bugfix - configuração do nome das propriedades do controlador.
+
+ * bugfix - controlador não está retornando o resultado da ação.
+
+ * bugfix - configuração de parâmetros construídos.
+
+ * bugfix - configuração de coleções de beans com propriedades primitivas.
+
+ * bugfix - validação de coleções.
+
+ * bugfix - importação de xmls de configuração que estão na mesma pasta.
+
 * 2.0-SNAPSHOT
 
- Está disponível para download o último snapshot da versão 2.0 do Brutos.
  O framework foi totalmente reformulado, não sendo possível manter a compatibilidade
  com as versões anteriores.
 
 * 1.3-RC1
-
- Está disponível para download versão 1.3-RC1 do Brutos. O download pode ser feito na
- página de downloads e as alterações feitas estão descritas logo abaixo:
 
  * Incluído suporte ao JBRGates.
 
