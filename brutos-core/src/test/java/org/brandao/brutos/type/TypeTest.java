@@ -19,6 +19,7 @@ package org.brandao.brutos.type;
 
 import java.util.List;
 import junit.framework.TestCase;
+import org.brandao.brutos.web.http.ParameterList;
 
 /**
  *
@@ -42,6 +43,7 @@ public class TypeTest  extends TestCase{
         try{
             ListType type = (ListType) Types.getType(List.class);
             type.setGenericType(List.class);
+            type.getValue(new ParameterList());
             TestCase.fail("expected UnknownTypeException");
         }
         catch( UnknownTypeException e ){
