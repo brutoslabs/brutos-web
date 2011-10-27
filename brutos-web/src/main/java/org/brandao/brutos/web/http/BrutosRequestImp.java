@@ -143,7 +143,7 @@ public class BrutosRequestImp extends ServletRequestWrapper
         if( value != null ){
             List<Object> values = (List)parameters.get( name );
             if( values == null ){
-                values = new ParameterList<Object>();
+                values = new ParameterList();
                 parameters.put( name, values );
             }
 

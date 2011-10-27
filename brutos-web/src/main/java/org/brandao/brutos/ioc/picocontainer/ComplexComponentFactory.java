@@ -126,7 +126,8 @@ public class ComplexComponentFactory extends ProviderAdapter {
     }
     
     private void loadDataMap(Map map, PicoContainer container) {
-        for( Property prop: inject.getProps() ){
+        for( Object p: inject.getProps() ){
+            Property prop = (Property)p;
             //Object key   = getValue( inject.getKeyType(), prop.getKey() );
             Object key   = prop.getKey() instanceof ValueInject? 
                         getValue( inject.getKeyType(), ((ValueInject)prop.getKey()).getValue() ) :
@@ -142,7 +143,8 @@ public class ComplexComponentFactory extends ProviderAdapter {
     }
 
     private void loadDataCollection(Collection collection, PicoContainer container) {
-        for( Property prop: inject.getProps() ){
+        for( Object p: inject.getProps() ){
+            Property prop = (Property)p;
             Object value = 
                     prop.getValue() instanceof ValueInject? 
                         getValue( inject.getValueType(), ((ValueInject)prop.getValue()).getValue() ) :

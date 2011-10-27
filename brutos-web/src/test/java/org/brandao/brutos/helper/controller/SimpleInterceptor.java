@@ -38,8 +38,8 @@ public class SimpleInterceptor extends AbstractInterceptor{
 
         Scopes scopes = ContextLoader.getCurrentWebApplicationContext().getScopes();
         Scope scope = scopes.get(ScopeType.REQUEST);
-        for(String key: this.props.keySet()){
-            scope.put(key, this.props.get(key));
+        for(Object key: this.props.keySet()){
+            scope.put((String)key, this.props.get(key));
         }
 
         stack.next(handler);
