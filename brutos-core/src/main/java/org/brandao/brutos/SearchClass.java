@@ -38,18 +38,22 @@ import org.brandao.brutos.mapping.MappingException;
  */
 public class SearchClass {
 
-    private List<Class> listClass;
+    private List listClass;
     private CheckSearch check;
 
     public SearchClass(){
-        this.listClass = new ArrayList<Class>();
+        this.listClass = new ArrayList();
     }
 
     public void load( ClassLoader classLoader ){
         try{
             URLClassLoader urls = (URLClassLoader)classLoader;
-            for( URL url: urls.getURLs() )
+            URL[] aUrls = urls.getURLs();
+            //for( URL url: urls.getURLs() )
+            for( int i=0;i<aUrls.length;i++ ){
+                URL url = aUrls[i];
                 readClassPath( url, classLoader );
+            }
         }
         catch( Exception e ){}
     }
@@ -57,8 +61,12 @@ public class SearchClass {
     public void loadDirs( ClassLoader classLoader ){
         try{
             URLClassLoader urls = (URLClassLoader)classLoader;
-            for( URL url: urls.getURLs() )
+            //for( URL url: urls.getURLs() )
+            URL[] aUrls = urls.getURLs();
+            for( int i=0;i<aUrls.length;i++ ){
+                URL url = aUrls[i];
                 readClassDir( url, classLoader );
+            }
         }
         catch( Exception e ){}
     }
@@ -66,10 +74,10 @@ public class SearchClass {
     public void manifest(){
         try {
             ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-            Enumeration<URL> urls = classLoader.getResources( "META-INF/MANIFEST.MF" );
+            Enumeration urls = classLoader.getResources( "META-INF/MANIFEST.MF" );
 
             while( urls.hasMoreElements() ){
-                URL url = urls.nextElement();
+                URL url = (URL) urls.nextElement();
                 InputStream in = url.openConnection().getInputStream();
                 manifest(in, classLoader);
             }
@@ -104,7 +112,7 @@ public class SearchClass {
                     readJar( file, classLoader );
                 */
                 if (".".equals(fileName)) {
-                    readClassDir(new URL(String.format("file:/%s", dirName)), classLoader);
+                    readClassDir(new URL(String.format("file:/%s", new Object[]{dirName})), classLoader);
                 } else {
                     fileName = dirName + "/" + fileName;
                     File file = new File(fileName);
@@ -145,7 +153,9 @@ public class SearchClass {
     private void readDir( File dir, ClassLoader classLoader, int removePos ){
         File[] files = dir.listFiles();
 
-        for( File file: files ){
+        //for( File file: files ){
+        for( int i=0;i<files.length;i++ ){
+            File file  = files[i];
             if( file.isDirectory() )
                 readDir( file, classLoader, removePos );
             else
@@ -166,9 +176,9 @@ public class SearchClass {
         JarFile jar = null;
         jar = new JarFile( file );
         try{
-            Enumeration<JarEntry> entrys = jar.entries();
+            Enumeration entrys = jar.entries();
             while( entrys.hasMoreElements() ){
-                JarEntry entry = entrys.nextElement();
+                JarEntry entry = (JarEntry) entrys.nextElement();
                 String name = entry.getName();
 
                 if( name.endsWith( ".class" ) ){
@@ -192,7 +202,7 @@ public class SearchClass {
         this.check = check;
     }
 
-    private void checkClass( Class<?> classe ){
+    private void checkClass( Class classe ){
         if( check == null )
             throw new NullPointerException();
 
@@ -201,7 +211,7 @@ public class SearchClass {
         }
     }
 
-    public List<Class> getClasses() {
+    public List getClasses() {
         return listClass;
     }
 

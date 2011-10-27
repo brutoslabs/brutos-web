@@ -31,10 +31,10 @@ import org.brandao.brutos.ClassType;
  */
 public class BeanInstance {
 
-    private static Map<Class, BeanData> cache;
+    private static Map cache;
 
     static{
-        cache = new HashMap<Class, BeanData>();
+        cache = new HashMap();
     }
 
     private Object object;
@@ -52,7 +52,7 @@ public class BeanInstance {
     }
 
     public SetterProperty getSetter( String property ){
-        Method method = data.getSetter().get(property);
+        Method method = (Method) data.getSetter().get(property);
         if( method == null )
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
         return new SetterProperty( method, object );
@@ -61,11 +61,14 @@ public class BeanInstance {
 
     private BeanData getBeanData( Class clazz ){
         if( cache.containsKey(clazz) )
-            return cache.get(clazz);
+            return (BeanData) cache.get(clazz);
         else{
             BeanData data = new BeanData();
             data.setClassType(clazz);
-            for( Method method: clazz.getMethods() ){
+            Method[] methods = clazz.getMethods();
+            for( int i=0;i<methods.length;i++ ){
+                Method method = methods[i];
+            //for( Method method: clazz.getMethods() ){
                 String methodName = method.getName();
 
                 if( methodName.startsWith("set") && method.getParameterTypes().length == 1 ){
@@ -102,7 +105,7 @@ public class BeanInstance {
     }
 
     public GetterProperty getGetter( String property ){
-        Method method = data.getGetter().get(property);
+        Method method = (Method) data.getGetter().get(property);
         if( method == null )
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
 
@@ -115,7 +118,7 @@ public class BeanInstance {
     }
     
     public Class getType( String property ){
-        Method method = data.getGetter().get(property);
+        Method method = (Method) data.getGetter().get(property);
         if( method == null )
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
 
@@ -124,7 +127,7 @@ public class BeanInstance {
 
     public Object getGenericType( String property ){
         
-        Method method = data.getGetter().get(property);
+        Method method = (Method) data.getGetter().get(property);
         if( method == null )
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
 
@@ -145,9 +148,9 @@ public class BeanInstance {
         
         Class methodClass = method.getClass();
         Method getGenericReturnType =
-            methodClass.getMethod("getGenericReturnType");
+            methodClass.getMethod("getGenericReturnType", new Class[]{});
 
-        return getGenericReturnType.invoke(method);
+        return getGenericReturnType.invoke(method, new Object[]{});
     }
 
     public Class getClassType(){
@@ -157,36 +160,36 @@ public class BeanInstance {
 
 class BeanData{
 
-    private Class<?> classType;
-    private Map<String,Method> setter;
-    private Map<String,Method> getter;
+    private Class classType;
+    private Map setter;
+    private Map getter;
 
     public BeanData(){
-        this.setter = new HashMap<String, Method>();
-        this.getter = new HashMap<String, Method>();
+        this.setter = new HashMap();
+        this.getter = new HashMap();
     }
     
-    public Class<?> getClassType() {
+    public Class getClassType() {
         return classType;
     }
 
-    public void setClassType(Class<?> classType) {
+    public void setClassType(Class classType) {
         this.classType = classType;
     }
 
-    public Map<String, Method> getSetter() {
+    public Map getSetter() {
         return setter;
     }
 
-    public void setSetter(Map<String, Method> setter) {
+    public void setSetter(Map setter) {
         this.setter = setter;
     }
 
-    public Map<String, Method> getGetter() {
+    public Map getGetter() {
         return getter;
     }
 
-    public void setGetter(Map<String, Method> getter) {
+    public void setGetter(Map getter) {
         this.getter = getter;
     }
 

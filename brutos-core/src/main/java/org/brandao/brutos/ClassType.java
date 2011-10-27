@@ -28,10 +28,10 @@ import java.util.Map;
  */
 public final class ClassType {
     
-    private final static Map<Object, Class> primitiveType;
+    private final static Map primitiveType;
     
     static{
-        primitiveType = new HashMap<Object, Class>();
+        primitiveType = new HashMap();
         primitiveType.put("boolean",java.lang.Boolean.TYPE);
         primitiveType.put("byte",java.lang.Byte.TYPE);
         primitiveType.put("char",java.lang.Character.TYPE);
@@ -54,27 +54,27 @@ public final class ClassType {
     }
 
     /**
-     * Obtém o tipo empacotado, caso seja um tipo primitivo.
+     * Obtï¿½m o tipo empacotado, caso seja um tipo primitivo.
      *
      * @param clazz Classe primitiva.
      * @return Classe empacotada.
      */
     public static Class getWrapper( Class clazz ){
-        Class classe = primitiveType.get( clazz );
+        Class classe = (Class) primitiveType.get( clazz );
         
         return classe == null? clazz : classe;
         
     }
 
     /**
-     * Obtém uma classe a partir se seu nome.
+     * Obtï¿½m uma classe a partir se seu nome.
      * @param name Nome da classe.
      * @return Classe.
-     * @throws ClassNotFoundException Lançada se não for possível obter a
+     * @throws ClassNotFoundException Lanï¿½ada se nï¿½o for possï¿½vel obter a
      * classe.
      */
     public static Class get( String name ) throws ClassNotFoundException{
-        Class classe = primitiveType.get( name );
+        Class classe = (Class) primitiveType.get( name );
         
         return classe == null? getClasse( name ) : classe;
         

@@ -37,9 +37,9 @@ public class Bean {
 
     private String name;
     
-    private Class<?> classType;
+    private Class classType;
     
-    private Map<String, PropertyBean> fields;
+    private Map fields;
 
     private boolean hierarchy;
 
@@ -68,19 +68,19 @@ public class Bean {
         this.name = name;
     }
 
-    public Class<?> getClassType() {
+    public Class getClassType() {
         return classType;
     }
 
-    public void setClassType(Class<?> classType) {
+    public void setClassType(Class classType) {
         this.classType = classType;
     }
 
-    public Map<String, PropertyBean> getFields() {
+    public Map getFields() {
         return fields;
     }
 
-    public void setFields(Map<String, PropertyBean> fields) {
+    public void setFields(Map fields) {
         this.fields = fields;
     }
 
@@ -121,11 +121,11 @@ public class Bean {
                     (this.getConstructor().size() == 0 && fields.isEmpty()) ||
                     this.getConstructor().isMethodFactory();
 
-            Iterator<PropertyBean> fds = fields.values().iterator();
+            Iterator fds = fields.values().iterator();
             BeanInstance beanInstance = new BeanInstance( obj, classType );
             
             while( fds.hasNext() ){
-                PropertyBean fb = fds.next();
+                PropertyBean fb = (PropertyBean) fds.next();
 
                 Object value = fb.getValue(prefix, index, vex);
 

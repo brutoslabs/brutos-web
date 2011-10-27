@@ -35,8 +35,8 @@ import org.brandao.brutos.mapping.Interceptor;
  */
 public class WebFrameManager {
     
-    private Map<String, Controller> forms;
-    private Map<Class, Controller> revForms;
+    private Map forms;
+    private Map revForms;
     
     private WebFrameBuilder current;
     
@@ -112,16 +112,17 @@ public class WebFrameManager {
         addForm( fr.getUri(), fr );
         this.current = new WebFrameBuilder( fr, this, interceptorManager );
         
-        for( Interceptor in: interceptorManager.getDefaultInterceptors() )
-            current.addInterceptor( in.getName() );
+        //for( Interceptor in: interceptorManager.getDefaultInterceptors() )
+        //    current.addInterceptor( in.getName() );
         
         return this.getCurrent();
     }
     
     private Method getMethodAction( String methodName, Class classe ){
         try{
-            Method method = classe.getDeclaredMethod( methodName );
-            return method;
+            //Method method = classe.getDeclaredMethod( methodName );
+            //return method;
+            return null;
         }
         catch( Exception e ){
             //throw new BrutosException( e );
@@ -134,14 +135,14 @@ public class WebFrameManager {
     }
     
     public Controller getForm( String uri ){
-        return forms.get( uri );
+        return (Controller) forms.get( uri );
     }
     
     public Controller getForm( Class controllerClass ){
-        return revForms.get( controllerClass );
+        return (Controller) revForms.get( controllerClass );
     }
     
-    public Map<String, Controller> getForms() {
+    public Map getForms() {
         return Collections.unmodifiableMap( forms );
     }
 

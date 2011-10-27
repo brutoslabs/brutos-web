@@ -34,10 +34,10 @@ public class Scopes{
         LoggerProvider.getCurrentLoggerProvider()
             .getLogger(Scopes.class.getName());
     
-    private Map<String,Scope> scopes;
+    private Map scopes;
 
     public Scopes() {
-        scopes = new HashMap<String,Scope>();
+        scopes = new HashMap();
     }
 
     public void register( String id, Scope scope ){
@@ -59,7 +59,7 @@ public class Scopes{
     }
 
     public Scope get( String id ){
-        return scopes.get( id );
+        return (Scope) scopes.get( id );
     }
 
     public Scope get( ScopeType scopeId ){

@@ -25,9 +25,9 @@ import java.util.List;
  */
 public class PropertiesInject extends ComplexObjectInject{
     
-    private List<Property> props;
+    private List props;
     
-    public PropertiesInject( Class<?> type, String name, String factory, Property ... props ) {
+    public PropertiesInject( Class type, String name, String factory, Property[] props ) {
         //super( type, name, ScopeType.REQUEST, false );
         super( name, String.class, String.class, java.util.Properties.class, factory, props );
         setSingleton( true );
@@ -35,11 +35,11 @@ public class PropertiesInject extends ComplexObjectInject{
         //setConstructor( new ConstructorInject( null, this ) );
     }
     
-    public List<Property> getProps() {
+    public List getProps() {
         return props;
     }
 
-    public void setProps(List<Property> props) {
+    public void setProps(List props) {
         this.props = props;
     }
     

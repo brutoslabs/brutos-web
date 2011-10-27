@@ -144,9 +144,9 @@ public class Types {
 
             if( parameterizedTypeClass.isAssignableFrom(type.getClass()) ){
                 Method getRawType =
-                        parameterizedTypeClass.getMethod("getRawType");
+                        parameterizedTypeClass.getMethod("getRawType", new Class[]{});
 
-                Object clazz = getRawType.invoke(type);
+                Object clazz = getRawType.invoke(type, new Object[]{});
                 return (Class)clazz;
             }
             else
@@ -173,9 +173,9 @@ public class Types {
 
             if( parameterizedTypeClass.isAssignableFrom(type.getClass()) ){
                 Method getRawType =
-                        parameterizedTypeClass.getMethod("getActualTypeArguments");
+                        parameterizedTypeClass.getMethod("getActualTypeArguments", new Class[]{});
 
-                Object args = getRawType.invoke(type);
+                Object args = getRawType.invoke(type, new Object[]{});
                 return (Class) Array.get(args, 0);
             }
             else

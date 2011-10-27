@@ -33,10 +33,10 @@ public class ByteWrapperType implements Type{
 
     public Object toValue( String value ){
         try{
-            return Byte.parseByte( value );
+            return Byte.valueOf( value );
         }
         catch( Exception e ){
-            return (byte)0;
+            return new Byte((byte)0);
         }
     }
 

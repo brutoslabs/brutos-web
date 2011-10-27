@@ -290,7 +290,7 @@ public class BeanBuilder {
         if( !this.mappingBean.isMap() )
             throw new BrutosException(
                 String.format("is not allowed for this type: %s",
-                    this.mappingBean.getClassType() ) );
+                    new Object[]{this.mappingBean.getClassType()} ) );
 
         ref = ref == null || ref.replace( " ", "" ).length() == 0? null : ref;
 
@@ -298,7 +298,9 @@ public class BeanBuilder {
             throw new NotFoundMappingBeanException(
                     String.format(
                         "mapping %s not found: %s",
-                        ref, controller.getClassType().getName() ) );
+                        new Object[]{
+                            ref,
+                            controller.getClassType().getName()} ) );
 
 
         Bean key = (Bean)controller.getMappingBean(ref);
@@ -319,7 +321,7 @@ public class BeanBuilder {
         if( !this.mappingBean.isMap() )
             throw new BrutosException(
                 String.format("is not allowed for this type: %s",
-                    this.mappingBean.getClassType() ) );
+                    new Object[]{this.mappingBean.getClassType()} ) );
         
         String beanName = mappingBean.getName() + "#key";
         BeanBuilder bb = controllerBuilder
@@ -375,7 +377,7 @@ public class BeanBuilder {
         if( !this.mappingBean.isCollection() && !this.mappingBean.isMap() )
             throw new BrutosException(
                 String.format("is not allowed for this type: %s",
-                    this.mappingBean.getClassType() ) );
+                    new Object[]{this.mappingBean.getClassType()} ) );
         
         ref = ref == null || ref.replace( " ", "" ).length() == 0? null : ref;
 
@@ -383,9 +385,12 @@ public class BeanBuilder {
             throw new NotFoundMappingBeanException(
                     String.format(
                         "mapping %s not found: %s",
-                        ref, controller.getClassType().getName() ) );
+                        new Object[]{
+                            ref,
+                            controller.getClassType().getName()
+            }) );
 
-        Bean bean = controller.getMappingBeans().get( ref );
+        Bean bean = (Bean) controller.getMappingBeans().get( ref );
 
         /*
         if( !bean.isBean() )
@@ -683,7 +688,7 @@ public class BeanBuilder {
 
         DependencyBean dependencyBean =
                 propertyNameRequired? 
-                    new PropertyBean(this.mappingBean) :
+                    (DependencyBean)new PropertyBean(this.mappingBean) :
                     new ConstructorArgBean(this.mappingBean);
         
         dependencyBean.setEnumProperty( enumProperty );
@@ -726,9 +731,10 @@ public class BeanBuilder {
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException(
                         String.format( "%s.%s : %s" ,
-                            controller.getClassType().getName(),
-                            propertyName,
-                            e.getMessage() ) );
+                            new Object[]{
+                                controller.getClassType().getName(),
+                                propertyName,
+                                e.getMessage()} ) );
             }
         }
         Configuration validatorConfig = new Configuration();

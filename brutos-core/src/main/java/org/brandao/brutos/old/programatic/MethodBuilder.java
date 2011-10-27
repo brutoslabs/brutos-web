@@ -98,7 +98,7 @@ public class MethodBuilder {
         if( methodForm.getParameters().size() > methodForm.getParametersType().size() )
             throw new BrutosException( "index > " + methodForm.getParametersType().size() );
         
-        Class classType = methodForm.
+        Class classType = (Class) methodForm.
                     getParametersType().get( methodForm.getParamterSize() );
 
         Configuration validatorConfig = new Configuration();
@@ -130,10 +130,10 @@ public class MethodBuilder {
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException( 
                         String.format( "%s.%s(...) index %d : %s" ,
-                            methodForm.getMethod().getDeclaringClass().getName(),
+                            new Object[]{methodForm.getMethod().getDeclaringClass().getName(),
                             methodForm.getMethod().getName(),
-                            methodForm.getParamterSize(),
-                            e.getMessage() ) );
+                            new Integer(methodForm.getParamterSize()),
+                            e.getMessage()} ) );
             }
             
             if( useBean.getType() == null )

@@ -15,7 +15,7 @@
  *
  */
 
-package org.brandao.brutos.xml.parser;
+package org.brandao.brutos.xml;
 
 /**
  *

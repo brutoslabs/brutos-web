@@ -40,7 +40,7 @@ public class DoubleType implements Type{
             return value;
         else
         if( value instanceof String )
-            return Double.parseDouble( (String)value );
+            return Double.valueOf( (String)value );
         else
         if( value == null )
             return null;

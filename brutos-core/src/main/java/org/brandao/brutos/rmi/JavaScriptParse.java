@@ -32,7 +32,6 @@ public class JavaScriptParse {
         this.controller = controller;
     }
 
-    @Override
     public String toString(){
         return toString0();
     }

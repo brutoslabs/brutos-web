@@ -20,7 +20,7 @@ package org.brandao.brutos;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
- * Constrói uma propriedade de um controlador.
+ * Constrï¿½i uma propriedade de um controlador.
  * 
  * @author Afonso Brandao
  */
@@ -30,12 +30,12 @@ public class PropertyBuilder extends RestrictionBuilder{
         super( config );
     }
 
-    public PropertyBuilder addRestriction( RestrictionRules ruleId, Object value ){
-        return (PropertyBuilder)super.addRestriction( ruleId, value );
+    public RestrictionBuilder addRestriction( RestrictionRules ruleId, Object value ){
+        return super.addRestriction( ruleId, value );
     }
 
-    public PropertyBuilder setMessage( String message ){
-        return (PropertyBuilder)super.setMessage(message);
+    public RestrictionBuilder setMessage( String message ){
+        return super.setMessage(message);
     }
 
 

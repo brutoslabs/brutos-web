@@ -34,13 +34,13 @@ import org.brandao.brutos.InterceptorStackBuilder;
  */
 public class InterceptorManager extends org.brandao.brutos.InterceptorManager{
 
-    private Map<String, Interceptor> interceptors;
-    private List<Interceptor> defaultInterceptors;
+    private Map interceptors;
+    private List defaultInterceptors;
     private IOCManager iocManager;
 
     public InterceptorManager( IOCManager iocManager ) {
-        this.interceptors = new HashMap<String, Interceptor>();
-        this.defaultInterceptors = new ArrayList<Interceptor>();
+        this.interceptors = new HashMap();
+        this.defaultInterceptors = new ArrayList();
         this.iocManager = iocManager;
     }
 
@@ -106,10 +106,10 @@ public class InterceptorManager extends org.brandao.brutos.InterceptorManager{
         if( !interceptors.containsKey( name ) )
             throw new BrutosException( "interceptor not found: " + name );
         else
-            return interceptors.get( name );
+            return (Interceptor) interceptors.get( name );
     }
 
-    public List<Interceptor> getDefaultInterceptors(){
+    public List getDefaultInterceptors(){
         return this.defaultInterceptors;
     }
 

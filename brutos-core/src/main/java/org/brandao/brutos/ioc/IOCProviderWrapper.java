@@ -35,17 +35,14 @@ public class IOCProviderWrapper extends IOCProvider{
         return iocProvider.getBean(name);
     }
 
-    @Override
     public void configure(Properties properties) {
         iocProvider.configure(properties);
     }
 
-    @Override
     public void destroy() {
         iocProvider.destroy();
     }
 
-    @Override
     public Object getBean(Class clazz) {
         return iocProvider.getBean(clazz);
     }

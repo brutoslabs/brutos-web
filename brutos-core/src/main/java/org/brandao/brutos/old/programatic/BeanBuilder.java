@@ -143,9 +143,9 @@ public class BeanBuilder {
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException(
                         String.format( "%s.%s : %s" ,
-                            webFrame.getClassType().getName(),
+                            new Object[]{webFrame.getClassType().getName(),
                             propertyName,
-                            e.getMessage() ) );
+                            e.getMessage()} ) );
             }
             /*
             fieldBean.setType( Types.getType( f.getType(), enumProperty, temporalProperty ) );

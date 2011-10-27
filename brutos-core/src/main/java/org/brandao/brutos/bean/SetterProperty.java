@@ -26,12 +26,18 @@ import java.lang.reflect.Method;
  */
 public class SetterProperty {
 
-    @Deprecated
+    /**
+     * @deprecated
+     */
     private Field field;
     private Object object;
     private Method method;
 
-    @Deprecated
+    /**
+     * @deprecated 
+     * @param field
+     * @param object
+     */
     public SetterProperty( Field field, Object object ){
         this.field = field;
         this.object = object;
@@ -51,7 +57,7 @@ public class SetterProperty {
 
         Method setter = field.getDeclaringClass().getMethod( methodName, field.getType() );
         */
-        method.invoke( object, value );
+        method.invoke( object, new Object[]{value} );
     }
 
     public Method getMethod(){

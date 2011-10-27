@@ -43,13 +43,13 @@ public class MethodForm {
 
     private String methodName;
 
-    private List<ParameterMethodMapping> parameters;
+    private List parameters;
     
-    private Map<Class<? extends Throwable>, ThrowableSafeData> throwsSafe;
+    private Map throwsSafe;
     
     private Method method;
     
-    private List<Class<?>> parametersType;
+    private List parametersType;
     
     private String returnIn;
     
@@ -57,7 +57,7 @@ public class MethodForm {
     
     private Type returnType;
 
-    private Class<?> returnClass;
+    private Class returnClass;
 
     private boolean redirect;
 
@@ -86,7 +86,7 @@ public class MethodForm {
         parameters.add(value);
     }
     
-    public List<ParameterMethodMapping> getParameters() {
+    public List getParameters() {
 
         if( !load )
             this.load();
@@ -94,15 +94,16 @@ public class MethodForm {
         return parameters;
     }
 
-    public void setParameters(List<ParameterMethodMapping> parameters) {
+    public void setParameters(List parameters) {
         load = false;
         this.parameters = parameters;
     }
 
-    public ThrowableSafeData getThrowsSafe( Class<? extends Throwable> thr ) {
-        return throwsSafe.containsKey(thr)?
-                throwsSafe.get(thr) :
-                controller.getThrowsSafe(thr);
+    public ThrowableSafeData getThrowsSafe( Class thr ) {
+        return (ThrowableSafeData) (
+                throwsSafe.containsKey(thr) ?
+                    throwsSafe.get(thr) :
+                    controller.getThrowsSafe(thr));
     }
 
     public void setThrowsSafe(ThrowableSafeData thr) {
@@ -114,7 +115,7 @@ public class MethodForm {
     }
 
     public Class getParameterType( int index ){
-        return this.parametersType.get( index );
+        return (Class) this.parametersType.get( index );
     }
 
     public java.lang.reflect.Type getGenericParameterType( int index ){
@@ -133,11 +134,11 @@ public class MethodForm {
         this.method = method;
     }
 
-    public List<Class<?>> getParametersType() {
+    public List getParametersType() {
         return parametersType;
     }
 
-    public void setParametersType(List<Class<?>> parametersType) {
+    public void setParametersType(List parametersType) {
         this.parametersType = parametersType;
     }
 
@@ -173,11 +174,11 @@ public class MethodForm {
         this.returnType = returnType;
     }
 
-    public Class<?> getReturnClass() {
+    public Class getReturnClass() {
         return returnClass;
     }
 
-    public void setReturnClass(Class<?> returnClass) {
+    public void setReturnClass(Class returnClass) {
         this.returnClass = returnClass;
     }
 
@@ -213,7 +214,7 @@ public class MethodForm {
             controller.addReserveMethod(method, this);
             setParametersType( Arrays.asList( method.getParameterTypes() ) );
 
-            Class<?> returnClassType = method.getReturnType();
+            Class returnClassType = method.getReturnType();
 
             if( returnClassType != void.class )
                 setReturnType( Types.getType( returnClassType ) );
@@ -235,7 +236,7 @@ public class MethodForm {
         int size = parameters.size();
         Class[] classArgs = new Class[ size ];
         for( int i=0;i<size;i++ ){
-            ParameterMethodMapping arg = parameters.get(i);
+            ParameterMethodMapping arg = (ParameterMethodMapping) parameters.get(i);
             classArgs[ i ] = arg.getBean().getClassType();
         }
 
@@ -249,7 +250,8 @@ public class MethodForm {
                     Class[] params = m.getParameterTypes();
                     for( int k=0;k<params.length;k++ ){
                         
-                        ParameterMethodMapping arg = parameters.get(k);
+                        ParameterMethodMapping arg = 
+                                (ParameterMethodMapping) parameters.get(k);
                         Type type = arg.getBean().getType();
                         Bean mapping = arg.getBean().getMapping();
                         
@@ -297,7 +299,8 @@ public class MethodForm {
         Class[] result = new Class[length];
 
         for( int i=0;i<length;i++ ){
-            ParameterMethodMapping p = this.parameters.get(i);
+            ParameterMethodMapping p = 
+                    (ParameterMethodMapping) this.parameters.get(i);
             result[i] =  p.getBean().getClassType();
         }
 

@@ -40,7 +40,7 @@ public class BooleanType implements Type{
             return value;
         else
         if(value instanceof String)
-            return Boolean.parseBoolean((String)value);
+            return Boolean.valueOf((String)value);
         else
         if( value == null )
             return null;

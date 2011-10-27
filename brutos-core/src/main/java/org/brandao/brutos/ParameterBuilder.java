@@ -20,7 +20,7 @@ package org.brandao.brutos;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
- * Constrói um parâmetro de uma ação.
+ * Constrï¿½i um parï¿½metro de uma aï¿½ï¿½o.
  *
  * @author Afonso Brandao
  */
@@ -30,12 +30,12 @@ public class ParameterBuilder extends RestrictionBuilder{
         super( config );
     }
 
-    public ParameterBuilder addRestriction( RestrictionRules ruleId, Object value ){
-        return (ParameterBuilder)super.addRestriction( ruleId, value );
+    public RestrictionBuilder addRestriction( RestrictionRules ruleId, Object value ){
+        return super.addRestriction( ruleId, value );
     }
 
-    public ParameterBuilder setMessage( String message ){
-        return (ParameterBuilder)super.setMessage(message);
+    public RestrictionBuilder setMessage( String message ){
+        return super.setMessage(message);
     }
 
 }

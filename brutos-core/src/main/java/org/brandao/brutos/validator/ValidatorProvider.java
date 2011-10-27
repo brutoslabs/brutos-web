@@ -40,7 +40,7 @@ public abstract class ValidatorProvider {
                 "org.brandao.brutos.validator.DefaultValidatorProvider" );
         try{
             ValidatorProvider provider = null;
-            Class<?> validatorProvider =
+            Class validatorProvider =
                 Class.forName(
                     validatorProviderName,
                     true,

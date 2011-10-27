@@ -44,7 +44,6 @@ import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
-import org.brandao.brutos.xml.parser.XMLBrutosConstants;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

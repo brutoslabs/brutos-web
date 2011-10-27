@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
  */
 public class Action {
     
-    private Class<?> classType;
+    private Class classType;
     
     private Method preAction;
     
@@ -51,11 +51,11 @@ public class Action {
         this.postAction = postAction;
     }
 
-    public Class<?> getClassType() {
+    public Class getClassType() {
         return classType;
     }
 
-    public void setClassType(Class<?> classType) {
+    public void setClassType(Class classType) {
         this.classType = classType;
     }
     

@@ -20,6 +20,7 @@ package org.brandao.brutos.interceptor;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ParameterMethodMapping;
 import org.brandao.brutos.mapping.ThrowableSafeData;
@@ -56,8 +58,8 @@ public class InterceptorProcess implements InterceptorStack{
                 .getLogger(InterceptorProcess.class.getName());
     
     private Controller form;
-    private List<org.brandao.brutos.mapping.Interceptor> stack;
-    private ThreadLocal<Integer> stackPos;
+    private List stack;
+    private ThreadLocal stackPos;
             
     public InterceptorProcess() {
         this.stackPos = new ThreadLocal();
@@ -74,8 +76,8 @@ public class InterceptorProcess implements InterceptorStack{
         Integer oldPos = null;
         
         try{
-            oldPos = stackPos.get();
-            stackPos.set( 0 );
+            oldPos = (Integer) stackPos.get();
+            stackPos.set( new Integer(0) );
             next( handler );
         }
         finally{
@@ -96,12 +98,15 @@ public class InterceptorProcess implements InterceptorStack{
     public void createStackInterceptor0(){
         this.stack = new LinkedList();
         
-        List<org.brandao.brutos.mapping.Interceptor> interceptors = 
+        List interceptors = 
             form.getDefaultInterceptorList();
 
 
         if( interceptors != null ){
-            for( org.brandao.brutos.mapping.Interceptor i: interceptors ){
+            //for( org.brandao.brutos.mapping.Interceptor i: interceptors ){
+            for( int idx=0;idx<interceptors.size();idx++ ){
+                Interceptor i =
+                        (Interceptor) interceptors.get(idx);
                 processInterceptor(
                         new StringBuffer(),
                         i.getProperties(),
@@ -113,7 +118,10 @@ public class InterceptorProcess implements InterceptorStack{
         interceptors =
             form.getInterceptors();
 
-        for( org.brandao.brutos.mapping.Interceptor i: interceptors ){
+        //for( org.brandao.brutos.mapping.Interceptor i: interceptors ){
+            for( int idx=0;idx<interceptors.size();idx++ ){
+                Interceptor i =
+                        (Interceptor) interceptors.get(idx);
             processInterceptor( 
                     new StringBuffer(),
                     i.getProperties(), 
@@ -132,15 +140,18 @@ public class InterceptorProcess implements InterceptorStack{
     }
     
     private void processInterceptor( StringBuffer path, 
-            Map<String,Object> propertiesScope,
-            org.brandao.brutos.mapping.Interceptor interceptor ){
+            Map propertiesScope,
+            Interceptor interceptor ){
         
         if( interceptor instanceof org.brandao.brutos.mapping.InterceptorStack ){
-            List<org.brandao.brutos.mapping.Interceptor> ins = 
+            List ins = 
                     ((org.brandao.brutos.mapping.InterceptorStack)interceptor)
                         .getInterceptors();
 
-            for( org.brandao.brutos.mapping.Interceptor i: ins ){
+            //for( org.brandao.brutos.mapping.Interceptor i: ins ){
+            for( int idx=0;idx<ins.size();idx++ ){
+                Interceptor i =
+                        (Interceptor) ins.get(idx);
                 
                 if( path.indexOf( i.getName() ) == -1 ){
                     processInterceptor( 
@@ -153,7 +164,7 @@ public class InterceptorProcess implements InterceptorStack{
         }
         else{
             String index = String.valueOf( form.hashCode() );
-            Map<String,Object> properties = (Map)interceptor.getProperty( index );
+            Map properties = (Map)interceptor.getProperty( index );
             
             if( properties == null ){
                 properties = getScopeProperties( path.toString(), propertiesScope,
@@ -165,14 +176,17 @@ public class InterceptorProcess implements InterceptorStack{
         }
     }
 
-    private Map<String,Object> getScopeProperties( String path, 
-            Map<String,Object> propertiesScope, Map<String,Object> properties ){
+    private Map getScopeProperties( String path, 
+            Map propertiesScope, Map properties ){
         
-        Map<String,Object> props = new HashMap();
+        Map props = new HashMap();
         
-        Set<String> keys = properties.keySet();
-        
-        for( String key: keys ){
+        Set keys = properties.keySet();
+        Iterator iKeys = keys.iterator();
+
+        //for( String key: keys ){
+        while( iKeys.hasNext() ){
+            String key = (String) iKeys.next();
             Object value = propertiesScope.get( path + key );
             
             value = value == null? properties.get( key ) : value;
@@ -191,16 +205,16 @@ public class InterceptorProcess implements InterceptorStack{
     }
 
     public void next(InterceptorHandler handler) throws InterceptedException{
-        int pos = stackPos.get();
-        stackPos.set( pos + 1 );
+        Integer pos = (Integer) stackPos.get();
+        stackPos.set( new Integer(pos.intValue() + 1) );
 
-        if( pos < this.stack.size() )
+        if( pos.intValue() < this.stack.size() )
             next0(handler, pos);
         else
             invoke( handler );
     }
 
-    private void next0(InterceptorHandler handler, int pos)
+    private void next0(InterceptorHandler handler, Integer pos)
             throws InterceptedException{
         /*
         Scope requestScope =
@@ -215,14 +229,14 @@ public class InterceptorProcess implements InterceptorStack{
         ConfigurableApplicationContext context =
                 (ConfigurableApplicationContext) handler.getContext();
 
-        org.brandao.brutos.mapping.Interceptor i = stack.get( pos );
+        Interceptor i = (Interceptor) stack.get( pos.intValue() );
 
-        Interceptor interceptor =
-            interceptor = (Interceptor)i.getInstance(context.getIocProvider());
+        org.brandao.brutos.interceptor.Interceptor interceptor =
+            interceptor = (org.brandao.brutos.interceptor.Interceptor) i.getInstance(context.getIocProvider());
             /*iocProvider.getBean( i.getName() );*/
 
         if( !interceptor.isConfigured() )
-            interceptor.setProperties( (Map<String, Object>) i
+            interceptor.setProperties( (Map) i
                     .getProperty( String.valueOf( form.hashCode()  )  ) );
 
         if( interceptor.accept( handler ) ){
@@ -294,7 +308,9 @@ public class InterceptorProcess implements InterceptorStack{
         catch( IllegalArgumentException ex ){
 
             StringBuilder argsText = new StringBuilder();
-            for( Object arg: args ){
+            //for( Object arg: args ){
+            for( int i=0;i<args.length;i++ ){
+                Object arg = args[i];
                 argsText =
                     argsText.length() == 0?
                         argsText.append(arg) :
@@ -408,7 +424,10 @@ public class InterceptorProcess implements InterceptorStack{
             Object[] values = new Object[ method.getParameters().size() ];
 
             int index = 0;
-            for( ParameterMethodMapping p: method.getParameters() ){
+            //for( ParameterMethodMapping p: method.getParameters() ){
+            List params = method.getParameters();
+            for( int i=0;i<params.size();i++ ){
+                ParameterMethodMapping p = (ParameterMethodMapping) params.get(i);
                 UseBeanData bean = p.getBean();
                 values[ index++ ] = bean.getValue();
             }
@@ -424,7 +443,7 @@ public class InterceptorProcess implements InterceptorStack{
             Action action = this.form.getAcion();
             if( action.getPreAction() != null ){
                 action.getPreAction().setAccessible( true );
-                action.getPreAction().invoke( source );
+                action.getPreAction().invoke( source, new Object[]{} );
             }
         }
         catch( Exception e ){
@@ -437,7 +456,7 @@ public class InterceptorProcess implements InterceptorStack{
             Action action = this.form.getAcion();
             if( action.getPostAction() != null ){
                 action.getPostAction().setAccessible( true );
-                action.getPostAction().invoke( source );
+                action.getPostAction().invoke( source, new Object[]{} );
             }
         }
         catch( Exception e ){

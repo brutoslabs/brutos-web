@@ -37,8 +37,8 @@ import org.brandao.brutos.web.http.ParameterList;
  */
 public class ListType implements CollectionType{
 
-    private Class<? extends List> listType;
-    private Class<?> type;
+    private Class listType;
+    private Class type;
     private Type primitiveType;
     private Type serializableType;
     
@@ -59,7 +59,7 @@ public class ListType implements CollectionType{
                                   "java.util.ArrayList" );
 
         try{
-            this.listType = (Class<? extends List>)
+            this.listType = (Class)
                     Class.forName( className, true,
                                 Thread.currentThread().getContextClassLoader());
         }
@@ -72,7 +72,6 @@ public class ListType implements CollectionType{
         return this.listType;
     }
 
-    @Override
     public void setGenericType(Object classType) {
         Class collectionType = Types.getCollectionType(classType);
         if( collectionType != null ){
@@ -97,10 +96,14 @@ public class ListType implements CollectionType{
         try{
             List objList = (List)this.getListType().newInstance();
 
-            for( Object o: (ParameterList)value )
+            ParameterList list = (ParameterList)value;
+            int size = list.size();
+            //for( Object o: (ParameterList)value )
+            for( int i=0;i<size;i++ ){
+                Object o = list.get(i);
                 objList.add( this.primitiveType.getValue(o) );
                 //objList.add( this.primitiveType.getValue(request, context, o) );
-
+            }
             return objList;
         }
         catch( Exception e ){

@@ -32,7 +32,7 @@ public class ValueInject extends Injectable{
         this.converted = false;
     }
 
-    public ValueInject( Class<?> target, Object value ) {
+    public ValueInject( Class target, Object value ) {
         super( target, null, null, false, null );
         this.value     = value;
         this.converted = false;

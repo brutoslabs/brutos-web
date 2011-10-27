@@ -47,23 +47,23 @@ public class Controller {
     
     private String uri;
     
-    private Class<?> classType;
+    private Class classType;
     
     private String methodId;
     
-    private Map<String, Bean> mappingBeans;
+    private Map mappingBeans;
     
-    private List<FieldForm> fields;
+    private List fields;
     
-    private Map<String, MethodForm> methods;
+    private Map methods;
 
     private Map reverseMethods;
     
     private Action action;
 
-    private Map<Class, ThrowableSafeData> throwsSafe;
+    private Map throwsSafe;
 
-    private List<String> alias;
+    private List alias;
 
     /**
      * @deprecated 
@@ -76,7 +76,7 @@ public class Controller {
     
     private String defaultMethodName;
     
-    private List<Interceptor> interceptorStack;
+    private List interceptorStack;
     
     private InterceptorProcess interceptorProcess;
 
@@ -117,19 +117,19 @@ public class Controller {
         this.methodId = methodId;
     }
 
-    public Map<String, Bean> getMappingBeans() {
+    public Map getMappingBeans() {
         return mappingBeans;
     }
 
-    public void setMappingBeans(Map<String, Bean> mappingBeans) {
+    public void setMappingBeans(Map mappingBeans) {
         this.mappingBeans = mappingBeans;
     }
 
-    public List<FieldForm> getFields() {
+    public List getFields() {
         return fields;
     }
 
-    public void setFields(List<FieldForm> fields) {
+    public void setFields(List fields) {
         this.fields = fields;
     }
 
@@ -141,11 +141,11 @@ public class Controller {
         this.setAction(acion);
     }
 
-    public Class<?> getClassType() {
+    public Class getClassType() {
         return classType;
     }
 
-    public void setClassType(Class<?> classType) {
+    public void setClassType(Class classType) {
         this.classType = classType;
     }
     
@@ -160,10 +160,10 @@ public class Controller {
     }
 
     public Bean getMappingBean( String name ){
-        return getMappingBeans().get( name );
+        return (Bean) getMappingBeans().get( name );
     }
     
-    public Map<String, MethodForm> getMethods() {
+    public Map getMethods() {
         return methods;
     }
 
@@ -199,12 +199,12 @@ public class Controller {
             throw new
                 BrutosException(
                     String.format("Ambiguous reference to action: %s",
-                    method.getName()));
+                    new Object[]{method.getName()}));
         
         return (MethodForm) list.get(0);
     }
     
-    public void setMethods(Map<String, MethodForm> methods) {
+    public void setMethods(Map methods) {
         this.methods = methods;
     }
     
@@ -212,7 +212,7 @@ public class Controller {
         getInterceptorStack().addAll( Arrays.asList( interceptor ) );
     }
     
-    public List<Interceptor> getInterceptors(){
+    public List getInterceptors(){
         return getInterceptorStack();
     }
 
@@ -231,8 +231,8 @@ public class Controller {
 
     public MethodForm getMethodByName( String name ){
         MethodForm mf = null;
-        mf = name == null? null : getMethods().get( name );
-        mf = mf == null? getMethods().get( getDefaultMethodName() ) : mf;
+        mf = (MethodForm) (name == null ? null : getMethods().get(name));
+        mf = (MethodForm) (mf == null ? getMethods().get(getDefaultMethodName()) : mf);
         return mf;
     }
 
@@ -243,7 +243,7 @@ public class Controller {
 
                 while(keys.hasNext()){
                     String key = (String)keys.next();
-                    MethodForm ac = methods.get(key);
+                    MethodForm ac = (MethodForm) methods.get(key);
                     if(!ac.isLoaded())
                         ac.load();
                 }
@@ -259,7 +259,9 @@ public class Controller {
             Field[] fields = getClassType().getDeclaredFields();
             Scope scope = scopes.get(ScopeType.REQUEST);
 
-            for( Field f: fields ){
+            //for( Field f: fields ){
+            for(int i=0;i<fields.length;i++){
+                Field f = fields[i];
                 f.setAccessible( true );
                 scope.put( f.getName(), f.get( webFrame ) );
             }
@@ -269,11 +271,11 @@ public class Controller {
         }
     }
     
-    public ThrowableSafeData getThrowsSafe( Class<? extends Throwable> thr ) {
-        return throwsSafe.get(thr);
+    public ThrowableSafeData getThrowsSafe( Class thr ) {
+        return (ThrowableSafeData) throwsSafe.get(thr);
     }
 
-    public void removeThrowsSafe(Class<? extends Throwable> thr) {
+    public void removeThrowsSafe(Class thr) {
         this.throwsSafe.remove( thr );
     }
 
@@ -285,7 +287,7 @@ public class Controller {
         this.alias.add( alias );
     }
 
-    public List<String> getAlias(){
+    public List getAlias(){
         return this.alias;
     }
 
@@ -345,11 +347,11 @@ public class Controller {
         this.action = action;
     }
 
-    public List<Interceptor> getInterceptorStack() {
+    public List getInterceptorStack() {
         return interceptorStack;
     }
 
-    public void setInterceptorStack(List<Interceptor> interceptorStack) {
+    public void setInterceptorStack(List interceptorStack) {
         this.interceptorStack = interceptorStack;
     }
 
