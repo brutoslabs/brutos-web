@@ -27,7 +27,7 @@ import java.util.Properties;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.type.json.JSONDecoder;
+import org.brandao.jbrgates.JSONDecoder;
 
 /**
  *

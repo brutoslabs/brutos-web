@@ -30,7 +30,8 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestWrapper;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.type.json.JSONDecoder;
+import org.brandao.jbrgates.JSONDecoder;
+
 
 
 
@@ -179,7 +180,7 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
         if( value != null ){
             List<Object> values = (List)parameters.get( name );
             if( values == null ){
-                values = new ParameterList<Object>();
+                values = new ParameterList();
                 parameters.put( name, values );
             }
 
