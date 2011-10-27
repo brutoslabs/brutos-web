@@ -87,7 +87,7 @@ public class FlowController {
             throw new BrutosException(
                 String.format(
                     "controller not configured: %s",
-                    controllerClass.getName() ));
+                    new Object[]{controllerClass.getName()} ));
 
         Object resource = controller.getInstance(iocProvider);
                 //iocProvider.getBean(controller.getId());

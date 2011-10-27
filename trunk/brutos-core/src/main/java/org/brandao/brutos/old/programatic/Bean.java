@@ -53,7 +53,7 @@ public class Bean {
         return this.bean;
     }
 
-    public Bean addConstructiorArg( Object value, Class<?> type ){
+    public Bean addConstructiorArg( Object value, Class type ){
         bean.getConstructor().addArg( new ValueInject( type, value ) );
         return this;
     }
@@ -63,42 +63,42 @@ public class Bean {
     }
 
     public Bean addConstructiorArg( boolean value ){
-        bean.getConstructor().addArg( new ValueInject(boolean.class, value ) );
+        bean.getConstructor().addArg( new ValueInject(boolean.class, new Boolean(value) ) );
         return this;
     }
 
     public Bean addConstructiorArg( byte value ){
-        bean.getConstructor().addArg( new ValueInject( byte.class, value ) );
+        bean.getConstructor().addArg( new ValueInject( byte.class, new Byte(value) ) );
         return this;
     }
 
     public Bean addConstructiorArg( char value ){
-        bean.getConstructor().addArg( new ValueInject( char.class, value ) );
+        bean.getConstructor().addArg( new ValueInject( char.class, new Character(value) ) );
         return this;
     }
 
     public Bean addConstructiorArg( double value ){
-        bean.getConstructor().addArg( new ValueInject( double.class, value ) );
+        bean.getConstructor().addArg( new ValueInject( double.class, new Double(value) ) );
         return this;
     }
 
     public Bean addConstructiorArg( float value ){
-        bean.getConstructor().addArg( new ValueInject( float.class, value ) );
+        bean.getConstructor().addArg( new ValueInject( float.class, new Float(value) ) );
         return this;
     }
 
     public Bean addConstructiorArg( int value ){
-        bean.getConstructor().addArg( new ValueInject( int.class, value ) );
+        bean.getConstructor().addArg( new ValueInject( int.class, new Integer(value) ) );
         return this;
     }
 
     public Bean addConstructiorArg( long value ){
-        bean.getConstructor().addArg( new ValueInject( long.class, value ) );
+        bean.getConstructor().addArg( new ValueInject( long.class, new Long(value) ) );
         return this;
     }
 
     public Bean addConstructiorArg( short value ){
-        bean.getConstructor().addArg( new ValueInject( short.class, value ) );
+        bean.getConstructor().addArg( new ValueInject( short.class, new Short(value) ) );
         return this;
     }
 
@@ -116,8 +116,12 @@ public class Bean {
         return this;
     }
 
-    @Deprecated
-    public ConstructorBean getConstructor( Class ... paramType ){
+    /**
+     * @deprecated
+     * @param paramType
+     * @return
+     */
+    public ConstructorBean getConstructor( Class[] paramType ){
         return new ConstructorBean( this, manager, paramType );
         /*
         List<Injectable> inject = new ArrayList();
@@ -174,7 +178,7 @@ public class Bean {
         Method method = set == null? null : set.getMethod();
 
         if( method == null ){
-            Class<?> classType = null;
+            Class classType = null;
             if( bean instanceof ComplexObjectInject )
                 classType = ((ComplexObjectInject)bean).getType();
             else
@@ -240,35 +244,35 @@ public class Bean {
     }
 
     public Bean addPropertyValue( String name, boolean value ){
-        return addPropertyValue( name, boolean.class, value );
+        return addPropertyValue( name, boolean.class, Boolean.valueOf(value));
     }
 
     public Bean addPropertyValue( String name, byte value ){
-        return addPropertyValue( name, byte.class, value );
+        return addPropertyValue( name, byte.class, new Byte(value) );
     }
 
     public Bean addPropertyValue( String name, char value ){
-        return addPropertyValue( name, char.class, value );
+        return addPropertyValue( name, char.class, new Character(value) );
     }
 
     public Bean addPropertyValue( String name, double value ){
-        return addPropertyValue( name, double.class, value );
+        return addPropertyValue( name, double.class, new Double(value) );
     }
 
     public Bean addPropertyValue( String name, float value ){
-        return addPropertyValue( name, float.class, value );
+        return addPropertyValue( name, float.class, new Float(value) );
     }
 
     public Bean addPropertyValue( String name, int value ){
-        return addPropertyValue( name, int.class, value );
+        return addPropertyValue( name, int.class, new Integer(value) );
     }
 
     public Bean addPropertyValue( String name, long value ){
-        return addPropertyValue( name, long.class, value );
+        return addPropertyValue( name, long.class, new Long(value) );
     }
 
     public Bean addPropertyValue( String name, short value ){
-        return addPropertyValue( name, short.class, value );
+        return addPropertyValue( name, short.class, new Short(value) );
     }
 
     public Bean addPropertyValue( String name, Class argType, Object arg ){
@@ -279,16 +283,19 @@ public class Bean {
                     name.substring( 0, 1 ).toUpperCase() +
                     name.substring( 1 );
 
-            Class<?> classType = null;
+            Class classType = null;
 
             if( bean instanceof ComplexObjectInject )
                 classType = ((ComplexObjectInject)bean).getType();
             else
                 classType = bean.getTarget();
 
-            for( Method m: classType.getMethods() ){
+            //for( Method m: classType.getMethods() ){
+            Method[] methods = classType.getMethods();
+            for( int i=0;i<methods.length;i++ ){
+                Method m = methods[i];
                 if( m.getParameterTypes().length == 1 && methodName.equals( m.getName() ) && ClassType.getWrapper( m.getParameterTypes()[0] ).isAssignableFrom( ClassType.getWrapper(argType) ) ){
-                    method = classType.getMethod( methodName, m.getParameterTypes()[0] );
+                    method = classType.getMethod( methodName, new Class[]{m.getParameterTypes()[0]} );
                     break;
                 }
             }

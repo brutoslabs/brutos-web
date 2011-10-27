@@ -26,7 +26,7 @@ import java.util.Date;
  * @author Afonso Brandao
  */
 final class Util {
-    
+    /*
     public static SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyy" );
     
     private Util() {
@@ -126,5 +126,5 @@ final class Util {
             return null;
 
     }
-    
+    */
 }

@@ -19,7 +19,7 @@ package org.brandao.brutos;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import org.brandao.brutos.bean.BeanInstance;
@@ -448,9 +448,11 @@ public class ControllerBuilder {
         
         it.setProperties( new HashMap() );
         
-        Set<String> keys = parent.getProperties().keySet();
-        
-        for( String key: keys ){
+        Set keys = parent.getProperties().keySet();
+        Iterator iKeys = keys.iterator();
+        while( iKeys.hasNext() ){
+            String key = (String) iKeys.next();
+        //for( String key: keys ){
             Object value = parent.getProperties().get( key );
             it.getProperties().put( /*parent.getName() + "." +*/ key, value );
         }
@@ -701,9 +703,10 @@ public class ControllerBuilder {
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException(
                         String.format( "%s.%s : %s" ,
-                            controller.getClassType().getName(),
-                            propertyName,
-                            e.getMessage() ) );
+                            new Object[]{
+                                controller.getClassType().getName(),
+                                propertyName,
+                                e.getMessage()} ) );
             }
         }
 

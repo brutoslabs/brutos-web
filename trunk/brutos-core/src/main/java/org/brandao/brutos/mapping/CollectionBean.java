@@ -30,7 +30,7 @@ public class CollectionBean extends Bean{
     /**
      * @deprecated 
      */
-    private Class<?> collectionType;
+    private Class collectionType;
 
     private Bean bean;
 
@@ -42,7 +42,7 @@ public class CollectionBean extends Bean{
      * @deprecated
      * @return .
      */
-    public Class<?> getCollectionType() {
+    public Class getCollectionType() {
         return collectionType;
     }
 
@@ -50,7 +50,7 @@ public class CollectionBean extends Bean{
      * @deprecated 
      * @param collectionType
      */
-    public void setCollectionType(Class<?> collectionType) {
+    public void setCollectionType(Class collectionType) {
         this.collectionType = collectionType;
     }
 
@@ -71,7 +71,7 @@ public class CollectionBean extends Bean{
             throw new MappingException(
                 String.format(
                     "element of the collection is not defined: %s",
-                    this.getName()));
+                    new Object[]{this.getName()}));
         else
             return bean.getValue( null, prefix, index, exceptionHandler, false );
     }

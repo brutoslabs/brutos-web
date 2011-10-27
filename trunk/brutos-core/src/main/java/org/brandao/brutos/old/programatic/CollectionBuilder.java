@@ -47,7 +47,7 @@ public class CollectionBuilder {
                     "mapping " + name + " not found: " +
                     webFrame.getClassType().getName() );
 
-        Bean bean = webFrame.getMappingBeans().get( name );
+        Bean bean = (Bean) webFrame.getMappingBeans().get( name );
         
         if( !bean.isBean() )
             throw new BrutosException(

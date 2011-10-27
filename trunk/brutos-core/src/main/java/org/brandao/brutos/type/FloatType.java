@@ -40,7 +40,7 @@ public class FloatType implements Type{
             return value;
         else
         if( value instanceof String )
-            return Float.parseFloat( (String)value );
+            return Float.valueOf( (String)value );
         else
         if( value == null )
             return null;

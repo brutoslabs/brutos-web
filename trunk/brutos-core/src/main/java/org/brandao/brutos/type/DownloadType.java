@@ -54,9 +54,9 @@ public class DownloadType implements Type{
             Download download = (Download)value;
             Map info = download.getHeader();
             if( info != null ){
-                Iterator<String> keys = download.getHeader().keySet().iterator();
+                Iterator keys = download.getHeader().keySet().iterator();
                 while( keys.hasNext() ){
-                    String key = keys.next();
+                    String key = (String) keys.next();
                     info.put( key, info.get( key ) );
                 }
             }

@@ -26,6 +26,7 @@ import org.brandao.brutos.mapping.ioc.Injectable;
 import org.brandao.brutos.mapping.ioc.ListInject;
 import org.brandao.brutos.mapping.ioc.MapInject;
 import org.brandao.brutos.mapping.ioc.PropertiesInject;
+import org.brandao.brutos.mapping.ioc.Property;
 import org.brandao.brutos.mapping.ioc.SetInject;
 
 /**
@@ -97,10 +98,10 @@ public class IOCManager {
         ComplexObjectInject inject;
         
         if( java.util.List.class.isAssignableFrom( classType ) )
-            inject = new ListInject( name, valueType, classType, factory );
+            inject = new ListInject( name, valueType, classType, factory, new Property[]{} );
         else
         if( java.util.Set.class.isAssignableFrom( classType ) )
-            inject = new SetInject( name, valueType, classType, factory );
+            inject = new SetInject( name, valueType, classType, factory, new Property[]{} );
         else
             throw new BrutosException( "invalid type" );
         
@@ -125,7 +126,7 @@ public class IOCManager {
         ComplexObjectInject inject;
         
         if( java.util.Map.class.isAssignableFrom( classType ) && !java.util.Properties.class.isAssignableFrom( classType ) )
-            inject = new MapInject( name, keyType, valueType, classType, factory );
+            inject = new MapInject( name, keyType, valueType, classType, factory, new Property[]{} );
         else
             throw new BrutosException( "invalid type" );
         
@@ -151,10 +152,10 @@ public class IOCManager {
             provider.removeBeanDefinition( oldBean );
         
         ComplexObjectInject inject;
-        inject = new PropertiesInject( classType, name, factory );
+        inject = new PropertiesInject( classType, name, factory, new Property[]{} );
         
         PropertiesBean bean = new PropertiesBean( inject, this );
-        provider.addBeanDefinition( bean );
+        //provider.addBeanDefinition( (Bean)bean );
         return bean;
     }
     

@@ -26,15 +26,15 @@ import org.brandao.brutos.mapping.InterceptorStack;
 
 /**
  * Classe usada para criar interceptadores ou pilhas de interceptadores.
- * O uso de interceptadores é necessário quando precisamos executar tarefas
+ * O uso de interceptadores ï¿½ necessï¿½rio quando precisamos executar tarefas
  * antes e/ou depois do controlador ser executado, normalmente usado para
- * controle de acesso, validação de dados, controle de transação e geração
+ * controle de acesso, validaï¿½ï¿½o de dados, controle de transaï¿½ï¿½o e geraï¿½ï¿½o
  * de log.
- * <p>É possível trabalhar com um ou mais interceptadores, podendo definir
- * quais recursos serão interceptados, a ordem com que serão executados e os
- * parâmetros necessários para a sua configuração.</p>
- * <p>Sua instância é controlada pelo container IOC, podendo assim, receber a
- * injeção por construtor ou método.</p>
+ * <p>ï¿½ possï¿½vel trabalhar com um ou mais interceptadores, podendo definir
+ * quais recursos serï¿½o interceptados, a ordem com que serï¿½o executados e os
+ * parï¿½metros necessï¿½rios para a sua configuraï¿½ï¿½o.</p>
+ * <p>Sua instï¿½ncia ï¿½ controlada pelo container IOC, podendo assim, receber a
+ * injeï¿½ï¿½o por construtor ou mï¿½todo.</p>
  *
  * <pre>
  * Ex:
@@ -65,8 +65,8 @@ import org.brandao.brutos.mapping.InterceptorStack;
  */
 public class InterceptorManager {
     
-    private Map<String, Interceptor> interceptors;
-    private List<Interceptor> defaultInterceptors;
+    private Map interceptors;
+    private List defaultInterceptors;
     
     public InterceptorManager() {
         this.interceptors = new HashMap();
@@ -74,9 +74,9 @@ public class InterceptorManager {
     }
 
     /**
-     * Cria uma pilha de interceptadores com uma determinada identificação.
-     * @param name Identificação da pilha de interceptadores.
-     * @param isDefault Se verdadeiro, todos os controladores e suas ações serão
+     * Cria uma pilha de interceptadores com uma determinada identificaï¿½ï¿½o.
+     * @param name Identificaï¿½ï¿½o da pilha de interceptadores.
+     * @param isDefault Se verdadeiro, todos os controladores e suas aï¿½ï¿½es serï¿½o
      * interceptadas.
      * @return Construtor da pilha de interceptadores.
      */
@@ -105,9 +105,9 @@ public class InterceptorManager {
     }
     
     /**
-     * Cria um interceptador com uma determinada identificação.
-     * @param name Identificação do interceptador.
-     * @param isDefault Se verdadeiro, todos os controladores e suas ações serão
+     * Cria um interceptador com uma determinada identificaï¿½ï¿½o.
+     * @param name Identificaï¿½ï¿½o do interceptador.
+     * @param isDefault Se verdadeiro, todos os controladores e suas aï¿½ï¿½es serï¿½o
      * interceptadas.
      * @return Construtor do interceptador.
      */
@@ -143,22 +143,22 @@ public class InterceptorManager {
     }
 
     /**
-     * Obtém o mapeamento de um determinado interceptador.
-     * @param name Identificação do interceptador.
+     * Obtï¿½m o mapeamento de um determinado interceptador.
+     * @param name Identificaï¿½ï¿½o do interceptador.
      * @return Mapeamento.
      */
     public Interceptor getInterceptor( String name ){
         if( !interceptors.containsKey( name ) )
             throw new BrutosException( "interceptor not found: " + name );
         else
-            return interceptors.get( name );
+            return (Interceptor) interceptors.get( name );
     }
 
     /**
-     * Obtém os interceptadores globais.
+     * Obtï¿½m os interceptadores globais.
      * @return Interceptadores globais.
      */
-    public List<Interceptor> getDefaultInterceptors(){
+    public List getDefaultInterceptors(){
         return this.defaultInterceptors;
     }
     

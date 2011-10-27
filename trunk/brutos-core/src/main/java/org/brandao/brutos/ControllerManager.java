@@ -225,7 +225,7 @@ public class ControllerManager {
     
     private Method getMethodAction( String methodName, Class classe ){
         try{
-            Method method = classe.getDeclaredMethod( methodName );
+            Method method = classe.getDeclaredMethod( methodName, new Class[]{} );
             return method;
         }
         catch( Exception e ){
@@ -283,7 +283,7 @@ public class ControllerManager {
      * Obt�m o mapeamento de todos os controladores.
      * @return Controladores.
      */
-    public Map<String, Controller> getControllers() {
+    public Map getControllers() {
         return Collections.unmodifiableMap( forms );
     }
 
@@ -291,13 +291,13 @@ public class ControllerManager {
      * @deprecated 
      * @return .
      */
-    public Map<String, Controller> getForms() {
+    public Map getForms() {
         return Collections.unmodifiableMap( forms );
     }
 
     void addForm( String id, Controller form ) {
         if( contains(id) )
-            throw new BrutosException( String.format("duplicate id: %s", id ) );
+            throw new BrutosException( String.format("duplicate id: %s", new Object[]{id} ) );
 
         forms.put(id, form);
         revForms.put( form.getClassType(), form);

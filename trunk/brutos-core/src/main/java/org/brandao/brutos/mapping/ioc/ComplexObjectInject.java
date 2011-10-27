@@ -30,12 +30,12 @@ import org.brandao.brutos.ScopeType;
  */
 public class ComplexObjectInject extends Injectable{
     
-    private List<Property> props;
-    private Class<?> keyType;
-    private Class<?> valueType;
-    private Class<?> type;
+    private List props;
+    private Class keyType;
+    private Class valueType;
+    private Class type;
     
-    public ComplexObjectInject( String name, Class<?> keyType, Class<?> valueType, Class<?> type, String factory, Property ... props ){
+    public ComplexObjectInject( String name, Class keyType, Class valueType, Class type, String factory, Property[] props ){
         super( type, name, ScopeType.valueOf( "prototype" ), false, factory );
         this.setKeyType(keyType == null? String.class : keyType);
         this.setValueType(valueType == null? String.class : valueType);
@@ -43,11 +43,11 @@ public class ComplexObjectInject extends Injectable{
         setSingleton( true );
     }
     
-    public List<Property> getProps() {
+    public List getProps() {
         return props;
     }
 
-    public void setProps(List<Property> props) {
+    public void setProps(List props) {
         this.props = props;
     }
     
@@ -59,27 +59,27 @@ public class ComplexObjectInject extends Injectable{
         return Map.class.isAssignableFrom( getTarget() );
     }
 
-    public Class<?> getKeyType() {
+    public Class getKeyType() {
         return keyType;
     }
 
-    public void setKeyType(Class<?> keyType) {
+    public void setKeyType(Class keyType) {
         this.keyType = keyType;
     }
 
-    public Class<?> getValueType() {
+    public Class getValueType() {
         return valueType;
     }
 
-    public void setValueType(Class<?> valueType) {
+    public void setValueType(Class valueType) {
         this.valueType = valueType;
     }
 
-    public Class<?> getType() {
+    public Class getType() {
         return type;
     }
 
-    public void setType(Class<?> type) {
+    public void setType(Class type) {
         this.type = type;
     }
     

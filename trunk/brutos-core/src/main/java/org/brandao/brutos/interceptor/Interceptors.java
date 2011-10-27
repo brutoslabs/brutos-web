@@ -23,6 +23,6 @@ package org.brandao.brutos.interceptor;
  */
 public interface Interceptors {
     
-    public Class<? extends Interceptor>[] getInterceptors();
+    public Class[] getInterceptors();
     
 }

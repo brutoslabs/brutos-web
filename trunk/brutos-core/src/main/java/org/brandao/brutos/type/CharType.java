@@ -39,7 +39,7 @@ public class CharType implements Type{
             return value;
         else
         if( value instanceof String )
-            return ((String)value).charAt(0);
+            return new Character(((String)value).charAt(0));
         else
         if( value == null)
             return null;

@@ -40,7 +40,7 @@ public class LongType implements Type{
             return value;
         else
         if( value instanceof String )
-            return Long.parseLong( (String)value );
+            return Long.valueOf( (String)value );
         else
         if( value == null )
             return null;

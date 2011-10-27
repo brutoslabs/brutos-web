@@ -30,7 +30,11 @@ public class GetterProperty {
     private Object object;
     private Method method;
 
-    @Deprecated
+    /**
+     * @deprecated 
+     * @param field
+     * @param object
+     */
     public GetterProperty( Field field, Object object ){
         this.field = field;
         this.object = object;
@@ -51,7 +55,7 @@ public class GetterProperty {
 
         Method getter = field.getDeclaringClass().getMethod( methodName );
         */
-        return method.invoke( object );
+        return method.invoke( object, new Object[]{} );
     }
 
     public Method getMethod(){

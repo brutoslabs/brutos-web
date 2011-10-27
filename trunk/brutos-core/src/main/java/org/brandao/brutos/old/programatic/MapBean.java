@@ -26,13 +26,13 @@ import org.brandao.brutos.mapping.ioc.ValueInject;
  *
  * @author Afonso Brandao
  */
-public class MapBean<K,T> extends Bean{
+public class MapBean extends Bean{
     
     public MapBean( Injectable inject, IOCManager manager ) {
         super( inject, manager );
     }
     
-    public MapBean<K,T> add( K valueKey, String keyRef, T value, String valueRef ){
+    public MapBean add( Object valueKey, String keyRef, Object value, String valueRef ){
         ComplexObjectInject coi = (ComplexObjectInject)getInjectable();
         
         Injectable key;
@@ -64,11 +64,11 @@ public class MapBean<K,T> extends Bean{
         return this;
     }
     
-    public MapBean<K,T> addBean( K key, String name ){
+    public MapBean addBean( Object key, String name ){
         return add( key, null, null, name );
     }
     
-    public MapBean<K,T> addValue( K key, T value ){
+    public MapBean addValue( Object key, Object value ){
         return add( key, null, value, null );
     }
     

@@ -31,7 +31,7 @@ import org.brandao.brutos.ClassType;
  */
 public class ConstructorInject {
     
-    private List<Injectable> args;
+    private List args;
     
     private Constructor contructor;
 
@@ -46,8 +46,12 @@ public class ConstructorInject {
         this.inject = inject;
     }
 
-    @Deprecated
-    public ConstructorInject( Constructor constructor, Injectable ... args ) {
+    /**
+     * @deprecated
+     * @param constructor
+     * @param args
+     */
+    public ConstructorInject( Constructor constructor, Injectable[] args ) {
         this.contructor = constructor;
         this.args = args.length == 0? new ArrayList() : Arrays.asList( args );
     }
@@ -69,18 +73,18 @@ public class ConstructorInject {
     }
 
     public Injectable getArg( int index ){
-        return args.get(index);
+        return (Injectable) args.get(index);
     }
 
     public int length(){
         return args.size();
     }
 
-    public List<Injectable> getArgs() {
+    public List getArgs() {
         return args;
     }
 
-    public void setArgs(List<Injectable> args) {
+    public void setArgs(List args) {
         this.args = args;
     }
 
@@ -118,21 +122,26 @@ public class ConstructorInject {
     private Constructor getContructor( Class clazz ){
         Class[] classArgs = new Class[ args.size() ];
 
-        int i=0;
-        for( Injectable arg: args ){
+        //int i=0;
+        //for( Injectable arg: args ){
+        for(int i=0;i<args.size();i++){
+            Injectable arg = (Injectable) args.get(i);
             if( arg.getTarget() != null )
                 classArgs[ i ] = arg.getTarget();
-            i++;
+            //i++;
         }
 
-        for( Constructor con: clazz.getConstructors() ){
+        //for( Constructor con: clazz.getConstructors() ){
+        Constructor[] cons = clazz.getConstructors();
+        for(int i=0;i<cons.length;i++){
+            Constructor con = cons[i];
             if( isCompatible( con, classArgs ) )
                 return con;
         }
 
         String msg = "not found: " + clazz.getName() + "( ";
 
-        for( i=0;i<classArgs.length;i++ ){
+        for( int i=0;i<classArgs.length;i++ ){
             Class arg = classArgs[i];
             msg += i != 0? ", " : "";
             msg += arg == null? "?" : arg.getName();
@@ -145,14 +154,19 @@ public class ConstructorInject {
     private Method getMethod( String name, Class clazz ){
         Class[] classArgs = new Class[ args.size() ];
 
-        int i=0;
-        for( Injectable arg: args ){
+        //int i=0;
+        //for( Injectable arg: args ){
+        for(int i=0;i<args.size();i++){
+            Injectable arg = (Injectable) args.get(i);
             if( arg.getTarget() != null )
                 classArgs[ i ] = arg.getTarget();
-            i++;
+            //i++;
         }
 
-        for( Method m: clazz.getDeclaredMethods() ){
+        Method[] methods = clazz.getDeclaredMethods();
+        //for( Method m: clazz.getDeclaredMethods() ){
+        for( int i=0;i<methods.length;i++ ){
+            Method m = methods[i];
             if( m.getName().equals(name) && 
                 /*( inject.getFactory() != null || Modifier.isStatic( m.getModifiers() ) ) &&*/
                 isCompatible( m, classArgs ) )
@@ -161,7 +175,7 @@ public class ConstructorInject {
 
         String msg = "not found: " + clazz.getName() + "( ";
 
-        for( i=0;i<classArgs.length;i++ ){
+        for( int i=0;i<classArgs.length;i++ ){
             Class arg = classArgs[i];
             msg += i != 0? ", " : "";
             msg += arg == null? "?" : arg.getName();

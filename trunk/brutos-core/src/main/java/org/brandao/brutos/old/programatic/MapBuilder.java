@@ -45,7 +45,7 @@ public class MapBuilder {
         return setKey( "key", clazz, ScopeType.REQUEST );
     }
 
-    public MapBuilder setKey( String name, Class<?> clazz, ScopeType scope ){
+    public MapBuilder setKey( String name, Class clazz, ScopeType scope ){
         name = name == null || name.replace(" ", "").length() == 0? null : name;
         
         if( name == null )
@@ -73,7 +73,7 @@ public class MapBuilder {
                     webFrame.getClassType().getName() );
 
         
-        Bean bean = webFrame.getMappingBeans().get( name );
+        Bean bean = (Bean) webFrame.getMappingBeans().get( name );
 
         if( !bean.isBean() )
             throw new BrutosException(

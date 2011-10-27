@@ -40,7 +40,7 @@ public class ValidatorProviderTest extends TestCase{
         config.setProperty(RestrictionRules.EQUAL.toString(), "100");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, 100);
+        v.validate(d, new Integer(100));
     }
 
     public void testNotEqualRule(){
@@ -55,7 +55,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, 10);
+            v.validate(d, new Integer(10));
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -74,7 +74,7 @@ public class ValidatorProviderTest extends TestCase{
         config.setProperty(RestrictionRules.MIN.toString(), "10");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, 10);
+        v.validate(d, new Integer(10));
     }
 
     public void testNotMinRule(){
@@ -89,7 +89,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, 9);
+            v.validate(d, new Integer(9));
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -142,7 +142,7 @@ public class ValidatorProviderTest extends TestCase{
         config.setProperty(RestrictionRules.MAX.toString(), "4");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, 4);
+        v.validate(d, new Integer(4));
     }
 
     public void testNotMaxRule(){
@@ -157,7 +157,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, 10);
+            v.validate(d, new Integer(10));
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -284,9 +284,9 @@ public class ValidatorProviderTest extends TestCase{
         config.setProperty("range", "10-20");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, 10);
-        v.validate(d, 20);
-        v.validate(d, 15);
+        v.validate(d, new Integer(10));
+        v.validate(d, new Integer(20));
+        v.validate(d, new Integer(15));
     }
 
     public void testErrorCustomRule(){
@@ -306,14 +306,14 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, 9);
+            v.validate(d, new Integer(9));
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
         }
 
         try{
-            v.validate(d, 21);
+            v.validate(d, new Integer(21));
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -358,11 +358,11 @@ public class ValidatorProviderTest extends TestCase{
                 throw new ValidatorException("invalid range syntax: " +  range );
 
             String[] vals = range.split("-");
-            Integer start = Integer.parseInt(vals[0]);
-            Integer end = Integer.parseInt(vals[1]);
+            Integer start = Integer.valueOf(vals[0]);
+            Integer end = Integer.valueOf(vals[1]);
 
-            Integer val = ((Number)value).intValue();
-            if( val<start || val>end )
+            Integer val = new Integer(((Number)value).intValue());
+            if( val.intValue()<start.intValue() || val.intValue()>end.intValue() )
                 throw new ValidatorException();
         }
 

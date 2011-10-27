@@ -24,13 +24,13 @@ import java.util.Collection;
  * 
  * @author Afonso Brandao
  */
-public class ParameterList<T> extends ArrayList<T>{
+public class ParameterList extends ArrayList{
 
     public ParameterList(){
         super();
     }
 
-    public ParameterList( Collection<? extends T> c ){
+    public ParameterList( Collection c ){
         super( c );
     }
 }

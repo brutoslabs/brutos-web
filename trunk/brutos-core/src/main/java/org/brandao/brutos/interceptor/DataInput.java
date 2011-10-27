@@ -18,6 +18,7 @@
 
 package org.brandao.brutos.interceptor;
 
+import java.util.List;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.FieldForm;
@@ -38,7 +39,10 @@ public class DataInput {
     
     public void read( Controller form, Object object ){
         try{
-            for( FieldForm ff: form.getFields() ){
+            List fields = form.getFields();
+            for( int i=0;i<fields.size();i++ ){
+                FieldForm ff = (FieldForm) fields.get(i);
+            //for( FieldForm ff: form.getFields() ){
                 //Object val = ff.getBean().getValue( context, request );
                 Object val = ff.getBean().getValue();
                 if( val != null )

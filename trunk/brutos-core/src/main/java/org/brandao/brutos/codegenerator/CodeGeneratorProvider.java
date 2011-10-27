@@ -57,7 +57,7 @@ public abstract class CodeGeneratorProvider {
         return provider;
     }
 
-    public abstract ProxyFactory getProxyFactory( Class<?> classEntity )
+    public abstract ProxyFactory getProxyFactory( Class classEntity )
             throws BrutosException;
     
 }

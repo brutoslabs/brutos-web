@@ -46,7 +46,7 @@ public class ConstructorBean {
                 cons = bean.getInjectable().getTarget().getConstructor( params );
             
             
-            bean.getInjectable().setConstructor( new ConstructorInject( cons ) );
+            //bean.getInjectable().setConstructor( new ConstructorInject( cons ) );
         }
         catch( BrutosException e ){
             throw e;
@@ -58,7 +58,7 @@ public class ConstructorBean {
     
     public ConstructorBean addValueArg( Object value ){
         Constructor con  = bean.getInjectable().getConstructor().getContructor();
-        Class<?> typeArg = con.getParameterTypes()[ bean.getInjectable().getConstructor().getArgs().size() ];
+        Class typeArg = con.getParameterTypes()[ bean.getInjectable().getConstructor().getArgs().size() ];
         
         if( value != null && !ClassType.getWrapper( typeArg ).isAssignableFrom( value.getClass() ) )
             throw new BrutosException( "invalid type" );
@@ -75,7 +75,7 @@ public class ConstructorBean {
             throw new BeanNotFoundException( ref );
         
         Constructor con  = bean.getInjectable().getConstructor().getContructor();
-        Class<?> typeArg = con.getParameterTypes()[ bean.getInjectable().getConstructor().getArgs().size() ];
+        Class typeArg = con.getParameterTypes()[ bean.getInjectable().getConstructor().getArgs().size() ];
         
         if( !typeArg.isAssignableFrom( refBean.getInjectable().getTarget() ) )
             throw new BrutosException( 

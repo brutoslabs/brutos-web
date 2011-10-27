@@ -27,10 +27,10 @@ import java.util.Properties;
  */
 public class JavaLoggerProvider extends LoggerProvider{
 
-    private Map<String,Logger> cacheLoggers;
+    private Map cacheLoggers;
 
     public JavaLoggerProvider(){
-        this.cacheLoggers = new HashMap<String,Logger>();
+        this.cacheLoggers = new HashMap();
     }
 
     public void configure( Properties config ){
@@ -50,7 +50,7 @@ public class JavaLoggerProvider extends LoggerProvider{
             return logger;
         }
         else
-            return cacheLoggers.get(name);
+            return (Logger) cacheLoggers.get(name);
     }
 
     public void destroy() {

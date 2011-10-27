@@ -40,7 +40,7 @@ public class ByteType implements Type{
             return value;
         else
         if( value instanceof String )
-            return Byte.parseByte((String)value );
+            return Byte.valueOf((String)value );
         else
         if( value == null )
             return null;

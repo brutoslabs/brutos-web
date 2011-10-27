@@ -41,7 +41,7 @@ public class ShortType implements Type{
             return value;
         else
         if( value instanceof String )
-            return Short.parseShort((String)value);
+            return Short.valueOf((String)value);
         else
         if( value == null )
             return null;

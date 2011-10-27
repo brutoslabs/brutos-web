@@ -43,7 +43,8 @@ public abstract class LoggerProvider {
         LoggerProvider logger       = null;
 
         try{
-            Class<?> loggerClass = Class.forName( loggerName, true, Thread.currentThread().getContextClassLoader() );
+            Class loggerClass =
+                    Class.forName( loggerName, true, Thread.currentThread().getContextClassLoader() );
             logger = (LoggerProvider)loggerClass.newInstance();
         }
         catch( ClassNotFoundException e ){

@@ -28,8 +28,8 @@ import org.brandao.brutos.ResourceAction;
  */
 public abstract class AbstractInterceptor implements Interceptor{
     
-    protected Map<String,Object> props;
-    private List<String> excludeMethods;
+    protected Map props;
+    private List excludeMethods;
     
     public AbstractInterceptor() {
     }
@@ -43,7 +43,7 @@ public abstract class AbstractInterceptor implements Interceptor{
             return true;
     }
     
-    public void setProperties( Map<String,Object> props ){
+    public void setProperties( Map props ){
         this.props = props;
         
         if( props != null ){

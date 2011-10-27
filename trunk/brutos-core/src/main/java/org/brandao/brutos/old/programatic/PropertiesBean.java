@@ -23,7 +23,7 @@ import org.brandao.brutos.mapping.ioc.Injectable;
  *
  * @author Afonso Brandao
  */
-public class PropertiesBean extends MapBean<String,String>{
+public class PropertiesBean extends MapBean{
     
     public PropertiesBean( Injectable inject, IOCManager manager ) {
         super( inject, manager );

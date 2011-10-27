@@ -18,10 +18,14 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
+import org.brandao.brutos.bean.EnumUtil;
 
 /**
  *
@@ -31,12 +35,14 @@ public class DefaultEnumType implements EnumType{
 
     private EnumerationType type;
     
-    private Class<?> classType;
+    private Class classType;
     
     private Type intType;
     
     private Type stringType;
-    
+
+    private EnumUtil enumUtil;
+
     public DefaultEnumType() {
         intType    = new IntegerType();
         stringType = new StringType();
@@ -50,12 +56,13 @@ public class DefaultEnumType implements EnumType{
         this.type = type;
     }
     
-    public Class<?> getClassType() {
+    public Class getClassType() {
         return classType;
     }
 
     public void setClassType(Class classType) {
         this.classType = classType;
+        this.enumUtil = new EnumUtil(classType);
     }
 
     public Object getValue(Object value) {
@@ -63,10 +70,17 @@ public class DefaultEnumType implements EnumType{
             if( value == null )
                 return null;
             else
-            if( type == EnumerationType.ORDINAL )
-                return classType.getEnumConstants()[ (Integer)intType.getValue( value ) ];
+            if( type == EnumerationType.ORDINAL ){
+                Object constants =
+                    this.enumUtil.getEnumConstants();
+
+                return Array.get(
+                    constants,
+                    ((Integer)intType.getValue( value )).intValue());
+            }
             else
-                return Enum.valueOf( (Class)classType, (String)stringType.getValue( value ) );
+                return enumUtil
+                    .valueOf( (String)stringType.getValue( value ) );
         }
         catch( Exception e ){
             return null;

@@ -20,7 +20,7 @@ package org.brandao.brutos.interceptor;
 import java.util.Map;
 
 /**
- * Intercepta as ações de um controlador. Todo interceptador deve
+ * Intercepta as aï¿½ï¿½es de um controlador. Todo interceptador deve
  * implementar essa classe.
  * <pre>
  * Ex:
@@ -33,32 +33,32 @@ import java.util.Map;
 public interface Interceptor {
 
     /**
-     * Define a configuração inicial do interceptador.
-     * @param props Configuração inicial
+     * Define a configuraï¿½ï¿½o inicial do interceptador.
+     * @param props Configuraï¿½ï¿½o inicial
      */
-    public void setProperties( Map<String,Object> props );
+    public void setProperties( Map props );
 
     /**
-     * Veqifica se o interceptador está configurado.
+     * Veqifica se o interceptador estï¿½ configurado.
      * @return Verdadeiro se o interceptador foi configurado,
-     * caso contrário falso.
+     * caso contrï¿½rio falso.
      */
     public boolean isConfigured();
 
     /**
-     * Methodo executado na interceptação da ação.
+     * Methodo executado na interceptaï¿½ï¿½o da aï¿½ï¿½o.
      * @param stack Pilha de interceptadores.
-     * @param handler Manipulador da requisição.
-     * @throws InterceptedException Lançada caso ocorra algum problema
-     * na execução do interceptador.
+     * @param handler Manipulador da requisiï¿½ï¿½o.
+     * @throws InterceptedException Lanï¿½ada caso ocorra algum problema
+     * na execuï¿½ï¿½o do interceptador.
      */
     public void intercepted( InterceptorStack stack, InterceptorHandler handler ) throws InterceptedException;
 
     /**
-     * Verifica se o interceptador será executado na ação interceptada.
-     * @param handler Manipulador da requisição.
-     * @return Verdadeiro se é permitido o acesso ao recurso interceptado,
-     * caso contrário falso.
+     * Verifica se o interceptador serï¿½ executado na aï¿½ï¿½o interceptada.
+     * @param handler Manipulador da requisiï¿½ï¿½o.
+     * @return Verdadeiro se ï¿½ permitido o acesso ao recurso interceptado,
+     * caso contrï¿½rio falso.
      */
     public boolean accept( InterceptorHandler handler );
     

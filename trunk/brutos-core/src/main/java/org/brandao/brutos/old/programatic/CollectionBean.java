@@ -26,13 +26,13 @@ import org.brandao.brutos.mapping.ioc.ValueInject;
  *
  * @author Afonso Brandao
  */
-public class CollectionBean<T> extends Bean{
+public class CollectionBean extends Bean{
     
     public CollectionBean( Injectable inject, IOCManager manager ) {
         super( inject, manager );
     }
     
-    public CollectionBean<T> addBean( String name ){
+    public CollectionBean addBean( String name ){
         ComplexObjectInject coi = (ComplexObjectInject)getInjectable();
 
         Bean refBean = manager.getBean( name );
@@ -44,7 +44,7 @@ public class CollectionBean<T> extends Bean{
         return this;
     }
     
-    public CollectionBean<T> addValue( T value ){
+    public CollectionBean addValue( Object value ){
         ComplexObjectInject coi = (ComplexObjectInject)getInjectable();
         coi.getProps().add( 
                 new Property( 

@@ -17,6 +17,7 @@
 
 package org.brandao.brutos;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -149,9 +150,13 @@ public abstract class AbstractApplicationContext
             CustomScopeConfigurer customScopesConfigurer =
                     (CustomScopeConfigurer)iocProvider.getBean("customScopes");
             Map customScopes = customScopesConfigurer.getCustomScopes();
-            Set i = customScopes.keySet();
-            for( Object key: i )
+            Set set = customScopes.keySet();
+            Iterator i = set.iterator();
+            while( i.hasNext() ){
+                Object key = i.next();
+            //for( Object key: i )
                 scopes.register( (String)key,(Scope)customScopes.get(key) );
+            }
         }
 
         this.loadIOCManager(iocManager);

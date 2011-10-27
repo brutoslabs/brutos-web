@@ -196,7 +196,8 @@ public class Invoker {
             if( logger.isDebugEnabled() )
                 logger.debug(
                         String.format( "Request processed in %d ms",
-                            (System.currentTimeMillis()-time) ) );
+                            new Object[]{
+                                new Long((System.currentTimeMillis()-time))} ) );
         }
 
         

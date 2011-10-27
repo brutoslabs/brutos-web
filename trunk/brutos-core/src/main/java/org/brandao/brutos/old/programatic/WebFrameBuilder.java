@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import org.brandao.brutos.BrutosException;
@@ -209,18 +210,18 @@ public class WebFrameBuilder {
         return mb;
     }
 
-    public MethodBuilder addMethod( String name, String methodName, Class<?> ... parametersType ){
+    public MethodBuilder addMethod( String name, String methodName, Class[] parametersType ){
         return addMethod( name, null, null, methodName, parametersType );
     }
 
-    public MethodBuilder addMethod( String name, String methodName, String returnPage, Class<?> ... parametersType ){
+    public MethodBuilder addMethod( String name, String methodName, String returnPage, Class[] parametersType ){
         return addMethod( name, null, returnPage, methodName, parametersType );
     }
     
-    public MethodBuilder addMethod( String name, String returnIn, String returnPage, String methodName, Class<?> ... parametersType ){
+    public MethodBuilder addMethod( String name, String returnIn, String returnPage, String methodName, Class[] parametersType ){
         return addMethod( name, returnIn, returnPage, false, methodName, parametersType );
     }
-    public MethodBuilder addMethod( String name, String returnIn, String returnPage, boolean redirect, String methodName, Class<?> ... parametersType ){
+    public MethodBuilder addMethod( String name, String returnIn, String returnPage, boolean redirect, String methodName, Class[] parametersType ){
         
         name =
             name == null || name.replace( " ", "" ).length() == 0?
@@ -250,11 +251,11 @@ public class WebFrameBuilder {
         mp.setRedirect(redirect);
         mp.setDispatcherType( redirect? DispatcherType.REDIRECT : DispatcherType.INCLUDE );
         try{
-            Class<?> classType = webFrame.getClassType();
+            Class classType = webFrame.getClassType();
             Method method = classType.getMethod( methodName, parametersType );
             mp.setParametersType( Arrays.asList( method.getParameterTypes() ) );
 
-            Class<?> returnType = method.getReturnType();
+            Class returnType = method.getReturnType();
             if( returnPage != null ){
                 mp.setReturnPage( returnPage );
                 mp.setReturnIn( returnIn == null? "result" : returnIn );
@@ -289,9 +290,11 @@ public class WebFrameBuilder {
         
         it.setProperties( new HashMap() );
         
-        Set<String> keys = parent.getProperties().keySet();
-        
-        for( String key: keys ){
+        Set keys = parent.getProperties().keySet();
+        Iterator iKeys = keys.iterator();
+        while( iKeys.hasNext() ){
+            String key = (String) iKeys.next();
+        //for( String key: keys ){
             Object value = parent.getProperties().get( key );
             it.getProperties().put( /*parent.getName() + "." +*/ key, value );
         }
@@ -419,9 +422,10 @@ public class WebFrameBuilder {
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException(
                         String.format( "%s.%s : %s" ,
-                            webFrame.getClassType().getName(),
-                            propertyName,
-                            e.getMessage() ) );
+                            new String[]{
+                                webFrame.getClassType().getName(),
+                                propertyName,
+                                e.getMessage()} ) );
             }
         }
 
@@ -434,7 +438,7 @@ public class WebFrameBuilder {
         return new PropertyBuilder( validatorConfig, webFrame, webFrameManager, interceptorManager );
     }
 
-    public Class<?> getClassType(){
+    public Class getClassType(){
         return webFrame.getClassType();
     }
     

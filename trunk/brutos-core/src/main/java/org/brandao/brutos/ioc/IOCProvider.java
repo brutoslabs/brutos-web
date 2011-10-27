@@ -36,10 +36,10 @@ public abstract class IOCProvider {
     /**
      * @deprecated 
      */
-    private Map<String, Bean> beans;
+    private Map beans;
     
     public IOCProvider(){
-        this.beans = new HashMap<String, Bean>();
+        this.beans = new HashMap();
     }
     
     public static IOCProvider getProvider( Properties properties ){
@@ -60,7 +60,7 @@ public abstract class IOCProvider {
 
         try{
             logger.info("IoC provider: " + iocProviderName );
-            Class<?> iocProvider = Class.forName( iocProviderName, true,
+            Class iocProvider = Class.forName( iocProviderName, true,
                     Thread.currentThread().getContextClassLoader() );
             ioc = (IOCProvider)iocProvider.newInstance();
         }
@@ -102,7 +102,7 @@ public abstract class IOCProvider {
      */
     public Bean removeBeanDefinition( Bean bean ){
         if( bean != null )
-            return beans.remove( bean.getInjectable().getName() );
+            return (Bean) beans.remove( bean.getInjectable().getName() );
         else
             return null;
     }
@@ -113,14 +113,14 @@ public abstract class IOCProvider {
      * @return
      */
     public Bean getBeanDefinition( String name ){
-        return beans.get( name );
+        return (Bean) beans.get( name );
     }
 
     /**
      * @deprecated 
      * @return
      */
-    public List<Bean> getBeansDefinition(){
+    public List getBeansDefinition(){
         return new ArrayList( beans.values() );
     }
 

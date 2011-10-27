@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.Properties;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ControllerManager;
-import org.brandao.brutos.xml.parser.XMLBrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.old.programatic.IOCManager;

@@ -37,7 +37,7 @@ public class MapBean extends CollectionBean{
     /**
      * @deprecated
      */
-    private Class<?> collectionType;
+    private Class collectionType;
 
     /**
      * @deprecated
@@ -73,11 +73,11 @@ public class MapBean extends CollectionBean{
         this.keyScopeType = scope;
     }
 
-    public Class<?> getCollectionType() {
+    public Class getCollectionType() {
         return collectionType;
     }
 
-    public void setCollectionType(Class<?> collectionType) {
+    public void setCollectionType(Class collectionType) {
         this.collectionType = collectionType;
     }
     /*
@@ -133,7 +133,7 @@ public class MapBean extends CollectionBean{
             return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
         else
             throw new BrutosException(
-                String.format("key mapping not defined: %s", this.getName() ) );
+                String.format("key mapping not defined: %s", new Object[]{this.getName()} ) );
     }
     /*
     private Object getKey( HttpServletRequest request, long index ){

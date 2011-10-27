@@ -31,7 +31,6 @@ public class IntegerWrapperType implements Type{
     public IntegerWrapperType() {
     }
 
-    @Override
     public Class getClassType() {
         return Integer.class;
     }

@@ -31,7 +31,6 @@ public class IntegerType implements Type{
     public IntegerType() {
     }
 
-    @Override
     public Class getClassType() {
         return Integer.TYPE;
     }
@@ -41,7 +40,7 @@ public class IntegerType implements Type{
             return value;
         else
         if( value instanceof String )
-            return Integer.parseInt( (String)value );
+            return Integer.valueOf( (String)value );
         else
         if( value == null )
             return null;

@@ -20,7 +20,7 @@ package org.brandao.brutos;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
- * Constrói um argumento do construtor de um bean.
+ * Constrï¿½i um argumento do construtor de um bean.
  * 
  * @author Afonso Brandao
  */
@@ -30,12 +30,12 @@ public class ConstructorBuilder extends RestrictionBuilder{
         super( config );
     }
 
-    public ConstructorBuilder addRestriction( RestrictionRules ruleId, Object value ){
-        return (ConstructorBuilder)super.addRestriction( ruleId, value );
+    public RestrictionBuilder addRestriction( RestrictionRules ruleId, Object value ){
+        return super.addRestriction( ruleId, value );
     }
 
-    public ConstructorBuilder setMessage( String message ){
-        return (ConstructorBuilder)super.setMessage(message);
+    public RestrictionBuilder setMessage( String message ){
+        return super.setMessage(message);
     }
 
 

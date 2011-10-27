@@ -25,20 +25,20 @@ import java.util.List;
  */
 public class ImpInterceptorStack implements InterceptorStack{
     
-    private List<Interceptor> stack;
+    private List stack;
     private int stackPos;
     
     public ImpInterceptorStack() {
     }
     
-    public void exec( List<Interceptor> interceptors, InterceptorHandler handler ){
+    public void exec( List interceptors, InterceptorHandler handler ){
         this.stack = interceptors;
         next( handler );
     }
     
     public void next( InterceptorHandler handler ){
         if( stackPos < this.stack.size() ){
-            Interceptor interceptor = this.stack.get( stackPos++ );
+            Interceptor interceptor = (Interceptor) this.stack.get( stackPos++ );
             if( interceptor.accept( handler ) )
                 interceptor.intercepted( this, handler );
         }

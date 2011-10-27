@@ -37,15 +37,14 @@ import org.brandao.brutos.web.http.ParameterList;
  */
 public class SetType implements CollectionType{
 
-    private Class<? extends Set> listType;
-    private Class<?> type;
+    private Class listType;
+    private Class type;
     private Type primitiveType;
     private Type serializableType;
 
     public SetType(){
     }
     
-    @Override
     public void setGenericType(Object classType) {
         Class collectionType = Types.getCollectionType(classType);
         if( collectionType != null ){
@@ -124,7 +123,7 @@ public class SetType implements CollectionType{
                                   "java.util.HashSet" );
 
         try{
-            this.listType = (Class<? extends Set>)
+            this.listType = (Class)
                     Class.forName( className, true,
                                 Thread.currentThread().getContextClassLoader());
         }
@@ -141,9 +140,13 @@ public class SetType implements CollectionType{
         try{
             Set objList = (Set) this.getListType().newInstance();
 
-            for( Object o: (ParameterList)value )
+            ParameterList list = (ParameterList)value;
+            int size = list.size();
+            //for( Object o: (ParameterList)value )
+            for( int i=0;i<size;i++ ){
+                Object o = list.get(i);
                 objList.add( this.primitiveType.getValue(o) );
-
+            }
             return objList;
         }
         catch( Exception e ){

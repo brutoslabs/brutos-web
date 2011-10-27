@@ -17,13 +17,13 @@
 
 package org.brandao.brutos.type;
 
-import org.brandao.brutos.type.json.JSONDecoder;
-import org.brandao.brutos.type.json.JSONEncoder;
 import java.io.IOException;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
+import org.brandao.jbrgates.JSONDecoder;
+import org.brandao.jbrgates.JSONEncoder;
 
 /**
 *
@@ -67,8 +67,7 @@ public class JSONType implements SerializableType {
         response.setType( "application/json" );
         response.setCharacterEncoding( "UTF-8" );
         JSONEncoder encoder = new JSONEncoder( response.processStream() );
-        encoder.writeObject( value );
-        encoder.close();
+        encoder.encode( value );
     }
 
 }

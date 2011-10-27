@@ -26,11 +26,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.brandao.brutos.AbstractApplicationContext;
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
-import org.brandao.brutos.xml.parser.XMLBrutosConstants;
 import org.brandao.brutos.type.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -132,21 +132,21 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
         if( cp == null )
             return;
 
-        AbstractApplicationContext aac = createApplicationContext();
+        ApplicationContext aac = createApplicationContext();
         aac.configure();
         
     }
 
-    private AbstractApplicationContext createApplicationContext(){
+    private ApplicationContext createApplicationContext(){
 
         Class clazz = getApplicationContextClass();
 
-        if(AbstractApplicationContext.class.isAssignableFrom(clazz)){
+        if(ApplicationContext.class.isAssignableFrom(clazz)){
             try{
-                AbstractApplicationContext app =
-                    (AbstractApplicationContext) clazz
-                        .getConstructor(AbstractApplicationContext.class)
-                            .newInstance(this.handler);
+                ApplicationContext app =
+                    (ApplicationContext) clazz
+                        .getConstructor(new Class[]{ApplicationContext.class})
+                            .newInstance(new Object[]{this.handler});
                 return app;
             }
             catch( Exception e ){

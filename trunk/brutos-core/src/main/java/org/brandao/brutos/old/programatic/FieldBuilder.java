@@ -154,9 +154,9 @@ public class FieldBuilder {
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException( 
                         String.format( "%s.%s : %s" ,
-                            webFrame.getClassType().getName(),
+                            new Object[]{webFrame.getClassType().getName(),
                             propertyName,
-                            e.getMessage() ) );
+                            e.getMessage()} ) );
             }
         }
                

@@ -27,7 +27,7 @@ import org.brandao.brutos.ScopeType;
  */
 public class Injectable {
     
-    private Class<?> target;
+    private Class target;
     
     private String name;
     
@@ -37,14 +37,14 @@ public class Injectable {
     
     private ConstructorInject constructor;
     
-    private List<PropertyInject> properties;
+    private List properties;
     
     private String factory;
     
     public Injectable() {
     }
 
-    public Injectable( Class<?> target, String name, ScopeType scope, boolean singleton, String factory ) {
+    public Injectable( Class target, String name, ScopeType scope, boolean singleton, String factory ) {
         this.target     = target;
         this.name       = name;
         this.scope      = scope;
@@ -55,11 +55,11 @@ public class Injectable {
         this.constructor = new ConstructorInject( this );
     }
     
-    public Class<?> getTarget() {
+    public Class getTarget() {
         return target;
     }
 
-    public void setTarget(Class<?> target) {
+    public void setTarget(Class target) {
         this.target = target;
     }
 
@@ -95,11 +95,11 @@ public class Injectable {
         this.constructor = constructor;
     }
 
-    public List<PropertyInject> getProperties() {
+    public List getProperties() {
         return properties;
     }
 
-    public void setProperties(List<PropertyInject> properties) {
+    public void setProperties(List properties) {
         this.properties = properties;
     }
     

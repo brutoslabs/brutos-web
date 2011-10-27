@@ -23,12 +23,10 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.RequestInstrument;
-import org.brandao.brutos.RequestInstrumentImp;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.ViewException;
-import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
@@ -50,7 +48,11 @@ public abstract class ViewProvider {
             viewProviderName = "org.brandao.brutos.view.JSPViewProvider";
 
         try{
-            Class<?> iocProvider = Class.forName( viewProviderName, true, Thread.currentThread().getContextClassLoader() );
+            Class iocProvider = 
+                    Class.forName(
+                        viewProviderName,
+                        true,
+                        Thread.currentThread().getContextClassLoader() );
             view = (ViewProvider)iocProvider.newInstance();
         }
         catch( ClassNotFoundException e ){

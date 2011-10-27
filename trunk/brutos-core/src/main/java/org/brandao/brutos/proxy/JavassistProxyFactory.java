@@ -37,7 +37,7 @@ public class JavassistProxyFactory extends AbstractProxyFactory{
     private ClassPool pool = null;
     private ProxyFactory factory;
     
-    public JavassistProxyFactory( Class<?> superClass, ClassPool pool )
+    public JavassistProxyFactory( Class superClass, ClassPool pool )
             throws Exception{
         super( superClass );
         this.pool = pool;
@@ -66,10 +66,9 @@ public class JavassistProxyFactory extends AbstractProxyFactory{
         }
     }
 
-    private Class<?> createProxyClass( Class clazz ) throws Exception{
+    private Class createProxyClass( Class clazz ) throws Exception{
         factory = new ProxyFactory();
         factory.setSuperclass(clazz);
-        //factory.setInterfaces(new Class[]{ObjectProxy.class});
         return factory.createClass();
     }
 

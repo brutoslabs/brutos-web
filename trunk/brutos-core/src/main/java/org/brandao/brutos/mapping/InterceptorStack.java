@@ -26,7 +26,7 @@ import org.brandao.brutos.BrutosException;
  */
 public class InterceptorStack extends Interceptor{
     
-    private List<Interceptor> interceptors;
+    private List interceptors;
 
     public InterceptorStack( InterceptorStack parent ) {
         super(parent);
@@ -34,14 +34,14 @@ public class InterceptorStack extends Interceptor{
     }
     
     public InterceptorStack() {
-        this.interceptors = new ArrayList<Interceptor>();
+        this.interceptors = new ArrayList();
     }
 
-    public List<Interceptor> getInterceptors() {
+    public List getInterceptors() {
         return interceptors;
     }
 
-    public void setInterceptors(List<Interceptor> interceptors) {
+    public void setInterceptors(List interceptors) {
         this.interceptors = interceptors;
     }
     
