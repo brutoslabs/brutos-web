@@ -70,6 +70,9 @@ public class DefaultEnumType implements EnumType{
             if( value == null )
                 return null;
             else
+            if( this.classType.isAssignableFrom(value.getClass()) )
+                return value;
+            else
             if( type == EnumerationType.ORDINAL ){
                 Object constants =
                     this.enumUtil.getEnumConstants();
@@ -83,7 +86,7 @@ public class DefaultEnumType implements EnumType{
                     .valueOf( (String)stringType.getValue( value ) );
         }
         catch( Exception e ){
-            return null;
+            throw new UnknownTypeException(e);
         }
     }
 
