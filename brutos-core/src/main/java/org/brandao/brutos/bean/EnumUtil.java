@@ -41,7 +41,7 @@ public class EnumUtil {
     public static Object getEnumConstants(Class clazz){
         try{
             Method m =
-                clazz.getMethod("getEnumConstants", new Class[]{});
+                Class.class.getMethod("getEnumConstants", new Class[]{});
             return m.invoke(clazz, new Object[]{});
         }
         catch( Exception e ){
