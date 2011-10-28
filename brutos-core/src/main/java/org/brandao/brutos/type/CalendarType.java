@@ -26,6 +26,13 @@ import java.util.GregorianCalendar;
  */
 public class CalendarType extends DefaultDateTimeType{
 
+    public CalendarType(){
+    }
+    
+    public CalendarType(String mask) {
+        this.setMask(mask);
+    }
+
     public Object toValue( String value ){
         try{
             Calendar cal =
