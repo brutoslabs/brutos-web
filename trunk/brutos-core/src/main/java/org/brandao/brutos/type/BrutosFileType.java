@@ -79,8 +79,10 @@ public class BrutosFileType implements Type{
     public Object getValue(Object value) {
         if( value instanceof BrutosFile )
             return value;
-        else
+        if( value == null )
             return null;
+        else
+            throw new UnknownTypeException(value.getClass().getName());
     }
 
     public void setValue(Object value) throws IOException {

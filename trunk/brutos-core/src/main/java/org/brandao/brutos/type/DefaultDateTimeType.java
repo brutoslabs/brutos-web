@@ -32,6 +32,10 @@ public class DefaultDateTimeType implements DateTimeType{
 
     SimpleDateFormat sdf;
     
+    public DefaultDateTimeType(String mask) {
+        this.setMask(mask);
+    }
+
     public DefaultDateTimeType() {
     }
 
