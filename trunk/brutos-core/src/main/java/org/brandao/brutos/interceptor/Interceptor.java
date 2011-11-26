@@ -39,7 +39,7 @@ public interface Interceptor {
     public void setProperties( Map props );
 
     /**
-     * Veqifica se o interceptador est� configurado.
+     * Verifica se o interceptador foi configurado.
      * @return Verdadeiro se o interceptador foi configurado,
      * caso contr�rio falso.
      */
