@@ -69,42 +69,8 @@ public class FlowController {
     }
 
     private static Object getControllerInstance( Class controllerClass ){
-        ConfigurableApplicationContext context = 
-                (ConfigurableApplicationContext) Invoker.getApplicationContext();
-        
-        ControllerResolver controllerResolver = context.getControllerResolver();
-        IOCProvider iocProvider = context.getIocProvider();
-        CodeGeneratorProvider codeGeneratorProvider =
-                context.getCodeGeneratorProvider();
-
-        Controller controller =
-            controllerResolver
-                .getController(
-                    context.getControllerManager(),
-                    controllerClass);
-
-        if( controller == null )
-            throw new BrutosException(
-                String.format(
-                    "controller not configured: %s",
-                    new Object[]{controllerClass.getName()} ));
-
-        Object resource = controller.getInstance(iocProvider);
-                //iocProvider.getBean(controller.getId());
-
-        ProxyFactory proxyFactory =
-                codeGeneratorProvider
-                    .getProxyFactory(controllerClass);
-
-        Object proxy =
-                proxyFactory
-                    .getNewProxy(
-                        resource,
-                        controller,
-                        context,
-                        context.getInvoker());
-
-        return proxy;
+        ApplicationContext context = Invoker.getApplicationContext();
+        return context.getController(controllerClass);
     }
 
 }

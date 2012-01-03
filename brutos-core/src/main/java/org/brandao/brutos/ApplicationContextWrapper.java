@@ -65,4 +65,8 @@ public class ApplicationContextWrapper
     public void configure() {
          this.applicationContext.configure();
     }
+
+    public Object getController(Class clazz) {
+        return this.applicationContext.getController(clazz);
+    }
 }
