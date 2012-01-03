@@ -76,4 +76,6 @@ public interface ApplicationContext {
      */
     Scopes getScopes();
 
+    Object getController(Class clazz);
+    
 }

@@ -26,8 +26,10 @@ import org.brandao.brutos.io.DefaultResourceLoader;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
+import org.brandao.brutos.proxy.ProxyFactory;
 import org.brandao.brutos.scope.ApplicationScope;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.Scope;
@@ -455,4 +457,35 @@ public abstract class AbstractApplicationContext
         this.codeGeneratorProvider = codeGeneratorProvider;
     }
 
+    public Object getController(Class clazz){
+
+        Controller controller =
+            controllerResolver
+                .getController(
+                    controllerManager,
+                    clazz);
+
+        if( controller == null )
+            throw new BrutosException(
+                String.format(
+                    "controller not configured: %s",
+                    new Object[]{clazz.getName()} ));
+
+        Object resource = controller.getInstance(iocProvider);
+                //iocProvider.getBean(controller.getId());
+
+        ProxyFactory proxyFactory =
+                codeGeneratorProvider
+                    .getProxyFactory(clazz);
+
+        Object proxy =
+                proxyFactory
+                    .getNewProxy(
+                        resource,
+                        controller,
+                        this,
+                        invoker);
+
+        return proxy;
+    }
 }
