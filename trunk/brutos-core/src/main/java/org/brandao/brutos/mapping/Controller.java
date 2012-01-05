@@ -192,7 +192,10 @@ public class Controller {
     }
 
     public MethodForm getMethod( Method method ){
-        
+
+        if( !this.loaded )
+            loadConfiguration();
+
         List list = (List)reverseMethods.get(method.toString());
 
         if(list == null || list.size() > 1)
@@ -237,6 +240,14 @@ public class Controller {
     }
 
     public void proccessBrutosAction( InterceptorHandler handler ){
+
+        if( !this.loaded )
+            loadConfiguration();
+
+        interceptorProcess.process( handler );
+    }
+
+    private synchronized void loadConfiguration(){
         if( !this.loaded ){
             synchronized(this){
                 Iterator keys = methods.keySet().iterator();
@@ -250,7 +261,7 @@ public class Controller {
             }
             this.loaded = true;
         }
-        interceptorProcess.process( handler );
+
     }
     
     public void fieldsToRequest( Object webFrame ) {
