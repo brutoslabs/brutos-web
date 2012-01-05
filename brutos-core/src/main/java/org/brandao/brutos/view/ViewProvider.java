@@ -45,7 +45,7 @@ public abstract class ViewProvider {
         ViewProvider view       = null;
         
         if( viewProviderName == null )
-            viewProviderName = "org.brandao.brutos.view.JSPViewProvider";
+            viewProviderName = DefaultViewProvider.class.getName();
 
         try{
             Class iocProvider = 

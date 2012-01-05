@@ -229,7 +229,7 @@ public abstract class AbstractApplicationContext
             MvcResponseFactory instance = (MvcResponseFactory) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.response_factory",
-                    "org.brandao.brutos.DefaultMvcResponseFactory"
+                    DefaultMvcResponseFactory.class.getName()
                 ),
                     true,
                     Thread.currentThread().getContextClassLoader()
@@ -252,7 +252,7 @@ public abstract class AbstractApplicationContext
             MvcRequestFactory instance = (MvcRequestFactory) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.request_factory",
-                    "org.brandao.brutos.DefaultMvcRequestFactory"
+                    DefaultMvcRequestFactory.class.getName()
                 ),
                     true,
                     Thread.currentThread().getContextClassLoader()
@@ -476,7 +476,7 @@ public abstract class AbstractApplicationContext
 
         ProxyFactory proxyFactory =
                 codeGeneratorProvider
-                    .getProxyFactory(clazz);
+                    .getProxyFactory(resource.getClass());
 
         Object proxy =
                 proxyFactory
