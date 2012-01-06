@@ -105,19 +105,28 @@ public class SearchClass {
             while( stok.hasMoreTokens() ){
                 String dirName  = System.getProperty( "user.dir" );
                 String fileName = stok.nextToken();
-                /*
-                fileName = dirName + "/" + fileName;
-                File file = new File( fileName );
-                if( file.exists() )
-                    readJar( file, classLoader );
-                */
-                if (".".equals(fileName)) {
+
+                if( fileName.startsWith("file:/") ){
+                    URL u = new URL (fileName);
+                    fileName = URLDecoder.decode(u.getFile(), "UTF-8");
+                    File f = new File(fileName);
+                    if( f.isFile() )
+                        readJar(f, classLoader);
+                    else
+                    if( f.isDirectory() )
+                        readClassDir(u, classLoader);
+                }
+                else
+                if (".".equals(fileName)) 
                     readClassDir(new URL(String.format("file:/%s", new Object[]{dirName})), classLoader);
-                } else {
+                else{
                     fileName = dirName + "/" + fileName;
                     File file = new File(fileName);
                     if (file.exists() && file.isFile())
                         readJar(file, classLoader);
+                    else
+                    if (file.isDirectory())
+                        readClassDir(new URL("file:/"+fileName), classLoader);
                 }
             }
         }
