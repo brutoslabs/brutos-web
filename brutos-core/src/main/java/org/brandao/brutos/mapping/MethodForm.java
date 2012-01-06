@@ -200,7 +200,6 @@ public class MethodForm {
 
     public synchronized void load(){
         try{
-            
             if( load )
                 return;
             

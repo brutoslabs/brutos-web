@@ -23,10 +23,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.Invoker;
@@ -88,12 +88,12 @@ public class Controller {
 
     public Controller() {
         this.fields = new ArrayList();
-        this.mappingBeans = new HashMap();
-        this.methods = new HashMap();
+        this.mappingBeans = new LinkedHashMap();
+        this.methods = new LinkedHashMap();
         this.interceptorStack = new ArrayList();
         this.alias = new ArrayList();
-        this.reverseMethods = new HashMap();
-        this.throwsSafe = new HashMap();
+        this.reverseMethods = new LinkedHashMap();
+        this.throwsSafe = new LinkedHashMap();
         this.interceptorProcess = new InterceptorProcess();
         this.loaded = false;
         this.interceptorProcess.setForm( this );
@@ -181,11 +181,13 @@ public class Controller {
 
     void addReserveMethod( Method method, MethodForm action ){
         
-        List list = (List)reverseMethods.get(method.toString());
+        ReverseActionKey key = new ReverseActionKey(method);
+
+        List list = (List)reverseMethods.get(key);
 
         if( list == null ){
             list = new LinkedList();
-            reverseMethods.put(method.toString(), list);
+            reverseMethods.put(key, list);
         }
 
         list.add( action );
@@ -196,7 +198,9 @@ public class Controller {
         if( !this.loaded )
             loadConfiguration();
 
-        List list = (List)reverseMethods.get(method.toString());
+        ReverseActionKey key = new ReverseActionKey(method);
+
+        List list = (List)reverseMethods.get(key);
 
         if(list == null || list.size() > 1)
             throw new
@@ -249,15 +253,13 @@ public class Controller {
 
     private synchronized void loadConfiguration(){
         if( !this.loaded ){
-            synchronized(this){
-                Iterator keys = methods.keySet().iterator();
+            Iterator keys = methods.keySet().iterator();
 
-                while(keys.hasNext()){
-                    String key = (String)keys.next();
-                    MethodForm ac = (MethodForm) methods.get(key);
-                    if(!ac.isLoaded())
-                        ac.load();
-                }
+            while(keys.hasNext()){
+                String key = (String)keys.next();
+                MethodForm ac = (MethodForm) methods.get(key);
+                if(!ac.isLoaded())
+                    ac.load();
             }
             this.loaded = true;
         }

@@ -168,13 +168,17 @@ public class Invoker {
 
     public boolean invoke( StackRequestElement element ){
 
-        StackRequest stackRequest = getStackRequest();
-        
-        long time                  = System.currentTimeMillis();
-        boolean createdThreadScope = ThreadScope.create();
-        boolean isFirstCall        = stackRequest.isEmpty();
+        long time = -1;
+        boolean createdThreadScope = false;
+        StackRequest stackRequest  = null;
+        boolean isFirstCall        = false;
 
         try{
+            time               = System.currentTimeMillis();
+            createdThreadScope = ThreadScope.create();
+            stackRequest       = getStackRequest();
+            isFirstCall        = stackRequest.isEmpty();
+            
             if( isFirstCall )
                 currentApp.set( this.applicationContext );
 
