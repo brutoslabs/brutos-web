@@ -71,7 +71,7 @@ public class WebControllerResolver implements ControllerResolver{
                                     .currentRequest.get();
         */
         Scope paramScope =
-                handler.getContext().getScopes().get(ScopeType.PARAM);
+                handler.getContext().getScopes().get(WebScopeType.PARAM);
         for( Controller  form: forms.values() ){
             List<String> uriList = new ArrayList<String>();
 

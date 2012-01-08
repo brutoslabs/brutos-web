@@ -24,18 +24,15 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
-import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.interceptor.DataInput;
 import org.brandao.brutos.interceptor.DataOutput;
 import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.Scopes;
-import org.brandao.brutos.web.ConfigurableWebApplicationContext;
+import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 
@@ -169,8 +166,8 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
         */
             WebApplicationContext app = ContextLoader
                     .getCurrentWebApplicationContext();
-        DataInput input = new DataInput( app.getScopes().get(ScopeType.PARAM) );
-        DataOutput output = new DataOutput(app.getScopes().get(ScopeType.REQUEST));
+        DataInput input = new DataInput( app.getScopes().get(WebScopeType.PARAM) );
+        DataOutput output = new DataOutput(app.getScopes().get(WebScopeType.REQUEST));
         
         //brutosContext.getRequest().setAttribute( BrutosConstants.WEBFRAME, instance );
         input.read( controller , instance);

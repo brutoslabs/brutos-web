@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.AbstractWebApplicationContext;
@@ -40,7 +41,7 @@ public class FlashScope implements Scope{
                 ContextLoader.getCurrentWebApplicationContext();
         //ServletRequest request = ContextLoaderListener.currentRequest.get();
 
-        Scope session = context.getScopes().get(ScopeType.SESSION);
+        Scope session = context.getScopes().get(WebScopeType.SESSION);
 
         FlashInstrument instrument =
                 getInstrument( session );
@@ -53,7 +54,7 @@ public class FlashScope implements Scope{
                 ContextLoader.getCurrentWebApplicationContext();
         //ServletRequest request = ContextLoaderListener.currentRequest.get();
 
-        Scope session = context.getScopes().get(ScopeType.SESSION);
+        Scope session = context.getScopes().get(WebScopeType.SESSION);
 
         FlashInstrument instrument =
                 getInstrument( session );
@@ -71,7 +72,7 @@ public class FlashScope implements Scope{
                 ContextLoader.getCurrentWebApplicationContext();
         //ServletRequest request = ContextLoaderListener.currentRequest.get();
 
-        Scope session = context.getScopes().get(ScopeType.SESSION);
+        Scope session = context.getScopes().get(WebScopeType.SESSION);
 
         FlashInstrument instrument =
                 getInstrument( session );

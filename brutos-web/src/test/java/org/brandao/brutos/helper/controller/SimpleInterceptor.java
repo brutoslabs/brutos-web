@@ -18,8 +18,8 @@
 
 package org.brandao.brutos.helper.controller;
 
-import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
+import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.interceptor.AbstractInterceptor;
 import org.brandao.brutos.interceptor.InterceptedException;
 import org.brandao.brutos.interceptor.InterceptorHandler;
@@ -37,7 +37,7 @@ public class SimpleInterceptor extends AbstractInterceptor{
             throws InterceptedException {
 
         Scopes scopes = ContextLoader.getCurrentWebApplicationContext().getScopes();
-        Scope scope = scopes.get(ScopeType.REQUEST);
+        Scope scope = scopes.get(WebScopeType.REQUEST);
         for(Object key: this.props.keySet()){
             scope.put((String)key, this.props.get(key));
         }

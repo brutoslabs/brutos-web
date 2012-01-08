@@ -23,6 +23,7 @@ import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ServletContextResource;
 import org.brandao.brutos.ioc.SpringIOCProvider;
@@ -76,7 +77,7 @@ public abstract class AbstractWebApplicationContext
                 Thread.currentThread().getContextClassLoader() );
 
             Scope contextScope = getScopes()
-                    .get( ScopeType.APPLICATION );
+                    .get( WebScopeType.APPLICATION );
 
             contextScope.put(
                 BrutosConstants.UPLOAD_LISTENER_FACTORY,
@@ -99,7 +100,7 @@ public abstract class AbstractWebApplicationContext
                 Thread.currentThread().getContextClassLoader() );
 
             Scope contextScope = getScopes()
-                    .get( ScopeType.APPLICATION );
+                    .get( WebScopeType.APPLICATION );
 
             contextScope.put(
                 BrutosConstants.HTTP_REQUEST_PARSER,
@@ -111,17 +112,17 @@ public abstract class AbstractWebApplicationContext
     }
 
     protected void loadScopes(){
-        getScopes().register( ScopeType.APPLICATION.toString(),
+        getScopes().register( WebScopeType.APPLICATION.toString(),
                 new ApplicationScope( getContext() ) );
-        getScopes().register( ScopeType.FLASH.toString(),
+        getScopes().register( WebScopeType.FLASH.toString(),
                 new FlashScope() );
-        getScopes().register( ScopeType.IOC.toString(),
+        getScopes().register( WebScopeType.IOC.toString(),
                 new IOCScope( this ) );
-        getScopes().register( ScopeType.REQUEST.toString(),
+        getScopes().register( WebScopeType.REQUEST.toString(),
                 new RequestScope() );
-        getScopes().register( ScopeType.SESSION.toString(),
+        getScopes().register( WebScopeType.SESSION.toString(),
                 new SessionScope() );
-        getScopes().register( ScopeType.PARAM.toString(),
+        getScopes().register( WebScopeType.PARAM.toString(),
                 new ParamScope() );
     }
     private void overrideConfig(Properties config){
@@ -177,7 +178,7 @@ public abstract class AbstractWebApplicationContext
     public Controller getController(){
         
         return (Controller) getScopes()
-                .get(ScopeType.REQUEST)
+                .get(WebScopeType.REQUEST)
                     .get( BrutosConstants.CONTROLLER );
     }
 

@@ -29,7 +29,7 @@ import javax.servlet.ServletResponse;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosContext;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
@@ -71,7 +71,7 @@ public class BrutosRequestFilter implements Filter{
         Invoker invoker =
                 context.getInvoker();
         
-        Scope scope = context.getScopes().get(ScopeType.SESSION);
+        Scope scope = context.getScopes().get(WebScopeType.SESSION);
 
         Map mappedUploadStats =
                 (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
