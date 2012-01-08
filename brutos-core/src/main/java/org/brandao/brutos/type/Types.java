@@ -66,7 +66,7 @@ public class Types {
         types.put( List.class ,         ListType.class );
         types.put( Set.class ,          SetType.class );
         types.put( Object.class ,       ObjectType.class );
-        types.put( Serializable.class , JSONType.class );
+        types.put( Serializable.class , SerializableTypeImp.class );
         types.put( Date.class,          DefaultDateTimeType.class );
         types.put( Calendar.class,      CalendarType.class );
         types.put( Array.class,         DefaultArrayType.class );

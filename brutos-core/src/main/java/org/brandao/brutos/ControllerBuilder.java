@@ -121,8 +121,8 @@ import org.brandao.brutos.validator.ValidatorProvider;
  * <pre>
  * BeanBuilder beanBuilder = controllerBuilder.buildMappingBean( "myBeanMapping", MyBean.class );
  * beanBuilder
- *   .addProperty( "name-client", "name", ScopeType.REQUEST )
- *   .addProperty( "country-client", "country", ScopeType.REQUEST )
+ *   .addProperty( "name-client", "name", ScopeType.PARAM )
+ *   .addProperty( "country-client", "country", ScopeType.PARAM )
  *   .addProperty( "currentUser", "currentUser", ScopeType.SESSION );
  * </pre>
  *
@@ -524,7 +524,7 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, EnumerationType enumProperty ){
-        return addProperty( propertyName, id, ScopeType.REQUEST, enumProperty,
+        return addProperty( propertyName, id, ScopeType.PARAM, enumProperty,
                 null, null, null, false, null );
     }
 
@@ -550,7 +550,7 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, String temporalProperty ){
-        return addProperty( propertyName, id, ScopeType.REQUEST, 
+        return addProperty( propertyName, id, ScopeType.PARAM,
                 EnumerationType.ORDINAL, temporalProperty, null, null, false, null );
     }
 
@@ -563,7 +563,7 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id, Type type ){
-        return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+        return addProperty( propertyName, id, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null, false, type );
     }
 
@@ -575,7 +575,7 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addPropertyMapping( String propertyName, String mapping ){
-        return addProperty( propertyName, null, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+        return addProperty( propertyName, null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, false, null );
     }
 
@@ -588,7 +588,7 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addPropertyMapping( String propertyName, String id, String mapping ){
-        return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+        return addProperty( propertyName, id, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, false, null );
     }
 
@@ -600,7 +600,7 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addProperty( String propertyName, String id ){
-        return addProperty( propertyName, id, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+        return addProperty( propertyName, id, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null, false, null );
     }
 
@@ -612,7 +612,7 @@ public class ControllerBuilder {
      * @return Contrutor da propriedade.
      */
     public PropertyBuilder addStaticProperty( String propertyName, Object value ){
-        return addProperty( propertyName, null, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+        return addProperty( propertyName, null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, value, false, null );
     }
 

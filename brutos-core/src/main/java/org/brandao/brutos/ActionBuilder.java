@@ -130,7 +130,7 @@ public class ActionBuilder {
      * @return Contrutor do par�metro.
      */
     public ParameterBuilder addParameter( String name, EnumerationType enumProperty, Class classType ){
-        return addParameter( name, ScopeType.REQUEST, enumProperty, null, null,
+        return addParameter( name, ScopeType.PARAM, enumProperty, null, null,
                 null, null, false, classType );
     }
     

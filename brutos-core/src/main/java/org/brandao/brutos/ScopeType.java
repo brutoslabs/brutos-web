@@ -27,25 +27,20 @@ import java.util.Map;
  */
 public class ScopeType {
 
-    public static final ScopeType APPLICATION = new ScopeType( "application" );
-    public static final ScopeType SINGLETON   = new ScopeType( "singleton" );
-    public static final ScopeType THREAD      = new ScopeType( "thread" );
-    public static final ScopeType PARAM       = new ScopeType( "param" );
     public static final ScopeType REQUEST     = new ScopeType( "request" );
-    public static final ScopeType SESSION     = new ScopeType( "session" );
-    public static final ScopeType FLASH       = new ScopeType( "flash" );
+    public static final ScopeType SINGLETON   = new ScopeType( "singleton" );
+    public static final ScopeType PARAM       = new ScopeType( "param" );
+    public static final ScopeType THREAD      = new ScopeType( "thread" );
     public static final ScopeType IOC         = new ScopeType( "ioc" );
 
-    private final static Map defaultScopes = new HashMap();
+    protected final static Map defaultScopes = new HashMap();
 
     static{
-        defaultScopes.put( APPLICATION.toString() , APPLICATION );
-        defaultScopes.put( THREAD.toString(),       THREAD );
-        defaultScopes.put( SINGLETON.toString(),    SINGLETON );
-        defaultScopes.put( REQUEST.toString(),      REQUEST );
-        defaultScopes.put( SESSION.toString(),      SESSION );
-        defaultScopes.put( FLASH.toString(),        FLASH );
-        defaultScopes.put( IOC.toString(),          IOC );
+        defaultScopes.put( REQUEST.toString(),   REQUEST );
+        defaultScopes.put( THREAD.toString(),    THREAD );
+        defaultScopes.put( PARAM.toString(),     PARAM );
+        defaultScopes.put( SINGLETON.toString(), SINGLETON );
+        defaultScopes.put( IOC.toString(),       IOC );
     }
 
     private String name;

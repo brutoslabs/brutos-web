@@ -46,28 +46,28 @@ public class BeanBuilder {
     
     public BeanBuilder addProperty( String name, String propertyName,
             EnumerationType enumProperty ){
-        return addProperty( name, propertyName, enumProperty, null, null, ScopeType.REQUEST, null );
+        return addProperty( name, propertyName, enumProperty, null, null, ScopeType.PARAM, null );
     }
     
     public BeanBuilder addProperty( String name, String propertyName,
             String temporalProperty ){
-        return addProperty( name, propertyName, EnumerationType.ORDINAL, temporalProperty, null, ScopeType.REQUEST, null );
+        return addProperty( name, propertyName, EnumerationType.ORDINAL, temporalProperty, null, ScopeType.PARAM, null );
     }
     
     public BeanBuilder addProperty( String name, String propertyName,
             Type type ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null,ScopeType.REQUEST, type );
+                null,ScopeType.PARAM, type );
     }
     
     public BeanBuilder addMappedProperty( String name, String propertyName, String mapping ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, ScopeType.REQUEST, null );
+                mapping, ScopeType.PARAM, null );
     }
     
     public BeanBuilder addProperty( String name, String propertyName ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy", 
-                null, ScopeType.REQUEST, null );
+                null, ScopeType.PARAM, null );
     }
 
     public BeanBuilder addProperty( String name, String propertyName, ScopeType scope ){

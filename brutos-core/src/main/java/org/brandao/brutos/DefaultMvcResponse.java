@@ -23,7 +23,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
- * Implementação padrão do MvcResponse.
+ * Implementaï¿½ï¿½o padrï¿½o do MvcResponse.
  * 
  * @author Afonso Brandao
  */
@@ -41,42 +41,38 @@ public class DefaultMvcResponse implements MvcResponse{
     }
 
     public OutputStream processStream(Map config, Map info) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return null;
     }
 
     public void setInfo(String name, String value) {
     }
 
     public String getType() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return null;
     }
 
     public int getLength() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return -1;
     }
 
     public String getCharacterEncoding() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return null;
     }
 
     public Locale getLocale() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return null;
     }
 
     public void setLocale(Locale value) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void setType(String value) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void setLength(int value) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public void setCharacterEncoding(String value) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }
