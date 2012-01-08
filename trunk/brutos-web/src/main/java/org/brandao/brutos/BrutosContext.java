@@ -121,8 +121,8 @@ public class BrutosContext extends AbstractWebApplicationContext
         getScopes().register( "ioc" , new IOCScope( this ) );
         //Scopes.register( "request" , new RequestScope() );
         getScopes().register( "session" , new SessionScope() );
-        getScopes().register( ScopeType.PARAM.toString(), new ParamScope() );
-        getScopes().register( ScopeType.REQUEST.toString(), new OldRequestScope() );
+        getScopes().register( WebScopeType.PARAM.toString(), new ParamScope() );
+        getScopes().register( WebScopeType.REQUEST.toString(), new OldRequestScope() );
         if( iocManager.getProvider().containsBeanDefinition("customScopes") ){
             CustomScopeConfigurer customScopes =
                     (CustomScopeConfigurer)iocManager.getInstance("customScopes");

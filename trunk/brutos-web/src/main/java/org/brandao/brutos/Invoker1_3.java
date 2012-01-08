@@ -85,7 +85,7 @@ public class Invoker1_3 extends Invoker{
 
 
         Scope requestScope = brutosContext.getScopes()
-                .get(ScopeType.REQUEST.toString());
+                .get(WebScopeType.REQUEST.toString());
         try{
             //compatibilidade com a vers�o 2.0
             requestScope.put( BrutosConstants.IOC_PROVIDER , this.iocProvider );

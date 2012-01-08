@@ -54,11 +54,11 @@ public class WebApplicationInterceptorTest extends AbstractTester implements Tes
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("action", "defaultAction");
-                    Scope r = app.getScopes().get(ScopeType.REQUEST);
+                    app.getScopes().get(WebScopeType.PARAM).put("action", "defaultAction");
+                    Scope r = app.getScopes().get(WebScopeType.REQUEST);
                     app.getInvoker().invoke("/testController.htm");
                     String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
+                            (String) app.getScopes().get(WebScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("OK", result);
                     TestCase.assertEquals("value1", r.get("param1"));
@@ -80,11 +80,11 @@ public class WebApplicationInterceptorTest extends AbstractTester implements Tes
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("action", "defaultAction");
-                    Scope r = app.getScopes().get(ScopeType.REQUEST);
+                    app.getScopes().get(WebScopeType.PARAM).put("action", "defaultAction");
+                    Scope r = app.getScopes().get(WebScopeType.REQUEST);
                     app.getInvoker().invoke("/testController.htm");
                     String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
+                            (String) app.getScopes().get(WebScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("OK", result);
                     TestCase.assertEquals("value3", r.get("param1"));
@@ -106,11 +106,11 @@ public class WebApplicationInterceptorTest extends AbstractTester implements Tes
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("action", "defaultAction");
-                    Scope r = app.getScopes().get(ScopeType.REQUEST);
+                    app.getScopes().get(WebScopeType.PARAM).put("action", "defaultAction");
+                    Scope r = app.getScopes().get(WebScopeType.REQUEST);
                     app.getInvoker().invoke("/testController.htm");
                     String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
+                            (String) app.getScopes().get(WebScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("OK", result);
                     TestCase.assertEquals("value4", r.get("param1"));
@@ -132,11 +132,11 @@ public class WebApplicationInterceptorTest extends AbstractTester implements Tes
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("action", "defaultAction");
-                    Scope r = app.getScopes().get(ScopeType.REQUEST);
+                    app.getScopes().get(WebScopeType.PARAM).put("action", "defaultAction");
+                    Scope r = app.getScopes().get(WebScopeType.REQUEST);
                     app.getInvoker().invoke("/testController.htm");
                     String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
+                            (String) app.getScopes().get(WebScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("OK", result);
                     TestCase.assertEquals("value4", r.get("param1"));

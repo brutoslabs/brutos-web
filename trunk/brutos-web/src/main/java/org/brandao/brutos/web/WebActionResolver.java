@@ -37,7 +37,7 @@ public class WebActionResolver implements ActionResolver{
 
         if( controller.getUri() != null ){
             Scope scope = handler.getContext().getScopes()
-                    .get(ScopeType.PARAM.toString());
+                    .get(WebScopeType.PARAM.toString());
 
             return getResourceAction( 
                     controller,
@@ -60,7 +60,7 @@ public class WebActionResolver implements ActionResolver{
         }
         else{
             Scopes scopes = handler.getContext().getScopes();
-            Scope request = scopes.get( ScopeType.PARAM );
+            Scope request = scopes.get( WebScopeType.PARAM );
             for( Object o: controller.getMethods().keySet() ){
                 String u = (String)o;
                 URIMapping uriMap = WebControllerResolver.getURIMapping( u );

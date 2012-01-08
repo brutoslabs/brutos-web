@@ -25,11 +25,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
 import org.brandao.brutos.web.http.UploadListener;
@@ -94,7 +93,7 @@ public class DispatcherServlet extends HttpServlet {
             requestInfo.setResponse(response);
             //RequestInfo.setCurrent(requestInfo);
 
-            Scope scope = context.getScopes().get(ScopeType.SESSION);
+            Scope scope = context.getScopes().get(WebScopeType.SESSION);
 
             mappedUploadStats =
                     (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );

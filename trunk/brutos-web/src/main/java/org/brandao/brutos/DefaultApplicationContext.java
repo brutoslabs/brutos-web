@@ -36,25 +36,25 @@ public class DefaultApplicationContext extends AbstractApplicationContext{
 
     protected void loadIOCManager(IOCManager iocManager){
         iocManager.addBean( "servletContextFactory",
-                ContextFactory.class, ScopeType.APPLICATION, false, null );
+                ContextFactory.class, WebScopeType.APPLICATION, false, null );
                 
         
         iocManager.addBean( "servletContext",
-                ServletContext.class, ScopeType.APPLICATION, false,
+                ServletContext.class, WebScopeType.APPLICATION, false,
                 "servletContextFactory" ).setFactoryMethod( "createInstance" );
 
         iocManager.addBean( "iocManagerFactory", 
-                IOCProviderFactory.class, ScopeType.APPLICATION, false, null );
+                IOCProviderFactory.class, WebScopeType.APPLICATION, false, null );
 
         iocManager.addBean( "iocManager",
-                IOCManager.class, ScopeType.APPLICATION, false,
+                IOCManager.class, WebScopeType.APPLICATION, false,
                 "iocManagerFactory" ).setFactoryMethod( "createInstance" );
 
         iocManager.addBean( "requestFactory", 
-                RequestFactory.class, ScopeType.REQUEST, false, null );
+                RequestFactory.class, WebScopeType.REQUEST, false, null );
         
         iocManager.addBean( "request",
-                ServletRequest.class, ScopeType.REQUEST, false,
+                ServletRequest.class, WebScopeType.REQUEST, false,
                 "requestFactory" ).setFactoryMethod( "createInstance" );
     }
 

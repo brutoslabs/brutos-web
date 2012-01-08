@@ -17,7 +17,6 @@
 
 package org.brandao.brutos;
 
-import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +24,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import org.brandao.brutos.helper.controller.AbstractTester;
 import org.brandao.brutos.helper.controller.SimpleController;
-import org.brandao.brutos.interceptor.DataInput;
 import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.mapping.Controller;
@@ -115,10 +113,10 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("action", "defaultAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("action", "defaultAction");
                     app.getInvoker().invoke("/testController.htm");
                     String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
+                            (String) app.getScopes().get(WebScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("OK", result);
                 }
@@ -140,7 +138,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
 
                     app.getInvoker().invoke("/testController.htm");
                     String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
+                            (String) app.getScopes().get(WebScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("OK", result);
                 }
@@ -162,7 +160,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
 
                     app.getInvoker().invoke("/testController.htm");
                     String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
+                            (String) app.getScopes().get(WebScopeType.REQUEST).get("result");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
                     TestCase.assertEquals("OK", result);
@@ -186,7 +184,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
 
                     app.getInvoker().invoke("/testController.htm");
                     String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
+                            (String) app.getScopes().get(WebScopeType.REQUEST).get("result");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
                     TestCase.assertEquals("OK", result);
@@ -210,7 +208,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
 
                     app.getInvoker().invoke("/testController.htm");
                     String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
+                            (String) app.getScopes().get(WebScopeType.REQUEST).get("result");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
                     TestCase.assertEquals("OK", result);
@@ -234,7 +232,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
 
                     app.getInvoker().invoke("/testController.htm");
                     String result =
-                            (String) app.getScopes().get(ScopeType.REQUEST).get("result");
+                            (String) app.getScopes().get(WebScopeType.REQUEST).get("result");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
                     TestCase.assertEquals("OK", result);
@@ -257,7 +255,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -280,8 +278,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(ScopeType.PARAM).put("value", "100");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("value", "100");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -304,8 +302,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(ScopeType.PARAM).put("value", "100");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("value", "100");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -328,8 +326,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(ScopeType.PARAM).put("value", "100");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("value", "100");
                     try{
                         app.getInvoker().invoke("/testController.htm");
                         TestCase.fail("expected NoSuchMethodException");
@@ -353,8 +351,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(ScopeType.PARAM).put("value", "100");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("value", "100");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -377,7 +375,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     try{
                         app.getInvoker().invoke("/testController.htm");
                         TestCase.fail("expected IllegalArgumentException");
@@ -403,8 +401,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(ScopeType.SESSION).put("value", "100");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.SESSION).put("value", "100");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -427,8 +425,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(ScopeType.PARAM).put("value", "101");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("value", "101");
                     try{
                         app.getInvoker().invoke("/testController.htm");
                         TestCase.fail("expected ValidatorException");
@@ -452,7 +450,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -475,10 +473,10 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(ScopeType.PARAM).put("value", "1");
-                    app.getScopes().get(ScopeType.PARAM).put("value", "6");
-                    app.getScopes().get(ScopeType.PARAM).put("value", "111");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("value", "1");
+                    app.getScopes().get(WebScopeType.PARAM).put("value", "6");
+                    app.getScopes().get(WebScopeType.PARAM).put("value", "111");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -501,11 +499,11 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
                     String result =
                             (String) app.getScopes()
-                                .get(ScopeType.REQUEST).get("result");
+                                .get(WebScopeType.REQUEST).get("result");
 
                     TestCase.assertEquals("MSG", result);
                 }
@@ -525,7 +523,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -548,7 +546,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     try{
                         app.getInvoker().invoke("/testController.htm");
                         TestCase.fail("expected UnsupportedOperationException");
@@ -575,13 +573,13 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
                     TestCase.assertEquals("/exception.jsp", view.getView());
                     TestCase.assertEquals(DispatcherType.REDIRECT, view.getDispatcherType());
-                    TestCase.assertNotNull(app.getScopes().get(ScopeType.REQUEST).get("ex"));
+                    TestCase.assertNotNull(app.getScopes().get(WebScopeType.REQUEST).get("ex"));
                 }
 
         });
@@ -599,13 +597,13 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
                     TestCase.assertEquals("/exceptionAction.jsp", view.getView());
                     TestCase.assertEquals(DispatcherType.INCLUDE, view.getDispatcherType());
-                    TestCase.assertNotNull(app.getScopes().get(ScopeType.REQUEST).get("exx"));
+                    TestCase.assertNotNull(app.getScopes().get(WebScopeType.REQUEST).get("exx"));
                 }
 
         });
@@ -623,13 +621,13 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
                     TestCase.assertEquals("/exceptionAction.jsp", view.getView());
                     TestCase.assertEquals(DispatcherType.INCLUDE, view.getDispatcherType());
-                    TestCase.assertNotNull(app.getScopes().get(ScopeType.REQUEST).get("exx"));
+                    TestCase.assertNotNull(app.getScopes().get(WebScopeType.REQUEST).get("exx"));
                 }
 
         });
@@ -647,7 +645,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -669,7 +667,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -691,7 +689,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -716,7 +714,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                     app.getInvoker().invoke("/test.htm");
 
                     TestCase.assertNotNull("OK",
-                            app.getScopes().get(ScopeType.REQUEST).get("result"));
+                            app.getScopes().get(WebScopeType.REQUEST).get("result"));
                 }
 
         });
@@ -752,7 +750,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
                     try{
                         app.getInvoker().invoke("/testController.htm");
                     }
@@ -775,8 +773,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(ScopeType.PARAM).put("value", "100");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("value", "100");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -798,8 +796,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(ScopeType.PARAM).put("value", "myvalue");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
+                    app.getScopes().get(WebScopeType.PARAM).put("value", "myvalue");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockViewProvider view = (MockViewProvider) app.getViewProvider();
@@ -821,8 +819,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testProperty1");
-                    app.getScopes().get(ScopeType.PARAM).put("value1", "teste");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testProperty1");
+                    app.getScopes().get(WebScopeType.PARAM).put("value1", "teste");
                     app.getInvoker().invoke("/testController.htm");
                 }
 
@@ -841,8 +839,8 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    app.getScopes().get(ScopeType.PARAM).put("invoke", "testProperty1");
-                    app.getScopes().get(ScopeType.PARAM).put("value1", "teste");
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testProperty1");
+                    app.getScopes().get(WebScopeType.PARAM).put("value1", "teste");
                     app.getInvoker().invoke("/testController.htm");
                 }
 
