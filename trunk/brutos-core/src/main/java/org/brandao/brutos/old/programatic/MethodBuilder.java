@@ -60,7 +60,7 @@ public class MethodBuilder {
     }
     
     public ParameterBuilder addParameter( String name, EnumerationType enumProperty ){
-        return addParameter( name, ScopeType.REQUEST, enumProperty, null, null, null );
+        return addParameter( name, ScopeType.PARAM, enumProperty, null, null, null );
     }
     
     public ParameterBuilder addParameter( String name, ScopeType scope ){
@@ -69,21 +69,21 @@ public class MethodBuilder {
     }
     
     public ParameterBuilder addParameter( String name, String temporalProperty ){
-        return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, temporalProperty, null, null );
+        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, temporalProperty, null, null );
     }
     
     public ParameterBuilder addParameter( String name, Type type ){
-        return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, type );
     }
     
     public ParameterBuilder addParameterMapping( String mapping ){
-        return addParameter( null, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy", 
+        return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null );
     }
     
     public ParameterBuilder addParameter( String name ){
-        return addParameter( name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy", 
+        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null );
     }
 

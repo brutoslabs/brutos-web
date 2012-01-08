@@ -198,7 +198,7 @@ public class ControllerManager {
         fr.setId( name );
         fr.setPage( view );
         fr.setClassType( classType );
-        fr.setScope( ScopeType.REQUEST );
+        fr.setScope( ScopeType.PARAM );
         fr.setMethodId( actionId );
         fr.setRedirect(false);
         fr.setDispatcherType(dispatcherType);

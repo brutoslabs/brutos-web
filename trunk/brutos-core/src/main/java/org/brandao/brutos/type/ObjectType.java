@@ -24,12 +24,16 @@ import java.io.Serializable;
  *
  * @author Afonso Brandao
  */
-public class ObjectType implements Type{
+public class ObjectType implements SerializableType{
 
     private Type serializableType;
     private Class classType;
 
-    public ObjectType( Class classType ) {
+    public ObjectType() {
+        this(null);
+    }
+    
+    public ObjectType(Class classType) {
         this.serializableType = Types.getType( Serializable.class );
         this.classType = classType;
     }
@@ -44,6 +48,10 @@ public class ObjectType implements Type{
 
     public void setValue(Object value) throws IOException {
         serializableType.setValue(value);
+    }
+
+    public void setClassType(Class classType) {
+        this.classType = classType;
     }
     
 }

@@ -30,7 +30,6 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.IOCManager;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.proxy.ProxyFactory;
-import org.brandao.brutos.scope.ApplicationScope;
 import org.brandao.brutos.scope.CustomScopeConfigurer;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.SingletonScope;
@@ -170,11 +169,6 @@ public abstract class AbstractApplicationContext
     protected void loadScopes(){
         getScopes()
             .register(
-                ScopeType.APPLICATION.toString(),
-                new ApplicationScope());
-
-        getScopes()
-            .register(
                 ScopeType.SINGLETON.toString(),
                 new SingletonScope());
 
@@ -182,6 +176,11 @@ public abstract class AbstractApplicationContext
             .register(
                 ScopeType.THREAD.toString(),
                 new ThreadScope());
+
+        getScopes()
+            .register(
+                ScopeType.PARAM.toString(),
+                getScopes().get(ScopeType.THREAD));
 
         getScopes()
             .register(

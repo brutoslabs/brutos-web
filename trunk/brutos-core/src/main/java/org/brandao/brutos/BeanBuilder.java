@@ -622,7 +622,7 @@ public class BeanBuilder {
      */
     public ConstructorBuilder addStaticContructorArg( String name, Object value ){
         return addContructorArg( name,
-            EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM, 
+            EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM,
             value, false, null, null );
     }
 

@@ -42,7 +42,7 @@ public class MapBuilder {
     }
 
     public MapBuilder setKey( Class clazz ){
-        return setKey( "key", clazz, ScopeType.REQUEST );
+        return setKey( "key", clazz, ScopeType.PARAM );
     }
 
     public MapBuilder setKey( String name, Class clazz, ScopeType scope ){

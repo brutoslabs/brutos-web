@@ -55,7 +55,7 @@ public class FieldBuilder {
     }
     
     public WebFrameBuilder addProperty( String propertyName, String name, EnumerationType enumProperty ){
-        return addProperty( propertyName, name, ScopeType.REQUEST, enumProperty, null, null, null );
+        return addProperty( propertyName, name, ScopeType.PARAM, enumProperty, null, null, null );
     }
     
     public WebFrameBuilder addProperty( String propertyName, String name, ScopeType scope ){
@@ -64,26 +64,26 @@ public class FieldBuilder {
     }
     
     public WebFrameBuilder addProperty( String propertyName, String name, String temporalProperty ){
-        return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, temporalProperty, null, null );
+        return addProperty( propertyName, name, ScopeType.PARAM, EnumerationType.ORDINAL, temporalProperty, null, null );
     }
     
     public WebFrameBuilder addProperty( String propertyName, String name, Type type ){
-        return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+        return addProperty( propertyName, name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, type );
     }
     
     public WebFrameBuilder addPropertyMapping( String propertyName, String mapping ){
-        return addProperty( propertyName, null, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy", 
+        return addProperty( propertyName, null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null );
     }
 
     public WebFrameBuilder addPropertyMapping( String propertyName, String name, String mapping ){
-        return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy",
+        return addProperty( propertyName, name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null );
     }
     
     public WebFrameBuilder addProperty( String propertyName, String name ){
-        return addProperty( propertyName, name, ScopeType.REQUEST, EnumerationType.ORDINAL, "dd/MM/yyyy", 
+        return addProperty( propertyName, name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null );
     }
     
