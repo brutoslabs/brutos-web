@@ -30,25 +30,25 @@ import org.brandao.brutos.validator.ValidatorException;
  */
 public class DependencyBean {
 
-    private String parameterName;
+    protected String parameterName;
 
-    private Type type;
+    protected Type type;
 
-    private String mapping;
+    protected String mapping;
 
-    private EnumerationType enumProperty;
+    protected EnumerationType enumProperty;
 
-    private String temporalType;
+    protected String temporalType;
 
-    private Scope scope;
+    protected Scope scope;
 
-    private Validator validator;
+    protected Validator validator;
 
-    private Object value;
+    protected Object value;
 
-    private Bean mappingBean;
+    protected Bean mappingBean;
 
-    private boolean nullable;
+    protected boolean nullable;
     
     public DependencyBean(Bean mappingBean) {
         this.mappingBean = mappingBean;
@@ -176,8 +176,8 @@ public class DependencyBean {
                 null,
                 mappingBean.isHierarchy()?
                     prefix != null?
-                        prefix + parameterName + mappingBean.getSeparator() :
-                        parameterName + mappingBean.getSeparator()
+                        prefix + getParameterName() + mappingBean.getSeparator() :
+                        getParameterName() + mappingBean.getSeparator()
                     :
                     null,
                 exceptionHandler );

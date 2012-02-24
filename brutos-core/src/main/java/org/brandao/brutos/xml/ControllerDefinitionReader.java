@@ -497,10 +497,10 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     }
 
     private void addBean( Element beanNode,
-            BeanBuilder bean, String propertyName, boolean key,
+            BeanBuilder bean, String name, String propertyName, boolean key,
             boolean element ){
 
-        String name          = parseUtil.getAttribute(beanNode,"name" );
+        //String name          = parseUtil.getAttribute(beanNode,"name" );
         String separator     = parseUtil.getAttribute(beanNode,"separator" );
         String indexFormat   = parseUtil.getAttribute(beanNode,"index-format" );
         String factory       = parseUtil.getAttribute(beanNode,"factory" );
@@ -529,7 +529,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             beanBuilder =
                 propertyName == null?
                     bean.buildConstructorArg(name, clazz) :
-                    bean.buildProperty(name, propertyName, clazz);
+                    bean.buildProperty(name == null? propertyName : name, propertyName, clazz);
 
         beanBuilder.setFactory(factory);
         beanBuilder.setMethodfactory(methodFactory);
@@ -596,7 +596,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                     XMLBrutosConstants.XML_BRUTOS_MAP_KEY );
 
         if( keyNode != null )
-            addBean(keyNode, beanBuilder, null, true, false);
+            addBean(keyNode, beanBuilder, null, null, true, false);
         else
         if( beanBuilder.isMap() )
             throw new BrutosException("key node is required in Map" );
@@ -608,7 +608,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                     XMLBrutosConstants.XML_BRUTOS_COLLECTION_ELEMENT );
         
         if( elementNode != null )
-            addBean(elementNode, beanBuilder, null, false, true);
+            addBean(elementNode, beanBuilder, null, null, false, true);
         else
         if( beanBuilder.isMap() )
             throw new BrutosException("element node is required in Collection");
@@ -659,7 +659,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             }
             else
             if( beanNode != null ){
-                addBean( beanNode, beanBuilder, null, false, false);
+                addBean( beanNode, beanBuilder, null, null, false, false);
                 continue;
             }
             else
@@ -742,7 +742,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             }
             else
             if( beanNode != null ){
-                addBean( beanNode, beanBuilder, propertyName, false, false );
+                addBean( beanNode, beanBuilder, bean, propertyName, false, false );
                 continue;
             }
             else
