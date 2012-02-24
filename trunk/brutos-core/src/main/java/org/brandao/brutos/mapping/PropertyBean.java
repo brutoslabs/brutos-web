@@ -35,4 +35,10 @@ public class PropertyBean extends DependencyBean{
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getParameterName(){
+        return super.parameterName == null? 
+                this.name : 
+                super.parameterName;
+    }
 }
