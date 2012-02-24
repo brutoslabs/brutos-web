@@ -932,6 +932,58 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
         });
     }
 
+    public void testConstructor26(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-constructor26.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("bean_arg", "teste");
+                    Bean bean = controller.getMappingBean("bean");
+                    
+                    SimpleBean obj = (SimpleBean) bean.getValue();
+                    TestCase.assertEquals("teste",obj.getBean().getArg());
+                }
+
+        });
+    }
+
+    public void testConstructor27(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-constructor27.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("bean.bean_arg", "teste");
+                    Bean bean = controller.getMappingBean("bean");
+                    
+                    SimpleBean obj = (SimpleBean) bean.getValue();
+                    TestCase.assertEquals("teste",obj.getBean().getArg());
+                }
+
+        });
+    }
+    
     public void testProperty1(){
         super.execTest(
             new HandlerTest(){
@@ -1391,6 +1443,58 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
         });
     }
 
+    public void testProperty17(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-property17.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("bean.bean_arg", "teste");
+                    Bean bean = controller.getMappingBean("bean");
+                    
+                    SimpleBean obj = (SimpleBean) bean.getValue();
+                    TestCase.assertEquals("teste",obj.getBean().getArg());
+                }
+
+        });
+    }
+
+    public void testProperty18(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-property18.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("bean_property.bean_arg", "teste");
+                    Bean bean = controller.getMappingBean("bean");
+                    
+                    SimpleBean obj = (SimpleBean) bean.getValue();
+                    TestCase.assertEquals("teste",obj.getBean().getArg());
+                }
+
+        });
+    }
+    
     public void testCollection1(){
         super.execTest(
             new HandlerTest(){
