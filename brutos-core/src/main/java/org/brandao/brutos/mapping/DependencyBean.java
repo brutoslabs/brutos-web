@@ -172,7 +172,21 @@ public class DependencyBean {
             if( dependencyBean == null )
                 throw new BrutosException( "mapping not found: " + mapping );
 
+            String newPrefix = null;
+            if(mappingBean.isHierarchy()){
+                String parameter = getParameterName();
+                if(!(prefix == null && parameter == null)){
+                    newPrefix = prefix == null? "" : prefix;
+                    newPrefix += parameter == null? "" : parameter + mappingBean.getSeparator();
+                }
+            }
+
             result = dependencyBean.getValue(
+                null,
+                newPrefix,
+                exceptionHandler );
+            
+            /*result = dependencyBean.getValue(
                 null,
                 mappingBean.isHierarchy()?
                     prefix != null?
@@ -181,7 +195,7 @@ public class DependencyBean {
                     :
                     null,
                 exceptionHandler );
-
+            */
         }
 
         try{

@@ -659,7 +659,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             }
             else
             if( beanNode != null ){
-                addBean( beanNode, beanBuilder, null, null, false, false);
+                addBean( beanNode, beanBuilder, bean, null, false, false);
                 continue;
             }
             else
