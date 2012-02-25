@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<controllers  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns='http://brutos.sourceforge.net/schema/controllers'
+   xsi:schemaLocation='http://brutos.sourceforge.net/schema/controllers http://brutos.sourceforge.net/schema/controllers/brutos-controllers-1.0.xsd'>
+
+    <controller
+        class="org.brandao.brutos.helper.controller.SimpleController">
+
+        <bean name="bean"
+            target="org.brandao.brutos.helper.controller.SimpleBean">
+                <property name="bean">
+                    <bean target="org.brandao.brutos.helper.controller.SimpleBean">
+                        <constructor-arg bean="arg0">
+                            <bean target="org.brandao.brutos.helper.controller.SimpleBean">
+                                <property name="arg" bean="bean_arg"/>
+                            </bean>
+                        </constructor-arg>
+                    </bean>
+                </property>
+        </bean>
+
+    </controller>
+
+</controllers>
