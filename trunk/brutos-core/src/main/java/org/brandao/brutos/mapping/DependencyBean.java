@@ -140,6 +140,23 @@ public class DependencyBean {
     public Object getValue(String prefix, long index, 
             ValidatorException exceptionHandler){
         
+        try{
+            return getValue0(prefix, index, exceptionHandler);
+        }
+        catch( ValidatorException e ){
+            throw e;
+        }
+        catch( Exception e ){
+            throw new DependencyException(
+                String.format("problem to resolve dependency: %s",
+                    new Object[]{this.getParameterName()}),
+                    e);
+        }
+        
+    }    
+    public Object getValue0(String prefix, long index, 
+            ValidatorException exceptionHandler){
+        
         Object result;
 
         if( mapping == null ){

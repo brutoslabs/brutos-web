@@ -18,6 +18,7 @@
 package org.brandao.brutos.bean;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -48,7 +49,8 @@ public class SetterProperty {
         this.object = object;
     }
 
-    public void set( Object value ) throws Exception{
+    public void set( Object value ) 
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
         /*
         String fieldName = field.getName();
         String methodName = "set" +
