@@ -23,7 +23,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.validator.ValidatorException;
 
@@ -103,15 +102,16 @@ public class Bean {
 
     public Object getValue( Object instance, String prefix, long index, 
                 ValidatorException exceptionHandler, boolean force ){
+        
+        ValidatorException vex = new ValidatorException();
+        Object obj;
+        
         try{
-
-            ValidatorException vex = new ValidatorException();
-
-            Object obj =
+            obj =
                 instance == null?
                     getInstanceByConstructor( prefix, index, vex, force ) :
                     instance;
-
+            
             if( obj == null )
                 return null;
 
@@ -127,13 +127,19 @@ public class Bean {
             while( fds.hasNext() ){
                 PropertyBean fb = (PropertyBean) fds.next();
 
-                Object value = fb.getValue(prefix, index, vex);
+                boolean existProperty = resolveAndSetProperty(fb, beanInstance, 
+                        prefix, index, vex );
+                
+                if( !exist && (existProperty || fb.isNullable()) )
+                    exist = true;
+
+                /*Object value = fb.getValue(prefix, index, vex);
 
                 if( !exist && (value != null || fb.isNullable()) )
                     exist = true;
 
                 beanInstance.getSetter( fb.getName() ).set( value );
-
+                */
             }
 
             if(exist || force){
@@ -157,11 +163,30 @@ public class Bean {
         catch( ValidatorException e ){
             throw e;
         }
-        catch( BrutosException e ){
+        catch( Throwable e ){
+            throw new MappingException( 
+                    String.format(
+                        "problem to create new instance of bean %s", 
+                        new Object[]{this.getName()} ), e );
+        }
+    }
+    
+    private boolean resolveAndSetProperty(PropertyBean fb, BeanInstance beanInstance, 
+            String prefix, long index, ValidatorException vex ){
+
+        try{
+            Object value = fb.getValue(prefix, index, vex);
+            beanInstance.getSetter( fb.getName() ).set( value );
+            return value != null;
+        }
+        catch( DependencyException e ){
             throw e;
         }
-        catch( Exception e ){
-            throw new BrutosException(e);
+        catch( Throwable e ){
+            throw new DependencyException(
+                String.format("problem to resolve dependency: %s",
+                    new Object[]{fb.getParameterName()}),
+                    e);
         }
     }
     
@@ -210,7 +235,10 @@ public class Bean {
     }
 
     private Object getInstanceByConstructor( String prefix, long index,
-            ValidatorException exceptionHandler, boolean force ) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, Exception{
+            ValidatorException exceptionHandler, boolean force ) 
+            throws InstantiationException, IllegalAccessException, 
+            IllegalArgumentException, InvocationTargetException{
+        
         ConstructorBean cons = this.getConstructor();
         ConstructorBean conInject = this.getConstructor();
         if( conInject.isConstructor() ){
@@ -256,7 +284,7 @@ public class Bean {
     }
 
     private Object[] getValues( ConstructorBean constructorBean, String prefix, 
-            long index, ValidatorException exceptionHandler, boolean force ) throws Exception{
+            long index, ValidatorException exceptionHandler, boolean force ) {
         int size = constructorBean.size();
         Object[] values = new Object[ size ];
 
