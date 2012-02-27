@@ -175,7 +175,9 @@ public class Bean {
             String prefix, long index, ValidatorException vex ){
 
         try{
-            Object value = fb.getValue(prefix, index, vex);
+            Object property = 
+                    beanInstance.getGetter( fb.getName() ).get();
+            Object value = fb.getValue(prefix, index, vex, property);
             beanInstance.getSetter( fb.getName() ).set( value );
             return value != null;
         }

@@ -22,7 +22,7 @@ import org.brandao.brutos.Configuration;
 import org.brandao.brutos.old.programatic.*;
 import org.brandao.brutos.InterceptorManager;
 /**
- *
+ * @deprecated 
  * @author Afonso Brandao
  */
 public abstract class Mapping {

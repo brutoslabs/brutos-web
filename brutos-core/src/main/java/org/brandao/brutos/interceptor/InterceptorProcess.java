@@ -232,7 +232,7 @@ public class InterceptorProcess implements InterceptorStack{
         Interceptor i = (Interceptor) stack.get( pos.intValue() );
 
         org.brandao.brutos.interceptor.Interceptor interceptor =
-            interceptor = (org.brandao.brutos.interceptor.Interceptor) i.getInstance(context.getIocProvider());
+            (org.brandao.brutos.interceptor.Interceptor) i.getInstance(context.getIocProvider());
             /*iocProvider.getBean( i.getName() );*/
 
         if( !interceptor.isConfigured() )
