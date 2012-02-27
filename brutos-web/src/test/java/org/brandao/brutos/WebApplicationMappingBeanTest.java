@@ -1520,6 +1520,34 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
         });
     }
+
+    public void testProperty19(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-property19.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(ScopeType.PARAM).put("arg", "teste");
+                    app.getScopes().get(ScopeType.PARAM).put("bean_property.arg2", "100");
+                    Bean bean = controller.getMappingBean("bean");
+                    
+                    SimpleBean obj = (SimpleBean) bean.getValue();
+                    TestCase.assertEquals("teste",obj.getBean().getArg());
+                    TestCase.assertEquals(100,obj.getBean().getArg2());
+                }
+
+        });
+    }
     
     public void testCollection1(){
         super.execTest(
