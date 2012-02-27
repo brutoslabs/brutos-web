@@ -139,9 +139,14 @@ public class DependencyBean {
 
     public Object getValue(String prefix, long index, 
             ValidatorException exceptionHandler){
+        return getValue(prefix, index, exceptionHandler, null);
+    }
+    
+    public Object getValue(String prefix, long index, 
+            ValidatorException exceptionHandler, Object value){
         
         try{
-            return getValue0(prefix, index, exceptionHandler);
+            return getValue0(prefix, index, exceptionHandler, value);
         }
         catch( ValidatorException e ){
             throw e;
@@ -155,7 +160,7 @@ public class DependencyBean {
         
     }    
     public Object getValue0(String prefix, long index, 
-            ValidatorException exceptionHandler){
+            ValidatorException exceptionHandler, Object value){
         
         Object result;
 
@@ -199,7 +204,7 @@ public class DependencyBean {
             }
 
             result = dependencyBean.getValue(
-                null,
+                value,
                 newPrefix,
                 exceptionHandler );
             
