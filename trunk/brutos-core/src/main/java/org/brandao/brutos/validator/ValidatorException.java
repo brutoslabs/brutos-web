@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.validator;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import org.brandao.brutos.BrutosException;
@@ -25,7 +26,7 @@ import org.brandao.brutos.BrutosException;
  * 
  * @author Afonso Brandao
  */
-public class ValidatorException extends BrutosException{
+public class ValidatorException extends BrutosException implements Serializable {
 
     public List exceptions = new LinkedList();
 
