@@ -20,6 +20,8 @@ import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 import com.mockrunner.mock.web.MockHttpSession;
 import com.mockrunner.mock.web.MockServletContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +43,9 @@ import org.brandao.brutos.web.RequestInfo;
  */
 public abstract class AbstractTester extends TestCase{
 
-
+    public AbstractTester(){
+    }
+    
     public abstract ConfigurableWebApplicationContext getApplicationContext(String resourceName);
     
     public void execTest( HandlerTest handler ){
