@@ -19,6 +19,8 @@ package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
@@ -165,12 +167,9 @@ public class DependencyBean {
         Object result;
 
         if( mapping == null ){
-            Object val = null;
-            if(isNullable())
-                return null;
-            else
+            
             if( isStatic() )
-                val = getValue();
+                result = getValue();
             else{
                 String pre   = prefix != null? prefix : "";
                 String param = getParameterName();
@@ -182,9 +181,15 @@ public class DependencyBean {
 
                 String key = pre + param + idx;
 
-                val = getScope().get(key);
+                result = getScope().get(key);
+                
             }
-            result = type.getValue( val );
+            
+            result = 
+                isNullable()? 
+                    null : 
+                    type.getValue( result );
+            
         }
         else{
             Bean dependencyBean =
@@ -208,16 +213,6 @@ public class DependencyBean {
                 newPrefix,
                 exceptionHandler );
             
-            /*result = dependencyBean.getValue(
-                null,
-                mappingBean.isHierarchy()?
-                    prefix != null?
-                        prefix + getParameterName() + mappingBean.getSeparator() :
-                        getParameterName() + mappingBean.getSeparator()
-                    :
-                    null,
-                exceptionHandler );
-            */
         }
 
         try{
