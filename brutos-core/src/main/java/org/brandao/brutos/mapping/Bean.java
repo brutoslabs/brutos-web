@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.validator.ValidatorException;
 
 /**
@@ -32,6 +34,9 @@ import org.brandao.brutos.validator.ValidatorException;
  */
 public class Bean {
 
+    private static final Logger logger = LoggerProvider
+            .getCurrentLoggerProvider().getLogger(Bean.class);
+    
     private Controller form;
 
     private String name;
@@ -102,6 +107,12 @@ public class Bean {
 
     public Object getValue( Object instance, String prefix, long index, 
                 ValidatorException exceptionHandler, boolean force ){
+        
+        if(logger.isDebugEnabled())
+            logger.debug(
+                    String.format(
+                    "creating instance of bean %s: %s",
+                    new Object[]{this.name,this.classType.getName()}));
         
         ValidatorException vex = new ValidatorException();
         Object obj;
@@ -178,6 +189,13 @@ public class Bean {
             Object property = 
                     beanInstance.getGetter( fb.getName() ).get();
             Object value = fb.getValue(prefix, index, vex, property);
+            
+            if(logger.isDebugEnabled())
+                logger.debug(
+                        String.format(
+                            "binding %s to property: %s", 
+                            new Object[]{value,fb.getName()}));
+
             beanInstance.getSetter( fb.getName() ).set( value );
             return value != null;
         }
@@ -294,6 +312,13 @@ public class Bean {
         for( int i=0;i<size;i++ ){
             ConstructorArgBean arg = constructorBean.getConstructorArg(i);
             values[i] = arg.getValue(prefix, index, exceptionHandler);
+            
+            if(logger.isDebugEnabled())
+                logger.debug(
+                    String.format(
+                        "binding %s to constructor arg: %s", 
+                        new Object[]{values[i],String.valueOf(i)}));
+            
             if( force || values[i] != null || arg.isNullable()  )
                 exist = true;
         }
