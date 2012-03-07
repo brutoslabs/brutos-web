@@ -19,6 +19,8 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.CollectionBean;
 import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.mapping.Controller;
@@ -169,6 +171,12 @@ public class BeanBuilder {
      * @return Construtor do mapeamento.
      */
     public BeanBuilder setFactory( String factory ){
+        getLogger()
+            .info(
+                String.format("%s defined factory %s",
+                new Object[]{
+                    this.getPrefixLogger(),
+                    factory} ) );
         mappingBean.setFactory(factory);
         return this;
     }
@@ -179,6 +187,14 @@ public class BeanBuilder {
      * @return Construtor do mapeamento.
      */
     public BeanBuilder setMethodfactory( String methodFactory ){
+
+        getLogger()
+            .info(
+                String.format("%s defined method factory %s",
+                new Object[]{
+                    this.getPrefixLogger(),
+                    methodFactory} ) );
+        
         mappingBean.getConstructor().setMethodFactory(methodFactory);
         return this;
     }
@@ -189,6 +205,14 @@ public class BeanBuilder {
      * @return Construtor do mapeamento.
      */
     public BeanBuilder setSeparator( String separator ){
+        
+        getLogger()
+            .info(
+                String.format("%s separator defined to %s",
+                new Object[]{
+                    this.getPrefixLogger(),
+                    separator} ) );
+        
         mappingBean.setSeparator(separator);
         return this;
     }
@@ -303,6 +327,13 @@ public class BeanBuilder {
                             controller.getClassType().getName()} ) );
 
 
+        getLogger()
+            .info(
+                String.format("%s defined key %s",
+                new Object[]{
+                    this.getPrefixLogger(),
+                    ref} ) );
+        
         Bean key = (Bean)controller.getMappingBean(ref);
         ((MapBean)mappingBean).setMappingKey(key);
         return this;
@@ -390,6 +421,13 @@ public class BeanBuilder {
                             controller.getClassType().getName()
             }) );
 
+        getLogger()
+            .info(
+                String.format("%s defined element %s",
+                new Object[]{
+                    this.getPrefixLogger(),
+                    ref} ) );
+        
         Bean bean = (Bean) controller.getMappingBeans().get( ref );
 
         /*
@@ -483,6 +521,13 @@ public class BeanBuilder {
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
                 type, null);
 
+        getLogger()
+            .info(
+                String.format("%s added property %s",
+                new Object[]{
+                    this.getPrefixLogger(),
+                    propertyName} ) );
+        
         Configuration validatorConfig = new Configuration();
         propertyBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
         this.mappingBean.getFields().put( propertyName, propertyBean );
@@ -647,6 +692,13 @@ public class BeanBuilder {
             (ConstructorArgBean) this.createDependencyBean(name, null, false,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, factory, type);
 
+        getLogger()
+            .info(
+                String.format("%s added constructor arg %s",
+                new Object[]{
+                    this.getPrefixLogger(),
+                    String.valueOf(this.mappingBean.getConstructor().size())} ) );
+        
         Configuration validatorConfig = new Configuration();
         arg.setValidator( validatorProvider.getValidator( validatorConfig ) );
         this.mappingBean.getConstructor().addConstructorArg(arg);
@@ -759,4 +811,13 @@ public class BeanBuilder {
         return this.mappingBean.isCollection();
     }
 
+    protected String getPrefixLogger(){
+        return this.mappingBean.getName() + ":";
+    }
+    
+    protected Logger getLogger(){
+        return LoggerProvider.getCurrentLoggerProvider()
+                .getLogger(ControllerBuilder.class);
+    }
+    
 }

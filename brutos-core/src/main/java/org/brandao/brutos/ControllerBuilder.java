@@ -17,23 +17,14 @@
 
 package org.brandao.brutos;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.mapping.CollectionBean;
-import org.brandao.brutos.mapping.FieldForm;
-import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.Interceptor;
-import org.brandao.brutos.mapping.InterceptorStack;
-import org.brandao.brutos.mapping.MapBean;
-import org.brandao.brutos.mapping.Bean;
-import org.brandao.brutos.mapping.MethodForm;
-import org.brandao.brutos.mapping.ThrowableSafeData;
-import org.brandao.brutos.mapping.UseBeanData;
-import org.brandao.brutos.type.*;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
+import org.brandao.brutos.mapping.*;
+import org.brandao.brutos.type.Type;
+import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
@@ -174,6 +165,11 @@ public class ControllerBuilder {
         if( id == null )
             throw new NullPointerException();
 
+        getLogger().info(
+                String.format(
+                "added alias: %s => %s",
+                new Object[]{id,controller.getClassType().getName()}));
+        
         controller.addAlias(id);
         controllerManager.addForm(id, controller);
         return this;
@@ -218,6 +214,16 @@ public class ControllerBuilder {
         if( !Throwable.class.isAssignableFrom( target ) )
             throw new BrutosException( "target is not allowed: " +target.getName() );
 
+        getLogger().info(
+                String.format(
+                "%s => %s",
+                new Object[]{
+                    target.getName(),
+                    view == null?
+                        (controller.getPage() == null? "empty" : controller.getPage()) :
+                        view
+                    }));
+        
         ThrowableSafeData thr = new ThrowableSafeData();
         thr.setParameterName(id);
         thr.setTarget(target);
@@ -250,6 +256,11 @@ public class ControllerBuilder {
                         webFrame.getClassType().getName() );
             else
              */
+            getLogger().info(
+                String.format(
+                    "default action defined %s: %s",
+                    new Object[]{id,controller.getClassType().getName()}));
+
                 controller.setDefaultMethodName( id );
         }
         return this;
@@ -292,6 +303,11 @@ public class ControllerBuilder {
             Collection.class.isAssignableFrom( target ) )
             throw new BrutosException( "target is not allowed: " + target.getName() );
         */
+        
+        getLogger().info(
+            String.format(
+                "create bean %s[%s]",
+                new Object[]{name,target.getName()}));
         
         Bean mappingBean;
 
@@ -392,6 +408,16 @@ public class ControllerBuilder {
             throw new BrutosException( "duplicate action " + id + ": " +
                 controller.getClassType().getName() );
      
+        getLogger().info(
+            String.format(
+                "%s => %s",
+                new Object[]{
+                    this.controller.getId() == null?
+                        id : this.controller.getUri() + "[" + id + "]",
+                    controller.getClassType().getName() + "." + 
+                    (executor == null? "?" : executor) + "(...)" } ) 
+                );
+        
         MethodForm mp = new MethodForm();
         mp.setName( id );
         mp.setRedirect(false);
@@ -399,31 +425,6 @@ public class ControllerBuilder {
         mp.setReturnPage(view);
         mp.setMethodName(executor);
         mp.setReturnIn( resultId == null? "result" : resultId );
-        /*
-        try{
-            Class<?> classType = controller.getClassType();
-            Method method = classType.getMethod( methodName, parametersType );
-            mp.setParametersType( Arrays.asList( method.getParameterTypes() ) );
-
-            Class<?> returnType = method.getReturnType();
-            if( viewResult != null ){
-                mp.setReturnPage( viewResult );
-                mp.setReturnIn( resultId == null? "result" : resultId );
-            }
-            else
-            if( returnType != void.class )
-                mp.setReturnType( Types.getType( returnType ) );
-            
-            mp.setMethod( method );
-            mp.setReturnClass( returnType );
-        }
-        catch( BrutosException e ){
-            throw e;
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-        */
         
         mp.setController( controller );
         controller.addMethod( id, mp );
@@ -456,6 +457,11 @@ public class ControllerBuilder {
             Object value = parent.getProperties().get( key );
             it.getProperties().put( /*parent.getName() + "." +*/ key, value );
         }
+        
+        getLogger().info(
+            String.format(
+                "%s intercepted by %s",
+                new Object[]{this.controller.getClassType().getName(),name}));
         
         controller.addInterceptor( new Interceptor[]{it} );
         return new InterceptorBuilder( it, interceptorManager );
@@ -745,4 +751,8 @@ public class ControllerBuilder {
         return controller.getClassType();
     }
     
+    protected Logger getLogger(){
+        return LoggerProvider.getCurrentLoggerProvider()
+                .getLogger(ControllerBuilder.class);
+    }
 }

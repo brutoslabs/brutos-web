@@ -97,10 +97,6 @@ import org.brandao.brutos.validator.ValidatorProvider;
  */
 public class ControllerManager {
 
-    private static Logger logger = LoggerProvider
-            .getCurrentLoggerProvider()
-                .getLogger(ControllerManager.class.getName());
-    
     private Map forms;
     private Map revForms;
     private ValidatorProvider validatorProvider;
@@ -203,6 +199,13 @@ public class ControllerManager {
         fr.setRedirect(false);
         fr.setDispatcherType(dispatcherType);
         
+        getLogger().info(
+                String.format(
+                    "create controller %s[%s]",
+                    new Object[]{
+                        classType.getName(),
+                        id == null? "?" : id
+                         }));
         //Action
         Action ac = new Action();
         ac.setPreAction( getMethodAction( "preAction", fr.getClassType() ) );
@@ -306,4 +309,10 @@ public class ControllerManager {
     public ControllerBuilder getCurrent() {
         return current;
     }
+    
+    protected Logger getLogger(){
+        return LoggerProvider.getCurrentLoggerProvider()
+                .getLogger(ControllerBuilder.class);
+    }
+    
 }
