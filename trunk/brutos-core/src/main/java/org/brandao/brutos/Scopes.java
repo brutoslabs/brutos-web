@@ -30,10 +30,6 @@ import org.brandao.brutos.logger.LoggerProvider;
  */
 public class Scopes{
 
-    private Logger logger =
-        LoggerProvider.getCurrentLoggerProvider()
-            .getLogger(Scopes.class.getName());
-    
     private Map scopes;
 
     public Scopes() {
@@ -42,8 +38,8 @@ public class Scopes{
 
     public void register( String id, Scope scope ){
 
-        if( logger.isInfoEnabled() )
-            logger.info(
+        if( getLogger().isInfoEnabled() )
+            getLogger().info(
                 (scopes.containsKey(id)?
                     "override scope: " :
                     "registred scope: ") + id );
@@ -52,8 +48,8 @@ public class Scopes{
     }
 
     public void remove( String id ){
-        if( logger.isInfoEnabled() )
-            logger.info( "removed scope: " + id );
+        if( getLogger().isInfoEnabled() )
+            getLogger().info( "removed scope: " + id );
 
         scopes.remove( id );
     }
@@ -73,6 +69,13 @@ public class Scopes{
     void clear(){
         scopes.clear();
     }
+    
+    public Logger getLogger(){
+        return 
+            LoggerProvider.getCurrentLoggerProvider()
+                .getLogger(Scopes.class.getName());
+    }
+    
     /*
     public static Scopes getScopesOfCurrentApplicationContext(){
         return Invoker

@@ -20,6 +20,9 @@ package org.brandao.brutos.codegenerator;
 
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ioc.IOCProvider;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.proxy.ProxyFactory;
 
 /**
@@ -29,6 +32,11 @@ import org.brandao.brutos.proxy.ProxyFactory;
 public abstract class CodeGeneratorProvider {
 
     public static CodeGeneratorProvider getProvider( Properties properties ){
+        
+        Logger logger = LoggerProvider
+                .getCurrentLoggerProvider()
+                    .getLogger(IOCProvider.class.getName());
+        
         String providerName =
                 properties
                     .getProperty(
@@ -36,9 +44,8 @@ public abstract class CodeGeneratorProvider {
                         JavassistCodeGeneratorProvider.class.getName());
         CodeGeneratorProvider provider = null;
 
-        if( providerName == null )
-            return null;
-
+        logger.info("CodeGenerator provider: " + providerName);
+        
         try{
             Class providerClass = Class.forName( providerName, true,
                     Thread.currentThread().getContextClassLoader() );
