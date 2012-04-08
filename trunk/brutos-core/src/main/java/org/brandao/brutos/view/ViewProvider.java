@@ -120,7 +120,6 @@ public abstract class ViewProvider {
 
         if( requestInstrument.isHasViewProcessed() )
             return;
-            //throw new ViewException("view has been processed");
 
         Scopes scopes         =
             requestInstrument.getContext().getScopes();
@@ -172,12 +171,6 @@ public abstract class ViewProvider {
                         method.getDispatcherType());
                 return;
             }
-            /*else
-            if( method.getReturnType() != null ){
-                method.getReturnType().setValue(stackRequestElement.getResultAction());
-                return;
-            }
-            */
         }
 
         if( stackRequestElement.getController().getPage() != null ){
@@ -186,11 +179,8 @@ public abstract class ViewProvider {
                     stackRequestElement.getController().getDispatcherType());
         }
         else
-        if( method != null && method.getReturnType() != null ){
+        if( method != null && method.getReturnType() != null )
             this.showView(requestInstrument, stackRequestElement, method);
-            //method.getReturnType().setValue(stackRequestElement.getResultAction());
-            return;
-        }
 
     }
 
