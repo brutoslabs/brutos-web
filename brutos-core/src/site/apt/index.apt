@@ -10,6 +10,12 @@ Brutos application framework
 
 Notícias
 
+* 09/04/2012
+
+ Foi disponibilizado para download um novo exemplo usando o Brutos MVC. Esse
+ exemplo é um simples webchat. O download pode ser feito em 
+ {{{http://sourceforge.net/projects/brutos/files/brutos/examples/webchat.zip/download}http://sourceforge.net/projects/brutos/files/brutos/examples/webchat.zip/download}}
+
 * 25/10/2011
 
  Está disponível para download a versão 2.0 beta do Brutos MVC.
