@@ -31,9 +31,9 @@ Quick Start
 
 ------
 <controllers  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-   xmlns='http://brutos.sourceforge.net/schema/controllers'
-   xsi:schemaLocation='http://brutos.sourceforge.net/schema/controllers
-   http://brutos.sourceforge.net/schema/controllers/brutos-controllers-1.0.xsd'>
+   xmlns='http://www.brutosframework.com.br/schema/controllers'
+   xsi:schemaLocation='http://www.brutosframework.com.br/schema/controllers
+   http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.0.xsd'>
 
 </controllers>
 ------
@@ -47,7 +47,7 @@ O primeiro projeto
 
 ------
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009-2011 Afonso Brandao.
 */
 
@@ -87,8 +87,8 @@ public class IndexController {
 
 ------
 <%--
-  Brutos Web MVC http://brutos.sourceforge.net/
-  Copyright (C) 2009 Afonso Brandão. (afonso.rbn@gmail.com)
+  Brutos Web MVC http://www.brutosframework.com.br/
+  Copyright (C) 2009 Afonso Brandao.
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
