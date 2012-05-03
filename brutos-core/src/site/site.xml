@@ -21,7 +21,7 @@
     <bannerLeft>
         <name>Brutos Application Framework</name>
         <src>images/brutos-titulo.png</src>
-        <href>http://brutos.sourceforge.net/</href>
+        <href>http://www.brutosframework.com.br/</href>
     </bannerLeft>
 
     <bannerRight>
@@ -32,18 +32,22 @@
 
     <body>
         <head>
+            
             <script type="text/javascript">
-               var _gaq = _gaq || [];
-              _gaq.push(['_setAccount', 'UA-16487808-3']);
-              _gaq.push(['_trackPageview']);
 
-              (function() {
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-16487808-3']);
+            _gaq.push(['_setDomainName', 'brutosframework.com.br']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
                 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
                 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-              })();
+            })();
 
             </script>
+            
         </head>
 
         <menu name="Geral">
