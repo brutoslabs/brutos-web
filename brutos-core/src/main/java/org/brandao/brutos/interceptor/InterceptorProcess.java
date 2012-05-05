@@ -25,7 +25,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.RequestInstrument;
@@ -43,7 +42,6 @@ import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.StackRequest;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.validator.ValidatorException;
 
@@ -103,7 +101,6 @@ public class InterceptorProcess implements InterceptorStack{
 
 
         if( interceptors != null ){
-            //for( org.brandao.brutos.mapping.Interceptor i: interceptors ){
             for( int idx=0;idx<interceptors.size();idx++ ){
                 Interceptor i =
                         (Interceptor) interceptors.get(idx);
@@ -118,7 +115,6 @@ public class InterceptorProcess implements InterceptorStack{
         interceptors =
             form.getInterceptors();
 
-        //for( org.brandao.brutos.mapping.Interceptor i: interceptors ){
             for( int idx=0;idx<interceptors.size();idx++ ){
                 Interceptor i =
                         (Interceptor) interceptors.get(idx);
@@ -211,20 +207,11 @@ public class InterceptorProcess implements InterceptorStack{
         if( pos.intValue() < this.stack.size() )
             next0(handler, pos);
         else
-            invoke( handler );
+            invoke( (ConfigurableInterceptorHandler)handler );
     }
 
     private void next0(InterceptorHandler handler, Integer pos)
             throws InterceptedException{
-        /*
-        Scope requestScope =
-            handler.getContext().getScopes().get(ScopeType.REQUEST.toString());
-
-        org.brandao.brutos.mapping.Interceptor i = stack.get( pos );
-
-        IOCProvider iocProvider =
-            (IOCProvider)requestScope.get( BrutosConstants.IOC_PROVIDER );
-        */
 
         ConfigurableApplicationContext context =
                 (ConfigurableApplicationContext) handler.getContext();
@@ -233,7 +220,6 @@ public class InterceptorProcess implements InterceptorStack{
 
         org.brandao.brutos.interceptor.Interceptor interceptor =
             (org.brandao.brutos.interceptor.Interceptor) i.getInstance(context.getIocProvider());
-            /*iocProvider.getBean( i.getName() );*/
 
         if( !interceptor.isConfigured() )
             interceptor.setProperties( (Map) i
@@ -251,8 +237,8 @@ public class InterceptorProcess implements InterceptorStack{
 
     }
 
-    private void invoke( InterceptorHandler handler ){
-        Scope scope =
+    private void invoke( ConfigurableInterceptorHandler handler ){
+        /*Scope scope =
             handler.getContext().getScopes()
                 .get(ScopeType.REQUEST);
 
@@ -262,18 +248,15 @@ public class InterceptorProcess implements InterceptorStack{
 
         StackRequestElement stackRequestElement =
                 ((StackRequest)requestInstrument).getCurrent();
-        Object result = null;
-        result = invoke0( requestInstrument, stackRequestElement );
-        stackRequestElement.setResultAction(result);
-        show(requestInstrument,stackRequestElement);
-        /*try{
-            result = invoke0( requestInstrument, stackRequestElement );
-            stackRequestElement.setResultAction(result);
-        }
-        finally{
-                show(requestInstrument,stackRequestElement);
-        }
         */
+        
+        
+        invoke0( handler );
+        
+        RequestInstrument requestInstrument = handler.getRequestInstrument();
+        StackRequestElement stackRequestElement = handler.getStackRequestElement();
+        
+        show(requestInstrument,stackRequestElement);
     }
 
     private void show(RequestInstrument requestInstrument,
@@ -289,26 +272,30 @@ public class InterceptorProcess implements InterceptorStack{
             throw new BrutosException(e);
         }
     }
-    private Object executeAction( StackRequestElement stackRequestElement )
+    
+    private void executeAction( ConfigurableInterceptorHandler handler )
         throws IllegalAccessException, IllegalArgumentException,
             InvocationTargetException, InstantiationException, ParseException{
 
-        Object[] args =
-            stackRequestElement.getParameters() == null?
+        if(handler.getResourceAction() == null)
+            return;
+        Object[] args = handler.getParameters();
+        /*    stackRequestElement.getParameters() == null?
                 getParameters(stackRequestElement.getAction().getMethodForm() ) :
                 stackRequestElement.getParameters();
-
-        Object source = stackRequestElement.getResource();
-
-        ResourceAction action = stackRequestElement.getAction();
-
+        */
+                
+        ResourceAction action = handler.getResourceAction();
+        Object source = handler.getResource();
+        
         try{
-            return action.invoke(source, args);
+            Object result = action.invoke(source, args);
+            handler.setResult(result);
+            handler.getStackRequestElement().setResultAction(result);
         }
         catch( IllegalArgumentException ex ){
 
             StringBuilder argsText = new StringBuilder();
-            //for( Object arg: args ){
             for( int i=0;i<args.length;i++ ){
                 Object arg = args[i];
                 argsText =
@@ -331,29 +318,27 @@ public class InterceptorProcess implements InterceptorStack{
         }
     }
 
-    public Object invoke0( RequestInstrument requestInstrument,
-            StackRequestElement stackRequestElement ) {
+    public void invoke0( ConfigurableInterceptorHandler handler/*, RequestInstrument requestInstrument,
+            StackRequestElement stackRequestElement*/ ) {
         
-        Scopes scopes      = requestInstrument.getContext().getScopes();
+        Scopes scopes      = handler.getContext().getScopes();
         Scope requestScope = scopes.get(ScopeType.REQUEST.toString());
-        Object source      = stackRequestElement.getResource();
+        Object resource    = handler.getResource();
+        StackRequestElement stackRequestElement = handler.getStackRequestElement();
+        
         
         try{
             DataInput input = new DataInput( requestScope );
-            input.read( form , stackRequestElement.getResource() );
-            preAction( source );
+            input.read( form , resource );
+            preAction( resource );
 
-            if( stackRequestElement.getAction() != null )
-                return executeAction(stackRequestElement);
-            else
-                return null;
+            executeAction(handler);
         }
         catch( ValidatorException e ){
             processException(
-                    stackRequestElement,
+                    handler.getStackRequestElement(),
                     e,
-                    stackRequestElement.getAction().getMethodForm());
-            return null;
+                    handler.getResourceAction().getMethodForm());
         }
         catch( InvocationTargetException e ){
             if( e.getTargetException() instanceof RedirectException ){
@@ -361,11 +346,6 @@ public class InterceptorProcess implements InterceptorStack{
                 stackRequestElement.setView(
                         re.getView());
                 stackRequestElement.setDispatcherType(re.getDispatcher());
-                /*
-                requestScope.put( 
-                    BrutosConstants.REDIRECT,
-                    ((RedirectException)e.getTargetException()).getPage() );
-                 */
             }
             else{
                 processException(
@@ -373,7 +353,6 @@ public class InterceptorProcess implements InterceptorStack{
                     e.getTargetException(),
                     stackRequestElement.getAction().getMethodForm());
             }
-            return null;
         }
         catch( BrutosException e ){
             throw e;
@@ -382,7 +361,7 @@ public class InterceptorProcess implements InterceptorStack{
             throw new BrutosException( e );
         }
         finally{
-            postAction( source );
+            postAction( resource );
             DataOutput dataOutput = new DataOutput(scopes.get(ScopeType.REQUEST));
             dataOutput.write( form, stackRequestElement.getResource() );
             dataOutput.writeFields( form, stackRequestElement.getResource() );
@@ -401,14 +380,6 @@ public class InterceptorProcess implements InterceptorStack{
             if( tdata != null ){
                 stackRequestElement.setObjectThrow(e);
                 stackRequestElement.setThrowableSafeData(tdata);
-                /*
-                requestScope.put(
-                        BrutosConstants.EXCEPTION,
-                        e );
-
-                requestScope.put(
-                        BrutosConstants.EXCEPTION_DATA, tdata );
-                 */
             }
             else
             if( e instanceof BrutosException )
@@ -417,6 +388,14 @@ public class InterceptorProcess implements InterceptorStack{
                 throw new InterceptedException( e );
     }
 
+    /**
+     * @deprecated 
+     * @param method
+     * @return
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws ParseException 
+     */
     private Object[] getParameters( MethodForm method )
             throws InstantiationException, IllegalAccessException,
         ParseException {
@@ -465,93 +444,4 @@ public class InterceptorProcess implements InterceptorStack{
 
     }
 
-    /*
-    private void show( InterceptorHandler handler, Object returnValue ){
-        try{
-            ConfigurableApplicationContext appContext =
-                    new ConfigurableApplicationContextImp(handler.getContext());
-            
-            Scopes scopes         =
-                handler.getContext().getScopes();
-            Scope requestScope    =
-                scopes.get(ScopeType.REQUEST.toString());
-            String redirectView   =
-                (String)requestScope.get( BrutosConstants.REDIRECT );
-            Throwable objectThrow =
-                (Throwable)requestScope.get( BrutosConstants.EXCEPTION );
-            ThrowableSafeData thr =
-                (ThrowableSafeData)requestScope.get( BrutosConstants.EXCEPTION_DATA );
-            MethodForm method     = 
-                handler.getResourceAction().getMethodForm();
-            
-            ViewProvider viewProvider     = appContext.getViewProvider();
-
-            if( redirectView != null ){
-                viewProvider.show(redirectView, DispatcherType.REDIRECT);
-                return;
-            }
-
-            if( thr != null ){
-                if( thr.getParameterName() != null )
-                    requestScope.put(thr.getParameterName(), objectThrow);
-
-                if( thr.getUri() != null ){
-                    viewProvider.show(thr.getUri(), thr.getDispatcher());
-                    return;
-                }
-            }
-            
-            if( method != null ){
-
-                if( method.getReturnClass() != void.class ){
-                    String var =
-                        method.getReturnIn() == null?
-                            BrutosConstants.DEFAULT_RETURN_NAME :
-                            method.getReturnIn();
-                    requestScope.put(var, returnValue);
-                }
-
-                if( method.getReturnPage() != null ){
-                    viewProvider.show(method.getReturnPage(),
-                            method.getDispatcherType());
-                    return;
-                }
-                else
-                if( method.getReturnType() != null ){
-                    method.getReturnType().setValue(returnValue);
-                    return;
-                }
-            }
-
-            String view = form.getPage();
-            viewProvider.show(view, form.getDispatcherType());
-
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
-    */
-    
-    /*
-    private String getView( MethodForm method ){
-        
-        if( method != null && method.getReturnPage() != null )
-            return method.getReturnPage();
-        else
-            return null;
-    }
-
-    
-    private String getView( Object source ){
-        if( source instanceof WebFrame && ((WebFrame)source).isUpdatable() )
-            return ((WebFrame)source).getPage();
-        else
-            return null;
-    }
-
-    private boolean isUpdatable( Object source ){
-        return source instanceof WebFrame? ((WebFrame)source).isUpdatable() : true;
-    }
-    */
 }

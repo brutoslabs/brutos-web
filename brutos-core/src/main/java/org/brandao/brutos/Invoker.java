@@ -17,6 +17,7 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
@@ -152,16 +153,25 @@ public class Invoker {
         return this.invoke(controller, action, null);
     }
 
-    public StackRequest getStackRequest(){
+    public RequestInstrument getRequestInstrument(){
         Scopes scopes = applicationContext.getScopes();
         Scope requestScope = scopes.get(ScopeType.REQUEST);
 
         RequestInstrument requestInstrument =
                 getRequestInstrument(requestScope);
 
-        return (StackRequest)requestInstrument;
+        return requestInstrument;
+    }
+    
+    public StackRequest getStackRequest(){
+        RequestInstrument requestInstrument = getRequestInstrument();
+        return getStackRequest(requestInstrument);
     }
 
+    public StackRequest getStackRequest(RequestInstrument value){
+        return (StackRequest)value;
+    }
+    
     public StackRequestElement getStackRequestElement(){
         return getStackRequest().getCurrent();
     }
@@ -172,12 +182,20 @@ public class Invoker {
         boolean createdThreadScope = false;
         StackRequest stackRequest  = null;
         boolean isFirstCall        = false;
+        RequestInstrument requestInstrument;
+        ConfigurableInterceptorHandler configurableInterceptorHandler;
 
+        
         try{
             time               = System.currentTimeMillis();
             createdThreadScope = ThreadScope.create();
-            stackRequest       = getStackRequest();
+            requestInstrument  = getRequestInstrument();
+            stackRequest       = getStackRequest(requestInstrument);
             isFirstCall        = stackRequest.isEmpty();
+            configurableInterceptorHandler = element.getHandler();
+            
+            configurableInterceptorHandler.setRequestInstrument(requestInstrument);
+            configurableInterceptorHandler.setStackRequestElement(element);
             
             if( isFirstCall )
                 currentApp.set( this.applicationContext );

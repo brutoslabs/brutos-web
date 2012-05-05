@@ -5,6 +5,7 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ThrowableSafeData;
@@ -29,7 +30,7 @@ public interface StackRequestElement {
 
     Object getResource();
     
-    InterceptorHandler getHandler();
+    ConfigurableInterceptorHandler getHandler();
 
     String getView();
 
@@ -47,7 +48,7 @@ public interface StackRequestElement {
 
     void setResultAction(Object resultAction);
 
-    void setHandler(InterceptorHandler handler);
+    void setHandler(ConfigurableInterceptorHandler handler);
 
     void setResource( Object resource );
 
