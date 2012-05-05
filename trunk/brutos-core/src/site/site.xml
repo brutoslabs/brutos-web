@@ -57,7 +57,7 @@
           <item name="Quick Start" href="quick.html"/>
           <item name="Download" href="http://sourceforge.net/projects/brutos/files/"/>
           <item name="Source Code" href="http://brutos.svn.sourceforge.net/viewvc/brutos/"/>
-          <item name="ChangLog" href="changelog.html"/>
+          <item name="ChangeLog" href="changelog.html"/>
           <item name="Maven" href="maven.html"/>
         </menu>
         <menu name="Documentação">
