@@ -126,10 +126,6 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
     public void build(Element document, Resource resource){
         
-        loadImporters( parseUtil.getElements(
-                document,
-                XMLBrutosConstants.XML_BRUTOS_IMPORTER ), resource );
-
         loadInterceptors( parseUtil.getElement(
                 document,
                 XMLBrutosConstants.XML_BRUTOS_INTERCEPTORS ) );
@@ -142,6 +138,10 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 document,
                 XMLBrutosConstants.XML_BRUTOS_CONTROLLER ) );
 
+        loadImporters( parseUtil.getElements(
+                document,
+                XMLBrutosConstants.XML_BRUTOS_IMPORTER ), resource );
+        
     }
 
     private void loadImporters( NodeList list, Resource resource ){
