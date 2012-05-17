@@ -130,7 +130,8 @@ public class MapBean extends CollectionBean{
             return mappingKey.getValue( null, prefix, index, exceptionHandler, false );
         else
         if( keyType != null )
-            return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
+            //return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
+            return keyType.convert( getKeyScope().get( getKeyName( index, prefix ) ) );
         else
             throw new BrutosException(
                 String.format("key mapping not defined: %s", new Object[]{this.getName()} ) );

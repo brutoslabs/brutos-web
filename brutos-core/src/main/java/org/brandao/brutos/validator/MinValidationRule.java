@@ -43,7 +43,8 @@ public class MinValidationRule implements ValidationRule{
         if( value instanceof Number ){
             if( config.containsKey( RestrictionRules.MIN.toString() ) ){
                 Number tmp = (Number) valueType
-                                .getValue(
+                                .convert(
+                                //.getValue(
                                 config.get(RestrictionRules.MIN.toString()));
 
                 if( ((Number)value).doubleValue() < tmp.doubleValue() )

@@ -35,6 +35,11 @@ public class BooleanType implements Type{
         return Boolean.TYPE;
     }
 
+    /**
+     * @deprecated 
+     * @param value
+     * @return 
+     */
     public Object getValue(Object value) {
         if( value instanceof Boolean )
             return value;
@@ -48,10 +53,23 @@ public class BooleanType implements Type{
             throw new UnknownTypeException(value.getClass().getName());
     }
 
+    /**
+     * @deprecated 
+     * @param value
+     * @throws IOException 
+     */
     public void setValue(Object value) throws IOException {
         ConfigurableApplicationContext app = 
                 (ConfigurableApplicationContext)Invoker.getApplicationContext();
         MvcResponse response = app.getMvcResponse();
+        response.process(value);
+    }
+
+    public Object convert(Object value) {
+        return getValue(value);
+    }
+
+    public void show(MvcResponse response, Object value) {
         response.process(value);
     }
 }

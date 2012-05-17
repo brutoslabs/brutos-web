@@ -33,7 +33,8 @@ public class MaxlengthValidationRule implements ValidationRule{
         if( value instanceof String ){
             if( config.containsKey( RestrictionRules.MAXLENGTH.toString() ) ){
                 Number tmp = (Number) integerType
-                                .getValue(
+                                .convert(
+                                //.getValue(
                                 config.get(RestrictionRules.MAXLENGTH.toString()));
 
                 if( ((String)value).length() > tmp.intValue() )

@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.type;
@@ -31,17 +31,6 @@ public class ClassType implements Type{
     public ClassType() {
     }
 
-    /*
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
-        if( value instanceof Class )
-            return value;
-        else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
-        else
-            throw new UnknownTypeException();
-    }
-    */
     public Object toValue( String value ){
         try{
             return Class.forName( value, true, Thread.currentThread().getContextClassLoader() );
@@ -50,18 +39,16 @@ public class ClassType implements Type{
             return new Byte((byte)0);
         }
     }
-    /*
-    public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
-        PrintWriter out = response.getWriter();
-        if( value instanceof Class )
-            out.print( ((Class)value).getName() );
-    }
-    */
+    
     public Class getClassType() {
         return Class.class;
     }
 
     public Object getValue(Object value) {
+        return null;
+    }
+    
+    public Object convert(Object value) {
         if( value instanceof Class )
             return value;
         else
@@ -72,9 +59,9 @@ public class ClassType implements Type{
     }
 
     public void setValue(Object value) throws IOException {
-        ConfigurableApplicationContext app =
-                (ConfigurableApplicationContext)Invoker.getApplicationContext();
-        MvcResponse response = app.getMvcResponse();
+    }
+    
+    public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
     }
     
