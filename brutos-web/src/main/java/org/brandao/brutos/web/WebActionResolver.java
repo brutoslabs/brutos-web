@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.web;
@@ -20,13 +20,12 @@ package org.brandao.brutos.web;
 import java.util.Map;
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MethodForm;
-import org.brandao.brutos.Scopes;
+import org.brandao.brutos.scope.Scope;
 
 /**
- * Implementa��o padr�o do ActionResolver.
+ * Implementação padrão do ActionResolver.
  * 
  * @author Afonso Brandao
  */
@@ -71,6 +70,7 @@ public class WebActionResolver implements ActionResolver{
 
                     for(String key: params.keySet() )
                         request.put(key, params.get(key) );
+                    
                     return getResourceAction( (MethodForm)controller.getMethods().get(u));
                 }
 
