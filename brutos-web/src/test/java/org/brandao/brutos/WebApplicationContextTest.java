@@ -30,6 +30,7 @@ import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.ioc.PicoContainerIOCProvider;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.GenericXMLWebApplicationContext;
 
@@ -79,7 +80,7 @@ public class WebApplicationContextTest extends AbstractTester implements Test{
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    Type type = Types.getType(SimpleBean.class);
+                    Type type = TypeManager.getType(SimpleBean.class);
                     TestCase.assertTrue(type instanceof TypeTest);
                 }
 
@@ -98,7 +99,7 @@ public class WebApplicationContextTest extends AbstractTester implements Test{
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    Type type = Types.getType(SimpleBean.class);
+                    Type type = TypeManager.getType(SimpleBean.class);
                     TestCase.assertTrue(type instanceof TypeTest);
                 }
 
