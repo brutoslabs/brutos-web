@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.interceptor;
@@ -238,23 +238,18 @@ public class InterceptorProcess implements InterceptorStack{
     }
 
     private void invoke( ConfigurableInterceptorHandler handler ){
-        /*Scope scope =
-            handler.getContext().getScopes()
-                .get(ScopeType.REQUEST);
-
-        RequestInstrument requestInstrument =
-                (RequestInstrument)
-                    scope.get(BrutosConstants.REQUEST_INSTRUMENT);
-
-        StackRequestElement stackRequestElement =
-                ((StackRequest)requestInstrument).getCurrent();
-        */
-        
-        
-        invoke0( handler );
         
         RequestInstrument requestInstrument = handler.getRequestInstrument();
         StackRequestElement stackRequestElement = handler.getStackRequestElement();
+        Throwable objectThrow = stackRequestElement.getObjectThrow();
+        
+        if(objectThrow == null)
+            invoke0( handler, stackRequestElement );
+        else
+            processException(
+                stackRequestElement,
+                objectThrow,
+                stackRequestElement.getAction());        
         
         show(requestInstrument,stackRequestElement);
     }
@@ -280,10 +275,6 @@ public class InterceptorProcess implements InterceptorStack{
         if(handler.getResourceAction() == null)
             return;
         Object[] args = handler.getParameters();
-        /*    stackRequestElement.getParameters() == null?
-                getParameters(stackRequestElement.getAction().getMethodForm() ) :
-                stackRequestElement.getParameters();
-        */
                 
         ResourceAction action = handler.getResourceAction();
         Object source = handler.getResource();
@@ -318,13 +309,12 @@ public class InterceptorProcess implements InterceptorStack{
         }
     }
 
-    public void invoke0( ConfigurableInterceptorHandler handler/*, RequestInstrument requestInstrument,
-            StackRequestElement stackRequestElement*/ ) {
+    public void invoke0( ConfigurableInterceptorHandler handler, 
+            StackRequestElement stackRequestElement ) {
         
         Scopes scopes      = handler.getContext().getScopes();
         Scope requestScope = scopes.get(ScopeType.REQUEST.toString());
         Object resource    = handler.getResource();
-        StackRequestElement stackRequestElement = handler.getStackRequestElement();
         
         
         try{
@@ -338,7 +328,7 @@ public class InterceptorProcess implements InterceptorStack{
             processException(
                     handler.getStackRequestElement(),
                     e,
-                    handler.getResourceAction().getMethodForm());
+                    handler.getResourceAction());
         }
         catch( InvocationTargetException e ){
             if( e.getTargetException() instanceof RedirectException ){
@@ -351,7 +341,7 @@ public class InterceptorProcess implements InterceptorStack{
                 processException(
                     stackRequestElement,
                     e.getTargetException(),
-                    stackRequestElement.getAction().getMethodForm());
+                    stackRequestElement.getAction());
             }
         }
         catch( BrutosException e ){
@@ -370,22 +360,27 @@ public class InterceptorProcess implements InterceptorStack{
     }
 
     private void processException( StackRequestElement stackRequestElement,
-            Throwable e, MethodForm method ){
-            ThrowableSafeData tdata = method == null?
-                form.getThrowsSafe(
-                    e.getClass() ) :
-                method.getThrowsSafe(
-                    e.getClass() );
+            Throwable e, ResourceAction resourceAction ){
+        
+        MethodForm method = resourceAction == null? 
+                null : 
+                resourceAction.getMethodForm();
+        
+        ThrowableSafeData tdata = method == null?
+            form.getThrowsSafe(
+                e.getClass() ) :
+            method.getThrowsSafe(
+                e.getClass() );
 
-            if( tdata != null ){
-                stackRequestElement.setObjectThrow(e);
-                stackRequestElement.setThrowableSafeData(tdata);
-            }
-            else
-            if( e instanceof BrutosException )
-                throw (BrutosException)e;
-            else
-                throw new InterceptedException( e );
+        if( tdata != null ){
+            stackRequestElement.setObjectThrow(e);
+            stackRequestElement.setThrowableSafeData(tdata);
+        }
+        else
+        if( e instanceof BrutosException )
+            throw (BrutosException)e;
+        else
+            throw new InterceptedException( e );
     }
 
     /**
