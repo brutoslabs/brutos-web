@@ -26,6 +26,7 @@ import org.brandao.brutos.ClassType;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -212,7 +213,7 @@ public class MethodForm {
             Class returnClassType = method.getReturnType();
 
             if( returnClassType != void.class )
-                setReturnType( Types.getType( returnClassType ) );
+                setReturnType( TypeManager.getType( returnClassType ) );
 
             setMethod( method );
             setReturnClass( returnClassType );
@@ -252,7 +253,7 @@ public class MethodForm {
                         
                         if( type == null && mapping == null ){
                             arg.getBean()
-                                    .setType(Types.getType(params[k]));
+                                    .setType(TypeManager.getType(params[k]));
                         }
                     }
 

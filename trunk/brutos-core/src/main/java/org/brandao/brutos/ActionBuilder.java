@@ -25,6 +25,7 @@ import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
@@ -329,7 +330,7 @@ public class ActionBuilder {
         if(classType != null && mapping == null){
             try{
                 /*useBean.setType( Types.getType( methodForm.getGenericParameterType( methodForm.getParamterSize() ), enumProperty, temporalProperty ) );*/
-                useBean.setType( Types.getType( classType ));
+                useBean.setType( TypeManager.getType( classType ));
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException( 

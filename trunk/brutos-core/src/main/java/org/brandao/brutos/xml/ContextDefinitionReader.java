@@ -225,12 +225,14 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
                             value,
                             true,
                             Thread.currentThread().getContextClassLoader() );
+                
+            TypeManager.register(type, (TypeFactory)factory.newInstance());
+                
             }
             catch( Exception e ){
                 throw new BrutosException( e );
             }
 
-            Types.setType(type, factory);
         }
 
     }

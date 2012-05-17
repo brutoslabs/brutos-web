@@ -24,6 +24,7 @@ import org.brandao.brutos.mapping.MapBean;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -54,7 +55,7 @@ public class MapBuilder {
         if( clazz == null )
             throw new NullPointerException( "key type is required" );
 
-        Type type = Types.getType(clazz);
+        Type type = TypeManager.getType(clazz);
 
         if( type == null )
             throw new BrutosException( "invalid type: " + clazz.getName() );
