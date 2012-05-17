@@ -122,7 +122,8 @@ public class ComplexComponentFactory extends ProviderAdapter {
 
     public Object getValue( Class<?> tipo, Object value ){
         org.brandao.brutos.type.Type type = Types.getType( (Class)tipo );
-        return type.getValue( value );
+        //return type.getValue( value );
+        return type.convert( value );
     }
     
     private void loadDataMap(Map map, PicoContainer container) {
