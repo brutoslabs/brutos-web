@@ -30,6 +30,7 @@ import org.brandao.brutos.mapping.ConstructorArgBean;
 import org.brandao.brutos.mapping.DependencyBean;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
@@ -769,14 +770,14 @@ public class BeanBuilder {
             try{
                 if( propertyNameRequired ){
                     dependencyBean.setType(
-                            Types.getType(
+                            TypeManager.getType(
                                 bean.getGenericType(propertyName),
                                 enumProperty,
                                 temporalProperty ) );
                 }
                 else
                 if( type != null )
-                    dependencyBean.setType(Types.getType(type, enumProperty, 
+                    dependencyBean.setType(TypeManager.getType(type, enumProperty, 
                             temporalProperty));
                 
             }

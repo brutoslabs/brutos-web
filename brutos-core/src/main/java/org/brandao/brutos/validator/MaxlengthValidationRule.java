@@ -20,6 +20,7 @@ package org.brandao.brutos.validator;
 import java.util.Properties;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -27,7 +28,7 @@ import org.brandao.brutos.type.Types;
  */
 public class MaxlengthValidationRule implements ValidationRule{
 
-    private Type integerType = Types.getType(Integer.class);
+    private Type integerType = TypeManager.getType(Integer.class);
 
     public void validate(Properties config, Object source, Object value) {
         if( value instanceof String ){

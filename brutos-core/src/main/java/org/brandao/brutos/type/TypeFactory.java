@@ -18,15 +18,12 @@
 
 package org.brandao.brutos.type;
 
-import org.brandao.brutos.EnumerationType;
-
 /**
  *
  * @author Brandao
  */
 public interface TypeFactory {
 
-    Type getType( Class clazz, Class classType, EnumerationType enumType,
-            String maskDate );
+    Type getInstance();
 
 }

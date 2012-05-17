@@ -36,7 +36,7 @@ public class ObjectType implements SerializableType{
     }
     
     public ObjectType(Class classType) {
-        this.serializableType = Types.getType( Serializable.class );
+        this.serializableType = TypeManager.getType( Serializable.class );
         this.classType = classType;
     }
 

@@ -38,12 +38,12 @@ public class DefaultArrayType implements ArrayType{
     private Class arrayComponentType;
 
     public DefaultArrayType(){
-        this.serializableType = Types.getType( Serializable.class );
+        this.serializableType = TypeManager.getType( Serializable.class );
     }
 
     public void setContentType(Class type) {
         this.arrayComponentType = type;
-        this.componentType = Types.getType( type );
+        this.componentType = TypeManager.getType( type );
    }
 
     public Class getClassType() {

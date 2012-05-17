@@ -24,6 +24,7 @@ import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.validator.ValidatorProvider;
 
@@ -701,7 +702,7 @@ public class ControllerBuilder {
         else{
             try{
                 useBean.setType(
-                        Types.getType(
+                        TypeManager.getType(
                             bean.getGenericType(propertyName),
                             enumProperty,
                             temporalProperty ) );

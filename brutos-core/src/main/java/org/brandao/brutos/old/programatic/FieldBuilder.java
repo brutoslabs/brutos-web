@@ -27,6 +27,7 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -146,7 +147,7 @@ public class FieldBuilder {
         else{
             try{
                 useBean.setType(
-                        Types.getType(
+                        TypeManager.getType(
                             bean.getGenericType(propertyName),
                             enumProperty,
                             temporalProperty ) );

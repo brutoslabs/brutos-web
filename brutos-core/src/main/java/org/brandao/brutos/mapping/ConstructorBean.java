@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassType;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  * 
@@ -100,7 +101,7 @@ public class ConstructorBean {
                 for( int k=0;k<params.length;k++ ){
                     if( getConstructorArg(k).getType() == null )
                         getConstructorArg(k)
-                                .setType(Types.getType(params[k]));
+                                .setType(TypeManager.getType(params[k]));
                 }
                 return con;
             }
@@ -137,7 +138,7 @@ public class ConstructorBean {
                     for( int k=0;k<params.length;k++ ){
                         if( getConstructorArg(k).getType() == null )
                             getConstructorArg(k)
-                                    .setType(Types.getType(params[k]));
+                                    .setType(TypeManager.getType(params[k]));
                     }
 
                     return m;

@@ -28,20 +28,20 @@ import org.brandao.brutos.web.http.ParameterList;
 public class TypeTest  extends TestCase{
 
     public void testGetClassType(){
-        Class type = Types.getRawType(int.class);
+        Class type = TypeManager.getRawType(int.class);
         TestCase.assertEquals(int.class,type);
     }
 
     public void testgetRawType(){
         GenericTypeImp genericType =
                 new GenericTypeImp(List.class,new Class[]{Integer.class});
-        Class type = Types.getRawType(genericType);
+        Class type = TypeManager.getRawType(genericType);
         TestCase.assertEquals(List.class, type);
     }
 
     public void testgetListTypeWithError(){
         try{
-            ListType type = (ListType) Types.getType(List.class);
+            ListType type = (ListType) TypeManager.getType(List.class);
             type.setGenericType(List.class);
             type.getValue(new ParameterList());
             TestCase.fail("expected UnknownTypeException");
@@ -53,7 +53,7 @@ public class TypeTest  extends TestCase{
     public void testgetListType(){
         GenericTypeImp genericType =
                 new GenericTypeImp(List.class,new Class[]{Integer.class});
-        ListType type = (ListType) Types.getType(genericType);
+        ListType type = (ListType) TypeManager.getType(genericType);
         type.setGenericType(genericType);
 
         TestCase.assertEquals(Integer.class, type.getGenericType());

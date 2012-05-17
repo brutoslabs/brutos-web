@@ -42,10 +42,10 @@ public class SetType implements CollectionType{
     }
     
     public void setGenericType(Object classType) {
-        Class collectionType = Types.getCollectionType(classType);
+        Class collectionType = TypeManager.getCollectionType(classType);
         if( collectionType != null ){
             this.type = collectionType;
-            this.primitiveType = Types.getType( this.type );
+            this.primitiveType = TypeManager.getType( this.type );
             if( this.primitiveType == null )
                 throw new UnknownTypeException( classType.toString() );
         }
@@ -102,7 +102,7 @@ public class SetType implements CollectionType{
             throw new BrutosException( e );
         }
 
-        this.serializableType = Types.getType( Serializable.class );
+        this.serializableType = TypeManager.getType( Serializable.class );
 
         return this.listType;
     }

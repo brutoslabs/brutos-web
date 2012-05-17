@@ -31,6 +31,7 @@ import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -125,7 +126,7 @@ public class MethodBuilder {
         }
         else{
             try{
-                useBean.setType( Types.getType( methodForm.getGenericParameterType( methodForm.getParamterSize() ), enumProperty, temporalProperty ) );
+                useBean.setType( TypeManager.getType( methodForm.getGenericParameterType( methodForm.getParamterSize() ), enumProperty, temporalProperty ) );
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException( 

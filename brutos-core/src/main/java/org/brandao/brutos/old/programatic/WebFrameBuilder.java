@@ -262,7 +262,7 @@ public class WebFrameBuilder {
             }
             else
             if( returnType != void.class )
-                mp.setReturnType( Types.getType( returnType ) );
+                mp.setReturnType( TypeManager.getType( returnType ) );
             
             mp.setMethod( method );
             mp.setReturnClass( returnType );
@@ -414,7 +414,7 @@ public class WebFrameBuilder {
         else{
             try{
                 useBean.setType(
-                        Types.getType(
+                        TypeManager.getType(
                             bean.getGenericType(propertyName),
                             enumProperty,
                             temporalProperty ) );
