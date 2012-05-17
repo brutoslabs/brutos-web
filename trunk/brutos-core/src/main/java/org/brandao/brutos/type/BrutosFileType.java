@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.type;
@@ -25,6 +25,7 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.BrutosFile;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  *
@@ -34,48 +35,16 @@ public class BrutosFileType implements Type{
 
     public BrutosFileType() {
     }
-    /*
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
-        if( value instanceof BrutosFile )
-            return value;
-        else
-            return null;
-    }
-
-    public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
-        if( value instanceof BrutosFile ){
-            BrutosFile f = (BrutosFile)value;
-            InputStream in   = new FileInputStream( f.getFile() );
-            OutputStream out = response.getOutputStream();
-            
-            if( f.getFile() != null ){
-                response.addHeader(
-                    "Content-Disposition",
-                    "attachment;filename=" + f.getFileName() + ";"
-                );
-            }
-            
-            response.setContentLength( (int)f.getFile().length() );
-            
-            try{
-                byte[] buffer = new byte[ 3072 ];
-                int length;
-                
-                while( (length = in.read( buffer )) != -1 )
-                    out.write( buffer, 0, length );
-            }
-            finally{
-                if( in != null )
-                    in.close();
-            }
-        }
-    }
-    */
     
     public Class getClassType() {
         return BrutosFile.class;
     }
 
+    /**
+     * @deprecated 
+     * @param value
+     * @return 
+     */
     public Object getValue(Object value) {
         if( value instanceof BrutosFile )
             return value;
@@ -86,11 +55,14 @@ public class BrutosFileType implements Type{
     }
 
     public void setValue(Object value) throws IOException {
-        if( value instanceof BrutosFile ){
-            ConfigurableApplicationContext app =
-                    (ConfigurableApplicationContext)Invoker.getApplicationContext();
-            MvcResponse response = app.getMvcResponse();
+    }
 
+    public Object convert(Object value) {
+        return getValue(value);
+    }
+
+    public void show(MvcResponse response, Object value) throws IOException{
+        if( value instanceof BrutosFile ){
             BrutosFile f = (BrutosFile)value;
 
             if( f.getFile() != null ){

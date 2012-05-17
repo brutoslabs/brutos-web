@@ -188,7 +188,8 @@ public class DependencyBean {
             result = 
                 isNullable()? 
                     null : 
-                    type.getValue( result );
+                    type.convert( result );
+                    //type.getValue( result );
             
         }
         else{

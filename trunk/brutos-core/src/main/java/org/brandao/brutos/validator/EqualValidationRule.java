@@ -41,7 +41,8 @@ public class EqualValidationRule implements ValidationRule{
             throw new BrutosException( "invalid source: " + source );
 
         Object tmp = valueType
-                        .getValue(
+                        .convert(
+                        //.getValue(
                         config.get(RestrictionRules.EQUAL.toString()));
 
         if( tmp != null && !tmp.equals( value ) )

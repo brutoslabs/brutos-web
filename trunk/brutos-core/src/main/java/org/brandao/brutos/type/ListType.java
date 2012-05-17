@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.type;
@@ -23,15 +23,10 @@ import java.util.List;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
+import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
 
 /**
- * Allows the creation of type List.
- * <p>The object type is determined by the org.brandao.brutos.type.list,
- * if not informed the type is java.util.ArrayList.</p>
- * <p>If the value parameter of the method ListType.getValue() is an
- * instance of the org.brandao.brutos.http.ParameterList then their
- * values should be converted, otherwise there is no need for conversion.</p>
  * 
  * @author Afonso Brandao
  */
@@ -101,7 +96,7 @@ public class ListType implements CollectionType{
             //for( Object o: (ParameterList)value )
             for( int i=0;i<size;i++ ){
                 Object o = list.get(i);
-                objList.add( this.primitiveType.getValue(o) );
+                objList.add( this.primitiveType.convert(o) );
                 //objList.add( this.primitiveType.getValue(request, context, o) );
             }
             return objList;
@@ -116,6 +111,10 @@ public class ListType implements CollectionType{
     }
 
     public Object getValue(Object value) {
+        return null;
+    }
+    
+    public Object convert(Object value) {
         if( value instanceof ParameterList )
             return getList(value);
 
@@ -124,7 +123,10 @@ public class ListType implements CollectionType{
     }
 
     public void setValue(Object value) throws IOException {
-        this.serializableType.setValue( value );
+    }
+    
+    public void show(MvcResponse response, Object value) throws IOException {
+        this.serializableType.show( response, value );
     }
 
 
