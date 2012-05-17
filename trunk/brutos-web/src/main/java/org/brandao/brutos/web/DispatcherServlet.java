@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.web;
@@ -73,13 +73,6 @@ public class DispatcherServlet extends HttpServlet {
         StaticBrutosRequest staticRequest = 
                 (StaticBrutosRequest) requestInfo.getRequest();
         
-        /*
-        if( request instanceof StaticBrutosRequest )
-            staticRequest = (StaticBrutosRequest)request;
-        else
-            staticRequest = new StaticBrutosRequest(request);
-        */
-
         ConfigurableWebApplicationContext context =
             (ConfigurableWebApplicationContext)
                 ContextLoader.getCurrentWebApplicationContext();
@@ -87,11 +80,7 @@ public class DispatcherServlet extends HttpServlet {
         String requestId = staticRequest.getRequestId();
         Map mappedUploadStats = null;
         try{
-            //RequestInfo requestInfo = new RequestInfo();
-
-            //requestInfo.setRequest(staticRequest);
             requestInfo.setResponse(response);
-            //RequestInfo.setCurrent(requestInfo);
 
             Scope scope = context.getScopes().get(WebScopeType.SESSION);
 
@@ -100,18 +89,21 @@ public class DispatcherServlet extends HttpServlet {
 
             UploadListener listener = staticRequest.getUploadListener();
 
-
             mappedUploadStats.put( requestId, listener.getUploadStats() );
-
-            invoker.invoke(requestId);
+            
+            FileUploadException fue = null;
+            
+            try{
+                staticRequest.parseRequest();
+            }
+            catch( FileUploadException e ){
+                fue = e;
+            }
+            
+            invoker.invoke(requestId, fue);
         }
         finally{
             mappedUploadStats.remove(requestId);
-
-            //context.getRequestFactory().destroyRequest();
-            //context.getResponseFactory().destroyResponse();
-
-            //RequestInfo.removeCurrent();
         }
     }
     

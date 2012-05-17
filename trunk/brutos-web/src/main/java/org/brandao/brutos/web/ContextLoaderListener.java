@@ -1,34 +1,34 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 
 package org.brandao.brutos.web;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletRequestEvent;
-import javax.servlet.ServletRequestListener;
+import javax.servlet.*;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.WebScopeType;
+import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
+import org.brandao.brutos.web.http.UploadListener;
 
 /**
  * 
@@ -38,21 +38,16 @@ public class ContextLoaderListener implements ServletContextListener,
         HttpSessionListener, ServletRequestListener{
     
     private ContextLoader contextLoader;
-    //public static ThreadLocal<ServletRequest> currentRequest;
-    //public static ServletContext currentContext;
     
     public ContextLoaderListener() {
-        //currentRequest = new ThreadLocal<ServletRequest>();
         contextLoader = new ContextLoader();
     }
 
     public void contextInitialized(ServletContextEvent sce) {
-        //currentContext = sce.getServletContext();
         contextLoader.init(sce.getServletContext());
     }
 
     public void contextDestroyed(ServletContextEvent sce) {
-        //currentRequest = null;
         contextLoader.destroy(sce.getServletContext());
     }
 
@@ -82,42 +77,18 @@ public class ContextLoaderListener implements ServletContextListener,
         context.getResponseFactory().destroyResponse();
 
 
-        //if( currentRequest != null )
-        //    currentRequest.remove();
     }
 
-    /*
-    private ServletRequest getRequest( ServletRequest request ){
-        try{
-            ServletRequest brutosRequest = (ServletRequest) Class.forName( 
-                    ContextLoader.getCurrentWebApplicationContext()
-                    .getConfiguration().getProperty(
-                    "org.brandao.brutos.web.request",
-                    BrutosRequestImp.class.getName()
-                ), 
-                    true, 
-                    Thread.currentThread().getContextClassLoader() 
-             
-            ).getConstructor( ServletRequest.class ).newInstance( request );
-
-            ((BrutosRequest)brutosRequest).parseRequest();
-            
-            return brutosRequest;
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
-    */
-    
     public void requestInitialized(ServletRequestEvent sre) {
-        //currentRequest.set( getRequest( sre.getServletRequest() ) );
+        
+        StaticBrutosRequest staticRequest;
+        
         ThreadScope.create();
         
         ServletRequest request = sre.getServletRequest();
-        StaticBrutosRequest staticRequest;
 
         staticRequest = new StaticBrutosRequest(request);
+        
         RequestInfo requestInfo = new RequestInfo();
         requestInfo.setRequest(staticRequest);
         RequestInfo.setCurrent(requestInfo);
