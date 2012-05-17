@@ -26,6 +26,7 @@ import org.brandao.brutos.mapping.ioc.ComplexObjectInject;
 import org.brandao.brutos.mapping.ioc.Property;
 import org.brandao.brutos.mapping.ioc.ValueInject;
 import org.brandao.brutos.type.Types;
+import org.brandao.brutos.type.TypeManager;
 import org.picocontainer.PicoCompositionException;
 import org.picocontainer.PicoContainer;
 import org.picocontainer.injectors.ProviderAdapter;
@@ -121,7 +122,7 @@ public class ComplexComponentFactory extends ProviderAdapter {
     }
 
     public Object getValue( Class<?> tipo, Object value ){
-        org.brandao.brutos.type.Type type = Types.getType( (Class)tipo );
+        org.brandao.brutos.type.Type type = TypeManager.getType( (Class)tipo );
         //return type.getValue( value );
         return type.convert( value );
     }

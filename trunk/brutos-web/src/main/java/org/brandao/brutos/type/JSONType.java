@@ -42,7 +42,7 @@ public class JSONType implements SerializableType {
     }
 
     private Class getClass( Class type ){
-        return Types.getRawType(type);
+        return TypeManager.getRawType(type);
     }
 
     public Object getValue(Object value) {
