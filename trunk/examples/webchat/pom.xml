@@ -14,7 +14,7 @@
        <repository>
             <id>Brutos</id>
             <name>Brutos Repository</name>
-            <url>http://brutos.sourceforge.net/maven/2</url>
+            <url>http://www.brutosframework.com.br/maven/2</url>
         </repository>
     </repositories>
 
