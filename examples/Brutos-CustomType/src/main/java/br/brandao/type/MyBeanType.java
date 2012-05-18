@@ -10,9 +10,11 @@ import java.io.IOException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.type.Type;
+import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 
@@ -20,13 +22,21 @@ import org.brandao.brutos.web.ContextLoader;
  *
  * @author Afonso Brandao
  */
-public class MyBeanType implements Type{
+public class MyBeanType implements Type,TypeFactory{
 
     public Class getClassType() {
         return MyBean.class;
     }
 
+    /**
+     * @deprecated 
+     * 
+     */
     public Object getValue(Object value) {
+        return null;
+    }
+    
+    public Object convert(Object value) {
         ConfigurableWebApplicationContext context =
             (ConfigurableWebApplicationContext)
                 ContextLoader.getCurrentWebApplicationContext();
@@ -37,8 +47,21 @@ public class MyBeanType implements Type{
         return mapping.getValue();
     }
 
+    /**
+     * @deprecated 
+     * @param value
+     * @throws IOException 
+     */
     public void setValue(Object value) throws IOException {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public void show(MvcResponse response, Object value) throws IOException {
+        
+    }
+
+    public Type getInstance() {
+        return this;
     }
 
 }
