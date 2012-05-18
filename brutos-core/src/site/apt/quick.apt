@@ -33,7 +33,7 @@ Quick Start
 <controllers  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
    xmlns='http://www.brutosframework.com.br/schema/controllers'
    xsi:schemaLocation='http://www.brutosframework.com.br/schema/controllers
-   http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.0.xsd'>
+   http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd'>
 
 </controllers>
 ------

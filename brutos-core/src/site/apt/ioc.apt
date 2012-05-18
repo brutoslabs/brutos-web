@@ -17,9 +17,9 @@ Inversão de controle e injeção de dependência
    xmlns:context='http://www.brutosframework.com.br/schema/context'
    xsi:schemaLocation='
    http://www.brutosframework.com.br/schema/controllers
-   http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.0.xsd
+   http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd
    http://www.brutosframework.com.br/schema/context
-   http://www.brutosframework.com.br/schema/context/brutos-context-1.0.xsd'>
+   http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>
 
    <context:params>
        <context:param name="org.brandao.brutos.ioc.provider"
@@ -43,9 +43,9 @@ Inversão de controle e injeção de dependência
    xmlns:context='http://www.brutosframework.com.br/schema/context'
    xsi:schemaLocation='
    http://www.brutosframework.com.br/schema/controllers
-   http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.0.xsd
+   http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd
    http://www.brutosframework.com.br/schema/context
-   http://www.brutosframework.com.br/schema/context/brutos-context-1.0.xsd'>
+   http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>
 
    <context:params>
        <context:param name="org.brandao.brutos.ioc.provider"
