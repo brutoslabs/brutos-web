@@ -20,12 +20,13 @@ package org.brandao.brutos.helper.controller;
 import java.io.IOException;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.type.Type;
+import org.brandao.brutos.type.TypeFactory;
 
 /**
  *
  * @author Brandao
  */
-public class TypeTest implements Type{
+public class TypeTest implements Type,TypeFactory{
 
     public Object getValue(Object value) {
         return null;
@@ -43,6 +44,10 @@ public class TypeTest implements Type{
 
     public Class getClassType() {
         return SimpleBean.class;
+    }
+
+    public Type getInstance() {
+        return this;
     }
 
 }
