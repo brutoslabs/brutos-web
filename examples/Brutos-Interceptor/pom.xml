@@ -33,19 +33,19 @@
         <dependency>
             <groupId>org.brandao</groupId>
             <artifactId>brutos-core</artifactId>
-            <version>2.0-b1</version>
+            <version>2.0-b2</version>
         </dependency>
         <dependency>
             <groupId>org.brandao</groupId>
             <artifactId>brutos-web</artifactId>
-            <version>2.0-b1</version>
+            <version>2.0-b2</version>
         </dependency>
     </dependencies>
     <repositories>
         <repository>
-            <id>maven2-brutos.sourceforge.net</id>
+            <id>maven2-brutosframework.com.br</id>
             <name>Repository for Maven</name>
-            <url>http://brutos.sourceforge.net/maven/2</url>
+            <url>http://www.brutosframework.com.br/maven/2</url>
         </repository>
     </repositories>
     <build>
@@ -63,6 +63,6 @@
         <finalName>example</finalName>
     </build>
     <properties>
-        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
+        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
 </project>
