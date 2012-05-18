@@ -1,16 +1,16 @@
 package org.brandao.webchat.model;
 
 import java.io.IOException;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.type.CollectionType;
 import org.brandao.brutos.type.SerializableType;
+import org.brandao.brutos.type.Type;
+import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.web.http.ParameterList;
 import org.brandao.jbrgates.JSONDecoder;
 import org.brandao.jbrgates.JSONEncoder;
 
-public class JSONType implements SerializableType, CollectionType{
+public class JSONType implements SerializableType, CollectionType, TypeFactory{
 
     private Class classType;
 
@@ -30,6 +30,11 @@ public class JSONType implements SerializableType, CollectionType{
 
     @Override
     public Object getValue(Object value) {
+        return null;
+    }
+    
+    @Override
+    public Object convert(Object value) {
         try{
             String v = null;
 
@@ -51,9 +56,10 @@ public class JSONType implements SerializableType, CollectionType{
 
     @Override
     public void setValue(Object value) throws IOException {
-        ConfigurableApplicationContext app =
-                (ConfigurableApplicationContext)Invoker.getApplicationContext();
-        MvcResponse response = app.getMvcResponse();
+    }
+    
+    @Override
+    public void show(MvcResponse response, Object value) throws IOException {
         response.setType( "application/json" );
         response.setCharacterEncoding( "UTF-8" );
         JSONEncoder encoder = new JSONEncoder();
@@ -64,6 +70,11 @@ public class JSONType implements SerializableType, CollectionType{
     @Override
     public Object getGenericType() {
         return null;
+    }
+
+    @Override
+    public Type getInstance() {
+        return this;
     }
 
 }
