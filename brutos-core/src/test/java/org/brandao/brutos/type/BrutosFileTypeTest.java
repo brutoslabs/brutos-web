@@ -34,13 +34,13 @@ public class BrutosFileTypeTest extends TestCase{
     private Object invalidType = new Integer(1);
 
     public void test1(){
-        Object val = type.getValue(test1);
+        Object val = type.convert(test1);
         TestCase.assertEquals(expected1, val);
     }
 
     public void test5(){
         try{
-            type.getValue(invalidType);
+            type.convert(invalidType);
             TestCase.fail("expected UnknownTypeException");
         }
         catch( UnknownTypeException e ){
@@ -48,7 +48,7 @@ public class BrutosFileTypeTest extends TestCase{
     }
 
     public void test6(){
-        Object val = type.getValue(null);
+        Object val = type.convert(null);
         TestCase.assertNull(val);
     }
 

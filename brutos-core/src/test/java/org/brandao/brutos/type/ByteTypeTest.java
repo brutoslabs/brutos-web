@@ -42,28 +42,28 @@ public class ByteTypeTest extends TestCase{
     private Object invalidType = new Integer(1);
 
     public void test1(){
-        Object val = type.getValue(test1);
+        Object val = type.convert(test1);
         TestCase.assertEquals(expected1, val);
     }
 
     public void test2(){
-        Object val = type.getValue(test2);
+        Object val = type.convert(test2);
         TestCase.assertEquals(expected2, val);
     }
 
     public void test3(){
-        Object val = type.getValue(test3);
+        Object val = type.convert(test3);
         TestCase.assertEquals(expected3, val);
     }
 
     public void test4(){
-        Object val = type.getValue(test4);
+        Object val = type.convert(test4);
         TestCase.assertEquals(expected4, val);
     }
 
     public void test5(){
         try{
-            type.getValue(invalidType);
+            type.convert(invalidType);
             TestCase.fail("expected UnknownTypeException");
         }
         catch( UnknownTypeException e ){
@@ -71,7 +71,7 @@ public class ByteTypeTest extends TestCase{
     }
 
     public void test6(){
-        Object val = type.getValue(null);
+        Object val = type.convert(null);
         TestCase.assertNull(val);
     }
 
