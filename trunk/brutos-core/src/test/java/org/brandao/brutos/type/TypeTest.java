@@ -43,7 +43,7 @@ public class TypeTest  extends TestCase{
         try{
             ListType type = (ListType) TypeManager.getType(List.class);
             type.setGenericType(List.class);
-            type.getValue(new ParameterList());
+            type.convert(new ParameterList());
             TestCase.fail("expected UnknownTypeException");
         }
         catch( UnknownTypeException e ){

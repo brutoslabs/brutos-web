@@ -81,7 +81,7 @@ public class TypeManager {
     }
     
     public static Type getType( Object classType, EnumerationType enumType, String maskDate ){
-        TypeFactory factory = (TypeFactory) types.get(classType);
+        TypeFactory factory = (TypeFactory) types.get(getRawType( classType ));
         
         if( factory == null ){
             if( getRawType(classType).isEnum() )
