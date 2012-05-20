@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.annotation;
@@ -24,43 +24,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Especifica uma determinada ação.
- * <pre>
- * Ex:
- * &#64;Controller( id="/myController.jbrs" )
- * public class MyController{
- *
- *     &#64;Action( name="test" )
- *     public void testAction(){
- *         ...
- *     }
- * }
- * </pre>
- * <pre>
- * Ex2:
- * &#64;Controller
- * public class MyController{
- *
- *     &#64;Action
- *     public void testAction(){
- *         ...
- *     }
- * }
- * </pre>
- * No exemplo acima a ação terá o nome de testAction e a view será
- * /MyController/testAction.jsp.
- * 
- * <pre>
- * Ex3:
- * &#64;Controller
- * public class MyController{
- *
- *     &#64;Action( id="/testAction.jbrs" )
- *     public void testAction(){
- *         ...
- *     }
- * }
- * </pre>
  * 
  * @author Afonso Brandao
  */
@@ -68,34 +31,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Action {
     
-    /**
-     * Identificação da ação. Se não informado, será usado o nome do método.
-     * @return Identificação da ação.
-     */
-    String id();
-
-    /**
-     * Parâmetros da ação. Se não informado, os parâmetros serão automaticamente
-     * configurados.
-     * @return
-     */
-    UseBean[] parameters() default {};
-
-    /**
-     * Se a ação retornar algun valor, essa será sua
-     * identificação. Se não informado, será usado <b>result</b>
-     * @return
-     */
-    String resultName() default "result";
-
-    /**
-     * Identificação da visão. Se não informado, será usado a concatenação de
-     * /, nome da classe, /, nome da ação e .jsp.
-     * @return Nome da visão. A visão é representada normalmente
-     * por um URI.
-     */
-    String view() default "";
-
-    String dispatcher() default "forward";
+    String value();
     
 }
