@@ -86,4 +86,5 @@ public interface BrutosConstants {
 
     public final String JSF_ACTION_LISTENER = ApplicationContext.class.getName() + ".JSF_Action_Listener";
 
+    public final DispatcherType DEFAULT_DISPATCHERTYPE = DispatcherType.FORWARD;
 }

@@ -1,42 +1,37 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.type.UnknownTypeException;
-import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MethodForm;
-import org.brandao.brutos.mapping.ParameterMethodMapping;
-import org.brandao.brutos.mapping.ThrowableSafeData;
-import org.brandao.brutos.mapping.UseBeanData;
+import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.type.Types;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
- * Constr�i uma a��o. A a��o pode ter ou n�o par�metros. Os par�metros podem ser
- * obtidos tanto da requisi��o, sess�o ou do contexto. Podendo ser de tipo primitivo
- * ou n�o. No caso de um objeto complexo, � poss�vel usar um mapeamento predefinido.
- * Se a a��o retornar algum valor, este ser� processado e inclu�do na requisi��o,
- * para posteriormente ser usada na vis�o. As exce��es lan�adas durante a execu��o
- * da a��o podem alterar o fluxo l�gico da aplica��o. <p>No exemplo a seguir, depois
- * de executar a a��o showPerson � exibido a vis�o personView.jsp e se for lan�ada
- * a exce��o NotExistPerson a vis�o error.jsp ser� exibida</p>.
+ * Constrói uma ação. A ação pode ter ou não parâmetros. Os parâmetros podem ser
+ * obtidos tanto da requisição, sessão ou do contexto. Podendo ser de tipo primitivo
+ * ou não. No caso de um objeto complexo, é possével usar um mapeamento predefinido.
+ * Se a ação retornar algum valor, este será processado e incluído na requisição,
+ * para posteriormente ser usada na visão. As exceções lançaadas durante a execução
+ * da ação podem alterar o fluxo lógico da aplicação. <p>No exemplo a seguir, depois
+ * de executar a ação showPerson é exibida a visão personView.jsp e se for lançada
+ * a exceção NotExistPerson a visão error.jsp será exibida</p>.
  * 
  * <pre>
  * public class MyController{
@@ -355,26 +350,26 @@ public class ActionBuilder {
     }
 
     /**
-     * Intercepta e atribui uma identifica��o a uma determinada exce��o. O
-     * objeto resultante da exce��o pode ser usando na vis�o.
+     * Intercepta e atribui uma identificaçao a uma determinada exceçao. O
+     * objeto resultante da exceção pode ser usando na visão.
      *
-     * @param target Exce��o alvo.
-     * @param id Identifica��o.
-     * @return Contrutor do controlador.
+     * @param target Exceçao alvo.
+     * @param id Identificação.
+     * @return Contrutor da ação.
      */
     public ActionBuilder addThrowable( Class target, String id ){
         return addThrowable( target, null, id, DispatcherType.FORWARD );
     }
 
     /**
-     * Intercepta e atribui uma identifica��o a uma determinada exce��o. O
-     * objeto resultante da exce��o pode ser usando na vis�o.
+     * Intercepta e atribui uma identificaçaoo a uma determinada exceção. O
+     * objeto resultante da exceção pode ser usando na visão.
      *
-     * @param target Exce��o alvo.
-     * @param view Vis�o. Se omitido, ser� usada a vis�o da a��o.
-     * @param id Identifica��o.
-     * @param dispatcher Modo como ser� direcionado o fluxo para a vis�o.
-     * @return Contrutor do controlador.
+     * @param target Exceção alvo.
+     * @param view Visão. Se omitido, será usada a visão da ação.
+     * @param id Identificação.
+     * @param dispatcher Modo como será direcionado o fluxo para a visão.
+     * @return Contrutor da ação.
      */
     public ActionBuilder addThrowable( Class target, String view, String id, DispatcherType dispatcher ){
         view = view == null || view.replace( " ", "" ).length() == 0? null : view;

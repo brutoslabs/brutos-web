@@ -21,24 +21,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Descreve as opções de direcionamento de fluxo para a visão.
+ * Descreve as opï¿½ï¿½es de direcionamento de fluxo para a visï¿½o.
  * 
  * @author Afonso Brandao
  */
 public class DispatcherType {
 
     /**
-     * Inclui a visão no resultado.
+     * Inclui a visï¿½o no resultado.
      */
     public static final DispatcherType INCLUDE  = new DispatcherType( "include" );
 
     /**
-     *  A requisição é encaminhada para a visão.
+     *  A requisiï¿½ï¿½o ï¿½ encaminhada para a visï¿½o.
      */
     public static final DispatcherType FORWARD  = new DispatcherType( "forward" );
 
     /**
-     *  A requisição é redirecionada para a visão.
+     *  A requisiï¿½ï¿½o ï¿½ redirecionada para a visï¿½o.
      */
     public static final DispatcherType REDIRECT = new DispatcherType( "redirect" );
 
@@ -61,6 +61,9 @@ public class DispatcherType {
     }
 
     public static DispatcherType valueOf( String value ){
+        if(value == null)
+            return null;
+        else
         if( defaultDispatcher.containsKey(value) )
             return (DispatcherType)defaultDispatcher.get( value );
         else
