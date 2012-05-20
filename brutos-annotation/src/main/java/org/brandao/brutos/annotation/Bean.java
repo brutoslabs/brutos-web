@@ -25,15 +25,12 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author Afonso Brandao
+ * @author Afosno Brandao
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Deprecated
-public @interface MethodMapping {
-    
-    String name();
-    
-    ParameterMethod[] parameters() default {};
+public @interface Bean {
+
+    String name() default "";
     
 }

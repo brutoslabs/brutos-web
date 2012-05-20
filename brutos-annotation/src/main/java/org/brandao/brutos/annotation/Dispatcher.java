@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.annotation;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -25,15 +24,12 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author Afonso Brandao
+ * @author Brandao
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Deprecated
-public @interface MethodMapping {
-    
-    String name();
-    
-    ParameterMethod[] parameters() default {};
+public @interface Dispatcher {
+
+    String value();
     
 }

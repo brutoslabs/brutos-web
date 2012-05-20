@@ -17,23 +17,22 @@
 
 package org.brandao.brutos.annotation;
 
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  *
- * @author Afonso Brandao
+ * @author Brandao
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Deprecated
-public @interface MethodMapping {
+public @interface CustomAnnotation {
     
-    String name();
+    Class<? extends Annotation> target();
     
-    ParameterMethod[] parameters() default {};
+    Class<? extends Annotation> depends() default Annotation.class;
+    
+    int majorVersion() default 1;
+    
+    int minorVersion() default 0;
     
 }

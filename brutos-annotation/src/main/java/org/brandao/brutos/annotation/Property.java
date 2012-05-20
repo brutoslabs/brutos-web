@@ -22,18 +22,18 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import org.brandao.brutos.type.Type;
 
 /**
- *
+ * 
  * @author Afonso Brandao
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@Deprecated
-public @interface MethodMapping {
+public @interface Property {
+
+    String bean() default "";
     
-    String name();
-    
-    ParameterMethod[] parameters() default {};
-    
+    String scope() default "param";
+
 }

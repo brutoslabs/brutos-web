@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation;
 
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -24,12 +25,12 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author Brandao
+ * @author Afonso Brandao
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.METHOD,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ControllerAlias {
+public @interface Enumerated {
 
-    String[] value();
-    
+    EnumType value() default EnumType.ORDINAL;
+   
 }

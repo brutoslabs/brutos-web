@@ -17,23 +17,18 @@
 
 package org.brandao.brutos.annotation;
 
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.brandao.brutos.ConfigurableApplicationContext;
 
 /**
  *
- * @author Afonso Brandao
+ * @author Brandao
  */
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@Deprecated
-public @interface MethodMapping {
+public interface AnnotationConfig {
     
-    String name();
+    boolean isApplicable(Object source);
     
-    ParameterMethod[] parameters() default {};
+    Object applyConfiguration(Object source, Object builder,
+            ConfigurableApplicationContext applicationContext);
+    
     
 }

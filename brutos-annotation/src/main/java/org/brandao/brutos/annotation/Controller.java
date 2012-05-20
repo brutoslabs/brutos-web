@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.annotation;
@@ -23,23 +23,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indica que a classe é um controlador.
- * <p>Ex:</p>
- * <pre>
- * &#64;Controller( id="/myController.jbrs", view="/myController.jsp" )
- * public class MyController{
- *     ...
- * }
- * </pre>
- * <p>Ex2:</p>
- * <pre>
- * &#64;Controller
- * public class MyController{
- *     ...
- * }
- * </pre>
- * No exemplo acima a id será /MyController.jbrs e a view será
- * /MyController/MyController.jsp.
  * 
  * @author Afonso Brandao
  */
@@ -47,44 +30,12 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Controller{
 
-    /**
-     * Ação a ser executada caso não seja especificada
-     * nenhuma ação.
-     * @return Nome da ação.
-     */
     String defaultActionName() default "";
 
-    /**
-     * Identificação da visão. Se não informado, será a concatenação
-     * de /, nome da classe, /, nome da classe e .jsp.
-     * @return Nome da visão. A visão é representada normalmente
-     * por um URI.
-     */
-    String view() default "";
-
-    /**
-     * Nome do controlador. Usado para identificar o controlador no
-     * container IOC. Se não informado, é usado o nome da classe.
-     * @return Nome do controlador.
-     */
     String name() default "";
 
-    /**
-     * Identificação do controlador. Se não informado, será usado a concatenação
-     * do nome da classe e .jbrs.
-     * @return Arranjo de identificações.
-     */
     String id() default "";
 
-    /**
-     * Nome do parâmetro que contém a identificação da ação.
-     * @return Nome do parâmetro. Por padrão é <b>invoke</b>.
-     */
     String actionId() default "invoke";
-
-    /**
-     * Determina como a visão será processada.
-     */
-    String dispatcher() default "forward";
 
 }
