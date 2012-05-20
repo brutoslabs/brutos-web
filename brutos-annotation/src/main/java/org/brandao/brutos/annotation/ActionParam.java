@@ -17,26 +17,24 @@
 
 package org.brandao.brutos.annotation;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 
- * @author Afonso Brandao
+ *
+ * @author Brandao
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Property {
-
-    String bean() default "";
+public @interface ActionParam {
+    
+    String bean();
     
     String scope() default "param";
-
+    
     boolean mapping() default false;
     
     Class<? extends org.brandao.brutos.type.Type> factory() default org.brandao.brutos.type.Type.class;
-    
 }
