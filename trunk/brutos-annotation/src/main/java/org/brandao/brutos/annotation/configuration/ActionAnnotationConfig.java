@@ -1,14 +1,26 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Brutos Web MVC http://www.brutosframework.com.br/
+ * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 package org.brandao.brutos.annotation.configuration;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import org.brandao.brutos.ActionBuilder;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.ControllerBuilder;
-import org.brandao.brutos.DispatcherType;
+import java.lang.reflect.Type;
+import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 
 /**
@@ -31,7 +43,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         String id;
         
         
-        if( action == null){
+        if( action == null || "".equals(action.value()) ){
             id = controllerBuilder.getClassType().getSimpleName().toLowerCase();
             id = id.endsWith("controller")? id.replaceAll("controller^", "") : id;
         }
@@ -45,7 +57,9 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         view = viewAnnotation == null? null : viewAnnotation.value();
 
         Dispatcher dispatcherAnnotation = method.getAnnotation(Dispatcher.class);
-        dispatcher = dispatcherAnnotation == null? null : DispatcherType.valueOf(dispatcherAnnotation.value());
+        dispatcher = dispatcherAnnotation == null? 
+                BrutosConstants.DEFAULT_DISPATCHERTYPE : 
+                DispatcherType.valueOf(dispatcherAnnotation.value());
         
         ActionBuilder actionBuilder =
         controllerBuilder
@@ -56,9 +70,26 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 dispatcher,
                 method.getName() );
         
+        addParameters(actionBuilder, method,applicationContext);
+        
         return actionBuilder;
     }
 
+    private void addParameters(ActionBuilder builder, 
+            Method method,ConfigurableApplicationContext applicationContext){
+        
+        Type[] genericTypes = (Type[]) method.getGenericParameterTypes();
+        Class[] types = method.getParameterTypes();
+        Annotation[][] annotations = method.getParameterAnnotations();
+        
+        for(int i=0;i<types.length;i++){
+            ActionParamEntry actionParamEntry = 
+                    new ActionParamEntry(null,types[i],genericTypes[i],annotations[i]);
+            
+            super.applyInternalConfiguration(actionParamEntry, builder, applicationContext);
+        }
+    }
+    
     public boolean isApplicable(Object source) {
         return source instanceof Method && 
                (((Method)source).isAnnotationPresent( Action.class ) ||
