@@ -87,4 +87,11 @@ public interface BrutosConstants {
     public final String JSF_ACTION_LISTENER = ApplicationContext.class.getName() + ".JSF_Action_Listener";
 
     public final DispatcherType DEFAULT_DISPATCHERTYPE = DispatcherType.FORWARD;
+    
+    public final ScopeType DEFAULT_SCOPETYPE = ScopeType.PARAM;
+    
+    public final EnumerationType DEFAULT_ENUMERATIONTYPE = EnumerationType.ORDINAL;
+    
+    public final String DEFAULT_TEMPORALPROPERTY = "dd/MM/yyyy";
+    
 }
