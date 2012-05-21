@@ -15,21 +15,18 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.configuration;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.Annotation;
 
 /**
  *
- * @author Afonso Brandao
+ * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.FIELD, ElementType.PARAMETER})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Temporal {
+public class PropertyEntry {
     
-    String value();
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
+        return false;
+    }
     
 }

@@ -27,7 +27,7 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
-@CustomAnnotation(target=Action.class,depends=Controller.class)
+@CustomAnnotation(target=Action.class,executeAfter=Controller.class)
 public class ActionAnnotationConfig extends AbstractAnnotationConfig{
 
     public Object applyConfiguration(Object source, Object builder, 
@@ -84,7 +84,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         
         for(int i=0;i<types.length;i++){
             ActionParamEntry actionParamEntry = 
-                    new ActionParamEntry(null,types[i],genericTypes[i],annotations[i]);
+                    new ActionParamEntry(null,types[i],genericTypes[i],annotations[i],i);
             
             super.applyInternalConfiguration(actionParamEntry, builder, applicationContext);
         }

@@ -29,7 +29,9 @@ public @interface CustomAnnotation {
     
     Class<? extends Annotation> target();
     
-    Class<? extends Annotation> depends() default Annotation.class;
+    Class<? extends Annotation>[] executeBefore() default {};
+
+    Class<? extends Annotation>[] executeAfter() default {};
     
     int majorVersion() default 1;
     

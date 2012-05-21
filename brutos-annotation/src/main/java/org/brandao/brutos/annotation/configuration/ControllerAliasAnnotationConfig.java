@@ -18,29 +18,24 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.annotation.AnnotationConfig;
+import org.brandao.brutos.annotation.Controller;
+import org.brandao.brutos.annotation.ControllerAlias;
+import org.brandao.brutos.annotation.CustomAnnotation;
 
 /**
  *
  * @author Brandao
  */
-public abstract class AbstractAnnotationConfig implements AnnotationConfig{
+@CustomAnnotation(target=ControllerAlias.class,executeAfter=Controller.class)
+public class ControllerAliasAnnotationConfig extends AbstractAnnotationConfig{
 
-    private AnnotationConfigEntry annotation;
-    
-    public void setConfiguration(AnnotationConfigEntry annotation){
-        this.annotation = annotation;
-    }
-    
-    public Object applyInternalConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
-
-        AnnotationConfigEntry next = annotation.getNextAnnotationConfig();
-        
-        if(next.getAnnotationConfig().isApplicable(source))
-            builder = next.getAnnotationConfig().applyConfiguration(source, builder, applicationContext);
-        
-        return builder;
+    public boolean isApplicable(Object source) {
+        return source instanceof Class && 
+               ((Class)source).isAnnotationPresent( ControllerAlias.class );
     }
 
+    public Object applyConfiguration(Object source, Object builder, ConfigurableApplicationContext applicationContext) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
 }

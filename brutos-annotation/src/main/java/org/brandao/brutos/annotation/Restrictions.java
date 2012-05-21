@@ -17,19 +17,12 @@
 
 package org.brandao.brutos.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 /**
  *
- * @author Afonso Brandao
+ * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.FIELD, ElementType.PARAMETER})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Temporal {
+public @interface Restrictions {
     
-    String value();
+    Restriction[] value();
     
 }
