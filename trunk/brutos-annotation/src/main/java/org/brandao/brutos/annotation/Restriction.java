@@ -24,12 +24,15 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author Afonso Brandao
+ * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.FIELD, ElementType.PARAMETER})
+@Target({ElementType.PARAMETER,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Temporal {
+public @interface Restriction {
+    
+    String rule();
     
     String value();
     
+    String message() default "";
 }

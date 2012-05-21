@@ -31,6 +31,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Enumerated {
 
-    EnumType value() default EnumType.ORDINAL;
+    String value() default "ordinal";
    
 }

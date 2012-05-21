@@ -20,8 +20,10 @@ package org.brandao.brutos.annotation.configuration;
 import java.lang.reflect.Method;
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.Action;
+import org.brandao.brutos.annotation.Controller;
 import org.brandao.brutos.annotation.CustomAnnotation;
 import org.brandao.brutos.annotation.ThrowableSafe;
 
@@ -29,29 +31,45 @@ import org.brandao.brutos.annotation.ThrowableSafe;
  *
  * @author Brandao
  */
-@CustomAnnotation(target=ThrowableSafe.class,depends=Action.class)
+@CustomAnnotation(target=ThrowableSafe.class,executeAfter={Action.class,Controller.class})
 public class ThrowableSafeAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
-        return source instanceof Method && 
-               ((Method)source).isAnnotationPresent( ThrowableSafe.class );
+        return (source instanceof Method && 
+               ((Method)source).isAnnotationPresent( ThrowableSafe.class )) ||
+               (source instanceof Class && 
+               ((Class)source).isAnnotationPresent( ThrowableSafe.class ));
     }
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
+
+        ActionBuilder actionBuilder = builder instanceof ActionBuilder? 
+                (ActionBuilder)builder : 
+                null;
         
-        Method method = (Method)source;
-        ActionBuilder actionBuilder = (ActionBuilder)builder;
-        ThrowableSafe throwableSafe = (ThrowableSafe)method.getAnnotation(ThrowableSafe.class);
+        ControllerBuilder controllerBuilder = builder instanceof ControllerBuilder? 
+                (ControllerBuilder)builder : 
+                null;
+        
+        Method method = source instanceof Method? (Method)source : null;
+        Class clazz = source instanceof Class? (Class)source : null;
+        
+        ThrowableSafe throwableSafe = source instanceof Method? 
+                (ThrowableSafe)method.getAnnotation(ThrowableSafe.class) :
+                (ThrowableSafe)clazz.getAnnotation(ThrowableSafe.class);
         
         DispatcherType dispatcher = DispatcherType.valueOf(throwableSafe.dispatcher());
         String name = throwableSafe.name();
         Class<? extends Throwable> target = throwableSafe.target();
         String view = throwableSafe.view();
         
-        actionBuilder = actionBuilder.addThrowable(target, view, name, dispatcher);
+        if(actionBuilder != null)
+            builder = actionBuilder.addThrowable(target, view, name, dispatcher);
+        else
+            builder = controllerBuilder.addThrowable(target, view, name, dispatcher);
         
-        return actionBuilder;
+        return builder;
     }
     
 }

@@ -21,6 +21,7 @@ package org.brandao.brutos.annotation;
  *
  * @author Brandao
  */
+@Deprecated
 public enum EnumType {
 
     ORDINAL,

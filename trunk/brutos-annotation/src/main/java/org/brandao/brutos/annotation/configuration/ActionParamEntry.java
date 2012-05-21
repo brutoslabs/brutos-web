@@ -26,6 +26,8 @@ import java.lang.reflect.Type;
  */
 public class ActionParamEntry {
     
+    private int index;
+    
     private Type genericType;
     
     private Class type;
@@ -34,7 +36,7 @@ public class ActionParamEntry {
     
     private Annotation[] annotation;
 
-    public ActionParamEntry(String name,Class type,Type genericType,Annotation[] annotation){
+    public ActionParamEntry(String name,Class type,Type genericType,Annotation[] annotation, int index){
         this.name = name;
         this.type = type;
         this.genericType = genericType;
@@ -89,6 +91,14 @@ public class ActionParamEntry {
 
     public void setAnnotation(Annotation[] annotation) {
         this.annotation = annotation;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
     
 }
