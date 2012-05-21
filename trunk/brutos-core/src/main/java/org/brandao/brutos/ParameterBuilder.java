@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos;
@@ -20,7 +20,7 @@ package org.brandao.brutos;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
- * Constr�i um par�metro de uma a��o.
+ * Constrói um parâmetro de uma ação.
  *
  * @author Afonso Brandao
  */
@@ -31,6 +31,10 @@ public class ParameterBuilder extends RestrictionBuilder{
     }
 
     public RestrictionBuilder addRestriction( RestrictionRules ruleId, Object value ){
+        
+        if(ruleId == null)
+            throw new NullPointerException();
+        
         return super.addRestriction( ruleId, value );
     }
 
