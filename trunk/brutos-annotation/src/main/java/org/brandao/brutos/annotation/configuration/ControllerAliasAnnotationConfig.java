@@ -18,15 +18,16 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.annotation.Controller;
 import org.brandao.brutos.annotation.ControllerAlias;
-import org.brandao.brutos.annotation.CustomAnnotation;
+import org.brandao.brutos.annotation.Stereotype;
 
 /**
  *
  * @author Brandao
  */
-@CustomAnnotation(target=ControllerAlias.class,executeAfter=Controller.class)
+@Stereotype(target=ControllerAlias.class,executeAfter=Controller.class)
 public class ControllerAliasAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
@@ -35,7 +36,16 @@ public class ControllerAliasAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, ConfigurableApplicationContext applicationContext) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
+        ControllerBuilder controllerBuilder = (ControllerBuilder)builder;
+        Class clazz = (Class)source;
+        ControllerAlias alias = (ControllerAlias)clazz.getAnnotation(ControllerAlias.class);
+        
+        for( String a: alias.value() )
+            controllerBuilder.addAlias(a);
+        
+        
+        return builder;
     }
     
 }

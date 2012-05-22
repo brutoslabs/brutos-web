@@ -27,7 +27,7 @@ import org.brandao.brutos.validator.RestrictionRules;
  *
  * @author Brandao
  */
-@CustomAnnotation(target=Restrictions.class,executeAfter={ActionParam.class,Property.class})
+@Stereotype(target=Restrictions.class,executeAfter={ActionParam.class,Property.class})
 public class RestrictionsAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {

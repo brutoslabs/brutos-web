@@ -31,7 +31,9 @@ import org.brandao.brutos.interceptor.Interceptor;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Intercept {
 
-    Class<? extends Interceptor> interceptor();
+    String name() default "";
+    
+    Class<? extends Interceptor> interceptor() default Interceptor.class;
 
     Param[] params() default{};
     
