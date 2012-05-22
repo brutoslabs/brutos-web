@@ -25,7 +25,7 @@ import org.brandao.brutos.type.Type;
  *
  * @author Brandao
  */
-@CustomAnnotation(target=ActionParam.class,executeAfter=Action.class)
+@Stereotype(target=ActionParam.class,executeAfter=Action.class)
 public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {

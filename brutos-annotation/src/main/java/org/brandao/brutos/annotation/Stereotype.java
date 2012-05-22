@@ -25,7 +25,7 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CustomAnnotation {
+public @interface Stereotype {
     
     Class<? extends Annotation> target();
     

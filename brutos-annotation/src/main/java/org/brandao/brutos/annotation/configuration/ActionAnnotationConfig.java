@@ -27,7 +27,7 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
-@CustomAnnotation(target=Action.class,executeAfter=Controller.class)
+@Stereotype(target=Action.class,executeAfter=Controller.class)
 public class ActionAnnotationConfig extends AbstractAnnotationConfig{
 
     public Object applyConfiguration(Object source, Object builder, 

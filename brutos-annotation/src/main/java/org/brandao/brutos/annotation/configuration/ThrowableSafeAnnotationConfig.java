@@ -24,14 +24,14 @@ import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.Action;
 import org.brandao.brutos.annotation.Controller;
-import org.brandao.brutos.annotation.CustomAnnotation;
+import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.ThrowableSafe;
 
 /**
  *
  * @author Brandao
  */
-@CustomAnnotation(target=ThrowableSafe.class,executeAfter={Action.class,Controller.class})
+@Stereotype(target=ThrowableSafe.class,executeAfter={Action.class,Controller.class})
 public class ThrowableSafeAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {

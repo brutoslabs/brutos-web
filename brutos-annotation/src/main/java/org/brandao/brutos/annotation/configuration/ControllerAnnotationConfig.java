@@ -28,7 +28,7 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
-@CustomAnnotation(target=Controller.class,executeAfter=Intercepts.class)
+@Stereotype(target=Controller.class,executeAfter=Intercepts.class)
 public class ControllerAnnotationConfig 
     extends AbstractAnnotationConfig{
 
