@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos;
@@ -66,10 +66,12 @@ import org.brandao.brutos.mapping.InterceptorStack;
 public class InterceptorManager {
     
     private Map interceptors;
+    private Map reverseInterceptors;
     private List defaultInterceptors;
     
     public InterceptorManager() {
         this.interceptors = new HashMap();
+        this.reverseInterceptors = new HashMap();
         this.defaultInterceptors = new ArrayList();
     }
 
@@ -138,6 +140,7 @@ public class InterceptorManager {
         in.setProperties( new HashMap() );
         in.setDefault( isDefault );
         interceptors.put( name, in );
+        reverseInterceptors.put(interceptor, name);
         return new InterceptorBuilder( in, this );
         
     }
@@ -154,6 +157,13 @@ public class InterceptorManager {
             return (Interceptor) interceptors.get( name );
     }
 
+    public Interceptor getInterceptor( Class clazz ){
+        if( !reverseInterceptors.containsKey( clazz ) )
+            throw new BrutosException( "interceptor not found: " + clazz.getName() );
+        else
+            return (Interceptor) reverseInterceptors.get( clazz );
+    }
+    
     /**
      * Obt�m os interceptadores globais.
      * @return Interceptadores globais.

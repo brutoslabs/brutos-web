@@ -79,7 +79,7 @@ public class Invoker {
      * Executa uma ação.
      *
      * @param requestId Identificação da ação.
-     * @param externalThrow Exceção external. Por exemplo FileUploadException.
+     * @param externalThrow Exceção externa. Por exemplo FileUploadException.
      * @return Verdadeiro se foi executada a ação, coso contrário é falso.
      */
     public boolean invoke( String requestId, Throwable externalThrow ){

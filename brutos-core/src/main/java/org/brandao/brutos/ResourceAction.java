@@ -1,19 +1,20 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 
 package org.brandao.brutos;
 
@@ -22,17 +23,17 @@ import java.lang.reflect.Method;
 import org.brandao.brutos.mapping.MethodForm;
 
 /**
- * Representa uma ação.
+ * Representa uma aÃ§ao.
  *
  * @author Afonso Brandao
  */
 public interface ResourceAction {
 
     /**
-     * Invoca o método associado a ação.
-     * @param source Objeto a ter o método invocado.
-     * @param args Argumentos necessários para invocar o método.
-     * @return Resultado obtido da invocação do método.
+     * Invoca o mï¿½todo associado a aï¿½ï¿½o.
+     * @param source Objeto a ter o mï¿½todo invocado.
+     * @param args Argumentos necessï¿½rios para invocar o mï¿½todo.
+     * @return Resultado obtido da invocaï¿½ï¿½o do mï¿½todo.
      * @throws IllegalAccessException
      * @throws IllegalArgumentException
      * @throws InvocationTargetException
@@ -42,39 +43,39 @@ public interface ResourceAction {
                 InvocationTargetException;
 
     /**
-     * Obtém o mapeamento da ação.
-     * @return Método.
+     * Obtï¿½m o mapeamento da aï¿½ï¿½o.
+     * @return Mï¿½todo.
      */
     public MethodForm getMethodForm();
 
     /**
-     * Obtém o método associado a ação.
-     * @return Método.
+     * Obtï¿½m o mï¿½todo associado a aï¿½ï¿½o.
+     * @return Mï¿½todo.
      */
     public Method getMethod();
 
     /**
-     * Obtém o tipo de retorno da ação.
+     * Obtï¿½m o tipo de retorno da aï¿½ï¿½o.
      * @return Tipo.
      */
     public Class returnType();
 
     /**
-     * Obtém os argumentos necessários para invocar o método.
+     * Obtï¿½m os argumentos necessï¿½rios para invocar o mï¿½todo.
      * @return Matriz de tipos.
      */
     public Class[] getParametersType();
 
     /**
-     * Obtém a classe proprietária do método associado a ação.
+     * Obtï¿½m a classe proprietï¿½ria do mï¿½todo associado a aï¿½ï¿½o.
      * @return Classe.
      */
     public Class getResourceClass();
 
     /**
-     * Verifica se é uma ação abstrata.
-     * @return Verdadeiro se existe um método associado a ação, caso
-     * contrário falso.
+     * Verifica se ï¿½ uma aï¿½ï¿½o abstrata.
+     * @return Verdadeiro se existe um mï¿½todo associado a aï¿½ï¿½o, caso
+     * contrï¿½rio falso.
      */
     public boolean isAbstract();
 }
