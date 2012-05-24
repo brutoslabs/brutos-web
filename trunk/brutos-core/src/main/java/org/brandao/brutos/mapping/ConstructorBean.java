@@ -22,7 +22,7 @@ import java.util.List;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassType;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.type.Types;
 import org.brandao.brutos.type.TypeManager;
 
@@ -177,8 +177,8 @@ public class ConstructorBean {
         if( params.length == classArgs.length ){
             for( int i=0;i<params.length;i++ ){
                 if( classArgs[i] != null && 
-                        !ClassType.getWrapper( params[i] )
-                            .isAssignableFrom( ClassType.getWrapper( classArgs[i] ) ) )
+                        !ClassUtil.getWrapper( params[i] )
+                            .isAssignableFrom( ClassUtil.getWrapper( classArgs[i] ) ) )
                     return false;
             }
             return true;

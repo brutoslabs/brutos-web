@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassType;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.Types;
@@ -279,8 +279,8 @@ public class MethodForm {
         if( params.length == classArgs.length ){
             for( int i=0;i<params.length;i++ ){
                 if( classArgs[i] != null &&
-                        !ClassType.getWrapper( params[i] )
-                            .isAssignableFrom( ClassType.getWrapper( classArgs[i] ) ) )
+                        !ClassUtil.getWrapper( params[i] )
+                            .isAssignableFrom( ClassUtil.getWrapper( classArgs[i] ) ) )
                     return false;
             }
             return true;

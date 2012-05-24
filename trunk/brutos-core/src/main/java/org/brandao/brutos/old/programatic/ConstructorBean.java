@@ -22,7 +22,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.ioc.ComplexObjectInject;
 import org.brandao.brutos.mapping.ioc.ConstructorInject;
 import org.brandao.brutos.mapping.ioc.ValueInject;
-import org.brandao.brutos.ClassType;
+import org.brandao.brutos.ClassUtil;
 
 /**
  *
@@ -60,7 +60,7 @@ public class ConstructorBean {
         Constructor con  = bean.getInjectable().getConstructor().getContructor();
         Class typeArg = con.getParameterTypes()[ bean.getInjectable().getConstructor().getArgs().size() ];
         
-        if( value != null && !ClassType.getWrapper( typeArg ).isAssignableFrom( value.getClass() ) )
+        if( value != null && !ClassUtil.getWrapper( typeArg ).isAssignableFrom( value.getClass() ) )
             throw new BrutosException( "invalid type" );
         
         bean.getInjectable().getConstructor().getArgs().add( new ValueInject( typeArg, value ) );

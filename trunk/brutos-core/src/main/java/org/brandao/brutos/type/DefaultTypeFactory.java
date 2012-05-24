@@ -39,5 +39,9 @@ public class DefaultTypeFactory implements TypeFactory{
             throw new BrutosException(e);
         }
     }
+
+    public Class getClassType() {
+        return null;
+    }
     
 }
