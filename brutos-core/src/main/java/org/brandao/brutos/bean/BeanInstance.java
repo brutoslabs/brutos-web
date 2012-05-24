@@ -1,25 +1,28 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.bean;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
@@ -52,11 +55,15 @@ public class BeanInstance {
     }
 
     public SetterProperty getSetter( String property ){
-        Method method = (Method) data.getSetter().get(property);
-        if( method == null )
+        Object access = data.getSetter().get(property);
+        
+        if( access instanceof Method )
+            return new SetterProperty( (Method)access, object );
+        else
+        if( access instanceof Field )
+            return new SetterProperty( (Field)access, object );
+        else
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
-        return new SetterProperty( method, object );
-        //return new SetterProperty( clazz.getDeclaredField( fieldName ), object );
     }
 
     private BeanData getBeanData( Class clazz ){
@@ -65,10 +72,19 @@ public class BeanInstance {
         else{
             BeanData data = new BeanData();
             data.setClassType(clazz);
+            
+            Field[] fields = clazz.getFields();
+
+            for( int i=0;i<fields.length;i++ ){
+                Field f = fields[i];
+                data.getSetter().put(f.getName(), f);
+                data.getGetter().put(f.getName(), f);
+            }
+            
             Method[] methods = clazz.getMethods();
+            
             for( int i=0;i<methods.length;i++ ){
                 Method method = methods[i];
-            //for( Method method: clazz.getMethods() ){
                 String methodName = method.getName();
 
                 if( methodName.startsWith("set") && method.getParameterTypes().length == 1 ){
@@ -105,12 +121,15 @@ public class BeanInstance {
     }
 
     public GetterProperty getGetter( String property ){
-        Method method = (Method) data.getGetter().get(property);
-        if( method == null )
+        Object access = data.getGetter().get(property);
+        
+        if( access instanceof Method )
+            return new GetterProperty( (Method)access, object );
+        else
+        if( access instanceof Field )
+            return new GetterProperty( (Field)access, object );
+        else
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
-
-        return new GetterProperty( method, object );
-        //return new GetterProperty( clazz.getDeclaredField( fieldName ), object );
     }
 
     public boolean containProperty( String property ){
@@ -156,6 +175,15 @@ public class BeanInstance {
     public Class getClassType(){
         return this.clazz;
     }
+    
+    public List getGetters(){
+        return new LinkedList(data.getGetter().values());
+    }
+    
+    public List getSetters(){
+        return new LinkedList(data.getSetter().values());
+    }
+    
 }
 
 class BeanData{
