@@ -36,5 +36,4 @@ public @interface ActionParam {
     
     boolean mapping() default false;
     
-    Class<? extends org.brandao.brutos.type.Type> factory() default org.brandao.brutos.type.Type.class;
 }
