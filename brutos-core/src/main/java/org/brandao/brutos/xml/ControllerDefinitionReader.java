@@ -534,7 +534,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         
         Class clazz = null;
         try{
-            clazz = ClassType.get(target);/*Class.forName(
+            clazz = ClassUtil.get(target);/*Class.forName(
                         target,
                         true,
                         Thread.currentThread().getContextClassLoader() );*/
@@ -663,7 +663,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 }
                 
                 if(typeName != null)
-                    type = ClassType.get(typeName);
+                    type = ClassUtil.get(typeName);
 
             }
             catch( Exception ex ){
@@ -916,7 +916,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
         try{
             if( type != null )
-                typeClass = ClassType.get(type);
+                typeClass = ClassUtil.get(type);
         }
         catch( Exception ex ){
             throw new BrutosException( ex );
@@ -954,11 +954,12 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         
         try{
             if( factoryName != null ){
-                factory = (Type)Class.forName(
+                factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
+                /*factory = (Type)Class.forName(
                             factoryName,
                             true,
                             Thread.currentThread().getContextClassLoader() )
-                                .newInstance();
+                                .newInstance();*/
             }
 
             //if( type == null )

@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos;
@@ -21,12 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Classe usada para empacotar tipos primitivos e obter uma classe a partir
- * de seu nome.
  * 
  * @author Afonso Brandao
  */
-public final class ClassType {
+public final class ClassUtil {
     
     private final static Map primitiveType;
     
@@ -53,12 +51,6 @@ public final class ClassType {
         primitiveType.put(void.class,java.lang.Void.class);
     }
 
-    /**
-     * Obt�m o tipo empacotado, caso seja um tipo primitivo.
-     *
-     * @param clazz Classe primitiva.
-     * @return Classe empacotada.
-     */
     public static Class getWrapper( Class clazz ){
         Class classe = (Class) primitiveType.get( clazz );
         
@@ -66,13 +58,6 @@ public final class ClassType {
         
     }
 
-    /**
-     * Obt�m uma classe a partir se seu nome.
-     * @param name Nome da classe.
-     * @return Classe.
-     * @throws ClassNotFoundException Lan�ada se n�o for poss�vel obter a
-     * classe.
-     */
     public static Class get( String name ) throws ClassNotFoundException{
         Class classe = (Class) primitiveType.get( name );
         
@@ -82,5 +67,10 @@ public final class ClassType {
     
     private static Class getClasse( String name ) throws ClassNotFoundException{
         return Class.forName( name, true, Thread.currentThread().getContextClassLoader() );
+    }
+    
+    public static Object getInstance(Class clazz) 
+            throws InstantiationException, IllegalAccessException{
+        return clazz.newInstance();
     }
 }

@@ -26,4 +26,6 @@ public interface TypeFactory {
 
     Type getInstance();
 
+    Class getClassType();
+    
 }

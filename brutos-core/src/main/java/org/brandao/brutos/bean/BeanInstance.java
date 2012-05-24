@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassType;
+import org.brandao.brutos.ClassUtil;
 
 
 /**
@@ -91,7 +91,7 @@ public class BeanInstance {
                 else
                 if( methodName.startsWith("is") &&
                     method.getParameterTypes().length == 0  &&
-                    ClassType.getWrapper(method.getReturnType()) == Boolean.class ){
+                    ClassUtil.getWrapper(method.getReturnType()) == Boolean.class ){
                     String id = methodName
                             .substring(2,methodName.length());
 

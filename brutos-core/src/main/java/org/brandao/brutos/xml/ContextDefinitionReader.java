@@ -28,6 +28,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
@@ -217,6 +218,7 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
             Class factory = null;
 
             try{
+                /*
                 type = Class.forName(
                             name,
                             true,
@@ -225,8 +227,10 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
                             value,
                             true,
                             Thread.currentThread().getContextClassLoader() );
-                
-            TypeManager.register(type, (TypeFactory)factory.newInstance());
+                */
+                type = ClassUtil.get(name);
+                factory = ClassUtil.get(value);
+                TypeManager.register(type, (TypeFactory)ClassUtil.getInstance(factory));
                 
             }
             catch( Exception e ){

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassType;
+import org.brandao.brutos.ClassUtil;
 
 /**
  *
@@ -205,7 +205,7 @@ public class ConstructorInject {
         if( params.length == classArgs.length ){
             for( int i=0;i<params.length;i++ ){
                 //if( classArgs[i] != null && !params[i].isAssignableFrom( classArgs[i] ) )
-                if( classArgs[i] != null && !ClassType.getWrapper( params[i] ).isAssignableFrom( ClassType.getWrapper( classArgs[i] ) ) )
+                if( classArgs[i] != null && !ClassUtil.getWrapper( params[i] ).isAssignableFrom( ClassUtil.getWrapper( classArgs[i] ) ) )
                     return false;
             }
             return true;

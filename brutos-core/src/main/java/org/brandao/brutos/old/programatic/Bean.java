@@ -24,7 +24,7 @@ import org.brandao.brutos.mapping.ioc.ComplexObjectInject;
 import org.brandao.brutos.mapping.ioc.Injectable;
 import org.brandao.brutos.mapping.ioc.PropertyInject;
 import org.brandao.brutos.mapping.ioc.ValueInject;
-import org.brandao.brutos.ClassType;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.GetterProperty;
 import org.brandao.brutos.bean.SetterProperty;
@@ -294,7 +294,7 @@ public class Bean {
             Method[] methods = classType.getMethods();
             for( int i=0;i<methods.length;i++ ){
                 Method m = methods[i];
-                if( m.getParameterTypes().length == 1 && methodName.equals( m.getName() ) && ClassType.getWrapper( m.getParameterTypes()[0] ).isAssignableFrom( ClassType.getWrapper(argType) ) ){
+                if( m.getParameterTypes().length == 1 && methodName.equals( m.getName() ) && ClassUtil.getWrapper( m.getParameterTypes()[0] ).isAssignableFrom( ClassUtil.getWrapper(argType) ) ){
                     method = classType.getMethod( methodName, new Class[]{m.getParameterTypes()[0]} );
                     break;
                 }
