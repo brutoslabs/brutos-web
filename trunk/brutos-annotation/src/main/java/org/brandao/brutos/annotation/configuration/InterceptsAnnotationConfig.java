@@ -23,12 +23,13 @@ import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.annotation.Intercepts;
 import org.brandao.brutos.annotation.Param;
 import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.annotation.TypeDef;
 
 /**
  *
  * @author Brandao
  */
-@Stereotype(target=Intercepts.class)
+@Stereotype(target=Intercepts.class,executeAfter=TypeDef.class)
 public class InterceptsAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {

@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.TypeDef;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.type.TypeManager;
@@ -28,6 +29,7 @@ import org.brandao.brutos.type.TypeManager;
  *
  * @author Brandao
  */
+@Stereotype(target=TypeDef.class)
 public class TypeDefAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
