@@ -51,7 +51,7 @@ public class ControllerAnnotationConfig
         String actionID;
 
         if(annotationController == null){
-            name = source.getSimpleName();
+            name = source.getSimpleName().replaceAll("Controller$", "");
             actionID = "invoke";
         }
         else{

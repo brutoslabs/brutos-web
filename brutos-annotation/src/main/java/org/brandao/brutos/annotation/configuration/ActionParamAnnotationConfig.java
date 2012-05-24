@@ -19,7 +19,6 @@ package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
-import org.brandao.brutos.type.Type;
 
 /**
  *
@@ -45,7 +44,7 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
         EnumerationType enumProperty = getEnumerationType(param);
         String temporalProperty = getTemporalProperty(param);
         String mapping = getMappingName(actionParam);
-        Type type = getType(actionParam);
+        org.brandao.brutos.type.Type type = getType(param);
         
         ParameterBuilder paramBuilder = 
                 actionBuilder.addParameter(name, scope, enumProperty, 
@@ -56,14 +55,15 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
         return actionBuilder;
     }
 
-    private Type getType(ActionParam actionParam){
+    private org.brandao.brutos.type.Type getType(ActionParamEntry param){
         try{
-            if(actionParam == null || actionParam.factory() == Type.class)
-                return null;
-            else{
-                Class typeClass = actionParam.factory();
-                return (Type)typeClass.newInstance();
+            Type type = param.getAnnotation(Type.class);
+            if(type != null){
+                Class typeClass = type.value();
+                return (org.brandao.brutos.type.Type)ClassUtil.getInstance(typeClass);
             }
+            else
+                return null;
             
             
         }
