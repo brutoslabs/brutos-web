@@ -19,6 +19,7 @@ package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.bean.BeanInstance;
 
 /**
  *
@@ -28,13 +29,13 @@ import org.brandao.brutos.annotation.*;
 public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
-        return source instanceof ActionParamEntry;
+        return source instanceof BeanInstance;
     }
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
-        ActionParamEntry param = (ActionParamEntry)source;
+        BeanInstance param = (BeanInstance)source;
         
         BeanBuilder beanBuilder = builder instanceof BeanBuilder? 
                 (BeanBuilder)builder :

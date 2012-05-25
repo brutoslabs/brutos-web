@@ -18,11 +18,14 @@
 package org.brandao.brutos.annotation.configuration;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.bean.BeanProperty;
 
 /**
  *
@@ -76,9 +79,20 @@ public class ControllerAnnotationConfig
                     name, source,
                     actionID);
 
+        addProperties(builder, applicationContext, source);
         addActions( builder, applicationContext, source );
-
         return builder;
+    }
+    
+    protected void addProperties(ControllerBuilder controllerBuilder, 
+            ConfigurableApplicationContext applicationContext, Class clazz){
+    
+        BeanInstance instance = new BeanInstance(null,clazz);
+        List props = instance.getProperties();
+        for(int i=0;i<props.size();i++){
+            BeanProperty prop = (BeanProperty) props.get(i);
+            super.applyInternalConfiguration(prop, controllerBuilder, applicationContext);
+        }
     }
     
     protected void addActions( ControllerBuilder controllerBuilder, 
