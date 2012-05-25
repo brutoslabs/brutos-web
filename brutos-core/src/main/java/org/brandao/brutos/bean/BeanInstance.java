@@ -227,6 +227,10 @@ public class BeanInstance {
         return this.clazz;
     }
     
+    public List getProperties(){
+        return new LinkedList(this.data.getProperties().values());
+    }
+    
 }
 
 class BeanData{
