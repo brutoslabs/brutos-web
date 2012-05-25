@@ -17,20 +17,13 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.mapping.CollectionBean;
-import org.brandao.brutos.mapping.PropertyBean;
-import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MapBean;
-import org.brandao.brutos.mapping.Bean;
-import org.brandao.brutos.mapping.ConstructorArgBean;
-import org.brandao.brutos.mapping.DependencyBean;
+import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.type.Types;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**

@@ -174,7 +174,7 @@ public class Bean {
         }
         */
 
-        SetterProperty set = beanInstance.getSetter(name);
+        SetterProperty set = null;//beanInstance.getSetter(name);
         Method method = set == null? null : set.getMethod();
 
         if( method == null ){

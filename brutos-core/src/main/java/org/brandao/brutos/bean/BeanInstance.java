@@ -54,6 +54,26 @@ public class BeanInstance {
         this.data   = getBeanData( this.clazz );
     }
 
+    public void set( String property, Object value ) throws IllegalAccessException, 
+            IllegalArgumentException, InvocationTargetException{
+        
+        BeanProperty prop = data.getProperty(property);
+        if(prop == null)
+            throw new BrutosException( "not found: " + clazz.getName() + "." + property );
+        prop.set(object, value);
+    }
+
+    public Object get( String property ) throws IllegalAccessException, 
+            IllegalArgumentException, InvocationTargetException{
+        
+        BeanProperty prop = data.getProperty(property);
+        if(prop == null)
+            throw new BrutosException( "not found: " + clazz.getName() + "." + property );
+        
+        return prop.get(object);
+    }
+    
+    /*
     public SetterProperty getSetter( String property ){
         Object access = data.getSetter().get(property);
         
@@ -65,7 +85,21 @@ public class BeanInstance {
         else
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
     }
-
+    */
+    /*
+    public GetterProperty getGetter( String property ){
+        Object access = data.getGetter().get(property);
+        
+        if( access instanceof Method )
+            return new GetterProperty( (Method)access, object );
+        else
+        if( access instanceof Field )
+            return new GetterProperty( (Field)access, object );
+        else
+            throw new BrutosException( "not found: " + clazz.getName() + "." + property );
+    }
+    */
+    
     private BeanData getBeanData( Class clazz ){
         if( cache.containsKey(clazz) )
             return (BeanData) cache.get(clazz);
@@ -77,6 +111,7 @@ public class BeanInstance {
 
             for( int i=0;i<fields.length;i++ ){
                 Field f = fields[i];
+                data.addProperty(f.getName(), new BeanProperty(f,null,null,f.getName()));
                 data.getSetter().put(f.getName(), f);
                 data.getGetter().put(f.getName(), f);
             }
@@ -92,6 +127,12 @@ public class BeanInstance {
                             .substring(3,methodName.length());
 
                     id = Character.toLowerCase( id.charAt(0) )+ id.substring(1, id.length());
+                    
+                    if(data.getProperty(id) != null)
+                        data.getProperty(id).setSet(method);
+                    else
+                        data.addProperty(id, new BeanProperty(null,method,null,id));
+                    
                     data.getSetter().put(id, method);
                 }
                 else
@@ -102,6 +143,12 @@ public class BeanInstance {
                             .substring(3,methodName.length());
 
                     id = Character.toLowerCase( id.charAt(0) )+ id.substring(1, id.length());
+                    
+                    if(data.getProperty(id) != null)
+                        data.getProperty(id).setGet(method);
+                    else
+                        data.addProperty(id, new BeanProperty(null,null,method,id));
+                    
                     data.getGetter().put(id, method);
                 }
                 else
@@ -112,6 +159,12 @@ public class BeanInstance {
                             .substring(2,methodName.length());
 
                     id = Character.toLowerCase( id.charAt(0) )+ id.substring(1, id.length());
+                    
+                    if(data.getProperty(id) != null)
+                        data.getProperty(id).setGet(method);
+                    else
+                        data.addProperty(id, new BeanProperty(null,null,method,id));
+                    
                     data.getGetter().put(id, method);
                 }
             }
@@ -120,38 +173,34 @@ public class BeanInstance {
         }
     }
 
-    public GetterProperty getGetter( String property ){
-        Object access = data.getGetter().get(property);
-        
-        if( access instanceof Method )
-            return new GetterProperty( (Method)access, object );
-        else
-        if( access instanceof Field )
-            return new GetterProperty( (Field)access, object );
-        else
-            throw new BrutosException( "not found: " + clazz.getName() + "." + property );
-    }
-
     public boolean containProperty( String property ){
-        return data.getGetter().get(property) != null;
+        return data.getProperties().containsKey(property);
     }
     
     public Class getType( String property ){
-        Method method = (Method) data.getGetter().get(property);
-        if( method == null )
+        //Method method = (Method) data.getGetter().get(property);
+        
+        BeanProperty prop = data.getProperty(property);
+        
+        if( prop == null )
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
 
-        return method.getReturnType();
+        //return method.getReturnType();
+
+        return prop.getType();
     }
 
     public Object getGenericType( String property ){
         
-        Method method = (Method) data.getGetter().get(property);
-        if( method == null )
+        BeanProperty prop = data.getProperty(property);
+        //Method method = (Method) data.getGetter().get(property);
+        
+        if( prop == null )
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
 
         try{
-            return getGenericReturnType( method );
+            //return getGenericReturnType( method );
+            return prop.getGenericType();
         }
         catch( NoSuchMethodException ex ){
             return this.getType(property);
@@ -162,6 +211,7 @@ public class BeanInstance {
 
     }
 
+    /*
     private Object getGenericReturnType( Method method ) throws NoSuchMethodException,
             IllegalAccessException, IllegalArgumentException, InvocationTargetException{
         
@@ -171,17 +221,10 @@ public class BeanInstance {
 
         return getGenericReturnType.invoke(method, new Object[]{});
     }
-
+    */
+    
     public Class getClassType(){
         return this.clazz;
-    }
-    
-    public List getGetters(){
-        return new LinkedList(data.getGetter().values());
-    }
-    
-    public List getSetters(){
-        return new LinkedList(data.getSetter().values());
     }
     
 }
@@ -191,10 +234,20 @@ class BeanData{
     private Class classType;
     private Map setter;
     private Map getter;
-
+    private Map properties;
+    
     public BeanData(){
         this.setter = new HashMap();
         this.getter = new HashMap();
+        this.properties = new HashMap();
+    }
+    
+    public void addProperty(String name, BeanProperty property){
+        this.properties.put(name, property);
+    }
+
+    public BeanProperty getProperty(String name){
+        return (BeanProperty)this.properties.get(name);
     }
     
     public Class getClassType() {
@@ -204,7 +257,7 @@ class BeanData{
     public void setClassType(Class classType) {
         this.classType = classType;
     }
-
+    
     public Map getSetter() {
         return setter;
     }
@@ -221,4 +274,11 @@ class BeanData{
         this.getter = getter;
     }
 
+    public Map getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Map properties) {
+        this.properties = properties;
+    }
 }
