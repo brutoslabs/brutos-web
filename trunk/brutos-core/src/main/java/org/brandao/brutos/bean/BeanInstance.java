@@ -111,7 +111,7 @@ public class BeanInstance {
 
             for( int i=0;i<fields.length;i++ ){
                 Field f = fields[i];
-                data.addProperty(f.getName(), new BeanProperty(f,null,null,f.getName()));
+                data.addProperty(f.getName(), new BeanPropertyImp(f,null,null,f.getName()));
                 data.getSetter().put(f.getName(), f);
                 data.getGetter().put(f.getName(), f);
             }
@@ -131,7 +131,7 @@ public class BeanInstance {
                     if(data.getProperty(id) != null)
                         data.getProperty(id).setSet(method);
                     else
-                        data.addProperty(id, new BeanProperty(null,method,null,id));
+                        data.addProperty(id, new BeanPropertyImp(null,method,null,id));
                     
                     data.getSetter().put(id, method);
                 }
@@ -147,7 +147,7 @@ public class BeanInstance {
                     if(data.getProperty(id) != null)
                         data.getProperty(id).setGet(method);
                     else
-                        data.addProperty(id, new BeanProperty(null,null,method,id));
+                        data.addProperty(id, new BeanPropertyImp(null,null,method,id));
                     
                     data.getGetter().put(id, method);
                 }
@@ -163,7 +163,7 @@ public class BeanInstance {
                     if(data.getProperty(id) != null)
                         data.getProperty(id).setGet(method);
                     else
-                        data.addProperty(id, new BeanProperty(null,null,method,id));
+                        data.addProperty(id, new BeanPropertyImp(null,null,method,id));
                     
                     data.getGetter().put(id, method);
                 }
