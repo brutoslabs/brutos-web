@@ -24,6 +24,7 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.BeanProperty;
 
@@ -91,7 +92,8 @@ public class ControllerAnnotationConfig
         List props = instance.getProperties();
         for(int i=0;i<props.size();i++){
             BeanProperty prop = (BeanProperty) props.get(i);
-            super.applyInternalConfiguration(prop, controllerBuilder, applicationContext);
+            super.applyInternalConfiguration(new BeanPropertyAnnotationImp(prop), 
+                    controllerBuilder, applicationContext);
         }
     }
     

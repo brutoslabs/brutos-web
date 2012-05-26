@@ -21,9 +21,10 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ParameterBuilder;
 import org.brandao.brutos.PropertyBuilder;
 import org.brandao.brutos.annotation.ActionParam;
-import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.Property;
 import org.brandao.brutos.annotation.Restriction;
+import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
@@ -36,18 +37,24 @@ public class RestrictionAnnotationConfig extends AbstractAnnotationConfig{
     public boolean isApplicable(Object source) {
         return (source instanceof ActionParamEntry &&
                 ((ActionParamEntry)source).isAnnotationPresent(Restriction.class)) ||
-               (source instanceof PropertyEntry &&
-                ((PropertyEntry)source).isAnnotationPresent(Restriction.class));
+               (source instanceof BeanPropertyAnnotation &&
+                ((BeanPropertyAnnotation)source).isAnnotationPresent(Restriction.class));
     }
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
-        ParameterBuilder parameterBuilder = builder instanceof ParameterBuilder? (ParameterBuilder)builder : null;
-        PropertyBuilder propertyBuilder = builder instanceof PropertyBuilder? (PropertyBuilder)builder : null;
+        ParameterBuilder parameterBuilder = 
+            builder instanceof ParameterBuilder? 
+                (ParameterBuilder)builder : 
+                null;
         
-        ActionParamEntry param = (ActionParamEntry)source;
-        Restriction restriction = (Restriction)param.getAnnotation(Restriction.class);
+        PropertyBuilder propertyBuilder = 
+            builder instanceof PropertyBuilder? 
+                (PropertyBuilder)builder : 
+                null;
+        
+        Restriction restriction = getAnnotation(source);
         
         String rule = restriction.rule();
         String value = restriction.value();
@@ -65,4 +72,10 @@ public class RestrictionAnnotationConfig extends AbstractAnnotationConfig{
         return builder;
     }
     
+    private Restriction getAnnotation(Object source){
+        if(source instanceof ActionParamEntry)
+            return ((ActionParamEntry)source).getAnnotation(Restriction.class);
+        else
+            return ((BeanPropertyAnnotation)source).getAnnotation(Restriction.class);
+    }
 }

@@ -15,18 +15,19 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
+package org.brandao.brutos.annotation.bean;
 
 import java.lang.annotation.Annotation;
+import org.brandao.brutos.bean.BeanProperty;
 
 /**
  *
  * @author Brandao
  */
-public class PropertyEntry {
+public interface BeanPropertyAnnotation extends BeanProperty{
     
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
-        return false;
-    }
+    <T extends Annotation> T getAnnotation(Class<T> annotation);
+    
+    boolean isAnnotationPresent(Class<? extends Annotation> annotation);
     
 }

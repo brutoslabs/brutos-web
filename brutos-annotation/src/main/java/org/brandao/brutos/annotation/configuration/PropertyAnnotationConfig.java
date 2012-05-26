@@ -19,23 +19,25 @@ package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.bean.BeanInstance;
 
 /**
  *
  * @author Brandao
  */
-@Stereotype(target=Property.class,executeAfter=Action.class)
+@Stereotype(target=Property.class,executeAfter={Controller.class, Bean.class})
 public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
-        return source instanceof BeanInstance;
+        return source instanceof BeanPropertyAnnotation &&
+                !((BeanPropertyAnnotation)source).isAnnotationPresent(Transient.class);
     }
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
-        BeanInstance param = (BeanInstance)source;
+        BeanPropertyAnnotation property = (BeanPropertyAnnotation)source;
         
         BeanBuilder beanBuilder = builder instanceof BeanBuilder? 
                 (BeanBuilder)builder :
@@ -45,27 +47,53 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
                 (ControllerBuilder)builder :
                 null;
         
-        Property actionParam = (Property)param.getAnnotation(ActionParam.class);
+        Property propertyAnnotation = (Property)property.getAnnotation(Property.class);
         
-        String name = getName(param,actionParam);
-        ScopeType scope = getScope(actionParam);
-        EnumerationType enumProperty = getEnumerationType(param);
-        String temporalProperty = getTemporalProperty(param);
-        String mapping = getMappingName(actionParam);
-        org.brandao.brutos.type.Type type = getType(param);
+        String propertyName = getPropertyName(property);
+        String name = getBeanName(property,propertyAnnotation);
+        ScopeType scope = getScope(propertyAnnotation);
+        EnumerationType enumProperty = getEnumerationType(property);
+        String temporalProperty = getTemporalProperty(property);
+        String mapping = getMappingName(propertyAnnotation);
+        org.brandao.brutos.type.Type type = getType(property);
         
-        ParameterBuilder paramBuilder = 
-                actionBuilder.addParameter(name, scope, enumProperty, 
-                temporalProperty, mapping, type, null, false, param.getType());
-                
-        super.applyInternalConfiguration(source, paramBuilder, applicationContext);
+        PropertyBuilder propertyBuilder;
         
-        return actionBuilder;
+        if(controllerBuilder != null ){
+            propertyBuilder = controllerBuilder
+                .addProperty(
+                    propertyName, 
+                    name, 
+                    scope, 
+                    enumProperty, 
+                    temporalProperty, 
+                    mapping, 
+                    null, 
+                    true, 
+                    type);
+            
+        }
+        else{
+            propertyBuilder = beanBuilder
+                .addProperty(
+                    name, 
+                    propertyName, 
+                    enumProperty, 
+                    temporalProperty, 
+                    mapping, 
+                    scope, 
+                    null, 
+                    true, 
+                    type);
+        }
+        super.applyInternalConfiguration(source, propertyBuilder, applicationContext);
+        
+        return builder;
     }
 
-    private org.brandao.brutos.type.Type getType(ActionParamEntry param){
+    private org.brandao.brutos.type.Type getType(BeanPropertyAnnotation property){
         try{
-            Type type = param.getAnnotation(Type.class);
+            Type type = property.getAnnotation(Type.class);
             if(type != null){
                 Class typeClass = type.value();
                 return (org.brandao.brutos.type.Type)ClassUtil.getInstance(typeClass);
@@ -80,41 +108,42 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
         }
     }
     
-    private String getMappingName(ActionParam actionParam){
-        if(actionParam != null && !"".equals(actionParam.bean()) && actionParam.mapping())
-            return actionParam.bean();
+    private String getMappingName(Property propertyAnnotation){
+        if(propertyAnnotation != null && !"".equals(propertyAnnotation.bean()) && propertyAnnotation.mapping())
+            return propertyAnnotation.bean();
         else
             return null;
     }
     
-    private String getTemporalProperty(ActionParamEntry param){
-        if(param.isAnnotationPresent(Temporal.class))
-            return param.getAnnotation(Temporal.class).value();
+    private String getTemporalProperty(BeanPropertyAnnotation property){
+        if(property.isAnnotationPresent(Temporal.class))
+            return property.getAnnotation(Temporal.class).value();
         else
             return BrutosConstants.DEFAULT_TEMPORALPROPERTY;
     }
-    private EnumerationType getEnumerationType(ActionParamEntry param){
-        if(param.isAnnotationPresent(Enumerated.class))
-            return EnumerationType.valueOf(param.getAnnotation(Enumerated.class).value());
+    private EnumerationType getEnumerationType(BeanPropertyAnnotation property){
+        if(property.isAnnotationPresent(Enumerated.class))
+            return EnumerationType.valueOf(property.getAnnotation(Enumerated.class).value());
         else
             return BrutosConstants.DEFAULT_ENUMERATIONTYPE;
     }
     
-    private ScopeType getScope(ActionParam actionParam){
-        if(actionParam != null && !"".equals(actionParam.scope()))
-            return ScopeType.valueOf(actionParam.scope());
+    private ScopeType getScope(Property propertyAnnotation){
+        if(propertyAnnotation != null && !"".equals(propertyAnnotation.scope()))
+            return ScopeType.valueOf(propertyAnnotation.scope());
         else
             return BrutosConstants.DEFAULT_SCOPETYPE;
     }
     
-    private String getName(ActionParamEntry param,ActionParam actionParam){
+    private String getBeanName(BeanPropertyAnnotation property, Property propertyAnnotation){
         
-        if(actionParam != null || !"".equals(actionParam.bean()) )
-            return actionParam.bean();
+        if(propertyAnnotation != null || !"".equals(propertyAnnotation.bean()) )
+            return propertyAnnotation.bean();
         else
-        if( param.getName() != null )
-            return param.getName();
-        else
-            return "arg"+param.getIndex();
+            return property.getName();
+    }
+    
+    private String getPropertyName(BeanPropertyAnnotation param){
+        return param.getName();
     }
 }
