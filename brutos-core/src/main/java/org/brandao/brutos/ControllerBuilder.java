@@ -626,18 +626,18 @@ public class ControllerBuilder {
      * Configura uma propriedade do controlador.
      *
      * @param propertyName Nome da propriedade.
-     * @param id Identifica��o da propriedade.
+     * @param id Identificação da propriedade.
      * @param scope Escopo.
-     * @param enumProperty Usado na configura��o de propriedades do tipo enum.
+     * @param enumProperty Usado na configuração de propriedades do tipo enum.
      * @param mapping Mapeamento customizado.
-     * @param temporalProperty Usado na configura��o de datas.
+     * @param temporalProperty Usado na configuração de datas.
      * @param type Faz o processamento da propriedade.
      * @param value Valor da propriedade.
      * @return Contrutor da propriedade.
      */
-    public PropertyBuilder addProperty( String propertyName, String id, ScopeType scope, EnumerationType enumProperty,
-            String temporalProperty, String mapping, Object value, boolean nullable,
-            Type type ){
+    public PropertyBuilder addProperty( String propertyName, String id, 
+            ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
+            String mapping, Object value, boolean nullable, Type type ){
 
         id =
             id == null || id.replace( " ", "" ).length() == 0?
