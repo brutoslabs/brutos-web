@@ -391,4 +391,8 @@ public class ActionBuilder {
         return this;
     }
 
+    public ControllerBuilder getControllerBuilder(){
+        return this.controllerBuilder;
+    }
+    
 }
