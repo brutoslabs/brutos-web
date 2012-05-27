@@ -298,12 +298,6 @@ public class ControllerBuilder {
         if( controller.getMappingBeans().containsKey( name ) )
             throw new BrutosException( "duplicate mapping name " + name + " in the " + controller.getClassType().getName() );
 
-        /*
-        if( Map.class.isAssignableFrom( target ) ||
-            Collection.class.isAssignableFrom( target ) )
-            throw new BrutosException( "target is not allowed: " + target.getName() );
-        */
-        
         getLogger().info(
             String.format(
                 "create bean %s[%s]",
@@ -749,6 +743,10 @@ public class ControllerBuilder {
 
     public Class getClassType(){
         return controller.getClassType();
+    }
+    
+    public Bean getMappingBean(String name){
+        return controller.getMappingBean(name);
     }
     
     protected Logger getLogger(){

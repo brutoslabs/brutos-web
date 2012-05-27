@@ -84,6 +84,7 @@ public class TypeManager {
         TypeFactory factory = (TypeFactory) types.get(getRawType( classType ));
         
         if( factory == null ){
+            /*FIXME: refactor the line getRawType(classType).isEnum()*/
             if( getRawType(classType).isEnum() )
                 factory = (TypeFactory)types.get( Enum.class );
             else

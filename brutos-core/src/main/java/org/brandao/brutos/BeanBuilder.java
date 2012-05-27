@@ -788,6 +788,10 @@ public class BeanBuilder {
         return dependencyBean;
     }
 
+    public ControllerBuilder getControllerBuilder(){
+        return this.controllerBuilder;
+    }
+    
     /**
      * Verifica se � o mapeamento de um Map.
      * @return Verdadeiro se � o mapeamento de um Map, caso contr�rio falso.
