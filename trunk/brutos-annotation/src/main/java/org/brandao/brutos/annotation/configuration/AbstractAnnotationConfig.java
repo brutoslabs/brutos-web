@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.util.List;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.AnnotationConfig;
 
@@ -35,10 +36,14 @@ public abstract class AbstractAnnotationConfig implements AnnotationConfig{
     public Object applyInternalConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
 
-        AnnotationConfigEntry next = annotation.getNextAnnotationConfig();
-        
-        if(next.getAnnotationConfig().isApplicable(source))
-            builder = next.getAnnotationConfig().applyConfiguration(source, builder, applicationContext);
+        List<AnnotationConfigEntry> list = annotation.getNextAnnotationConfig();
+
+        for(int i=0;i<list.size();i++){
+            AnnotationConfigEntry next = list.get(i);
+            if(next.getAnnotationConfig().isApplicable(source))
+                builder = next.getAnnotationConfig()
+                        .applyConfiguration(source, builder, applicationContext);
+        }
         
         return builder;
     }

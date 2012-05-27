@@ -93,7 +93,8 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     public boolean isApplicable(Object source) {
         return source instanceof Method && 
                (((Method)source).isAnnotationPresent( Action.class ) ||
-               ((Method)source).getName().endsWith("Action"));
+               ((Method)source).getName().endsWith("Action")) &&
+               !((Method)source).isAnnotationPresent(Transient.class);
     }
     
 }
