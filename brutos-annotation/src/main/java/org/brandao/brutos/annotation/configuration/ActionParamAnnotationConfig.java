@@ -19,6 +19,8 @@ package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.type.ObjectType;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -43,7 +45,7 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
         ScopeType scope = getScope(actionParam);
         EnumerationType enumProperty = getEnumerationType(param);
         String temporalProperty = getTemporalProperty(param);
-        String mapping = getMappingName(actionParam);
+        String mapping = getMappingName(param,actionParam, actionBuilder.getControllerBuilder(),applicationContext);
         org.brandao.brutos.type.Type type = getType(param);
         
         ParameterBuilder paramBuilder = 
@@ -72,11 +74,22 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
         }
     }
     
-    private String getMappingName(ActionParam actionParam){
+    private String getMappingName(ActionParamEntry param, 
+            ActionParam actionParam, ControllerBuilder controllerBuilder,
+            ConfigurableApplicationContext applicationContext){
         if(actionParam != null && !"".equals(actionParam.bean()) && actionParam.mapping())
             return actionParam.bean();
-        else
-            return null;
+        else{
+            Type type = (Type) TypeManager.getType(param.getType());
+            if(type instanceof ObjectType){
+                super.applyInternalConfiguration(
+                        param, controllerBuilder, applicationContext);
+                return param.getType().getSimpleName().toLowerCase();
+            }
+            else
+                return null;
+        }
+            
     }
     
     private String getTemporalProperty(ActionParamEntry param){

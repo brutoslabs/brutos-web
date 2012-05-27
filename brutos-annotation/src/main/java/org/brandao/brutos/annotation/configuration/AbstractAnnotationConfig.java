@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.AnnotationConfig;
@@ -48,4 +49,8 @@ public abstract class AbstractAnnotationConfig implements AnnotationConfig{
         return builder;
     }
 
+    public Class<? extends Annotation>[] getExecutionOrder(){
+        return new Class[]{};
+    }
+    
 }
