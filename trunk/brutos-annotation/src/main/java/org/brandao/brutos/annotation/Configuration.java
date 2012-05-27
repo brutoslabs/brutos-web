@@ -17,33 +17,18 @@
 
 package org.brandao.brutos.annotation;
 
-import java.util.List;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 
 /**
  *
  * @author Afonso Brandao
  */
-public abstract class Configuration<T> {
-
-    protected T resource;
-    protected List<Class> source;
-
-    public void setResource( T resource ){
-        this.resource = resource;
-    }
-
-    public T getResource(){
-        return this.resource;
-    }
-
-    public void setSource( List<Class> source ){
-        this.source = source;
-    }
-
-    public List<Class> getSource(){
-        return this.source;
-    }
-    
-    public abstract void configure();
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Configuration {
     
 }

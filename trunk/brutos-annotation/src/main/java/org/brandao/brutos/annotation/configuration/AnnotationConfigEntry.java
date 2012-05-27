@@ -19,12 +19,15 @@ package org.brandao.brutos.annotation.configuration;
 
 import java.util.List;
 import org.brandao.brutos.annotation.AnnotationConfig;
+import org.brandao.brutos.annotation.Stereotype;
 
 /**
  *
  * @author Brandao
  */
 public class AnnotationConfigEntry {
+    
+    private Stereotype stereotype;
     
     private AnnotationConfig annotationConfig;
 
@@ -44,6 +47,14 @@ public class AnnotationConfigEntry {
 
     public void setNextAnnotationConfig(List<AnnotationConfigEntry> nextAnnotationConfig) {
         this.nextAnnotationConfig = nextAnnotationConfig;
+    }
+
+    public Stereotype getStereotype() {
+        return stereotype;
+    }
+
+    public void setStereotype(Stereotype stereotype) {
+        this.stereotype = stereotype;
     }
     
 }
