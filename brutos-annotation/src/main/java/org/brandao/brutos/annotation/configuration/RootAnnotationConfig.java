@@ -68,7 +68,9 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
             
             for(Class clazz: classList){
                 AnnotationConfigEntry ace = map.get(target);
-                ace.getAnnotationConfig().applyConfiguration(clazz, null, applicationContext);
+                AnnotationConfig ac = ace.getAnnotationConfig();
+                if(ac.isApplicable(clazz))
+                    ac.applyConfiguration(clazz, null, applicationContext);
             }
         }
         
