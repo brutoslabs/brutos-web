@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
@@ -44,8 +45,9 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         this.allClazz = clazz;
     }
 
-    public void configure( Configuration config ) {
-        super.configure(configuration);
+    @Override
+    public void configure( Properties config ) {
+        super.configure(config);
         postConfigure();
     }
 
@@ -61,7 +63,8 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         AnnotationConfig rootAnnotationConfig = getRootAnnotationConfig();
         
         rootAnnotationConfig
-                .applyConfiguration(this.allClazz, compositeClassList, this);
+                .applyConfiguration(Arrays.asList(this.allClazz), 
+                    compositeClassList, this);
     }
     
     @Override
