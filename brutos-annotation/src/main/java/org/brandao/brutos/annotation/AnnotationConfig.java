@@ -19,12 +19,15 @@ package org.brandao.brutos.annotation;
 
 import java.lang.annotation.Annotation;
 import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.annotation.configuration.AnnotationConfigEntry;
 
 /**
  *
  * @author Brandao
  */
 public interface AnnotationConfig {
+    
+    void setConfiguration(AnnotationConfigEntry annotation);
     
     boolean isApplicable(Object source);
     
