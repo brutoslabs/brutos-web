@@ -17,13 +17,13 @@
 
 package org.brandao.brutos.annotation;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.brandao.brutos.AbstractApplicationContext;
-import org.brandao.brutos.Configuration;
-import org.brandao.brutos.ControllerBuilder;
-import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
+import org.brandao.brutos.annotation.configuration.*;
 
 /**
  *
@@ -32,6 +32,7 @@ import org.brandao.brutos.DispatcherType;
 public class AnnotationApplicationContext extends AbstractApplicationContext{
     
     private Class[] allClazz;
+    private List<Class> annotationConfig;
     
     public AnnotationApplicationContext(Class[] clazz) {
         this.allClazz = clazz;
@@ -49,10 +50,73 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     }
 
     private void postConfigure(){
+        
+        loadDefaultAnnotationConfig();
+        
+        List<Class> compositeClassList = new ArrayList<Class>();
+        
+        compositeClassList.addAll(this.annotationConfig);
+        compositeClassList.addAll(Arrays.asList(this.allClazz));
+        
+        AnnotationConfig rootAnnotationConfig = getRootAnnotationConfig();
+        
+        rootAnnotationConfig
+                .applyConfiguration(this.allClazz, compositeClassList, this);
     }
     
     @Override
     public void destroy(){
     }
+ 
+    protected AnnotationConfig getRootAnnotationConfig(){
+        Class<AnnotationConfig> rootConfigClass = null;
+        
+        for(Class clazz: this.allClazz){
+            Stereotype newSt = (Stereotype) clazz.getAnnotation(Stereotype.class);
+            if(newSt != null && newSt.target() == Configuration.class){
+                        
+                if(rootConfigClass != null){
+                    Stereotype st = (Stereotype) rootConfigClass.getAnnotation(Stereotype.class);
+                    boolean override = 
+                        newSt.majorVersion() >= st.majorVersion() &&
+                        newSt.minorVersion() > st.minorVersion();
+                    
+                    if(override)
+                        rootConfigClass = clazz;
+                }
+                else
+                    rootConfigClass = clazz;
+            }
+        }
+        
+        if(rootConfigClass == null)
+            throw new BrutosException(
+                    "not found: " + Configuration.class.getSimpleName());
+        
+        try{
+            AnnotationConfig rootAnnotationConfig = 
+                    (AnnotationConfig)ClassUtil.getInstance(rootConfigClass);
+            return rootAnnotationConfig;
+        }
+        catch( Exception e ){
+            throw new BrutosException(e);
+        }
+    }
     
+    protected void loadDefaultAnnotationConfig(){
+        annotationConfig = new ArrayList<Class>();
+        
+        annotationConfig.add(ActionAnnotationConfig.class);
+        annotationConfig.add(ActionParamAnnotationConfig.class);
+        annotationConfig.add(BeanAnnotationConfig.class);
+        annotationConfig.add(ControllerAliasAnnotationConfig.class);
+        annotationConfig.add(ControllerAnnotationConfig.class);
+        annotationConfig.add(InterceptedByAnnotationConfig.class);
+        annotationConfig.add(InterceptsAnnotationConfig.class);
+        annotationConfig.add(PropertyAnnotationConfig.class);
+        annotationConfig.add(RestrictionAnnotationConfig.class);
+        annotationConfig.add(RestrictionsAnnotationConfig.class);
+        annotationConfig.add(ThrowableSafeAnnotationConfig.class);
+        annotationConfig.add(TypeDefAnnotationConfig.class);
+    }
 }
