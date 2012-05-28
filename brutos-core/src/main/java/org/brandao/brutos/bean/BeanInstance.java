@@ -122,6 +122,9 @@ public class BeanInstance {
                 Method method = methods[i];
                 String methodName = method.getName();
 
+                if(methodName.equals("getClass"))
+                    continue;
+                
                 if( methodName.startsWith("set") && method.getParameterTypes().length == 1 ){
                     String id = methodName
                             .substring(3,methodName.length());
