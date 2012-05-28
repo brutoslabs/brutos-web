@@ -150,7 +150,7 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
     
     private String getBeanName(BeanPropertyAnnotation property, Property propertyAnnotation){
         
-        if(propertyAnnotation != null || !"".equals(propertyAnnotation.bean()) )
+        if(propertyAnnotation != null && !"".equals(propertyAnnotation.bean()) )
             return propertyAnnotation.bean();
         else
             return property.getName();

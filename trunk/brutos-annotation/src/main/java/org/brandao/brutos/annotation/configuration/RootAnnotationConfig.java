@@ -133,6 +133,7 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
             AnnotationConfig ac = (AnnotationConfig) ClassUtil.getInstance(stereotype);
             AnnotationConfigEntry r = new AnnotationConfigEntry();
             r.setAnnotationConfig(ac);
+            ac.setConfiguration(r);
             r.setStereotype((Stereotype)stereotype.getAnnotation(Stereotype.class));
             r.setNextAnnotationConfig(new LinkedList<AnnotationConfigEntry>());
 
