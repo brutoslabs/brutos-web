@@ -205,7 +205,7 @@ public abstract class AbstractApplicationContext
             ControllerResolver instance = (ControllerResolver) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.class",
-                    null
+                    DefaultControllerResolver.class.getName()
                 ),
                     true,
                     Thread.currentThread().getContextClassLoader()
