@@ -100,6 +100,11 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
                 new HashMap<Class,AnnotationConfigEntry>();
 
         for(Class clazz: list){
+            
+            if(!clazz.isAnnotationPresent(Stereotype.class) || 
+               !AnnotationConfig.class.isAssignableFrom(clazz))
+                continue;
+            
             Stereotype st = 
                     (Stereotype) clazz.getAnnotation(Stereotype.class);
             
