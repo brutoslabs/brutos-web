@@ -18,8 +18,6 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 /**
@@ -36,7 +34,7 @@ public class ClassType implements Type{
             return Class.forName( value, true, Thread.currentThread().getContextClassLoader() );
         }
         catch( Exception e ){
-            return new Byte((byte)0);
+            return null;
         }
     }
     

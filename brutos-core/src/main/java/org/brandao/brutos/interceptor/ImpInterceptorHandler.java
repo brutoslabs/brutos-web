@@ -23,7 +23,7 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.StackRequestElement;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ParameterMethodMapping;
 import org.brandao.brutos.mapping.UseBeanData;
 
@@ -136,7 +136,7 @@ public class ImpInterceptorHandler implements ConfigurableInterceptorHandler{
         return this.stackRequestElement;
     }
 
-    private Object[] getParameters( MethodForm method )
+    private Object[] getParameters( Action method )
             throws InstantiationException, IllegalAccessException,
         ParseException {
         if( method != null ){

@@ -406,13 +406,13 @@ public class ControllerBuilder {
             String.format(
                 "%s => %s",
                 new Object[]{
-                    this.controller.getId() == null?
-                        id : this.controller.getUri() + "[" + id + "]",
+                    this.controller.getName() == null?
+                        id : this.controller.getId() + "[" + id + "]",
                     controller.getClassType().getName() + "." + 
                     (executor == null? "?" : executor) + "(...)" } ) 
                 );
         
-        MethodForm mp = new MethodForm();
+        Action mp = new Action();
         mp.setName( id );
         mp.setRedirect(false);
         mp.setDispatcherType(dispatcher);
@@ -726,7 +726,7 @@ public class ControllerBuilder {
      * @return Construtor da propriedade.
      */
     public BeanBuilder buildProperty( String propertyName, Class clazz ){
-        String beanName = this.controller.getId() + "Controller#" + propertyName;
+        String beanName = this.controller.getName() + "Controller#" + propertyName;
 
         BeanBuilder beanBuilder =
                 buildMappingBean(beanName, clazz);

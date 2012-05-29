@@ -43,9 +43,9 @@ import org.brandao.brutos.scope.Scope;
  */
 public class Controller {
 
-    private String id;
+    private String name;
     
-    private String uri;
+    private String id;
     
     private Class classType;
     
@@ -59,7 +59,7 @@ public class Controller {
 
     private Map reverseMethods;
     
-    private Action action;
+    private ActionListener action;
 
     private Map throwsSafe;
 
@@ -104,11 +104,11 @@ public class Controller {
     }
 
     public Object getInstance(IOCProvider iocProvider){
-        Object instance = id == null? null : iocProvider.getBean(id);
+        Object instance = name == null? null : iocProvider.getBean(name);
         instance = instance == null? iocProvider.getBean(classType) : instance;
 
         if( instance == null )
-            throw new BrutosException("can't get instance " + id + ":" + classType);
+            throw new BrutosException("can't get instance " + name + ":" + classType);
         else
             return instance;
     }
@@ -133,11 +133,11 @@ public class Controller {
         this.fields = fields;
     }
 
-    public Action getAcion() {
+    public ActionListener getAcion() {
         return getAction();
     }
 
-    public void setAcion(Action acion) {
+    public void setAcion(ActionListener acion) {
         this.setAction(acion);
     }
 
@@ -167,7 +167,7 @@ public class Controller {
         return methods;
     }
 
-    public void addMethod( String id, MethodForm method ){
+    public void addMethod( String id, Action method ){
 
         //if( method.getMethod() != null )
         //    this.reverseMethods.put(method.getMethodName().toString(), method);
@@ -179,7 +179,7 @@ public class Controller {
         return reverseMethods;
     }
 
-    void addReserveMethod( Method method, MethodForm action ){
+    void addReserveMethod( Method method, Action action ){
         
         ReverseActionKey key = new ReverseActionKey(method);
 
@@ -193,7 +193,7 @@ public class Controller {
         list.add( action );
     }
 
-    public MethodForm getMethod( Method method ){
+    public Action getMethod( Method method ){
 
         if( !this.loaded )
             loadConfiguration();
@@ -208,7 +208,7 @@ public class Controller {
                     String.format("Ambiguous reference to action: %s",
                     new Object[]{method.getName()}));
         
-        return (MethodForm) list.get(0);
+        return (Action) list.get(0);
     }
     
     public void setMethods(Map methods) {
@@ -236,10 +236,10 @@ public class Controller {
         }
     }
 
-    public MethodForm getMethodByName( String name ){
-        MethodForm mf = null;
-        mf = (MethodForm) (name == null ? null : getMethods().get(name));
-        mf = (MethodForm) (mf == null ? getMethods().get(getDefaultMethodName()) : mf);
+    public Action getMethodByName( String name ){
+        Action mf = null;
+        mf = (Action) (name == null ? null : getMethods().get(name));
+        mf = (Action) (mf == null ? getMethods().get(getDefaultMethodName()) : mf);
         return mf;
     }
 
@@ -257,7 +257,7 @@ public class Controller {
 
             while(keys.hasNext()){
                 String key = (String)keys.next();
-                MethodForm ac = (MethodForm) methods.get(key);
+                Action ac = (Action) methods.get(key);
                 if(!ac.isLoaded())
                     ac.load();
             }
@@ -336,6 +336,14 @@ public class Controller {
         this.defaultMethodName = defaultMethodName;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getId() {
         return id;
     }
@@ -344,19 +352,11 @@ public class Controller {
         this.id = id;
     }
 
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public Action getAction() {
+    public ActionListener getAction() {
         return action;
     }
 
-    public void setAction(Action action) {
+    public void setAction(ActionListener action) {
         this.action = action;
     }
 

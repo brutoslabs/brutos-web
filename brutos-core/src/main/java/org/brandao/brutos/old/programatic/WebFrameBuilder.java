@@ -40,7 +40,7 @@ import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 import org.brandao.brutos.mapping.MapBean;
 import org.brandao.brutos.mapping.Bean;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.*;
@@ -246,7 +246,7 @@ public class WebFrameBuilder {
             throw new BrutosException( "duplicate method " + name + ": " +
                 webFrame.getClassType().getName() );
      
-        MethodForm mp = new MethodForm();
+        Action mp = new Action();
         mp.setName( name );
         mp.setRedirect(redirect);
         mp.setDispatcherType( redirect? DispatcherType.REDIRECT : DispatcherType.INCLUDE );

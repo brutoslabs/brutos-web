@@ -27,7 +27,7 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.ViewException;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
 
@@ -108,7 +108,7 @@ public abstract class ViewProvider {
     }
 
     private void showView( RequestInstrument requestInstrument,
-            StackRequestElement stackRequestElement, MethodForm method )
+            StackRequestElement stackRequestElement, Action method )
                 throws IOException{
         requestInstrument.setHasViewProcessed(true);
         //method.getReturnType().setValue(stackRequestElement.getResultAction());
@@ -129,7 +129,7 @@ public abstract class ViewProvider {
             requestInstrument.getContext().getScopes();
         Scope requestScope    =
             scopes.get(ScopeType.REQUEST.toString());
-        MethodForm method     =
+        Action method     =
             stackRequestElement.getAction() == null?
                 null :
                 stackRequestElement.getAction().getMethodForm();

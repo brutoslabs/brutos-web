@@ -154,7 +154,7 @@ public class Invoker {
 
         // create factory or other solution
         ImpInterceptorHandler ih = new ImpInterceptorHandler();
-        ih.setRequestId(controller.getUri());
+        ih.setRequestId(controller.getId());
         ih.setContext(applicationContext);
 
         ResourceAction action =

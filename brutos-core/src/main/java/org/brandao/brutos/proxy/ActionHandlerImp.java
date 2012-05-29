@@ -27,7 +27,7 @@ import org.brandao.brutos.RedirectException;
 import org.brandao.brutos.StackRequestElementImp;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 
 /**
  *
@@ -50,7 +50,7 @@ public abstract class ActionHandlerImp implements ActionHandler{
     
     public Object invoke(Object self, Method thisMethod, Method proceed,
             Object[] args) throws Throwable {
-        MethodForm action = controller.getMethod(thisMethod);
+        Action action = controller.getMethod(thisMethod);
         return invoker.invoke(
             controller,
             context.getActionResolver().getResourceAction(action),
