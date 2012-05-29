@@ -18,9 +18,10 @@
 package org.brandao.brutos.annotation;
 
 import java.util.Properties;
+import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.brandao.brutos.annotation.configuration.RootAnnotationConfig;
 import org.brandao.brutos.annotation.helper.ControllerTest1Controller;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.test.MockIOCProvider;
 import org.brandao.brutos.test.MockViewProvider;
 
@@ -30,14 +31,11 @@ import org.brandao.brutos.test.MockViewProvider;
  */
 public class AnnotationApplicationContextTest extends TestCase{
     
-    public void test1(){
+    private AnnotationApplicationContext getApplication(Class[] clazz){
         AnnotationApplicationContext 
             annotationApplicationContext = 
                 new AnnotationApplicationContext(
-                    new Class[]{
-                        RootAnnotationConfig.class,
-                        ControllerTest1Controller.class
-                    }
+                        clazz
                 );
         
         Properties prop = new Properties();
@@ -48,5 +46,22 @@ public class AnnotationApplicationContextTest extends TestCase{
                 MockViewProvider.class.getName());
         
         annotationApplicationContext.configure(prop);
+        return annotationApplicationContext;
+    }
+    
+    public void test1(){
+        
+        Class clazz = ControllerTest1Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertNull(controller.getId());
+        Action action = controller.getMethodByName("myfirst");
+        Assert.assertEquals("myfirst",action.getName());
     }
 }
