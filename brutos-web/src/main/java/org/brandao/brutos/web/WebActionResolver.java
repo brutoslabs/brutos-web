@@ -21,7 +21,7 @@ import java.util.Map;
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.scope.Scope;
 
 /**
@@ -34,7 +34,7 @@ public class WebActionResolver implements ActionResolver{
     public ResourceAction getResourceAction(Controller controller,
             InterceptorHandler handler) {
 
-        if( controller.getUri() != null ){
+        if( controller.getId() != null ){
             Scope scope = handler.getContext().getScopes()
                     .get(WebScopeType.PARAM.toString());
 
@@ -52,8 +52,8 @@ public class WebActionResolver implements ActionResolver{
     public ResourceAction getResourceAction(Controller controller, String actionId, 
             InterceptorHandler handler) {
 
-        if( controller.getUri() != null ){
-            MethodForm method = controller
+        if( controller.getId() != null ){
+            Action method = controller
                     .getMethodByName( actionId );
             return method == null? null : getResourceAction( method );
         }
@@ -71,7 +71,7 @@ public class WebActionResolver implements ActionResolver{
                     for(String key: params.keySet() )
                         request.put(key, params.get(key) );
                     
-                    return getResourceAction( (MethodForm)controller.getMethods().get(u));
+                    return getResourceAction( (Action)controller.getMethods().get(u));
                 }
 
             }
@@ -79,7 +79,7 @@ public class WebActionResolver implements ActionResolver{
         }
     }
 
-    public ResourceAction getResourceAction(MethodForm action) {
+    public ResourceAction getResourceAction(Action action) {
         return new DefaultResourceAction( action );
     }
 

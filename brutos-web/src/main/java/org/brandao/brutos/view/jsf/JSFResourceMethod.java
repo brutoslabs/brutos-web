@@ -27,7 +27,7 @@ import javax.el.MethodInfo;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import org.brandao.brutos.ResourceMethod;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 
 /**
  *
@@ -91,7 +91,7 @@ public class JSFResourceMethod implements ResourceMethod{
         return this.method == null;
     }
 
-    public MethodForm getMethodForm() {
+    public Action getMethodForm() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

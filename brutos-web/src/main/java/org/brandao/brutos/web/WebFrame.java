@@ -83,7 +83,7 @@ public class WebFrame {
             throw new BrutosException( "invalid controller: " + controller.getName() );
         
         RedirectException re = new RedirectException();
-        re.setPage( wf.getUri() );
+        re.setPage( wf.getId() );
         throw re;
     }
 

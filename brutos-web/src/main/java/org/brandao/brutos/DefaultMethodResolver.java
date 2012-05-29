@@ -22,7 +22,7 @@ import org.brandao.brutos.web.AbstractWebApplicationContext;
 import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 
@@ -37,20 +37,20 @@ public class DefaultMethodResolver implements MethodResolver{
         WebApplicationContext brutosContext = ContextLoader
                 .getCurrentWebApplicationContext();
         Controller controller = null;//brutosContext.getController();
-        MethodForm method = controller
+        Action method = controller
                 .getMethodByName( request.getParameter( controller.getMethodId() ) );
         
         return method == null? null : getResourceMethod( method );
     }
 
-    private ResourceMethod getResourceMethod( MethodForm methodForm ){
+    private ResourceMethod getResourceMethod( Action methodForm ){
         return new DefaultResourceMethod( methodForm );
     }
 
     public ResourceAction getResourceAction(Controller controller, Scopes scopes,
             InterceptorHandler handler) {
         Scope scope = scopes.get(ScopeType.PARAM);
-        MethodForm method = controller
+        Action method = controller
                 .getMethodByName( String.valueOf( scope.get( controller.getMethodId() ) ) );
         return method == null? null : getResourceMethod( method );
     }
@@ -63,7 +63,7 @@ public class DefaultMethodResolver implements MethodResolver{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public ResourceAction getResourceAction(MethodForm action) {
+    public ResourceAction getResourceAction(Action action) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
