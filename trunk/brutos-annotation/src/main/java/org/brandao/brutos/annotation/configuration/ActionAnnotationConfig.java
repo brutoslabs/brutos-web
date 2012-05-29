@@ -44,8 +44,8 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         
         
         if( action == null || "".equals(action.value()) ){
-            id = controllerBuilder.getClassType().getSimpleName().toLowerCase();
-            id = id.endsWith("controller")? id.replaceAll("controller^", "") : id;
+            id = method.getName().toLowerCase();
+            id = id.endsWith("action")? id.replaceAll("action$", "") : id;
         }
         else
             id = action.value();

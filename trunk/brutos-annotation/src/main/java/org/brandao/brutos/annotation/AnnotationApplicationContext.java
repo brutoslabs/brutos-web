@@ -34,6 +34,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     
     private Class[] allClazz;
     private List<Class> annotationConfig;
+    private List<Class> compositeClassList;
     
     public AnnotationApplicationContext(Class[] clazz) {
         this.allClazz = clazz;
@@ -55,7 +56,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         
         loadDefaultAnnotationConfig();
         
-        List<Class> compositeClassList = new ArrayList<Class>();
+        compositeClassList = new ArrayList<Class>();
         
         compositeClassList.addAll(this.annotationConfig);
         compositeClassList.addAll(Arrays.asList(this.allClazz));
@@ -74,7 +75,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     protected AnnotationConfig getRootAnnotationConfig(){
         Class<AnnotationConfig> rootConfigClass = null;
         
-        for(Class clazz: this.allClazz){
+        for(Class clazz: this.compositeClassList){
             Stereotype newSt = (Stereotype) clazz.getAnnotation(Stereotype.class);
             if(newSt != null && newSt.target() == Configuration.class){
                         
@@ -109,6 +110,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     protected void loadDefaultAnnotationConfig(){
         annotationConfig = new ArrayList<Class>();
         
+        annotationConfig.add(RootAnnotationConfig.class);
         annotationConfig.add(ActionAnnotationConfig.class);
         annotationConfig.add(ActionParamAnnotationConfig.class);
         annotationConfig.add(BeanAnnotationConfig.class);

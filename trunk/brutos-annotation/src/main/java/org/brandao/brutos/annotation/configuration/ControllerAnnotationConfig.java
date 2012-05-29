@@ -50,23 +50,19 @@ public class ControllerAnnotationConfig
                 (Controller) source.getAnnotation(Controller.class);
 
         
-        String controllerID = null;
-        
+        String controllerID;
         String view;
         DispatcherType dispatcher;
-        String name;
-        String actionID;
+        
+        String name     = null;
+        String actionID = null;
 
-        if(annotationController == null){
-            name = source.getSimpleName().replaceAll("Controller$", "");
-            actionID = "invoke";
-        }
-        else{
-            controllerID = annotationController.id();
+        if(annotationController != null){
             name = annotationController.name();
             actionID = annotationController.actionId();
         }
 
+        controllerID = this.getControllerId(annotationController, source);
         View viewAnnotation = (View) source.getAnnotation(View.class);
         view = viewAnnotation == null? null : viewAnnotation.value();
 
@@ -80,7 +76,8 @@ public class ControllerAnnotationConfig
                     controllerID,
                     view,
                     dispatcher,
-                    name, source,
+                    name,
+                    source,
                     actionID);
 
         addProperties(builder, applicationContext, source);
@@ -108,6 +105,13 @@ public class ControllerAnnotationConfig
         for( Method m: methods ){
             super.applyInternalConfiguration(m, controllerBuilder, applicationContext);
         }
+    }
+    
+    protected String getControllerId(Controller annotation, Class controllerClass){
+        if(annotation != null)
+            return annotation.id();
+        else
+            return null;
     }
     
     public boolean isApplicable(Object source) {
