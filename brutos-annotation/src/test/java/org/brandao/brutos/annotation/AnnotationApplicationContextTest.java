@@ -20,7 +20,7 @@ package org.brandao.brutos.annotation;
 import java.util.Properties;
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.brandao.brutos.annotation.helper.ControllerTest1Controller;
+import org.brandao.brutos.annotation.helper.*;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.test.MockIOCProvider;
 import org.brandao.brutos.test.MockViewProvider;
@@ -64,4 +64,71 @@ public class AnnotationApplicationContextTest extends TestCase{
         Action action = controller.getMethodByName("myfirst");
         Assert.assertEquals("myfirst",action.getName());
     }
+    
+    public void test2(){
+        
+        Class clazz = ControllerTest2Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertNull(controller.getId());
+        Action action = controller.getMethodByName("action");
+        Assert.assertEquals("action",action.getName());
+    }
+
+    public void test3(){
+        
+        Class clazz = ControllerTest3Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertNull(controller.getId());
+        Action action = controller.getMethodByName("myfirst");
+        Assert.assertNull(action);
+    }
+    
+    public void test4(){
+        
+        Class clazz = ControllerTest4Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertNull(controller.getId());
+        Action action = controller.getMethodByName("myfirst");
+        Assert.assertEquals("myfirst",action.getName());
+        Assert.assertEquals("result",action.getReturnIn());
+    }
+
+    public void test5(){
+        
+        Class clazz = ControllerTest5Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertNull(controller.getId());
+        Action action = controller.getMethodByName("myfirst");
+        Assert.assertEquals("myfirst",action.getName());
+        Assert.assertEquals("actionResult",action.getReturnIn());
+    }
+    
 }

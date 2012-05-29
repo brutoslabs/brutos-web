@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.io.Resource;
 
 /**
  *
@@ -42,19 +43,17 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         DispatcherType dispatcher;
         String id;
         
-        
-        if( action == null || "".equals(action.value()) ){
-            id = method.getName().toLowerCase();
-            id = id.endsWith("action")? id.replaceAll("action$", "") : id;
-        }
-        else
-            id = action.value();
+        id = getId(action, method);
         
         Result resultAnnotation = method.getAnnotation(Result.class);
         result = resultAnnotation == null? null : resultAnnotation.value();
 
-        View viewAnnotation = method.getAnnotation(View.class);
-        view = viewAnnotation == null? null : viewAnnotation.value();
+        view = getView(
+                method.getAnnotation(View.class), 
+                controllerBuilder.getClassType(), 
+                method,
+                applicationContext,
+                false);
 
         Dispatcher dispatcherAnnotation = method.getAnnotation(Dispatcher.class);
         dispatcher = dispatcherAnnotation == null? 
@@ -75,6 +74,48 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         return actionBuilder;
     }
 
+    protected String getId(Action action, Method method){
+        if( action == null || "".equals(action.value()) ){
+            String id = method.getName().toLowerCase();
+            id = id.endsWith("action")? id.replaceAll("action$", "") : id;
+            return id;
+        }
+        else
+            return action.value();
+    }
+    
+    protected String getView(View view, Class controllerClass, Method action,
+        ConfigurableApplicationContext applicationContext, boolean hasViewController){
+        
+        if(view != null)
+            return view.value();
+        else
+        if(hasViewController)
+            return null;
+        else{
+            String prefix = applicationContext.getConfiguration()
+                    .getProperty("org.brandao.brutos.view.prefix");
+
+            String v = applicationContext.getConfiguration()
+                    .getProperty("org.brandao.brutos.view.path", prefix);
+            
+            v = (v + controllerClass.getSimpleName() + "/" + action.getName()).toLowerCase();
+            
+            try{
+                Resource viewResource = 
+                        ((Resource)applicationContext).getRelativeResource(v);
+                
+                return viewResource != null && viewResource.exists()?
+                        v :
+                        null;
+            }
+            catch(Exception e){
+                throw new BrutosException(e);
+            }
+        }
+            
+    }
+    
     private void addParameters(ActionBuilder builder, 
             Method method,ConfigurableApplicationContext applicationContext){
         
