@@ -29,7 +29,7 @@ import org.brandao.brutos.DefaultMethodResolver;
 import org.brandao.brutos.ResourceMethod;
 import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 
@@ -60,7 +60,7 @@ public class MethodResolverJSF extends DefaultMethodResolver{
 
     private ResourceMethod getResourceMethod( FacesContext context, WebApplicationContext brutosContext, ActionEvent event ){
         Controller controller = null;//brutosContext.getController();
-        MethodForm methodController;
+        Action methodController;
         
         UIComponent component = event.getComponent();
         UICommand command = (UICommand)component;

@@ -117,7 +117,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
         ImpInterceptorHandler ih = new ImpInterceptorHandler();
         //ih.setContext( brutosContext.getContext() );
         //ih.setRequest( brutosContext.getRequest() );
-        ih.setResource( iocManager.getInstance( controller.getId() ) );
+        ih.setResource( iocManager.getInstance( controller.getName() ) );
         //ih.setResponse( response );
         //ih.setURI( ih.getRequest().getRequestURI() );
 
@@ -155,7 +155,7 @@ public class ViewHandler extends javax.faces.application.ViewHandler {
         WebApplicationContext brutosContext = ContextLoader
                     .getCurrentWebApplicationContext();
         IOCManager iocManager = ((BrutosContext)brutosContext).getIocManager();
-        Object instance = iocManager.getInstance( controller.getId() );
+        Object instance = iocManager.getInstance( controller.getName() );
 
         /*
         DataInput input = new DataInput( brutosContext.getRequest(),

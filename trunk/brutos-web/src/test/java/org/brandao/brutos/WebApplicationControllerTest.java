@@ -27,7 +27,7 @@ import org.brandao.brutos.helper.controller.SimpleController;
 import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.test.MockViewProvider;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
@@ -63,7 +63,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    MethodForm form =
+                    Action form =
                             controller.getMethodByName("action");
 
                     form.load();
@@ -90,7 +90,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    MethodForm form =
+                    Action form =
                             controller.getMethodByName("action");
 
                     form.load();

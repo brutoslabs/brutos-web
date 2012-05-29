@@ -76,8 +76,8 @@ public class WebControllerResolver implements ControllerResolver{
             List<String> uriList = new ArrayList<String>();
 
             uriList.addAll( form.getAlias() );
-            if( form.getUri() != null )
-                uriList.add( form.getUri() );
+            if( form.getId() != null )
+                uriList.add( form.getId() );
             else
                 uriList.addAll( form.getMethods().keySet() );
 

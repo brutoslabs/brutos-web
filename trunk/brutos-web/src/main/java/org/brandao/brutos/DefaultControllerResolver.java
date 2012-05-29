@@ -20,7 +20,7 @@ package org.brandao.brutos;
 import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 
 /**

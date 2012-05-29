@@ -50,7 +50,7 @@ public class ELResolver extends javax.el.ELResolver{
             if( propertyName.equals( BrutosConstants.WEBFRAME ) ){
                 Controller controller = null;//brutosContext.getController();
                 if( controller != null ){
-                    result = resolveBrutosBean( controller.getId() );
+                    result = resolveBrutosBean( controller.getName() );
                     context.setPropertyResolved( true );
                 }
             }

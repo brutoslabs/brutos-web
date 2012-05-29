@@ -104,7 +104,7 @@ public class Invoker1_3 extends Invoker{
             ImpInterceptorHandler ih = new ImpInterceptorHandler();
             //ih.setContext( brutosContext.getContext() );
             //ih.setRequest( brutosContext.getRequest() );
-            ih.setResource( iocManager.getInstance( form.getId() ) );
+            ih.setResource( iocManager.getInstance( form.getName() ) );
             //ih.setResponse( response );
             //ih.setURI( ih.getRequest().getRequestURI() );
             ih.setResourceAction(
