@@ -33,10 +33,10 @@ import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ParameterMethodMapping;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
@@ -362,7 +362,7 @@ public class InterceptorProcess implements InterceptorStack{
     private void processException( StackRequestElement stackRequestElement,
             Throwable e, ResourceAction resourceAction ){
         
-        MethodForm method = resourceAction == null? 
+        Action method = resourceAction == null? 
                 null : 
                 resourceAction.getMethodForm();
         
@@ -391,7 +391,7 @@ public class InterceptorProcess implements InterceptorStack{
      * @throws IllegalAccessException
      * @throws ParseException 
      */
-    private Object[] getParameters( MethodForm method )
+    private Object[] getParameters( Action method )
             throws InstantiationException, IllegalAccessException,
         ParseException {
         if( method != null ){
@@ -414,7 +414,7 @@ public class InterceptorProcess implements InterceptorStack{
 
     private void preAction( Object source ) {
         try{
-            Action action = this.form.getAcion();
+            ActionListener action = this.form.getAcion();
             if( action.getPreAction() != null ){
                 action.getPreAction().setAccessible( true );
                 action.getPreAction().invoke( source, new Object[]{} );
@@ -427,7 +427,7 @@ public class InterceptorProcess implements InterceptorStack{
 
     private void postAction( Object source ) {
         try{
-            Action action = this.form.getAcion();
+            ActionListener action = this.form.getAcion();
             if( action.getPostAction() != null ){
                 action.getPostAction().setAccessible( true );
                 action.getPostAction().invoke( source, new Object[]{} );

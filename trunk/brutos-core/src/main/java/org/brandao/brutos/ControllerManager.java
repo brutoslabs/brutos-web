@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.validator.ValidatorProvider;
 
@@ -190,8 +190,8 @@ public class ControllerManager {
             name = classType.getSimpleName();
         
         Controller fr = new Controller();
-        fr.setUri( id );
-        fr.setId( name );
+        fr.setId( id );
+        fr.setName( name );
         fr.setPage( view );
         fr.setClassType( classType );
         fr.setScope( ScopeType.PARAM );
@@ -207,14 +207,14 @@ public class ControllerManager {
                         id == null? "?" : id
                          }));
         //Action
-        Action ac = new Action();
+        ActionListener ac = new ActionListener();
         ac.setPreAction( getMethodAction( "preAction", fr.getClassType() ) );
         ac.setPostAction( getMethodAction( "postAction", fr.getClassType() ) );
         fr.setAcion( ac );
         
         //forms.put( fr.getUri(), fr );
         //revForms.put( fr.getClassType(), fr );
-        addForm( fr.getUri(), fr );
+        addForm( fr.getId(), fr );
         fr.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
         
         this.current = new ControllerBuilder( fr, this, 

@@ -19,7 +19,7 @@ package org.brandao.brutos;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 
 /**
  * @deprecated 
@@ -27,9 +27,9 @@ import org.brandao.brutos.mapping.MethodForm;
  */
 public class DefaultResourceMethod implements ResourceMethod{
 
-    MethodForm method;
+    Action method;
 
-    public DefaultResourceMethod( MethodForm method ){
+    public DefaultResourceMethod( Action method ){
         this.method = method;
    }
 
@@ -62,7 +62,7 @@ public class DefaultResourceMethod implements ResourceMethod{
         return this.method.isAbstract();
     }
 
-    public MethodForm getMethodForm() {
+    public Action getMethodForm() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

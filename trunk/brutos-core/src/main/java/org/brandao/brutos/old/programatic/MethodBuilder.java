@@ -25,7 +25,7 @@ import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ParameterMethodMapping;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
@@ -40,9 +40,9 @@ import org.brandao.brutos.type.TypeManager;
 public class MethodBuilder {
     
     Controller webFrame;
-    MethodForm methodForm;
+    Action methodForm;
     
-    public MethodBuilder( MethodForm methodForm, Controller webFrame ) {
+    public MethodBuilder( Action methodForm, Controller webFrame ) {
         this.webFrame = webFrame;
         this.methodForm = methodForm;
     }

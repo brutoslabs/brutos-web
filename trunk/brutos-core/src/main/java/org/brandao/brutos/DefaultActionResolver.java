@@ -20,7 +20,7 @@ package org.brandao.brutos;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 
 /**
  * Implementação padrão do ActionResolver.
@@ -40,12 +40,12 @@ public class DefaultActionResolver implements ActionResolver{
 
     public ResourceAction getResourceAction(Controller controller, String actionId,
             InterceptorHandler handler) {
-        MethodForm method = controller
+        Action method = controller
                 .getMethodByName( actionId );
         return method == null? null : getResourceAction( method );
     }
 
-    public ResourceAction getResourceAction(MethodForm action) {
+    public ResourceAction getResourceAction(Action action) {
         return new DefaultResourceAction( action );
     }
 

@@ -20,7 +20,7 @@ package org.brandao.brutos;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 
 /**
  * Representa uma açao.
@@ -46,7 +46,7 @@ public interface ResourceAction {
      * Obt�m o mapeamento da a��o.
      * @return M�todo.
      */
-    public MethodForm getMethodForm();
+    public Action getMethodForm();
 
     /**
      * Obt�m o m�todo associado a a��o.

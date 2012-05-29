@@ -19,17 +19,17 @@ package org.brandao.brutos;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import org.brandao.brutos.mapping.MethodForm;
+import org.brandao.brutos.mapping.Action;
 
 /**
- * Implementação padrão do ResourceAction.
+ * Implementaï¿½ï¿½o padrï¿½o do ResourceAction.
  * @author Afonso Brandao
  */
 public class DefaultResourceAction implements ResourceAction{
 
-    MethodForm method;
+    Action method;
 
-    public DefaultResourceAction( MethodForm method ){
+    public DefaultResourceAction( Action method ){
         this.method = method;
    }
 
@@ -62,7 +62,7 @@ public class DefaultResourceAction implements ResourceAction{
         return this.method.isAbstract();
     }
 
-    public MethodForm getMethodForm() {
+    public Action getMethodForm() {
         return method;
     }
     

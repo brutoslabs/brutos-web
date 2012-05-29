@@ -53,11 +53,11 @@ import org.brandao.brutos.validator.ValidatorProvider;
 public class ActionBuilder {
     
     Controller controller;
-    MethodForm methodForm;
+    Action methodForm;
     ValidatorProvider validatorProvider;
     ControllerBuilder controllerBuilder;
 
-    public ActionBuilder( MethodForm methodForm, 
+    public ActionBuilder( Action methodForm, 
             Controller controller, ValidatorProvider validatorProvider,
             ControllerBuilder controllerBuilder ) {
         this.controller = controller;
