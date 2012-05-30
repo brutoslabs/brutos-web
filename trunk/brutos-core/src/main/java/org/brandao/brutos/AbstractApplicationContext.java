@@ -50,20 +50,36 @@ public abstract class AbstractApplicationContext
             .getLogger(AbstractApplicationContext.class.getName());
 
     protected IOCManager iocManager;
+    
     protected IOCProvider iocProvider;
+    
     protected WebFrameManager webFrameManager;
+    
     protected InterceptorManager interceptorManager;
+    
     protected ControllerManager controllerManager;
+    
     protected ViewProvider viewProvider;
+    
     protected ValidatorProvider validatorProvider;
+    
     protected Invoker invoker;
+    
     protected Properties configuration;
+    
     protected LoggerProvider loggerProvider;
+    
     protected ControllerResolver controllerResolver;
+    
     protected ActionResolver actionResolver;
+    
     protected MvcResponseFactory responseFactory;
+    
     protected MvcRequestFactory requestFactory;
     private Scopes scopes;
+    
+    private ViewResolver viewResolver;
+    
     protected CodeGeneratorProvider codeGeneratorProvider;
     
     private AbstractApplicationContext parent;
@@ -73,10 +89,14 @@ public abstract class AbstractApplicationContext
     }
 
     public AbstractApplicationContext( AbstractApplicationContext parent ) {
+        
         this.parent = parent;
-        this.configuration = parent == null?
-            new Configuration() :
-            parent.configuration;
+        
+        if(parent == null)
+            this.configuration = new Configuration();
+        else
+            this.configuration = new Configuration(parent.configuration);
+            
         this.scopes = new Scopes();
     }
 
@@ -129,6 +149,7 @@ public abstract class AbstractApplicationContext
         this.requestFactory = getMvcRequestFactory();
         this.responseFactory = getMvcResponseFactory();
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
+        this.viewResolver = getNewViewResolver();
         this.controllerManager = new ControllerManager(
                 this.interceptorManager, validatorProvider,this);
         
@@ -287,6 +308,20 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    protected ViewResolver getNewViewResolver(){
+        try{
+            String className = 
+                configuration.getProperty(
+                    "org.brandao.brutos.view.resolver",
+                    DefaultViewResolver.class.getName());
+            
+            return (ViewResolver)ClassUtil.getInstance(ClassUtil.get(className));
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+    
     /**
      * M�todo invocado quando a aplica��o � finalizada.
      */
@@ -308,7 +343,7 @@ public abstract class AbstractApplicationContext
         this.viewProvider = null;
         this.viewProvider = null;
         this.webFrameManager = null;
-
+        this.viewResolver = null;
     }
 
     /**
@@ -456,6 +491,14 @@ public abstract class AbstractApplicationContext
         this.codeGeneratorProvider = codeGeneratorProvider;
     }
 
+    public ViewResolver getViewResolver() {
+        return viewResolver;
+    }
+
+    public void setViewResolver(ViewResolver viewResolver) {
+        this.viewResolver = viewResolver;
+    }
+    
     public Object getController(Class clazz){
 
         Controller controller =
@@ -487,4 +530,5 @@ public abstract class AbstractApplicationContext
 
         return proxy;
     }
+    
 }
