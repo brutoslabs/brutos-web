@@ -66,14 +66,14 @@ public class Invoker1_3 extends Invoker{
 
         //Form form = brutosContext.getController();
         WebFrameManager wfm = brutosContext.getWebFrameManager();
-
-        Controller form = ((DefaultControllerResolver)brutosContext
+        Controller form = null;
+       /* Controller form = ((DefaultControllerResolver)brutosContext
                 .getResolveController())
                     .getController(
                         wfm,
                         (HttpServletRequest)org.brandao.brutos.ContextLoaderListener.currentRequest.get()
                 );
-
+        */
         long time = 0;
         if( form == null )
             //response.setStatus( response.SC_NOT_FOUND );
