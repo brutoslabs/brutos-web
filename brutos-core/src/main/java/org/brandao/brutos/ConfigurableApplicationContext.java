@@ -36,120 +36,123 @@ public interface ConfigurableApplicationContext
      * Obt�m a f�brica de requisi��o.
      * @return F�brica.
      */
-    public MvcRequestFactory getRequestFactory();
+    MvcRequestFactory getRequestFactory();
 
     /**
      * Obt�m a f�brica de resposta.
      * @return F�brica.
      */
-    public MvcResponseFactory getResponseFactory();
+    MvcResponseFactory getResponseFactory();
 
     /**
      * @deprecated
      * @param iocManager
      */
-    public void setIocManager(IOCManager iocManager);
+    void setIocManager(IOCManager iocManager);
 
     /**
      * @deprecated
      * @param webFrameManager
      */
-    public void setWebFrameManager(WebFrameManager webFrameManager);
+    void setWebFrameManager(WebFrameManager webFrameManager);
 
     /**
      * Define o gestor de interceptadores.
      * @param interceptorManager Gestor de interceptadores.
      */
-    public void setInterceptorManager(InterceptorManager interceptorManager);
+    void setInterceptorManager(InterceptorManager interceptorManager);
 
 
     /**
      * Obt�m o provedor da vis�o.
      * @return Provedor da vis�o.
      */
-    public ViewProvider getViewProvider();
+    ViewProvider getViewProvider();
 
     /**
      * Obt�m o provedor das regras de valida��o.
      * @return Provedor das regras de valida��o
      */
-    public ValidatorProvider getValidatorProvider();
+    ValidatorProvider getValidatorProvider();
 
     /**
      * Obt�m o respons�vel por executar as a��es.
      * @return Respons�vel por executar as a��es.
      */
-    public Invoker getInvoker();
+    Invoker getInvoker();
 
     /**
      * Define o responsável por executar as ações.
      * @param value Responsável por executar as ações.
      */
-    public void setInvoker(Invoker value);
+    void setInvoker(Invoker value);
 
     /**
      * Define as configura��es da aplica��o.
      * @param config Configura��o.
      */
-    public void setConfiguration( Properties config );
+    void setConfiguration( Properties config );
 
     /**
      * Obt�m a configura��o da aplica��o.
      * @param config Configura��o.
      */
-    public Properties getConfiguration();
+    Properties getConfiguration();
 
     /**
      * Define o provedor do container IOC.
      * @param iocProvider Provedor do container IOC.
      */
-    public void setIocProvider(IOCProvider iocProvider);
-
+    void setIocProvider(IOCProvider iocProvider);
 
     /**
      * Obt�m o gestor de interceptadores.
      * @return Gestor de interceptadores.
      */
-    public InterceptorManager getInterceptorManager();
+    InterceptorManager getInterceptorManager();
 
     /**
      * Obt�m o gestor de controladores.
      * @return Gestor de controladores.
      */
-    public ControllerManager getControllerManager();
+    ControllerManager getControllerManager();
 
     /**
      * @deprecated
      * @return .
      */
-    public IOCManager getIocManager();
+    IOCManager getIocManager();
 
     /**
      * @deprecated
      * @return .
      */
-    public WebFrameManager getWebFrameManager();
-
+    WebFrameManager getWebFrameManager();
+    
     /**
      * Obt�m o provedor do container IOC.
      * @return Provedor do container IOC.
      */
-    public IOCProvider getIocProvider();
+    IOCProvider getIocProvider();
 
     /**
      * Obt�m o respons�vel por resolver os controladores.
      * @return Respons�vel por resolver os controladores.
      */
-    public ControllerResolver getControllerResolver();
+    ControllerResolver getControllerResolver();
 
     /**
      * Obt�m o respons�vel por resolver as a��es.
      * @return Respons�vel por resolver as a��es.
      */
-    public ActionResolver getActionResolver();
+    ActionResolver getActionResolver();
 
-    public CodeGeneratorProvider getCodeGeneratorProvider();
+    CodeGeneratorProvider getCodeGeneratorProvider();
 
-    public void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider);
+    void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider);
 
+    void setViewResolver(ViewResolver viewResolver);
+
+    ViewResolver getViewResolver();
+    
 }

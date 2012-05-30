@@ -94,4 +94,10 @@ public interface BrutosConstants {
     
     public final String DEFAULT_TEMPORALPROPERTY = "dd/MM/yyyy";
     
+    public final String DEFAULT_SUFFIX_VIEW = "";
+    
+    public final String DEFAULT_PREFIX_VIEW = "views/";
+
+    public final String DEFAULT_CONTROLLER_VIEW = "Controller";
+    
 }
