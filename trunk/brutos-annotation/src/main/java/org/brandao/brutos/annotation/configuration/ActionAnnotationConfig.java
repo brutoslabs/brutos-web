@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -52,8 +53,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 method.getAnnotation(View.class), 
                 controllerBuilder.getClassType(), 
                 method,
-                applicationContext,
-                false);
+                applicationContext);
 
         Dispatcher dispatcherAnnotation = method.getAnnotation(Dispatcher.class);
         dispatcher = dispatcherAnnotation == null? 
@@ -84,36 +84,21 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             return action.value();
     }
     
-    protected String getView(View view, Class controllerClass, Method action,
-        ConfigurableApplicationContext applicationContext, boolean hasViewController){
+    protected String getView(View viewAnnotation, Class controllerClass, Method action,
+        ConfigurableApplicationContext applicationContext){
         
-        if(view != null)
-            return view.value();
+        if(viewAnnotation != null)
+            return viewAnnotation.value();
         else
-        if(hasViewController)
-            return null;
-        else{
-            String prefix = applicationContext.getConfiguration()
-                    .getProperty("org.brandao.brutos.view.prefix");
+            return createActionView(controllerClass, action, applicationContext);
+    }
 
-            String v = applicationContext.getConfiguration()
-                    .getProperty("org.brandao.brutos.view.path", prefix);
-            
-            v = (v + controllerClass.getSimpleName() + "/" + action.getName()).toLowerCase();
-            
-            try{
-                Resource viewResource = 
-                        ((Resource)applicationContext).getRelativeResource(v);
-                
-                return viewResource != null && viewResource.exists()?
-                        v :
-                        null;
-            }
-            catch(Exception e){
-                throw new BrutosException(e);
-            }
-        }
-            
+    protected String createActionView(Class controllerClass, Method action,
+            ConfigurableApplicationContext applicationContext){
+        
+        return applicationContext.getViewResolver()
+                .getView(controllerClass, action, 
+                applicationContext.getConfiguration());
     }
     
     private void addParameters(ActionBuilder builder, 

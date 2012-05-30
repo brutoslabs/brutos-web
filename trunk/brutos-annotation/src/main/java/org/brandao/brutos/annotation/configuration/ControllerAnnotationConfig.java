@@ -63,8 +63,9 @@ public class ControllerAnnotationConfig
         }
 
         controllerID = this.getControllerId(annotationController, source);
-        View viewAnnotation = (View) source.getAnnotation(View.class);
-        view = viewAnnotation == null? null : viewAnnotation.value();
+        
+        view = getView((View) source.getAnnotation(View.class), source,
+            applicationContext);
 
         Dispatcher dispatcherAnnotation = (Dispatcher) source.getAnnotation(Dispatcher.class);
         dispatcher = dispatcherAnnotation == null? 
@@ -83,6 +84,23 @@ public class ControllerAnnotationConfig
         addProperties(builder, applicationContext, source);
         addActions( builder, applicationContext, source );
         return builder;
+    }
+    
+    protected String getView(View viewAnnotation, Class controllerClass,
+        ConfigurableApplicationContext applicationContext){
+        
+        if(viewAnnotation != null)
+            return viewAnnotation.value();
+        else
+            return createControllerView(controllerClass, applicationContext);
+    }
+    
+    protected String createControllerView(Class controllerClass,
+            ConfigurableApplicationContext applicationContext){
+        
+        return applicationContext.getViewResolver()
+                .getView(controllerClass, null, 
+                applicationContext.getConfiguration());
     }
     
     protected void addProperties(ControllerBuilder controllerBuilder, 
