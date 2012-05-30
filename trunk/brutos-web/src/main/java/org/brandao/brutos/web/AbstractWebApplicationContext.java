@@ -125,50 +125,73 @@ public abstract class AbstractWebApplicationContext
         getScopes().register( WebScopeType.PARAM.toString(),
                 new ParamScope() );
     }
+    
     private void overrideConfig(Properties config){
-
-        String controllerResolverName = config
+        String tmp;
+        
+        tmp = config
                 .getProperty( "org.brandao.brutos.controller.class", 
                               WebControllerResolver.class.getName() );
 
         config.put( "org.brandao.brutos.controller.class" ,
-                    controllerResolverName );
+                    tmp );
 
-        String responseFactory = config
+        tmp = config
                 .getProperty( "org.brandao.brutos.controller.response_factory",
                               WebMvcResponseFactory.class.getName() );
 
         config.put( "org.brandao.brutos.controller.response_factory",
-                    responseFactory );
+                    tmp );
 
-        String requestFactory = config
+        tmp = config
                 .getProperty( "org.brandao.brutos.controller.request_factory",
                               WebMvcRequestFactory.class.getName() );
 
         config.put( "org.brandao.brutos.controller.request_factory",
-                    requestFactory );
+                    tmp );
 
-        String actionResolverName = config
+        tmp = config
                 .getProperty( "org.brandao.brutos.controller.action_resolver",
                               WebActionResolver.class.getName() );
 
         config.put( "org.brandao.brutos.controller.action_resolver",
-                    actionResolverName );
+                    tmp );
 
-        String iocProvider = config
+        tmp = config
                 .getProperty( "org.brandao.brutos.ioc.provider",
                               SpringIOCProvider.class.getName() );
 
         config.put( "org.brandao.brutos.ioc.provider",
-                    iocProvider );
+                    tmp );
 
-        String viewProvider = config
+        tmp = config
                 .getProperty( "org.brandao.brutos.view.provider",
                               JSPViewProvider.class.getName() );
 
         config.put( "org.brandao.brutos.view.provider",
-                    viewProvider );
+                    tmp );
 
+        tmp = config
+                .getProperty( "org.brandao.brutos.view.prefix",
+                              "WEB-INF/" );
+        
+        config.put( "org.brandao.brutos.view.prefix",
+                    tmp );
+
+        tmp = config
+                .getProperty( "org.brandao.brutos.view.suffix",
+                              ".jsp" );
+        
+        config.put( "org.brandao.brutos.view.suffix",
+                    tmp );
+
+        tmp = config
+                .getProperty( "org.brandao.brutos.view.controller",
+                              "index" );
+        
+        config.put( "org.brandao.brutos.view.controller",
+                    tmp );
+        
     }
 
     public ServletContext getContext(){
