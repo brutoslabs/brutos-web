@@ -87,10 +87,21 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     protected String getView(View viewAnnotation, Class controllerClass, Method action,
         ConfigurableApplicationContext applicationContext){
         
-        if(viewAnnotation != null)
-            return viewAnnotation.value();
+        boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
+        
+        String view = 
+            viewAnnotation != null && viewAnnotation.id().trim().length() > 0?
+                viewAnnotation.id() : null;
+        
+        
+        if(rendered){
+            if(view != null)
+                return viewAnnotation.id();
+            else
+                return createActionView(controllerClass, action, applicationContext);
+        }
         else
-            return createActionView(controllerClass, action, applicationContext);
+            return null;
     }
 
     protected String createActionView(Class controllerClass, Method action,

@@ -26,10 +26,12 @@ import java.lang.annotation.Target;
  *
  * @author Brandao
  */
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface View {
 
-    String value();
+    String id() default "";
+    
+    boolean rendered() default true;
     
 }
