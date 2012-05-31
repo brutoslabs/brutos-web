@@ -49,7 +49,7 @@ public class Controller {
     
     private Class classType;
     
-    private String methodId;
+    private String actionId;
     
     private Map mappingBeans;
     
@@ -70,11 +70,11 @@ public class Controller {
      */
     private ScopeType scope;
     
-    private String page;
+    private String view;
 
     private boolean redirect;
     
-    private String defaultMethodName;
+    private String defaultAction;
     
     private List interceptorStack;
     
@@ -99,8 +99,8 @@ public class Controller {
         this.interceptorProcess.setForm( this );
     }
 
-    public String getMethodId() {
-        return methodId;
+    public String getActionId() {
+        return actionId;
     }
 
     public Object getInstance(IOCProvider iocProvider){
@@ -113,8 +113,8 @@ public class Controller {
             return instance;
     }
 
-    public void setMethodId(String methodId) {
-        this.methodId = methodId;
+    public void setActionId(String actionId) {
+        this.actionId = actionId;
     }
 
     public Map getMappingBeans() {
@@ -133,10 +133,17 @@ public class Controller {
         this.fields = fields;
     }
 
+    /**
+     * @deprecated 
+     * @return 
+     */
     public ActionListener getAcion() {
         return getAction();
     }
 
+    /**
+     * @deprecated 
+     */
     public void setAcion(ActionListener acion) {
         this.setAction(acion);
     }
@@ -236,10 +243,10 @@ public class Controller {
         }
     }
 
-    public Action getMethodByName( String name ){
+    public Action getActionByName( String name ){
         Action mf = null;
         mf = (Action) (name == null ? null : getMethods().get(name));
-        mf = (Action) (mf == null ? getMethods().get(getDefaultMethodName()) : mf);
+        mf = (Action) (mf == null ? getMethods().get(getDefaultAction()) : mf);
         return mf;
     }
 
@@ -320,20 +327,20 @@ public class Controller {
         this.scope = scope;
     }
 
-    public String getPage() {
-        return page;
+    public String getView() {
+        return view;
     }
 
-    public void setPage(String page) {
-        this.page = page;
+    public void setView(String view) {
+        this.view = view;
     }
 
-    public String getDefaultMethodName() {
-        return defaultMethodName;
+    public String getDefaultAction() {
+        return defaultAction;
     }
 
-    public void setDefaultMethodName(String defaultMethodName) {
-        this.defaultMethodName = defaultMethodName;
+    public void setDefaultAction(String defaultAction) {
+        this.defaultAction = defaultAction;
     }
 
     public String getName() {
