@@ -38,7 +38,7 @@ public class DefaultMethodResolver implements MethodResolver{
                 .getCurrentWebApplicationContext();
         Controller controller = null;//brutosContext.getController();
         Action method = controller
-                .getMethodByName( request.getParameter( controller.getMethodId() ) );
+                .getActionByName( request.getParameter( controller.getActionId() ) );
         
         return method == null? null : getResourceMethod( method );
     }
@@ -51,7 +51,7 @@ public class DefaultMethodResolver implements MethodResolver{
             InterceptorHandler handler) {
         Scope scope = scopes.get(ScopeType.PARAM);
         Action method = controller
-                .getMethodByName( String.valueOf( scope.get( controller.getMethodId() ) ) );
+                .getActionByName( String.valueOf( scope.get( controller.getActionId() ) ) );
         return method == null? null : getResourceMethod( method );
     }
 

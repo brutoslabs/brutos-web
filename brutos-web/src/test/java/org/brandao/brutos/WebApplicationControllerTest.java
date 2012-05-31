@@ -64,7 +64,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                                 .getController(SimpleController.class);
 
                     Action form =
-                            controller.getMethodByName("action");
+                            controller.getActionByName("action");
 
                     form.load();
                     Class type = form.getParameterType(0);
@@ -91,7 +91,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                                 .getController(SimpleController.class);
 
                     Action form =
-                            controller.getMethodByName("action");
+                            controller.getActionByName("action");
 
                     form.load();
                     Class type = form.getParameterType(0);

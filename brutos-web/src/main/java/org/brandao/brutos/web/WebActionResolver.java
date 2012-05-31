@@ -41,7 +41,7 @@ public class WebActionResolver implements ActionResolver{
             return getResourceAction( 
                     controller,
                     String.valueOf(
-                            scope.get( controller.getMethodId() ) ),
+                            scope.get( controller.getActionId() ) ),
                     handler);
         }
         else
@@ -54,7 +54,7 @@ public class WebActionResolver implements ActionResolver{
 
         if( controller.getId() != null ){
             Action method = controller
-                    .getMethodByName( actionId );
+                    .getActionByName( actionId );
             return method == null? null : getResourceAction( method );
         }
         else{

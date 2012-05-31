@@ -72,11 +72,11 @@ public class MethodResolverJSF extends DefaultMethodResolver{
             String[] parts = expression.split( "\\." );
 
             if( BrutosConstants.WEBFRAME.equals( parts[0] ) ){
-                methodController = controller.getMethodByName( parts[1] );
+                methodController = controller.getActionByName( parts[1] );
 
                 if( methodController != null ){
                     brutosContext.getScopes().get(WebScopeType.PARAM)
-                            .put( controller.getMethodId(), parts[1] );
+                            .put( controller.getActionId(), parts[1] );
                     
                     return super.getResourceMethod( null );
                 }
