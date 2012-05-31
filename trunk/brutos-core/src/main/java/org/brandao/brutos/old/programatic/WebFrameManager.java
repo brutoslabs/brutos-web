@@ -94,10 +94,10 @@ public class WebFrameManager {
         Controller fr = new Controller();
         fr.setId( uri );
         fr.setName( name );
-        fr.setPage( page );
+        fr.setView( page );
         fr.setClassType( classType );
         fr.setScope( scope );
-        fr.setMethodId( methodParameterName );
+        fr.setActionId( methodParameterName );
         fr.setRedirect(redirect);
         fr.setDispatcherType(redirect? DispatcherType.REDIRECT : DispatcherType.INCLUDE );
         

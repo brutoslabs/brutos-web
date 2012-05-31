@@ -170,16 +170,16 @@ public abstract class ViewProvider {
                 requestScope.put(var, stackRequestElement.getResultAction());
             }
 
-            if( method.getReturnPage() != null ){
-                this.showView(requestInstrument, method.getReturnPage(),
+            if( method.getView() != null ){
+                this.showView(requestInstrument, method.getView(),
                         method.getDispatcherType());
                 return;
             }
         }
 
-        if( stackRequestElement.getController().getPage() != null ){
+        if( stackRequestElement.getController().getView() != null ){
             this.showView(requestInstrument,
-                    stackRequestElement.getController().getPage(),
+                    stackRequestElement.getController().getView(),
                     stackRequestElement.getController().getDispatcherType());
         }
         else

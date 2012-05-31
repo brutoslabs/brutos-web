@@ -34,14 +34,14 @@ public class DefaultActionResolver implements ActionResolver{
         Scope scope = handler.getContext().getScopes().get(ScopeType.PARAM);
         return getResourceAction(
                 controller,
-                String.valueOf( scope.get( controller.getMethodId() ) ),
+                String.valueOf( scope.get( controller.getActionId() ) ),
                 handler );
     }
 
     public ResourceAction getResourceAction(Controller controller, String actionId,
             InterceptorHandler handler) {
         Action method = controller
-                .getMethodByName( actionId );
+                .getActionByName( actionId );
         return method == null? null : getResourceAction( method );
     }
 

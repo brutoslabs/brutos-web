@@ -50,7 +50,7 @@ public class Action {
     
     private String returnIn;
     
-    private String returnPage;
+    private String view;
     
     private Type returnType;
 
@@ -147,12 +147,12 @@ public class Action {
         this.returnIn = returnIn;
     }
 
-    public String getReturnPage() {
-        return returnPage;
+    public String getView() {
+        return view;
     }
 
-    public void setReturnPage(String returnPage) {
-        this.returnPage = returnPage;
+    public void setView(String view) {
+        this.view = view;
     }
 
     public Controller getController() {

@@ -68,7 +68,7 @@ public interface BrutosConstants {
 
     public final String LOGGER = ApplicationContext.class.getName() + ".LOGGER";
 
-    public final String DEFAULT_RETURN_NAME = ApplicationContext.class.getName() + ".RETURN";
+    public final String DEFAULT_RETURN_NAME = "result";
     
     public final String METHOD_RESOLVER = ApplicationContext.class.getName() + ".METHOD_RESOLVER";
 
@@ -99,5 +99,6 @@ public interface BrutosConstants {
     public final String DEFAULT_PREFIX_VIEW = "views/";
 
     public final String DEFAULT_CONTROLLER_VIEW = "Controller";
-    
+
+    public final String DEFAULT_ACTION_ID = "invoke";
 }

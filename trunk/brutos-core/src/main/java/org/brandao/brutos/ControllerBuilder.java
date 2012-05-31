@@ -220,7 +220,7 @@ public class ControllerBuilder {
                 new Object[]{
                     target.getName(),
                     view == null?
-                        (controller.getPage() == null? "empty" : controller.getPage()) :
+                        (controller.getView() == null? "empty" : controller.getView()) :
                         view
                     }));
         
@@ -261,7 +261,7 @@ public class ControllerBuilder {
                     "default action defined %s: %s",
                     new Object[]{id,controller.getClassType().getName()}));
 
-                controller.setDefaultMethodName( id );
+                controller.setDefaultAction( id );
         }
         return this;
     }
@@ -416,7 +416,7 @@ public class ControllerBuilder {
         mp.setName( id );
         mp.setRedirect(false);
         mp.setDispatcherType(dispatcher);
-        mp.setReturnPage(view);
+        mp.setView(view);
         mp.setMethodName(executor);
         mp.setReturnIn( resultId == null? "result" : resultId );
         

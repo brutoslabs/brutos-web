@@ -116,7 +116,7 @@ public class WebFrameBuilder {
                 throw new BrutosException( "method " + name + " not found: " +
                         webFrame.getClassType().getName() );
             else
-                webFrame.setDefaultMethodName( name );
+                webFrame.setDefaultAction( name );
         }
         return this;
     }
@@ -257,7 +257,7 @@ public class WebFrameBuilder {
 
             Class returnType = method.getReturnType();
             if( returnPage != null ){
-                mp.setReturnPage( returnPage );
+                mp.setView( returnPage );
                 mp.setReturnIn( returnIn == null? "result" : returnIn );
             }
             else

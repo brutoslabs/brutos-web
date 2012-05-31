@@ -192,10 +192,10 @@ public class ControllerManager {
         Controller fr = new Controller();
         fr.setId( id );
         fr.setName( name );
-        fr.setPage( view );
+        fr.setView( view );
         fr.setClassType( classType );
         fr.setScope( ScopeType.PARAM );
-        fr.setMethodId( actionId );
+        fr.setActionId( actionId );
         fr.setRedirect(false);
         fr.setDispatcherType(dispatcherType);
         
