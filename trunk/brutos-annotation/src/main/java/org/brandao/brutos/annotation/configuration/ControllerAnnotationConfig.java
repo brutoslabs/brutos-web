@@ -89,10 +89,21 @@ public class ControllerAnnotationConfig
     protected String getView(View viewAnnotation, Class controllerClass,
         ConfigurableApplicationContext applicationContext){
         
-        if(viewAnnotation != null)
-            return viewAnnotation.value();
+        boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
+        
+        String view = 
+            viewAnnotation != null && viewAnnotation.id().trim().length() > 0?
+                viewAnnotation.id() : null;
+        
+        
+        if(rendered){
+            if(view != null)
+                return viewAnnotation.id();
+            else
+                return createControllerView(controllerClass, applicationContext);
+        }
         else
-            return createControllerView(controllerClass, applicationContext);
+            return null;
     }
     
     protected String createControllerView(Class controllerClass,

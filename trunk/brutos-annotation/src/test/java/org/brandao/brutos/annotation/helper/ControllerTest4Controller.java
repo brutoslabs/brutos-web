@@ -26,7 +26,7 @@ import org.brandao.brutos.annotation.*;
 public class ControllerTest4Controller {
     
     @Action
-    public void myFirstAction(){
+    public void myFirst(){
     }
 
 }
