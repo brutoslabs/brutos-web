@@ -15,21 +15,23 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.helper;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.brandao.brutos.annotation.*;
 
 /**
- * 
- * @author Afonso Brandao
+ *
+ * @author Brandao
  */
-@Target({ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ThrowableSafeList {
+@ThrowSafe(
+    target=Exception.class,
+    dispatcher="redirect",
+    name="ex",
+    view="/WEB-INF/exception.jsp")
+public class ControllerTest15Controller {
     
-    ThrowableSafe[] value();
-    
+    public Object myFirstAction(){
+        return null;
+    }
+
 }

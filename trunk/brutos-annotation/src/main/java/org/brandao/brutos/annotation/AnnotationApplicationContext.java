@@ -120,7 +120,8 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         annotationConfig.add(PropertyAnnotationConfig.class);
         annotationConfig.add(RestrictionAnnotationConfig.class);
         annotationConfig.add(RestrictionsAnnotationConfig.class);
-        annotationConfig.add(ThrowableSafeAnnotationConfig.class);
+        annotationConfig.add(ThrowSafeAnnotationConfig.class);
+        annotationConfig.add(ThrowSafeListAnnotationConfig.class);
         annotationConfig.add(TypeDefAnnotationConfig.class);
     }
 }
