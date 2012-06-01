@@ -17,7 +17,6 @@
 
 package org.brandao.brutos;
 
-import java.lang.reflect.Method;
 import java.util.Properties;
 
 /**
@@ -26,6 +25,6 @@ import java.util.Properties;
  */
 public interface ViewResolver {
     
-    String getView(Class controllerClass, Method action,
+    String getView(ControllerBuilder controller, ActionBuilder action,
                     Properties configuration);
 }

@@ -749,6 +749,11 @@ public class ControllerBuilder {
         return controller.getMappingBean(name);
     }
     
+    public ControllerBuilder setView(String value){
+        controller.setView(value);
+        return this;
+    }
+    
     protected Logger getLogger(){
         return LoggerProvider.getCurrentLoggerProvider()
                 .getLogger(ControllerBuilder.class);

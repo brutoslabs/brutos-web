@@ -17,8 +17,6 @@
 
 package org.brandao.brutos;
 
-import java.io.File;
-import java.lang.reflect.Method;
 import java.util.Properties;
 
 /**
@@ -27,8 +25,8 @@ import java.util.Properties;
  */
 public class DefaultViewResolver implements ViewResolver{
 
-    public String getView(Class controllerClass, Method action, 
-            Properties configuration) {
+    public String getView(ControllerBuilder controllerBuilder, ActionBuilder actionBuilder,
+                    Properties configuration) {
         
         String prefix = configuration
                 .getProperty("org.brandao.brutos.view.prefix", 
@@ -38,18 +36,23 @@ public class DefaultViewResolver implements ViewResolver{
                 .getProperty("org.brandao.brutos.view.suffix", 
                 BrutosConstants.DEFAULT_SUFFIX_VIEW);
 
-        String controller = configuration
+        String controllerDefaultName = configuration
                 .getProperty("org.brandao.brutos.view.controller", 
                 BrutosConstants.DEFAULT_CONTROLLER_VIEW);
         
-        String separator = File.separator;
-
+        String controllerName = controllerBuilder.getClassType().getSimpleName();
+        controllerName = controllerName.replaceAll("Controller$", "");
+        
+        String actionName = actionBuilder == null? 
+                controllerDefaultName : 
+                actionBuilder.getName();
+        
         String view = prefix;
-        view += controllerClass.getSimpleName();
-        view += separator;
-        view += action == null? controller : action.getName();
+        view += controllerName.toLowerCase();
+        view += "/";
+        view += actionName.toLowerCase();
         view += suffix;
-        return view.toLowerCase();
+        return view;
     }
     
 }
