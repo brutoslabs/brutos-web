@@ -395,4 +395,12 @@ public class ActionBuilder {
         return this.controllerBuilder;
     }
     
+    public String getName(){
+        return this.methodForm.getName();
+    }
+    
+    public ActionBuilder setView(String value){
+        this.methodForm.setView(value);
+        return this;
+    }
 }

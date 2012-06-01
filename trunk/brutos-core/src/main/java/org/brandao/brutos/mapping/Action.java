@@ -152,6 +152,7 @@ public class Action {
     }
 
     public void setView(String view) {
+        view = view == null || view.trim().length() == 0 ? null : view;        
         this.view = view;
     }
 
