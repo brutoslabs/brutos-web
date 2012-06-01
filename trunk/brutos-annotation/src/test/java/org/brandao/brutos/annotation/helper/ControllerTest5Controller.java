@@ -23,9 +23,9 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
+@Controller(name="controllerTest5Controller")
 public class ControllerTest5Controller {
     
-    @Result("actionResult")
     public Object myFirstAction(){
         return null;
     }

@@ -15,22 +15,19 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.helper;
 
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.brandao.brutos.annotation.*;
 
 /**
- * 
- * @author Afonso Brandao
+ *
+ * @author Brandao
  */
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Action {
+@View(id="/WEB-INF/jsp/controller9controller.jsp")
+public class ControllerTest8Controller {
     
-    String[] value() default {};
-    
+    public Object myFirstAction(){
+        return null;
+    }
+
 }

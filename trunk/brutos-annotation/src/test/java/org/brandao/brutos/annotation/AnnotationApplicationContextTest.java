@@ -21,8 +21,10 @@ import java.util.Properties;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.helper.*;
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.test.MockIOCProvider;
 import org.brandao.brutos.test.MockViewProvider;
 
@@ -47,7 +49,7 @@ public class AnnotationApplicationContextTest extends TestCase{
                 MockViewProvider.class.getName());
 
         prop.setProperty("org.brandao.brutos.view.prefix",
-                "/WEB-INF/jsp/");
+                "/WEB-INF/");
 
         prop.setProperty("org.brandao.brutos.view.suffix",
                 ".jsp");
@@ -77,10 +79,10 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/controllertest1/index.jsp",controller.getView());
         
-        Action action = controller.getActionByName("myfirst");
+        Action action = controller.getActionByName("myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals("myfirst",action.getName());
+        Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest1/myfirst.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
@@ -91,7 +93,7 @@ public class AnnotationApplicationContextTest extends TestCase{
     
     public void test2() throws NoSuchMethodException{
         
-        Class clazz = ControllerTest2Controller.class;
+        Class clazz = ControllerTest2.class;
         
         AnnotationApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
@@ -107,12 +109,12 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/controllertest2/index.jsp",controller.getView());
         
-        Action action = controller.getActionByName("myfirst");
+        Action action = controller.getActionByName("myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals("action",action.getName());
+        Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
-        Assert.assertEquals("/WEB-INF/controllertest2/action.jsp",action.getView());
+        Assert.assertEquals("/WEB-INF/controllertest2/myfirst.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(void.class,action.getReturnClass());
@@ -134,12 +136,19 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertNotNull(controller.getAction());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
-        Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
+        Assert.assertEquals("action",controller.getActionId());
         Assert.assertEquals("/WEB-INF/controllertest3/index.jsp",controller.getView());
         
-        Action action = controller.getActionByName("myfirst");
+        Action action = controller.getActionByName("myFirst");
         
-        Assert.assertNull(action);
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
+        Assert.assertEquals("myFirst",action.getName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
+        Assert.assertEquals("/WEB-INF/controllertest3/myfirst.jsp",action.getView());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(0,action.getParameters().size());
+        Assert.assertEquals(void.class,action.getReturnClass());
+        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
     }
     
     public void test4() throws NoSuchMethodException{
@@ -155,18 +164,20 @@ public class AnnotationApplicationContextTest extends TestCase{
         
         Assert.assertNull(controller.getId());
         Assert.assertNotNull(controller.getAction());
+        Assert.assertEquals("myFirst",controller.getDefaultAction());
+        Assert.assertEquals(clazz.getSimpleName(),controller.getName());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/controllertest4/index.jsp",controller.getView());
         
-        Action action = controller.getActionByName("myfirst");
+        Action action = controller.getActionByName("myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         Assert.assertEquals("myFirst",action.getName());
-        Assert.assertEquals(clazz.getMethod("myFirst"),action.getMethod());
+        Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest4/myfirst.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirst").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(void.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -185,12 +196,14 @@ public class AnnotationApplicationContextTest extends TestCase{
         
         Assert.assertNull(controller.getId());
         Assert.assertNotNull(controller.getAction());
+        Assert.assertNull(controller.getDefaultAction());
+        Assert.assertEquals("controllerTest5Controller",controller.getName());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/controllertest5/index.jsp",controller.getView());
         
-        Action action = controller.getActionByName("myfirst");
+        Action action = controller.getActionByName("myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         Assert.assertEquals("myFirst",action.getName());
@@ -198,8 +211,8 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("/WEB-INF/controllertest5/myfirst.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
         Assert.assertEquals(0,action.getParameters().size());
-        Assert.assertEquals(void.class,action.getReturnClass());
-        Assert.assertEquals("actionResult",action.getReturnIn());
+        Assert.assertEquals(Object.class,action.getReturnClass());
+        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
     }
 
     public void test6() throws NoSuchMethodException{
@@ -213,23 +226,7 @@ public class AnnotationApplicationContextTest extends TestCase{
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
-        Assert.assertNotNull(controller.getAction());
-        Assert.assertEquals(0,controller.getAlias().size());
-        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
-        Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
-        Assert.assertEquals("/WEB-INF/controllertest6/index.jsp",controller.getView());
-        
-        Action action = controller.getActionByName("myfirst");
-        
-        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals("myFirst",action.getName());
-        Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
-        Assert.assertNull(action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
-        Assert.assertEquals(0,action.getParameters().size());
-        Assert.assertEquals(Object.class,action.getReturnClass());
-        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        Assert.assertNull(controller);
     }
 
     public void test7() throws NoSuchMethodException{
@@ -245,17 +242,187 @@ public class AnnotationApplicationContextTest extends TestCase{
         
         Assert.assertNull(controller.getId());
         Assert.assertNotNull(controller.getAction());
+        Assert.assertNull(controller.getDefaultAction());
+        Assert.assertEquals(clazz.getSimpleName(),controller.getName());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertNull(controller.getView());
         
-        Action action = controller.getActionByName("myfirst");
+        Action action = controller.getActionByName("myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest7/myfirst.jsp",action.getView());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(0,action.getParameters().size());
+        Assert.assertEquals(Object.class,action.getReturnClass());
+        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+    }
+
+    public void test8() throws NoSuchMethodException{
+        
+        Class clazz = ControllerTest8Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getAction());
+        Assert.assertNull(controller.getDefaultAction());
+        Assert.assertEquals(clazz.getSimpleName(),controller.getName());
+        Assert.assertEquals(0,controller.getAlias().size());
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
+        Assert.assertEquals("/WEB-INF/jsp/controller9controller.jsp",controller.getView());
+        
+        Action action = controller.getActionByName("myFirst");
+        
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
+        Assert.assertEquals("myFirst",action.getName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
+        Assert.assertEquals("/WEB-INF/controllertest8/myfirst.jsp",action.getView());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(0,action.getParameters().size());
+        Assert.assertEquals(Object.class,action.getReturnClass());
+        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+    }
+
+    public void test9() throws NoSuchMethodException{
+        
+        Class clazz = ControllerTest9Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getAction());
+        Assert.assertNull(controller.getDefaultAction());
+        Assert.assertEquals(clazz.getSimpleName(),controller.getName());
+        Assert.assertEquals(0,controller.getAlias().size());
+        Assert.assertEquals(DispatcherType.REDIRECT,controller.getDispatcherType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
+        Assert.assertEquals("/WEB-INF/jsp/controller9controller.jsp",controller.getView());
+        
+        Action action = controller.getActionByName("myFirst");
+        
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
+        Assert.assertEquals("myFirst",action.getName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
+        Assert.assertEquals("/WEB-INF/controllertest9/myfirst.jsp",action.getView());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(0,action.getParameters().size());
+        Assert.assertEquals(Object.class,action.getReturnClass());
+        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+    }
+
+    public void test10() throws NoSuchMethodException{
+        
+        Class clazz = ControllerTest10Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertEquals("/controller/{invoke}",controller.getId());
+        Assert.assertNotNull(controller.getAction());
+        Assert.assertNull(controller.getDefaultAction());
+        Assert.assertEquals(clazz.getSimpleName(),controller.getName());
+        Assert.assertEquals(0,controller.getAlias().size());
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
+        Assert.assertEquals("/WEB-INF/controllertest10/index.jsp",controller.getView());
+        
+        Action action = controller.getActionByName("myFirst");
+        
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
+        Assert.assertEquals("myFirst",action.getName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
+        Assert.assertEquals("/WEB-INF/controllertest10/myfirst.jsp",action.getView());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(0,action.getParameters().size());
+        Assert.assertEquals(Object.class,action.getReturnClass());
+        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+    }
+
+    public void test11() throws NoSuchMethodException{
+        
+        Class clazz = ControllerTest11Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertEquals("/controller/{invoke}",controller.getId());
+        
+        Assert.assertNotNull(controller.getAction());
+        Assert.assertNull(controller.getDefaultAction());
+        Assert.assertEquals(clazz.getSimpleName(),controller.getName());
+        Assert.assertEquals(1,controller.getAlias().size());
+        
+        Assert.assertEquals("/controller", controller.getAlias().get(0));
+        
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
+        Assert.assertEquals("/WEB-INF/controllertest11/index.jsp",controller.getView());
+        
+        Action action = controller.getActionByName("myFirst");
+        
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
+        Assert.assertEquals("myFirst",action.getName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
+        Assert.assertEquals("/WEB-INF/controllertest11/myfirst.jsp",action.getView());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(0,action.getParameters().size());
+        Assert.assertEquals(Object.class,action.getReturnClass());
+        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+    }
+
+    public void test12() throws NoSuchMethodException{
+        
+        Class clazz = ControllerTest12Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertNull(controller.getId());
+        
+        Assert.assertNotNull(controller.getAction());
+        Assert.assertNull(controller.getDefaultAction());
+        Assert.assertEquals(clazz.getSimpleName(),controller.getName());
+        Assert.assertEquals(0,controller.getAlias().size());
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
+        Assert.assertEquals("/WEB-INF/controllertest12/index.jsp",controller.getView());
+        
+        ThrowableSafeData ex = controller.getThrowsSafe(Exception.class);
+        Assert.assertNotNull(ex);
+        
+        Action action = controller.getActionByName("myFirst");
+        
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
+        Assert.assertEquals("myFirst",action.getName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
+        Assert.assertEquals("/WEB-INF/controllertest12/myfirst.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());

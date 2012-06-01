@@ -23,9 +23,9 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
+@Transient
 public class ControllerTest6Controller {
     
-    @View(rendered=false)
     public Object myFirstAction(){
         return null;
     }
