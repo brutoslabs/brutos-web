@@ -91,6 +91,9 @@ public class ControllerAnnotationConfig
             
         builder.setView(view);
         builder.setDefaultAction(defaultActionName);
+        
+        super.applyInternalConfiguration(source, builder, applicationContext);
+        
         addProperties(builder, applicationContext, source);
         addActions( builder, applicationContext, source );
         

@@ -23,9 +23,9 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
-@ThrowableSafeList({
-    @ThrowableSafe(target=Exception.class),
-    @ThrowableSafe(target=RuntimeException.class)
+@ThrowSafeList({
+    @ThrowSafe(target=Exception.class),
+    @ThrowSafe(target=RuntimeException.class)
 })
 public class ControllerTest13Controller {
     

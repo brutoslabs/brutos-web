@@ -23,7 +23,7 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
-@ThrowableSafe(target=Exception.class)
+@ThrowSafe(target=Exception.class)
 public class ControllerTest12Controller {
     
     public Object myFirstAction(){

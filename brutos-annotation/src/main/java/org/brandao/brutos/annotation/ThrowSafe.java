@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ThrowableSafe {
+public @interface ThrowSafe {
     
     String view() default "";
     
