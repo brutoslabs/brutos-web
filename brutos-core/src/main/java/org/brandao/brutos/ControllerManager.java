@@ -210,19 +210,14 @@ public class ControllerManager {
         ActionListener ac = new ActionListener();
         ac.setPreAction( getMethodAction( "preAction", fr.getClassType() ) );
         ac.setPostAction( getMethodAction( "postAction", fr.getClassType() ) );
-        fr.setAcion( ac );
+        fr.setActionListener( ac );
         
-        //forms.put( fr.getUri(), fr );
-        //revForms.put( fr.getClassType(), fr );
         addForm( fr.getId(), fr );
         fr.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
         
         this.current = new ControllerBuilder( fr, this, 
                 interceptorManager, validatorProvider, applicationContext );
         
-        //for( Interceptor in: interceptorManager.getDefaultInterceptors() )
-        //    current.addInterceptor( in.getName() );
-
         return this.getCurrent();
     }
     

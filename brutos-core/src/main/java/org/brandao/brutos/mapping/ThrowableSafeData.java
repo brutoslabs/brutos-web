@@ -27,7 +27,7 @@ public class ThrowableSafeData {
     
     private Class target;
     
-    private String uri;
+    private String view;
     
     private String parameterName;
 
@@ -46,12 +46,12 @@ public class ThrowableSafeData {
         this.target = target;
     }
 
-    public String getUri() {
-        return uri;
+    public String getView() {
+        return view;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setView(String uri) {
+        this.view = uri;
     }
 
     public String getParameterName() {

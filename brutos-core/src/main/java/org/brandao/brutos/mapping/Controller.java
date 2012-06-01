@@ -59,7 +59,7 @@ public class Controller {
 
     private Map reverseMethods;
     
-    private ActionListener action;
+    private ActionListener actionListener;
 
     private Map throwsSafe;
 
@@ -138,14 +138,14 @@ public class Controller {
      * @return 
      */
     public ActionListener getAcion() {
-        return getAction();
+        return getActionListener();
     }
 
     /**
      * @deprecated 
      */
     public void setAcion(ActionListener acion) {
-        this.setAction(acion);
+        this.setActionListener(acion);
     }
 
     public Class getClassType() {
@@ -360,12 +360,12 @@ public class Controller {
         this.id = id;
     }
 
-    public ActionListener getAction() {
-        return action;
+    public ActionListener getActionListener() {
+        return actionListener;
     }
 
-    public void setAction(ActionListener action) {
-        this.action = action;
+    public void setActionListener(ActionListener action) {
+        this.actionListener = action;
     }
 
     public List getInterceptorStack() {
