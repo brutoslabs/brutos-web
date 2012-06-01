@@ -145,10 +145,10 @@ public abstract class ViewProvider {
                     throwableSafeData.getParameterName(),
                     objectThrow);
 
-            if( throwableSafeData.getUri() != null ){
+            if( throwableSafeData.getView() != null ){
                 this.showView(
                     requestInstrument,
-                    throwableSafeData.getUri(),
+                    throwableSafeData.getView(),
                     throwableSafeData.getDispatcher());
                 return;
             }

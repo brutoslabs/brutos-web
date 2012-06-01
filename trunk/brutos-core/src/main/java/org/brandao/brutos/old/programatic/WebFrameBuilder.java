@@ -97,7 +97,7 @@ public class WebFrameBuilder {
         ThrowableSafeData thr = new ThrowableSafeData();
         thr.setParameterName(parameterName);
         thr.setTarget(target);
-        thr.setUri(viewId);
+        thr.setView(viewId);
         thr.setRedirect( redirect );
         thr.setDispatcher( redirect? DispatcherType.REDIRECT : DispatcherType.INCLUDE );
         webFrame.setThrowsSafe(thr);

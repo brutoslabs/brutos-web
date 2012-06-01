@@ -381,10 +381,13 @@ public class ActionBuilder {
         if( !Throwable.class.isAssignableFrom( target ) )
             throw new BrutosException( "target is not allowed: " +target.getName() );
 
+        if(dispatcher == null)
+            dispatcher = BrutosConstants.DEFAULT_DISPATCHERTYPE;
+        
         ThrowableSafeData thr = new ThrowableSafeData();
         thr.setParameterName(id);
         thr.setTarget(target);
-        thr.setUri(view);
+        thr.setView(view);
         thr.setRedirect( false );
         thr.setDispatcher(dispatcher);
         methodForm.setThrowsSafe(thr);

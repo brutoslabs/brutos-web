@@ -166,7 +166,7 @@ public class MethodBuilder {
         ThrowableSafeData thr = new ThrowableSafeData();
         thr.setParameterName(parameterName);
         thr.setTarget(target);
-        thr.setUri(uri);
+        thr.setView(uri);
         thr.setRedirect( redirect );
         thr.setDispatcher( redirect? DispatcherType.REDIRECT : DispatcherType.INCLUDE );
         methodForm.setThrowsSafe(thr);

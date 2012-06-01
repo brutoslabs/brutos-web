@@ -414,7 +414,7 @@ public class InterceptorProcess implements InterceptorStack{
 
     private void preAction( Object source ) {
         try{
-            ActionListener action = this.form.getAcion();
+            ActionListener action = this.form.getActionListener();
             if( action.getPreAction() != null ){
                 action.getPreAction().setAccessible( true );
                 action.getPreAction().invoke( source, new Object[]{} );
@@ -427,7 +427,7 @@ public class InterceptorProcess implements InterceptorStack{
 
     private void postAction( Object source ) {
         try{
-            ActionListener action = this.form.getAcion();
+            ActionListener action = this.form.getActionListener();
             if( action.getPostAction() != null ){
                 action.getPostAction().setAccessible( true );
                 action.getPostAction().invoke( source, new Object[]{} );
