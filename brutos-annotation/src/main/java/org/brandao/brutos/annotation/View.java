@@ -32,6 +32,8 @@ public @interface View {
 
     String id() default "";
     
+    String dispatcher() default "";
+    
     boolean rendered() default true;
     
 }

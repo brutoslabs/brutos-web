@@ -34,7 +34,7 @@ public @interface Controller{
 
     String name() default "";
 
-    String id() default "";
+    String[] id() default {};
 
     String actionId() default "invoke";
 

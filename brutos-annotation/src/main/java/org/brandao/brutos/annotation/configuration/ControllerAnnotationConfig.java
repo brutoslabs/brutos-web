@@ -23,10 +23,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.annotation.Controller;
-import org.brandao.brutos.annotation.Dispatcher;
-import org.brandao.brutos.annotation.Stereotype;
-import org.brandao.brutos.annotation.View;
+import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.BeanProperty;
@@ -48,6 +45,7 @@ public class ControllerAnnotationConfig
         
         Controller annotationController =
                 (Controller) source.getAnnotation(Controller.class);
+        View viewAnnotation = (View) source.getAnnotation(View.class);
 
         
         String controllerID;
@@ -56,37 +54,50 @@ public class ControllerAnnotationConfig
         
         String name     = null;
         String actionID = null;
-
+        String defaultActionName = null;
+        
         if(annotationController != null){
             name = annotationController.name();
             actionID = annotationController.actionId();
+            defaultActionName = annotationController.defaultActionName();
         }
 
         controllerID = this.getControllerId(annotationController, source);
         
-        view = getView((View) source.getAnnotation(View.class), source,
-            applicationContext);
-
-        Dispatcher dispatcherAnnotation = (Dispatcher) source.getAnnotation(Dispatcher.class);
-        dispatcher = dispatcherAnnotation == null? 
+        dispatcher = 
+            viewAnnotation == null || "".equals(viewAnnotation.dispatcher())? 
                 BrutosConstants.DEFAULT_DISPATCHERTYPE : 
-                DispatcherType.valueOf(dispatcherAnnotation.value());
+                DispatcherType.valueOf(viewAnnotation.dispatcher());
         
         builder =
                 applicationContext.getControllerManager().addController(
                     controllerID,
-                    view,
+                    null,
                     dispatcher,
                     name,
                     source,
                     actionID);
 
+        
+        view = getView((View) source.getAnnotation(View.class), builder,
+            applicationContext);
+        
+        if(annotationController != null && annotationController.id().length > 1){
+            String[] ids = annotationController.id();
+            for(int i=1;i<ids.length;i++ ){
+                builder.addAlias(ids[i]);
+            }
+        }
+            
+        builder.setView(view);
+        builder.setDefaultAction(defaultActionName);
         addProperties(builder, applicationContext, source);
         addActions( builder, applicationContext, source );
+        
         return builder;
     }
     
-    protected String getView(View viewAnnotation, Class controllerClass,
+    protected String getView(View viewAnnotation, ControllerBuilder controller,
         ConfigurableApplicationContext applicationContext){
         
         boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
@@ -100,17 +111,17 @@ public class ControllerAnnotationConfig
             if(view != null)
                 return viewAnnotation.id();
             else
-                return createControllerView(controllerClass, applicationContext);
+                return createControllerView(controller, applicationContext);
         }
         else
             return null;
     }
     
-    protected String createControllerView(Class controllerClass,
+    protected String createControllerView(ControllerBuilder controller,
             ConfigurableApplicationContext applicationContext){
         
         return applicationContext.getViewResolver()
-                .getView(controllerClass, null, 
+                .getView(controller, null, 
                 applicationContext.getConfiguration());
     }
     
@@ -135,10 +146,14 @@ public class ControllerAnnotationConfig
             super.applyInternalConfiguration(m, controllerBuilder, applicationContext);
         }
     }
+
+    protected String getControllerName(Class controllerClass){
+        return controllerClass.getSimpleName().replaceAll("Controller$", "");
+    }
     
     protected String getControllerId(Controller annotation, Class controllerClass){
-        if(annotation != null)
-            return annotation.id();
+        if(annotation != null && annotation.id().length > 0)
+            return annotation.id()[0];
         else
             return null;
     }
@@ -146,7 +161,8 @@ public class ControllerAnnotationConfig
     public boolean isApplicable(Object source) {
         return source instanceof Class && 
                (((Class)source).isAnnotationPresent( Controller.class ) ||
-               ((Class)source).getSimpleName().endsWith("Controller"));
+               ((Class)source).getSimpleName().endsWith("Controller")) &&
+               !((Class)source).isAnnotationPresent(Transient.class);
     }
     
 }

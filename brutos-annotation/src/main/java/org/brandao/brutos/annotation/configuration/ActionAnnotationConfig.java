@@ -17,13 +17,11 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
-import org.brandao.brutos.io.Resource;
 
 /**
  *
@@ -38,6 +36,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         Method method = (Method)source;
         ControllerBuilder controllerBuilder = (ControllerBuilder)builder;
         Action action = (Action)method.getAnnotation(Action.class);
+        View viewAnnotation = method.getAnnotation(View.class);
         
         String result;
         String view;
@@ -49,25 +48,26 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         Result resultAnnotation = method.getAnnotation(Result.class);
         result = resultAnnotation == null? null : resultAnnotation.value();
 
-        view = getView(
-                method.getAnnotation(View.class), 
-                controllerBuilder.getClassType(), 
-                method,
-                applicationContext);
-
-        Dispatcher dispatcherAnnotation = method.getAnnotation(Dispatcher.class);
-        dispatcher = dispatcherAnnotation == null? 
+        dispatcher = 
+            viewAnnotation == null || "".equals(viewAnnotation.dispatcher())? 
                 BrutosConstants.DEFAULT_DISPATCHERTYPE : 
-                DispatcherType.valueOf(dispatcherAnnotation.value());
+                DispatcherType.valueOf(viewAnnotation.dispatcher());
         
         ActionBuilder actionBuilder =
         controllerBuilder
             .addAction(
                 id, 
                 result,
-                view, 
+                null, 
                 dispatcher,
                 method.getName() );
+
+        view = getView(
+                viewAnnotation, 
+                actionBuilder,
+                applicationContext);
+        
+        actionBuilder.setView(view);
         
         addParameters(actionBuilder, method,applicationContext);
         
@@ -75,16 +75,16 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     protected String getId(Action action, Method method){
-        if( action == null || "".equals(action.value()) ){
-            String id = method.getName().toLowerCase();
-            id = id.endsWith("action")? id.replaceAll("action$", "") : id;
+        if( action == null || action.value().length == 0 ){
+            String id = method.getName();
+            id = id.replaceAll("Action$", "");
             return id;
         }
         else
-            return action.value();
+            return action.value()[0];
     }
     
-    protected String getView(View viewAnnotation, Class controllerClass, Method action,
+    protected String getView(View viewAnnotation, ActionBuilder action,
         ConfigurableApplicationContext applicationContext){
         
         boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
@@ -98,17 +98,17 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             if(view != null)
                 return viewAnnotation.id();
             else
-                return createActionView(controllerClass, action, applicationContext);
+                return createActionView(action, applicationContext);
         }
         else
             return null;
     }
 
-    protected String createActionView(Class controllerClass, Method action,
+    protected String createActionView(ActionBuilder action,
             ConfigurableApplicationContext applicationContext){
         
         return applicationContext.getViewResolver()
-                .getView(controllerClass, action, 
+                .getView(action.getControllerBuilder(), action, 
                 applicationContext.getConfiguration());
     }
     

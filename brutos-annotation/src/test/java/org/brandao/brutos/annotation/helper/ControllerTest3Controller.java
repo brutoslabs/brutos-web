@@ -23,9 +23,9 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
+@Controller(actionId="action")
 public class ControllerTest3Controller {
     
-    @Transient
     public void myFirstAction(){
     }
 

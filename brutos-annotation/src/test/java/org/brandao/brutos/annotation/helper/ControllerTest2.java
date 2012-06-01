@@ -17,15 +17,15 @@
 
 package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.annotation.Action;
+import org.brandao.brutos.annotation.Controller;
 
 /**
  *
  * @author Brandao
  */
-public class ControllerTest2Controller {
+@Controller
+public class ControllerTest2 {
     
-    @Action("action")
     public void myFirstAction(){
     }
     
