@@ -38,4 +38,8 @@ public @interface ThrowSafe {
 
     String dispatcher() default "";
     
+    boolean rendered() default true;
+    
+    boolean enabled() default true;
+    
 }
