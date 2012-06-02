@@ -20,6 +20,10 @@ package org.brandao.brutos.annotation.configuration;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 
@@ -68,6 +72,8 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 applicationContext);
         
         actionBuilder.setView(view);
+        
+        throwsSafe(actionBuilder, method,applicationContext);
         
         addParameters(actionBuilder, method,applicationContext);
         
@@ -125,6 +131,38 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             
             super.applyInternalConfiguration(actionParamEntry, builder, applicationContext);
         }
+    }
+
+    protected void throwsSafe(ActionBuilder builder, Method method,
+            ConfigurableApplicationContext applicationContext){
+        
+        List<ThrowableEntry> list = new ArrayList<ThrowableEntry>();
+        ThrowSafeList throwSafeList = method.getAnnotation(ThrowSafeList.class);
+        ThrowSafe throwSafe = method.getAnnotation(ThrowSafe.class);
+        
+        if(throwSafeList != null)
+            list.addAll(
+                    AnnotationUtil.toList(AnnotationUtil.toList(throwSafeList)));
+
+        if(throwSafe != null)
+            list.add(
+                    AnnotationUtil.toEntry(throwSafe));
+        
+        Class[] exs = method.getExceptionTypes();
+        Map<Class<? extends Throwable>,ThrowableEntry> map = 
+                new HashMap<Class<? extends Throwable>,ThrowableEntry>();
+        
+        for(Class ex: exs){
+            ThrowableEntry entry = new ThrowableEntry(ex);
+            map.put(ex,entry);
+        }
+        
+        for(ThrowableEntry entry: list)
+            map.put(entry.getTarget(),entry);
+        
+        for(ThrowableEntry entry: map.values())
+            super.applyInternalConfiguration(entry, builder, applicationContext);
+        
     }
     
     public boolean isApplicable(Object source) {

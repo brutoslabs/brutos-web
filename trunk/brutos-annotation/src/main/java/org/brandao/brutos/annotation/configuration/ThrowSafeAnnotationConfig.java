@@ -22,10 +22,7 @@ import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.annotation.Action;
-import org.brandao.brutos.annotation.Controller;
-import org.brandao.brutos.annotation.Stereotype;
-import org.brandao.brutos.annotation.ThrowSafe;
+import org.brandao.brutos.annotation.*;
 
 /**
  *
@@ -35,10 +32,10 @@ import org.brandao.brutos.annotation.ThrowSafe;
 public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
-        return (source instanceof Method && 
-               ((Method)source).isAnnotationPresent( ThrowSafe.class )) ||
+        return source instanceof Method ||
                (source instanceof Class && 
-               ((Class)source).isAnnotationPresent( ThrowSafe.class ));
+               (((Class)source).isAnnotationPresent( ThrowSafe.class ) || 
+                ((Class)source).isAnnotationPresent( ThrowSafeList.class )));
     }
 
     public Object applyConfiguration(Object source, Object builder, 
@@ -60,6 +57,18 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
     protected void addThrowSafe(ControllerBuilder controllerBuilder, Class clazz){
         ThrowSafe throwSafe = (ThrowSafe)clazz.getAnnotation(ThrowSafe.class);
         addThrowSafe(controllerBuilder, throwSafe);
+    }
+    
+    protected void addThrowSafeList(ActionBuilder actionBuilder, Method method){
+        ThrowSafeList throwSafeList = method.getAnnotation(ThrowSafeList.class);
+        for(ThrowSafe throwSafe: throwSafeList.value())
+            addThrowSafe(actionBuilder, throwSafe);
+    }
+
+    protected void addThrowSafeList(ControllerBuilder controllerBuilder, Class clazz){
+        ThrowSafeList throwSafeList = (ThrowSafeList)clazz.getAnnotation(ThrowSafeList.class);
+        for(ThrowSafe throwSafe: throwSafeList.value())
+            addThrowSafe(controllerBuilder, throwSafe);
     }
     
     protected void addThrowSafe(ActionBuilder actionBuilder, ThrowSafe throwSafe){

@@ -100,6 +100,17 @@ public class ControllerAnnotationConfig
         return builder;
     }
     
+    protected void throwSafe(ThrowSafeList value, ControllerBuilder controllerBuilder){
+        if(value == null)
+            return;
+        
+        List<ThrowableEntry> list = 
+            AnnotationUtil.toList(
+                AnnotationUtil.toList(value));
+        
+        
+    }
+    
     protected String getView(View viewAnnotation, ControllerBuilder controller,
         ConfigurableApplicationContext applicationContext){
         
