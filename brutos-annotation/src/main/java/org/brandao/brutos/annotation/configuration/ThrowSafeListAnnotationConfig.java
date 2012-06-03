@@ -25,7 +25,6 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
-@Stereotype(target=ThrowSafeList.class,executeAfter={Action.class,Controller.class})
 public class ThrowSafeListAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {

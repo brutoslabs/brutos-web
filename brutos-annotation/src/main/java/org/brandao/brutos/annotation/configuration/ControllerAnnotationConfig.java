@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation.configuration;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
@@ -93,21 +94,31 @@ public class ControllerAnnotationConfig
         builder.setDefaultAction(defaultActionName);
         
         super.applyInternalConfiguration(source, builder, applicationContext);
-        
+
+        throwsSafe(builder, source, applicationContext);
         addProperties(builder, applicationContext, source);
         addActions( builder, applicationContext, source );
         
         return builder;
     }
     
-    protected void throwSafe(ThrowSafeList value, ControllerBuilder controllerBuilder){
-        if(value == null)
-            return;
+    protected void throwsSafe(ControllerBuilder builder, Class clazz,
+            ConfigurableApplicationContext applicationContext){
         
-        List<ThrowableEntry> list = 
-            AnnotationUtil.toList(
-                AnnotationUtil.toList(value));
+        List<ThrowableEntry> list = new ArrayList<ThrowableEntry>();
+        ThrowSafeList throwSafeList = (ThrowSafeList) clazz.getAnnotation(ThrowSafeList.class);
+        ThrowSafe throwSafe = (ThrowSafe) clazz.getAnnotation(ThrowSafe.class);
         
+        if(throwSafeList != null)
+            list.addAll(
+                    AnnotationUtil.toList(AnnotationUtil.toList(throwSafeList)));
+
+        if(throwSafe != null)
+            list.add(
+                    AnnotationUtil.toEntry(throwSafe));
+        
+        for(ThrowableEntry entry: list)
+            super.applyInternalConfiguration(entry, builder, applicationContext);
         
     }
     
@@ -135,7 +146,7 @@ public class ControllerAnnotationConfig
             ConfigurableApplicationContext applicationContext){
         
         return applicationContext.getViewResolver()
-                .getView(controller, null, 
+                .getView(controller, null, null,
                 applicationContext.getConfiguration());
     }
     

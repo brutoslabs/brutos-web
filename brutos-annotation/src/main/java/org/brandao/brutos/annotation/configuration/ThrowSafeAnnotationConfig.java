@@ -32,65 +32,74 @@ import org.brandao.brutos.annotation.*;
 public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
-        return source instanceof Method ||
-               (source instanceof Class && 
-               (((Class)source).isAnnotationPresent( ThrowSafe.class ) || 
-                ((Class)source).isAnnotationPresent( ThrowSafeList.class )));
+        return source instanceof ThrowableEntry;
     }
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
 
         if(builder instanceof ActionBuilder)
-            addThrowSafe((ActionBuilder)builder, (Method)source);
+            addThrowSafe((ActionBuilder)builder, applicationContext, (ThrowableEntry)source);
         else
-            addThrowSafe((ControllerBuilder)builder, (Class)source);
+            addThrowSafe((ControllerBuilder)builder, applicationContext, (ThrowableEntry)source);
         
         return builder;
     }
     
-    protected void addThrowSafe(ActionBuilder actionBuilder, Method method){
-        ThrowSafe throwSafe = method.getAnnotation(ThrowSafe.class);
-        addThrowSafe(actionBuilder, throwSafe);
+    protected void addThrowSafe(ActionBuilder actionBuilder, 
+            ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
+        
+        if(throwSafe.isEnabled())
+            actionBuilder
+                    .addThrowable(
+                        throwSafe.getTarget(), 
+                        throwSafe.isRendered()? 
+                            getView(actionBuilder, applicationContext, throwSafe) : 
+                            null,
+                        throwSafe.getName(), 
+                        throwSafe.getDispatcher());
+    }
+    
+    protected void addThrowSafe(ControllerBuilder controllerBuilder, 
+            ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
+        
+        if(throwSafe.isEnabled())
+            controllerBuilder
+                    .addThrowable(
+                        throwSafe.getTarget(), 
+                        throwSafe.isRendered()? 
+                            getView(controllerBuilder, applicationContext, throwSafe) : 
+                            null,
+                        throwSafe.getName(), 
+                        throwSafe.getDispatcher());
+    }
+    
+    protected String getView(ControllerBuilder controllerBuilder, 
+            ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
+        return 
+            throwSafe.getView() == null? 
+                createView(controllerBuilder, null, throwSafe.getTarget(), applicationContext) :
+                throwSafe.getView();
     }
 
-    protected void addThrowSafe(ControllerBuilder controllerBuilder, Class clazz){
-        ThrowSafe throwSafe = (ThrowSafe)clazz.getAnnotation(ThrowSafe.class);
-        addThrowSafe(controllerBuilder, throwSafe);
+    protected String getView(ActionBuilder actionBuilder, 
+            ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
+        return 
+            throwSafe.getView() == null? 
+                createView(
+                    actionBuilder.getControllerBuilder(), actionBuilder, 
+                    throwSafe.getTarget(), 
+                    applicationContext) :
+                throwSafe.getView();
     }
     
-    protected void addThrowSafeList(ActionBuilder actionBuilder, Method method){
-        ThrowSafeList throwSafeList = method.getAnnotation(ThrowSafeList.class);
-        for(ThrowSafe throwSafe: throwSafeList.value())
-            addThrowSafe(actionBuilder, throwSafe);
-    }
-
-    protected void addThrowSafeList(ControllerBuilder controllerBuilder, Class clazz){
-        ThrowSafeList throwSafeList = (ThrowSafeList)clazz.getAnnotation(ThrowSafeList.class);
-        for(ThrowSafe throwSafe: throwSafeList.value())
-            addThrowSafe(controllerBuilder, throwSafe);
-    }
-    
-    protected void addThrowSafe(ActionBuilder actionBuilder, ThrowSafe throwSafe){
-        DispatcherType dispatcher = "".equals(throwSafe.dispatcher())?
-                null :
-                DispatcherType.valueOf(throwSafe.dispatcher());
+    protected String createView(ControllerBuilder controllerBuilder, 
+            ActionBuilder action, Class exception, 
+            ConfigurableApplicationContext applicationContext){
         
-        String name = throwSafe.name();
-        Class<? extends Throwable> target = throwSafe.target();
-        String view = throwSafe.view();
-        actionBuilder.addThrowable(target, view, name, dispatcher);
-    }
-    
-    protected void addThrowSafe(ControllerBuilder controllerBuilder, ThrowSafe throwSafe){
-        DispatcherType dispatcher = "".equals(throwSafe.dispatcher())?
-                null :
-                DispatcherType.valueOf(throwSafe.dispatcher());
-        
-        String name = throwSafe.name();
-        Class<? extends Throwable> target = throwSafe.target();
-        String view = throwSafe.view();
-        controllerBuilder.addThrowable(target, view, name, dispatcher);
+        return applicationContext.getViewResolver()
+                .getView(controllerBuilder, action, exception,
+                applicationContext.getConfiguration());
     }
     
 }
