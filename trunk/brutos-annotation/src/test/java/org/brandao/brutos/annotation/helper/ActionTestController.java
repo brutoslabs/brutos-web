@@ -25,7 +25,7 @@ import org.brandao.brutos.annotation.ThrowSafeList;
  *
  * @author Brandao
  */
-public class ActionTest2Controller {
+public class ActionTestController {
     
     public void myAction(){
     }
@@ -34,11 +34,11 @@ public class ActionTest2Controller {
     }
     
     @Action
-    public void myFirst(){
+    public void ac1(){
     }
 
     @Action
-    public void mySecondAction(){
+    public void ac2Action(){
     }
 
     @Action("/myaction")
@@ -68,7 +68,11 @@ public class ActionTest2Controller {
     public void my8Action() throws Exception{
     }
 
-    public void my9Action() throws RuntimeException{
+    @ThrowSafe(target=Exception.class, enabled=false)
+    public void my9Action() throws Exception{
+    }
+    
+    public void my10Action() throws RuntimeException{
     }
     
 }

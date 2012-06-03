@@ -114,7 +114,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             ConfigurableApplicationContext applicationContext){
         
         return applicationContext.getViewResolver()
-                .getView(action.getControllerBuilder(), action, 
+                .getView(action.getControllerBuilder(), action, null,
                 applicationContext.getConfiguration());
     }
     

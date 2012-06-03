@@ -29,8 +29,6 @@ public @interface Stereotype {
     
     Class<? extends Annotation> target();
     
-    /*Class<? extends Annotation>[] executeBefore() default {};*/
-
     Class<? extends Annotation>[] executeAfter() default {};
     
     int majorVersion() default 1;
