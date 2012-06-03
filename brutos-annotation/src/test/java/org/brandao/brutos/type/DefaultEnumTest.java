@@ -31,7 +31,7 @@ public class DefaultEnumTest extends TestCase{
         DefaultEnumType type = new DefaultEnumType();
         type.setClassType(EnumTest.class);
         type.setEnumType(EnumerationType.ORDINAL);
-        EnumTest e = (EnumTest) type.getValue("0");
+        EnumTest e = (EnumTest) type.convert("0");
         TestCase.assertEquals(EnumTest.VALUE1, e);
     }
 
@@ -39,7 +39,7 @@ public class DefaultEnumTest extends TestCase{
         DefaultEnumType type = new DefaultEnumType();
         type.setClassType(EnumTest.class);
         type.setEnumType(EnumerationType.ORDINAL);
-        EnumTest e = (EnumTest) type.getValue("1");
+        EnumTest e = (EnumTest) type.convert("1");
         TestCase.assertEquals(EnumTest.VALUE2, e);
     }
 
@@ -47,7 +47,7 @@ public class DefaultEnumTest extends TestCase{
         DefaultEnumType type = new DefaultEnumType();
         type.setClassType(EnumTest.class);
         type.setEnumType(EnumerationType.STRING);
-        EnumTest e = (EnumTest) type.getValue("VALUE1");
+        EnumTest e = (EnumTest) type.convert("VALUE1");
         TestCase.assertEquals(EnumTest.VALUE1, e);
     }
 
@@ -55,7 +55,7 @@ public class DefaultEnumTest extends TestCase{
         DefaultEnumType type = new DefaultEnumType();
         type.setClassType(EnumTest.class);
         type.setEnumType(EnumerationType.STRING);
-        EnumTest e = (EnumTest) type.getValue("VALUE2");
+        EnumTest e = (EnumTest) type.convert("VALUE2");
         TestCase.assertEquals(EnumTest.VALUE2, e);
     }
 
@@ -63,7 +63,7 @@ public class DefaultEnumTest extends TestCase{
         DefaultEnumType type = new DefaultEnumType();
         type.setClassType(EnumTest.class);
         type.setEnumType(EnumerationType.STRING);
-        EnumTest e = (EnumTest) type.getValue(EnumTest.VALUE1);
+        EnumTest e = (EnumTest) type.convert(EnumTest.VALUE1);
         TestCase.assertEquals(EnumTest.VALUE1, e);
     }
 

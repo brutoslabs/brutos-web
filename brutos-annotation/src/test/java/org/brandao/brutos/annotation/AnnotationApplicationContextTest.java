@@ -88,7 +88,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest1/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(void.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -118,7 +118,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest2/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(void.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -148,7 +148,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest3/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(void.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -180,7 +180,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest4/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(void.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -212,7 +212,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest5/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -258,7 +258,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest7/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -290,7 +290,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest8/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -322,7 +322,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest9/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -354,7 +354,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest10/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -390,7 +390,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest11/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -430,7 +430,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest12/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -477,7 +477,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest13/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -524,7 +524,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest14/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -564,7 +564,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest15/myfirst/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(Object.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -594,7 +594,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("ac1",action.getName());
         Assert.assertEquals(clazz.getMethod("ac1"),action.getMethod());
         Assert.assertEquals("/WEB-INF/actiontest/ac1/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("ac1").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("ac1").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(void.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
@@ -647,7 +647,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("ac2",action.getName());
         Assert.assertEquals(clazz.getMethod("ac2"),action.getMethod());
         Assert.assertEquals("/WEB-INF/actiontest/ac2/index.jsp",action.getView());
-        Assert.assertEquals(clazz.getMethod("ac2").getName(),action.getMethodName());
+        Assert.assertEquals(clazz.getMethod("ac2").getName(),action.getExecutor());
         Assert.assertEquals(0,action.getParameters().size());
         Assert.assertEquals(void.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
