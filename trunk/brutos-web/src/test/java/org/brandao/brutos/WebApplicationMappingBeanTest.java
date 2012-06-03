@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos;
@@ -74,7 +74,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     app.getScopes().get(WebScopeType.PARAM).put("arg(0)", "1");
                     app.getScopes().get(WebScopeType.PARAM).put("arg(1)", "2");
                     app.getScopes().get(WebScopeType.PARAM).put("arg(2)", "3");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
                     TestCase.assertEquals(1,instance.get(0).getArg2());
@@ -104,7 +104,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     app.getScopes().get(WebScopeType.PARAM).put("arg(0)", "1");
                     app.getScopes().get(WebScopeType.PARAM).put("arg(1)", "2");
                     app.getScopes().get(WebScopeType.PARAM).put("arg(2)", "3");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
                     TestCase.assertEquals(1,instance.get(0).getArg2());
@@ -134,7 +134,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     app.getScopes().get(WebScopeType.PARAM).put("arg(0)", "1");
                     app.getScopes().get(WebScopeType.PARAM).put("arg(1)", "2");
                     app.getScopes().get(WebScopeType.PARAM).put("arg(2)", "3");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     try{
                         bean.getValue();
@@ -164,7 +164,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("valueRef", "teste");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     
@@ -192,7 +192,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("valueRef", "teste");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -219,7 +219,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -246,7 +246,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -273,7 +273,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -300,7 +300,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -328,7 +328,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("enum", "VALUE2");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -356,7 +356,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("enum", "1");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -384,7 +384,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("enum", "1");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -412,7 +412,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("enum", "VALUE1");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -439,7 +439,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -466,7 +466,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -493,7 +493,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -527,7 +527,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -561,7 +561,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -588,7 +588,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -615,7 +615,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -643,7 +643,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -671,7 +671,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     app.getScopes().get(WebScopeType.PARAM).put("data", "11");
                     SimpleBean instance = (SimpleBean) bean.getValue();
@@ -700,7 +700,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     app.getScopes().get(WebScopeType.PARAM).put("data", "Teste");
                     SimpleBean instance = (SimpleBean) bean.getValue();
@@ -729,7 +729,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     app.getScopes().get(WebScopeType.SESSION).put("data", "Teste");
                     SimpleBean instance = (SimpleBean) bean.getValue();
@@ -758,7 +758,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -786,7 +786,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
@@ -815,7 +815,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     try{
-                        Bean bean = controller.getMappingBean("bean");
+                        Bean bean = controller.getBean("bean");
                         bean.getValue(true);
                         TestCase.fail("expected ValidatorException");
                     }
@@ -842,7 +842,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
                     TestCase.assertNotNull(instance);
@@ -869,7 +869,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("text", "123");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
 
                     TestCase.assertNotNull(instance);
@@ -896,7 +896,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     try{
-                        Bean bean = controller.getMappingBean("bean");
+                        Bean bean = controller.getBean("bean");
                         SimpleBean instance = (SimpleBean) bean.getValue();
                         TestCase.fail("expected NullPointerException");
                     }
@@ -925,7 +925,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     TestCase.assertNull(bean.getValue());
                 }
 
@@ -949,7 +949,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(ScopeType.PARAM).put("bean_arg", "teste");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     
                     SimpleBean obj = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("teste",obj.getBean().getArg());
@@ -975,7 +975,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(ScopeType.PARAM).put("bean.bean_arg", "teste");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     
                     SimpleBean obj = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("teste",obj.getBean().getBean().getArg());
@@ -1001,7 +1001,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(ScopeType.PARAM).put("bean.arg0.bean_arg", "teste");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     
                     SimpleBean obj = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("teste",obj.getBean().getBean().getArg());
@@ -1027,7 +1027,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("param", "123");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("123", instance.getArg());
                 }
@@ -1051,7 +1051,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("Texto", instance.getArg());
                 }
@@ -1075,7 +1075,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertNull(instance.getBean());
                 }
@@ -1099,7 +1099,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("Texto",instance.getArg());
                 }
@@ -1124,7 +1124,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("enum", "VALUE");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertEquals(EnumTest.VALUE,instance.getEnumTest());
                 }
@@ -1149,7 +1149,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("enum", "0");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertEquals(EnumTest.VALUE,instance.getEnumTest());
                 }
@@ -1173,7 +1173,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertEquals(EnumTest.VALUE2,instance.getEnumTest());
                 }
@@ -1197,7 +1197,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     try {
                         TestCase.assertEquals((new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/2011"), instance.getDate());
@@ -1225,7 +1225,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     try {
                         TestCase.assertEquals(
@@ -1255,7 +1255,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("Texto", instance.getArg());
                 }
@@ -1280,7 +1280,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.PARAM).put("bean2", "123");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("123", instance.getArg());
                 }
@@ -1305,7 +1305,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(WebScopeType.SESSION).put("bean2", "123");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("123", instance.getArg());
                 }
@@ -1330,7 +1330,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     try{
-                        Bean bean = controller.getMappingBean("bean");
+                        Bean bean = controller.getBean("bean");
                         bean.getValue(true);
                         TestCase.fail("expected ValidatorException");
                     }
@@ -1357,7 +1357,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertNotNull(instance.getBean());
                 }
@@ -1381,7 +1381,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     TestCase.assertNotNull(instance.getBean());
                 }
@@ -1405,7 +1405,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     SimpleBean instance = (SimpleBean) bean.getValue();
                     try {
                         Date expected = (new SimpleDateFormat("dd/MM/yyyy")).parse("29/08/1984");
@@ -1435,7 +1435,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     try {
-                        Bean bean = controller.getMappingBean("bean");
+                        Bean bean = controller.getBean("bean");
                         bean.getValue();
                         TestCase.fail("expected BrutosException");
                     }
@@ -1462,7 +1462,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     TestCase.assertNull(bean.getValue());
                 }
 
@@ -1486,7 +1486,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(ScopeType.PARAM).put("bean.bean_arg", "teste");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     
                     SimpleBean obj = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("teste",obj.getBean().getArg());
@@ -1512,7 +1512,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     app.getScopes().get(ScopeType.PARAM).put("bean_property.bean_arg", "teste");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     
                     SimpleBean obj = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("teste",obj.getBean().getArg());
@@ -1539,7 +1539,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
                     app.getScopes().get(ScopeType.PARAM).put("arg", "teste");
                     app.getScopes().get(ScopeType.PARAM).put("bean_property.arg2", "100");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     
                     SimpleBean obj = (SimpleBean) bean.getValue();
                     TestCase.assertEquals("teste",obj.getBean().getArg());
@@ -1568,7 +1568,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     app.getScopes().get(WebScopeType.PARAM).put("arg[0]", "1");
                     app.getScopes().get(WebScopeType.PARAM).put("arg[1]", "2");
                     app.getScopes().get(WebScopeType.PARAM).put("arg[2]", "3");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
                     TestCase.assertEquals("1",instance.get(0).getArg());
@@ -1596,7 +1596,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                                 .getController(SimpleController.class);
 
                     try{
-                        Bean bean = controller.getMappingBean("bean");
+                        Bean bean = controller.getBean("bean");
                         bean.getValue();
                         TestCase.fail("expected MappingException");
                     }
@@ -1626,7 +1626,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     app.getScopes().get(WebScopeType.PARAM).put("arg[0]", "1");
                     app.getScopes().get(WebScopeType.PARAM).put("arg[1]", "2");
                     app.getScopes().get(WebScopeType.PARAM).put("arg[2]", "3");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
                     TestCase.assertEquals("1",instance.get(0).getArg());
@@ -1656,7 +1656,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     app.getScopes().get(WebScopeType.PARAM).put("arg(0)", "1");
                     app.getScopes().get(WebScopeType.PARAM).put("arg(1)", "2");
                     app.getScopes().get(WebScopeType.PARAM).put("arg(2)", "3");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
                     TestCase.assertEquals("1",instance.get(0).getArg());
@@ -1686,7 +1686,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     app.getScopes().get(WebScopeType.PARAM).put("arg[0]", "1");
                     app.getScopes().get(WebScopeType.PARAM).put("arg[1]", "2");
                     app.getScopes().get(WebScopeType.PARAM).put("arg[2]", "3");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     Set<SimpleBean> instance = (Set<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
                     boolean id1 = false;
@@ -1746,7 +1746,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     app.getScopes().get(WebScopeType.PARAM).put("arg[0]", "1");
                     app.getScopes().get(WebScopeType.PARAM).put("arg[1]", "2");
                     app.getScopes().get(WebScopeType.PARAM).put("arg[2]", "3");
-                    Bean bean = controller.getMappingBean("bean");
+                    Bean bean = controller.getBean("bean");
                     Map<String,SimpleBean> instance = (Map<String,SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
                     TestCase.assertEquals("1",instance.get("1").getArg());

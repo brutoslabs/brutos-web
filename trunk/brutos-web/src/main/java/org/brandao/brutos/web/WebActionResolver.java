@@ -60,7 +60,7 @@ public class WebActionResolver implements ActionResolver{
         else{
             Scopes scopes = handler.getContext().getScopes();
             Scope request = scopes.get( WebScopeType.PARAM );
-            for( Object o: controller.getMethods().keySet() ){
+            for( Object o: controller.getActions().keySet() ){
                 String u = (String)o;
                 URIMapping uriMap = WebControllerResolver.getURIMapping( u );
                 if( uriMap.matches(actionId) ){
@@ -71,7 +71,7 @@ public class WebActionResolver implements ActionResolver{
                     for(String key: params.keySet() )
                         request.put(key, params.get(key) );
                     
-                    return getResourceAction( (Action)controller.getMethods().get(u));
+                    return getResourceAction( (Action)controller.getActions().get(u));
                 }
 
             }
