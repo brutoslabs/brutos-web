@@ -55,7 +55,7 @@ public class Controller {
     
     private List fields;
     
-    private Map methods;
+    private Map actions;
 
     private Map reverseMethods;
     
@@ -89,13 +89,15 @@ public class Controller {
     public Controller() {
         this.fields = new ArrayList();
         this.mappingBeans = new LinkedHashMap();
-        this.methods = new LinkedHashMap();
+        this.actions = new LinkedHashMap();
         this.interceptorStack = new ArrayList();
         this.alias = new ArrayList();
         this.reverseMethods = new LinkedHashMap();
         this.throwsSafe = new LinkedHashMap();
         this.interceptorProcess = new InterceptorProcess();
         this.loaded = false;
+        this.scope = ScopeType.PARAM;
+        this.redirect = false;
         this.interceptorProcess.setForm( this );
     }
 
@@ -117,6 +119,14 @@ public class Controller {
         this.actionId = actionId;
     }
 
+    public Bean getBean(String name){
+        return (Bean)mappingBeans.get(name);
+    }
+    
+    public void addBean(String name, Bean bean){
+        mappingBeans.put(name, bean);
+    }
+    /*
     public Map getMappingBeans() {
         return mappingBeans;
     }
@@ -124,7 +134,32 @@ public class Controller {
     public void setMappingBeans(Map mappingBeans) {
         this.mappingBeans = mappingBeans;
     }
+    */
+    
+    public boolean containsProperty(String name){
+        return getProperty(name) != null;
+    }
+    
+    public PropertyController getProperty(String name){
+        
+        for(int i=0;i<fields.size();i++){
+            if( ((PropertyController)fields.get(i)).getName().equals(name) )
+                return (PropertyController)fields.get(i);
+        }
+            
+        return null;
+    }
 
+    public List getProperties() {
+        return fields;
+    }
+    
+    public void addProperty(PropertyController property){
+        if(!containsProperty(property.getName()))
+            fields.add(property);
+    }
+    
+    /*
     public List getFields() {
         return fields;
     }
@@ -132,7 +167,8 @@ public class Controller {
     public void setFields(List fields) {
         this.fields = fields;
     }
-
+    */
+    
     /**
      * @deprecated 
      * @return 
@@ -156,7 +192,7 @@ public class Controller {
         this.classType = classType;
     }
     
-    public void addMappingBean( Bean mapping ){
+    /*public void addMappingBean( Bean mapping ){
         if( getMappingBeans() == null )
             setMappingBeans(new HashMap());
         
@@ -169,17 +205,19 @@ public class Controller {
     public Bean getMappingBean( String name ){
         return (Bean) getMappingBeans().get( name );
     }
+    */
     
-    public Map getMethods() {
-        return methods;
+    public Action getAction(String id) {
+        return (Action)actions.get(id);
     }
-
-    public void addMethod( String id, Action method ){
-
-        //if( method.getMethod() != null )
-        //    this.reverseMethods.put(method.getMethodName().toString(), method);
+    
+    public Map getActions() {
+        return actions;
+    }
+    
+    public void addAction( String id, Action method ){
         this.loaded = false;
-        this.methods.put(id, method);
+        this.actions.put(id, method);
     }
 
     Map getReverseMethods(){
@@ -219,7 +257,7 @@ public class Controller {
     }
     
     public void setMethods(Map methods) {
-        this.methods = methods;
+        this.actions = methods;
     }
     
     public void addInterceptor( Interceptor[] interceptor ){
@@ -245,8 +283,8 @@ public class Controller {
 
     public Action getActionByName( String name ){
         Action mf = null;
-        mf = (Action) (name == null ? null : getMethods().get(name));
-        mf = (Action) (mf == null ? getMethods().get(getDefaultAction()) : mf);
+        mf = (Action) (name == null ? null : actions.get(name));
+        mf = (Action) (mf == null ? actions.get(getDefaultAction()) : mf);
         return mf;
     }
 
@@ -260,11 +298,11 @@ public class Controller {
 
     private synchronized void loadConfiguration(){
         if( !this.loaded ){
-            Iterator keys = methods.keySet().iterator();
+            Iterator keys = actions.keySet().iterator();
 
             while(keys.hasNext()){
                 String key = (String)keys.next();
-                Action ac = (Action) methods.get(key);
+                Action ac = (Action) actions.get(key);
                 if(!ac.isLoaded())
                     ac.load();
             }

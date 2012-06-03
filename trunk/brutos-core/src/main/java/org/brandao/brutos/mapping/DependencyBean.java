@@ -135,7 +135,7 @@ public class DependencyBean {
     public Class getClassType(){
         return
             this.mapping != null?
-                this.mappingBean.getForm().getMappingBean( mapping ).getClassType() :
+                this.mappingBean.getForm().getBean( mapping ).getClassType() :
                 this.type == null? null : this.type.getClassType();
     }
 
@@ -195,7 +195,7 @@ public class DependencyBean {
         else{
             Bean dependencyBean =
                 this.mappingBean
-                    .getForm().getMappingBean( mapping );
+                    .getForm().getBean( mapping );
 
             if( dependencyBean == null )
                 throw new BrutosException( "mapping not found: " + mapping );

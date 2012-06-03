@@ -42,12 +42,12 @@ public class CollectionBuilder {
     public CollectionBuilder beanRef( String name ){
         name = name == null || name.replace( " ", "" ).length() == 0? null : name;
 
-        if( !webFrame.getMappingBeans().containsKey( name ) )
+        if( webFrame.getBean( name ) == null )
             throw new BrutosException( 
                     "mapping " + name + " not found: " +
                     webFrame.getClassType().getName() );
 
-        Bean bean = (Bean) webFrame.getMappingBeans().get( name );
+        Bean bean = (Bean) webFrame.getBean( name );
         
         if( !bean.isBean() )
             throw new BrutosException(

@@ -302,17 +302,17 @@ public class BeanBuilder {
      */
     public BeanBuilder setKey( String ref ){
 
-        if( ref == null )
-            throw new NullPointerException();
+        ref = StringUtil.adjust(ref);
+        
+        if( StringUtil.isEmpty(ref) )
+            throw new IllegalArgumentException();
 
-        if( !this.mappingBean.isMap() )
+        if( !mappingBean.isMap() )
             throw new BrutosException(
                 String.format("is not allowed for this type: %s",
                     new Object[]{this.mappingBean.getClassType()} ) );
 
-        ref = ref == null || ref.replace( " ", "" ).length() == 0? null : ref;
-
-        if( !controller.getMappingBeans().containsKey( ref ) )
+        if( controller.getBean( ref ) == null )
             throw new NotFoundMappingBeanException(
                     String.format(
                         "mapping %s not found: %s",
@@ -328,7 +328,7 @@ public class BeanBuilder {
                     this.getPrefixLogger(),
                     ref} ) );
         
-        Bean key = (Bean)controller.getMappingBean(ref);
+        Bean key = (Bean)controller.getBean(ref);
         ((MapBean)mappingBean).setMappingKey(key);
         return this;
     }
@@ -379,6 +379,14 @@ public class BeanBuilder {
      * @return Construtor do mapeamento.
      */
     public BeanBuilder setIndexFormat( String indexFormat ){
+        indexFormat = StringUtil.adjust(indexFormat);
+        
+        if(indexFormat == null)
+            throw new IllegalArgumentException();
+        
+        if(indexFormat.indexOf("$index") == -1)
+            throw new IllegalArgumentException("$index not found");
+        
         mappingBean.setIndexFormat(indexFormat);
         return this;
     }
@@ -396,17 +404,17 @@ public class BeanBuilder {
      */
     public BeanBuilder setElement( String ref ){
 
-        if( ref == null )
-            throw new NullPointerException();
+        ref = StringUtil.adjust(ref);
+        
+        if( StringUtil.isEmpty(ref) )
+            throw new IllegalArgumentException();
 
-        if( !this.mappingBean.isCollection() && !this.mappingBean.isMap() )
+        if( !mappingBean.isCollection() && !mappingBean.isMap() )
             throw new BrutosException(
                 String.format("is not allowed for this type: %s",
                     new Object[]{this.mappingBean.getClassType()} ) );
         
-        ref = ref == null || ref.replace( " ", "" ).length() == 0? null : ref;
-
-        if( !controller.getMappingBeans().containsKey( ref ) )
+        if( controller.getBean(ref) == null )
             throw new NotFoundMappingBeanException(
                     String.format(
                         "mapping %s not found: %s",
@@ -422,14 +430,7 @@ public class BeanBuilder {
                     this.getPrefixLogger(),
                     ref} ) );
         
-        Bean bean = (Bean) controller.getMappingBeans().get( ref );
-
-        /*
-        if( !bean.isBean() )
-            throw new BrutosException(
-                    "not allowed: " +
-                    webFrame.getClassType().getName() );
-        */
+        Bean bean = (Bean) controller.getBean( ref );
 
         ((CollectionBean)mappingBean).setBean( bean );
         return this;
@@ -444,6 +445,9 @@ public class BeanBuilder {
      * @return Construtor da propriedade.
      */
     public BeanBuilder buildProperty( String name, String propertyName, Class target ){
+        
+        name = StringUtil.adjust(name);
+        
         String beanName = this.mappingBean.getName() + "#" + propertyName;
         
         BeanBuilder beanBuilder = 
@@ -537,6 +541,9 @@ public class BeanBuilder {
      * @return Construtor do argumento.
      */
     public BeanBuilder buildConstructorArg( String name, Class target ){
+        
+        name = StringUtil.adjust(name);
+        
         String beanName = this.mappingBean.getName()
                 + "#[" + this.mappingBean.getConstructor().size() + "]";
 
@@ -557,6 +564,9 @@ public class BeanBuilder {
      * @return Construtor do argumento.
      */
     public BeanBuilder buildConstructorArg( String name, Class classType, Class target ){
+        
+        name = StringUtil.adjust(name);
+        
         String beanName = this.mappingBean.getName()
                 + "#[" + this.mappingBean.getConstructor().size() + "]";
 
@@ -704,25 +714,10 @@ public class BeanBuilder {
             String temporalProperty, String mapping, ScopeType scope,
             Object value, boolean nullable, Type factory, Class type ){
 
-        name = 
-            name == null || name.replace( " ", "" ).length() == 0?
-                null :
-                name;
-
-        propertyName =
-            propertyName == null || propertyName.replace( " ", "" ).length() == 0?
-                null :
-                propertyName;
-
-        temporalProperty = 
-            temporalProperty == null || temporalProperty.replace( " ", "" ).length() == 0?
-                null :
-                temporalProperty;
-
-        mapping =
-            mapping == null || mapping.replace( " ", "" ).length() == 0?
-                null :
-                mapping;
+        name             = StringUtil.adjust(name);
+        propertyName     = StringUtil.adjust(propertyName);
+        temporalProperty = StringUtil.adjust(temporalProperty);
+        mapping          = StringUtil.adjust(mapping);
 
         if( propertyNameRequired ){
             if( propertyName == null )

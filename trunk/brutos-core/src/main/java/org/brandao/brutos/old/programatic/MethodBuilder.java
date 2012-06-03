@@ -112,8 +112,8 @@ public class MethodBuilder {
                     .getCurrentInstance()).getValidatorProvider()
                         .getValidator( validatorConfig ) );*/
         if( mapping != null ){
-            if( webFrame.getMappingBeans().containsKey( mapping ) )
-                useBean.setMapping( webFrame.getMappingBean( mapping ) );
+            if( webFrame.getBean( mapping ) != null )
+                useBean.setMapping( webFrame.getBean( mapping ) );
             else
                 throw new BrutosException( "mapping name " + mapping + " not found!" );
                 

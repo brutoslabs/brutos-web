@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos;
@@ -159,11 +159,11 @@ public class ControllerBuilder {
      * @return Construtor do controlador.
      */
     public ControllerBuilder addAlias( String id ){
-
-        //id = id == null || id.replace( " ", "" ).length() == 0? null : id;
-
-        if( id == null )
-            throw new NullPointerException();
+        
+        id = StringUtil.adjust(id);
+        
+        if( StringUtil.isEmpty(id) )
+            throw new BrutosException("invalid alias");
 
         getLogger().info(
                 String.format(
@@ -198,15 +198,9 @@ public class ControllerBuilder {
      */
     public ControllerBuilder addThrowable( Class target, String view, String id, DispatcherType dispatcher ){
 
-        view =
-            view == null || view.replace( " ", "" ).length() == 0?
-                null :
-                view;
+        view = StringUtil.adjust(view);
         
-        id =
-            id == null || id.replace( " ", "" ).length() == 0?
-                null :
-                id;
+        id = StringUtil.adjust(id);
 
         if( target == null )
             throw new BrutosException( "target is required: " + controller.getClassType().getName() );
@@ -246,19 +240,9 @@ public class ControllerBuilder {
      */
     public ControllerBuilder setDefaultAction( String id ){
 
-        id =
-            id == null || id.replace( " ", "" ).length() == 0?
-                null :
-                id;
+        id = StringUtil.adjust(id);
         
         if( id != null ){
-            /*
-             * Agora � permitido que exista uma acao sem um metodo
-            if( !action.getMethods().containsKey( name ) )
-                throw new BrutosException( "method " + name + " not found: " +
-                        webFrame.getClassType().getName() );
-            else
-             */
             getLogger().info(
                 String.format(
                     "default action defined %s: %s",
@@ -285,10 +269,7 @@ public class ControllerBuilder {
         if( target == null )
             throw new NullPointerException();
 
-        name =
-            name == null || name.replace( " ", "" ).length() == 0?
-                null :
-                name;
+        name = StringUtil.adjust(name);
         
         if( name == null )
             throw new BrutosException( "name is required: " +
@@ -298,7 +279,7 @@ public class ControllerBuilder {
             throw new BrutosException( "target is required: " +
                     controller.getClassType().getName() );
         
-        if( controller.getMappingBeans().containsKey( name ) )
+        if( controller.getBean( name ) != null )
             throw new BrutosException( "duplicate mapping name " + name + " in the " + controller.getClassType().getName() );
 
         getLogger().info(
@@ -319,7 +300,7 @@ public class ControllerBuilder {
 
         mappingBean.setClassType( target );
         mappingBean.setName( name );
-        controller.getMappingBeans().put( name, mappingBean );
+        controller.addBean( name, mappingBean );
         BeanBuilder mb = new BeanBuilder( mappingBean, controller, 
                 this, validatorProvider, applicationContext );
         return mb;
@@ -381,27 +362,16 @@ public class ControllerBuilder {
      * @return Contrutor da a��o.
      */
     public ActionBuilder addAction( String id, String resultId, String view, DispatcherType dispatcher, String executor ){
-        /*
-        id =
-            id == null || id.replace( " ", "" ).length() == 0?
-                null :
-                id;*/
-        resultId =
-            resultId == null || resultId.replace( " ", "" ).length() == 0?
-                null :
-                resultId;
-
-        view =
-            view == null || view.replace( " ", "" ).length() == 0?
-                null :
-                view;
-
-        executor =
-            executor == null || executor.replace( " ", "" ).length() == 0?
-                null :
-                executor;
         
-        if( controller.getMethods().containsKey( id ) )
+        id = StringUtil.adjust(id);
+        
+        resultId = StringUtil.adjust(resultId);
+
+        view = StringUtil.adjust(view);
+
+        executor = StringUtil.adjust(executor);
+        
+        if( controller.getAction( id ) != null )
             throw new BrutosException( "duplicate action " + id + ": " +
                 controller.getClassType().getName() );
      
@@ -415,17 +385,35 @@ public class ControllerBuilder {
                     (executor == null? "?" : executor) + "(...)" } ) 
                 );
         
+        Action action = new Action();
+        action.setController( controller );
+        controller.addAction( id, action );
+        
+        ActionBuilder actionBuilder = 
+                new ActionBuilder( action, controller, validatorProvider, this );
+
+        actionBuilder
+                .setName( id )
+                .setDispatcherType(dispatcher)
+                .setView(view)
+                .setDispatcherType(dispatcher)
+                .setExecutor(executor)
+                .setResult(resultId);
+        
+        return actionBuilder;
+        /*
         Action mp = new Action();
         mp.setName( id );
         mp.setRedirect(false);
         mp.setDispatcherType(dispatcher);
         mp.setView(view);
-        mp.setMethodName(executor);
+        mp.setExecutor(executor);
         mp.setReturnIn( resultId == null? "result" : resultId );
         
         mp.setController( controller );
-        controller.addMethod( id, mp );
+        controller.addAction( id, mp );
         return new ActionBuilder( mp, controller, validatorProvider, this );
+        */
     }
 
     /**
@@ -437,7 +425,7 @@ public class ControllerBuilder {
      */
     public InterceptorBuilder addInterceptor( String name ){
         Interceptor parent = interceptorManager.getInterceptor( name );
-        Interceptor it = null;
+        Interceptor it;
         
         if( parent instanceof InterceptorStack )
             it = new InterceptorStack( (InterceptorStack) parent );
@@ -450,9 +438,8 @@ public class ControllerBuilder {
         Iterator iKeys = keys.iterator();
         while( iKeys.hasNext() ){
             String key = (String) iKeys.next();
-        //for( String key: keys ){
             Object value = parent.getProperties().get( key );
-            it.getProperties().put( /*parent.getName() + "." +*/ key, value );
+            it.getProperties().put( key, value );
         }
         
         getLogger().info(
@@ -636,29 +623,10 @@ public class ControllerBuilder {
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             String mapping, Object value, boolean nullable, Type type ){
 
-        id =
-            id == null || id.replace( " ", "" ).length() == 0?
-                null :
-                id;
-        propertyName =
-            propertyName == null || propertyName.replace( " ", "" ).length() == 0?
-                null :
-                propertyName;
-
-        temporalProperty =
-            temporalProperty == null || temporalProperty.replace( " ", "" ).length() == 0?
-                null :
-                temporalProperty;
-
-        mapping =
-            mapping == null || mapping.replace( " ", "" ).length() == 0?
-                null :
-                mapping;
-
-        /*if( id == null )
-            throw new BrutosException( "name is required: " +
-                    controller.getClassType().getName() );
-        */
+        id               = StringUtil.adjust(id);
+        propertyName     = StringUtil.adjust(propertyName);
+        temporalProperty = StringUtil.adjust(temporalProperty);
+        mapping          = StringUtil.adjust(mapping);
         
         if( propertyName == null )
             throw new BrutosException( "property name is required: " +
@@ -673,9 +641,9 @@ public class ControllerBuilder {
         useBean.setStaticValue( value );
         useBean.setNullable(nullable);
         
-        FieldForm fieldBean = new FieldForm();
-        fieldBean.setBean( useBean );
-        fieldBean.setName(propertyName);
+        PropertyController property = new PropertyController();
+        property.setBean( useBean );
+        property.setName(propertyName);
 
 
         BeanInstance bean = new BeanInstance( null, controller.getClassType() );
@@ -686,8 +654,8 @@ public class ControllerBuilder {
 
 
         if( mapping != null ){
-            if( controller.getMappingBeans().containsKey( mapping ) )
-                useBean.setMapping( controller.getMappingBean( mapping ) );
+            if( controller.getBean(mapping) != null )
+                useBean.setMapping( controller.getBean( mapping ) );
             else
                 throw new BrutosException( "mapping not found: " + mapping );
 
@@ -713,11 +681,11 @@ public class ControllerBuilder {
             }
         }
 
-        if( controller.getFields().contains( fieldBean ) )
+        if( controller.containsProperty( propertyName ) )
             throw new BrutosException( "property already defined: " +
                     controller.getClassType().getName() + "." + propertyName );
 
-        controller.getFields().add( fieldBean );
+        controller.addProperty( property );
 
         return new PropertyBuilder( validatorConfig );
     }
@@ -748,13 +716,79 @@ public class ControllerBuilder {
         return controller.getClassType();
     }
     
-    public Bean getMappingBean(String name){
-        return controller.getMappingBean(name);
+    public Bean getBean(String name){
+        return controller.getBean(name);
+    }
+    
+    public ControllerBuilder setId(String value){
+        
+        value = StringUtil.adjust(value);
+        
+        this.controller.setId(value);
+        return this;
+    }
+    
+    public String getId(){
+        return controller.getId();
+    }
+
+    public ControllerBuilder setName(String value){
+        value = StringUtil.adjust(value);
+        
+        if(value == null)
+            value = controller.getClassType().getSimpleName();
+        
+        controller.setName(value);
+        
+        return this;
+    }
+
+    public String getName(){
+        return controller.getName();
     }
     
     public ControllerBuilder setView(String value){
+        value = StringUtil.adjust(value);
         controller.setView(value);
         return this;
+    }
+
+    public String getView(){
+        return controller.getView();
+    }
+    
+    public ControllerBuilder setActionId(String value){
+        value = StringUtil.adjust(value);
+        if(value == null)
+            value = BrutosConstants.DEFAULT_ACTION_ID;
+        
+        controller.setActionId(value);
+        
+        return this;
+    }
+    
+    public String getActionId(){
+        return controller.getActionId();
+    }
+    
+    public ControllerBuilder setDispatcherType(String value){
+        value = StringUtil.adjust(value);
+        
+        if(StringUtil.isEmpty(value))
+            throw new BrutosException("invalid dispatcher type");
+        
+        this.setDispatcherType(DispatcherType.valueOf(value));
+        
+        return this;
+    }
+
+    public ControllerBuilder setDispatcherType(DispatcherType value){
+        this.controller.setDispatcherType(value);
+        return this;
+    }
+
+    public DispatcherType getDispatcherType(){
+        return this.controller.getDispatcherType();
     }
     
     protected Logger getLogger(){

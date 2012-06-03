@@ -38,7 +38,7 @@ public class Action {
     
     private String name;
 
-    private String methodName;
+    private String executor;
 
     private List parameters;
     
@@ -68,6 +68,7 @@ public class Action {
         this.throwsSafe = new HashMap();
         this.dispatcherType = DispatcherType.INCLUDE;
         this.returnClass = void.class;
+        this.redirect = false;
     }
 
     public String getName() {
@@ -201,13 +202,13 @@ public class Action {
             if( load )
                 return;
             
-            if( this.methodName == null ){
+            if( this.executor == null ){
                 load = true;
                 return;
             }
             
             //Class<?> classType = controller.getClassType();
-            method = getMethod( methodName, controller.getClassType() );//classType.getMethod( this.methodName, this.getParameterClass() );
+            method = getMethod( executor, controller.getClassType() );//classType.getMethod( this.methodName, this.getParameterClass() );
             controller.addReserveMethod(method, this);
             setParametersType( Arrays.asList( method.getParameterTypes() ) );
 
@@ -304,12 +305,12 @@ public class Action {
         return result;
     }
 
-    public String getMethodName() {
-        return methodName;
+    public String getExecutor() {
+        return executor;
     }
 
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
+    public void setExecutor(String value) {
+        this.executor = value;
     }
 
     public Object invoke( Object source, Object[] args )

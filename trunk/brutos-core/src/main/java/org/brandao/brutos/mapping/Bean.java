@@ -275,7 +275,7 @@ public class Bean {
         else{
             Bean factoryBean =
                 this.getFactory() != null?
-                    form.getMappingBean(factory) :
+                    form.getBean(factory) :
                     null;
 
             Object factoryInstance = null;

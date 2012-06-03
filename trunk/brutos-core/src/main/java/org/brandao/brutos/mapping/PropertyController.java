@@ -24,7 +24,7 @@ import org.brandao.brutos.bean.BeanInstance;
  *
  * @author Afonso Brandao
  */
-public class FieldForm {
+public class PropertyController {
 
     private UseBeanData bean;
     
@@ -36,7 +36,7 @@ public class FieldForm {
 
     private String name;
     
-    public FieldForm() {
+    public PropertyController() {
     }
 
     public Object getValue( Object source ){
@@ -107,8 +107,8 @@ public class FieldForm {
     }
     
     public boolean equals( Object o ){
-        return o instanceof FieldForm? 
-            ((FieldForm)o).name.equals( name ) :
+        return o instanceof PropertyController? 
+            ((PropertyController)o).name.equals( name ) :
             false;
     }
 

@@ -22,7 +22,7 @@ import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.mapping.FieldForm;
+import org.brandao.brutos.mapping.PropertyController;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.Type;
@@ -122,7 +122,7 @@ public class FieldBuilder {
         useBean.setNome( name );
         useBean.setScopeType( scope );
 
-        FieldForm fieldBean = new FieldForm();
+        PropertyController fieldBean = new PropertyController();
         fieldBean.setBean( useBean );
         fieldBean.setName(propertyName);
 
@@ -135,8 +135,8 @@ public class FieldBuilder {
         
         
         if( mapping != null ){
-            if( webFrame.getMappingBeans().containsKey( mapping ) )
-                useBean.setMapping( webFrame.getMappingBean( mapping ) );
+            if( webFrame.getBean( mapping ) != null )
+                useBean.setMapping( webFrame.getBean( mapping ) );
             else
                 throw new BrutosException( "mapping not found: " + mapping );
                 
@@ -161,11 +161,11 @@ public class FieldBuilder {
             }
         }
                
-        if( webFrame.getFields().contains( fieldBean ) )
+        if( webFrame.containsProperty( fieldBean.getName() ) )
             throw new BrutosException( "property already defined: " +
                     webFrame.getClassType().getName() + "." + propertyName );
         
-        webFrame.getFields().add( fieldBean );
+        webFrame.addProperty( fieldBean );
         
         return getWebFrameManager();
     }
