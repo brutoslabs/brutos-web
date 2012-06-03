@@ -96,9 +96,11 @@ public interface BrutosConstants {
     
     public final String DEFAULT_SUFFIX_VIEW = "";
     
-    public final String DEFAULT_PREFIX_VIEW = "views/";
+    public final String DEFAULT_PREFIX_VIEW = "views";
 
-    public final String DEFAULT_CONTROLLER_VIEW = "index";
+    public final String DEFAULT_INDEX_VIEW = "index";
 
+    public final String DEFAULT_SEPARATOR_VIEW = ".";
+    
     public final String DEFAULT_ACTION_ID = "invoke";
 }

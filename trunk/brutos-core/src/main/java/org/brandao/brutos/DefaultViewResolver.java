@@ -25,8 +25,8 @@ import java.util.Properties;
  */
 public class DefaultViewResolver implements ViewResolver{
 
-    public String getView(ControllerBuilder controllerBuilder, ActionBuilder actionBuilder,
-                    Properties configuration) {
+    public String getView(ControllerBuilder controllerBuilder, 
+            ActionBuilder actionBuilder, Class exception, Properties configuration) {
         
         String prefix = configuration
                 .getProperty("org.brandao.brutos.view.prefix", 
@@ -36,23 +36,35 @@ public class DefaultViewResolver implements ViewResolver{
                 .getProperty("org.brandao.brutos.view.suffix", 
                 BrutosConstants.DEFAULT_SUFFIX_VIEW);
 
-        String controllerDefaultName = configuration
-                .getProperty("org.brandao.brutos.view.controller", 
-                BrutosConstants.DEFAULT_CONTROLLER_VIEW);
+        String indexName = configuration
+                .getProperty("org.brandao.brutos.view.index", 
+                BrutosConstants.DEFAULT_INDEX_VIEW);
+
+        String separator = configuration
+                .getProperty("org.brandao.brutos.view.separator", 
+                BrutosConstants.DEFAULT_SEPARATOR_VIEW);
         
         String controllerName = controllerBuilder.getClassType().getSimpleName();
         controllerName = controllerName.replaceAll("Controller$", "");
-        
-        String actionName = actionBuilder == null? 
-                controllerDefaultName : 
-                actionBuilder.getName();
-        
+
         String view = prefix;
         view += controllerName.toLowerCase();
-        view += "/";
-        view += actionName.toLowerCase();
+        view += separator;
+        
+        if(actionBuilder != null){
+            view += actionBuilder.getName().toLowerCase();
+            view += separator;
+        }
+        
+        if(exception != null)
+            view += exception.getSimpleName().toLowerCase();
+        else
+            view += indexName;
+        
         view += suffix;
+        
         return view;
+        
     }
     
 }
