@@ -173,7 +173,7 @@ public abstract class AbstractWebApplicationContext
 
         tmp = config
                 .getProperty( "org.brandao.brutos.view.prefix",
-                              "WEB-INF/" );
+                              "/WEB-INF/" );
         
         config.put( "org.brandao.brutos.view.prefix",
                     tmp );
@@ -186,10 +186,17 @@ public abstract class AbstractWebApplicationContext
                     tmp );
 
         tmp = config
-                .getProperty( "org.brandao.brutos.view.controller",
+                .getProperty( "org.brandao.brutos.view.index",
                               "index" );
         
-        config.put( "org.brandao.brutos.view.controller",
+        config.put( "org.brandao.brutos.view.index",
+                    tmp );
+
+        tmp = config
+                .getProperty( "org.brandao.brutos.view.separator",
+                              "/" );
+        
+        config.put( "org.brandao.brutos.view.separator",
                     tmp );
         
     }
