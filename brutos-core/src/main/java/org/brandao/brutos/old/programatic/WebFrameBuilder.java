@@ -34,7 +34,7 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.mapping.CollectionBean;
-import org.brandao.brutos.mapping.FieldForm;
+import org.brandao.brutos.mapping.PropertyController;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
@@ -112,7 +112,7 @@ public class WebFrameBuilder {
                 name;
         
         if( name != null ){
-            if( !webFrame.getMethods().containsKey( name ) )
+            if( !webFrame.getActions().containsKey( name ) )
                 throw new BrutosException( "method " + name + " not found: " +
                         webFrame.getClassType().getName() );
             else
@@ -136,7 +136,7 @@ public class WebFrameBuilder {
             throw new BrutosException( "target is required: " +
                     webFrame.getClassType().getName() );
         
-        if( webFrame.getMappingBeans().containsKey( name ) )
+        if( webFrame.getBean( name ) != null )
             throw new BrutosException( "duplicate mapping name " + name + " in the " + webFrame.getClassType().getName() );
         
         if( Map.class.isAssignableFrom( target ) ||
@@ -146,7 +146,7 @@ public class WebFrameBuilder {
         Bean mappingBean = new Bean(webFrame);
         mappingBean.setClassType( target );
         mappingBean.setName( name );
-        webFrame.getMappingBeans().put( name, mappingBean );
+        webFrame.addBean( name, mappingBean );
         BeanBuilder mb = new BeanBuilder( mappingBean, webFrame, this );
         return mb;
     }
@@ -169,14 +169,14 @@ public class WebFrameBuilder {
         if( !Map.class.isAssignableFrom( target ) )
             throw new BrutosException( "invalid class type: " + target.getName() );
 
-        if( webFrame.getMappingBeans().containsKey( name ) )
+        if( webFrame.getBean( name ) != null )
             throw new BrutosException( "duplicate mapping name " + name + 
                 ": " + webFrame.getClassType().getName() );
 
         MapBean mappingBean = new MapBean(webFrame);
         mappingBean.setCollectionType(target);
         mappingBean.setName( name );
-        webFrame.getMappingBeans().put( name, mappingBean );
+        webFrame.addBean( name, mappingBean );
         MapBuilder mb = new MapBuilder( mappingBean, webFrame, this );
         return mb;
     }
@@ -198,14 +198,14 @@ public class WebFrameBuilder {
         if( !Collection.class.isAssignableFrom( target ) )
             throw new BrutosException( "invalid class type: " + target.getName() );
 
-        if( webFrame.getMappingBeans().containsKey( name ) )
+        if( webFrame.getBean( name ) != null )
             throw new BrutosException( "duplicate mapping name " + name + ": " +
                 webFrame.getClassType().getName() );
 
         CollectionBean mappingBean = new CollectionBean(webFrame);
         mappingBean.setCollectionType(target);
         mappingBean.setName( name );
-        webFrame.getMappingBeans().put( name, mappingBean );
+        webFrame.addBean( name, mappingBean );
         CollectionBuilder mb = new CollectionBuilder( mappingBean, webFrame, this );
         return mb;
     }
@@ -242,7 +242,7 @@ public class WebFrameBuilder {
                 null :
                 methodName;
         
-        if( webFrame.getMethods().containsKey( name ) )
+        if( webFrame.getActions().containsKey( name ) )
             throw new BrutosException( "duplicate method " + name + ": " +
                 webFrame.getClassType().getName() );
      
@@ -275,7 +275,7 @@ public class WebFrameBuilder {
         }
         
         mp.setController( webFrame );
-        webFrame.getMethods().put( name, mp );
+        webFrame.getActions().put( name, mp );
         return new MethodBuilder( mp, webFrame );
     }
     
@@ -389,7 +389,7 @@ public class WebFrameBuilder {
                     .getCurrentInstance()).getValidatorProvider()
                         .getValidator( validatorConfig ) );*/
 
-        FieldForm fieldBean = new FieldForm();
+        PropertyController fieldBean = new PropertyController();
         fieldBean.setBean( useBean );
         fieldBean.setName(propertyName);
 
@@ -402,8 +402,8 @@ public class WebFrameBuilder {
 
 
         if( mapping != null ){
-            if( webFrame.getMappingBeans().containsKey( mapping ) )
-                useBean.setMapping( webFrame.getMappingBean( mapping ) );
+            if( webFrame.getBean( mapping ) != null )
+                useBean.setMapping( webFrame.getBean( mapping ) );
             else
                 throw new BrutosException( "mapping not found: " + mapping );
 
@@ -429,11 +429,11 @@ public class WebFrameBuilder {
             }
         }
 
-        if( webFrame.getFields().contains( fieldBean ) )
+        if( webFrame.containsProperty( fieldBean.getName() ) )
             throw new BrutosException( "property already defined: " +
                     webFrame.getClassType().getName() + "." + propertyName );
 
-        webFrame.getFields().add( fieldBean );
+        webFrame.addProperty( fieldBean );
 
         return new PropertyBuilder( validatorConfig, webFrame, webFrameManager, interceptorManager );
     }

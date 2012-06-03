@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
  *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos;
@@ -25,10 +25,11 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
- * Classe usada para configurar controladores ou front controllers.
+ * Classe usada para configurar controladores.
  * <p>O controlador � respons�vel por receber os dados e determinar qual objeto
  * do modelo e vis�o ser�o usados. Ele tamb�m � respons�vel por converter,
  * validar e filtrar a entrada de dados.</p>
@@ -180,24 +181,24 @@ public class ControllerManager {
     public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
             String name, Class classType, String actionId ){
 
-        id = id == null || id.replace( " ", "" ).length() == 0? null : id;
-        view = view == null || view.replace( " ", "" ).length() == 0 ? null : view;
-
-        if( actionId == null )
-            actionId = "invoke";
+        id       = StringUtil.adjust(id);
+        view     = StringUtil.adjust(view);
+        actionId = StringUtil.adjust(actionId);
+        name     = StringUtil.adjust(name);
         
-        if( name == null || name.length() == 0 )
+        if( StringUtil.isEmpty(actionId) )
+            actionId = BrutosConstants.DEFAULT_ACTION_ID;
+        
+        if( StringUtil.isEmpty(name) )
             name = classType.getSimpleName();
         
-        Controller fr = new Controller();
-        fr.setId( id );
-        fr.setName( name );
-        fr.setView( view );
-        fr.setClassType( classType );
-        fr.setScope( ScopeType.PARAM );
-        fr.setActionId( actionId );
-        fr.setRedirect(false);
-        fr.setDispatcherType(dispatcherType);
+        Controller controller = new Controller();
+        controller.setId( id );
+        controller.setName( name );
+        controller.setView( view );
+        controller.setClassType( classType );
+        controller.setActionId( actionId );
+        controller.setDispatcherType(dispatcherType);
         
         getLogger().info(
                 String.format(
@@ -208,14 +209,14 @@ public class ControllerManager {
                          }));
         //Action
         ActionListener ac = new ActionListener();
-        ac.setPreAction( getMethodAction( "preAction", fr.getClassType() ) );
-        ac.setPostAction( getMethodAction( "postAction", fr.getClassType() ) );
-        fr.setActionListener( ac );
+        ac.setPreAction( getMethodAction( "preAction", controller.getClassType() ) );
+        ac.setPostAction( getMethodAction( "postAction", controller.getClassType() ) );
+        controller.setActionListener( ac );
         
-        addForm( fr.getId(), fr );
-        fr.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
+        addForm( controller.getId(), controller );
+        controller.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
         
-        this.current = new ControllerBuilder( fr, this, 
+        this.current = new ControllerBuilder( controller, this, 
                 interceptorManager, validatorProvider, applicationContext );
         
         return this.getCurrent();

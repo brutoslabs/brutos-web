@@ -21,7 +21,7 @@ package org.brandao.brutos.interceptor;
 import java.util.List;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.mapping.FieldForm;
+import org.brandao.brutos.mapping.PropertyController;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.Scope;
 
@@ -39,9 +39,9 @@ public class DataInput {
     
     public void read( Controller form, Object object ){
         try{
-            List fields = form.getFields();
+            List fields = form.getProperties();
             for( int i=0;i<fields.size();i++ ){
-                FieldForm ff = (FieldForm) fields.get(i);
+                PropertyController ff = (PropertyController) fields.get(i);
             //for( FieldForm ff: form.getFields() ){
                 //Object val = ff.getBean().getValue( context, request );
                 Object val = ff.getBean().getValue();

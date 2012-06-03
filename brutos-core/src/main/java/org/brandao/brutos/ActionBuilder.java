@@ -53,7 +53,7 @@ import org.brandao.brutos.validator.ValidatorProvider;
 public class ActionBuilder {
     
     Controller controller;
-    Action methodForm;
+    Action action;
     ValidatorProvider validatorProvider;
     ControllerBuilder controllerBuilder;
 
@@ -61,7 +61,7 @@ public class ActionBuilder {
             Controller controller, ValidatorProvider validatorProvider,
             ControllerBuilder controllerBuilder ) {
         this.controller = controller;
-        this.methodForm = methodForm;
+        this.action = methodForm;
         this.validatorProvider = validatorProvider;
         this.controllerBuilder = controllerBuilder;
     }
@@ -230,7 +230,7 @@ public class ActionBuilder {
 
     public BeanBuilder buildParameter( Class classType ){
         String beanName = 
-                this.methodForm.getName()+"#"+this.methodForm.getParamterSize();
+                this.action.getName()+"#"+this.action.getParamterSize();
         BeanBuilder bb = this.controllerBuilder
                     .buildMappingBean(beanName, classType);
 
@@ -248,7 +248,7 @@ public class ActionBuilder {
 
     public BeanBuilder buildParameter( Class classType, Class beanType ){
         String beanName =
-                this.methodForm.getName()+"#"+this.methodForm.getParamterSize();
+                this.action.getName()+"#"+this.action.getParamterSize();
         BeanBuilder bb = this.controllerBuilder
                     .buildMappingBean(beanName, beanType);
 
@@ -285,16 +285,10 @@ public class ActionBuilder {
             String temporalProperty, String mapping, Type type, Object value,
             boolean nullable, Class classType ){
 
-        name = name == null || name.replace( " ", "" ).length() == 0? null : name;
-        temporalProperty = temporalProperty == null || temporalProperty.replace( " ", "" ).length() == 0? null : temporalProperty;
-        mapping = mapping == null || mapping.replace( " ", "" ).length() == 0? null : mapping;
+        name = StringUtil.adjust(name);
+        temporalProperty = StringUtil.adjust(temporalProperty);
+        mapping = StringUtil.adjust(mapping);
         
-        //if( methodForm.getParameters().size() > methodForm.getParametersType().size() )
-        //    throw new BrutosException( "index > " + methodForm.getParametersType().size() );
-        
-        /*Class classType = methodForm.
-                    getParametersType().get( methodForm.getParamterSize() );*/
-
         Configuration validatorConfig = new Configuration();
         
         UseBeanData useBean = new UseBeanData();
@@ -305,14 +299,14 @@ public class ActionBuilder {
         useBean.setStaticValue(value);
         useBean.setNullable(nullable);
         
-        if( mapping != null ){
-            if( controller.getMappingBeans().containsKey( mapping ) )
-                useBean.setMapping( controller.getMappingBean( mapping ) );
+        if( !StringUtil.isEmpty(mapping) ){
+            if( controller.getBean(mapping) != null )
+                useBean.setMapping( controller.getBean( mapping ) );
             else
                 throw new BrutosException( "mapping name " + mapping + " not found!" );
                 
         }
-        //else
+        
         if( type != null ){
             useBean.setType( type );
             if( classType != null &&
@@ -324,7 +318,6 @@ public class ActionBuilder {
         else
         if(classType != null && mapping == null){
             try{
-                /*useBean.setType( Types.getType( methodForm.getGenericParameterType( methodForm.getParamterSize() ), enumProperty, temporalProperty ) );*/
                 useBean.setType( TypeManager.getType( classType, enumProperty, temporalProperty ));
             }
             catch( UnknownTypeException e ){
@@ -332,8 +325,8 @@ public class ActionBuilder {
                         String.format( "%s.%s(...) index %d : %s" ,
                             new Object[]{
                                 this.controller.getClassType().getName(),
-                                methodForm.getMethodName(),
-                                new Integer(methodForm.getParamterSize()),
+                                action.getExecutor(),
+                                new Integer(action.getParamterSize()),
                                 e.getMessage()} ), e );
             }
             
@@ -345,7 +338,7 @@ public class ActionBuilder {
         pmm.setBean( useBean );
         pmm.setParameterId( 0 );
         
-        methodForm.addParameter( pmm );
+        action.addParameter( pmm );
         return new ParameterBuilder( validatorConfig );
     }
 
@@ -372,8 +365,8 @@ public class ActionBuilder {
      * @return Contrutor da ação.
      */
     public ActionBuilder addThrowable( Class target, String view, String id, DispatcherType dispatcher ){
-        view = view == null || view.replace( " ", "" ).length() == 0? null : view;
-        id = id == null || id.replace( " ", "" ).length() == 0? null : id;
+        view = StringUtil.adjust(view);
+        id = StringUtil.adjust(id);
 
         if( target == null )
             throw new BrutosException( "target is required: " + controller.getClassType().getName() );
@@ -390,7 +383,7 @@ public class ActionBuilder {
         thr.setView(view);
         thr.setRedirect( false );
         thr.setDispatcher(dispatcher);
-        methodForm.setThrowsSafe(thr);
+        action.setThrowsSafe(thr);
         return this;
     }
 
@@ -399,11 +392,71 @@ public class ActionBuilder {
     }
     
     public String getName(){
-        return this.methodForm.getName();
+        return this.action.getName();
     }
     
     public ActionBuilder setView(String value){
-        this.methodForm.setView(value);
+        this.action.setView(value);
         return this;
     }
+    
+    public String getView(){
+        return this.action.getView();
+    }
+    
+    public ActionBuilder setName(String value){
+        
+        value = StringUtil.adjust(value);
+        
+        if(StringUtil.isEmpty(value))
+            throw new BrutosException("invalid action name");
+        
+        this.action.setName(value);
+        return this;
+    }
+
+    public ActionBuilder setDispatcherType(String value){
+        value = StringUtil.adjust(value);
+        
+        if(StringUtil.isEmpty(value))
+            throw new BrutosException("invalid dispatcher type");
+        
+        this.setDispatcherType(DispatcherType.valueOf(value));
+        
+        return this;
+    }
+
+    public ActionBuilder setDispatcherType(DispatcherType value){
+        this.action.setDispatcherType(value);
+        return this;
+    }
+
+    public DispatcherType getDispatcherType(){
+        return this.action.getDispatcherType();
+    }
+    
+    public ActionBuilder setExecutor(String value){
+        value = StringUtil.adjust(value);
+        this.action.setExecutor(value);
+        return this;
+    }
+    
+    public String getExecutor(){
+        return this.action.getExecutor();
+    }
+    
+    public ActionBuilder setResult(String value){
+        value = StringUtil.adjust(value);
+        this.action.setReturnIn(
+                StringUtil.isEmpty(value)? 
+                    BrutosConstants.DEFAULT_RETURN_NAME :
+                    value);
+        
+        return this;
+    }
+    
+    public String getResult(){
+        return this.action.getReturnIn();
+    }
+    
 }
