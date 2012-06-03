@@ -79,7 +79,7 @@ public class WebControllerResolver implements ControllerResolver{
             if( form.getId() != null )
                 uriList.add( form.getId() );
             else
-                uriList.addAll( form.getMethods().keySet() );
+                uriList.addAll( form.getActions().keySet() );
 
             for( String u: uriList ){
                 
