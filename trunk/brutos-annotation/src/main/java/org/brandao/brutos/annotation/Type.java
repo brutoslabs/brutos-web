@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  *
  * @author Afonso Brandao
  */
-@Target({ElementType.METHOD,ElementType.FIELD})
+@Target({ElementType.PARAMETER,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Type {
 
