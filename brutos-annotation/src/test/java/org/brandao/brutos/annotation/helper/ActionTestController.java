@@ -17,9 +17,11 @@
 
 package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.annotation.Action;
-import org.brandao.brutos.annotation.ThrowSafe;
-import org.brandao.brutos.annotation.ThrowSafeList;
+import java.util.Calendar;
+import java.util.Date;
+import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.type.IntegerType;
+import org.brandao.brutos.validator.ValidatorException;
 
 /**
  *
@@ -73,6 +75,95 @@ public class ActionTestController {
     }
     
     public void my10Action() throws RuntimeException{
+    }
+
+    public Object my11Action(){
+        return null;
+    }
+
+    @Result("actionResult")
+    public Object my12Action(){
+        return null;
+    }
+
+    @Transient
+    public void my13Action(){
+    }
+
+    @View(id="/controller/view.jsp")
+    public void my14Action(){
+    }
+
+    @View(id="/controller/view.jsp", dispatcher="redirect")
+    public void my15Action(){
+    }
+
+    @View(rendered=false)
+    public void my16Action(){
+    }
+
+    @Action
+    @View(id="/controller/view.jsp")
+    @Result("actionResult")
+    public void my17(){
+    }
+    
+    public void my18Action(int a){
+    }
+    
+    public void my19Action(Integer a, String b){
+    }
+
+    public void my20Action(
+            @ActionParam(bean="param1",scope="request")
+            Integer a,
+            @ActionParam(scope="request")
+            String b){
+    }
+
+    public void my21Action(
+            @Enumerated("string")
+            EnumTest a,
+            EnumTest b){
+    }
+
+    public void my22Action (
+            @Restriction(rule="required",value="true")
+            String a,
+            @Restrictions({
+                @Restriction(rule="required",value="true"),
+                @Restriction(rule="min",value="10"),
+                @Restriction(rule="max",value="100"),
+            })
+            int b){
+    }
+
+    public void my22Action(
+            @Restriction(rule="required",value="true")
+            String a ) throws ValidatorException{
+    }
+    
+    public void my23Action(
+            Date a,
+            @Temporal("dd/MM/yyyy")
+            Date b,
+            Calendar c,
+            @Temporal("yyyy-MM-dd")
+            Calendar d){
+    }
+
+    public void my24Action(
+            @Type(IntegerType.class)
+            Integer a){
+    }
+
+    public void my25Action(
+            @ActionParam(bean="integer",mapping=true)
+            Integer a){
+    }
+
+    public void my25Action(
+            MyBean a){
     }
     
 }

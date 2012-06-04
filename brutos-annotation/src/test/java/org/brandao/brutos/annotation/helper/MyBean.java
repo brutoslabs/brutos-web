@@ -15,25 +15,12 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package org.brandao.brutos.annotation.helper;
 
 /**
  *
  * @author Brandao
  */
-@Target(ElementType.PARAMETER)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ActionParam {
-    
-    String bean() default "";
-    
-    String scope() default "param";
-    
-    boolean mapping() default false;
+public class MyBean {
     
 }
