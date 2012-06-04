@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.ThrowSafe;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -47,18 +48,18 @@ public class ThrowableEntry {
     }
     
     public ThrowableEntry(ThrowSafe value){
-        this.dispatcher = "".equals(value.dispatcher())?
+        this.dispatcher = StringUtil.isEmpty(value.dispatcher())?
                 null :
-                DispatcherType.valueOf(value.dispatcher());
+                DispatcherType.valueOf(StringUtil.adjust(value.dispatcher()));
         
         this.enabled = value.enabled();
-        this.name = "".equals(value.name().trim())?
+        this.name = StringUtil.isEmpty(value.name())?
                 null : 
-                value.name();
+                StringUtil.adjust(value.name());
         
         this.rendered = value.rendered();
         this.target = value.target();
-        this.view = value.view();
+        this.view = StringUtil.adjust(value.view());
     }
     
     public String getView() {
