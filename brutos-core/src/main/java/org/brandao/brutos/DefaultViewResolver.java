@@ -52,7 +52,12 @@ public class DefaultViewResolver implements ViewResolver{
         view += separator;
         
         if(actionBuilder != null){
-            view += actionBuilder.getName().toLowerCase();
+            String executor = actionBuilder.getExecutor();
+            
+            if(executor == null)
+                throw new BrutosException("can not resolve view: " + actionBuilder.getName());
+            
+            view += actionBuilder.getExecutor().toLowerCase();
             view += separator;
         }
         
