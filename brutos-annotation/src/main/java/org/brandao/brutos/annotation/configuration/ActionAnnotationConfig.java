@@ -73,6 +73,13 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         
         actionBuilder.setView(view);
         
+        if(action != null && action.value().length > 1){
+            String[] ids = action.value();
+            for(int i=1;i<ids.length;i++ ){
+                actionBuilder.addAlias(ids[i]);
+            }
+        }
+        
         throwsSafe(actionBuilder, method,applicationContext);
         
         addParameters(actionBuilder, method,applicationContext);
