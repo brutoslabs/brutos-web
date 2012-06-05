@@ -66,6 +66,14 @@ public class ActionBuilder {
         this.controllerBuilder = controllerBuilder;
     }
 
+    public void addAlias(String value){
+        value = StringUtil.adjust(value);
+        
+        if( StringUtil.isEmpty(value) )
+            throw new BrutosException("invalid alias");
+        
+        this.controller.addAction(value, action);
+    }
     /**
      * Configura um novo par�metro.
      *
