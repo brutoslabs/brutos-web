@@ -133,7 +133,7 @@ public class ActionTestController {
             @Restrictions({
                 @Restriction(rule="required",value="true"),
                 @Restriction(rule="min",value="10"),
-                @Restriction(rule="max",value="100"),
+                @Restriction(rule="max",value="100")
             })
             int b){
     }
