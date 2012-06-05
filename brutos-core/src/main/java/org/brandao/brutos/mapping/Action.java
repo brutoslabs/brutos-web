@@ -38,6 +38,8 @@ public class Action {
     
     private String name;
 
+    private List alias;
+    
     private String executor;
 
     private List parameters;
@@ -69,6 +71,7 @@ public class Action {
         this.dispatcherType = DispatcherType.INCLUDE;
         this.returnClass = void.class;
         this.redirect = false;
+        this.alias = new ArrayList();
     }
 
     public String getName() {
@@ -326,5 +329,17 @@ public class Action {
 
     public boolean isLoaded(){
         return this.load;
+    }
+    
+    public void addAlias(String value){
+        this.alias.add(value);
+    }
+    
+    public void removeAlias(String value){
+        this.alias.remove(value);
+    }
+
+    public List getAlias(){
+        return this.alias;
     }
 }
