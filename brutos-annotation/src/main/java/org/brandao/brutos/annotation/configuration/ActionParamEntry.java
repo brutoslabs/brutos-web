@@ -19,6 +19,8 @@ package org.brandao.brutos.annotation.configuration;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import org.brandao.brutos.annotation.ActionParam;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -78,7 +80,24 @@ public class ActionParamEntry {
     }
 
     public String getName() {
-        return name;
+        
+        ActionParam actionParam = 
+                (ActionParam)this.getAnnotation(ActionParam.class);
+        
+        if(actionParam != null){
+             String actionName = StringUtil.adjust(actionParam.bean());
+             if(!StringUtil.isEmpty(actionName))
+                 return actionName;
+        }
+        
+        if( this.name != null ){
+             String actionName = StringUtil.adjust(this.name);
+             if(!StringUtil.isEmpty(actionName))
+                 return actionName;
+            
+        }
+        
+        return "arg"+index;
     }
 
     public void setName(String name) {

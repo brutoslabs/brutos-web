@@ -41,11 +41,11 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
         
         ActionParam actionParam = (ActionParam)param.getAnnotation(ActionParam.class);
         
-        String name = getName(param,actionParam);
+        String name = param.getName();
         ScopeType scope = getScope(actionParam);
         EnumerationType enumProperty = getEnumerationType(param);
         String temporalProperty = getTemporalProperty(param);
-        String mapping = getMappingName(param,actionParam, actionBuilder.getControllerBuilder(),applicationContext);
+        String mapping = getMappingName(param,actionParam, actionBuilder,applicationContext);
         org.brandao.brutos.type.Type type = getType(param);
         
         ParameterBuilder paramBuilder = 
@@ -75,7 +75,7 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     private String getMappingName(ActionParamEntry param, 
-            ActionParam actionParam, ControllerBuilder controllerBuilder,
+            ActionParam actionParam, ActionBuilder actionBuilder,
             ConfigurableApplicationContext applicationContext){
         if(actionParam != null && !"".equals(actionParam.bean()) && actionParam.mapping())
             return actionParam.bean();
@@ -83,7 +83,7 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
             Type type = (Type) TypeManager.getType(param.getType());
             if(type instanceof ObjectType){
                 super.applyInternalConfiguration(
-                        param, controllerBuilder, applicationContext);
+                        param, actionBuilder, applicationContext);
                 return param.getType().getSimpleName().toLowerCase();
             }
             else
@@ -112,14 +112,4 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
             return BrutosConstants.DEFAULT_SCOPETYPE;
     }
     
-    private String getName(ActionParamEntry param,ActionParam actionParam){
-        
-        if(actionParam != null || !"".equals(actionParam.bean()) )
-            return actionParam.bean();
-        else
-        if( param.getName() != null )
-            return param.getName();
-        else
-            return "arg"+param.getIndex();
-    }
 }

@@ -17,12 +17,17 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BeanBuilder;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.ControllerBuilder;
+import org.brandao.brutos.annotation.ActionParam;
 import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.Property;
 import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.BeanProperty;
@@ -31,33 +36,53 @@ import org.brandao.brutos.bean.BeanProperty;
  *
  * @author Brandao
  */
-@Stereotype(target=Bean.class)
+@Stereotype(target=Bean.class, executeAfter={ActionParam.class, Property.class})
 public class BeanAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
-        return source instanceof Class;
+        Class clazz = null;
+        
+        if(source instanceof ActionParamEntry)
+            clazz = ((ActionParamEntry)source).getType();
+        else
+        if( source instanceof BeanPropertyAnnotation)
+            clazz = ((BeanPropertyAnnotation)source).getType();
+        
+        return !Map.class.isAssignableFrom(clazz) &&
+               !Collection.class.isAssignableFrom(clazz);
     }
 
     public Object applyConfiguration(
             Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
 
-        Class clazz = (Class)source;
-        ControllerBuilder controllerBuilder = (ControllerBuilder)builder;
-        
-        Bean beanAnnotation = (Bean) clazz.getAnnotation(Bean.class);
-        
-        String name = beanAnnotation == null || "".equals(beanAnnotation.name())?
-                clazz.getSimpleName().toLowerCase() :
-                beanAnnotation.name();
-        
-        BeanBuilder beanBuilder = controllerBuilder.buildMappingBean(name, clazz);
-        
-        addProperties(beanBuilder, applicationContext, clazz);
+        if(builder instanceof ActionBuilder)
+            createBean((ActionBuilder)builder, (ActionParamEntry)source, applicationContext);
+        else
+        if(builder instanceof BeanBuilder)
+            createBean((BeanBuilder)builder, (BeanPropertyAnnotation)source, applicationContext);
         
         return builder;
     }
  
+    protected void createBean(ActionBuilder builder, 
+            ActionParamEntry actionParam, ConfigurableApplicationContext applicationContext){
+        
+        BeanBuilder beanBuilder = 
+            builder.buildParameter(actionParam.getName(), actionParam.getType());
+        
+        addProperties(beanBuilder, applicationContext, actionParam.getType());
+    }
+
+    protected void createBean(BeanBuilder builder, 
+            BeanPropertyAnnotation source, ConfigurableApplicationContext applicationContext){
+        
+        BeanBuilder beanBuilder = 
+            builder.buildProperty(source.getName(), source.getName(), source.getType());
+        
+        addProperties(beanBuilder, applicationContext, source.getType());
+    }
+    
     protected void addProperties(BeanBuilder beanBuilder, 
             ConfigurableApplicationContext applicationContext, Class clazz){
     
