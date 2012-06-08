@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.TypeManager;
 
@@ -39,58 +40,72 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
             ConfigurableApplicationContext applicationContext) {
         
         BeanPropertyAnnotation property = (BeanPropertyAnnotation)source;
-        
-        BeanBuilder beanBuilder = builder instanceof BeanBuilder? 
-                (BeanBuilder)builder :
-                null;
-        
-        ControllerBuilder controllerBuilder = builder instanceof ControllerBuilder?
-                (ControllerBuilder)builder :
-                beanBuilder.getControllerBuilder();
-        
         Property propertyAnnotation = (Property)property.getAnnotation(Property.class);
         
-        String propertyName = getPropertyName(property);
-        String name = getBeanName(property,propertyAnnotation);
-        ScopeType scope = getScope(propertyAnnotation);
-        EnumerationType enumProperty = getEnumerationType(property);
-        String temporalProperty = getTemporalProperty(property);
-        String mapping = getMappingName(propertyAnnotation,property,controllerBuilder,applicationContext);
-        org.brandao.brutos.type.Type type = getType(property);
-        
-        PropertyBuilder propertyBuilder;
-        
-        if(beanBuilder != null ){
-            propertyBuilder = beanBuilder
-                .addProperty(
-                    name, 
-                    propertyName, 
-                    enumProperty, 
-                    temporalProperty, 
-                    mapping, 
-                    scope, 
-                    null, 
-                    true, 
-                    type);
+        if(TypeManager.isStandardType(property.getType())){
+            buildProperty((BeanBuilder)builder,property,applicationContext);
         }
         else{
-            propertyBuilder = controllerBuilder
-                .addProperty(
-                    propertyName, 
-                    name, 
-                    scope, 
-                    enumProperty, 
-                    temporalProperty, 
-                    mapping, 
-                    null, 
-                    true, 
-                    type);
+            String propertyName = getPropertyName(property);
+            String name = getBeanName(property,propertyAnnotation);
+            ScopeType scope = getScope(propertyAnnotation);
+            EnumerationType enumProperty = getEnumerationType(property);
+            String temporalProperty = getTemporalProperty(property);
+            org.brandao.brutos.type.Type type = getType(property);
+
+            PropertyBuilder propertyBuilder;
+            
+            if(builder instanceof BeanBuilder){
+                propertyBuilder = addProperty((BeanBuilder)builder,property, propertyName,
+                    name, scope, enumProperty, temporalProperty, type,
+                    applicationContext);
+            }
+            else{
+                propertyBuilder = addProperty((ControllerBuilder)builder,property, propertyName,
+                    name, scope, enumProperty, temporalProperty, type,
+                    applicationContext);
+            }
+        
+            super.applyInternalConfiguration(
+                    source, propertyBuilder, applicationContext);
+            
         }
-        super.applyInternalConfiguration(source, propertyBuilder, applicationContext);
+        return builder;
+    }
+
+    protected PropertyBuilder addProperty(BeanBuilder beanBuilder, 
+        BeanPropertyAnnotation property, String propertyName,
+        String name, ScopeType scope, EnumerationType enumProperty,
+        String temporalProperty, org.brandao.brutos.type.Type type,
+        ConfigurableApplicationContext applicationContext){
+        
+        PropertyBuilder builder = 
+            beanBuilder.addProperty(name, propertyName, enumProperty, 
+            temporalProperty, name, scope, null, false, type);
         
         return builder;
     }
 
+    protected PropertyBuilder addProperty(ControllerBuilder controllerBuilder, 
+        BeanPropertyAnnotation property, String propertyName,
+        String name, ScopeType scope, EnumerationType enumProperty,
+        String temporalProperty, org.brandao.brutos.type.Type type,
+        ConfigurableApplicationContext applicationContext){
+        
+        PropertyBuilder builder = 
+            controllerBuilder.addProperty(propertyName, name, scope, 
+                enumProperty, temporalProperty, null, null, false, type);
+        
+        return builder;
+    }
+    
+    protected void buildProperty(BeanBuilder beanBuilder, 
+            BeanPropertyAnnotation property, 
+            ConfigurableApplicationContext applicationContext){
+        super.applyInternalConfiguration(property, beanBuilder, 
+                applicationContext);
+    }
+    
     private org.brandao.brutos.type.Type getType(BeanPropertyAnnotation property){
         try{
             Type type = property.getAnnotation(Type.class);
@@ -108,26 +123,6 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
         }
     }
     
-    private String getMappingName(Property propertyAnnotation,
-            BeanPropertyAnnotation property,
-            ControllerBuilder controllerBuilder,
-            ConfigurableApplicationContext applicationContext){
-        
-        if(propertyAnnotation != null && !"".equals(propertyAnnotation.bean()) 
-                && propertyAnnotation.mapping())
-            return propertyAnnotation.bean();
-        else{
-            Type type = (Type) TypeManager.getType(property.getType());
-            if(type instanceof ObjectType){
-                super.applyInternalConfiguration(
-                        property.getType(), controllerBuilder, applicationContext);
-                return property.getType().getSimpleName().toLowerCase();
-            }
-            else
-                return null;
-        }
-    }
-    
     private String getTemporalProperty(BeanPropertyAnnotation property){
         if(property.isAnnotationPresent(Temporal.class))
             return property.getAnnotation(Temporal.class).value();
@@ -142,18 +137,25 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     private ScopeType getScope(Property propertyAnnotation){
-        if(propertyAnnotation != null && !"".equals(propertyAnnotation.scope()))
-            return ScopeType.valueOf(propertyAnnotation.scope());
-        else
-            return BrutosConstants.DEFAULT_SCOPETYPE;
+        
+        if(propertyAnnotation != null){
+            String scope = StringUtil.adjust(propertyAnnotation.scope());
+            if(!StringUtil.isEmpty(scope))
+                return ScopeType.valueOf(propertyAnnotation.scope());
+        }
+        
+        return BrutosConstants.DEFAULT_SCOPETYPE;
     }
     
     private String getBeanName(BeanPropertyAnnotation property, Property propertyAnnotation){
         
-        if(propertyAnnotation != null && !"".equals(propertyAnnotation.bean()) )
-            return propertyAnnotation.bean();
-        else
-            return property.getName();
+        if(propertyAnnotation != null){
+            String bean = StringUtil.adjust(propertyAnnotation.bean());
+            if(!StringUtil.isEmpty(bean))
+                return propertyAnnotation.bean();
+        }
+        
+        return property.getName();
     }
     
     private String getPropertyName(BeanPropertyAnnotation param){
