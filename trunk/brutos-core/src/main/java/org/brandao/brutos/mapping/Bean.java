@@ -100,6 +100,10 @@ public class Bean {
         return getValue( instance, null, -1, null, false );
     }
 
+    public Object getValue( String prefix ){
+        return getValue( null, prefix, -1, null, false );
+    }
+    
     public Object getValue( Object instance, String prefix,
             ValidatorException exceptionHandler ){
         return getValue( instance, prefix, -1, exceptionHandler, false );

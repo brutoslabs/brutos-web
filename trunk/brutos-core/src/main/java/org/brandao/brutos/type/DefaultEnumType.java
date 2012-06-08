@@ -19,11 +19,7 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.lang.reflect.Method;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.EnumerationType;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.bean.EnumUtil;
 

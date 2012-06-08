@@ -58,16 +58,6 @@ public class UseBeanData {
         this.nome = nome;
     }
 
-    /*
-    public ScopeType getScope() {
-        return scope;
-    }
-
-    public void setScope(ScopeType scope) {
-        this.scope = scope;
-    }
-    */
-    
     public Bean getMapping() {
         return mapping;
     }
@@ -76,39 +66,14 @@ public class UseBeanData {
         this.mapping = mapping;
     }
 
-    /*
-     * @deprecated
-     * @param context
-     * @param request
-     * @return .
-     */
-    /*
-    public Object getValue( ServletContext context, HttpServletRequest request ){
-
-        Object value = null;
-        
-        if( mapping != null )
-            value = mapping.getValue( request );
-        else
-        if( type instanceof CollectionType || type instanceof ArrayType )
-            value = type.getValue(request, context, getScope().getCollection(nome) );
-        else
-            value = type.getValue(request, context, getScope().get(nome) );
-
-        if( validate != null )
-            validate.validate(this, value);
-
-        return value;
-    }
-    */
-    
     public Object getValue(){
 
         Object value = null;
 
         if( !isNullable() ){
             if( mapping != null )
-                value = mapping.getValue();
+                value = mapping.getValue(nome);
+                //value = mapping.getValue();
             else
             if(staticValue!= null)
                 value = type.convert( staticValue );

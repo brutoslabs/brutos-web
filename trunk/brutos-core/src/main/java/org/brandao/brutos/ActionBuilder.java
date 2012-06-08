@@ -249,6 +249,23 @@ public class ActionBuilder {
     /**
      * Constrói um novo parâmetro.
      *
+     * @param classType Tipo do par�metro.
+     * @return Contrutor do par�metro.
+     */
+
+    public BeanBuilder buildParameter( String name, Class classType ){
+        String beanName = 
+                this.action.getName()+"#"+this.action.getParamterSize();
+        BeanBuilder bb = this.controllerBuilder
+                    .buildMappingBean(beanName, classType);
+
+        this.addParameterMapping(name, beanName, classType);
+        return bb;
+    }
+    
+    /**
+     * Constrói um novo parâmetro.
+     *
      * @param classType Tipo do parâmetro.
      * @param beanType Tipo do bean.
      * @return Contrutor do par�metro.
@@ -264,6 +281,24 @@ public class ActionBuilder {
         return bb;
     }
 
+    /**
+     * Constrói um novo parâmetro.
+     *
+     * @param classType Tipo do parâmetro.
+     * @param beanType Tipo do bean.
+     * @return Contrutor do par�metro.
+     */
+
+    public BeanBuilder buildParameter( String name, Class classType, Class beanType ){
+        String beanName =
+                this.action.getName()+"#"+this.action.getParamterSize();
+        BeanBuilder bb = this.controllerBuilder
+                    .buildMappingBean(beanName, beanType);
+
+        this.addParameterMapping(name, beanName, classType);
+        return bb;
+    }
+    
     /**
      * Configura um novo par�metro.
      *
