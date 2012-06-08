@@ -21,8 +21,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
 

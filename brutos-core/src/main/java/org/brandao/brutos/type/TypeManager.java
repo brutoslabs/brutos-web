@@ -60,7 +60,7 @@ public class TypeManager {
         types.put( Enum.class,          new DefaultTypeFactory(DefaultEnumType.class ));
         types.put( List.class ,         new DefaultTypeFactory(ListType.class ));
         types.put( Set.class ,          new DefaultTypeFactory(SetType.class ));
-        types.put( Object.class ,       new DefaultTypeFactory(ObjectType.class ));
+        //types.put( Object.class ,       new DefaultTypeFactory(ObjectType.class ));
         types.put( Serializable.class , new DefaultTypeFactory(SerializableTypeImp.class ));
         types.put( Date.class,          new DefaultTypeFactory(DefaultDateTimeType.class ));
         types.put( Calendar.class,      new DefaultTypeFactory(CalendarType.class ));
@@ -75,7 +75,10 @@ public class TypeManager {
         types.remove(clazz);
     }
     
-    
+   public static boolean isStandardType(Class clazz){
+       return types.containsKey(clazz);
+   }
+   
     public static Type getType( Object classType ){
         return getType( classType, EnumerationType.ORDINAL, "dd/MM/yyyy" );
     }
