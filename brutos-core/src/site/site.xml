@@ -52,6 +52,7 @@
 
         <menu name="Geral">
           <item name="Introdução" href="index.html"/>
+          <item name="Forum" href="http://forum.brutosframework.com.br/"/>
           <item name="Dependências" href="dependencies.html"/>
           <item name="Licença" href="license.html"/>
           <item name="Quick Start" href="quick.html"/>
@@ -70,8 +71,12 @@
           <item name="Beans" href="bean.html"/>
           <item name="Interceptor" href="interceptor.html"/>
         </menu>
-        <!--<menu name="Exemplos">
-          <item name="Brutos+PicoContainer" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+PicoContainer.zip/download"/>
+        <menu name="Exemplos">
+          <item name="Web Chat" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B2/webchat.zip/download"/>
+          <item name="Interceptor" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B2/Brutos-Interceptor.zip/download"/>
+          <item name="File Upload" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B2/Brutos-FileUpload.zip/download"/>
+          <item name="Custom Type" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B2/Brutos-CustomType.zip/download"/>
+          <!--<item name="Brutos+PicoContainer" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+PicoContainer.zip/download"/>
           <item name="Brutos+Spring" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+Spring.zip/download"/>
           <item name="File upload" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosFileUpload.zip/download"/>
           <item name="Brutos+JSF" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+JSF.zip/download"/>
@@ -80,6 +85,7 @@
           <item name="CustomTypes" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosCustomType.zip/download"/>
           <item name="Serializing Bean to XML" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosSerializingBeanToXML.zip/download"/>
           <item name="Serializing Bean to Json" href="http://http//sourceforge.net/projects/brutos/files/brutos/examples/BrutosJson.zip/download"/>
-        </menu>-->
+          -->
+        </menu>
     </body>
 </project>
