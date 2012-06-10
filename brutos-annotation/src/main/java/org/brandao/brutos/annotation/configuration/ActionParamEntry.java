@@ -38,6 +38,9 @@ public class ActionParamEntry {
     
     private Annotation[] annotation;
 
+    public ActionParamEntry(){
+    }
+    
     public ActionParamEntry(String name,Class type,Type genericType,Annotation[] annotation, int index){
         this.name = name;
         this.type = type;
