@@ -687,7 +687,7 @@ public class ControllerBuilder {
 
         controller.addProperty( property );
 
-        return new PropertyBuilder( validatorConfig );
+        return new PropertyBuilder( property );
     }
 
     /**

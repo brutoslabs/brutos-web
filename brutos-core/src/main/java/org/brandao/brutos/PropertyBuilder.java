@@ -17,6 +17,8 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.mapping.PropertyBean;
+import org.brandao.brutos.mapping.PropertyController;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
@@ -26,10 +28,18 @@ import org.brandao.brutos.validator.RestrictionRules;
  */
 public class PropertyBuilder extends RestrictionBuilder{
 
-    public PropertyBuilder( Configuration config){
-        super( config );
+    private Object propertyBean;
+    
+    public PropertyBuilder(PropertyBean propertyBean){
+        super( propertyBean.getValidator().getConfiguration() );
+        this.propertyBean = propertyBean;
     }
 
+    public PropertyBuilder(PropertyController propertyBean){
+        super( propertyBean.getValidator().getConfiguration() );
+        this.propertyBean = propertyBean;
+    }
+    
     public RestrictionBuilder addRestriction( RestrictionRules ruleId, Object value ){
         return super.addRestriction( ruleId, value );
     }

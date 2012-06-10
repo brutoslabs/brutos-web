@@ -530,7 +530,7 @@ public class BeanBuilder {
         propertyBean.setValidator( validatorProvider.getValidator( validatorConfig ) );
         this.mappingBean.getFields().put( propertyName, propertyBean );
 
-        return new PropertyBuilder( validatorConfig );
+        return new PropertyBuilder( propertyBean );
     }
 
     /**
@@ -786,7 +786,11 @@ public class BeanBuilder {
     public ControllerBuilder getControllerBuilder(){
         return this.controllerBuilder;
     }
-    
+
+    public PropertyBuilder getProperty(String name){
+        PropertyBean property = (PropertyBean) mappingBean.getFields().get(name);
+        return property == null? null : new PropertyBuilder(property);
+    }
     /**
      * Verifica se � o mapeamento de um Map.
      * @return Verdadeiro se � o mapeamento de um Map, caso contr�rio falso.

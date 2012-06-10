@@ -25,8 +25,10 @@ import java.util.Properties;
  */
 public interface Validator {
 
-    public void configure( Properties config );
+    void configure( Properties config );
 
-    public void validate(Object source, Object value) throws ValidatorException;
+    Properties getConfiguration();
+    
+    void validate(Object source, Object value) throws ValidatorException;
 
 }

@@ -17,6 +17,7 @@
 
 package org.brandao.brutos;
 
+import java.util.Properties;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
@@ -26,9 +27,9 @@ import org.brandao.brutos.validator.RestrictionRules;
  */
 public class RestrictionBuilder{
 
-    private Configuration config;
+    private Properties config;
     
-    public RestrictionBuilder( Configuration config){
+    public RestrictionBuilder( Properties config){
         this.config = config;
     }
 
