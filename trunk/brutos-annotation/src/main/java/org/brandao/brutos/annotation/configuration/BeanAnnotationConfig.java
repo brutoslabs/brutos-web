@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BeanBuilder;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.ActionParam;
 import org.brandao.brutos.annotation.Bean;
@@ -31,6 +32,7 @@ import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.BeanProperty;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -39,28 +41,61 @@ import org.brandao.brutos.bean.BeanProperty;
 @Stereotype(target=Bean.class, executeAfter={ActionParam.class, Property.class})
 public class BeanAnnotationConfig extends AbstractAnnotationConfig{
 
+    private String path;
+    
+    public BeanAnnotationConfig(){
+        this.path = "";
+    }
+    
     public boolean isApplicable(Object source) {
-        Class clazz = null;
-        
-        if(source instanceof ActionParamEntry)
-            clazz = ((ActionParamEntry)source).getType();
-        else
-        if( source instanceof BeanPropertyAnnotation)
-            clazz = ((BeanPropertyAnnotation)source).getType();
-        
-        return !Map.class.isAssignableFrom(clazz) &&
-               !Collection.class.isAssignableFrom(clazz);
+        if(source instanceof BeanEntry){
+            Class clazz = ((BeanEntry)source).getBeanType();
+            
+            if(!clazz.isAnnotationPresent(Bean.class))
+                throw new BrutosException("expected @Bean: " + clazz.getName() );    
+            
+            return 
+                !Map.class.isAssignableFrom(clazz) &&
+                !Collection.class.isAssignableFrom(clazz);
+        }
+        else 
+            return false;
     }
 
     public Object applyConfiguration(
             Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
 
-        if(builder instanceof ActionBuilder)
+        boolean isRoot = StringUtil.isEmpty(path);
+        
+        
+        if(builder instanceof ActionBuilder){
+            String key =
+                isRoot? ((ActionParamEntry)source).getType().getName().replace(".", "-") :
+                ((ActionParamEntry)source).getName();
+            
+            if(path.indexOf(key) != -1)
+                throw new BrutosException("circular reference");
+            
+            path += key;
             createBean((ActionBuilder)builder, (ActionParamEntry)source, applicationContext);
+        }
         else
-        if(builder instanceof BeanBuilder)
+        if(builder instanceof BeanBuilder){
+            
+            String key =
+                isRoot? ((BeanPropertyAnnotation)source).getType().getName().replace(".", "-") :
+                ((BeanPropertyAnnotation)source).getName();
+            
+            if(path.indexOf(key) != -1)
+                throw new BrutosException("circular reference");
+            
+            path += key;
             createBean((BeanBuilder)builder, (BeanPropertyAnnotation)source, applicationContext);
+        }
+        
+        if(isRoot)
+            path = "";
         
         return builder;
     }

@@ -19,7 +19,7 @@ package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
-import org.brandao.brutos.type.ObjectType;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.TypeManager;
 
 /**
@@ -39,24 +39,44 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
         ActionParamEntry param = (ActionParamEntry)source;
         ActionBuilder actionBuilder = (ActionBuilder)builder;
         
-        ActionParam actionParam = (ActionParam)param.getAnnotation(ActionParam.class);
+        ParameterBuilder paramBuilder;
         
-        String name = param.getName();
-        ScopeType scope = getScope(actionParam);
-        EnumerationType enumProperty = getEnumerationType(param);
-        String temporalProperty = getTemporalProperty(param);
-        String mapping = getMappingName(param,actionParam, actionBuilder,applicationContext);
-        org.brandao.brutos.type.Type type = getType(param);
+        if(TypeManager.isStandardType(param.getType()))
+            paramBuilder = buildParameter(actionBuilder,param,applicationContext);
+        else
+            paramBuilder = addParameter(param,actionBuilder,applicationContext);
         
-        ParameterBuilder paramBuilder = 
-                actionBuilder.addParameter(name, scope, enumProperty, 
-                temporalProperty, mapping, type, null, false, param.getType());
-                
         super.applyInternalConfiguration(source, paramBuilder, applicationContext);
         
         return actionBuilder;
     }
 
+    protected ParameterBuilder buildParameter(ActionBuilder builder, 
+            ActionParamEntry property, 
+            ConfigurableApplicationContext applicationContext){
+        
+        
+        super.applyInternalConfiguration(property, builder, 
+                applicationContext);
+        
+        return builder.getParameter(builder.getParametersSize()-1);
+    }
+    
+    protected ParameterBuilder addParameter(ActionParamEntry source,ActionBuilder builder,
+            ConfigurableApplicationContext applicationContext){
+        ActionParam actionParam = (ActionParam)source.getAnnotation(ActionParam.class);
+
+        String name = source.getName();
+        ScopeType scope = getScope(actionParam);
+        EnumerationType enumProperty = getEnumerationType(source);
+        String temporalProperty = getTemporalProperty(source);
+        org.brandao.brutos.type.Type type = getType(source);
+
+        return builder.addParameter(name, scope, enumProperty, 
+                temporalProperty, null, type, null, false, source.getType());
+        
+    }
+    
     private org.brandao.brutos.type.Type getType(ActionParamEntry param){
         try{
             Type type = param.getAnnotation(Type.class);
@@ -74,42 +94,28 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
         }
     }
     
-    private String getMappingName(ActionParamEntry param, 
-            ActionParam actionParam, ActionBuilder actionBuilder,
-            ConfigurableApplicationContext applicationContext){
-        if(actionParam != null && !"".equals(actionParam.bean()) && actionParam.mapping())
-            return actionParam.bean();
-        else{
-            Type type = (Type) TypeManager.getType(param.getType());
-            if(type instanceof ObjectType){
-                super.applyInternalConfiguration(
-                        param, actionBuilder, applicationContext);
-                return param.getType().getSimpleName().toLowerCase();
-            }
-            else
-                return null;
-        }
-            
-    }
-    
-    private String getTemporalProperty(ActionParamEntry param){
-        if(param.isAnnotationPresent(Temporal.class))
-            return param.getAnnotation(Temporal.class).value();
+    private String getTemporalProperty(ActionParamEntry value){
+        if(value.isAnnotationPresent(Temporal.class))
+            return value.getAnnotation(Temporal.class).value();
         else
             return BrutosConstants.DEFAULT_TEMPORALPROPERTY;
     }
-    private EnumerationType getEnumerationType(ActionParamEntry param){
-        if(param.isAnnotationPresent(Enumerated.class))
-            return EnumerationType.valueOf(param.getAnnotation(Enumerated.class).value());
+    private EnumerationType getEnumerationType(ActionParamEntry property){
+        if(property.isAnnotationPresent(Enumerated.class))
+            return EnumerationType.valueOf(property.getAnnotation(Enumerated.class).value());
         else
             return BrutosConstants.DEFAULT_ENUMERATIONTYPE;
     }
     
-    private ScopeType getScope(ActionParam actionParam){
-        if(actionParam != null && !"".equals(actionParam.scope()))
-            return ScopeType.valueOf(actionParam.scope());
-        else
-            return BrutosConstants.DEFAULT_SCOPETYPE;
+    private ScopeType getScope(ActionParam value){
+        
+        if(value != null){
+            String scope = StringUtil.adjust(value.scope());
+            if(!StringUtil.isEmpty(scope))
+                return ScopeType.valueOf(value.scope());
+        }
+        
+        return BrutosConstants.DEFAULT_SCOPETYPE;
     }
     
 }
