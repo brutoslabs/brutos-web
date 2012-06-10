@@ -19,6 +19,7 @@ package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.validator.Validator;
 
 /**
  *
@@ -120,4 +121,8 @@ public class PropertyController {
         this.name = name;
     }
 
+    public Validator getValidator() {
+        return bean.getValidate();
+    }
+    
 }

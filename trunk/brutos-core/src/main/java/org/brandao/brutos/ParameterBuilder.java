@@ -17,6 +17,7 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
@@ -26,8 +27,11 @@ import org.brandao.brutos.validator.RestrictionRules;
  */
 public class ParameterBuilder extends RestrictionBuilder{
 
-    public ParameterBuilder( Configuration config){
-        super( config );
+    private ParameterAction parameter;
+    
+    public ParameterBuilder(ParameterAction value){
+        super( value.getBean().getValidate().getConfiguration() );
+        this.parameter = value;
     }
 
     public RestrictionBuilder addRestriction( RestrictionRules ruleId, Object value ){

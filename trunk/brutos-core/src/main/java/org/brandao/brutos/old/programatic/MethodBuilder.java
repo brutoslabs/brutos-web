@@ -26,7 +26,7 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.mapping.ParameterMethodMapping;
+import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.Type;
@@ -141,7 +141,7 @@ public class MethodBuilder {
                 throw new UnknownTypeException( classType.getName() );
         }
 
-        ParameterMethodMapping pmm = new ParameterMethodMapping();
+        ParameterAction pmm = new ParameterAction();
         pmm.setBean( useBean );
         pmm.setParameterId( methodForm.getParameters().size() + 1 );
         

@@ -37,7 +37,7 @@ import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.mapping.ParameterMethodMapping;
+import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.scope.Scope;
@@ -401,7 +401,7 @@ public class InterceptorProcess implements InterceptorStack{
             //for( ParameterMethodMapping p: method.getParameters() ){
             List params = method.getParameters();
             for( int i=0;i<params.size();i++ ){
-                ParameterMethodMapping p = (ParameterMethodMapping) params.get(i);
+                ParameterAction p = (ParameterAction) params.get(i);
                 UseBeanData bean = p.getBean();
                 values[ index++ ] = bean.getValue();
             }

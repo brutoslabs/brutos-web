@@ -17,6 +17,7 @@
 
 package org.brandao.brutos;
 
+import java.util.Properties;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
@@ -377,12 +378,12 @@ public class ActionBuilder {
                 throw new UnknownTypeException( classType.getName() );
         }
 
-        ParameterMethodMapping pmm = new ParameterMethodMapping();
+        ParameterAction pmm = new ParameterAction();
         pmm.setBean( useBean );
         pmm.setParameterId( 0 );
         
         action.addParameter( pmm );
-        return new ParameterBuilder( validatorConfig );
+        return new ParameterBuilder( pmm );
     }
 
     /**
@@ -502,4 +503,12 @@ public class ActionBuilder {
         return this.action.getReturnIn();
     }
     
+    public int getParametersSize(){
+        return this.action.getParamterSize();
+    }
+    
+    public ParameterBuilder getParameter(int index){
+        ParameterAction param = this.action.getParameter(index);
+        return new ParameterBuilder(param);
+    }
 }

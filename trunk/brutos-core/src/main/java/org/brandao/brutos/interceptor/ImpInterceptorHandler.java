@@ -24,7 +24,7 @@ import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.mapping.ParameterMethodMapping;
+import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.UseBeanData;
 
 /**
@@ -146,7 +146,7 @@ public class ImpInterceptorHandler implements ConfigurableInterceptorHandler{
             //for( ParameterMethodMapping p: method.getParameters() ){
             List params = method.getParameters();
             for( int i=0;i<params.size();i++ ){
-                ParameterMethodMapping p = (ParameterMethodMapping) params.get(i);
+                ParameterAction p = (ParameterAction) params.get(i);
                 UseBeanData bean = p.getBean();
                 values[ index++ ] = bean.getValue();
             }
