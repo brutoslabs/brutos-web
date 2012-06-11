@@ -60,7 +60,7 @@ public class TypeManager {
         types.put( Enum.class,          new DefaultTypeFactory(DefaultEnumType.class ));
         types.put( List.class ,         new DefaultTypeFactory(ListType.class ));
         types.put( Set.class ,          new DefaultTypeFactory(SetType.class ));
-        //types.put( Object.class ,       new DefaultTypeFactory(ObjectType.class ));
+        types.put( Object.class ,       new DefaultTypeFactory(ObjectType.class ));
         types.put( Serializable.class , new DefaultTypeFactory(SerializableTypeImp.class ));
         types.put( Date.class,          new DefaultTypeFactory(DefaultDateTimeType.class ));
         types.put( Calendar.class,      new DefaultTypeFactory(CalendarType.class ));
@@ -76,7 +76,8 @@ public class TypeManager {
     }
     
    public static boolean isStandardType(Class clazz){
-       return types.containsKey(clazz);
+       TypeFactory factory = (TypeFactory)types.get(clazz);
+       return factory == null || factory.getClassType() == ObjectType.class;
    }
    
     public static Type getType( Object classType ){

@@ -41,7 +41,7 @@ public class DefaultTypeFactory implements TypeFactory{
     }
 
     public Class getClassType() {
-        return null;
+        return this.typeClass;
     }
     
 }
