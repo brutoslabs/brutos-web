@@ -210,7 +210,9 @@ public class DependencyBean {
             result = dependencyBean.getValue(
                 value,
                 newPrefix,
-                exceptionHandler );
+                index,
+                exceptionHandler,
+                false);
             
         }
 

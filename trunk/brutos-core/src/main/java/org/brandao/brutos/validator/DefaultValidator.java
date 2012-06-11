@@ -96,4 +96,8 @@ public class DefaultValidator implements Validator{
         }
     }
 
+    public Properties getConfiguration() {
+        return this.config;
+    }
+
 }
