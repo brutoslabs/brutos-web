@@ -147,6 +147,38 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
         });
     }
 
+    public void testCollection11(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-collection11.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(WebScopeType.PARAM).put("map.key[0]", "VALUE");
+                    app.getScopes().get(WebScopeType.PARAM).put("map.value[0]", "valor1");
+                    app.getScopes().get(WebScopeType.PARAM).put("map.key[1]", "VALUE2");
+                    app.getScopes().get(WebScopeType.PARAM).put("map.value[1]", "valor2");
+                    Bean bean = controller.getBean("bean");
+
+                    SimpleBean instance = (SimpleBean) bean.getValue();
+                    Map<EnumTest,String> map = instance.getMap();
+                    TestCase.assertEquals(2, map.size());
+                    TestCase.assertEquals("valor1", map.get(EnumTest.VALUE));
+                    TestCase.assertEquals("valor2", map.get(EnumTest.VALUE2));
+                }
+
+        });
+    }
+    
     public void testConstructorArgRefScopeTag(){
         super.execTest(
             new HandlerTest(){
