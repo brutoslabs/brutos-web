@@ -19,6 +19,7 @@ package org.brandao.brutos.helper.controller;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 /**
  *
@@ -32,7 +33,8 @@ public class SimpleBean {
     private EnumTest enumTest;
     private Calendar calendar;
     private Date date;
-
+    private Map<EnumTest,String> map;
+    
     public SimpleBean(){
     }
 
@@ -116,5 +118,13 @@ public class SimpleBean {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Map<EnumTest,String> getMap() {
+        return map;
+    }
+
+    public void setMap(Map<EnumTest,String> map) {
+        this.map = map;
     }
 }
