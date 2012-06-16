@@ -18,7 +18,10 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
-import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.ActionParam;
+import org.brandao.brutos.annotation.Enumerated;
+import org.brandao.brutos.annotation.Temporal;
+import org.brandao.brutos.annotation.Type;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.TypeManager;
 
