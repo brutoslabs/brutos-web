@@ -20,8 +20,6 @@ package org.brandao.brutos.type;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 /**
@@ -78,6 +76,10 @@ public class DefaultDateTimeType implements DateTimeType{
     
     public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
+    }
+
+    public String getMask() {
+        return this.sdf.toPattern();
     }
     
 }

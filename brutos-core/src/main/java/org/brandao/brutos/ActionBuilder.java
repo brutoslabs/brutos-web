@@ -17,7 +17,6 @@
 
 package org.brandao.brutos;
 
-import java.util.Properties;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
