@@ -18,16 +18,12 @@
 package org.brandao.brutos.type;
 
 /**
- * Allows the creation date types.
- *
  * @author Afonso Brandao
  */
 public interface DateTimeType extends Type{
 
-    /**
-     * Set the mask used in converting.
-     * @param value Mask.
-     */
-    public void setMask( String value );
+    void setMask( String value );
+
+    String getMask();
     
 }

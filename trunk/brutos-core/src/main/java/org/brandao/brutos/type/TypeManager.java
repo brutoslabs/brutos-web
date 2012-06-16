@@ -76,8 +76,8 @@ public class TypeManager {
     }
     
    public static boolean isStandardType(Class clazz){
-       TypeFactory factory = (TypeFactory)types.get(clazz);
-       return factory == null || factory.getClassType() == ObjectType.class;
+       Type type = getType(clazz);
+       return type == null || type instanceof ObjectType;
    }
    
     public static Type getType( Object classType ){
