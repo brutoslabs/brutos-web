@@ -15,24 +15,25 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.helper;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.Calendar;
+import java.util.Date;
+import org.brandao.brutos.annotation.Temporal;
 
 /**
  *
  * @author Brandao
  */
-@Target({ElementType.PARAMETER,ElementType.FIELD,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Restriction {
+public class ActionTest26Controller {
+
+    public void myAction(
+            Date a,
+            @Temporal("MM/dd/yyyy")
+            Date b,
+            Calendar c,
+            @Temporal("yyyy-MM-dd")
+            Calendar d){
+    }
     
-    String rule();
-    
-    String value();
-    
-    String message() default "";
 }

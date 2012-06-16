@@ -51,7 +51,7 @@ public class ActionParamEntry {
     
     public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
         for( Annotation a: this.annotation ){
-            if( a.getClass().isAssignableFrom(annotation) )
+            if( a.annotationType().isAssignableFrom(annotation) )
                 return true;
         }
         

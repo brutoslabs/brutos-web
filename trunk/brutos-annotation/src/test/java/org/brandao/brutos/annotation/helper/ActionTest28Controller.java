@@ -15,24 +15,19 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.helper;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.brandao.brutos.annotation.Identify;
 
 /**
  *
  * @author Brandao
  */
-@Target({ElementType.PARAMETER,ElementType.FIELD,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Restriction {
+public class ActionTest28Controller {
+
+    public void myAction(
+            @Identify(bean="integer",mapping=true)
+            int a){
+    }
     
-    String rule();
-    
-    String value();
-    
-    String message() default "";
 }
