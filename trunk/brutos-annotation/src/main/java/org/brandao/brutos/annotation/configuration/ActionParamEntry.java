@@ -46,6 +46,7 @@ public class ActionParamEntry {
         this.type = type;
         this.genericType = genericType;
         this.annotation = annotation;
+        this.index = index;
     }
     
     public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
@@ -59,7 +60,7 @@ public class ActionParamEntry {
     
     public <T> T getAnnotation(Class<T> annotation){
         for( Annotation a: this.annotation ){
-            if( a.getClass().isAssignableFrom(annotation) )
+            if( a.annotationType().isAssignableFrom(annotation) )
                 return (T) a;
         }
         
