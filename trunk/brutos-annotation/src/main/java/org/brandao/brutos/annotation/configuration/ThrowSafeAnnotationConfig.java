@@ -17,12 +17,13 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import java.lang.reflect.Method;
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
-import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.Action;
+import org.brandao.brutos.annotation.Controller;
+import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.annotation.ThrowSafe;
 
 /**
  *

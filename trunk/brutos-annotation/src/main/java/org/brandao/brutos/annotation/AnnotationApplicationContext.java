@@ -112,16 +112,17 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         
         annotationConfig.add(RootAnnotationConfig.class);
         annotationConfig.add(ActionAnnotationConfig.class);
-        annotationConfig.add(ActionParamAnnotationConfig.class);
+        //annotationConfig.add(ActionParamAnnotationConfig.class);
         annotationConfig.add(BeanAnnotationConfig.class);
         annotationConfig.add(ControllerAnnotationConfig.class);
         annotationConfig.add(InterceptedByAnnotationConfig.class);
         annotationConfig.add(InterceptsAnnotationConfig.class);
-        annotationConfig.add(PropertyAnnotationConfig.class);
+        //annotationConfig.add(PropertyAnnotationConfig.class);
         annotationConfig.add(RestrictionAnnotationConfig.class);
         annotationConfig.add(RestrictionsAnnotationConfig.class);
         annotationConfig.add(ThrowSafeAnnotationConfig.class);
         annotationConfig.add(ThrowSafeListAnnotationConfig.class);
         annotationConfig.add(TypeDefAnnotationConfig.class);
+        annotationConfig.add(IdentifyAnnotationConfig.class);
     }
 }

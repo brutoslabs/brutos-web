@@ -24,9 +24,8 @@ import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BeanBuilder;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.annotation.ActionParam;
 import org.brandao.brutos.annotation.Bean;
-import org.brandao.brutos.annotation.Property;
+import org.brandao.brutos.annotation.Identify;
 import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
@@ -38,7 +37,7 @@ import org.brandao.brutos.mapping.StringUtil;
  *
  * @author Brandao
  */
-@Stereotype(target=Bean.class, executeAfter={ActionParam.class, Property.class})
+@Stereotype(target=Bean.class, executeAfter=Identify.class)
 public class BeanAnnotationConfig extends AbstractAnnotationConfig{
 
     private String path;
