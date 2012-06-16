@@ -20,8 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ParameterBuilder;
 import org.brandao.brutos.PropertyBuilder;
-import org.brandao.brutos.annotation.ActionParam;
-import org.brandao.brutos.annotation.Property;
+import org.brandao.brutos.annotation.Identify;
 import org.brandao.brutos.annotation.Restriction;
 import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
@@ -31,7 +30,7 @@ import org.brandao.brutos.validator.RestrictionRules;
  *
  * @author Brandao
  */
-@Stereotype(target=Restriction.class,executeAfter={ActionParam.class,Property.class})
+@Stereotype(target=Restriction.class,executeAfter={Identify.class})
 public class RestrictionAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {

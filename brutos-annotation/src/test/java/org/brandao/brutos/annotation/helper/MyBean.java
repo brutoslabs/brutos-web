@@ -17,10 +17,37 @@
 
 package org.brandao.brutos.annotation.helper;
 
+import org.brandao.brutos.annotation.Constructor;
+import org.brandao.brutos.annotation.Identify;
+
+
 /**
  *
  * @author Brandao
  */
 public class MyBean {
+    
+    @Identify(bean="bean1", scope="request")
+    private int prop1;
+    
+    private int prop2;
+    
+    @Constructor
+    public MyBean(
+            @Identify(bean="idade")
+            int value,
+            @Identify(bean="idade2")
+            int value2){
+        this.prop1 = value;
+    }
+    
+    public void setProp1(int value){
+        this.prop1 = value;
+    }
+    
+    @Identify(bean="bean1", scope="session")
+    public int getProp1(){
+        return prop1;
+    }
     
 }

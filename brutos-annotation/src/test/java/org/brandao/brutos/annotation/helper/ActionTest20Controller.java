@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
+package org.brandao.brutos.annotation.helper;
 
 /**
  *
  * @author Brandao
  */
-public interface BeanEntry {
+public class ActionTest20Controller {
+
+    public void myAction(int a){
+    }
     
-    Class getBeanType();
 }

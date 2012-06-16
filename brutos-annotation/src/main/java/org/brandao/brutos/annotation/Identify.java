@@ -15,13 +15,25 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
+package org.brandao.brutos.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  *
  * @author Brandao
  */
-public interface BeanEntry {
+@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Identify {
     
-    Class getBeanType();
+    String bean() default "";
+    
+    String scope() default "param";
+
+    boolean mapping() default false;
+    
 }

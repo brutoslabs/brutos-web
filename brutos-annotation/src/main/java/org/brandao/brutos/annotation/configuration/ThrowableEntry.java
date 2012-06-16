@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.ThrowSafe;
 import org.brandao.brutos.mapping.StringUtil;
@@ -45,6 +44,8 @@ public class ThrowableEntry {
 
     public ThrowableEntry(Class<? extends Throwable> target){
         this.target = target;
+        this.enabled = true;
+        this.rendered = true;
     }
     
     public ThrowableEntry(ThrowSafe value){
