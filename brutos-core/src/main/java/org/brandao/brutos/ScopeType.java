@@ -33,6 +33,7 @@ public class ScopeType {
     public static final ScopeType PARAM       = new ScopeType( "param" );
     public static final ScopeType THREAD      = new ScopeType( "thread" );
     public static final ScopeType IOC         = new ScopeType( "ioc" );
+    public static final ScopeType CONTROLLER  = new ScopeType( "controller" );
 
     protected final static Map defaultScopes = new HashMap();
 
@@ -42,6 +43,7 @@ public class ScopeType {
         defaultScopes.put( PARAM.toString(),     PARAM );
         defaultScopes.put( SINGLETON.toString(), SINGLETON );
         defaultScopes.put( IOC.toString(),       IOC );
+        defaultScopes.put( CONTROLLER.toString(),CONTROLLER );
     }
 
     private String name;
