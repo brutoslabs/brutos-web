@@ -77,7 +77,7 @@ public class TypeManager {
     
    public static boolean isStandardType(Class clazz){
        Type type = getType(clazz);
-       return type == null || type instanceof ObjectType;
+       return !(type == null || type instanceof ObjectType);
    }
    
     public static Type getType( Object classType ){
