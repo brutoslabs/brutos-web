@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
