@@ -17,8 +17,9 @@
 
 package org.brandao.brutos.annotation.helper.bean;
 
-import java.util.Date;
-import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.Enumerated;
+import org.brandao.brutos.annotation.EnumerationType;
 import org.brandao.brutos.annotation.helper.EnumTest;
 
 /**
@@ -26,24 +27,13 @@ import org.brandao.brutos.annotation.helper.EnumTest;
  * @author Brandao
  */
 @Bean
-public class BeanFieldTest {
+public class BeanConstructorTest8 {
     
-    private int popertyA;
+    public BeanConstructorTest8(
+            @Enumerated(value=EnumerationType.STRING) EnumTest propertyK){
+    }
 
-    @Identify(bean="prop")
-    private String propertyB;
-    
-    private Date propertyC;
-    
-    @Temporal("yyyy-MM-dd")
-    private Date propertyD;
-    
-    private EnumTest propertyI;
-
-    @Enumerated(value=EnumerationType.ORDINAL)
-    private EnumTest propertyJ;
-    
-    @Enumerated(value=EnumerationType.STRING)
-    private EnumTest propertyK;
+    public BeanConstructorTest8(){
+    }
     
 }

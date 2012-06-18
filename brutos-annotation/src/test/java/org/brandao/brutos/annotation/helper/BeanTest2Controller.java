@@ -15,35 +15,17 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper.bean;
+package org.brandao.brutos.annotation.helper;
 
-import java.util.Date;
-import org.brandao.brutos.annotation.*;
-import org.brandao.brutos.annotation.helper.EnumTest;
+import org.brandao.brutos.annotation.helper.bean.BeanPropertyTest;
 
 /**
  *
  * @author Brandao
  */
-@Bean
-public class BeanFieldTest {
-    
-    private int popertyA;
+public class BeanTest2Controller {
 
-    @Identify(bean="prop")
-    private String propertyB;
-    
-    private Date propertyC;
-    
-    @Temporal("yyyy-MM-dd")
-    private Date propertyD;
-    
-    private EnumTest propertyI;
-
-    @Enumerated(value=EnumerationType.ORDINAL)
-    private EnumTest propertyJ;
-    
-    @Enumerated(value=EnumerationType.STRING)
-    private EnumTest propertyK;
+    public void myAction(BeanPropertyTest a){
+    }
     
 }
