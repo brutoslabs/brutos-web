@@ -147,11 +147,10 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     protected ParameterBuilder buildParameter(ActionBuilder builder, 
-            ActionParamEntry property, 
+            final ActionParamEntry property, 
             ConfigurableApplicationContext applicationContext){
         
-        
-        super.applyInternalConfiguration(property, builder, 
+        super.applyInternalConfiguration(new BeanActionParamEntry(property), builder, 
                 applicationContext);
         
         return builder.getParameter(builder.getParametersSize()-1);
