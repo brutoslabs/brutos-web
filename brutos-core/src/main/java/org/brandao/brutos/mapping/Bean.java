@@ -347,5 +347,9 @@ public class Bean {
     public void setIndexFormat(String indexFormat) {
         this.indexFormat = indexFormat;
     }
+
+    public PropertyBean getProperty(String name){
+        return (PropertyBean) this.fields.get(name);
+    }
     
 }

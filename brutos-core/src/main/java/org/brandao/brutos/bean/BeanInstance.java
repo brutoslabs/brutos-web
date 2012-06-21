@@ -107,7 +107,7 @@ public class BeanInstance {
             BeanData data = new BeanData();
             data.setClassType(clazz);
             
-            Field[] fields = clazz.getFields();
+            Field[] fields = clazz.getDeclaredFields();
 
             for( int i=0;i<fields.length;i++ ){
                 Field f = fields[i];
