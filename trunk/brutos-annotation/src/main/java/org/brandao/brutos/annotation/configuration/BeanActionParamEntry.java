@@ -15,16 +15,21 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.configuration;
 
 /**
  *
  * @author Brandao
  */
-public interface EnumerationType {
+public class BeanActionParamEntry 
+    extends ActionParamEntryWrapper implements BeanEntry{
+
+    public BeanActionParamEntry(ActionParamEntry value){
+        super(value);
+    }
     
-    static final String ORDINAL = "ordinal";
-    
-    static final  String STRING = "string";
+    public Class getBeanType() {
+        return super.getType();
+    }
     
 }
