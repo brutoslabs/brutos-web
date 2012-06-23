@@ -1826,5 +1826,70 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals(EnumerationType.STRING, property.getEnumProperty());
         Assert.assertNull(property.getMapping());
     }
+
+    public void testBean2() throws NoSuchMethodException{
+        
+        Class clazz = BeanTest2Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        PropertyBean property = bean.getProperty("propertyA");
+        Assert.assertEquals(int.class, property.getClassType());
+        Assert.assertEquals("propertyA", property.getName());
+        Assert.assertEquals("propertyA", property.getParameterName());
+        Assert.assertNull(property.getMapping());
+        
+        property = bean.getProperty("propertyB");
+        Assert.assertEquals(String.class, property.getClassType());
+        Assert.assertEquals("propertyB", property.getName());
+        Assert.assertEquals("prop", property.getParameterName());
+        Assert.assertNull(property.getMapping());
+        
+        property = bean.getProperty("propertyC");
+        Assert.assertEquals(Date.class, property.getClassType());
+        Assert.assertEquals("propertyC", property.getName());
+        Assert.assertEquals("propertyC", property.getParameterName());
+        Assert.assertEquals("dd/MM/yyyy", property.getTemporalType());
+        Assert.assertNull(property.getMapping());
+        
+        property = bean.getProperty("propertyD");
+        Assert.assertEquals(Date.class, property.getClassType());
+        Assert.assertEquals("propertyD", property.getName());
+        Assert.assertEquals("propertyD", property.getParameterName());
+        Assert.assertEquals("yyyy-MM-dd", property.getTemporalType());
+        Assert.assertNull(property.getMapping());
+        
+        property = bean.getProperty("propertyE");
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyE", property.getName());
+        Assert.assertEquals("propertyE", property.getParameterName());
+        Assert.assertEquals(EnumerationType.ORDINAL, property.getEnumProperty());
+        Assert.assertNull(property.getMapping());
+
+        property = bean.getProperty("propertyF");
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyF", property.getName());
+        Assert.assertEquals("propertyF", property.getParameterName());
+        Assert.assertEquals(EnumerationType.ORDINAL, property.getEnumProperty());
+        Assert.assertNull(property.getMapping());
+
+        property = bean.getProperty("propertyG");
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyG", property.getName());
+        Assert.assertEquals("propertyG", property.getParameterName());
+        Assert.assertEquals(EnumerationType.STRING, property.getEnumProperty());
+        Assert.assertNull(property.getMapping());
+    }
     
 }

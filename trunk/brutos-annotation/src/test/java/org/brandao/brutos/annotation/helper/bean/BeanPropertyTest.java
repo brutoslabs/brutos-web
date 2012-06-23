@@ -28,7 +28,7 @@ import org.brandao.brutos.annotation.helper.EnumTest;
 @Bean
 public class BeanPropertyTest {
     
-    private int popertyA;
+    private int propertyA;
 
     private String propertyB;
     
@@ -36,18 +36,18 @@ public class BeanPropertyTest {
     
     private Date propertyD;
     
-    private EnumTest propertyI;
+    private EnumTest propertyE;
 
-    private EnumTest propertyJ;
+    private EnumTest propertyF;
     
-    private EnumTest propertyK;
+    private EnumTest propertyG;
 
-    public int getPopertyA() {
-        return popertyA;
+    public int getPropertyA() {
+        return propertyA;
     }
 
-    public void setPopertyA(int popertyA) {
-        this.popertyA = popertyA;
+    public void setPropertyA(int propertyA) {
+        this.propertyA = propertyA;
     }
 
     @Identify(bean="prop")
@@ -76,30 +76,30 @@ public class BeanPropertyTest {
         this.propertyD = propertyD;
     }
 
-    public EnumTest getPropertyI() {
-        return propertyI;
+    public EnumTest getPropertyE() {
+        return propertyE;
     }
 
-    public void setPropertyI(EnumTest propertyI) {
-        this.propertyI = propertyI;
+    public void setPropertyE(EnumTest propertyE) {
+        this.propertyE = propertyE;
     }
 
     @Enumerated(value=EnumerationType.ORDINAL)
-    public EnumTest getPropertyJ() {
-        return propertyJ;
+    public EnumTest getPropertyF() {
+        return propertyF;
     }
 
-    public void setPropertyJ(EnumTest propertyJ) {
-        this.propertyJ = propertyJ;
-    }
-
-    public EnumTest getPropertyK() {
-        return propertyK;
+    public void setPropertyF(EnumTest propertyF) {
+        this.propertyF = propertyF;
     }
 
     @Enumerated(value=EnumerationType.STRING)
-    public void setPropertyK(EnumTest propertyK) {
-        this.propertyK = propertyK;
+    public EnumTest getPropertyG() {
+        return propertyG;
+    }
+
+    public void setPropertyG(EnumTest propertyG) {
+        this.propertyG = propertyG;
     }
     
 }
