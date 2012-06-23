@@ -38,12 +38,12 @@ public class BeanFieldTest {
     @Temporal("yyyy-MM-dd")
     private Date propertyD;
     
-    private EnumTest propertyI;
+    private EnumTest propertyE;
 
     @Enumerated(value=EnumerationType.ORDINAL)
-    private EnumTest propertyJ;
+    private EnumTest propertyF;
     
     @Enumerated(value=EnumerationType.STRING)
-    private EnumTest propertyK;
+    private EnumTest propertyG;
     
 }
