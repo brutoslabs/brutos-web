@@ -34,6 +34,7 @@ import org.brandao.brutos.type.*;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.brandao.brutos.validator.Validator;
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.mapping.*;
 
 /**
  *
@@ -1890,6 +1891,193 @@ public class AnnotationApplicationContextTest extends TestCase{
         Assert.assertEquals("propertyG", property.getParameterName());
         Assert.assertEquals(EnumerationType.STRING, property.getEnumProperty());
         Assert.assertNull(property.getMapping());
+    }
+
+    public void testConstructorBean() throws NoSuchMethodException{
+        
+        Class clazz = BeanTest3Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        
+        Assert.assertEquals(int.class, arg.getClassType());
+        Assert.assertEquals("arg0", arg.getParameterName());
+        Assert.assertNull(arg.getMapping());
+    }
+
+    public void testConstructoBean2() throws NoSuchMethodException{
+        
+        Class clazz = BeanTest4Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        
+        Assert.assertEquals(String.class, arg.getClassType());
+        Assert.assertEquals("prop", arg.getParameterName());
+        Assert.assertNull(arg.getMapping());
+    }
+
+    public void testConstructoBean3() throws NoSuchMethodException{
+        
+        Class clazz = BeanTest5Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        
+        Assert.assertEquals(Date.class, arg.getClassType());
+        Assert.assertEquals("arg0", arg.getParameterName());
+        Assert.assertEquals("dd/MM/yyyy", arg.getTemporalType());
+        Assert.assertNull(arg.getMapping());
+    }
+
+    public void testConstructoBean4() throws NoSuchMethodException{
+        
+        Class clazz = BeanTest6Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        
+        Assert.assertEquals(Date.class, arg.getClassType());
+        Assert.assertEquals("arg0", arg.getParameterName());
+        Assert.assertEquals("yyyy-MM-dd", arg.getTemporalType());
+        Assert.assertNull(arg.getMapping());
+    }
+
+    public void testConstructoBean5() throws NoSuchMethodException{
+        
+        Class clazz = BeanTest7Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        
+        Assert.assertEquals(EnumTest.class, arg.getClassType());
+        Assert.assertEquals("arg0", arg.getParameterName());
+        Assert.assertEquals(EnumerationType.ORDINAL, arg.getEnumProperty());
+        Assert.assertNull(arg.getMapping());
+    }
+
+    public void testConstructoBean6() throws NoSuchMethodException{
+        
+        Class clazz = BeanTest8Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        
+        Assert.assertEquals(EnumTest.class, arg.getClassType());
+        Assert.assertEquals("arg0", arg.getParameterName());
+        Assert.assertEquals(EnumerationType.ORDINAL, arg.getEnumProperty());
+        Assert.assertNull(arg.getMapping());
+    }
+
+    public void testConstructoBean7() throws NoSuchMethodException{
+        
+        Class clazz = BeanTest9Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        
+        Assert.assertEquals(EnumTest.class, arg.getClassType());
+        Assert.assertEquals("arg", arg.getParameterName());
+        Assert.assertEquals(EnumerationType.STRING, arg.getEnumProperty());
+        Assert.assertNull(arg.getMapping());
     }
     
 }
