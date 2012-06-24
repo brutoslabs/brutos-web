@@ -17,15 +17,15 @@
 
 package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest;
+import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest5;
 
 /**
  *
  * @author Brandao
  */
-public class BeanTest3Controller {
+public class BeanTest7Controller {
 
-    public void myAction(BeanConstructorTest a){
+    public void myAction(BeanConstructorTest5 a){
     }
     
 }
