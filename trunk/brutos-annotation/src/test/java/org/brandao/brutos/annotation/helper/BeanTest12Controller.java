@@ -15,19 +15,17 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper.bean;
+package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest10;
 
 /**
  *
  * @author Brandao
  */
-@Bean
-public class BeanConstructorTest10 {
-        
-    public BeanConstructorTest10(
-            int arg){
-    }
+public class BeanTest12Controller {
 
+    public void myAction(BeanConstructorTest10 a){
+    }
+    
 }
