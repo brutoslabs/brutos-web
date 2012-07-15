@@ -27,115 +27,8 @@ import org.brandao.brutos.type.UnknownTypeException;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
- * Constr�i o mapeamento de um bean.<br>
- * Com essa classe � poss�vel definir as depend�ncias do bean, tanto por construtor
- * quanto por m�todo. � poss�vel tamb�m obter a inst�ncia do bean por meio de
- * uma f�brica ou m�todo est�tico. <br>
- * Sua inst�ncia � obtida a partir da classe ControllerBuilder.<br>
- * BeanBuilder n�o tem a mesma fun��o que um container IOC, ela apenas faz o
- * mapeamento de uma requisi��o em um determinado bean.
  *
- * <p>No exemplo abaixo a depend�ncia do bean � mapeada por construtor.</p>
- *
- * Ex:
- * <pre>
- *
- * &lt;html&gt;
- *   &lt;body&gt;
- *    &lt;a href="/index.jbrs?idBean=100"&gt;show&lt;/a&gt;
- *   &lt;/body&gt;
- * &lt;/html&gt;
- *
- * public class MyBean{
- *
- *   private int id;
- *
- *   public MyBean( int val ){
- *     this.id = id;
- *   }
- *   ...
- * }
- *
- * beanBuilder.addContructorArg( "idBean" );
- *
- * </pre>
- *
- * No pr�ximo exemplo o mesmo par�metro � mapeado em uma propriedade.
- *
- * Ex:
- * <pre>
- * public class MyBean{
- *
- *   private int id;
- *
- *   public MyBean(){
- *   }
- *
- *   public void setId( int id ){
- *     this.id = id;
- *   }
- *   ...
- * }
- *
- * beanBuilder.addProperty( "id","idBean" );
- *
- * </pre>
- *
- * Nesse exemplo � feito o mapeamento de um atributo do tipo enum.
- * <pre>
- *
- * &lt;html&gt;
- *   &lt;body&gt;
- *    &lt;a href="/index.jbrs?idBean=1"&gt;show&lt;/a&gt;
- *   &lt;/body&gt;
- * &lt;/html&gt;
- *
- * public enum MyEnum{
- *   VALUE1("Valor 1"),
- *   VALUE2("Valor 2"),
- *   VALUE3("Valor 3");
- *
- *   ...
- *
- * }
- *
- * public class MyBean{
- *
- *   private MyEnum id;
- *
- *   public MyBean(){
- *   }
- *
- *   public void setId( MyEnum id ){
- *     this.id = id;
- *   }
- *   ...
- * }
- *
- * beanBuilder.addProperty( "idBean","id", EnumerationType.ORDINAL );
- *
- * </pre>
- *
- * O mapeamento do enum pode tamb�m ser feito da seguinte maneira:
- * <pre>
- *
- * &lt;html&gt;
- *   &lt;body&gt;
- *    &lt;a href="/index.jbrs?enumName=VALUE2"&gt;show&lt;/a&gt;
- *   &lt;/body&gt;
- * &lt;/html&gt;
- *
- * controllerBuilder
- *      .buildMappingBean( "myEnumMapping", MyEnum.class )
- *      .setMethodfactory( "valueOf" )
- *      .addConstructorArg( "enumName" );
- *
- * beanBuilder.addMappedProperty( "id", "myEnumMapping" );
- *
- * </pre>
- *
- *
- * @author Afonso Brandao
+ * @author Brandao
  */
 public class BeanBuilder {
 
@@ -143,14 +36,14 @@ public class BeanBuilder {
     ControllerBuilder controllerBuilder;
     Bean mappingBean;
     ValidatorProvider validatorProvider;
-    AbstractApplicationContext applicationContext;
+    ApplicationContext applicationContext;
 
     public BeanBuilder(
             Bean mappingBean,
             Controller controller,
             ControllerBuilder controllerBuilder,
             ValidatorProvider validatorProvider,
-            AbstractApplicationContext applicationContext) {
+            ApplicationContext applicationContext) {
 
         this.controllerBuilder = controllerBuilder;
         this.mappingBean = mappingBean;
@@ -160,9 +53,9 @@ public class BeanBuilder {
     }
 
     /**
-     * Define o nome da f�brica do bean.
-     * @param factory Nome da f�brica.
-     * @return Construtor do mapeamento.
+     * Define a fábrica do bean.
+     * @param factory Fábrica.
+     * @return Construtor do bean.
      */
     public BeanBuilder setFactory( String factory ){
         getLogger()
@@ -706,7 +599,7 @@ public class BeanBuilder {
         Configuration validatorConfig = new Configuration();
         arg.setValidator( validatorProvider.getValidator( validatorConfig ) );
         this.mappingBean.getConstructor().addConstructorArg(arg);
-        return new ConstructorBuilder( validatorConfig );
+        return new ConstructorBuilder( arg );
     }
 
     private DependencyBean createDependencyBean( String name, String propertyName,
@@ -791,6 +684,20 @@ public class BeanBuilder {
         PropertyBean property = (PropertyBean) mappingBean.getFields().get(name);
         return property == null? null : new PropertyBuilder(property);
     }
+    
+    public ConstructorBuilder getConstructorArg(int index){
+        ConstructorArgBean arg = mappingBean.getConstructor().getConstructorArg(index);
+        return new ConstructorBuilder(arg);
+    }
+
+    public int getConstructorArgSize(){
+        return mappingBean.getConstructor().size();
+    }
+
+    public Class getClassType(){
+        return mappingBean.getClassType();
+    }
+    
     /**
      * Verifica se � o mapeamento de um Map.
      * @return Verdadeiro se � o mapeamento de um Map, caso contr�rio falso.
