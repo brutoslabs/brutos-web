@@ -32,9 +32,15 @@ import org.brandao.brutos.type.TypeManager;
 public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
-        return (source instanceof ActionParamEntry) ||
-                (source instanceof BeanPropertyAnnotation &&
+        boolean applicable = source instanceof ActionParamEntry;
+        
+        applicable = applicable || 
+                (source instanceof BeanPropertyAnnotation && 
                 !((BeanPropertyAnnotation)source).isAnnotationPresent(Transient.class));
+        
+        applicable = applicable || source instanceof ConstructorArgEntry;
+        
+        return applicable;
     }
 
     public Object applyConfiguration(Object source, Object builder, 
@@ -43,8 +49,12 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         if(source instanceof ActionParamEntry)
             addIdentify((ActionParamEntry)source, (ActionBuilder)builder, applicationContext);
         else
+        if(source instanceof BeanPropertyAnnotation)
             addIdentify((BeanPropertyAnnotation)source, builder, applicationContext);
-        
+        else
+        if(source instanceof ConstructorArgEntry)
+            addIdentify((ConstructorArgEntry)source, (BeanBuilder)builder, applicationContext);
+            
         return source;
     }
     
@@ -81,6 +91,50 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         super.applyInternalConfiguration(
                 source, propertyBuilder, applicationContext);
         
+    }
+
+    protected void addIdentify(ConstructorArgEntry source, BeanBuilder builder,
+            ConfigurableApplicationContext applicationContext){
+
+        ConstructorBuilder constructorBuilder;
+        
+        Identify identify = source.getAnnotation(Identify.class);
+        boolean oldControllerScope = identify != null && identify.mapping();
+        
+        if(!(oldControllerScope || TypeManager.isStandardType(source.getType())))
+            constructorBuilder = buildConstructorArg(builder,source,applicationContext);
+        else
+            constructorBuilder = addConstructorArg(source,builder,applicationContext);
+        
+        super.applyInternalConfiguration(source, constructorBuilder, applicationContext);
+        
+    }
+    
+    protected ConstructorBuilder addConstructorArg(ConstructorArgEntry source, BeanBuilder builder,
+            ConfigurableApplicationContext applicationContext){
+        
+        Identify identify = source.getAnnotation(Identify.class);
+        
+        String name = source.getName();
+        ScopeType scope = getScope(identify);
+        EnumerationType enumProperty = getEnumerationType(source.getAnnotation(Enumerated.class));
+        String temporalProperty = getTemporalProperty(source.getAnnotation(Temporal.class));
+        org.brandao.brutos.type.Type type = getType(source.getAnnotation(Type.class));
+        String mapping = identify != null && identify.mapping()? name : null;
+                
+        return builder.addContructorArg(name, enumProperty, temporalProperty, 
+                mapping, scope, null, false, type, source.getType());
+        
+    }
+    
+    protected ConstructorBuilder buildConstructorArg(BeanBuilder builder, 
+            ConstructorArgEntry arg, 
+            ConfigurableApplicationContext applicationContext){
+        
+        super.applyInternalConfiguration(new BeanEntryConstructorArg(arg), builder, 
+                applicationContext);
+        
+        return builder.getConstructorArg(builder.getConstructorArgSize()-1);
     }
     
     protected PropertyBuilder addProperty(BeanPropertyAnnotation property,Object builder,
