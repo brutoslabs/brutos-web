@@ -15,21 +15,20 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper.bean;
-
-import org.brandao.brutos.annotation.Bean;
-import org.brandao.brutos.annotation.Constructor;
+package org.brandao.brutos.annotation.configuration;
 
 /**
  *
  * @author Brandao
  */
-@Bean
-public class BeanCircularTest {
+public class BeanEntryConstructorArg 
+    extends ConstructorArgEntryWrapper implements BeanEntry{
     
-    @Constructor
-    public BeanCircularTest(
-            BeanCircularTest arg){
+    public BeanEntryConstructorArg(ConstructorArgEntry constructorArgEntry){
+        super(constructorArgEntry);
     }
-    
+
+    public Class getBeanType() {
+        return super.getType();
+    }
 }

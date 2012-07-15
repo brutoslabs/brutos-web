@@ -17,6 +17,9 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -68,29 +71,31 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         boolean isRoot = StringUtil.isEmpty(path);
         
         
-        if(builder instanceof ActionBuilder){
-            String key =
-                isRoot? ((ActionParamEntry)source).getType().getName().replace(".", "-") :
-                ((ActionParamEntry)source).getName();
+        if(source instanceof ActionParamEntry)
+            createBean((ActionBuilder)builder, (ActionParamEntry)source, applicationContext);
+        else
+        if(source instanceof BeanPropertyAnnotation){
             
-            if(path.indexOf(key) != -1)
+            String node =
+                getNode(((BeanBuilder)builder).getClassType(),((BeanPropertyAnnotation)source).getName());
+            
+            if(path.indexOf(node) != -1)
                 throw new BrutosException("circular reference");
             
-            path += key;
-            createBean((ActionBuilder)builder, (ActionParamEntry)source, applicationContext);
+            path += node;
+            createBean((BeanBuilder)builder, (BeanPropertyAnnotation)source, applicationContext);
         }
         else
-        if(builder instanceof BeanBuilder){
+        if(source instanceof BeanEntryConstructorArg){
             
-            String key =
-                isRoot? ((BeanPropertyAnnotation)source).getType().getName().replace(".", "-") :
-                ((BeanPropertyAnnotation)source).getName();
+            String node =
+                getNode(((BeanBuilder)builder).getClassType(),((BeanEntryConstructorArg)source).getName());
             
-            if(path.indexOf(key) != -1)
+            if(path.indexOf(node) != -1)
                 throw new BrutosException("circular reference");
             
-            path += key;
-            createBean((BeanBuilder)builder, (BeanPropertyAnnotation)source, applicationContext);
+            path += node;
+            createBean((BeanBuilder)builder, (BeanEntryConstructorArg)source, applicationContext);
         }
         
         if(isRoot)
@@ -99,13 +104,16 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         return builder;
     }
  
+    private String getNode(Class clazz, String name){
+        return "["+clazz.getName()+"]." + name;
+    }
     protected void createBean(ActionBuilder builder, 
             ActionParamEntry actionParam, ConfigurableApplicationContext applicationContext){
         
         BeanBuilder beanBuilder = 
             builder.buildParameter(actionParam.getName(), actionParam.getType());
         
-        addProperties(beanBuilder, applicationContext, actionParam.getType());
+        createBean(beanBuilder, applicationContext, actionParam.getType());
     }
 
     protected void createBean(BeanBuilder builder, 
@@ -114,7 +122,57 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         BeanBuilder beanBuilder = 
             builder.buildProperty(source.getName(), source.getName(), source.getType());
         
-        addProperties(beanBuilder, applicationContext, source.getType());
+        createBean(beanBuilder, applicationContext, source.getType());
+    }
+
+    protected void createBean(BeanBuilder builder, 
+            BeanEntryConstructorArg source, ConfigurableApplicationContext applicationContext){
+        
+        BeanBuilder beanBuilder = 
+            builder.buildConstructorArg(source.getName(), source.getType());
+        
+        createBean(beanBuilder, applicationContext, source.getType());
+    }
+    
+    protected void createBean(BeanBuilder beanBuilder, 
+            ConfigurableApplicationContext applicationContext, Class type){
+        
+        addConstructor(beanBuilder, applicationContext, type);
+        addProperties(beanBuilder, applicationContext, type);
+    }
+    
+    protected void addConstructor(BeanBuilder beanBuilder, 
+            ConfigurableApplicationContext applicationContext, Class clazz){
+        
+        Constructor[] constructors = clazz.getDeclaredConstructors();
+        
+        Constructor constructor = null;
+        
+        if(constructors.length == 1)
+            constructor = constructors[1];
+        else{
+            for(Constructor c: constructors){
+                if(c.isAnnotationPresent(org.brandao.brutos.annotation.Constructor.class)){
+                    if(constructor != null)
+                        throw new BrutosException("expected @Constructor");
+                    else
+                        constructor = c;
+                }
+            }
+        }
+        
+        if(constructor == null)
+            throw new BrutosException("can't determine the constructor of the bean");
+        
+        Type[] genericTypes = (Type[]) constructor.getGenericParameterTypes();
+        Class[] types = constructor.getParameterTypes();
+        Annotation[][] annotations = constructor.getParameterAnnotations();
+        
+        for(int i=0;i<genericTypes.length;i++){
+            ConstructorArgEntry entry = 
+                    new ConstructorArgEntry(null,types[i],genericTypes[i],annotations[i],i);
+            super.applyInternalConfiguration(entry, beanBuilder, applicationContext);
+        }
     }
     
     protected void addProperties(BeanBuilder beanBuilder, 
