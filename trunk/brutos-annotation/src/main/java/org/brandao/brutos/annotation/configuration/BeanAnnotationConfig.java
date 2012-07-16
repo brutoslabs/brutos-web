@@ -149,7 +149,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         Constructor constructor = null;
         
         if(constructors.length == 1)
-            constructor = constructors[1];
+            constructor = constructors[0];
         else{
             for(Constructor c: constructors){
                 if(c.isAnnotationPresent(org.brandao.brutos.annotation.Constructor.class)){
