@@ -34,7 +34,6 @@ import org.brandao.brutos.type.*;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.brandao.brutos.validator.Validator;
 import org.brandao.brutos.EnumerationType;
-import org.brandao.brutos.annotation.helper.bean.BeanCircularTest;
 import org.brandao.brutos.mapping.*;
 
 /**
@@ -2194,7 +2193,7 @@ public class AnnotationApplicationContextTest extends TestCase{
         ConstructorArgBean arg = constructor.getConstructorArg(0);
         
         Assert.assertEquals(EnumTest.class, arg.getClassType());
-        Assert.assertEquals("arg", arg.getParameterName());
+        Assert.assertEquals("arg0", arg.getParameterName());
         Assert.assertEquals(EnumerationType.STRING, arg.getEnumProperty());
         Assert.assertNull(arg.getMapping());
     }

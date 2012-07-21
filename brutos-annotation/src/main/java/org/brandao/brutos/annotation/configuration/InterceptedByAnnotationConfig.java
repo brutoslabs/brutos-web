@@ -21,7 +21,8 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.annotation.*;
-import org.brandao.brutos.interceptor.Interceptor;
+import org.brandao.brutos.interceptor.InterceptorController;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -45,15 +46,14 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
         for(Intercept i: interceptedBy.value()){
             String name;
             
-            
             InterceptorBuilder ib;
             
-            if(i.interceptor() != Interceptor.class){
-                Class<? extends Interceptor> iClass = i.interceptor();
+            if(i.interceptor() != InterceptorController.class){
+                Class<? extends InterceptorController> iClass = i.interceptor();
                 name = applicationContext.getInterceptorManager().getInterceptor(iClass).getName();
             }
             else
-                name = "".equals(i.name())? null : i.name();
+                name = StringUtil.isEmpty(i.name()) ? null : StringUtil.adjust(i.name());
             
             ib = controllerBuilder.addInterceptor(name);
             
