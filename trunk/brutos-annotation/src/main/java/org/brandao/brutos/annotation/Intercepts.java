@@ -32,8 +32,6 @@ public @interface Intercepts {
 
     String name() default "";
 
-    boolean isDefault() default false;
+    boolean isDefault() default true;
 
-    Param[] params() default{};
-    
 }

@@ -21,8 +21,8 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.annotation.Intercepts;
-import org.brandao.brutos.annotation.Param;
 import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -40,31 +40,22 @@ public class InterceptsAnnotationConfig extends AbstractAnnotationConfig{
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
-        Class clazz = (Class)source;
-        InterceptorManager interceptorManager = 
+        InterceptorManager interceporManager = 
                 applicationContext.getInterceptorManager();
-     
-        Intercepts intercepts = (Intercepts)clazz.getAnnotation(Intercepts.class);
         
-        String name = clazz.getSimpleName().replaceAll("InterceptorController$", "");
-        boolean isDefault = true;
-        Param[] params = null;
+        Class clazz = (Class)source;
+        Intercepts intercepts = (Intercepts) clazz.getAnnotation(clazz);
         
-        if(intercepts != null){
-            name = "".equals(intercepts.name())? name : intercepts.name();
-            isDefault = intercepts.isDefault();
-            params = intercepts.params();
-        }
+        String name = intercepts == null || StringUtil.adjust(intercepts.name()) == null?
+                clazz.getSimpleName().toLowerCase().replaceAll("InterceptorController$", "") :
+                StringUtil.adjust(intercepts.name());
         
-        InterceptorBuilder interceptorBuilder = 
-                interceptorManager.addInterceptor(name, clazz, isDefault);
+        boolean isDefault = intercepts == null || intercepts.isDefault();
+        InterceptorBuilder newBuilder = 
+                interceporManager.addInterceptor(name, clazz, isDefault);
         
-        if(params != null){
-            for(Param p: params)
-                interceptorBuilder.addParameter(p.name(), p.value());
-        }
-        
-        return interceptorBuilder;
+        super.applyInternalConfiguration(source,newBuilder, applicationContext);
+        return builder;
     }
     
 }
