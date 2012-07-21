@@ -26,7 +26,7 @@ import org.brandao.brutos.ResourceAction;
  *
  * @author Afonso Brandao
  */
-public abstract class AbstractInterceptor implements Interceptor{
+public abstract class AbstractInterceptor implements InterceptorController{
     
     protected Map props;
     private List excludeMethods;

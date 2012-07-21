@@ -28,6 +28,7 @@ import java.util.Map;
  *     ...
  * }
  * </pre>
+ * @deprecated 
  * @author Afonso Brandao
  */
 public interface Interceptor {
