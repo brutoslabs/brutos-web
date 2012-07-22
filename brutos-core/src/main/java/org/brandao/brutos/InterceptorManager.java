@@ -140,7 +140,7 @@ public class InterceptorManager {
         in.setProperties( new HashMap() );
         in.setDefault( isDefault );
         interceptors.put( name, in );
-        reverseInterceptors.put(interceptor, name);
+        reverseInterceptors.put(interceptor, in);
         return new InterceptorBuilder( in, this );
         
     }
