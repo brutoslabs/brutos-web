@@ -20,8 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.brandao.brutos.annotation.ThrowSafe;
-import org.brandao.brutos.annotation.ThrowSafeList;
+import org.brandao.brutos.annotation.*;
 
 /**
  *
@@ -46,4 +45,25 @@ public class AnnotationUtil {
         
         return result;
     }
+    
+    public static boolean isInterceptor(Class clazz){
+        boolean isInterceptor =
+            clazz.getSimpleName().endsWith("InterceptorController") ||
+            clazz.isAnnotationPresent(Intercepts.class);
+        
+        return isInterceptor && !isTransient(clazz);
+    }
+    
+    public static boolean isController(Class clazz){
+        boolean isController = 
+               clazz.getSimpleName().endsWith("Controller") ||
+               clazz.isAnnotationPresent(Controller.class);
+        
+        return isController && !isTransient(clazz) && !isInterceptor(clazz);
+    }
+    
+    public static boolean isTransient(Class clazz){
+        return clazz.isAnnotationPresent(Transient.class);
+    }
+    
 }
