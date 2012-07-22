@@ -184,10 +184,7 @@ public class ControllerAnnotationConfig
     }
     
     public boolean isApplicable(Object source) {
-        return source instanceof Class && 
-               (((Class)source).isAnnotationPresent( Controller.class ) ||
-               ((Class)source).getSimpleName().endsWith("Controller")) &&
-               !((Class)source).isAnnotationPresent(Transient.class);
+        return source instanceof Class && AnnotationUtil.isController((Class)source);
     }
     
 }

@@ -21,6 +21,7 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.annotation.Intercepts;
+import org.brandao.brutos.annotation.Param;
 import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.mapping.StringUtil;
 
@@ -32,9 +33,7 @@ import org.brandao.brutos.mapping.StringUtil;
 public class InterceptsAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
-        return source instanceof Class && 
-               ((Class)source).isAnnotationPresent( Intercepts.class ) ||
-               ((Class)source).getSimpleName().endsWith("InterceptorController");
+        return source instanceof Class && AnnotationUtil.isInterceptor((Class)source);
     }
 
     public Object applyConfiguration(Object source, Object builder, 
@@ -44,15 +43,20 @@ public class InterceptsAnnotationConfig extends AbstractAnnotationConfig{
                 applicationContext.getInterceptorManager();
         
         Class clazz = (Class)source;
-        Intercepts intercepts = (Intercepts) clazz.getAnnotation(clazz);
+        Intercepts intercepts = (Intercepts) clazz.getAnnotation(Intercepts.class);
         
         String name = intercepts == null || StringUtil.adjust(intercepts.name()) == null?
-                clazz.getSimpleName().toLowerCase().replaceAll("InterceptorController$", "") :
+                clazz.getSimpleName().replaceAll("InterceptorController$", "") :
                 StringUtil.adjust(intercepts.name());
         
         boolean isDefault = intercepts == null || intercepts.isDefault();
         InterceptorBuilder newBuilder = 
                 interceporManager.addInterceptor(name, clazz, isDefault);
+        
+        if(intercepts != null){
+            for(Param p: intercepts.params())
+                newBuilder.addParameter(p.name(), p.value());
+        }
         
         super.applyInternalConfiguration(source,newBuilder, applicationContext);
         return builder;

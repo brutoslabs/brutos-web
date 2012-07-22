@@ -15,25 +15,24 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.helper;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.brandao.brutos.annotation.Intercept;
+import org.brandao.brutos.annotation.InterceptedBy;
+import org.brandao.brutos.annotation.helper.interceptor.Test1InterceptorController;
 
 /**
  *
- *  @author Afonso Brandao
+ * @author Brandao
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Intercepts {
 
-    String name() default "";
-
-    boolean isDefault() default true;
-
-    Param[] params() default{};
+@InterceptedBy(
+        value=@Intercept(interceptor=Test1InterceptorController.class)
+)
+public class InterceptorTest1Controller {
     
+    public Object myFirstAction(){
+        return null;
+    }
+
 }
