@@ -20,12 +20,17 @@ package org.brandao.brutos.annotation;
 import java.lang.annotation.Annotation;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.configuration.AnnotationConfigEntry;
+import org.brandao.brutos.annotation.configuration.Converter;
 
 /**
  *
  * @author Brandao
  */
 public interface AnnotationConfig {
+    
+    void setSourceConverter(Converter value);
+    
+    Converter getSourceConverter();
     
     void setConfiguration(AnnotationConfigEntry annotation);
     

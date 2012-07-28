@@ -53,6 +53,15 @@ public class AnnotationUtil {
         
         return isInterceptor && !isTransient(clazz);
     }
+
+    public static boolean isInterceptorStack(Class clazz){
+        boolean isInterceptor =
+            isInterceptor(clazz) && 
+            (clazz.isAnnotationPresent(InterceptsStackList.class) ||
+             clazz.isAnnotationPresent(InterceptsStack.class));
+        
+        return isInterceptor;
+    }
     
     public static boolean isController(Class clazz){
         boolean isController = 

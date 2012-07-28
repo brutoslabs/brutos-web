@@ -18,7 +18,11 @@
 package org.brandao.brutos.annotation.configuration;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.AnnotationConfig;
 
@@ -28,7 +32,9 @@ import org.brandao.brutos.annotation.AnnotationConfig;
  */
 public abstract class AbstractAnnotationConfig implements AnnotationConfig{
 
-    private AnnotationConfigEntry annotation;
+    protected AnnotationConfigEntry annotation;
+    
+    private Converter sourceConverter;
     
     public void setConfiguration(AnnotationConfigEntry annotation){
         this.annotation = annotation;
@@ -37,20 +43,68 @@ public abstract class AbstractAnnotationConfig implements AnnotationConfig{
     public Object applyInternalConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
 
-        List<AnnotationConfigEntry> list = annotation.getNextAnnotationConfig();
+        List<AnnotationConfigEntry> list = 
+                getOrder(annotation.getNextAnnotationConfig());
 
         for(int i=0;i<list.size();i++){
             AnnotationConfigEntry next = list.get(i);
-            if(next.getAnnotationConfig().isApplicable(source))
+            if(next.getAnnotationConfig().isApplicable(source)){
+                
+                source = 
+                        this.sourceConverter == null? 
+                            source : 
+                            this.sourceConverter.converter(source,applicationContext);
+                
                 builder = next.getAnnotationConfig()
                         .applyConfiguration(source, builder, applicationContext);
+            }
         }
         
         return builder;
     }
 
+    private List<AnnotationConfigEntry> getOrder(List<AnnotationConfigEntry> list){
+        
+        Class<? extends Annotation>[] order = getExecutionOrder();
+        
+        if(order.length == 0)
+            return list;
+        
+        Map<Class,AnnotationConfigEntry> map = new HashMap<Class,AnnotationConfigEntry>();
+        
+        for(AnnotationConfigEntry ace: annotation.getNextAnnotationConfig())
+            map.put(ace.getStereotype().target(), ace);
+        
+        
+        List<AnnotationConfigEntry> result = new ArrayList<AnnotationConfigEntry>();
+        
+        for(Class target: getExecutionOrder()){
+            AnnotationConfigEntry ace = map.get(target);
+            
+            if(ace == null)
+                throw new BrutosException("not found target: @" + target.getSimpleName());
+            
+            result.add(ace);
+        }
+        
+        for(AnnotationConfigEntry ace: annotation.getNextAnnotationConfig()){
+            if(!map.containsKey(ace.getStereotype().target()))
+                result.add(ace);
+        }
+            
+        return result;
+    }
+    
     public Class<? extends Annotation>[] getExecutionOrder(){
         return new Class[]{};
+    }
+
+    public void setSourceConverter(Converter value){
+        this.sourceConverter = value;
+    }
+    
+    public Converter getSourceConverter(){
+        return this.sourceConverter;
     }
     
 }

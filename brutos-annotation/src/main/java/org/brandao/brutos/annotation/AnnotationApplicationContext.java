@@ -17,14 +17,14 @@
 
 package org.brandao.brutos.annotation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.lang.annotation.Annotation;
+import java.util.*;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.configuration.*;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 
 /**
  *
@@ -35,17 +35,25 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     private Class[] allClazz;
     private List<Class> annotationConfig;
     private List<Class> compositeClassList;
+    private Logger logger;
     
     public AnnotationApplicationContext(Class[] clazz) {
         this.allClazz = clazz;
+        defineLogger();
     }
 
     public AnnotationApplicationContext(Class[] clazz,
             AbstractApplicationContext parent) {
         super(parent);
         this.allClazz = clazz;
+        defineLogger();
     }
 
+    private void defineLogger(){
+        this.logger = LoggerProvider
+                .getCurrentLoggerProvider().getLogger(AnnotationApplicationContext.class);
+    }
+    
     @Override
     public void configure( Properties config ) {
         super.configure(config);
@@ -61,7 +69,8 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         compositeClassList.addAll(this.annotationConfig);
         compositeClassList.addAll(Arrays.asList(this.allClazz));
         
-        AnnotationConfig rootAnnotationConfig = getRootAnnotationConfig();
+        AnnotationConfig rootAnnotationConfig = 
+                createAnnotationTree(compositeClassList);
         
         rootAnnotationConfig
                 .applyConfiguration(Arrays.asList(this.allClazz), 
@@ -71,7 +80,108 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     @Override
     public void destroy(){
     }
- 
+
+    protected AnnotationConfig createAnnotationTree(List<Class> list) {
+        
+        logger.info("creating configuration route");
+        
+        Map<Class,AnnotationConfigEntry> configMap = getAnnotationConfigEntry(list);
+        List<AnnotationConfigEntry> root = new LinkedList<AnnotationConfigEntry>();
+        
+        AnnotationConfigEntry config = null;
+        
+        for(AnnotationConfigEntry ace: configMap.values()){
+            Stereotype stereotype = ace.getStereotype();
+            
+            if(stereotype.target() == Configuration.class){
+                ace.setNextAnnotationConfig(root);
+                config = ace;
+                continue;
+            }
+
+            Class<? extends Annotation>[] after = stereotype.executeAfter();
+            
+            for(Class<? extends Annotation> an: after){
+                if(an == Configuration.class){
+                    logger.warn("property after ignored: " + ace.getClass());
+                    continue;
+                }
+                    
+                AnnotationConfigEntry afterEntry = configMap.get(an);
+                
+                if(afterEntry == null)
+                    throw new BrutosException("not found: " + an.getName());
+                
+                afterEntry.getNextAnnotationConfig().add(ace);
+            }
+            
+            if(after.length == 0)
+                root.add(ace);
+        }
+        
+        if(config == null)
+            throw new BrutosException("not found: @" + Configuration.class.getName());
+        
+        printConfigurationRoute(config);
+        return config.getAnnotationConfig();
+    }
+
+    protected Map<Class,AnnotationConfigEntry> getAnnotationConfigEntry(List<Class> list){
+        Map<Class,AnnotationConfigEntry> map = 
+                new HashMap<Class,AnnotationConfigEntry>();
+
+        for(Class clazz: list){
+            
+            if(!clazz.isAnnotationPresent(Stereotype.class) || 
+               !AnnotationConfig.class.isAssignableFrom(clazz))
+                continue;
+            
+            Stereotype st = 
+                    (Stereotype) clazz.getAnnotation(Stereotype.class);
+            
+            AnnotationConfigEntry current = map.get(st.target());
+            AnnotationConfigEntry newConfig = getAnnotationConfig(st, clazz);
+            
+            if(current != null){
+                boolean override = 
+                    newConfig.getStereotype().majorVersion() >= current.getStereotype().majorVersion() &&
+                    newConfig.getStereotype().minorVersion() > current.getStereotype().minorVersion();
+                if( override )
+                    map.put(st.target(), newConfig);
+            }
+            else
+                map.put(st.target(), newConfig);
+        }
+        
+        return map;
+    }
+
+    protected AnnotationConfigEntry getAnnotationConfig(Stereotype stereotype, Class clazz) {
+        
+        try{
+            AnnotationConfig ac = (AnnotationConfig) ClassUtil.getInstance(clazz);
+            AnnotationConfigEntry r = new AnnotationConfigEntry();
+            r.setAnnotationConfig(ac);
+            ac.setConfiguration(r);
+            r.setStereotype(stereotype);
+            r.setNextAnnotationConfig(new LinkedList<AnnotationConfigEntry>());
+
+            Class<?> sourceConverterClass = stereotype.sourceConverter();
+            
+            if(sourceConverterClass != Converter.class){
+                Converter valueConverter = 
+                        (Converter)ClassUtil.getInstance(sourceConverterClass);
+                ac.setSourceConverter(valueConverter);
+            }
+            
+            return r;
+        }
+        catch( Exception e ){
+            throw new BrutosException(e);
+        }
+    }
+    
+    /*
     protected AnnotationConfig getRootAnnotationConfig(){
         Class<AnnotationConfig> rootConfigClass = null;
         
@@ -106,6 +216,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
             throw new BrutosException(e);
         }
     }
+    */
     
     protected void loadDefaultAnnotationConfig(){
         annotationConfig = new ArrayList<Class>();
@@ -124,5 +235,29 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         annotationConfig.add(ThrowSafeListAnnotationConfig.class);
         annotationConfig.add(TypeDefAnnotationConfig.class);
         annotationConfig.add(IdentifyAnnotationConfig.class);
+    }
+    
+    private void printConfigurationRoute(AnnotationConfigEntry root){
+        nextPart(root, new StringBuilder());
+    }
+    
+    private void nextPart(AnnotationConfigEntry entry, StringBuilder prefix){
+        
+        prefix.append(entry.getStereotype().target().getSimpleName());
+        
+        for(AnnotationConfigEntry next: entry.getNextAnnotationConfig()){
+            String node =
+                entry.getStereotype().target().getSimpleName() +
+                " -> " +
+                next.getStereotype().target().getSimpleName();
+            
+            if(prefix.indexOf(node) != -1)
+                continue;
+            
+            nextPart(next,new StringBuilder(prefix).append(" -> "));
+        }
+        
+        if(entry.getNextAnnotationConfig().isEmpty())
+            logger.info("route config detected: " + prefix);
     }
 }

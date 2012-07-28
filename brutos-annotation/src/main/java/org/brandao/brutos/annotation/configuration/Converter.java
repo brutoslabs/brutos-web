@@ -15,27 +15,16 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.configuration;
 
-import java.lang.annotation.*;
-import org.brandao.brutos.annotation.configuration.Converter;
+import org.brandao.brutos.ConfigurableApplicationContext;
 
 /**
- *
+ * 
  * @author Brandao
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Stereotype {
+public interface Converter {
     
-    Class<? extends Annotation> target();
-    
-    Class<? extends Annotation>[] executeAfter() default {};
-    
-    int majorVersion() default 1;
-    
-    int minorVersion() default 0;
-    
-    Class<? extends Converter> sourceConverter() default Converter.class;
+    Object converter(Object value, ConfigurableApplicationContext applicationContext);
     
 }
