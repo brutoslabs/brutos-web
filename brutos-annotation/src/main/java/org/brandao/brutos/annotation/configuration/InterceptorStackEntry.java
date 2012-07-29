@@ -15,23 +15,34 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper.interceptor;
+package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.annotation.Intercepts;
-import org.brandao.brutos.interceptor.AbstractInterceptor;
-import org.brandao.brutos.interceptor.InterceptedException;
-import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.interceptor.InterceptorStack;
+import java.util.List;
 
 /**
  *
  * @author Brandao
  */
-@Intercepts
-public class Test2Interceptor extends AbstractInterceptor{
+public class InterceptorStackEntry {
+    
+    private String name;
+    
+    private List<Class> interceptors;
 
-    public void intercepted(InterceptorStack stack, InterceptorHandler handler) throws InterceptedException {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Class> getInterceptors() {
+        return interceptors;
+    }
+
+    public void setInterceptors(List<Class> interceptors) {
+        this.interceptors = interceptors;
     }
     
 }
