@@ -15,9 +15,11 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper.interceptor;
+package org.brandao.brutos.annotation.helper.interceptor.stackb;
 
 import org.brandao.brutos.annotation.Intercepts;
+import org.brandao.brutos.annotation.InterceptsStack;
+import org.brandao.brutos.annotation.Param;
 import org.brandao.brutos.interceptor.AbstractInterceptor;
 import org.brandao.brutos.interceptor.InterceptedException;
 import org.brandao.brutos.interceptor.InterceptorHandler;
@@ -28,7 +30,15 @@ import org.brandao.brutos.interceptor.InterceptorStack;
  * @author Brandao
  */
 @Intercepts
-public class Test2Interceptor extends AbstractInterceptor{
+@InterceptsStack(
+    name="stackB", 
+    executeAfter=InterceptorAInterceptorController.class,
+    params={
+        @Param(name="name1", value="value1"),
+        @Param(name="name2", value="value2")
+    }
+)
+public class InterceptorB extends AbstractInterceptor{
 
     public void intercepted(InterceptorStack stack, InterceptorHandler handler) throws InterceptedException {
         throw new UnsupportedOperationException("Not supported yet.");

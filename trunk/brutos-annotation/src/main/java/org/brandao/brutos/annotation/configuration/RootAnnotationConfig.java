@@ -23,25 +23,24 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.configuration.converters.InterceptorStackConverter;
 
 /**
  *
  * @author Brandao
  */
-@Stereotype(target=Configuration.class)
+@Stereotype(target=Configuration.class, 
+        sourceConverter=InterceptorStackConverter.class)
 public class RootAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
-        return ((Class)source).isAnnotationPresent(TypeDef.class) ||
-               ((Class)source).isAnnotationPresent(Intercepts.class) ||
-               ((Class)source).isAnnotationPresent(Controller.class);
-        
+        return true;
     }
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
-        List<Class> classList = (List<Class>)source;
+        List<Object> classList = (List<Object>)source;
         
         Map<Class,AnnotationConfigEntry> map = new HashMap<Class,AnnotationConfigEntry>();
 
@@ -53,9 +52,9 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
             AnnotationConfigEntry ace = map.get(target);
             AnnotationConfig ac = ace.getAnnotationConfig();
             
-            for(Class clazz: classList){
-                if(ac.isApplicable(clazz))
-                    ac.applyConfiguration(clazz, null, applicationContext);
+            for(Object item: classList){
+                if(ac.isApplicable(item))
+                    ac.applyConfiguration(item, null, applicationContext);
             }
         }
         

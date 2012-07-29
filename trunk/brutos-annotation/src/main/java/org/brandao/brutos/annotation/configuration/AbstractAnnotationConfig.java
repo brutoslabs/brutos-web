@@ -30,7 +30,8 @@ import org.brandao.brutos.annotation.AnnotationConfig;
  *
  * @author Brandao
  */
-public abstract class AbstractAnnotationConfig implements AnnotationConfig{
+public abstract class AbstractAnnotationConfig 
+    implements AnnotationConfig,ApplyAnnotationConfig{
 
     protected AnnotationConfigEntry annotation;
     
@@ -38,6 +39,10 @@ public abstract class AbstractAnnotationConfig implements AnnotationConfig{
     
     public void setConfiguration(AnnotationConfigEntry annotation){
         this.annotation = annotation;
+    }
+
+    public AnnotationConfigEntry getConfiguration(){
+        return this.annotation;
     }
     
     public Object applyInternalConfiguration(Object source, Object builder, 
@@ -47,15 +52,14 @@ public abstract class AbstractAnnotationConfig implements AnnotationConfig{
                 getOrder(annotation.getNextAnnotationConfig());
 
         for(int i=0;i<list.size();i++){
-            AnnotationConfigEntry next = list.get(i);
-            if(next.getAnnotationConfig().isApplicable(source)){
-                
+            AnnotationConfig next = list.get(i).getAnnotationConfig();
+            if(next.isApplicable(source)){
                 source = 
-                        this.sourceConverter == null? 
+                        next.getSourceConverter() == null? 
                             source : 
-                            this.sourceConverter.converter(source,applicationContext);
+                            next.getSourceConverter().converter(source,applicationContext);
                 
-                builder = next.getAnnotationConfig()
+                builder = next
                         .applyConfiguration(source, builder, applicationContext);
             }
         }

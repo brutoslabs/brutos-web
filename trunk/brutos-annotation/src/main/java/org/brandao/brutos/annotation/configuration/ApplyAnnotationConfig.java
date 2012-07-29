@@ -15,23 +15,21 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper.interceptor;
+package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.annotation.Intercepts;
-import org.brandao.brutos.interceptor.AbstractInterceptor;
-import org.brandao.brutos.interceptor.InterceptedException;
-import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.interceptor.InterceptorStack;
+import org.brandao.brutos.ConfigurableApplicationContext;
 
 /**
  *
  * @author Brandao
  */
-@Intercepts
-public class Test2Interceptor extends AbstractInterceptor{
-
-    public void intercepted(InterceptorStack stack, InterceptorHandler handler) throws InterceptedException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+public interface ApplyAnnotationConfig {
+    
+    void setConfiguration(AnnotationConfigEntry annotation);
+    
+    AnnotationConfigEntry getConfiguration();
+    
+    Object applyInternalConfiguration(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext);
     
 }

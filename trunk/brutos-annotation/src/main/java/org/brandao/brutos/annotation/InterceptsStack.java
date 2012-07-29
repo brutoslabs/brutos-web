@@ -14,24 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.brandao.brutos.annotation;
 
-package org.brandao.brutos.annotation.helper.interceptor;
-
-import org.brandao.brutos.annotation.Intercepts;
-import org.brandao.brutos.interceptor.AbstractInterceptor;
-import org.brandao.brutos.interceptor.InterceptedException;
-import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.interceptor.InterceptorStack;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.brandao.brutos.interceptor.InterceptorController;
 
 /**
  *
  * @author Brandao
  */
-@Intercepts
-public class Test2Interceptor extends AbstractInterceptor{
-
-    public void intercepted(InterceptorStack stack, InterceptorHandler handler) throws InterceptedException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface InterceptsStack {
     
+    String name();
+    
+    Class<? extends InterceptorController> executeAfter() default InterceptorController.class;
+    
+    Param[] params() default {};
+
 }

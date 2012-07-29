@@ -22,6 +22,7 @@ import java.util.*;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.configuration.*;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -72,9 +73,13 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         AnnotationConfig rootAnnotationConfig = 
                 createAnnotationTree(compositeClassList);
         
-        rootAnnotationConfig
-                .applyConfiguration(Arrays.asList(this.allClazz), 
-                    compositeClassList, this);
+        List<Object> source = new ArrayList<Object>();
+        source.addAll(Arrays.asList(this.allClazz));
+        
+        AnnotationConfig init = 
+                new StartConfiguration((ApplyAnnotationConfig)rootAnnotationConfig);
+        
+        init.applyConfiguration(source, compositeClassList, this);
     }
     
     @Override
@@ -259,5 +264,28 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         
         if(entry.getNextAnnotationConfig().isEmpty())
             logger.info("route config detected: " + prefix);
+    }
+    
+    private class StartConfiguration extends AbstractAnnotationConfig{
+
+        private ApplyAnnotationConfig root;
+        
+        public StartConfiguration(ApplyAnnotationConfig root){
+            this.root = root;
+            AnnotationConfigEntry entry = new AnnotationConfigEntry();
+            entry.setAnnotationConfig(null);
+            entry.setNextAnnotationConfig(Arrays.asList(root.getConfiguration()));
+            super.setConfiguration(entry);
+        }
+        
+        public boolean isApplicable(Object source) {
+            return true;
+        }
+
+        public Object applyConfiguration(Object source, Object builder, 
+                ConfigurableApplicationContext applicationContext) {
+            return super.applyInternalConfiguration(source, builder, applicationContext);
+        }
+        
     }
 }
