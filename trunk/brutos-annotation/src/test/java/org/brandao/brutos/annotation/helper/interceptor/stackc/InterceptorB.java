@@ -39,8 +39,8 @@ import org.brandao.brutos.interceptor.InterceptorStack;
         name="stackB", 
         executeAfter=InterceptorAInterceptorController.class,
         params={
-            @Param(name="name1", value="value1"),
-            @Param(name="name2", value="value2")
+            @Param(name="param1", value="value1"),
+            @Param(name="param2", value="value2")
         }
     )
 })
