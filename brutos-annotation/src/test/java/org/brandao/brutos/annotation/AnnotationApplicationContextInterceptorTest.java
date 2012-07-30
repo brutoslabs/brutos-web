@@ -26,6 +26,7 @@ import org.brandao.brutos.annotation.helper.InterceptorTest3Controller;
 import org.brandao.brutos.annotation.helper.InterceptorTest4Controller;
 import org.brandao.brutos.annotation.helper.interceptor.*;
 import org.brandao.brutos.mapping.Interceptor;
+import org.brandao.brutos.mapping.InterceptorStack;
 
 /**
  *
@@ -259,6 +260,190 @@ public class AnnotationApplicationContextInterceptorTest
             if(!e.getMessage().startsWith("interceptor not found"))
                 Assert.fail();
         }
+    }
+
+    public void testInterceptorstack1(){
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(
+                    new Class[]{
+                        org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorAInterceptorController.class,
+                        org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorB.class,
+                        org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorC.class
+                });
+        
+        org.brandao.brutos.mapping.Interceptor interceptor = 
+                annotationApplicationContext
+                    .getInterceptorManager().getInterceptor("stackA");
+     
+        Assert.assertEquals("stackA", interceptor.getName());
+        Assert.assertTrue(interceptor instanceof InterceptorStack);
+        
+        InterceptorStack stack = (InterceptorStack)interceptor;
+        List<Interceptor> list = stack.getInterceptors();
+        Assert.assertEquals(list.size(),3);
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorAInterceptorController.class,
+                list.get(0).getType());
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorB.class,
+                list.get(1).getType());
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorC.class,
+                list.get(2).getType());
+        
+    }
+
+    public void testInterceptorstack2(){
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(
+                    new Class[]{
+                        org.brandao.brutos.annotation.helper.interceptor.stackb.InterceptorAInterceptorController.class,
+                        org.brandao.brutos.annotation.helper.interceptor.stackb.InterceptorB.class,
+                        org.brandao.brutos.annotation.helper.interceptor.stackb.InterceptorC.class
+                });
+        
+        org.brandao.brutos.mapping.Interceptor interceptor = 
+                annotationApplicationContext
+                    .getInterceptorManager().getInterceptor("stackB");
+     
+        Assert.assertEquals("stackB", interceptor.getName());
+        Assert.assertTrue(interceptor instanceof InterceptorStack);
+        
+        InterceptorStack stack = (InterceptorStack)interceptor;
+        List<Interceptor> list = stack.getInterceptors();
+        Assert.assertEquals(list.size(),3);
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorAInterceptorController.class,
+                list.get(0).getType());
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorB.class,
+                list.get(1).getType());
+        
+        Interceptor i = list.get(1);
+        Assert.assertNotNull(i.getProperties());
+        Assert.assertEquals(2,i.getProperties().size());
+        Assert.assertEquals("value1",i.getProperties().get("param1"));
+        Assert.assertEquals("value2",i.getProperties().get("param2"));
+        
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorC.class,
+                list.get(2).getType());
+        
+    }
+
+    public void testInterceptorstack3(){
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(
+                    new Class[]{
+                        org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorAInterceptorController.class,
+                        org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorB.class,
+                        org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorC.class
+                });
+
+        org.brandao.brutos.mapping.Interceptor interceptor = 
+                annotationApplicationContext
+                    .getInterceptorManager().getInterceptor("stackA");
+     
+        Assert.assertEquals("stackA", interceptor.getName());
+        Assert.assertTrue(interceptor instanceof InterceptorStack);
+        
+        InterceptorStack stack = (InterceptorStack)interceptor;
+        List<Interceptor> list = stack.getInterceptors();
+        Assert.assertEquals(list.size(),3);
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorAInterceptorController.class,
+                list.get(0).getType());
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorB.class,
+                list.get(1).getType());
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorC.class,
+                list.get(2).getType());
+        
+        interceptor = 
+                annotationApplicationContext
+                    .getInterceptorManager().getInterceptor("stackB");
+     
+        Assert.assertEquals("stackB", interceptor.getName());
+        Assert.assertTrue(interceptor instanceof InterceptorStack);
+        
+        stack = (InterceptorStack)interceptor;
+        list = stack.getInterceptors();
+        Assert.assertEquals(list.size(),3);
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorAInterceptorController.class,
+                list.get(0).getType());
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorB.class,
+                list.get(1).getType());
+        
+        Interceptor i = list.get(1);
+        Assert.assertNotNull(i.getProperties());
+        Assert.assertEquals(2,i.getProperties().size());
+        Assert.assertEquals("value1",i.getProperties().get("param1"));
+        Assert.assertEquals("value2",i.getProperties().get("param2"));
+        
+        Assert.assertEquals(
+                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorC.class,
+                list.get(2).getType());
+        
+    }
+
+    public void testInterceptorstack4(){
+        
+        try{
+            getApplication(
+                new Class[]{
+                    org.brandao.brutos.annotation.helper.interceptor.stackd.InterceptorAInterceptorController.class,
+                    org.brandao.brutos.annotation.helper.interceptor.stackd.InterceptorB.class,
+                    org.brandao.brutos.annotation.helper.interceptor.stackd.InterceptorC.class
+            });
+            Assert.fail();
+        }
+        catch(BrutosException e){
+            if(!e.getMessage().startsWith("does not compose the interceptor stack"))
+                Assert.fail();
+        }
+        
+    }
+
+    public void testInterceptorstack5(){
+        
+        try{
+            getApplication(
+                new Class[]{
+                    org.brandao.brutos.annotation.helper.interceptor.stacke.InterceptorAInterceptorController.class,
+                    org.brandao.brutos.annotation.helper.interceptor.stacke.InterceptorB.class,
+                    org.brandao.brutos.annotation.helper.interceptor.stacke.InterceptorC.class
+            });
+            Assert.fail();
+        }
+        catch(BrutosException e){
+            if(!e.getMessage().startsWith("does not compose the interceptor stack"))
+                Assert.fail();
+        }
+        
+    }
+
+    public void testInterceptorstack6(){
+        
+        try{
+            getApplication(
+                new Class[]{
+                    org.brandao.brutos.annotation.helper.interceptor.stackf.InterceptorAInterceptorController.class,
+                    org.brandao.brutos.annotation.helper.interceptor.stackf.InterceptorB.class,
+                    org.brandao.brutos.annotation.helper.interceptor.stackf.InterceptorC.class
+            });
+            Assert.fail();
+        }
+        catch(BrutosException e){
+            if(!e.getMessage().startsWith("detected circular reference in interceptor stack"))
+                Assert.fail();
+        }
+        
     }
     
 }
