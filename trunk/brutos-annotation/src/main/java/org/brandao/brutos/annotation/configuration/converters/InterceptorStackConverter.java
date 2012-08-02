@@ -78,7 +78,7 @@ public class InterceptorStackConverter implements Converter{
             previous.addNext(item);
         }
         
-        List<Class> list = new ArrayList<Class>();
+        List<InterceptorStackItem> list = new ArrayList<InterceptorStackItem>();
         
         InterceptorStackEntry entry = new InterceptorStackEntry();
         entry.setName(name);
@@ -92,13 +92,15 @@ public class InterceptorStackConverter implements Converter{
         return entry;
     }
     
-    private void addInterceptor(InterceptorStackItem item, List<Class> list){
-        list.add(item.getType());
+    private void addInterceptor(InterceptorStackItem item, List<InterceptorStackItem> list){
+        list.add(item);
         
         for(InterceptorStackItem next: item.next){
             addInterceptor(next, list);
         }
+        
     }
+    
     private Map<String,Map<Class,InterceptorStackItem>> groupInfo(List<Object> clazzList){
         Map<String,Map<Class,InterceptorStackItem>> stacks = 
                 new HashMap<String,Map<Class,InterceptorStackItem>>();
@@ -182,7 +184,7 @@ public class InterceptorStackConverter implements Converter{
         }
     }
     
-    private class InterceptorStackItem{
+    public static class InterceptorStackItem{
         
         private String name;
         

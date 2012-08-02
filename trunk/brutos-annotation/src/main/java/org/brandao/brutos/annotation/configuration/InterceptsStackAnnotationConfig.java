@@ -17,48 +17,52 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.util.List;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.InterceptorManager;
+import org.brandao.brutos.InterceptorStackBuilder;
 import org.brandao.brutos.annotation.Intercepts;
+import org.brandao.brutos.annotation.InterceptsStack;
 import org.brandao.brutos.annotation.Param;
 import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.annotation.configuration.converters.InterceptorStackConverter.InterceptorStackItem;
+import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
  * @author Brandao
  */
-@Stereotype(target=Intercepts.class)
+@Stereotype(target=InterceptsStack.class)
 public class InterceptsStackAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
-        return source instanceof Class && AnnotationUtil.isInterceptorStack((Class)source);
+        return source instanceof InterceptorStackEntry;
     }
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
+        InterceptorStackEntry stack = (InterceptorStackEntry)source;
+        
         InterceptorManager interceporManager = 
                 applicationContext.getInterceptorManager();
         
-        Class clazz = (Class)source;
-        Intercepts intercepts = (Intercepts) clazz.getAnnotation(Intercepts.class);
+        String name = StringUtil.adjust(stack.getName());
+        List<InterceptorStackItem> interceptors = stack.getInterceptors();
         
-        String name = intercepts == null || StringUtil.adjust(intercepts.name()) == null?
-                clazz.getSimpleName().replaceAll("InterceptorController$", "") :
-                StringUtil.adjust(intercepts.name());
+        InterceptorStackBuilder newBuilder = 
+                interceporManager.addInterceptorStack(name, stack.isDefault());
         
-        boolean isDefault = intercepts == null || intercepts.isDefault();
-        InterceptorBuilder newBuilder = 
-                interceporManager.addInterceptor(name, clazz, isDefault);
-        
-        if(intercepts != null){
-            for(Param p: intercepts.params())
-                newBuilder.addParameter(p.name(), p.value());
+        for(InterceptorStackItem i: interceptors){
+            Interceptor in = interceporManager.getInterceptor(i.getType());
+            newBuilder.addInterceptor(in.getName());
+            Param[] params = i.getInfo().params();
+            for(Param p: params){
+                newBuilder.addParameter(StringUtil.adjust(p.name()), StringUtil.adjust(p.value()));
+            }
         }
-        
-        super.applyInternalConfiguration(source,newBuilder, applicationContext);
+        super.applyInternalConfiguration(source, newBuilder, applicationContext);
         return builder;
     }
     
