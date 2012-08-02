@@ -21,6 +21,7 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.configuration.converters.InterceptorStackConverter;
@@ -50,6 +51,10 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
         for(Class target: getExecutionOrder()){
             
             AnnotationConfigEntry ace = map.get(target);
+            
+            if(ace == null)
+                throw new BrutosException("configuration not found: " + target);
+            
             AnnotationConfig ac = ace.getAnnotationConfig();
             
             for(Object item: classList){
@@ -66,6 +71,7 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
         return new Class[]{
             TypeDef.class,
             Intercepts.class,
+            InterceptsStack.class,
             Controller.class};
     }
     

@@ -315,10 +315,10 @@ public class AnnotationApplicationContextInterceptorTest
         List<Interceptor> list = stack.getInterceptors();
         Assert.assertEquals(list.size(),3);
         Assert.assertEquals(
-                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorAInterceptorController.class,
+                org.brandao.brutos.annotation.helper.interceptor.stackb.InterceptorAInterceptorController.class,
                 list.get(0).getType());
         Assert.assertEquals(
-                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorB.class,
+                org.brandao.brutos.annotation.helper.interceptor.stackb.InterceptorB.class,
                 list.get(1).getType());
         
         Interceptor i = list.get(1);
@@ -328,7 +328,7 @@ public class AnnotationApplicationContextInterceptorTest
         Assert.assertEquals("value2",i.getProperties().get("param2"));
         
         Assert.assertEquals(
-                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorC.class,
+                org.brandao.brutos.annotation.helper.interceptor.stackb.InterceptorC.class,
                 list.get(2).getType());
         
     }
@@ -354,13 +354,13 @@ public class AnnotationApplicationContextInterceptorTest
         List<Interceptor> list = stack.getInterceptors();
         Assert.assertEquals(list.size(),3);
         Assert.assertEquals(
-                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorAInterceptorController.class,
+                org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorAInterceptorController.class,
                 list.get(0).getType());
         Assert.assertEquals(
-                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorB.class,
+                org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorB.class,
                 list.get(1).getType());
         Assert.assertEquals(
-                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorC.class,
+                org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorC.class,
                 list.get(2).getType());
         
         interceptor = 
@@ -374,10 +374,10 @@ public class AnnotationApplicationContextInterceptorTest
         list = stack.getInterceptors();
         Assert.assertEquals(list.size(),3);
         Assert.assertEquals(
-                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorAInterceptorController.class,
+                org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorAInterceptorController.class,
                 list.get(0).getType());
         Assert.assertEquals(
-                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorB.class,
+                org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorB.class,
                 list.get(1).getType());
         
         Interceptor i = list.get(1);
@@ -387,7 +387,7 @@ public class AnnotationApplicationContextInterceptorTest
         Assert.assertEquals("value2",i.getProperties().get("param2"));
         
         Assert.assertEquals(
-                org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorC.class,
+                org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorC.class,
                 list.get(2).getType());
         
     }

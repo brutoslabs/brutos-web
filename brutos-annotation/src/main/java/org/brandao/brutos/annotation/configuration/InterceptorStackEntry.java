@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation.configuration;
 
 import java.util.List;
+import org.brandao.brutos.annotation.configuration.converters.InterceptorStackConverter.InterceptorStackItem;
 
 /**
  *
@@ -27,8 +28,10 @@ public class InterceptorStackEntry {
     
     private String name;
     
-    private List<Class> interceptors;
+    private List<InterceptorStackItem> interceptors;
 
+    private boolean isDefault;
+    
     public String getName() {
         return name;
     }
@@ -37,12 +40,19 @@ public class InterceptorStackEntry {
         this.name = name;
     }
 
-    public List<Class> getInterceptors() {
+    public List<InterceptorStackItem> getInterceptors() {
         return interceptors;
     }
 
-    public void setInterceptors(List<Class> interceptors) {
+    public void setInterceptors(List<InterceptorStackItem> interceptors) {
         this.interceptors = interceptors;
     }
+
+    public void setDefault(boolean value){
+        this.isDefault = value;
+    }
     
+    public boolean isDefault(){
+        return this.isDefault;
+    }
 }
