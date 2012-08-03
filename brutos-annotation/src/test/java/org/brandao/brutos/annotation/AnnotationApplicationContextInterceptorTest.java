@@ -440,10 +440,28 @@ public class AnnotationApplicationContextInterceptorTest
             Assert.fail();
         }
         catch(BrutosException e){
+            if(!e.getMessage().startsWith("not found first interceptor"))
+                Assert.fail();
+        }
+        
+    }
+    /*
+    public void testInterceptorstack7(){
+        
+        try{
+            getApplication(
+                new Class[]{
+                    org.brandao.brutos.annotation.helper.interceptor.stackg.InterceptorAInterceptorController.class,
+                    org.brandao.brutos.annotation.helper.interceptor.stackg.InterceptorB.class,
+                    org.brandao.brutos.annotation.helper.interceptor.stackg.InterceptorC.class
+            });
+            Assert.fail();
+        }
+        catch(BrutosException e){
             if(!e.getMessage().startsWith("detected circular reference in interceptor stack"))
                 Assert.fail();
         }
         
     }
-    
+    */    
 }
