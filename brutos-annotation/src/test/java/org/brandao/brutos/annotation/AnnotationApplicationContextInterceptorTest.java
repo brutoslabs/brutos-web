@@ -440,7 +440,7 @@ public class AnnotationApplicationContextInterceptorTest
             Assert.fail();
         }
         catch(BrutosException e){
-            if(!e.getMessage().startsWith("not found first interceptor"))
+            if(!e.getMessage().startsWith("first interceptor not found"))
                 Assert.fail();
         }
         
