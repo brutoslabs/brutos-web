@@ -17,7 +17,7 @@
 
 package org.brandao.brutos.annotation.helper.bean;
 
-import java.util.Date;
+import java.util.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.helper.EnumTest;
 
@@ -45,5 +45,39 @@ public class BeanFieldTest {
     
     @Enumerated(value=EnumerationType.STRING)
     private EnumTest propertyG;
+    
+    @KeyCollection(bean="myKey")
+    @ElementCollection(bean="myElement")
+    private Map<String,Integer> propertyH;
+
+    @Target(HashMap.class)
+    private Map<String,Integer> propertyI;
+    
+    private Map<BeanConstructorTest,Integer> propertyJ;
+
+    private Map<String,BeanConstructorTest> propertyK;
+
+    @ElementCollection(bean="myElement")
+    private Map<String,BeanConstructorTest> propertyL;
+
+    @ElementCollection(bean="myElement")
+    private List<Integer> propertyM;
+
+    @Target(LinkedList.class)
+    private List<Integer> propertyN;
+    
+    private List<Integer> propertyO;
+
+    private List<BeanConstructorTest> propertyP;
+
+    @ElementCollection(bean="myElement")
+    private List<BeanConstructorTest> propertyQ;
+
+    @KeyCollection(bean="myKey", useMappring=true)
+    @ElementCollection(bean="myElement", useMapping=true)
+    private Map<BeanConstructorTest,BeanConstructorTest> propertyR;
+
+    @ElementCollection(bean="myElement", useMapping=true)
+    private List<BeanConstructorTest> propertyS;
     
 }

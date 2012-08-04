@@ -15,27 +15,23 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.helper.bean;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.HashMap;
+import java.util.Map;
+import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.Target;
 
 /**
  *
  * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Identify {
-    
-    String bean() default "";
-    
-    String scope() default "param";
+@Bean
+public class BeanConstructorTest12 {
+        
+    public BeanConstructorTest12(
+            @Target(HashMap.class)
+            Map<String,Integer> propertyI){
+    }
 
-    boolean mapping() default false;
-    
-    boolean useMapping() default false;
-    
 }

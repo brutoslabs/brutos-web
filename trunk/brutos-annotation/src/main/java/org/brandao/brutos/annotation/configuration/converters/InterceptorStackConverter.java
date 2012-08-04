@@ -79,7 +79,7 @@ public class InterceptorStackConverter implements Converter{
         }
         
         if(root.isEmpty())
-            throw new BrutosException("not found first interceptor: " + name);
+            throw new BrutosException("first interceptor not found: " + name);
         
         List<InterceptorStackItem> list = new ArrayList<InterceptorStackItem>();
         

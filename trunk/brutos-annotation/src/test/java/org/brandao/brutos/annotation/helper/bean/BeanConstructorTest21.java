@@ -15,27 +15,24 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.helper.bean;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.Map;
+import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.ElementCollection;
+import org.brandao.brutos.annotation.KeyCollection;
 
 /**
  *
  * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Identify {
-    
-    String bean() default "";
-    
-    String scope() default "param";
+@Bean
+public class BeanConstructorTest21 {
+        
+    public BeanConstructorTest21(
+            @KeyCollection(bean="myKey", useMappring=true)
+            @ElementCollection(bean="myElement", useMapping=true)
+            Map<BeanConstructorTest,BeanConstructorTest> propertyR){
+    }
 
-    boolean mapping() default false;
-    
-    boolean useMapping() default false;
-    
 }

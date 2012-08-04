@@ -28,14 +28,12 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Identify {
+public @interface ElementCollection {
     
     String bean() default "";
     
     String scope() default "param";
 
-    boolean mapping() default false;
-    
     boolean useMapping() default false;
     
 }
