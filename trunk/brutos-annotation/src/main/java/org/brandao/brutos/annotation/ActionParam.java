@@ -33,7 +33,7 @@ public @interface ActionParam {
     String bean() default "";
     
     String scope() default "param";
-    
-    boolean mapping() default false;
+
+    boolean useMapping() default false;
     
 }

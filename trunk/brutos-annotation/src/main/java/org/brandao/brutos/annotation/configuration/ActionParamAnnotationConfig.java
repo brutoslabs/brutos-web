@@ -44,7 +44,7 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
         
         ParameterBuilder paramBuilder;
         
-        if(TypeManager.isStandardType(param.getType()))
+        if(!TypeManager.isStandardType(param.getType()))
             paramBuilder = buildParameter(actionBuilder,param,applicationContext);
         else
             paramBuilder = addParameter(param,actionBuilder,applicationContext);

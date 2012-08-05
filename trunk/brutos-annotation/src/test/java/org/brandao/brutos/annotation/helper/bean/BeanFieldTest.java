@@ -57,7 +57,7 @@ public class BeanFieldTest {
 
     private Map<String,BeanConstructorTest> propertyK;
 
-    @ElementCollection(bean="myElement")
+    @ElementCollection(bean="myElement", useMapping=true)
     private Map<String,BeanConstructorTest> propertyL;
 
     @ElementCollection(bean="myElement")

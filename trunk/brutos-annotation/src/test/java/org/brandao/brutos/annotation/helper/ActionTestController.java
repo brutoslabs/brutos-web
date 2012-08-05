@@ -158,7 +158,7 @@ public class ActionTestController {
     }
 
     public void my25Action(
-            @Identify(bean="integer",mapping=true)
+            @Identify(bean="integer",useMapping=true)
             Integer a){
     }
 

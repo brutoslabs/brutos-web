@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation;
 
 import java.lang.annotation.*;
+import java.lang.annotation.Target;
 import org.brandao.brutos.annotation.configuration.Converter;
 
 /**

@@ -15,20 +15,24 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper;
-
-import org.brandao.brutos.annotation.Identify;
-import org.brandao.brutos.annotation.ScopeType;
+package org.brandao.brutos.annotation;
 
 /**
  *
  * @author Brandao
  */
-public class ActionTest28Controller {
-
-    public void myAction(
-            @Identify(bean="sdf", useMapping=true)
-            ScopeType a){
-    }
+public interface ScopeType {
+    
+    public static final String REQUEST     = "request";
+    
+    public static final String SINGLETON   = "singleton";
+    
+    public static final String PARAM       = "param";
+    
+    public static final String THREAD      = "thread";
+    
+    public static final String IOC         = "ioc";
+    
+    public static final String CONTROLLER  = "controller";
     
 }

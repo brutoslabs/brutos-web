@@ -51,11 +51,11 @@ public class ControllerTest19Controller {
         this.propertyA = propertyA;
     }
 
-    @Identify(bean="prop")
     public String getPropertyB() {
         return propertyB;
     }
 
+    @Identify(bean="prop")
     public void setPropertyB(String propertyB) {
         this.propertyB = propertyB;
     }
@@ -68,11 +68,11 @@ public class ControllerTest19Controller {
         this.propertyC = propertyC;
     }
 
-    @Temporal("yyyy-MM-dd")
     public Date getPropertyD() {
         return propertyD;
     }
 
+    @Temporal("yyyy-MM-dd")
     public void setPropertyD(Date propertyD) {
         this.propertyD = propertyD;
     }
@@ -85,20 +85,20 @@ public class ControllerTest19Controller {
         this.propertyE = propertyE;
     }
 
-    @Enumerated(value=EnumerationType.ORDINAL)
     public EnumTest getPropertyF() {
         return propertyF;
     }
 
+    @Enumerated(value=EnumerationType.ORDINAL)
     public void setPropertyF(EnumTest propertyF) {
         this.propertyF = propertyF;
     }
 
-    @Enumerated(value=EnumerationType.STRING)
     public EnumTest getPropertyG() {
         return propertyG;
     }
 
+    @Enumerated(value=EnumerationType.STRING)
     public void setPropertyG(EnumTest propertyG) {
         this.propertyG = propertyG;
     }
