@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.TypeManager;
@@ -64,9 +65,12 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         ParameterBuilder paramBuilder;
         
         Identify identify = source.getAnnotation(Identify.class);
-        boolean oldControllerScope = identify != null && identify.mapping();
+        boolean useMapping = 
+            identify == null?
+                true : 
+                identify.useMapping();
         
-        if(!(oldControllerScope || TypeManager.isStandardType(source.getType())))
+        if(useMapping && !TypeManager.isStandardType(source.getType()))
             paramBuilder = buildParameter(builder,source,applicationContext);
         else
             paramBuilder = addParameter(source,builder,applicationContext);
@@ -81,9 +85,12 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         PropertyBuilder propertyBuilder;        
 
         Identify identify = source.getAnnotation(Identify.class);
-        boolean oldControllerScope = identify != null && identify.mapping();
+        boolean useMapping = 
+            identify == null?
+                true : 
+                identify.useMapping();
         
-        if(!(oldControllerScope || TypeManager.isStandardType(source.getType())))
+        if(useMapping && !TypeManager.isStandardType(source.getType()))
             propertyBuilder = buildProperty((BeanBuilder)builder, source, applicationContext);
         else
             propertyBuilder = addProperty(source, builder, applicationContext);
@@ -99,9 +106,12 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         ConstructorBuilder constructorBuilder;
         
         Identify identify = source.getAnnotation(Identify.class);
-        boolean oldControllerScope = identify != null && identify.mapping();
+        boolean useMapping = 
+            identify == null?
+                true : 
+                identify.useMapping();
         
-        if(!(oldControllerScope || TypeManager.isStandardType(source.getType())))
+        if(useMapping && !TypeManager.isStandardType(source.getType()))
             constructorBuilder = buildConstructorArg(builder,source,applicationContext);
         else
             constructorBuilder = addConstructorArg(source,builder,applicationContext);
@@ -120,10 +130,10 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         EnumerationType enumProperty = getEnumerationType(source.getAnnotation(Enumerated.class));
         String temporalProperty = getTemporalProperty(source.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = getType(source.getAnnotation(Type.class));
-        String mapping = identify != null && identify.mapping()? name : null;
+        //String mapping = identify != null && identify.useMapping()? name : null;
                 
         return builder.addContructorArg(name, enumProperty, temporalProperty, 
-                mapping, scope, null, false, type, source.getType());
+                /*mapping*/null, scope, null, false, type, source.getType());
         
     }
     
@@ -148,18 +158,18 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         EnumerationType enumProperty = getEnumerationType(property.getAnnotation(Enumerated.class));
         String temporalProperty = getTemporalProperty(property.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = getType(property.getAnnotation(Type.class));
-        String mapping = identify != null && identify.mapping()? name : null;
+        //String mapping = identify != null && identify.mapping()? name : null;
 
         PropertyBuilder propertyBuilder;
         if(builder instanceof BeanBuilder){
             propertyBuilder = addProperty((BeanBuilder)builder,property, propertyName,
                 name, scope, enumProperty, temporalProperty, type,
-                mapping, applicationContext);
+                /*mapping*/null, applicationContext);
         }
         else{
             propertyBuilder = addProperty((ControllerBuilder)builder,property, propertyName,
                 name, scope, enumProperty, temporalProperty, type,
-                mapping, applicationContext);
+                /*mapping*/null, applicationContext);
         }
         
         return propertyBuilder;
@@ -220,10 +230,10 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         EnumerationType enumProperty = getEnumerationType(source.getAnnotation(Enumerated.class));
         String temporalProperty = getTemporalProperty(source.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = getType(source.getAnnotation(Type.class));
-        String mapping = identify != null && identify.mapping()? name : null;
+        //String mapping = identify != null && identify.mapping()? name : null;
                 
         return builder.addParameter(name, scope, enumProperty, 
-                temporalProperty, mapping, type, null, false, source.getType());
+                temporalProperty, /*mapping*/ null, type, null, false, source.getType());
         
     }
     

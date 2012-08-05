@@ -35,6 +35,6 @@ public @interface Property {
     
     String scope() default "param";
 
-    boolean mapping() default false;
+    boolean useMapping() default false;
     
 }

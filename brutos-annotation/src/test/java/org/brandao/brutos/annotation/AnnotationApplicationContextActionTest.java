@@ -1145,7 +1145,7 @@ public class AnnotationApplicationContextActionTest
     }
 
     public void testAction28() throws NoSuchMethodException{
-        
+
         Class clazz = ActionTest28Controller.class;
 
         try{
@@ -1153,10 +1153,9 @@ public class AnnotationApplicationContextActionTest
             Assert.fail();
         }
         catch(BrutosException e){
-            if(!e.getMessage().startsWith("mapping name"))
+            if(!e.getMessage().startsWith("expected @Bean"))
                 Assert.fail();
         }
-        
     }
     
 }
