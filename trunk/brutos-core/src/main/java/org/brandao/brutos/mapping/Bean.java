@@ -148,13 +148,6 @@ public class Bean {
                 if( !exist && (existProperty || fb.isNullable()) )
                     exist = true;
 
-                /*Object value = fb.getValue(prefix, index, vex);
-
-                if( !exist && (value != null || fb.isNullable()) )
-                    exist = true;
-
-                beanInstance.getSetter( fb.getName() ).set( value );
-                */
             }
 
             if(exist || force){
@@ -173,7 +166,6 @@ public class Bean {
             else
                 return null;
             
-            //return exist || force? obj : null;
         }
         catch( ValidatorException e ){
             throw e;
@@ -192,7 +184,6 @@ public class Bean {
         try{
             Object property = 
                     beanInstance.get( fb.getName() );
-                    //beanInstance.getGetter( fb.getName() ).get();
             Object value = fb.getValue(prefix, index, vex, property);
             
             if(logger.isDebugEnabled())
@@ -202,7 +193,6 @@ public class Bean {
                             new Object[]{value,fb.getName()}));
 
             beanInstance.set( fb.getName(), value );
-            //beanInstance.getSetter( fb.getName() ).set( value );
             return value != null;
         }
         catch( DependencyException e ){
@@ -298,7 +288,7 @@ public class Bean {
             Method method = this.getConstructor().getMethod( factoryInstance );
 
             if( index != -1 && this.getConstructor().size() == 0 )
-                throw new MappingException("can infinite loop: " + 
+                throw new MappingException("infinite loop: " + 
                         this.getName());
             
             return method.invoke(

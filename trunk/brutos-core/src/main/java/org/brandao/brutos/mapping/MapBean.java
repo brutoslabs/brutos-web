@@ -1,28 +1,25 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.mapping;
 
 import java.util.Map;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.*;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.Scopes;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.ValidatorException;
 
@@ -32,37 +29,48 @@ import org.brandao.brutos.validator.ValidatorException;
  */
 public class MapBean extends CollectionBean{
 
-    private Bean mappingKey;
+    //private Bean mappingKey;
 
-    /**
+    /*
      * @deprecated
      */
-    private Class collectionType;
+    //private Class collectionType;
 
-    /**
+    /*
      * @deprecated
      */
-    private Bean bean;
+    //private Bean bean;
 
-    /**
+    /*
      * @deprecated
      */
-    private String key;
+    //private String key;
 
-    /**
+    /*
      * @deprecated
      */
-    private Type keyType;
+    //private Type keyType;
 
-    /**
+    /*
      * @deprecated
      */
-    private ScopeType keyScopeType;
+    //private ScopeType keyScopeType;
 
+    private DependencyBean key;
+    
     public MapBean( Controller form ){
         super(form);
     }
 
+    public void setKey(DependencyBean key){
+        this.key = key;
+    }
+
+    public DependencyBean getKey(){
+        return this.key;
+    }
+    
+    /*
     public void setMappingKey( Bean mappingKey ){
         this.mappingKey = mappingKey;
     }
@@ -80,78 +88,34 @@ public class MapBean extends CollectionBean{
     public void setCollectionType(Class collectionType) {
         this.collectionType = collectionType;
     }
-    /*
-    public Bean getBean() {
-        return bean;
-    }
-
-    public void setBean(Bean bean) {
-        this.bean = bean;
-    }
-    */
-    /*
-    private Object get( HttpServletRequest request, String prefix, long index ){
-        if( bean == null )
-            return super.getValue(request, null, prefix, index );
-        else
-            return bean.getValue(request, null, prefix, index );
-    }
     */
     
     /*
-    private Object get( HttpSession session, long index ){
-        if( bean == null )
-            return super.getValue( session, index );
-        else
-            return bean.getValue( session, index );
-    }
-
-    private Object get( ServletContext context, long index ){
-        if( bean == null )
-            return super.getValue(context, index );
-        else
-            return bean.getValue(context, index );
-    }
-    */
     private String getKeyName( long index, String prefix ){
         return (prefix != null? prefix : "") + key + ( index < 0? "" : "[" + index + "]" );
     }
+    */
     
     private Object getKey( long index, String prefix,
             ValidatorException exceptionHandler ){
-        /*return keyType.getValue(
-            request,
-            request.getSession().getServletContext(),
-            getKeyScope().get( getKeyName( index, prefix ) ) );*/
+        
         /*
-         * A partir da vers�o 2.0 mappingKey sempre ser� diferente de null.
-         */
         if( mappingKey != null )
             return mappingKey.getValue( null, prefix, index, exceptionHandler, false );
         else
         if( keyType != null )
-            //return keyType.getValue( getKeyScope().get( getKeyName( index, prefix ) ) );
             return keyType.convert( getKeyScope().get( getKeyName( index, prefix ) ) );
         else
             throw new BrutosException(
                 String.format("key mapping not defined: %s", new Object[]{this.getName()} ) );
+        */
+        if(key != null)
+            return key.getValue(prefix, index, exceptionHandler);
+        else
+            throw new BrutosException(
+                String.format("key mapping not defined: %s", new Object[]{this.getName()} ) );
+            
     }
-    /*
-    private Object getKey( HttpServletRequest request, long index ){
-        return keyType.getValue(
-            request,
-            request.getSession().getServletContext(),
-            request.getParameter( getKeyName( index ) ) );
-    }
-
-    private Object getKey( HttpSession session, long index ){
-        return session.getAttribute( getKeyName( index ) );
-    }
-
-    private Object getKey( ServletContext context, long index ){
-        return context.getAttribute( getKeyName( index ) );
-    }
-    */
 
     public Object getValue(){
         return getValue( null );
@@ -205,7 +169,6 @@ public class MapBean extends CollectionBean{
             else
                 return null;
 
-            //return force || !map.isEmpty()? map : null;
         }
         catch( ValidatorException e ){
             throw e;
@@ -218,6 +181,7 @@ public class MapBean extends CollectionBean{
         }
     }
 
+    /*
     public Scope getKeyScope() {
         Scopes scopes = Invoker.getApplicationContext().getScopes();
 
@@ -237,7 +201,7 @@ public class MapBean extends CollectionBean{
     public ScopeType getkeyScopeType() {
         return this.keyScopeType;
     }
-
+    */
     public boolean isBean(){
         return false;
     }
@@ -250,40 +214,4 @@ public class MapBean extends CollectionBean{
         return true;
     }
 
-    /*
-    public Object getValue( HttpSession session ){
-        try{
-            Map map = (Map) collectionType.newInstance();
-
-            long index = 0;
-            Object bean;
-            while( (bean = get( session, index )) != null ){
-                map.put( getKey( session, index ), bean );
-                index++;
-            }
-            return map;
-        }
-        catch( Exception e ){
-            return null;
-        }
-    }
-
-
-    public Object getValue( ServletContext context ){
-        try{
-            Map map = (Map) collectionType.newInstance();
-
-            long index = 0;
-            Object bean;
-            while( (bean = get( context, index )) != null ){
-                map.put( getKey( context, index ), bean );
-                index++;
-            }
-            return map;
-        }
-        catch( Exception e ){
-            return null;
-        }
-    }
-    */
 }

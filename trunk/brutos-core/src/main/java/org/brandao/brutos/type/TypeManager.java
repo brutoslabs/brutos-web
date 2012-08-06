@@ -156,6 +156,27 @@ public class TypeManager {
     }
 
     public static Class getCollectionType( Object type ){
+        int index = -1;
+
+        if(Map.class.isAnnotationPresent(type.getClass()))
+            index = 1;
+        else
+        if(Collection.class.isAnnotationPresent(type.getClass()))
+            index = 0;
+        
+        return getParameter(type, index);
+    }
+
+    public static Class getKeyType( Object type ){
+        int index = -1;
+
+        if(Map.class.isAnnotationPresent(type.getClass()))
+            index = 0;
+        
+        return getParameter(type, index);
+    }
+    
+    public static Class getParameter( Object type, int index ){
         try{
             Class parameterizedTypeClass =
                     Class.forName("java.lang.reflect.ParameterizedType");
@@ -165,7 +186,8 @@ public class TypeManager {
                         parameterizedTypeClass.getMethod("getActualTypeArguments", new Class[]{});
 
                 Object args = getRawType.invoke(type, new Object[]{});
-                return (Class) Array.get(args, 0);
+                
+                return (Class) Array.get(args, index);
             }
             else
                 return null;

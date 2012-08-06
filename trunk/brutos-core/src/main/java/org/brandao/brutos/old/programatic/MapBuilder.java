@@ -60,7 +60,7 @@ public class MapBuilder {
         if( type == null )
             throw new BrutosException( "invalid type: " + clazz.getName() );
 
-        mappingBean.setKey( name, type, scope );
+        //mappingBean.setKey( name, type, scope );
         return this;
     }
 
@@ -81,7 +81,7 @@ public class MapBuilder {
                     "not allowed: " +
                     webFrame.getClassType().getName() );
 
-        mappingBean.setBean( bean );
+        //mappingBean.setBean( bean );
 
         return this;
     }

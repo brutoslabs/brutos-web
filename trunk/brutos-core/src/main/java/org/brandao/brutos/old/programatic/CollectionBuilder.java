@@ -54,7 +54,7 @@ public class CollectionBuilder {
                     "not allowed: " +
                     webFrame.getClassType().getName() );
 
-        mappingBean.setBean( bean );
+        //mappingBean.setBean( bean );
         return this;
     }
     

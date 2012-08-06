@@ -174,7 +174,7 @@ public class WebFrameBuilder {
                 ": " + webFrame.getClassType().getName() );
 
         MapBean mappingBean = new MapBean(webFrame);
-        mappingBean.setCollectionType(target);
+        //mappingBean.setCollectionType(target);
         mappingBean.setName( name );
         webFrame.addBean( name, mappingBean );
         MapBuilder mb = new MapBuilder( mappingBean, webFrame, this );
@@ -203,7 +203,7 @@ public class WebFrameBuilder {
                 webFrame.getClassType().getName() );
 
         CollectionBean mappingBean = new CollectionBean(webFrame);
-        mappingBean.setCollectionType(target);
+        //mappingBean.setCollectionType(target);
         mappingBean.setName( name );
         webFrame.addBean( name, mappingBean );
         CollectionBuilder mb = new CollectionBuilder( mappingBean, webFrame, this );
