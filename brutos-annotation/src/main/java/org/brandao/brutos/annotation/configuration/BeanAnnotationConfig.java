@@ -53,9 +53,6 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         if(source instanceof BeanEntry){
             Class clazz = ((BeanEntry)source).getBeanType();
             
-            if(!clazz.isAnnotationPresent(Bean.class))
-                throw new BrutosException("expected @Bean: " + clazz.getName() );    
-            
             return 
                 !Map.class.isAssignableFrom(clazz) &&
                 !Collection.class.isAssignableFrom(clazz);
@@ -68,8 +65,12 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
 
-        boolean isRoot = StringUtil.isEmpty(path);
+        Class clazz = ((BeanEntry)source).getBeanType();
         
+        if(!clazz.isAnnotationPresent(Bean.class))
+            throw new BrutosException("expected @Bean: " + clazz.getName() );    
+        
+        boolean isRoot = StringUtil.isEmpty(path);
         
         if(source instanceof ActionParamEntry)
             createBean((ActionBuilder)builder, (ActionParamEntry)source, applicationContext);

@@ -30,10 +30,21 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ElementCollection {
     
+    Identify identify() default @Identify;
+    
+    Enumerated enumerated() default @Enumerated(EnumerationType.ORDINAL);
+    
+    Temporal temporal() default @Temporal("dd/MM/yyyy");
+    
+    Type type() default @Type(org.brandao.brutos.type.Type.class);
+    
+    org.brandao.brutos.annotation.Target target() default @org.brandao.brutos.annotation.Target(void.class);
+    
+    /*
     String bean() default "";
     
     String scope() default "param";
 
     boolean useMapping() default false;
-    
+    */
 }

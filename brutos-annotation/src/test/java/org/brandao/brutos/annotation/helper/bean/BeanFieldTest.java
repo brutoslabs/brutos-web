@@ -46,8 +46,26 @@ public class BeanFieldTest {
     @Enumerated(value=EnumerationType.STRING)
     private EnumTest propertyG;
     
-    @KeyCollection(bean="myKey")
-    @ElementCollection(bean="myElement")
+    /*
+    @KeyCollection(
+            bean="myKey",
+            enumerated=EnumerationType.STRING,
+            target=String.class,
+            temporal="yyyy-MM-dd"
+    )
+    */
+    @KeyCollection(
+        identify=@Identify(bean="myKey"),
+        enumerated=@Enumerated(EnumerationType.STRING),
+        target=@Target(String.class),
+        temporal=@Temporal("yyyy-MM-dd")
+    )
+    @ElementCollection(
+        identify=@Identify(bean="myElement"),
+        enumerated=@Enumerated(EnumerationType.STRING),
+        target=@Target(String.class),
+        temporal=@Temporal("yyyy-MM-dd")
+    )
     private Map<String,Integer> propertyH;
 
     @Target(HashMap.class)
