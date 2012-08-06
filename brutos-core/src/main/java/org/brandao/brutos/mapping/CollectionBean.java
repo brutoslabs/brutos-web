@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.mapping;
@@ -27,29 +27,33 @@ import org.brandao.brutos.validator.ValidatorException;
  */
 public class CollectionBean extends Bean{
 
-    /**
+    /*
      * @deprecated 
      */
-    private Class collectionType;
+    /*private Class collectionType;
 
     private Bean bean;
-
+    */
+    
+    private DependencyBean collection;
+    
     public CollectionBean( Controller form ){
         super( form );
     }
 
-    /**
-     * @deprecated
-     * @return .
-     */
+    public void setCollection(DependencyBean collection){
+        this.collection = collection;
+    }
+
+    public DependencyBean getCollection(){
+        return this.collection;
+    }
+    
+    /*
     public Class getCollectionType() {
         return collectionType;
     }
 
-    /**
-     * @deprecated 
-     * @param collectionType
-     */
     public void setCollectionType(Class collectionType) {
         this.collectionType = collectionType;
     }
@@ -61,35 +65,27 @@ public class CollectionBean extends Bean{
     public void setBean(Bean bean) {
         this.bean = bean;
     }
-
+    */
+    
     protected Object get( String prefix, long index, ValidatorException exceptionHandler ){
+        
+        if(collection != null)
+            return collection.getValue(prefix, index, exceptionHandler);
+        else
+            throw new MappingException(
+                String.format(
+                    "element of the collection is not defined: %s",
+                    new Object[]{this.getName()}));
         /*
-         * A partir da vers�o 2.0 o bean sempre ser� diferente de null.
-         */
         if( bean == null )
-            //return super.getValue( null, prefix, index, false );
             throw new MappingException(
                 String.format(
                     "element of the collection is not defined: %s",
                     new Object[]{this.getName()}));
         else
             return bean.getValue( null, prefix, index, exceptionHandler, false );
+        */
     }
-    /*
-    private Object get( HttpSession session, long index ){
-        if( bean == null )
-            return super.getValue( session, index );
-        else
-            return bean.getValue( session, index );
-    }
-
-    private Object get( ServletContext context, long index ){
-        if( bean == null )
-            return super.getValue(context, index );
-        else
-            return bean.getValue(context, index );
-    }
-    */
 
     public Object getValue( boolean force ){
         return getValue( null, null, -1, null, force );
@@ -110,32 +106,31 @@ public class CollectionBean extends Bean{
             ValidatorException vex = new ValidatorException();
 
             instance = getInstance( instance,prefix,otherIndex,vex,force);
-            Collection collection = (Collection)instance;
+            Collection collectionBean = (Collection)instance;
 
             long index = 0;
             Object beanInstance;
 
             while( (beanInstance = get( prefix, index, vex )) != null ){
-                collection.add(beanInstance);
+                collectionBean.add(beanInstance);
                 index++;
             }
 
-            if(!collection.isEmpty() || force){
+            if(!collectionBean.isEmpty() || force){
                 if( exceptionHandler == null){
                     if( !vex.getCauses().isEmpty() )
                         throw vex;
                     else
-                        return collection;
+                        return collectionBean;
                 }
                 else {
                     exceptionHandler.addCauses(vex.getCauses());
-                    return collection;
+                    return collectionBean;
                 }
             }
             else
                 return null;
 
-            //return force || !collection.isEmpty()? collection : null;
         }
         catch( ValidatorException e ){
             throw e;
@@ -152,21 +147,22 @@ public class CollectionBean extends Bean{
             ValidatorException exceptionHandler, boolean force )
             throws InstantiationException, IllegalAccessException{
 
+        if(instance == null){
+            instance = super.getValue(
+                instance,
+                prefix,
+                index,
+                exceptionHandler,
+                force);
+        }
+        /*
         if( instance == null ){
             if( collectionType == null )
                 instance = super.getValue(instance,prefix,index,exceptionHandler,force);
             else
                 instance = collectionType.newInstance();
         }
-
-        /*
-        instance = instance == null?
-            (collectionType != null?
-                   collectionType.newInstance() :
-                   super.getValue()) :
-            instance;
         */
-        
         return instance;
     }
 
@@ -181,44 +177,5 @@ public class CollectionBean extends Bean{
     public boolean isMap(){
         return false;
     }
-
-    /*
-    public Object getValue( HttpSession session ){
-        try{
-            Collection collection = (Collection)collectionType.newInstance();
-
-            long index = 0;
-            Object bean;
-
-            while( (bean = get( session, index )) != null ){
-                collection.add(bean);
-                index++;
-            }
-            return collection;
-        }
-        catch( Exception e ){
-            return null;
-        }
-    }
-
-
-    public Object getValue( ServletContext context ){
-        try{
-            Collection collection = (Collection)collectionType.newInstance();
-
-            long index = 0;
-            Object bean;
-
-            while( (bean = get( context, index )) != null ){
-                collection.add(bean);
-                index++;
-            }
-            return collection;
-        }
-        catch( Exception e ){
-            return null;
-        }
-    }
-    */
 
 }
