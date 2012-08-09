@@ -380,7 +380,7 @@ public class BeanBuilder {
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
                 factory, type, DEPENDENCY);
 
-        ((MapBean)mappingBean).setCollection(collection);
+        ((CollectionBean)mappingBean).setCollection(collection);
         return this;
     }
     

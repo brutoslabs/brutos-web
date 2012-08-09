@@ -61,13 +61,16 @@ public class BeanPropertyImp implements BeanProperty{
         }
     }
 
-    public Object getGenericType() throws NoSuchMethodException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        
-        if(get != null)
-            return getGenericReturnType( get );
-        else
-            return getGenericType( field );
+    public Object getGenericType(){
+        try{
+            if(get != null)
+                return getGenericReturnType( get );
+            else
+                return getGenericType( field );
+        }
+        catch(Exception e){
+            throw new BeanException(e);
+        }
             
     }
     
