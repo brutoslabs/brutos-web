@@ -33,8 +33,7 @@ public interface BeanProperty {
     Object get(Object o) throws IllegalAccessException, 
             IllegalArgumentException, InvocationTargetException;
 
-    Object getGenericType() throws NoSuchMethodException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException;
+    Object getGenericType();
     
     Class getType();
     

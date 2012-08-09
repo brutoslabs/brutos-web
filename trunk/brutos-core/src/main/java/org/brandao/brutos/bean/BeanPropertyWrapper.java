@@ -45,9 +45,7 @@ public class BeanPropertyWrapper implements BeanProperty{
         return this.beanProperty.get(o);
     }
 
-    public Object getGenericType() 
-            throws NoSuchMethodException, IllegalAccessException, 
-            IllegalArgumentException, InvocationTargetException {
+    public Object getGenericType(){
         return this.beanProperty.getGenericType();
     }
 

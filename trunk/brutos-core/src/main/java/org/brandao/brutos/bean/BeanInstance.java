@@ -201,8 +201,8 @@ public class BeanInstance {
         if( prop == null )
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
 
-        try{
-            //return getGenericReturnType( method );
+        return prop.getGenericType();
+        /*try{
             return prop.getGenericType();
         }
         catch( NoSuchMethodException ex ){
@@ -211,7 +211,7 @@ public class BeanInstance {
         catch( Exception ex ){
             throw new BrutosException(ex);
         }
-
+        */
     }
 
     /*
