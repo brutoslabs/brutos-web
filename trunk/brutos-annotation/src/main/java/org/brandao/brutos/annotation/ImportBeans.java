@@ -20,28 +20,15 @@ package org.brandao.brutos.annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
 /**
  *
  * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
+@java.lang.annotation.Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ElementCollection {
+public @interface ImportBeans {
     
-    String bean() default "";
-    
-    String scope() default "param";
-
-    boolean useMapping() default false;
-    
-    Class<?> target() default void.class;
-    
-    String enumerated() default EnumerationType.ORDINAL;
-    
-    String temporal() default "dd/MM/yyyy";
-    
-    Class<? extends org.brandao.brutos.type.Type> type() default org.brandao.brutos.type.Type.class;
+    Class<?>[] value();
     
 }

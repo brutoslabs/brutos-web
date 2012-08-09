@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.bean.BeanProperty;
 import org.brandao.brutos.bean.BeanPropertyWrapper;
 
@@ -34,5 +35,5 @@ public class BeanEntryProperty
     public Class getBeanType() {
         return super.getType();
     }
-    
+
 }

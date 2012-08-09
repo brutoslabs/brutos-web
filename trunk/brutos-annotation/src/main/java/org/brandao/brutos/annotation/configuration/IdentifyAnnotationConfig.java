@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.util.Map;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
@@ -204,9 +205,10 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
      protected PropertyBuilder buildProperty(BeanBuilder beanBuilder, 
             BeanPropertyAnnotation property, 
             ConfigurableApplicationContext applicationContext){
+         
         super.applyInternalConfiguration(new BeanEntryProperty(property), beanBuilder, 
                 applicationContext);
-        
+
         return beanBuilder.getProperty(property.getName());
     }
     

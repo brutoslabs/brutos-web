@@ -27,14 +27,13 @@ import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BeanBuilder;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.annotation.Bean;
-import org.brandao.brutos.annotation.Identify;
-import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.BeanProperty;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -114,7 +113,10 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         BeanBuilder beanBuilder = 
             builder.buildParameter(actionParam.getName(), actionParam.getType());
         
-        createBean(beanBuilder, applicationContext, actionParam.getType());
+        createBean(beanBuilder, applicationContext, 
+                actionParam.getType(), 
+                actionParam.getAnnotation(KeyCollection.class),
+                actionParam.getAnnotation(ElementCollection.class));
     }
 
     protected void createBean(BeanBuilder builder, 
@@ -123,7 +125,9 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         BeanBuilder beanBuilder = 
             builder.buildProperty(source.getName(), source.getName(), source.getType());
         
-        createBean(beanBuilder, applicationContext, source.getType());
+        createBean(beanBuilder, applicationContext, source.getType(), 
+                source.getAnnotation(KeyCollection.class),
+                source.getAnnotation(ElementCollection.class));
     }
 
     protected void createBean(BeanBuilder builder, 
@@ -132,14 +136,43 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         BeanBuilder beanBuilder = 
             builder.buildConstructorArg(source.getName(), source.getType());
         
-        createBean(beanBuilder, applicationContext, source.getType());
+        createBean(beanBuilder, applicationContext, source.getType(), 
+                source.getAnnotation(KeyCollection.class),
+                source.getAnnotation(ElementCollection.class));
     }
-    
+
     protected void createBean(BeanBuilder beanBuilder, 
-            ConfigurableApplicationContext applicationContext, Class type){
+            ConfigurableApplicationContext applicationContext, 
+            Class type, 
+            KeyCollection keyCollection, ElementCollection elementCollection){
         
         addConstructor(beanBuilder, applicationContext, type);
         addProperties(beanBuilder, applicationContext, type);
+
+        if(!Map.class.isAssignableFrom(type)){
+            Class keyType = TypeManager.getKeyType(type);
+
+            KeyEntry keyEntry = 
+                new KeyEntry(keyType,keyCollection);
+
+            super.applyInternalConfiguration(
+                    keyEntry, 
+                    beanBuilder, 
+                    applicationContext);
+        }
+        
+        if(!Collection.class.isAssignableFrom(type)){
+            Class elementType = TypeManager.getCollectionType(type);
+
+            ElementEntry elementEntry = 
+                new ElementEntry(elementType,elementCollection);
+
+            super.applyInternalConfiguration(
+                    elementEntry, 
+                    beanBuilder, 
+                    applicationContext);
+        }
+        
     }
     
     protected void addConstructor(BeanBuilder beanBuilder, 

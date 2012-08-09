@@ -55,16 +55,16 @@ public class BeanFieldTest {
     )
     */
     @KeyCollection(
-        identify=@Identify(bean="myKey"),
-        enumerated=@Enumerated(EnumerationType.STRING),
-        target=@Target(String.class),
-        temporal=@Temporal("yyyy-MM-dd")
+        bean="myKey",
+        enumerated=EnumerationType.STRING,
+        target=String.class,
+        temporal="yyyy-MM-dd"
     )
     @ElementCollection(
-        identify=@Identify(bean="myElement"),
-        enumerated=@Enumerated(EnumerationType.STRING),
-        target=@Target(String.class),
-        temporal=@Temporal("yyyy-MM-dd")
+        bean="myElement",
+        enumerated=EnumerationType.STRING,
+        target=String.class,
+        temporal="yyyy-MM-dd"
     )
     private Map<String,Integer> propertyH;
 
@@ -91,7 +91,7 @@ public class BeanFieldTest {
     @ElementCollection(bean="myElement")
     private List<BeanConstructorTest> propertyQ;
 
-    @KeyCollection(bean="myKey", useMappring=true)
+    @KeyCollection(bean="myKey", useMapping=true)
     @ElementCollection(bean="myElement", useMapping=true)
     private Map<BeanConstructorTest,BeanConstructorTest> propertyR;
 

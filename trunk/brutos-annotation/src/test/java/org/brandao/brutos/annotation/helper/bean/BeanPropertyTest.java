@@ -217,7 +217,7 @@ public class BeanPropertyTest {
         return propertyR;
     }
 
-    @KeyCollection(bean="myKey", useMappring=true)
+    @KeyCollection(bean="myKey", useMapping=true)
     @ElementCollection(bean="myElement", useMapping=true)
     public void setPropertyR(Map<BeanConstructorTest,BeanConstructorTest> propertyR) {
         this.propertyR = propertyR;
