@@ -20,14 +20,14 @@ package org.brandao.brutos.annotation.configuration;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.annotation.KeyCollection;
+import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
  * @author Brandao
  */
-public class KeyEntry implements BeanEntry{
+public class ElementEntry implements BeanEntry{
     
     private String name;
     
@@ -45,11 +45,11 @@ public class KeyEntry implements BeanEntry{
     
     private Class<? extends org.brandao.brutos.type.Type> type;
     
-    public KeyEntry(){
+    public ElementEntry(){
         this(null, null);
     }
 
-    public KeyEntry(Class<?> classType, KeyCollection definition){
+    public ElementEntry(Class<?> classType, ElementCollection definition){
         this.classType = classType;
         if(definition != null){
             this.name = StringUtil.adjust(definition.bean());
@@ -71,14 +71,13 @@ public class KeyEntry implements BeanEntry{
 
             this.temporal = 
                     StringUtil.isEmpty(definition.temporal())?
-                    null :
+                    BrutosConstants.DEFAULT_TEMPORALPROPERTY :
                     StringUtil.adjust(definition.temporal());
 
             this.type = definition.type() == org.brandao.brutos.type.Type.class?
                     null :
                     definition.type();
         }
-        
     }
 
     public String getName() {

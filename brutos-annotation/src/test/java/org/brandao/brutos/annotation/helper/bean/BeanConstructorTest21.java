@@ -30,7 +30,7 @@ import org.brandao.brutos.annotation.KeyCollection;
 public class BeanConstructorTest21 {
         
     public BeanConstructorTest21(
-            @KeyCollection(bean="myKey", useMappring=true)
+            @KeyCollection(bean="myKey", useMapping=true)
             @ElementCollection(bean="myElement", useMapping=true)
             Map<BeanConstructorTest,BeanConstructorTest> propertyR){
     }

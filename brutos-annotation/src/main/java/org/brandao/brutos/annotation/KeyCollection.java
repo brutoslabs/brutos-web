@@ -21,6 +21,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import org.brandao.brutos.BrutosConstants;
 
 /**
  *
@@ -30,28 +31,18 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface KeyCollection {
     
-    Identify identify() default @Identify;
-    
-    Enumerated enumerated() default @Enumerated(EnumerationType.ORDINAL);
-    
-    Temporal temporal() default @Temporal("dd/MM/yyyy");
-    
-    Type type() default @Type(org.brandao.brutos.type.Type.class);
-    
-    org.brandao.brutos.annotation.Target target() default @org.brandao.brutos.annotation.Target(void.class);
-    /*
     String bean() default "";
     
     String scope() default "param";
 
-    boolean useMappring() default false;
+    boolean useMapping() default false;
     
     Class<?> target() default void.class;
     
-    String enumerated() default EnumerationType.ORDINAL;
+    String enumerated() default BrutosConstants.DEFAULT_ENUMERATION_TYPE;
     
-    String temporal() default "dd/MM/yyyy";
+    String temporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
     
     Class<? extends org.brandao.brutos.type.Type> type() default org.brandao.brutos.type.Type.class;
-    */
+    
 }
