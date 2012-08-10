@@ -42,7 +42,8 @@ public class SetType implements CollectionType{
     }
     
     public void setGenericType(Object classType) {
-        Class collectionType = TypeManager.getCollectionType(classType);
+        Object collectionGenericType = TypeManager.getCollectionType(classType);
+        Class collectionType = TypeManager.getRawType(collectionGenericType);
         if( collectionType != null ){
             this.type = collectionType;
             this.primitiveType = TypeManager.getType( this.type );
@@ -50,7 +51,7 @@ public class SetType implements CollectionType{
                 throw new UnknownTypeException( classType.toString() );
         }
         else
-            throw new UnknownTypeException( "is not allowed the use the Set or Set<?>" );
+            throw new UnknownTypeException( "invalid type: Set or Set<?>" );
     }
 
     public Object getGenericType(){

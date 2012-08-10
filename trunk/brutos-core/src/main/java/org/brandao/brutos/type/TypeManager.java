@@ -155,28 +155,32 @@ public class TypeManager {
         }
     }
 
-    public static Class getCollectionType( Object type ){
+    public static Object getCollectionType( Object type ){
         int index = -1;
 
-        if(Map.class.isAnnotationPresent(type.getClass()))
+        Class rawType = getRawType(type);
+        
+        if(Map.class.isAssignableFrom(rawType))
             index = 1;
         else
-        if(Collection.class.isAnnotationPresent(type.getClass()))
+        if(Collection.class.isAssignableFrom(rawType))
             index = 0;
         
         return getParameter(type, index);
     }
 
-    public static Class getKeyType( Object type ){
+    public static Object getKeyType( Object type ){
         int index = -1;
 
-        if(Map.class.isAnnotationPresent(type.getClass()))
+        Class rawType = getRawType(type);
+        
+        if(Map.class.isAssignableFrom(rawType))
             index = 0;
         
         return getParameter(type, index);
     }
     
-    public static Class getParameter( Object type, int index ){
+    public static Object getParameter( Object type, int index ){
         try{
             Class parameterizedTypeClass =
                     Class.forName("java.lang.reflect.ParameterizedType");
@@ -187,7 +191,7 @@ public class TypeManager {
 
                 Object args = getRawType.invoke(type, new Object[]{});
                 
-                return (Class) Array.get(args, index);
+                return Array.get(args, index);
             }
             else
                 return null;

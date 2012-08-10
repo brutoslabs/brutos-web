@@ -68,6 +68,9 @@ public class BeanPropertyImp implements BeanProperty{
             else
                 return getGenericType( field );
         }
+        catch(NoSuchMethodException e){
+            return this.getType();
+        }
         catch(Exception e){
             throw new BeanException(e);
         }
