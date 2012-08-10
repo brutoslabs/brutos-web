@@ -20,7 +20,11 @@ package org.brandao.brutos.annotation.configuration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -73,6 +77,52 @@ public class AnnotationUtil {
     
     public static boolean isTransient(Class clazz){
         return clazz.isAnnotationPresent(Transient.class);
+    }
+    
+    public static org.brandao.brutos.type.Type getTypeInstance(Type value){
+        if(value != null){
+            Class typeClass = value.value();
+            return (org.brandao.brutos.type.Type)getTypeInstance(typeClass);
+        }
+        else
+            return null;
+    }
+    
+    public static org.brandao.brutos.type.Type getTypeInstance(Class value){
+        try{
+            if(value != null)
+                return (org.brandao.brutos.type.Type)ClassUtil.getInstance(value);
+            else
+                return null;
+        }
+        catch(Exception e){
+            throw new BrutosException(e);
+        }
+    }
+    
+    public static String getTemporalProperty(Temporal value){
+        if(value != null)
+            return value.value();
+        else
+            return BrutosConstants.DEFAULT_TEMPORALPROPERTY;
+    }
+    
+    public static org.brandao.brutos.EnumerationType getEnumerationType(Enumerated value){
+        if(value != null)
+            return org.brandao.brutos.EnumerationType.valueOf(value.value());
+        else
+            return BrutosConstants.DEFAULT_ENUMERATIONTYPE;
+    }
+    
+    public static org.brandao.brutos.ScopeType getScope(Identify value){
+        
+        if(value != null){
+            String scope = StringUtil.adjust(value.scope());
+            if(!StringUtil.isEmpty(scope))
+                return org.brandao.brutos.ScopeType.valueOf(value.scope());
+        }
+        
+        return BrutosConstants.DEFAULT_SCOPETYPE;
     }
     
 }

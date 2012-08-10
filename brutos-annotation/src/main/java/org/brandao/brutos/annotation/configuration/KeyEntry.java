@@ -37,6 +37,8 @@ public class KeyEntry implements BeanEntry{
     
     private Class<?> classType;
     
+    private Object genericType;
+    
     private Class<?> target;
     
     private EnumerationType enumerated;
@@ -46,11 +48,12 @@ public class KeyEntry implements BeanEntry{
     private Class<? extends org.brandao.brutos.type.Type> type;
     
     public KeyEntry(){
-        this(null, null);
+        this(null, null, null);
     }
 
-    public KeyEntry(Class<?> classType, KeyCollection definition){
+    public KeyEntry(Class<?> classType, Object genericType, KeyCollection definition){
         this.classType = classType;
+        this.genericType = genericType;
         if(definition != null){
             this.name = StringUtil.adjust(definition.bean());
             this.scope = 
@@ -147,6 +150,14 @@ public class KeyEntry implements BeanEntry{
 
     public Class getBeanType() {
         return this.getClassType();
+    }
+
+    public Object getGenericType() {
+        return genericType;
+    }
+
+    public void setGenericType(Object genericType) {
+        this.genericType = genericType;
     }
     
 }

@@ -39,6 +39,8 @@ public class ElementEntry implements BeanEntry{
     
     private Class<?> target;
     
+    private Object genericType;
+    
     private EnumerationType enumerated;
     
     private String temporal;
@@ -46,11 +48,12 @@ public class ElementEntry implements BeanEntry{
     private Class<? extends org.brandao.brutos.type.Type> type;
     
     public ElementEntry(){
-        this(null, null);
+        this(null, null, null);
     }
 
-    public ElementEntry(Class<?> classType, ElementCollection definition){
+    public ElementEntry(Class<?> classType, Object genericType, ElementCollection definition){
         this.classType = classType;
+        this.genericType = genericType;
         if(definition != null){
             this.name = StringUtil.adjust(definition.bean());
             this.scope = 
@@ -146,6 +149,14 @@ public class ElementEntry implements BeanEntry{
 
     public Class getBeanType() {
         return this.getClassType();
+    }
+
+    public Object getGenericType() {
+        return genericType;
+    }
+
+    public void setGenericType(Object genericType) {
+        this.genericType = genericType;
     }
     
 }
