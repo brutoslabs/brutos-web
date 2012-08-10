@@ -68,7 +68,8 @@ public class ListType implements CollectionType{
     }
 
     public void setGenericType(Object classType) {
-        Class collectionType = TypeManager.getCollectionType(classType);
+        Object collectionGenericType = TypeManager.getCollectionType(classType);
+        Class collectionType = TypeManager.getRawType(collectionGenericType);
         if( collectionType != null ){
             this.type = collectionType;
             this.primitiveType = TypeManager.getType( this.type );
@@ -86,7 +87,7 @@ public class ListType implements CollectionType{
     private List getList(Object value){
 
         if( this.type == null )
-            throw new UnknownTypeException( "is not allowed the use the List or List<?>" );
+            throw new UnknownTypeException( "invalid type: List or List<?>" );
 
         try{
             List objList = (List)this.getListType().newInstance();
