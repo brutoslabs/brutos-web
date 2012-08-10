@@ -39,7 +39,15 @@ import org.brandao.brutos.type.TypeManager;
  *
  * @author Brandao
  */
-@Stereotype(target=Bean.class, executeAfter=Identify.class)
+@Stereotype(
+    target=
+        Bean.class, 
+    executeAfter={
+        Identify.class,
+        KeyCollection.class,
+        ElementCollection.class
+    }
+)
 public class BeanAnnotationConfig extends AbstractAnnotationConfig{
 
     private String path;
@@ -71,42 +79,105 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         
         boolean isRoot = StringUtil.isEmpty(path);
         
-        if(source instanceof ActionParamEntry)
-            createBean((ActionBuilder)builder, (ActionParamEntry)source, applicationContext);
-        else
-        if(source instanceof BeanPropertyAnnotation){
-            
-            String node =
-                getNode(((BeanBuilder)builder).getClassType(),((BeanPropertyAnnotation)source).getName());
-            
-            if(path.indexOf(node) != -1)
-                throw new BrutosException("circular reference");
-            
-            path += node;
-            createBean((BeanBuilder)builder, (BeanPropertyAnnotation)source, applicationContext);
+        try{
+            createBean(builder, source, applicationContext);
         }
-        else
-        if(source instanceof BeanEntryConstructorArg){
-            
-            String node =
-                getNode(((BeanBuilder)builder).getClassType(),((BeanEntryConstructorArg)source).getName());
-            
-            if(path.indexOf(node) != -1)
-                throw new BrutosException("circular reference");
-            
-            path += node;
-            createBean((BeanBuilder)builder, (BeanEntryConstructorArg)source, applicationContext);
+        finally{
+            if(isRoot)
+                path = "";
         }
-        
-        if(isRoot)
-            path = "";
         
         return builder;
     }
- 
+
+    private void checkCircularReference(Object builder, Object source){
+        
+        String node = null;
+        
+        if( source instanceof KeyEntry ){
+            node = getNode(((BeanBuilder)builder).getClassType(),
+                    ((KeyEntry)source).getName());
+        }
+        else
+        if( source instanceof ElementEntry ){
+            node = getNode(((BeanBuilder)builder).getClassType(),
+                    ((ElementEntry)source).getName());
+        }
+        else
+        if( source instanceof BeanEntryConstructorArg ){
+            node = getNode(((BeanBuilder)builder).getClassType(),
+                    ((BeanEntryConstructorArg)source).getName());
+        }
+        else
+        if( source instanceof BeanPropertyAnnotation ){
+            node = getNode(((BeanBuilder)builder).getClassType(),
+                    ((BeanPropertyAnnotation)source).getName());
+        }
+        
+        checkNode(node);
+    }
+
+    private void checkNode(String node){
+        if(path.indexOf(node) != -1)
+            throw new BrutosException("circular reference");
+        else
+            path += node;
+    }
+    
     private String getNode(Class clazz, String name){
         return "["+clazz.getName()+"]." + name;
     }
+
+    protected void createBean(Object builder, 
+            Object source, ConfigurableApplicationContext applicationContext){
+        
+        if(source instanceof ActionParamEntry)
+            createBean((ActionBuilder)builder, (ActionParamEntry)source, applicationContext);
+        else{
+            checkCircularReference(builder,source);
+            if(source instanceof BeanPropertyAnnotation){
+                createBean(
+                    (BeanBuilder)builder, (BeanPropertyAnnotation)source, applicationContext);
+            }
+            else
+            if(source instanceof BeanEntryConstructorArg){
+                createBean(
+                    (BeanBuilder)builder, (BeanEntryConstructorArg)source, applicationContext);
+            }
+            else
+            if(source instanceof KeyEntry){
+                createBean(
+                    (BeanBuilder)builder, (KeyEntry)source, applicationContext);
+            }
+            else
+            if(source instanceof ElementEntry){
+                createBean(
+                    (BeanBuilder)builder, (ElementEntry)source, applicationContext);
+            }
+        }
+        
+    }
+    
+    protected void createBean(BeanBuilder builder, 
+            KeyEntry source, ConfigurableApplicationContext applicationContext){
+        
+        BeanBuilder beanBuilder = 
+            builder.buildKey(source.getName(), source.getType());
+        
+        createBean(beanBuilder, applicationContext, 
+                source.getGenericType(), null, null);
+    }
+
+    protected void createBean(BeanBuilder builder, 
+            ElementEntry source, ConfigurableApplicationContext applicationContext){
+        
+        BeanBuilder beanBuilder = 
+            builder.buildElement(source.getName(), source.getType());
+        
+        createBean(beanBuilder, applicationContext, 
+                source.getGenericType(), null, null);
+    }
+    
     protected void createBean(ActionBuilder builder, 
             ActionParamEntry actionParam, ConfigurableApplicationContext applicationContext){
         
@@ -114,7 +185,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             builder.buildParameter(actionParam.getName(), actionParam.getType());
         
         createBean(beanBuilder, applicationContext, 
-                actionParam.getType(), 
+                actionParam.getGenericType(), 
                 actionParam.getAnnotation(KeyCollection.class),
                 actionParam.getAnnotation(ElementCollection.class));
     }
@@ -125,7 +196,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         BeanBuilder beanBuilder = 
             builder.buildProperty(source.getName(), source.getName(), source.getType());
         
-        createBean(beanBuilder, applicationContext, source.getType(), 
+        createBean(beanBuilder, applicationContext, source.getGenericType(), 
                 source.getAnnotation(KeyCollection.class),
                 source.getAnnotation(ElementCollection.class));
     }
@@ -136,24 +207,26 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         BeanBuilder beanBuilder = 
             builder.buildConstructorArg(source.getName(), source.getType());
         
-        createBean(beanBuilder, applicationContext, source.getType(), 
+        createBean(beanBuilder, applicationContext, source.getGenericType(), 
                 source.getAnnotation(KeyCollection.class),
                 source.getAnnotation(ElementCollection.class));
     }
 
     protected void createBean(BeanBuilder beanBuilder, 
             ConfigurableApplicationContext applicationContext, 
-            Class type, 
+            Object genericType, 
             KeyCollection keyCollection, ElementCollection elementCollection){
+        
+        Class type = TypeManager.getRawType(genericType);
         
         addConstructor(beanBuilder, applicationContext, type);
         addProperties(beanBuilder, applicationContext, type);
 
         if(!Map.class.isAssignableFrom(type)){
-            Class keyType = TypeManager.getKeyType(type);
+            Object keyType = TypeManager.getKeyType(genericType);
 
             KeyEntry keyEntry = 
-                new KeyEntry(keyType,keyCollection);
+                new KeyEntry(TypeManager.getRawType(keyType),keyType,keyCollection);
 
             super.applyInternalConfiguration(
                     keyEntry, 
@@ -162,10 +235,10 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         }
         
         if(!Collection.class.isAssignableFrom(type)){
-            Class elementType = TypeManager.getCollectionType(type);
+            Object elementType = TypeManager.getCollectionType(genericType);
 
             ElementEntry elementEntry = 
-                new ElementEntry(elementType,elementCollection);
+                new ElementEntry(TypeManager.getRawType(elementType),elementType,elementCollection);
 
             super.applyInternalConfiguration(
                     elementEntry, 

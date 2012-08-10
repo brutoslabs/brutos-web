@@ -24,7 +24,5 @@ package org.brandao.brutos.annotation.configuration;
 public interface BeanEntry {
     
     Class getBeanType();
-    /*
-    Object getGenericType();
-    */
+    
 }
