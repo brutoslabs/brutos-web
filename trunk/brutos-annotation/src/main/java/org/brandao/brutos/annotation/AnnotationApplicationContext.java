@@ -231,6 +231,8 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         annotationConfig.add(InterceptsStackAnnotationConfig.class);
         //annotationConfig.add(ActionParamAnnotationConfig.class);
         annotationConfig.add(BeanAnnotationConfig.class);
+        annotationConfig.add(KeyCollectionAnnotationConfig.class);
+        annotationConfig.add(ElementCollectionAnnotationConfig.class);
         annotationConfig.add(ControllerAnnotationConfig.class);
         annotationConfig.add(InterceptedByAnnotationConfig.class);
         annotationConfig.add(InterceptsAnnotationConfig.class);
