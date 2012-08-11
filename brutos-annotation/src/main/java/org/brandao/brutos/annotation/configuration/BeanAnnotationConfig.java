@@ -57,15 +57,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     public boolean isApplicable(Object source) {
-        if(source instanceof BeanEntry){
-            Class clazz = ((BeanEntry)source).getBeanType();
-            
-            return 
-                !Map.class.isAssignableFrom(clazz) &&
-                !Collection.class.isAssignableFrom(clazz);
-        }
-        else 
-            return false;
+        return source instanceof BeanEntry;
     }
 
     public Object applyConfiguration(
@@ -221,20 +213,25 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         
         addConstructor(beanBuilder, applicationContext, type);
         addProperties(beanBuilder, applicationContext, type);
-
-        if(!Map.class.isAssignableFrom(type)){
-            Object keyType = TypeManager.getKeyType(genericType);
-
-            KeyEntry keyEntry = 
-                new KeyEntry(TypeManager.getRawType(keyType),keyType,keyCollection);
-
-            super.applyInternalConfiguration(
-                    keyEntry, 
-                    beanBuilder, 
-                    applicationContext);
-        }
         
-        if(!Collection.class.isAssignableFrom(type)){
+        if(keyCollection == null)
+            keyCollection = (KeyCollection) type.getAnnotation(KeyCollection.class);
+
+        if(elementCollection == null)
+            elementCollection = (ElementCollection) type.getAnnotation(ElementCollection.class);
+        
+        setKey(beanBuilder, applicationContext, genericType, type, keyCollection);
+        setElement(beanBuilder, applicationContext, genericType, type, elementCollection);
+        
+        
+    }
+
+    protected void setElement(BeanBuilder beanBuilder, 
+            ConfigurableApplicationContext applicationContext, 
+            Object genericType, Class type, 
+            ElementCollection elementCollection){
+        
+        if(Collection.class.isAssignableFrom(type)){
             Object elementType = TypeManager.getCollectionType(genericType);
 
             ElementEntry elementEntry = 
@@ -245,9 +242,25 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                     beanBuilder, 
                     applicationContext);
         }
-        
     }
     
+    protected void setKey(BeanBuilder beanBuilder, 
+            ConfigurableApplicationContext applicationContext, 
+            Object genericType, Class type, 
+            KeyCollection keyCollection){
+        
+        if(Map.class.isAssignableFrom(type)){
+            Object keyType = TypeManager.getKeyType(genericType);
+
+            KeyEntry keyEntry = 
+                new KeyEntry(TypeManager.getRawType(keyType),keyType,keyCollection);
+
+            super.applyInternalConfiguration(
+                    keyEntry, 
+                    beanBuilder, 
+                    applicationContext);
+        }
+    }
     protected void addConstructor(BeanBuilder beanBuilder, 
             ConfigurableApplicationContext applicationContext, Class clazz){
         

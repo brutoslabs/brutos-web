@@ -46,14 +46,6 @@ public class BeanFieldTest {
     @Enumerated(value=EnumerationType.STRING)
     private EnumTest propertyG;
     
-    /*
-    @KeyCollection(
-            bean="myKey",
-            enumerated=EnumerationType.STRING,
-            target=String.class,
-            temporal="yyyy-MM-dd"
-    )
-    */
     @KeyCollection(
         bean="myKey",
         enumerated=EnumerationType.STRING,
