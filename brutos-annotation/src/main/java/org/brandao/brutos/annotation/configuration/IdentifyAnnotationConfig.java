@@ -66,12 +66,14 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         ParameterBuilder paramBuilder;
         
         Identify identify = source.getAnnotation(Identify.class);
+        
+        boolean isStandardType = TypeManager.isStandardType(source.getType());
         boolean useMapping = 
             identify == null?
-                true : 
-                identify.useMapping();
+                !isStandardType : 
+                identify.useMapping() || !isStandardType;
         
-        if(useMapping && !TypeManager.isStandardType(source.getType()))
+        if(useMapping)
             paramBuilder = buildParameter(builder,source,applicationContext);
         else
             paramBuilder = addParameter(source,builder,applicationContext);
@@ -86,12 +88,13 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         PropertyBuilder propertyBuilder;        
 
         Identify identify = source.getAnnotation(Identify.class);
+        boolean isStandardType = TypeManager.isStandardType(source.getType());
         boolean useMapping = 
             identify == null?
-                true : 
-                identify.useMapping();
+                !isStandardType : 
+                identify.useMapping() || !isStandardType;
         
-        if(useMapping && !TypeManager.isStandardType(source.getType()))
+        if(useMapping)
             propertyBuilder = buildProperty((BeanBuilder)builder, source, applicationContext);
         else
             propertyBuilder = addProperty(source, builder, applicationContext);
@@ -107,12 +110,13 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         ConstructorBuilder constructorBuilder;
         
         Identify identify = source.getAnnotation(Identify.class);
+        boolean isStandardType = TypeManager.isStandardType(source.getType());
         boolean useMapping = 
             identify == null?
-                true : 
-                identify.useMapping();
+                !isStandardType : 
+                identify.useMapping() || !isStandardType;
         
-        if(useMapping && !TypeManager.isStandardType(source.getType()))
+        if(useMapping)
             constructorBuilder = buildConstructorArg(builder,source,applicationContext);
         else
             constructorBuilder = addConstructorArg(source,builder,applicationContext);

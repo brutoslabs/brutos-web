@@ -81,6 +81,18 @@ public class ElementEntry implements BeanEntry{
                     null :
                     definition.type();
         }
+        else{
+            this.name = null;
+            this.scope = BrutosConstants.DEFAULT_SCOPETYPE;
+            this.useBean = false;
+            this.target = null;
+            this.enumerated = 
+                    EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE);
+
+            this.temporal = null;
+            this.type = null;
+        }
+        
     }
 
     public String getName() {

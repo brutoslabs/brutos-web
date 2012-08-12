@@ -39,8 +39,10 @@ public class KeyCollectionAnnotationConfig
             ConfigurableApplicationContext applicationContext) {
         
         KeyEntry key = (KeyEntry)source;
+        boolean isStandardType = TypeManager.isStandardType(key.getClassType());
+        boolean useMapping = key.isUseBean() || !isStandardType;
         
-        if(key.isUseBean() && !TypeManager.isStandardType(key.getClassType()))
+        if(useMapping)
             buildKey(key, builder, applicationContext);
         else
             addKey(key, (BeanBuilder)builder, applicationContext);

@@ -17,14 +17,15 @@
 
 package org.brandao.brutos.annotation;
 
-import java.util.Date;
+import java.util.*;
 import junit.framework.Assert;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.annotation.helper.*;
-import org.brandao.brutos.mapping.ConstructorArgBean;
-import org.brandao.brutos.mapping.ConstructorBean;
-import org.brandao.brutos.mapping.ParameterAction;
-import org.brandao.brutos.mapping.PropertyBean;
+import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest;
+import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
+import org.brandao.brutos.mapping.*;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -96,6 +97,352 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals("propertyG", property.getParameterName());
         Assert.assertEquals(org.brandao.brutos.EnumerationType.STRING, property.getEnumProperty());
         Assert.assertNull(property.getMapping());
+        
+        
+        property = bean.getProperty("propertyH");
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("myKey", key.getParameterName());
+        Assert.assertEquals(Integer.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(EnumerationType.STRING, key.getEnumProperty());
+        Assert.assertEquals("yyyy-MM-dd", key.getTemporalType());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(String.class, element.getClassType());
+        Assert.assertEquals(ScopeType.REQUEST, element.getScope());
+        Assert.assertEquals(EnumerationType.STRING, element.getEnumProperty());
+        Assert.assertEquals("yyyy-MM-dd", element.getTemporalType());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyI");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(LinkedHashMap.class, beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyJ");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(HashMap.class, beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNotNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyK");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(HashMap.class, beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        property = bean.getProperty("propertyL");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(HashMap.class, beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyM");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyN");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(LinkedList.class, beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyO");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyP");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyQ");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyR");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("myKey", key.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNotNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyS");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyT");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(List.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        Assert.assertEquals("element", subElement.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, subElement.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, subElement.getTemporalType());
+        Assert.assertNotNull(subElement.getMapping());
+        Assert.assertNull(subElement.getType());
+        Assert.assertNull(subElement.getValue());
+
+        property = bean.getProperty("propertyU");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(CustomArrayList.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        Assert.assertEquals("myElement", subElement.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, subElement.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, subElement.getTemporalType());
+        Assert.assertNotNull(subElement.getMapping());
+        Assert.assertNull(subElement.getType());
+        Assert.assertNull(subElement.getValue());
+
+        property = bean.getProperty("propertyV");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement2", element.getParameterName());
+        Assert.assertEquals(CustomArrayList.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        Assert.assertEquals("myElement", subElement.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, subElement.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, subElement.getTemporalType());
+        Assert.assertNotNull(subElement.getMapping());
+        Assert.assertNull(subElement.getType());
+        Assert.assertNull(subElement.getValue());
+        
     }
 
     public void testBean2() throws NoSuchMethodException{
@@ -161,6 +508,351 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals("propertyG", property.getParameterName());
         Assert.assertEquals(org.brandao.brutos.EnumerationType.STRING, property.getEnumProperty());
         Assert.assertNull(property.getMapping());
+        
+        property = bean.getProperty("propertyH");
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("myKey", key.getParameterName());
+        Assert.assertEquals(Integer.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(EnumerationType.STRING, key.getEnumProperty());
+        Assert.assertEquals("yyyy-MM-dd", key.getTemporalType());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(String.class, element.getClassType());
+        Assert.assertEquals(ScopeType.REQUEST, element.getScope());
+        Assert.assertEquals(EnumerationType.STRING, element.getEnumProperty());
+        Assert.assertEquals("yyyy-MM-dd", element.getTemporalType());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyI");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(LinkedHashMap.class, beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyJ");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(HashMap.class, beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNotNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyK");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(HashMap.class, beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        property = bean.getProperty("propertyL");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(HashMap.class, beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyM");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyN");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(LinkedList.class, beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyO");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyP");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyQ");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyR");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("myKey", key.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNotNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyS");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertNull(key);
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+
+        property = bean.getProperty("propertyT");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(List.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        Assert.assertEquals("element", subElement.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, subElement.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, subElement.getTemporalType());
+        Assert.assertNotNull(subElement.getMapping());
+        Assert.assertNull(subElement.getType());
+        Assert.assertNull(subElement.getValue());
+
+        property = bean.getProperty("propertyU");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(CustomArrayList.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        Assert.assertEquals("myElement", subElement.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, subElement.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, subElement.getTemporalType());
+        Assert.assertNotNull(subElement.getMapping());
+        Assert.assertNull(subElement.getType());
+        Assert.assertNull(subElement.getValue());
+
+        property = bean.getProperty("propertyV");
+        beanProperty = property.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement2", element.getParameterName());
+        Assert.assertEquals(CustomArrayList.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        Assert.assertEquals("myElement", subElement.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, subElement.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, subElement.getTemporalType());
+        Assert.assertNotNull(subElement.getMapping());
+        Assert.assertNull(subElement.getType());
+        Assert.assertNull(subElement.getValue());
+        
     }
 
     public void testConstructorBean() throws NoSuchMethodException{

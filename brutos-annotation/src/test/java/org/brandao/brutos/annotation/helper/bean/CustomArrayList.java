@@ -15,24 +15,16 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
+package org.brandao.brutos.annotation.helper.bean;
 
-import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
-import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationWrapper;
+import java.util.ArrayList;
+import org.brandao.brutos.annotation.ElementCollection;
 
 /**
  *
  * @author Brandao
  */
-public class BeanEntryProperty 
-    extends BeanPropertyAnnotationWrapper implements BeanEntry{
-
-    public BeanEntryProperty(BeanPropertyAnnotation value){
-        super(value);
-    }
-            
-    public Class getBeanType() {
-        return super.getType();
-    }
-
+@ElementCollection(bean="myElement")
+public class CustomArrayList extends ArrayList<BeanConstructorTest>{
+    
 }
