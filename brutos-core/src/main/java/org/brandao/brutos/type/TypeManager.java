@@ -35,6 +35,12 @@ public class TypeManager {
 
     private final static Map types = new HashMap();
     
+    private static Class defaultListType;
+    
+    private static Class defaultSetType;
+    
+    private static Class defaultMapType;
+    
     static{
         types.put( Class.class,         new DefaultTypeFactory(ClassType.class ));
         types.put( Boolean.TYPE,        new DefaultTypeFactory(BooleanType.class ));
@@ -65,6 +71,10 @@ public class TypeManager {
         types.put( Date.class,          new DefaultTypeFactory(DefaultDateTimeType.class ));
         types.put( Calendar.class,      new DefaultTypeFactory(CalendarType.class ));
         types.put( Array.class,         new DefaultTypeFactory(DefaultArrayType.class ));
+        
+        defaultListType = ArrayList.class;
+        defaultSetType  = HashSet.class;
+        defaultMapType  = HashMap.class;
     }
     
     public static void register( Class clazz, TypeFactory factory ){
@@ -76,16 +86,18 @@ public class TypeManager {
     }
     
    public static boolean isStandardType(Class clazz){
-       Type type = getType(clazz);
-       return type != null && !(type instanceof ObjectType);
-       //return !(type == null || type instanceof ObjectType);
+       TypeFactory typeFactory = 
+            getTypeFactory( clazz );
+               
+       return typeFactory != null && !(typeFactory.getClassType() == ObjectType.class);
    }
    
     public static Type getType( Object classType ){
         return getType( classType, EnumerationType.ORDINAL, "dd/MM/yyyy" );
     }
     
-    public static Type getType( Object classType, EnumerationType enumType, String maskDate ){
+    private static TypeFactory getTypeFactory( Object classType ){
+        
         TypeFactory factory = (TypeFactory) types.get(getRawType( classType ));
         
         if( factory == null ){
@@ -101,7 +113,14 @@ public class TypeManager {
             else
                 factory = (TypeFactory)types.get( Object.class );
         }
+        return factory;
+    }
+    
+    public static Type getType( Object classType, EnumerationType enumType, String maskDate ){
         
+        TypeFactory factory = 
+                getTypeFactory( classType );
+                
         Type type = factory.getInstance();
             
         if( type instanceof EnumType ){
@@ -199,6 +218,30 @@ public class TypeManager {
         catch( Exception e ){
             return null;
         }
+    }
+
+    public static Class getDefaultListType() {
+        return defaultListType;
+    }
+
+    public static void setDefaultListType(Class aDefaultListType) {
+        defaultListType = aDefaultListType;
+    }
+
+    public static Class getDefaultSetType() {
+        return defaultSetType;
+    }
+
+    public static void setDefaultSetType(Class aDefaultSetType) {
+        defaultSetType = aDefaultSetType;
+    }
+
+    public static Class getDefaultMapType() {
+        return defaultMapType;
+    }
+
+    public static void setDefaultMapType(Class aDefaultMapType) {
+        defaultMapType = aDefaultMapType;
     }
     
 }

@@ -17,8 +17,8 @@
 
 package org.brandao.brutos;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  * 
@@ -72,5 +72,37 @@ public final class ClassUtil {
     public static Object getInstance(Class clazz) 
             throws InstantiationException, IllegalAccessException{
         return clazz.newInstance();
+    }
+    
+    public static List getListInstance() 
+            throws ClassNotFoundException, InstantiationException, 
+            IllegalAccessException{
+        return (List)getInstance(TypeManager.getDefaultListType());
+    }
+    
+    public static Map getMapInstance() 
+            throws ClassNotFoundException, InstantiationException, 
+            IllegalAccessException{
+        return (Map)getInstance(TypeManager.getDefaultMapType());
+    }
+
+    public static Set getSetInstance() 
+            throws ClassNotFoundException, InstantiationException, 
+            IllegalAccessException{
+        return (Set)getInstance(TypeManager.getDefaultSetType());
+    }
+    
+    public static Class getInstantiableClass(Class clazz){
+        
+        if(clazz == Map.class)
+            return TypeManager.getDefaultMapType();
+        else
+        if(clazz == List.class)
+            return TypeManager.getDefaultListType();
+        else
+        if(clazz == Set.class)
+            return TypeManager.getDefaultSetType();
+        else
+            return clazz;
     }
 }
