@@ -18,9 +18,7 @@
 package org.brandao.brutos.annotation.helper.bean;
 
 import java.util.Map;
-import org.brandao.brutos.annotation.Bean;
-import org.brandao.brutos.annotation.ElementCollection;
-import org.brandao.brutos.annotation.KeyCollection;
+import org.brandao.brutos.annotation.*;
 
 /**
  *
@@ -30,8 +28,8 @@ import org.brandao.brutos.annotation.KeyCollection;
 public class BeanConstructorTest11 {
         
     public BeanConstructorTest11(
-            @KeyCollection(bean="myKey")
-            @ElementCollection(bean="myElement")
+            @KeyCollection(bean="myKey",enumerated=EnumerationType.STRING,target=Integer.class,temporal="yyyy-MM-dd")
+            @ElementCollection(bean="myElement",enumerated=EnumerationType.STRING,target=String.class,temporal="yyyy-MM-dd",scope=ScopeType.REQUEST)
             Map<String,Integer> propertyH){
     }
 

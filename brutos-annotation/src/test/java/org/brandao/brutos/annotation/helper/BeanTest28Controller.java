@@ -15,25 +15,17 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper.bean;
+package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.annotation.Bean;
-import org.brandao.brutos.annotation.Enumerated;
-import org.brandao.brutos.annotation.EnumerationType;
-import org.brandao.brutos.annotation.helper.EnumTest;
+import org.brandao.brutos.annotation.helper.bean.*;
 
 /**
  *
  * @author Brandao
  */
-@Bean
-public class BeanConstructorTest8 {
-    
-    public BeanConstructorTest8(
-            @Enumerated(value=EnumerationType.STRING) EnumTest propertyG){
-    }
+public class BeanTest28Controller {
 
-    public BeanConstructorTest8(){
+    public void myAction(BeanConstructorTest25 a){
     }
     
 }

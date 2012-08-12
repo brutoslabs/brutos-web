@@ -30,7 +30,7 @@ import org.brandao.brutos.annotation.helper.EnumTest;
 public class BeanConstructorTest7 {
     
     public BeanConstructorTest7(
-            @Enumerated(value=EnumerationType.STRING) EnumTest propertyK){
+            @Enumerated(value=EnumerationType.STRING) EnumTest propertyG){
     }
     
 }

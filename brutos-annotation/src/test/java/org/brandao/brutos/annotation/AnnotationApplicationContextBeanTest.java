@@ -1835,5 +1835,631 @@ public class AnnotationApplicationContextBeanTest
         catch(BrutosException e){
         }
     }
+
+    public void testConstructoBean12() throws NoSuchMethodException{
+        
+        Class clazz = BeanTest14Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("myKey", key.getParameterName());
+        Assert.assertEquals(Integer.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(EnumerationType.STRING, key.getEnumProperty());
+        Assert.assertEquals("yyyy-MM-dd", key.getTemporalType());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(String.class, element.getClassType());
+        Assert.assertEquals(ScopeType.REQUEST, element.getScope());
+        Assert.assertEquals(EnumerationType.STRING, element.getEnumProperty());
+        Assert.assertEquals("yyyy-MM-dd", element.getTemporalType());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+    }
+
+    public void testConstructoBean13() throws NoSuchMethodException{
+        Class clazz = BeanTest15Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(LinkedHashMap.class, beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean14() throws NoSuchMethodException{
+        Class clazz = BeanTest16Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(HashMap.class, beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNotNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean15() throws NoSuchMethodException{
+        Class clazz = BeanTest17Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(HashMap.class, beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(Integer.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean16() throws NoSuchMethodException{
+        Class clazz = BeanTest18Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(HashMap.class, beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean17() throws NoSuchMethodException{
+        Class clazz = BeanTest19Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        DependencyBean element = ((CollectionBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean18() throws NoSuchMethodException{
+        Class clazz = BeanTest20Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(LinkedList.class, beanProperty.getClassType());
+        
+        DependencyBean element = ((CollectionBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean19() throws NoSuchMethodException{
+        Class clazz = BeanTest21Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        DependencyBean element = ((CollectionBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(Integer.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean20() throws NoSuchMethodException{
+        Class clazz = BeanTest22Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        DependencyBean element = ((CollectionBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean21() throws NoSuchMethodException{
+        Class clazz = BeanTest23Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        DependencyBean element = ((CollectionBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean22() throws NoSuchMethodException{
+        Class clazz = BeanTest24Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("myKey", key.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNotNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean23() throws NoSuchMethodException{
+        Class clazz = BeanTest25Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement", element.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+    }
+
+    public void testConstructoBean24() throws NoSuchMethodException{
+        Class clazz = BeanTest26Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(List.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        Assert.assertEquals("element", subElement.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, subElement.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, subElement.getTemporalType());
+        Assert.assertNotNull(subElement.getMapping());
+        Assert.assertNull(subElement.getType());
+        Assert.assertNull(subElement.getValue());
+        
+    }
+
+    public void testConstructoBean25() throws NoSuchMethodException{
+        Class clazz = BeanTest27Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("element", element.getParameterName());
+        Assert.assertEquals(CustomArrayList.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        Assert.assertEquals("myElement", subElement.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, subElement.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, subElement.getTemporalType());
+        Assert.assertNotNull(subElement.getMapping());
+        Assert.assertNull(subElement.getType());
+        Assert.assertNull(subElement.getValue());
+        
+    }
+
+    public void testConstructoBean26() throws NoSuchMethodException{
+        Class clazz = BeanTest28Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        
+        ConstructorBean constructor = bean.getConstructor();
+        Assert.assertEquals(1,constructor.size());
+        ConstructorArgBean arg = constructor.getConstructorArg(0);
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        
+        DependencyBean key = ((MapBean)beanProperty).getKey();
+        Assert.assertEquals("key", key.getParameterName());
+        Assert.assertEquals(String.class, key.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
+        Assert.assertNull(key.getMapping());
+        Assert.assertNull(key.getType());
+        Assert.assertNull(key.getValue());
+
+        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        Assert.assertEquals("myElement2", element.getParameterName());
+        Assert.assertEquals(CustomArrayList.class, element.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
+        Assert.assertNotNull(element.getMapping());
+        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getValue());
+        
+        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        Assert.assertEquals("myElement", subElement.getParameterName());
+        Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, subElement.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, subElement.getTemporalType());
+        Assert.assertNotNull(subElement.getMapping());
+        Assert.assertNull(subElement.getType());
+        Assert.assertNull(subElement.getValue());
+        
+    }
     
 }

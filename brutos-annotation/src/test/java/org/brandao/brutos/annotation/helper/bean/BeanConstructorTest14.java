@@ -20,7 +20,6 @@ package org.brandao.brutos.annotation.helper.bean;
 import java.util.HashMap;
 import java.util.Map;
 import org.brandao.brutos.annotation.Bean;
-import org.brandao.brutos.annotation.Target;
 
 /**
  *
@@ -30,7 +29,6 @@ import org.brandao.brutos.annotation.Target;
 public class BeanConstructorTest14 {
         
     public BeanConstructorTest14(
-            @Target(HashMap.class)
             Map<String,BeanConstructorTest> propertyK){
     }
 

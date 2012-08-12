@@ -32,7 +32,7 @@ public class BeanConstructorTest9 {
     
     @Constructor
     public BeanConstructorTest9(
-            @Enumerated(value=EnumerationType.STRING) EnumTest propertyK){
+            @Enumerated(value=EnumerationType.STRING) EnumTest propertyG){
     }
 
     public BeanConstructorTest9(){

@@ -28,7 +28,7 @@ import org.brandao.brutos.annotation.helper.EnumTest;
 public class BeanConstructorTest5 {
     
     public BeanConstructorTest5(
-            EnumTest propertyI){
+            EnumTest propertyE){
     }
     
 }
