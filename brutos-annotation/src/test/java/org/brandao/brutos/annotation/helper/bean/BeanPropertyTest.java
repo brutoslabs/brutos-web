@@ -41,7 +41,7 @@ public class BeanPropertyTest {
     private EnumTest propertyF;
     
     private EnumTest propertyG;
-
+    
     private Map<String,Integer> propertyH;
 
     private Map<String,Integer> propertyI;
@@ -61,11 +61,17 @@ public class BeanPropertyTest {
     private List<BeanConstructorTest> propertyP;
 
     private List<BeanConstructorTest> propertyQ;
-    
+
     private Map<BeanConstructorTest,BeanConstructorTest> propertyR;
 
     private List<BeanConstructorTest> propertyS;
+
+    private Map<String,List<BeanConstructorTest>> propertyT;
     
+    private Map<String,CustomArrayList> propertyU;
+
+    private Map<String,CustomArrayList> propertyV;
+
     public int getPropertyA() {
         return propertyA;
     }
@@ -130,8 +136,19 @@ public class BeanPropertyTest {
         return propertyH;
     }
 
-    @KeyCollection(bean="myKey")
-    @ElementCollection(bean="myElement")
+    @KeyCollection(
+        bean="myKey",
+        enumerated=EnumerationType.STRING,
+        target=Integer.class,
+        temporal="yyyy-MM-dd"
+    )
+    @ElementCollection(
+        bean="myElement",
+        enumerated=EnumerationType.STRING,
+        target=String.class,
+        temporal="yyyy-MM-dd",
+        scope=ScopeType.REQUEST
+    )
     public void setPropertyH(Map<String,Integer> propertyH) {
         this.propertyH = propertyH;
     }
@@ -140,7 +157,7 @@ public class BeanPropertyTest {
         return propertyI;
     }
 
-    @Target(HashMap.class)
+    @Target(LinkedHashMap.class)
     public void setPropertyI(Map<String,Integer> propertyI) {
         this.propertyI = propertyI;
     }
@@ -165,7 +182,7 @@ public class BeanPropertyTest {
         return propertyL;
     }
 
-    @ElementCollection(bean="myElement")
+    @ElementCollection(bean="myElement", useMapping=true)
     public void setPropertyL(Map<String,BeanConstructorTest> propertyL) {
         this.propertyL = propertyL;
     }
@@ -230,6 +247,31 @@ public class BeanPropertyTest {
     @ElementCollection(bean="myElement", useMapping=true)
     public void setPropertyS(List<BeanConstructorTest> propertyS) {
         this.propertyS = propertyS;
+    }
+
+    public Map<String,List<BeanConstructorTest>> getPropertyT() {
+        return propertyT;
+    }
+
+    public void setPropertyT(Map<String,List<BeanConstructorTest>> propertyT) {
+        this.propertyT = propertyT;
+    }
+
+    public Map<String,CustomArrayList> getPropertyU() {
+        return propertyU;
+    }
+
+    public void setPropertyU(Map<String,CustomArrayList> propertyU) {
+        this.propertyU = propertyU;
+    }
+
+    public Map<String,CustomArrayList> getPropertyV() {
+        return propertyV;
+    }
+
+    @ElementCollection(bean="myElement2")
+    public void setPropertyV(Map<String,CustomArrayList> propertyV) {
+        this.propertyV = propertyV;
     }
     
 }
