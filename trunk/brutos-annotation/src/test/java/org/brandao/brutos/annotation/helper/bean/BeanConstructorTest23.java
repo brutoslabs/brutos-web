@@ -17,23 +17,19 @@
 
 package org.brandao.brutos.annotation.helper.bean;
 
+import java.util.List;
+import java.util.Map;
 import org.brandao.brutos.annotation.Bean;
-import org.brandao.brutos.annotation.Enumerated;
-import org.brandao.brutos.annotation.EnumerationType;
-import org.brandao.brutos.annotation.helper.EnumTest;
 
 /**
  *
  * @author Brandao
  */
 @Bean
-public class BeanConstructorTest8 {
-    
-    public BeanConstructorTest8(
-            @Enumerated(value=EnumerationType.STRING) EnumTest propertyG){
+public class BeanConstructorTest23 {
+        
+    public BeanConstructorTest23(
+            Map<String,List<BeanConstructorTest>> propertyT){
     }
 
-    public BeanConstructorTest8(){
-    }
-    
 }
