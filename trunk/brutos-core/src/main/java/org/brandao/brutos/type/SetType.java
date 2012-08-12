@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Set;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
@@ -39,6 +40,8 @@ public class SetType implements CollectionType{
     private Type serializableType;
 
     public SetType(){
+        this.listType = TypeManager.getDefaultSetType();
+        this.serializableType = TypeManager.getType( Serializable.class );
     }
     
     public void setGenericType(Object classType) {
@@ -82,35 +85,12 @@ public class SetType implements CollectionType{
     }
 
     private Class getListType(){
-
-        if( this.listType != null )
-            return this.listType;
-
-        ConfigurableApplicationContext context =
-                (ConfigurableApplicationContext)Invoker.getApplicationContext();
-
-        String className = context
-                .getConfiguration()
-                    .getProperty( "org.brandao.brutos.type.set",
-                                  "java.util.HashSet" );
-
-        try{
-            this.listType = (Class)
-                    Class.forName( className, true,
-                                Thread.currentThread().getContextClassLoader());
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-
-        this.serializableType = TypeManager.getType( Serializable.class );
-
         return this.listType;
     }
 
     private Set getList(Object value){
         try{
-            Set objList = (Set) this.getListType().newInstance();
+            Set objList = (Set)ClassUtil.getInstance(getListType());
 
             ParameterList list = (ParameterList)value;
             int size = list.size();

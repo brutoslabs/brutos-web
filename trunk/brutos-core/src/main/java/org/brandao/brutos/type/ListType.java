@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
 
@@ -38,32 +37,11 @@ public class ListType implements CollectionType{
     private Type serializableType;
     
     public ListType(){
+        this.listType = TypeManager.getDefaultListType();
+        this.serializableType = TypeManager.getType( Serializable.class );
     }
 
     private Class getListType(){
-
-        if( this.listType != null )
-            return this.listType;
-
-        ConfigurableApplicationContext context =
-                (ConfigurableApplicationContext)Invoker.getApplicationContext();
-
-        String className = context
-                .getConfiguration()
-                    .getProperty( "org.brandao.brutos.type.list",
-                                  "java.util.ArrayList" );
-
-        try{
-            this.listType = (Class)
-                    Class.forName( className, true,
-                                Thread.currentThread().getContextClassLoader());
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-
-        this.serializableType = TypeManager.getType( Serializable.class );
-
         return this.listType;
     }
 
@@ -90,15 +68,13 @@ public class ListType implements CollectionType{
             throw new UnknownTypeException( "invalid type: List or List<?>" );
 
         try{
-            List objList = (List)this.getListType().newInstance();
+            List objList = (List)ClassUtil.getInstance(getListType());
 
             ParameterList list = (ParameterList)value;
             int size = list.size();
-            //for( Object o: (ParameterList)value )
             for( int i=0;i<size;i++ ){
                 Object o = list.get(i);
                 objList.add( this.primitiveType.convert(o) );
-                //objList.add( this.primitiveType.getValue(request, context, o) );
             }
             return objList;
         }
