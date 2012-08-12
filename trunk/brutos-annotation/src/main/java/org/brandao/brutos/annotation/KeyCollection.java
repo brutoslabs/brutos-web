@@ -27,7 +27,7 @@ import org.brandao.brutos.BrutosConstants;
  *
  * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
+@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface KeyCollection {
     

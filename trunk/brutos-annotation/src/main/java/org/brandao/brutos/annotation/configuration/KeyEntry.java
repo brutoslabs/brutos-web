@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.KeyCollection;
@@ -58,18 +59,18 @@ public class KeyEntry implements BeanEntry{
             this.name = StringUtil.adjust(definition.bean());
             this.scope = 
                 StringUtil.isEmpty(definition.scope())? 
-                    null : 
+                    BrutosConstants.DEFAULT_SCOPETYPE : 
                     ScopeType.valueOf(definition.scope());
 
             this.useBean = definition.useMapping();
             this.target = 
                     definition.target() == void.class?
-                        null :
+                        ClassUtil.getInstantiableClass(type) :
                         definition.target();
 
             this.enumerated = 
                 StringUtil.isEmpty(definition.enumerated())? 
-                    null : 
+                    EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE) : 
                     EnumerationType.valueOf(definition.scope());
 
             this.temporal = 
@@ -80,6 +81,17 @@ public class KeyEntry implements BeanEntry{
             this.type = definition.type() == org.brandao.brutos.type.Type.class?
                     null :
                     definition.type();
+        }
+        else{
+            this.name = null;
+            this.scope = BrutosConstants.DEFAULT_SCOPETYPE;
+            this.useBean = false;
+            this.target = null;
+            this.enumerated = 
+                    EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE);
+
+            this.temporal = null;
+            this.type = null;
         }
         
     }

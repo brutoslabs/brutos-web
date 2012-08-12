@@ -15,24 +15,28 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
+package org.brandao.brutos.annotation.bean;
 
-import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
-import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationWrapper;
+import java.lang.annotation.Annotation;
+import org.brandao.brutos.bean.BeanPropertyWrapper;
 
 /**
  *
  * @author Brandao
  */
-public class BeanEntryProperty 
-    extends BeanPropertyAnnotationWrapper implements BeanEntry{
+public class BeanPropertyAnnotationWrapper 
+    extends BeanPropertyWrapper implements BeanPropertyAnnotation{
 
-    public BeanEntryProperty(BeanPropertyAnnotation value){
-        super(value);
+    public BeanPropertyAnnotationWrapper(BeanPropertyAnnotation beanProperty){
+        super(beanProperty);
     }
-            
-    public Class getBeanType() {
-        return super.getType();
+    
+    public <T extends Annotation> T getAnnotation(Class<T> annotation) {
+        return ((BeanPropertyAnnotation)super.beanProperty).getAnnotation(annotation);
     }
 
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
+        return ((BeanPropertyAnnotation)super.beanProperty).isAnnotationPresent(annotation);
+    }
+    
 }

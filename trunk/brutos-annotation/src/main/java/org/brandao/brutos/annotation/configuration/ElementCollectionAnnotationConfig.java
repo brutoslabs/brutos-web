@@ -39,8 +39,10 @@ public class ElementCollectionAnnotationConfig
             ConfigurableApplicationContext applicationContext) {
         
         ElementEntry element = (ElementEntry)source;
+        boolean isStandardType = TypeManager.isStandardType(element.getClassType());
+        boolean useMapping = element.isUseBean() || !isStandardType;
         
-        if(element.isUseBean() && !TypeManager.isStandardType(element.getClassType()))
+        if(useMapping)
             buildElement(element, builder, applicationContext);
         else
             addElement(element, (BeanBuilder)builder, applicationContext);

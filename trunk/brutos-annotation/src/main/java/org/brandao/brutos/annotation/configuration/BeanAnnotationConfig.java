@@ -23,9 +23,11 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BeanBuilder;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
@@ -66,7 +68,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
 
         Class clazz = ((BeanEntry)source).getBeanType();
         
-        if(!clazz.isAnnotationPresent(Bean.class))
+        if(requiredBeanAnnotation(clazz))
             throw new BrutosException("expected @Bean: " + clazz.getName() );    
         
         boolean isRoot = StringUtil.isEmpty(path);
@@ -82,6 +84,12 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         return builder;
     }
 
+    private boolean requiredBeanAnnotation(Class clazz){
+        return clazz != Map.class && 
+               !Collection.class.isAssignableFrom(clazz) &&
+               !clazz.isAnnotationPresent(Bean.class);
+    }
+    
     private void checkCircularReference(Object builder, Object source){
         
         String node = null;
@@ -154,7 +162,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             KeyEntry source, ConfigurableApplicationContext applicationContext){
         
         BeanBuilder beanBuilder = 
-            builder.buildKey(source.getName(), source.getType());
+            builder.buildKey(source.getName(), source.getClassType());
         
         createBean(beanBuilder, applicationContext, 
                 source.getGenericType(), null, null);
@@ -164,7 +172,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             ElementEntry source, ConfigurableApplicationContext applicationContext){
         
         BeanBuilder beanBuilder = 
-            builder.buildElement(source.getName(), source.getType());
+            builder.buildElement(source.getName(), source.getClassType());
         
         createBean(beanBuilder, applicationContext, 
                 source.getGenericType(), null, null);
@@ -174,7 +182,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             ActionParamEntry actionParam, ConfigurableApplicationContext applicationContext){
         
         BeanBuilder beanBuilder = 
-            builder.buildParameter(actionParam.getName(), actionParam.getType());
+            builder.buildParameter(actionParam.getName(), ClassUtil.getInstantiableClass(actionParam.getType()));
         
         createBean(beanBuilder, applicationContext, 
                 actionParam.getGenericType(), 
@@ -186,7 +194,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             BeanPropertyAnnotation source, ConfigurableApplicationContext applicationContext){
         
         BeanBuilder beanBuilder = 
-            builder.buildProperty(source.getName(), source.getName(), source.getType());
+            builder.buildProperty(source.getName(), source.getName(), ClassUtil.getInstantiableClass(source.getType()));
         
         createBean(beanBuilder, applicationContext, source.getGenericType(), 
                 source.getAnnotation(KeyCollection.class),
@@ -197,7 +205,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             BeanEntryConstructorArg source, ConfigurableApplicationContext applicationContext){
         
         BeanBuilder beanBuilder = 
-            builder.buildConstructorArg(source.getName(), source.getType());
+            builder.buildConstructorArg(source.getName(), ClassUtil.getInstantiableClass(source.getType()));
         
         createBean(beanBuilder, applicationContext, source.getGenericType(), 
                 source.getAnnotation(KeyCollection.class),
@@ -211,8 +219,15 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         
         Class type = TypeManager.getRawType(genericType);
         
-        addConstructor(beanBuilder, applicationContext, type);
-        addProperties(beanBuilder, applicationContext, type);
+        boolean userDefaultMapping = 
+            type == Map.class || type == List.class || type == Set.class;
+        
+        type = ClassUtil.getInstantiableClass(type);
+        
+        if(!userDefaultMapping){
+            addConstructor(beanBuilder, applicationContext, type);
+            addProperties(beanBuilder, applicationContext, type);
+        }
         
         if(keyCollection == null)
             keyCollection = (KeyCollection) type.getAnnotation(KeyCollection.class);
@@ -231,7 +246,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             Object genericType, Class type, 
             ElementCollection elementCollection){
         
-        if(Collection.class.isAssignableFrom(type)){
+        if(Map.class.isAssignableFrom(type) || Collection.class.isAssignableFrom(type)){
             Object elementType = TypeManager.getCollectionType(genericType);
 
             ElementEntry elementEntry = 

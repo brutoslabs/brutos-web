@@ -49,18 +49,19 @@ public class BeanFieldTest {
     @KeyCollection(
         bean="myKey",
         enumerated=EnumerationType.STRING,
-        target=String.class,
+        target=Integer.class,
         temporal="yyyy-MM-dd"
     )
     @ElementCollection(
         bean="myElement",
         enumerated=EnumerationType.STRING,
         target=String.class,
-        temporal="yyyy-MM-dd"
+        temporal="yyyy-MM-dd",
+        scope=ScopeType.REQUEST
     )
     private Map<String,Integer> propertyH;
 
-    @Target(HashMap.class)
+    @Target(LinkedHashMap.class)
     private Map<String,Integer> propertyI;
     
     private Map<BeanConstructorTest,Integer> propertyJ;
@@ -89,5 +90,12 @@ public class BeanFieldTest {
 
     @ElementCollection(bean="myElement", useMapping=true)
     private List<BeanConstructorTest> propertyS;
+
+    private Map<String,List<BeanConstructorTest>> propertyT;
+    
+    private Map<String,CustomArrayList> propertyU;
+
+    @ElementCollection(bean="myElement2")
+    private Map<String,CustomArrayList> propertyV;
     
 }
