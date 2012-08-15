@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.lang.reflect.Type;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
@@ -39,7 +40,7 @@ public class ElementEntry implements BeanEntry{
     
     private Class<?> target;
     
-    private Object genericType;
+    private Type genericType;
     
     private EnumerationType enumerated;
     
@@ -51,7 +52,7 @@ public class ElementEntry implements BeanEntry{
         this(null, null, null);
     }
 
-    public ElementEntry(Class<?> classType, Object genericType, ElementCollection definition){
+    public ElementEntry(Class<?> classType, Type genericType, ElementCollection definition){
         this.classType = classType;
         this.genericType = genericType;
         if(definition != null){
@@ -163,11 +164,11 @@ public class ElementEntry implements BeanEntry{
         return this.getClassType();
     }
 
-    public Object getGenericType() {
+    public Type getGenericType() {
         return genericType;
     }
 
-    public void setGenericType(Object genericType) {
+    public void setGenericType(Type genericType) {
         this.genericType = genericType;
     }
     

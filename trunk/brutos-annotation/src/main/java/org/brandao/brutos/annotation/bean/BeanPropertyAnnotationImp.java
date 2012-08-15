@@ -36,12 +36,18 @@ public class BeanPropertyAnnotationImp
         if(this.beanProperty.getSet() != null)
             return (T)this.beanProperty.getSet().getAnnotation(annotation);
         else
+        if(this.beanProperty.getGet() != null)
+            return (T)this.beanProperty.getGet().getAnnotation(annotation);
+        else
             return (T)this.beanProperty.getField().getAnnotation(annotation);
     }
 
     public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
         if(this.beanProperty.getSet() != null)
             return this.beanProperty.getSet().isAnnotationPresent(annotation);
+        else
+        if(this.beanProperty.getGet() != null)
+            return this.beanProperty.getGet().isAnnotationPresent(annotation);
         else
             return this.beanProperty.getField().isAnnotationPresent(annotation);
     }

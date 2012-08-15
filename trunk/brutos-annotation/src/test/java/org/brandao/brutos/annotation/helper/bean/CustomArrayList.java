@@ -18,12 +18,14 @@
 package org.brandao.brutos.annotation.helper.bean;
 
 import java.util.ArrayList;
+import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
 
 /**
  *
  * @author Brandao
  */
+@Bean
 @ElementCollection(bean="myElement")
 public class CustomArrayList extends ArrayList<BeanConstructorTest>{
     
