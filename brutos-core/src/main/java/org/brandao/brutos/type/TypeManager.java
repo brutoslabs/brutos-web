@@ -118,18 +118,20 @@ public class TypeManager {
     
     public static Type getType( Object classType, EnumerationType enumType, String maskDate ){
         
+        Class rawType = getRawType( classType );
+        
         TypeFactory factory = 
-                getTypeFactory( classType );
+                getTypeFactory( rawType );
                 
         Type type = factory.getInstance();
             
         if( type instanceof EnumType ){
             ((EnumType)type).setEnumType( enumType );
-            ((EnumType)type).setClassType( getRawType( classType ) );
+            ((EnumType)type).setClassType( rawType );
         }
 
         if( type instanceof SerializableType )
-            ((SerializableType)type).setClassType( getRawType( classType ) );
+            ((SerializableType)type).setClassType( rawType );
 
         if( type instanceof DateTimeType )
             ((DateTimeType)type).setMask( maskDate );
@@ -138,8 +140,8 @@ public class TypeManager {
             ((CollectionType)type).setGenericType( classType );
 
         if( type instanceof ArrayType ){
-            ((ArrayType)type).setContentType( getRawType( classType ).getComponentType() );
-            ((ArrayType)type).setClassType( getRawType( classType ) );
+            ((ArrayType)type).setContentType( rawType.getComponentType() );
+            ((ArrayType)type).setClassType( rawType );
         }
         
         return type;
