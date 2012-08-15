@@ -250,7 +250,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             Object elementType = TypeManager.getCollectionType(genericType);
 
             ElementEntry elementEntry = 
-                new ElementEntry(TypeManager.getRawType(elementType),elementType,elementCollection);
+                new ElementEntry(TypeManager.getRawType(elementType),(Type)elementType,elementCollection);
 
             super.applyInternalConfiguration(
                     elementEntry, 
@@ -268,7 +268,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             Object keyType = TypeManager.getKeyType(genericType);
 
             KeyEntry keyEntry = 
-                new KeyEntry(TypeManager.getRawType(keyType),keyType,keyCollection);
+                new KeyEntry(TypeManager.getRawType(keyType),(Type)keyType,keyCollection);
 
             super.applyInternalConfiguration(
                     keyEntry, 

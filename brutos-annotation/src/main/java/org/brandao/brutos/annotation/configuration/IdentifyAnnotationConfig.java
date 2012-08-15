@@ -17,14 +17,12 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import java.util.Map;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.*;
-import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -67,13 +65,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
         Identify identify = source.getAnnotation(Identify.class);
         
-        boolean isStandardType = TypeManager.isStandardType(source.getType());
-        boolean useMapping = 
-            identify == null?
-                !isStandardType : 
-                identify.useMapping() || !isStandardType;
-        
-        if(useMapping)
+        if(AnnotationUtil.isBuildEntity(identify, source.getType()))
             paramBuilder = buildParameter(builder,source,applicationContext);
         else
             paramBuilder = addParameter(source,builder,applicationContext);
@@ -88,13 +80,8 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         PropertyBuilder propertyBuilder;        
 
         Identify identify = source.getAnnotation(Identify.class);
-        boolean isStandardType = TypeManager.isStandardType(source.getType());
-        boolean useMapping = 
-            identify == null?
-                !isStandardType : 
-                identify.useMapping() || !isStandardType;
         
-        if(useMapping)
+        if(AnnotationUtil.isBuildEntity(identify, source.getType()))
             propertyBuilder = buildProperty((BeanBuilder)builder, source, applicationContext);
         else
             propertyBuilder = addProperty(source, builder, applicationContext);
@@ -110,13 +97,8 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         ConstructorBuilder constructorBuilder;
         
         Identify identify = source.getAnnotation(Identify.class);
-        boolean isStandardType = TypeManager.isStandardType(source.getType());
-        boolean useMapping = 
-            identify == null?
-                !isStandardType : 
-                identify.useMapping() || !isStandardType;
         
-        if(useMapping)
+        if(AnnotationUtil.isBuildEntity(identify, source.getType()))
             constructorBuilder = buildConstructorArg(builder,source,applicationContext);
         else
             constructorBuilder = addConstructorArg(source,builder,applicationContext);
@@ -138,7 +120,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         //String mapping = identify != null && identify.useMapping()? name : null;
                 
         return builder.addContructorArg(name, enumProperty, temporalProperty, 
-                /*mapping*/null, scope, null, false, type, source.getType());
+                /*mapping*/null, scope, null, false, type, source.getGenericType());
         
     }
     
@@ -237,7 +219,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         //String mapping = identify != null && identify.mapping()? name : null;
                 
         return builder.addParameter(name, scope, enumProperty, 
-                temporalProperty, /*mapping*/ null, type, null, false, source.getType());
+                temporalProperty, /*mapping*/ null, type, null, false, source.getGenericType());
         
     }
     

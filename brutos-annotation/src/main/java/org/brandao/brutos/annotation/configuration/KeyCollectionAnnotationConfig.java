@@ -39,10 +39,11 @@ public class KeyCollectionAnnotationConfig
             ConfigurableApplicationContext applicationContext) {
         
         KeyEntry key = (KeyEntry)source;
+        /*
         boolean isStandardType = TypeManager.isStandardType(key.getClassType());
         boolean useMapping = key.isUseBean() || !isStandardType;
-        
-        if(useMapping)
+        */
+        if(AnnotationUtil.isBuildEntity(key.isUseBean(), key.getClassType()))
             buildKey(key, builder, applicationContext);
         else
             addKey(key, (BeanBuilder)builder, applicationContext);
@@ -62,7 +63,7 @@ public class KeyCollectionAnnotationConfig
                 keyEntry.getType() == null? null : AnnotationUtil.getTypeInstance(keyEntry.getType());
         
         builder.setKey(
-            key, enumType, tempType, null, scope, null, type, keyEntry.getClassType());
+            key, enumType, tempType, null, scope, null, type, keyEntry.getGenericType());
     }
     
     protected void buildKey(KeyEntry key, Object builder, 

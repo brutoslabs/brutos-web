@@ -25,6 +25,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -123,6 +124,29 @@ public class AnnotationUtil {
         }
         
         return BrutosConstants.DEFAULT_SCOPETYPE;
+    }
+
+    public static boolean isBuildEntity(Boolean buildIfNecessary, Class type){
+        boolean isStandardType = TypeManager.isStandardType(type);
+        
+        isStandardType = isStandardType && !type.isAnnotationPresent(Bean.class);
+        
+        return
+            buildIfNecessary == null?
+                !isStandardType : 
+                buildIfNecessary.booleanValue() || !isStandardType;
+    }
+
+    public static boolean isBuildEntity(KeyCollection identify, Class type){
+        return isBuildEntity(identify == null? null : identify.useMapping(), type);
+    }
+
+    public static boolean isBuildEntity(ElementCollection identify, Class type){
+        return isBuildEntity(identify == null? null : identify.useMapping(), type);
+    }
+    
+    public static boolean isBuildEntity(Identify identify, Class type){
+        return isBuildEntity(identify == null? null : identify.useMapping(), type);
     }
     
 }

@@ -39,10 +39,12 @@ public class ElementCollectionAnnotationConfig
             ConfigurableApplicationContext applicationContext) {
         
         ElementEntry element = (ElementEntry)source;
+        /*
         boolean isStandardType = TypeManager.isStandardType(element.getClassType());
         boolean useMapping = element.isUseBean() || !isStandardType;
+        */
         
-        if(useMapping)
+        if(AnnotationUtil.isBuildEntity(element.isUseBean(), element.getClassType()))
             buildElement(element, builder, applicationContext);
         else
             addElement(element, (BeanBuilder)builder, applicationContext);
@@ -62,7 +64,7 @@ public class ElementCollectionAnnotationConfig
                 elementEntry.getType() == null? null : AnnotationUtil.getTypeInstance(elementEntry.getType());
         
         builder.setElement(
-            element, enumType, tempType, null, scope, null, false, type, elementEntry.getClassType());
+            element, enumType, tempType, null, scope, null, false, type, elementEntry.getGenericType());
     }
     
     protected void buildElement(ElementEntry element, Object builder, 
