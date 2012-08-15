@@ -327,10 +327,18 @@ public class ActionBuilder {
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
             String temporalProperty, String mapping, Type type, Object value,
             boolean nullable, Class classType ){
+        return addParameter( name, scope, enumProperty, temporalProperty, 
+                mapping, type, value, nullable, (Object)classType );
+    }
+    
+    public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
+            String temporalProperty, String mapping, Type type, Object value,
+            boolean nullable, Object classType ){
 
         name = StringUtil.adjust(name);
         temporalProperty = StringUtil.adjust(temporalProperty);
         mapping = StringUtil.adjust(mapping);
+        Class rawType = type == null? null : TypeManager.getRawType(classType);
         
         Configuration validatorConfig = new Configuration();
         
@@ -352,14 +360,14 @@ public class ActionBuilder {
         
         if( type != null ){
             useBean.setType( type );
-            if( classType != null &&
-                    !classType.isAssignableFrom( useBean.getType().getClassType() ) )
+            if( rawType != null &&
+                    !rawType.isAssignableFrom( useBean.getType().getClassType() ) )
                 throw new BrutosException( 
-                        "expected " + classType.getName() + " found " +
+                        "expected " + rawType.getName() + " found " +
                         type.getClassType().getName() );
         }
         else
-        if(classType != null && mapping == null){
+        if(rawType != null && mapping == null){
             try{
                 useBean.setType( TypeManager.getType( classType, enumProperty, temporalProperty ));
             }
@@ -374,7 +382,7 @@ public class ActionBuilder {
             }
             
             if( useBean.getType() == null )
-                throw new UnknownTypeException( classType.getName() );
+                throw new UnknownTypeException( rawType.getName() );
         }
 
         ParameterAction pmm = new ParameterAction();

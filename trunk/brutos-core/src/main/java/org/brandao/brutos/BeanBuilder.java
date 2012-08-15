@@ -268,6 +268,13 @@ public class BeanBuilder {
     public BeanBuilder setKey( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, Type factory, Class type ){
+        return setKey( name, enumProperty, temporalProperty, mapping,
+                scope, value, factory, (Object)type );
+    }
+    
+    public BeanBuilder setKey( String name,
+            EnumerationType enumProperty, String temporalProperty, String mapping,
+            ScopeType scope, Object value, Type factory, Object type ){
 
         if( !mappingBean.isMap() )
             throw new BrutosException(
@@ -365,10 +372,17 @@ public class BeanBuilder {
         return setElement( name, EnumerationType.ORDINAL, "dd/MM/yyyy", null,
                 scope, null, false, null, classType );
     }
-    
+
     public BeanBuilder setElement( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, boolean nullable, Type factory, Class type ){
+        return setElement( name, enumProperty, temporalProperty, mapping,
+                scope, value, nullable, factory, (Object)type );
+    }
+    
+    public BeanBuilder setElement( String name,
+            EnumerationType enumProperty, String temporalProperty, String mapping,
+            ScopeType scope, Object value, boolean nullable, Type factory, Object type ){
 
         if( !mappingBean.isCollection() && !mappingBean.isMap() )
             throw new BrutosException(
@@ -704,10 +718,18 @@ public class BeanBuilder {
     public ConstructorBuilder addContructorArg( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, boolean nullable, Type factory, Class type ){
+        return addContructorArg( name, enumProperty, temporalProperty, mapping,
+            scope, value, nullable, factory, (Object)type );
+    }
+    
+    public ConstructorBuilder addContructorArg( String name,
+            EnumerationType enumProperty, String temporalProperty, String mapping,
+            ScopeType scope, Object value, boolean nullable, Type factory, Object type ){
 
         ConstructorArgBean arg =
             (ConstructorArgBean) this.createDependencyBean(name, null,
-                enumProperty, temporalProperty, mapping, scope, value, nullable, factory, type, CONSTRUCTOR_ARG);
+                enumProperty, temporalProperty, mapping, scope, value, nullable, 
+                factory, type, CONSTRUCTOR_ARG);
 
         getLogger()
             .info(
@@ -725,13 +747,13 @@ public class BeanBuilder {
     private DependencyBean createDependencyBean( String name, String propertyName,
             EnumerationType enumProperty,String temporalProperty, String mapping, 
             ScopeType scope, Object value, boolean nullable, Type factory, 
-            Class type, int dependencyType ){
+            Object type, int dependencyType ){
 
         name             = StringUtil.adjust(name);
         propertyName     = StringUtil.adjust(propertyName);
         temporalProperty = StringUtil.adjust(temporalProperty);
         mapping          = StringUtil.adjust(mapping);
-
+        
         if( dependencyType == PROPERTY ){
             if( propertyName == null )
                 throw new BrutosException( "the property name is required!" );
