@@ -246,8 +246,8 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             Object genericType, Class type, 
             ElementCollection elementCollection){
         
-        if(Map.class.isAssignableFrom(type) || Collection.class.isAssignableFrom(type)){
-            Object elementType = TypeManager.getCollectionType(genericType);
+        if(AnnotationUtil.isCollection(type)){
+            Object elementType = AnnotationUtil.getCollectionType(genericType);
 
             ElementEntry elementEntry = 
                 new ElementEntry(TypeManager.getRawType(elementType),(Type)elementType,elementCollection);
@@ -264,8 +264,8 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             Object genericType, Class type, 
             KeyCollection keyCollection){
         
-        if(Map.class.isAssignableFrom(type)){
-            Object keyType = TypeManager.getKeyType(genericType);
+        if(AnnotationUtil.isMap(type)){
+            Object keyType = AnnotationUtil.getKeyType(genericType);
 
             KeyEntry keyEntry = 
                 new KeyEntry(TypeManager.getRawType(keyType),(Type)keyType,keyCollection);
@@ -276,6 +276,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                     applicationContext);
         }
     }
+    
     protected void addConstructor(BeanBuilder beanBuilder, 
             ConfigurableApplicationContext applicationContext, Class clazz){
         

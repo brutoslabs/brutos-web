@@ -25,6 +25,7 @@ import org.brandao.brutos.annotation.helper.*;
 import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest;
 import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
 import org.brandao.brutos.mapping.*;
+import org.brandao.brutos.type.StringType;
 import org.brandao.brutos.type.TypeManager;
 
 /**
@@ -224,7 +225,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyH");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -264,7 +265,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyI");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(LinkedHashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -304,7 +305,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyJ");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -346,7 +347,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyK");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -388,7 +389,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyL");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -430,7 +431,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyM");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -462,7 +463,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyN");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(LinkedList.class, beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -494,7 +495,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyO");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -526,7 +527,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyP");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -558,7 +559,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyQ");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -590,7 +591,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyR");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -632,7 +633,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyS");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -664,7 +665,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyT");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -687,7 +688,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
-        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        DependencyBean subElement = ((CollectionBean)element.getParent()).getCollection();
         Assert.assertEquals("element", subElement.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
@@ -716,17 +717,17 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyU");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
         Assert.assertEquals("key", key.getParameterName());
         Assert.assertEquals(String.class, key.getClassType());
-        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScope());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, key.getScoperType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -739,7 +740,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
-        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        DependencyBean subElement = ((CollectionBean)element.getParent()).getCollection();
         Assert.assertEquals("myElement", subElement.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
@@ -768,7 +769,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyV");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -791,7 +792,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
-        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        DependencyBean subElement = ((CollectionBean)element.getParent()).getCollection();
         Assert.assertEquals("myElement", subElement.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
@@ -994,7 +995,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyH");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1034,7 +1035,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyI");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(LinkedHashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1074,7 +1075,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyJ");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1116,7 +1117,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyK");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1158,7 +1159,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyL");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1200,7 +1201,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyM");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1232,7 +1233,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyN");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(LinkedList.class, beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1264,7 +1265,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyO");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1296,7 +1297,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyP");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1328,7 +1329,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyQ");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1360,7 +1361,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyR");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1402,7 +1403,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyS");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -1434,7 +1435,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyT");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1457,7 +1458,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
-        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        DependencyBean subElement = ((CollectionBean)element.getParent()).getCollection();
         Assert.assertEquals("element", subElement.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
@@ -1486,7 +1487,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyU");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1509,7 +1510,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
-        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        DependencyBean subElement = ((CollectionBean)element.getParent()).getCollection();
         Assert.assertEquals("myElement", subElement.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
@@ -1538,7 +1539,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
 
         PropertyBean property = bean.getProperty("propertyV");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1561,7 +1562,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
-        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        DependencyBean subElement = ((CollectionBean)element.getParent()).getCollection();
         Assert.assertEquals("myElement", subElement.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
@@ -1856,7 +1857,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1897,7 +1898,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(LinkedHashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1939,7 +1940,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1983,7 +1984,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -2027,7 +2028,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -2071,7 +2072,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -2105,7 +2106,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(LinkedList.class, beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -2139,7 +2140,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -2173,7 +2174,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -2207,7 +2208,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -2241,7 +2242,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -2285,7 +2286,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -2319,7 +2320,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -2342,7 +2343,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
-        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        DependencyBean subElement = ((CollectionBean)element.getParent()).getCollection();
         Assert.assertEquals("element", subElement.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
@@ -2373,7 +2374,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -2396,7 +2397,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
-        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        DependencyBean subElement = ((CollectionBean)element.getParent()).getCollection();
         Assert.assertEquals("myElement", subElement.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());
@@ -2427,7 +2428,7 @@ public class AnnotationApplicationContextBeanTest
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
         ConstructorArgBean arg = constructor.getConstructorArg(0);
-        org.brandao.brutos.mapping.Bean beanProperty = arg.getMappingBean();
+        org.brandao.brutos.mapping.Bean beanProperty = arg.getParent();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -2450,7 +2451,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
-        DependencyBean subElement = ((CollectionBean)element.getMappingBean()).getCollection();
+        DependencyBean subElement = ((CollectionBean)element.getParent()).getCollection();
         Assert.assertEquals("myElement", subElement.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, subElement.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, subElement.getScope());

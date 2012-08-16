@@ -17,9 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
@@ -149,4 +147,38 @@ public class AnnotationUtil {
         return isBuildEntity(identify == null? null : identify.useMapping(), type);
     }
     
+    public static Object getKeyType(Object type){
+        Class rawType = TypeManager.getRawType(type);
+        Object keyType = TypeManager.getKeyType(type);
+        
+        if(keyType != null)
+            return keyType;
+        
+        if(isMap(rawType))
+            return getKeyType(rawType.getGenericSuperclass());
+        
+        return null;
+    }
+    
+    public static Object getCollectionType(Object type){
+        Class rawType = TypeManager.getRawType(type);
+        Object elementType = TypeManager.getCollectionType(type);
+        
+        if(elementType != null)
+            return elementType;
+        
+        if(isMap(rawType) || isCollection(rawType))
+            return getCollectionType(rawType.getGenericSuperclass());
+        else
+            return null;
+            
+    }
+
+    public static boolean isCollection(Class clazz){
+        return Collection.class.isAssignableFrom(clazz);
+    }
+    
+    public static boolean isMap(Class clazz){
+        return Map.class.isAssignableFrom(clazz);
+    }
 }
