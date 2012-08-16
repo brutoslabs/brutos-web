@@ -37,7 +37,7 @@ public class Bean {
     private static final Logger logger = LoggerProvider
             .getCurrentLoggerProvider().getLogger(Bean.class);
     
-    private Controller form;
+    private Controller controller;
 
     private String name;
     
@@ -55,9 +55,9 @@ public class Bean {
 
     private String indexFormat;
 
-    public Bean( Controller form ) {
+    public Bean( Controller controller ) {
         this.fields = new HashMap();
-        this.form = form;
+        this.controller = controller;
         this.hierarchy = true;
         this.separator = ".";
         this.indexFormat = "[$index]";
@@ -218,12 +218,12 @@ public class Bean {
         return false;
     }
 
-    public Controller getForm() {
-        return form;
+    public Controller getController() {
+        return controller;
     }
 
-    public void setForm(Controller form) {
-        this.form = form;
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     public boolean isHierarchy() {
@@ -269,7 +269,7 @@ public class Bean {
         else{
             Bean factoryBean =
                 this.getFactory() != null?
-                    form.getBean(factory) :
+                    controller.getBean(factory) :
                     null;
 
             Object factoryInstance = null;
