@@ -19,6 +19,7 @@ package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
@@ -42,16 +43,21 @@ public class DependencyBean {
 
     protected Scope scope;
 
+    private ScopeType scoperType;
+    
     protected Validator validator;
 
     protected Object value;
 
-    protected Bean mappingBean;
+    protected Bean parent;
 
     protected boolean nullable;
     
-    public DependencyBean(Bean mappingBean) {
-        this.mappingBean = mappingBean;
+    protected Controller controller;
+    
+    public DependencyBean(Bean parent) {
+        this.parent = parent;
+        this.controller = parent.getController();
     }
 
     public String getParameterName() {
@@ -114,12 +120,12 @@ public class DependencyBean {
         this.value = value;
     }
 
-    public Bean getMappingBean() {
-        return mappingBean;
+    public Bean getParent() {
+        return parent;
     }
 
-    public void setMappingBean(Bean mappingBean) {
-        this.mappingBean = mappingBean;
+    public void setParent(Bean parent) {
+        this.parent = parent;
     }
 
     public Scope getScope() {
@@ -133,7 +139,7 @@ public class DependencyBean {
     public Class getClassType(){
         return
             this.mapping != null?
-                this.mappingBean.getForm().getBean( mapping ).getClassType() :
+                controller.getBean( mapping ).getClassType() :
                 this.type == null? null : this.type.getClassType();
     }
 
@@ -173,7 +179,7 @@ public class DependencyBean {
                 String param = getParameterName();
                 String idx   = index < 0?
                                     "" :
-                                    mappingBean.getIndexFormat().replace(
+                                    parent.getIndexFormat().replace(
                                         "$index",
                                         String.valueOf(index) );
 
@@ -192,18 +198,17 @@ public class DependencyBean {
         }
         else{
             Bean dependencyBean =
-                this.mappingBean
-                    .getForm().getBean( mapping );
+                controller.getBean( mapping );
 
             if( dependencyBean == null )
                 throw new BrutosException( "mapping not found: " + mapping );
 
             String newPrefix = null;
-            if(mappingBean.isHierarchy()){
+            if(parent.isHierarchy()){
                 String parameter = getParameterName();
                 if(!(prefix == null && parameter == null)){
                     newPrefix = prefix == null? "" : prefix;
-                    newPrefix += parameter == null? "" : parameter + mappingBean.getSeparator();
+                    newPrefix += parameter == null? "" : parameter + parent.getSeparator();
                 }
             }
 
@@ -239,4 +244,17 @@ public class DependencyBean {
     public void setNullable(boolean nullable) {
         this.nullable = nullable;
     }
+    
+    public Bean getBean(){
+        return controller.getBean( mapping );
+    }
+
+    public ScopeType getScoperType() {
+        return scoperType;
+    }
+
+    public void setScoperType(ScopeType scoperType) {
+        this.scoperType = scoperType;
+    }
+    
 }
