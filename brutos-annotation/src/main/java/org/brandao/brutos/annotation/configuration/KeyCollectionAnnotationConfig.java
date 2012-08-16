@@ -58,7 +58,7 @@ public class KeyCollectionAnnotationConfig
         String key = keyEntry.getName();
         EnumerationType enumType = keyEntry.getEnumerated();
         String tempType = keyEntry.getTemporal();
-        ScopeType scope = keyEntry.getScope();
+        ScopeType scope = keyEntry.getScopeType();
         org.brandao.brutos.type.Type type = 
                 keyEntry.getType() == null? null : AnnotationUtil.getTypeInstance(keyEntry.getType());
         

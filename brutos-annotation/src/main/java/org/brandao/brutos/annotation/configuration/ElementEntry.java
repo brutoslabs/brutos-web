@@ -32,7 +32,7 @@ public class ElementEntry implements BeanEntry{
     
     private String name;
     
-    private ScopeType scope;
+    private ScopeType scopeType;
     
     private boolean useBean;
     
@@ -57,7 +57,7 @@ public class ElementEntry implements BeanEntry{
         this.genericType = genericType;
         if(definition != null){
             this.name = StringUtil.adjust(definition.bean());
-            this.scope = 
+            this.scopeType = 
                 StringUtil.isEmpty(definition.scope())? 
                     null : 
                     ScopeType.valueOf(definition.scope());
@@ -84,7 +84,7 @@ public class ElementEntry implements BeanEntry{
         }
         else{
             this.name = null;
-            this.scope = BrutosConstants.DEFAULT_SCOPETYPE;
+            this.scopeType = BrutosConstants.DEFAULT_SCOPETYPE;
             this.useBean = false;
             this.target = null;
             this.enumerated = 
@@ -97,19 +97,19 @@ public class ElementEntry implements BeanEntry{
     }
 
     public String getName() {
-        return this.name == null? BrutosConstants.DEFAULT_KEY_NAME : name;
+        return this.name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public ScopeType getScope() {
-        return scope;
+    public ScopeType getScopeType() {
+        return scopeType;
     }
 
-    public void setScope(ScopeType scope) {
-        this.scope = scope;
+    public void setScopeType(ScopeType scopeType) {
+        this.scopeType = scopeType;
     }
 
     public boolean isUseBean() {

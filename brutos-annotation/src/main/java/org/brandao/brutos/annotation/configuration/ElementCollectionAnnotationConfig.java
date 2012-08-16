@@ -59,7 +59,7 @@ public class ElementCollectionAnnotationConfig
         String element = elementEntry.getName();
         EnumerationType enumType = elementEntry.getEnumerated();
         String tempType = elementEntry.getTemporal();
-        ScopeType scope = elementEntry.getScope();
+        ScopeType scope = elementEntry.getScopeType();
         org.brandao.brutos.type.Type type = 
                 elementEntry.getType() == null? null : AnnotationUtil.getTypeInstance(elementEntry.getType());
         

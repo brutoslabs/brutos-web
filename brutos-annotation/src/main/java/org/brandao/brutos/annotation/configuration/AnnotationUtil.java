@@ -175,7 +175,7 @@ public class AnnotationUtil {
     }
 
     public static boolean isCollection(Class clazz){
-        return Collection.class.isAssignableFrom(clazz);
+        return isMap(clazz) || Collection.class.isAssignableFrom(clazz);
     }
     
     public static boolean isMap(Class clazz){
