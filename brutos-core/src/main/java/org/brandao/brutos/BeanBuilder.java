@@ -787,7 +787,7 @@ public class BeanBuilder {
         dependencyBean.setTemporalType( temporalProperty );
         dependencyBean.setValue(value);
         dependencyBean.setScope( applicationContext.getScopes().get(scope) );
-        dependencyBean.setScoperType(scope);
+        dependencyBean.setScopeType(scope);
         BeanInstance bean = new BeanInstance( null, mappingBean.getClassType() );
 
         if( propertyName != null && !bean.containProperty(propertyName) )

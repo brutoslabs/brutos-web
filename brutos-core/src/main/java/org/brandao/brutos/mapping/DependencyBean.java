@@ -43,7 +43,7 @@ public class DependencyBean {
 
     protected Scope scope;
 
-    private ScopeType scoperType;
+    private ScopeType scopeType;
     
     protected Validator validator;
 
@@ -249,12 +249,12 @@ public class DependencyBean {
         return controller.getBean( mapping );
     }
 
-    public ScopeType getScoperType() {
-        return scoperType;
+    public ScopeType getScopeType() {
+        return scopeType;
     }
 
-    public void setScoperType(ScopeType scoperType) {
-        this.scoperType = scoperType;
+    public void setScopeType(ScopeType scopeType) {
+        this.scopeType = scopeType;
     }
     
 }
