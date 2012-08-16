@@ -91,7 +91,7 @@ public class KeyEntry implements BeanEntry{
             this.enumerated = 
                     EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE);
 
-            this.temporal = null;
+            this.temporal = BrutosConstants.DEFAULT_TEMPORALPROPERTY;
             this.type = null;
         }
         
