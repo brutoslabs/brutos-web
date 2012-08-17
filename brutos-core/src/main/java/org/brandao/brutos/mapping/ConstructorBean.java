@@ -56,11 +56,15 @@ public class ConstructorBean {
     }
 
     public Constructor getContructor() {
-        if( contructor == null )
-            setContructor(getContructor(getBean().getClassType()));
+        initIfNecessary();
         return contructor;
     }
 
+    private synchronized void initIfNecessary(){
+        if(contructor == null)
+            setContructor(getContructor(getBean().getClassType()));
+    }
+    
     public Method getMethod( Object factory ) {
         if( getMethod() == null ){
             Class clazz = factory == null?
