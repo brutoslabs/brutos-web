@@ -27,6 +27,7 @@ import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.IntegerWrapperType;
 import org.brandao.brutos.type.StringType;
+import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.type.TypeManager;
 
 /**
@@ -417,13 +418,22 @@ public class AnnotationApplicationContextBeanTest
 
     public void testBean13() throws NoSuchMethodException{
         Class clazz = BeanTest1Controller.class;
+
+        AnnotationApplicationContext annotationApplicationContext;
+        TypeFactory typeFactory = TypeManager.getTypeFactory(List.class);
+        try{
+            TypeManager.remove(List.class);
+            annotationApplicationContext = getApplication(new Class[]{clazz});
+        }
+        finally{
+            TypeManager.register(List.class, typeFactory);
+        }
         
-        AnnotationApplicationContext annotationApplicationContext = 
-                getApplication(new Class[]{clazz});
         
-        org.brandao.brutos.mapping.Controller controller = 
-                annotationApplicationContext
+        org.brandao.brutos.mapping.Controller
+            controller = annotationApplicationContext
                     .getControllerManager().getController(clazz);
+        
         
         org.brandao.brutos.mapping.Action action = controller.getActionByName("my");
         
@@ -442,9 +452,8 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
         Assert.assertNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertEquals(IntegerWrapperType.class,element.getType().getClass());
         Assert.assertNull(element.getValue());
-        
     }
 
     public void testBean14() throws NoSuchMethodException{
