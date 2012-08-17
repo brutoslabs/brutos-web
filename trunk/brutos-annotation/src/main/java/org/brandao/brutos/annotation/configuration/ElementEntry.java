@@ -70,8 +70,8 @@ public class ElementEntry implements BeanEntry{
 
             this.enumerated = 
                 StringUtil.isEmpty(definition.enumerated())? 
-                    null : 
-                    EnumerationType.valueOf(definition.scope());
+                    EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE) : 
+                    EnumerationType.valueOf(definition.enumerated());
 
             this.temporal = 
                     StringUtil.isEmpty(definition.temporal())?
