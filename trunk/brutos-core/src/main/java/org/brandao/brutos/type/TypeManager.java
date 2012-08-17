@@ -96,7 +96,7 @@ public class TypeManager {
         return getType( classType, EnumerationType.ORDINAL, "dd/MM/yyyy" );
     }
     
-    private static TypeFactory getTypeFactory( Object classType ){
+    public static TypeFactory getTypeFactory( Object classType ){
         
         TypeFactory factory = (TypeFactory) types.get(getRawType( classType ));
         
