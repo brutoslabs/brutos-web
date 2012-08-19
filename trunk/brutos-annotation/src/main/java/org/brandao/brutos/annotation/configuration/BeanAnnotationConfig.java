@@ -161,8 +161,12 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(BeanBuilder builder, 
             KeyEntry source, ConfigurableApplicationContext applicationContext){
         
+        Class classType = source.getTarget() == null? 
+                ClassUtil.getInstantiableClass(source.getClassType()) : 
+                source.getTarget();
+        
         BeanBuilder beanBuilder = 
-            builder.buildKey(source.getName(), source.getClassType());
+            builder.buildKey(source.getName(), classType);
         
         createBean(beanBuilder, applicationContext, 
                 source.getGenericType(), null, null);
@@ -171,8 +175,12 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(BeanBuilder builder, 
             ElementEntry source, ConfigurableApplicationContext applicationContext){
         
+        Class classType = source.getTarget() == null? 
+                ClassUtil.getInstantiableClass(source.getClassType()) : 
+                source.getTarget();
+        
         BeanBuilder beanBuilder = 
-            builder.buildElement(source.getName(), source.getClassType());
+            builder.buildElement(source.getName(), classType);
         
         createBean(beanBuilder, applicationContext, 
                 source.getGenericType(), null, null);
@@ -181,8 +189,14 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(ActionBuilder builder, 
             ActionParamEntry actionParam, ConfigurableApplicationContext applicationContext){
         
+        
+        Target target = actionParam.getAnnotation(Target.class);
+        Class classType = target == null? 
+                ClassUtil.getInstantiableClass(actionParam.getType()) : 
+                target.value();
+        
         BeanBuilder beanBuilder = 
-            builder.buildParameter(actionParam.getName(), ClassUtil.getInstantiableClass(actionParam.getType()));
+            builder.buildParameter(actionParam.getName(), classType);
         
         createBean(beanBuilder, applicationContext, 
                 actionParam.getGenericType(), 
@@ -193,8 +207,13 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(BeanBuilder builder, 
             BeanPropertyAnnotation source, ConfigurableApplicationContext applicationContext){
         
+        Target target = source.getAnnotation(Target.class);
+        Class classType = target == null? 
+                ClassUtil.getInstantiableClass(source.getType()) : 
+                target.value();
+        
         BeanBuilder beanBuilder = 
-            builder.buildProperty(source.getName(), source.getName(), ClassUtil.getInstantiableClass(source.getType()));
+            builder.buildProperty(source.getName(), source.getName(), classType);
         
         createBean(beanBuilder, applicationContext, source.getGenericType(), 
                 source.getAnnotation(KeyCollection.class),
@@ -204,8 +223,13 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(BeanBuilder builder, 
             BeanEntryConstructorArg source, ConfigurableApplicationContext applicationContext){
         
+        Target target = source.getAnnotation(Target.class);
+        Class classType = target == null? 
+                ClassUtil.getInstantiableClass(source.getType()) : 
+                target.value();
+        
         BeanBuilder beanBuilder = 
-            builder.buildConstructorArg(source.getName(), ClassUtil.getInstantiableClass(source.getType()));
+            builder.buildConstructorArg(source.getName(), classType);
         
         createBean(beanBuilder, applicationContext, source.getGenericType(), 
                 source.getAnnotation(KeyCollection.class),

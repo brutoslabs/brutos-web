@@ -21,6 +21,7 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.annotation.Target;
 import org.brandao.brutos.type.TypeManager;
 
 /**
@@ -63,8 +64,10 @@ public class ElementCollectionAnnotationConfig
         org.brandao.brutos.type.Type type = 
                 elementEntry.getType() == null? null : AnnotationUtil.getTypeInstance(elementEntry.getType());
         
+        Object classType = elementEntry.getTarget() == null? elementEntry.getGenericType() : elementEntry.getTarget();
+        
         builder.setElement(
-            element, enumType, tempType, null, scope, null, false, type, elementEntry.getGenericType());
+            element, enumType, tempType, null, scope, null, false, type, classType);
     }
     
     protected void buildElement(ElementEntry element, Object builder, 
