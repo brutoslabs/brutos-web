@@ -122,7 +122,7 @@ public class KeyEntry implements BeanEntry{
     }
 
     public Class<?> getClassType() {
-        return this.target == null? classType : target;
+        return classType;
     }
 
     public void setClassType(Class<?> classType) {

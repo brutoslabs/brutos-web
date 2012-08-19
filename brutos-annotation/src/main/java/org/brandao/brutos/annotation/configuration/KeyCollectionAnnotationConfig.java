@@ -62,8 +62,10 @@ public class KeyCollectionAnnotationConfig
         org.brandao.brutos.type.Type type = 
                 keyEntry.getType() == null? null : AnnotationUtil.getTypeInstance(keyEntry.getType());
         
+        Object classType = keyEntry.getTarget() == null? keyEntry.getGenericType() : keyEntry.getTarget();
+        
         builder.setKey(
-            key, enumType, tempType, null, scope, null, type, keyEntry.getGenericType());
+            key, enumType, tempType, null, scope, null, type, classType);
     }
     
     protected void buildKey(KeyEntry key, Object builder, 
