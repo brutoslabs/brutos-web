@@ -25,10 +25,7 @@ import org.brandao.brutos.annotation.helper.*;
 import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest;
 import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
 import org.brandao.brutos.mapping.*;
-import org.brandao.brutos.type.IntegerWrapperType;
-import org.brandao.brutos.type.StringType;
-import org.brandao.brutos.type.TypeFactory;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.type.*;
 
 /**
  *
@@ -37,6 +34,10 @@ import org.brandao.brutos.type.TypeManager;
 public class AnnotationApplicationContextBeanTest 
     extends AbstractApplicationContextTest{
 
+    public AnnotationApplicationContextBeanTest(){
+        TypeManager.remove(List.class);
+    }
+    
     public void testBean1() throws NoSuchMethodException{
         Class clazz = BeanTest1Controller.class;
         
@@ -401,7 +402,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -419,15 +420,8 @@ public class AnnotationApplicationContextBeanTest
     public void testBean13() throws NoSuchMethodException{
         Class clazz = BeanTest1Controller.class;
 
-        AnnotationApplicationContext annotationApplicationContext;
-        TypeFactory typeFactory = TypeManager.getTypeFactory(List.class);
-        try{
-            TypeManager.remove(List.class);
-            annotationApplicationContext = getApplication(new Class[]{clazz});
-        }
-        finally{
-            TypeManager.register(List.class, typeFactory);
-        }
+        AnnotationApplicationContext annotationApplicationContext =
+            getApplication(new Class[]{clazz});
         
         
         org.brandao.brutos.mapping.Controller
@@ -515,7 +509,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
         Assert.assertNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertEquals(IntegerWrapperType.class,element.getType().getClass());
         Assert.assertNull(element.getValue());
         
     }
@@ -578,7 +572,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScopeType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
-        Assert.assertNull(element.getMapping());
+        Assert.assertNotNull(element.getMapping());
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
@@ -646,7 +640,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
-        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        DependencyBean element = ((CollectionBean)beanProperty).getCollection();
         Assert.assertEquals("myElement", element.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScopeType());
@@ -685,7 +679,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -789,7 +783,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -1105,7 +1099,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
         Assert.assertNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertEquals(IntegerWrapperType.class,element.getType().getClass());
         Assert.assertNull(element.getValue());
         
     }
@@ -1179,7 +1173,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -1221,7 +1215,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
         Assert.assertNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertEquals(IntegerType.class,element.getType().getClass());
         Assert.assertNull(element.getValue());
         
     }
@@ -1285,7 +1279,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
         Assert.assertNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertEquals(IntegerWrapperType.class,element.getType().getClass());
         Assert.assertNull(element.getValue());
         
     }
@@ -1348,7 +1342,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScopeType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
-        Assert.assertNull(element.getMapping());
+        Assert.assertNotNull(element.getMapping());
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
@@ -1416,7 +1410,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
-        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        DependencyBean element = ((CollectionBean)beanProperty).getCollection();
         Assert.assertEquals("myElement", element.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScopeType());
@@ -1455,7 +1449,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -1507,7 +1501,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -1559,7 +1553,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -1970,7 +1964,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
         Assert.assertNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertEquals(IntegerWrapperType.class,element.getType().getClass());
         Assert.assertNull(element.getValue());
         
     }
@@ -2048,7 +2042,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -2092,7 +2086,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
         Assert.assertNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertEquals(Integer.class,element.getType().getClass());
         Assert.assertNull(element.getValue());
         
     }
@@ -2160,7 +2154,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
         Assert.assertNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertEquals(IntegerWrapperType.class,element.getType().getClass());
         Assert.assertNull(element.getValue());
         
     }
@@ -2227,7 +2221,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScopeType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
-        Assert.assertNull(element.getMapping());
+        Assert.assertNotNull(element.getMapping());
         Assert.assertNull(element.getType());
         Assert.assertNull(element.getValue());
         
@@ -2299,7 +2293,7 @@ public class AnnotationApplicationContextBeanTest
         org.brandao.brutos.mapping.Bean beanProperty = arg.getBean();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
-        DependencyBean element = ((MapBean)beanProperty).getCollection();
+        DependencyBean element = ((CollectionBean)beanProperty).getCollection();
         Assert.assertEquals("myElement", element.getParameterName());
         Assert.assertEquals(BeanConstructorTest.class, element.getClassType());
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScopeType());
@@ -2340,7 +2334,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -2394,7 +2388,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
@@ -2448,7 +2442,7 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, key.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, key.getTemporalType());
         Assert.assertNull(key.getMapping());
-        Assert.assertNull(key.getType());
+        Assert.assertEquals(StringType.class,key.getType().getClass());
         Assert.assertNull(key.getValue());
 
         DependencyBean element = ((MapBean)beanProperty).getCollection();
