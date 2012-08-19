@@ -10,7 +10,7 @@
 
 <project  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
    xmlns='http://maven.apache.org/DECORATION/1.0.0'
-   xsi:schemaLocation='http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd' name="Brutos application framework">
+   xsi:schemaLocation='http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd' name="Java WEB MVC - Brutos application framework">
        
     <skin>
         <groupId>org.apache.maven.skins</groupId>
