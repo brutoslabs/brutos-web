@@ -540,11 +540,18 @@ public class BeanBuilder {
     public PropertyBuilder addProperty( String name, String propertyName,
             EnumerationType enumProperty, String temporalProperty, String mapping, 
             ScopeType scope, Object value, boolean nullable, Type type ){
+        return addProperty(name,propertyName,enumProperty,temporalProperty,mapping, 
+            scope, value, nullable, null, type );
+    }
+    
+    public PropertyBuilder addProperty( String name, String propertyName,
+            EnumerationType enumProperty, String temporalProperty, String mapping, 
+            ScopeType scope, Object value, boolean nullable, Object classType, Type type ){
 
         PropertyBean propertyBean =
             (PropertyBean) this.createDependencyBean(name, propertyName,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                type, null, PROPERTY);
+                type, classType, PROPERTY);
 
         getLogger()
             .info(

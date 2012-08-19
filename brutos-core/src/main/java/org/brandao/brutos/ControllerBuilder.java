@@ -622,6 +622,13 @@ public class ControllerBuilder {
     public PropertyBuilder addProperty( String propertyName, String id, 
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             String mapping, Object value, boolean nullable, Type type ){
+        return addProperty(propertyName,id,scope,enumProperty,temporalProperty, 
+            mapping,value,nullable,null,type);
+    }
+    
+    public PropertyBuilder addProperty( String propertyName, String id, 
+            ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
+            String mapping, Object value, boolean nullable, Object classType, Type type ){
 
         id               = StringUtil.adjust(id);
         propertyName     = StringUtil.adjust(propertyName);
@@ -653,6 +660,8 @@ public class ControllerBuilder {
                 controller.getClassType().getName() + "." + propertyName );
 
 
+        Object genericType = classType == null? bean.getGenericType(propertyName) : classType;
+        
         if( mapping != null ){
             if( controller.getBean(mapping) != null )
                 useBean.setMapping( controller.getBean( mapping ) );
@@ -667,7 +676,7 @@ public class ControllerBuilder {
             try{
                 useBean.setType(
                         TypeManager.getType(
-                            bean.getGenericType(propertyName),
+                            genericType,
                             enumProperty,
                             temporalProperty ) );
             }
