@@ -379,8 +379,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean12() throws NoSuchMethodException{
         Class clazz = BeanTest1Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
-                getApplication(new Class[]{clazz});
+        AnnotationApplicationContext annotationApplicationContext;
+        try{
+            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(BeanConstructorTest.class ));
+            annotationApplicationContext = getApplication(new Class[]{clazz});
+        }
+        finally{
+            TypeManager.remove(BeanConstructorTest.class);
+        }
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -582,8 +588,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean18() throws NoSuchMethodException{
         Class clazz = BeanTest1Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
-                getApplication(new Class[]{clazz});
+        AnnotationApplicationContext annotationApplicationContext;
+        try{
+            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(BeanConstructorTest.class ));
+            annotationApplicationContext = getApplication(new Class[]{clazz});
+        }
+        finally{
+            TypeManager.remove(BeanConstructorTest.class);
+        }
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -624,8 +636,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean19() throws NoSuchMethodException{
         Class clazz = BeanTest1Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
-                getApplication(new Class[]{clazz});
+        AnnotationApplicationContext annotationApplicationContext;
+        try{
+            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(BeanConstructorTest.class ));
+            annotationApplicationContext = getApplication(new Class[]{clazz});
+        }
+        finally{
+            TypeManager.remove(BeanConstructorTest.class);
+        }
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -1150,8 +1168,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean34() throws NoSuchMethodException{
         Class clazz = BeanTest2Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
-                getApplication(new Class[]{clazz});
+        AnnotationApplicationContext annotationApplicationContext;
+        try{
+            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(BeanConstructorTest.class ));
+            annotationApplicationContext = getApplication(new Class[]{clazz});
+        }
+        finally{
+            TypeManager.remove(BeanConstructorTest.class);
+        }
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -1352,8 +1376,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean40() throws NoSuchMethodException{
         Class clazz = BeanTest2Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
-                getApplication(new Class[]{clazz});
+        AnnotationApplicationContext annotationApplicationContext;
+        try{
+            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(BeanConstructorTest.class ));
+            annotationApplicationContext = getApplication(new Class[]{clazz});
+        }
+        finally{
+            TypeManager.remove(BeanConstructorTest.class);
+        }
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -1394,8 +1424,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean41() throws NoSuchMethodException{
         Class clazz = BeanTest2Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
-                getApplication(new Class[]{clazz});
+        AnnotationApplicationContext annotationApplicationContext;
+        try{
+            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(BeanConstructorTest.class ));
+            annotationApplicationContext = getApplication(new Class[]{clazz});
+        }
+        finally{
+            TypeManager.remove(BeanConstructorTest.class);
+        }
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -2017,8 +2053,14 @@ public class AnnotationApplicationContextBeanTest
     public void testConstructoBean16() throws NoSuchMethodException{
         Class clazz = BeanTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
-                getApplication(new Class[]{clazz});
+        AnnotationApplicationContext annotationApplicationContext;
+        try{
+            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(BeanConstructorTest.class ));
+            annotationApplicationContext = getApplication(new Class[]{clazz});
+        }
+        finally{
+            TypeManager.remove(BeanConstructorTest.class);
+        }
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -2231,8 +2273,14 @@ public class AnnotationApplicationContextBeanTest
     public void testConstructoBean22() throws NoSuchMethodException{
         Class clazz = BeanTest24Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
-                getApplication(new Class[]{clazz});
+        AnnotationApplicationContext annotationApplicationContext;
+        try{
+            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(BeanConstructorTest.class ));
+            annotationApplicationContext = getApplication(new Class[]{clazz});
+        }
+        finally{
+            TypeManager.remove(BeanConstructorTest.class);
+        }
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -2275,8 +2323,14 @@ public class AnnotationApplicationContextBeanTest
     public void testConstructoBean23() throws NoSuchMethodException{
         Class clazz = BeanTest25Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
-                getApplication(new Class[]{clazz});
+        AnnotationApplicationContext annotationApplicationContext;
+        try{
+            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(BeanConstructorTest.class ));
+            annotationApplicationContext = getApplication(new Class[]{clazz});
+        }
+        finally{
+            TypeManager.remove(BeanConstructorTest.class);
+        }
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
