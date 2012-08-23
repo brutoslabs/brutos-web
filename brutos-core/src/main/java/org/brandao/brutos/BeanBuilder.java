@@ -471,6 +471,10 @@ public class BeanBuilder {
      * @param target Classe alvo do mapeamento.
      * @return Construtor da propriedade.
      */
+    public BeanBuilder buildProperty( String propertyName, Class target ){
+        return buildProperty( null, propertyName, target );
+    }
+    
     public BeanBuilder buildProperty( String name, String propertyName, Class target ){
         
         name = StringUtil.adjust(name);

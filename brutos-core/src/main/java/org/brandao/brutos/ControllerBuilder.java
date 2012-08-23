@@ -804,4 +804,10 @@ public class ControllerBuilder {
         return LoggerProvider.getCurrentLoggerProvider()
                 .getLogger(ControllerBuilder.class);
     }
+    
+    public PropertyBuilder getProperty(String name){
+        PropertyController property = (PropertyController) controller.getProperty(name);
+        return property == null? null : new PropertyBuilder( property );
+    }
+    
 }
