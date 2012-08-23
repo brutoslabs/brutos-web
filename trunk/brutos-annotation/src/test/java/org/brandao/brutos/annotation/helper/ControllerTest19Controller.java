@@ -17,18 +17,17 @@
 
 package org.brandao.brutos.annotation.helper;
 
-import java.util.Date;
-import org.brandao.brutos.annotation.Enumerated;
-import org.brandao.brutos.annotation.EnumerationType;
-import org.brandao.brutos.annotation.Identify;
-import org.brandao.brutos.annotation.Temporal;
+import java.util.*;
+import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest;
+import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
 
 /**
  *
  * @author Brandao
  */
 public class ControllerTest19Controller {
-    
+
     private int propertyA;
 
     private String propertyB;
@@ -42,6 +41,40 @@ public class ControllerTest19Controller {
     private EnumTest propertyF;
     
     private EnumTest propertyG;
+    
+    private Map<String,Integer> propertyH;
+
+    private Map<String,Integer> propertyI;
+    
+    private Map<BeanConstructorTest,Integer> propertyJ;
+
+    private Map<String,BeanConstructorTest> propertyK;
+
+    private Map<String,BeanConstructorTest> propertyL;
+
+    private List<Integer> propertyM;
+
+    private List<Integer> propertyN;
+    
+    private List<Integer> propertyO;
+
+    private List<BeanConstructorTest> propertyP;
+
+    private List<BeanConstructorTest> propertyQ;
+
+    private Map<BeanConstructorTest,BeanConstructorTest> propertyR;
+
+    private List<BeanConstructorTest> propertyS;
+
+    private Map<String,List<BeanConstructorTest>> propertyT;
+    
+    private Map<String,CustomArrayList> propertyU;
+
+    private Map<String,CustomArrayList> propertyV;
+    
+    public Object myFirstAction(){
+        return null;
+    }
 
     public int getPropertyA() {
         return propertyA;
@@ -102,9 +135,147 @@ public class ControllerTest19Controller {
     public void setPropertyG(EnumTest propertyG) {
         this.propertyG = propertyG;
     }
-    
-    public Object myFirstAction(){
-        return null;
+
+    public Map<String,Integer> getPropertyH() {
+        return propertyH;
+    }
+
+    @KeyCollection(
+        bean="myKey",
+        enumerated=EnumerationType.STRING,
+        target=Integer.class,
+        temporal="yyyy-MM-dd"
+    )
+    @ElementCollection(
+        bean="myElement",
+        enumerated=EnumerationType.STRING,
+        target=String.class,
+        temporal="yyyy-MM-dd",
+        scope=ScopeType.REQUEST
+    )
+    public void setPropertyH(Map<String,Integer> propertyH) {
+        this.propertyH = propertyH;
+    }
+
+    public Map<String,Integer> getPropertyI() {
+        return propertyI;
+    }
+
+    @Target(LinkedHashMap.class)
+    public void setPropertyI(Map<String,Integer> propertyI) {
+        this.propertyI = propertyI;
+    }
+
+    public Map<BeanConstructorTest,Integer> getPropertyJ() {
+        return propertyJ;
+    }
+
+    public void setPropertyJ(Map<BeanConstructorTest,Integer> propertyJ) {
+        this.propertyJ = propertyJ;
+    }
+
+    public Map<String,BeanConstructorTest> getPropertyK() {
+        return propertyK;
+    }
+
+    public void setPropertyK(Map<String,BeanConstructorTest> propertyK) {
+        this.propertyK = propertyK;
+    }
+
+    public Map<String,BeanConstructorTest> getPropertyL() {
+        return propertyL;
+    }
+
+    @ElementCollection(bean="myElement", useMapping=true)
+    public void setPropertyL(Map<String,BeanConstructorTest> propertyL) {
+        this.propertyL = propertyL;
+    }
+
+    public List<Integer> getPropertyM() {
+        return propertyM;
+    }
+
+    @ElementCollection(bean="myElement")
+    public void setPropertyM(List<Integer> propertyM) {
+        this.propertyM = propertyM;
+    }
+
+    public List<Integer> getPropertyN() {
+        return propertyN;
+    }
+
+    @Target(LinkedList.class)
+    public void setPropertyN(List<Integer> propertyN) {
+        this.propertyN = propertyN;
+    }
+
+    public List<Integer> getPropertyO() {
+        return propertyO;
+    }
+
+    public void setPropertyO(List<Integer> propertyO) {
+        this.propertyO = propertyO;
+    }
+
+    public List<BeanConstructorTest> getPropertyP() {
+        return propertyP;
+    }
+
+    public void setPropertyP(List<BeanConstructorTest> propertyP) {
+        this.propertyP = propertyP;
+    }
+
+    public List<BeanConstructorTest> getPropertyQ() {
+        return propertyQ;
+    }
+
+    @ElementCollection(bean="myElement")
+    public void setPropertyQ(List<BeanConstructorTest> propertyQ) {
+        this.propertyQ = propertyQ;
+    }
+
+    public Map<BeanConstructorTest,BeanConstructorTest> getPropertyR() {
+        return propertyR;
+    }
+
+    @KeyCollection(bean="myKey", useMapping=true)
+    @ElementCollection(bean="myElement", useMapping=true)
+    public void setPropertyR(Map<BeanConstructorTest,BeanConstructorTest> propertyR) {
+        this.propertyR = propertyR;
+    }
+
+    public List<BeanConstructorTest> getPropertyS() {
+        return propertyS;
+    }
+
+    @ElementCollection(bean="myElement", useMapping=true)
+    public void setPropertyS(List<BeanConstructorTest> propertyS) {
+        this.propertyS = propertyS;
+    }
+
+    public Map<String,List<BeanConstructorTest>> getPropertyT() {
+        return propertyT;
+    }
+
+    public void setPropertyT(Map<String,List<BeanConstructorTest>> propertyT) {
+        this.propertyT = propertyT;
+    }
+
+    public Map<String,CustomArrayList> getPropertyU() {
+        return propertyU;
+    }
+
+    public void setPropertyU(Map<String,CustomArrayList> propertyU) {
+        this.propertyU = propertyU;
+    }
+
+    public Map<String,CustomArrayList> getPropertyV() {
+        return propertyV;
+    }
+
+    @ElementCollection(bean="myElement2")
+    public void setPropertyV(Map<String,CustomArrayList> propertyV) {
+        this.propertyV = propertyV;
     }
 
 }

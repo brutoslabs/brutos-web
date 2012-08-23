@@ -17,8 +17,10 @@
 
 package org.brandao.brutos.annotation.helper;
 
-import java.util.Date;
+import java.util.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest;
+import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
 
 /**
  *
@@ -43,6 +45,58 @@ public class ControllerTest18Controller {
     
     @Enumerated(value=EnumerationType.STRING)
     private EnumTest propertyG;
+    
+    @KeyCollection(
+        bean="myKey",
+        enumerated=EnumerationType.STRING,
+        target=Integer.class,
+        temporal="yyyy-MM-dd"
+    )
+    @ElementCollection(
+        bean="myElement",
+        enumerated=EnumerationType.STRING,
+        target=String.class,
+        temporal="yyyy-MM-dd",
+        scope=ScopeType.REQUEST
+    )
+    private Map<String,Integer> propertyH;
+
+    @Target(LinkedHashMap.class)
+    private Map<String,Integer> propertyI;
+    
+    private Map<BeanConstructorTest,Integer> propertyJ;
+
+    private Map<String,BeanConstructorTest> propertyK;
+
+    @ElementCollection(bean="myElement", useMapping=true)
+    private Map<String,BeanConstructorTest> propertyL;
+
+    @ElementCollection(bean="myElement")
+    private List<Integer> propertyM;
+
+    @Target(LinkedList.class)
+    private List<Integer> propertyN;
+    
+    private List<Integer> propertyO;
+
+    private List<BeanConstructorTest> propertyP;
+
+    @ElementCollection(bean="myElement")
+    private List<BeanConstructorTest> propertyQ;
+
+    @KeyCollection(bean="myKey", useMapping=true)
+    @ElementCollection(bean="myElement", useMapping=true)
+    private Map<BeanConstructorTest,BeanConstructorTest> propertyR;
+
+    @ElementCollection(bean="myElement", useMapping=true)
+    private List<BeanConstructorTest> propertyS;
+
+    private Map<String,List<BeanConstructorTest>> propertyT;
+    
+    private Map<String,CustomArrayList> propertyU;
+
+    @ElementCollection(bean="myElement2")
+    private Map<String,CustomArrayList> propertyV;
     
     public Object myFirstAction(){
         return null;

@@ -19,16 +19,13 @@ package org.brandao.brutos.annotation.configuration;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.brandao.brutos.ActionBuilder;
-import org.brandao.brutos.BeanBuilder;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
@@ -92,8 +89,24 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     
     private void checkCircularReference(Object builder, Object source){
         
-        String node = null;
+        try{
+            Method getClassType = builder.getClass().getMethod("getClassType");
+            Method getName = source.getClass().getMethod("getName");
+            
+            Class<?> classType = (Class<?>) getClassType.invoke(builder);
+            String name = (String) getName.invoke(source);
+            
+            String node = getNode(classType,name);
+            checkNode(node);
+        }
+        catch(BrutosException e){
+            throw e;
+        }
+        catch(Exception e){
+            throw new BrutosException(e);
+        }
         
+        /*
         if( source instanceof KeyEntry ){
             node = getNode(((BeanBuilder)builder).getClassType(),
                     ((KeyEntry)source).getName());
@@ -110,11 +123,16 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         }
         else
         if( source instanceof BeanPropertyAnnotation ){
-            node = getNode(((BeanBuilder)builder).getClassType(),
-                    ((BeanPropertyAnnotation)source).getName());
+            if(builder instanceof BeanBuilder){
+                node = getNode(((BeanBuilder)builder).getClassType(),
+                        ((BeanPropertyAnnotation)source).getName());
+            }
+            else{
+                node = getNode(((ControllerBuilder)builder).getClassType(),
+                        ((BeanPropertyAnnotation)source).getName());
+            }
         }
-        
-        checkNode(node);
+        */
     }
 
     private void checkNode(String node){
@@ -131,6 +149,28 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(Object builder, 
             Object source, ConfigurableApplicationContext applicationContext){
         
+        try{
+            Method createBeanMethod = 
+                getClass()
+                    .getDeclaredMethod(
+                        "createBean", 
+                        builder.getClass(),
+                        source.getClass(),
+                        ConfigurableApplicationContext.class);
+            
+            if(!(source instanceof ActionParamEntry))
+                checkCircularReference(builder,source);
+            
+            createBeanMethod.invoke(this, builder,source,applicationContext);
+        }
+        catch(BrutosException e){
+            throw e;
+        }
+        catch(Exception e){
+            throw new BrutosException(e);
+        }
+        
+        /*
         if(source instanceof ActionParamEntry)
             createBean((ActionBuilder)builder, (ActionParamEntry)source, applicationContext);
         else{
@@ -155,7 +195,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                     (BeanBuilder)builder, (ElementEntry)source, applicationContext);
             }
         }
-        
+        */
     }
     
     protected void createBean(BeanBuilder builder, 
@@ -187,7 +227,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     protected void createBean(ActionBuilder builder, 
-            ActionParamEntry actionParam, ConfigurableApplicationContext applicationContext){
+            BeanActionParamEntry actionParam, ConfigurableApplicationContext applicationContext){
         
         
         Target target = actionParam.getAnnotation(Target.class);
@@ -204,8 +244,8 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 actionParam.getAnnotation(ElementCollection.class));
     }
 
-    protected void createBean(BeanBuilder builder, 
-            BeanPropertyAnnotation source, ConfigurableApplicationContext applicationContext){
+    protected void createBean(ControllerBuilder builder, 
+            BeanEntryProperty source, ConfigurableApplicationContext applicationContext){
         
         Target target = source.getAnnotation(Target.class);
         Class classType = target == null? 
@@ -213,7 +253,23 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 target.value();
         
         BeanBuilder beanBuilder = 
-            builder.buildProperty(source.getName(), source.getName(), classType);
+            builder.buildProperty(source.getName(), classType);
+        
+        createBean(beanBuilder, applicationContext, source.getGenericType(), 
+                source.getAnnotation(KeyCollection.class),
+                source.getAnnotation(ElementCollection.class));
+    }
+    
+    protected void createBean(BeanBuilder builder, 
+            BeanEntryProperty source, ConfigurableApplicationContext applicationContext){
+        
+        Target target = source.getAnnotation(Target.class);
+        Class classType = target == null? 
+                ClassUtil.getInstantiableClass(source.getType()) : 
+                target.value();
+        
+        BeanBuilder beanBuilder = 
+            builder.buildProperty(source.getName(), classType);
         
         createBean(beanBuilder, applicationContext, source.getGenericType(), 
                 source.getAnnotation(KeyCollection.class),
