@@ -82,7 +82,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         Identify identify = source.getAnnotation(Identify.class);
         
         if(AnnotationUtil.isBuildEntity(identify, source.getType()))
-            propertyBuilder = buildProperty((BeanBuilder)builder, source, applicationContext);
+            propertyBuilder = buildProperty(builder, source, applicationContext);
         else
             propertyBuilder = addProperty(source, builder, applicationContext);
         
@@ -194,14 +194,16 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         return builder;
     }
 
-     protected PropertyBuilder buildProperty(BeanBuilder beanBuilder, 
+     protected PropertyBuilder buildProperty(Object beanBuilder, 
             BeanPropertyAnnotation property, 
             ConfigurableApplicationContext applicationContext){
          
         super.applyInternalConfiguration(new BeanEntryProperty(property), beanBuilder, 
                 applicationContext);
 
-        return beanBuilder.getProperty(property.getName());
+        return beanBuilder instanceof BeanBuilder? 
+                ((BeanBuilder)beanBuilder).getProperty(property.getName()) :
+                ((ControllerBuilder)beanBuilder).getProperty(property.getName());
     }
     
     protected ParameterBuilder buildParameter(ActionBuilder builder, 
