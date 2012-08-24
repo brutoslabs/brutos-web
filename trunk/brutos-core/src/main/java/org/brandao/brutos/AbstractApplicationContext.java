@@ -113,36 +113,15 @@ public abstract class AbstractApplicationContext
      * @param config Configura��o.
      */
     public void configure( Properties config ){
-        
-        if( parent != null )
-            loadParentConfig( parent );
-        else
-            loadLocalConfig(config);
+        loadLocalConfig(config);
     }
 
-    private void loadParentConfig( AbstractApplicationContext parent ){
-        this.configuration = parent.getConfiguration();
-        this.iocManager = parent.iocManager;
-        this.iocProvider = parent.iocProvider;
-        this.interceptorManager = parent.interceptorManager;
-        this.webFrameManager = parent.webFrameManager;
-        this.controllerResolver = parent.controllerResolver;
-        this.actionResolver = parent.actionResolver;
-        this.requestFactory = parent.requestFactory;
-        this.responseFactory = parent.responseFactory;
-        this.validatorProvider = parent.validatorProvider;
-        this.controllerManager = parent.controllerManager;
-        this.invoker = parent.invoker;
-        this.viewProvider = parent.viewProvider;
-        this.codeGeneratorProvider = parent.codeGeneratorProvider;
-    }
-    
     private void loadLocalConfig(Properties config){
         this.configuration = config;
         this.iocManager = new IOCManager();
         this.iocProvider = IOCProvider.getProvider(config);
         this.iocProvider.configure(config);
-        this.interceptorManager = new InterceptorManager();
+        this.interceptorManager = new InterceptorManager(this.parent == null? null : this.parent.getInterceptorManager());
         this.webFrameManager = new WebFrameManager( this.interceptorManager, this.iocManager );
         this.controllerResolver = getNewControllerResolver();
         this.actionResolver = getNewMethodResolver();
@@ -151,7 +130,10 @@ public abstract class AbstractApplicationContext
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
         this.viewResolver = getNewViewResolver();
         this.controllerManager = new ControllerManager(
-                this.interceptorManager, validatorProvider,this);
+                this.interceptorManager, 
+                validatorProvider,
+                this.parent == null? null : this.parent.getControllerManager(),
+                this);
         
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
         this.codeGeneratorProvider = CodeGeneratorProvider.getProvider(this.getConfiguration());

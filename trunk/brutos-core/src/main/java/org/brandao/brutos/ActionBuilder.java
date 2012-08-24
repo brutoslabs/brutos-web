@@ -338,7 +338,7 @@ public class ActionBuilder {
         name = StringUtil.adjust(name);
         temporalProperty = StringUtil.adjust(temporalProperty);
         mapping = StringUtil.adjust(mapping);
-        Class rawType = type == null? null : TypeManager.getRawType(classType);
+        Class rawType = classType == null? null : TypeManager.getRawType(classType);
         
         Configuration validatorConfig = new Configuration();
         

@@ -68,13 +68,19 @@ public class InterceptorManager {
     private Map interceptors;
     private Map reverseInterceptors;
     private List defaultInterceptors;
+    private InterceptorManager parent;
     
     public InterceptorManager() {
+        this(null);
+    }
+
+    public InterceptorManager(InterceptorManager parent) {
         this.interceptors = new HashMap();
         this.reverseInterceptors = new HashMap();
         this.defaultInterceptors = new ArrayList();
+        this.parent = parent;
     }
-
+    
     /**
      * Cria uma pilha de interceptadores com uma determinada identifica��o.
      * @param name Identifica��o da pilha de interceptadores.
@@ -151,15 +157,23 @@ public class InterceptorManager {
      * @return Mapeamento.
      */
     public Interceptor getInterceptor( String name ){
-        if( !interceptors.containsKey( name ) )
-            throw new BrutosException( "interceptor not found: " + name );
+        if( !interceptors.containsKey( name ) ){
+            if(parent != null)
+                return (Interceptor) parent.getInterceptor( name );
+            else
+                throw new BrutosException( "interceptor not found: " + name );
+        }
         else
             return (Interceptor) interceptors.get( name );
     }
 
     public Interceptor getInterceptor( Class clazz ){
-        if( !reverseInterceptors.containsKey( clazz ) )
-            throw new BrutosException( "interceptor not found: " + clazz.getName() );
+        if( !reverseInterceptors.containsKey( clazz ) ){
+            if(parent != null)
+                return (Interceptor) parent.getInterceptor( clazz );
+            else
+                throw new BrutosException( "interceptor not found: " + clazz.getName() );
+        }
         else
             return (Interceptor) reverseInterceptors.get( clazz );
     }
