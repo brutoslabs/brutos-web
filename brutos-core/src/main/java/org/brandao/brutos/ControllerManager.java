@@ -104,14 +104,18 @@ public class ControllerManager {
     private ControllerBuilder current;
     private AbstractApplicationContext applicationContext;
     private InterceptorManager interceptorManager;
+    private ControllerManager parent;
     
     public ControllerManager( InterceptorManager interceptorManager, 
-            ValidatorProvider validatorProvider, AbstractApplicationContext applicationContext) {
+            ValidatorProvider validatorProvider, 
+            ControllerManager parent,
+            AbstractApplicationContext applicationContext) {
         this.forms              = new HashMap();
         this.revForms           = new HashMap();
         this.interceptorManager = interceptorManager;
         this.validatorProvider  = validatorProvider;
         this.applicationContext = applicationContext;
+        this.parent             = parent;
     }
 
     /**
@@ -248,7 +252,13 @@ public class ControllerManager {
      * @return Mapeamento do controlador.
      */
     public Controller getController( String id ){
-        return (Controller)forms.get( id );
+        Controller controller = (Controller)forms.get( id );
+        
+        if(controller == null && parent != null)
+            return parent.getController(id);
+        else
+            return controller;
+        
     }
 
     /**
@@ -266,7 +276,12 @@ public class ControllerManager {
      * @return Mapeamento do controlador.
      */
     public Controller getController( Class controllerClass ){
-        return (Controller)revForms.get( controllerClass );
+        Controller controller = (Controller)revForms.get( controllerClass );
+        
+        if(controller == null && parent != null)
+            return parent.getController(controllerClass);
+        else
+            return controller;
     }
 
     /**
