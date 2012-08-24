@@ -17,16 +17,14 @@
 
 package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.type.DefaultTypeFactory;
+import org.brandao.brutos.type.IntegerType;
 
 /**
  *
  * @author Brandao
  */
-public class TestType extends DefaultTypeFactory{
+public class TestType4 extends IntegerType{
     
-    public TestType(){
-        super(TestType.class);
+    public TestType4(){
     }
-
 }

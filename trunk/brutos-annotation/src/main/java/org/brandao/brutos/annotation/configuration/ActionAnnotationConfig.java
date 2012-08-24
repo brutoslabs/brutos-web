@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -76,7 +77,8 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         if(action != null && action.value().length > 1){
             String[] ids = action.value();
             for(int i=1;i<ids.length;i++ ){
-                actionBuilder.addAlias(ids[i]);
+                if(!StringUtil.isEmpty(ids[i]))
+                    actionBuilder.addAlias(ids[i]);
             }
         }
         
@@ -94,7 +96,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             return id;
         }
         else
-            return action.value()[0];
+            return StringUtil.adjust(action.value()[0]);
     }
     
     protected String getView(View viewAnnotation, ActionBuilder action,
