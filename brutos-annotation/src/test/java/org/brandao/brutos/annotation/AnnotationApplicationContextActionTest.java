@@ -1140,7 +1140,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNull(parameter.getBean().getMapping());
         Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
         Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(TestType.class, parameter.getBean().getType().getClass());
+        Assert.assertEquals(TestType4.class, parameter.getBean().getType().getClass());
         Assert.assertNotNull(parameter.getBean().getValidate());
     }
 

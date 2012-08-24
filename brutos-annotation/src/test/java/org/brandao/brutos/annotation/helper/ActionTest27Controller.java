@@ -26,7 +26,7 @@ import org.brandao.brutos.annotation.Type;
 public class ActionTest27Controller {
 
     public void myAction(
-            @Type(TestType.class)
+            @Type(TestType4.class)
             int a){
     }
     
