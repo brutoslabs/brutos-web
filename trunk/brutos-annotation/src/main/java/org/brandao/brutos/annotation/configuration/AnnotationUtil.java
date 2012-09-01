@@ -18,12 +18,12 @@
 package org.brandao.brutos.annotation.configuration;
 
 import java.util.*;
-import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassUtil;
+import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.WebApplicationContext;
 
 /**
  *
@@ -180,5 +180,10 @@ public class AnnotationUtil {
     
     public static boolean isMap(Class clazz){
         return Map.class.isAssignableFrom(clazz);
+    }
+    
+    public static boolean isWebApplication(ApplicationContext applicationContext){
+        Properties config = applicationContext.getConfiguration();
+        return config.getProperty(BrutosConstants.WEB_APPLICATION_CLASS) != null;
     }
 }

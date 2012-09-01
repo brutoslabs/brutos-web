@@ -72,10 +72,12 @@ public class DefaultEnumTest extends TestCase{
         type.setClassType(EnumTest.class);
         type.setEnumType(EnumerationType.STRING);
         try{
-            type.getValue(new DefaultEnumType());
+            type.convert(new DefaultEnumType());
             TestCase.fail("expected UnknownTypeException");
         }
-        catch( UnknownTypeException e ){
+        catch( Exception e ){
+            if(!(e instanceof UnknownTypeException))
+                TestCase.fail("expected UnknownTypeException");
         }
 
     }
