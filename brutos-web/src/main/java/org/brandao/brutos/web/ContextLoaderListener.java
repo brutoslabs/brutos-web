@@ -24,11 +24,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.WebScopeType;
-import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
-import org.brandao.brutos.web.http.UploadListener;
 
 /**
  * 
