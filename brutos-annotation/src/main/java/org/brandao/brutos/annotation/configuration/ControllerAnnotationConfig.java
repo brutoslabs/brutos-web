@@ -20,14 +20,12 @@ package org.brandao.brutos.annotation.configuration;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.ControllerBuilder;
-import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.BeanProperty;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -86,7 +84,10 @@ public class ControllerAnnotationConfig
         if(annotationController != null && annotationController.id().length > 1){
             String[] ids = annotationController.id();
             for(int i=1;i<ids.length;i++ ){
-                builder.addAlias(ids[i]);
+                if(!StringUtil.isEmpty(ids[i]))
+                    builder.addAlias(StringUtil.adjust(ids[i]));
+                else
+                    throw new BrutosException("invalid controller id: " + source.getName());
             }
         }
             
@@ -177,10 +178,11 @@ public class ControllerAnnotationConfig
     }
     
     protected String getControllerId(Controller annotation, Class controllerClass){
-        if(annotation != null && annotation.id().length > 0)
-            return annotation.id()[0];
-        else
-            return null;
+        boolean hasControllerId = 
+            annotation != null && annotation.id().length > 0 && 
+            !StringUtil.isEmpty(annotation.id()[0]);
+        
+        return hasControllerId? annotation.id()[0] : null;
     }
     
     public boolean isApplicable(Object source) {

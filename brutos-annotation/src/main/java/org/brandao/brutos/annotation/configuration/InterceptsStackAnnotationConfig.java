@@ -21,7 +21,6 @@ import java.util.List;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.InterceptorStackBuilder;
-import org.brandao.brutos.annotation.Intercepts;
 import org.brandao.brutos.annotation.InterceptsStack;
 import org.brandao.brutos.annotation.Param;
 import org.brandao.brutos.annotation.Stereotype;

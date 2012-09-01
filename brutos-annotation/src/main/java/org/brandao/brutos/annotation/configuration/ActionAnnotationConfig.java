@@ -48,7 +48,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         DispatcherType dispatcher;
         String id;
         
-        id = getId(action, method);
+        id = getId(action, controllerBuilder.getId(), method, applicationContext);
         
         Result resultAnnotation = method.getAnnotation(Result.class);
         result = resultAnnotation == null? null : resultAnnotation.value();
@@ -78,7 +78,13 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             String[] ids = action.value();
             for(int i=1;i<ids.length;i++ ){
                 if(!StringUtil.isEmpty(ids[i]))
-                    actionBuilder.addAlias(ids[i]);
+                    actionBuilder.addAlias(StringUtil.adjust(ids[i]));
+                else{
+                    throw new BrutosException(
+                        "invalid action id: " + 
+                        method.getDeclaringClass().getName() + "." + 
+                        method.getName());
+                }
             }
         }
         
@@ -89,14 +95,25 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         return actionBuilder;
     }
 
-    protected String getId(Action action, Method method){
-        if( action == null || action.value().length == 0 ){
+    protected String getId(Action action, String controllerId, Method method, 
+            ConfigurableApplicationContext applicationContext){
+        boolean hasActionId =
+            action != null && action.value().length > 0 && 
+            !StringUtil.isEmpty(action.value()[0]);
+        
+        if(hasActionId)
+            return StringUtil.adjust(action.value()[0]);
+        else{
             String id = method.getName();
             id = id.replaceAll("Action$", "");
-            return id;
+            
+            return
+                AnnotationUtil.isWebApplication(applicationContext)?
+                    method.getDeclaringClass().getSimpleName() + BrutosConstants.WEB_SEPARATOR + id
+                    :
+                    id;
+                
         }
-        else
-            return StringUtil.adjust(action.value()[0]);
     }
     
     protected String getView(View viewAnnotation, ActionBuilder action,
