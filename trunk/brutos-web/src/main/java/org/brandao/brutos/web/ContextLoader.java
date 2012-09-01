@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 package org.brandao.brutos.web;
 
 import java.util.Enumeration;
@@ -64,6 +63,8 @@ public class ContextLoader {
                 .setServletContext(servletContext);
 
         Properties config = getConfiguration(servletContext);
+        config.setProperty(BrutosConstants.WEB_APPLICATION_CLASS, app.getClass().getName());
+        
         initLogger(config);
 
         logger.info( "Initializing Brutos root WebApplicationContext" );
