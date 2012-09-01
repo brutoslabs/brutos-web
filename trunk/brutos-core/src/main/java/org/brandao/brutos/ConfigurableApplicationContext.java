@@ -154,5 +154,9 @@ public interface ConfigurableApplicationContext
     void setViewResolver(ViewResolver viewResolver);
 
     ViewResolver getViewResolver();
+
+    void setParent(ApplicationContext applicationContext);
+
+    ApplicationContext getParent();
     
 }

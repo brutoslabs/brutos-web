@@ -109,4 +109,11 @@ public interface BrutosConstants {
     public final String DEFAULT_SEPARATOR_VIEW = ".";
     
     public final String DEFAULT_ACTION_ID = "invoke";
+    
+    public final String DEFAULT_VIEW_RESOLVER = "true";
+
+    public final String WEB_SEPARATOR = "/";
+
+    public final String WEB_APPLICATION_CLASS = ApplicationContext.class.getName() + ".web.application";
+    
 }

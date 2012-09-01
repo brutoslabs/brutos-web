@@ -82,20 +82,20 @@ public abstract class AbstractApplicationContext
     
     protected CodeGeneratorProvider codeGeneratorProvider;
     
-    private AbstractApplicationContext parent;
+    private ApplicationContext parent;
 
     public AbstractApplicationContext() {
         this(null);
     }
 
-    public AbstractApplicationContext( AbstractApplicationContext parent ) {
+    public AbstractApplicationContext( ApplicationContext parent ) {
         
         this.parent = parent;
         
         if(parent == null)
             this.configuration = new Configuration();
         else
-            this.configuration = new Configuration(parent.configuration);
+            this.configuration = new Configuration(parent.getConfiguration());
             
         this.scopes = new Scopes();
     }
@@ -113,15 +113,18 @@ public abstract class AbstractApplicationContext
      * @param config Configura��o.
      */
     public void configure( Properties config ){
-        loadLocalConfig(config);
-    }
-
-    private void loadLocalConfig(Properties config){
         this.configuration = config;
         this.iocManager = new IOCManager();
         this.iocProvider = IOCProvider.getProvider(config);
+        
         this.iocProvider.configure(config);
-        this.interceptorManager = new InterceptorManager(this.parent == null? null : this.parent.getInterceptorManager());
+        
+        this.interceptorManager = 
+                new InterceptorManager(
+                    this.parent == null? 
+                        null : 
+                        ((ConfigurableApplicationContext)parent).getInterceptorManager() );
+        
         this.webFrameManager = new WebFrameManager( this.interceptorManager, this.iocManager );
         this.controllerResolver = getNewControllerResolver();
         this.actionResolver = getNewMethodResolver();
@@ -132,7 +135,9 @@ public abstract class AbstractApplicationContext
         this.controllerManager = new ControllerManager(
                 this.interceptorManager, 
                 validatorProvider,
-                this.parent == null? null : this.parent.getControllerManager(),
+                this.parent == null? 
+                    null : 
+                    ((ConfigurableApplicationContext)parent).getControllerManager(),
                 this);
         
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
@@ -511,6 +516,28 @@ public abstract class AbstractApplicationContext
                         invoker);
 
         return proxy;
+    }
+    
+    public void setParent(ApplicationContext applicationContext){
+        
+        if(!(applicationContext instanceof ConfigurableApplicationContext)){
+            throw new IllegalArgumentException("expected: instance of " + 
+                    ConfigurableApplicationContext.class.getName());
+        }
+        
+        this.parent = applicationContext;
+        
+        this.controllerManager.setParent(
+            ((ConfigurableApplicationContext)applicationContext)
+                .getControllerManager());
+        
+        this.interceptorManager.setParent(
+            ((ConfigurableApplicationContext)applicationContext)
+                .getInterceptorManager());
+    }
+
+    public ApplicationContext getParent(){
+        return this.parent;
     }
     
 }
