@@ -37,12 +37,12 @@ import org.brandao.brutos.mapping.MappingException;
  *
  * @author Afonso Brandao
  */
-public class SearchClass {
+public class Scanner {
 
     private List listClass;
-    private CheckSearch check;
+    private ScannerFilter filter;
 
-    public SearchClass(){
+    public Scanner(){
         this.listClass = new ArrayList();
     }
 
@@ -208,15 +208,15 @@ public class SearchClass {
         jar.close();
     }
 
-    public void setCheck( CheckSearch check ){
-        this.check = check;
+    public void setFilter( ScannerFilter filter ){
+        this.filter = filter;
     }
 
     private void checkClass( Class classe ){
-        if( check == null )
+        if( filter == null )
             throw new NullPointerException();
 
-        if( !listClass.contains(classe) && check.checkClass( classe ) ){
+        if( !listClass.contains(classe) && filter.accepts( classe ) ){
             listClass.add( classe );
         }
     }
@@ -225,7 +225,7 @@ public class SearchClass {
         return listClass;
     }
 
-    public CheckSearch getCheck() {
-        return check;
+    public ScannerFilter getFilter() {
+        return filter;
     }
 }

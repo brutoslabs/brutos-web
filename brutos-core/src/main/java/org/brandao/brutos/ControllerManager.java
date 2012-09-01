@@ -102,14 +102,14 @@ public class ControllerManager {
     private Map revForms;
     private ValidatorProvider validatorProvider;
     private ControllerBuilder current;
-    private AbstractApplicationContext applicationContext;
+    private ConfigurableApplicationContext applicationContext;
     private InterceptorManager interceptorManager;
     private ControllerManager parent;
     
     public ControllerManager( InterceptorManager interceptorManager, 
             ValidatorProvider validatorProvider, 
             ControllerManager parent,
-            AbstractApplicationContext applicationContext) {
+            ConfigurableApplicationContext applicationContext) {
         this.forms              = new HashMap();
         this.revForms           = new HashMap();
         this.interceptorManager = interceptorManager;
@@ -243,7 +243,8 @@ public class ControllerManager {
      * @return Verdadeiro se existir um mapeamento, coso contr�rio falso.
      */
     public boolean contains( String id ){
-        return this.forms.containsKey( id );
+        boolean result = this.forms.containsKey( id );
+        return !result && parent != null? parent.forms.containsKey( id ) : result;
     }
     
     /**
@@ -267,7 +268,7 @@ public class ControllerManager {
      * @return .
      */
     public Controller getForm( String uri ){
-        return (Controller)forms.get( uri );
+        return getController(uri);
     }
 
     /**
@@ -290,7 +291,7 @@ public class ControllerManager {
      * @return .
      */
     public Controller getForm( Class controllerClass ){
-        return (Controller)revForms.get( controllerClass );
+        return getController( controllerClass );
     }
 
     /**
@@ -298,7 +299,16 @@ public class ControllerManager {
      * @return Controladores.
      */
     public Map getControllers() {
-        return Collections.unmodifiableMap( forms );
+        Map tmp;
+        
+        if(parent != null){
+            tmp = new HashMap(parent.forms);
+            tmp.putAll(forms);
+        }
+        else
+            tmp = forms;
+            
+        return Collections.unmodifiableMap( tmp );
     }
 
     /**
@@ -306,7 +316,7 @@ public class ControllerManager {
      * @return .
      */
     public Map getForms() {
-        return Collections.unmodifiableMap( forms );
+        return getControllers();
     }
 
     void addForm( String id, Controller form ) {
@@ -319,6 +329,14 @@ public class ControllerManager {
 
     public ControllerBuilder getCurrent() {
         return current;
+    }
+    
+    void setParent( ControllerManager parent ){
+        this.parent = parent;
+    }
+    
+    public ControllerManager getParent(){
+        return this.parent;
     }
     
     protected Logger getLogger(){

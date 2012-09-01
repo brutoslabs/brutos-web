@@ -28,6 +28,13 @@ public class DefaultViewResolver implements ViewResolver{
     public String getView(ControllerBuilder controllerBuilder, 
             ActionBuilder actionBuilder, Class exception, Properties configuration) {
         
+        String autoResolver = configuration
+                .getProperty("org.brandao.brutos.view.auto", 
+                BrutosConstants.DEFAULT_VIEW_RESOLVER);
+        
+        if(!autoResolver.toLowerCase().equals("true"))
+            return null;
+        
         String prefix = configuration
                 .getProperty("org.brandao.brutos.view.prefix", 
                 BrutosConstants.DEFAULT_PREFIX_VIEW);

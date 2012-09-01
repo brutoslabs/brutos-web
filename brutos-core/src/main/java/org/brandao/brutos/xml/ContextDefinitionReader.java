@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
+ * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.xml;
@@ -25,14 +25,11 @@ import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.brandao.brutos.AbstractApplicationContext;
-import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
-import org.brandao.brutos.type.*;
+import org.brandao.brutos.type.TypeFactory;
+import org.brandao.brutos.type.TypeManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -48,8 +45,11 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
 
     private XMLParseUtil parseUtil;
 
-    public static final String AnnotationApplicationContext =
-            "org.brandao.brutos.annotation.AnnotationApplicationContext";
+    public static final String 
+        AnnotationApplicationContext = "org.brandao.brutos.annotation.AnnotationApplicationContext";
+    
+    public static final String 
+        DefaultScannerFilter = "org.brandao.brutos.annotation.AnnotationFilter";
     
     public ContextDefinitionReader( ConfigurableApplicationContext handler,
             List blackList, ResourceLoader resourceLoader ){
@@ -129,16 +129,31 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
     }
 
     private void loadAnnotationDefinition( Element cp ){
-
-        if( cp == null )
-            return;
-
-        ApplicationContext aac = createApplicationContext();
-        aac.configure();
-        
+        if( cp != null ){
+            ApplicationContext aac = createApplicationContext(getDetectedClass());
+            handler.setParent(aac);
+            aac.configure(aac.getConfiguration());
+        }
     }
 
-    private ApplicationContext createApplicationContext(){
+    private List getDetectedClass(){
+        Scanner scanner = new Scanner();
+        scanner.load(Thread.currentThread().getContextClassLoader());
+        scanner.setFilter(getFilter());
+        return scanner.getClasses();
+    }
+    
+    private ScannerFilter getFilter(){
+        try{
+            Class scannerFilterClass = ClassUtil.get(DefaultScannerFilter);
+            return (ScannerFilter)ClassUtil.getInstance(scannerFilterClass);
+        }
+        catch(Exception e){
+            throw new BrutosException(
+                "can't initialize the scanner: " + DefaultScannerFilter,e);
+        }
+    }
+    private ApplicationContext createApplicationContext(List detectedClass){
 
         Class clazz = getApplicationContextClass();
 
@@ -146,8 +161,8 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
             try{
                 ApplicationContext app =
                     (ApplicationContext) clazz
-                        .getConstructor(new Class[]{ApplicationContext.class})
-                            .newInstance(new Object[]{this.handler});
+                        .getConstructor(new Class[]{Class[].class})
+                            .newInstance(new Object[]{detectedClass.toArray()});
                 return app;
             }
             catch( Exception e ){
@@ -214,24 +229,13 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
 
             value = value == null? c.getTextContent() : value;
 
-            Class type = null;
-            Class factory = null;
+            Class type;
+            Class factory;
 
             try{
-                /*
-                type = Class.forName(
-                            name,
-                            true,
-                            Thread.currentThread().getContextClassLoader() );
-                factory = Class.forName(
-                            value,
-                            true,
-                            Thread.currentThread().getContextClassLoader() );
-                */
                 type = ClassUtil.get(name);
                 factory = ClassUtil.get(value);
                 TypeManager.register(type, (TypeFactory)ClassUtil.getInstance(factory));
-                
             }
             catch( Exception e ){
                 throw new BrutosException( e );

@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -183,7 +184,23 @@ public class InterceptorManager {
      * @return Interceptadores globais.
      */
     public List getDefaultInterceptors(){
-        return this.defaultInterceptors;
+        List tmp;
+        
+        if(parent != null){
+            tmp = new ArrayList(parent.defaultInterceptors);
+            tmp.addAll(this.defaultInterceptors);
+        }
+        else
+            tmp = this.defaultInterceptors;
+            
+        return Collections.unmodifiableList(tmp);
     }
     
+    void setParent(InterceptorManager parent){
+        this.parent = parent;
+    }
+    
+    public InterceptorManager getParent(){
+        return this.parent;
+    }
 }
