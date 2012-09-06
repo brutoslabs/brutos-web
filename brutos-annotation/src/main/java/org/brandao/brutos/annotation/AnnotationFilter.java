@@ -17,21 +17,25 @@
 
 package org.brandao.brutos.annotation;
 
-import org.brandao.brutos.ScannerFilter;
+import java.util.Properties;
+import org.brandao.brutos.TypeFilter;
 import org.brandao.brutos.annotation.configuration.AnnotationUtil;
 
 /**
  *
  * @author Brandao
  */
-public class AnnotationFilter implements ScannerFilter{
+public class AnnotationFilter implements TypeFilter{
 
-    public boolean accepts(Class classe) {
+    public Boolean accepts(Class classe) {
         boolean accepts =
             AnnotationUtil.isCollection(classe) ||
             AnnotationUtil.isInterceptor(classe) ||
             classe.isAnnotationPresent(TypeDef.class);
         return accepts;
+    }
+
+    public void setConfiguration(Properties config) {
     }
     
 }
