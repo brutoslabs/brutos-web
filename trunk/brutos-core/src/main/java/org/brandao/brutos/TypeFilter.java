@@ -17,12 +17,16 @@
 
 package org.brandao.brutos;
 
+import java.util.Properties;
+
 /**
  *
  * @author Afonso Brandao
  */
-public interface ScannerFilter {
+public interface TypeFilter {
 
-    boolean accepts( Class classe );
+    void setConfiguration(Properties config);
+    
+    Boolean accepts( Class classe );
     
 }

@@ -137,22 +137,23 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
     }
 
     private List getDetectedClass(){
-        Scanner scanner = new Scanner();
-        scanner.load(Thread.currentThread().getContextClassLoader());
-        scanner.setFilter(getFilter());
-        return scanner.getClasses();
+        Scanner scanner = new DefaultScanner();
+        scanner.setDefaultFilter(getFilter());
+        scanner.scan();
+        return scanner.getClassList();
     }
     
-    private ScannerFilter getFilter(){
+    private TypeFilter getFilter(){
         try{
             Class scannerFilterClass = ClassUtil.get(DefaultScannerFilter);
-            return (ScannerFilter)ClassUtil.getInstance(scannerFilterClass);
+            return (TypeFilter)ClassUtil.getInstance(scannerFilterClass);
         }
         catch(Exception e){
             throw new BrutosException(
                 "can't initialize the scanner: " + DefaultScannerFilter,e);
         }
     }
+    
     private ApplicationContext createApplicationContext(List detectedClass){
 
         Class clazz = getApplicationContextClass();
