@@ -24,11 +24,12 @@
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
     <xsd:import namespace="http://www.brutosframework.com.br/schema/controllers"
-		schemaLocation="http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.0.xsd" />
+		schemaLocation="http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd" />
     
     <xsd:element name="annotation-config"/>
     <xsd:element name="params" type="params"/>
     <xsd:element name="types" type="types"/>
+    <xsd:element name="component-scan" type="scan-type"/>
     
     <xsd:complexType name="types">
         <xsd:sequence>
@@ -60,4 +61,26 @@
         </xsd:sequence>
     </xsd:complexType>
 
+  <xsd:simpleType name="filter-type">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="annotation"/>
+        <xsd:enumeration value="regex"/>
+        <xsd:enumeration value="custom"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+    <xsd:complexType name="scanner-filter">
+        <xsd:attribute name="type" type="filter-type" use="required"/>
+        <xsd:attribute name="expression" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="scan-type">
+        <xsd:sequence>
+            <xsd:element name="exclude-filter" type="scanner-filter" minOccurs="0"  maxOccurs="unbounded" />
+            <xsd:element name="include-filter" type="scanner-filter" minOccurs="0"  maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="scanner-class" type="xsd:string"/>
+        <xsd:attribute name="base-package" type="xsd:string"/>
+        <xsd:attribute name="use-default-filters" type="xsd:boolean" default="true"/>
+    </xsd:complexType>
 </xsd:schema>

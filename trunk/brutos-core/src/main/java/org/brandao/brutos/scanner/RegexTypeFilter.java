@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos;
+package org.brandao.brutos.scanner;
 
 import java.util.Properties;
 
@@ -23,26 +23,21 @@ import java.util.Properties;
  *
  * @author Brandao
  */
-public class AnnotationTypeFilter implements TypeFilter{
+public class RegexTypeFilter implements TypeFilter{
 
     private boolean include;
-    private Class annotation;
+    private String regex;
     
     public void setConfiguration(Properties config) {
         this.include = 
             config.getProperty("filter-type","include").equals("include");
-        
-        try{
-            this.annotation =
-                ClassUtil.get(config.getProperty("expression"));
-        }
-        catch(Exception e){
-            throw new BrutosException(e);
-        }
+        this.regex =
+            config.getProperty("expression",".*");
     }
 
     public Boolean accepts(Class classe) {
-        return classe.isAnnotationPresent(annotation) ? Boolean.valueOf(include) : null;
+        String name = classe.getName();
+        return name.matches(regex)? Boolean.valueOf(include) : null;
     }
     
 }

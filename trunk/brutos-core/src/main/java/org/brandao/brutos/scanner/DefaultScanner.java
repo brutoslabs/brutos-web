@@ -16,8 +16,9 @@
  */
 
 
-package org.brandao.brutos;
+package org.brandao.brutos.scanner;
 
+import org.brandao.brutos.scanner.AbstractScanner;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +32,7 @@ import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import org.brandao.brutos.mapping.MappingException;
+import org.brandao.brutos.mapping.StringUtil;
 /**
  *
  * @author Afonso Brandao
@@ -42,6 +44,7 @@ public class DefaultScanner extends AbstractScanner{
 
     public void scan(){
         load(Thread.currentThread().getContextClassLoader());
+        manifest();
     }
     
     public void load( ClassLoader classLoader ){
@@ -152,7 +155,15 @@ public class DefaultScanner extends AbstractScanner{
         File file = new File( path );
         if( file.isDirectory() ){
             path = file.getPath();
-            readDir( file, classLoader, path.length() );
+            
+            if(!StringUtil.isEmpty(this.basePackage)){
+                String packageName = path.replace(File.pathSeparator, ".");
+                if(packageName.startsWith(this.basePackage))
+                    readDir( file, classLoader, path.length() );
+            }
+            else
+                readDir( file, classLoader, path.length() );
+            
         }
     }
 

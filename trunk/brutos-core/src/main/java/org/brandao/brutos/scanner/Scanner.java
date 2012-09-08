@@ -16,7 +16,7 @@
  */
 
 
-package org.brandao.brutos;
+package org.brandao.brutos.scanner;
 
 import java.util.List;
 import java.util.Properties;
@@ -32,8 +32,6 @@ public interface Scanner {
     void setConfiguration(Properties config);
     
     List getClassList();
-    
-    void setDefaultFilter(TypeFilter filter);
     
     void addFilter(TypeFilter filter);
 }
