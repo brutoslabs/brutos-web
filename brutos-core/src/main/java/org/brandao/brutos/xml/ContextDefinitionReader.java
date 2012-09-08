@@ -17,6 +17,9 @@
 
 package org.brandao.brutos.xml;
 
+import org.brandao.brutos.scanner.DefaultScanner;
+import org.brandao.brutos.scanner.TypeFilter;
+import org.brandao.brutos.scanner.Scanner;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -28,6 +31,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
+import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.scanner.*;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.type.TypeManager;
 import org.w3c.dom.Document;
@@ -49,7 +54,19 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
         AnnotationApplicationContext = "org.brandao.brutos.annotation.AnnotationApplicationContext";
     
     public static final String 
-        DefaultScannerFilter = "org.brandao.brutos.annotation.AnnotationFilter";
+        BaseScannerClass = "org.brandao.brutos.scanner.";
+
+    public static final String 
+        BaseScannerAnnotationClass = BaseScannerClass + "annotation.";
+    
+    public static final String[] DefaultFilters = new String[]{
+        BaseScannerClass + "ControllerFilter",
+        BaseScannerClass + "InterceptorFilter",
+        BaseScannerClass + "ValueTypeFilter",
+        BaseScannerAnnotationClass + "AnnotationControllerFilter",
+        BaseScannerAnnotationClass + "AnnotationInterceptorFilter",
+        BaseScannerAnnotationClass + "AnnotationValueTypeFilter"
+    }; 
     
     public ContextDefinitionReader( ConfigurableApplicationContext handler,
             List blackList, ResourceLoader resourceLoader ){
@@ -123,35 +140,127 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
                 document,
                 XMLBrutosConstants.XML_BRUTOS_TYPES ) );
 
+        Scanner scanner = 
+                getScanner(parseUtil.getElement(
+                    document,
+                    XMLBrutosConstants.XML_BRUTOS_COMPONENT_SCAN ) );
+        
         loadAnnotationDefinition( parseUtil.getElement(
                 document,
-                XMLBrutosConstants.XML_BRUTOS_ANNOTATION_CONFIG ) );
+                XMLBrutosConstants.XML_BRUTOS_ANNOTATION_CONFIG ), scanner );
     }
 
-    private void loadAnnotationDefinition( Element cp ){
+    private Scanner getScanner(Element element){
+        
+        String basePackage = element.getAttribute("base-package");
+        boolean useDefaultfilter = "true".equals(element.getAttribute("use-default-filters"));
+        
+        Scanner scanner = new DefaultScanner();
+        
+        if(useDefaultfilter)
+            loadDefaultFilters(scanner);
+        
+        Properties prop = new Properties();
+        prop.setProperty("base-package", basePackage);
+        prop.setProperty("use-default-filters", String.valueOf(useDefaultfilter));
+        
+        scanner.setConfiguration(prop);
+        
+        NodeList list = parseUtil.getElements(element, "exclude-filter");
+        for(int i=0;i<list.getLength();i++){
+            Element filterNode = (Element)list.item(i);
+            String expression = filterNode.getAttribute("expression");
+            String type = filterNode.getAttribute("type");
+            String filterClassName = getFilterClassName(expression, type);
+            
+            TypeFilter filter = 
+                getTypeFilter(expression, false, filterClassName, true);
+            
+            if(filter != null)
+                scanner.addFilter(filter);
+        }
+        
+        list = parseUtil.getElements(element, "include-filter");
+        
+        for(int i=0;i<list.getLength();i++){
+            Element filterNode = (Element)list.item(i);
+            String expression = filterNode.getAttribute("expression");
+            String type = filterNode.getAttribute("type");
+            String filterClassName = getFilterClassName(expression, type);
+            
+            TypeFilter filter = 
+                getTypeFilter(expression, true, filterClassName, true);
+            
+            if(filter != null)
+                scanner.addFilter(filter);
+        }
+        
+        scanner.scan();
+        
+        return scanner;
+    }
+    
+    private String getFilterClassName(String expression, String type){
+        if(XMLBrutosConstants.XML_BRUTOS_CUSTOM_FILTER.equals(type))
+            return expression;
+        else{
+            String name = 
+                type.length() > 1?
+                Character.toUpperCase(type.charAt(0)) + type.substring(1) :
+                type;
+            return BaseScannerClass + name + "TypeFilter";
+        }
+    }
+    
+    private void loadDefaultFilters(Scanner scanner){
+        for(int i=0;i<DefaultFilters.length;i++){
+            String filterName = DefaultFilters[i];
+            TypeFilter filter = 
+                getTypeFilter(null, true, filterName, 
+                    !filterName.startsWith(BaseScannerAnnotationClass));
+            
+            
+            if(filter != null)
+                scanner.addFilter(filter);
+        }
+    }
+    private void loadAnnotationDefinition( Element cp, Scanner scanner ){
         if( cp != null ){
-            ApplicationContext aac = createApplicationContext(getDetectedClass());
+            ApplicationContext aac = createApplicationContext(scanner.getClassList());
             handler.setParent(aac);
             aac.configure(aac.getConfiguration());
         }
     }
 
-    private List getDetectedClass(){
-        Scanner scanner = new DefaultScanner();
-        scanner.setDefaultFilter(getFilter());
-        scanner.scan();
-        return scanner.getClassList();
-    }
-    
-    private TypeFilter getFilter(){
+    private TypeFilter getTypeFilter(String expression, boolean include, 
+        String className, boolean required){
+        
+        Properties prop = new Properties();
+        prop.setProperty("filter-type", String.valueOf(include));
+        prop.setProperty("expression", expression);
         try{
-            Class scannerFilterClass = ClassUtil.get(DefaultScannerFilter);
+            
+            Class scannerFilterClass;
+            scannerFilterClass = ClassUtil.get(className);
             return (TypeFilter)ClassUtil.getInstance(scannerFilterClass);
         }
-        catch(Exception e){
-            throw new BrutosException(
-                "can't initialize the scanner: " + DefaultScannerFilter,e);
+        catch (ClassNotFoundException ex) {
+            if(required)
+                throw new BrutosException(
+                    "class not found: " + className,ex);
+        } 
+        catch (InstantiationException ex) {
+            if(required)
+                throw new BrutosException(
+                    "can't initialize the scanner: " + className,ex);
+        } 
+        catch (IllegalAccessException ex) {
+            if(required)
+                throw new BrutosException(
+                    "can't initialize the scanner: " + className,ex);
         }
+        
+        return null;
     }
     
     private ApplicationContext createApplicationContext(List detectedClass){

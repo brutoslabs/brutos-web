@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos;
+package org.brandao.brutos.scanner;
 
 import java.util.Properties;
 

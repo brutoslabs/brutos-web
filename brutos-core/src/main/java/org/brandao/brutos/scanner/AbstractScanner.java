@@ -16,7 +16,7 @@
  */
 
 
-package org.brandao.brutos;
+package org.brandao.brutos.scanner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +28,9 @@ import java.util.Properties;
 public abstract class AbstractScanner implements Scanner{
 
     protected List listClass;
-    protected TypeFilter defaultFilter;
     protected List filters;
     protected String basePackage;
-    protected boolean useDefaultFilter;
+    protected boolean useDefaultFilters;
     
     public AbstractScanner(){
         this.listClass = new ArrayList();
@@ -41,8 +40,8 @@ public abstract class AbstractScanner implements Scanner{
     public void setConfiguration(Properties config){
         this.basePackage =  
             config.getProperty("base-package", "");
-        this.useDefaultFilter =  
-            Boolean.valueOf(config.getProperty("use-default-filter", "true"))
+        this.useDefaultFilters =  
+            Boolean.valueOf(config.getProperty("use-default-filters", "true"))
                     .booleanValue();
     }
     
@@ -50,16 +49,10 @@ public abstract class AbstractScanner implements Scanner{
         filters.add(filter);
     }
 
-    public void setDefaultFilter( TypeFilter filter ){
-        this.defaultFilter = filter;
-    }
-
     protected boolean accepts(Class classe){
         if(!listClass.contains(classe)){
-            Boolean value = 
-                this.defaultFilter == null || !this.useDefaultFilter? 
-                    Boolean.FALSE : 
-                    this.defaultFilter.accepts(classe);
+            
+            Boolean value = null;
             
             for(int i=0;i<filters.size();i++){
                 TypeFilter filter = (TypeFilter)filters.get(i);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos;
+package org.brandao.brutos.scanner;
 
 import java.util.Properties;
 
@@ -23,21 +23,16 @@ import java.util.Properties;
  *
  * @author Brandao
  */
-public class RegexTypeFilter implements TypeFilter{
-
-    private boolean include;
-    private String regex;
-    
-    public void setConfiguration(Properties config) {
-        this.include = 
-            config.getProperty("filter-type","include").equals("include");
-        this.regex =
-            config.getProperty("expression",".*");
-    }
+public class ControllerFilter implements TypeFilter{
 
     public Boolean accepts(Class classe) {
-        String name = classe.getName();
-        return name.matches(regex)? Boolean.valueOf(include) : null;
+        return 
+            classe.getName().endsWith("Controller")?
+            Boolean.TRUE :
+            null;
+    }
+
+    public void setConfiguration(Properties config) {
     }
     
 }
