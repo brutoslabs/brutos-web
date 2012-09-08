@@ -15,24 +15,26 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.scanner;
 
 import java.util.Properties;
-import org.brandao.brutos.TypeFilter;
-import org.brandao.brutos.annotation.configuration.AnnotationUtil;
+import org.brandao.brutos.annotation.TypeDef;
+import org.brandao.brutos.scanner.TypeFilter;
+import org.brandao.brutos.type.Type;
 
 /**
  *
  * @author Brandao
  */
-public class AnnotationFilter implements TypeFilter{
+public class AnnotationValueTypeFilter implements TypeFilter{
 
     public Boolean accepts(Class classe) {
-        boolean accepts =
-            AnnotationUtil.isCollection(classe) ||
-            AnnotationUtil.isInterceptor(classe) ||
-            classe.isAnnotationPresent(TypeDef.class);
-        return accepts;
+        return 
+            classe.isAnnotationPresent(TypeDef.class) 
+            && Type.class.isAssignableFrom(classe)
+                ?
+            Boolean.TRUE :
+            null;
     }
 
     public void setConfiguration(Properties config) {
