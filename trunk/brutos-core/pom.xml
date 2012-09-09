@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.brandao</groupId>
     <artifactId>brutos-core</artifactId>
@@ -42,6 +42,12 @@
         </plugins>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-vfs</artifactId>
+            <version>3.0.0.CR5</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -98,9 +104,9 @@
             <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
         </repository>
         <repository>
-            <id>repository.jboss.org</id>
-            <name>repository.jboss.org</name>
-            <url>http://repository.jboss.org/maven2</url>
+            <id>jboss</id>
+            <name>jboss</name>
+            <url>http://repository.jboss.com/maven2</url>
         </repository>
     </repositories>
     <properties>

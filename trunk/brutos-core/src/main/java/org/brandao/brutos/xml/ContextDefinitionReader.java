@@ -17,22 +17,24 @@
 
 package org.brandao.brutos.xml;
 
-import org.brandao.brutos.scanner.DefaultScanner;
-import org.brandao.brutos.scanner.TypeFilter;
-import org.brandao.brutos.scanner.Scanner;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import org.brandao.brutos.*;
+import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
-import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.scanner.*;
+import org.brandao.brutos.scanner.DefaultScanner;
+import org.brandao.brutos.scanner.Scanner;
+import org.brandao.brutos.scanner.TypeFilter;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.type.TypeManager;
 import org.w3c.dom.Document;
@@ -50,6 +52,8 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
 
     private XMLParseUtil parseUtil;
 
+    private ApplicationContext parent;
+    
     public static final String 
         AnnotationApplicationContext = "org.brandao.brutos.annotation.AnnotationApplicationContext";
     
@@ -152,6 +156,9 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
 
     private Scanner getScanner(Element element){
         
+        if(element == null)
+            return null;
+        
         String basePackage = element.getAttribute("base-package");
         boolean useDefaultfilter = "true".equals(element.getAttribute("use-default-filters"));
         
@@ -161,7 +168,7 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
             loadDefaultFilters(scanner);
         
         Properties prop = new Properties();
-        prop.setProperty("base-package", basePackage);
+        prop.setProperty("base-package", basePackage == null? "" : basePackage);
         prop.setProperty("use-default-filters", String.valueOf(useDefaultfilter));
         
         scanner.setConfiguration(prop);
@@ -226,9 +233,9 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
     }
     private void loadAnnotationDefinition( Element cp, Scanner scanner ){
         if( cp != null ){
-            ApplicationContext aac = createApplicationContext(scanner.getClassList());
-            handler.setParent(aac);
-            aac.configure(aac.getConfiguration());
+            List classList = scanner == null? new ArrayList() : scanner.getClassList();
+            parent = createApplicationContext(classList);
+           parent.configure(handler.getConfiguration());
         }
     }
 
@@ -237,7 +244,10 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
         
         Properties prop = new Properties();
         prop.setProperty("filter-type", String.valueOf(include));
-        prop.setProperty("expression", expression);
+        
+        if(expression != null)
+            prop.setProperty("expression", expression);
+        
         try{
             
             Class scannerFilterClass;
@@ -269,10 +279,15 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
 
         if(ApplicationContext.class.isAssignableFrom(clazz)){
             try{
+                Class[] arrayClass = new Class[detectedClass.size()];
+                
+                for(int i=0;i<detectedClass.size();i++)
+                    arrayClass[i] = (Class)detectedClass.get(i);
+                
                 ApplicationContext app =
                     (ApplicationContext) clazz
                         .getConstructor(new Class[]{Class[].class})
-                            .newInstance(new Object[]{detectedClass.toArray()});
+                            .newInstance(new Object[]{arrayClass});
                 return app;
             }
             catch( Exception e ){
@@ -379,6 +394,10 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
 
     public ResourceLoader getResourceLoader() {
         return this.resourceLoader;
+    }
+
+    public ApplicationContext getParent() {
+        return parent;
     }
 
 }
