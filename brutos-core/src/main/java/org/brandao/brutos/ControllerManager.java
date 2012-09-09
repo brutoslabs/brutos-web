@@ -218,6 +218,7 @@ public class ControllerManager {
         controller.setActionListener( ac );
         
         addForm( controller.getId(), controller );
+        
         controller.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
         
         this.current = new ControllerBuilder( controller, this, 
@@ -320,10 +321,13 @@ public class ControllerManager {
     }
 
     void addForm( String id, Controller form ) {
-        if( contains(id) )
-            throw new BrutosException( String.format("duplicate id: %s", new Object[]{id} ) );
-
-        forms.put(id, form);
+        if( id != null){
+             if(contains(id))
+                throw new BrutosException( String.format("duplicate id: %s", new Object[]{id} ) );
+            else
+                forms.put(id, form);
+        }
+        
         revForms.put( form.getClassType(), form);
     }
 

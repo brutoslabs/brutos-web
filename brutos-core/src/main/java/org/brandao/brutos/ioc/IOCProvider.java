@@ -56,7 +56,7 @@ public abstract class IOCProvider {
         IOCProvider ioc        = null;
         
         if( iocProviderName == null )
-            return null;
+            throw new BrutosException("IoC provider not configured");
 
         try{
             logger.info("IoC provider: " + iocProviderName );
