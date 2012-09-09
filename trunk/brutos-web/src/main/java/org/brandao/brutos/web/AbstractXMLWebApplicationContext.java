@@ -33,12 +33,16 @@ public abstract class AbstractXMLWebApplicationContext
 
     public void configure( Properties config ){
         super.setConfiguration(config);
-        loadContextDefinition();
+        ContextDefinitionReader ccdr = loadContextDefinition();
         super.configure(config);
+        
+        if(ccdr.getParent() != null)
+            this.setParent(ccdr.getParent());
+        
         loadControllersDefinition();
     }
 
-    protected void loadContextDefinition(){
+    protected ContextDefinitionReader loadContextDefinition(){
         ContextDefinitionReader ccdr =
             new ContextDefinitionReader(
                 this,
@@ -46,6 +50,8 @@ public abstract class AbstractXMLWebApplicationContext
                 this);
 
         loadDefinitions(ccdr);
+        
+        return ccdr;
     }
 
     protected void loadControllersDefinition(){
