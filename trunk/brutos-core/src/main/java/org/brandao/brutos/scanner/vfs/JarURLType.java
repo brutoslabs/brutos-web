@@ -20,7 +20,6 @@ package org.brandao.brutos.scanner.vfs;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.jar.JarFile;
 
 /**
  *
