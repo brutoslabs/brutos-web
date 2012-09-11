@@ -19,12 +19,14 @@
 package org.brandao.brutos.scanner;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.scanner.vfs.Dir;
 import org.brandao.brutos.scanner.vfs.File;
 import org.brandao.brutos.scanner.vfs.Vfs;
@@ -38,20 +40,25 @@ public class DefaultScanner extends AbstractScanner{
     }
 
     public void scan(){
-        manifest();
+        try{
+            ClassLoader classLoader = getClassLoader();
+            scan( classLoader );
+        }
+        catch(Exception e){
+            throw new BrutosException(e);
+        }
     }
     
-    public void load( ClassLoader classLoader ){
-        try{
-            URLClassLoader urls = (URLClassLoader)classLoader;
-            Enumeration e = urls.getResources(toResource(basePackage));
-            
-            while(e.hasMoreElements()){
-                URL url = (URL) e.nextElement();
-                scan(url, classLoader);
-            }
+    public void scan( ClassLoader classLoader ) throws IOException{
+        
+        URLClassLoader urls = (URLClassLoader)classLoader;
+        
+        Enumeration e = urls.getResources(toResource(basePackage));
+
+        while(e.hasMoreElements()){
+            URL url = (URL) e.nextElement();
+            scan(url, classLoader);
         }
-        catch( Exception e ){}
     }
 
     private void scan(URL url, ClassLoader classLoader){
@@ -64,8 +71,9 @@ public class DefaultScanner extends AbstractScanner{
 
             if( path.endsWith( ".class" ) ){
                 String tmp = 
-                    basePackage + 
-                    "." + 
+                    (StringUtil.isEmpty(basePackage)? 
+                        "" : 
+                        basePackage + ".") + 
                     path.replace( "/" , "." ).substring( 0, path.length()-6 );
 
                 try{
@@ -75,43 +83,40 @@ public class DefaultScanner extends AbstractScanner{
             }
         }
     }
-    public void manifest(){
-        try {
-            ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-            Enumeration urls = classLoader.getResources( "META-INF/MANIFEST.MF" );
-            Map urlMap = new HashMap();
-            
-            while( urls.hasMoreElements() ){
-                URL url = (URL) urls.nextElement();
-                InputStream in = url.openConnection().getInputStream();
-                List listURL = manifest(in);
-                
-                for(int i=0;i<listURL.size();i++){
-                    URL u = (URL)listURL.get(i);
-                    urlMap.put(u.toExternalForm(), u);
-                }
+    public ClassLoader getClassLoader() throws IOException{
+        
+        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+        
+        Enumeration urls = classLoader.getResources( "META-INF/MANIFEST.MF" );
+        
+        Map urlMap = new HashMap();
+
+        while( urls.hasMoreElements() ){
+            URL url = (URL) urls.nextElement();
+            InputStream in = url.openConnection().getInputStream();
+            List listURL = manifest(in);
+
+            for(int i=0;i<listURL.size();i++){
+                URL u = (URL)listURL.get(i);
+                urlMap.put(u.toExternalForm(), u);
             }
-            
-            Collection collectionUrls = urlMap.values();
-            Iterator iterator = collectionUrls.iterator();
-            
-            URL[] arrayUrls = new URL[collectionUrls.size()];
-            
-            int index = 0;
-            while(iterator.hasNext()){
-                arrayUrls[index++] = (URL)iterator.next();
-            }
-            
-            URLClassLoader urlClassLoader = 
-                new URLClassLoader(
-                    arrayUrls,
-                    Thread.currentThread().getContextClassLoader());
-            
-            load( urlClassLoader );
         }
-        catch (Exception ex) {
-            throw new BrutosException( ex );
+
+        Collection collectionUrls = urlMap.values();
+        Iterator iterator = collectionUrls.iterator();
+
+        URL[] arrayUrls = new URL[collectionUrls.size()];
+
+        int index = 0;
+        while(iterator.hasNext()){
+            arrayUrls[index++] = (URL)iterator.next();
         }
+
+        return 
+            new URLClassLoader(
+                arrayUrls,
+                Thread.currentThread().getContextClassLoader());
+            
     }
 
     public List manifest(InputStream in){
@@ -139,11 +144,11 @@ public class DefaultScanner extends AbstractScanner{
                 
                 URL url;
                 
-                if( fileName.startsWith("file:/") )
-                    url = new URL(fileName);
-                else
                 if (".".equals(fileName)) 
                     url = new URL("file:/" + dirName);
+                else
+                if( fileName.matches("^[a-z]*\\:/.*") )
+                    url = new URL(fileName);
                 else{
                     fileName = dirName + "/" + fileName;
                     url = new URL("file:/"+fileName);
