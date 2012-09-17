@@ -27,6 +27,6 @@ public interface TypeFilter {
 
     void setConfiguration(Properties config);
     
-    Boolean accepts( Class classe );
+    Boolean accepts( String resource );
     
 }

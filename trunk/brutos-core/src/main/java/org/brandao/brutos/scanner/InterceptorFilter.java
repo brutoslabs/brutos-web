@@ -18,18 +18,21 @@
 package org.brandao.brutos.scanner;
 
 import java.util.Properties;
-import org.brandao.brutos.interceptor.InterceptorController;
 
 /**
  *
  * @author Brandao
  */
-public class InterceptorFilter implements TypeFilter{
+public class InterceptorFilter extends RegexTypeFilter{
 
-    public Boolean accepts(Class classe) {
+    public InterceptorFilter(){
+        super();
+        this.regex = ".*/\\w+InterceptorController\\.class";
+    }
+    
+    public Boolean accepts(String resource) {
         return 
-            classe.getName().endsWith("InterceptorController") 
-            && InterceptorController.class.isAssignableFrom(classe)?
+            resource.matches(this.regex)?
             Boolean.TRUE :
             null;
     }

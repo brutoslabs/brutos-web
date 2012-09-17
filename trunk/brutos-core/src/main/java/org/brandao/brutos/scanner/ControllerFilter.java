@@ -25,9 +25,10 @@ import java.util.Properties;
  */
 public class ControllerFilter implements TypeFilter{
 
-    public Boolean accepts(Class classe) {
+    public Boolean accepts(String resource) {
         return 
-            classe.getName().endsWith("Controller")?
+            resource.matches(".*/\\w+Controller\\.class")
+                ?
             Boolean.TRUE :
             null;
     }

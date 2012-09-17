@@ -49,14 +49,14 @@ public abstract class AbstractScanner implements Scanner{
         filters.add(filter);
     }
 
-    protected boolean accepts(Class classe){
-        if(!listClass.contains(classe)){
+    protected boolean accepts(String resource){
+        if(!listClass.contains(resource)){
             
             Boolean value = null;
             
             for(int i=0;i<filters.size();i++){
                 TypeFilter filter = (TypeFilter)filters.get(i);
-                Boolean filterValue = filter.accepts(classe);
+                Boolean filterValue = filter.accepts(resource);
                 if(filterValue != null){
                     if(!filterValue.booleanValue())
                         return false;
