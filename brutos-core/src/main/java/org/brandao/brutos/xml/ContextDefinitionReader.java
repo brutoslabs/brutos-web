@@ -252,7 +252,9 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
             
             Class scannerFilterClass;
             scannerFilterClass = ClassUtil.get(className);
-            return (TypeFilter)ClassUtil.getInstance(scannerFilterClass);
+            TypeFilter filter = (TypeFilter)ClassUtil.getInstance(scannerFilterClass);
+            filter.setConfiguration(prop);
+            return filter;
         }
         catch (ClassNotFoundException ex) {
             if(required)

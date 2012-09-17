@@ -70,16 +70,21 @@ public class DefaultScanner extends AbstractScanner{
             String path = file.getRelativePath();
 
             if( path.endsWith( ".class" ) ){
+                /*
                 String tmp = 
                     (StringUtil.isEmpty(basePackage)? 
                         "" : 
                         basePackage + ".") + 
                     path.replace( "/" , "." ).substring( 0, path.length()-6 );
-
-                try{
-                    checkClass( Class.forName( tmp, false, classLoader) );
-                }
-                catch( Throwable ex ){}
+                */
+                String tmp = 
+                    (StringUtil.isEmpty(basePackage)? 
+                        "" : 
+                        basePackage + "/") + 
+                    path.replace( "." , "/" );
+                
+                checkClass( tmp );
+                
             }
         }
     }
@@ -165,9 +170,9 @@ public class DefaultScanner extends AbstractScanner{
 
     }
     
-    private void checkClass( Class classe ){
-        if(accepts(classe))
-            listClass.add(classe);
+    private void checkClass( String resource ){
+        if(accepts(resource))
+            listClass.add(resource);
     }
     
    private String toResource(String value){

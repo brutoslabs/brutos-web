@@ -24,11 +24,16 @@ import org.brandao.brutos.type.Type;
  *
  * @author Brandao
  */
-public class ValueTypeFilter implements TypeFilter{
+public class ValueTypeFilter extends RegexTypeFilter{
 
-    public Boolean accepts(Class classe) {
+    public ValueTypeFilter(){
+        super();
+        this.regex = ".*/\\w+Type\\.class";
+    }
+    
+    public Boolean accepts(String resource) {
         return 
-            classe.getName().endsWith("Type") && Type.class.isAssignableFrom(classe)
+            resource.matches(this.regex)
                 ?
             Boolean.TRUE :
             null;

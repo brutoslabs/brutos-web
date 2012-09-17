@@ -25,8 +25,8 @@ import java.util.Properties;
  */
 public class RegexTypeFilter implements TypeFilter{
 
-    private boolean include;
-    private String regex;
+    protected boolean include;
+    protected String regex;
     
     public void setConfiguration(Properties config) {
         this.include = 
@@ -35,9 +35,8 @@ public class RegexTypeFilter implements TypeFilter{
             config.getProperty("expression",".*");
     }
 
-    public Boolean accepts(Class classe) {
-        String name = classe.getName();
-        return name.matches(regex)? Boolean.valueOf(include) : null;
+    public Boolean accepts(String resource) {
+        return resource.matches(regex)? Boolean.valueOf(include) : null;
     }
     
 }
