@@ -18,6 +18,8 @@
 package org.brandao.brutos.annotation.scanner;
 
 import java.util.Properties;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.TypeDef;
 import org.brandao.brutos.scanner.TypeFilter;
 import org.brandao.brutos.type.Type;
@@ -28,13 +30,19 @@ import org.brandao.brutos.type.Type;
  */
 public class AnnotationValueTypeFilter implements TypeFilter{
 
-    public Boolean accepts(Class classe) {
-        return 
-            classe.isAnnotationPresent(TypeDef.class) 
-            && Type.class.isAssignableFrom(classe)
-                ?
-            Boolean.TRUE :
-            null;
+    public Boolean accepts(String resource) {
+        try{
+            Class clazz = ClassUtil.get(resource);
+            return 
+                clazz.isAnnotationPresent(TypeDef.class) 
+                && Type.class.isAssignableFrom(clazz)
+                    ?
+                Boolean.TRUE :
+                null;
+        }
+        catch(Exception e){
+            throw new BrutosException(e);
+        }
     }
 
     public void setConfiguration(Properties config) {

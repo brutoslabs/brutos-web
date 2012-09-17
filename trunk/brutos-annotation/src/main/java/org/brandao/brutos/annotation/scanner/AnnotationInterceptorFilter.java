@@ -18,6 +18,8 @@
 package org.brandao.brutos.annotation.scanner;
 
 import java.util.Properties;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.Intercepts;
 import org.brandao.brutos.interceptor.InterceptorController;
 import org.brandao.brutos.scanner.TypeFilter;
@@ -28,12 +30,19 @@ import org.brandao.brutos.scanner.TypeFilter;
  */
 public class AnnotationInterceptorFilter implements TypeFilter{
 
-    public Boolean accepts(Class classe) {
-        return 
-            classe.isAnnotationPresent(Intercepts.class) 
-            && InterceptorController.class.isAssignableFrom(classe)?
-            Boolean.TRUE :
-            null;
+    public Boolean accepts(String resource) {
+        try{
+            Class clazz = ClassUtil.get(resource);
+            return 
+                clazz.isAnnotationPresent(Intercepts.class) 
+                && InterceptorController.class.isAssignableFrom(clazz)?
+                Boolean.TRUE :
+                null;
+        }
+        catch(Exception e){
+            throw new BrutosException(e);
+        }
+        
     }
 
     public void setConfiguration(Properties config) {

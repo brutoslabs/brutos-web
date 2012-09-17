@@ -44,8 +44,20 @@ public class AnnotationTypeFilter implements TypeFilter{
         }
     }
 
-    public Boolean accepts(Class classe) {
-        return classe.isAnnotationPresent(annotation) ? Boolean.valueOf(include) : null;
+    public Boolean accepts(String resource) {
+        try{
+            Class clazz = ClassUtil.get(resource);
+            return clazz.isAnnotationPresent(annotation) ? Boolean.valueOf(include) : null;
+        }
+        catch(Exception e){
+            throw new BrutosException(e);
+        }
+        /*
+        return 
+          include?
+            (classe.isAnnotationPresent(annotation) ? Boolean.TRUE : null) :
+            (classe.isAnnotationPresent(annotation) ? Boolean.FALSE : null);
+         */
     }
     
 }

@@ -92,7 +92,8 @@ public class ScannerTest extends TestCase{
     public void test4(){
         String content = "";
         content +="<ns1:component-scan>";
-        content +="        <ns1:exclude-filter type=\"regex\" expression=\"InterceptorController$\"/>";
+        content +="        <ns1:exclude-filter type=\"regex\" expression=\".*InterceptorController$\"/>";
+        content +="        <ns1:exclude-filter type=\"regex\" expression=\".*Type$\"/>";
         content +="        <ns1:exclude-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Intercepts\"/>";
         content +="</ns1:component-scan>";
         ByteArrayXMLApplicationContext applicationContext = 
