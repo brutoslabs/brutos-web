@@ -31,9 +31,15 @@ import java.util.zip.ZipEntry;
 public class ZipDir implements CloseableDir{
 
     private java.util.zip.ZipFile file;
+    private String prefix;
     
-    public ZipDir(JarFile file) {
+    public ZipDir(String prefix,JarFile file) {
         this.file = file;
+        this.prefix = prefix;
+    }
+    
+    public String getPrefixPath(){
+        return this.prefix;
     }
     
     public void close() throws IOException {
@@ -49,8 +55,11 @@ public class ZipDir implements CloseableDir{
         Enumeration entries = file.entries();
         while(entries.hasMoreElements()){
             ZipEntry entry = (ZipEntry)entries.nextElement();
-            if(!entry.isDirectory())
-                result.add(new ZipFile(this,entry));
+            if(!entry.isDirectory()){
+                if((prefix == null || entry.getName().startsWith(prefix))){
+                    result.add(new ZipFile(this,entry));
+                }
+            }
         }
         
         File[] files = new File[result.size()];

@@ -39,7 +39,7 @@ public abstract class AbstractScanner implements Scanner{
 
     public void setConfiguration(Properties config){
         this.basePackage =  
-            config.getProperty("base-package", "");
+            config.getProperty("base-package", "").replace(".","/");
         this.useDefaultFilters =  
             Boolean.valueOf(config.getProperty("use-default-filters", "true"))
                     .booleanValue();

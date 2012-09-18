@@ -81,7 +81,7 @@ public class DefaultScanner extends AbstractScanner{
                     (StringUtil.isEmpty(basePackage)? 
                         "" : 
                         basePackage + "/") + 
-                    path.replace( "." , "/" );
+                    path;
                 
                 checkClass( tmp );
                 

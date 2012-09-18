@@ -22,6 +22,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -78,6 +79,19 @@ public final class Vfs {
             path = path.substring(0, path.indexOf(".jar!") + ".jar".length());        
         
         return path;
+    }
+    
+    public static String getRelativePath(URL url){
+        String path = url.getPath();
+        int index = path.indexOf("!");
+        
+        if(index != -1){
+            path = path.substring(index+1);
+            path = path.startsWith("/")? path.substring(1) : path;
+            return StringUtil.isEmpty(path)? null : path;
+        }
+        else
+            return null;
     }
     
     public static final List DefaultURLTypes;

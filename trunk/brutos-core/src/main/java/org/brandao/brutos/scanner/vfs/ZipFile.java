@@ -35,7 +35,10 @@ public class ZipFile implements File{
     }
     
     public String getRelativePath() {
-        return entry.getName();
+        if(root.getPrefixPath() != null)
+            return entry.getName().substring(root.getPrefixPath().length());
+        else
+            return entry.getName();
     }
 
     public String getName() {
