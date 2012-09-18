@@ -27,7 +27,7 @@ public class ControllerFilter implements TypeFilter{
 
     public Boolean accepts(String resource) {
         return 
-            resource.matches(".*/\\w+Controller\\.class")
+            resource.matches("(.*/)*\\w+Controller\\.class")
                 ?
             Boolean.TRUE :
             null;

@@ -29,8 +29,11 @@ public class JarURLType implements URLType{
 
     public Dir toDir(URL url) throws Exception {
         URLConnection urlConnection = url.openConnection();
-        if(urlConnection instanceof JarURLConnection)
-            return new ZipDir(((JarURLConnection) urlConnection).getJarFile());
+        if(urlConnection instanceof JarURLConnection){
+            return new ZipDir(
+                Vfs.getRelativePath(url),
+                ((JarURLConnection) urlConnection).getJarFile());
+        }
         else
             return null;
     }

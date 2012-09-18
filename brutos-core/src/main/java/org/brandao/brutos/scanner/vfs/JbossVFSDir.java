@@ -34,7 +34,7 @@ public class JbossVFSDir implements Dir{
                 if(file.isDirectory())
                     this.path = new SystemPath(file);
                 else
-                    this.path = new ZipDir(new JarFile(file));
+                    this.path = new ZipDir(null,new JarFile(file));
             }
             else
                 throw new VfsException("can't open path: " + file);

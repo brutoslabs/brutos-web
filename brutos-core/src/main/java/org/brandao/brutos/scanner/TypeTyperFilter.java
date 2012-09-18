@@ -23,14 +23,14 @@ import java.util.Properties;
  *
  * @author Brandao
  */
-public class InterceptorFilter implements TypeFilter{
+public class TypeTyperFilter implements TypeFilter{
 
-    public InterceptorFilter(){
+    public TypeTyperFilter(){
     }
     
     public Boolean accepts(String resource) {
         return 
-            resource.matches("(.*/)*\\w+InterceptorController\\.class")?
+            resource.matches("(.*/)*\\w+Type\\.class")?
             Boolean.TRUE :
             null;
     }
