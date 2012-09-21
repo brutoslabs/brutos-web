@@ -21,6 +21,7 @@ import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.scanner.TypeFilter;
+import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
  *
@@ -46,6 +47,7 @@ public class AnnotationTypeFilter implements TypeFilter{
 
     public Boolean accepts(String resource) {
         try{
+            resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
             return clazz.isAnnotationPresent(annotation) ? Boolean.valueOf(include) : null;
         }
