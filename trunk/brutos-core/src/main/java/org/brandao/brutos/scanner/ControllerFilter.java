@@ -18,6 +18,7 @@
 package org.brandao.brutos.scanner;
 
 import java.util.Properties;
+import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
  *
@@ -26,8 +27,9 @@ import java.util.Properties;
 public class ControllerFilter implements TypeFilter{
 
     public Boolean accepts(String resource) {
+        String className = Vfs.toClass(resource);
         return 
-            resource.matches("(.*/)*\\w+Controller\\.class")
+            className.matches("(.*\\.)*\\w+Controller")
                 ?
             Boolean.TRUE :
             null;

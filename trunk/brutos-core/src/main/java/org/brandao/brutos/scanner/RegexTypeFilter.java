@@ -18,6 +18,7 @@
 package org.brandao.brutos.scanner;
 
 import java.util.Properties;
+import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
  *
@@ -36,7 +37,8 @@ public class RegexTypeFilter implements TypeFilter{
     }
 
     public Boolean accepts(String resource) {
-        return resource.matches(regex)? Boolean.valueOf(include) : null;
+        String className = Vfs.toClass(resource);
+        return className.matches(regex)? Boolean.valueOf(include) : null;
     }
     
 }
