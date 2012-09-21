@@ -109,5 +109,21 @@ public final class Vfs {
         }
         
     }
+
+    public static String toClass(String resource){
+        return resource
+                .replaceAll("/+", ".")
+                .replaceAll("\\+", ".")
+                .replaceAll(".class$", "")
+                .replaceAll("^\\.", "");
+    }
+    
+   public static String toResource(String value){
+        return value
+            .replaceAll("\\.+", "/")
+            .replaceAll("\\\\+", "/")
+            .replaceAll( "/+" , "/")
+            .replaceAll("^\\/", "");
+    }
     
 }

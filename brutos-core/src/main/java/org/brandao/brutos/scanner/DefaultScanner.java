@@ -26,6 +26,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.scanner.vfs.Dir;
 import org.brandao.brutos.scanner.vfs.File;
@@ -44,6 +45,9 @@ public class DefaultScanner extends AbstractScanner{
             ClassLoader classLoader = getClassLoader();
             scan( classLoader );
         }
+        catch(BrutosException e){
+            throw e;
+        }
         catch(Exception e){
             throw new BrutosException(e);
         }
@@ -53,7 +57,7 @@ public class DefaultScanner extends AbstractScanner{
         
         URLClassLoader urls = (URLClassLoader)classLoader;
         
-        Enumeration e = urls.getResources(toResource(basePackage));
+        Enumeration e = urls.getResources(Vfs.toResource(basePackage));
 
         while(e.hasMoreElements()){
             URL url = (URL) e.nextElement();
@@ -171,20 +175,13 @@ public class DefaultScanner extends AbstractScanner{
     }
     
     private void checkClass( String resource ){
-        if(accepts(resource))
-            listClass.add(resource);
-    }
-    
-   private String toResource(String value){
-        value = value
-            .replace(".", "/")
-            .replace("\\", "/")
-            .replaceAll( "/+" , "/");
-        
-        if (value.startsWith("/")) 
-            value = value.substring(1);
-        
-        return value;
+        try{
+            if(accepts(resource))
+                listClass.add(ClassUtil.get(Vfs.toClass(resource)));
+        }
+        catch(Exception e){
+            throw new BrutosException(e);
+        }
     }
    
 }
