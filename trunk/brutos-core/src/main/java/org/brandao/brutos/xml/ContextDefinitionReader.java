@@ -243,7 +243,7 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
         String className, boolean required){
         
         Properties prop = new Properties();
-        prop.setProperty("filter-type", String.valueOf(include));
+        prop.setProperty("filter-type", include? "include" : "exclude");
         
         if(expression != null)
             prop.setProperty("expression", expression);
