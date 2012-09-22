@@ -18,23 +18,21 @@
 package org.brandao.brutos.scanner;
 
 import java.util.Properties;
-import org.brandao.brutos.type.Type;
+import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
  *
  * @author Brandao
  */
-public class ValueTypeFilter extends RegexTypeFilter{
+public class TypeTypeFilter implements TypeFilter{
 
-    public ValueTypeFilter(){
-        super();
-        this.regex = ".*/\\w+Type\\.class";
+    public TypeTypeFilter(){
     }
     
     public Boolean accepts(String resource) {
+        String className = Vfs.toClass(resource);
         return 
-            resource.matches(this.regex)
-                ?
+            className.matches("(.*\\.)*\\w+Type")?
             Boolean.TRUE :
             null;
     }

@@ -66,10 +66,10 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
     public static final String[] DefaultFilters = new String[]{
         BaseScannerClass + "ControllerFilter",
         BaseScannerClass + "InterceptorFilter",
-        BaseScannerClass + "ValueTypeFilter",
+        BaseScannerClass + "TypeTypeFilter",
         BaseScannerAnnotationClass + "AnnotationControllerFilter",
         BaseScannerAnnotationClass + "AnnotationInterceptorFilter",
-        BaseScannerAnnotationClass + "AnnotationValueTypeFilter"
+        BaseScannerAnnotationClass + "AnnotationTypeTypeFilter"
     }; 
     
     public ContextDefinitionReader( ConfigurableApplicationContext handler,

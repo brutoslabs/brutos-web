@@ -26,7 +26,7 @@ import junit.framework.TestCase;
  */
 public class TypeTypeFilterTest extends TestCase{
     
-    private TypeTyperFilter filter = new TypeTyperFilter();
+    private TypeTypeFilter filter = new TypeTypeFilter();
     
     public void test1(){
         Assert.assertNull(filter.accepts("test/Type.class"));
