@@ -18,6 +18,7 @@
 package org.brandao.brutos.scanner;
 
 import java.util.Properties;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
@@ -31,7 +32,9 @@ public class RegexTypeFilter implements TypeFilter{
     
     public void setConfiguration(Properties config) {
         this.include = 
-            config.getProperty("filter-type","include").equals("include");
+            config.getProperty(
+                "filter-type",BrutosConstants.INCLUDE)
+                    .equals(BrutosConstants.INCLUDE);
         this.regex =
             config.getProperty("expression",".*");
     }

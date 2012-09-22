@@ -116,4 +116,9 @@ public interface BrutosConstants {
 
     public final String WEB_APPLICATION_CLASS = ApplicationContext.class.getName() + ".web.application";
     
+    public final String INCLUDE = "include";
+    
+    public final String EXCLUDE = "exclude";
+    
+    public final String EXPRESSION = "expression";
 }
