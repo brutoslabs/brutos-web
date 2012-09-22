@@ -18,9 +18,9 @@
 package org.brandao.brutos.scanner;
 
 import java.util.Properties;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.scanner.TypeFilter;
 import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
@@ -34,11 +34,14 @@ public class AnnotationTypeFilter implements TypeFilter{
     
     public void setConfiguration(Properties config) {
         this.include = 
-            config.getProperty("filter-type","include").equals("include");
+            config.getProperty(
+                "filter-type", 
+                BrutosConstants.INCLUDE)
+                    .equals(BrutosConstants.INCLUDE);
         
         try{
             this.annotation =
-                ClassUtil.get(config.getProperty("expression"));
+                ClassUtil.get(config.getProperty(BrutosConstants.EXPRESSION));
         }
         catch(Exception e){
             throw new BrutosException(e);
@@ -54,12 +57,6 @@ public class AnnotationTypeFilter implements TypeFilter{
         catch(Exception e){
             throw new BrutosException(e);
         }
-        /*
-        return 
-          include?
-            (classe.isAnnotationPresent(annotation) ? Boolean.TRUE : null) :
-            (classe.isAnnotationPresent(annotation) ? Boolean.FALSE : null);
-         */
     }
     
 }

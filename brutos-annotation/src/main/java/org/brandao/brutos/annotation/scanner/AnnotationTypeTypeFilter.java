@@ -28,7 +28,7 @@ import org.brandao.brutos.type.Type;
  *
  * @author Brandao
  */
-public class AnnotationValueTypeFilter implements TypeFilter{
+public class AnnotationTypeTypeFilter implements TypeFilter{
 
     public Boolean accepts(String resource) {
         try{
