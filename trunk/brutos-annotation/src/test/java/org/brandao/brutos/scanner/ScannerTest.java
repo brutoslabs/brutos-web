@@ -187,8 +187,8 @@ public class ScannerTest extends TestCase{
     public void test8(){
         String content = "";
         content +="<ns1:component-scan base-package=\"org.brandao.brutos.helper\" use-default-filters=\"false\">";
-        content +="        <ns1:include-filter type=\"regex\" expression=\".*Controller$\"/>";
         content +="        <ns1:exclude-filter type=\"regex\" expression=\".*Test2.*\"/>";
+        content +="        <ns1:include-filter type=\"regex\" expression=\".*Controller$\"/>";
         content +="</ns1:component-scan>";
         ByteArrayXMLApplicationContext applicationContext = 
                 new ByteArrayXMLApplicationContext(getXML(content).getBytes());
