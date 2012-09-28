@@ -24,13 +24,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Define um bean.
+ * 
  * @author Afosno Brandao
  */
 @Target({ElementType.TYPE,ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Bean {
 
+    /**
+     * Identificação do bean. 
+     * Caso seja omitido, será usado no nome da classe.
+     */
     String name() default "";
     
 }

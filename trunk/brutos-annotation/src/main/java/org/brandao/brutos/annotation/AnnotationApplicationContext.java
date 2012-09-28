@@ -19,16 +19,13 @@ package org.brandao.brutos.annotation;
 
 import java.lang.annotation.Annotation;
 import java.util.*;
-import org.brandao.brutos.AbstractApplicationContext;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.configuration.*;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 
 /**
- *
+ * 
  * @author Afonso Brandao
  */
 public class AnnotationApplicationContext extends AbstractApplicationContext{
@@ -38,13 +35,22 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     private List<Class> compositeClassList;
     private Logger logger;
     
+    /**
+     * Cria uma nova aplicação.
+     * @param clazz Componentes da aplicação.
+     */
     public AnnotationApplicationContext(Class[] clazz) {
         this.allClazz = clazz;
         defineLogger();
     }
 
+    /**
+     * Cria uma nova aplicação.
+     * @param clazz Componentes da aplicação.
+     * @param parent Aplicação.
+     */
     public AnnotationApplicationContext(Class[] clazz,
-            AbstractApplicationContext parent) {
+            ApplicationContext parent) {
         super(parent);
         this.allClazz = clazz;
         defineLogger();

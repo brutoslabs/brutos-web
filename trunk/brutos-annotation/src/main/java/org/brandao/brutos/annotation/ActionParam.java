@@ -22,18 +22,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- *
- * @author Brandao
- */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
+@Deprecated
 public @interface ActionParam {
     
     String bean() default "";
     
     String scope() default "param";
 
+    @Deprecated
     boolean useMapping() default false;
     
 }

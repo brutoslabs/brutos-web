@@ -18,13 +18,20 @@
 package org.brandao.brutos.annotation;
 
 /**
- *
+ * Descreve os tipos que um Enum pode ser mapeado.
+ * 
  * @author Brandao
  */
 public interface EnumerationType {
     
+    /**
+     * O Enum é mapeado como inteiro.
+     */
     static final String ORDINAL = "ordinal";
     
+    /**
+     * O Enum é mapeado como string.
+     */
     static final  String STRING = "string";
     
 }

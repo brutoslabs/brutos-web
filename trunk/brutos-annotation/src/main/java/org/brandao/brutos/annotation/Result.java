@@ -23,13 +23,31 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Define a identificação do resultado de uma ação.
+ * 
+ * <pre>
+ * Ex:
+ * public class MyController{
+ *    
+ *    private int index;
+ * 
+ *    &#064;Result("msg")
+ *    public String myAction(){
+ *       ...
+ *    }
+ * 
+ *    ...
+ * }
+ * </pre>
  * @author Brandao
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Result {
  
+    /**
+     * Identificação do resultado.
+     */
     String value();
     
 }

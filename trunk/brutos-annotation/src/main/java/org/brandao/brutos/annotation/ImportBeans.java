@@ -22,13 +22,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- *
+ * Define os bean de escopo controller.
+ * 
  * @author Brandao
  */
 @java.lang.annotation.Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ImportBeans {
     
+    /**
+     * Coleção de beans.
+     */
     Class<?>[] value();
     
 }

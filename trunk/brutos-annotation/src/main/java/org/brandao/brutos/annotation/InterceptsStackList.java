@@ -22,13 +22,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Define uma coleção de pilhas de interceptadores.
+ * 
  * @author Brandao
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InterceptsStackList {
     
+    /**
+     * Coleção de pilhas de interceptadores.
+     */
     InterceptsStack[] value();
     
 }

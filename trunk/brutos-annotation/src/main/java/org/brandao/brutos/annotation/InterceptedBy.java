@@ -23,8 +23,25 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Define os interceptadores que irão interceptar o controlador.
+ * <pre>
+ * Ex1:
+ * &#064;InterceptedBy(
+ *    &#064;Intercept(
+ *       interceptor=MyInterceptor.class,
+ *       params={
+ *          &#064;Param(name="name1",value="value1"),
+ *          &#064;Param(name="name2",value="value2")
+ *       }
+ *    )
+ * )
+ * public class MyController{
  * 
- *  @author Afonso Brandao
+ *    ...
+ * 
+ * }
+ * </pre>
+ * @author Afonso Brandao
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

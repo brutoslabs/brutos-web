@@ -23,16 +23,28 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Usado para especificar uma regra de validação.
+ * 
  * @author Brandao
  */
 @Target({ElementType.PARAMETER,ElementType.FIELD,ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Restriction {
     
+    /**
+     * Regra de validação. Os valores estão descritos em 
+     * <a href="RestrictionsRules.html">ScopeType</a>
+     */
     String rule();
     
+    /**
+     * Valor da regra de validação.
+     */
     String value();
     
+    /**
+     * Mensagem exibida caso o valor não esteja de acordo com a 
+     * regra de validação.
+     */
     String message() default "";
 }
