@@ -24,13 +24,29 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Usado para especificar o mapeamento de um Enum.
+ * 
+ * <pre>
+ * Ex:
+ * public class MyController{
+ * 
+ *    &#064;Enumerated(value=EnumerationType.ORDINAL)
+ *    private MyEnum property;
+ * 
+ *    ...
+ * 
+ * }
+ * </pre>
+ * 
  * @author Afonso Brandao
  */
 @Target({ElementType.METHOD,ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Enumerated {
 
+    /**
+     * O tipo usado no mapeamento do Enum.
+     */
     String value() default "ordinal";
    
 }

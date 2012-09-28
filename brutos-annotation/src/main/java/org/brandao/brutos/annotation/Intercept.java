@@ -24,17 +24,27 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.interceptor.InterceptorController;
 
 /**
- *
+ * Usada para definir a interceptação de um controlador.
+ * 
  * @author Afonso Brandao
  */
 @Target(ElementType.ANNOTATION_TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Intercept {
 
+    /**
+     * Nome do interceptador.
+     */
     String name() default "";
     
+    /**
+     * Classe do interceptador.
+     */
     Class<? extends InterceptorController> interceptor() default InterceptorController.class;
 
+    /**
+     * Configuração da interceptação.
+     */
     Param[] params() default{};
     
 }

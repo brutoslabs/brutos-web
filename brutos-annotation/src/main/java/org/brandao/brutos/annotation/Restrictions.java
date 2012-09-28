@@ -23,13 +23,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Especifica varias regras de validação.
+ * 
  * @author Brandao
  */
 @Target({ElementType.PARAMETER,ElementType.FIELD,ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Restrictions {
-    
+   
+    /**
+     * Coleção de regras de validação.
+     */
     Restriction[] value();
     
 }

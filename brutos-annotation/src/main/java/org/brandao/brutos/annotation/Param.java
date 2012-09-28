@@ -18,13 +18,20 @@
 package org.brandao.brutos.annotation;
 
 /**
- *
+ * Usado na configuração dos componentes.
+ * 
  * @author Afonso Brandao
  */
 public @interface Param {
 
+    /**
+     * Nome do parâmetro
+     */
     String name();
     
+    /**
+     * Valor do parâmetro.
+     */
     String value();
     
 }

@@ -23,17 +23,65 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.interceptor.InterceptorController;
 
 /**
- *
+ * Define a ordem de um item da pilha de interceptadores.
+ * 
+ * <pre>
+ * Ex:
+ * &#064;Intercepts
+ * &#064;InterceptsStack(name="stackA")
+ * public class Interceptor1
+ *       extends AbstractInterceptorController{
+ *    ...
+ * }
+ * 
+ * &#064;Intercepts
+ * &#064;InterceptsStack(name="stackA",executeAfter=Interceptor1.class)
+ * public class Interceptor2
+ *       extends AbstractInterceptorController{
+ *    ...
+ * }
+ * 
+ * &#064;Intercepts
+ * &#064;InterceptsStack(name="stackA",executeAfter=Interceptor2.class)
+ * public class Interceptor3
+ *       extends AbstractInterceptorController{
+ *    ...
+ * }
+ * 
+ * &#064;Controller
+ * &#064;InterceptedBy(
+ *    name="stackA",
+ *    params={
+ *       &#064;Param(name="interceptor1.name1",value="value1"),
+ *       &#064;Param(name="interceptor1.name2",value="value2")
+ *    }
+ * )
+ * public class MyController{
+ *    ...
+ * }
+ * 
+ * </pre>
+ * 
  * @author Brandao
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InterceptsStack {
     
+    /**
+     * Nome da pilha de interceptadores.
+     */
     String name();
     
+    /**
+     * Define que o interceptador será executado depois de um determinado 
+     * interceptador.
+     */
     Class<? extends InterceptorController> executeAfter() default InterceptorController.class;
     
+    /**
+     * Parâmetros de configuração da pilha de interceptadores.
+     */
     Param[] params() default {};
 
 }

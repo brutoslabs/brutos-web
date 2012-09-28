@@ -24,25 +24,65 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.BrutosConstants;
 
 /**
- *
+ * Define a cheve de um elemento de uma coleção.
+ * 
+ * <pre>
+ * Ex:
+ * public class MyController{
+ * 
+ *    &#064;KeyCollection(bean="myKey")
+ *    private Map&lt;String,BeanConstructorTest&gt; property;
+ * 
+ *    ...
+ * 
+ * }
+ * </pre>
+ * 
  * @author Brandao
  */
 @Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface KeyCollection {
     
+    /**
+     * Identificação do bean que será injetado.
+     * Caso seja omitido, será usado o nome da propriedade ou 
+     * o nome genérico do item.
+     * 
+     */
     String bean() default "";
     
+    /**
+     * Escopo do valor a ser injetado. Os valores estão 
+     * descritos em <a href="ScopeType.html">ScopeType</a>
+     * 
+     */
     String scope() default "param";
 
+    /**
+     * Usado em tipos não primitivos. Força o uso do mapeamento do bean.
+     */
     boolean useMapping() default false;
     
+    /**
+     * Class alvo do mapeamento.
+     */
     Class<?> target() default void.class;
     
+    /**
+     * Usado em tipos enum. Os valores estão 
+     * descritos em <a href="EnumerationType.html">EnumerationType</a>
+     */
     String enumerated() default BrutosConstants.DEFAULT_ENUMERATION_TYPE;
     
+    /**
+     * Usado em tipos Date e Calendar. Define o formato da data.
+     */
     String temporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
     
+    /**
+     * Define o uso de um tipo específico de dados.
+     */
     Class<? extends org.brandao.brutos.type.Type> type() default org.brandao.brutos.type.Type.class;
     
 }

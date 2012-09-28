@@ -107,6 +107,9 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             String id = method.getName();
             id = id.replaceAll("Action$", "");
             
+            if(StringUtil.isEmpty(id))
+                throw new BrutosException("invalid action name: " + id);
+            
             return
                 AnnotationUtil.isWebApplication(applicationContext)?
                     method.getDeclaringClass().getSimpleName() + BrutosConstants.WEB_SEPARATOR + id

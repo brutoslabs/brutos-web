@@ -24,13 +24,58 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Define uma ação do controlador. Uma ação é representada por um método. 
+ * Esse método pode ter ou não parâmetros. Os parâmetros podem ser de tipo 
+ * primitivo ou não. No caso de tipos não primitivos, pode ser criado um mapeamento para 
+ * definir como os valores da requisição serão injetados nas propriedades do 
+ * objeto. Além de ser possível a configuração de propriedades do tipo Enum e
+ * Date. Se o método retornar algum valor, este será processado e incluído na
+ * requisição, para posteriormente ser usada na visão. As exceções lançadas 
+ * dentro do método podem alterar o fluxo lógico da aplicação.
+ * 
+ * Ex:
+ * <pre>
+ * public class TestController{
+ * 
+ *    &#064;Action
+ *    public void root(){
+ *       ...
+ *    }
+ * }
+ * </pre>
+ * 
+ * Também é possível definir uma ação sem a utilização da anotação.
+ * Nesse caso, o nome do método terá que seguir a nomenclatura 
+ * &lt;nome-da-ação&gt;Action.
+ * 
+ * Ex:
+ * <pre>
+ * public class TestController{
+ * 
+ *    public void rootAction(){
+ *       ...
+ *    }
+ * }
+ * </pre>
+ * 
+ * <p>Em aplicações web, a identificação da ação é um URI. Se não forem definidas
+ * a identificação do controlador e ação, será assumido como identificação da 
+ * ação a URI /&lt;nome do controlador&gt;/&lt;nome da ação&gt;</p>
  * 
  * @author Afonso Brandao
  */
+
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Action {
-    
+    /**
+     * Identificação da Ação. 
+     * Se omitido, o nome da ação será o nome do método.<br>
+     * Em aplicações web, a identificação da ação é um URI. 
+     * Se não forem definidas
+     * a identificação do controlador e ação, será assumido como identificação da 
+     * ação a URI /&lt;nome do controlador&gt;/&lt;nome da ação&gt;
+     */
     String[] value() default {};
     
 }
