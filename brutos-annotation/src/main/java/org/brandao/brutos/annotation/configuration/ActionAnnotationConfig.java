@@ -45,7 +45,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         
         String result;
         String view;
-        DispatcherType dispatcher;
+        org.brandao.brutos.DispatcherType dispatcher;
         String id;
         
         id = getId(action, controllerBuilder.getId(), method, applicationContext);
@@ -56,7 +56,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         dispatcher = 
             viewAnnotation == null || "".equals(viewAnnotation.dispatcher())? 
                 BrutosConstants.DEFAULT_DISPATCHERTYPE : 
-                DispatcherType.valueOf(viewAnnotation.dispatcher());
+                org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
         
         ActionBuilder actionBuilder =
         controllerBuilder

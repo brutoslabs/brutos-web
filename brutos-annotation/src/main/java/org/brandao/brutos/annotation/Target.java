@@ -23,13 +23,27 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
+ * Define a classe alvo do mapeamento.
+ * <pre>
+ * Ex:
+ * public class MyController{
+ * 
+ *     &#064;Target(LinkedHashMap.class)
+ *     private Map&lt;String,Integer&gt; property;
+ * 
+ *     ...
+ * }
+ * </pre>
  * 
  * @author Afonso Brandao
  */
 @java.lang.annotation.Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Target {
-    
+   
+    /**
+     * Classe alvo.
+     */
     Class<?> value();
     
 }

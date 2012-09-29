@@ -49,7 +49,7 @@ public class ControllerAnnotationConfig
         
         String controllerID;
         String view;
-        DispatcherType dispatcher;
+        org.brandao.brutos.DispatcherType dispatcher;
         
         String name     = null;
         String actionID = null;
@@ -66,7 +66,7 @@ public class ControllerAnnotationConfig
         dispatcher = 
             viewAnnotation == null || "".equals(viewAnnotation.dispatcher())? 
                 BrutosConstants.DEFAULT_DISPATCHERTYPE : 
-                DispatcherType.valueOf(viewAnnotation.dispatcher());
+                org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
         
         builder =
                 applicationContext.getControllerManager().addController(

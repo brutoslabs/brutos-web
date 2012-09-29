@@ -23,6 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Define uma coleção de interceptadores de exceção.
  * 
  * @author Afonso Brandao
  */
@@ -30,6 +31,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ThrowSafeList {
     
+    /**
+     * Coleção de interceptadores de exceção.
+     */
     ThrowSafe[] value();
     
 }

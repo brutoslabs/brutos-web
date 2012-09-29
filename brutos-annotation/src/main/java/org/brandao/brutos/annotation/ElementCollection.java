@@ -86,7 +86,10 @@ public @interface ElementCollection {
     String enumerated() default BrutosConstants.DEFAULT_ENUMERATION_TYPE;
     
     /**
-     * Usado em tipos Date e Calendar. Define o formato da data.
+     * Usado em tipos <a href="http://java.sun.com/j2se/1.5/docs/api/java/util/Date.html">Date</a></code>
+     * e <a href="http://java.sun.com/j2se/1.5/docs/api/java/util/Calendar.html">Calendar</a>.
+     * Deve seguir o padrão definido em  
+     * <a href="http://java.sun.com/j2se/1.5/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</a>.
      */
     String temporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
     
