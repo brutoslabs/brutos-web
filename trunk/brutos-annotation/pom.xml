@@ -1,12 +1,13 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.brandao</groupId>
-  <artifactId>brutos-annotation</artifactId>
-  <packaging>jar</packaging>
-  <version>2.0-b2</version>
-  <name>brutos-annotation</name>
-  <url>http://maven.apache.org</url>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.brandao</groupId>
+    <artifactId>brutos-annotation</artifactId>
+    <packaging>jar</packaging>
+    <version>2.0-b3</version>
+    <name>brutos-annotation</name>
+    <url>http://maven.apache.org</url>
     <build>
         <plugins>
             <plugin>
@@ -31,10 +32,10 @@
     </build>
     <dependencies>
         <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>3.8.1</version>
-          <scope>test</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.mockrunner</groupId>

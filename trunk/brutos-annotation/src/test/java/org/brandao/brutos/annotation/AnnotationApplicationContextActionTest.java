@@ -251,7 +251,7 @@ public class AnnotationApplicationContextActionTest
         
         ThrowableSafeData ex = action.getThrowsSafe(RuntimeException.class);
         Assert.assertNotNull(ex);
-        Assert.assertNull(ex.getParameterName());
+        Assert.assertEquals(BrutosConstants.DEFAULT_EXCEPTION_NAME,ex.getParameterName());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,ex.getDispatcher());
         Assert.assertEquals("/WEB-INF/actiontest7/myaction/runtimeexception.jsp",ex.getView());
         Assert.assertEquals(RuntimeException.class,ex.getTarget());
@@ -291,7 +291,7 @@ public class AnnotationApplicationContextActionTest
         
         ThrowableSafeData ex = action.getThrowsSafe(RuntimeException.class);
         Assert.assertNotNull(ex);
-        Assert.assertNull(ex.getParameterName());
+        Assert.assertEquals(BrutosConstants.DEFAULT_EXCEPTION_NAME,ex.getParameterName());
         Assert.assertEquals(DispatcherType.REDIRECT,ex.getDispatcher());
         Assert.assertEquals("/view/exception.jsp",ex.getView());
         Assert.assertEquals(RuntimeException.class,ex.getTarget());
@@ -331,14 +331,14 @@ public class AnnotationApplicationContextActionTest
         
         ThrowableSafeData ex = action.getThrowsSafe(RuntimeException.class);
         Assert.assertNotNull(ex);
-        Assert.assertNull(ex.getParameterName());
+        Assert.assertEquals(BrutosConstants.DEFAULT_EXCEPTION_NAME,ex.getParameterName());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,ex.getDispatcher());
         Assert.assertEquals("/WEB-INF/actiontest9/myaction/runtimeexception.jsp",ex.getView());
         Assert.assertEquals(RuntimeException.class,ex.getTarget());
 
         ex = action.getThrowsSafe(Exception.class);
         Assert.assertNotNull(ex);
-        Assert.assertNull(ex.getParameterName());
+        Assert.assertEquals(BrutosConstants.DEFAULT_EXCEPTION_NAME,ex.getParameterName());
         Assert.assertEquals(DispatcherType.REDIRECT,ex.getDispatcher());
         Assert.assertEquals("/view/exception.jsp",ex.getView());
         Assert.assertEquals(Exception.class,ex.getTarget());
@@ -378,7 +378,7 @@ public class AnnotationApplicationContextActionTest
         
         ThrowableSafeData ex = action.getThrowsSafe(Exception.class);
         Assert.assertNotNull(ex);
-        Assert.assertNull(ex.getParameterName());
+        Assert.assertEquals(BrutosConstants.DEFAULT_EXCEPTION_NAME,ex.getParameterName());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,ex.getDispatcher());
         Assert.assertNull(ex.getView());
         Assert.assertEquals(Exception.class,ex.getTarget());

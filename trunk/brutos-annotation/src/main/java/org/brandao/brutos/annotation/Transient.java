@@ -23,7 +23,31 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * O controlador, ação ou propriedade que possuir essa anotação, 
+ * será ignorada.
+ * 
+ * <pre>
+ * Ex:
+ * &#064;Transient
+ * public class ActionController{
+ * 
+ *    public void root(){
+ *       ...
+ *    }
+ * }
+ * </pre>
+ * 
+ * <pre>
+ * Ex:
+ * public class ActionController{
+ * 
+ *    &#064;Transient
+ *    public void myAction(){
+ *       ...
+ *    }
+ * }
+ * </pre>
+ * 
  * @author Brandao
  */
 @Target({ElementType.METHOD,ElementType.FIELD,ElementType.TYPE})

@@ -88,15 +88,15 @@ public @interface ThrowSafe {
     
     /**
      * Identificação da exceção na visão. Caso não seja informada, será assumido
-     * "exception" .
+     * "exception".
      */
-    String name() default BrutosConstants.DEFAULT_EXCEPTION_NAME;
+    String name() default "exception";
 
     /**
      * Define como o fluxo de execução será direcionado para a visão.
      * Os valores estão descritos em <a href="DispatcherType.html">DispatcherType</a>.
      */
-    String dispatcher() default BrutosConstants.DEFAULT_DISPATCHERTYPE_NAME;
+    String dispatcher() default "forward";
     
     /**
      * Define se a visão deve ser renderizada. 
