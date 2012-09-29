@@ -18,21 +18,40 @@
 package org.brandao.brutos.annotation;
 
 /**
- *
+ * Descreve os escopos pré-definidos.
+ * 
  * @author Brandao
  */
 public interface ScopeType {
     
+    /**
+     * O context é a requisição.
+     */
     public static final String REQUEST     = "request";
     
+    /**
+     * O contexto é a aplicação.
+     */
     public static final String SINGLETON   = "singleton";
     
+    /**
+     * O contexto são os parâmetros da requisição.
+     */
     public static final String PARAM       = "param";
     
+    /**
+     * O contexto é um thread.
+     */
     public static final String THREAD      = "thread";
     
+    /**
+     * O contexto é definido pelo container IoC.
+     */
     public static final String IOC         = "ioc";
     
+    /**
+     * O contexto é o controlador.
+     */
     public static final String CONTROLLER  = "controller";
     
 }
