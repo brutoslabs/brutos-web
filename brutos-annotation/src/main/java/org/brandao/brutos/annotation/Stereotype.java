@@ -22,21 +22,40 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.annotation.configuration.Converter;
 
 /**
- *
+ * Usada para integrar um novo recurso. 
+ * A classe que possui essa anotação deve implementar a interface
+ * <a href="AnnotationConfig.html">org.brandao.brutos.annotation.AnnotationConfig</a>.
+ * 
  * @author Brandao
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Stereotype {
     
+    /**
+     * Anotação alvo.
+     */
     Class<? extends Annotation> target();
     
+    /**
+     * Define que esse recurso seja configurado após a 
+     * configuração de outro recurso.
+     */
     Class<? extends Annotation>[] executeAfter() default {};
     
+    /**
+     * Versão principal.
+     */
     int majorVersion() default 1;
     
+    /**
+     * Versão secundária.
+     */
     int minorVersion() default 0;
     
+    /**
+     * Converte as informações em um tipo desejado.
+     */
     Class<? extends Converter> sourceConverter() default Converter.class;
     
 }

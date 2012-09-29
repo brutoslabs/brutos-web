@@ -22,7 +22,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Define os bean de escopo controller.
+ * Define os beans cujo o contexto é o controlador.
  * 
  * @author Brandao
  */
