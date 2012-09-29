@@ -87,8 +87,12 @@ public interface BrutosConstants {
     public final String JSF_ACTION_LISTENER = ApplicationContext.class.getName() + ".JSF_Action_Listener";
 
     public final DispatcherType DEFAULT_DISPATCHERTYPE = DispatcherType.FORWARD;
+
+    public final String DEFAULT_DISPATCHERTYPE_NAME = "forward";
     
     public final ScopeType DEFAULT_SCOPETYPE = ScopeType.PARAM;
+    
+    public final String DEFAULT_EXCEPTION_NAME = "exception";
     
     public final EnumerationType DEFAULT_ENUMERATIONTYPE = EnumerationType.ORDINAL;
 
@@ -102,7 +106,7 @@ public interface BrutosConstants {
     
     public final String DEFAULT_SUFFIX_VIEW = "";
     
-    public final String DEFAULT_PREFIX_VIEW = "views";
+    public final String DEFAULT_PREFIX_VIEW = "views.";
 
     public final String DEFAULT_INDEX_VIEW = "index";
 
