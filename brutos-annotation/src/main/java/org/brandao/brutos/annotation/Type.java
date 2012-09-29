@@ -24,7 +24,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Define o uso de um tipo específico de dados.
+ * 
  * @author Afonso Brandao
  */
 @Target({ElementType.PARAMETER,ElementType.FIELD})

@@ -23,17 +23,48 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * Define a visão de um controlador ou ação.
+ * <pre>
+ * Ex:
+ * &#064;Controller
+ * &#064;View("/jsp/index/index.jsp")
+ * public class Index{
+ * 
+ *    &#064;View("/jsp/index/myAction.jsp")
+ *    public void myAction(
+ *        ...
+ *    }
+ * 
+ *    public void my2Action(
+ *        ...
+ *    }
+ * 
+ *    ...
+ * }
+ * </pre>
+ * 
  * @author Brandao
  */
 @Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface View {
 
+    /**
+     * Identificação da visão. Normalmente em aplicaçãoes web, a 
+     * identificação é uma URI.
+     */
     String id() default "";
     
+    /**
+     * Define como o fluxo de execução será direcionado para a visão.
+     * Os valores estão descritos em <a href="DispatcherType.html">DispatcherType</a>.
+     */
     String dispatcher() default "";
     
+    /**
+     * Define se a visão deve ser renderizada. 
+     * Se verdadeiro a visão será renderizada, caso contrário não.
+     */
     boolean rendered() default true;
     
 }

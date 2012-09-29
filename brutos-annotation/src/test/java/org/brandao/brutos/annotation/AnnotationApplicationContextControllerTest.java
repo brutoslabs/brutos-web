@@ -402,7 +402,7 @@ public class AnnotationApplicationContextControllerTest
         
         ThrowableSafeData ex = controller.getThrowsSafe(Exception.class);
         Assert.assertNotNull(ex);
-        Assert.assertNull(ex.getParameterName());
+        Assert.assertEquals(BrutosConstants.DEFAULT_EXCEPTION_NAME,ex.getParameterName());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,ex.getDispatcher());
         Assert.assertEquals("/WEB-INF/controllertest12/exception.jsp",ex.getView());
         Assert.assertEquals(Exception.class,ex.getTarget());
@@ -442,14 +442,14 @@ public class AnnotationApplicationContextControllerTest
         
         ThrowableSafeData ex = controller.getThrowsSafe(Exception.class);
         Assert.assertNotNull(ex);
-        Assert.assertNull(ex.getParameterName());
+        Assert.assertEquals(BrutosConstants.DEFAULT_EXCEPTION_NAME,ex.getParameterName());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,ex.getDispatcher());
         Assert.assertEquals("/WEB-INF/controllertest13/exception.jsp",ex.getView());
         Assert.assertEquals(Exception.class,ex.getTarget());
 
         ThrowableSafeData ex2 = controller.getThrowsSafe(RuntimeException.class);
         Assert.assertNotNull(ex2);
-        Assert.assertNull(ex2.getParameterName());
+        Assert.assertEquals(BrutosConstants.DEFAULT_EXCEPTION_NAME,ex.getParameterName());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,ex2.getDispatcher());
         Assert.assertEquals("/WEB-INF/controllertest13/runtimeexception.jsp",ex2.getView());
         Assert.assertEquals(RuntimeException.class,ex2.getTarget());
@@ -496,7 +496,7 @@ public class AnnotationApplicationContextControllerTest
 
         ThrowableSafeData ex2 = controller.getThrowsSafe(RuntimeException.class);
         Assert.assertNotNull(ex2);
-        Assert.assertNull(ex2.getParameterName());
+        Assert.assertEquals(BrutosConstants.DEFAULT_EXCEPTION_NAME,ex2.getParameterName());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,ex2.getDispatcher());
         Assert.assertEquals("/WEB-INF/controllertest14/runtimeexception.jsp",ex2.getView());
         Assert.assertEquals(RuntimeException.class,ex2.getTarget());
