@@ -38,7 +38,7 @@
             <actionName>javadoc</actionName>
             <goals>
                 <goal>generate-sources</goal>
-                <goal>javadoc:aggregate</goal>
+                <goal>javadoc:javadoc</goal>
             </goals>
         </action>
     </actions>

@@ -25,7 +25,12 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 
 /**
- * 
+ * Classe central que permite a configuração de um aplicativo usando 
+ * anotações e CoC.
+ * <p>Para que a configuração seja automaticamente carregada em uma 
+ * aplicação web, é necessário a utilização das tags 
+ * &lt;context:annotation-config/&gt; e &lt;context:component-scan/&gt; no 
+ * arquivo de configuração /WEB-INF/brutos-config.xml</p>
  * @author Afonso Brandao
  */
 public class AnnotationApplicationContext extends AbstractApplicationContext{
