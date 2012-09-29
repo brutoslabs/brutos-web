@@ -25,7 +25,7 @@ package org.brandao.brutos.annotation;
 public interface ScopeType {
     
     /**
-     * O context é a requisição.
+     * O contexto é a requisição.
      */
     public static final String REQUEST     = "request";
     

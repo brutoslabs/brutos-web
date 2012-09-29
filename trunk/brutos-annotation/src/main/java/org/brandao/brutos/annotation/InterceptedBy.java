@@ -23,9 +23,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define os interceptadores que irão interceptar o controlador.
+ * Define os interceptadores do controlador.
  * <pre>
- * Ex1:
+ * Ex:
  * &#064;InterceptedBy(
  *    &#064;Intercept(
  *       interceptor=MyInterceptor.class,

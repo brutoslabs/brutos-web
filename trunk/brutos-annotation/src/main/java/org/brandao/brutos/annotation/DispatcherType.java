@@ -17,26 +17,26 @@
 
 package org.brandao.brutos.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 /**
- * Usado em tipos <a href="http://java.sun.com/j2se/1.5/docs/api/java/util/Date.html">Date</a></code> 
- * e <a href="http://java.sun.com/j2se/1.5/docs/api/java/util/Calendar.html">Calendar</a>. 
- * Define o formato da data.
+ * Descreve as opções pré-definidas de direcionamento de fluxo para a visão.
  * 
- * @author Afonso Brandao
+ * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.FIELD, ElementType.PARAMETER})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Temporal {
+public interface DispatcherType {
     
     /**
-     * Formato da data. Deve seguir o padrão definido em  
-     * <a href="http://java.sun.com/j2se/1.5/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</a>.
+     * Inclui a visão no resultado.
      */
-    String value();
+    public final String INCLUDE  = "include";
+
+    /**
+     *  A requisição é encaminhada para a visão.
+     */
+    public static final String FORWARD  = "forward";
+
+    /**
+     *  A requisição é redirecionada para a visão.
+     */
+    public static final String REDIRECT = "redirect";
     
 }
