@@ -171,7 +171,7 @@ public class ControllerBuilder {
                 new Object[]{id,controller.getClassType().getName()}));
         
         controller.addAlias(id);
-        controllerManager.addForm(id, controller);
+        controllerManager.addController(id, controller);
         return this;
     }
 

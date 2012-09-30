@@ -31,6 +31,9 @@ public class MockInvoker extends Invoker{
     private Object request;
     private Object response;
     
+    public MockInvoker(){
+    }
+    
     public boolean invoke( StackRequestElement element ){
         this.element = element;
         return true;
