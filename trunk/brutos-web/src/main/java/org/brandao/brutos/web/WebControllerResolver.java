@@ -17,10 +17,7 @@
 
 package org.brandao.brutos.web;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.brandao.brutos.*;
 import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.interceptor.InterceptorHandler;
@@ -66,51 +63,42 @@ public class WebControllerResolver implements ControllerResolver{
 
     public Controller getController(ControllerManager controllerManager, InterceptorHandler handler) {
         String uri = handler.requestId();
-        Map<String, Controller> forms = controllerManager.getForms();
-        /*BrutosRequest request = (BrutosRequest) ContextLoaderListener
-                                    .currentRequest.get();
-        */
+        Iterator controllers = controllerManager.getAllControllers();
         Scope paramScope =
                 handler.getContext().getScopes().get(WebScopeType.PARAM);
-        for( Controller  form: forms.values() ){
-            List<String> uriList = new ArrayList<String>();
-
-            uriList.addAll( form.getAlias() );
-            if( form.getId() != null )
-                uriList.add( form.getId() );
-            else
-                uriList.addAll( form.getActions().keySet() );
-
-            for( String u: uriList ){
-                
-                URIMapping uriMap = getURIMapping( u );
-                if( uriMap.matches(uri) ){
-
-                    Map<String,String> params = uriMap.getParameters(uri);
-                    for(String key: params.keySet() )
-                        paramScope.put(key, params.get(key) );
-                    return form;
-                }
-                
-            }
+        
+        while(controllers.hasNext()){
+            Controller controller = (Controller)controllers.next();
             
-        }
-
-        /*
-        for( String u: forms.keySet() ){
-            URIMap uriMap = getURIMapping( u );
-            if( uriMap.matches(uri) ){
-                Map<String,String> params = uriMap.getParameters(uri);
-                for(String key: params.keySet() )
-                    request.setParameter(key, params.get(key) );
-                return forms.get(u);
+            URIMapping uriMap;
+            if(controller.getId() != null){
+                uriMap = getURIMapping( controller.getId() );
+                if(uriMap.matches(uri)){
+                    updateRequest(uri, paramScope, uriMap);
+                    return controller;
+                }
+            }
+            else{
+                Set actionsId = controller.getActions().keySet();
+                for(Object id: actionsId){
+                    uriMap = getURIMapping( (String)id );
+                    if(uriMap.matches(uri)){
+                        updateRequest(uri, paramScope, uriMap);
+                        return controller;
+                    }
+                }
             }
         }
-        */
 
         return null;
     }
 
+    private void updateRequest(String uri, Scope paramScope, URIMapping uriMap){
+        Map<String,String> params = uriMap.getParameters(uri);
+        for(String key: params.keySet() )
+            paramScope.put(key, params.get(key) );
+    }
+    
     public Controller getController(ControllerManager controllerManager, Class controllerClass) {
         Controller controller =
                 controllerManager.getController(controllerClass);

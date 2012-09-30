@@ -43,7 +43,7 @@ public class DefaultControllerResolver implements ControllerResolver{
     }
 
     public Controller getController(ControllerManager controllerManager, InterceptorHandler handler) {
-        return controllerManager.getForm( handler.requestId() );
+        return controllerManager.getController( handler.requestId() );
     }
 
     public Controller getController(ControllerManager controllerManager, Class controllerClass) {
