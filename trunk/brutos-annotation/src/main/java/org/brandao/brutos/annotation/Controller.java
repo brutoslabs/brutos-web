@@ -23,39 +23,31 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define um controlador. Com ela é possível definir uma ação padrão, o nome 
- * do controlador, a identificação do controlador e o parâmetro que contém a 
- * identificação da ação a ser executada.
- * <p>Também é possível definir um controlador sem a necessidade de utilização
- * da anotação. Nesse caso, o nome da classe tem que seguir a nomenclatura
- * &lt;nome-do-controlador&gt;Controller.</p>
- * <p>Uma ação padrão é aquela ação que será executada nos casos em que na
- * requisição não for informada nenhuma ação para ser executada</p>
+ * Define um controlador. Um controlador pode ter ações, ações com
+ * ou sem método associado (executor), várias identificações e uma
+ * ação padrão.
+ * <p>Uma ação pode ser representada por um método. Esse método pode ter ou não 
+ * parâmetros. Os parâmetros podem ser de tipo primitivo ou não. No caso 
+ * de tipos não primitivos, podem ser criados mapeamentos para a definição de como 
+ * os valores da requisição serão injetados nas propriedades do "bean". 
+ * Além de ser possível a configuração de propriedades do tipo Enum e Date. 
+ * Se o método retornar algum valor, este será processado e incluído na 
+ * requisição, para posteriormente ser usada na visão. As exceções lançadas 
+ * dentro do método podem alterar o fluxo lógico da aplicação.</p>
  * 
- * <pre>
- * Ex:
- * &#064;Controller(id="/index",defaultActionName="action1")
- * public class Index{
+ * <p>Também é possível definir um controlador sem a necessidade da utilização
+ * de anotação. Nesse caso, o nome da classe tem que seguir a nomenclatura
+ * <b><code>&lt;nome-do-controlador&gt;Controller</code></b>.</p>
  * 
- *    &#064;Action
- *    public void action1(){
- *       ...
- *    }
- * 
- *    &#064;Action
- *    public void action2(){
- *       ...
- *    }
- * 
- * }
- * </pre>
+ * <p>Uma ação padrão é aquela ação que será executada nos casos em que 
+ * não for identificada uma ação.</p>
  * 
  * <p>Em aplicações web, quando o controlador possuir identificação, as 
  * identificações das ações não serão consideradas como URIs e terão que ser 
  * informadas como um parâmetro.</p>
  * <pre>
  * Ex1:
- * &#064;Controller(id="/index/{invoker}")
+ * &#064;Controller(id="/index",defaultActionName="action1")
  * public class Index{
  * 
  *    &#064;Action
@@ -71,7 +63,23 @@ import java.lang.annotation.Target;
  * }
  * 
  * Ex2:
- * &#064;Controller(id="/index{invoker}")
+ * &#064;Controller(id="/index/{invoke}")
+ * public class Index{
+ * 
+ *    &#064;Action
+ *    public void action1(){
+ *       ...
+ *    }
+ * 
+ *    &#064;Action
+ *    public void action2(){
+ *       ...
+ *    }
+ * 
+ * }
+ * 
+ * Ex3:
+ * &#064;Controller(id="/index{invoke}")
  * public class Index{
  * 
  *    &#064;Action("/action1")
@@ -86,7 +94,7 @@ import java.lang.annotation.Target;
  * 
  * }
  * 
- * Ex3:
+ * Ex4:
  * &#064;Controller
  * public class Index{
  * 
@@ -130,7 +138,8 @@ public @interface Controller{
     String[] id() default {};
 
     /**
-     * Parâmetro da requisição usada para a identificação da ação a ser executada.
+     * Parâmetro da requisição usada para a identificação da ação a 
+     * ser executada.
      */
     String actionId() default "invoke";
 

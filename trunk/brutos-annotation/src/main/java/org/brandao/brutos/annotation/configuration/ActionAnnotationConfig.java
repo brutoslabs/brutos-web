@@ -112,11 +112,18 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             
             return
                 AnnotationUtil.isWebApplication(applicationContext)?
-                    method.getDeclaringClass().getSimpleName() + BrutosConstants.WEB_SEPARATOR + id
+                    getURI(id,method)
                     :
                     id;
                 
         }
+    }
+    
+    protected String getURI(String actionId,Method method){
+        return 
+            (BrutosConstants.WEB_SEPARATOR + 
+            method.getDeclaringClass().getSimpleName().replaceAll("Controller$", "") + 
+            BrutosConstants.WEB_SEPARATOR + actionId).toLowerCase();
     }
     
     protected String getView(View viewAnnotation, ActionBuilder action,

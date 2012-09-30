@@ -25,12 +25,14 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 
 /**
- * Classe central que permite a configuração de um aplicativo usando 
- * anotações e CoC.
+ * Classe central que permite a configuração de uma aplicação usando 
+ * anotações e "Convention over configuration".
  * <p>Para que a configuração seja automaticamente carregada em uma 
  * aplicação web, é necessário a utilização das tags 
- * &lt;context:annotation-config/&gt; e &lt;context:component-scan/&gt; no 
- * arquivo de configuração /WEB-INF/brutos-config.xml</p>
+ * <b><code>&lt;context:annotation-config/&gt;</code></b> e 
+ * <b><code>&lt;context:component-scan/&gt;</code></b> no 
+ * arquivo de configuração brutos-config.xml</p>
+ * 
  * @author Afonso Brandao
  */
 public class AnnotationApplicationContext extends AbstractApplicationContext{
@@ -160,8 +162,9 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
             
             if(current != null){
                 boolean override = 
-                    newConfig.getStereotype().majorVersion() >= current.getStereotype().majorVersion() &&
-                    newConfig.getStereotype().minorVersion() > current.getStereotype().minorVersion();
+                    newConfig.getStereotype().majorVersion() > current.getStereotype().majorVersion() ||
+                    (newConfig.getStereotype().majorVersion() == current.getStereotype().majorVersion() &&
+                    newConfig.getStereotype().minorVersion() > current.getStereotype().minorVersion());
                 if( override )
                     map.put(st.target(), newConfig);
             }
@@ -196,43 +199,6 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
             throw new BrutosException(e);
         }
     }
-    
-    /*
-    protected AnnotationConfig getRootAnnotationConfig(){
-        Class<AnnotationConfig> rootConfigClass = null;
-        
-        for(Class clazz: this.compositeClassList){
-            Stereotype newSt = (Stereotype) clazz.getAnnotation(Stereotype.class);
-            if(newSt != null && newSt.target() == Configuration.class){
-                        
-                if(rootConfigClass != null){
-                    Stereotype st = (Stereotype) rootConfigClass.getAnnotation(Stereotype.class);
-                    boolean override = 
-                        newSt.majorVersion() >= st.majorVersion() &&
-                        newSt.minorVersion() > st.minorVersion();
-                    
-                    if(override)
-                        rootConfigClass = clazz;
-                }
-                else
-                    rootConfigClass = clazz;
-            }
-        }
-        
-        if(rootConfigClass == null)
-            throw new BrutosException(
-                    "not found: " + Configuration.class.getSimpleName());
-        
-        try{
-            AnnotationConfig rootAnnotationConfig = 
-                    (AnnotationConfig)ClassUtil.getInstance(rootConfigClass);
-            return rootAnnotationConfig;
-        }
-        catch( Exception e ){
-            throw new BrutosException(e);
-        }
-    }
-    */
     
     protected void loadDefaultAnnotationConfig(){
         annotationConfig = new ArrayList<Class>();

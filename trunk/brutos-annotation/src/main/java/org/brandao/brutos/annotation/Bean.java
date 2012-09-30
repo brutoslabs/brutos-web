@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define um bean.
+ * Define um "bean".
  * 
  * @author Afosno Brandao
  */
@@ -33,8 +33,8 @@ import java.lang.annotation.Target;
 public @interface Bean {
 
     /**
-     * Identificação do bean. 
-     * Caso seja omitido, será usado no nome da classe.
+     * Identificação do "bean".
+     * Caso seja omitido, será usado o nome da classe.
      */
     String name() default "";
     
