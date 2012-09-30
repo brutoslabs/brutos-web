@@ -23,7 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define o construtor de um bean.
+ * Define o construtor de um "bean". 
+ * Normalmente usado quando o "bean" possuir mais de um construtor.
  * 
  * @author Brandao
  */
