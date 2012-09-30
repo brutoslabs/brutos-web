@@ -18,9 +18,7 @@
 package org.brandao.brutos;
 
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.ActionListener;
@@ -98,8 +96,8 @@ import org.brandao.brutos.validator.ValidatorProvider;
  */
 public class ControllerManager {
 
-    private Map forms;
-    private Map revForms;
+    private Map mappedControllers;
+    private Map classMappedControllers;
     private ValidatorProvider validatorProvider;
     private ControllerBuilder current;
     private ConfigurableApplicationContext applicationContext;
@@ -110,12 +108,12 @@ public class ControllerManager {
             ValidatorProvider validatorProvider, 
             ControllerManager parent,
             ConfigurableApplicationContext applicationContext) {
-        this.forms              = new HashMap();
-        this.revForms           = new HashMap();
-        this.interceptorManager = interceptorManager;
-        this.validatorProvider  = validatorProvider;
-        this.applicationContext = applicationContext;
-        this.parent             = parent;
+        this.mappedControllers      = new HashMap();
+        this.classMappedControllers = new HashMap();
+        this.interceptorManager     = interceptorManager;
+        this.validatorProvider      = validatorProvider;
+        this.applicationContext     = applicationContext;
+        this.parent                 = parent;
     }
 
     /**
@@ -217,7 +215,7 @@ public class ControllerManager {
         ac.setPostAction( getMethodAction( "postAction", controller.getClassType() ) );
         controller.setActionListener( ac );
         
-        addForm( controller.getId(), controller );
+        addController( controller.getId(), controller );
         
         controller.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
         
@@ -244,8 +242,8 @@ public class ControllerManager {
      * @return Verdadeiro se existir um mapeamento, coso contr�rio falso.
      */
     public boolean contains( String id ){
-        boolean result = this.forms.containsKey( id );
-        return !result && parent != null? parent.forms.containsKey( id ) : result;
+        boolean result = this.mappedControllers.containsKey( id );
+        return !result && parent != null? parent.mappedControllers.containsKey( id ) : result;
     }
     
     /**
@@ -254,7 +252,7 @@ public class ControllerManager {
      * @return Mapeamento do controlador.
      */
     public Controller getController( String id ){
-        Controller controller = (Controller)forms.get( id );
+        Controller controller = (Controller)mappedControllers.get( id );
         
         if(controller == null && parent != null)
             return parent.getController(id);
@@ -264,21 +262,12 @@ public class ControllerManager {
     }
 
     /**
-     * @deprecated
-     * @param uri
-     * @return .
-     */
-    public Controller getForm( String uri ){
-        return getController(uri);
-    }
-
-    /**
      * Obt�m o mapeamento de um controlador.
      * @param controllerClass Classe do controlador.
      * @return Mapeamento do controlador.
      */
     public Controller getController( Class controllerClass ){
-        Controller controller = (Controller)revForms.get( controllerClass );
+        Controller controller = (Controller)classMappedControllers.get( controllerClass );
         
         if(controller == null && parent != null)
             return parent.getController(controllerClass);
@@ -287,48 +276,82 @@ public class ControllerManager {
     }
 
     /**
-     * @deprecated 
-     * @param controllerClass
-     * @return .
-     */
-    public Controller getForm( Class controllerClass ){
-        return getController( controllerClass );
-    }
-
-    /**
-     * Obt�m o mapeamento de todos os controladores.
+     * Obtém o mapeamento de todos os controladores.
      * @return Controladores.
      */
-    public Map getControllers() {
-        Map tmp;
+    public List getControllers() {
+        List tmp;
         
-        if(parent != null){
-            tmp = new HashMap(parent.forms);
-            tmp.putAll(forms);
-        }
-        else
-            tmp = forms;
+        tmp = new LinkedList(classMappedControllers.values());
+        
+        if(parent != null)
+            tmp.addAll(parent.classMappedControllers.values());
             
-        return Collections.unmodifiableMap( tmp );
+        return Collections.unmodifiableList( tmp );
     }
 
-    /**
-     * @deprecated 
-     * @return .
-     */
-    public Map getForms() {
-        return getControllers();
-    }
+    public Iterator getAllControllers(){
+        return new Iterator(){
+            
+            private Iterator currentIterator;
+            private Iterator parentIterator;
+            private int index;
+            private int maxSize;
+            {
+                index = 0;
+                currentIterator = 
+                        classMappedControllers.values().iterator();
+                parentIterator = 
+                        parent != null? 
+                            parent.classMappedControllers.values().iterator() : 
+                            null;
+                maxSize = 
+                        classMappedControllers.size();
+                
+            }
+            
+            public boolean hasNext() {
+                if(index < maxSize)
+                    return currentIterator.hasNext();
+                else
+                    return parentIterator != null? parentIterator.hasNext() : false;
+            }
 
-    void addForm( String id, Controller form ) {
+            public Object next() {
+                try{
+                    if(index < maxSize)
+                        return currentIterator.next();
+                    else
+                        return parentIterator != null? parentIterator.next() : null;
+                }
+                finally{
+                    index++;
+                }
+            }
+
+            public void remove() {
+                if(index < maxSize)
+                    currentIterator.remove();
+                else
+                if(parentIterator != null)
+                    parentIterator.remove();
+                
+                index--;
+            }
+            
+        };
+    }
+    
+    void addController( String id, Controller form ) {
+        
         if( id != null){
              if(contains(id))
                 throw new BrutosException( String.format("duplicate id: %s", new Object[]{id} ) );
             else
-                forms.put(id, form);
+                mappedControllers.put(id, form);
         }
         
-        revForms.put( form.getClassType(), form);
+        classMappedControllers.put( form.getClassType(), form);
     }
 
     public ControllerBuilder getCurrent() {
