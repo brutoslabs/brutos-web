@@ -24,6 +24,8 @@ import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.ControllerManager;
+import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.scope.Scope;
 
 /**
@@ -61,7 +63,8 @@ public class WebControllerResolver implements ControllerResolver{
         return webFrameManager.getForm( path );
     }
 
-    public Controller getController(ControllerManager controllerManager, InterceptorHandler handler) {
+    public Controller getController(ControllerManager controllerManager, 
+            ConfigurableInterceptorHandler handler) {
         String uri = handler.requestId();
         Iterator controllers = controllerManager.getAllControllers();
         Scope paramScope =
@@ -84,6 +87,21 @@ public class WebControllerResolver implements ControllerResolver{
                     uriMap = getURIMapping( (String)id );
                     if(uriMap.matches(uri)){
                         updateRequest(uri, paramScope, uriMap);
+                        
+                        ConfigurableApplicationContext context =
+                            (ConfigurableApplicationContext)handler.getContext();
+                        
+                        ActionResolver actionResolver =
+                                context.getActionResolver();
+                        
+                        Action action = 
+                                controller.getAction((String)id);
+                        
+                        ResourceAction resourceAction = 
+                                actionResolver.getResourceAction(action);
+                        
+                        handler.setResourceAction(resourceAction);
+                        
                         return controller;
                     }
                 }
