@@ -95,7 +95,9 @@ public class Invoker {
             return false;
 
         ih.setResource( form.getInstance(iocProvider) );
-        ih.setResourceAction( actionResolver.getResourceAction(form, ih) );
+        
+        if(ih.getResourceAction() == null)
+            ih.setResourceAction( actionResolver.getResourceAction(form, ih) );
 
 
         StackRequestElement element = createStackRequestElement();
