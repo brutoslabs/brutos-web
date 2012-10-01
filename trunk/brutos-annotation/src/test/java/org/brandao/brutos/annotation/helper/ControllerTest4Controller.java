@@ -17,13 +17,13 @@
 
 package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.Controller;
 
 /**
  *
  * @author Brandao
  */
-@Controller(defaultActionName="myFirst")
+@Controller(defaultActionName="myfirst")
 public class ControllerTest4Controller {
     
     public void myFirstAction(){
