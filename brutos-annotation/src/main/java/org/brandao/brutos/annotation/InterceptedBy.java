@@ -47,6 +47,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InterceptedBy {
 
+    /**
+     * Coleção de interceptadores.
+     */
     Intercept[] value();
     
 }

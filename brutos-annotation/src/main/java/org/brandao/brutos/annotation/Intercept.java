@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.interceptor.InterceptorController;
 
 /**
- * Usada para definir a interceptação de um controlador.
+ * Usada para especificar uma interceptação.
  * 
  * @author Afonso Brandao
  */

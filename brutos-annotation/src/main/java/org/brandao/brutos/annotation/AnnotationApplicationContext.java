@@ -25,7 +25,7 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 
 /**
- * Classe central que permite a configuração de uma aplicação usando 
+ * Classe que permite a configuração de uma aplicação usando 
  * anotações e "Convention over configuration".
  * <p>Para que a configuração seja automaticamente carregada em uma 
  * aplicação web, é necessário a utilização das tags 

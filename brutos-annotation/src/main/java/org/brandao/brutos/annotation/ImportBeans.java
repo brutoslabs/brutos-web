@@ -22,7 +22,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Define os beans cujo o contexto é o controlador.
+ * Define os "beans" do controlador.
  * 
  * @author Brandao
  */
@@ -31,7 +31,7 @@ import java.lang.annotation.RetentionPolicy;
 public @interface ImportBeans {
     
     /**
-     * Coleção de beans.
+     * Coleção de "beans".
      */
     Class<?>[] value();
     

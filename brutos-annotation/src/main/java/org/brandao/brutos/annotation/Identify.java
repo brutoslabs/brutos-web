@@ -23,13 +23,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Pode definir o parâmetro de uma ação, propriedade de um bean, 
- * propriedade de um controlador e o argumento de um construdor de um bean.
- * O item representado pode ser de tipo primitivo ou não. 
- * No caso de tipo não primitivo, pode ser criado um mapeamento 
- * para definir como os valores da requisição serão injetados nas 
- * propriedades do objeto. Além de ser possível a configuração de 
- * propriedades do tipo Enum e Date.
+ * Usada para especificar o parâmetro de uma ação, propriedade de um “bean”, 
+ * propriedade de um controlador e o argumento de um construtor.
+ * Os itens citados podem ser de tipos primitivos ou não. 
+ * No caso de tipos não primitivos, podem ser criados mapeamentos 
+ * para a definição de como os valores da requisição serão injetados 
+ * no "bean". Além de ser possível a configuração de tipos Enum e Date.
  * 
  * <pre>
  * Ex1:
@@ -95,9 +94,7 @@ import java.lang.annotation.Target;
 public @interface Identify {
     
     /**
-     * Identificação do bean que será injetado.
-     * Caso seja omitido, será usado o nome da propriedade ou 
-     * o nome genérico do item.
+     * Identificação do "bean" que será injetado.
      * 
      */
     String bean() default "";
@@ -110,7 +107,7 @@ public @interface Identify {
     String scope() default "param";
 
     /**
-     * Usado em tipos não primitivos. Força o uso do mapeamento do bean.
+     * Usado em tipos não primitivos. Força o uso do mapeamento do "bean".
      */
     boolean useMapping() default false;
     
