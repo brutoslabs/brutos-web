@@ -20,7 +20,7 @@ package org.brandao.brutos;
 import java.util.Properties;
 
 /**
- * Classe central que permite a configuração de um aplicativo. Com essa classe
+ * Classe que permite a configuração de uma aplicação. Com essa classe
  * é possível:
  * <ul>
  * <li>configurar interceptadores;</li>
