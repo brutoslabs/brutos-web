@@ -24,16 +24,16 @@ import java.lang.annotation.Target;
 
 /**
  * Define um interceptador. Com ela é possível determinar o nome 
- * do interceptador e a configuração do mesmo.
- * Também é possível definir um interceptador sem a necessidade do uso da
+ * e a configuração do mesmo.
+ * <p>Também é possível definir um interceptador sem a necessidade do uso da
  * anotação. Nesse caso, além da implementação da interface
  * InterceptorController, é necessário que o nome da classe siga a nomenclatura
- * &lt;nome-do-interceptador&gt;InterceptorController.
+ * <b><code>&lt;nome-do-interceptador&gt;InterceptorController</code></b>.</p>
  * 
  * <pre>
  * Ex1:
  * &#064;Intercepts
- * public class ControllerTest
+ * public class MyInterceptor
  *       extends AbstractInterceptorController{
  * 
  *    public void intercepted(InterceptorStack stack, InterceptorHandler handler) 
@@ -60,13 +60,13 @@ import java.lang.annotation.Target;
 public @interface Intercepts {
 
     /**
-     * Nome do interceptador. Se não for infomado, será usado o nome da 
+     * Nome do interceptador. Se for omitido, será usado o nome da 
      * classe.
      */
     String name() default "";
 
     /**
-     * Define um interceptador padrão. Se verdadeiro,
+     * Indica que o interceptador é global. Se verdadeiro,
      * todos os controladores serão interceptados. Caso contrário, 
      * terá que ser definido quais controldores deverão ser 
      * interceptados.

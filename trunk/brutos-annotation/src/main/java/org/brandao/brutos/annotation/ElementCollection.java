@@ -24,7 +24,8 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.BrutosConstants;
 
 /**
- * Define o elemento de uma coleção.
+ * Especifica os elementos de uma coleção.
+ * 
  * <pre>
  * Ex1:
  * public class MyController{
@@ -55,27 +56,27 @@ import org.brandao.brutos.BrutosConstants;
 public @interface ElementCollection {
     
     /**
-     * Identificação do bean que será injetado.
-     * Caso seja omitido, será usado o nome da propriedade ou 
-     * o nome genérico do item.
+     * Identificação do "bean" que será injetado.
+     * Caso seja omitido, será usado o nome do item. O item pode ser uma 
+     * propriedade, parâmetro de uma ação ou o argumento de um construtor.
      * 
      */
     String bean() default "";
     
     /**
-     * Escopo do valor a ser injetado. Os valores estão 
+     * Escopo do valor a ser injetado. Os escopos estão 
      * descritos em <a href="ScopeType.html">ScopeType</a>
      * 
      */
     String scope() default "param";
 
     /**
-     * Usado em tipos não primitivos. Força o uso do mapeamento do bean.
+     * Usado em tipos não primitivos. Força o uso do mapeamento do "bean".
      */
     boolean useMapping() default false;
 
     /**
-     * Class alvo do mapeamento.
+     * Classe alvo do mapeamento.
      */
     Class<?> target() default void.class;
     

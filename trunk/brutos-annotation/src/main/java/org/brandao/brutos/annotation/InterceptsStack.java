@@ -41,9 +41,8 @@ import org.brandao.brutos.interceptor.InterceptorController;
  *    ...
  * }
  * 
- * &#064;Intercepts
  * &#064;InterceptsStack(name="stackA",executeAfter=Interceptor2.class)
- * public class Interceptor3
+ * public class Interceptor3InterceptorController
  *       extends AbstractInterceptorController{
  *    ...
  * }
