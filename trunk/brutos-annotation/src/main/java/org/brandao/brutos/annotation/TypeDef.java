@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define um novo tipo de dados. A classe que possui essa anotação tem 
+ * especifica um novo tipo de dados. A classe que possui essa anotação tem 
  * implementar a interface <a href="../type/TypeFactory">TypeFactory</a>.
  * 
  * @author Afonso Brandao

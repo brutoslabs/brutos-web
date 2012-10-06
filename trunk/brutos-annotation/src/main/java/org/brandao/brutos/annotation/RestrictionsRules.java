@@ -25,41 +25,42 @@ package org.brandao.brutos.annotation;
 public interface RestrictionsRules {
     
     /**
-     * Somente são permitidos valores maiores que o valor definido. Somente permitido
+     * Somente são considerados válidos os valores maiores do que o definido. Somente permitido
      * para valores numéricos.
      */
     public final String MIN       = org.brandao.brutos.validator.RestrictionRules.MIN.toString();
     
     /**
-     * Somente são permitidos textos com tamanho maior que o valor definido.
+     * Somente são considerados válidos os textos com tamanho maior que o definido.
      * Somente permitido para tipos texto.
      */
     public final String MINLENGTH = org.brandao.brutos.validator.RestrictionRules.MINLENGTH.toString();
     
     /**
-     * Somente são permitidos valores menores que o valor definido. Somente permitido
+     * Somente são considerados válidos os valores menores que o definido. Somente permitido
      * para valores numéricos.
      */
     public final String MAX       = org.brandao.brutos.validator.RestrictionRules.MAX.toString();
     
     /**
-     * Somente são permitidos textos com tamanho menor que o valor definido.
+     * Somente são considerados válidos os textos com tamanho menor que o definido.
      * Somente permitido para tipos texto.
      */
     public final String MAXLENGTH = org.brandao.brutos.validator.RestrictionRules.MAXLENGTH.toString();
     
     /**
-     * Somente são permitidos valores que correspondam a expressão regular definida.
+     * Somente são considerados válidos os valores que correspondem à expressão regular definida.
      * Somente permitido para tipos texto.
      */
     public final String MATCHES   = org.brandao.brutos.validator.RestrictionRules.MATCHES.toString();
+    
     /**
-     * Somente são permitidos valores diferente de null.
+     * Indica que o valor é obrigatório.
      */
     public final String REQUIRED  = org.brandao.brutos.validator.RestrictionRules.REQUIRED.toString();
     
     /**
-     * Somente são permitidos valores iguais ao valor definido.
+     * Somente são considerados válidos os valores iguais ao definido.
      */
     public final String EQUAL     = org.brandao.brutos.validator.RestrictionRules.EQUAL.toString();
     

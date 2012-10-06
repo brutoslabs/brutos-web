@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.BrutosConstants;
 
 /**
- * Define a cheve de um elemento de uma coleção.
+ * Especifica as chaves de uma coleção de "beans".
  * 
  * <pre>
  * Ex:
@@ -45,9 +45,8 @@ import org.brandao.brutos.BrutosConstants;
 public @interface KeyCollection {
     
     /**
-     * Identificação do bean que será injetado.
-     * Caso seja omitido, será usado o nome da propriedade ou 
-     * o nome genérico do item.
+     * Identificação do "bean" que será injetado.
+     * Caso seja omitido, será usado o nome do item anotado.
      * 
      */
     String bean() default "";
@@ -60,7 +59,7 @@ public @interface KeyCollection {
     String scope() default "param";
 
     /**
-     * Usado em tipos não primitivos. Força o uso do mapeamento do bean.
+     * Usado em tipos não primitivos. Força o uso do mapeamento do "bean".
      */
     boolean useMapping() default false;
     
@@ -70,7 +69,7 @@ public @interface KeyCollection {
     Class<?> target() default void.class;
     
     /**
-     * Usado em tipos enum. Os valores estão 
+     * Usado em tipos Enum. Os valores estão 
      * descritos em <a href="EnumerationType.html">EnumerationType</a>
      */
     String enumerated() default BrutosConstants.DEFAULT_ENUMERATION_TYPE;

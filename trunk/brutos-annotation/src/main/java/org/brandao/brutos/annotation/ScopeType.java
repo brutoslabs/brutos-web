@@ -40,7 +40,7 @@ public interface ScopeType {
     public static final String PARAM       = "param";
     
     /**
-     * O contexto é um thread.
+     * O contexto é um "thread".
      */
     public static final String THREAD      = "thread";
     
