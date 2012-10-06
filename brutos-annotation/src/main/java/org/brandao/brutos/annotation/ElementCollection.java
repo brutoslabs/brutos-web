@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.BrutosConstants;
 
 /**
- * Especifica os elementos de uma coleção.
+ * Especifica os elementos de uma coleção de "beans".
  * 
  * <pre>
  * Ex1:

@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.interceptor.InterceptorController;
 
 /**
- * Define a ordem de um item da pilha de interceptadores.
+ * Usada para definir uma pilha de interceptadores.
  * 
  * <pre>
  * Ex:
@@ -73,7 +73,7 @@ public @interface InterceptsStack {
     String name();
     
     /**
-     * Define que o interceptador será executado depois de um determinado 
+     * Indica que o interceptador será executado depois de um determinado 
      * interceptador.
      */
     Class<? extends InterceptorController> executeAfter() default InterceptorController.class;

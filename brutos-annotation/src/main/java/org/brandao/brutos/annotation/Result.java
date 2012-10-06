@@ -23,7 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define a identificação do resultado de uma ação.
+ * Usado para atribuir uma identificação ao resultado da ação. Se for omitido,
+ * será usado "result".
  * 
  * <pre>
  * Ex:

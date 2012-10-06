@@ -39,7 +39,7 @@ public @interface Stereotype {
     
     /**
      * Define que esse recurso seja configurado após a 
-     * configuração de outro recurso.
+     * configuração de um outro recurso em específico.
      */
     Class<? extends Annotation>[] executeAfter() default {};
     

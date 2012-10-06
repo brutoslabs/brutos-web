@@ -43,7 +43,7 @@ public @interface Restriction {
     String value();
     
     /**
-     * Mensagem exibida caso o valor não esteja de acordo com a 
+     * Mensagem retornada caso o valor não esteja de acordo com a 
      * regra de validação.
      */
     String message() default "";

@@ -50,7 +50,7 @@ import java.lang.annotation.Target;
 public @interface View {
 
     /**
-     * Identificação da visão. Normalmente em aplicaçãoes web, a 
+     * Identificação da visão. Normalmente em aplicações web, a 
      * identificação é uma URI.
      */
     String id() default "";
