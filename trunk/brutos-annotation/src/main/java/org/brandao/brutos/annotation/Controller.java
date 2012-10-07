@@ -61,7 +61,30 @@ import java.lang.annotation.Target;
  *    }
  * 
  * }
+ * </pre>
  * 
+ * <b>Mapeamentos:</b>
+ * 
+ * <table border="1">
+ * <tr>
+ *    <td><b>Ação</b></td>
+ *    <td><b>Método</b></td>
+ * </tr>
+ * <tr>
+ *    <td>/index</td>
+ *    <td>Index.action1()</td>
+ * </tr>
+ * <tr>
+ *    <td>/index?invoke=action1</td>
+ *    <td>Index.action1()</td>
+ * </tr>
+ * <tr>
+ *    <td>/index?invoke=action2</td>
+ *    <td>Index.action2()</td>
+ * </tr>
+ * </table>
+ * 
+ * <pre>
  * Ex2:
  * &#064;Controller(id="/index/{invoke}")
  * public class Index{
@@ -77,24 +100,27 @@ import java.lang.annotation.Target;
  *    }
  * 
  * }
+ * </pre>
  * 
+ * <b>Mapeamentos:</b>
+ * 
+ * <table border="1">
+ * <tr>
+ *    <td><b>Ação</b></td>
+ *    <td><b>Método</b></td>
+ * </tr>
+ * <tr>
+ *    <td>/index/action1</td>
+ *    <td>Index.action1()</td>
+ * </tr>
+ * <tr>
+ *    <td>/index/action2</td>
+ *    <td>Index.action2()</td>
+ * </tr>
+ * </table>
+ * 
+ * <pre>
  * Ex3:
- * &#064;Controller(id="/index{invoke}")
- * public class Index{
- * 
- *    &#064;Action("/action1")
- *    public void action1(){
- *       ...
- *    }
- * 
- *    &#064;Action("/action2")
- *    public void action2(){
- *       ...
- *    }
- * 
- * }
- * 
- * Ex4:
  * &#064;Controller
  * public class Index{
  * 
@@ -110,6 +136,58 @@ import java.lang.annotation.Target;
  * 
  * }
  * </pre>
+ * 
+ * <b>Mapeamentos:</b>
+ * 
+ * <table border="1">
+ * <tr>
+ *    <td><b>Ação</b></td>
+ *    <td><b>Método</b></td>
+ * </tr>
+ * <tr>
+ *    <td>/index/action1</td>
+ *    <td>Index.action1()</td>
+ * </tr>
+ * <tr>
+ *    <td>/index/action2</td>
+ *    <td>Index.action2()</td>
+ * </tr>
+ * </table>
+ * 
+ * <pre>
+ * Ex4:
+ * &#064;Controller(id="/index", hierarchy=true )
+ * public class Index{
+ * 
+ *    &#064;Action("/action1")
+ *    public void action1(){
+ *       ...
+ *    }
+ * 
+ *    &#064;Action("/action2")
+ *    public void action2(){
+ *       ...
+ *    }
+ * 
+ * }
+ * </pre>
+ * 
+ * <b>Mapeamentos:</b>
+ * 
+ * <table border="1">
+ * <tr>
+ *    <td><b>Ação</b></td>
+ *    <td><b>Método</b></td>
+ * </tr>
+ * <tr>
+ *    <td>/index/action1</td>
+ *    <td>Index.action1()</td>
+ * </tr>
+ * <tr>
+ *    <td>/index/action2</td>
+ *    <td>Index.action2()</td>
+ * </tr>
+ * </table>
  * 
  * @author Afonso Brandao
  */

@@ -59,6 +59,7 @@ import java.lang.annotation.Target;
  *       ...
  *    }
  * }
+ * 
  * </pre>
  * 
  * @author Afonso Brandao
