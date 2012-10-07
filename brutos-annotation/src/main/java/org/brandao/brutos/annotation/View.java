@@ -51,7 +51,7 @@ public @interface View {
 
     /**
      * Identificação da visão. Normalmente em aplicações web, a 
-     * identificação é uma URI.
+     * identificação é um URI.
      */
     String id() default "";
     
