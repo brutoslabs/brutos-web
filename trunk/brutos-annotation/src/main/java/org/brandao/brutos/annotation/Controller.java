@@ -122,6 +122,7 @@ import java.lang.annotation.Target;
  * <pre>
  * Ex3:
  * &#064;Controller
+ * &#064;ActionStrategy(ActionType.DETACHED)
  * public class Index{
  * 
  *    &#064;Action("/index/action1")
@@ -156,7 +157,8 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * Ex4:
- * &#064;Controller(id="/index", hierarchy=true )
+ * &#064;Controller(id="/index" )
+ * &#064;ActionStrategy(ActionType.COMPLEMENT)
  * public class Index{
  * 
  *    &#064;Action("/action1")

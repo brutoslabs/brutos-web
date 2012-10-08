@@ -84,7 +84,7 @@ public @interface ElementCollection {
      * Usado em tipos enum. Os valores estão 
      * descritos em <a href="EnumerationType.html">EnumerationType</a>
      */
-    String enumerated() default BrutosConstants.DEFAULT_ENUMERATION_TYPE;
+    EnumerationType enumerated() default EnumerationType.ORDINAL;
     
     /**
      * Usado em tipos <a href="http://java.sun.com/j2se/1.5/docs/api/java/util/Date.html">Date</a></code>

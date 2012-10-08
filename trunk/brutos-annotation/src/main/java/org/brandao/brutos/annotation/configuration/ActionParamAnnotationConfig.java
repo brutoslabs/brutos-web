@@ -104,8 +104,12 @@ public class ActionParamAnnotationConfig extends AbstractAnnotationConfig{
             return BrutosConstants.DEFAULT_TEMPORALPROPERTY;
     }
     private EnumerationType getEnumerationType(ActionParamEntry property){
-        if(property.isAnnotationPresent(Enumerated.class))
-            return EnumerationType.valueOf(property.getAnnotation(Enumerated.class).value());
+        if(property.isAnnotationPresent(Enumerated.class)){
+            return EnumerationType.valueOf(
+                    property.getAnnotation(
+                        Enumerated.class)
+                            .value().name().toLowerCase());
+        }
         else
             return BrutosConstants.DEFAULT_ENUMERATIONTYPE;
     }

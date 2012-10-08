@@ -47,6 +47,6 @@ public @interface Enumerated {
     /**
      * O tipo usado no mapeamento do Enum.
      */
-    String value() default "ordinal";
+    EnumerationType value() default EnumerationType.ORDINAL;
    
 }

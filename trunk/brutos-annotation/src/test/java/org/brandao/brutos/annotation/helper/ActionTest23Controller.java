@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation.helper;
 
 import org.brandao.brutos.annotation.Enumerated;
+import org.brandao.brutos.annotation.EnumerationType;
 
 /**
  *
@@ -26,7 +27,7 @@ import org.brandao.brutos.annotation.Enumerated;
 public class ActionTest23Controller {
 
     public void myAction(
-            @Enumerated("string")
+            @Enumerated(EnumerationType.STRING)
             EnumTest a,
             EnumTest b){
     }
