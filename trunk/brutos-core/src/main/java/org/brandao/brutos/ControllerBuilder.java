@@ -160,6 +160,11 @@ public class ControllerBuilder {
      */
     public ControllerBuilder addAlias( String id ){
         
+        if(ActionType.DETACHED.equals(controller.getActionType())){
+                throw new IllegalArgumentException(
+                    "alias not allowed: " + controller.getClassType().getName() );
+        }
+        
         id = StringUtil.adjust(id);
         
         if( StringUtil.isEmpty(id) )
@@ -803,6 +808,14 @@ public class ControllerBuilder {
     protected Logger getLogger(){
         return LoggerProvider.getCurrentLoggerProvider()
                 .getLogger(ControllerBuilder.class);
+    }
+    
+    public void setActionType(ActionType actionType){
+        this.controller.setActionType(actionType);
+    }
+    
+    public ActionType getActionType(){
+        return this.controller.getActionType();
     }
     
     public PropertyBuilder getProperty(String name){
