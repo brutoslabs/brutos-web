@@ -27,11 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.Scopes;
+import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
 import org.brandao.brutos.ioc.IOCProvider;
@@ -86,6 +82,8 @@ public class Controller {
 
     private boolean loaded;
 
+    private ActionType actionType;
+    
     public Controller() {
         this.fields = new ArrayList();
         this.mappingBeans = new LinkedHashMap();
@@ -99,6 +97,7 @@ public class Controller {
         this.scope = ScopeType.PARAM;
         this.redirect = false;
         this.interceptorProcess.setForm( this );
+        this.actionType = ActionType.PARAMETER;
     }
 
     public String getActionId() {
@@ -444,6 +443,14 @@ public class Controller {
 
     public void setDefaultInterceptorList(List defaultInterceptorList) {
         this.defaultInterceptorList = defaultInterceptorList;
+    }
+
+    public ActionType getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(ActionType actionType) {
+        this.actionType = actionType;
     }
 
 }

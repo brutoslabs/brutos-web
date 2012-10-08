@@ -166,6 +166,12 @@ public class ControllerManager {
         return addController( id, view, DispatcherType.FORWARD, name, classType, actionId );
     }
 
+    public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
+            String name, Class classType, String actionId ){
+            return addController( id, view, dispatcherType, name, classType, actionId, 
+                    ActionType.PARAMETER);
+    }
+    
     /**
      * Constr�i um novo controlador.
      *
@@ -181,12 +187,18 @@ public class ControllerManager {
      * @return Construtor do controlador.
      */
     public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
-            String name, Class classType, String actionId ){
+            String name, Class classType, String actionId, ActionType actionType ){
 
         id       = StringUtil.adjust(id);
         view     = StringUtil.adjust(view);
         actionId = StringUtil.adjust(actionId);
         name     = StringUtil.adjust(name);
+        
+        if(actionType == null)
+            actionType = ActionType.PARAMETER;
+        
+        if(classType == null)
+            throw new IllegalArgumentException("invalid class type: " + classType);
         
         if( StringUtil.isEmpty(actionId) )
             actionId = BrutosConstants.DEFAULT_ACTION_ID;
@@ -194,6 +206,18 @@ public class ControllerManager {
         if( StringUtil.isEmpty(name) )
             name = classType.getSimpleName();
         
+        if(ActionType.PARAMETER.equals(actionType) || ActionType.COMPLEMENT.equals(actionType)){
+            if(StringUtil.isEmpty(id))
+                throw new IllegalArgumentException("controller id is required: " + classType.getName() );
+        }
+        else
+        if(ActionType.DETACHED.equals(actionType)){
+            if(!StringUtil.isEmpty(id))
+                throw new IllegalArgumentException("invalid controller id: " + classType.getName() );
+        }
+        else
+            throw new IllegalArgumentException("invalid class type: " + classType);
+            
         Controller controller = new Controller();
         controller.setId( id );
         controller.setName( name );
