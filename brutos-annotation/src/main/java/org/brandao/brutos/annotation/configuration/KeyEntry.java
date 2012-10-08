@@ -70,9 +70,7 @@ public class KeyEntry implements BeanEntry{
                         definition.target();
 
             this.enumerated = 
-                StringUtil.isEmpty(definition.enumerated())? 
-                    EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE) : 
-                    EnumerationType.valueOf(definition.enumerated());
+                    EnumerationType.valueOf(definition.enumerated().name().toLowerCase());
 
             this.temporal = 
                     StringUtil.isEmpty(definition.temporal())?

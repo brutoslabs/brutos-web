@@ -18,20 +18,25 @@
 package org.brandao.brutos.annotation;
 
 /**
- * Descreve os tipos que um Enum pode ser mapeado.
+ * Descreve as estratégias de identificação da ação.
  * 
- * @author Brandao
+ * @author Afonso Brandao
  */
-public enum EnumerationType {
+public enum ActionStrategyType {
     
     /**
-     * O Enum é mapeado como inteiro.
+     * A ação vai ser informada através de um parâmetro.
      */
-    ORDINAL,
-    
-    /**
-     * O Enum é mapeado como string.
-     */
-    STRING;
+   PARAMETER,
+
+   /**
+    * A identificação do controlador é o prefixo da identificação da ação.
+    */
+   COMPLEMENT,
+
+   /**
+    * A identificação da ação independe da identificação do controlador.
+    */
+   DETACHED;
     
 }

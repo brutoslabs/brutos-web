@@ -17,21 +17,22 @@
 
 package org.brandao.brutos.annotation;
 
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
- * Descreve os tipos que um Enum pode ser mapeado.
+ * Defini como a ação será identificada.
  * 
- * @author Brandao
+ * @author Afonso Brandao
  */
-public enum EnumerationType {
+
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ActionStrategy {
     
-    /**
-     * O Enum é mapeado como inteiro.
-     */
-    ORDINAL,
-    
-    /**
-     * O Enum é mapeado como string.
-     */
-    STRING;
+    ActionStrategyType value();
     
 }

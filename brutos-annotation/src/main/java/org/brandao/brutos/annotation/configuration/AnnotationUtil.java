@@ -107,8 +107,11 @@ public class AnnotationUtil {
     }
     
     public static org.brandao.brutos.EnumerationType getEnumerationType(Enumerated value){
-        if(value != null)
-            return org.brandao.brutos.EnumerationType.valueOf(value.value());
+        if(value != null){
+            return 
+                org.brandao.brutos.EnumerationType
+                    .valueOf(value.value().name().toLowerCase());
+        }
         else
             return BrutosConstants.DEFAULT_ENUMERATIONTYPE;
     }

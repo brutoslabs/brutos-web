@@ -45,7 +45,7 @@ public class ControllerAnnotationConfig
         Controller annotationController =
                 (Controller) source.getAnnotation(Controller.class);
         View viewAnnotation = (View) source.getAnnotation(View.class);
-
+        ActionStrategy strategy = (ActionStrategy) source.getAnnotation(ActionStrategy.class);
         
         String controllerID;
         String view;
@@ -54,6 +54,10 @@ public class ControllerAnnotationConfig
         String name     = null;
         String actionID = null;
         String defaultActionName = null;
+        ActionType actionType = 
+            strategy == null? 
+                null : 
+                ActionType.valueOf(strategy.value().name().toLowerCase());
         
         if(annotationController != null){
             name = annotationController.name();
@@ -75,7 +79,8 @@ public class ControllerAnnotationConfig
                     dispatcher,
                     name,
                     source,
-                    actionID);
+                    actionID,
+                    actionType);
 
         
         view = getView((View) source.getAnnotation(View.class), builder,

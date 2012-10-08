@@ -122,7 +122,7 @@ public class ActionTestController {
     }
 
     public void my21Action(
-            @Enumerated("string")
+            @Enumerated(EnumerationType.STRING)
             EnumTest a,
             EnumTest b){
     }
