@@ -96,6 +96,14 @@ public interface BrutosConstants {
     
     public final EnumerationType DEFAULT_ENUMERATIONTYPE = EnumerationType.ORDINAL;
 
+    public final String SEPARATOR = "org.brandao.brutos.separator";
+
+    public final String ACTION_TYPE = "org.brandao.brutos.action_strategy";
+
+    public final String DEFAULT_ACTION_TYPE_NAME = "parameter";
+    
+    public final String DEFAULT_SEPARATOR = "-";
+    
     public final String DEFAULT_ENUMERATION_TYPE = "ordinal";
     
     public final String DEFAULT_KEY_NAME = "key";

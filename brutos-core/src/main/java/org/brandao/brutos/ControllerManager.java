@@ -194,8 +194,14 @@ public class ControllerManager {
         actionId = StringUtil.adjust(actionId);
         name     = StringUtil.adjust(name);
         
-        if(actionType == null)
-            actionType = ActionType.PARAMETER;
+        if(actionType == null){
+            Properties config = applicationContext.getConfiguration();
+            String strategyName =
+                    config.getProperty(
+                        BrutosConstants.ACTION_TYPE,
+                        BrutosConstants.DEFAULT_ACTION_TYPE_NAME);
+            actionType = ActionType.valueOf(strategyName.toUpperCase());
+        }
         
         if(classType == null)
             throw new IllegalArgumentException("invalid class type: " + classType);
@@ -211,11 +217,7 @@ public class ControllerManager {
                 throw new IllegalArgumentException("controller id is required: " + classType.getName() );
         }
         else
-        if(ActionType.DETACHED.equals(actionType)){
-            if(!StringUtil.isEmpty(id))
-                throw new IllegalArgumentException("invalid controller id: " + classType.getName() );
-        }
-        else
+        if(!ActionType.DETACHED.equals(actionType))
             throw new IllegalArgumentException("invalid class type: " + classType);
             
         Controller controller = new Controller();
@@ -225,6 +227,7 @@ public class ControllerManager {
         controller.setClassType( classType );
         controller.setActionId( actionId );
         controller.setDispatcherType(dispatcherType);
+        controller.setActionType(actionType);
         
         getLogger().info(
                 String.format(
@@ -243,10 +246,17 @@ public class ControllerManager {
         
         controller.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
         
-        this.current = new ControllerBuilder( controller, this, 
+        this.current = createBuilder( controller, this, 
                 interceptorManager, validatorProvider, applicationContext );
         
         return this.getCurrent();
+    }
+    
+    protected ControllerBuilder createBuilder(Controller controller, ControllerManager controllerManager,
+            InterceptorManager interceptorManager, ValidatorProvider validatorProvider,
+            ConfigurableApplicationContext applicationContext){
+        return new ControllerBuilder( controller, this, 
+                interceptorManager, validatorProvider, applicationContext );
     }
     
     private Method getMethodAction( String methodName, Class classe ){
