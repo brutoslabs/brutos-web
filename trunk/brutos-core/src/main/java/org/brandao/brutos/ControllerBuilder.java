@@ -128,11 +128,11 @@ import org.brandao.brutos.validator.ValidatorProvider;
  */
 public class ControllerBuilder {
     
-    private Controller controller;
-    private ControllerManager controllerManager;
-    private InterceptorManager interceptorManager;
-    private ValidatorProvider validatorProvider;
-    private ConfigurableApplicationContext applicationContext;
+    protected final Controller controller;
+    protected ControllerManager controllerManager;
+    protected InterceptorManager interceptorManager;
+    protected ValidatorProvider validatorProvider;
+    protected ConfigurableApplicationContext applicationContext;
 
     /**
      * Constr�i um novo controlador.
@@ -369,6 +369,22 @@ public class ControllerBuilder {
     public ActionBuilder addAction( String id, String resultId, String view, DispatcherType dispatcher, String executor ){
         
         id = StringUtil.adjust(id);
+        
+        if(id == null)
+            throw new IllegalArgumentException("invalid action id: " + id);
+        
+        ActionType type = controller.getActionType();
+        
+        if(type.equals(ActionType.COMPLEMENT)){
+            Properties config = this.applicationContext.getConfiguration();
+            String separator = 
+                    config.getProperty(
+                        BrutosConstants.SEPARATOR,
+                        BrutosConstants.DEFAULT_SEPARATOR);
+            
+            id = controller.getId() + separator + id;
+            id = id.replaceAll("\\w("+separator+")+", separator);
+        }
         
         resultId = StringUtil.adjust(resultId);
 

@@ -65,7 +65,7 @@ public abstract class ActionType {
    public static final ActionType DETACHED   = new ActionType(){
 
         public int type() {
-            return 0;
+            return 2;
         }
        
         public String name(){
@@ -75,9 +75,9 @@ public abstract class ActionType {
    };
    
    static{
-       defaultTypes.put(PARAMETER, PARAMETER.name());
-       defaultTypes.put(COMPLEMENT, COMPLEMENT.name());
-       defaultTypes.put(DETACHED, DETACHED.name());
+       defaultTypes.put(PARAMETER.name() , PARAMETER);
+       defaultTypes.put(COMPLEMENT.name(), COMPLEMENT);
+       defaultTypes.put(DETACHED.name()  , DETACHED);
    }
    
     public static ActionType valueOf( String value ){
