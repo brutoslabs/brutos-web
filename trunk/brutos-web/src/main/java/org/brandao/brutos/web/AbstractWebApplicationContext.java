@@ -200,17 +200,24 @@ public abstract class AbstractWebApplicationContext
                     tmp );
 
         tmp = config
-                .getProperty( BrutosConstants.SEPARATOR,
-                              "/" );
-        
-        config.put( BrutosConstants.SEPARATOR,
-                    tmp );
-
-        tmp = config
                 .getProperty( BrutosConstants.ACTION_TYPE,
                               ActionType.COMPLEMENT.name() );
         
         config.put( BrutosConstants.ACTION_TYPE,
+                    tmp );
+
+        tmp = config
+                .getProperty( BrutosConstants.CONTROLLER_MANAGER_CLASS,
+                              WebControllerManager.class.getName() );
+        
+        config.put( BrutosConstants.CONTROLLER_MANAGER_CLASS,
+                    tmp );
+
+        tmp = config
+                .getProperty( BrutosConstants.CONTROLLER_BUILDER_CLASS,
+                              WebControllerBuilder.class.getName() );
+        
+        config.put( BrutosConstants.CONTROLLER_BUILDER_CLASS,
                     tmp );
         
     }
