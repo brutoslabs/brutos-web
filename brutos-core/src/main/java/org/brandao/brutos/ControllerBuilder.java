@@ -375,16 +375,8 @@ public class ControllerBuilder {
         
         ActionType type = controller.getActionType();
         
-        if(type.equals(ActionType.COMPLEMENT)){
-            Properties config = this.applicationContext.getConfiguration();
-            String separator = 
-                    config.getProperty(
-                        BrutosConstants.SEPARATOR,
-                        BrutosConstants.DEFAULT_SEPARATOR);
-            
-            id = controller.getId() + separator + id;
-            id = id.replaceAll("\\w("+separator+")+", separator);
-        }
+        if(type.equals(ActionType.COMPLEMENT))
+            id = controller.getId() + id;
         
         resultId = StringUtil.adjust(resultId);
 
@@ -422,21 +414,39 @@ public class ControllerBuilder {
                 .setResult(resultId);
         
         return actionBuilder;
-        /*
-        Action mp = new Action();
-        mp.setName( id );
-        mp.setRedirect(false);
-        mp.setDispatcherType(dispatcher);
-        mp.setView(view);
-        mp.setExecutor(executor);
-        mp.setReturnIn( resultId == null? "result" : resultId );
-        
-        mp.setController( controller );
-        controller.addAction( id, mp );
-        return new ActionBuilder( mp, controller, validatorProvider, this );
-        */
     }
 
+    /*
+    protected ActionBuilder createActionBuilder( Action methodForm, 
+            Controller controller, ValidatorProvider validatorProvider,
+            ControllerBuilder controllerBuilder ){
+        
+        Properties config = applicationContext.getConfiguration();
+        String builderClassName = config.getProperty(
+                BrutosConstants.ACTION_BUILDER_CLASS, ActionBuilder.class.getName());
+        
+        try{
+            Class clazz = ClassUtil.get(builderClassName);
+
+            ActionBuilder builder = (ActionBuilder)ClassUtil.getInstance(
+                    clazz,
+                    new Class[]{ 
+                        Action.class, Controller.class, ValidatorProvider.class,
+                        ControllerBuilder.class },
+                    new Object[]{
+                        methodForm, controller, validatorProvider,
+                        controllerBuilder});
+
+            return builder;
+        }
+        catch(Exception e){
+            throw new BrutosException(
+                    "Could not instantiate the action builder: " + builderClassName, e);
+        }
+      
+    }
+    */
+    
     /**
      * Define um novo interceptador do controlador. Se o interceptador for
      * definido como "default", ser� lan�ada uma exce��o. O interceptador dever�

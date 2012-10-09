@@ -255,8 +255,30 @@ public class ControllerManager {
     protected ControllerBuilder createBuilder(Controller controller, ControllerManager controllerManager,
             InterceptorManager interceptorManager, ValidatorProvider validatorProvider,
             ConfigurableApplicationContext applicationContext){
-        return new ControllerBuilder( controller, this, 
-                interceptorManager, validatorProvider, applicationContext );
+        
+        Properties config = applicationContext.getConfiguration();
+        String builderClassName = config.getProperty(
+                BrutosConstants.CONTROLLER_BUILDER_CLASS, ControllerBuilder.class.getName());
+        
+        try{
+            Class clazz = ClassUtil.get(builderClassName);
+
+            ControllerBuilder builder = (ControllerBuilder)ClassUtil.getInstance(
+                    clazz,
+                    new Class[]{ 
+                        Controller.class, ControllerManager.class,
+                        InterceptorManager.class, ValidatorProvider.class,
+                        ConfigurableApplicationContext.class },
+                    new Object[]{
+                        controller, controllerManager, interceptorManager, 
+                        validatorProvider, applicationContext });
+
+            return builder;
+        }
+        catch(Exception e){
+            throw new BrutosException(
+                    "Could not instantiate the controller builder: " + builderClassName, e);
+        }
     }
     
     private Method getMethodAction( String methodName, Class classe ){
