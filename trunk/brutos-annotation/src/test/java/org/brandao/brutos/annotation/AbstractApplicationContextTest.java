@@ -19,6 +19,7 @@ package org.brandao.brutos.annotation;
 
 import java.util.Properties;
 import junit.framework.TestCase;
+import org.brandao.brutos.ActionType;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.test.MockIOCProvider;
 import org.brandao.brutos.test.MockViewProvider;
@@ -57,8 +58,12 @@ public abstract class AbstractApplicationContextTest extends TestCase{
         
         prop.setProperty(BrutosConstants.WEB_APPLICATION_CLASS, "");
         
+        prop.setProperty(BrutosConstants.ACTION_TYPE, ActionType.COMPLEMENT.name());
+
+        prop.setProperty(BrutosConstants.SEPARATOR, "/");
+        
         annotationApplicationContext.configure(prop);
         return annotationApplicationContext;
     }
-    
+
 }

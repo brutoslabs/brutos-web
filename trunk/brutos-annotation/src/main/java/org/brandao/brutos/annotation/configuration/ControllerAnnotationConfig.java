@@ -179,7 +179,7 @@ public class ControllerAnnotationConfig
     }
 
     protected String getControllerName(Class controllerClass){
-        return controllerClass.getSimpleName().replaceAll("Controller$", "");
+        return controllerClass.getSimpleName().replaceAll("Controller$", "").toLowerCase();
     }
     
     protected String getControllerId(Controller annotation, Class controllerClass){
@@ -187,7 +187,7 @@ public class ControllerAnnotationConfig
             annotation != null && annotation.id().length > 0 && 
             !StringUtil.isEmpty(annotation.id()[0]);
         
-        return hasControllerId? annotation.id()[0] : null;
+        return hasControllerId? annotation.id()[0] : getControllerName(controllerClass);
     }
     
     public boolean isApplicable(Object source) {
