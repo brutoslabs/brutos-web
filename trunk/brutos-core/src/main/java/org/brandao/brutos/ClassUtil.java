@@ -17,6 +17,8 @@
 
 package org.brandao.brutos;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import org.brandao.brutos.type.TypeManager;
 
@@ -67,6 +69,14 @@ public final class ClassUtil {
     
     private static Class getClasse( String name ) throws ClassNotFoundException{
         return Class.forName( name, true, Thread.currentThread().getContextClassLoader() );
+    }
+    
+    public static Object getInstance(Class clazz, Class[] params, Object[] values) 
+        throws NoSuchMethodException, InstantiationException, 
+        IllegalAccessException, IllegalArgumentException, 
+            InvocationTargetException{
+        Constructor cons = clazz.getConstructor(params);
+        return cons.newInstance(values);
     }
     
     public static Object getInstance(Class clazz) 

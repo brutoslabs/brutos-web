@@ -119,11 +119,7 @@ public abstract class AbstractApplicationContext
         
         this.iocProvider.configure(config);
         
-        this.interceptorManager = 
-                new InterceptorManager(
-                    this.parent == null? 
-                        null : 
-                        ((ConfigurableApplicationContext)parent).getInterceptorManager() );
+        this.interceptorManager = getNewInterceptorManager();
         
         this.webFrameManager = new WebFrameManager( this.interceptorManager, this.iocManager );
         this.controllerResolver = getNewControllerResolver();
@@ -132,13 +128,7 @@ public abstract class AbstractApplicationContext
         this.responseFactory = getMvcResponseFactory();
         this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
         this.viewResolver = getNewViewResolver();
-        this.controllerManager = new ControllerManager(
-                this.interceptorManager, 
-                validatorProvider,
-                this.parent == null? 
-                    null : 
-                    ((ConfigurableApplicationContext)parent).getControllerManager(),
-                this);
+        this.controllerManager = this.getNewControllerManager();
         
         this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
         this.codeGeneratorProvider = CodeGeneratorProvider.getProvider(this.getConfiguration());
@@ -295,6 +285,67 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    protected ControllerManager getNewControllerManager(){
+        try{
+            String className =
+                configuration.getProperty(
+                    BrutosConstants.CONTROLLER_MANAGER_CLASS,
+                    ControllerManager.class.getName());
+            
+            Class clazz = 
+                    ClassUtil.get(className);
+            
+            ControllerManager instance = 
+                (ControllerManager)ClassUtil.getInstance(
+                    clazz, 
+                    new Class[]{
+                        InterceptorManager.class, 
+                        ValidatorProvider.class, 
+                        ControllerManager.class,
+                        ConfigurableApplicationContext.class},
+                    new Object[]{
+                        interceptorManager, 
+                        validatorProvider, 
+                        this.parent == null? 
+                            null : 
+                            ((ConfigurableApplicationContext)parent).getControllerManager(),
+                        this });
+            
+            return instance;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected InterceptorManager getNewInterceptorManager(){
+        try{
+            String className =
+                configuration.getProperty(
+                    BrutosConstants.INTERCEPTOR_MANAGER_CLASS,
+                    InterceptorManager.class.getName());
+            
+            Class clazz = 
+                    ClassUtil.get(className);
+            
+            InterceptorManager instance = 
+                (InterceptorManager)ClassUtil.getInstance(
+                    clazz, 
+                    new Class[]{
+                        InterceptorManager.class},
+                    new Object[]{
+                        this.parent == null? 
+                        null : 
+                        ((ConfigurableApplicationContext)parent).getInterceptorManager()
+                        });
+            
+            return instance;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+    
     protected ViewResolver getNewViewResolver(){
         try{
             String className = 
