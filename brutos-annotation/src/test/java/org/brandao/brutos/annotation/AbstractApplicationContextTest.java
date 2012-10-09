@@ -23,6 +23,8 @@ import org.brandao.brutos.ActionType;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.test.MockIOCProvider;
 import org.brandao.brutos.test.MockViewProvider;
+import org.brandao.brutos.web.WebControllerBuilder;
+import org.brandao.brutos.web.WebControllerManager;
 
 /**
  *
@@ -60,7 +62,11 @@ public abstract class AbstractApplicationContextTest extends TestCase{
         
         prop.setProperty(BrutosConstants.ACTION_TYPE, ActionType.COMPLEMENT.name());
 
-        prop.setProperty(BrutosConstants.SEPARATOR, "/");
+        prop.setProperty( BrutosConstants.CONTROLLER_MANAGER_CLASS,
+                              WebControllerManager.class.getName() );
+        
+        prop.setProperty( BrutosConstants.CONTROLLER_BUILDER_CLASS,
+                              WebControllerBuilder.class.getName() );
         
         annotationApplicationContext.configure(prop);
         return annotationApplicationContext;
