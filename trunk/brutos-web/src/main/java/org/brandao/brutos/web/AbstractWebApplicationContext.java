@@ -19,11 +19,7 @@ package org.brandao.brutos.web;
 
 import java.util.Properties;
 import javax.servlet.ServletContext;
-import org.brandao.brutos.AbstractApplicationContext;
-import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.WebScopeType;
+import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ServletContextResource;
 import org.brandao.brutos.ioc.SpringIOCProvider;
@@ -58,6 +54,10 @@ public abstract class AbstractWebApplicationContext
     public AbstractWebApplicationContext(){
     }
 
+    public AbstractWebApplicationContext( ApplicationContext parent ) {
+        super(parent);
+    }
+    
     public void configure( Properties config ){
         overrideConfig(config);
         super.configure(config);
@@ -197,6 +197,20 @@ public abstract class AbstractWebApplicationContext
                               "/" );
         
         config.put( "org.brandao.brutos.view.separator",
+                    tmp );
+
+        tmp = config
+                .getProperty( BrutosConstants.SEPARATOR,
+                              "/" );
+        
+        config.put( BrutosConstants.SEPARATOR,
+                    tmp );
+
+        tmp = config
+                .getProperty( BrutosConstants.ACTION_TYPE,
+                              ActionType.COMPLEMENT.name() );
+        
+        config.put( BrutosConstants.ACTION_TYPE,
                     tmp );
         
     }
