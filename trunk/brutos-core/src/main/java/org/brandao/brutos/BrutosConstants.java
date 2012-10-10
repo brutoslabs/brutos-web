@@ -102,10 +102,6 @@ public interface BrutosConstants {
     
     public final String INTERCEPTOR_MANAGER_CLASS = "org.brandao.brutos.manager.interceptor";
     
-    public final String CONTROLLER_BUILDER_CLASS = "org.brandao.brutos.builder.controller";
-
-    public final String ACTION_BUILDER_CLASS = "org.brandao.brutos.builder.action";
-    
     public final String DEFAULT_ACTION_TYPE_NAME = "parameter";
     
     public final String DEFAULT_SEPARATOR = "-";
