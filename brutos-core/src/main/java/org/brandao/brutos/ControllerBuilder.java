@@ -134,6 +134,12 @@ public class ControllerBuilder {
     protected ValidatorProvider validatorProvider;
     protected ConfigurableApplicationContext applicationContext;
 
+    public ControllerBuilder(ControllerBuilder builder){
+        this( builder.controller, builder.controllerManager,
+            builder.interceptorManager, builder.validatorProvider,
+            builder.applicationContext );
+    }
+    
     /**
      * Constr�i um novo controlador.
      * 
@@ -416,37 +422,6 @@ public class ControllerBuilder {
         return actionBuilder;
     }
 
-    /*
-    protected ActionBuilder createActionBuilder( Action methodForm, 
-            Controller controller, ValidatorProvider validatorProvider,
-            ControllerBuilder controllerBuilder ){
-        
-        Properties config = applicationContext.getConfiguration();
-        String builderClassName = config.getProperty(
-                BrutosConstants.ACTION_BUILDER_CLASS, ActionBuilder.class.getName());
-        
-        try{
-            Class clazz = ClassUtil.get(builderClassName);
-
-            ActionBuilder builder = (ActionBuilder)ClassUtil.getInstance(
-                    clazz,
-                    new Class[]{ 
-                        Action.class, Controller.class, ValidatorProvider.class,
-                        ControllerBuilder.class },
-                    new Object[]{
-                        methodForm, controller, validatorProvider,
-                        controllerBuilder});
-
-            return builder;
-        }
-        catch(Exception e){
-            throw new BrutosException(
-                    "Could not instantiate the action builder: " + builderClassName, e);
-        }
-      
-    }
-    */
-    
     /**
      * Define um novo interceptador do controlador. Se o interceptador for
      * definido como "default", ser� lan�ada uma exce��o. O interceptador dever�
