@@ -28,6 +28,10 @@ import org.brandao.brutos.validator.ValidatorProvider;
  */
 public class WebControllerBuilder extends ControllerBuilder{
     
+    public WebControllerBuilder(ControllerBuilder builder){
+        super( builder );
+    }
+    
     public WebControllerBuilder( Controller controller, ControllerManager controllerManager,
             InterceptorManager interceptorManager, ValidatorProvider validatorProvider,
             ConfigurableApplicationContext applicationContext ){
