@@ -57,7 +57,7 @@ public class ControllerAnnotationConfig
         ActionType actionType = 
             strategy == null? 
                 null : 
-                ActionType.valueOf(strategy.value().name().toLowerCase());
+                ActionType.valueOf(strategy.value().name());
         
         if(annotationController != null){
             name = annotationController.name();
