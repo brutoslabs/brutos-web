@@ -213,13 +213,6 @@ public abstract class AbstractWebApplicationContext
         config.put( BrutosConstants.CONTROLLER_MANAGER_CLASS,
                     tmp );
 
-        tmp = config
-                .getProperty( BrutosConstants.CONTROLLER_BUILDER_CLASS,
-                              WebControllerBuilder.class.getName() );
-        
-        config.put( BrutosConstants.CONTROLLER_BUILDER_CLASS,
-                    tmp );
-        
     }
 
     public ServletContext getContext(){
