@@ -24,6 +24,7 @@ import org.brandao.brutos.annotation.*;
  * @author Brandao
  */
 @Controller(id="/controller/{invoke}")
+@ActionStrategy(ActionStrategyType.PARAMETER)
 public class ControllerTest10Controller {
     
     public Object myFirstAction(){

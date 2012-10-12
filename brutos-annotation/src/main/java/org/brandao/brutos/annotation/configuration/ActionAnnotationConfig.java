@@ -109,9 +109,9 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             id = id.replaceAll("Action$", "");
             
             if(StringUtil.isEmpty(id))
-                throw new BrutosException("invalid action name: " + id);
+                throw new BrutosException("invalid action name: " + method.getName());
             
-            return id;
+            return id.toLowerCase();
         }
     }
     

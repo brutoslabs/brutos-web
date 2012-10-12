@@ -58,7 +58,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
@@ -90,7 +90,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
@@ -122,7 +122,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
@@ -154,7 +154,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertEquals("myfirst",controller.getDefaultAction());
         Assert.assertEquals(clazz.getSimpleName(),controller.getName());
@@ -188,7 +188,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertEquals("controllerTest5Controller",controller.getName());
@@ -236,7 +236,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertEquals(clazz.getSimpleName(),controller.getName());
@@ -270,7 +270,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertEquals(clazz.getSimpleName(),controller.getName());
@@ -304,7 +304,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertEquals(clazz.getSimpleName(),controller.getName());
@@ -347,12 +347,10 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/controllertest10/index.jsp",controller.getView());
         
-        String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
-        Action action = controller.getActionByName(prefix+"myfirst");
+        Action action = controller.getActionByName("myfirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myfirst",action.getName());
+        Assert.assertEquals("myfirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest10/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -385,12 +383,10 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/controllertest11/index.jsp",controller.getView());
         
-        String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
-        Action action = controller.getActionByName(prefix+"myfirst");
+        Action action = controller.getActionByName("myfirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myfirst",action.getName());
+        Assert.assertEquals("myfirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest11/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -410,7 +406,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
@@ -452,7 +448,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
@@ -501,7 +497,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
@@ -550,7 +546,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
@@ -592,7 +588,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
@@ -634,7 +630,7 @@ public class AnnotationApplicationContextControllerTest
                 annotationApplicationContext
                     .getControllerManager().getController(clazz);
         
-        Assert.assertNull(controller.getId());
+        Assert.assertNotNull(controller.getId());
         
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
