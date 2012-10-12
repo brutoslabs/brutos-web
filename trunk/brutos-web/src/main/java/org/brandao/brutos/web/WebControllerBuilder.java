@@ -47,7 +47,8 @@ public class WebControllerBuilder extends ControllerBuilder{
             DispatcherType dispatcher, String executor ){
         return 
             super.addAction( 
-                WebUtil.fixURI(id), resultId, WebUtil.fixURI(view), 
+                controller.getActionType().equals(ActionType.PARAMETER)? 
+                id : WebUtil.fixURI(id), resultId, WebUtil.fixURI(view), 
                 dispatcher, executor );
     }
     
