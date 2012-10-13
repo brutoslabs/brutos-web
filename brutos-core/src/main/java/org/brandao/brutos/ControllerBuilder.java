@@ -394,20 +394,10 @@ public class ControllerBuilder {
             throw new BrutosException( "duplicate action " + id + ": " +
                 controller.getClassType().getName() );
      
-        getLogger().info(
-            String.format(
-                "%s => %s",
-                new Object[]{
-                    this.controller.getName() == null?
-                        id : this.controller.getId() + "[" + id + "]",
-                    controller.getClassType().getName() + "." + 
-                    (executor == null? "?" : executor) + "(...)" } ) 
-                );
-        
         Action action = new Action();
         action.setController( controller );
         controller.addAction( id, action );
-        
+
         ActionBuilder actionBuilder = 
                 new ActionBuilder( action, controller, validatorProvider, this );
 
@@ -418,6 +408,8 @@ public class ControllerBuilder {
                 .setDispatcherType(dispatcher)
                 .setExecutor(executor)
                 .setResult(resultId);
+        
+        printCreateAction(action);
         
         return actionBuilder;
     }
@@ -818,10 +810,39 @@ public class ControllerBuilder {
     public ActionType getActionType(){
         return this.controller.getActionType();
     }
-    
+
     public PropertyBuilder getProperty(String name){
         PropertyController property = (PropertyController) controller.getProperty(name);
         return property == null? null : new PropertyBuilder( property );
+    }
+
+    private void printCreateAction(Action action){
+        
+        ActionType type = controller.getActionType();
+        String log;
+        
+        if(type.equals(ActionType.PARAMETER)){
+            log = 
+                controller + 
+                "[" +
+                controller.getId() + 
+                "?" + 
+                controller.getActionId() + 
+                "=" +
+                action.getName() + 
+                "]";
+        }
+        else{
+            log = 
+                controller + 
+                "[" +
+                action.getName() + 
+                "]";
+            
+        }
+        
+        getLogger()
+            .info(log);
     }
     
 }
