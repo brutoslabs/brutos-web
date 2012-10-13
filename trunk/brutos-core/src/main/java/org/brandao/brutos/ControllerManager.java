@@ -229,13 +229,8 @@ public class ControllerManager {
         controller.setDispatcherType(dispatcherType);
         controller.setActionType(actionType);
         
-        getLogger().info(
-                String.format(
-                    "create controller %s[%s]",
-                    new Object[]{
-                        classType.getName(),
-                        id == null? "?" : id
-                         }));
+        printCreateController(controller);
+        
         //Action
         ActionListener ac = new ActionListener();
         ac.setPreAction( getMethodAction( "preAction", controller.getClassType() ) );
@@ -393,6 +388,21 @@ public class ControllerManager {
         return this.parent;
     }
     
+    private void printCreateController(Controller controller){
+        
+        ActionType type = controller.getActionType();
+        
+        if(type.equals(ActionType.PARAMETER)){
+            String log = 
+                controller + 
+                "[" +
+                controller.getId() +
+                "]";
+            getLogger()
+                .info(log);
+        }
+        
+    }
     protected Logger getLogger(){
         return LoggerProvider.getCurrentLoggerProvider()
                 .getLogger(ControllerBuilder.class);
