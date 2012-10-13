@@ -146,15 +146,23 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         return "["+clazz.getName()+"]." + name;
     }
 
+    private Class getType(Class type){
+        if(type.getSuperclass() != Object.class)
+            return getType(type.getSuperclass());
+        else
+            return type;
+    }
+    
     protected void createBean(Object builder, 
             Object source, ConfigurableApplicationContext applicationContext){
         
+        /*
         try{
             Method createBeanMethod = 
                 getClass()
                     .getDeclaredMethod(
                         "createBean", 
-                        builder.getClass(),
+                        getType(builder.getClass()),
                         source.getClass(),
                         ConfigurableApplicationContext.class);
             
@@ -169,15 +177,23 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         catch(Exception e){
             throw new BrutosException(e);
         }
+        */
         
-        /*
-        if(source instanceof ActionParamEntry)
-            createBean((ActionBuilder)builder, (ActionParamEntry)source, applicationContext);
+        //if(source instanceof ActionParamEntry)
+        if(builder instanceof ActionBuilder)
+            createBean((ActionBuilder)builder, (BeanActionParamEntry)source, applicationContext);
+        else
+        if(builder instanceof ControllerBuilder){
+            if(source instanceof BeanPropertyAnnotation){
+                createBean(
+                    (ControllerBuilder)builder, (BeanEntryProperty)source, applicationContext);
+            }
+        }
         else{
             checkCircularReference(builder,source);
             if(source instanceof BeanPropertyAnnotation){
                 createBean(
-                    (BeanBuilder)builder, (BeanPropertyAnnotation)source, applicationContext);
+                    (BeanBuilder)builder, (BeanEntryProperty)source, applicationContext);
             }
             else
             if(source instanceof BeanEntryConstructorArg){
@@ -195,7 +211,6 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                     (BeanBuilder)builder, (ElementEntry)source, applicationContext);
             }
         }
-        */
     }
     
     protected void createBean(BeanBuilder builder, 
