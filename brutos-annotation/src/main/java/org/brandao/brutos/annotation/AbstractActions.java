@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Coleção de ações que não possui um método associado (executor).
+ * Coleção de ações que não possuem um método associado (executor).
  * 
  * @author Afonso Brandao
  */

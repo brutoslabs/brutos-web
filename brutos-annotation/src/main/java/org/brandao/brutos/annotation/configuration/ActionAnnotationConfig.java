@@ -38,7 +38,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
-        Method method = (Method)source;
+        ActionEntry method = (ActionEntry)source;
         ControllerBuilder controllerBuilder = (ControllerBuilder)builder;
         Action action = (Action)method.getAnnotation(Action.class);
         View viewAnnotation = method.getAnnotation(View.class);
@@ -68,6 +68,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 method.getName() );
 
         view = getView(
+                method,
                 viewAnnotation, 
                 actionBuilder,
                 applicationContext);
@@ -82,7 +83,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 else{
                     throw new BrutosException(
                         "invalid action id: " + 
-                        method.getDeclaringClass().getName() + "." + 
+                        method.getControllerClass().getName() + "." + 
                         method.getName());
                 }
             }
@@ -95,7 +96,24 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         return actionBuilder;
     }
 
-    protected String getId(Action action, Method method,
+    protected org.brandao.brutos.DispatcherType getDispatcherType(
+            ActionEntry actionEntry, View viewAnnotation){
+        
+        if(actionEntry.isAbstractAction()){
+            return org.brandao.brutos.DispatcherType
+                        .valueOf(actionEntry.getDispatcher());
+        }
+        else
+        if(viewAnnotation != null && !StringUtil.isEmpty(viewAnnotation.dispatcher())){
+            return org.brandao.brutos.DispatcherType
+                        .valueOf(viewAnnotation.dispatcher());
+        }
+        else
+            return BrutosConstants.DEFAULT_DISPATCHERTYPE;
+        
+    }
+    
+    protected String getId(Action action, ActionEntry method,
             ConfigurableApplicationContext applicationContext){
         
         boolean hasActionId =
@@ -115,24 +133,28 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         }
     }
     
-    protected String getView(View viewAnnotation, ActionBuilder action,
+    protected String getView(ActionEntry actionEntry, View viewAnnotation, ActionBuilder action,
         ConfigurableApplicationContext applicationContext){
         
-        boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
-        
-        String view = 
-            viewAnnotation != null && viewAnnotation.id().trim().length() > 0?
-                viewAnnotation.id() : null;
-        
-        
-        if(rendered){
-            if(view != null)
-                return viewAnnotation.id();
+        if(actionEntry.isAbstractAction())
+            return actionEntry.getView();
+        else{
+            boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
+
+            String view = 
+                viewAnnotation != null && !StringUtil.isEmpty(viewAnnotation.id())?
+                    viewAnnotation.id() : null;
+
+
+            if(rendered){
+                if(view != null)
+                    return viewAnnotation.id();
+                else
+                    return createActionView(action, applicationContext);
+            }
             else
-                return createActionView(action, applicationContext);
+                return null;
         }
-        else
-            return null;
     }
 
     protected String createActionView(ActionBuilder action,
@@ -144,21 +166,26 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     private void addParameters(ActionBuilder builder, 
-            Method method,ConfigurableApplicationContext applicationContext){
+            ActionEntry method,ConfigurableApplicationContext applicationContext){
         
-        Type[] genericTypes = (Type[]) method.getGenericParameterTypes();
+        Type[] genericTypes = method.getGenericParameterTypes();
         Class[] types = method.getParameterTypes();
         Annotation[][] annotations = method.getParameterAnnotations();
         
         for(int i=0;i<types.length;i++){
             ActionParamEntry actionParamEntry = 
-                    new ActionParamEntry(null,types[i],genericTypes[i],annotations[i],i);
+                new ActionParamEntry(
+                    null,
+                    types != null? types[i] : null,
+                    genericTypes != null? genericTypes[i] : null, 
+                    annotations != null? annotations[i] : null,
+                    i);
             
             super.applyInternalConfiguration(actionParamEntry, builder, applicationContext);
         }
     }
 
-    protected void throwsSafe(ActionBuilder builder, Method method,
+    protected void throwsSafe(ActionBuilder builder, ActionEntry method,
             ConfigurableApplicationContext applicationContext){
         
         List<ThrowableEntry> list = new ArrayList<ThrowableEntry>();
@@ -173,13 +200,16 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             list.add(
                     AnnotationUtil.toEntry(throwSafe));
         
-        Class[] exs = method.getExceptionTypes();
         Map<Class<? extends Throwable>,ThrowableEntry> map = 
                 new HashMap<Class<? extends Throwable>,ThrowableEntry>();
         
-        for(Class ex: exs){
-            ThrowableEntry entry = new ThrowableEntry(ex);
-            map.put(ex,entry);
+        Class[] exs = method.getExceptionTypes();
+        
+        if(exs != null){
+            for(Class ex: exs){
+                ThrowableEntry entry = new ThrowableEntry(ex);
+                map.put(ex,entry);
+            }
         }
         
         for(ThrowableEntry entry: list)
@@ -191,10 +221,13 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     public boolean isApplicable(Object source) {
-        return source instanceof Method && 
-               (((Method)source).isAnnotationPresent( Action.class ) ||
-               ((Method)source).getName().endsWith("Action")) &&
-               !((Method)source).isAnnotationPresent(Transient.class);
+        return source instanceof ActionEntry && 
+               (
+                    ((ActionEntry)source).isAnnotationPresent( Action.class ) ||
+                    ((ActionEntry)source).getName().endsWith("Action") ||
+                    ((ActionEntry)source).isAbstractAction()
+                ) &&
+               !((ActionEntry)source).isAnnotationPresent(Transient.class);
     }
     
 }
