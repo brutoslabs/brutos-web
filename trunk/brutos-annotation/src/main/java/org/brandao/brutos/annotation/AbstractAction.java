@@ -56,7 +56,7 @@ public @interface AbstractAction {
     /**
      * Identificação da Ação. 
      */
-    String[] value();
+    String[] id();
     
     /**
      * Identificação da visão. Somente pode ser omitido se for definida a visão

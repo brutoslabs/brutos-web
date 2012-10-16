@@ -19,6 +19,7 @@ package org.brandao.brutos.annotation.configuration;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
@@ -171,9 +172,51 @@ public class ControllerAnnotationConfig
     protected void addActions( ControllerBuilder controllerBuilder, 
             ConfigurableApplicationContext applicationContext, Class clazz ){
         
+        List<ActionEntry> actionList = new ArrayList<ActionEntry>();
+        
+        AbstractActions abstractActions = 
+                (AbstractActions)clazz.getAnnotation(AbstractActions.class);
+        
+        AbstractAction abstractAction = 
+                (AbstractAction)clazz.getAnnotation(AbstractAction.class);
+        
+        List<AbstractAction> actions = 
+            new ArrayList<AbstractAction>();
+        
+        if(abstractActions != null)
+                actions.addAll(Arrays.asList(abstractActions.value()));
+        
+        if(abstractAction!= null)
+            actions.add(abstractAction);
+        
+        for(AbstractAction action: actions){
+            for(String id: action.id()){
+                if(StringUtil.isEmpty(id))
+                    throw new BrutosException("invalid action: " + id);
+                
+                ActionEntry entry = 
+                    new ActionEntry(
+                        id,
+                        null,
+                        controllerBuilder.getClassType(),
+                        null,
+                        null,
+                        null,
+                        null,
+                        true);
+                
+                actionList.add(entry);
+            }
+        }
+        
         Method[] methods = clazz.getMethods();
 
         for( Method m: methods ){
+            ActionEntry entry = new ActionEntry(m);
+            actionList.add(entry);
+        }
+        
+        for( AbstractAction m: actions ){
             super.applyInternalConfiguration(m, controllerBuilder, applicationContext);
         }
     }
