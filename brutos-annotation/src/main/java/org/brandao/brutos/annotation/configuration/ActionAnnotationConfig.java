@@ -65,7 +65,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 result,
                 null, 
                 dispatcher,
-                method.getName() );
+                method.isAbstractAction()? null : method.getName() );
 
         view = getView(
                 method,
@@ -136,25 +136,32 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     protected String getView(ActionEntry actionEntry, View viewAnnotation, ActionBuilder action,
         ConfigurableApplicationContext applicationContext){
         
-        if(actionEntry.isAbstractAction())
-            return actionEntry.getView();
-        else{
-            boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
-
-            String view = 
-                viewAnnotation != null && !StringUtil.isEmpty(viewAnnotation.id())?
-                    viewAnnotation.id() : null;
-
-
-            if(rendered){
-                if(view != null)
-                    return viewAnnotation.id();
-                else
-                    return createActionView(action, applicationContext);
-            }
+        if(actionEntry.isAbstractAction()){
+            String view = actionEntry.getView();
+            if(!StringUtil.isEmpty(view))
+                return StringUtil.adjust(view);
             else
-                return null;
+                throw new BrutosException("invalid view in abstract action: " + actionEntry.getView());
         }
+            
+        boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
+
+        String view = 
+            viewAnnotation != null && !StringUtil.isEmpty(viewAnnotation.id())?
+                StringUtil.adjust(viewAnnotation.id()) : null;
+
+
+        if(rendered){
+            if(view != null)
+                return view;
+            else
+            if(!StringUtil.isEmpty(actionEntry.getView()))
+                return StringUtil.adjust(actionEntry.getView());
+            else
+                return createActionView(action, applicationContext);
+        }
+        else
+            return null;
     }
 
     protected String createActionView(ActionBuilder action,
