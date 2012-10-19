@@ -56,12 +56,14 @@ public class ActionEntry {
             method.getGenericParameterTypes(),
             method.getParameterTypes(),
             method.getParameterAnnotations(),
+            null,
+            null,
             false);
     }
     
     public ActionEntry(String name, Annotation[] annotation, Class controllerClass, 
             Class[] exceptionTypes, Type[] genericParameterTypes, Class[] parameterTypes,
-            Annotation[][] parameterAnnotations, boolean abstractAction){
+            Annotation[][] parameterAnnotations, String view, String dispatcher, boolean abstractAction){
         this.name = name;
         this.annotation = annotation;
         this.exceptionTypes = exceptionTypes;
@@ -70,9 +72,14 @@ public class ActionEntry {
         this.parameterTypes = parameterTypes;
         this.parameterAnnotations = parameterAnnotations;
         this.abstractAction = abstractAction;
+        this.dispatcher = dispatcher;
+        this.view = view;
     }
     
     public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
+        if(this.annotation == null)
+            return false;
+        
         for( Annotation a: this.annotation ){
             if( a.annotationType().isAssignableFrom(annotation) )
                 return true;
@@ -82,6 +89,9 @@ public class ActionEntry {
     }
     
     public <T> T getAnnotation(Class<T> annotation){
+        if(this.annotation == null)
+            return null;
+        
         for( Annotation a: this.annotation ){
             if( a.annotationType().isAssignableFrom(annotation) )
                 return (T) a;

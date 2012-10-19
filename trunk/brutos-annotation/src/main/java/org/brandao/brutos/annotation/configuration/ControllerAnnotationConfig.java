@@ -203,6 +203,8 @@ public class ControllerAnnotationConfig
                         null,
                         null,
                         null,
+                        action.view(),
+                        action.dispatcher(),
                         true);
                 
                 actionList.add(entry);
@@ -216,7 +218,7 @@ public class ControllerAnnotationConfig
             actionList.add(entry);
         }
         
-        for( AbstractAction m: actions ){
+        for( ActionEntry m: actionList ){
             super.applyInternalConfiguration(m, controllerBuilder, applicationContext);
         }
     }
