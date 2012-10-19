@@ -37,6 +37,8 @@ public class Action {
     
     private String name;
 
+    private String simpleName;
+    
     private List alias;
     
     private String executor;
@@ -349,5 +351,13 @@ public class Action {
 
     public List getAlias(){
         return this.alias;
+    }
+
+    public String getSimpleName() {
+        return simpleName;
+    }
+
+    public void setSimpleName(String simpleName) {
+        this.simpleName = simpleName;
     }
 }

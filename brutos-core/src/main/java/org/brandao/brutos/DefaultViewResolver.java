@@ -64,7 +64,7 @@ public class DefaultViewResolver implements ViewResolver{
             if(executor == null)
                 throw new BrutosException("can not resolve view: " + actionBuilder.getName());
             
-            view += actionBuilder.getExecutor().toLowerCase();
+            view += executor.toLowerCase();//actionBuilder.getExecutor().toLowerCase();
             view += separator;
         }
         
