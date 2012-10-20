@@ -1256,7 +1256,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         Assert.assertEquals(prefix+"my",action.getName());
         Assert.assertNull(action.getMethod());
-        Assert.assertEquals("/myjsp",action.getView());
+        Assert.assertEquals("/my.jsp",action.getView());
         Assert.assertNull(action.getExecutor());
         Assert.assertEquals(void.class,action.getReturnClass());
         Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());

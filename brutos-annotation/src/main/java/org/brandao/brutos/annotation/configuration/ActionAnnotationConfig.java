@@ -179,6 +179,9 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         Class[] types = method.getParameterTypes();
         Annotation[][] annotations = method.getParameterAnnotations();
         
+        if(types == null)
+            return;
+        
         for(int i=0;i<types.length;i++){
             ActionParamEntry actionParamEntry = 
                 new ActionParamEntry(
