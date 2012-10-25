@@ -56,8 +56,8 @@
         <xsd:attribute name="view" type="xsd:string"/>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="class" type="xsd:string"/>
-        <!--<xsd:attribute name="scope" type="xsd:string" default="request"/>-->
         <xsd:attribute name="action-id" type="xsd:string" default="invoke"/>
+        <xsd:attribute name="action-type" type="actionType" default="complement"/>
         <xsd:attribute name="default-action" type="xsd:string"/>
     </xsd:complexType>
 
@@ -86,41 +86,17 @@
         <xsd:sequence>
             <xsd:element name="constructor-arg" type="constructor-arg" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="property" type="property" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="key" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
-            <xsd:element name="element" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
-            <!--<xsd:element name="bean" type="mapping-bean" minOccurs="1" maxOccurs="1"/>
-            <xsd:element name="ref" type="mapping-ref" minOccurs="1" maxOccurs="1"/>-->
-            <!--<xsd:element name="extend" type="extend-mapping-bean"  minOccurs="0" maxOccurs="1"/>-->
+            <xsd:element name="key" type="key-collection" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="element" type="element-collection" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="separator" type="xsd:string" default="."/>
         <xsd:attribute name="index-format" type="xsd:string" default="[$index]"/>
         <xsd:attribute name="factory" type="xsd:string"/>
         <xsd:attribute name="method-factory" type="xsd:string"/>
-        <!--<xsd:attribute name="init-method" type="xsd:string"/>
-        <xsd:attribute name="destroy-method" type="xsd:string"/>-->
         <xsd:attribute name="target" type="class" use="required"/>
     </xsd:complexType>
 
-<!--
-    <xsd:complexType name="extend-mapping-bean">
-        <xsd:sequence>
-            <xsd:element name="key" type="mapping-key" minOccurs="0" maxOccurs="1"/>
-            <xsd:choice>
-                <xsd:element name="bean" type="mapping-bean" minOccurs="1" maxOccurs="1"/>
-                <xsd:element name="ref" type="mapping-ref" minOccurs="1" maxOccurs="1"/>
-            </xsd:choice>
-        </xsd:sequence>
-        <xsd:attribute name="ref" type="xsd:string"/>
-    </xsd:complexType>
--->
-<!--
-    <xsd:complexType name="mapping-key">
-        <xsd:attribute name="name" type="xsd:string" use="required"/>
-        <xsd:attribute name="type" type="xsd:string" use="required"/>
-        <xsd:attribute name="scope" type="xsd:string" default="request"/>
-    </xsd:complexType>
--->
     <xsd:complexType name="mapping-ref">
         <xsd:sequence>
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
@@ -134,15 +110,7 @@
         <xsd:attribute name="factory" type="class"/>
     </xsd:complexType>
 
-    <!--
-    <xsd:complexType name="mapping-ref">
-        <xsd:complexContent>
-            <xsd:extension base="constructor-arg">
-                <xsd:attribute name="bean" type="xsd:string"/>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
-    -->
+  <!-- *************************************************************** -->
 
     <xsd:simpleType name="class">
         <xsd:restriction base="xsd:token">
@@ -172,6 +140,16 @@
 
   <!-- *************************************************************** -->
 
+    <xsd:simpleType name="actionType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="parameter"/>
+            <xsd:enumeration value="complement"/>
+            <xsd:enumeration value="detached"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+  <!-- *************************************************************** -->
+  
     <xsd:simpleType name="dispatcher">
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="include"/>
@@ -219,19 +197,10 @@
         <xsd:attribute name="factory" type="class"/>
         <xsd:attribute name="bean" type="xsd:string"/>
         <xsd:attribute name="mapping" type="xsd:boolean" default="false"/>
-        <!--<xsd:attribute name="mapping-name" type="xsd:string"/>-->
-        <!--<xsd:sequence>
-            <xsd:element name="bean" type="mapping-bean"  minOccurs="1" maxOccurs="1"/>
-        </xsd:sequence>
-        <xsd:attribute name="name" type="xsd:string"/>
-        <xsd:attribute name="property-name" type="xsd:string" use="required"/>
-        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
-        <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
-        <xsd:attribute name="ref" type="xsd:string"/>
-        <xsd:attribute name="scope" type="xsd:string" default="request"/>
-        <xsd:attribute name="factory" type="class"/>-->
     </xsd:complexType>
 
+  <!-- *************************************************************** -->
+  
     <xsd:complexType name="constructor-arg">
         <xsd:choice>
             <xsd:element name="ref" type="mapping-ref" minOccurs="0" maxOccurs="1"/>
@@ -253,6 +222,47 @@
     </xsd:complexType>
 
   <!-- *************************************************************** -->
+
+    <xsd:complexType name="key-collection">
+        <xsd:choice>
+            <xsd:element name="ref" type="mapping-ref" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
+        </xsd:choice>
+        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="value" type="xsd:string"/>
+        <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
+        <xsd:attribute name="bean" type="xsd:string"/>
+        <xsd:attribute name="mapping" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="scope" type="xsd:string" default="param"/>
+        <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="type" type="xsd:string"/>
+    </xsd:complexType>
+
+  <!-- *************************************************************** -->
+
+    <xsd:complexType name="element-collection">
+        <xsd:choice>
+            <xsd:element name="ref" type="mapping-ref" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
+        </xsd:choice>
+        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="value" type="xsd:string"/>
+        <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
+        <xsd:attribute name="bean" type="xsd:string"/>
+        <xsd:attribute name="mapping" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="scope" type="xsd:string" default="param"/>
+        <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="type" type="xsd:string"/>
+    </xsd:complexType>
+
+  <!-- *************************************************************** -->
+
     <xsd:complexType name="validator">
         <xsd:sequence>
             <xsd:element name="rule" type="rule"  minOccurs="1" maxOccurs="unbounded"/>

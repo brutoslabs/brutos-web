@@ -17,29 +17,22 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.mapping.PropertyBean;
-import org.brandao.brutos.mapping.PropertyController;
+import org.brandao.brutos.mapping.DependencyBean;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
- * Constr�i uma propriedade de um controlador.
  * 
  * @author Afonso Brandao
  */
-public class PropertyBuilder extends RestrictionBuilder{
+public class KeyBuilder extends RestrictionBuilder{
 
-    private Object propertyBean;
+    private DependencyBean key;
     
-    public PropertyBuilder(PropertyBean propertyBean){
-        super( propertyBean.getValidator().getConfiguration() );
-        this.propertyBean = propertyBean;
+    public KeyBuilder(DependencyBean key){
+        super( key.getValidator().getConfiguration() );
+        this.key = key;
     }
 
-    public PropertyBuilder(PropertyController propertyBean){
-        super( propertyBean.getValidator().getConfiguration() );
-        this.propertyBean = propertyBean;
-    }
-    
     public RestrictionBuilder addRestriction( RestrictionRules ruleId, Object value ){
         return super.addRestriction( ruleId, value );
     }
