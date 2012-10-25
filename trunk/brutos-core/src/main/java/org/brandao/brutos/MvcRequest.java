@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Brutos Web MVC http://www.brutosframework.com.br/
+ * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos;
@@ -22,54 +22,54 @@ import java.io.InputStream;
 import java.util.Locale;
 
 /**
- * Representa uma requisição.
+ * Representa uma requisiï¿½ï¿½o.
  * 
  * @author Afonso Brandao
  */
 public interface MvcRequest {
 
     /**
-     * Obtém um valor.
-     * @param name Identificação
+     * Obtï¿½m um valor.
+     * @param name Identificaï¿½ï¿½o
      * @return Valor.
      */
     public Object getValue( String name );
 
     /**
-     * Obtém uma propriedade.
-     * @param name Identificação.
+     * Obtï¿½m uma propriedade.
+     * @param name Identificaï¿½ï¿½o.
      * @return Propriedade.
      */
     public Object getProperty( String name );
 
     /**
-     * Obtém o stream da requisição.
+     * Obtï¿½m o stream da requisiï¿½ï¿½o.
      * @return Stream.
-     * @throws IOException Lançado caso ocorra algum problema ao obter o stream.
+     * @throws IOException Lanï¿½ado caso ocorra algum problema ao obter o stream.
      */
     public InputStream getStream() throws IOException;
 
     /**
-     * Tipo da requisição. Normalmente usado em aplicações web.
+     * Tipo da requisiï¿½ï¿½o. Normalmente usado em aplicaï¿½ï¿½es web.
      * @return Tipo.
      */
     public String getType();
 
     /**
-     * Obtém o tamanho da requisição. Normalmente usado em aplicações web.
+     * Obtï¿½m o tamanho da requisiï¿½ï¿½o. Normalmente usado em aplicaï¿½ï¿½es web.
      * @return Tamanho.
      */
     public int getLength();
 
     /**
-     * Obtém a codificado da requisição. Normalmente usado
-     * em aplicações web.
-     * @return Codificação.
+     * Obtï¿½m a codificado da requisiï¿½ï¿½o. Normalmente usado
+     * em aplicaï¿½ï¿½es web.
+     * @return Codificaï¿½ï¿½o.
      */
     public String getCharacterEncoding();
 
     /**
-     * Obtém a localidade. Normalmente usado em aplicações web.
+     * Obtï¿½m a localidade. Normalmente usado em aplicaï¿½ï¿½es web.
      * @return Localidade.
      */
     public Locale getLocale();

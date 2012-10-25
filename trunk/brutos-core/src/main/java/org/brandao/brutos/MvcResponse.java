@@ -1,18 +1,18 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Brutos Web MVC http://www.brutosframework.com.br/
+ * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos;
@@ -40,59 +40,59 @@ public interface MvcResponse {
     public OutputStream processStream();
 
     /**
-     * Inclui uma nova informação na resposta. Normalmente usado em aplicações
+     * Inclui uma nova informaï¿½ï¿½o na resposta. Normalmente usado em aplicaï¿½ï¿½es
      * web, equilave ao addHeader(...)
-     * @param name Identificação.
+     * @param name Identificaï¿½ï¿½o.
      * @param value Valor.
      */
     public void setInfo( String name, String value );
 
     /**
-     * Obtém o tipo da resposta. Normalmente usado em aplicações web.
+     * Obtï¿½m o tipo da resposta. Normalmente usado em aplicaï¿½ï¿½es web.
      * @return Tipo.
      */
     public String getType();
 
     /**
-     * Obtém o tamanho da resposta. Normalmente usado em aplicações web.
+     * Obtï¿½m o tamanho da resposta. Normalmente usado em aplicaï¿½ï¿½es web.
      * @return Tamanho.
      */
     public int getLength();
 
     /**
-     * Obtém a codificação da resposta. Normalmente usado em aplicações
+     * Obtï¿½m a codificaï¿½ï¿½o da resposta. Normalmente usado em aplicaï¿½ï¿½es
      * web.
-     * @return Codificação.
+     * @return Codificaï¿½ï¿½o.
      */
     public String getCharacterEncoding();
 
     /**
-     * Obtém a localidade. Normalmente usado em aplicações web.
+     * Obtï¿½m a localidade. Normalmente usado em aplicaï¿½ï¿½es web.
      * @return Localidade.
      */
     public Locale getLocale();
 
     /**
-     * Define a localidade. Normalmente usado em aplicações web.
+     * Define a localidade. Normalmente usado em aplicaï¿½ï¿½es web.
      * @param value Localidade.
      */
     public void setLocale( Locale value );
 
     /**
-     * Define o tipo da resposta. Normalmente usado em aplicações web.
+     * Define o tipo da resposta. Normalmente usado em aplicaï¿½ï¿½es web.
      * @param value Tipo.
      */
     public void setType( String value );
 
     /**
-     * Define o tamanho da resposta. Normalmente usado em aplicações web.
+     * Define o tamanho da resposta. Normalmente usado em aplicaï¿½ï¿½es web.
      * @param value Tamanho.
      */
     public void setLength( int value );
 
     /**
-     * Define a codificação. Normalmente usado em aplicações web.
-     * @param value Codificação.
+     * Define a codificaï¿½ï¿½o. Normalmente usado em aplicaï¿½ï¿½es web.
+     * @param value Codificaï¿½ï¿½o.
      */
     public void setCharacterEncoding( String value );
 
