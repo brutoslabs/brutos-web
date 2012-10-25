@@ -193,86 +193,54 @@ public class BeanBuilder {
      * @throws org.brandao.brutos.BrutosException Lançado se a classe alvo do
      * mapeamento não for uma coleção.
      */
-    public BeanBuilder setMappedKey( String name, String ref ){
-
+    public KeyBuilder setMappedKey( String name, String ref ){
         return setKey( name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
             ScopeType.PARAM, null, null, null );
-        /*
-        ref = StringUtil.adjust(ref);
-        
-        if( StringUtil.isEmpty(ref) )
-            throw new IllegalArgumentException();
-
-        if( !mappingBean.isMap() )
-            throw new BrutosException(
-                String.format("is not allowed for this type: %s",
-                    new Object[]{this.mappingBean.getClassType()} ) );
-
-        if( controller.getBean( ref ) == null )
-            throw new NotFoundMappingBeanException(
-                    String.format(
-                        "mapping %s not found: %s",
-                        new Object[]{
-                            ref,
-                            controller.getClassType().getName()} ) );
-
-
-        getLogger()
-            .info(
-                String.format("%s defined key %s",
-                new Object[]{
-                    this.getPrefixLogger(),
-                    ref} ) );
-        
-        Bean key = (Bean)controller.getBean(ref);
-        ((MapBean)mappingBean).setMappingKey(key);
-        return this;
-        */
     }
 
-    public BeanBuilder setKey( String ref ){
+    public KeyBuilder setKey( String ref ){
         return setMappedKey(ref);
     }
     
-    public BeanBuilder setMappedKey( String ref ){
+    public KeyBuilder setMappedKey( String ref ){
         return setMappedKey(null, ref);
     }
     
-    public BeanBuilder setKey( String name, EnumerationType enumProperty, Class classType ){
+    public KeyBuilder setKey( String name, EnumerationType enumProperty, Class classType ){
         return setKey( name, enumProperty, "dd/MM/yyyy", null,
                 ScopeType.PARAM, null, null, classType );
     }
 
-    public BeanBuilder setKey( String name, String temporalProperty, Class classType ){
+    public KeyBuilder setKey( String name, String temporalProperty, Class classType ){
         return setKey( name,EnumerationType.ORDINAL, temporalProperty, null,
                 ScopeType.PARAM, null, null, classType );
     }
 
-    public BeanBuilder setKey( String name, EnumerationType enumProperty, 
+    public KeyBuilder setKey( String name, EnumerationType enumProperty, 
             ScopeType scope, Class classType ){
         return setKey( name, enumProperty, "dd/MM/yyyy", null,
                 scope, null, null, classType );
     }
 
-    public BeanBuilder setKey( String name, String temporalProperty, 
+    public KeyBuilder setKey( String name, String temporalProperty, 
             ScopeType scope, Class classType ){
         return setKey( name,EnumerationType.ORDINAL, temporalProperty, null,
                 scope, null, null, classType );
     }
     
-    public BeanBuilder setKey( String name, ScopeType scope, Class classType ){
+    public KeyBuilder setKey( String name, ScopeType scope, Class classType ){
         return setKey( name, EnumerationType.ORDINAL, "dd/MM/yyyy", null,
                 scope, null, null, classType );
     }
     
-    public BeanBuilder setKey( String name,
+    public KeyBuilder setKey( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, Type factory, Class type ){
         return setKey( name, enumProperty, temporalProperty, mapping,
                 scope, value, factory, (Object)type );
     }
     
-    public BeanBuilder setKey( String name,
+    public KeyBuilder setKey( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, Type factory, Object type ){
 
@@ -287,7 +255,7 @@ public class BeanBuilder {
                 factory, type, DEPENDENCY);
 
         ((MapBean)mappingBean).setKey(key);
-        return this;
+        return new KeyBuilder(key);
     }
     
     /**
@@ -338,49 +306,49 @@ public class BeanBuilder {
         return bb;
     }
 
-    public BeanBuilder setMappedElement( String ref ){
+    public ElementBuilder setMappedElement( String ref ){
         return setMappedElement(null, ref);
     }
     
-    public BeanBuilder setMappedElement(String name, String ref){
+    public ElementBuilder setMappedElement(String name, String ref){
         return setElement( name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
             ScopeType.PARAM, null, false, null, null );
     }
-    public BeanBuilder setElement( String name, EnumerationType enumProperty, Class classType ){
+    public ElementBuilder setElement( String name, EnumerationType enumProperty, Class classType ){
         return setElement( name, enumProperty, "dd/MM/yyyy", null,
                 ScopeType.PARAM, null, false, null, classType );
     }
 
-    public BeanBuilder setElement( String name, String temporalProperty, Class classType ){
+    public ElementBuilder setElement( String name, String temporalProperty, Class classType ){
         return setElement( name,EnumerationType.ORDINAL, temporalProperty, null,
                 ScopeType.PARAM, null, false, null, classType );
     }
 
-    public BeanBuilder setElement( String name, EnumerationType enumProperty, 
+    public ElementBuilder setElement( String name, EnumerationType enumProperty, 
             ScopeType scope, Class classType ){
         return setElement( name, enumProperty, "dd/MM/yyyy", null,
                 scope, null, false, null, classType );
     }
 
-    public BeanBuilder setElement( String name, String temporalProperty, 
+    public ElementBuilder setElement( String name, String temporalProperty, 
             ScopeType scope, Class classType ){
         return setElement( name,EnumerationType.ORDINAL, temporalProperty, null,
                 scope, null, false, null, classType );
     }
     
-    public BeanBuilder setElement( String name, ScopeType scope, Class classType ){
+    public ElementBuilder setElement( String name, ScopeType scope, Class classType ){
         return setElement( name, EnumerationType.ORDINAL, "dd/MM/yyyy", null,
                 scope, null, false, null, classType );
     }
 
-    public BeanBuilder setElement( String name,
+    public ElementBuilder setElement( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, boolean nullable, Type factory, Class type ){
         return setElement( name, enumProperty, temporalProperty, mapping,
                 scope, value, nullable, factory, (Object)type );
     }
     
-    public BeanBuilder setElement( String name,
+    public ElementBuilder setElement( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, boolean nullable, Type factory, Object type ){
 
@@ -395,7 +363,7 @@ public class BeanBuilder {
                 factory, type, DEPENDENCY);
 
         ((CollectionBean)mappingBean).setCollection(collection);
-        return this;
+        return new ElementBuilder(collection);
     }
     
     /**
@@ -427,7 +395,7 @@ public class BeanBuilder {
      * @throws org.brandao.brutos.BrutosException Lan�ado se a classe alvo do
      * mapeamento n�o for uma cole��o.
      */
-    public BeanBuilder setElement( String ref ){
+    public RestrictionBuilder setElement( String ref ){
         return setMappedElement(null,ref);
         /*
         ref = StringUtil.adjust(ref);
