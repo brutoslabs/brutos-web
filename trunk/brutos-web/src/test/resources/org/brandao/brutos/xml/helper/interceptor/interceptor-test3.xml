@@ -17,7 +17,7 @@
        </interceptor-stack>
    </interceptors>
    
-    <controller action-id="action" id="/testController.htm"
+    <controller action-id="action" id="/testController.htm" action-type="parameter"
         class="org.brandao.brutos.helper.controller.SimpleController">
 
             <interceptor-ref name="testStack">
