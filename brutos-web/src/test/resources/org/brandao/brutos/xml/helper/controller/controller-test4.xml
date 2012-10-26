@@ -4,7 +4,7 @@
    xmlns='http://www.brutosframework.com.br/schema/controllers'
    xsi:schemaLocation='http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd'>
 
-    <controller action-id="action" id="/testController.htm" 
+    <controller action-id="action" id="/testController.htm" action-type="parameter" 
         default-action="defaultAction" view="/view.jsp"
         class="org.brandao.brutos.helper.controller.SimpleController">
             <action id="defaultAction" view="/viewAction.jsp"
