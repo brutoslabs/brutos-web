@@ -57,7 +57,7 @@
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="action-id" type="xsd:string" default="invoke"/>
-        <xsd:attribute name="action-type" type="actionType" default="complement"/>
+        <xsd:attribute name="action-type" type="actionType"/>
         <xsd:attribute name="default-action" type="xsd:string"/>
     </xsd:complexType>
 
