@@ -351,7 +351,7 @@ public class BeanBuilder {
     public ElementBuilder setElement( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, boolean nullable, Type factory, Object type ){
-
+        // name is required if mapping is null
         if( !mappingBean.isCollection() && !mappingBean.isMap() )
             throw new BrutosException(
                 String.format("is not allowed for this type: %s",
