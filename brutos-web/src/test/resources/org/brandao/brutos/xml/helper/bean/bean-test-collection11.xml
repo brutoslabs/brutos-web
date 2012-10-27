@@ -10,13 +10,17 @@
         <bean name="bean" target="org.brandao.brutos.helper.controller.SimpleBean">
             <property name="map">
                 <bean target="java.util.HashMap">
-                    <key target="org.brandao.brutos.helper.controller.EnumTest" method-factory="valueOf">
+                    <key>
+                    <bean target="org.brandao.brutos.helper.controller.EnumTest" method-factory="valueOf">
                         <constructor-arg bean="key"/>
+                    </bean>
                     </key>
-                    <element target="java.lang.String">
+                    <element>
+                    <bean target="java.lang.String">
                         <constructor-arg bean="value"/>
+                    </bean>
                     </element>
-                </bean>
+            </bean>
             </property>
         </bean>
     </controller>

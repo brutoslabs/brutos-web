@@ -46,12 +46,16 @@ import org.brandao.brutos.web.GenericXMLWebApplicationContext;
  */
 public class WebApplicationMappingBeanTest extends AbstractTester implements Test{
 
+    public WebApplicationMappingBeanTest(){
+        super.actionType = ActionType.DETACHED;
+    }
     public ConfigurableWebApplicationContext getApplicationContext(String resourceName) {
-        return new GenericXMLWebApplicationContext(
+        ConfigurableWebApplicationContext app = new GenericXMLWebApplicationContext(
                 new Resource[]{
                     new ClassPathResource( 
                             getClass(),
                             resourceName )});
+        return app;
     }
  
 

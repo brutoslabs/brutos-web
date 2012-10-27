@@ -9,10 +9,12 @@
 
         <bean name="bean"
             target="java.util.LinkedList">
-                <element 
+                <element>
+                <bean 
                     index-format="($index)"
                     target="org.brandao.brutos.helper.controller.SimpleBean">
                     <constructor-arg bean="arg"/>
+                </bean>
                 </element>
         </bean>
 
