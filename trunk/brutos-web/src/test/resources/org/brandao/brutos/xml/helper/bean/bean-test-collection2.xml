@@ -9,9 +9,11 @@
 
         <bean name="bean"
             target="java.util.LinkedList">
-                <element factory="factory"
+                <element>
+                <bean factory="factory"
                     method-factory="getInstance"
                     target="org.brandao.brutos.helper.controller.SimpleBean"/>
+                </element>
         </bean>
 
         <bean name="factory"

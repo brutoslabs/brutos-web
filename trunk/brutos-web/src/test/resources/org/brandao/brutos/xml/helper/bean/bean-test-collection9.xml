@@ -9,7 +9,8 @@
 
         <bean name="bean"
             target="java.util.LinkedList">
-                <element
+                <element>
+                <bean
                     index-format="($index)"
                     target="org.brandao.brutos.helper.controller.SimpleBean">
                     <constructor-arg bean="arg" type="int">
@@ -17,6 +18,7 @@
                             <rule name="required"/>
                         </validator>
                     </constructor-arg>
+                </bean>
                 </element>
         </bean>
 

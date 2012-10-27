@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSessionEvent;
 import junit.framework.TestCase;
+import org.brandao.brutos.ActionType;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.test.MockIOCProvider;
 import org.brandao.brutos.test.MockViewProvider;
@@ -43,6 +44,8 @@ import org.brandao.brutos.web.RequestInfo;
  */
 public abstract class AbstractTester extends TestCase{
 
+    protected ActionType actionType;
+    
     public AbstractTester(){
     }
     
@@ -58,6 +61,9 @@ public abstract class AbstractTester extends TestCase{
 
         servletContext.setInitParameter("org.brandao.brutos.ioc.provider",
                 MockIOCProvider.class.getName());
+
+        if(actionType != null)
+            servletContext.setInitParameter("org.brandao.brutos.action_strategy", actionType.name());
         
         servletContext.setInitParameter("org.brandao.brutos.view.provider",
                 MockViewProvider.class.getName());
