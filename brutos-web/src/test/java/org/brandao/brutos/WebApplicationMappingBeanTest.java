@@ -810,59 +810,73 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
     }
 
     public void testConstructor19(){
-        super.execTest(
-            new HandlerTest(){
+        try{
+            super.execTest(
+                new HandlerTest(){
 
-                public String getResourceName() {
-                    return
-                        "org/brandao/brutos/xml/helper/bean/bean-test-constructor19.xml";
-                }
+                    public String getResourceName() {
+                        return
+                            "org/brandao/brutos/xml/helper/bean/bean-test-constructor19.xml";
+                    }
 
-                public void run(ConfigurableApplicationContext app,
-                        HttpServletRequest request, HttpServletResponse response) {
+                    public void run(ConfigurableApplicationContext app,
+                            HttpServletRequest request, HttpServletResponse response) {
+                        /*
+                        Controller controller =
+                                app.getControllerManager()
+                                    .getController(SimpleController.class);
 
-                    Controller controller =
-                            app.getControllerManager()
-                                .getController(SimpleController.class);
+                        Bean bean = controller.getBean("bean");
 
-                    Bean bean = controller.getBean("bean");
+                        SimpleBean instance = (SimpleBean) bean.getValue();
 
-                    SimpleBean instance = (SimpleBean) bean.getValue();
+                        TestCase.assertNotNull(instance);
+                        TestCase
+                            .assertNotNull(instance.getBean());
+                        */
+                    }
 
-                    TestCase.assertNotNull(instance);
-                    TestCase
-                        .assertNotNull(instance.getBean());
-                }
-
-        });
+            });
+            TestCase.fail("expected IllegalArgumentException");
+        }
+        catch(IllegalArgumentException e){
+            
+        }
+        
     }
 
     public void testConstructor20(){
-        super.execTest(
-            new HandlerTest(){
+        try{
+            super.execTest(
+                new HandlerTest(){
 
-                public String getResourceName() {
-                    return
-                        "org/brandao/brutos/xml/helper/bean/bean-test-constructor20.xml";
-                }
+                    public String getResourceName() {
+                        return
+                            "org/brandao/brutos/xml/helper/bean/bean-test-constructor20.xml";
+                    }
 
-                public void run(ConfigurableApplicationContext app,
-                        HttpServletRequest request, HttpServletResponse response) {
+                    public void run(ConfigurableApplicationContext app,
+                            HttpServletRequest request, HttpServletResponse response) {
 
-                    Controller controller =
-                            app.getControllerManager()
-                                .getController(SimpleController.class);
+                        Controller controller =
+                                app.getControllerManager()
+                                    .getController(SimpleController.class);
 
-                    Bean bean = controller.getBean("bean");
+                        Bean bean = controller.getBean("bean");
 
-                    SimpleBean instance = (SimpleBean) bean.getValue();
+                        SimpleBean instance = (SimpleBean) bean.getValue();
 
-                    TestCase.assertNotNull(instance);
-                    TestCase
-                        .assertNotNull(instance.getBean());
-                }
+                        TestCase.assertNotNull(instance);
+                        TestCase
+                            .assertNotNull(instance.getBean());
+                    }
 
-        });
+            });
+            TestCase.fail("expected IllegalArgumentException");
+        }
+        catch(IllegalArgumentException e){
+            
+        }
     }
 
     public void testConstructor21(){
