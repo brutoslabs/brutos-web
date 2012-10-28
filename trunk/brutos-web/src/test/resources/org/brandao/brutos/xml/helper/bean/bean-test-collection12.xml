@@ -9,13 +9,8 @@
 
         <bean name="bean"
             target="java.util.HashMap">
-                <key bean="arg" target="java.lang.String"/>
-                <element>
-                <bean
-                    target="org.brandao.brutos.helper.controller.SimpleBean">
-                    <constructor-arg bean="arg2"/>
-                </bean>
-                </element>
+                <key bean="chave" enum-property="string" type="org.brandao.brutos.helper.controller.EnumTest"/>
+                <element bean="elemento" type="java.lang.String"/>
         </bean>
 
     </controller>
