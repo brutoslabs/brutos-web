@@ -763,8 +763,10 @@ public class BeanBuilder {
         if( dependencyType == PROPERTY )
             ((PropertyBean)dependencyBean).setName(propertyName);
         else
-        if(StringUtil.isEmpty(name) && StringUtil.isEmpty(mapping))
-            throw new IllegalArgumentException("bean name is required");
+        if(StringUtil.isEmpty(name) && StringUtil.isEmpty(mapping)){
+            if(!nullable && value == null)
+                throw new IllegalArgumentException("bean name is required");
+        }
             
         dependencyBean.setTemporalType( temporalProperty );
         dependencyBean.setValue(value);
@@ -794,9 +796,6 @@ public class BeanBuilder {
                 if( type != null )
                     dependencyBean.setType(TypeManager.getType(type, enumProperty, 
                             temporalProperty));
-                else
-                if(mapping == null)
-                    throw new IllegalArgumentException("object type is required" );
                 
             }
             catch( UnknownTypeException e ){
