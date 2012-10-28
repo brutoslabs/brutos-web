@@ -351,12 +351,12 @@ public class BeanBuilder {
     public ElementBuilder setElement( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, boolean nullable, Type factory, Object type ){
-        // name is required if mapping is null
+
         if( !mappingBean.isCollection() && !mappingBean.isMap() )
             throw new BrutosException(
                 String.format("is not allowed for this type: %s",
                     new Object[]{this.mappingBean.getClassType()} ) );
-        
+
         DependencyBean collection =
             this.createDependencyBean(name, null,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
@@ -762,7 +762,10 @@ public class BeanBuilder {
         
         if( dependencyType == PROPERTY )
             ((PropertyBean)dependencyBean).setName(propertyName);
-        
+        else
+        if(StringUtil.isEmpty(name) && StringUtil.isEmpty(mapping))
+            throw new IllegalArgumentException("bean name is required");
+            
         dependencyBean.setTemporalType( temporalProperty );
         dependencyBean.setValue(value);
         dependencyBean.setScope( applicationContext.getScopes().get(scope) );
@@ -791,6 +794,9 @@ public class BeanBuilder {
                 if( type != null )
                     dependencyBean.setType(TypeManager.getType(type, enumProperty, 
                             temporalProperty));
+                else
+                if(mapping == null)
+                    throw new IllegalArgumentException("object type is required" );
                 
             }
             catch( UnknownTypeException e ){
