@@ -102,6 +102,14 @@ public interface BrutosConstants {
     
     public final String INTERCEPTOR_MANAGER_CLASS = "org.brandao.brutos.manager.interceptor";
     
+    public final String CDI_BEAN_MANAGER = "org.brandao.brutos.cdi.bean_manager";
+    
+    public final String JNDI_CLASS = "org.brandao.brutos.jndi.class";
+    
+    public final String JNDI_URL = "org.brandao.brutos.jndi.url";
+    
+    public final String DEFAULT_CDI_BEAN_MANAGER = "java:comp/BeanManager";
+    
     public final String DEFAULT_ACTION_TYPE_NAME = "parameter";
     
     public final String DEFAULT_SEPARATOR = "-";

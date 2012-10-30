@@ -218,8 +218,8 @@ public class InterceptorProcess implements InterceptorStack{
 
         Interceptor i = (Interceptor) stack.get( pos.intValue() );
 
-        org.brandao.brutos.interceptor.Interceptor interceptor =
-            (org.brandao.brutos.interceptor.Interceptor) i.getInstance(context.getIocProvider());
+        org.brandao.brutos.interceptor.InterceptorController interceptor =
+            (org.brandao.brutos.interceptor.InterceptorController) i.getInstance(context.getIocProvider());
 
         if( !interceptor.isConfigured() )
             interceptor.setProperties( (Map) i

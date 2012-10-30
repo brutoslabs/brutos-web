@@ -209,9 +209,6 @@ public class ControllerManager {
         if( StringUtil.isEmpty(actionId) )
             actionId = BrutosConstants.DEFAULT_ACTION_ID;
         
-        if( StringUtil.isEmpty(name) )
-            name = classType.getSimpleName();
-        
         if(ActionType.PARAMETER.equals(actionType) || ActionType.COMPLEMENT.equals(actionType)){
             if(StringUtil.isEmpty(id))
                 throw new IllegalArgumentException("controller id is required: " + classType.getName() );
