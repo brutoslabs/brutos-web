@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
+import javax.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class RoomService {
     
     private final Map<String,User> users;

@@ -2,14 +2,12 @@ package org.brandao.webchat.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import org.brandao.webchat.controller.entity.MessageDTO;
 import org.brandao.webchat.controller.entity.UserDTO;
 import org.brandao.webchat.model.*;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
-@Component
-@Scope(value="request")
+@RequestScoped
 public class RoomController {
     
     private User currentUser;
