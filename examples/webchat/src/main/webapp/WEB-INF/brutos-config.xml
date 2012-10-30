@@ -16,7 +16,8 @@
                      class="org.brandao.webchat.controller.interceptor.CheckUserInterceptor"/>
     </interceptors>
 
-    <controller id="/{roomID:\d+}/{invoke}.jbrs" class="org.brandao.webchat.controller.RoomController">
+    <controller id="/{roomID:\d+}/{invoke}.jbrs" action-type="parameter" 
+        class="org.brandao.webchat.controller.RoomController">
         
         <interceptor-ref name="checkUserInterceptor"/>
         

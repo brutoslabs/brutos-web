@@ -1,5 +1,6 @@
 package org.brandao.webchat.controller.interceptor;
 
+import javax.enterprise.context.ApplicationScoped;
 import org.brandao.brutos.FlowController;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.WebScopeType;
@@ -10,9 +11,8 @@ import org.brandao.brutos.interceptor.InterceptorStack;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.webchat.controller.RoomController;
 import org.brandao.webchat.model.User;
-import org.springframework.stereotype.Component;
 
-@Component
+@ApplicationScoped
 public class CheckUserInterceptor extends AbstractInterceptor{
 
     @Override
