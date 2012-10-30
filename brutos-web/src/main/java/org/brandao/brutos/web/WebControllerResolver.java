@@ -74,7 +74,7 @@ public class WebControllerResolver implements ControllerResolver{
             Controller controller = (Controller)controllers.next();
             
             URIMapping uriMap;
-            if(controller.getId() != null){
+            if(controller.getActionType() == ActionType.PARAMETER){
                 uriMap = getURIMapping( controller.getId() );
                 if(uriMap.matches(uri)){
                     updateRequest(uri, paramScope, uriMap);
