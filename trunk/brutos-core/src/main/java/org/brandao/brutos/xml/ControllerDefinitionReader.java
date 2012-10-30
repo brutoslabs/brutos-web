@@ -313,10 +313,10 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     private void loadController( Element controller ){
 
         String id = parseUtil.getAttribute(controller,"id" );
-        /*
+        
         ActionType actionType = 
             ActionType.valueOf( parseUtil.getAttribute(controller,"action-type" ) );
-        */
+        
         DispatcherType dispatcher =
             DispatcherType.valueOf( parseUtil.getAttribute(controller,"dispatcher" ) );
         String view = parseUtil.getAttribute(controller,"view" );
@@ -347,7 +347,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 name,
                 clazz,
                 actionId,
-                null);
+                actionType);
 
         controllerBuilder.setDefaultAction(defaultAction);
 
