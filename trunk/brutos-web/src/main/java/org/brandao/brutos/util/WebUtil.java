@@ -30,11 +30,15 @@ public class WebUtil {
         if(StringUtil.isEmpty(uri))
             return null;
         
-        uri = uri.replace("\\", "/");
+        uri = uri.replace("\\+", "\\");
         uri = uri.replaceAll("/+", "/");
         uri = uri.startsWith("/")? uri : "/" + uri;
         uri = uri.replace("/$", "");
         return uri;
+    }
+    
+    public static boolean isValidURI(String value){
+        return true;
     }
     
 }
