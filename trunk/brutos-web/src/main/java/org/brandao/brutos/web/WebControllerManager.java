@@ -38,9 +38,17 @@ public class WebControllerManager extends ControllerManager{
             DispatcherType dispatcherType, String name, Class classType, 
             String actionId, ActionType actionType ){
         
+        
         ControllerBuilder builder =  
-            super.addController( WebUtil.fixURI(id), WebUtil.fixURI(view), 
+            super.addController( id, view,
                 dispatcherType, name, classType, actionId, actionType );
+        
+        ActionType type = builder.getActionType();
+        
+        if(ActionType.PARAMETER.equals(type) || ActionType.COMPLEMENT.equals(type))
+            WebUtil.checkURI(builder.getId(), true);
+        
+        WebUtil.checkURI(builder.getView(), false);
         
         return new WebControllerBuilder(builder);
     }

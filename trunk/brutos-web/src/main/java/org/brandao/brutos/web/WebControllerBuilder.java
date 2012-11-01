@@ -40,16 +40,23 @@ public class WebControllerBuilder extends ControllerBuilder{
     }
     
     public ControllerBuilder addAlias( String id ){
+        WebUtil.checkURI(id,true);
         return super.addAlias(WebUtil.fixURI(id));
     }
     
     public ActionBuilder addAction( String id, String resultId, String view, 
             DispatcherType dispatcher, String executor ){
-        return 
+        
+        ActionType type = this.controller.getActionType();
+        
+        if(!ActionType.PARAMETER.equals(type))
+            WebUtil.checkURI(id, true);
+        
+        WebUtil.checkURI(view, false);
+        
+        return
             super.addAction( 
-                controller.getActionType().equals(ActionType.PARAMETER)? 
-                id : WebUtil.fixURI(id), resultId, WebUtil.fixURI(view), 
-                dispatcher, executor );
+                id, resultId, view, dispatcher, executor );
     }
     
 }

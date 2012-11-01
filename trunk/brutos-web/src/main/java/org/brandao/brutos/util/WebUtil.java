@@ -17,7 +17,11 @@
 
 package org.brandao.brutos.util;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.web.URIMapping;
 
 /**
  *
@@ -37,8 +41,27 @@ public class WebUtil {
         return uri;
     }
     
-    public static boolean isValidURI(String value){
-        return true;
+    public static void checkURI(String value, boolean required){
+        try{  
+            if(StringUtil.isEmpty(value)){
+                if(required)
+                    throw new MalformedURLException("is null or empty: " + value);
+                else
+                    return;
+            }
+            
+            if(!value.startsWith("/"))
+                throw new MalformedURLException("expected starts with \"/\": " + value);
+
+            URIMapping map = new URIMapping( value );
+            
+            String uri = map.getURI(new Object[]{});
+            URI prefix = new URI("http://localhost");
+            prefix.resolve(uri);
+        }
+        catch(Exception e){
+            throw new BrutosException(e);
+        }
     }
     
 }

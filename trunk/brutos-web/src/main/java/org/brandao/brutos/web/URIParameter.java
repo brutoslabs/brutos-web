@@ -26,11 +26,15 @@ public class URIParameter {
         private String start;
         private String end;
         private String id;
-
-        public URIParameter( String id, String start, String end ){
-            this.id = id;
+        private String regex;
+        private int index;
+        
+        public URIParameter( int index, String id, String regex, String start, String end ){
+            this.id    = id;
             this.start = start;
-            this.end = end;
+            this.end   = end;
+            this.regex = regex;
+            this.index = index;
         }
 
         public String getStart() {
@@ -56,5 +60,21 @@ public class URIParameter {
         public void setId(String id) {
             this.id = id;
         }
+
+    public String getRegex() {
+        return regex;
+    }
+
+    public void setRegex(String regex) {
+        this.regex = regex;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
 }
