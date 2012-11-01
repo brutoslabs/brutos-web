@@ -48,16 +48,16 @@ public class CDIProvider extends IOCProvider{
             return null;
         else{
             Set beans = beanManager.getBeans(name);
-            return this.getInstance(beans);
+            return this.getInstance(beans,null);
         }
     }
 
     public Object getBean(Class clazz) {
         Set beans = beanManager.getBeans(clazz, new Annotation[]{});
-        return this.getInstance(beans);
+        return this.getInstance(beans,clazz);
     }
     
-    protected Object getInstance(Set beans){
+    protected Object getInstance(Set beans, Class clazz){
         
         if(beans.isEmpty())
             return null;
@@ -65,7 +65,7 @@ public class CDIProvider extends IOCProvider{
         Bean bean = (Bean) beans.iterator().next();
         
         CreationalContext ctx = beanManager.createCreationalContext(bean);
-        return beanManager.getReference(bean, bean.getBeanClass(), ctx);
+        return beanManager.getReference(bean, clazz == null? bean.getBeanClass() : clazz, ctx);
     }
     
     public void configure(Properties properties) {
