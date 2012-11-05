@@ -48,7 +48,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         org.brandao.brutos.DispatcherType dispatcher;
         String id;
         
-        id = getId(action, method, applicationContext);
+        id = getId(action, method, controllerBuilder, applicationContext);
         
         Result resultAnnotation = method.getAnnotation(Result.class);
         result = resultAnnotation == null? null : resultAnnotation.value();
@@ -114,6 +114,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     protected String getId(Action action, ActionEntry method,
+            ControllerBuilder controllerBuilder, 
             ConfigurableApplicationContext applicationContext){
         
         boolean hasActionId =
@@ -129,7 +130,11 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             if(StringUtil.isEmpty(id))
                 throw new BrutosException("invalid action name: " + method.getName());
             
-            return id.toLowerCase();
+            if(AnnotationUtil.isWebApplication(applicationContext) && 
+               controllerBuilder.getActionType() != ActionType.PARAMETER)
+                return "/" + id.toLowerCase();
+            else
+                return id.toLowerCase();
         }
     }
     

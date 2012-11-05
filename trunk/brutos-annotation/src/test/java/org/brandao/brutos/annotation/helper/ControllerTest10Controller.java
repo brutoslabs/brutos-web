@@ -17,7 +17,9 @@
 
 package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.ActionStrategy;
+import org.brandao.brutos.annotation.ActionStrategyType;
+import org.brandao.brutos.annotation.Controller;
 
 /**
  *
