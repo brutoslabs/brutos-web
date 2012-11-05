@@ -82,7 +82,10 @@ public abstract class ActionType {
    }
    
     public static ActionType valueOf( String value ){
-        return (ActionType)defaultTypes.get(value.toUpperCase());
+        if(value == null)
+            return null;
+        else
+            return (ActionType)defaultTypes.get(value.toUpperCase());
     }
    
    public abstract int type();
