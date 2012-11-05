@@ -66,7 +66,7 @@ public class ControllerAnnotationConfig
             defaultActionName = annotationController.defaultActionName();
         }
 
-        controllerID = this.getControllerId(annotationController, source);
+        controllerID = this.getControllerId(applicationContext,annotationController, source);
         
         dispatcher = 
             viewAnnotation == null || "".equals(viewAnnotation.dispatcher())? 
@@ -223,16 +223,25 @@ public class ControllerAnnotationConfig
         }
     }
 
-    protected String getControllerName(Class controllerClass){
-        return controllerClass.getSimpleName().replaceAll("Controller$", "").toLowerCase();
+    protected String getControllerName(ApplicationContext applicationContext, 
+            Class controllerClass){
+        String id = 
+            controllerClass.getSimpleName()
+                .replaceAll("Controller$", "").toLowerCase();
+        
+        id = 
+            (AnnotationUtil.isWebApplication(applicationContext)? "/" : "") + id.toLowerCase();
+        
+        return id;
     }
     
-    protected String getControllerId(Controller annotation, Class controllerClass){
+    protected String getControllerId(ApplicationContext applicationContext, 
+            Controller annotation, Class controllerClass){
         boolean hasControllerId = 
             annotation != null && annotation.id().length > 0 && 
             !StringUtil.isEmpty(annotation.id()[0]);
         
-        return hasControllerId? annotation.id()[0] : getControllerName(controllerClass);
+        return hasControllerId? annotation.id()[0] : getControllerName(applicationContext, controllerClass);
     }
     
     public boolean isApplicable(Object source) {
