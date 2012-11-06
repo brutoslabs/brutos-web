@@ -27,7 +27,7 @@ import org.brandao.brutos.logger.LoggerProvider;
 /**
  * Classe que permite a configuração de uma aplicação usando 
  * anotações e "Convention over configuration".
- * <p>Para que a configuração seja automaticamente carregada em uma 
+ * <p>Para que a configuração seja carregada em uma 
  * aplicação web, é necessário a utilização das tags 
  * <b><code>&lt;context:annotation-config/&gt;</code></b> e 
  * <b><code>&lt;context:component-scan/&gt;</code></b> no 

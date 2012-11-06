@@ -38,10 +38,6 @@ import java.lang.annotation.Target;
  * Nesse caso, o nome do método terá que seguir a nomenclatura 
  * <b><code>&lt;nome-da-ação&gt;Action</code></b>.</p>
  * 
- * <p>Em aplicações web, a identificação da ação é um URI. Se não forem definidas
- * a identificação do controlador e ação, será assumido como identificação da 
- * ação o URI <b><code>/&lt;nome do controlador&gt;/&lt;nome da ação&gt;</code></b></p>
- * 
  * <pre>
  * Ex1:
  * public class TestController{
@@ -70,14 +66,7 @@ import java.lang.annotation.Target;
 public @interface Action {
     
     /**
-     * Identificação da Ação. 
-     * Se omitido, o nome da ação será o nome do método nos casos
-     * em que o controlador possuir uma identificação. Nos demais casos
-     * será a composição do nome do controlador com o nome da ação.<br>
-     * Em aplicações web, a identificação da ação pode ser um URI. 
-     * Então se não forem definidas
-     * a identificação do controlador e da ação, será assumido 
-     * o URI <b><code>/&lt;nome do controlador&gt;/&lt;nome da ação&gt;</code></b>.
+     * Identificação da Ação.
      */
     String[] value() default {};
     

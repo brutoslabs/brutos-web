@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Defini como a ação será identificada.
+ * Defini como a ação será mapeada.
  * 
  * @author Afonso Brandao
  */
@@ -33,6 +33,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ActionStrategy {
     
+    /**
+     * Estratégia de mapeamento da ação. Os valores estão 
+     * descritos em <a href="ActionStrategyType.html">ActionStrategyType</a>.
+     */
     ActionStrategyType value();
     
 }

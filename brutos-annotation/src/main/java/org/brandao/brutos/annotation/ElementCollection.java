@@ -65,7 +65,7 @@ public @interface ElementCollection {
     
     /**
      * Escopo do valor a ser injetado. Os escopos estão 
-     * descritos em <a href="ScopeType.html">ScopeType</a>
+     * descritos em <a href="ScopeType.html">ScopeType</a>.
      * 
      */
     String scope() default "param";

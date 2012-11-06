@@ -18,24 +18,24 @@
 package org.brandao.brutos.annotation;
 
 /**
- * Descreve as estratégias de identificação da ação.
+ * Descreve as estratégias de mapeamento da ação.
  * 
  * @author Afonso Brandao
  */
 public enum ActionStrategyType {
     
     /**
-     * A ação vai ser informada através de um parâmetro.
+     * A ação é mapeada como um parâmetro.
      */
    PARAMETER,
 
    /**
-    * A identificação do controlador é o prefixo da identificação da ação.
+    * A ação é mapeada em um nível inferior ao do controlador.
     */
-   COMPLEMENT,
-
+   HIERARCHY,
+   
    /**
-    * A identificação da ação independe da identificação do controlador.
+    * A ação é mapeada no mesmo nível do controlador.
     */
    DETACHED;
     

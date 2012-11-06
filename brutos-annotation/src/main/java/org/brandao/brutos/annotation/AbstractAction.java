@@ -27,20 +27,12 @@ import java.lang.annotation.Target;
  * Define uma ação que não possui um método associado (executor).
  * 
  * <pre>
- * Ex1:
- * &#064;AbstractAction(id="index", view="/testcontroller/index.jsp")
+ * Ex:
+ * &#064;AbstractAction(id="/index", view="/testcontroller/index.jsp")
  * public class TestController{
  * 
  *    &#064;View(id="/testcontroller/perfil.jsp")
  *    public void perfilAction(){
- *       ...
- *    }
- * }
- * 
- * Ex2:
- * public class TestController{
- * 
- *    public void rootAction(){
  *       ...
  *    }
  * }
@@ -59,9 +51,7 @@ public @interface AbstractAction {
     String[] id();
     
     /**
-     * Identificação da visão. Somente pode ser omitido se for definida a visão
-     * do controlador. Normalmente em aplicações web, a 
-     * identificação é um URI.
+     * Identificação da visão.
      */
     String view();
     

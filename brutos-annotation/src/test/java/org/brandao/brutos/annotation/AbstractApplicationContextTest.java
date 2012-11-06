@@ -60,7 +60,7 @@ public abstract class AbstractApplicationContextTest extends TestCase{
         
         prop.setProperty(BrutosConstants.WEB_APPLICATION_CLASS, "");
         
-        prop.setProperty(BrutosConstants.ACTION_TYPE, ActionType.COMPLEMENT.name());
+        prop.setProperty(BrutosConstants.ACTION_TYPE, ActionType.HIERARCHY.name());
 
         prop.setProperty( BrutosConstants.CONTROLLER_MANAGER_CLASS,
                               WebControllerManager.class.getName() );
