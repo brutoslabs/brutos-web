@@ -45,7 +45,7 @@ import java.lang.annotation.Target;
 public @interface Enumerated {
 
     /**
-     * O tipo usado no mapeamento do Enum.
+     * Estratégia de mapeamento do enum.
      */
     EnumerationType value() default EnumerationType.ORDINAL;
    

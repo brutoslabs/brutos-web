@@ -42,12 +42,10 @@ import java.lang.annotation.Target;
  * <p>Uma ação padrão é aquela ação que será executada nos casos em que 
  * não for identificada uma ação.</p>
  * 
- * <p>Em aplicações web, quando o controlador possuir identificação, as 
- * identificações das ações não serão consideradas como URIs e terão que ser 
- * informadas como um parâmetro.</p>
  * <pre>
  * Ex1:
  * &#064;Controller(id="/index",defaultActionName="action1")
+ * &#064;ActionStrategy(ActionStrategyType.PARAMETER)
  * public class Index{
  * 
  *    &#064;Action
@@ -87,6 +85,7 @@ import java.lang.annotation.Target;
  * <pre>
  * Ex2:
  * &#064;Controller(id="/index/{invoke}")
+ * &#064;ActionStrategy(ActionStrategyType.PARAMETER)
  * public class Index{
  * 
  *    &#064;Action
@@ -211,9 +210,6 @@ public @interface Controller{
 
     /**
      * Identificação do controlador.
-     * <p>Em aplicações web, quando o controlador possui identificação, as 
-     * identificações das ações não são consideradas como URIs e terão que ser 
-     * informadas como um parâmetro.</p>
      */
     String[] id() default {};
 

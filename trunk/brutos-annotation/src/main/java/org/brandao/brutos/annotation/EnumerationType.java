@@ -18,7 +18,7 @@
 package org.brandao.brutos.annotation;
 
 /**
- * Descreve os tipos que um Enum pode ser mapeado.
+ * Descreve os tipos que um Enum podem ser mapeados.
  * 
  * @author Brandao
  */
