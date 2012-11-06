@@ -143,7 +143,7 @@
     <xsd:simpleType name="actionType">
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="parameter"/>
-            <xsd:enumeration value="complement"/>
+            <xsd:enumeration value="hierarchy"/>
             <xsd:enumeration value="detached"/>
         </xsd:restriction>
     </xsd:simpleType>
