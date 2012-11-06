@@ -17,7 +17,7 @@
                      factory="br.brandao.type.MyBeanType"/>
     </context:types>
    
-    <controller id="/index.jbrs" view="/WEB-INF/jsp/index.jsp"
+    <controller id="/index.jbrs" view="/WEB-INF/jsp/index.jsp" action-type="parameter"
                class="br.brandao.controller.IndexController">
         <bean name="myBean" target="br.brandao.beans.MyBean">
             <property name="id" bean="id"/>
