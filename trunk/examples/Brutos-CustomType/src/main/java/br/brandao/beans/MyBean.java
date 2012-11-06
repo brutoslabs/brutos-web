@@ -7,7 +7,7 @@ package br.brandao.beans;
 
 /**
  *
- * @author Afonso Brandão
+ * @author Afonso Brandao
  */
 public class MyBean {
 

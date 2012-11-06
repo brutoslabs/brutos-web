@@ -7,9 +7,6 @@ package br.brandao.type;
 import br.brandao.beans.MyBean;
 import br.brandao.controller.IndexController;
 import java.io.IOException;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
@@ -43,7 +40,7 @@ public class MyBeanType implements Type,TypeFactory{
         Controller controller =
                 context.getControllerManager()
                     .getController(IndexController.class);
-        Bean mapping = controller.getMappingBean( "myBean" );
+        Bean mapping = controller.getBean( "myBean" );
         return mapping.getValue();
     }
 
