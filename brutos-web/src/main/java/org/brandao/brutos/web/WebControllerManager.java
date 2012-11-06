@@ -45,7 +45,7 @@ public class WebControllerManager extends ControllerManager{
         
         ActionType type = builder.getActionType();
         
-        if(ActionType.PARAMETER.equals(type) || ActionType.COMPLEMENT.equals(type))
+        if(ActionType.PARAMETER.equals(type) || ActionType.HIERARCHY.equals(type))
             WebUtil.checkURI(builder.getId(), true);
         
         WebUtil.checkURI(builder.getView(), false);
