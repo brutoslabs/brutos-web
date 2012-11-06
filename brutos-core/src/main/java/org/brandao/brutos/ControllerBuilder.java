@@ -382,7 +382,7 @@ public class ControllerBuilder {
         
         ActionType type = controller.getActionType();
         
-        if(type.equals(ActionType.COMPLEMENT))
+        if(type.equals(ActionType.HIERARCHY))
             id = controller.getId() + id;
         
         resultId = StringUtil.adjust(resultId);

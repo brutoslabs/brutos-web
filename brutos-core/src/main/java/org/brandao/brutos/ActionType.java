@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Descreve as estratégias de identificação da ação.
+ * Descreve as estratégias de mapeamento da ação.
  * 
  * @author Afonso Brandao
  */
@@ -32,7 +32,7 @@ public abstract class ActionType {
     private final static Map defaultTypes = new HashMap();
     
     /**
-     * A ação vai ser informada através de um parâmetro.
+     * A ação é mapeada como um parâmetro.
      */
    public static final ActionType PARAMETER  = new ActionType(){
 
@@ -46,22 +46,22 @@ public abstract class ActionType {
    };
 
    /**
-    * A identificação do controlador é o prefixo da identificação da ação.
+    * A ação é mapeada em um nível inferior ao do controlador.
     */
-   public static final ActionType COMPLEMENT = new ActionType(){
+   public static final ActionType HIERARCHY = new ActionType(){
 
         public int type() {
             return 1;
         }
        
         public String name(){
-            return "COMPLEMENT";
+            return "HIERARCHY";
         }
         
    };
 
    /**
-    * A identificação da ação independe da identificação do controlador.
+    * A ação é mapeada no mesmo nível do controlador.
     */
    public static final ActionType DETACHED   = new ActionType(){
 
@@ -77,7 +77,7 @@ public abstract class ActionType {
    
    static{
        defaultTypes.put(PARAMETER.name() , PARAMETER);
-       defaultTypes.put(COMPLEMENT.name(), COMPLEMENT);
+       defaultTypes.put(HIERARCHY.name(), HIERARCHY);
        defaultTypes.put(DETACHED.name()  , DETACHED);
    }
    
