@@ -100,7 +100,8 @@ public class DispatcherServlet extends HttpServlet {
                 fue = e;
             }
             
-            invoker.invoke(requestId, fue);
+            if(!invoker.invoke(requestId, fue))
+                ((HttpServletResponse)response).setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
         finally{
             mappedUploadStats.remove(requestId);
