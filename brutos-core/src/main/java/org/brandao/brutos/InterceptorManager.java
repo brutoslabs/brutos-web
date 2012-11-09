@@ -17,11 +17,9 @@
 
 package org.brandao.brutos;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 
@@ -148,6 +146,8 @@ public class InterceptorManager {
         in.setDefault( isDefault );
         interceptors.put( name, in );
         reverseInterceptors.put(interceptor, in);
+        
+        getLogger().info("created interceptor: " + interceptor.getName());
         return new InterceptorBuilder( in, this );
         
     }
@@ -203,4 +203,10 @@ public class InterceptorManager {
     public InterceptorManager getParent(){
         return this.parent;
     }
+    
+    protected Logger getLogger(){
+        return LoggerProvider.getCurrentLoggerProvider()
+                .getLogger(InterceptorManager.class);
+    }
+    
 }

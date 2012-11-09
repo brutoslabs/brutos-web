@@ -18,8 +18,9 @@
 package org.brandao.brutos.validator;
 
 import java.util.Properties;
-import org.brandao.brutos.Configuration;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 /**
  * Validator provider.
  * 
@@ -36,10 +37,14 @@ public abstract class ValidatorProvider {
     public static ValidatorProvider getValidatorProvider( Properties config ){
         String validatorProviderName =
             config.getProperty(
-                "org.brandao.brutos.validator.provider",
-                "org.brandao.brutos.validator.DefaultValidatorProvider" );
+                BrutosConstants.VALIDATOR_PROVIDER_CLASS,
+                BrutosConstants.DEFAULT_VALIDATOR_PROVIDER );
         try{
-            ValidatorProvider provider = null;
+            ValidatorProvider provider;
+            Class validatorProvider = ClassUtil.get(validatorProviderName);
+            
+            provider = (ValidatorProvider)ClassUtil.getInstance(validatorProvider);
+            /*
             Class validatorProvider =
                 Class.forName(
                     validatorProviderName,
@@ -47,6 +52,7 @@ public abstract class ValidatorProvider {
                     Thread.currentThread().getContextClassLoader() );
             
             provider = (ValidatorProvider)validatorProvider.newInstance();
+            */
             provider.configure( config );
             return provider;
         }

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Properties;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ScopeType;
@@ -40,19 +41,24 @@ public abstract class ViewProvider {
     }
     
     public static ViewProvider getProvider( Properties properties ){
-        String viewProviderName = properties.getProperty("org.brandao.brutos.view.provider");
+        String viewProviderName = properties
+                .getProperty(
+                    BrutosConstants.VIEW_PROVIDER_CLASS,
+                    BrutosConstants.DEFAULT_VIEW_PROVIDER_CLASS);
+        
         ViewProvider view       = null;
         
-        if( viewProviderName == null )
-            viewProviderName = DefaultViewProvider.class.getName();
-
         try{
+            Class iocProvider = ClassUtil.get(viewProviderName);
+            view = (ViewProvider)ClassUtil.getInstance(iocProvider);
+            /*
             Class iocProvider = 
                     Class.forName(
                         viewProviderName,
                         true,
                         Thread.currentThread().getContextClassLoader() );
             view = (ViewProvider)iocProvider.newInstance();
+            */
         }
         catch( ClassNotFoundException e ){
             throw new BrutosException( e );

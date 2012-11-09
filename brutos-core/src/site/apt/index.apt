@@ -10,6 +10,20 @@ Brutos application framework
 
 Notícias
 
+* 06/11/2012
+
+ Está disponível para download a versão 2.0 beta 3 do Brutos MVC.
+ O download da versão 2.0 beta 3 pode ser feito na página
+ {{{http://sourceforge.net/projects/brutos/files/brutos/2.0/brutos-2.0-B3.zip/download}Brutos 2.0 beta 3}}
+ e as alterações estão descritas no {{{http://www.brutosframework.com.br/changelog.html}changelog}}
+
+ Destaques dessa versão:
+
+ * incluído suporte a configuração com anotação.
+
+ * incluído suporte ao CDI.
+
+
 * 17/05/2012
 
  Está disponível para download a versão 2.0 beta 2 do Brutos MVC.

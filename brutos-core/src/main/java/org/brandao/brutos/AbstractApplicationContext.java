@@ -200,6 +200,12 @@ public abstract class AbstractApplicationContext
      */
     protected ControllerResolver getNewControllerResolver(){
         try{
+            Class clazz = ClassUtil.get(configuration.getProperty(
+                    BrutosConstants.CONTROLLER_RESOLVER_CLASS,
+                    DefaultControllerResolver.class.getName()));
+            
+            return (ControllerResolver)ClassUtil.getInstance(clazz);
+            /*
             ControllerResolver instance = (ControllerResolver) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.class",
@@ -209,8 +215,9 @@ public abstract class AbstractApplicationContext
                     Thread.currentThread().getContextClassLoader()
 
             ).newInstance();
-
+            
             return instance;
+            */
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -223,6 +230,12 @@ public abstract class AbstractApplicationContext
      */
     protected MvcResponseFactory getMvcResponseFactory(){
         try{
+            Class clazz = ClassUtil.get(configuration.getProperty(
+                    BrutosConstants.RESPONSE_FACTORY,
+                    DefaultMvcResponseFactory.class.getName()));
+            
+            return (MvcResponseFactory)ClassUtil.getInstance(clazz);
+            /*
             MvcResponseFactory instance = (MvcResponseFactory) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.response_factory",
@@ -234,6 +247,7 @@ public abstract class AbstractApplicationContext
             ).newInstance();
 
             return instance;
+            */
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -246,6 +260,12 @@ public abstract class AbstractApplicationContext
      */
     protected MvcRequestFactory getMvcRequestFactory(){
         try{
+            Class clazz = ClassUtil.get(configuration.getProperty(
+                    BrutosConstants.REQUEST_FACTORY,
+                    DefaultMvcRequestFactory.class.getName()));
+            
+            return (MvcRequestFactory)ClassUtil.getInstance(clazz);
+            /*
             MvcRequestFactory instance = (MvcRequestFactory) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.request_factory",
@@ -257,6 +277,7 @@ public abstract class AbstractApplicationContext
             ).newInstance();
 
             return instance;
+            */
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -269,6 +290,12 @@ public abstract class AbstractApplicationContext
      */
     protected ActionResolver getNewMethodResolver(){
         try{
+            Class clazz = ClassUtil.get(configuration.getProperty(
+                    BrutosConstants.ACTION_RESOLVER,
+                    DefaultActionResolver.class.getName()));
+            
+            return (ActionResolver)ClassUtil.getInstance(clazz);
+            /*
             ActionResolver instance = (ActionResolver) Class.forName(
                     configuration.getProperty(
                     "org.brandao.brutos.controller.action_resolver",
@@ -278,7 +305,9 @@ public abstract class AbstractApplicationContext
                     Thread.currentThread().getContextClassLoader()
 
             ).newInstance();
+            
             return instance;
+            */
         }
         catch( Exception e ){
             throw new BrutosException( e );

@@ -18,13 +18,14 @@
 
 package org.brandao.brutos.proxy;
 
-import javassist.*;
+import javassist.ClassClassPath;
+import javassist.ClassPool;
 import javassist.util.proxy.MethodHandler;
 import javassist.util.proxy.ProxyFactory;
 import javassist.util.proxy.ProxyObject;
-import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.ClassUtil;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
 
@@ -57,7 +58,7 @@ public class JavassistProxyFactory extends AbstractProxyFactory{
                     invoker);
 
         try{
-            ProxyObject instance = (ProxyObject)proxyClass.newInstance();
+            ProxyObject instance = (ProxyObject)ClassUtil.getInstance(proxyClass);
             instance.setHandler(handler);
             return instance;
         }

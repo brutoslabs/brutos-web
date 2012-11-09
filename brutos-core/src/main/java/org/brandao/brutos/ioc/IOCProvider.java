@@ -22,7 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.old.programatic.Bean;
@@ -51,7 +53,7 @@ public abstract class IOCProvider {
         String iocProviderName = 
                 properties
                     .getProperty(
-                        "org.brandao.brutos.ioc.provider",
+                        BrutosConstants.IOC_PROVIDER_CLASS,
                         null);
         IOCProvider ioc        = null;
         
@@ -60,9 +62,13 @@ public abstract class IOCProvider {
 
         try{
             logger.info("IoC provider: " + iocProviderName );
+            Class iocProvider = ClassUtil.get(iocProviderName);
+            ioc = (IOCProvider)ClassUtil.getInstance(iocProvider);
+            /*
             Class iocProvider = Class.forName( iocProviderName, true,
                     Thread.currentThread().getContextClassLoader() );
             ioc = (IOCProvider)iocProvider.newInstance();
+            */
         }
         catch( ClassNotFoundException e ){
             throw new BrutosException( e );

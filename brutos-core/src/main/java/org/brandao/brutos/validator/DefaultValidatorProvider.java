@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.mapping.DependencyBean;
 import org.brandao.brutos.mapping.UseBeanData;
@@ -175,8 +176,11 @@ public class DefaultValidatorProvider extends ValidatorProvider{
 
     private ValidationRule getInstance(String name){
         try{
+            return (ValidationRule)ClassUtil.getInstance(ClassUtil.get(name));
+            /*
             Class clazz = Class.forName(name, true, Thread.currentThread().getContextClassLoader());
             return (ValidationRule)clazz.newInstance();
+            */
         }
         catch( Exception e ){
             throw new BrutosException(e);

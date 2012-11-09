@@ -826,6 +826,10 @@ public class BeanBuilder {
         return new ConstructorBuilder(arg);
     }
 
+    public String getName(){
+        return mappingBean.getName();
+    }
+    
     public int getConstructorArgSize(){
         return mappingBean.getConstructor().size();
     }
