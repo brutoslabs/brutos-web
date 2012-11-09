@@ -22,7 +22,8 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.TypeDef;
 import org.brandao.brutos.scanner.TypeFilter;
-import org.brandao.brutos.type.Type;
+import org.brandao.brutos.scanner.vfs.Vfs;
+import org.brandao.brutos.type.TypeFactory;
 
 /**
  *
@@ -32,10 +33,11 @@ public class AnnotationTypeTypeFilter implements TypeFilter{
 
     public Boolean accepts(String resource) {
         try{
+            resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
             return 
                 clazz.isAnnotationPresent(TypeDef.class) 
-                && Type.class.isAssignableFrom(clazz)
+                && TypeFactory.class.isAssignableFrom(clazz)
                     ?
                 Boolean.TRUE :
                 null;

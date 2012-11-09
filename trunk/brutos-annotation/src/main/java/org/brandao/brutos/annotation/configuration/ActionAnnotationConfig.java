@@ -37,6 +37,21 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            throw 
+                new BrutosException(
+                        "can't create action: " + ((ActionEntry)source).getName(),
+                        e );
+        }
+        
+    }
+    
+    public Object applyConfiguration0(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
         
         ActionEntry method = (ActionEntry)source;
         ControllerBuilder controllerBuilder = (ControllerBuilder)builder;

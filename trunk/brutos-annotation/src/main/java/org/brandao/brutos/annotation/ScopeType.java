@@ -53,5 +53,15 @@ public interface ScopeType {
      * O contexto é o controlador.
      */
     public static final String CONTROLLER  = "controller";
+
+    /**
+     * O contexto é a sessão.
+     */
+    public static final String SESSION = "session";
+    
+    /**
+     * O contexto é a aplicação.
+     */
+    public static final String APPLICATION = "application";
     
 }

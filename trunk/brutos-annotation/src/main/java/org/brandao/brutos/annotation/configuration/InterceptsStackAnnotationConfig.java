@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation.configuration;
 
 import java.util.List;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.InterceptorStackBuilder;
@@ -40,6 +41,21 @@ public class InterceptsStackAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            throw 
+                new BrutosException(
+                        "can't create interceptor stack: " + ((InterceptorStackEntry)source).getName(),
+                        e );
+        }
+        
+    }
+    
+    public Object applyConfiguration0(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
         InterceptorStackEntry stack = (InterceptorStackEntry)source;

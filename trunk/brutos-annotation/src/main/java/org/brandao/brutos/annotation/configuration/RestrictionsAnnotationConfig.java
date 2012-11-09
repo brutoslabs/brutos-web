@@ -17,9 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.ParameterBuilder;
-import org.brandao.brutos.PropertyBuilder;
+import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.Identify;
 import org.brandao.brutos.annotation.Restriction;
 import org.brandao.brutos.annotation.Restrictions;
@@ -43,6 +41,21 @@ public class RestrictionsAnnotationConfig extends AbstractAnnotationConfig{
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            throw 
+                new BrutosException(
+                        "can't create validation rules",
+                        e );
+        }
+        
+    }
+    
+    public Object applyConfiguration0(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
         
         ParameterBuilder parameterBuilder = 
             builder instanceof ParameterBuilder? 
@@ -55,23 +68,38 @@ public class RestrictionsAnnotationConfig extends AbstractAnnotationConfig{
                 null;
         
         Restrictions restrictions = this.getAnnotation(source);
+        String message = restrictions.message();
+        RestrictionBuilder restrictionBuilder = null;
+        Restriction[] rules = restrictions.rules();
         
-        for(Restriction r: restrictions.value()){
+        if(rules.length > 1){
+            Restriction r = rules[0];
             String rule = r.rule();
             String value = r.value();
-            String message = r.message();
-
+            
             if(parameterBuilder != null){
-                parameterBuilder.addRestriction(RestrictionRules.valueOf(rule), value)
-                    .setMessage(message);
+                restrictionBuilder = 
+                    parameterBuilder
+                        .addRestriction(RestrictionRules.valueOf(rule), value);
             }
             else{
-                propertyBuilder.addRestriction(RestrictionRules.valueOf(rule), value)
-                    .setMessage(message);
+                restrictionBuilder =
+                    propertyBuilder
+                        .addRestriction(RestrictionRules.valueOf(rule), value);
             }
+
+            for(int i=1;i<rules.length;i++){
+                r = rules[i];
+                rule = r.rule();
+                value = r.value();
+                restrictionBuilder
+                    .addRestriction(RestrictionRules.valueOf(rule), value);
+            }
+            restrictionBuilder.setMessage(message);
         }
         
-        return builder;
+        
+        return restrictionBuilder;
     }
 
     private Restrictions getAnnotation(Object source){

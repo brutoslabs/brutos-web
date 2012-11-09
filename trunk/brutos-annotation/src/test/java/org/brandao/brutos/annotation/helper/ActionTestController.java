@@ -128,9 +128,14 @@ public class ActionTestController {
     }
 
     public void my22Action (
-            @Restriction(rule="required",value="true")
+            @Restrictions(
+                rules={
+                    @Restriction(rule="required",value="true")
+                }
+            )
             String a,
-            @Restrictions({
+            @Restrictions(
+                rules={
                 @Restriction(rule="required",value="true"),
                 @Restriction(rule="min",value="10"),
                 @Restriction(rule="max",value="100")
@@ -139,7 +144,11 @@ public class ActionTestController {
     }
 
     public void my22Action(
-            @Restriction(rule="required",value="true")
+            @Restrictions(
+                rules={
+                    @Restriction(rule="required",value="true")
+                }
+            )
             String a ) throws ValidatorException{
     }
     

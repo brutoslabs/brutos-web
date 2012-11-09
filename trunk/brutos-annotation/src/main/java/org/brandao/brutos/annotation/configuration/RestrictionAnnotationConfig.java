@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ParameterBuilder;
 import org.brandao.brutos.PropertyBuilder;
@@ -41,6 +42,21 @@ public class RestrictionAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            throw 
+                new BrutosException(
+                        "can't create validation rule",
+                        e );
+        }
+        
+    }
+    
+    public Object applyConfiguration0(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
         ParameterBuilder parameterBuilder = 
