@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -104,7 +105,7 @@ public class ContextLoader {
         if(ConfigurableWebApplicationContext.class.isAssignableFrom(clazz)){
             try{
                 WebApplicationContext app =
-                        (WebApplicationContext) clazz.newInstance();
+                        (WebApplicationContext) ClassUtil.getInstance(clazz);
 
 
                 return app;

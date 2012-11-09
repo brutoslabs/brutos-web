@@ -32,9 +32,8 @@ public abstract class AbstractXMLWebApplicationContext
         extends AbstractWebApplicationContext {
 
     public void configure( Properties config ){
-        super.setConfiguration(config);
-        ContextDefinitionReader ccdr = loadContextDefinition();
         super.configure(config);
+        ContextDefinitionReader ccdr = loadContextDefinition();
         
         if(ccdr.getParent() != null)
             this.setParent(ccdr.getParent());
