@@ -23,6 +23,18 @@ package org.brandao.brutos.mapping;
  */
 public class StringUtil {
     
+    public static String getVariableFormat(String value){
+        if(isEmpty(value))
+            return null;
+        
+        value = adjust(value);
+        
+        char first = value.charAt(0);
+        first = Character.toLowerCase(first);
+        value = first + value.substring(1);
+        return value;
+    }
+    
     public static boolean isEmpty(String value){
         return value == null || value.trim().length() == 0;
     }

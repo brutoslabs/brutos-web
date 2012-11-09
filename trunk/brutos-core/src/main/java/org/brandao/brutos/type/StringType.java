@@ -19,10 +19,6 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import org.brandao.brutos.AbstractApplicationContext;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 /**

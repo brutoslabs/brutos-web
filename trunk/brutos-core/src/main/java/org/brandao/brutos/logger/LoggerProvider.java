@@ -19,6 +19,7 @@ package org.brandao.brutos.logger;
 
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 
 
 /**
@@ -43,9 +44,13 @@ public abstract class LoggerProvider {
         LoggerProvider logger       = null;
 
         try{
+            Class loggerClass = ClassUtil.get(loggerName);
+            logger = (LoggerProvider)ClassUtil.getInstance(loggerClass);
+            /*
             Class loggerClass =
                     Class.forName( loggerName, true, Thread.currentThread().getContextClassLoader() );
             logger = (LoggerProvider)loggerClass.newInstance();
+            */
         }
         catch( ClassNotFoundException e ){
             throw new BrutosException( e );

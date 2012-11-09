@@ -19,6 +19,7 @@ package org.brandao.brutos.test;
 
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ioc.*;
 
 /**
@@ -33,7 +34,7 @@ public class MockIOCProvider extends IOCProvider{
 
     public Object getBean(Class clazz) {
         try{
-            return clazz.newInstance();
+            return ClassUtil.getInstance(clazz);
         }
         catch( Exception e ){
             throw new BrutosException(e);

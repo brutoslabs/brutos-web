@@ -20,6 +20,7 @@ package org.brandao.brutos.codegenerator;
 
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -47,9 +48,13 @@ public abstract class CodeGeneratorProvider {
         logger.info("CodeGenerator provider: " + providerName);
         
         try{
+            Class providerClass = ClassUtil.get(providerName);
+            provider = (CodeGeneratorProvider)ClassUtil.getInstance(providerClass);
+            /*
             Class providerClass = Class.forName( providerName, true,
                     Thread.currentThread().getContextClassLoader() );
             provider = (CodeGeneratorProvider)providerClass.newInstance();
+            */
         }
         catch( ClassNotFoundException e ){
             throw new BrutosException( e );

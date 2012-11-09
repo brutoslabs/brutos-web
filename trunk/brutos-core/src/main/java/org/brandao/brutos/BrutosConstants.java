@@ -96,17 +96,45 @@ public interface BrutosConstants {
     
     public final EnumerationType DEFAULT_ENUMERATIONTYPE = EnumerationType.ORDINAL;
 
-    public final String ACTION_TYPE = "org.brandao.brutos.action_strategy";
+    /* vars */
     
-    public final String CONTROLLER_MANAGER_CLASS = "org.brandao.brutos.manager.controller";
+    public final String ACTION_TYPE               = "org.brandao.brutos.action_strategy";
+    
+    public final String CONTROLLER_MANAGER_CLASS  = "org.brandao.brutos.manager.controller";
     
     public final String INTERCEPTOR_MANAGER_CLASS = "org.brandao.brutos.manager.interceptor";
     
-    public final String CDI_BEAN_MANAGER = "org.brandao.brutos.cdi.bean_manager";
+    public final String CDI_BEAN_MANAGER          = "org.brandao.brutos.cdi.bean_manager";
     
-    public final String JNDI_CLASS = "org.brandao.brutos.jndi.class";
+    public final String JNDI_CLASS                = "org.brandao.brutos.jndi.class";
     
-    public final String JNDI_URL = "org.brandao.brutos.jndi.url";
+    public final String JNDI_URL                  = "org.brandao.brutos.jndi.url";
+
+    public final String ACTION_RESOLVER           = "org.brandao.brutos.controller.action_resolver";
+    
+    public final String REQUEST_FACTORY           = "org.brandao.brutos.controller.request_factory";
+    
+    public final String RESPONSE_FACTORY          = "org.brandao.brutos.controller.response_factory";
+
+    public final String CONTROLLER_RESOLVER_CLASS = "org.brandao.brutos.controller.class";
+    
+    public final String IOC_PROVIDER_CLASS        = "org.brandao.brutos.ioc.provider";
+    
+    public final String VALIDATOR_PROVIDER_CLASS  = "org.brandao.brutos.validator.provider";
+    
+    public final String VIEW_PROVIDER_CLASS       = "org.brandao.brutos.view.provider";
+    
+    public final String UPLOAD_LISTENER_CLASS     = "org.brandao.brutos.web.upload_listener_factory";
+    
+    public final String REQUEST_PARSER_CLASS      = "org.brandao.brutos.web.request_parser";
+    
+    /*vars - end*/
+    
+    public final String DEFAULT_REQUEST_PARSER      = "org.brandao.brutos.web.http.HttpRequestParserImp";
+    
+    public final String DEFAULT_VALIDATOR_PROVIDER  = "org.brandao.brutos.validator.DefaultValidatorProvider";
+
+    public final String DEFAULT_VIEW_PROVIDER_CLASS = "org.brandao.brutos.view.DefaultViewProvider";
     
     public final String DEFAULT_CDI_BEAN_MANAGER = "java:comp/BeanManager";
     

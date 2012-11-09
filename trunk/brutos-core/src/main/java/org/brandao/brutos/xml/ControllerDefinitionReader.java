@@ -662,11 +662,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
             try{
                 if( factoryName != null ){
+                    factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
+                    /*
                     factory = (Type)Class.forName(
                                 factoryName,
                                 true,
                                 Thread.currentThread().getContextClassLoader() )
                                     .newInstance();
+                    */
                 }
                 
                 if(typeName != null)
@@ -745,11 +748,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
             try{
                 if( factoryName != null ){
+                    factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
+                    /*
                     factory = (Type)Class.forName(
                                 factoryName,
                                 true,
                                 Thread.currentThread().getContextClassLoader() )
                                     .newInstance();
+                    */
                 }
             }
             catch( Exception ex ){
@@ -830,11 +836,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
         try{
             if( factoryName != null ){
+                factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
+                /*
                 factory = (Type)Class.forName(
                             factoryName,
                             true,
                             Thread.currentThread().getContextClassLoader() )
                                 .newInstance();
+                */
             }
         }
         catch( Exception ex ){
@@ -911,11 +920,14 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
         try{
             if( factoryName != null ){
+                factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
+                /*
                 factory = (Type)Class.forName(
                             factoryName,
                             true,
                             Thread.currentThread().getContextClassLoader() )
                                 .newInstance();
+                */
             }
 
             if(typeName != null)
@@ -996,11 +1008,15 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
         try{
             if( factoryName != null ){
+                factory = 
+                    (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
+                /*
                 factory = (Type)Class.forName(
                             factoryName,
                             true,
                             Thread.currentThread().getContextClassLoader() )
                                 .newInstance();
+                */
             }
 
             if(typeName != null)

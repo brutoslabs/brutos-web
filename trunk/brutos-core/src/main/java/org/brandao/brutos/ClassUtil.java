@@ -82,7 +82,17 @@ public final class ClassUtil {
     
     public static Object getInstance(Class clazz) 
             throws InstantiationException, IllegalAccessException{
-        return clazz.newInstance();
+        return getInstance(clazz,null);
+    }
+            
+    public static Object getInstance(Class clazz, 
+            ConfigurableApplicationContext context) 
+            throws InstantiationException, IllegalAccessException{
+        
+        if(context != null)
+            return context.getIocProvider().getBean(clazz);
+        else
+            return clazz.newInstance();
     }
     
     public static List getListInstance() 

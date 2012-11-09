@@ -61,7 +61,7 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
         BaseScannerClass = "org.brandao.brutos.scanner.";
 
     public static final String 
-        BaseScannerAnnotationClass = BaseScannerClass + "annotation.";
+        BaseScannerAnnotationClass = "org.brandao.brutos.annotation.scanner.";
     
     public static final String[] DefaultFilters = new String[]{
         BaseScannerClass + "ControllerFilter",
@@ -362,7 +362,7 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
             try{
                 type = ClassUtil.get(name);
                 factory = ClassUtil.get(value);
-                TypeManager.register(type, (TypeFactory)ClassUtil.getInstance(factory));
+                TypeManager.register(type, (TypeFactory)ClassUtil.getInstance(factory,super.handler));
             }
             catch( Exception e ){
                 throw new BrutosException( e );
