@@ -68,7 +68,7 @@ public abstract class AbstractWebApplicationContext
     private void initUploadListener(Properties config){
         try{
             String uploadListenerFactoryName =
-                config.getProperty( "org.brandao.brutos.upload_listener_factory",
+                config.getProperty( BrutosConstants.UPLOAD_LISTENER_CLASS,
                     DefaultUploadListenerFactory.class.getName() );
 
             Class ulfClass = Class.forName(
@@ -81,7 +81,7 @@ public abstract class AbstractWebApplicationContext
 
             contextScope.put(
                 BrutosConstants.UPLOAD_LISTENER_FACTORY,
-                ulfClass.newInstance() );
+                ClassUtil.getInstance(ulfClass) );
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -91,8 +91,8 @@ public abstract class AbstractWebApplicationContext
     private void initRequestParser(Properties config){
         try{
             String requestParserName =
-                config.getProperty( "org.brandao.brutos.request_parser",
-                    HttpRequestParserImp.class.getName() );
+                config.getProperty( BrutosConstants.REQUEST_PARSER_CLASS,
+                    BrutosConstants.DEFAULT_REQUEST_PARSER );
 
             Class rpClass = Class.forName(
                 requestParserName,
@@ -104,7 +104,7 @@ public abstract class AbstractWebApplicationContext
 
             contextScope.put(
                 BrutosConstants.HTTP_REQUEST_PARSER,
-                rpClass.newInstance() );
+                ClassUtil.getInstance(rpClass) );
         }
         catch( Exception e ){
             throw new BrutosException( e );
