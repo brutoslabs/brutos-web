@@ -45,6 +45,40 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            
+            String type = "source";
+            String name = "it is a bug";
+            
+            if(source instanceof ActionParamEntry){
+                type = "parameter";
+                name = ((ActionParamEntry)source).getName();
+            }
+            else
+            if(source instanceof BeanPropertyAnnotation){
+                type = "property";
+                name = ((BeanPropertyAnnotation)source).getName();
+            }
+            else
+            if(source instanceof ConstructorArgEntry){
+                type = "constructor arg";
+                name = ((ConstructorArgEntry)source).getName();
+            }
+            
+            throw 
+                new BrutosException(
+                        "can't identify " + type + ": " + name,
+                        e );
+        }
+        
+    }
+    
+    public Object applyConfiguration0(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
         
         if(source instanceof ActionParamEntry)
             addIdentify((ActionParamEntry)source, (ActionBuilder)builder, applicationContext);

@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.InterceptorBuilder;
@@ -37,6 +38,21 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            throw 
+                new BrutosException(
+                        "can't create interception: " + ((Class)source).getName(),
+                        e );
+        }
+        
+    }
+    
+    public Object applyConfiguration0(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
         ControllerBuilder controllerBuilder = (ControllerBuilder)builder;

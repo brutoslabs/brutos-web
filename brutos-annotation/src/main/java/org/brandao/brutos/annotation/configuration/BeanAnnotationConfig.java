@@ -42,6 +42,7 @@ import org.brandao.brutos.type.TypeManager;
     target=
         Bean.class, 
     executeAfter={
+        Controller.class,
         Identify.class,
         KeyCollection.class,
         ElementCollection.class
@@ -62,11 +63,26 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     public Object applyConfiguration(
             Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            throw 
+                new BrutosException(
+                        "can't create mapping: " + ((BeanEntry)source).getBeanType(),
+                        e );
+        }
+    }
+    
+    public Object applyConfiguration0(
+            Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
 
         Class clazz = ((BeanEntry)source).getBeanType();
         
         if(requiredBeanAnnotation(clazz))
-            throw new BrutosException("expected @Bean: " + clazz.getName() );    
+            throw new BrutosException("expected @Bean");    
         
         boolean isRoot = StringUtil.isEmpty(path);
         
@@ -103,7 +119,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             throw e;
         }
         catch(Exception e){
-            throw new BrutosException(e);
+            throw new BrutosException(builder.getClass().getName(), e);
         }
         
         /*
@@ -187,6 +203,11 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             if(source instanceof BeanPropertyAnnotation){
                 createBean(
                     (ControllerBuilder)builder, (BeanEntryProperty)source, applicationContext);
+            }
+            else
+            if(source instanceof ImportBeanEntry){
+                this.createBean(
+                    (ControllerBuilder)builder, (ImportBeanEntry)source, applicationContext);
             }
         }
         else{
@@ -307,6 +328,28 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 source.getAnnotation(ElementCollection.class));
     }
 
+    protected void createBean(ControllerBuilder builder, 
+            ImportBeanEntry source, ConfigurableApplicationContext applicationContext){
+        
+            Class type  = source.getBeanType();
+            Bean bean = (Bean)type.getAnnotation(Bean.class);
+            String name = StringUtil.adjust(bean.name());
+            name = 
+                StringUtil.isEmpty(name)? 
+                    StringUtil.getVariableFormat(type.getSimpleName()) : 
+                    name;
+
+            BeanBuilder beanBuilder = 
+                    builder.buildMappingBean(name, type);
+            
+        createBean(beanBuilder, applicationContext, 
+                type, 
+                (KeyCollection)type.getAnnotation(KeyCollection.class),
+                (ElementCollection)type.getAnnotation(ElementCollection.class));
+            
+        addfactories(beanBuilder, applicationContext, type);
+    }
+    
     protected void createBean(BeanBuilder beanBuilder, 
             ConfigurableApplicationContext applicationContext, 
             Object genericType, 
@@ -322,6 +365,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         if(!userDefaultMapping){
             addConstructor(beanBuilder, applicationContext, type);
             addProperties(beanBuilder, applicationContext, type);
+            //addfactories(beanBuilder, applicationContext, type);
         }
         
         if(keyCollection == null)
@@ -393,7 +437,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         }
         
         if(constructor == null)
-            throw new BrutosException("can't determine the constructor of the bean");
+            throw new BrutosException("can't determine the constructor of the bean: " + clazz.getName());
         
         Type[] genericTypes = (Type[]) constructor.getGenericParameterTypes();
         Class[] types = constructor.getParameterTypes();
@@ -404,6 +448,49 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                     new ConstructorArgEntry(null,types[i],genericTypes[i],annotations[i],i);
             super.applyInternalConfiguration(entry, beanBuilder, applicationContext);
         }
+    }
+    
+    protected void addfactories(BeanBuilder factoryBuilder, 
+            ConfigurableApplicationContext applicationContext, Class clazz){
+        
+        Method[] methods = clazz.getDeclaredMethods();
+        String factoryName = factoryBuilder.getName();
+        
+        for(Method method: methods){
+            
+            if(method.isAnnotationPresent(Bean.class)){
+                Bean bean = method.getAnnotation(Bean.class);
+                Type[] genericTypes = (Type[]) method.getGenericParameterTypes();
+                Class[] types = method.getParameterTypes();
+                Annotation[][] annotations = method.getParameterAnnotations();
+                
+                ControllerBuilder controllerBuilder = 
+                        factoryBuilder.getControllerBuilder();
+                
+                Class type  = method.getReturnType();
+                String name = StringUtil.adjust(bean.name());
+                name = 
+                    StringUtil.isEmpty(name)? 
+                        StringUtil.getVariableFormat(type.getSimpleName()) : 
+                        name;
+                
+                Target target = method.getAnnotation(Target.class);
+                
+                type = target != null? target.value() : type;
+                
+                BeanBuilder beanBuilder = 
+                        controllerBuilder.buildMappingBean(name, type);
+                
+                beanBuilder.setFactory(factoryName);
+                
+                for(int i=0;i<genericTypes.length;i++){
+                    ConstructorArgEntry entry = 
+                            new ConstructorArgEntry(null,types[i],genericTypes[i],annotations[i],i);
+                    super.applyInternalConfiguration(entry, beanBuilder, applicationContext);
+                }
+            }
+        }
+        
     }
     
     protected void addProperties(BeanBuilder beanBuilder, 

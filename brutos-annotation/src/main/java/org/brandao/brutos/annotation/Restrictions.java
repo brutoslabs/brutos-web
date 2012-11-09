@@ -34,6 +34,12 @@ public @interface Restrictions {
     /**
      * Coleção de regras de validação.
      */
-    Restriction[] value();
+    Restriction[] rules();
+    
+    /**
+     * Mensagem retornada caso o valor não esteja de acordo com a 
+     * regra de validação.
+     */
+    String message() default "";
     
 }

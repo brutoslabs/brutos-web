@@ -135,7 +135,7 @@ public class AnnotationUtil {
         return
             buildIfNecessary == null?
                 !isStandardType : 
-                buildIfNecessary.booleanValue() || !isStandardType;
+                buildIfNecessary.booleanValue() && !isStandardType;
     }
 
     public static boolean isBuildEntity(KeyCollection identify, Class type){

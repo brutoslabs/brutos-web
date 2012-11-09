@@ -37,6 +37,21 @@ public class KeyCollectionAnnotationConfig
 
     public Object applyConfiguration(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            throw 
+                new BrutosException(
+                        "can't create key of collection: " + ((KeyEntry)source).getName(),
+                        e );
+        }
+        
+    }
+    
+    public Object applyConfiguration0(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
         
         KeyEntry key = (KeyEntry)source;
         /*

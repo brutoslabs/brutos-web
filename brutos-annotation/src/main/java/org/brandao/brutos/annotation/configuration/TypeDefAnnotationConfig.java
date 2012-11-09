@@ -35,10 +35,25 @@ public class TypeDefAnnotationConfig extends AbstractAnnotationConfig{
     public boolean isApplicable(Object source) {
         return source instanceof Class && 
                (((Class)source).isAnnotationPresent( TypeDef.class ) ||
-               ((Class)source).getSimpleName().endsWith("Type"));
+               ((Class)source).getSimpleName().endsWith("TypeFactory"));
     }
 
     public Object applyConfiguration(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            throw 
+                new BrutosException(
+                        "can't create new type",
+                        e );
+        }
+        
+    }
+    
+    public Object applyConfiguration0(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
         
         try{

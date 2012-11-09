@@ -36,8 +36,22 @@ import org.brandao.brutos.mapping.StringUtil;
 public class ControllerAnnotationConfig 
     extends AbstractAnnotationConfig{
 
-    @Override
-    public Object applyConfiguration(Object arg0, Object arg1,
+    public Object applyConfiguration(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            throw 
+                new BrutosException(
+                        "can't create controller: " + ((Class)source).getName(),
+                        e );
+        }
+        
+    }
+    
+    public Object applyConfiguration0(Object arg0, Object arg1,
             ConfigurableApplicationContext applicationContext){
         
         Class source = (Class)arg0;
@@ -102,6 +116,7 @@ public class ControllerAnnotationConfig
         
         super.applyInternalConfiguration(source, builder, applicationContext);
 
+        importBeans(builder, applicationContext, builder.getClassType());
         throwsSafe(builder, source, applicationContext);
         addProperties(builder, applicationContext, source);
         addActions( builder, applicationContext, source );
@@ -223,6 +238,19 @@ public class ControllerAnnotationConfig
         }
     }
 
+    protected void importBeans(ControllerBuilder controllerBuilder, 
+            ConfigurableApplicationContext applicationContext, Class clazz){
+    
+        ImportBeans beans = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
+        
+        if(beans != null){
+            for(Class bean: beans.value()){
+                ImportBeanEntry beanEntry = new ImportBeanEntry(bean);
+                super.applyInternalConfiguration(beanEntry, controllerBuilder, applicationContext);
+            }
+        }
+    }
+    
     protected String getControllerName(ApplicationContext applicationContext, 
             Class controllerClass){
         String id = 

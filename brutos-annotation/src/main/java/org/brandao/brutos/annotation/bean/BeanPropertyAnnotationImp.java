@@ -33,22 +33,51 @@ public class BeanPropertyAnnotationImp
     }
 
     public <T extends Annotation> T getAnnotation(Class<T> annotation) {
-        if(this.beanProperty.getSet() != null)
-            return (T)this.beanProperty.getSet().getAnnotation(annotation);
-        else
-        if(this.beanProperty.getGet() != null)
-            return (T)this.beanProperty.getGet().getAnnotation(annotation);
-        else
-            return (T)this.beanProperty.getField().getAnnotation(annotation);
+        
+        if(this.beanProperty.getSet() != null){
+            T value = (T)this.beanProperty.getSet().getAnnotation(annotation);
+            
+            if(value != null)
+                return value;
+        }
+        
+        if(this.beanProperty.getGet() != null){
+            T value = (T)this.beanProperty.getGet().getAnnotation(annotation);
+            
+            if(value != null)
+                return value;
+        }
+        
+        if(this.beanProperty.getField() != null){
+            T value = (T)this.beanProperty.getField().getAnnotation(annotation);
+            
+            if(value != null)
+                return value;
+        }
+        
+        return null;
     }
 
     public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
-        if(this.beanProperty.getSet() != null)
-            return this.beanProperty.getSet().isAnnotationPresent(annotation);
-        else
-        if(this.beanProperty.getGet() != null)
-            return this.beanProperty.getGet().isAnnotationPresent(annotation);
-        else
-            return this.beanProperty.getField().isAnnotationPresent(annotation);
+        
+        if(this.beanProperty.getSet() != null){
+            boolean value = this.beanProperty.getSet().isAnnotationPresent(annotation);
+            if(value)
+                return true;
+        }
+        if(this.beanProperty.getGet() != null){
+            boolean value = this.beanProperty.getGet().isAnnotationPresent(annotation);
+            
+            if(value)
+                return true;
+        }
+        
+        if(this.beanProperty.getField() != null){
+            boolean value = this.beanProperty.getField().isAnnotationPresent(annotation);
+            if(value)
+                return true;
+        }
+        
+        return false;
     }
 }

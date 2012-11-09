@@ -23,6 +23,7 @@ import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.Intercepts;
 import org.brandao.brutos.interceptor.InterceptorController;
 import org.brandao.brutos.scanner.TypeFilter;
+import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
  *
@@ -32,6 +33,7 @@ public class AnnotationInterceptorFilter implements TypeFilter{
 
     public Boolean accepts(String resource) {
         try{
+            resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
             return 
                 clazz.isAnnotationPresent(Intercepts.class) 

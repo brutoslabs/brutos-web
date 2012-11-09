@@ -18,10 +18,7 @@
 package org.brandao.brutos.annotation.configuration;
 
 import java.lang.reflect.Method;
-import org.brandao.brutos.ActionBuilder;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.ControllerBuilder;
-import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.ThrowSafe;
 import org.brandao.brutos.annotation.ThrowSafeList;
 
@@ -39,6 +36,21 @@ public class ThrowSafeListAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
+            ConfigurableApplicationContext applicationContext) {
+    
+        try{
+            return applyConfiguration0(source, builder, applicationContext);
+        }
+        catch(Exception e){
+            throw 
+                new BrutosException(
+                        "can't create mapping exception",
+                        e );
+        }
+        
+    }
+    
+    public Object applyConfiguration0(Object source, Object builder, 
             ConfigurableApplicationContext applicationContext) {
 
         if(builder instanceof ActionBuilder)

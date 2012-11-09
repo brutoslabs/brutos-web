@@ -15,27 +15,15 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper;
+package org.brandao.brutos.annotation.helper.importbean;
 
-import org.brandao.brutos.annotation.Restriction;
-import org.brandao.brutos.annotation.Restrictions;
+import org.brandao.brutos.annotation.ImportBeans;
+import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest5;
 
 /**
  *
  * @author Brandao
  */
-public class ActionTest24Controller {
-
-    public void myAction(
-            @Restriction(rule="required",value="true")
-            String a,
-            @Restrictions(
-                rules={
-                @Restriction(rule="required",value="true"),
-                @Restriction(rule="min",value="10"),
-                @Restriction(rule="max",value="100")
-            })
-            int b){
-    }
-    
+@ImportBeans({BeanConstructorTest5.class})
+public class BeanTest7Controller {
 }
