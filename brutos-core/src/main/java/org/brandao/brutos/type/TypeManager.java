@@ -42,35 +42,35 @@ public class TypeManager {
     private static Class defaultMapType;
     
     static{
-        types.put( Class.class,         new DefaultTypeFactory(ClassType.class ));
-        types.put( Boolean.TYPE,        new DefaultTypeFactory(BooleanType.class ));
-        types.put( Byte.TYPE,           new DefaultTypeFactory(ByteType.class ));
-        types.put( Character.TYPE,      new DefaultTypeFactory(CharType.class ));
-        types.put( Double.TYPE,         new DefaultTypeFactory(DoubleType.class ));
-        types.put( Float.TYPE,          new DefaultTypeFactory(FloatType.class ));
-        types.put( Integer.TYPE,        new DefaultTypeFactory(IntegerType.class ));
-        types.put( Long.TYPE,           new DefaultTypeFactory(LongType.class ));
-        types.put( Short.TYPE,          new DefaultTypeFactory(ShortType.class ));
-        types.put( String.class,        new DefaultTypeFactory(StringType.class ));
-        types.put( BrutosFile.class,    new DefaultTypeFactory(BrutosFileType.class ));
-        types.put( File.class,          new DefaultTypeFactory(FileType.class ));
-        types.put( Boolean.class,       new DefaultTypeFactory(BooleanWrapperType.class ));
-        types.put( Byte.class,          new DefaultTypeFactory(ByteWrapperType.class ));
-        types.put( Character.class,     new DefaultTypeFactory(CharacterType.class ));
-        types.put( Double.class,        new DefaultTypeFactory(DoubleWrapperType.class ));
-        types.put( Float.class,         new DefaultTypeFactory(FloatWrapperType.class ));
-        types.put( Integer.class,       new DefaultTypeFactory(IntegerWrapperType.class ));
-        types.put( Long.class,          new DefaultTypeFactory(LongWrapperType.class ));
-        types.put( Short.class,         new DefaultTypeFactory(ShortWrapperType.class ));
-        types.put( Download.class,      new DefaultTypeFactory(DownloadType.class ));
-        types.put( Enum.class,          new DefaultTypeFactory(DefaultEnumType.class ));
-        types.put( List.class ,         new DefaultTypeFactory(ListType.class ));
-        types.put( Set.class ,          new DefaultTypeFactory(SetType.class ));
-        types.put( Object.class ,       new DefaultTypeFactory(ObjectType.class ));
-        types.put( Serializable.class , new DefaultTypeFactory(SerializableTypeImp.class ));
-        types.put( Date.class,          new DefaultTypeFactory(DefaultDateTimeType.class ));
-        types.put( Calendar.class,      new DefaultTypeFactory(CalendarType.class ));
-        types.put( Array.class,         new DefaultTypeFactory(DefaultArrayType.class ));
+        types.put( Class.class,         new DefaultTypeFactory(ClassType.class,Class.class));
+        types.put( Boolean.TYPE,        new DefaultTypeFactory(BooleanType.class,Boolean.TYPE));
+        types.put( Byte.TYPE,           new DefaultTypeFactory(ByteType.class,Byte.TYPE ));
+        types.put( Character.TYPE,      new DefaultTypeFactory(CharType.class,Character.TYPE ));
+        types.put( Double.TYPE,         new DefaultTypeFactory(DoubleType.class,Double.TYPE));
+        types.put( Float.TYPE,          new DefaultTypeFactory(FloatType.class,Float.TYPE ));
+        types.put( Integer.TYPE,        new DefaultTypeFactory(IntegerType.class,Integer.TYPE ));
+        types.put( Long.TYPE,           new DefaultTypeFactory(LongType.class,Long.TYPE ));
+        types.put( Short.TYPE,          new DefaultTypeFactory(ShortType.class,Short.TYPE ));
+        types.put( String.class,        new DefaultTypeFactory(StringType.class,String.class ));
+        types.put( BrutosFile.class,    new DefaultTypeFactory(BrutosFileType.class,BrutosFile.class ));
+        types.put( File.class,          new DefaultTypeFactory(FileType.class,File.class ));
+        types.put( Boolean.class,       new DefaultTypeFactory(BooleanWrapperType.class,Boolean.class ));
+        types.put( Byte.class,          new DefaultTypeFactory(ByteWrapperType.class,Byte.class ));
+        types.put( Character.class,     new DefaultTypeFactory(CharacterType.class,Character.class ));
+        types.put( Double.class,        new DefaultTypeFactory(DoubleWrapperType.class,Double.class ));
+        types.put( Float.class,         new DefaultTypeFactory(FloatWrapperType.class,Float.class ));
+        types.put( Integer.class,       new DefaultTypeFactory(IntegerWrapperType.class,Integer.class ));
+        types.put( Long.class,          new DefaultTypeFactory(LongWrapperType.class,Long.class ));
+        types.put( Short.class,         new DefaultTypeFactory(ShortWrapperType.class,Short.class ));
+        types.put( Download.class,      new DefaultTypeFactory(DownloadType.class,Download.class ));
+        types.put( Enum.class,          new DefaultTypeFactory(DefaultEnumType.class,Enum.class ));
+        types.put( List.class ,         new DefaultTypeFactory(ListType.class,List.class ));
+        types.put( Set.class ,          new DefaultTypeFactory(SetType.class,Set.class ));
+        types.put( Object.class ,       new DefaultTypeFactory(ObjectType.class,Object.class ));
+        types.put( Serializable.class , new DefaultTypeFactory(SerializableTypeImp.class,Serializable.class ));
+        types.put( Date.class,          new DefaultTypeFactory(DefaultDateTimeType.class,Date.class ));
+        types.put( Calendar.class,      new DefaultTypeFactory(CalendarType.class,Calendar.class ));
+        types.put( Array.class,         new DefaultTypeFactory(DefaultArrayType.class,Array.class ));
         
         defaultListType = ArrayList.class;
         defaultSetType  = HashSet.class;
@@ -89,7 +89,7 @@ public class TypeManager {
        TypeFactory typeFactory = 
             getTypeFactory( clazz );
                
-       return typeFactory != null && !(typeFactory.getClassType() == ObjectType.class);
+       return typeFactory != null && typeFactory.getClassType() != Object.class;
    }
    
     public static Type getType( Object classType ){

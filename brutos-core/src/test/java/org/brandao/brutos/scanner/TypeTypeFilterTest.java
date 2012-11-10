@@ -29,63 +29,66 @@ public class TypeTypeFilterTest extends TestCase{
     private TypeTypeFilter filter = new TypeTypeFilter();
     
     public void test1(){
-        Assert.assertNull(filter.accepts("test/Type.class"));
+        Assert.assertNull(filter.accepts("test/TypeFactory.class"));
     }
     
     public void test2(){
-        Assert.assertNull(filter.accepts("Type.class"));
+        Assert.assertNull(filter.accepts("TypeFactory.class"));
     }
 
     public void test3(){
-        Assert.assertNull(filter.accepts("Type.java"));
+        Assert.assertNull(filter.accepts("TypeFactory.java"));
     }
 
     public void test4(){
-        Assert.assertNull(filter.accepts("tes1/test2/Type.class"));
+        Assert.assertNull(filter.accepts("tes1/test2/TypeFactory.class"));
     }
 
     public void test5(){
-        Assert.assertNull(filter.accepts("tes1/test2/Type.java"));
+        Assert.assertNull(filter.accepts("tes1/test2/TypeFactory.java"));
     }
 
     public void test6(){
-        Assert.assertTrue(filter.accepts("test/AType.class").booleanValue());
+        Assert.assertTrue(filter.accepts("test/ATypeFactory.class").booleanValue());
     }
     
     public void test7(){
-        Assert.assertTrue(filter.accepts("AType.class").booleanValue());
+        Assert.assertTrue(filter.accepts("ATypeFactory.class").booleanValue());
     }
 
     public void test8(){
-        Assert.assertNull(filter.accepts("AType.java"));
+        Assert.assertNull(filter.accepts("ATypeFactory.java"));
     }
 
     public void test9(){
-        Assert.assertTrue(filter.accepts("tes1/test2/AType.class").booleanValue());
+        Assert.assertTrue(filter.accepts("tes1/test2/ATypeFactory.class").booleanValue());
     }
 
     public void test10(){
-        Assert.assertNull(filter.accepts("tes1/test2/AType.java"));
+        Assert.assertNull(filter.accepts("tes1/test2/ATypeFactory.java"));
     }
 
     public void test11(){
-        Assert.assertTrue(filter.accepts("test/TestType.class").booleanValue());
+        Assert.assertTrue(filter.accepts("test/TestTypeFactory.class").booleanValue());
     }
     
     public void test12(){
-        Assert.assertTrue(filter.accepts("TestType.class").booleanValue());
+        Assert.assertTrue(filter.accepts("TestTypeFactory.class").booleanValue());
     }
 
     public void test13(){
-        Assert.assertNull(filter.accepts("TestType.java"));
+        Assert.assertNull(filter.accepts("TestTypeFactory.java"));
     }
 
     public void test14(){
-        Assert.assertTrue(filter.accepts("tes1/test2/TestType.class").booleanValue());
+        Assert.assertTrue(filter.accepts("tes1/test2/TestTypeFactory.class").booleanValue());
     }
 
     public void test15(){
-        Assert.assertNull(filter.accepts("tes1/test2/TestType.java"));
+        Assert.assertNull(filter.accepts("tes1/test2/TestTypeFactory.java"));
     }
-    
+
+    public void test16(){
+        Assert.assertTrue(filter.accepts("tes1/test2/A2TypeFactory.class").booleanValue());
+    }
 }
