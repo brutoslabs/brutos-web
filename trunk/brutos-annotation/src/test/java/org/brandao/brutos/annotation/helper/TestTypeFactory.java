@@ -17,17 +17,16 @@
 
 package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.annotation.TypeDef;
 import org.brandao.brutos.type.DefaultTypeFactory;
 
 /**
  *
  * @author Brandao
  */
-@TypeDef
-public class TestType2 extends DefaultTypeFactory{
+public class TestTypeFactory extends DefaultTypeFactory{
     
-    public TestType2(){
+    public TestTypeFactory(){
         super(MyBeanType.class,MyBean.class);
     }
+
 }

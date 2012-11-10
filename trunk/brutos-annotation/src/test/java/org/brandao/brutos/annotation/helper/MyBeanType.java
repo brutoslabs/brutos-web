@@ -18,15 +18,19 @@
 package org.brandao.brutos.annotation.helper;
 
 import org.brandao.brutos.type.DefaultTypeFactory;
+import org.brandao.brutos.type.StringType;
 
 /**
  *
  * @author Brandao
  */
-public class TestType extends DefaultTypeFactory{
+public class MyBeanType extends StringType{
     
-    public TestType(){
-        super(TestType.class);
+    public MyBeanType(){
     }
 
+    public Class getClassType() {
+        return MyBean.class;
+    }
+    
 }

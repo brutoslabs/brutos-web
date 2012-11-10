@@ -1234,7 +1234,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(parameter.getBean().getValidate());
     }
 
-    public void testAction28() throws NoSuchMethodException{
+    public void testAction28() throws NoSuchMethodException, Throwable{
 
         Class clazz = ActionTest28Controller.class;
 
@@ -1242,9 +1242,18 @@ public class AnnotationApplicationContextActionTest
             getApplication(new Class[]{clazz});
             Assert.fail();
         }
-        catch(BrutosException e){
-            if(!e.getMessage().startsWith("expected @Bean"))
-                Assert.fail();
+        catch(Throwable e){
+            boolean beanException = false;
+            while(e != null){
+                if(e.getMessage().startsWith("expected @Bean")){
+                   beanException = true;
+                   break;
+                }
+                e = e.getCause();
+            }
+            
+            if(!beanException)
+                throw e;
         }
     }
 
