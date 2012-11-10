@@ -82,7 +82,7 @@ public class BeanBuilder {
                     this.getPrefixLogger(),
                     methodFactory} ) );
         
-        mappingBean.getConstructor().setMethodFactory(methodFactory);
+        mappingBean.setMethodfactory(methodFactory);
         return this;
     }
 

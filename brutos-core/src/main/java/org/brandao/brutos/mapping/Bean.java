@@ -230,6 +230,14 @@ public class Bean {
         return hierarchy;
     }
 
+    public void setMethodfactory( String methodFactory ){
+        getConstructor().setMethodFactory(methodFactory);
+    }
+    
+    public String getMethodfactory(){
+        return getConstructor().getMethodFactory();
+    }
+    
     public void setHierarchy(boolean hierarchy) {
         this.hierarchy = hierarchy;
     }
