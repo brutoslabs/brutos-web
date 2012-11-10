@@ -482,6 +482,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                         controllerBuilder.buildMappingBean(name, type);
                 
                 beanBuilder.setFactory(factoryName);
+                beanBuilder.setMethodfactory(method.getName());
                 
                 for(int i=0;i<genericTypes.length;i++){
                     ConstructorArgEntry entry = 
