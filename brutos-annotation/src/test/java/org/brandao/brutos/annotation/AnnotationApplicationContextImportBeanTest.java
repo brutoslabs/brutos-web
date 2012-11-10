@@ -29,6 +29,8 @@ import org.brandao.brutos.type.*;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.helper.EnumTest;
+import org.brandao.brutos.annotation.helper.MyBean;
+import org.brandao.brutos.annotation.helper.bean.BeanTestFactory;
 /**
  *
  * @author Brandao
@@ -2404,6 +2406,89 @@ public class AnnotationApplicationContextImportBeanTest
         Assert.assertNotNull(subElement.getMapping());
         Assert.assertNull(subElement.getType());
         Assert.assertNull(subElement.getValue());
+        
+    }
+
+    public void testbeanFactory1() throws NoSuchMethodException{
+        Class clazz = BeanFactoryTestController.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Bean factory = controller.getBean("beanTestFactory");
+        
+        Assert.assertEquals(BeanTestFactory.class, factory.getClassType());
+        Assert.assertNull(factory.getFactory());
+        
+        org.brandao.brutos.mapping.Bean bean = controller.getBean("bean1");
+        
+        Assert.assertEquals(MyBean.class, bean.getClassType());
+        Assert.assertEquals("beanTestFactory",bean.getFactory());
+        Assert.assertEquals("createMyBean",bean.getMethodfactory());
+        Assert.assertEquals(0, bean.getConstructor().size());
+        
+    }
+
+    public void testbeanFactory2() throws NoSuchMethodException{
+        Class clazz = BeanFactoryTestController.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Bean factory = controller.getBean("beanTestFactory");
+        
+        Assert.assertEquals(BeanTestFactory.class, factory.getClassType());
+        Assert.assertNull(factory.getFactory());
+        
+        org.brandao.brutos.mapping.Bean bean = controller.getBean("bean2");
+        
+        Assert.assertEquals(MyBean.class, bean.getClassType());
+        Assert.assertEquals("beanTestFactory",bean.getFactory());
+        Assert.assertEquals("createMyBean2",bean.getMethodfactory());
+        Assert.assertEquals(0, bean.getConstructor().size());
+    }
+
+    public void testbeanFactory3() throws NoSuchMethodException{
+        Class clazz = BeanFactoryTestController.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        org.brandao.brutos.mapping.Bean factory = controller.getBean("beanTestFactory");
+        
+        Assert.assertEquals(BeanTestFactory.class, factory.getClassType());
+        Assert.assertNull(factory.getFactory());
+        
+        org.brandao.brutos.mapping.Bean bean = controller.getBean("bean3");
+        
+        Assert.assertEquals(MyBean.class, bean.getClassType());
+        Assert.assertEquals("beanTestFactory",bean.getFactory());
+        Assert.assertEquals("createMyBean3",bean.getMethodfactory());
+        Assert.assertEquals(2, bean.getConstructor().size());
+        
+        ConstructorArgBean arg = bean.getConstructor().getConstructorArg(0);
+        
+        Assert.assertEquals(int.class, arg.getClassType());
+        Assert.assertEquals("value1", arg.getParameterName());
+        Assert.assertNull(arg.getMapping());
+
+        arg = bean.getConstructor().getConstructorArg(1);
+        
+        Assert.assertEquals(int.class, arg.getClassType());
+        Assert.assertEquals("value2", arg.getParameterName());
+        Assert.assertNull(arg.getMapping());
         
     }
     
