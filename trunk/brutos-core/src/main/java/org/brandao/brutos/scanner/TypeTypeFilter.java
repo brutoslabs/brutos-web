@@ -32,7 +32,7 @@ public class TypeTypeFilter implements TypeFilter{
     public Boolean accepts(String resource) {
         String className = Vfs.toClass(resource);
         return 
-            className.matches("(.*\\.)*\\w+Type")?
+            className.matches("(.*\\.)*\\w+TypeFactory")?
             Boolean.TRUE :
             null;
     }
