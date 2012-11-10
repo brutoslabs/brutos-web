@@ -18,7 +18,9 @@
 package org.brandao.brutos.annotation;
 
 import junit.framework.Assert;
-import org.brandao.brutos.annotation.helper.TestType;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.annotation.helper.MyBean;
+import org.brandao.brutos.annotation.helper.TestTypeFactory;
 import org.brandao.brutos.annotation.helper.TestType2;
 import org.brandao.brutos.annotation.helper.TestType3;
 import org.brandao.brutos.type.TypeManager;
@@ -31,15 +33,15 @@ public class AnnotationApplicationContextTypeTest
     extends AbstractApplicationContextTest{
     
     public void test1() throws NoSuchMethodException{
-        Class clazz = TestType.class;
+        Class clazz = TestTypeFactory.class;
         
         try{
             getApplication(new Class[]{clazz});
             
-            Assert.assertNotNull(TypeManager.getType(TestType.class));
+            Assert.assertTrue(TypeManager.isStandardType(MyBean.class));
         }
-        catch(Exception e){
-            TypeManager.remove(TestType.class);
+        finally{
+            TypeManager.remove(MyBean.class);
         }
     }
 
@@ -49,21 +51,32 @@ public class AnnotationApplicationContextTypeTest
         try{
             getApplication(new Class[]{clazz});
             
-            Assert.assertNotNull(TypeManager.getType(TestType2.class));
+            Assert.assertTrue(TypeManager.isStandardType(MyBean.class));
         }
-        catch(Exception e){
+        finally{
             TypeManager.remove(TestType2.class);
         }
     }
 
-    public void test3() throws NoSuchMethodException{
+    public void test3() throws NoSuchMethodException, Throwable{
         Class clazz = TestType3.class;
         
         try{
             getApplication(new Class[]{clazz});
             Assert.fail();
         }
-        catch(Exception e){
+        catch(Throwable e){
+            boolean beanException = false;
+            while(e != null){
+                if(e instanceof ClassCastException){
+                   beanException = true;
+                   break;
+                }
+                e = e.getCause();
+            }
+            
+            if(!beanException)
+                throw e;
         }
     }
     

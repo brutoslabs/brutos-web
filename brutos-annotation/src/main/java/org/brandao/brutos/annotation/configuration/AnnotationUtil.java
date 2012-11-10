@@ -129,13 +129,11 @@ public class AnnotationUtil {
 
     public static boolean isBuildEntity(Boolean buildIfNecessary, Class type){
         boolean isStandardType = TypeManager.isStandardType(type);
-        
         isStandardType = isStandardType && !type.isAnnotationPresent(Bean.class);
-        
         return
             buildIfNecessary == null?
                 !isStandardType : 
-                buildIfNecessary.booleanValue() && !isStandardType;
+                buildIfNecessary.booleanValue()? true : !isStandardType;
     }
 
     public static boolean isBuildEntity(KeyCollection identify, Class type){
