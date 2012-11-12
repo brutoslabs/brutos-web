@@ -357,12 +357,12 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         
         Class type = TypeManager.getRawType(genericType);
         
-        boolean userDefaultMapping = 
-            type == Map.class || type == List.class || type == Set.class;
+        boolean useDefaultMapping = AnnotationUtil.isUseDefaultMapping(type);
+            /*type == Map.class || type == List.class || type == Set.class;*/
         
         type = ClassUtil.getInstantiableClass(type);
         
-        if(!userDefaultMapping){
+        if(!useDefaultMapping){
             addConstructor(beanBuilder, applicationContext, type);
             addProperties(beanBuilder, applicationContext, type);
             //addfactories(beanBuilder, applicationContext, type);

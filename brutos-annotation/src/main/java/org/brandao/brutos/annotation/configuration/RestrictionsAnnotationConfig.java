@@ -67,12 +67,15 @@ public class RestrictionsAnnotationConfig extends AbstractAnnotationConfig{
                 (PropertyBuilder)builder : 
                 null;
         
+        if(parameterBuilder == null && propertyBuilder == null)
+            return builder;
+        
         Restrictions restrictions = this.getAnnotation(source);
         String message = restrictions.message();
         RestrictionBuilder restrictionBuilder = null;
         Restriction[] rules = restrictions.rules();
         
-        if(rules.length > 1){
+        if(rules.length > 0){
             Restriction r = rules[0];
             String rule = r.rule();
             String value = r.value();
