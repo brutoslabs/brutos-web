@@ -50,7 +50,7 @@ public class AnnotationApplicationContextBeanTest
                     .getControllerManager().getController(clazz);
         
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix+"my");
         

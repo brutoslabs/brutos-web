@@ -135,7 +135,9 @@ public class AnnotationUtil {
                 !isStandardType : 
                 buildIfNecessary.booleanValue()? true : isComplexBean(type);
         */
-        return buildIfNecessary.booleanValue();
+        return buildIfNecessary == null?
+                !TypeManager.isStandardType(type) && type.isAnnotationPresent(Bean.class): 
+                buildIfNecessary.booleanValue();
     }
 
     public static boolean isComplexBean(Class type){
@@ -155,7 +157,7 @@ public class AnnotationUtil {
     }
     
     public static boolean isBuildEntity(Identify identify, Class type){
-        return isBuildEntity(identify == null? false : identify.useMapping(), type);
+        return isBuildEntity(identify == null? null : identify.useMapping(), type);
     }
     
     public static Object getKeyType(Object type){
