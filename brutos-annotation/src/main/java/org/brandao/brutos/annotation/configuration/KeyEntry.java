@@ -35,7 +35,7 @@ public class KeyEntry implements BeanEntry{
     
     private ScopeType scopeType;
     
-    private boolean useBean;
+    private Boolean useBean;
     
     private Class<?> classType;
     
@@ -84,7 +84,7 @@ public class KeyEntry implements BeanEntry{
         else{
             this.name = null;
             this.scopeType = BrutosConstants.DEFAULT_SCOPETYPE;
-            this.useBean = false;
+            this.useBean = null;
             this.target = null;
             this.enumerated = 
                     EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE);
@@ -111,7 +111,7 @@ public class KeyEntry implements BeanEntry{
         this.scopeType = scopeType;
     }
 
-    public boolean isUseBean() {
+    public Boolean isUseBean() {
         return useBean;
     }
 
