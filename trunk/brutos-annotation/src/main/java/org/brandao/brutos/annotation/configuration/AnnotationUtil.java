@@ -128,24 +128,34 @@ public class AnnotationUtil {
     }
 
     public static boolean isBuildEntity(Boolean buildIfNecessary, Class type){
-        boolean isStandardType = TypeManager.isStandardType(type);
-        isStandardType = isStandardType && !type.isAnnotationPresent(Bean.class);
-        return
+        //boolean isStandardType = TypeManager.isStandardType(type);
+        //isStandardType = isStandardType && !type.isAnnotationPresent(Bean.class);
+        /*return
             buildIfNecessary == null?
                 !isStandardType : 
-                buildIfNecessary.booleanValue()? true : !isStandardType;
+                buildIfNecessary.booleanValue()? true : isComplexBean(type);
+        */
+        return buildIfNecessary.booleanValue();
     }
 
+    public static boolean isComplexBean(Class type){
+        return isUseDefaultMapping(type) || type.isAnnotationPresent(Bean.class);
+    }
+    
+    public static boolean isUseDefaultMapping(Class type){
+        return type == Map.class || type == List.class || type == Set.class;
+    }
+    
     public static boolean isBuildEntity(KeyCollection identify, Class type){
-        return isBuildEntity(identify == null? null : identify.useMapping(), type);
+        return isBuildEntity(identify == null? false : identify.useMapping(), type);
     }
 
     public static boolean isBuildEntity(ElementCollection identify, Class type){
-        return isBuildEntity(identify == null? null : identify.useMapping(), type);
+        return isBuildEntity(identify == null? false : identify.useMapping(), type);
     }
     
     public static boolean isBuildEntity(Identify identify, Class type){
-        return isBuildEntity(identify == null? null : identify.useMapping(), type);
+        return isBuildEntity(identify == null? false : identify.useMapping(), type);
     }
     
     public static Object getKeyType(Object type){

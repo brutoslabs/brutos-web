@@ -147,9 +147,9 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             
             if(AnnotationUtil.isWebApplication(applicationContext) && 
                controllerBuilder.getActionType() != ActionType.PARAMETER)
-                return "/" + id.toLowerCase();
+                return "/" + id;
             else
-                return id.toLowerCase();
+                return id;
         }
     }
     

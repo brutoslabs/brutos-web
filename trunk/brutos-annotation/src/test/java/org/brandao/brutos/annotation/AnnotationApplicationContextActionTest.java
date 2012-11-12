@@ -39,6 +39,10 @@ import org.brandao.brutos.validator.Validator;
 public class AnnotationApplicationContextActionTest 
     extends AbstractApplicationContextTest{
     
+    public void testAction(){
+        String a = "teste";
+        boolean b = a.matches("[^\\<\\>\\s]*");
+    }
     public void testAction1() throws NoSuchMethodException{
         
         Class clazz = ActionTest1Controller.class;
@@ -58,7 +62,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertEquals("/WEB-INF/actiontest1/index.jsp",controller.getView());
         
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
             controller.getActionByName( prefix + "my");
         
@@ -114,7 +118,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertEquals("/WEB-INF/actiontest3/index.jsp",controller.getView());
         
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -147,7 +151,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertEquals("/WEB-INF/actiontest4/index.jsp",controller.getView());
         
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -251,14 +255,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest7/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -295,14 +299,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest8/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -339,14 +343,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest9/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -390,14 +394,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest10/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -434,14 +438,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest11/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -474,14 +478,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest12/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -518,14 +522,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest13/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -555,14 +559,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest14/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -592,7 +596,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
@@ -619,14 +623,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest16/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -656,14 +660,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest17/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -693,14 +697,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest18/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -730,14 +734,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest19/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -767,14 +771,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest20/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -815,14 +819,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest21/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -874,14 +878,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest22/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -933,14 +937,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest23/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -992,14 +996,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest24/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -1063,14 +1067,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest25/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -1117,14 +1121,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest26/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
                 controller.getActionByName(prefix + "my");
         
@@ -1202,14 +1206,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest27/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = controller
                 .getActionByName(prefix + "my");
         
@@ -1273,14 +1277,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest29/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = controller
                 .getActionByName(prefix + "my");
         
@@ -1311,14 +1315,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest30/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = controller
                 .getActionByName(prefix + "my");
         
@@ -1349,14 +1353,14 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNotNull(controller.getActionListener());
         Assert.assertNull(controller.getDefaultAction());
         Assert.assertNull(controller.getName());
-        Assert.assertEquals("/"+clazz.getSimpleName().toLowerCase().replaceAll("controller$",""),controller.getId());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
         Assert.assertEquals(0,controller.getAlias().size());
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest31/index.jsp",controller.getView());
 
         String prefix = 
-            "/" + clazz.getSimpleName().replaceAll("Controller$", "").toLowerCase() + "/";
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = controller
                 .getActionByName(prefix + "my");
         

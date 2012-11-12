@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.lang.annotation.Annotation;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.*;
 import org.brandao.brutos.ScopeType;
@@ -284,6 +285,14 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         }
         
         return property.getName();
+    }
+
+    public Class<? extends Annotation>[] getExecutionOrder(){
+        return new Class[]{
+          Bean.class,
+          Restriction.class,
+          Restrictions.class
+        };
     }
     
 }

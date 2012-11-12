@@ -255,10 +255,10 @@ public class ControllerAnnotationConfig
             Class controllerClass){
         String id = 
             controllerClass.getSimpleName()
-                .replaceAll("Controller$", "").toLowerCase();
+                .replaceAll("Controller$", "");
         
         id = 
-            (AnnotationUtil.isWebApplication(applicationContext)? "/" : "") + id.toLowerCase();
+            (AnnotationUtil.isWebApplication(applicationContext)? "/" : "") + id;
         
         return id;
     }
