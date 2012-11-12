@@ -136,7 +136,7 @@ public class AnnotationUtil {
                 buildIfNecessary.booleanValue()? true : isComplexBean(type);
         */
         return buildIfNecessary == null?
-                !TypeManager.isStandardType(type) && type.isAnnotationPresent(Bean.class): 
+                !TypeManager.isStandardType(type) && isComplexBean(type): 
                 buildIfNecessary.booleanValue();
     }
 
