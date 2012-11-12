@@ -262,13 +262,13 @@ public class Invoker {
     }
 
     
-    public static ApplicationContext getApplicationContext(){
+    public static ApplicationContext getCurrentApplicationContext(){
         return (ApplicationContext) currentApp.get();
     }
 
     public static Invoker getInstance(){
         ConfigurableApplicationContext context =
-                (ConfigurableApplicationContext)getApplicationContext();
+                (ConfigurableApplicationContext)getCurrentApplicationContext();
 
         if( context == null )
             throw new BrutosException("can not get invoker");

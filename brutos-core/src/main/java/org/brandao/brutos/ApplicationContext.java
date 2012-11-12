@@ -79,4 +79,8 @@ public interface ApplicationContext {
 
     Object getController(Class clazz);
     
+    Object getBean(Class clazz);
+
+    Object getBean(String name);
+    
 }
