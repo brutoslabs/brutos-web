@@ -619,5 +619,13 @@ public abstract class AbstractApplicationContext
     public ApplicationContext getParent(){
         return this.parent;
     }
+
+    public Object getBean(Class clazz){
+        return this.getIocProvider().getBean(clazz);
+    }
+
+    public Object getBean(String name){
+        return this.getIocProvider().getBean(name);
+    }
     
 }

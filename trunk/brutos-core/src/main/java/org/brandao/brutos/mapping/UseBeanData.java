@@ -72,7 +72,7 @@ public class UseBeanData {
 
         if( !isNullable() ){
             if( mapping != null )
-                value = mapping.getValue(nome);
+                value = mapping.getValue(nome == null? null : nome + mapping.getSeparator());
                 //value = mapping.getValue();
             else
             if(staticValue!= null)
@@ -165,14 +165,16 @@ public class UseBeanData {
     }
 
     public Scope getScope() {
-
-        Scopes scopes = Invoker.getApplicationContext().getScopes();
+        return Scopes.getCurrentScope(scopeType);
+        /*
+        Scopes scopes = Invoker.getCurrentApplicationContext().getScopes();
         Scope objectScope = scopes.get( scopeType.toString() );
 
         if( objectScope == null )
             throw new BrutosException( "scope not allowed in context: " + scopeType );
 
         return objectScope;
+        */
     }
 
     public void setScopeType(ScopeType scope) {

@@ -60,7 +60,7 @@ public class BooleanType implements Type{
      */
     public void setValue(Object value) throws IOException {
         ConfigurableApplicationContext app = 
-                (ConfigurableApplicationContext)Invoker.getApplicationContext();
+                (ConfigurableApplicationContext)Invoker.getCurrentApplicationContext();
         MvcResponse response = app.getMvcResponse();
         response.process(value);
     }

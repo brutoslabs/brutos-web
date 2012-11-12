@@ -20,6 +20,7 @@ package org.brandao.brutos.mapping;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.Scopes;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
@@ -129,7 +130,8 @@ public class DependencyBean {
     }
 
     public Scope getScope() {
-        return scope;
+        //return scope;
+        return Scopes.getCurrentScope(scopeType);
     }
 
     public void setScope(Scope scope) {

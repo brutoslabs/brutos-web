@@ -77,6 +77,21 @@ public class Scopes{
                 .getLogger(Scopes.class.getName());
     }
     
+    public static Scope getCurrentScope(ScopeType value){
+        
+        ApplicationContext context = Invoker.getCurrentApplicationContext();
+        
+        if(context == null)
+            throw new BrutosException("could not get context");
+        
+        Scope objectScope = context.getScopes().get(value);
+        
+        if( objectScope == null )
+            throw new BrutosException( "scope not found in context: " + value );
+        
+        return objectScope;
+    }
+    
     /*
     public static Scopes getScopesOfCurrentApplicationContext(){
         return Invoker

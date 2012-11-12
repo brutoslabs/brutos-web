@@ -69,7 +69,7 @@ public class FlowController {
     }
 
     private static Object getControllerInstance( Class controllerClass ){
-        ApplicationContext context = Invoker.getApplicationContext();
+        ApplicationContext context = Invoker.getCurrentApplicationContext();
         return context.getController(controllerClass);
     }
 

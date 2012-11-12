@@ -312,7 +312,7 @@ public class Controller {
     
     public void fieldsToRequest( Object webFrame ) {
         try{
-            Scopes scopes = Invoker.getApplicationContext().getScopes();
+            Scopes scopes = Invoker.getCurrentApplicationContext().getScopes();
             Field[] fields = getClassType().getDeclaredFields();
             Scope scope = scopes.get(ScopeType.REQUEST);
 
