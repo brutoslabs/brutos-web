@@ -147,7 +147,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
         Identify identify = source.getAnnotation(Identify.class);
         
-        String name = source.getName();
+        String name = source.getName() == null? "arg"+source.getIndex() : source.getName();
         ScopeType scope = AnnotationUtil.getScope(identify);
         EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
         String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
@@ -256,7 +256,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
         Identify identify = source.getAnnotation(Identify.class);
         
-        String name = source.getName();
+        String name = source.getName() == null? "arg" + source.getIndex() : source.getName();
         ScopeType scope = AnnotationUtil.getScope(identify);
         EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
         String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
