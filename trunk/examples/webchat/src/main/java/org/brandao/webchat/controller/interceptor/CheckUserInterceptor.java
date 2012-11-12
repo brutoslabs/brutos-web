@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import org.brandao.brutos.FlowController;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.WebScopeType;
+import org.brandao.brutos.annotation.Intercepts;
 import org.brandao.brutos.interceptor.AbstractInterceptor;
 import org.brandao.brutos.interceptor.InterceptedException;
 import org.brandao.brutos.interceptor.InterceptorHandler;
@@ -13,6 +14,7 @@ import org.brandao.webchat.controller.RoomController;
 import org.brandao.webchat.model.User;
 
 @ApplicationScoped
+@Intercepts
 public class CheckUserInterceptor extends AbstractInterceptor{
 
     @Override

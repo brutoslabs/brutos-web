@@ -1,14 +1,29 @@
 package org.brandao.webchat.controller.entity;
 
 import java.io.Serializable;
+import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.Constructor;
+import org.brandao.brutos.annotation.Restriction;
+import org.brandao.brutos.annotation.Restrictions;
+import org.brandao.brutos.annotation.RestrictionsRules;
 import org.brandao.webchat.model.RoomService;
 import org.brandao.webchat.model.User;
 import org.brandao.webchat.model.UserNotFoundException;
 
+@Bean
 public class UserDTO implements Serializable{
 
+    @Restrictions(
+        rules={
+            @Restriction(rule=RestrictionsRules.MINLENGTH, value="3"),
+            @Restriction(rule=RestrictionsRules.MAXLENGTH, value="30"),
+            @Restriction(rule=RestrictionsRules.MATCHES, value="[^\\<\\>\\s]*")
+        },
+        message="userError"
+    )
     private String nick;
     
+    @Constructor
     public UserDTO(){
     }
     

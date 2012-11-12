@@ -1,3 +1,4 @@
+
 package org.brandao.webchat.model;
 
 import java.io.IOException;

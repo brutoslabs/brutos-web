@@ -11,6 +11,11 @@
         <context:type class-type="java.util.List" factory="org.brandao.webchat.model.JSONType"/>
     </context:types>
 
+    <context:annotation-config/>
+    
+    <context:component-scan base-package="org.brandao.webchat"/>
+    
+    <!--
     <interceptors>
         <interceptor name="checkUserInterceptor"
                      class="org.brandao.webchat.controller.interceptor.CheckUserInterceptor"/>
@@ -49,7 +54,7 @@
                 <bean target="org.brandao.webchat.controller.entity.MessageDTO">
                     <property name="origin">
                         <bean target="org.brandao.webchat.controller.entity.UserDTO">
-                            <property name="nick" bean="origin">
+                            <property name="nick" bean="nick">
                                 <validator message="userError">
                                     <rule name="maxlength" value="30"/>
                                     <rule name="matches" value="[^\&lt;\&gt;\s]*"/>
@@ -59,7 +64,7 @@
                     </property>
                     <property name="dest">
                         <bean target="org.brandao.webchat.controller.entity.UserDTO">
-                            <property name="nick" bean="dest">
+                            <property name="nick" bean="nick">
                                 <validator message="userError">
                                     <rule name="maxlength" value="30"/>
                                     <rule name="matches" value="[^\&lt;\&gt;\s]*"/>
@@ -80,7 +85,7 @@
         <action id="enter" executor="putUser" view="/layout/room.jsp">
             <parameter>
                 <bean target="org.brandao.webchat.controller.entity.UserDTO">
-                    <property name="nick" bean="user">
+                    <property name="nick" bean="nick">
                         <validator message="msgError">
                             <rule name="minlength" value="3"/>
                             <rule name="maxlength" value="30"/>
@@ -108,4 +113,5 @@
         <action id="listUsers" executor="getUsers"/>
         
     </controller>
+    -->
 </controllers>
