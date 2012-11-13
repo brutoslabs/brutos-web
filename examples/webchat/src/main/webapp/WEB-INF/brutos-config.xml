@@ -8,7 +8,7 @@
 
     <context:types>
         <context:type class-type="java.io.Serializable" factory="org.brandao.webchat.model.JSONType"/>
-        <context:type class-type="java.util.List" factory="org.brandao.webchat.model.JSONType"/>
+        <!--<context:type class-type="java.util.List" factory="org.brandao.webchat.model.JSONType"/>-->
     </context:types>
 
     <context:annotation-config/>
