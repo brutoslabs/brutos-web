@@ -269,7 +269,7 @@ public class BeanPropertyTest {
         return propertyV;
     }
 
-    @ElementCollection(bean="myElement2")
+    @ElementCollection(bean="myElement2",useMapping=true)
     public void setPropertyV(Map<String,CustomArrayList> propertyV) {
         this.propertyV = propertyV;
     }
