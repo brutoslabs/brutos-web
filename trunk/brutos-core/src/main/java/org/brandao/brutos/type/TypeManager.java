@@ -108,9 +108,9 @@ public class TypeManager {
             if( getRawType(classType).isArray() )
                 factory = (TypeFactory)types.get( java.lang.reflect.Array.class );
             else
-            if( Serializable.class.isAssignableFrom( getRawType(classType) ) )
+            /*if( Serializable.class.isAssignableFrom( getRawType(classType) ) )
                 factory = (TypeFactory)types.get( Serializable.class );
-            else
+            else*/
                 factory = (TypeFactory)types.get( Object.class );
         }
         return factory;
