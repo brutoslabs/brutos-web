@@ -26,7 +26,7 @@ import org.brandao.brutos.annotation.ElementCollection;
  * @author Brandao
  */
 @Bean
-@ElementCollection(bean="myElement")
+@ElementCollection(bean="myElement",useMapping=true)
 public class CustomArrayList extends ArrayList<BeanConstructorTest>{
     
 }

@@ -630,10 +630,9 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScopeType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
-        Assert.assertNotNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNotNull(element.getType());
         Assert.assertNull(element.getValue());
-        
     }
 
     public void testBean18() throws NoSuchMethodException{
@@ -1484,8 +1483,8 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScopeType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
-        Assert.assertNotNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNotNull(element.getType());
         Assert.assertNull(element.getValue());
         
     }
@@ -2453,8 +2452,8 @@ public class AnnotationApplicationContextBeanTest
         Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, element.getScopeType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, element.getEnumProperty());
         Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, element.getTemporalType());
-        Assert.assertNotNull(element.getMapping());
-        Assert.assertNull(element.getType());
+        Assert.assertNull(element.getMapping());
+        Assert.assertNotNull(element.getType());
         Assert.assertNull(element.getValue());
         
     }
