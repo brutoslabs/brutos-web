@@ -1,5 +1,6 @@
 package org.brandao.webchat.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -85,7 +86,7 @@ public class RoomController {
     
     @Action("message")
     @View(rendered=false)
-    public MessageDTO readMessage() 
+    public Serializable readMessage() 
             throws UserNotFoundException, InterruptedException{
         
         Message msg = roomService.getMessage(this.getCurrentUser());
@@ -102,14 +103,14 @@ public class RoomController {
     
     @Action("listUsers")
     @View(rendered=false)
-    public List<UserDTO> readUsers(){
+    public Serializable readUsers(){
         List<User> users = roomService.getUsers();
         List<UserDTO> usersDTO = new ArrayList<UserDTO>();
         
         for(User user: users)
             usersDTO.add(new UserDTO(user));
         
-        return usersDTO;
+        return (Serializable)usersDTO;
     }
 
     public User getCurrentUser() {
