@@ -22,7 +22,7 @@
 
     <controller id="/index.jbrs" 
                class="br.brandao.controller.IndexController" action-id="action"
-               default-action="default" >
+               default-action="default" action-type="parameter">
 
         <action id="default" view="/WEB-INF/jsp/index.jsf"/>
         

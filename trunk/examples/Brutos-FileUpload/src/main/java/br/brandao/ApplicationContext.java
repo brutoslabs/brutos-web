@@ -1,9 +1,9 @@
 package br.brandao;
 
 import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.ContextLoaderListener;
 
 /*
  * To change this template, choose Tools | Templates
@@ -14,9 +14,11 @@ import org.brandao.brutos.web.ContextLoader;
  *
  * @author Neto
  */
-public class ApplicationContext implements ServletContextListener{
+public class ApplicationContext extends ContextLoaderListener{
 
     public void contextInitialized(ServletContextEvent sce) {
+        super.contextInitialized(sce);
+        
         ConfigurableApplicationContext context =
                 (ConfigurableApplicationContext)
                 ContextLoader.getCurrentWebApplicationContext();
