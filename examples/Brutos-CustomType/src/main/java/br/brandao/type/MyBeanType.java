@@ -7,13 +7,13 @@ package br.brandao.type;
 import br.brandao.beans.MyBean;
 import br.brandao.controller.IndexController;
 import java.io.IOException;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.ContextLoader;
 
 /**
  *
@@ -35,8 +35,8 @@ public class MyBeanType implements Type,TypeFactory{
     
     public Object convert(Object value) {
         ConfigurableWebApplicationContext context =
-            (ConfigurableWebApplicationContext)
-                ContextLoader.getCurrentWebApplicationContext();
+            (ConfigurableWebApplicationContext) Invoker.getCurrentApplicationContext();
+        
         Controller controller =
                 context.getControllerManager()
                     .getController(IndexController.class);
