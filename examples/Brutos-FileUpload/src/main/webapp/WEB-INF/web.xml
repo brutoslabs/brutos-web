@@ -27,9 +27,9 @@
         <servlet-name>BRUTOS SERVLET</servlet-name>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
-    <listener>
+    <!--<listener>
         <listener-class>org.brandao.brutos.web.ContextLoaderListener</listener-class>
-    </listener>
+    </listener>-->
     <listener>
         <listener-class>br.brandao.ApplicationContext</listener-class>
     </listener>
