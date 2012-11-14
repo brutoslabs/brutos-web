@@ -19,7 +19,7 @@
     </interceptors>
 
     <controller id="/index.jbrs" view="/WEB-INF/jsp/index.jsp"
-               class="br.brandao.controller.IndexController">
+               class="br.brandao.controller.IndexController" action-type="parameter">
        <!-- todos os métodos são interceptados exceto o método4() -->
         <interceptor-ref name="testInterceptor">
             <param name="excludeMethods">method4</param>
