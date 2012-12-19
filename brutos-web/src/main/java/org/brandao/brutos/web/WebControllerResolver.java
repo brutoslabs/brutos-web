@@ -75,10 +75,24 @@ public class WebControllerResolver implements ControllerResolver{
             
             URIMapping uriMap;
             if(controller.getActionType() == ActionType.PARAMETER){
+                
                 uriMap = getURIMapping( controller.getId() );
+                
                 if(uriMap.matches(uri)){
                     updateRequest(uri, paramScope, uriMap);
                     return controller;
+                }
+                else{
+                    Iterator alias = controller.getAlias().iterator();
+                    
+                    while(alias.hasNext()){
+                        uriMap = getURIMapping( (String)alias.next() );
+                        
+                        if(uriMap.matches(uri)){
+                            updateRequest(uri, paramScope, uriMap);
+                            return controller;
+                        }
+                    }
                 }
             }
             else{
