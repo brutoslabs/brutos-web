@@ -893,6 +893,36 @@ public class AnnotationApplicationContextBeanTest
     }
     
     
+    public void testBean22X() throws NoSuchMethodException{
+        Class clazz = BeanTest1Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        String prefix = 
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
+        org.brandao.brutos.mapping.Action action = 
+                controller.getActionByName(prefix+"my");
+        
+        ParameterAction param = action.getParameter(0);
+        
+        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+
+        PropertyBean property = bean.getProperty("propertyX");
+        Assert.assertEquals(BeanConstructorTest.class, property.getClassType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_SCOPETYPE, property.getScopeType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ENUMERATIONTYPE, property.getEnumProperty());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY, property.getTemporalType());
+        Assert.assertNotNull(property.getMapping());
+        Assert.assertNotNull(property.getType());
+        Assert.assertNull(property.getValue());
+        
+    }
+    
     public void testBean23() throws NoSuchMethodException{
         Class clazz = BeanTest2Controller.class;
         
