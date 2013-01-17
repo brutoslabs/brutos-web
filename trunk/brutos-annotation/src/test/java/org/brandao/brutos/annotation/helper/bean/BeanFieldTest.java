@@ -97,5 +97,7 @@ public class BeanFieldTest {
 
     @ElementCollection(bean="myElement2",useMapping=true)
     private Map<String,CustomArrayList> propertyV;
+
+    private BeanConstructorTest propertyX;
     
 }
