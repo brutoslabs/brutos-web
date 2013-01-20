@@ -40,7 +40,7 @@ import org.brandao.brutos.web.http.UploadListener;
 public class DispatcherServlet extends HttpServlet {
     
     private WebApplicationContext webApplicationContext;
-    private Invoker invoker;
+    private WebInvoker invoker;
 
     public void init() throws ServletException{
         super.init();
@@ -53,7 +53,7 @@ public class DispatcherServlet extends HttpServlet {
             );
         }
         else
-            invoker = ((ConfigurableApplicationContext)webApplicationContext).getInvoker();
+            invoker = (WebInvoker)((ConfigurableApplicationContext)webApplicationContext).getInvoker();
 
         Throwable ex = (Throwable)getServletContext().getAttribute( BrutosConstants.EXCEPTION );
 
@@ -68,44 +68,7 @@ public class DispatcherServlet extends HttpServlet {
     
     protected void processRequest(ServletRequest request, ServletResponse response)
     throws ServletException, IOException {
-
-        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-        StaticBrutosRequest staticRequest = 
-                (StaticBrutosRequest) requestInfo.getRequest();
-        
-        ConfigurableWebApplicationContext context =
-            (ConfigurableWebApplicationContext)
-                ContextLoader.getCurrentWebApplicationContext();
-                
-        String requestId = staticRequest.getRequestId();
-        Map mappedUploadStats = null;
-        try{
-            requestInfo.setResponse(response);
-
-            Scope scope = context.getScopes().get(WebScopeType.SESSION);
-
-            mappedUploadStats =
-                    (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
-
-            UploadListener listener = staticRequest.getUploadListener();
-
-            mappedUploadStats.put( requestId, listener.getUploadStats() );
-            
-            FileUploadException fue = null;
-            
-            try{
-                staticRequest.parseRequest();
-            }
-            catch( FileUploadException e ){
-                fue = e;
-            }
-            
-            if(!invoker.invoke(requestId, fue))
-                ((HttpServletResponse)response).setStatus(HttpServletResponse.SC_NOT_FOUND);
-        }
-        finally{
-            mappedUploadStats.remove(requestId);
-        }
+        invoker.invoker(request, response, null);
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
