@@ -200,6 +200,13 @@ public abstract class AbstractWebApplicationContext
                     tmp );
 
         tmp = config
+                .getProperty( BrutosConstants.INVOKER_CLASS,
+                              WebInvoker.class.getName() );
+        
+        config.put( BrutosConstants.INVOKER_CLASS,
+                    tmp );
+        
+        tmp = config
                 .getProperty( BrutosConstants.ACTION_TYPE,
                               ActionType.HIERARCHY.name() );
         

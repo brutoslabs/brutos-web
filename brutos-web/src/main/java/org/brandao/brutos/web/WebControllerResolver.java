@@ -72,9 +72,10 @@ public class WebControllerResolver implements ControllerResolver{
         
         while(controllers.hasNext()){
             Controller controller = (Controller)controllers.next();
-            
+            ActionType actionType = controller.getActionType();
             URIMapping uriMap;
-            if(controller.getActionType() == ActionType.PARAMETER){
+            
+            if(actionType == ActionType.PARAMETER){
                 
                 uriMap = getURIMapping( controller.getId() );
                 
@@ -96,6 +97,15 @@ public class WebControllerResolver implements ControllerResolver{
                 }
             }
             else{
+                
+                if(actionType == ActionType.HIERARCHY){
+                    uriMap = getURIMapping( controller.getId() );
+                    if(uriMap.matches(uri)){
+                        updateRequest(uri, paramScope, uriMap);
+                        return controller;
+                    }
+                }
+                
                 Set actionsId = controller.getActions().keySet();
                 for(Object id: actionsId){
                     uriMap = getURIMapping( (String)id );

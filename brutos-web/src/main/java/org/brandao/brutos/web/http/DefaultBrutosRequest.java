@@ -223,6 +223,10 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public void setServletRequest(ServletRequest request) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
 
 

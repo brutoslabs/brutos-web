@@ -65,31 +65,32 @@ public class ContextLoaderListener implements ServletContextListener,
     }
 
     public void requestDestroyed(ServletRequestEvent sre) {
+        /*
         ThreadScope.destroy();
         RequestInfo.removeCurrent();
         ConfigurableWebApplicationContext context =
             (ConfigurableWebApplicationContext)ContextLoader
                 .getCurrentWebApplicationContext();
-        context.getRequestFactory().destroyRequest();
-        context.getResponseFactory().destroyResponse();
-
-
+        
+        if(context != null){
+            context.getRequestFactory().destroyRequest();
+            context.getResponseFactory().destroyResponse();
+        }
+        */
     }
 
     public void requestInitialized(ServletRequestEvent sre) {
-        
+        /*
         StaticBrutosRequest staticRequest;
-        
-        ThreadScope.create();
-        
+
         ServletRequest request = sre.getServletRequest();
 
         staticRequest = new StaticBrutosRequest(request);
-        
+
         RequestInfo requestInfo = new RequestInfo();
         requestInfo.setRequest(staticRequest);
         RequestInfo.setCurrent(requestInfo);
-
+        */
     }
     
 }

@@ -178,14 +178,20 @@ public class BrutosRequestImp extends ServletRequestWrapper
             this.setObject(name, value);
     }
 
+    public void setServletRequest(ServletRequest request){
+        super.setRequest(request);
+    }
+    
     public ServletRequest getServletRequest() {
         return super.getRequest();
     }
 
     public String getRequestId() {
-
-        if( getRequest() instanceof HttpServletRequest ){
-            HttpServletRequest httpRequest = (HttpServletRequest)getRequest();
+        
+        Object request = getRequest();
+        
+        if( request instanceof HttpServletRequest ){
+            HttpServletRequest httpRequest = (HttpServletRequest)request;
             String path         = httpRequest.getRequestURI();
             String contextPath  = httpRequest.getContextPath();
             path = path.substring( contextPath.length(), path.length() );

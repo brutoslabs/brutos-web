@@ -339,5 +339,9 @@ public class DefaultRequest extends HttpServletRequestWrapper implements BrutosR
     public String getRequestId() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public void setServletRequest(ServletRequest request) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

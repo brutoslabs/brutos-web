@@ -21,15 +21,9 @@ package org.brandao.brutos.web.http;
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.*;
-import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.BrutosContext;
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.WebScopeType;
+import org.brandao.brutos.*;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.ContextLoader;
-import org.brandao.brutos.web.FileUploadException;
-import org.brandao.brutos.web.RequestInfo;
+import org.brandao.brutos.web.*;
 
 /**
  *
@@ -38,11 +32,29 @@ import org.brandao.brutos.web.RequestInfo;
 public class BrutosRequestFilter implements Filter{
 
     private FilterConfig filterConfig = null;
-    private static ThreadLocal<FilterChain> currentFilter;
+    private static ThreadLocal<FilterChain> currentFilter = new ThreadLocal<FilterChain>();
+    private WebApplicationContext webApplicationContext;
+    private WebInvoker invoker;
 
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig   = filterConfig;
-        this.currentFilter  = new ThreadLocal<FilterChain>();
+        
+        webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+
+        if( webApplicationContext == null ){
+            throw new IllegalStateException(
+                    "Unable to initialize the servlet was not configured for the application context root - " +
+                    "make sure you have defined in your web.xml ContextLoader!"
+            );
+        }
+        else
+            invoker = (WebInvoker)((ConfigurableApplicationContext)webApplicationContext).getInvoker();
+
+        Throwable ex = (Throwable)filterConfig.getServletContext().getAttribute( BrutosConstants.EXCEPTION );
+
+        if( ex != null )
+            throw new ServletException( ex );
+        
     }
 
     public static FilterChain getCurrentFilterChain(){
@@ -51,53 +63,13 @@ public class BrutosRequestFilter implements Filter{
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
             throws IOException, ServletException {
         
-        if( filterConfig == null )
-            return;
-
-        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-        StaticBrutosRequest staticRequest =
-                (StaticBrutosRequest) requestInfo.getRequest();
-        
-        ConfigurableWebApplicationContext context =
-            (ConfigurableWebApplicationContext)
-                ContextLoader.getCurrentWebApplicationContext();
-
-        Invoker invoker =
-                context.getInvoker();
-        
-        String requestId = staticRequest.getRequestId();
-        Map mappedUploadStats = null;
         try{
-            requestInfo.setResponse(response);
-
-            Scope scope = context.getScopes().get(WebScopeType.SESSION);
-
-            mappedUploadStats =
-                    (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
-            
-            UploadListener listener = staticRequest.getUploadListener();
-            mappedUploadStats.put( requestId, listener.getUploadStats() );
-
-            FileUploadException fue = null;
-            try{
-                staticRequest.parseRequest();
-            }
-            catch( FileUploadException e ){
-                fue = e;
-            }
-            
+            if( filterConfig == null )
+                return;
             currentFilter.set(chain);
-            if( context instanceof BrutosContext ){
-                if( !invoker.invoke((String)null, fue) )
-                    chain.doFilter( staticRequest, response);
-            }
-            else{
-                if( !invoker.invoke( requestId, fue ) )
-                    chain.doFilter( staticRequest, response);
-            }
+            invoker.invoker(request, response, chain);
         }
         finally{
-            mappedUploadStats.remove( requestId );
             currentFilter.remove();
         }
     }
