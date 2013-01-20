@@ -114,33 +114,30 @@ public abstract class AbstractApplicationContext
      */
     public void configure( Properties config ){
         this.configuration = config;
-        this.iocManager = new IOCManager();
-        this.iocProvider = IOCProvider.getProvider(config);
+        this.iocManager    = new IOCManager();
+        this.iocProvider   = IOCProvider.getProvider(config);
         
         this.iocProvider.configure(config);
         
-        this.interceptorManager = getNewInterceptorManager();
-        
-        this.webFrameManager = new WebFrameManager( this.interceptorManager, this.iocManager );
-        this.controllerResolver = getNewControllerResolver();
-        this.actionResolver = getNewMethodResolver();
-        this.requestFactory = getMvcRequestFactory();
-        this.responseFactory = getMvcResponseFactory();
-        this.validatorProvider = ValidatorProvider.getValidatorProvider(this.getConfiguration());
-        this.viewResolver = getNewViewResolver();
-        this.controllerManager = this.getNewControllerManager();
-        
-        this.viewProvider = ViewProvider.getProvider(this.getConfiguration());
+        this.interceptorManager    = getNewInterceptorManager();
+        this.webFrameManager       = new WebFrameManager( this.interceptorManager, this.iocManager );
+        this.controllerResolver    = getNewControllerResolver();
+        this.actionResolver        = getNewMethodResolver();
+        this.requestFactory        = getMvcRequestFactory();
+        this.responseFactory       = getMvcResponseFactory();
+        this.validatorProvider     = ValidatorProvider.getValidatorProvider(this.getConfiguration());
+        this.viewResolver          = getNewViewResolver();
+        this.controllerManager     = getNewControllerManager();
+        this.viewProvider          = ViewProvider.getProvider(this.getConfiguration());
         this.codeGeneratorProvider = CodeGeneratorProvider.getProvider(this.getConfiguration());
-
-        this.invoker =
-                new Invoker(
-                    controllerResolver,
-                    iocProvider,
-                    controllerManager,
-                    actionResolver,
-                    this,
-                    viewProvider );
+        this.invoker               = 
+                                     createInvoker(
+                                         controllerResolver,
+                                         iocProvider,
+                                         controllerManager,
+                                         actionResolver,
+                                         this,
+                                         viewProvider);
         
 
         loadScopes();
@@ -366,6 +363,45 @@ public abstract class AbstractApplicationContext
                         this.parent == null? 
                         null : 
                         ((ConfigurableApplicationContext)parent).getInterceptorManager()
+                        });
+            
+            return instance;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected Invoker createInvoker( 
+            ControllerResolver controllerResolver, IOCProvider iocProvider, 
+            ControllerManager controllerManager, ActionResolver actionResolver, 
+            ConfigurableApplicationContext applicationContext, ViewProvider viewProvider ){
+        try{
+            String className =
+                configuration.getProperty(
+                    BrutosConstants.INVOKER_CLASS,
+                    BrutosConstants.DEFAULT_INVOKER_CLASS);
+            
+            Class clazz = 
+                    ClassUtil.get(className);
+            
+            Invoker instance = 
+                (Invoker)ClassUtil.getInstance(
+                    clazz, 
+                    new Class[]{
+                        ControllerResolver.class, 
+                        IOCProvider.class, 
+                        ControllerManager.class, 
+                        ActionResolver.class, 
+                        ConfigurableApplicationContext.class, 
+                        ViewProvider.class},
+                    new Object[]{
+                        controllerResolver, 
+                        iocProvider, 
+                        controllerManager, 
+                        actionResolver, 
+                        applicationContext, 
+                        viewProvider
                         });
             
             return instance;
