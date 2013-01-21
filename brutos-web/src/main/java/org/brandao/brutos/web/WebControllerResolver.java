@@ -73,68 +73,89 @@ public class WebControllerResolver implements ControllerResolver{
         while(controllers.hasNext()){
             Controller controller = (Controller)controllers.next();
             ActionType actionType = controller.getActionType();
-            URIMapping uriMap;
             
-            if(actionType == ActionType.PARAMETER){
-                
-                uriMap = getURIMapping( controller.getId() );
-                
-                if(uriMap.matches(uri)){
-                    updateRequest(uri, paramScope, uriMap);
-                    return controller;
-                }
-                else{
-                    Iterator alias = controller.getAlias().iterator();
-                    
-                    while(alias.hasNext()){
-                        uriMap = getURIMapping( (String)alias.next() );
-                        
-                        if(uriMap.matches(uri)){
-                            updateRequest(uri, paramScope, uriMap);
-                            return controller;
-                        }
-                    }
-                }
-            }
-            else{
-                
-                if(actionType == ActionType.HIERARCHY){
-                    uriMap = getURIMapping( controller.getId() );
-                    if(uriMap.matches(uri)){
-                        updateRequest(uri, paramScope, uriMap);
-                        return controller;
-                    }
-                }
-                
-                Set actionsId = controller.getActions().keySet();
-                for(Object id: actionsId){
-                    uriMap = getURIMapping( (String)id );
-                    if(uriMap.matches(uri)){
-                        updateRequest(uri, paramScope, uriMap);
-                        
-                        ConfigurableApplicationContext context =
-                            (ConfigurableApplicationContext)handler.getContext();
-                        
-                        ActionResolver actionResolver =
-                                context.getActionResolver();
-                        
-                        Action action = 
-                                controller.getAction((String)id);
-                        
-                        ResourceAction resourceAction = 
-                                actionResolver.getResourceAction(action);
-                        
-                        handler.setResourceAction(resourceAction);
-                        
-                        return controller;
-                    }
-                }
-            }
+            if(this.isMatch(actionType, controller, paramScope, uri) || 
+               this.isMatch(actionType, controller, paramScope, handler, uri))
+                return controller;
+            
         }
 
         return null;
     }
 
+    private boolean isMatch(ActionType actionType, Controller controller, 
+            Scope scope, ConfigurableInterceptorHandler handler, String uri){
+        
+        if(actionType == ActionType.PARAMETER)
+            return false;
+
+        URIMapping uriMap;
+        
+        Iterator actionsId = controller.getActions().values().iterator();
+        
+        while(actionsId.hasNext()){
+            
+            Action action = (Action) actionsId.next();
+            
+            String id = action.getId();
+            
+            uriMap = getURIMapping( id );
+            if(uriMap.matches(uri)){
+                updateRequest(uri, scope, uriMap);
+
+                ConfigurableApplicationContext context =
+                    (ConfigurableApplicationContext)handler.getContext();
+
+                ActionResolver actionResolver =
+                        context.getActionResolver();
+                
+                /*
+                Action action = 
+                        controller.getAction(id);
+                */
+                
+                ResourceAction resourceAction = 
+                        actionResolver.getResourceAction(action);
+
+                handler.setResourceAction(resourceAction);
+
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    private boolean isMatch(ActionType actionType, Controller controller, 
+            Scope scope, String uri){
+        
+        if(actionType == ActionType.DETACHED)
+            return false;
+
+        URIMapping uriMap;
+        
+        uriMap = getURIMapping( controller.getId() );
+
+        if(uriMap.matches(uri)){
+            updateRequest(uri, scope, uriMap);
+            return true;
+        }
+        else{
+            Iterator alias = controller.getAlias().iterator();
+
+            while(alias.hasNext()){
+                uriMap = getURIMapping( (String)alias.next() );
+
+                if(uriMap.matches(uri)){
+                    updateRequest(uri, scope, uriMap);
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
     private void updateRequest(String uri, Scope paramScope, URIMapping uriMap){
         Map<String,String> params = uriMap.getParameters(uri);
         for(String key: params.keySet() )
