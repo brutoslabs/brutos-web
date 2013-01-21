@@ -52,31 +52,9 @@ public class WebActionResolver implements ActionResolver{
     public ResourceAction getResourceAction(Controller controller, String actionId, 
             InterceptorHandler handler) {
 
-        if( controller.getId() != null ){
-            Action method = controller
-                    .getActionByName( actionId );
-            return method == null? null : getResourceAction( method );
-        }
-        else{
-            Scopes scopes = handler.getContext().getScopes();
-            Scope request = scopes.get( WebScopeType.PARAM );
-            for( Object o: controller.getActions().keySet() ){
-                String u = (String)o;
-                URIMapping uriMap = WebControllerResolver.getURIMapping( u );
-                if( uriMap.matches(actionId) ){
-
-                    Map<String,String> params =
-                            uriMap.getParameters(actionId);
-
-                    for(String key: params.keySet() )
-                        request.put(key, params.get(key) );
-                    
-                    return getResourceAction( (Action)controller.getActions().get(u));
-                }
-
-            }
-            return null;
-        }
+        Action method = controller
+                .getActionByName( actionId );
+        return method == null? null : getResourceAction( method );
     }
 
     public ResourceAction getResourceAction(Action action) {

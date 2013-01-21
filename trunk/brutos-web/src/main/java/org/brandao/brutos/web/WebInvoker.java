@@ -62,6 +62,20 @@ public class WebInvoker extends Invoker{
                 (ConfigurableWebApplicationContext)this.applicationContext;
         
         try{
+            staticRequest = new StaticBrutosRequest(request);
+            if(isFirstCall){
+                requestInfo   = new RequestInfo();
+                requestInfo.setRequest(staticRequest);
+                requestInfo.setResponse(response);
+                RequestInfo.setCurrent(requestInfo);
+            }
+            else{
+                oldRequest  = requestInfo.getRequest();
+                oldResponse = requestInfo.getResponse();
+                requestInfo.setResponse(response);
+                requestInfo.setRequest(staticRequest);
+            }
+            /*
             if(isFirstCall){
                 staticRequest = new StaticBrutosRequest(request);
                 requestInfo   = new RequestInfo();
@@ -76,7 +90,7 @@ public class WebInvoker extends Invoker{
                 requestInfo.setResponse(response);
                 staticRequest.setRequest(request);
             }
-            
+            */
             this.invoke0(staticRequest, response, chain);
         }
         finally{
@@ -87,7 +101,7 @@ public class WebInvoker extends Invoker{
             }
             else{
                 requestInfo.setResponse(oldResponse);
-                staticRequest.setRequest(oldRequest);
+                requestInfo.setRequest(oldRequest);
             }
         }
        
@@ -121,7 +135,7 @@ public class WebInvoker extends Invoker{
                 if(chain == null)
                     ((HttpServletResponse)response).setStatus(HttpServletResponse.SC_NOT_FOUND);
                 else
-                    chain.doFilter(brutosRequest.getServletRequest(), response);
+                    chain.doFilter(brutosRequest, response);
             }
         }
         finally{

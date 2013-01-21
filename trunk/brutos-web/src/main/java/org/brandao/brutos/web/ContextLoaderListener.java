@@ -20,12 +20,13 @@ package org.brandao.brutos.web;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.*;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRequestEvent;
+import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.scope.ThreadScope;
-import org.brandao.brutos.web.http.StaticBrutosRequest;
 
 /**
  * 
