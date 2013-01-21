@@ -380,10 +380,12 @@ public class ControllerBuilder {
         if(id == null)
             throw new IllegalArgumentException("invalid action id: " + id);
         
+        /*
         ActionType type = controller.getActionType();
         
         if(type.equals(ActionType.HIERARCHY))
             id = controller.getId() + id;
+        */
         
         resultId = StringUtil.adjust(resultId);
 

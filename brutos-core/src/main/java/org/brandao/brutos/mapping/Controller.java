@@ -191,21 +191,6 @@ public class Controller {
         this.classType = classType;
     }
     
-    /*public void addMappingBean( Bean mapping ){
-        if( getMappingBeans() == null )
-            setMappingBeans(new HashMap());
-        
-        if( getMappingBeans().containsKey( mapping.getName() ) )
-            throw new MappingException( "conflict mapping name: " + mapping.getName() );
-        else
-            getMappingBeans().put( mapping.getName(), mapping );
-    }
-
-    public Bean getMappingBean( String name ){
-        return (Bean) getMappingBeans().get( name );
-    }
-    */
-    
     public Action getAction(String id) {
         return (Action)actions.get(id);
     }
