@@ -35,6 +35,8 @@ public class Action {
     
     private Controller controller;
     
+    private String id;
+    
     private String name;
 
     private String simpleName;
@@ -81,6 +83,10 @@ public class Action {
 
     public void setName(String name) {
         this.name = name;
+        this.id = 
+                this.controller.getId() == null? 
+                    name : 
+                    this.controller.getId() + name;
     }
 
     public void addParameter( ParameterAction value ){
@@ -360,4 +366,9 @@ public class Action {
     public void setSimpleName(String simpleName) {
         this.simpleName = simpleName;
     }
+
+    public String getId() {
+        return id;
+    }
+
 }
