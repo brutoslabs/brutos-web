@@ -91,7 +91,7 @@ public class WebInvoker extends Invoker{
                 staticRequest.setRequest(request);
             }
             */
-            this.invoke0(staticRequest, response, chain);
+            this.invoke0(staticRequest, request, response, chain);
         }
         finally{
             if(isFirstCall){
@@ -107,7 +107,7 @@ public class WebInvoker extends Invoker{
        
     }
 
-    protected void invoke0(BrutosRequest brutosRequest, 
+    protected void invoke0(BrutosRequest brutosRequest, ServletRequest request,
             ServletResponse response, FilterChain chain) 
                 throws IOException, ServletException{
         
@@ -135,7 +135,7 @@ public class WebInvoker extends Invoker{
                 if(chain == null)
                     ((HttpServletResponse)response).setStatus(HttpServletResponse.SC_NOT_FOUND);
                 else
-                    chain.doFilter(brutosRequest, response);
+                    chain.doFilter(request, response);
             }
         }
         finally{
