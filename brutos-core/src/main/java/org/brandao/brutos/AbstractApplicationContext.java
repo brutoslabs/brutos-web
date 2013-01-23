@@ -621,7 +621,7 @@ public abstract class AbstractApplicationContext
 
         ProxyFactory proxyFactory =
                 codeGeneratorProvider
-                    .getProxyFactory(resource.getClass());
+                    .getProxyFactory(controller.getClassType());
 
         Object proxy =
                 proxyFactory
