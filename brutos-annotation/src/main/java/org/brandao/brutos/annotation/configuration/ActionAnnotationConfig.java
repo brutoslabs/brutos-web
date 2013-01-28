@@ -56,6 +56,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         ControllerBuilder controllerBuilder = (ControllerBuilder)builder;
         Action action = (Action)method.getAnnotation(Action.class);
         View viewAnnotation = method.getAnnotation(View.class);
+        ResultView resultView = method.getAnnotation(ResultView.class);
         
         String result;
         String view;
@@ -72,11 +73,14 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 BrutosConstants.DEFAULT_DISPATCHERTYPE : 
                 org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
         
+        boolean resultRendered = resultView == null? false : resultView.rendered();
+        
         ActionBuilder actionBuilder =
         controllerBuilder
             .addAction(
                 id, 
                 result,
+                resultRendered,
                 null, 
                 dispatcher,
                 method.isAbstractAction()? null : method.getName() );
