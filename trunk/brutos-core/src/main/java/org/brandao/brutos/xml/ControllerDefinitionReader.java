@@ -329,10 +329,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
         Class clazz = null;
         try{
-            clazz = Class.forName(
-                        clazzName,
-                        true,
-                        Thread.currentThread().getContextClassLoader() );
+            clazz = ClassUtil.get(clazzName);
         }
         catch( Exception ex ){
             throw new BrutosException( ex );
@@ -1059,12 +1056,15 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         String id = parseUtil.getAttribute(actionNode,  "id" );
         String executor = parseUtil.getAttribute(actionNode,  "executor" );
         String result = parseUtil.getAttribute(actionNode,  "result" );
+        String resultRendered = parseUtil.getAttribute(actionNode,  "result-rendered" );
         String view = parseUtil.getAttribute(actionNode,  "view" );
         DispatcherType dispatcher =
             DispatcherType.valueOf( parseUtil.getAttribute(actionNode,  "dispatcher" ) );
 
         ActionBuilder actionBuilder =
-            controllerBuilder.addAction(id, result, view, dispatcher, executor);
+            controllerBuilder.addAction(id, result, 
+                Boolean.parseBoolean(resultRendered), 
+                view, dispatcher, executor);
 
         addParametersAction(
             parseUtil.getElements(

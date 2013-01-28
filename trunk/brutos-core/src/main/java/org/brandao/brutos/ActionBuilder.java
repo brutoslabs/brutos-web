@@ -510,6 +510,15 @@ public class ActionBuilder {
     public String getResult(){
         return this.action.getReturnIn();
     }
+
+    public ActionBuilder setResultRendered(boolean value){
+        this.action.setReturnRendered(value);
+        return this;
+    }
+
+    public boolean isResultRendered(){
+        return this.action.isReturnRendered();
+    }
     
     public int getParametersSize(){
         return this.action.getParamterSize();
