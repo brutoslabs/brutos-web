@@ -40,6 +40,7 @@ import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.web.RequestInfo;
+import org.brandao.brutos.web.http.StaticBrutosRequest;
 
 /**
  *
@@ -71,8 +72,11 @@ public abstract class AbstractTester extends TestCase{
         servletContext.setInitParameter("org.brandao.brutos.view.provider",
                 MockViewProvider.class.getName());
 
+        ConfigurableWebApplicationContext context = getApplicationContext(handler.getResourceName());
         MockWebApplicationContext
-                .setCurrentApplicationContext(getApplicationContext(handler.getResourceName()));
+                .setCurrentApplicationContext(context);
+        
+        RequestInfo requestInfo = null;
         try{
             listener.contextInitialized(sce);
             MockHttpServletRequest request = new MockHttpServletRequest();
@@ -86,9 +90,11 @@ public abstract class AbstractTester extends TestCase{
                 request.setContextPath("");
                 listener.requestInitialized(sre);
                 listener.sessionCreated(hse);
-                RequestInfo requestInfo =
-                        RequestInfo.getCurrentRequestInfo();
+
+                requestInfo   = new RequestInfo();
+                requestInfo.setRequest(new StaticBrutosRequest(request));
                 requestInfo.setResponse(response);
+                RequestInfo.setCurrent(requestInfo);
                 
                 ConfigurableApplicationContext app =
                         (ConfigurableApplicationContext)ContextLoader
@@ -117,6 +123,12 @@ public abstract class AbstractTester extends TestCase{
                 }
             }
             finally{
+                if(requestInfo != null)
+                    requestInfo.removeCurrent();
+
+                context.getRequestFactory().destroyRequest();
+                context.getResponseFactory().destroyResponse();
+                
                 listener.requestDestroyed(sre);
                 listener.sessionDestroyed(hse);
             }

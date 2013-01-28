@@ -846,6 +846,27 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
 
         });
     }
+    
+    public void testController35(){
+        super.execTest(
+            new HandlerTest(){
 
+                public String getResourceName() {
+                    return
+                        "org/brandao/brutos/xml/helper/controller/controller-test35.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "action");
+                    app.getInvoker().invoke("/testController.htm");
+                    
+                    MockViewProvider view = (MockViewProvider) app.getViewProvider();
+                    TestCase.assertNotNull(view.getActionResult());
+                }
+
+        });
+    }
 
 }
