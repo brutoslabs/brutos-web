@@ -71,6 +71,7 @@
         <xsd:attribute name="id" type="xsd:string" use="required"/>
         <xsd:attribute name="executor" type="xsd:string"/>
         <xsd:attribute name="result" type="xsd:string"/>
+        <xsd:attribute name="result-rendered" type="xsd:boolean" default="false"/>
         <xsd:attribute name="view" type="xsd:string"/>
         <xsd:attribute name="dispatcher" type="dispatcher" default="forward"/>
     </xsd:complexType>

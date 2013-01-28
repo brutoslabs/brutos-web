@@ -173,6 +173,11 @@ public abstract class ViewProvider {
                         BrutosConstants.DEFAULT_RETURN_NAME :
                         method.getReturnIn();
                 requestScope.put(var, stackRequestElement.getResultAction());
+                
+                if(method.isReturnRendered()){
+                    this.showView(requestInstrument, stackRequestElement, method);
+                    return;
+                }
             }
 
             if( method.getView() != null ){

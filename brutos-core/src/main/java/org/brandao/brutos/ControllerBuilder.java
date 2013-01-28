@@ -373,7 +373,13 @@ public class ControllerBuilder {
      * @param resultId Identifica��o do resultado da a��o.
      * @return Contrutor da a��o.
      */
-    public ActionBuilder addAction( String id, String resultId, String view, DispatcherType dispatcher, String executor ){
+    public ActionBuilder addAction( String id, String resultId, String view, 
+            DispatcherType dispatcher, String executor ){
+        return addAction( id, resultId, false, view, dispatcher, executor );
+    }
+
+    public ActionBuilder addAction( String id, String resultId, boolean resultRendered, String view, 
+            DispatcherType dispatcher, String executor ){
         
         id = StringUtil.adjust(id);
         
@@ -410,7 +416,8 @@ public class ControllerBuilder {
                 .setView(view)
                 .setDispatcherType(dispatcher)
                 .setExecutor(executor)
-                .setResult(resultId);
+                .setResult(resultId)
+                .setResultRendered(resultRendered);
         
         printCreateAction(action);
         

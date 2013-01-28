@@ -55,6 +55,8 @@ public class Action {
     
     private String returnIn;
     
+    private boolean returnRendered;
+    
     private String view;
     
     private Type returnType;
@@ -369,6 +371,14 @@ public class Action {
 
     public String getId() {
         return id;
+    }
+
+    public boolean isReturnRendered() {
+        return returnRendered;
+    }
+
+    public void setReturnRendered(boolean returnRendered) {
+        this.returnRendered = returnRendered;
     }
 
 }
