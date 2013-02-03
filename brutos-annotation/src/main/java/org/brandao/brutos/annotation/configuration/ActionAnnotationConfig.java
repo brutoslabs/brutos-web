@@ -150,7 +150,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             
             if(AnnotationUtil.isWebApplication(applicationContext) && 
                controllerBuilder.getActionType() != ActionType.PARAMETER)
-                return "/" + id;
+                return id.startsWith("/") || id.startsWith("\\")? id : "/" + id;
             else
                 return id;
         }
