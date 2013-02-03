@@ -119,10 +119,10 @@ public class Invoker {
             Object[] parameters ){
 
         if( controller == null )
-            throw new NullPointerException("controller");
+            throw new IllegalArgumentException("controller not found");
 
         if( action == null )
-            throw new NullPointerException("action");
+            throw new IllegalArgumentException("action not found");
 
         // create factory or other solution
         ImpInterceptorHandler handler = new ImpInterceptorHandler();
