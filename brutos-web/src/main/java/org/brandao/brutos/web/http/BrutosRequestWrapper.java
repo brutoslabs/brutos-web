@@ -68,6 +68,14 @@ public class BrutosRequestWrapper extends HttpServletRequestWrapper implements B
         request.setParameters(name, values);
     }
 
+    public String[] getParameterValues(String name){
+        return request.getParameterValues(name);
+    }
+
+    public String getParameter(String name){
+        return request.getParameter(name);
+    }
+    
     public void setObject(String name, Object value) {
         request.setObject(name, value);
     }
