@@ -1,7 +1,8 @@
-package org.brandao.webchat.model;
+package org.brandao.webchat.controller.type;
 
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeFactory;
+import org.brandao.webchat.model.RoomService;
 
 /**
  *

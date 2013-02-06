@@ -7,7 +7,7 @@
     </head>
     <body>
         <h1>Enter Chat</h1>
-        <form method="POST" action="enter.jbrs">
+        <form method="POST" action="${param.roomID}/enter">
             <label for="nick">Nick</label><input type="text" size="20" name="nick" id="nick"><br>
             <input type="submit" value="enter">
         </form>

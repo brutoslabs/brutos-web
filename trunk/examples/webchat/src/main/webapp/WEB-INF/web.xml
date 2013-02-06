@@ -22,6 +22,19 @@
         <param-value>org.brandao.brutos.ioc.CDIProvider</param-value>
     </context-param>
     
+    <filter>
+        <filter-name>Brutos Framework Filter</filter-name>
+        <filter-class>org.brandao.brutos.web.http.BrutosRequestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Brutos Framework Filter</filter-name>
+        <url-pattern>*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+    
     <listener>
         <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
     </listener>

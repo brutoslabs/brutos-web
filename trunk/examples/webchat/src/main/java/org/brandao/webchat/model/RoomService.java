@@ -12,8 +12,10 @@ public class RoomService {
     
     private final Map<String,User> users;
     private User allUser;
+    private String id;
     
-    public RoomService(){
+    public RoomService(String id){
+        this.id = id;
         this.users = new HashMap<String, User>();
         try{
             this.allUser = new AllUser();
@@ -61,14 +63,16 @@ public class RoomService {
             if(users.size()>20)
                 throw new MaxUsersException();
 
-            users.put(key, user);
-
             RoomService oldRoom = user.getRoom();
 
             if(oldRoom != null)
                 oldRoom.removeUser(user);
 
+            users.put(key, user);
+            
             user.setRoom(this);
+            
+            user.init();
             
             String text = String.format(
                     "%s acabou de entrar na sala", user.getNick());
@@ -105,5 +109,18 @@ public class RoomService {
         synchronized(this.users){
             return new ArrayList<User>(this.users.values());
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    @Override
+    public String toString(){
+        return this.id;
     }
 }

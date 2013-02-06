@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.webchat.controller.entity.MessageDTO;
@@ -11,18 +13,15 @@ import org.brandao.webchat.controller.entity.UserDTO;
 import org.brandao.webchat.model.*;
 
 @RequestScoped
-@Controller(id="/{roomID:\\d+}/{invoke}.jbrs")
+@Controller(id="/Room/{roomID:\\d+}")
+@View(id="/layout/login.jsp")
 @AbstractActions({
-    @AbstractAction(id="default",    view="/layout/room.jsp"),
-    @AbstractAction(id="messagePart",view="/layout/messages.jsp"),
-    @AbstractAction(id="sendPart",   view="/layout/send.jsp"),
-    @AbstractAction(id="login",      view="/layout/login.jsp")
+    @AbstractAction(id="/messagePart",view="/layout/messages.jsp"),
+    @AbstractAction(id="/sendPart",   view="/layout/send.jsp"),
+    @AbstractAction(id="/login",      view="/layout/login.jsp")
 })
-@ActionStrategy(ActionStrategyType.PARAMETER)
-@View(rendered=false)
 public class RoomController {
     
-    @Identify(bean="user", scope=ScopeType.SESSION)
     private User currentUser;
     
     private RoomService roomService;
@@ -30,17 +29,21 @@ public class RoomController {
     public RoomController(){
     }
 
+    @Inject
+    public RoomController(@Named(value="sessionUser") User user){
+        this.currentUser = user;
+    }
+    
     public RoomService getRoomService() {
         return roomService;
     }
-
+    
     @Identify(bean="roomID")
     public void setRoomService(RoomService roomService){
         this.roomService = roomService;
     }
     
-    @Action("send")
-    @View(rendered=false)
+    @Action("/send")
     public void sendMessage(
             @Identify(useMapping=true)
             MessageDTO message) throws UserNotFoundException{
@@ -49,7 +52,7 @@ public class RoomController {
                 this.roomService,this.getCurrentUser()));
     }
     
-    @Action("enter")
+    @Action("/enter")
     @View(id="/layout/room.jsp")
     @ThrowSafeList({
         @ThrowSafe(target=ValidatorException.class,   view="/layout/login.jsp"),
@@ -70,13 +73,9 @@ public class RoomController {
         
         User user = userDTO.rebuild();
         roomService.putUser(user);
-        
-        this.setCurrentUser(user);
-        
     }
     
-    @Action("exit")
-    @View(rendered=false)
+    @Action("/exit")
     public void removeUser(
             @Identify(bean="user",scope=ScopeType.SESSION)
             User user ) throws UserNotFoundException{
@@ -84,8 +83,8 @@ public class RoomController {
             user.exitRoom();
     }
     
-    @Action("message")
-    @View(rendered=false)
+    @Action("/message")
+    @ResultView(rendered=true)
     public Serializable readMessage() 
             throws UserNotFoundException, InterruptedException{
         
@@ -101,8 +100,8 @@ public class RoomController {
             return null;
     }
     
-    @Action("listUsers")
-    @View(rendered=false)
+    @Action("/listUsers")
+    @ResultView(rendered=true)
     public Serializable readUsers(){
         List<User> users = roomService.getUsers();
         List<UserDTO> usersDTO = new ArrayList<UserDTO>();

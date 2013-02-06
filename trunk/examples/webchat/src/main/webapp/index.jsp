@@ -7,10 +7,10 @@
     </head>
     <body>
         <h1>choose your room</h1>
-        <a href="123/login.jbrs">Room 123</a><br>
-        <a href="124/login.jbrs">Room 124</a><br>
-        <a href="125/login.jbrs">Room 125</a><br>
-        <a href="126/login.jbrs">Room 126</a><br>
-        <a href="127/login.jbrs">Room 127</a><br>
+        <a href="${pageContext.servletContext.contextPath}/Room/123">Room 123</a><br>
+        <a href="${pageContext.servletContext.contextPath}/Room/124">Room 124</a><br>
+        <a href="${pageContext.servletContext.contextPath}/Room/125">Room 125</a><br>
+        <a href="${pageContext.servletContext.contextPath}/Room/126">Room 126</a><br>
+        <a href="${pageContext.servletContext.contextPath}/Room/127">Room 127</a><br>
     </body>
 </html>

@@ -20,7 +20,7 @@ public class RoomServiceFactoryImp implements RoomServiceFactory{
         if( rooms.containsKey(id) )
             room = rooms.get(id);
         else{
-            room = new RoomService();
+            room = new RoomService(id);
             rooms.put(id,room);
         }
         
