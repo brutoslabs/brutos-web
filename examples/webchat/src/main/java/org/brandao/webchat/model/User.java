@@ -1,9 +1,15 @@
 package org.brandao.webchat.model;
 
+import java.io.Serializable;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 
-public class User {
+@SessionScoped
+@Named(value="sessionUser")
+public class User implements Serializable{
     
     private String nick;
     private RoomService room;
@@ -11,14 +17,18 @@ public class User {
     private long lastRead;
     
     public User(){
-        this.messages = new LinkedBlockingQueue<Message>();
-        this.lastRead = System.currentTimeMillis();
     }
     
     public String getNick() {
         return nick;
     }
 
+    @PostConstruct
+    public void init(){
+        this.messages = new LinkedBlockingQueue<Message>();
+        this.lastRead = System.currentTimeMillis();
+    }
+    
     public void setNick(String nick) {
         this.nick = nick;
     }
