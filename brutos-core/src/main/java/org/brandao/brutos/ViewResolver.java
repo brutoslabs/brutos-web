@@ -25,6 +25,7 @@ import java.util.Properties;
  */
 public interface ViewResolver {
     
-    String getView(ControllerBuilder controller, ActionBuilder action, 
-            Class exception, Properties configuration);
+    String getView(ControllerBuilder controllerBuilder, ActionBuilder actionBuilder, 
+            Class exceptionType, Properties configuration);
+
 }
