@@ -25,15 +25,15 @@ import org.brandao.brutos.mapping.InterceptorStack;
 
 /**
  * Classe usada para criar interceptadores ou pilhas de interceptadores.
- * O uso de interceptadores � necess�rio quando precisamos executar tarefas
+ * O uso de interceptadores é necessário quando precisamos executar tarefas
  * antes e/ou depois do controlador ser executado, normalmente usado para
- * controle de acesso, valida��o de dados, controle de transa��o e gera��o
+ * controle de acesso, validação de dados, controle de transação e geração
  * de log.
- * <p>� poss�vel trabalhar com um ou mais interceptadores, podendo definir
- * quais recursos ser�o interceptados, a ordem com que ser�o executados e os
- * par�metros necess�rios para a sua configura��o.</p>
- * <p>Sua inst�ncia � controlada pelo container IOC, podendo assim, receber a
- * inje��o por construtor ou m�todo.</p>
+ * <p>É possível trabalhar com um ou mais interceptadores, podendo definir
+ * quais recursos serão interceptados, a ordem com que serão executados e os
+ * parãmetros necessários para a sua configuração.</p>
+ * <p>Sua instância é controlada pelo container IOC, podendo assim, receber a
+ * injeção por construtor ou método.</p>
  *
  * <pre>
  * Ex:
@@ -81,9 +81,9 @@ public class InterceptorManager {
     }
     
     /**
-     * Cria uma pilha de interceptadores com uma determinada identifica��o.
-     * @param name Identifica��o da pilha de interceptadores.
-     * @param isDefault Se verdadeiro, todos os controladores e suas a��es ser�o
+     * Cria uma pilha de interceptadores com uma determinada identificação.
+     * @param name Identificação da pilha de interceptadores.
+     * @param isDefault Se verdadeiro, todos os controladores e suas ações serão
      * interceptadas.
      * @return Construtor da pilha de interceptadores.
      */
@@ -112,9 +112,9 @@ public class InterceptorManager {
     }
     
     /**
-     * Cria um interceptador com uma determinada identifica��o.
-     * @param name Identifica��o do interceptador.
-     * @param isDefault Se verdadeiro, todos os controladores e suas a��es ser�o
+     * Cria um interceptador com uma determinada identificação.
+     * @param name Identificação do interceptador.
+     * @param isDefault Se verdadeiro, todos os controladores e suas ações serão
      * interceptadas.
      * @return Construtor do interceptador.
      */
@@ -153,8 +153,8 @@ public class InterceptorManager {
     }
 
     /**
-     * Obt�m o mapeamento de um determinado interceptador.
-     * @param name Identifica��o do interceptador.
+     * Obtém um interceptador a partir do nome.
+     * @param name Identificação do interceptador.
      * @return Mapeamento.
      */
     public Interceptor getInterceptor( String name ){
@@ -168,6 +168,11 @@ public class InterceptorManager {
             return (Interceptor) interceptors.get( name );
     }
 
+    /**
+     * Obtém um interceptador a partir de sua classe.
+     * @param clazz Classe do interceptador.
+     * @return Mapeamento.
+     */
     public Interceptor getInterceptor( Class clazz ){
         if( !reverseInterceptors.containsKey( clazz ) ){
             if(parent != null)
@@ -180,7 +185,7 @@ public class InterceptorManager {
     }
     
     /**
-     * Obt�m os interceptadores globais.
+     * Obtém os interceptadores globais.
      * @return Interceptadores globais.
      */
     public List getDefaultInterceptors(){
@@ -196,10 +201,18 @@ public class InterceptorManager {
         return Collections.unmodifiableList(tmp);
     }
     
-    void setParent(InterceptorManager parent){
+    /**
+     * Define o gestor de interceptador associado ao atual.
+     * @param parent Gestor de interceptador.
+     */
+    public void setParent(InterceptorManager parent){
         this.parent = parent;
     }
     
+    /**
+     * Obtém o gestor de interceptador associado ao atual.
+     * @result Gestor de interceptador.
+     */
     public InterceptorManager getParent(){
         return this.parent;
     }
