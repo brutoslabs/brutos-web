@@ -22,27 +22,26 @@ import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 
 /**
- * Interface usada na resolução de controladores.
+ * Interface responsável por identificar qual controlador será executado 
+ * a partir dos dados enviados na requisição ou por meio de sua classe.
  *
  * @author Afonso Brandao
  */
 public interface ControllerResolver {
 
-    /*
-     * @deprecated
-     * @param webFrameManager
-     * @param request
-     * @return .
-     */
-    //public Form getController( WebFrameManager webFrameManager, HttpServletRequest request );
-
     /**
-     * Obtém um controlador de acordo com a requisição.
+     * Obtém o controlador a partir dos dados enviados na requisição.
      * @param controllerManager Gestor dos controladores.
      * @param handler Manipulador da requisição.
      * @return Controlador.
      */
     Controller getController( ControllerManager controllerManager, ConfigurableInterceptorHandler handler );
 
+    /**
+     * Obtém o controlador a partir de sua classe.
+     * @param controllerManager Gestor dos controladores.
+     * @param controllerClass Classe que representa o controlador.
+     * @return Controlador.
+     */
     Controller getController( ControllerManager controllerManager, Class controllerClass );
 }
