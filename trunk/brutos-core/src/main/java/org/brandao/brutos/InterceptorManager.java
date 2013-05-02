@@ -31,7 +31,7 @@ import org.brandao.brutos.mapping.InterceptorStack;
  * de log.
  * <p>É possível trabalhar com um ou mais interceptadores, podendo definir
  * quais recursos serão interceptados, a ordem com que serão executados e os
- * parãmetros necessários para a sua configuração.</p>
+ * parâmetros necessários para a sua configuração.</p>
  * <p>Sua instância é controlada pelo container IOC, podendo assim, receber a
  * injeção por construtor ou método.</p>
  *
