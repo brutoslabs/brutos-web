@@ -18,21 +18,47 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.Controller;
 
 /**
+ * Responsável por identificar uma ação a partir dos dados enviados
+ * na requisição, mapeamento ou a partir da identificação da ação.
+ * Os controladores cujo o mapemaneto de ação for PARAMETER, a ação será obtida
+ * a partir de sua identificação, nesse caso, a identificação da ação não pode
+ * representar um URI. Nos demais mapeamentos de ação, a ação pode ser identificada
+ * a partir dos dados da requisição ou por meio de seu mapeamento. Se a ação
+ * já for identificada no momento em que o controlador for obtido, ele não será
+ * executado.
  * 
  * @author Afonso Brandao
  */
 public interface ActionResolver {
 
-    public ResourceAction getResourceAction( Controller controller,
+    /**
+     * Obtém a ação a partir dos dados enviados na requisição.
+     * @param controller Controlador.
+     * @param handler Manipulador da requisição.
+     * @return Ação.
+     */
+    ResourceAction getResourceAction( Controller controller,
             InterceptorHandler handler );
 
-    public ResourceAction getResourceAction( Controller controller, String actionId,
+    /**
+     * Obtém a ação a partir de sua identificação, normalmente um URI.
+     * @param controller Controlador
+     * @param actionId Identificação da ação.
+     * @param handler Manipulador da requisição.
+     * @return Ação.
+     */
+    ResourceAction getResourceAction( Controller controller, String actionId,
             InterceptorHandler handler );
 
-    public ResourceAction getResourceAction( Action action );
+    /**
+     * Obtém a ação a partir de seu mapeamento.
+     * @param action Mapeamento da ação.
+     * @return Ação.
+     */
+    ResourceAction getResourceAction( Action action );
 
 }
