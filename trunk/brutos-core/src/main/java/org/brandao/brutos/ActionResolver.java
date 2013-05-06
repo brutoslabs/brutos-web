@@ -22,14 +22,12 @@ import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 
 /**
- * Responsável por identificar uma ação a partir dos dados enviados
- * na requisição, mapeamento ou a partir da identificação da ação.
- * Os controladores cujo o mapemaneto de ação for PARAMETER, a ação será obtida
- * a partir de sua identificação, nesse caso, a identificação da ação não pode
- * representar um URI. Nos demais mapeamentos de ação, a ação pode ser identificada
- * a partir dos dados da requisição ou por meio de seu mapeamento. Se a ação
- * já for identificada no momento em que o controlador for obtido, ele não será
- * executado.
+ * Responsável por identificar uma ação. Uma ação pode ser identificada a partir 
+ * dos dados enviados na requisição, mapeamento ou a partir de suas identificações.
+ * Os controladores com mapemaneto PARAMETER, terão suas ações obtidas a partir 
+ * de suas identificações. Nesse caso, as identificações não poderão ser representadas
+ * por URIs. Já nos demais tipos de mapeamentos, as ações serão obtidas a partir 
+ * dos dados da requisição ou por meio de seu mapeamento.
  * 
  * @author Afonso Brandao
  */
@@ -45,7 +43,7 @@ public interface ActionResolver {
             InterceptorHandler handler );
 
     /**
-     * Obtém a ação a partir de sua identificação, normalmente um URI.
+     * Obtém a ação a partir de sua identificação.
      * @param controller Controlador
      * @param actionId Identificação da ação.
      * @param handler Manipulador da requisição.
