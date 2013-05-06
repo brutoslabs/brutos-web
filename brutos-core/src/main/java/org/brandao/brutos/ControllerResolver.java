@@ -22,10 +22,10 @@ import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 
 /**
- * Responsável por identificar qual controlador será executado a partir 
- * dos dados enviados na requisição ou por meio da classe do controlador. 
- * Nos casos em que a ação é representada por um URI, o ControllerResolver 
- * pode se comportar como um ActionResolver, identificando também a ação.
+ * Responsável por identificar um controlador. Um controlador pode ser identificado 
+ * a partir dos dados enviados na requisição ou por meio de sua classe. 
+ * Nos casos em que a ação é representada por um URI, ele pode se comportar como 
+ * o ActionResolver, identificando também a ação.
  * 
  * @author Afonso Brandao
  */
