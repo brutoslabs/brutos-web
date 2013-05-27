@@ -17,7 +17,8 @@
 
 package org.brandao.brutos.scope;
 
-import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.Invoker;
 
 /**
  *
@@ -25,17 +26,15 @@ import org.brandao.brutos.ConfigurableApplicationContext;
  */
 public class IOCScope implements Scope{
 
-    private ConfigurableApplicationContext app;
-    
-    public IOCScope( ConfigurableApplicationContext app ) {
-        this.app = app;
+    public IOCScope() {
     }
 
     public void put(String name, Object value){
     }
 
     public Object get(String name) {
-        return app.getIocProvider().getBean(name);
+        ApplicationContext app = Invoker.getCurrentApplicationContext();
+        return app.getBean(name);
     }
 
     public Object getCollection( String name ){

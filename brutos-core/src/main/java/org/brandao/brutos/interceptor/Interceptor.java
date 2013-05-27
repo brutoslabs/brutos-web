@@ -20,8 +20,8 @@ package org.brandao.brutos.interceptor;
 import java.util.Map;
 
 /**
- * Intercepta as a��es de um controlador. Todo interceptador deve
- * implementar essa classe.
+ * Intercepta as ações de um controlador. Todo interceptador deve
+ * implementar essa interface.
  * <pre>
  * Ex:
  * public class MyInterceptor implements Interceptor{
@@ -34,32 +34,32 @@ import java.util.Map;
 public interface Interceptor {
 
     /**
-     * Define a configura��o inicial do interceptador.
-     * @param props Configura��o inicial
+     * Define a configuração inicial do interceptador.
+     * @param props Configuração inicial.
      */
     public void setProperties( Map props );
 
     /**
      * Verifica se o interceptador foi configurado.
      * @return Verdadeiro se o interceptador foi configurado,
-     * caso contr�rio falso.
+     * caso contrário falso.
      */
     public boolean isConfigured();
 
     /**
-     * Methodo executado na intercepta��o da a��o.
+     * Methodo executado na interceptação da ação.
      * @param stack Pilha de interceptadores.
-     * @param handler Manipulador da requisi��o.
-     * @throws InterceptedException Lan�ada caso ocorra algum problema
-     * na execu��o do interceptador.
+     * @param handler Manipulador da requisição.
+     * @throws InterceptedException Lançada caso ocorra algum problema
+     * na execução do interceptador.
      */
     public void intercepted( InterceptorStack stack, InterceptorHandler handler ) throws InterceptedException;
 
     /**
-     * Verifica se o interceptador ser� executado na a��o interceptada.
-     * @param handler Manipulador da requisi��o.
-     * @return Verdadeiro se � permitido o acesso ao recurso interceptado,
-     * caso contr�rio falso.
+     * Verifica se o interceptador será executado na ação interceptada.
+     * @param handler Manipulador da requisição.
+     * @return Verdadeiro se for permitido o acesso ao recurso interceptado,
+     * caso contrário falso.
      */
     public boolean accept( InterceptorHandler handler );
     

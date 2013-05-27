@@ -22,54 +22,58 @@ import java.io.InputStream;
 import java.util.Locale;
 
 /**
- * Representa uma requisi��o.
+ * Define um objeto que fornece informações do cliente 
+ * para um controlador. Ele fornece os parâmetros, valores, atributos 
+ * e o fluxo de entrada. Em aplicações web também fornece informações 
+ * sobre a requisição HTTP.
  * 
  * @author Afonso Brandao
  */
 public interface MvcRequest {
 
     /**
-     * Obt�m um valor.
-     * @param name Identifica��o
+     * Obtém um valor.
+     * @param name Identificação
      * @return Valor.
      */
     public Object getValue( String name );
 
     /**
-     * Obt�m uma propriedade.
-     * @param name Identifica��o.
+     * Obtém uma propriedade.
+     * @param name Identificação.
      * @return Propriedade.
      */
     public Object getProperty( String name );
 
     /**
-     * Obt�m o stream da requisi��o.
+     * Obté o fluxo de dados binários.
      * @return Stream.
-     * @throws IOException Lan�ado caso ocorra algum problema ao obter o stream.
+     * @throws IOException Lançado caso ocorra algum problema ao obter o fluxo.
      */
     public InputStream getStream() throws IOException;
 
     /**
-     * Tipo da requisi��o. Normalmente usado em aplica��es web.
+     * Obtém o tipo da requisição. Normalmente usado em aplicações web.
      * @return Tipo.
      */
     public String getType();
 
     /**
-     * Obt�m o tamanho da requisi��o. Normalmente usado em aplica��es web.
+     * Obtém o tamanho da requisição. Normalmente usado em aplicações web.
      * @return Tamanho.
      */
     public int getLength();
 
     /**
-     * Obt�m a codificado da requisi��o. Normalmente usado
-     * em aplica��es web.
-     * @return Codifica��o.
+     * Obtém a codificado dos dados enviados na requisição. Normalmente usado
+     * em aplicações web.
+     * @return Codificação.
      */
     public String getCharacterEncoding();
 
     /**
-     * Obt�m a localidade. Normalmente usado em aplica��es web.
+     * Obtém a localidade de origem da requisição. Normalmente usado em 
+     * aplicações web.
      * @return Localidade.
      */
     public Locale getLocale();

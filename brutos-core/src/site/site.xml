@@ -56,7 +56,7 @@
           <item name="Dependências" href="dependencies.html"/>
           <item name="Licença" href="license.html"/>
           <item name="Quick Start" href="quick.html"/>
-          <item name="Download" href="http://sourceforge.net/projects/brutos/files/"/>
+          <item name="Download" href="http://sourceforge.net/projects/brutos/files/latest/download?source=files"/>
           <item name="Source Code" href="http://brutos.svn.sourceforge.net/viewvc/brutos/"/>
           <item name="ChangeLog" href="changelog.html"/>
           <item name="Maven" href="maven.html"/>
@@ -72,10 +72,10 @@
           <item name="Interceptor" href="interceptor.html"/>
         </menu>
         <menu name="Exemplos">
-          <item name="Web Chat" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B2/webchat.zip/download"/>
-          <item name="Interceptor" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B2/Brutos-Interceptor.zip/download"/>
-          <item name="File Upload" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B2/Brutos-FileUpload.zip/download"/>
-          <item name="Custom Type" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B2/Brutos-CustomType.zip/download"/>
+          <item name="Web Chat" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B3/webchat.zip/download"/>
+          <item name="Interceptor" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B3/Brutos-Interceptor.zip/download"/>
+          <item name="File Upload" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B3/Brutos-FileUpload.zip/download"/>
+          <item name="Custom Type" href="http://sourceforge.net/projects/brutos/files/brutos/2.0/examples/2.0-B3/Brutos-CustomType.zip/download"/>
           <!--<item name="Brutos+PicoContainer" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+PicoContainer.zip/download"/>
           <item name="Brutos+Spring" href="http://sourceforge.net/projects/brutos/files/brutos/examples/Brutos+Spring.zip/download"/>
           <item name="File upload" href="http://sourceforge.net/projects/brutos/files/brutos/examples/BrutosFileUpload.zip/download"/>

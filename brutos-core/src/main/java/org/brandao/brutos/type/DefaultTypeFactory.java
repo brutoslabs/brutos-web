@@ -49,5 +49,9 @@ public class DefaultTypeFactory implements TypeFactory{
     public Class getClassType() {
         return this.classType;
     }
+
+    public boolean matches(Class type) {
+        return type == this.classType;
+    }
     
 }

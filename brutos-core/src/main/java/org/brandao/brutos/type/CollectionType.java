@@ -18,10 +18,10 @@
 package org.brandao.brutos.type;
 
 /**
- * Allows the creation of collection types.
+ * 
  * 
  * @author Afonso Brandao
  */
-public interface CollectionType extends Type,GenericType{
+public interface CollectionType extends GenericType{
 
 }
