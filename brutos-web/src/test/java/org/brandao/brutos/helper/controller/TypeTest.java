@@ -50,4 +50,8 @@ public class TypeTest implements Type,TypeFactory{
         return this;
     }
 
+    public boolean matches(Class type) {
+        return type == SimpleBean.class;
+    }
+
 }

@@ -118,7 +118,7 @@ public class BrutosContext extends AbstractWebApplicationContext
         logger.info( "Register scopes..." );
         getScopes().register( "application" , new ApplicationScope( sce.getServletContext() ) );
         getScopes().register( "flash" , new FlashScope() );
-        getScopes().register( "ioc" , new IOCScope( this ) );
+        //getScopes().register( "ioc" , new IOCScope( this ) );
         //Scopes.register( "request" , new RequestScope() );
         getScopes().register( "session" , new SessionScope() );
         getScopes().register( WebScopeType.PARAM.toString(), new ParamScope() );
