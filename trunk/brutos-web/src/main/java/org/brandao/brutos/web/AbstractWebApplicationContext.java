@@ -117,7 +117,7 @@ public abstract class AbstractWebApplicationContext
         getScopes().register( WebScopeType.FLASH.toString(),
                 new FlashScope() );
         getScopes().register( WebScopeType.IOC.toString(),
-                new IOCScope( this ) );
+                new IOCScope() );
         getScopes().register( WebScopeType.REQUEST.toString(),
                 new RequestScope() );
         getScopes().register( WebScopeType.SESSION.toString(),
