@@ -18,13 +18,28 @@
 package org.brandao.brutos.type;
 
 /**
- *
+ * Fábrica de tipos.
+ * 
  * @author Brandao
  */
 public interface TypeFactory {
 
+    /**
+     * Gera uma nova instânciao tipo.
+     * @return Nova instância do tipo.
+     */
     Type getInstance();
 
+    /**
+     * Verifica se a fabrica representa o tipo.
+     * @param Tipo da classe.
+     */
+    boolean matches(Class type);
+    
+    /**
+     * Obtém o tipo que a fábrica representa.
+     * @return Tipo da classe.
+     */
     Class getClassType();
     
 }

@@ -27,23 +27,24 @@ import org.brandao.brutos.MvcResponse;
 public interface Type {
 
     /**
-     * @deprecated 
-     * @param value
-     * @return 
+     * Converte o valor para um tipo predefinido.
+     * @param value Valor a ser convertido.
+     * @return Valor convertido.
      */
-    Object getValue( Object value );
-
     Object convert(Object value);
-    
+
     /**
-     * @deprecated 
-     * @param value
+     * Renderiza o valor.
+     * @param response Resposta da requisição.
+     * @param value Valor a ser renderizado.
      * @throws IOException 
      */
-    void setValue( Object value ) throws IOException;
-
     void show(MvcResponse response, Object value) throws IOException;
     
-    public Class getClassType();
+    /**
+     * Obtém o tipo da classe.
+     * @return Tipo da classe.
+     */
+    Class getClassType();
 
 }

@@ -23,11 +23,10 @@ package org.brandao.brutos.interceptor;
  * implementar essa interface.
  * <pre>
  * Ex:
- * public class MyInterceptor implements ControllerInterceptor{
+ * public class MyInterceptor implements InterceptorController{
  *     ...
  * }
  * </pre>
- * 
  * @author Afonso Brandao
  */
 public interface InterceptorController extends Interceptor{

@@ -21,80 +21,98 @@ import java.io.OutputStream;
 import java.util.Locale;
 
 /**
- * Representa uma resposta.
+ * Define um objeto que auxilia o controlador a enviar uma resposta ao cliente. 
+ * Para o envio de dados por meio de um fluxo binário use o método processStream(). 
+ * Para serem enviados caracteres, use o objeto PrintWriter obtido no método getWriter(). 
+ * Se a resposta for a mistura de dados binários e texto, use o fluxo binário e 
+ * controle manualmente a codificação dos caracteres.
+ * <p>A codificação da resposta pode ser definida usando o 
+ * método setCharacterEncoding(java.lang.String).</p>
  * 
  * @author Afonso Brandao
  */
 public interface MvcResponse {
 
     /**
-     * Processa a resposta a partir de um objeto.
+     * Envia um determinado objeto ao cliente.
      * @param object Objeto.
      */
     public void process( Object object );
 
     /**
-     * Processa a resposta a partir de um stream.
-     * @return Stream.
+     * Obtém um objeto OutputStream usado para a gravação dos dados binários da
+     * resposta.
+     * @return Objeto OutputStream.
      */
     public OutputStream processStream();
 
     /**
-     * Inclui uma nova informa��o na resposta. Normalmente usado em aplica��es
-     * web, equilave ao addHeader(...)
-     * @param name Identifica��o.
+     * Inclui uma nova informação na resposta. Normalmente usado em aplicações
+     * web. Ele equivale ao método addHeader(java.land.String.java.lang.String) da 
+     * classe HttpServletResponse.
+     * @param name Identificação.
      * @param value Valor.
      */
     public void setInfo( String name, String value );
 
     /**
-     * Obt�m o tipo da resposta. Normalmente usado em aplica��es web.
+     * Obtém o tipo da resposta. Normalmente usado em aplicações web. Ele equivale ao
+     * método getContentType() da classe ServletResponse.
      * @return Tipo.
      */
     public String getType();
 
     /**
-     * Obt�m o tamanho da resposta. Normalmente usado em aplica��es web.
-     * @return Tamanho.
+     * Obtém o tamanho do corpo da resposta. Normalmente usado em aplicações web.
+     * Ele equivale ao método getContentLength() da classe ServletResponse.
+     * @return Valor inteiro que indica o tamanho do conteudo que será enviado ao
+     * cliente.
      */
     public int getLength();
 
     /**
-     * Obt�m a codifica��o da resposta. Normalmente usado em aplica��es
-     * web.
-     * @return Codifica��o.
+     * Obtém a codificação usada da resposta que será enviada ao cliente. 
+     * Normalmente usado em aplicações web. Equivale ao método getCharacterEncoding()
+     * da calsse ServletResponse.
+     * @return String que indica a condificação usada. Ela é definida pelo IANA
+     * (http://www.iana.org/assignments/character-sets).
      */
     public String getCharacterEncoding();
 
     /**
-     * Obt�m a localidade. Normalmente usado em aplica��es web.
-     * @return Localidade.
+     * Obtém um objeto que representa uma região georáfica, política ou cultural 
+     * da resposta.
+     * @return objeto que representa uma região georáfica, política ou cultural.
      */
     public Locale getLocale();
 
     /**
-     * Define a localidade. Normalmente usado em aplica��es web.
-     * @param value Localidade.
+     * Define a região georáfica, política ou cultural da resposta.
+     * @param value Objeto que representa uma região georáfica, política ou cultural.
      */
     public void setLocale( Locale value );
 
     /**
-     * Define o tipo da resposta. Normalmente usado em aplica��es web.
-     * @param value Tipo.
+     * Define o tipo da resposta. Normalmente usado em aplicações web. Ele equivale ao
+     * método setContentType(java.lang.String) da classe ServletResponse.
+     * @return Tipo.
      */
     public void setType( String value );
 
     /**
-     * Define o tamanho da resposta. Normalmente usado em aplica��es web.
+     * Define o tamanho do corpo da resposta. Normalmente usado em aplicações web.
+     * Ele equivale ao método setContentLength(int) da classe ServletResponse.
      * @param value Tamanho.
      */
     public void setLength( int value );
 
     /**
-     * Define a codifica��o. Normalmente usado em aplica��es web.
-     * @param value Codifica��o.
+     * Define a codificação usada da resposta que será enviada ao cliente. 
+     * Normalmente usado em aplicações web. Equivale ao método setCharacterEncoding(java.lang.String)
+     * da calsse ServletResponse.
+     * @param value String que indica a condificação usada. Ela é definida pelo IANA
+     * (http://www.iana.org/assignments/character-sets).
      */
     public void setCharacterEncoding( String value );
-
 
 }

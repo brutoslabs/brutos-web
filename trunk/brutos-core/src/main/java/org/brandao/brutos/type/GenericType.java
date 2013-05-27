@@ -22,7 +22,7 @@ package org.brandao.brutos.type;
  *
  * @author Afonso Brandao
  */
-public interface GenericType {
+public interface GenericType extends Type{
 
     public void setGenericType( Object genericType );
 
