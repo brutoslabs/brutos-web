@@ -46,8 +46,7 @@ public @interface KeyCollection {
     
     /**
      * Identificação do "bean" que será injetado.
-     * Caso seja omitido, será usado o nome do item anotado.
-     * 
+     * Caso seja omitido, será usado o termo "key".
      */
     String bean() default "";
     
