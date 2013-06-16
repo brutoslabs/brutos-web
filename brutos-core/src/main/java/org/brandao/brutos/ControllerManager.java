@@ -27,71 +27,8 @@ import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
- * Classe usada para configurar controladores.
- * <p>O controlador � respons�vel por receber os dados e determinar qual objeto
- * do modelo e vis�o ser�o usados. Ele tamb�m � respons�vel por converter,
- * validar e filtrar a entrada de dados.</p>
- * <p>O Brutos pode ser usando como controlador ou front controller. Nos dois
- * casos, somente � necess�rio fazer respectivamente o mapeamento do modelo ou
- * controlador. Esse mapeamento nada mais � que, informar ao controlador como os
- * dados de entrada ser�o disponibilizados no modelo (atributos ou par�metros de
- * um m�todo) e como seu resultado ser� exibido (vis�o). Todo o processamento de
- * uma aplica��o segue as seguintes etapas:</p>
+ * Gerencia os controladores de toda a aplicação.
  * 
- * <ul>
- * 
- * <li><b>Obter modelo.</b> O controlador recebe a requisi��o, examina-o e extrai a ID
- * do modelo, que � determinado pelo URI, no caso de uma aplica��o web, ou nome 
- * da classe, em uma aplica��o desktop. Essa ID � usada para localizar o modelo. 
- * Se o modelo n�o for encontrado, a requisi��o � finalizada.</li>
- * 
- * <li><b>Gerar manipulador.</b> Nessa etapa � gerado o manipulador da requisi��o. O
- * manipulador � composto por: modelo; a��o e a identifica��o da requisi��o. � 
- * nesse momento que � identificado o controlador e a a��o a ser executada.</li>
- * 
- * <li><b>Processar interceptadores.</b> Ocorre o processamento da pilha de
- * interceptadores. Essa pilha de interceptadores pode ser criada pelo 
- * desenvolvedor. Se a pilha de interceptadores estiver vazia, ir� 
- * automaticamente avan�ar para a pr�xima etapa.</li>
- * 
- * <li><b>Processar valida��es.</b> � nessa etapa que ocorrem as valida��es. Essa
- * valida��o pode ser criada pelo desenvolvedor ou obtida diretamente do 
- * controlador. Os valores s�o validados de acordo com as regras de valida��o 
- * da aplica��o. Se o valor for considerado inv�lido, ser� marcado como inv�lido. 
- * Mesmo existindo um valor inv�lido, a pr�xima etapa, atualizar valores do
- * modelo, ser� executada.</li>
- * 
- * <li><b>Atualizar valores do modelo.</b> Esta � a etapa onde s�o atualizados os
- * valores no lado do servidor, ou seja, a atualiza��o das propriedades do 
- * modelo. Somente as propriedades mapeadas ser�o atualizadas. Se na etapa 
- * anterior, algum valor foi marcado como inv�lido, o controlador 
- * automaticamente ir� para a etapa final, processar vis�o, ignorando a etapa 
- * invocar aplica��o.</li>
- * 
- * <li><b>Invocar aplica��o.</b> Nessa etapa o controlador invoca a aplica��o. Os
- * valores foram convertidos, validados e aplicados no modelo, ent�o estar� 
- * pronto para utilizar suas regras de neg�cio. Se ocorrer um problema, o 
- * controlador automaticamente ir� para a pr�xima etapa. Tanto um 
- * erro (exception) quanto o resultado poder� alterar o fluxo l�gico da 
- * aplica��o.</li>
- * 
- * <li><b>Processar vis�o.</b> Nessa etapa ser� exibida a tela com o resultado obtido
- * do modelo.</li>
- * 
- * </ul>
- *
- * Ex:
- *
- * <pre>
- * public class MyController{
- *   ...
- * }
- *
- * controllerManager.addController( MyController.class );
- * ...
- * controllerManager.addController( "/index.jbrs", MyController.class );
- * </pre>
- *
  * @author Afonso Brandao
  */
 public class ControllerManager {
@@ -117,7 +54,7 @@ public class ControllerManager {
     }
 
     /**
-     * Constr�i um novo controlador.
+     * Cria um novo controlador.
      *
      * @param classtype Classe do controlador.
      * @return Construtor do controlador.
@@ -127,9 +64,9 @@ public class ControllerManager {
     }
 
     /**
-     * Constr�i um novo controlador.
+     * Cria um novo controlador atribuindo uma identificação.
      *
-     * @param id Identifica��o do controlador.
+     * @param id Identificação do controlador.
      * @param classType Classe do controlador.
      * @return Construtor do controlador.
      */
@@ -138,10 +75,10 @@ public class ControllerManager {
     }
     
     /**
-     * Constr�i um novo controlador.
+     * Cria um novo controlador atribuindo uma identificação e uma visão.
      *
-     * @param id Identifica��o do controlador.
-     * @param view Vis�o associada ao controlador.
+     * @param id Identificação do controlador.
+     * @param view Visão do controlador.
      * @param classType Classe do controlador.
      * @return Construtor do controlador.
      */
@@ -150,15 +87,13 @@ public class ControllerManager {
     }
     
     /**
-     * Constr�i um novo controlador.
-     *
-     * @param id Identifica��o do controlador.
-     * @param view Vis�o associada ao controlador.
-     * @param name Nome do controlador, usado para obter sua inst�ncia no container
-     * IOC.
+     * Cria um novo controlador atribuindo uma identificação, uma visão e
+     * com o nome do parâmetro que identifica a ação.
+     * @param id Identificação do controlador.
+     * @param view Visão do controlador.
+     * @param name Identificação do controlador dentro do contexto do conteinerIoC.
      * @param classType Classe do controlador.
-     * @param actionId Nome do par�metro que cont�m a identifica��o da a��o.
-     * Normalmente usado em aplica��es web.
+     * @param actionId Parâmetro que identifica a ação.
      * @return Construtor do controlador.
      */
     public ControllerBuilder addController( String id, String view,
@@ -166,13 +101,24 @@ public class ControllerManager {
         return addController( id, view, DispatcherType.FORWARD, name, classType, actionId );
     }
 
+    /**
+     * Cria um novo controlador atribuindo uma identificação, uma visão com o tipo
+     * de direcionamento de fluxo e nome do parâmetro que identifica a ação.
+     * @param id Identificação do controlador.
+     * @param view Visão do controlador.
+     * @param dispatcherType Tipo do direcionamento do fluxo para a visão.
+     * @param name Identificação do controlador dentro do contexto do conteinerIoC.
+     * @param classType Classe do controlador.
+     * @param actionId Parâmetro que identifica a ação.
+     * @return Construtor do controlador.
+     */
     public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
             String name, Class classType, String actionId ){
             return addController( id, view, dispatcherType, name, classType, actionId, 
                     ActionType.PARAMETER);
     }
     
-    /**
+    /*
      * Constr�i um novo controlador.
      *
      * @param id Identifica��o do controlador.
@@ -185,6 +131,20 @@ public class ControllerManager {
      * @param actionId Nome do par�metro que cont�m a identifica��o da a��o.
      * Normalmente usado em aplica��es web.
      * @return Construtor do controlador.
+     */
+    
+    /**
+     * Cria um novo controlador atribuindo uma identificação, uma visão com o tipo
+     * de direcionamento de fluxo, com o nome do parâmetro que identifica a ação
+     * e seu tipo de mapeamento.
+     * @param id Identificação do controlador.
+     * @param view Visão do controlador.
+     * @param dispatcherType
+     * @param name
+     * @param classType
+     * @param actionId
+     * @param actionType
+     * @return 
      */
     public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
             String name, Class classType, String actionId, ActionType actionType ){
