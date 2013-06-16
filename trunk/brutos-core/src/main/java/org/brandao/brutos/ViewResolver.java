@@ -20,11 +20,40 @@ package org.brandao.brutos;
 import java.util.Properties;
 
 /**
- *
+ * Define qual visão será utilizada pelo controlador, ação ou exceção. 
+ * Uma visão é automaticamente definada quando ela não é infomrada no momento 
+ * da construção do controlador, ação ou exceção.
+ * 
+ * <p>O método {@link #getView(org.brandao.brutos.ControllerBuilder, 
+ * org.brandao.brutos.ActionBuilder, java.lang.Class, java.util.Properties) 
+ * getView()} a partir dos parâmetros informados, determina qual visão será 
+ * usada. Ele recebe como parâmetro, o construtor do controlador, da ação, 
+ * a classe que representa a exceção e a configuração da aplicação. Em todas 
+ * as etapas, a configuração da aplicação é necessária. Na resolução da visão 
+ * do controlador, além da configuração, é usado o seu construtor. Para a 
+ * resolução da visão da ação além da configuração da aplicação, são necessários
+ * o construtor do controlador e o construtor da ação. Já na resolução da visão 
+ * da exceção, são necessários todos os parâmetros.</p>
+ * 
+ * <p>A configuração da auto-resolução tem que ser feita no inicio da aplicação 
+ * com o uso propriedade org.brandao.brutos.view.resolver. A classe informada 
+ * nessa propriedade tem que implementar a interface 
+ * {@link org.brandao.brutos.ViewResolver ViewResolver}. 
+ * Caso não seja informada, será utilizada a implementação padrão 
+ * {@link org.brandao.brutos.DefaultViewResolver DefaultViewResolver}.</p>
+ * 
  * @author Brandao
  */
 public interface ViewResolver {
     
+    /**
+     * Obtém uma visão.
+     * @param controllerBuilder Construtor do controlador.
+     * @param actionBuilder Construtor da ação.
+     * @param exceptionType Classe que representa a exceção.
+     * @param configuration Configuração da aplicação.
+     * @return Visão.
+     */
     String getView(ControllerBuilder controllerBuilder, ActionBuilder actionBuilder, 
             Class exceptionType, Properties configuration);
 
