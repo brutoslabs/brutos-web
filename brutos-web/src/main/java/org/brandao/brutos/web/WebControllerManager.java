@@ -17,21 +17,20 @@
 
 package org.brandao.brutos.web;
 
-import org.brandao.brutos.*;
+import org.brandao.brutos.ActionType;
+import org.brandao.brutos.ControllerBuilder;
+import org.brandao.brutos.ControllerManagerImp;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.util.WebUtil;
-import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  *
  * @author Brandao
  */
-public class WebControllerManager extends ControllerManager{
+public class WebControllerManager extends ControllerManagerImp{
  
-    public WebControllerManager(InterceptorManager interceptorManager, 
-            ValidatorProvider validatorProvider, 
-            ControllerManager parent,
-            ConfigurableApplicationContext applicationContext){
-        super( interceptorManager, validatorProvider, parent, applicationContext);
+    public WebControllerManager(){
+        super();
     }
     
     public ControllerBuilder addController( String id, String view, 
