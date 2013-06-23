@@ -17,41 +17,18 @@
 
 package org.brandao.brutos;
 
-import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 import org.brandao.brutos.logger.Logger;
-import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  * Gerencia os controladores de toda a aplicação.
  * 
- * @author Afonso Brandao
+ * @author Brandao
  */
-public class ControllerManager {
-
-    private Map mappedControllers;
-    private Map classMappedControllers;
-    private ValidatorProvider validatorProvider;
-    private ControllerBuilder current;
-    private ConfigurableApplicationContext applicationContext;
-    private InterceptorManager interceptorManager;
-    private ControllerManager parent;
-    
-    public ControllerManager( InterceptorManager interceptorManager, 
-            ValidatorProvider validatorProvider, 
-            ControllerManager parent,
-            ConfigurableApplicationContext applicationContext) {
-        this.mappedControllers      = new HashMap();
-        this.classMappedControllers = new HashMap();
-        this.interceptorManager     = interceptorManager;
-        this.validatorProvider      = validatorProvider;
-        this.applicationContext     = applicationContext;
-        this.parent                 = parent;
-    }
+public interface ControllerManager {
 
     /**
      * Cria um novo controlador.
@@ -59,36 +36,30 @@ public class ControllerManager {
      * @param classtype Classe do controlador.
      * @return Construtor do controlador.
      */
-    public ControllerBuilder addController( Class classtype ){
-        return addController( null, null, null, classtype, "invoke" );
-    }
+    ControllerBuilder addController( Class classtype );
 
     /**
-     * Cria um novo controlador atribuindo uma identificação.
+     * Cria um novo controlador.
      *
      * @param id Identificação do controlador.
      * @param classType Classe do controlador.
      * @return Construtor do controlador.
      */
-    public ControllerBuilder addController( String id, Class classType ){
-        return addController( id, null, null, classType, "invoke" );
-    }
+    ControllerBuilder addController( String id, Class classType );
     
     /**
-     * Cria um novo controlador atribuindo uma identificação e uma visão.
+     * Cria um novo controlador.
      *
      * @param id Identificação do controlador.
      * @param view Visão do controlador.
      * @param classType Classe do controlador.
      * @return Construtor do controlador.
      */
-    public ControllerBuilder addController( String id, String view, Class classType ){
-        return addController( id, view, null, classType, "invoke" );
-    }
+    ControllerBuilder addController( String id, String view, Class classType );
     
     /**
-     * Cria um novo controlador atribuindo uma identificação, uma visão e
-     * com o nome do parâmetro que identifica a ação.
+     * Cria um novo controlador.
+     * 
      * @param id Identificação do controlador.
      * @param view Visão do controlador.
      * @param name Identificação do controlador dentro do contexto do conteinerIoC.
@@ -96,273 +67,129 @@ public class ControllerManager {
      * @param actionId Parâmetro que identifica a ação.
      * @return Construtor do controlador.
      */
-    public ControllerBuilder addController( String id, String view,
-           String name, Class classType, String actionId ){
-        return addController( id, view, DispatcherType.FORWARD, name, classType, actionId );
-    }
+    ControllerBuilder addController( String id, String view,
+           String name, Class classType, String actionId );
 
     /**
-     * Cria um novo controlador atribuindo uma identificação, uma visão com o tipo
-     * de direcionamento de fluxo e nome do parâmetro que identifica a ação.
+     * Cria um novo controlador.
+     * 
      * @param id Identificação do controlador.
      * @param view Visão do controlador.
      * @param dispatcherType Tipo do direcionamento do fluxo para a visão.
-     * @param name Identificação do controlador dentro do contexto do conteinerIoC.
+     * @param name Identificação do controlador dentro do contexto do conteiner IoC.
      * @param classType Classe do controlador.
      * @param actionId Parâmetro que identifica a ação.
      * @return Construtor do controlador.
      */
-    public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
-            String name, Class classType, String actionId ){
-            return addController( id, view, dispatcherType, name, classType, actionId, 
-                    ActionType.PARAMETER);
-    }
-    
-    /*
-     * Constr�i um novo controlador.
-     *
-     * @param id Identifica��o do controlador.
-     * @param view Vis�o associada ao controlador.
-     * @param dispatcherType Determina como o fluxo deve ser direcionado para a
-     * vis�o.
-     * @param name Nome do controlador, usado para obter sua inst�ncia no container
-     * IOC.
-     * @param classType Classe do controlador.
-     * @param actionId Nome do par�metro que cont�m a identifica��o da a��o.
-     * Normalmente usado em aplica��es web.
-     * @return Construtor do controlador.
-     */
+    ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
+            String name, Class classType, String actionId );
     
     /**
-     * Cria um novo controlador atribuindo uma identificação, uma visão com o tipo
-     * de direcionamento de fluxo, com o nome do parâmetro que identifica a ação
-     * e seu tipo de mapeamento.
+     * Cria um novo controlador.
+     * 
      * @param id Identificação do controlador.
      * @param view Visão do controlador.
-     * @param dispatcherType
-     * @param name
-     * @param classType
-     * @param actionId
-     * @param actionType
-     * @return 
+     * @param dispatcherType Tipo do direcionamento do fluxo para a visão.
+     * @param name Identificação do controlador dentro do contexto do contêiner IoC.
+     * @param classType Classe do controlador.
+     * @param actionId Parâmetro que identifica a ação.
+     * @param actionType Estratégia de mapeamento de ação.
+     * @return Construtor do controlador.
      */
-    public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
-            String name, Class classType, String actionId, ActionType actionType ){
-
-        id       = StringUtil.adjust(id);
-        view     = StringUtil.adjust(view);
-        actionId = StringUtil.adjust(actionId);
-        name     = StringUtil.adjust(name);
-        
-        if(actionType == null){
-            Properties config = applicationContext.getConfiguration();
-            String strategyName =
-                    config.getProperty(
-                        BrutosConstants.ACTION_TYPE,
-                        BrutosConstants.DEFAULT_ACTION_TYPE_NAME);
-            actionType = ActionType.valueOf(strategyName.toUpperCase());
-        }
-        
-        if(classType == null)
-            throw new IllegalArgumentException("invalid class type: " + classType);
-        
-        if( StringUtil.isEmpty(actionId) )
-            actionId = BrutosConstants.DEFAULT_ACTION_ID;
-        
-        if(ActionType.PARAMETER.equals(actionType) || ActionType.HIERARCHY.equals(actionType)){
-            if(StringUtil.isEmpty(id))
-                throw new IllegalArgumentException("controller id is required: " + classType.getName() );
-        }
-        else
-        if(!ActionType.DETACHED.equals(actionType))
-            throw new IllegalArgumentException("invalid class type: " + classType);
-            
-        Controller controller = new Controller();
-        controller.setId( id );
-        controller.setName( name );
-        controller.setView( view );
-        controller.setClassType( classType );
-        controller.setActionId( actionId );
-        controller.setDispatcherType(dispatcherType);
-        controller.setActionType(actionType);
-        
-        printCreateController(controller);
-        
-        //Action
-        ActionListener ac = new ActionListener();
-        ac.setPreAction( getMethodAction( "preAction", controller.getClassType() ) );
-        ac.setPostAction( getMethodAction( "postAction", controller.getClassType() ) );
-        controller.setActionListener( ac );
-        
-        addController( controller.getId(), controller );
-        
-        controller.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
-        
-        this.current = new ControllerBuilder( controller, this, 
-                interceptorManager, validatorProvider, applicationContext );
-        
-        return this.getCurrent();
-    }
-    
-    private Method getMethodAction( String methodName, Class classe ){
-        try{
-            Method method = classe.getDeclaredMethod( methodName, new Class[]{} );
-            return method;
-        }
-        catch( Exception e ){
-            //throw new BrutosException( e );
-            return null;
-        }
-    }
-
-    /**
-     * Verifica se existe um controlador mapeado para uma determinada identifica��o
-     * @param id Identifica��o.
-     * @return Verdadeiro se existir um mapeamento, coso contr�rio falso.
-     */
-    public boolean contains( String id ){
-        boolean result = this.mappedControllers.containsKey( id );
-        return !result && parent != null? parent.mappedControllers.containsKey( id ) : result;
-    }
+    ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
+            String name, Class classType, String actionId, ActionType actionType );
     
     /**
-     * Obt�m o mapeamento de um controlador.
-     * @param id Identifica��o do controlador.
+     * Verifica a existência de um controlador com uma determinada identificação.
+     * @param id Identificação.
+     * @return Verdadeiro se existir, coso contrário falso.
+     */
+    boolean contains( String id );
+    
+    /**
+     * Obtém um controlador a partir de sua identificação.
+     * @param id Identificação do controlador.
      * @return Mapeamento do controlador.
      */
-    public Controller getController( String id ){
-        Controller controller = (Controller)mappedControllers.get( id );
-        
-        if(controller == null && parent != null)
-            return parent.getController(id);
-        else
-            return controller;
-        
-    }
+    Controller getController( String id );
 
     /**
-     * Obt�m o mapeamento de um controlador.
+     * Obtém o mapeamento de um controlador a partir de sua classe.
      * @param controllerClass Classe do controlador.
      * @return Mapeamento do controlador.
      */
-    public Controller getController( Class controllerClass ){
-        Controller controller = (Controller)classMappedControllers.get( controllerClass );
-        
-        if(controller == null && parent != null)
-            return parent.getController(controllerClass);
-        else
-            return controller;
-    }
+    Controller getController( Class controllerClass );
 
     /**
      * Obtém o mapeamento de todos os controladores.
      * @return Controladores.
      */
-    public List getControllers() {
-        List tmp;
-        
-        tmp = new LinkedList(classMappedControllers.values());
-        
-        if(parent != null)
-            tmp.addAll(parent.classMappedControllers.values());
-            
-        return Collections.unmodifiableList( tmp );
-    }
+    List getControllers();
 
-    public Iterator getAllControllers(){
-        return new Iterator(){
-            
-            private Iterator currentIterator;
-            private Iterator parentIterator;
-            private int index;
-            private int maxSize;
-            {
-                index = 0;
-                currentIterator = 
-                        classMappedControllers.values().iterator();
-                parentIterator = 
-                        parent != null? 
-                            parent.classMappedControllers.values().iterator() : 
-                            null;
-                maxSize = 
-                        classMappedControllers.size();
-                
-            }
-            
-            public boolean hasNext() {
-                if(index < maxSize)
-                    return currentIterator.hasNext();
-                else
-                    return parentIterator != null? parentIterator.hasNext() : false;
-            }
+    /**
+     * Obtém o mapeamento de todos os controladores.
+     * @return Controladores.
+     */
+    Iterator getAllControllers();
+    
+    /**
+     * Obtém o controlador que está atualmente está sendo construido.
+     * @return Contrutor do controlador.
+     */
+    ControllerBuilder getCurrent();
+    
+    /**
+     * Define o gestor parente.
+     * @param parent Gestor parente.
+     */
+    void setParent( ControllerManager parent );
+    
+    /**
+     * Obtém o gestor parente.
+     * @return Gestor parente.
+     */
+    ControllerManager getParent();
+    
+    /**
+     * Obtém o objeto que auxilia a geração de log.
+     * @return Objeto que auxilia a geração de log
+     */
+    Logger getLogger();
 
-            public Object next() {
-                try{
-                    if(index < maxSize)
-                        return currentIterator.next();
-                    else
-                        return parentIterator != null? parentIterator.next() : null;
-                }
-                finally{
-                    index++;
-                }
-            }
+    /**
+     * Obtém o gerenciador dos interceptadrores.
+     * @return Gerenciador dos interceptadrores
+     */
+    InterceptorManager getInterceptorManager();
+   
+    /**
+     * Define o gerenciador dos interceptadrores
+     * @param interceptorManager Gerenciador dos interceptadrores.
+     */
+    void setInterceptorManager(InterceptorManager interceptorManager);
+    
+    /**
+     * Obtém o provedor dos validadores.
+     * @return Provedor dos validadores..
+     */
+    ValidatorProvider getValidatorProvider();
+    
+    /**
+     * Define o provedor dos validadores.
+     * @param validatorProvider Provedor dos validadores. 
+     */
+    void setValidatorProvider(ValidatorProvider validatorProvider);
 
-            public void remove() {
-                if(index < maxSize)
-                    currentIterator.remove();
-                else
-                if(parentIterator != null)
-                    parentIterator.remove();
-                
-                index--;
-            }
-            
-        };
-    }
+    /**
+     * Obtém o contexto da aplicação.
+     * @return Contexto da aplicação.
+     */
+    ConfigurableApplicationContext getApplicationContext();
     
-    void addController( String id, Controller form ) {
-        
-        if( id != null){
-             if(contains(id))
-                throw new BrutosException( String.format("duplicate id: %s", new Object[]{id} ) );
-            else
-                mappedControllers.put(id, form);
-        }
-        
-        classMappedControllers.put( form.getClassType(), form);
-    }
-
-    public ControllerBuilder getCurrent() {
-        return current;
-    }
-    
-    void setParent( ControllerManager parent ){
-        this.parent = parent;
-    }
-    
-    public ControllerManager getParent(){
-        return this.parent;
-    }
-    
-    private void printCreateController(Controller controller){
-        
-        ActionType type = controller.getActionType();
-        
-        if(type.equals(ActionType.PARAMETER)){
-            String log = 
-                controller + 
-                "[" +
-                controller.getId() +
-                "]";
-            getLogger()
-                .info(log);
-        }
-        
-    }
-    protected Logger getLogger(){
-        return LoggerProvider.getCurrentLoggerProvider()
-                .getLogger(ControllerBuilder.class);
-    }
+    /**
+     * Define o contexto da aplicação.
+     * @param applicationContext Contexto da aplicação.
+     */
+    void setApplicationContext(ConfigurableApplicationContext applicationContext);
     
 }

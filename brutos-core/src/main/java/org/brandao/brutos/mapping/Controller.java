@@ -19,14 +19,7 @@ package org.brandao.brutos.mapping;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
@@ -34,8 +27,9 @@ import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.scope.Scope;
 
 /**
- *
- * @author Afonso Brandao
+ * Define um objeto que representa um controlador dentro da aplicação.
+ * 
+ * @author Brandao
  */
 public class Controller {
 
@@ -84,6 +78,9 @@ public class Controller {
 
     private ActionType actionType;
     
+    /**
+     * Cria um novo controlador.
+     */
     public Controller() {
         this.fields = new ArrayList();
         this.mappingBeans = new LinkedHashMap();
@@ -100,10 +97,20 @@ public class Controller {
         this.actionType = ActionType.PARAMETER;
     }
 
+    /**
+     * Obtém o parâmetro que identifica a ação.
+     * @return Nome do parâmetro.
+     */
     public String getActionId() {
         return actionId;
     }
 
+    /**
+     * Obtém a instância do controlador.
+     * 
+     * @param iocProvider Contêiner IoC.
+     * @return Instância do controlador.
+     */
     public Object getInstance(IOCProvider iocProvider){
         Object instance = name == null? null : iocProvider.getBean(name);
         instance = instance == null? iocProvider.getBean(classType) : instance;
@@ -114,10 +121,19 @@ public class Controller {
             return instance;
     }
 
+    /**
+     * Define o parâmetro que identifica a ação.
+     * @param actionId Nome do parâmetro.
+     */
     public void setActionId(String actionId) {
         this.actionId = actionId;
     }
 
+    /**
+     * Obtém o mapeamento de um bean a partir de seu nome.
+     * @param name Nome do bean.
+     * @return Bean.
+     */
     public Bean getBean(String name){
         return (Bean)mappingBeans.get(name);
     }
