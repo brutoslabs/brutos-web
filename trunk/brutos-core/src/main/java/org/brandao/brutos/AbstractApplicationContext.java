@@ -316,11 +316,22 @@ public abstract class AbstractApplicationContext
             String className =
                 configuration.getProperty(
                     BrutosConstants.CONTROLLER_MANAGER_CLASS,
-                    ControllerManager.class.getName());
+                    ControllerManagerImp.class.getName());
             
             Class clazz = 
                     ClassUtil.get(className);
             
+            ControllerManager instance = 
+                (ControllerManager)ClassUtil.getInstance(clazz);
+            
+            instance.setInterceptorManager(interceptorManager);
+            instance.setValidatorProvider(validatorProvider);
+            instance.setParent(this.parent == null? 
+                            null : 
+                            ((ConfigurableApplicationContext)parent).getControllerManager());
+            instance.setApplicationContext(this);
+            
+            /*
             ControllerManager instance = 
                 (ControllerManager)ClassUtil.getInstance(
                     clazz, 
@@ -336,7 +347,7 @@ public abstract class AbstractApplicationContext
                             null : 
                             ((ConfigurableApplicationContext)parent).getControllerManager(),
                         this });
-            
+            */
             return instance;
         }
         catch( Exception e ){
