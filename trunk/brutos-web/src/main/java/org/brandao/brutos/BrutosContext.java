@@ -123,6 +123,7 @@ public class BrutosContext extends AbstractWebApplicationContext
         getScopes().register( "session" , new SessionScope() );
         getScopes().register( WebScopeType.PARAM.toString(), new ParamScope() );
         getScopes().register( WebScopeType.REQUEST.toString(), new OldRequestScope() );
+        /*
         if( iocManager.getProvider().containsBeanDefinition("customScopes") ){
             CustomScopeConfigurer customScopes =
                     (CustomScopeConfigurer)iocManager.getInstance("customScopes");
@@ -131,7 +132,7 @@ public class BrutosContext extends AbstractWebApplicationContext
             for( Object key: i )
                 getScopes().register( (String)key,(Scope)scopes.get(key) );
         }
-
+        */
         logger.info( "Scopes:" );
             Map scopes = getScopes().getScopes();
             Set i = scopes.keySet();
@@ -141,6 +142,7 @@ public class BrutosContext extends AbstractWebApplicationContext
     }
 
     private void registerCustomEditors(){
+        /*
         if( iocManager.getProvider().containsBeanDefinition("customEditors") ){
             CustomEditorConfigurer customEditors =
                     (CustomEditorConfigurer)iocManager.getInstance("customEditors");
@@ -149,6 +151,7 @@ public class BrutosContext extends AbstractWebApplicationContext
             for( Object key: i )
                 EditorConfigurer.registerPropertyEditor( (String)key,(PropertyEditor)editors.get(key) );
         }
+        */
     }
 
     private void loadInvoker( ServletContext sc ){

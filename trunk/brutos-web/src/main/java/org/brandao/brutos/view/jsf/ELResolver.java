@@ -63,12 +63,15 @@ public class ELResolver extends javax.el.ELResolver{
         if( ioc == null )
             throw new BrutosException( "IOC provider not found!" );
 
+        /*
         if (ioc.containsBeanDefinition(name)) {
             return ioc.getBean( name );
         }
         else{
             return null;
         }
+        */
+        return null;
     }
 
     protected IOCProvider getIOCProvider(){

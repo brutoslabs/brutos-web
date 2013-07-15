@@ -56,7 +56,7 @@ public class PicoContainerIOCProvider extends IOCProvider{
     }
 
     public void addBeanDefinition( Bean bean ){
-        super.addBeanDefinition( bean );
+        //super.addBeanDefinition( bean );
         Injectable b = bean.getInjectable();
         if( b instanceof ComplexObjectInject )
             applicationContainer.addAdapter( new ComplexComponentFactory( (ComplexObjectInject)b ) );
@@ -66,7 +66,8 @@ public class PicoContainerIOCProvider extends IOCProvider{
 
     public Bean removeBeanDefinition( Bean bean ){
         applicationContainer.removeComponent( bean.getInjectable().getName() );
-        return super.removeBeanDefinition(bean);
+        //return super.removeBeanDefinition(bean);
+        return null;
     }
 
     public void destroy(){

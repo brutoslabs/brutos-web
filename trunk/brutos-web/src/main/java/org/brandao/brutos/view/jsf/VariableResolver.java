@@ -59,12 +59,16 @@ public class VariableResolver extends javax.faces.el.VariableResolver{
         if( ioc == null )
             throw new BrutosException( "IOC provider not found!" );
         
+        /*
         if (ioc.containsBeanDefinition(name)) {
             return ioc.getBean( name );
         }
         else{
             return null;
         }
+        * 
+        */
+        return null;
     }
     
     protected Object resolveJSFBean(FacesContext facesContext, String name) {
