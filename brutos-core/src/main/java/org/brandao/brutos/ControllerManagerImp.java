@@ -1,7 +1,20 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Brutos Web MVC http://www.brutosframework.com.br/
+ * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 package org.brandao.brutos;
 
 import java.lang.reflect.Method;
@@ -19,17 +32,19 @@ import org.brandao.brutos.validator.ValidatorProvider;
  */
 public class ControllerManagerImp implements ControllerManager{
 
-    private Map mappedControllers;
-    private Map classMappedControllers;
-    private ValidatorProvider validatorProvider;
-    private ControllerBuilder current;
-    private ConfigurableApplicationContext applicationContext;
-    private InterceptorManager interceptorManager;
-    private ControllerManager parent;
+    protected Map mappedControllers;
+    protected Map classMappedControllers;
+    protected ValidatorProvider validatorProvider;
+    protected ControllerBuilder current;
+    protected ConfigurableApplicationContext applicationContext;
+    protected InterceptorManager interceptorManager;
+    protected ControllerManager parent;
+    protected InternalUpdate internalUpdate;
     
     public ControllerManagerImp() {
         this.mappedControllers      = new HashMap();
         this.classMappedControllers = new HashMap();
+        this.internalUpdate         = new InternalUpdateImp(this);
     }
 
     /**
@@ -163,7 +178,7 @@ public class ControllerManagerImp implements ControllerManager{
         controller.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
         
         this.current = new ControllerBuilder( controller, this, 
-                interceptorManager, validatorProvider, applicationContext );
+                interceptorManager, validatorProvider, applicationContext, internalUpdate );
         
         return this.getCurrent();
     }
@@ -285,7 +300,7 @@ public class ControllerManagerImp implements ControllerManager{
         };
     }
     
-    void addController( String id, Controller controller ) {
+    private void addController( String id, Controller controller ) {
         
         if( id != null){
              if(contains(id))
@@ -297,6 +312,19 @@ public class ControllerManagerImp implements ControllerManager{
         classMappedControllers.put( controller.getClassType(), controller);
     }
 
+    private void removeController( String id, Controller controller ) {
+        
+        if( id != null){
+             if(!contains(id))
+                throw new BrutosException( String.format("controller not found: %s", new Object[]{id} ) );
+             else
+                mappedControllers.remove(id);
+        }
+        
+        if(id == null || id.equals(controller.getId()))
+            classMappedControllers.remove( controller.getClassType());
+    }
+    
     public ControllerBuilder getCurrent() {
         return current;
     }
@@ -354,4 +382,21 @@ public class ControllerManagerImp implements ControllerManager{
         this.applicationContext = applicationContext;
     }
     
+    public static class InternalUpdateImp implements InternalUpdate{
+        
+        private ControllerManagerImp manager;
+        
+        public InternalUpdateImp(ControllerManagerImp manager){
+            this.manager = manager;
+        }
+        
+        public void addControllerAlias(Controller controller, String alias ){
+            manager.addController(alias, controller);
+        }
+
+        public void removeControllerAlias(Controller controller, String alias) {
+            manager.removeController(alias, controller);
+        }
+
+    }
 }

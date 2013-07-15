@@ -20,15 +20,31 @@ package org.brandao.brutos.validator;
 import java.util.Properties;
 
 /**
+ * Define o objeto que faz a validação dos dados da requisição.
  * 
  * @author Afonso Brandao
  */
 public interface Validator {
 
+    /**
+     * Aplica a configuração no validador.
+     * @param config Configuração.
+     */
     void configure( Properties config );
 
+    /**
+     * Obtém a validação do validador.
+     * @return Configuração.
+     */
     Properties getConfiguration();
     
+    /**
+     * Faz a validação de um objeto.
+     * 
+     * @param source Origem do valor.
+     * @param value Valor a ser validado.
+     * @throws ValidatorException Lançado caso o valor seja considerado inválido.
+     */
     void validate(Object source, Object value) throws ValidatorException;
 
 }

@@ -18,21 +18,14 @@ package org.brandao.brutos.view;
 
 import java.io.IOException;
 import java.util.Properties;
-import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.RequestInstrument;
-import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.Scopes;
-import org.brandao.brutos.StackRequestElement;
-import org.brandao.brutos.ViewException;
+import org.brandao.brutos.*;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
 
 /**
- *
+ * Renderiza as vistas da aplicação.
+ * 
  * @author Afonso Brandao
  */
 public abstract class ViewProvider {
@@ -40,6 +33,11 @@ public abstract class ViewProvider {
     public ViewProvider() {
     }
     
+    /**
+     * Obtém uma instância do provedor de vista.
+     * @param properties Configuração da aplicação.
+     * @return Provedor de vista.
+     */
     public static ViewProvider getProvider( Properties properties ){
         String viewProviderName = properties
                 .getProperty(
@@ -51,14 +49,6 @@ public abstract class ViewProvider {
         try{
             Class iocProvider = ClassUtil.get(viewProviderName);
             view = (ViewProvider)ClassUtil.getInstance(iocProvider);
-            /*
-            Class iocProvider = 
-                    Class.forName(
-                        viewProviderName,
-                        true,
-                        Thread.currentThread().getContextClassLoader() );
-            view = (ViewProvider)iocProvider.newInstance();
-            */
         }
         catch( ClassNotFoundException e ){
             throw new BrutosException( e );
@@ -74,37 +64,33 @@ public abstract class ViewProvider {
         return view;
     }
     
+    /**
+     * Aplica as configurações da aplicação.
+     * 
+     * @param properties Configuração da aplicação.
+     */
     public abstract void configure( Properties properties );
 
-    /*
-     * @deprecated
-     * @param page
-     * @param request
-     * @param response
-     * @param context
-     * @throws ServletException
-     * @throws IOException
+    /**
+     * Renderiza uma determinada vista.
+     * 
+     * @param requestInstrument Recursos da aplicação.
+     * @param view Vista a ser renderizada.
+     * @param dispatcherType Tipo de direcionamento do fluxo para a vista.
+     * @throws IOException Lançado se ocorrer algum problema ao renderizar a vista.
      */
-    //public abstract void show( String page, ServletRequest request, HttpServletResponse response, ServletContext context ) throws ServletException, IOException;
-
-    /*
-     * @deprecated 
-     * @param page
-     * @param redirect
-     * @param request
-     * @param response
-     * @param context
-     * @throws ServletException
-     * @throws IOException
-     */
-    /*public abstract void show( String page, boolean redirect, ServletRequest request,
-            HttpServletResponse response, ServletContext context )
-                throws ServletException, IOException;
-    */
     protected abstract void show( RequestInstrument requestInstrument,
             String view, DispatcherType dispatcherType )
                 throws IOException;
 
+    /**
+     * Renderiza uma determinada vista.
+     * 
+     * @param requestInstrument Recursos da aplicação.
+     * @param view Vista a ser renderizada.
+     * @param dispatcherType Tipo de direcionamento do fluxo para visão.
+     * @throws IOException Lançado se ocorrer algum problema ao renderizar a vista.
+     */
     private void showView( RequestInstrument requestInstrument,
             String view, DispatcherType dispatcherType )
                 throws IOException{
@@ -112,20 +98,33 @@ public abstract class ViewProvider {
         show(requestInstrument,view,dispatcherType);
     }
 
+    /**
+     * Renderiza a vista de uma determinada ação.
+     * 
+     * @param requestInstrument Recursos da aplicação.
+     * @param stackRequestElement Informações da requisição.
+     * @param action Ação.
+     * @throws IOException Lançado se ocorrer algum problema ao renderizar a vista.
+     */
     private void showView( RequestInstrument requestInstrument,
-            StackRequestElement stackRequestElement, Action method )
+            StackRequestElement stackRequestElement, Action action )
                 throws IOException{
         requestInstrument.setHasViewProcessed(true);
-        //method.getReturnType().setValue(stackRequestElement.getResultAction());
-        method.getReturnType()
+        action.getReturnType()
             .show(
                 stackRequestElement.getHandler().getContext().getMvcResponse(), 
                 stackRequestElement.getResultAction());
     }
 
+    /**
+     * Renderiza a vista da requisição.
+     * 
+     * @param requestInstrument Recursos da aplicação.
+     * @param stackRequestElement Informações da requisição.
+     * @throws IOException Lançado se ocorrer algum problema ao renderizar a vista.
+     */
     public void show( RequestInstrument requestInstrument,
-            StackRequestElement stackRequestElement ) throws IOException,
-            ViewException{
+            StackRequestElement stackRequestElement ) throws IOException{
 
         if( requestInstrument.isHasViewProcessed() )
             return;

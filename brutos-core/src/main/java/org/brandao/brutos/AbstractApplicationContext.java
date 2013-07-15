@@ -142,19 +142,6 @@ public abstract class AbstractApplicationContext
 
         loadScopes();
         
-        if( iocProvider.containsBeanDefinition("customScopes") ){
-            CustomScopeConfigurer customScopesConfigurer =
-                    (CustomScopeConfigurer)iocProvider.getBean("customScopes");
-            Map customScopes = customScopesConfigurer.getCustomScopes();
-            Set set = customScopes.keySet();
-            Iterator i = set.iterator();
-            while( i.hasNext() ){
-                Object key = i.next();
-            //for( Object key: i )
-                scopes.register( (String)key,(Scope)customScopes.get(key) );
-            }
-        }
-
         this.loadIOCManager(iocManager);
         this.loadInterceptorManager(interceptorManager);
         this.loadController(controllerManager);

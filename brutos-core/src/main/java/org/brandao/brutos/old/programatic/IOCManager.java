@@ -61,7 +61,7 @@ public class IOCManager {
     }
     
     public Bean addBean( String name, Class classType, ScopeType scope, boolean singleton, String factory ){
-        
+        /*
         if( provider == null )
             throw new BrutosException( "IOC/DI provider not configured!" );
         
@@ -80,10 +80,12 @@ public class IOCManager {
         Bean bean = new Bean( injectable, this );
         provider.addBeanDefinition( bean );
         return bean;
+        */
+        return null;
     }
     
     public CollectionBean addCollection( String name, Class classType, Class valueType, String factory ){
-        
+        /*
         if( provider == null )
             throw new BrutosException( "IOC/DI provider not configured!" );
         
@@ -108,10 +110,12 @@ public class IOCManager {
         CollectionBean bean = new CollectionBean( inject, this );
         provider.addBeanDefinition( bean );
         return bean;
+        */
+        return null;
     }
     
     public MapBean addMap( String name, Class classType, Class keyType, Class valueType, String factory ){
-        
+        /*
         if( provider == null )
             throw new BrutosException( "IOC/DI provider not configured!" );
         
@@ -133,6 +137,8 @@ public class IOCManager {
         MapBean bean = new MapBean( inject, this );
         provider.addBeanDefinition( bean );
         return bean;
+        */
+        return null;
     }
     
     public PropertiesBean addProperties( String name, Class classType ){
@@ -140,6 +146,7 @@ public class IOCManager {
     }
     
     public PropertiesBean addProperties( String name, Class classType, String factory ){
+        /*
         if( provider == null )
             throw new BrutosException( "IOC/DI provider not configured!" );
 
@@ -157,6 +164,9 @@ public class IOCManager {
         PropertiesBean bean = new PropertiesBean( inject, this );
         //provider.addBeanDefinition( (Bean)bean );
         return bean;
+        * 
+        */
+        return null;
     }
     
     public Object getInstance( String name ){
@@ -164,7 +174,8 @@ public class IOCManager {
     }
     
     public Bean getBean( String name ){
-        return provider.getBeanDefinition( name );
+        //return provider.getBeanDefinition( name );
+        return null;
     }
 
     public IOCProvider getProvider() {

@@ -17,31 +17,21 @@
 
 package org.brandao.brutos.ioc;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.old.programatic.Bean;
 
 /**
- *
+ * Provê os objetos gerenciados pelo container IoC.
+ * 
  * @author Afonso Brandao
  */
 public abstract class IOCProvider {
 
-    /**
-     * @deprecated 
-     */
-    private Map beans;
-    
     public IOCProvider(){
-        this.beans = new HashMap();
     }
     
     public static IOCProvider getProvider( Properties properties ){
@@ -64,11 +54,6 @@ public abstract class IOCProvider {
             logger.info("IoC provider: " + iocProviderName );
             Class iocProvider = ClassUtil.get(iocProviderName);
             ioc = (IOCProvider)ClassUtil.getInstance(iocProvider);
-            /*
-            Class iocProvider = Class.forName( iocProviderName, true,
-                    Thread.currentThread().getContextClassLoader() );
-            ioc = (IOCProvider)iocProvider.newInstance();
-            */
         }
         catch( ClassNotFoundException e ){
             throw new BrutosException( e );
@@ -80,71 +65,32 @@ public abstract class IOCProvider {
             throw new BrutosException( e );
         }
         
-        //ioc.configure( properties, sce );
         return ioc;
     }
 
     /**
-     * @deprecated
-     * @param name
-     * @return
+     * Obtém um objeto a partir de seu nome.
+     * @param name Nome que identifica o objeto.
+     * @return Objeto.
      */
-    public boolean containsBeanDefinition( String name ){
-        return beans.containsKey( name );
-    }
-
-    /**
-     * @deprecated
-     * @param bean
-     */
-    public void addBeanDefinition( Bean bean ){
-        beans.put( bean.getInjectable().getName(), bean );
-    }
-
-    /**
-     * @deprecated 
-     * @param bean
-     * @return
-     */
-    public Bean removeBeanDefinition( Bean bean ){
-        if( bean != null )
-            return (Bean) beans.remove( bean.getInjectable().getName() );
-        else
-            return null;
-    }
-
-    /**
-     * @deprecated 
-     * @param name
-     * @return
-     */
-    public Bean getBeanDefinition( String name ){
-        return (Bean) beans.get( name );
-    }
-
-    /**
-     * @deprecated 
-     * @return
-     */
-    public List getBeansDefinition(){
-        return new ArrayList( beans.values() );
-    }
-
     public abstract Object getBean( String name );
     
+    /**
+     * Obtém um objeto a partir de seu classe.
+     * @param clazz Classe do objeto.
+     * @return Objecto.
+     */
     public abstract Object getBean( Class clazz );
 
+    /**
+     * Aplica a configuração da aplicação.
+     * @param properties Configuração da aplicação.
+     */
     public abstract void configure( Properties properties );
 
     /**
-     * @deprecated 
-     * @param name
-     * @return
+     * Desliga o container  IoC.
      */
-    public Object getInstance( String name ){
-        throw new UnsupportedOperationException( "use getBean(String)" );
-    }
-
     public abstract void destroy();
     
 }

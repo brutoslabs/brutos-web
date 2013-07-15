@@ -191,5 +191,13 @@ public interface ControllerManager {
      * @param applicationContext Contexto da aplicação.
      */
     void setApplicationContext(ConfigurableApplicationContext applicationContext);
+
+    public static interface InternalUpdate{
+        
+        void addControllerAlias( Controller controller, String alias );
+        
+        void removeControllerAlias( Controller controller, String alias );
+        
+    }
     
 }
