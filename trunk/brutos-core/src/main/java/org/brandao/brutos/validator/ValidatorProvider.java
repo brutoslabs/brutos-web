@@ -22,16 +22,16 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 /**
- * Validator provider.
+ * Provê os objetos que auxiliam na validação dos dados da requisição.
  * 
  * @author Afonso Brandao
  */
 public abstract class ValidatorProvider {
 
     /**
-     * Get a new validator provider.
-     * @param config Configuration.
-     * @return New validator provider.
+     * Obtém um novo provedor de validação.
+     * @param config Configuração da aplicação.
+     * @return Provedor de validação.
      */
 
     public static ValidatorProvider getValidatorProvider( Properties config ){
@@ -44,15 +44,6 @@ public abstract class ValidatorProvider {
             Class validatorProvider = ClassUtil.get(validatorProviderName);
             
             provider = (ValidatorProvider)ClassUtil.getInstance(validatorProvider);
-            /*
-            Class validatorProvider =
-                Class.forName(
-                    validatorProviderName,
-                    true,
-                    Thread.currentThread().getContextClassLoader() );
-            
-            provider = (ValidatorProvider)validatorProvider.newInstance();
-            */
             provider.configure( config );
             return provider;
         }
@@ -68,15 +59,15 @@ public abstract class ValidatorProvider {
     }
 
     /**
-     * Configure validator provider.
-     * @param config Configuration.
+     * Aplica as configurações da aplicação
+     * @param config Configuração da aplicação.
      */
     public abstract void configure( Properties config );
 
     /**
-     * Get a new validator.
-     * @param config Configuration.
-     * @return The validator.
+     * Obtém um novo validador.
+     * @param config Configuração do validador.
+     * @return Validador.
      */
     public abstract Validator getValidator( Properties config );
 

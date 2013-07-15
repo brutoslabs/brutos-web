@@ -345,6 +345,11 @@ public class Controller {
         this.alias.add( alias );
     }
 
+    public String removeAlias( String alias ){
+        int index = this.alias.indexOf(alias);
+        return index == -1? null : (String)this.alias.remove(index);
+    }
+    
     public List getAlias(){
         return this.alias;
     }

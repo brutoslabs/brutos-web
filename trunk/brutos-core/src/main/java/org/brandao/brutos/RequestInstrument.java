@@ -22,19 +22,28 @@ import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.view.ViewProvider;
 
 /**
- *
+ * Provê os recursos da aplicação.
+ * 
  * @author Brandao
  */
-public interface RequestInstrument {
+public interface RequestInstrument extends ViewCheck{
 
-    public ApplicationContext getContext();
+    /**
+     * Obtém o contexto da aplicação.
+     * @return Contexto da aplicação.
+     */
+    ApplicationContext getContext();
 
-    boolean isHasViewProcessed();
+    /**
+     * Obtém o provedor do container IoC.
+     * @return Provedor do container IoC.
+     */
+    IOCProvider getIocProvider();
 
-    void setHasViewProcessed(boolean value);
-
-    public IOCProvider getIocProvider();
-
-    public ViewProvider getViewProvider();
+    /**
+     * Obtém o provedor de vista.
+     * @return Provedor de vista.
+     */
+    ViewProvider getViewProvider();
 
 }

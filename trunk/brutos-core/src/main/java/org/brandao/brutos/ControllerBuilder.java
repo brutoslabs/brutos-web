@@ -19,6 +19,7 @@
 package org.brandao.brutos;
 
 import java.util.*;
+import org.brandao.brutos.ControllerManager.InternalUpdate;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -134,11 +135,12 @@ public class ControllerBuilder {
     protected InterceptorManager interceptorManager;
     protected ValidatorProvider validatorProvider;
     protected ConfigurableApplicationContext applicationContext;
+    protected InternalUpdate internalUpdate;
 
-    public ControllerBuilder(ControllerBuilder builder){
+    public ControllerBuilder(ControllerBuilder builder, InternalUpdate internalUpdate){
         this( builder.controller, builder.controllerManager,
             builder.interceptorManager, builder.validatorProvider,
-            builder.applicationContext );
+            builder.applicationContext, internalUpdate );
     }
     
     /**
@@ -151,12 +153,13 @@ public class ControllerBuilder {
      */
     public ControllerBuilder( Controller controller, ControllerManager controllerManager,
             InterceptorManager interceptorManager, ValidatorProvider validatorProvider,
-            ConfigurableApplicationContext applicationContext ) {
+            ConfigurableApplicationContext applicationContext,InternalUpdate internalUpdate ) {
         this.controller = controller;
         this.controllerManager  = controllerManager;
         this.interceptorManager = interceptorManager;
         this.validatorProvider  = validatorProvider;
         this.applicationContext = applicationContext;
+        this.internalUpdate     = internalUpdate;
     }
 
     /**
@@ -183,10 +186,37 @@ public class ControllerBuilder {
                 new Object[]{id,controller.getClassType().getName()}));
         
         controller.addAlias(id);
-        controllerManager.addController(id, controller);
+        internalUpdate.addControllerAlias(controller,id);
         return this;
     }
 
+    /**
+     * Remove uma das identificações do controlador.
+     * 
+     * @param id Identificação.
+     * @return Construtor do controlador.
+     */
+    public ControllerBuilder removeAlias( String id ){
+        
+        if(ActionType.DETACHED.equals(controller.getActionType())){
+                throw new IllegalArgumentException(
+                    "alias not allowed: " + controller.getClassType().getName() );
+        }
+        
+        id = StringUtil.adjust(id);
+        
+        if( StringUtil.isEmpty(id) )
+            throw new BrutosException("invalid alias");
+
+        getLogger().info(
+                String.format(
+                "removed alias: %s => %s",
+                new Object[]{id,controller.getClassType().getName()}));
+        
+        internalUpdate.removeControllerAlias(controller,id);
+        return this;
+    }
+    
     /**
      * Intercepta e atribui uma identifica��o a uma determinada exce��o.
      *
