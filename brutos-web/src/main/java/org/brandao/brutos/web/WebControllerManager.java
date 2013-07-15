@@ -49,7 +49,7 @@ public class WebControllerManager extends ControllerManagerImp{
         
         WebUtil.checkURI(builder.getView(), false);
         
-        return new WebControllerBuilder(builder);
+        return new WebControllerBuilder(builder, this.internalUpdate);
     }
     
 }
