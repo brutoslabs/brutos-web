@@ -130,15 +130,19 @@ public interface BrutosConstants {
     
     public final String REQUEST_PARSER_CLASS      = "org.brandao.brutos.web.request_parser";
     
+    public final String PROXY_PROVIDER_CLASS      = "org.brandao.brutos.proxy.provider";
+    
     /*vars - end*/
-    
-    public final String DEFAULT_REQUEST_PARSER      = "org.brandao.brutos.web.http.HttpRequestParserImp";
-    
-    public final String DEFAULT_VALIDATOR_PROVIDER  = "org.brandao.brutos.validator.DefaultValidatorProvider";
 
-    public final String DEFAULT_VIEW_PROVIDER_CLASS = "org.brandao.brutos.view.DefaultViewProvider";
+    public final String DEFAULT_PROXY_PROVIDER_CLASS = "org.brandao.brutos.codegenerator.JavassistCodeGeneratorProvider";
     
-    public final String DEFAULT_INVOKER_CLASS       = "org.brandao.brutos.Invoker";
+    public final String DEFAULT_REQUEST_PARSER       = "org.brandao.brutos.web.http.HttpRequestParserImp";
+    
+    public final String DEFAULT_VALIDATOR_PROVIDER   = "org.brandao.brutos.validator.DefaultValidatorProvider";
+
+    public final String DEFAULT_VIEW_PROVIDER_CLASS  = "org.brandao.brutos.view.DefaultViewProvider";
+    
+    public final String DEFAULT_INVOKER_CLASS        = "org.brandao.brutos.Invoker";
     
     public final String DEFAULT_CDI_BEAN_MANAGER = "java:comp/BeanManager";
     

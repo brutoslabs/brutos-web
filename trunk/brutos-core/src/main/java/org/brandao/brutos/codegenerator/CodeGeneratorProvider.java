@@ -19,6 +19,7 @@
 package org.brandao.brutos.codegenerator;
 
 import java.util.Properties;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ioc.IOCProvider;
@@ -27,11 +28,28 @@ import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.proxy.ProxyFactory;
 
 /**
- *
+ * Responsável por gerenciar e prover as fábricas de proxy da aplicação. 
+ * Ele possui um método que disponibiliza e cria quando necessário a fábrica 
+ * de proxy de uma determinada entidade.
+ * <p>O método {@link #getProvider(java.util.Properties)} é responsável por
+ * criar o geador de código a partir da configuração da aplicação.
+ * O gerador de código é definido no início da aplicação por meio
+ * da variável <code>org.brandao.brutos.proxy.provider</code>. A implementação
+ * padrão é {@link JavassistCodeGeneratorProvider}</p>
+ * <p>O método {@link #getProxyFactory(java.lang.Class)} é responsável por retornar
+ * e criar, quando necessário, a fábrica de proxy de uma determinada entidade.
+ * Ela é criada na primeira tentativa de se obtê-la. Sendo lançada
+ * uma exceção, caso ocorra algum problema na sua criação.</p>
+ * 
  * @author Brandao
  */
 public abstract class CodeGeneratorProvider {
 
+    /**
+     * Obtém uma instância do gerador de códigos.
+     * @param properties Configuração da Aplicação.
+     * @return Gerador de códigos.
+     */
     public static CodeGeneratorProvider getProvider( Properties properties ){
         
         Logger logger = LoggerProvider
@@ -41,8 +59,8 @@ public abstract class CodeGeneratorProvider {
         String providerName =
                 properties
                     .getProperty(
-                        "org.brandao.brutos.proxy.provider",
-                        JavassistCodeGeneratorProvider.class.getName());
+                        BrutosConstants.PROXY_PROVIDER_CLASS,
+                        BrutosConstants.DEFAULT_PROXY_PROVIDER_CLASS);
         CodeGeneratorProvider provider = null;
 
         logger.info("CodeGenerator provider: " + providerName);
@@ -50,11 +68,6 @@ public abstract class CodeGeneratorProvider {
         try{
             Class providerClass = ClassUtil.get(providerName);
             provider = (CodeGeneratorProvider)ClassUtil.getInstance(providerClass);
-            /*
-            Class providerClass = Class.forName( providerName, true,
-                    Thread.currentThread().getContextClassLoader() );
-            provider = (CodeGeneratorProvider)providerClass.newInstance();
-            */
         }
         catch( ClassNotFoundException e ){
             throw new BrutosException( e );
@@ -69,6 +82,14 @@ public abstract class CodeGeneratorProvider {
         return provider;
     }
 
+    /**
+     * Obtém e instancia quando necessário a fabrica de proxy de uma determinada
+     * entidade.
+     * @param classEntity Entidade.
+     * @return Fábrica de proxy da entidade.
+     * @throws BrutosException Lançada se ocorrer algum problema ao tentar 
+     * obter ou criar a fábrica de proxy da entidade
+     */
     public abstract ProxyFactory getProxyFactory( Class classEntity )
             throws BrutosException;
     
