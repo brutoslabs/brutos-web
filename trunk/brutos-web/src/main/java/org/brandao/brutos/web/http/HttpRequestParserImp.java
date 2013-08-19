@@ -252,7 +252,7 @@ public class HttpRequestParserImp implements HttpRequestParser{
 
                         if( fout == null ){
                             File arquivo = getFile( this.path, file );
-                            f = new BrutosFile( arquivo );
+                            f = new BrutosFileImp( arquivo );
                             f.setFileName( file );
                             fout = new FileOutputStream( arquivo );
                         }
