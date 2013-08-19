@@ -34,7 +34,7 @@ import org.brandao.brutos.proxy.ProxyFactory;
  * <p>O método {@link #getProvider(java.util.Properties)} é responsável por
  * criar o geador de código a partir da configuração da aplicação.
  * O gerador de código é definido no início da aplicação por meio
- * da variável <code>org.brandao.brutos.proxy.provider</code>. A implementação
+ * da propriedade <code>org.brandao.brutos.proxy.provider</code>. A implementação
  * padrão é {@link JavassistCodeGeneratorProvider}</p>
  * <p>O método {@link #getProxyFactory(java.lang.Class)} é responsável por retornar
  * e criar, quando necessário, a fábrica de proxy de uma determinada entidade.

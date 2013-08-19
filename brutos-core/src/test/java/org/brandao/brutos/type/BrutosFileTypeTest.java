@@ -28,7 +28,7 @@ public class BrutosFileTypeTest extends TestCase{
 
     private Type type = new BrutosFileType();
 
-    private Object expected1 = new BrutosFile(null);
+    private Object expected1 = null;//new BrutosFile(null);
     private Object test1     = expected1;
 
     private Object invalidType = new Integer(1);
