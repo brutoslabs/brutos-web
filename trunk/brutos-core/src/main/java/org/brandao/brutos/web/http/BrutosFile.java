@@ -20,51 +20,46 @@ package org.brandao.brutos.web.http;
 import java.io.File;
 
 /**
- *
+ * Representa um arquivo em uma requisição HTTP.
+ * 
  * @author Afonso Brandao
  */
-public class BrutosFile {
-    
-    private File file = null;
-    private String contentType;
-    private String fileName;
-    
-    public BrutosFile( File file, String contentType ) {
-        this( file, contentType, null );
-    }
-    
-    public BrutosFile( File file ) {
-        this( file, null, null );
-    }
-    
-    public BrutosFile( File file, String contentType, String fileName ) {
-        setFile(file);
-        setContentType(contentType);
-        setFileName(fileName);
-    }
+public interface BrutosFile {
 
-    public File getFile() {
-        return file;
-    }
+    /**
+     * Obtém o arquivo.
+     * @return Arquivo.
+     */
+    File getFile();
 
-    public void setFile(File file) {
-        this.file = file;
-    }
+    /**
+     * Define o arquivo.
+     * @param file Arquivo.
+     */
+    void setFile(File file);
 
-    public String getContentType() {
-        return contentType;
-    }
+    /**
+     * Obtém o tipo de dados do arquivo.
+     * @return Tipo de dados do arquivo.
+     */
+    String getContentType();
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
+    /**
+     * Define o tipo de dados do arquivo.
+     * @param contentType Tipo de dados do arquivo.
+     */
+    void setContentType(String contentType);
 
-    public String getFileName() {
-        return fileName;
-    }
+    /**
+     * Obtém o nome do arquivo original.
+     * @return Nome do arquivo original.
+     */
+    String getFileName();
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+    /**
+     * Define o nome original do arquivo.
+     * @param fileName Nome original do arquivo.
+     */
+    void setFileName(String fileName);
     
 }
