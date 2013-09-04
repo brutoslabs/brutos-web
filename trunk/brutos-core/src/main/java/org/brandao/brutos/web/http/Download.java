@@ -22,17 +22,36 @@ import java.io.OutputStream;
 import java.util.Map;
 
 /**
- *
+ * Envia um fluxo de dados binários ao navegador.
+ * 
  * @author Afonso Brandao
  */
 public interface Download {
 
-    public String getContentType();
+    /**
+     * Obtém o tipo dos dados binários.
+     * @return Tipo dos dados binários.
+     */
+    String getContentType();
 
-    public Map getHeader();
+    /**
+     * Obtém o cabeçalho.
+     * @return Cabeçalho.
+     */
+    Map getHeader();
 
-    public long getContentLength();
+    /**
+     * Obtém o tamanho do fluxo dos dados binários.
+     * @return Tamanho.
+     */
+    long getContentLength();
     
-    public void write( OutputStream out ) throws IOException;
+    /**
+     * Envia o fluxo de dados binários ao navegador.
+     * 
+     * @param out Saída dos dados binários.
+     * @throws IOException 
+     */
+    void write( OutputStream out ) throws IOException;
     
 }
