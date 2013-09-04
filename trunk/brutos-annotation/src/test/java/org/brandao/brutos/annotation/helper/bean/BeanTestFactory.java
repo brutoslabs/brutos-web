@@ -28,17 +28,17 @@ import org.brandao.brutos.annotation.helper.MyBean;
 @Bean
 public class BeanTestFactory {
     
-    @Bean(name="bean1")
+    @Bean("bean1")
     public MyBean createMyBean(){
         return new MyBean(0,0);
     }
 
-    @Bean(name="bean2")
+    @Bean("bean2")
     public MyBean createMyBean2(){
         return new MyBean(2,2);
     }
 
-    @Bean(name="bean3")
+    @Bean("bean3")
     public MyBean createMyBean3(
             @Identify(bean="value1")
             int v1, 

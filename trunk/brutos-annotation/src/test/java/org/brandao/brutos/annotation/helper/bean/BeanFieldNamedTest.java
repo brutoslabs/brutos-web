@@ -25,7 +25,7 @@ import org.brandao.brutos.annotation.helper.EnumTest;
  *
  * @author Brandao
  */
-@Bean(name="beanTest")
+@Bean("beanTest")
 public class BeanFieldNamedTest {
     
     private int propertyA;

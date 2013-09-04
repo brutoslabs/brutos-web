@@ -25,7 +25,7 @@ import org.brandao.brutos.annotation.View;
  */
 public class ActionTest16Controller {
 
-    @View(id="/controller/view.jsp")
+    @View("/controller/view.jsp")
     public void myAction(){
     }
     

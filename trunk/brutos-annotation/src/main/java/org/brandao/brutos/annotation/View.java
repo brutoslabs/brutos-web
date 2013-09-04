@@ -53,7 +53,7 @@ public @interface View {
      * Identificação da visão. Normalmente em aplicações web, a 
      * identificação é um URI.
      */
-    String id() default "";
+    String value() default "";
     
     /**
      * Define como o fluxo de execução será direcionado para a visão.

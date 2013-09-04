@@ -23,7 +23,7 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
-@Controller(id={"/controller/{invoke}","/controller"})
+@Controller({"/controller/{invoke}","/controller"})
 @ActionStrategy(ActionStrategyType.PARAMETER)
 public class ControllerTest11Controller {
     

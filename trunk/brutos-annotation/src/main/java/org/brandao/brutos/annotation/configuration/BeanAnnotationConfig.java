@@ -333,7 +333,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         
             Class type  = source.getBeanType();
             Bean bean = (Bean)type.getAnnotation(Bean.class);
-            String name = StringUtil.adjust(bean.name());
+            String name = StringUtil.adjust(bean.value());
             name = 
                 StringUtil.isEmpty(name)? 
                     StringUtil.getVariableFormat(type.getSimpleName()) : 
@@ -468,7 +468,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                         factoryBuilder.getControllerBuilder();
                 
                 Class type  = method.getReturnType();
-                String name = StringUtil.adjust(bean.name());
+                String name = StringUtil.adjust(bean.value());
                 name = 
                     StringUtil.isEmpty(name)? 
                         StringUtil.getVariableFormat(type.getSimpleName()) : 

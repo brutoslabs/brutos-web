@@ -101,8 +101,8 @@ public class ControllerAnnotationConfig
         view = getView((View) source.getAnnotation(View.class), builder,
             applicationContext);
         
-        if(annotationController != null && annotationController.id().length > 1){
-            String[] ids = annotationController.id();
+        if(annotationController != null && annotationController.value().length > 1){
+            String[] ids = annotationController.value();
             for(int i=1;i<ids.length;i++ ){
                 if(!StringUtil.isEmpty(ids[i]))
                     builder.addAlias(StringUtil.adjust(ids[i]));
@@ -150,13 +150,13 @@ public class ControllerAnnotationConfig
         boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
         
         String view = 
-            viewAnnotation != null && viewAnnotation.id().trim().length() > 0?
-                viewAnnotation.id() : null;
+            viewAnnotation != null && viewAnnotation.value().trim().length() > 0?
+                viewAnnotation.value() : null;
         
         
         if(rendered){
             if(view != null)
-                return viewAnnotation.id();
+                return viewAnnotation.value();
             else
                 return createControllerView(controller, applicationContext);
         }
@@ -184,11 +184,10 @@ public class ControllerAnnotationConfig
         }
     }
     
-    protected void addActions( ControllerBuilder controllerBuilder, 
-            ConfigurableApplicationContext applicationContext, Class clazz ){
-        
-        List<ActionEntry> actionList = new ArrayList<ActionEntry>();
-        
+    private void addAbstractActions( ControllerBuilder controllerBuilder, 
+            ConfigurableApplicationContext applicationContext, Class clazz, 
+            List<ActionEntry> actionList ){
+
         AbstractActions abstractActions = 
                 (AbstractActions)clazz.getAnnotation(AbstractActions.class);
         
@@ -225,6 +224,65 @@ public class ControllerAnnotationConfig
                 actionList.add(entry);
             }
         }
+        
+    }
+    
+    private void addActions( ControllerBuilder controllerBuilder, 
+            ConfigurableApplicationContext applicationContext, Class clazz, 
+            List<ActionEntry> actionList ){
+
+        Actions actions = 
+                (Actions)clazz.getAnnotation(Actions.class);
+        
+        Action action = 
+                (Action)clazz.getAnnotation(Action.class);
+        
+        List<Action> all = 
+            new ArrayList<Action>();
+        
+        if(actions != null)
+                all.addAll(Arrays.asList(actions.value()));
+        
+        if(action!= null)
+            all.add(action);
+        
+        for(Action act: all){
+            for(String id: act.value()){
+                if(StringUtil.isEmpty(id))
+                    throw new BrutosException("invalid action: " + id);
+                
+                if(StringUtil.isEmpty(act.view().value()))
+                    throw new BrutosException("view must be informed: " + id);
+                
+                ActionEntry entry = 
+                    new ActionEntry(
+                        id,
+                        null,
+                        controllerBuilder.getClassType(),
+                        null,
+                        null,
+                        null,
+                        null,
+                        act.view().value(),
+                        act.view().dispatcher(),
+                        true);
+                
+                actionList.add(entry);
+            }
+        }
+        
+    }
+    
+    protected void addActions( ControllerBuilder controllerBuilder, 
+            ConfigurableApplicationContext applicationContext, Class clazz ){
+        
+        List<ActionEntry> actionList = new ArrayList<ActionEntry>();
+        
+        addAbstractActions( controllerBuilder, applicationContext, clazz, 
+                actionList );
+        
+        addActions( controllerBuilder, applicationContext, clazz, 
+                actionList );
         
         Method[] methods = clazz.getMethods();
 
@@ -266,10 +324,10 @@ public class ControllerAnnotationConfig
     protected String getControllerId(ApplicationContext applicationContext, 
             Controller annotation, Class controllerClass){
         boolean hasControllerId = 
-            annotation != null && annotation.id().length > 0 && 
-            !StringUtil.isEmpty(annotation.id()[0]);
+            annotation != null && annotation.value().length > 0 && 
+            !StringUtil.isEmpty(annotation.value()[0]);
         
-        return hasControllerId? annotation.id()[0] : getControllerName(applicationContext, controllerClass);
+        return hasControllerId? annotation.value()[0] : getControllerName(applicationContext, controllerClass);
     }
     
     public boolean isApplicable(Object source) {
