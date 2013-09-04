@@ -90,11 +90,11 @@ public class ActionTestController {
     public void my13Action(){
     }
 
-    @View(id="/controller/view.jsp")
+    @View("/controller/view.jsp")
     public void my14Action(){
     }
 
-    @View(id="/controller/view.jsp", dispatcher="redirect")
+    @View(value="/controller/view.jsp", dispatcher="redirect")
     public void my15Action(){
     }
 
@@ -103,7 +103,7 @@ public class ActionTestController {
     }
 
     @Action
-    @View(id="/controller/view.jsp")
+    @View("/controller/view.jsp")
     @Result("actionResult")
     public void my17(){
     }

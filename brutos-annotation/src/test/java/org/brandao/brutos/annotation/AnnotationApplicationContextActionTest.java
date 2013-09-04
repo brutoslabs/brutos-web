@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.Properties;
 import junit.framework.Assert;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.helper.*;
@@ -1358,6 +1357,120 @@ public class AnnotationApplicationContextActionTest
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
         Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
         Assert.assertEquals("/WEB-INF/actiontest31/index.jsp",controller.getView());
+
+        String prefix = 
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
+        org.brandao.brutos.mapping.Action action = controller
+                .getActionByName(prefix + "my");
+        
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
+        Assert.assertEquals(prefix+"my",action.getName());
+        Assert.assertNull(action.getMethod());
+        Assert.assertEquals("/my.jsp",action.getView());
+        Assert.assertNull(action.getExecutor());
+        Assert.assertEquals(void.class,action.getReturnClass());
+        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        
+        Assert.assertEquals(0,action.getParameters().size());
+
+        action = controller
+                .getActionByName(prefix + "my2");
+        
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
+        Assert.assertEquals(prefix+"my2",action.getName());
+        Assert.assertNull(action.getMethod());
+        Assert.assertEquals("/my2.jsp",action.getView());
+        Assert.assertNull(action.getExecutor());
+        Assert.assertEquals(void.class,action.getReturnClass());
+        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        
+        Assert.assertEquals(0,action.getParameters().size());
+        
+    }
+
+    public void testAction32() throws NoSuchMethodException{
+        
+        Class clazz = ActionTest32Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertNotNull(controller.getId());
+        
+        Assert.assertNotNull(controller.getActionListener());
+        Assert.assertNull(controller.getDefaultAction());
+        Assert.assertNull(controller.getName());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
+        Assert.assertEquals(0,controller.getAlias().size());
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
+        Assert.assertEquals("/WEB-INF/actiontest32/index.jsp",controller.getView());
+
+        String prefix = 
+            "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
+        org.brandao.brutos.mapping.Action action = controller
+                .getActionByName(prefix + "my");
+        
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
+        Assert.assertEquals(prefix+"my",action.getName());
+        Assert.assertNull(action.getMethod());
+        Assert.assertEquals("/my.jsp",action.getView());
+        Assert.assertNull(action.getExecutor());
+        Assert.assertEquals(void.class,action.getReturnClass());
+        Assert.assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        
+        Assert.assertEquals(0,action.getParameters().size());
+    }
+
+    public void testAction33() throws NoSuchMethodException, Throwable{
+        
+        Class clazz = ActionTest33Controller.class;
+
+        try{
+            getApplication(new Class[]{clazz});
+            Assert.fail();
+        }
+        catch(Throwable e){
+            boolean expectedException = false;
+            while(e != null){
+                if(e.getMessage().startsWith("view must be informed")){
+                   expectedException = true;
+                   break;
+                }
+                e = e.getCause();
+            }
+            
+            if(!expectedException)
+                throw e;
+        }
+        
+    }
+
+    public void testAction34() throws NoSuchMethodException{
+        
+        Class clazz = ActionTest34Controller.class;
+        
+        AnnotationApplicationContext annotationApplicationContext = 
+                getApplication(new Class[]{clazz});
+        
+        org.brandao.brutos.mapping.Controller controller = 
+                annotationApplicationContext
+                    .getControllerManager().getController(clazz);
+        
+        Assert.assertNotNull(controller.getId());
+        
+        Assert.assertNotNull(controller.getActionListener());
+        Assert.assertNull(controller.getDefaultAction());
+        Assert.assertNull(controller.getName());
+        Assert.assertEquals("/"+clazz.getSimpleName().replaceAll("Controller$",""),controller.getId());
+        Assert.assertEquals(0,controller.getAlias().size());
+        Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,controller.getDispatcherType());
+        Assert.assertEquals(BrutosConstants.DEFAULT_ACTION_ID,controller.getActionId());
+        Assert.assertEquals("/WEB-INF/actiontest34/index.jsp",controller.getView());
 
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";

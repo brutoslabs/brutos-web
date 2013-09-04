@@ -24,42 +24,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define uma ação que não possui um método associado (executor).
- * 
- * <pre>
- * Ex:
- * &#064;AbstractAction(id="/index", view="/testcontroller/index.jsp")
- * public class TestController{
- * 
- *    &#064;View(id="/testcontroller/perfil.jsp")
- *    public void perfilAction(){
- *       ...
- *    }
- * }
- * </pre>
+ * Coleção de ações que não possuem um método associado (executor).
  * 
  * @author Afonso Brandao
  */
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Deprecated
-public @interface AbstractAction {
+public @interface Actions {
     
     /**
-     * Identificação da Ação. 
+     * Coleção de ações
      */
-    String[] id();
-    
-    /**
-     * Identificação da visão.
-     */
-    String view();
-    
-    /**
-     * Define como o fluxo de execução será direcionado para a visão.
-     * Os valores estão descritos em <a href="DispatcherType.html">DispatcherType</a>.
-     */
-    String dispatcher() default "forward";
+    Action[] value();
     
 }

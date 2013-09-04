@@ -44,7 +44,7 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * Ex1:
- * &#064;Controller(id="/index",defaultActionName="action1")
+ * &#064;Controller(value="/index",defaultActionName="action1")
  * &#064;ActionStrategy(ActionStrategyType.PARAMETER)
  * public class Index{
  * 
@@ -84,7 +84,7 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * Ex2:
- * &#064;Controller(id="/index/{invoke}")
+ * &#064;Controller(value="/index/{invoke}")
  * &#064;ActionStrategy(ActionStrategyType.PARAMETER)
  * public class Index{
  * 
@@ -156,7 +156,7 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * Ex4:
- * &#064;Controller(id="/index" )
+ * &#064;Controller("/index")
  * &#064;ActionStrategy(ActionType.COMPLEMENT)
  * public class Index{
  * 
@@ -211,7 +211,7 @@ public @interface Controller{
     /**
      * Identificação do controlador.
      */
-    String[] id() default {};
+    String[] value() default {};
 
     /**
      * Parâmetro da requisição usada para a identificação da ação a 

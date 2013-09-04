@@ -170,8 +170,8 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
 
         String view = 
-            viewAnnotation != null && !StringUtil.isEmpty(viewAnnotation.id())?
-                StringUtil.adjust(viewAnnotation.id()) : null;
+            viewAnnotation != null && !StringUtil.isEmpty(viewAnnotation.value())?
+                StringUtil.adjust(viewAnnotation.value()) : null;
 
 
         if(rendered){

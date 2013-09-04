@@ -15,27 +15,15 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.helper;
 
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.brandao.brutos.annotation.Action;
 
 /**
- * Define um "bean".
- * 
- * @author Afosno Brandao
+ *
+ * @author Brandao
  */
-@Target({ElementType.TYPE,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Bean {
+@Action("my")
+public class ActionTest33Controller {
 
-    /**
-     * Identificação do "bean".
-     * Caso seja omitido, será usado o nome da classe.
-     */
-    String value() default "";
-    
 }

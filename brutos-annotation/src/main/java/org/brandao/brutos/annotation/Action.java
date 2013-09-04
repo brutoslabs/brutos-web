@@ -61,7 +61,7 @@ import java.lang.annotation.Target;
  * @author Afonso Brandao
  */
 
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Action {
     
@@ -69,5 +69,10 @@ public @interface Action {
      * Identificação da Ação.
      */
     String[] value() default {};
+    
+    /**
+     * Define a vista da ação.
+     */
+    View view() default @View;
     
 }
