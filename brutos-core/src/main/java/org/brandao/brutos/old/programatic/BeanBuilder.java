@@ -135,11 +135,11 @@ public class BeanBuilder {
         }
         else{
             try{
-                fieldBean.setType(
-                        TypeManager.getType(
-                            bean.getGenericType(propertyName),
-                            enumProperty,
-                            temporalProperty ) );
+                //fieldBean.setType(
+                //        TypeManager.getType(
+                //            bean.getGenericType(propertyName),
+                //            enumProperty,
+                //            temporalProperty ) );
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException(

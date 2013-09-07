@@ -55,7 +55,7 @@ public class MapBuilder {
         if( clazz == null )
             throw new NullPointerException( "key type is required" );
 
-        Type type = TypeManager.getType(clazz);
+        Type type = null /*TypeManager.getType(clazz)*/;
 
         if( type == null )
             throw new BrutosException( "invalid type: " + clazz.getName() );

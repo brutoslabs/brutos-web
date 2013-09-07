@@ -91,7 +91,7 @@ public class WebFrameManager {
         //IOC-Manager
         iocManager.addBean( name, classType, scope, false, null );
         
-        Controller fr = new Controller();
+        Controller fr = new Controller(null);
         fr.setId( uri );
         fr.setName( name );
         fr.setView( page );

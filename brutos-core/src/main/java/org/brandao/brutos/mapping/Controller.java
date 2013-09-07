@@ -78,23 +78,25 @@ public class Controller {
 
     private ActionType actionType;
     
+    private ApplicationContext context;
     /**
      * Cria um novo controlador.
      */
-    public Controller() {
-        this.fields = new ArrayList();
-        this.mappingBeans = new LinkedHashMap();
-        this.actions = new LinkedHashMap();
-        this.interceptorStack = new ArrayList();
-        this.alias = new ArrayList();
-        this.reverseMethods = new LinkedHashMap();
-        this.throwsSafe = new LinkedHashMap();
+    public Controller(ApplicationContext context) {
+        this.fields             = new ArrayList();
+        this.mappingBeans       = new LinkedHashMap();
+        this.actions            = new LinkedHashMap();
+        this.interceptorStack   = new ArrayList();
+        this.alias              = new ArrayList();
+        this.reverseMethods     = new LinkedHashMap();
+        this.throwsSafe         = new LinkedHashMap();
         this.interceptorProcess = new InterceptorProcess();
-        this.loaded = false;
-        this.scope = ScopeType.PARAM;
-        this.redirect = false;
+        this.loaded             = false;
+        this.scope              = ScopeType.PARAM;
+        this.redirect           = false;
+        this.actionType         = ActionType.PARAMETER;
+        this.context            = context;
         this.interceptorProcess.setForm( this );
-        this.actionType = ActionType.PARAMETER;
     }
 
     /**
@@ -457,6 +459,14 @@ public class Controller {
 
     public void setActionType(ActionType actionType) {
         this.actionType = actionType;
+    }
+
+    public ApplicationContext getContext() {
+        return context;
+    }
+
+    public void setContext(ApplicationContext context) {
+        this.context = context;
     }
 
 }

@@ -126,7 +126,7 @@ public class MethodBuilder {
         }
         else{
             try{
-                useBean.setType( TypeManager.getType( methodForm.getGenericParameterType( methodForm.getParamterSize() ), enumProperty, temporalProperty ) );
+                useBean.setType( null /*TypeManager.getType( methodForm.getGenericParameterType( methodForm.getParamterSize() ), enumProperty, temporalProperty )*/ );
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException( 

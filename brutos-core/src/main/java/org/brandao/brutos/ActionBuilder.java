@@ -57,14 +57,17 @@ public class ActionBuilder {
     Action action;
     ValidatorProvider validatorProvider;
     ControllerBuilder controllerBuilder;
-
+    ConfigurableApplicationContext applicationContext;
+    
     public ActionBuilder( Action methodForm, 
             Controller controller, ValidatorProvider validatorProvider,
-            ControllerBuilder controllerBuilder ) {
+            ControllerBuilder controllerBuilder,
+            ConfigurableApplicationContext applicationContext) {
         this.controller = controller;
         this.action = methodForm;
         this.validatorProvider = validatorProvider;
         this.controllerBuilder = controllerBuilder;
+        this.applicationContext = applicationContext;
     }
 
     public void addAlias(String value){
@@ -370,7 +373,11 @@ public class ActionBuilder {
         else
         if(rawType != null && mapping == null){
             try{
-                useBean.setType( TypeManager.getType( classType, enumProperty, temporalProperty ));
+                useBean.setType( 
+                        TypeManager.getType( 
+                            classType, 
+                            enumProperty, 
+                            temporalProperty ));
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException( 

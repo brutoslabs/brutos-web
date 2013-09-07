@@ -262,7 +262,7 @@ public class WebFrameBuilder {
             }
             else
             if( returnType != void.class )
-                mp.setReturnType( TypeManager.getType( returnType ) );
+                mp.setReturnType( null /*TypeManager.getType( returnType ) */);
             
             mp.setMethod( method );
             mp.setReturnClass( returnType );
@@ -413,11 +413,11 @@ public class WebFrameBuilder {
             useBean.setType( type );
         else{
             try{
-                useBean.setType(
-                        TypeManager.getType(
+                useBean.setType( null
+                        /*TypeManager.getType(
                             bean.getGenericType(propertyName),
                             enumProperty,
-                            temporalProperty ) );
+                            temporalProperty ) */);
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException(

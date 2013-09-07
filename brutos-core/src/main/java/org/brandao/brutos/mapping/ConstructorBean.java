@@ -103,9 +103,12 @@ public class ConstructorBean {
             if( isCompatible( con, classArgs ) ){
                 Class[] params = con.getParameterTypes();
                 for( int k=0;k<params.length;k++ ){
-                    if( getConstructorArg(k).getType() == null )
+                    if( getConstructorArg(k).getType() == null ){
                         getConstructorArg(k)
-                                .setType(TypeManager.getType(params[k]));
+                                .setType(
+                                    TypeManager.getType(
+                                        params[k]));
+                    }
                 }
                 return con;
             }
@@ -140,9 +143,12 @@ public class ConstructorBean {
                     isCompatible( m, classArgs ) ){
                     Class[] params = m.getParameterTypes();
                     for( int k=0;k<params.length;k++ ){
-                        if( getConstructorArg(k).getType() == null )
+                        if( getConstructorArg(k).getType() == null ){
                             getConstructorArg(k)
-                                    .setType(TypeManager.getType(params[k]));
+                                    .setType(
+                                        TypeManager.getType(
+                                            params[k]));
+                        }
                     }
 
                     return m;

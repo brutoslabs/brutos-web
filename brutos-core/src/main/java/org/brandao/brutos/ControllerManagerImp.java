@@ -156,7 +156,7 @@ public class ControllerManagerImp implements ControllerManager{
         if(!ActionType.DETACHED.equals(actionType))
             throw new IllegalArgumentException("invalid class type: " + classType);
             
-        Controller controller = new Controller();
+        Controller controller = new Controller(this.applicationContext);
         controller.setId( id );
         controller.setName( name );
         controller.setView( view );

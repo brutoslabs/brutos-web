@@ -235,8 +235,11 @@ public class Action {
 
             Class returnClassType = method.getReturnType();
 
-            if( returnClassType != void.class )
-                setReturnType( TypeManager.getType( returnClassType ) );
+            if( returnClassType != void.class ){
+                setReturnType( 
+                        TypeManager.getType( 
+                            returnClassType ) );
+            }
 
             setMethod( method );
             setReturnClass( returnClassType );
@@ -276,7 +279,9 @@ public class Action {
                         
                         if( type == null && mapping == null ){
                             arg.getBean()
-                                    .setType(TypeManager.getType(params[k]));
+                                    .setType(
+                                        TypeManager.getType(
+                                            params[k]));
                         }
                     }
 
