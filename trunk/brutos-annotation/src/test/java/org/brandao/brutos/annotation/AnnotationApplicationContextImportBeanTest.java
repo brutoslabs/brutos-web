@@ -362,7 +362,7 @@ public class AnnotationApplicationContextImportBeanTest
         
         AnnotationApplicationContext annotationApplicationContext;
         try{
-            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
@@ -559,7 +559,7 @@ public class AnnotationApplicationContextImportBeanTest
         
         AnnotationApplicationContext annotationApplicationContext;
         try{
-            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
@@ -605,7 +605,7 @@ public class AnnotationApplicationContextImportBeanTest
         
         AnnotationApplicationContext annotationApplicationContext;
         try{
-            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
@@ -1107,7 +1107,7 @@ public class AnnotationApplicationContextImportBeanTest
         
         AnnotationApplicationContext annotationApplicationContext;
         try{
-            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
@@ -1303,7 +1303,7 @@ public class AnnotationApplicationContextImportBeanTest
         
         AnnotationApplicationContext annotationApplicationContext;
         try{
-            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
@@ -1349,7 +1349,7 @@ public class AnnotationApplicationContextImportBeanTest
         
         AnnotationApplicationContext annotationApplicationContext;
         try{
-            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
@@ -1964,7 +1964,7 @@ public class AnnotationApplicationContextImportBeanTest
         
         AnnotationApplicationContext annotationApplicationContext;
         try{
-            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
@@ -2172,7 +2172,7 @@ public class AnnotationApplicationContextImportBeanTest
         
         AnnotationApplicationContext annotationApplicationContext;
         try{
-            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
@@ -2220,7 +2220,7 @@ public class AnnotationApplicationContextImportBeanTest
         
         AnnotationApplicationContext annotationApplicationContext;
         try{
-            TypeManager.register(BeanConstructorTest.class, new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
