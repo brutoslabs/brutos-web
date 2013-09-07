@@ -146,11 +146,11 @@ public class FieldBuilder {
             useBean.setType( type );
         else{
             try{
-                useBean.setType(
-                        TypeManager.getType(
-                            bean.getGenericType(propertyName),
-                            enumProperty,
-                            temporalProperty ) );
+                //useBean.setType(
+                //        TypeManager.getType(
+                //            bean.getGenericType(propertyName),
+                //            enumProperty,
+                //            temporalProperty ) );
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException( 

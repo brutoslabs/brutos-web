@@ -438,7 +438,8 @@ public class ControllerBuilder {
         controller.addAction( id, action );
 
         ActionBuilder actionBuilder = 
-                new ActionBuilder( action, controller, validatorProvider, this );
+                new ActionBuilder( action, controller, validatorProvider, 
+                    this, this.applicationContext );
 
         actionBuilder
                 .setName( id )

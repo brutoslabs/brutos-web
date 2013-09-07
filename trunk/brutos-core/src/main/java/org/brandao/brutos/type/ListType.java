@@ -46,15 +46,15 @@ public class ListType implements CollectionType{
 
     public void setGenericType(Object classType) {
         Object collectionGenericType = TypeManager.getCollectionType(classType);
-        Class collectionType = TypeManager.getRawType(collectionGenericType);
-        if( collectionType != null ){
-            this.type = collectionType;
-            this.primitiveType = TypeManager.getType( this.type );
-            if( this.primitiveType == null )
-                throw new UnknownTypeException( classType.toString() );
+        if(collectionGenericType != null){
+            Class collectionType = TypeManager.getRawType(collectionGenericType);
+            if( collectionType != null ){
+                this.type = collectionType;
+                this.primitiveType = TypeManager.getType( this.type );
+                if( this.primitiveType == null )
+                    throw new UnknownTypeException( classType.toString() );
+            }
         }
-        //else
-        //    throw new UnknownTypeException( "is not allowed the use the List or List<?>" );
     }
 
     public Object getGenericType(){

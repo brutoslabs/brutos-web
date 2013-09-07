@@ -19,6 +19,8 @@ package org.brandao.brutos.validator;
 
 import java.util.Properties;
 import junit.framework.TestCase;
+import org.brandao.brutos.mapping.Bean;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.DependencyBean;
 import org.brandao.brutos.type.IntegerType;
 import org.brandao.brutos.type.StringType;
@@ -33,7 +35,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
         
         Properties config = new Properties();
@@ -47,7 +49,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
 
         Properties config = new Properties();
@@ -67,7 +69,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
 
         Properties config = new Properties();
@@ -81,7 +83,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
 
         Properties config = new Properties();
@@ -101,7 +103,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -115,7 +117,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -135,7 +137,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
 
         Properties config = new Properties();
@@ -149,7 +151,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
 
         Properties config = new Properties();
@@ -169,7 +171,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -183,7 +185,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -204,7 +206,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -218,7 +220,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -238,7 +240,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -252,7 +254,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(new Properties());
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -277,7 +279,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(configProvider);
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -298,7 +300,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(configProvider);
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -327,7 +329,7 @@ public class ValidatorProviderTest extends TestCase{
         ValidatorProvider vp =
                 ValidatorProvider.getValidatorProvider(configProvider);
 
-        DependencyBean d = new DependencyBean(null);
+        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();

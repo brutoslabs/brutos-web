@@ -362,7 +362,7 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
             try{
                 type = ClassUtil.get(name);
                 factory = ClassUtil.get(value);
-                TypeManager.register(type, (TypeFactory)ClassUtil.getInstance(factory/*,super.handler*/));
+                TypeManager.register((TypeFactory)ClassUtil.getInstance(factory/*,super.handler*/));
             }
             catch( Exception e ){
                 throw new BrutosException( e );

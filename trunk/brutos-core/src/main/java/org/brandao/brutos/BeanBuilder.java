@@ -793,9 +793,14 @@ public class BeanBuilder {
                                 temporalProperty ) );
                 }
                 else
-                if( type != null )
-                    dependencyBean.setType(TypeManager.getType(type, enumProperty, 
-                            temporalProperty));
+                if( type != null ){
+                    dependencyBean
+                            .setType(
+                                TypeManager.getType(
+                                    type, 
+                                    enumProperty, 
+                                    temporalProperty));
+                }
                 
             }
             catch( UnknownTypeException e ){

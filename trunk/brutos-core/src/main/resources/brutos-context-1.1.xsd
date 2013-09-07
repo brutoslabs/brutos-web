@@ -37,7 +37,7 @@
                 <xsd:complexType>
                     <xsd:simpleContent>
                         <xsd:extension base="xsd:string">
-                            <xsd:attribute name="class-type" type="xsd:string" use="required"/>
+                            <!--<xsd:attribute name="class-type" type="xsd:string" use="required"/>-->
                             <xsd:attribute name="factory" type="xsd:string"/>
                         </xsd:extension>
                     </xsd:simpleContent>
