@@ -59,8 +59,7 @@ public class TypeDefAnnotationConfig extends AbstractAnnotationConfig{
         try{
             TypeFactory factory = 
                     (TypeFactory)ClassUtil.getInstance((Class)source);
-            Class classType = factory.getClassType();
-            TypeManager.register(classType, factory);
+            TypeManager.register(factory);
             return factory;
         }
         catch(Exception e){
