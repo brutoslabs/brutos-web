@@ -10,7 +10,7 @@
         <bean name="bean"
             target="org.brandao.brutos.helper.controller.SimpleBean">
                 <property name="bean">
-                    <ref factory="org.brandao.brutos.helper.controller.TypeTest"/>
+                    <ref type-def="org.brandao.brutos.helper.controller.TypeTest"/>
                 </property>
                     
         </bean>
