@@ -11,7 +11,7 @@
             target="org.brandao.brutos.helper.controller.SimpleBean">
                 <constructor-arg
                     factory="org.brandao.brutos.helper.controller.TypeTest"
-                    type="org.brandao.brutos.helper.controller.SimpleBean"/>
+                    type="org.brandao.brutos.helper.controller.EnumTest"/>
         </bean>
     </controller>
 
