@@ -8,6 +8,6 @@
 
    <context:types>
        <context:type class-type="org.brandao.brutos.helper.controller.SimpleBean"
-       factory="org.brandao.brutos.helper.controller.TypeTest"/>
+       type-def="org.brandao.brutos.helper.controller.TypeTest"/>
    </context:types>
 </controllers>

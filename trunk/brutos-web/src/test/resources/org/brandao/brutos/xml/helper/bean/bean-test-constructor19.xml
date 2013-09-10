@@ -10,7 +10,7 @@
         <bean name="bean"
             target="org.brandao.brutos.helper.controller.SimpleBean">
                 <constructor-arg
-                    factory="org.brandao.brutos.helper.controller.TypeTest"
+                    type-def="org.brandao.brutos.helper.controller.TypeTest"
                     type="org.brandao.brutos.helper.controller.EnumTest"/>
         </bean>
     </controller>
