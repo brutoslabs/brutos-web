@@ -108,7 +108,7 @@
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="mapping" type="xsd:boolean" default="false"/>
         <xsd:attribute name="scope" type="xsd:string" default="param"/>
-        <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="type-def" type="xsd:string"/>
     </xsd:complexType>
 
   <!-- *************************************************************** -->
@@ -195,7 +195,7 @@
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="scope" type="xsd:string" default="param"/>
-        <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="type-def" type="xsd:string"/>
         <xsd:attribute name="bean" type="xsd:string"/>
         <xsd:attribute name="mapping" type="xsd:boolean" default="false"/>
     </xsd:complexType>
@@ -217,7 +217,7 @@
         <xsd:attribute name="bean" type="xsd:string"/>
         <xsd:attribute name="mapping" type="xsd:boolean" default="false"/>
         <xsd:attribute name="scope" type="xsd:string" default="param"/>
-        <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="type-def" type="xsd:string"/>
         <xsd:attribute name="type" type="xsd:string"/>
         <!--<xsd:attribute name="mapping-name" type="xsd:string"/>-->
     </xsd:complexType>
@@ -237,7 +237,7 @@
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="bean" type="xsd:string"/>
         <xsd:attribute name="scope" type="xsd:string" default="param"/>
-        <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="type-def" type="xsd:string"/>
         <xsd:attribute name="type" type="xsd:string"/>
     </xsd:complexType>
 
@@ -256,7 +256,7 @@
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="bean" type="xsd:string"/>
         <xsd:attribute name="scope" type="xsd:string" default="param"/>
-        <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="type-def" type="xsd:string"/>
         <xsd:attribute name="type" type="xsd:string"/>
     </xsd:complexType>
 
@@ -293,7 +293,7 @@
         <xsd:attribute name="bean" type="xsd:string"/>
         <xsd:attribute name="mapping" type="xsd:boolean"/>
         <xsd:attribute name="scope" type="xsd:string" default="param"/>
-        <xsd:attribute name="factory" type="xsd:string"/>
+        <xsd:attribute name="type-def" type="xsd:string"/>
     </xsd:complexType>
 
   <!-- *************************************************************** -->
@@ -312,7 +312,7 @@
         <xsd:attribute name="bean" type="xsd:string"/>
         <xsd:attribute name="mapping" type="xsd:boolean"/>
         <xsd:attribute name="scope" type="xsd:string" default="param"/>
-        <xsd:attribute name="factory" type="class"/>
+        <xsd:attribute name="type-def" type="xsd:string"/>
         <xsd:attribute name="type" type="xsd:string"/>
         <!--
         <xsd:attribute name="name" type="xsd:string" use="required"/>
