@@ -620,7 +620,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
             String scopeName = parseUtil.getAttribute(conNode, "scope");
             ScopeType scope = ScopeType.valueOf(scopeName);
-            String factoryName = parseUtil.getAttribute(conNode, "factory");
+            String factoryName = parseUtil.getAttribute(conNode, "type-def");
             String typeName = parseUtil.getAttribute(conNode, "type");
             Type factory = null;
             boolean nullable = false;
@@ -642,7 +642,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 mapping = Boolean
                     .valueOf(parseUtil.getAttribute(mappingRef,  "mapping" )).booleanValue();
                 scope = ScopeType.valueOf( parseUtil.getAttribute(mappingRef,  "scope" ) );
-                factoryName = parseUtil.getAttribute(mappingRef,  "factory" );
+                factoryName = parseUtil.getAttribute(mappingRef,  "type-def" );
                 validatorNode = parseUtil.getElement( mappingRef, "validator");
             }
             else
@@ -710,7 +710,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             boolean mapping = Boolean
                 .valueOf(parseUtil.getAttribute(propNode,  "mapping" )).booleanValue();
             ScopeType scope = ScopeType.valueOf( parseUtil.getAttribute(propNode,  "scope" ) );
-            String factoryName = parseUtil.getAttribute(propNode,  "factory" );
+            String factoryName = parseUtil.getAttribute(propNode,  "type-def" );
             Type factory = null;
             boolean nullable = false;
             
@@ -728,7 +728,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 mapping = Boolean
                     .valueOf(parseUtil.getAttribute(mappingRef,  "mapping" )).booleanValue();
                 scope = ScopeType.valueOf( parseUtil.getAttribute(mappingRef,  "scope" ) );
-                factoryName = parseUtil.getAttribute(mappingRef,  "factory" );
+                factoryName = parseUtil.getAttribute(mappingRef,  "type-def" );
                 validatorNode = parseUtil.getElement( mappingRef, "validator");
             }
             else
@@ -798,7 +798,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         boolean mapping = Boolean
             .valueOf(parseUtil.getAttribute(propNode,  "mapping" )).booleanValue();
         ScopeType scope = ScopeType.valueOf( parseUtil.getAttribute(propNode,  "scope" ) );
-        String factoryName = parseUtil.getAttribute(propNode,  "factory" );
+        String factoryName = parseUtil.getAttribute(propNode,  "type-def" );
         Type factory = null;
         boolean nullable = false;
 
@@ -816,7 +816,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             mapping = Boolean
                 .valueOf(parseUtil.getAttribute(mappingRef,  "mapping" )).booleanValue();
             scope = ScopeType.valueOf( parseUtil.getAttribute(mappingRef,  "scope" ) );
-            factoryName = parseUtil.getAttribute(mappingRef,  "factory" );
+            factoryName = parseUtil.getAttribute(mappingRef,  "type-def" );
             validatorNode = parseUtil.getElement( mappingRef, "validator");
         }
         else
@@ -878,7 +878,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
         String scopeName = parseUtil.getAttribute(conNode, "scope");
         ScopeType scope = ScopeType.valueOf(scopeName);
-        String factoryName = parseUtil.getAttribute(conNode, "factory");
+        String factoryName = parseUtil.getAttribute(conNode, "type-def");
         String typeName = parseUtil.getAttribute(conNode, "type");
         Type factory = null;
         boolean nullable = false;
@@ -900,7 +900,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             mapping = Boolean
                 .valueOf(parseUtil.getAttribute(mappingRef,  "mapping" )).booleanValue();
             scope = ScopeType.valueOf( parseUtil.getAttribute(mappingRef,  "scope" ) );
-            factoryName = parseUtil.getAttribute(mappingRef,  "factory" );
+            factoryName = parseUtil.getAttribute(mappingRef,  "type-def" );
             validatorNode = parseUtil.getElement( mappingRef, "validator");
         }
         else
@@ -966,7 +966,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
 
         String scopeName = parseUtil.getAttribute(conNode, "scope");
         ScopeType scope = ScopeType.valueOf(scopeName);
-        String factoryName = parseUtil.getAttribute(conNode, "factory");
+        String factoryName = parseUtil.getAttribute(conNode, "type-def");
         String typeName = parseUtil.getAttribute(conNode, "type");
         Type factory = null;
         boolean nullable = false;
@@ -988,7 +988,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             mapping = Boolean
                 .valueOf(parseUtil.getAttribute(mappingRef,  "mapping" )).booleanValue();
             scope = ScopeType.valueOf( parseUtil.getAttribute(mappingRef,  "scope" ) );
-            factoryName = parseUtil.getAttribute(mappingRef,  "factory" );
+            factoryName = parseUtil.getAttribute(mappingRef,  "type-def" );
             validatorNode = parseUtil.getElement( mappingRef, "validator");
         }
         else
@@ -1103,7 +1103,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         boolean mapping = Boolean
             .valueOf(parseUtil.getAttribute(paramNode,  "mapping" )).booleanValue();
         ScopeType scope = ScopeType.valueOf( parseUtil.getAttribute(paramNode,  "scope" ) );
-        String factoryName = parseUtil.getAttribute(paramNode,  "factory" );
+        String factoryName = parseUtil.getAttribute(paramNode,  "type-def" );
         String type = parseUtil.getAttribute(paramNode,  "type" );
         Type factory = null;
         Class typeClass = null;
@@ -1131,7 +1131,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             mapping = Boolean
                 .valueOf(parseUtil.getAttribute(mappingRef,  "mapping" )).booleanValue();
             scope = ScopeType.valueOf( parseUtil.getAttribute(mappingRef,  "scope" ) );
-            factoryName = parseUtil.getAttribute(mappingRef,  "factory" );
+            factoryName = parseUtil.getAttribute(mappingRef,  "type-def" );
             validatorNode = parseUtil.getElement( mappingRef, "validator");
         }
         else
