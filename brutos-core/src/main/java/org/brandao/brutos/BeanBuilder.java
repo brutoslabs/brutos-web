@@ -235,14 +235,19 @@ public class BeanBuilder {
     
     public KeyBuilder setKey( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, Type factory, Class type ){
+            ScopeType scope, Object value, Type typeDef, Class type ){
         return setKey( name, enumProperty, temporalProperty, mapping,
-                scope, value, factory, (Object)type );
+                scope, value, typeDef, (Object)type );
     }
     
     public KeyBuilder setKey( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, Type factory, Object type ){
+            ScopeType scope, Object value, Type typeDef, Object type ){
+
+        name = StringUtil.adjust(name);
+        name = StringUtil.isEmpty(name)?
+                "key" :
+                name;
 
         if( !mappingBean.isMap() )
             throw new BrutosException(
@@ -252,7 +257,7 @@ public class BeanBuilder {
         DependencyBean key =
             this.createDependencyBean(name, null,
                 enumProperty, temporalProperty, mapping, scope, value, false, 
-                factory, type, DEPENDENCY);
+                typeDef, type, DEPENDENCY);
 
         ((MapBean)mappingBean).setKey(key);
         return new KeyBuilder(key);
@@ -343,15 +348,20 @@ public class BeanBuilder {
 
     public ElementBuilder setElement( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, boolean nullable, Type factory, Class type ){
+            ScopeType scope, Object value, boolean nullable, Type typeDef, Class type ){
         return setElement( name, enumProperty, temporalProperty, mapping,
-                scope, value, nullable, factory, (Object)type );
+                scope, value, nullable, typeDef, (Object)type );
     }
     
     public ElementBuilder setElement( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, boolean nullable, Type factory, Object type ){
+            ScopeType scope, Object value, boolean nullable, Type typeDef, Object type ){
 
+        name = StringUtil.adjust(name);
+        name = StringUtil.isEmpty(name)?
+                "element" :
+                name;
+        
         if( !mappingBean.isCollection() && !mappingBean.isMap() )
             throw new BrutosException(
                 String.format("is not allowed for this type: %s",
@@ -360,7 +370,7 @@ public class BeanBuilder {
         DependencyBean collection =
             this.createDependencyBean(name, null,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                factory, type, DEPENDENCY);
+                typeDef, type, DEPENDENCY);
 
         ((CollectionBean)mappingBean).setCollection(collection);
         return new ElementBuilder(collection);
@@ -520,6 +530,11 @@ public class BeanBuilder {
             EnumerationType enumProperty, String temporalProperty, String mapping, 
             ScopeType scope, Object value, boolean nullable, Object classType, Type type ){
 
+        name = StringUtil.adjust(name);
+        name = StringUtil.isEmpty(name)?
+                propertyName :
+                name;
+        
         PropertyBean propertyBean =
             (PropertyBean) this.createDependencyBean(name, propertyName,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
@@ -696,19 +711,24 @@ public class BeanBuilder {
      */
     public ConstructorBuilder addContructorArg( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, boolean nullable, Type factory, Class type ){
+            ScopeType scope, Object value, boolean nullable, Type typeDef, Class type ){
         return addContructorArg( name, enumProperty, temporalProperty, mapping,
-            scope, value, nullable, factory, (Object)type );
+            scope, value, nullable, typeDef, (Object)type );
     }
     
     public ConstructorBuilder addContructorArg( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, boolean nullable, Type factory, Object type ){
+            ScopeType scope, Object value, boolean nullable, Type typeDef, Object type ){
 
+        name = StringUtil.adjust(name);
+        name = StringUtil.isEmpty(name)?
+                "arg" + this.mappingBean.getConstructor().size() :
+                name;
+        
         ConstructorArgBean arg =
             (ConstructorArgBean) this.createDependencyBean(name, null,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                factory, type, CONSTRUCTOR_ARG);
+                typeDef, type, CONSTRUCTOR_ARG);
 
         getLogger()
             .info(
@@ -725,7 +745,7 @@ public class BeanBuilder {
 
     private DependencyBean createDependencyBean( String name, String propertyName,
             EnumerationType enumProperty,String temporalProperty, String mapping, 
-            ScopeType scope, Object value, boolean nullable, Type factory, 
+            ScopeType scope, Object value, boolean nullable, Type typeDef, 
             Object type, int dependencyType ){
 
         name             = StringUtil.adjust(name);
@@ -781,8 +801,24 @@ public class BeanBuilder {
         if( mapping != null )
             dependencyBean.setMapping( mapping );
 
-        if( factory != null )
-            dependencyBean.setType( factory );
+        if( typeDef != null ){
+            if(type != null){
+                Class rawType = TypeManager.getRawType(type);
+                if(!typeDef.getClassType().isAssignableFrom(rawType)){
+                    throw new IllegalArgumentException(
+                            String.format(
+                                "expected %s found %s",
+                                new Object[]{
+                                    rawType.getName(),
+                                    typeDef.getClassType().getName()
+                                }
+                            )
+                    );
+                }
+            }
+            
+            dependencyBean.setType( typeDef );
+        }
         else{
             try{
                 if( dependencyType == PROPERTY ){

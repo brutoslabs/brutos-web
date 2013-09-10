@@ -482,8 +482,9 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     }
 
     private void addBean( Element beanNode,
-            BeanBuilder bean, String name, String propertyName, boolean key,
-            boolean element ){
+            BeanBuilder bean, String name, String propertyName, 
+            boolean key, String keyName,
+            boolean element, String elementName ){
 
         //String name          = parseUtil.getAttribute(beanNode,"name" );
         String separator     = parseUtil.getAttribute(beanNode,"separator" );
@@ -506,15 +507,15 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         BeanBuilder beanBuilder;
 
         if( key )
-            beanBuilder = bean.buildKey( clazz );
+            beanBuilder = bean.buildKey( keyName, clazz );
         else
         if( element )
-            beanBuilder = bean.buildElement( clazz );
+            beanBuilder = bean.buildElement( elementName, clazz );
         else
             beanBuilder =
                 propertyName == null?
                     bean.buildConstructorArg(name, clazz) :
-                    bean.buildProperty(name == null? propertyName : name, propertyName, clazz);
+                    bean.buildProperty(name, propertyName, clazz);
 
         beanBuilder.setFactory(factory);
         beanBuilder.setMethodfactory(methodFactory);
@@ -646,7 +647,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             }
             else
             if( beanNode != null ){
-                addBean( beanNode, beanBuilder, bean, null, false, false);
+                addBean( beanNode, beanBuilder, bean, null, false, null, false, null);
                 continue;
             }
             else
@@ -732,7 +733,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             }
             else
             if( beanNode != null ){
-                addBean( beanNode, beanBuilder, bean, propertyName, false, false );
+                addBean( beanNode, beanBuilder, bean, propertyName, false, null, false, null );
                 continue;
             }
             else
@@ -904,7 +905,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         }
         else
         if( beanNode != null ){
-            addBean( beanNode, beanBuilder, bean, null, true, false);
+            addBean( beanNode, beanBuilder, null, null, true, bean, false, null);
             return;
         }
         else
@@ -992,7 +993,7 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         }
         else
         if( beanNode != null ){
-            addBean( beanNode, beanBuilder, bean, null, false, true);
+            addBean( beanNode, beanBuilder, null, null, false, null, true, bean);
             return;
         }
         else
