@@ -124,9 +124,9 @@ public class ActionBuilder {
      * @param type Faz o processamento do par�metro.
      * @return Contrutor do par�metro.
      */
-    public ParameterBuilder addParameter( String name, ScopeType scope, Type type ){
+    public ParameterBuilder addParameter( String name, ScopeType scope, Type typeDef ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, type, null, false, type.getClassType() );
+                null, typeDef, null, false, typeDef.getClassType() );
     }
     
     /**
@@ -175,9 +175,9 @@ public class ActionBuilder {
      * @param type Faz o processamento do par�metro.
      * @return Contrutor do par�metro.
      */
-    public ParameterBuilder addParameter( String name, Type type ){
+    public ParameterBuilder addParameter( String name, Type typeDef ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, type, null, false, type.getClassType() );
+                null, typeDef, null, false, typeDef.getClassType() );
     }
     
     /**
@@ -329,14 +329,14 @@ public class ActionBuilder {
      * @return Contrutor do par�metro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
-            String temporalProperty, String mapping, Type type, Object value,
+            String temporalProperty, String mapping, Type typeDef, Object value,
             boolean nullable, Class classType ){
         return addParameter( name, scope, enumProperty, temporalProperty, 
-                mapping, type, value, nullable, (Object)classType );
+                mapping, typeDef, value, nullable, (Object)classType );
     }
     
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
-            String temporalProperty, String mapping, Type type, Object value,
+            String temporalProperty, String mapping, Type typeDef, Object value,
             boolean nullable, Object classType ){
 
         name = StringUtil.adjust(name);
@@ -362,13 +362,22 @@ public class ActionBuilder {
                 
         }
         
-        if( type != null ){
-            useBean.setType( type );
-            if( rawType != null &&
-                    !rawType.isAssignableFrom( useBean.getType().getClassType() ) )
-                throw new BrutosException( 
-                        "expected " + rawType.getName() + " found " +
-                        type.getClassType().getName() );
+        if( typeDef != null ){
+            if(classType != null){
+                if(!typeDef.getClassType().isAssignableFrom(rawType)){
+                    throw new IllegalArgumentException(
+                            String.format(
+                                "expected %s found %s",
+                                new Object[]{
+                                    rawType.getName(),
+                                    typeDef.getClassType().getName()
+                                }
+                            )
+                    );
+                }
+            }
+            
+            useBean.setType( typeDef );
         }
         else
         if(rawType != null && mapping == null){
