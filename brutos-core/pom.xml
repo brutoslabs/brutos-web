@@ -5,7 +5,7 @@
     <groupId>org.brandao</groupId>
     <artifactId>brutos-core</artifactId>
     <packaging>jar</packaging>
-    <version>2.0-b3</version>
+    <version>2.0-b4</version>
     <name>brutos-core</name>
     <url>http://maven.apache.org</url>
     <build>
