@@ -356,11 +356,11 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
 
             value = value == null? c.getTextContent() : value;
 
-            Class type;
+            //Class type;
             Class factory;
 
             try{
-                type = ClassUtil.get(name);
+                //type = ClassUtil.get(name);
                 factory = ClassUtil.get(value);
                 TypeManager.register((TypeFactory)ClassUtil.getInstance(factory/*,super.handler*/));
             }
