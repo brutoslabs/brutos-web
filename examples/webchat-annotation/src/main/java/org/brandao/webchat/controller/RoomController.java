@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.webchat.controller.entity.MessageDTO;
@@ -13,12 +11,12 @@ import org.brandao.webchat.controller.entity.UserDTO;
 import org.brandao.webchat.model.*;
 
 @RequestScoped
-@Controller(id="/Room/{roomID:\\d+}")
-@View(id="/layout/login.jsp")
-@AbstractActions({
-    @AbstractAction(id="/messagePart",view="/layout/messages.jsp"),
-    @AbstractAction(id="/sendPart",   view="/layout/send.jsp"),
-    @AbstractAction(id="/login",      view="/layout/login.jsp")
+@Controller("/Room/{roomID:\\d+}")
+@View("/layout/login.jsp")
+@Actions({
+    @Action(value="/messagePart",view=@View("/layout/messages.jsp")),
+    @Action(value="/sendPart",   view=@View("/layout/send.jsp")),
+    @Action(value="/login",      view=@View("/layout/login.jsp"))
 })
 public class RoomController {
     
@@ -29,11 +27,6 @@ public class RoomController {
     public RoomController(){
     }
 
-    @Inject
-    public RoomController(@Named(value="sessionUser") User user){
-        this.currentUser = user;
-    }
-    
     public RoomService getRoomService() {
         return roomService;
     }
@@ -53,7 +46,7 @@ public class RoomController {
     }
     
     @Action("/enter")
-    @View(id="/layout/room.jsp")
+    @View("/layout/room.jsp")
     @ThrowSafeList({
         @ThrowSafe(target=ValidatorException.class,   view="/layout/login.jsp"),
         @ThrowSafe(target=UserExistException.class,   view="/layout/login.jsp"),
@@ -73,6 +66,7 @@ public class RoomController {
         
         User user = userDTO.rebuild();
         roomService.putUser(user);
+        this.setCurrentUser(user);
     }
     
     @Action("/exit")
@@ -116,6 +110,7 @@ public class RoomController {
         return currentUser;
     }
 
+    @Identify(bean="sessionUser", scope=ScopeType.SESSION)
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
