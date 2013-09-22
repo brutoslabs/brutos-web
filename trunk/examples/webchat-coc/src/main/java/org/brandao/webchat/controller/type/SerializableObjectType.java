@@ -31,12 +31,6 @@ public class SerializableObjectType
     }
 
     @Override
-    @Deprecated
-    public Object getValue(Object value) {
-        return null;
-    }
-    
-    @Override
     public Object convert(Object value) {
         try{
             String v;
@@ -57,11 +51,6 @@ public class SerializableObjectType
         }
     }
 
-    @Override
-    @Deprecated
-    public void setValue(Object value) throws IOException {
-    }
-    
     @Override
     public void show(MvcResponse response, Object value) throws IOException {
         response.setType( "application/json" );
