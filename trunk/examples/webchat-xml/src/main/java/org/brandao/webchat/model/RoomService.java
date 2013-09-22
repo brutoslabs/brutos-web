@@ -87,7 +87,7 @@ public class RoomService {
             if(users.containsKey(key)){
 
                 this.users.remove(key);
-
+                user.setRoom(null);
                 String text = String.format(
                         "%s acabou de sair da sala", user.getNick());
 

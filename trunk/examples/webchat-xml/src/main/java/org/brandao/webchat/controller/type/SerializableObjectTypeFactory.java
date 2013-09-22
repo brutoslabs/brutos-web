@@ -18,4 +18,9 @@ public class SerializableObjectTypeFactory implements
         return new SerializableObjectType();
     }
 
+    @Override
+    public boolean matches(Class type) {
+        return type == Serializable.class;
+    }
+
 }
