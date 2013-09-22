@@ -2,8 +2,6 @@ package org.brandao.webchat.controller.entity;
 
 import java.io.Serializable;
 import org.brandao.brutos.annotation.*;
-import org.brandao.brutos.web.ContextLoader;
-import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.webchat.model.RoomService;
 import org.brandao.webchat.model.User;
 import org.brandao.webchat.model.UserNotFoundException;
@@ -38,9 +36,7 @@ public class UserDTO implements Serializable{
     }
     
     public User rebuild(){
-        WebApplicationContext context = 
-                ContextLoader.getCurrentWebApplicationContext();
-        User obj = (User) context.getBean(User.class);
+        User obj = new User();
         obj.setNick(this.nick);
         return obj;
     }
