@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+import org.brandao.brutos.annotation.Identify;
 import org.brandao.brutos.annotation.ResultView;
+import org.brandao.brutos.annotation.ScopeType;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.webchat.controller.entity.MessageDTO;
 import org.brandao.webchat.controller.entity.UserDTO;
@@ -22,11 +22,6 @@ public class RoomController {
     public RoomController(){
     }
     
-    @Inject
-    public RoomController(@Named(value="sessionUser") User user){
-        this.currentUser = user;
-    }
-
     public void messagePartAction(){
     }
 
@@ -64,6 +59,7 @@ public class RoomController {
         
         User user = userDTO.rebuild();
         roomService.putUser(user);
+        this.setCurrentUser(user);
     }
     
     public void exitAction() throws UserNotFoundException{
@@ -100,6 +96,11 @@ public class RoomController {
 
     public User getCurrentUser() {
         return currentUser;
+    }
+
+    @Identify(scope=ScopeType.SESSION)
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
 }

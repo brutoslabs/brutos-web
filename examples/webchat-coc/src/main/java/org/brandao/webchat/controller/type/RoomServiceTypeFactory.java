@@ -22,5 +22,10 @@ public class RoomServiceTypeFactory
     public Class getClassType() {
         return RoomService.class;
     }
+
+    @Override
+    public boolean matches(Class type) {
+        return RoomService.class.isAssignableFrom(type);
+    }
     
 }
