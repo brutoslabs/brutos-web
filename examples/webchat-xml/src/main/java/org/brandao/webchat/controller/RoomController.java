@@ -3,12 +3,12 @@ package org.brandao.webchat.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
-import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import org.brandao.webchat.controller.entity.MessageDTO;
 import org.brandao.webchat.controller.entity.UserDTO;
 import org.brandao.webchat.model.*;
 
+@RequestScoped
 public class RoomController {
     
     private User currentUser;
@@ -18,11 +18,6 @@ public class RoomController {
     public RoomController(){
     }
 
-    @Inject
-    public RoomController(@Named(value="sessionUser") User user){
-        this.currentUser = user;
-    }
-    
     public RoomService getRoomService() {
         return roomService;
     }
@@ -52,7 +47,6 @@ public class RoomController {
         roomService.putUser(user);
         
         this.setCurrentUser(user);
-        
     }
     
     public void removeUser(

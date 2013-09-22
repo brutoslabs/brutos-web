@@ -4,11 +4,7 @@ import java.io.Serializable;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 
-@SessionScoped
-@Named(value="sessionUser")
 public class User implements Serializable{
     
     private String nick;
@@ -74,4 +70,12 @@ public class User implements Serializable{
             ((User)x).getNick().equalsIgnoreCase(this.nick) :
             false;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + (this.nick != null ? this.nick.hashCode() : 0);
+        return hash;
+    }
+    
 }
