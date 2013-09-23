@@ -13,8 +13,7 @@
    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>
 
     <context:types>
-        <context:type class-type="br.brandao.beans.MyBean"
-                     factory="br.brandao.type.MyBeanType"/>
+        <context:type factory="br.brandao.type.MyBeanType"/>
     </context:types>
    
     <controller id="/index.jbrs" view="/WEB-INF/jsp/index.jsp" action-type="parameter"
