@@ -351,7 +351,7 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
 
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
-            String name  = parseUtil.getAttribute(c,"class-type" );
+            //String name  = parseUtil.getAttribute(c,"class-type" );
             String value = parseUtil.getAttribute(c,"factory");
 
             value = value == null? c.getTextContent() : value;
