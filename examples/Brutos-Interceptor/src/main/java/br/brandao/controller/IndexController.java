@@ -7,7 +7,7 @@ package br.brandao.controller;
 
 /**
  *
- * @author Afonso Brand√£o
+ * @author Afonso Brand„o
  */
 public class IndexController {
 
