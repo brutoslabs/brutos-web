@@ -21,10 +21,9 @@
        </bean>
 
        <bean name="filesPath" class="java.lang.String"
-        factory-bean="filesPathFactory" factory-method="createInstance" scope="application"/>
+        factory-bean="filesPathFactory" factory-method="createInstance"/>
 
-       <bean name="filesPathFactory" class="br.brandao.controller.bean.FilesPathFactory"
-        scope="application">
+       <bean name="filesPathFactory" class="br.brandao.controller.bean.FilesPathFactory">
             <constructor-arg type="javax.servlet.ServletContext">
                 <ref bean="servletContext"/>
             </constructor-arg>

@@ -6,7 +6,6 @@
 package br.brandao.controller.bean;
 
 import javax.servlet.ServletContext;
-import org.brandao.brutos.ioc.FactoryBean;
 
 /**
  *
