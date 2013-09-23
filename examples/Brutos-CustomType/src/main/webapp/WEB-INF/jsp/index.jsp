@@ -23,7 +23,7 @@
                     <td width="50%"><b>First Name</b></td>
                 </tr>
                 <tr>
-                    <td width="50%"><input type="text" name="id" style="width: 90%"></td>
+                    <td width="50%"><input type="text" name="id" value="0" style="width: 90%"></td>
                     <td width="50%"><input type="text" name="first-name" style="width: 90%"></td>
                 </tr>
                 <tr>
@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                     <td width="50%"><input type="text" name="last-name" style="width: 90%"></td>
-                    <td width="50%"><input type="text" name="age" style="width: 90%"></td>
+                    <td width="50%"><input type="text" name="age" value="0" style="width: 90%"></td>
                 </tr>
                 <tr>
                     <td width="100%" colspan="2" align="center">

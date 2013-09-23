@@ -61,4 +61,8 @@ public class MyBeanType implements Type,TypeFactory{
         return this;
     }
 
+    public boolean matches(Class type) {
+        return MyBean.class == type;
+    }
+
 }
