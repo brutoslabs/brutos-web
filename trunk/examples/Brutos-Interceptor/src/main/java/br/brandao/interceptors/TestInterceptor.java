@@ -6,7 +6,6 @@
 package br.brandao.interceptors;
 
 import org.brandao.brutos.ResourceAction;
-import org.brandao.brutos.ResourceMethod;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.interceptor.AbstractInterceptor;
 import org.brandao.brutos.interceptor.InterceptedException;
