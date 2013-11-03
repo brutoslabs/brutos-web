@@ -21,35 +21,26 @@ package org.brandao.brutos;
 import java.util.Properties;
 
 /**
- * Classe que permite a configuração de uma aplicação. Com essa classe
- * é possível:
- * <ul>
- * <li>configurar interceptadores;</li>
- * <li>incluir novos controladores;</li>
- * <li>manipular os controladores;</li>
- * <li>manipular a resolução de controladores;</li>
- * <li>manipular a execução de ações;</li>
- * <li>determinar novas regras de validação.</li>
- * </ul>
+ * Classe que permite a configuração de uma aplicação.
  *
  * @author Afonso Brandao
  */
 public interface ApplicationContext {
 
     /**
-     * Inicia o processo de configuração da aplicação.
+     * Configura a aplicação.
      */
     void configure();
 
     /**
-     * Inicia o processo de configuração da aplicação.
+     * Configura a aplicação.
      *
      * @param config Configuração.
      */
     void configure(Properties config);
 
     /**
-     * Método invocado quando a aplicação é finalizada.
+     * Destroi a aplicação.
      */
     void destroy();
 
@@ -77,10 +68,25 @@ public interface ApplicationContext {
      */
     Scopes getScopes();
 
+    /**
+     * Obtém a instância de um controlador.
+     * @param clazz Classe que representa o controlador.
+     * @return Controlador.
+     */
     Object getController(Class clazz);
     
+    /**
+     * Obtém a instância de um bean a partir de sua classe.
+     * @param clazz Classe que representa o bean.
+     * @return Bean.
+     */
     Object getBean(Class clazz);
 
+    /**
+     * Obtém a instância de um bean a partir de seu nome.
+     * @param clazz Nome do bean.
+     * @return Bean.
+     */
     Object getBean(String name);
     
 }
