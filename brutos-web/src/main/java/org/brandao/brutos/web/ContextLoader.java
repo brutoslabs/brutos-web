@@ -49,10 +49,8 @@ public class ContextLoader {
 
         if( servletContext.getAttribute( BrutosConstants.ROOT_APPLICATION_CONTEXT_ATTRIBUTE ) != null ){
             throw new IllegalStateException(
-                            "Cannot initialize context because there is already "
-                            + "a root application context present - " +
-                            "check whether you have multiple ContextLoader "
-                            + "definitions in your web.xml!");
+                    "Multiple ContextLoader definitions has been detected. "
+                    + "Check your web.xml!");
         }
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
