@@ -46,11 +46,10 @@
             <xsd:element name="alias" minOccurs="0" type="alias" maxOccurs="unbounded"/>
             <xsd:element name="interceptor-ref" type="interceptor-ref" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="property" type="controller-property" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="property" type="property" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="action" type="action" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="throw-safe" minOccurs="0" type="throw-safe" maxOccurs="unbounded"/>
         </xsd:sequence>
-
         <xsd:attribute name="id" type="xsd:string"/>
         <xsd:attribute name="dispatcher" type="dispatcher" default="forward"/>
         <xsd:attribute name="view" type="xsd:string"/>
