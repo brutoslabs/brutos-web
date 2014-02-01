@@ -19,13 +19,23 @@
 package org.brandao.brutos.type;
 
 /**
- *
- * @author Afonso Brandao
+ * Permite a implementação de tipos que usam generics.
+ * 
+ * @author Brandao
  */
 public interface GenericType extends Type{
 
-    public void setGenericType( Object genericType );
+    /**
+     * Define o tipo.
+     * 
+     * @param genericType Tipo.
+     */
+    void setGenericType( Object genericType );
 
+    /**
+     * Obtém o tipo.
+     * @return Tipo.
+     */
     public Object getGenericType();
     
 }

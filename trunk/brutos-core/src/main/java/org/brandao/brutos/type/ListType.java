@@ -16,94 +16,27 @@
  */
 package org.brandao.brutos.type;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.MvcResponse;
-import org.brandao.brutos.web.http.ParameterList;
 
 /**
+ * Representa o tipo {@link java.util.List}.
  * 
- * @author Afonso Brandao
+ * @author Brandao
  */
-public class ListType implements CollectionType{
+public class ListType extends AbstractCollectionType{
 
-    private Class listType;
-    private Class type;
-    private Type primitiveType;
-    private Type serializableType;
-    
+    /**
+     * Cria um novo tipo.
+     */
     public ListType(){
-        this.listType = TypeManager.getDefaultListType();
-        this.serializableType = TypeManager.getType( Serializable.class );
-    }
-
-    private Class getListType(){
-        return this.listType;
-    }
-
-    public void setGenericType(Object classType) {
-        Object collectionGenericType = TypeManager.getCollectionType(classType);
-        if(collectionGenericType != null){
-            Class collectionType = TypeManager.getRawType(collectionGenericType);
-            if( collectionType != null ){
-                this.type = collectionType;
-                this.primitiveType = TypeManager.getType( this.type );
-                if( this.primitiveType == null )
-                    throw new UnknownTypeException( classType.toString() );
-            }
-        }
-    }
-
-    public Object getGenericType(){
-        return this.type;
+        super(TypeManager.getDefaultListType());
     }
     
-    private List getList(Object value){
-
-        if( this.type == null )
-            throw new UnknownTypeException( "invalid type: List or List<?>" );
-
-        try{
-            List objList = (List)ClassUtil.getInstance(getListType());
-
-            ParameterList list = (ParameterList)value;
-            int size = list.size();
-            for( int i=0;i<size;i++ ){
-                Object o = list.get(i);
-                objList.add( this.primitiveType.convert(o) );
-            }
-            return objList;
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
-    
+    /**
+     * @see CollectionType#getClassType() 
+     */
     public Class getClassType() {
         return List.class;
     }
-
-    public Object getValue(Object value) {
-        return null;
-    }
-    
-    public Object convert(Object value) {
-        if( value instanceof ParameterList )
-            return getList(value);
-
-        else
-            return value;
-    }
-
-    public void setValue(Object value) throws IOException {
-    }
-    
-    public void show(MvcResponse response, Object value) throws IOException {
-        this.serializableType.show( response, value );
-    }
-
 
 }
