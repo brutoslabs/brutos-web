@@ -29,6 +29,7 @@ public interface EnumType extends Type{
 
     /**
      * Obtém o tipo do mapeamento do {@link java.lang.Enum}.
+     * 
      * @return Tipo do mapeamento.
      */
     EnumerationType getEnumType();
