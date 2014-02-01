@@ -44,16 +44,11 @@ public class CalendarType extends DefaultDateType{
     }
 
     private Object toValue( Object value ){
-        try{
-            Calendar cal =
-                    GregorianCalendar.getInstance();
+        Calendar cal =
+                GregorianCalendar.getInstance();
 
-            cal.setTime((Date)value);
-            return cal;
-        }
-        catch( Exception e ){
-            return null;
-        }
+        cal.setTime((Date)value);
+        return cal;
     }
 
     public Class getClassType() {
@@ -68,8 +63,10 @@ public class CalendarType extends DefaultDateType{
         if( value instanceof Calendar )
             return value;
         else
-        if( value instanceof String )
-            return toValue( super.convert(value) );
+        if( value instanceof String ){
+            value = super.convert(value);
+            return value == null? null : toValue( value );
+        }
         else
         if(value == null)
             return null;
