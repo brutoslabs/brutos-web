@@ -18,92 +18,27 @@
 
 package org.brandao.brutos.type;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.Set;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.MvcResponse;
-import org.brandao.brutos.web.http.ParameterList;
 
 /**
+ * Representa o tipo {@link java.util.Set}.
  * 
- * @author Afonso Brandao
+ * @author Brandao
  */
-public class SetType implements CollectionType{
+public class SetType extends AbstractCollectionType{
 
-    private Class listType;
-    private Class type;
-    private Type primitiveType;
-    private Type serializableType;
-
+    /**
+     * Cria um novo tipo.
+     */
     public SetType(){
-        this.listType = TypeManager.getDefaultSetType();
-        this.serializableType = TypeManager.getType( Serializable.class );
+        super(TypeManager.getDefaultSetType());
     }
     
-    public void setGenericType(Object classType) {
-        Object collectionGenericType = TypeManager.getCollectionType(classType);
-        Class collectionType = TypeManager.getRawType(collectionGenericType);
-        if( collectionType != null ){
-            this.type = collectionType;
-            this.primitiveType = TypeManager.getType( this.type );
-            if( this.primitiveType == null )
-                throw new UnknownTypeException( classType.toString() );
-        }
-        else
-            throw new UnknownTypeException( "invalid type: Set or Set<?>" );
-    }
-
-    public Object getGenericType(){
-        return this.type;
-    }
-
+    /**
+     * @see CollectionType#getClassType() 
+     */
     public Class getClassType() {
         return Set.class;
     }
-
-    public Object getValue(Object value) {
-        return null;
-    }
     
-    public Object convert(Object value) {
-        if( value instanceof ParameterList )
-            return getList(value);
-
-        else
-            return value;
-    }
-
-    public void setValue(Object value) throws IOException {
-    }
-    
-    public void show(MvcResponse response, Object value) throws IOException {
-        this.serializableType.show( response, value );
-    }
-
-    private Class getListType(){
-        return this.listType;
-    }
-
-    private Set getList(Object value){
-        try{
-            Set objList = (Set)ClassUtil.getInstance(getListType());
-
-            ParameterList list = (ParameterList)value;
-            int size = list.size();
-            //for( Object o: (ParameterList)value )
-            for( int i=0;i<size;i++ ){
-                Object o = list.get(i);
-                objList.add( this.primitiveType.convert(o) );
-            }
-            return objList;
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
-
 }
