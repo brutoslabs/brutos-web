@@ -63,7 +63,7 @@ public class TypeManager {
         staticTypes.add(new DefaultTypeFactory(ListType.class, List.class));
         staticTypes.add(new DefaultTypeFactory(SetType.class, Set.class));
         staticTypes.add(new DefaultTypeFactory(SerializableTypeImp.class, Serializable.class));
-        staticTypes.add(new DefaultTypeFactory(DefaultDateTimeType.class, Date.class));
+        staticTypes.add(new DefaultTypeFactory(DefaultDateType.class, Date.class));
         staticTypes.add(new DefaultTypeFactory(CalendarType.class, Calendar.class));
         staticTypes.add(new DefaultArrayTypeFactory());
         staticTypes.add(new DefaultEnumTypeFactory());
@@ -226,7 +226,7 @@ public class TypeManager {
         }
 
         if (type instanceof DateTimeType) {
-            ((DateTimeType) type).setMask(maskDate);
+            ((DateTimeType) type).setPattern(maskDate);
         }
 
         if (type instanceof CollectionType) {

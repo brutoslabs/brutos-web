@@ -18,28 +18,37 @@
 package org.brandao.brutos.type;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- *
+ * Implementação padão do tipo {@link java.util.Calendar}.
+ * 
  * @author Brandao
  */
-public class CalendarType extends DefaultDateTimeType{
+public class CalendarType extends DefaultDateType{
 
+    /**
+     * Cria um novo tipo.
+     */
     public CalendarType(){
     }
     
-    public CalendarType(String mask) {
-        this.setMask(mask);
+    /**
+     * Cria um novo tipo usando um formato de data específico.
+     * 
+     * @param pattern Formato da data.
+     */
+    public CalendarType(String pattern) {
+        super.setPattern(pattern);
     }
 
-    public Object toValue( String value ){
+    private Object toValue( Object value ){
         try{
             Calendar cal =
                     GregorianCalendar.getInstance();
 
-            cal.setTime(sdf.parse( value ));
-
+            cal.setTime((Date)value);
             return cal;
         }
         catch( Exception e ){
@@ -51,16 +60,19 @@ public class CalendarType extends DefaultDateTimeType{
         return Calendar.class;
     }
 
-    public Object getValue(Object value) {
-        return null;
-    }
-    
+    /**
+     * @see DateTimeType#convert(java.lang.Object) 
+     * 
+     */
     public Object convert(Object value) {
         if( value instanceof Calendar )
             return value;
         else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
+        if( value instanceof String )
+            return toValue( super.convert(value) );
+        else
+        if(value == null)
+            return null;
         else
             throw new UnknownTypeException();
     }

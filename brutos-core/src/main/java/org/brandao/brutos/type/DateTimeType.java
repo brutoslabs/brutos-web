@@ -18,12 +18,26 @@
 package org.brandao.brutos.type;
 
 /**
- * @author Afonso Brandao
+ * Representa os tipos {@link java.util.Date} e {@link java.util.Calendar} ou 
+ * equivalentes.
+ * 
+ * @author Brandao
  */
 public interface DateTimeType extends Type{
 
-    void setMask( String value );
+    /**
+     * Define o formato da data. O formato é 
+     * descrito em {@link java.text.SimpleDateFormat}.
+     * 
+     * @param value Formato com que a data é representada.
+     */
+    void setPattern( String value );
 
-    String getMask();
+    /**
+     * Obtém o formato da data.
+     * 
+     * @return  Formato com que a data é representada.
+     */
+    String getPattern();
     
 }
