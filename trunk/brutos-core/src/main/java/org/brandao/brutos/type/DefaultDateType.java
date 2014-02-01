@@ -23,30 +23,42 @@ import java.util.Date;
 import org.brandao.brutos.MvcResponse;
 
 /**
- *
+ * Implementação padão do tipo {@link java.util.Date}.
+ * 
  * @author Afonso Brandao
  */
-public class DefaultDateTimeType implements DateTimeType{
+public class DefaultDateType implements DateTimeType{
 
-    SimpleDateFormat sdf;
+    private SimpleDateFormat sdf;
     
-    public DefaultDateTimeType(String mask) {
-        this.setMask(mask);
+    /**
+     * Cria um novo tipo usando um formato de data específico.
+     * 
+     * @param pattern Formato da data.
+     */
+    public DefaultDateType(String pattern) {
+        this.setPattern(pattern);
     }
 
-    public DefaultDateTimeType() {
+    /**
+     * Cria um novo tipo.
+     */
+    public DefaultDateType() {
     }
 
-    public void setMask( String value ){
+    /**
+     * @see DateTimeType#setPattern(java.lang.String) 
+     */
+    public void setPattern( String value ){
         sdf = new SimpleDateFormat( value );
         sdf.setLenient( false );
     }
     
-    public Object toValue( String value ){
+    private Object toValue( String value ){
         try{
             return sdf.parse( value );
         }
-        catch( Exception e ){
+        catch( Throwable e ){
             return null;
         }
     }
@@ -55,30 +67,36 @@ public class DefaultDateTimeType implements DateTimeType{
         return Date.class;
     }
 
-    public Object getValue(Object value) {
-        return null;
-    }
-    
+    /**
+     * @see DateTimeType#convert(java.lang.Object) 
+     * 
+     */
     public Object convert(Object value) {
         if( value instanceof Date )
             return value;
         else
         if( value instanceof String )
             return toValue( (String)value );
+        else
         if( value == null )
             return null;
         else
             throw new UnknownTypeException(value.getClass().getName());
     }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
+    /**
+     * @see DateTimeType#show(org.brandao.brutos.MvcResponse, java.lang.Object) 
+     * 
+     */
     public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
     }
 
-    public String getMask() {
+    /**
+     * @see DateTimeType#getPattern() 
+     * 
+     */
+    public String getPattern() {
         return this.sdf.toPattern();
     }
     

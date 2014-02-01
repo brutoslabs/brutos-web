@@ -30,6 +30,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.Date;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.http.BrutosFile;
 import org.brandao.brutos.web.http.Download;
 
@@ -68,7 +69,7 @@ public class Types {
         types.put( Set.class ,          SetType.class );
         types.put( Object.class ,       ObjectType.class );
         types.put( Serializable.class , SerializableTypeImp.class );
-        types.put( Date.class,          DefaultDateTimeType.class );
+        types.put( Date.class,          DefaultDateType.class );
         types.put( Calendar.class,      CalendarType.class );
         types.put( Array.class,         DefaultArrayType.class );
     }
@@ -81,10 +82,11 @@ public class Types {
     }
     
     public static Type getType( Object classType ){
-        return getType( classType, EnumerationType.ORDINAL, "dd/MM/yyyy" );
+        return getType( classType, EnumerationType.ORDINAL, 
+                BrutosConstants.DEFAULT_TEMPORALPROPERTY);
     }
     
-    public static Type getType( Object classType, EnumerationType enumType, String maskDate ){
+    public static Type getType( Object classType, EnumerationType enumType, String patternDate ){
         Class typeClass = (Class)types.get( getRawType( classType ) );
 
         if( typeClass == null ){
@@ -99,13 +101,13 @@ public class Types {
         }
 
         if( typeClass != null )
-            return (Type) getInstance( typeClass, classType, enumType, maskDate );
+            return (Type) getInstance( typeClass, classType, enumType, patternDate );
         else
             return new ObjectType((Class)classType);
     }
 
     private static Object getInstance( Class clazz, Object classType,
-            EnumerationType enumType, String maskDate ){
+            EnumerationType enumType, String patternDate ){
         try{
             Object instance = clazz.newInstance();
             
@@ -118,7 +120,7 @@ public class Types {
                 ((SerializableType)instance).setClassType( getRawType( classType ) );
             
             if( instance instanceof DateTimeType )
-                ((DateTimeType)instance).setMask( maskDate );
+                ((DateTimeType)instance).setPattern(patternDate);
             
             if( instance instanceof CollectionType )
                 ((CollectionType)instance).setGenericType( classType );
