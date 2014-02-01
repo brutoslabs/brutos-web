@@ -26,15 +26,17 @@ package org.brandao.brutos.type;
 public interface GenericType extends Type{
 
     /**
-     * Define o tipo.
+     * Define o tipo da classe com dados genéricos.
      * 
-     * @param genericType Tipo.
+     * @param genericType Tipo da classe. Deve implementar
+     * a interface {@link java.lang.reflect.Type}.
      */
     void setGenericType( Object genericType );
 
     /**
-     * Obtém o tipo.
-     * @return Tipo.
+     * Obtém o tipo da classe com dados genéricos.
+     * 
+     * @return Tipo da classe.
      */
     public Object getGenericType();
     
