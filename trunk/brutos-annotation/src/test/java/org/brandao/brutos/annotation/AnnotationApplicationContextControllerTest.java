@@ -692,7 +692,7 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(Date.class, property.getBean().getClassType());
         Assert.assertEquals("propertyC", property.getName());
         Assert.assertEquals("propertyC", property.getBean().getNome());
-        Assert.assertEquals("dd/MM/yyyy", ((DateTimeType)property.getBean().getType()).getMask());
+        Assert.assertEquals("dd/MM/yyyy", ((DateTimeType)property.getBean().getType()).getPattern());
         Assert.assertNull(property.getBean().getMapping());
     }
 
@@ -710,7 +710,7 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(Date.class, property.getBean().getClassType());
         Assert.assertEquals("propertyD", property.getName());
         Assert.assertEquals("propertyD", property.getBean().getNome());
-        Assert.assertEquals("yyyy-MM-dd", ((DateTimeType)property.getBean().getType()).getMask());
+        Assert.assertEquals("yyyy-MM-dd", ((DateTimeType)property.getBean().getType()).getPattern());
         Assert.assertNull(property.getBean().getMapping());
     }
 
@@ -1325,7 +1325,7 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(Date.class, property.getBean().getClassType());
         Assert.assertEquals("propertyC", property.getName());
         Assert.assertEquals("propertyC", property.getBean().getNome());
-        Assert.assertEquals("dd/MM/yyyy", ((DateTimeType)property.getBean().getType()).getMask());
+        Assert.assertEquals("dd/MM/yyyy", ((DateTimeType)property.getBean().getType()).getPattern());
         Assert.assertNull(property.getBean().getMapping());
     }
 
@@ -1343,7 +1343,7 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(Date.class, property.getBean().getClassType());
         Assert.assertEquals("propertyD", property.getName());
         Assert.assertEquals("propertyD", property.getBean().getNome());
-        Assert.assertEquals("yyyy-MM-dd", ((DateTimeType)property.getBean().getType()).getMask());
+        Assert.assertEquals("yyyy-MM-dd", ((DateTimeType)property.getBean().getType()).getPattern());
         Assert.assertNull(property.getBean().getMapping());
     }
 

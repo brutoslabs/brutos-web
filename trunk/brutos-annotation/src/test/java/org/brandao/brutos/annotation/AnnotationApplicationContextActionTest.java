@@ -1168,9 +1168,9 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNull(parameter.getBean().getMapping());
         Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
         Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(DefaultDateTimeType.class, parameter.getBean().getType().getClass());
+        Assert.assertEquals(DefaultDateType.class, parameter.getBean().getType().getClass());
         Assert.assertNotNull(parameter.getBean().getValidate());
-        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY,((DateTimeType)parameter.getBean().getType()).getMask());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY,((DateTimeType)parameter.getBean().getType()).getPattern());
 
         parameter = action.getParameter(1);
         
@@ -1179,9 +1179,9 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNull(parameter.getBean().getMapping());
         Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
         Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(DefaultDateTimeType.class, parameter.getBean().getType().getClass());
+        Assert.assertEquals(DefaultDateType.class, parameter.getBean().getType().getClass());
         Assert.assertNotNull(parameter.getBean().getValidate());
-        Assert.assertEquals("MM/dd/yyyy",((DateTimeType)parameter.getBean().getType()).getMask());
+        Assert.assertEquals("MM/dd/yyyy",((DateTimeType)parameter.getBean().getType()).getPattern());
 
         parameter = action.getParameter(2);
         
@@ -1192,7 +1192,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNull(parameter.getBean().getStaticValue());
         Assert.assertEquals(CalendarType.class, parameter.getBean().getType().getClass());
         Assert.assertNotNull(parameter.getBean().getValidate());
-        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY,((DateTimeType)parameter.getBean().getType()).getMask());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY,((DateTimeType)parameter.getBean().getType()).getPattern());
 
         parameter = action.getParameter(3);
         
@@ -1203,7 +1203,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNull(parameter.getBean().getStaticValue());
         Assert.assertEquals(CalendarType.class, parameter.getBean().getType().getClass());
         Assert.assertNotNull(parameter.getBean().getValidate());
-        Assert.assertEquals("yyyy-MM-dd",((DateTimeType)parameter.getBean().getType()).getMask());
+        Assert.assertEquals("yyyy-MM-dd",((DateTimeType)parameter.getBean().getType()).getPattern());
         
     }
 
