@@ -124,7 +124,7 @@ public class Types {
                 ((CollectionType)instance).setGenericType( classType );
             
             if( instance instanceof ArrayType ){
-                ((ArrayType)instance).setContentType( getRawType( classType ).getComponentType() );
+                ((ArrayType)instance).setComponentType(getRawType( classType ).getComponentType() );
                 ((ArrayType)instance).setClassType( getRawType( classType ) );
             }
 

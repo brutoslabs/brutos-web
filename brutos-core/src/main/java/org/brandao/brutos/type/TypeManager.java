@@ -234,7 +234,7 @@ public class TypeManager {
         }
 
         if (type instanceof ArrayType) {
-            ((ArrayType) type).setContentType(rawType.getComponentType());
+            ((ArrayType) type).setComponentType(rawType.getComponentType());
             ((ArrayType) type).setClassType(rawType);
         }
 

@@ -18,28 +18,26 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.lang.reflect.Array;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
 
 /**
- *
- * @author Afonso Brandao
+ * Implementação padrão de qualquer tipo de array.
+ * 
+ * @author Brandao
  */
 public class DefaultArrayType implements ArrayType{
 
     private org.brandao.brutos.type.Type componentType;
-    private org.brandao.brutos.type.Type serializableType;
     private Class classType;
     private Class arrayComponentType;
 
     public DefaultArrayType(){
-        this.serializableType = TypeManager.getType( Serializable.class );
     }
 
-    public void setContentType(Class type) {
+    public void setComponentType(Class type) {
         this.arrayComponentType = type;
         this.componentType = TypeManager.getType( type );
    }
@@ -48,17 +46,16 @@ public class DefaultArrayType implements ArrayType{
         return this.classType;
     }
 
-    private Object getList(Object value){
+    private Object getArray(Object value){
         try{
             ParameterList param = (ParameterList)value;
-            Object objList = Array.newInstance( arrayComponentType , param.size() );
+            Object objList = Array.newInstance( this.arrayComponentType , param.size() );
 
             for( int i=0;i<param.size();i++ )
                 Array.set(
                     objList,
                     i,
-                    componentType.convert( param.get( i ) )
-                    //componentType.getValue(request, context, param.get( i ) )
+                    this.componentType.convert( param.get( i ) )
                 );
 
             return objList;
@@ -72,21 +69,13 @@ public class DefaultArrayType implements ArrayType{
         this.classType = classType;
     }
 
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         if( value instanceof ParameterList )
-            return getList(value);
-
+            return getArray(value);
         else
             return value;
     }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
     }

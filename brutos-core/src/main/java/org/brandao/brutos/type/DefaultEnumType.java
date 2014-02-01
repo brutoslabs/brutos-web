@@ -24,19 +24,16 @@ import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.bean.EnumUtil;
 
 /**
- *
- * @author Afonso Brandao
+ * Implementação padrão do tipo {@link java.lang.Enum}
+ * 
+ * @author Brandao
  */
 public class DefaultEnumType implements EnumType{
 
     private EnumerationType type;
-    
     private Class classType;
-    
     private Type intType;
-    
     private Type stringType;
-
     private EnumUtil enumUtil;
 
     public DefaultEnumType() {
