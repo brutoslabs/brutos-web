@@ -134,7 +134,7 @@ public class TypeManager {
     }
 
     /**
-     * Obtém o tipo a partir de sua classe.
+     * Obtém um tipo a partir de sua classe.
      * @param classType Classe do tipo. Pode ser uma {@link java.lang.Class} ou 
      * {@link java.lang.reflect.Type}.
      * @return Tipo.
