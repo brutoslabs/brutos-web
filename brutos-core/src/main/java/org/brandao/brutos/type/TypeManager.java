@@ -21,14 +21,14 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.*;
-import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.web.http.BrutosFile;
 import org.brandao.brutos.web.http.Download;
 
 /**
- *
+ * Faz o gerenciamento dos tipos em uma aplicação.
+ * 
  * @author Brandao
  */
 public class TypeManager {
@@ -40,105 +40,59 @@ public class TypeManager {
     private static Class defaultMapType;
 
     static {
-        staticTypes.add(new DefaultTypeFactory(BooleanType.class, Boolean.TYPE));
-        staticTypes.add(new DefaultTypeFactory(ByteType.class, Byte.TYPE));
-        staticTypes.add(new DefaultTypeFactory(CharType.class, Character.TYPE));
-        staticTypes.add(new DefaultTypeFactory(DoubleType.class, Double.TYPE));
-        staticTypes.add(new DefaultTypeFactory(FloatType.class, Float.TYPE));
-        staticTypes.add(new DefaultTypeFactory(IntegerType.class, Integer.TYPE));
-        staticTypes.add(new DefaultTypeFactory(LongType.class, Long.TYPE));
-        staticTypes.add(new DefaultTypeFactory(ShortType.class, Short.TYPE));
-        staticTypes.add(new DefaultTypeFactory(StringType.class, String.class));
-        staticTypes.add(new DefaultTypeFactory(BrutosFileType.class, BrutosFile.class));
-        staticTypes.add(new DefaultTypeFactory(FileType.class, File.class));
-        staticTypes.add(new DefaultTypeFactory(BooleanWrapperType.class, Boolean.class));
-        staticTypes.add(new DefaultTypeFactory(ByteWrapperType.class, Byte.class));
-        staticTypes.add(new DefaultTypeFactory(CharacterType.class, Character.class));
-        staticTypes.add(new DefaultTypeFactory(DoubleWrapperType.class, Double.class));
-        staticTypes.add(new DefaultTypeFactory(FloatWrapperType.class, Float.class));
-        staticTypes.add(new DefaultTypeFactory(IntegerWrapperType.class, Integer.class));
-        staticTypes.add(new DefaultTypeFactory(LongWrapperType.class, Long.class));
-        staticTypes.add(new DefaultTypeFactory(ShortWrapperType.class, Short.class));
-        staticTypes.add(new DefaultTypeFactory(DownloadType.class, Download.class));
-        staticTypes.add(new DefaultTypeFactory(ListType.class, List.class));
-        staticTypes.add(new DefaultTypeFactory(SetType.class, Set.class));
+        staticTypes.add(new DefaultTypeFactory(BooleanType.class,         Boolean.TYPE));
+        staticTypes.add(new DefaultTypeFactory(ByteType.class,            Byte.TYPE));
+        staticTypes.add(new DefaultTypeFactory(CharType.class,            Character.TYPE));
+        staticTypes.add(new DefaultTypeFactory(DoubleType.class,          Double.TYPE));
+        staticTypes.add(new DefaultTypeFactory(FloatType.class,           Float.TYPE));
+        staticTypes.add(new DefaultTypeFactory(IntegerType.class,         Integer.TYPE));
+        staticTypes.add(new DefaultTypeFactory(LongType.class,            Long.TYPE));
+        staticTypes.add(new DefaultTypeFactory(ShortType.class,           Short.TYPE));
+        staticTypes.add(new DefaultTypeFactory(StringType.class,          String.class));
+        staticTypes.add(new DefaultTypeFactory(BrutosFileType.class,      BrutosFile.class));
+        staticTypes.add(new DefaultTypeFactory(FileType.class,            File.class));
+        staticTypes.add(new DefaultTypeFactory(BooleanWrapperType.class,  Boolean.class));
+        staticTypes.add(new DefaultTypeFactory(ByteWrapperType.class,     Byte.class));
+        staticTypes.add(new DefaultTypeFactory(CharacterType.class,       Character.class));
+        staticTypes.add(new DefaultTypeFactory(DoubleWrapperType.class,   Double.class));
+        staticTypes.add(new DefaultTypeFactory(FloatWrapperType.class,    Float.class));
+        staticTypes.add(new DefaultTypeFactory(IntegerWrapperType.class,  Integer.class));
+        staticTypes.add(new DefaultTypeFactory(LongWrapperType.class,     Long.class));
+        staticTypes.add(new DefaultTypeFactory(ShortWrapperType.class,    Short.class));
+        staticTypes.add(new DefaultTypeFactory(DownloadType.class,        Download.class));
+        staticTypes.add(new DefaultTypeFactory(ListType.class,            List.class));
+        staticTypes.add(new DefaultTypeFactory(SetType.class,             Set.class));
         staticTypes.add(new DefaultTypeFactory(SerializableTypeImp.class, Serializable.class));
-        staticTypes.add(new DefaultTypeFactory(DefaultDateType.class, Date.class));
-        staticTypes.add(new DefaultTypeFactory(CalendarType.class, Calendar.class));
+        staticTypes.add(new DefaultTypeFactory(DefaultDateType.class,     Date.class));
+        staticTypes.add(new DefaultTypeFactory(CalendarType.class,        Calendar.class));
         staticTypes.add(new DefaultArrayTypeFactory());
         staticTypes.add(new DefaultEnumTypeFactory());
-        staticTypes.add(new DefaultTypeFactory(ClassType.class, Class.class));
+        staticTypes.add(new DefaultTypeFactory(ClassType.class,           Class.class));
         staticTypes.add(new ObjectTypeFactory());
-
-        /*
-         * types.put( Class.class, new
-         * DefaultTypeFactory(ClassType.class,Class.class)); types.put(
-         * Boolean.TYPE, new
-         * DefaultTypeFactory(BooleanType.class,Boolean.TYPE)); types.put(
-         * Byte.TYPE, new DefaultTypeFactory(ByteType.class,Byte.TYPE ));
-         * types.put( Character.TYPE, new
-         * DefaultTypeFactory(CharType.class,Character.TYPE )); types.put(
-         * Double.TYPE, new DefaultTypeFactory(DoubleType.class,Double.TYPE));
-         * types.put( Float.TYPE, new
-         * DefaultTypeFactory(FloatType.class,Float.TYPE )); types.put(
-         * Integer.TYPE, new DefaultTypeFactory(IntegerType.class,Integer.TYPE
-         * )); types.put( Long.TYPE, new
-         * DefaultTypeFactory(LongType.class,Long.TYPE )); types.put(
-         * Short.TYPE, new DefaultTypeFactory(ShortType.class,Short.TYPE ));
-         * types.put( String.class, new
-         * DefaultTypeFactory(StringType.class,String.class )); types.put(
-         * BrutosFile.class, new
-         * DefaultTypeFactory(BrutosFileType.class,BrutosFile.class ));
-         * types.put( File.class, new
-         * DefaultTypeFactory(FileType.class,File.class )); types.put(
-         * Boolean.class, new
-         * DefaultTypeFactory(BooleanWrapperType.class,Boolean.class ));
-         * types.put( Byte.class, new
-         * DefaultTypeFactory(ByteWrapperType.class,Byte.class )); types.put(
-         * Character.class, new
-         * DefaultTypeFactory(CharacterType.class,Character.class )); types.put(
-         * Double.class, new
-         * DefaultTypeFactory(DoubleWrapperType.class,Double.class ));
-         * types.put( Float.class, new
-         * DefaultTypeFactory(FloatWrapperType.class,Float.class )); types.put(
-         * Integer.class, new
-         * DefaultTypeFactory(IntegerWrapperType.class,Integer.class ));
-         * types.put( Long.class, new
-         * DefaultTypeFactory(LongWrapperType.class,Long.class )); types.put(
-         * Short.class, new
-         * DefaultTypeFactory(ShortWrapperType.class,Short.class )); types.put(
-         * Download.class, new
-         * DefaultTypeFactory(DownloadType.class,Download.class )); types.put(
-         * Enum.class, new DefaultTypeFactory(DefaultEnumType.class,Enum.class
-         * )); types.put( List.class , new
-         * DefaultTypeFactory(ListType.class,List.class )); types.put( Set.class
-         * , new DefaultTypeFactory(SetType.class,Set.class )); types.put(
-         * Object.class , new DefaultTypeFactory(ObjectType.class,Object.class
-         * )); types.put( Serializable.class , new
-         * DefaultTypeFactory(SerializableTypeImp.class,Serializable.class ));
-         * types.put( Date.class, new
-         * DefaultTypeFactory(DefaultDateTimeType.class,Date.class ));
-         * types.put( Calendar.class, new
-         * DefaultTypeFactory(CalendarType.class,Calendar.class )); types.put(
-         * Array.class, new
-         * DefaultTypeFactory(DefaultArrayType.class,Array.class ));
-         */
 
         defaultListType = ArrayList.class;
         defaultSetType = HashSet.class;
         defaultMapType = HashMap.class;
     }
 
+    /**
+     * Registra um novo tipo.
+     * @param factory Fábrica do tipo.
+     */
     public static void register(TypeFactory factory) {
         customTypes.add(factory);
     }
 
+    /**
+     * Remove um tipo a partir de sua classe.
+     * @param type Classe do tipo.
+     */
     public static void remove(Class type) {
         Iterator i = customTypes.iterator();
         while (i.hasNext()) {
             TypeFactory factory = (TypeFactory) i.next();
             if (factory.getClassType() == type) {
-                customTypes.remove(factory);;
+                customTypes.remove(factory);
             }
         }
 
@@ -151,14 +105,27 @@ public class TypeManager {
         }
     }
     
+    /**
+     * Remove um tipo a apartir sua fábrica.
+     * @param factory Fábrica do tipo.
+     */
     public static void remove(TypeFactory factory) {
         customTypes.remove(factory);
     }
 
+    /**
+     * Obtém todos os tipos registrados.
+     * @return Lista contendo todos os tipos registrados.
+     */
     public static List getAllTypes(){
         return customTypes;
     }
     
+    /**
+     * Verifica se a classe representa um tipo padrão.
+     * @param clazz Classe do tipo.
+     * @return Verdadeiro se for um tipo padrão, caso contrário falso.
+     */
     public static boolean isStandardType(Class clazz) {
         TypeFactory typeFactory =
                 getTypeFactory(clazz);
@@ -166,10 +133,22 @@ public class TypeManager {
         return typeFactory != null && typeFactory.getClassType() != Object.class;
     }
 
+    /**
+     * Obtém o tipo a partir de sua classe.
+     * @param classType Classe do tipo. Pode ser uma {@link java.lang.Class} ou 
+     * {@link java.lang.reflect.Type}.
+     * @return Tipo.
+     */
     public static Type getType(Object classType) {
         return getType(classType, EnumerationType.ORDINAL, "dd/MM/yyyy");
     }
 
+    /**
+     * Obtém a fábrica do tipo a partir de sua classe.
+     * @param classType Classe do tipo. Pode ser uma {@link java.lang.Class} ou 
+     * {@link java.lang.reflect.Type}.
+     * @return Fábrica do tipo.
+     */
     public static TypeFactory getTypeFactory(Object classType) {
         Class rawType = getRawType(classType);
 
@@ -190,24 +169,18 @@ public class TypeManager {
         }
 
         return null;
-
-        /*
-         * TypeFactory factory = (TypeFactory) types.get(getRawType( classType
-         * ));
-         *
-         * if( factory == null ){ //FIXME: refactor the line
-         * getRawType(classType).isEnum() if( getRawType(classType).isEnum() )
-         * factory = (TypeFactory)types.get( Enum.class ); else if(
-         * getRawType(classType).isArray() ) factory = (TypeFactory)types.get(
-         * java.lang.reflect.Array.class ); else //if(
-         * Serializable.class.isAssignableFrom( getRawType(classType) ) ) //
-         * factory = (TypeFactory)types.get( Serializable.class ); //else
-         * factory = (TypeFactory)types.get( Object.class ); } return factory;
-         */
     }
 
+    /**
+     * Obtém o tipo a partir de sua classe.
+     * @param classType Classe do tipo. Pode ser uma {@link java.lang.Class} ou 
+     * {@link java.lang.reflect.Type}.
+     * @param enumType Tipo do mapeamento de Enum.
+     * @param pattern Formato de uma data.
+     * @return Tipo.
+     */
     public static Type getType(
-            Object classType, EnumerationType enumType, String maskDate) {
+            Object classType, EnumerationType enumType, String pattern) {
 
         Class rawType = getRawType(classType);
 
@@ -226,7 +199,7 @@ public class TypeManager {
         }
 
         if (type instanceof DateTimeType) {
-            ((DateTimeType) type).setPattern(maskDate);
+            ((DateTimeType) type).setPattern(pattern);
         }
 
         if (type instanceof CollectionType) {
@@ -241,6 +214,12 @@ public class TypeManager {
         return type;
     }
 
+    /**
+     * Obtém a classe base de um tipo que usa generics.
+     * @param type Classe. Pode ser uma {@link java.lang.Class} ou 
+     * {@link java.lang.reflect.Type}.
+     * @return Classe base.
+     */
     public static Class getRawType(Object type) {
         try {
             Class parameterizedTypeClass =
@@ -268,6 +247,12 @@ public class TypeManager {
         }
     }
 
+    /**
+     * Obtém o tipo dos objetos de uma coleção.
+     * @param type Classe. Pode ser uma {@link java.lang.Class} ou 
+     * {@link java.lang.reflect.Type}.
+     * @return Tipo da coleção.
+     */
     public static Object getCollectionType(Object type) {
         int index = -1;
 
@@ -282,6 +267,12 @@ public class TypeManager {
         return getParameter(type, index);
     }
 
+    /**
+     * Obtém o tipo da chave de uma coleção.
+     * @param type Classe. Pode ser uma {@link java.lang.Class} ou 
+     * {@link java.lang.reflect.Type}.
+     * @return Tipo da chave.
+     */
     public static Object getKeyType(Object type) {
         int index = -1;
 
@@ -294,6 +285,13 @@ public class TypeManager {
         return getParameter(type, index);
     }
 
+    /**
+     * Obtém o parâmetro de um tipo que usa generics.
+     * @param type Classe. Pode ser uma {@link java.lang.Class} ou 
+     * {@link java.lang.reflect.Type}.
+     * @param index Índice do parâmetro.
+     * @return Parâmetro.
+     */
     public static Object getParameter(Object type, int index) {
         try {
             Class parameterizedTypeClass =
@@ -314,26 +312,50 @@ public class TypeManager {
         }
     }
 
+    /**
+     * Obtém a classe padrão de uma coleção do tipo {@link java.util.List}.
+     * @return Classe.
+     */
     public static Class getDefaultListType() {
         return defaultListType;
     }
 
+    /**
+     * Define a classe padrão de uma coleção do tipo {@link java.util.List}.
+     * @param aDefaultListType Classe. Deve implementar a interface {@link java.util.List}.
+     */
     public static void setDefaultListType(Class aDefaultListType) {
         defaultListType = aDefaultListType;
     }
 
+    /**
+     * Obtém a classe padrão de uma coleção do tipo {@link java.util.Set}.
+     * @return Classe.
+     */
     public static Class getDefaultSetType() {
         return defaultSetType;
     }
 
+    /**
+     * Define a classe padrão de uma coleção do tipo {@link java.util.Set}.
+     * @param aDefaultSetType Classe. Deve implementar a interface {@link java.util.Set}.
+     */
     public static void setDefaultSetType(Class aDefaultSetType) {
         defaultSetType = aDefaultSetType;
     }
 
+    /**
+     * Obtém a classe padrão de um mapa.
+     * @return Classe.
+     */
     public static Class getDefaultMapType() {
         return defaultMapType;
     }
 
+    /**
+     * Define a classe padrão de um mapa.
+     * @param aDefaultMapType Classe. Deve implementar a interface {@link java.util.Map}.
+     */
     public static void setDefaultMapType(Class aDefaultMapType) {
         defaultMapType = aDefaultMapType;
     }
