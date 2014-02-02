@@ -27,7 +27,7 @@ import org.brandao.brutos.web.http.BrutosFile;
 import org.brandao.brutos.web.http.Download;
 
 /**
- * Faz o gerenciamento dos tipos em uma aplicação.
+ * Faz o gerenciamento dos tipos de uma aplicação.
  * 
  * @author Brandao
  */
