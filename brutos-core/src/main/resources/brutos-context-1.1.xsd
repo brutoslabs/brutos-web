@@ -29,6 +29,7 @@
     <xsd:element name="annotation-config"/>
     <xsd:element name="params" type="params"/>
     <xsd:element name="types" type="types"/>
+    <xsd:element name="extended-scopes" type="extended-scopes"/>
     <xsd:element name="component-scan" type="scan-type"/>
     
     <xsd:complexType name="types">
@@ -83,4 +84,20 @@
         <xsd:attribute name="base-package" type="xsd:string"/>
         <xsd:attribute name="use-default-filters" type="xsd:boolean" default="true"/>
     </xsd:complexType>
+    
+    <xsd:complexType name="extended-scopes">
+        <xsd:sequence>
+        <xsd:element name="extended-scope" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="extended-scope">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="name" type="xsd:string"/>
+                <xsd:attribute name="class" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+        
 </xsd:schema>

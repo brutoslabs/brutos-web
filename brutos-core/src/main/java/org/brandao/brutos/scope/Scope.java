@@ -18,17 +18,37 @@
 package org.brandao.brutos.scope;
 
 /**
- *
- * @author Afonso Brandao
+ * Permite o acesso aos escopos de uma aplicação.
+ * 
+ * @author Brandao
  */
 public interface Scope {
     
-    public void put( String name, Object value );
+    /**
+     * Adiciona um objeto ao escopo.
+     * @param name Identificação do objeto.
+     * @param value Objeto.
+     */
+    void put( String name, Object value );
     
-    public Object get( String name );
+    /**
+     * Obtém um objeto. 
+     * @param name Identificação do objeto.
+     * @return Objeto.
+     */
+    Object get( String name );
 
-    public Object getCollection( String name );
+    /**
+     * Obtém um objeto que representa uma coleção.
+     * @param name Identificação do objeto.
+     * @return Objeto.
+     */
+    Object getCollection( String name );
 
-    public void remove( String name );
+    /**
+     * Remove o objeto do escopo.
+     * @param name Identificação do objeto.
+     */
+    void remove( String name );
     
 }
