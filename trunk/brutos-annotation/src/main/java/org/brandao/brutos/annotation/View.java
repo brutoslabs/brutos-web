@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define a visão de um controlador ou ação.
+ * Define a vista de um determinado controlador ou ação.
  * <pre>
  * Ex:
  * &#064;Controller
@@ -50,20 +50,19 @@ import java.lang.annotation.Target;
 public @interface View {
 
     /**
-     * Identificação da visão. Normalmente em aplicações web, a 
-     * identificação é um URI.
+     * Identificação da vista.
      */
     String value() default "";
     
     /**
-     * Define como o fluxo de execução será direcionado para a visão.
-     * Os valores estão descritos em <a href="DispatcherType.html">DispatcherType</a>.
+     * Define como o fluxo de execução será direcionado para a vista.
+     * Os valores estão descritos em {@link org.brandao.brutos.annotation.DispatcherType}.
      */
     String dispatcher() default "";
     
     /**
-     * Define se a visão deve ser renderizada. 
-     * Se verdadeiro a visão será renderizada, caso contrário não.
+     * Define se a vista deve ser renderizada. 
+     * Se verdadeiro a vista será renderizada, caso contrário não.
      */
     boolean rendered() default true;
     
