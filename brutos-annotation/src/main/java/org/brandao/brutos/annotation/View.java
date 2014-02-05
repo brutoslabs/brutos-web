@@ -56,7 +56,8 @@ public @interface View {
     
     /**
      * Define como o fluxo de execução será direcionado para a vista.
-     * Os valores estão descritos em {@link org.brandao.brutos.annotation.DispatcherType}.
+     * Os valores estão descritos em 
+     * {@link org.brandao.brutos.annotation.DispatcherType}.
      */
     String dispatcher() default "";
     
@@ -65,5 +66,11 @@ public @interface View {
      * Se verdadeiro a vista será renderizada, caso contrário não.
      */
     boolean rendered() default true;
+    
+    /**
+     * Define se a vista informada precisa ser resolvida.
+     * Se verdadeiro, a vista é considerada como resolvida, caso contrário falso.
+     */
+    boolean resolved() default false;
     
 }
