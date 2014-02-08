@@ -148,28 +148,34 @@ public class ControllerAnnotationConfig
         ConfigurableApplicationContext applicationContext){
         
         boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
+        boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
         
         String view = 
-            viewAnnotation != null && viewAnnotation.value().trim().length() > 0?
-                viewAnnotation.value() : null;
+            viewAnnotation == null ||StringUtil.isEmpty(viewAnnotation.value())?
+                null :
+                StringUtil.adjust(viewAnnotation.value());
         
         
         if(rendered){
-            if(view != null)
-                return viewAnnotation.value();
+            if(resolved)
+                return view;
             else
-                return createControllerView(controller, applicationContext);
+                return createControllerView(controller, applicationContext, viewAnnotation.value());
         }
         else
             return null;
     }
     
     protected String createControllerView(ControllerBuilder controller,
-            ConfigurableApplicationContext applicationContext){
+            ConfigurableApplicationContext applicationContext, String view){
         
-        return applicationContext.getViewResolver()
-                .getView(controller, null, null,
-                applicationContext.getConfiguration());
+        return applicationContext
+                .getViewResolver()
+                .getControllerView(
+                        controller.getClassType(), 
+                        view);
+                //.getView(controller, null, null,
+                //applicationContext.getConfiguration());
     }
     
     protected void addProperties(ControllerBuilder controllerBuilder, 
