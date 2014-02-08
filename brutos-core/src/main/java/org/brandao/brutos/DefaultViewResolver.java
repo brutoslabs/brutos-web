@@ -17,66 +17,63 @@
 
 package org.brandao.brutos;
 
-import java.util.Properties;
-
 /**
  *
  * @author Brandao
  */
-public class DefaultViewResolver implements ViewResolver{
+public class DefaultViewResolver extends AbstractViewResolver{
 
-    public String getView(ControllerBuilder controllerBuilder, 
-            ActionBuilder actionBuilder, Class exception, Properties configuration) {
-        
-        String autoResolver = configuration
-                .getProperty("org.brandao.brutos.view.auto", 
-                BrutosConstants.DEFAULT_VIEW_RESOLVER);
-        
-        if(!autoResolver.toLowerCase().equals("true"))
-            return null;
-        
-        String prefix = configuration
-                .getProperty("org.brandao.brutos.view.prefix", 
-                BrutosConstants.DEFAULT_PREFIX_VIEW);
-
-        String suffix = configuration
-                .getProperty("org.brandao.brutos.view.suffix", 
-                BrutosConstants.DEFAULT_SUFFIX_VIEW);
-
-        String indexName = configuration
-                .getProperty("org.brandao.brutos.view.index", 
-                BrutosConstants.DEFAULT_INDEX_VIEW);
-
-        String separator = configuration
-                .getProperty("org.brandao.brutos.view.separator", 
-                BrutosConstants.DEFAULT_SEPARATOR_VIEW);
-        
-        String controllerName = controllerBuilder.getClassType().getSimpleName();
+    private String getPrefix(Class controllerType){
+        String controllerName = controllerType.getSimpleName();
         controllerName = controllerName.replaceAll("Controller$", "");
+        controllerName = controllerName.toLowerCase();
+        
+        String resolvedView = this.getSeparator();
+        resolvedView       += controllerName;
+        return resolvedView;
+    }
+    
+    private String getPrefix(Class controllerType, String actionExecutor){
+        String resolvedView = this.getPrefix(controllerType);
+        resolvedView       += this.getSeparator();
+        resolvedView       += actionExecutor.toLowerCase();
+        return resolvedView;
+    }
+    
+    public String getControllerView(Class controllerType, String view) {
+        String resolvedView = this.getPrefix();
+        resolvedView       += this.getPrefix(controllerType);
+        resolvedView       += this.getSeparator();
+        resolvedView       += view == null? this.getIndexName() : view;
+        resolvedView       += this.getSuffix();
+        return resolvedView;
+    }
 
-        String view = prefix;
-        view += controllerName.toLowerCase();
-        view += separator;
-        
-        if(actionBuilder != null){
-            String executor = actionBuilder.getExecutor();
-            
-            if(executor == null)
-                throw new BrutosException("can not resolve view: " + actionBuilder.getName());
-            
-            view += executor.toLowerCase();
-            view += separator;
-        }
-        
-        if(exception != null)
-            view += exception.getSimpleName().toLowerCase();
-        else
-            view += indexName;
-        
-        view += suffix;
-        
-        return view;
-        
+    public String getActionView(Class controllerType, String actionExecutor, String view) {
+        String resolvedView = this.getPrefix();
+        resolvedView       += this.getPrefix(controllerType, actionExecutor);
+        resolvedView       += this.getSeparator();
+        resolvedView       += view == null? this.getIndexName() : view;
+        resolvedView       += this.getSuffix();
+        return resolvedView;
+    }
+
+    public String getExceptionView(Class controllerType, String actionExecutor, Class exceptionType, String view) {
+        String resolvedView = this.getPrefix();
+        resolvedView       += this.getPrefix(controllerType, actionExecutor);
+        resolvedView       += this.getSeparator();
+        resolvedView       += view == null? exceptionType.getSimpleName().toLowerCase() : view;
+        resolvedView       += this.getSuffix();
+        return resolvedView;
+    }
+
+    public String getExceptionView(Class controllerType, Class exceptionType, String view) {
+        String resolvedView = this.getPrefix();
+        resolvedView       += this.getPrefix(controllerType);
+        resolvedView       += this.getSeparator();
+        resolvedView       += view == null? exceptionType.getSimpleName().toLowerCase() : view;
+        resolvedView       += this.getSuffix();
+        return resolvedView;
     }
     
 }

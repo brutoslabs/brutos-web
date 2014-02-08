@@ -51,10 +51,28 @@ public interface ViewResolver {
      * @param controllerBuilder Construtor do controlador.
      * @param actionBuilder Construtor da ação.
      * @param exceptionType Classe que representa a exceção.
-     * @param configuration Configuração da aplicação.
+     * @param view Vista.
      * @return Visão.
      */
     String getView(ControllerBuilder controllerBuilder, ActionBuilder actionBuilder, 
-            Class exceptionType, Properties configuration);
+            Class exceptionType, String view);
 
+    void setApplicationContext(ApplicationContext context);
+    
+    String getPrefix();
+    
+    String getSuffix();
+    
+    String getIndexName();
+    
+    String getSeparator();
+    
+    String getControllerView(Class controllerType, String view);
+    
+    String getActionView(Class controllerType, String actionExecutor, String view);
+    
+    String getExceptionView(Class controllerType, String actionExecutor, Class exceptionType, String view);
+    
+    String getExceptionView(Class controllerType, Class exceptionType, String view);
+    
 }
