@@ -168,31 +168,34 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         }
             
         boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
+        boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
 
         String view = 
-            viewAnnotation != null && !StringUtil.isEmpty(viewAnnotation.value())?
-                StringUtil.adjust(viewAnnotation.value()) : null;
-
+            viewAnnotation == null || StringUtil.isEmpty(viewAnnotation.value())?
+                null :
+                StringUtil.adjust(viewAnnotation.value());
 
         if(rendered){
-            if(view != null)
+            if(resolved)
                 return view;
             else
-            if(!StringUtil.isEmpty(actionEntry.getView()))
-                return StringUtil.adjust(actionEntry.getView());
-            else
-                return createActionView(action, applicationContext);
+                return createActionView(action, applicationContext, view);
         }
         else
             return null;
     }
 
     protected String createActionView(ActionBuilder action,
-            ConfigurableApplicationContext applicationContext){
+            ConfigurableApplicationContext applicationContext, String view){
         
-        return applicationContext.getViewResolver()
-                .getView(action.getControllerBuilder(), action, null,
-                applicationContext.getConfiguration());
+        return applicationContext
+                .getViewResolver()
+                .getActionView(
+                        action.getControllerBuilder().getClassType(), 
+                        action.getExecutor(), 
+                        view);
+                //.getView(action.getControllerBuilder(), action, null,
+                //applicationContext.getConfiguration());
     }
     
     private void addParameters(ActionBuilder builder, 

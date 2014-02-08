@@ -39,14 +39,18 @@ public class ThrowableEntry {
     private boolean rendered;
     
     private boolean enabled;
+    
+    private boolean resolved;
+
 
     public ThrowableEntry(){
     }
 
     public ThrowableEntry(Class<? extends Throwable> target){
-        this.target = target;
-        this.enabled = true;
+        this.target   = target;
+        this.enabled  = true;
         this.rendered = true;
+        this.resolved = false;
     }
     
     public ThrowableEntry(ThrowSafe value){
@@ -54,14 +58,15 @@ public class ThrowableEntry {
                 null :
                 DispatcherType.valueOf(StringUtil.adjust(value.dispatcher()));
         
-        this.enabled = value.enabled();
-        this.name = StringUtil.isEmpty(value.name())?
+        this.enabled    = value.enabled();
+        this.name       = StringUtil.isEmpty(value.name())?
                 BrutosConstants.DEFAULT_EXCEPTION_NAME : 
                 StringUtil.adjust(value.name());
         
-        this.rendered = value.rendered();
-        this.target = value.target();
-        this.view = StringUtil.adjust(value.view());
+        this.rendered   = value.rendered();
+        this.target     = value.target();
+        this.view       = StringUtil.adjust(value.view());
+        this.resolved   = value.resolved();
     }
     
     public String getView() {
@@ -110,6 +115,20 @@ public class ThrowableEntry {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    /**
+     * @return the resolved
+     */
+    public boolean isResolved() {
+        return resolved;
+    }
+
+    /**
+     * @param resolved the resolved to set
+     */
+    public void setResolved(boolean resolved) {
+        this.resolved = resolved;
     }
     
     
