@@ -173,7 +173,7 @@ public abstract class AbstractWebApplicationContext
 
         tmp = config
                 .getProperty( "org.brandao.brutos.view.prefix",
-                              "/WEB-INF/" );
+                              "/WEB-INF" );
         
         config.put( "org.brandao.brutos.view.prefix",
                     tmp );
