@@ -66,7 +66,7 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
     protected void addThrowSafe(ActionBuilder actionBuilder, 
             ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
         
-        if(throwSafe.isEnabled())
+        if(throwSafe.isEnabled()){
             actionBuilder
                     .addThrowable(
                         throwSafe.getTarget(), 
@@ -75,12 +75,13 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
                             null,
                         throwSafe.getName(), 
                         throwSafe.getDispatcher());
+        }
     }
     
     protected void addThrowSafe(ControllerBuilder controllerBuilder, 
             ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
         
-        if(throwSafe.isEnabled())
+        if(throwSafe.isEnabled()){
             controllerBuilder
                     .addThrowable(
                         throwSafe.getTarget(), 
@@ -89,34 +90,33 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
                             null,
                         throwSafe.getName(), 
                         throwSafe.getDispatcher());
+        }
+        
     }
     
     protected String getView(ControllerBuilder controllerBuilder, 
             ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
         return 
-            throwSafe.getView() == null? 
-                createView(controllerBuilder, null, throwSafe.getTarget(), applicationContext) :
-                throwSafe.getView();
+            throwSafe.isResolved()? 
+                throwSafe.getView() : 
+                applicationContext.
+                        getViewResolver()
+                        .getExceptionView(
+                                controllerBuilder.getClassType(), 
+                                throwSafe.getTarget(), throwSafe.getView());
     }
 
     protected String getView(ActionBuilder actionBuilder, 
             ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
-        return 
-            throwSafe.getView() == null? 
-                createView(
-                    actionBuilder.getControllerBuilder(), actionBuilder, 
-                    throwSafe.getTarget(), 
-                    applicationContext) :
-                throwSafe.getView();
-    }
-    
-    protected String createView(ControllerBuilder controllerBuilder, 
-            ActionBuilder action, Class exception, 
-            ConfigurableApplicationContext applicationContext){
-        
-        return applicationContext.getViewResolver()
-                .getView(controllerBuilder, action, exception,
-                applicationContext.getConfiguration());
+        return
+            throwSafe.isResolved()?
+                throwSafe.getView() : 
+                applicationContext.
+                        getViewResolver()
+                        .getExceptionView(
+                                actionBuilder.getControllerBuilder().getClassType(),
+                                actionBuilder.getExecutor(), 
+                                throwSafe.getTarget(), throwSafe.getView());
     }
     
 }
