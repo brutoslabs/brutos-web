@@ -101,9 +101,11 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
                 throwSafe.getView() : 
                 applicationContext.
                         getViewResolver()
-                        .getExceptionView(
-                                controllerBuilder.getClassType(), 
-                                throwSafe.getTarget(), throwSafe.getView());
+                        .getView(
+                                controllerBuilder, 
+                                null, 
+                                throwSafe.getTarget(), 
+                                throwSafe.getView());
     }
 
     protected String getView(ActionBuilder actionBuilder, 
@@ -113,10 +115,11 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
                 throwSafe.getView() : 
                 applicationContext.
                         getViewResolver()
-                        .getExceptionView(
-                                actionBuilder.getControllerBuilder().getClassType(),
-                                actionBuilder.getExecutor(), 
-                                throwSafe.getTarget(), throwSafe.getView());
+                        .getView(
+                                actionBuilder.getControllerBuilder(), 
+                                actionBuilder, 
+                                throwSafe.getTarget(), 
+                                throwSafe.getView());
     }
     
 }
