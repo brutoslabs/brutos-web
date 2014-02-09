@@ -190,12 +190,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         
         return applicationContext
                 .getViewResolver()
-                .getActionView(
-                        action.getControllerBuilder().getClassType(), 
-                        action.getExecutor(), 
-                        view);
-                //.getView(action.getControllerBuilder(), action, null,
-                //applicationContext.getConfiguration());
+                .getView(action.getControllerBuilder(), action, null, view);
     }
     
     private void addParameters(ActionBuilder builder, 

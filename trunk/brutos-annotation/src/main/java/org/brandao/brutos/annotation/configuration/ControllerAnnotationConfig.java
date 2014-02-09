@@ -171,11 +171,7 @@ public class ControllerAnnotationConfig
         
         return applicationContext
                 .getViewResolver()
-                .getControllerView(
-                        controller.getClassType(), 
-                        view);
-                //.getView(controller, null, null,
-                //applicationContext.getConfiguration());
+                .getView(controller, null, null, view);
     }
     
     protected void addProperties(ControllerBuilder controllerBuilder, 
