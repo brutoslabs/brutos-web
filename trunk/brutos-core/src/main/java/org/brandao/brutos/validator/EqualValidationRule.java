@@ -29,7 +29,9 @@ import org.brandao.brutos.type.Type;
  */
 public class EqualValidationRule implements ValidationRule{
 
-    public void validate(Properties config, Object source, Object value) {
+    private Object expected;
+    
+    public void validate(Object source, Object value) {
         Type valueType = null;
 
         if( source instanceof DependencyBean )
@@ -40,13 +42,14 @@ public class EqualValidationRule implements ValidationRule{
         else
             throw new BrutosException( "invalid source: " + source );
 
-        Object tmp = valueType
-                        .convert(
-                        //.getValue(
-                        config.get(RestrictionRules.EQUAL.toString()));
+        Object convertedValue = valueType.convert(this.expected);
 
-        if( tmp != null && !tmp.equals( value ) )
+        if( convertedValue != null && !convertedValue.equals( value ) )
             throw new ValidatorException();
+    }
+
+    public void setConfiguration(Properties config) {
+        this.expected = config.get(RestrictionRules.EQUAL.toString());
     }
 
 }
