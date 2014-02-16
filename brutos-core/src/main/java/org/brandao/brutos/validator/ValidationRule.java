@@ -22,27 +22,33 @@ import java.util.Properties;
 
 /**
  * Define uma regra de validação.
- * O método {@link #validate(java.util.Properties, java.lang.Object, java.lang.Object) validate} 
- * é responsável por validar um objeto e suas dependências. Ele recebe como parâmetro 
- * a configuração, origem do valor e o valor a ser validado.
- * A configuração é representada pela classe {@link java.util.Properties Properties} e nele
- * contém o nome da regra e seu valor. Pode-se conter mais de uma regra de validação.
+ * O método {@link #validate(java.lang.Object, java.lang.Object)} 
+ * é responsável por validar um objeto e suas dependências. 
  * A origem do valor pode ser {@link org.brandao.brutos.mapping.UseBeanData UseBeanMapping} 
  * quando for uma propriedade do controlador ou um parâmetro de uma ação ou 
  * {@link org.brandao.brutos.mapping.DependencyBean DependencyBean} se for um argumento 
  * de um construtor ou a propriedade de um bean.
+ * O método {@link #setConfiguration(java.util.Properties)} define a configuração 
+ * da regra.
+ * A configuração é representada pela classe {@link java.util.Properties Properties} e nele
+ * contém o nome da regra e seu valor. Pode-se conter mais de uma regra de validação.
  * 
  * @author Brandao
  */
 public interface ValidationRule {
 
     /**
-     * Faz a validação de um objeto.
+     * Configura a regra de validação.
      * @param config Configuração da regra de validação.
+     */
+    void setConfiguration(Properties config);
+    
+    /**
+     * Faz a validação de um objeto.
      * @param source Origem do valor a ser validado.
      * @param value Valor a ser validado.
      * @throws ValidatorException Lançado quando o valor for considerado inválido.
      */
-    public void validate(Properties config, Object source, Object value)
+    void validate(Object source, Object value)
             throws ValidatorException;
 }

@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 
 /**
  *
@@ -43,7 +45,7 @@ public class DefaultValidator implements Validator{
         this.initialized = false;
     }
 
-    private void init(){
+    private synchronized void init(){
         this.rules = new HashMap();
 
         Iterator keys = config.stringPropertyNames().iterator();
@@ -51,15 +53,28 @@ public class DefaultValidator implements Validator{
         while( keys.hasNext() ){
             String key = (String) keys.next();
             if( !key.equals("message") ){
-                ValidationRule rule = (ValidationRule) mappedRules.get(key);
+                Class rule = (Class) mappedRules.get(key);
 
-                if( rule != null )
-                    rules.put(key, rule);
+                if( rule != null ){
+                    ValidationRule ruleInstance = getInstance(rule);
+                    ruleInstance.setConfiguration(this.config);
+                    rules.put(key, ruleInstance);
+                }
             }
         }
         this.initialized = true;
     }
 
+    private ValidationRule getInstance(Class clazz){
+        try{
+            return (ValidationRule)ClassUtil.getInstance(clazz);
+        }
+        catch( Exception e ){
+            throw new BrutosException(e);
+        }
+    }
+
+    
     protected String getMessage(Object value, Properties config){
         String message = config.getProperty( "message" );
         if( message != null ){
@@ -88,7 +103,7 @@ public class DefaultValidator implements Validator{
         try{
             while( c.hasNext() ){
                 ValidationRule rule = (ValidationRule) c.next();
-                rule.validate(config, source, value);
+                rule.validate(source, value);
             }
         }
         catch( ValidatorException e ){

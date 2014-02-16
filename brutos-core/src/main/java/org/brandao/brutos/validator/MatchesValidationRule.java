@@ -29,7 +29,7 @@ import org.brandao.brutos.type.Type;
  */
 public class MatchesValidationRule implements ValidationRule{
 
-    public void validate(Properties config, Object source, Object value) {
+    public void validate(Object source, Object value) {
         Type valueType = null;
 
         if( source instanceof DependencyBean )
@@ -51,6 +51,10 @@ public class MatchesValidationRule implements ValidationRule{
                     throw new ValidatorException();
             }
         }
+    }
+
+    public void setConfiguration(Properties config) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
