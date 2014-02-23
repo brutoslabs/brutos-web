@@ -19,8 +19,6 @@ import org.brandao.brutos.MvcResponseFactory;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.ioc.IOCProvider;
-import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
@@ -85,18 +83,9 @@ public class WebApplicationContextWrapper
         return applicationContext.getResponseFactory();
     }
 
-    public void setIocManager(IOCManager iocManager){
-        applicationContext.setIocProvider(iocProvider);
-    }
-
-    public void setWebFrameManager(WebFrameManager webFrameManager){
-        applicationContext.setWebFrameManager(webFrameManager);
-    }
-
     public void setInterceptorManager(InterceptorManager interceptorManager){
         applicationContext.setInterceptorManager(interceptorManager);
     }
-
 
     public ViewProvider getViewProvider(){
         return applicationContext.getViewProvider();
@@ -129,14 +118,6 @@ public class WebApplicationContextWrapper
 
     public ControllerManager getControllerManager(){
         return applicationContext.getControllerManager();
-    }
-
-    public IOCManager getIocManager(){
-        return applicationContext.getIocManager();
-    }
-
-    public WebFrameManager getWebFrameManager(){
-        return applicationContext.getWebFrameManager();
     }
 
     public IOCProvider getIocProvider(){

@@ -25,7 +25,6 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.scope.Scope;
 
 /**
@@ -52,15 +51,6 @@ public class WebControllerResolver implements ControllerResolver{
         catch( Exception e ){
             throw new BrutosException( e.getMessage(), e );
         }
-    }
-
-    public Controller getController(WebFrameManager webFrameManager, HttpServletRequest request) {
-        String path         = request.getRequestURI();
-        String contextPath  = request.getContextPath();
-        path = path.substring( contextPath.length(), path.length() );
-        
-        path = path.replace( "\\", "/" );
-        return webFrameManager.getForm( path );
     }
 
     public Controller getController(ControllerManager controllerManager, 
@@ -108,11 +98,6 @@ public class WebControllerResolver implements ControllerResolver{
 
                 ActionResolver actionResolver =
                         context.getActionResolver();
-                
-                /*
-                Action action = 
-                        controller.getAction(id);
-                */
                 
                 ResourceAction resourceAction = 
                         actionResolver.getResourceAction(action);
