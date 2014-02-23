@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.util;
 
+import org.brandao.brutos.web.util.WebUtil;
 import java.net.MalformedURLException;
 import junit.framework.TestCase;
 import org.brandao.brutos.BrutosException;

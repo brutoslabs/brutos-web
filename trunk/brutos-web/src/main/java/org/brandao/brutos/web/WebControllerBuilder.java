@@ -19,7 +19,7 @@ package org.brandao.brutos.web;
 
 import org.brandao.brutos.*;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.util.WebUtil;
+import org.brandao.brutos.web.util.WebUtil;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
