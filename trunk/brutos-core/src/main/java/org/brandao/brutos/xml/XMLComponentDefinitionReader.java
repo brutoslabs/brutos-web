@@ -19,6 +19,7 @@ package org.brandao.brutos.xml;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -39,16 +40,15 @@ import org.xml.sax.SAXParseException;
  *
  * @author Brandao
  */
-public class ControllerDefinitionReader extends AbstractDefinitionReader{
+public class XMLComponentDefinitionReader extends AbstractDefinitionReader{
 
-    private XMLParseUtil parseUtil;
-    private List blackList;
+    private final XMLParseUtil parseUtil;
+    private final List blackList;
     
-    public ControllerDefinitionReader( ConfigurableApplicationContext handler,
-            List blackList, ResourceLoader resourceLoader ){
-        super( handler, resourceLoader );
+    public XMLComponentDefinitionReader(ComponentRegistry componenetRegistry){
+        super( componenetRegistry );
         this.parseUtil = new XMLParseUtil();
-        this.blackList = blackList;
+        this.blackList = new ArrayList();
     }
 
     public Element validate(Resource resource){
@@ -203,11 +203,8 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
                 throw new BrutosException( ex );
             }
 
-            InterceptorManager interceptorManager =
-                handler.getInterceptorManager();
-
             InterceptorBuilder interceptorBuilder =
-                interceptorManager.addInterceptor(
+                componenetRegistry.registerInterceptor(
                     name,
                     clazz,
                     isDefault.booleanValue());
@@ -245,11 +242,8 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
             String name       = parseUtil.getAttribute(c,"name" );
             Boolean isDefault = Boolean.valueOf(parseUtil.getAttribute(c,"default" ));
 
-            InterceptorManager interceptorManager =
-                handler.getInterceptorManager();
-
             InterceptorStackBuilder interceptorStackBuilder =
-                interceptorManager.addInterceptorStack(
+                componenetRegistry.registerInterceptorStack(
                     name,
                     isDefault.booleanValue());
 
@@ -334,10 +328,8 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
         catch( Exception ex ){
             throw new BrutosException( ex );
         }
-        ControllerManager controllerMaanger = handler.getControllerManager();
-
         ControllerBuilder controllerBuilder =
-            controllerMaanger.addController(
+            componenetRegistry.registerController(
                 id,
                 view,
                 dispatcher,
@@ -1309,11 +1301,11 @@ public class ControllerDefinitionReader extends AbstractDefinitionReader{
     }
 
     public void loadDefinitions(String location) {
-        Resource resource = this.resourceLoader.getResource(location);
+        Resource resource = this.componenetRegistry.getResource(location);
         this.loadDefinitions(resource);
     }
 
     public ResourceLoader getResourceLoader() {
-        return this.resourceLoader;
+        return this.componenetRegistry;
     }
 }
