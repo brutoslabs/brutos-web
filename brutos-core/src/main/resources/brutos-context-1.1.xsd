@@ -67,6 +67,7 @@
         <xsd:enumeration value="annotation"/>
         <xsd:enumeration value="regex"/>
         <xsd:enumeration value="custom"/>
+        <xsd:enumeration value="assignable"/>
     </xsd:restriction>
   </xsd:simpleType>
 
