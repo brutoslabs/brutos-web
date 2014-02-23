@@ -17,19 +17,20 @@
 
 package org.brandao.brutos.web;
 
+import java.util.List;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ServletContextResource;
-import org.brandao.brutos.ioc.SpringIOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.view.JSPViewProvider;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
-import org.brandao.brutos.web.http.HttpRequestParserImp;
+import org.brandao.brutos.web.ioc.SpringIOCProvider;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.ParamScope;
@@ -49,7 +50,12 @@ public abstract class AbstractWebApplicationContext
     public static final String  contextConfigName   = "contextConfig";
 
     private Logger logger;
+    
     protected ServletContext servletContext;
+    
+    private String[] locations;
+    
+    private Resource[] resources;
     
     public AbstractWebApplicationContext(){
     }
@@ -65,6 +71,51 @@ public abstract class AbstractWebApplicationContext
         initRequestParser(config);
     }
 
+    public void setLocations(String[] locations) {
+        this.locations = locations;
+    }
+
+    public void setResources(Resource[] resources) {
+        this.resources = resources;
+    }
+
+    public String[] getLocations() {
+        return this.locations;
+    }
+
+    public Resource[] getResources() {
+        return this.resources;
+    }
+    
+    public void loadDefinitions(
+            DefinitionReader definitionReader ){
+
+        String configContext = super.configuration.getProperty(
+            AbstractWebApplicationContext.contextConfigName,
+            AbstractWebApplicationContext.defaultConfigContext);
+        
+        List contextLocations = 
+            StringUtil.getList(
+                    configContext, 
+                    BrutosConstants.COMMA);
+        
+        if(contextLocations != null){
+            Resource[] contextResources = new Resource[contextLocations.size()];
+            for(int i=0;i<contextResources.length;i++){
+                contextResources[i] =
+                    this.getResource((String) contextLocations.get(i));
+            }
+            definitionReader.loadDefinitions(contextResources);
+        }
+        
+        if( resources != null)
+            definitionReader.loadDefinitions(resources);
+        
+        if( locations != null)
+            definitionReader.loadDefinitions(locations);
+        
+    }
+    
     private void initUploadListener(Properties config){
         try{
             String uploadListenerFactoryName =

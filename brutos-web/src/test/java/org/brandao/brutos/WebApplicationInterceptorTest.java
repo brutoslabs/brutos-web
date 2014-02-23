@@ -28,6 +28,7 @@ import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.GenericXMLWebApplicationContext;
+import org.brandao.brutos.web.WebScopeType;
 
 /**
  *

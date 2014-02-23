@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.web;
 
-import java.util.Map;
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Controller;

@@ -32,6 +32,7 @@ import org.brandao.brutos.test.MockViewProvider;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.GenericXMLWebApplicationContext;
+import org.brandao.brutos.web.WebScopeType;
 
 /**
  *

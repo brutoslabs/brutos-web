@@ -17,61 +17,11 @@
 
 package org.brandao.brutos.web;
 
-import java.util.ArrayList;
-import java.util.Properties;
-import org.brandao.brutos.DefinitionReader;
-import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.xml.ContextDefinitionReader;
-import org.brandao.brutos.xml.ControllerDefinitionReader;
-
 /**
  *
  * @author Brandao
  */
 public abstract class AbstractXMLWebApplicationContext
         extends AbstractWebApplicationContext {
-
-    public void configure( Properties config ){
-        super.configure(config);
-        ContextDefinitionReader ccdr = loadContextDefinition();
-        
-        if(ccdr.getParent() != null)
-            this.setParent(ccdr.getParent());
-        
-        loadControllersDefinition();
-    }
-
-    protected ContextDefinitionReader loadContextDefinition(){
-        ContextDefinitionReader ccdr =
-            new ContextDefinitionReader(
-                this,
-                new ArrayList(),
-                this);
-
-        loadDefinitions(ccdr);
-        
-        return ccdr;
-    }
-
-    protected void loadControllersDefinition(){
-        ControllerDefinitionReader cdr =
-            new ControllerDefinitionReader(
-                this,
-                new ArrayList(),
-                this);
-
-        loadDefinitions(cdr);
-    }
-
-    protected void loadDefinitions(
-            DefinitionReader definitionReader ){
-
-        Resource[] resources = getContextResources();
-
-        if( resources != null)
-            definitionReader.loadDefinitions(resources);
-    }
-
-    protected abstract Resource[] getContextResources();
 
 }
