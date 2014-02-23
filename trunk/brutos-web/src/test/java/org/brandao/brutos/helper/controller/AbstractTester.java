@@ -35,7 +35,7 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.test.MockIOCProvider;
 import org.brandao.brutos.test.MockViewProvider;
-import org.brandao.brutos.test.MockWebApplicationContext;
+import org.brandao.brutos.web.test.MockWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
