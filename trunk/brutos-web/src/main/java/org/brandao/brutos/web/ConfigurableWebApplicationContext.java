@@ -19,6 +19,8 @@ package org.brandao.brutos.web;
 
 import javax.servlet.ServletContext;
 import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.DefinitionReader;
+import org.brandao.brutos.io.Resource;
 
 /**
  *
@@ -27,6 +29,16 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 public interface ConfigurableWebApplicationContext 
         extends WebApplicationContext, ConfigurableApplicationContext{
 
-    public void setServletContext( ServletContext servletContext );
+    void setServletContext( ServletContext servletContext );
+    
+    void loadDefinitions(DefinitionReader definitionReader);
+    
+    void setLocations(String[] locations);
+    
+    void setResources(Resource[] resources);
+
+    String[] getLocations();
+    
+    Resource[] getResources();
     
 }

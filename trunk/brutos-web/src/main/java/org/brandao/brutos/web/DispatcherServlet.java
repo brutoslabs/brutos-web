@@ -18,7 +18,6 @@
 package org.brandao.brutos.web;
 
 import java.io.IOException;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -27,11 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.WebScopeType;
-import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.web.http.StaticBrutosRequest;
-import org.brandao.brutos.web.http.UploadListener;
 
 /**
  * 

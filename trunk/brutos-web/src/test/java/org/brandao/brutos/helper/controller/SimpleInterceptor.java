@@ -19,13 +19,13 @@
 package org.brandao.brutos.helper.controller;
 
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.interceptor.AbstractInterceptor;
 import org.brandao.brutos.interceptor.InterceptedException;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorStack;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.WebScopeType;
 
 /**
  *

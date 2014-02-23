@@ -19,7 +19,6 @@ package org.brandao.brutos.web;
 
 import java.util.Map;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.http.UploadStats;
 

@@ -20,12 +20,10 @@ package org.brandao.brutos.web.scope;
 import java.util.HashMap;
 import java.util.Map;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ContextLoader;
-import org.brandao.brutos.web.AbstractWebApplicationContext;
 import org.brandao.brutos.web.WebApplicationContext;
+import org.brandao.brutos.web.WebScopeType;
 
 /**
  *

@@ -28,7 +28,6 @@ import org.brandao.brutos.helper.controller.SimpleBean;
 import org.brandao.brutos.helper.controller.TypeTest;
 import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.ioc.PicoContainerIOCProvider;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
@@ -118,24 +117,6 @@ public class WebApplicationContextTest extends AbstractTester implements Test{
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                }
-
-        });
-    }
-
-    public void testContext5(){
-        super.execTest(
-            new HandlerTest(){
-
-                public String getResourceName() {
-                    return
-                        "org/brandao/brutos/xml/helper/context/context-test5.xml";
-                }
-
-                public void run(ConfigurableApplicationContext app,
-                        HttpServletRequest request, HttpServletResponse response) {
-
-                    TestCase.assertTrue(app.getIocProvider() instanceof PicoContainerIOCProvider);
                 }
 
         });
