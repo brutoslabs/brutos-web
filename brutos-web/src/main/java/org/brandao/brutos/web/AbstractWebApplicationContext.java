@@ -28,7 +28,7 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.view.JSPViewProvider;
+import org.brandao.brutos.web.view.JSPViewProvider;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
 import org.brandao.brutos.web.ioc.SpringIOCProvider;
 import org.brandao.brutos.web.scope.ApplicationScope;

@@ -21,7 +21,7 @@ import org.brandao.brutos.ActionType;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManagerImp;
 import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.util.WebUtil;
+import org.brandao.brutos.web.util.WebUtil;
 
 /**
  *

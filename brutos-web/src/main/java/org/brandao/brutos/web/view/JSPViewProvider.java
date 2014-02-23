@@ -15,7 +15,7 @@
  *
  */
 
-package org.brandao.brutos.view;
+package org.brandao.brutos.web.view;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.RequestInstrument;
+import org.brandao.brutos.view.ViewProvider;
 import org.brandao.brutos.web.RequestInfo;
 
 /**
