@@ -17,6 +17,9 @@
 
 package org.brandao.brutos.mapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Brandao
@@ -54,5 +57,22 @@ public class StringUtil {
         }
         else
             return null;
+    }
+    
+    public static List getList(String value, String separator){
+        
+        if(value == null)
+            return null;
+        
+        List result = new ArrayList();
+        String[] split = value.split(separator);
+        
+        for(int i=0;i<split.length;i++){
+            String tmp = split[i];
+            tmp = adjust(tmp);
+            result.add(tmp);
+        }
+        
+        return result;
     }
 }
