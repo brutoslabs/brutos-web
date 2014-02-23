@@ -22,7 +22,7 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.io.ServletContextResource;
+import org.brandao.brutos.web.io.ServletContextResource;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.StringUtil;
