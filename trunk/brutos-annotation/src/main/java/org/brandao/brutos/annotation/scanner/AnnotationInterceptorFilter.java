@@ -22,7 +22,6 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.Intercepts;
 import org.brandao.brutos.interceptor.InterceptorController;
-import org.brandao.brutos.scanner.TypeFilter;
 import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
@@ -36,8 +35,9 @@ public class AnnotationInterceptorFilter implements TypeFilter{
             resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
             return 
-                clazz.isAnnotationPresent(Intercepts.class) 
-                && InterceptorController.class.isAssignableFrom(clazz)?
+                resource.matches("(.*\\.)*\\w+InterceptorController") || 
+                (clazz.isAnnotationPresent(Intercepts.class) 
+                && InterceptorController.class.isAssignableFrom(clazz))?
                 Boolean.TRUE :
                 null;
         }

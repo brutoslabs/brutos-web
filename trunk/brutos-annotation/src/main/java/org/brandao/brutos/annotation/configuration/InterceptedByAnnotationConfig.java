@@ -18,7 +18,7 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.annotation.*;
@@ -38,10 +38,10 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
     
         try{
-            return applyConfiguration0(source, builder, applicationContext);
+            return applyConfiguration0(source, builder, componentRegistry);
         }
         catch(Exception e){
             throw 
@@ -53,7 +53,7 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     public Object applyConfiguration0(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
         
         ControllerBuilder controllerBuilder = (ControllerBuilder)builder;
         Class clazz = (Class)source;
@@ -66,7 +66,7 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
             
             if(i.interceptor() != InterceptorController.class){
                 Class<? extends InterceptorController> iClass = i.interceptor();
-                name = applicationContext.getInterceptorManager().getInterceptor(iClass).getName();
+                name = componentRegistry.getInterceptor(iClass).getName();
             }
             else
                 name = StringUtil.isEmpty(i.name()) ? null : StringUtil.adjust(i.name());

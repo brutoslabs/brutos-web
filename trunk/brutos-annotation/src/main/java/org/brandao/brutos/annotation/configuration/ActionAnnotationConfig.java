@@ -35,10 +35,10 @@ import org.brandao.brutos.mapping.StringUtil;
 public class ActionAnnotationConfig extends AbstractAnnotationConfig{
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
     
         try{
-            return applyConfiguration0(source, builder, applicationContext);
+            return applyConfiguration0(source, builder, componentRegistry);
         }
         catch(Exception e){
             throw 
@@ -50,7 +50,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     public Object applyConfiguration0(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
         
         ActionEntry method = (ActionEntry)source;
         ControllerBuilder controllerBuilder = (ControllerBuilder)builder;
@@ -63,7 +63,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         org.brandao.brutos.DispatcherType dispatcher;
         String id;
         
-        id = getId(action, method, controllerBuilder, applicationContext);
+        id = getId(action, method, controllerBuilder, componentRegistry);
         
         Result resultAnnotation = method.getAnnotation(Result.class);
         result = resultAnnotation == null? null : resultAnnotation.value();
@@ -89,7 +89,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 method,
                 viewAnnotation, 
                 actionBuilder,
-                applicationContext);
+                componentRegistry);
         
         actionBuilder.setView(view);
         
@@ -107,9 +107,9 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             }
         }
         
-        throwsSafe(actionBuilder, method,applicationContext);
+        throwsSafe(actionBuilder, method, componentRegistry);
         
-        addParameters(actionBuilder, method,applicationContext);
+        addParameters(actionBuilder, method, componentRegistry);
         
         return actionBuilder;
     }
@@ -133,7 +133,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     
     protected String getId(Action action, ActionEntry method,
             ControllerBuilder controllerBuilder, 
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         boolean hasActionId =
             action != null && action.value().length > 0 && 
@@ -148,7 +148,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             if(StringUtil.isEmpty(id))
                 throw new BrutosException("invalid action name: " + method.getName());
             
-            if(AnnotationUtil.isWebApplication(applicationContext) && 
+            if(AnnotationUtil.isWebApplication(componentRegistry) && 
                controllerBuilder.getActionType() != ActionType.PARAMETER)
                 return id.startsWith("/") || id.startsWith("\\")? id : "/" + id;
             else
@@ -157,7 +157,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     protected String getView(ActionEntry actionEntry, View viewAnnotation, ActionBuilder action,
-        ConfigurableApplicationContext applicationContext){
+        ComponentRegistry componentRegistry){
         
         if(actionEntry.isAbstractAction()){
             String view = actionEntry.getView();
@@ -179,14 +179,14 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             if(resolved)
                 return view;
             else
-                return createActionView(action, applicationContext, view);
+                return createActionView(action, componentRegistry, view);
         }
         else
             return null;
     }
 
     protected String createActionView(ActionBuilder action,
-            ConfigurableApplicationContext applicationContext, String view){
+            ComponentRegistry componentRegistry, String view){
         
         return applicationContext
                 .getViewResolver()
@@ -194,7 +194,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     private void addParameters(ActionBuilder builder, 
-            ActionEntry method,ConfigurableApplicationContext applicationContext){
+            ActionEntry method, ComponentRegistry componentRegistry){
         
         Type[] genericTypes = method.getGenericParameterTypes();
         Class[] types = method.getParameterTypes();
@@ -212,12 +212,12 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                     annotations != null? annotations[i] : null,
                     i);
             
-            super.applyInternalConfiguration(actionParamEntry, builder, applicationContext);
+            super.applyInternalConfiguration(actionParamEntry, builder, componentRegistry);
         }
     }
 
     protected void throwsSafe(ActionBuilder builder, ActionEntry method,
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         List<ThrowableEntry> list = new ArrayList<ThrowableEntry>();
         ThrowSafeList throwSafeList = method.getAnnotation(ThrowSafeList.class);
@@ -247,7 +247,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             map.put(entry.getTarget(),entry);
         
         for(ThrowableEntry entry: map.values())
-            super.applyInternalConfiguration(entry, builder, applicationContext);
+            super.applyInternalConfiguration(entry, builder, componentRegistry);
         
     }
     

@@ -17,7 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.ComponentRegistry;
 
 /**
  * 
@@ -25,6 +25,6 @@ import org.brandao.brutos.ConfigurableApplicationContext;
  */
 public interface Converter {
     
-    Object converter(Object value, ConfigurableApplicationContext applicationContext);
+    Object converter(Object value, ComponentRegistry componentRegistry);
     
 }

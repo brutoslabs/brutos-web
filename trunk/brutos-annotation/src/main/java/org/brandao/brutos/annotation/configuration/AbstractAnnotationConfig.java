@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.AnnotationConfig;
 
@@ -35,7 +36,13 @@ public abstract class AbstractAnnotationConfig
 
     protected AnnotationConfigEntry annotation;
     
+    //protected ConfigurableApplicationContext applicationContext;
+    
     private Converter sourceConverter;
+    
+    public void setApplicationContext(ConfigurableApplicationContext applicationContext){
+        //this.applicationContext = applicationContext;
+    }
     
     public void setConfiguration(AnnotationConfigEntry annotation){
         this.annotation = annotation;
@@ -46,7 +53,7 @@ public abstract class AbstractAnnotationConfig
     }
     
     public Object applyInternalConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
 
         List<AnnotationConfigEntry> list = 
                 getOrder(annotation.getNextAnnotationConfig());
@@ -57,10 +64,10 @@ public abstract class AbstractAnnotationConfig
                 source = 
                         next.getSourceConverter() == null? 
                             source : 
-                            next.getSourceConverter().converter(source,applicationContext);
+                            next.getSourceConverter().converter(source, componentRegistry);
                 
                 builder = next
-                        .applyConfiguration(source, builder, applicationContext);
+                        .applyConfiguration(source, builder, componentRegistry);
             }
         }
         

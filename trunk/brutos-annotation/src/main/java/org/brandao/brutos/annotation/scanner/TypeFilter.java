@@ -1,6 +1,6 @@
 /*
  * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,18 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
+package org.brandao.brutos.annotation.scanner;
 
-import org.brandao.brutos.ComponentRegistry;
+import java.util.Properties;
 
 /**
  *
- * @author Brandao
+ * @author Afonso Brandao
  */
-public interface ApplyAnnotationConfig {
+public interface TypeFilter {
+
+    void setConfiguration(Properties config);
     
-    void setConfiguration(AnnotationConfigEntry annotation);
-    
-    AnnotationConfigEntry getConfiguration();
-    
-    Object applyInternalConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry);
+    Boolean accepts( String resource );
     
 }

@@ -19,6 +19,7 @@ package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.annotation.Action;
@@ -38,10 +39,10 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
     
         try{
-            return applyConfiguration0(source, builder, applicationContext);
+            return applyConfiguration0(source, builder, componentRegistry);
         }
         catch(Exception e){
             throw 
@@ -53,25 +54,25 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     public Object applyConfiguration0(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
 
         if(builder instanceof ActionBuilder)
-            addThrowSafe((ActionBuilder)builder, applicationContext, (ThrowableEntry)source);
+            addThrowSafe((ActionBuilder)builder, componentRegistry, (ThrowableEntry)source);
         else
-            addThrowSafe((ControllerBuilder)builder, applicationContext, (ThrowableEntry)source);
+            addThrowSafe((ControllerBuilder)builder, componentRegistry, (ThrowableEntry)source);
         
         return builder;
     }
     
     protected void addThrowSafe(ActionBuilder actionBuilder, 
-            ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
+            ComponentRegistry componentRegistry, ThrowableEntry throwSafe){
         
         if(throwSafe.isEnabled()){
             actionBuilder
                     .addThrowable(
                         throwSafe.getTarget(), 
                         throwSafe.isRendered()? 
-                            getView(actionBuilder, applicationContext, throwSafe) : 
+                            getView(actionBuilder, componentRegistry, throwSafe) : 
                             null,
                         throwSafe.getName(), 
                         throwSafe.getDispatcher());
@@ -79,14 +80,14 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     protected void addThrowSafe(ControllerBuilder controllerBuilder, 
-            ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
+            ComponentRegistry componentRegistry, ThrowableEntry throwSafe){
         
         if(throwSafe.isEnabled()){
             controllerBuilder
                     .addThrowable(
                         throwSafe.getTarget(), 
                         throwSafe.isRendered()? 
-                            getView(controllerBuilder, applicationContext, throwSafe) : 
+                            getView(controllerBuilder, componentRegistry, throwSafe) : 
                             null,
                         throwSafe.getName(), 
                         throwSafe.getDispatcher());
@@ -95,7 +96,7 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     protected String getView(ControllerBuilder controllerBuilder, 
-            ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
+            ComponentRegistry componentRegistry, ThrowableEntry throwSafe){
         return 
             throwSafe.isResolved()? 
                 throwSafe.getView() : 
@@ -109,7 +110,7 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     protected String getView(ActionBuilder actionBuilder, 
-            ConfigurableApplicationContext applicationContext, ThrowableEntry throwSafe){
+            ComponentRegistry componentRegistry, ThrowableEntry throwSafe){
         return
             throwSafe.isResolved()?
                 throwSafe.getView() : 

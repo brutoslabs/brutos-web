@@ -19,6 +19,7 @@ package org.brandao.brutos.annotation.configuration.converters;
 
 import java.util.*;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.InterceptsStack;
 import org.brandao.brutos.annotation.InterceptsStackList;
@@ -35,7 +36,7 @@ import org.brandao.brutos.mapping.StringUtil;
 public class InterceptorStackConverter implements Converter{
 
     public Object converter(Object value, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
         
         List<Object> list = (List<Object>)value;
         

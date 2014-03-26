@@ -15,21 +15,21 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
+package org.brandao.brutos.annotation;
 
-import org.brandao.brutos.ComponentRegistry;
+import org.brandao.brutos.DefinitionReader;
+import org.brandao.brutos.annotation.scanner.TypeFilter;
 
 /**
  *
  * @author Brandao
  */
-public interface ApplyAnnotationConfig {
+public interface ScannerDefinitionReader extends DefinitionReader{
+   
+    void setBasePackage(String[] value);
     
-    void setConfiguration(AnnotationConfigEntry annotation);
+    void addFilter(TypeFilter value);
     
-    AnnotationConfigEntry getConfiguration();
-    
-    Object applyInternalConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry);
+    void removeFilter(TypeFilter value);
     
 }

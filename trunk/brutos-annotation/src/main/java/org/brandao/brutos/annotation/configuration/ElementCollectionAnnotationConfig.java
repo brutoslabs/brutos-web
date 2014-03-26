@@ -37,25 +37,21 @@ public class ElementCollectionAnnotationConfig
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
         
         ElementEntry element = (ElementEntry)source;
-        /*
-        boolean isStandardType = TypeManager.isStandardType(element.getClassType());
-        boolean useMapping = element.isUseBean() || !isStandardType;
-        */
         
         if(AnnotationUtil.isBuildEntity(element.isUseBean(), element.getClassType()))
-            buildElement(element, builder, applicationContext);
+            buildElement(element, builder, componentRegistry);
         else
-            addElement(element, (BeanBuilder)builder, applicationContext);
+            addElement(element, (BeanBuilder)builder, componentRegistry);
         
 
         return builder;
     }
     
     protected void addElement(ElementEntry elementEntry, BeanBuilder builder, 
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         String element = elementEntry.getName();
         EnumerationType enumType = elementEntry.getEnumerated();
@@ -71,11 +67,11 @@ public class ElementCollectionAnnotationConfig
     }
     
     protected void buildElement(ElementEntry element, Object builder, 
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         super.applyInternalConfiguration(
                 element, 
                 builder, 
-                applicationContext);
+                componentRegistry);
     }
     
     

@@ -38,24 +38,24 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
         
         BeanPropertyAnnotation property = (BeanPropertyAnnotation)source;
         
         PropertyBuilder propertyBuilder;        
         if(!TypeManager.isStandardType(property.getType()))
-            propertyBuilder = buildProperty((BeanBuilder)builder,property,applicationContext);
+            propertyBuilder = buildProperty((BeanBuilder)builder,property,componentRegistry);
         else
-            propertyBuilder = addProperty(property,builder, applicationContext);
+            propertyBuilder = addProperty(property,builder, componentRegistry);
         
         super.applyInternalConfiguration(
-                property, propertyBuilder, applicationContext);
+                property, propertyBuilder, componentRegistry);
         
         return builder;
     }
 
     protected PropertyBuilder addProperty(BeanPropertyAnnotation property,Object builder,
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         Property propertyAnnotation = (Property)property.getAnnotation(Property.class);
         String propertyName = getPropertyName(property);
@@ -69,12 +69,12 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
         if(builder instanceof BeanBuilder){
             propertyBuilder = addProperty((BeanBuilder)builder,property, propertyName,
                 name, scope, enumProperty, temporalProperty, type,
-                applicationContext);
+                componentRegistry);
         }
         else{
             propertyBuilder = addProperty((ControllerBuilder)builder,property, propertyName,
                 name, scope, enumProperty, temporalProperty, type,
-                applicationContext);
+                componentRegistry);
         }
         
         return propertyBuilder;
@@ -84,7 +84,7 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
         BeanPropertyAnnotation property, String propertyName,
         String name, ScopeType scope, EnumerationType enumProperty,
         String temporalProperty, org.brandao.brutos.type.Type type,
-        ConfigurableApplicationContext applicationContext){
+        ComponentRegistry componentRegistry){
         
         PropertyBuilder builder = 
             beanBuilder.addProperty(name, propertyName, enumProperty, 
@@ -97,7 +97,7 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
         BeanPropertyAnnotation property, String propertyName,
         String name, ScopeType scope, EnumerationType enumProperty,
         String temporalProperty, org.brandao.brutos.type.Type type,
-        ConfigurableApplicationContext applicationContext){
+        ComponentRegistry componentRegistry){
         
         PropertyBuilder builder = 
             controllerBuilder.addProperty(propertyName, name, scope, 
@@ -108,9 +108,9 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
     
      protected PropertyBuilder buildProperty(BeanBuilder beanBuilder, 
             BeanPropertyAnnotation property, 
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         super.applyInternalConfiguration(new BeanEntryProperty(property), beanBuilder, 
-                applicationContext);
+                componentRegistry);
         
         return beanBuilder.getProperty(property.getName());
     }

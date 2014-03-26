@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.InterceptorManager;
@@ -38,10 +39,10 @@ public class InterceptsAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
     
         try{
-            return applyConfiguration0(source, builder, applicationContext);
+            return applyConfiguration0(source, builder, componentRegistry);
         }
         catch(Exception e){
             throw 
@@ -53,10 +54,7 @@ public class InterceptsAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     public Object applyConfiguration0(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
-        
-        InterceptorManager interceporManager = 
-                applicationContext.getInterceptorManager();
+            ComponentRegistry componentRegistry) {
         
         Class clazz = (Class)source;
         Intercepts intercepts = (Intercepts) clazz.getAnnotation(Intercepts.class);
@@ -67,14 +65,14 @@ public class InterceptsAnnotationConfig extends AbstractAnnotationConfig{
         
         boolean isDefault = intercepts == null || intercepts.isDefault();
         InterceptorBuilder newBuilder = 
-                interceporManager.addInterceptor(name, clazz, isDefault);
+                componentRegistry.registerInterceptor(name, clazz, isDefault);
         
         if(intercepts != null){
             for(Param p: intercepts.params())
                 newBuilder.addParameter(p.name(), p.value());
         }
         
-        super.applyInternalConfiguration(source,newBuilder, applicationContext);
+        super.applyInternalConfiguration(source,newBuilder, componentRegistry);
         return builder;
     }
     

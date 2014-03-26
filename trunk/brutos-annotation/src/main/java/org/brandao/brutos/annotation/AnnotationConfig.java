@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation;
 
 import java.lang.annotation.Annotation;
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.configuration.AnnotationConfigEntry;
 import org.brandao.brutos.annotation.configuration.Converter;
@@ -29,6 +30,8 @@ import org.brandao.brutos.annotation.configuration.Converter;
  * @author Brandao
  */
 public interface AnnotationConfig {
+    
+    void setApplicationContext(ConfigurableApplicationContext applicationContext);
     
     /**
      * Define o conversor dos dados de entrada.
@@ -58,11 +61,11 @@ public interface AnnotationConfig {
      * 
      * @param source Entidade.
      * @param builder Construtor da entidade.
-     * @param applicationContext Aplicação.
+     * @param componentRegistry Regsitro dos componentes da aplicação.
      * @return Construtor da entidade.
      */
     Object applyConfiguration(Object source, Object builder,
-            ConfigurableApplicationContext applicationContext);
+            ComponentRegistry componentRegistry);
     
     /**
      * Obtém a ordem de execução dos recursos do próximo nível.
