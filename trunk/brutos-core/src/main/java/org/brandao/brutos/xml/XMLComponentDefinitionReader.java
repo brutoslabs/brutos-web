@@ -40,9 +40,8 @@ import org.xml.sax.SAXParseException;
  *
  * @author Brandao
  */
-public class XMLComponentDefinitionReader extends AbstractDefinitionReader{
+public class XMLComponentDefinitionReader extends ContextDefinitionReader{
 
-    private final XMLParseUtil parseUtil;
     private final List blackList;
     
     public XMLComponentDefinitionReader(ComponentRegistry componenetRegistry){
@@ -51,7 +50,7 @@ public class XMLComponentDefinitionReader extends AbstractDefinitionReader{
         this.blackList = new ArrayList();
     }
 
-    public Element validate(Resource resource){
+    protected Element validate(Resource resource){
         DocumentBuilderFactory documentBuilderFactory =
                 DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder;
@@ -107,7 +106,12 @@ public class XMLComponentDefinitionReader extends AbstractDefinitionReader{
     }
 
 
-    public void build(Element document, Resource resource){
+    protected void build(Element document, Resource resource){
+        super.build(document);
+        this.buildComponents(document, resource);
+    }
+        
+    protected void buildComponents(Element document, Resource resource){
         
         loadInterceptors( parseUtil.getElement(
                 document,
@@ -144,7 +148,8 @@ public class XMLComponentDefinitionReader extends AbstractDefinitionReader{
                     else
                         blackList.add(dependencyResource);
 
-                    this.loadDefinitions( dependencyResource );
+                    Element document = this.validate(dependencyResource);
+                    this.buildComponents(document, dependencyResource);
                 }
                 catch( BrutosException ex ){
                     throw ex;

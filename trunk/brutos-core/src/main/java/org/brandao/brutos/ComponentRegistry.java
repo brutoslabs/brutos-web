@@ -15,18 +15,15 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.scanner;
+package org.brandao.brutos;
 
-import java.util.Properties;
+import org.brandao.brutos.io.ResourceLoader;
 
 /**
  *
- * @author Afonso Brandao
+ * @author Brando
  */
-public interface TypeFilter {
-
-    void setConfiguration(Properties config);
-    
-    Boolean accepts( String resource );
+public interface ComponentRegistry 
+    extends ControllerRegistry, InterceptorRegistry, ResourceLoader{
     
 }

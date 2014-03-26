@@ -17,21 +17,15 @@
 
 package org.brandao.brutos;
 
-import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.io.DefaultResourceLoader;
 import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.proxy.ProxyFactory;
-import org.brandao.brutos.scope.CustomScopeConfigurer;
-import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.validator.ValidatorProvider;
@@ -45,15 +39,9 @@ public abstract class AbstractApplicationContext
         extends DefaultResourceLoader 
         implements ConfigurableApplicationContext{
 
-    private Logger logger = LoggerProvider
-        .getCurrentLoggerProvider()
-            .getLogger(AbstractApplicationContext.class.getName());
+    protected Logger logger;
 
-    protected IOCManager iocManager;
-    
     protected IOCProvider iocProvider;
-    
-    protected WebFrameManager webFrameManager;
     
     protected InterceptorManager interceptorManager;
     
@@ -76,6 +64,7 @@ public abstract class AbstractApplicationContext
     protected MvcResponseFactory responseFactory;
     
     protected MvcRequestFactory requestFactory;
+    
     private Scopes scopes;
     
     private ViewResolver viewResolver;
@@ -100,27 +89,12 @@ public abstract class AbstractApplicationContext
         this.scopes = new Scopes();
     }
 
-    /**
-     * Inicia o processo de configuração da aplicaçao.
-     */
-    public void configure(){
-        configure( this.configuration );
-    }
-
-    /**
-     * Inicia o processo de configura��o da aplica��o.
-     *
-     * @param config Configura��o.
-     */
-    public void configure( Properties config ){
-        this.configuration = config;
-        this.iocManager    = new IOCManager();
-        this.iocProvider   = IOCProvider.getProvider(config);
+    protected void init(){
+        this.iocProvider   = IOCProvider.getProvider(this.configuration);
         
-        this.iocProvider.configure(config);
+        this.iocProvider.configure(this.configuration);
         
         this.interceptorManager    = getNewInterceptorManager();
-        this.webFrameManager       = new WebFrameManager( this.interceptorManager, this.iocManager );
         this.controllerResolver    = getNewControllerResolver();
         this.actionResolver        = getNewMethodResolver();
         this.requestFactory        = getMvcRequestFactory();
@@ -138,17 +112,9 @@ public abstract class AbstractApplicationContext
                                          actionResolver,
                                          this,
                                          viewProvider);
-        
-
-        loadScopes();
-        
-        this.loadIOCManager(iocManager);
-        this.loadInterceptorManager(interceptorManager);
-        this.loadController(controllerManager);
-        this.loadWebFrameManager(webFrameManager);
     }
-
-    protected void loadScopes(){
+    
+    protected void initScopes(){
         getScopes()
             .register(
                 ScopeType.SINGLETON.toString(),
@@ -170,6 +136,32 @@ public abstract class AbstractApplicationContext
                 getScopes().get(ScopeType.THREAD));
 
     }
+    
+    protected void initControllers(){
+        List controllers = this.controllerManager.getControllers();
+        for(int i=0;i<controllers.size();i++){
+            Controller controller = (Controller)controllers.get(i);
+            controller.flush();
+        }
+    }
+    
+    protected void initLogger(){
+        this.logger = LoggerProvider
+                .getCurrentLoggerProvider().getLogger(getClass());
+    }
+    
+    public void flush(){
+        
+        this.initLogger();
+        
+        this.init();
+        
+        this.initScopes();
+        
+        this.initControllers();
+        
+    }
+    
     /**
      * Define o respons�vel por resolver os controladores.
      * @param controllerResolver Respons�vel por resolver os controladores
@@ -219,19 +211,6 @@ public abstract class AbstractApplicationContext
                     DefaultMvcResponseFactory.class.getName()));
             
             return (MvcResponseFactory)ClassUtil.getInstance(clazz);
-            /*
-            MvcResponseFactory instance = (MvcResponseFactory) Class.forName(
-                    configuration.getProperty(
-                    "org.brandao.brutos.controller.response_factory",
-                    DefaultMvcResponseFactory.class.getName()
-                ),
-                    true,
-                    Thread.currentThread().getContextClassLoader()
-
-            ).newInstance();
-
-            return instance;
-            */
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -249,19 +228,6 @@ public abstract class AbstractApplicationContext
                     DefaultMvcRequestFactory.class.getName()));
             
             return (MvcRequestFactory)ClassUtil.getInstance(clazz);
-            /*
-            MvcRequestFactory instance = (MvcRequestFactory) Class.forName(
-                    configuration.getProperty(
-                    "org.brandao.brutos.controller.request_factory",
-                    DefaultMvcRequestFactory.class.getName()
-                ),
-                    true,
-                    Thread.currentThread().getContextClassLoader()
-
-            ).newInstance();
-
-            return instance;
-            */
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -279,19 +245,6 @@ public abstract class AbstractApplicationContext
                     DefaultActionResolver.class.getName()));
             
             return (ActionResolver)ClassUtil.getInstance(clazz);
-            /*
-            ActionResolver instance = (ActionResolver) Class.forName(
-                    configuration.getProperty(
-                    "org.brandao.brutos.controller.action_resolver",
-                    DefaultActionResolver.class.getName()
-                ),
-                    true,
-                    Thread.currentThread().getContextClassLoader()
-
-            ).newInstance();
-            
-            return instance;
-            */
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -318,23 +271,6 @@ public abstract class AbstractApplicationContext
                             ((ConfigurableApplicationContext)parent).getControllerManager());
             instance.setApplicationContext(this);
             
-            /*
-            ControllerManager instance = 
-                (ControllerManager)ClassUtil.getInstance(
-                    clazz, 
-                    new Class[]{
-                        InterceptorManager.class, 
-                        ValidatorProvider.class, 
-                        ControllerManager.class,
-                        ConfigurableApplicationContext.class},
-                    new Object[]{
-                        interceptorManager, 
-                        validatorProvider, 
-                        this.parent == null? 
-                            null : 
-                            ((ConfigurableApplicationContext)parent).getControllerManager(),
-                        this });
-            */
             return instance;
         }
         catch( Exception e ){
@@ -347,21 +283,18 @@ public abstract class AbstractApplicationContext
             String className =
                 configuration.getProperty(
                     BrutosConstants.INTERCEPTOR_MANAGER_CLASS,
-                    InterceptorManager.class.getName());
+                    InterceptorManagerImp.class.getName());
             
             Class clazz = 
                     ClassUtil.get(className);
             
             InterceptorManager instance = 
-                (InterceptorManager)ClassUtil.getInstance(
-                    clazz, 
-                    new Class[]{
-                        InterceptorManager.class},
-                    new Object[]{
-                        this.parent == null? 
+                (InterceptorManager)ClassUtil.getInstance(clazz);
+            
+            instance.setParent(
+                    this.parent == null? 
                         null : 
-                        ((ConfigurableApplicationContext)parent).getInterceptorManager()
-                        });
+                        ((ConfigurableApplicationContext)parent).getInterceptorManager());
             
             return instance;
         }
@@ -434,7 +367,6 @@ public abstract class AbstractApplicationContext
         this.controllerResolver = null;
         this.interceptorManager = null;
         this.invoker = null;
-        this.iocManager = null;
         this.iocProvider = null;
         this.loggerProvider = null;
         this.requestFactory = null;
@@ -443,36 +375,7 @@ public abstract class AbstractApplicationContext
         this.validatorProvider = null;
         this.viewProvider = null;
         this.viewProvider = null;
-        this.webFrameManager = null;
         this.viewResolver = null;
-    }
-
-    /**
-     * @deprecated 
-     * @param iocManager
-     */
-    protected void loadIOCManager( IOCManager iocManager ){
-    }
-
-    /**
-     * @deprecated 
-     * @param webFrameManager
-     */
-    protected void loadWebFrameManager( WebFrameManager webFrameManager ){
-    }
-
-    /**
-     * Configura os interceptadores.
-     * @param interceptorManager Gestor de interceptadores.
-     */
-    protected void loadInterceptorManager( InterceptorManager interceptorManager ){
-    }
-    
-    /**
-     * Configura os controladores.
-     * @param controllerManager Gestor dos controladores.
-     */
-    protected void loadController( ControllerManager controllerManager ){
     }
 
     /**
@@ -520,14 +423,6 @@ public abstract class AbstractApplicationContext
         return this.responseFactory;
     }
 
-    public void setIocManager(IOCManager iocManager) {
-        this.iocManager = iocManager;
-    }
-
-    public void setWebFrameManager(WebFrameManager webFrameManager) {
-        this.webFrameManager = webFrameManager;
-    }
-
     public void setInterceptorManager(InterceptorManager interceptorManager) {
         this.interceptorManager = interceptorManager;
     }
@@ -562,14 +457,6 @@ public abstract class AbstractApplicationContext
 
     public ControllerManager getControllerManager() {
         return this.controllerManager;
-    }
-
-    public IOCManager getIocManager() {
-        return this.iocManager;
-    }
-
-    public WebFrameManager getWebFrameManager() {
-        return this.webFrameManager;
     }
 
     public IOCProvider getIocProvider() {
@@ -615,7 +502,6 @@ public abstract class AbstractApplicationContext
                     new Object[]{clazz.getName()} ));
 
         Object resource = controller.getInstance(iocProvider);
-                //iocProvider.getBean(controller.getId());
 
         ProxyFactory proxyFactory =
                 codeGeneratorProvider

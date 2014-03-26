@@ -67,8 +67,6 @@ public class Action {
 
     private DispatcherType dispatcherType;
 
-    private boolean load = false;
-
     public Action() {
         this.parameters = new ArrayList();
         this.parametersType = new ArrayList();
@@ -92,7 +90,6 @@ public class Action {
     }
 
     public void addParameter( ParameterAction value ){
-        load = false;
         parameters.add(value);
     }
     
@@ -101,20 +98,14 @@ public class Action {
     }
 
     public void removeParameter(int index){
-        load = false;
         parameters.remove(index);
     }
     
     public List getParameters() {
-
-        if( !load )
-            this.load();
-
         return parameters;
     }
 
     public void setParameters(List parameters) {
-        load = false;
         this.parameters = parameters;
     }
 
@@ -142,10 +133,6 @@ public class Action {
     }
 
     public Method getMethod() {
-
-        if( !load )
-            this.load();
-        
         return method;
     }
 
@@ -218,18 +205,13 @@ public class Action {
         this.dispatcherType = dispatcherType;
     }
 
-    public synchronized void load(){
+    public synchronized void flush(){
         try{
-            if( load )
-                return;
-            
             if( this.executor == null ){
-                load = true;
                 return;
             }
             
-            //Class<?> classType = controller.getClassType();
-            method = getMethod( executor, controller.getClassType() );//classType.getMethod( this.methodName, this.getParameterClass() );
+            method = getMethod( executor, controller.getClassType() );
             controller.addReserveMethod(method, this);
             setParametersType( Arrays.asList( method.getParameterTypes() ) );
 
@@ -243,7 +225,6 @@ public class Action {
 
             setMethod( method );
             setReturnClass( returnClassType );
-            load = true;
         }
         catch( BrutosException e ){
             throw e;
@@ -350,10 +331,6 @@ public class Action {
         return this.method == null;
     }
 
-    public boolean isLoaded(){
-        return this.load;
-    }
-    
     public void addAlias(String value){
         this.alias.add(value);
     }

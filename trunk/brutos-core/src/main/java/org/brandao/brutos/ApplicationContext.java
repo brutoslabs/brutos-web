@@ -28,18 +28,6 @@ import java.util.Properties;
 public interface ApplicationContext {
 
     /**
-     * Configura a aplicação.
-     */
-    void configure();
-
-    /**
-     * Configura a aplicação.
-     *
-     * @param config Configuração.
-     */
-    void configure(Properties config);
-
-    /**
      * Destroi a aplicação.
      */
     void destroy();

@@ -68,9 +68,7 @@ public class InterceptorProcess implements InterceptorStack{
     }
     
     public void process( InterceptorHandler handler ){
-        if( stack == null )
-            createStack();
-
+        
         Integer oldPos = null;
         
         try{
@@ -86,14 +84,7 @@ public class InterceptorProcess implements InterceptorStack{
         }
     }
             
-    private synchronized void createStack(){
-        if( stack != null )
-            return;
-
-        createStackInterceptor0();
-    }
-    
-    public void createStackInterceptor0(){
+    public synchronized void flush(){
         this.stack = new LinkedList();
         
         List interceptors = 
@@ -144,7 +135,6 @@ public class InterceptorProcess implements InterceptorStack{
                     ((org.brandao.brutos.mapping.InterceptorStack)interceptor)
                         .getInterceptors();
 
-            //for( org.brandao.brutos.mapping.Interceptor i: ins ){
             for( int idx=0;idx<ins.size();idx++ ){
                 Interceptor i =
                         (Interceptor) ins.get(idx);
@@ -381,35 +371,6 @@ public class InterceptorProcess implements InterceptorStack{
             throw (BrutosException)e;
         else
             throw new InterceptedException( e );
-    }
-
-    /**
-     * @deprecated 
-     * @param method
-     * @return
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws ParseException 
-     */
-    private Object[] getParameters( Action method )
-            throws InstantiationException, IllegalAccessException,
-        ParseException {
-        if( method != null ){
-            Object[] values = new Object[ method.getParameters().size() ];
-
-            int index = 0;
-            //for( ParameterMethodMapping p: method.getParameters() ){
-            List params = method.getParameters();
-            for( int i=0;i<params.size();i++ ){
-                ParameterAction p = (ParameterAction) params.get(i);
-                UseBeanData bean = p.getBean();
-                values[ index++ ] = bean.getValue();
-            }
-
-            return values;
-        }
-        else
-            return null;
     }
 
     private void preAction( Object source ) {

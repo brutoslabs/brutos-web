@@ -18,10 +18,7 @@
 package org.brandao.brutos;
 
 import java.util.*;
-import org.brandao.brutos.logger.Logger;
-import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Interceptor;
-import org.brandao.brutos.mapping.InterceptorStack;
 
 /**
  * Classe usada para criar interceptadores ou pilhas de interceptadores.
@@ -62,23 +59,7 @@ import org.brandao.brutos.mapping.InterceptorStack;
  *
  * @author Afonso Brandao
  */
-public class InterceptorManager {
-    
-    private Map interceptors;
-    private Map reverseInterceptors;
-    private List defaultInterceptors;
-    private InterceptorManager parent;
-    
-    public InterceptorManager() {
-        this(null);
-    }
-
-    public InterceptorManager(InterceptorManager parent) {
-        this.interceptors = new HashMap();
-        this.reverseInterceptors = new HashMap();
-        this.defaultInterceptors = new ArrayList();
-        this.parent = parent;
-    }
+public interface InterceptorManager {
     
     /**
      * Cria uma pilha de interceptadores com uma determinada identificação.
@@ -87,29 +68,7 @@ public class InterceptorManager {
      * interceptadas.
      * @return Construtor da pilha de interceptadores.
      */
-    public InterceptorStackBuilder addInterceptorStack( String name, boolean isDefault ){
-        Interceptor in;
-        
-        name = name == null || name.length() == 0? null : name;
-        
-        if( interceptors.containsKey( name ) )
-            throw new BrutosException( "conflict interceptor name: " + name );
-        
-        if( name == null )
-            throw new BrutosException( "interceptor name is required!" );
-        
-        in = new InterceptorStack();
-        
-        if( isDefault )
-            defaultInterceptors.add( in );
-        
-        in.setName( name );
-        in.setDefault( isDefault );
-        in.setProperties( new HashMap() );
-        interceptors.put( name, in );
-        
-        return new InterceptorStackBuilder( in, this );
-    }
+    InterceptorStackBuilder addInterceptorStack( String name, boolean isDefault );
     
     /**
      * Cria um interceptador com uma determinada identificação.
@@ -118,108 +77,39 @@ public class InterceptorManager {
      * interceptadas.
      * @return Construtor do interceptador.
      */
-    public InterceptorBuilder addInterceptor( String name, Class interceptor, boolean isDefault ){
-        Interceptor in;
-        
-        name = name == null || name.length() == 0? null : name;
-        
-        if( interceptors.containsKey( name ) )
-            throw new BrutosException( "conflict interceptor name: " + name );
-        
-        if( interceptor == null )
-            throw new BrutosException( "interceptor class is required!" );
-        
-        if( name == null )
-            throw new BrutosException( "interceptor name is required!" );
-        
-        if( !org.brandao.brutos.interceptor.Interceptor.class.isAssignableFrom( interceptor ) )
-            throw new BrutosException( "is not a interceptor: " + interceptor.getName() );
-        
-        in = new Interceptor();
-        
-        if( isDefault )
-            defaultInterceptors.add( in );
-        
-        in.setType( interceptor );
-        in.setName( name );
-        in.setProperties( new HashMap() );
-        in.setDefault( isDefault );
-        interceptors.put( name, in );
-        reverseInterceptors.put(interceptor, in);
-        
-        getLogger().info("created interceptor: " + interceptor.getName());
-        return new InterceptorBuilder( in, this );
-        
-    }
+    InterceptorBuilder addInterceptor( String name, Class interceptor, boolean isDefault );
 
     /**
      * Obtém um interceptador a partir do nome.
      * @param name Identificação do interceptador.
      * @return Mapeamento.
      */
-    public Interceptor getInterceptor( String name ){
-        if( !interceptors.containsKey( name ) ){
-            if(parent != null)
-                return (Interceptor) parent.getInterceptor( name );
-            else
-                throw new BrutosException( "interceptor not found: " + name );
-        }
-        else
-            return (Interceptor) interceptors.get( name );
-    }
+    Interceptor getInterceptor( String name );
 
     /**
      * Obtém um interceptador a partir de sua classe.
      * @param clazz Classe do interceptador.
      * @return Mapeamento.
      */
-    public Interceptor getInterceptor( Class clazz ){
-        if( !reverseInterceptors.containsKey( clazz ) ){
-            if(parent != null)
-                return (Interceptor) parent.getInterceptor( clazz );
-            else
-                throw new BrutosException( "interceptor not found: " + clazz.getName() );
-        }
-        else
-            return (Interceptor) reverseInterceptors.get( clazz );
-    }
+    Interceptor getInterceptor( Class clazz );
     
     /**
      * Obtém os interceptadores globais.
      * @return Interceptadores globais.
      */
-    public List getDefaultInterceptors(){
-        List tmp;
-        
-        if(parent != null){
-            tmp = new ArrayList(parent.defaultInterceptors);
-            tmp.addAll(this.defaultInterceptors);
-        }
-        else
-            tmp = this.defaultInterceptors;
-            
-        return Collections.unmodifiableList(tmp);
-    }
+    List getDefaultInterceptors();
     
     /**
      * Define o gestor de interceptador associado ao atual.
      * @param parent Gestor de interceptador.
      */
-    public void setParent(InterceptorManager parent){
-        this.parent = parent;
-    }
+    void setParent(InterceptorManager parent);
     
     /**
      * Obtém o gestor de interceptador associado ao atual.
-     * @result Gestor de interceptador.
+     * @return Gestor de interceptador.
      */
-    public InterceptorManager getParent(){
-        return this.parent;
-    }
+    InterceptorManager getParent();
     
-    protected Logger getLogger(){
-        return LoggerProvider.getCurrentLoggerProvider()
-                .getLogger(InterceptorManager.class);
-    }
     
 }
