@@ -15,27 +15,22 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.scanner;
+package org.brandao.brutos;
 
-import java.util.Properties;
-import org.brandao.brutos.scanner.vfs.Vfs;
+import org.brandao.brutos.mapping.Interceptor;
 
 /**
  *
  * @author Brandao
  */
-public class ControllerFilter implements TypeFilter{
-
-    public Boolean accepts(String resource) {
-        String className = Vfs.toClass(resource);
-        return 
-            className.matches("(.*\\.)*\\w+Controller")
-                ?
-            Boolean.TRUE :
-            null;
-    }
-
-    public void setConfiguration(Properties config) {
-    }
+public interface InterceptorRegistry {
+    
+    InterceptorStackBuilder registerInterceptorStack( String name, boolean isDefault );
+    
+    InterceptorBuilder registerInterceptor( String name, Class interceptor, boolean isDefault );
+    
+    Interceptor getInterceptor(Class clazz);
+    
+    Interceptor getInterceptor(String name);
     
 }

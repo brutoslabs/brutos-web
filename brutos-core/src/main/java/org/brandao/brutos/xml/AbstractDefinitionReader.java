@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.xml;
 
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DefinitionReader;
 import org.brandao.brutos.io.ResourceLoader;
@@ -27,13 +28,10 @@ import org.brandao.brutos.io.ResourceLoader;
  */
 public abstract class AbstractDefinitionReader implements DefinitionReader{
 
-    protected ConfigurableApplicationContext handler;
-    protected ResourceLoader resourceLoader;
+    protected ComponentRegistry componenetRegistry;
 
-    public AbstractDefinitionReader( ConfigurableApplicationContext handler,
-            ResourceLoader resourceLoader){
-        this.handler = handler;
-        this.resourceLoader = resourceLoader;
+    public AbstractDefinitionReader(ComponentRegistry componenetRegistry){
+        this.componenetRegistry = componenetRegistry;
     }
     
 }

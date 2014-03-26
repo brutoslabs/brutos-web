@@ -74,8 +74,6 @@ public class Controller {
 
     private List defaultInterceptorList;
 
-    private boolean loaded;
-
     private ActionType actionType;
     
     private ApplicationContext context;
@@ -91,7 +89,6 @@ public class Controller {
         this.reverseMethods     = new LinkedHashMap();
         this.throwsSafe         = new LinkedHashMap();
         this.interceptorProcess = new InterceptorProcess();
-        this.loaded             = false;
         this.scope              = ScopeType.PARAM;
         this.redirect           = false;
         this.actionType         = ActionType.PARAMETER;
@@ -218,7 +215,6 @@ public class Controller {
     }
     
     public void addAction( String id, Action method ){
-        this.loaded = false;
         this.actions.put(id, method);
     }
 
@@ -241,9 +237,6 @@ public class Controller {
     }
 
     public Action getMethod( Method method ){
-
-        if( !this.loaded )
-            loadConfiguration();
 
         ReverseActionKey key = new ReverseActionKey(method);
 
@@ -284,33 +277,27 @@ public class Controller {
     }
 
     public Action getActionByName( String name ){
-        Action mf = null;
+        Action mf;
         mf = (Action) (name == null ? null : actions.get(name));
         mf = (Action) (mf == null ? actions.get(getDefaultAction()) : mf);
         return mf;
     }
 
     public void proccessBrutosAction( InterceptorHandler handler ){
-
-        if( !this.loaded )
-            loadConfiguration();
-
         interceptorProcess.process( handler );
     }
 
-    private synchronized void loadConfiguration(){
-        if( !this.loaded ){
-            Iterator keys = actions.keySet().iterator();
+    public synchronized void flush(){
+        
+        this.interceptorProcess.flush();
+        
+        Iterator keys = actions.keySet().iterator();
 
-            while(keys.hasNext()){
-                String key = (String)keys.next();
-                Action ac = (Action) actions.get(key);
-                if(!ac.isLoaded())
-                    ac.load();
-            }
-            this.loaded = true;
+        while(keys.hasNext()){
+            String key = (String)keys.next();
+            Action ac = (Action) actions.get(key);
+            ac.flush();
         }
-
     }
     
     public void fieldsToRequest( Object webFrame ) {

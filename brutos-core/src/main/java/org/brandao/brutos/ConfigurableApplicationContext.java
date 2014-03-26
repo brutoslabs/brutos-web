@@ -21,8 +21,6 @@ package org.brandao.brutos;
 import java.util.Properties;
 import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.ioc.IOCProvider;
-import org.brandao.brutos.old.programatic.IOCManager;
-import org.brandao.brutos.old.programatic.WebFrameManager;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
@@ -44,18 +42,6 @@ public interface ConfigurableApplicationContext
      * @return F�brica.
      */
     MvcResponseFactory getResponseFactory();
-
-    /**
-     * @deprecated
-     * @param iocManager
-     */
-    void setIocManager(IOCManager iocManager);
-
-    /**
-     * @deprecated
-     * @param webFrameManager
-     */
-    void setWebFrameManager(WebFrameManager webFrameManager);
 
     /**
      * Define o gestor de interceptadores.
@@ -95,8 +81,8 @@ public interface ConfigurableApplicationContext
     void setConfiguration( Properties config );
 
     /**
-     * Obt�m a configura��o da aplica��o.
-     * @param config Configura��o.
+     * Obtém a configuração da aplicação.
+     * @return Configuração.
      */
     Properties getConfiguration();
 
@@ -118,18 +104,6 @@ public interface ConfigurableApplicationContext
      */
     ControllerManager getControllerManager();
 
-    /**
-     * @deprecated
-     * @return .
-     */
-    IOCManager getIocManager();
-
-    /**
-     * @deprecated
-     * @return .
-     */
-    WebFrameManager getWebFrameManager();
-    
     /**
      * Obt�m o provedor do container IOC.
      * @return Provedor do container IOC.
@@ -159,5 +133,7 @@ public interface ConfigurableApplicationContext
     void setParent(ApplicationContext applicationContext);
 
     ApplicationContext getParent();
+    
+    void flush();
     
 }
