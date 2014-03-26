@@ -23,7 +23,6 @@ import javax.servlet.ServletContext;
 import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.web.io.ServletContextResource;
-import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.scope.IOCScope;
@@ -36,6 +35,7 @@ import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
+import org.brandao.brutos.xml.ContextDefinitionReader;
 
 /**
  *
@@ -43,14 +43,12 @@ import org.brandao.brutos.web.scope.SessionScope;
  */
 public abstract class AbstractWebApplicationContext
         extends AbstractApplicationContext
-        implements ConfigurableWebApplicationContext{
+        implements ConfigurableWebApplicationContext, ComponentRegistry{
 
     public static final String defaultConfigContext = "WEB-INF/brutos-config.xml";
 
     public static final String  contextConfigName   = "contextConfig";
 
-    private Logger logger;
-    
     protected ServletContext servletContext;
     
     private String[] locations;
@@ -64,13 +62,6 @@ public abstract class AbstractWebApplicationContext
         super(parent);
     }
     
-    public void configure( Properties config ){
-        overrideConfig(config);
-        super.configure(config);
-        initUploadListener(config);
-        initRequestParser(config);
-    }
-
     public void setLocations(String[] locations) {
         this.locations = locations;
     }
@@ -86,13 +77,13 @@ public abstract class AbstractWebApplicationContext
     public Resource[] getResources() {
         return this.resources;
     }
-    
+
     public void loadDefinitions(
             DefinitionReader definitionReader ){
 
-        String configContext = super.configuration.getProperty(
-            AbstractWebApplicationContext.contextConfigName,
-            AbstractWebApplicationContext.defaultConfigContext);
+        String configContext = super.getConfiguration().getProperty(
+            contextConfigName,
+            defaultConfigContext);
         
         List contextLocations = 
             StringUtil.getList(
@@ -116,8 +107,9 @@ public abstract class AbstractWebApplicationContext
         
     }
     
-    private void initUploadListener(Properties config){
+    protected void initUploadListener(){
         try{
+            Properties config = this.getConfiguration();
             String uploadListenerFactoryName =
                 config.getProperty( BrutosConstants.UPLOAD_LISTENER_CLASS,
                     DefaultUploadListenerFactory.class.getName() );
@@ -139,8 +131,10 @@ public abstract class AbstractWebApplicationContext
         }
     }
 
-    private void initRequestParser(Properties config){
+    protected void initRequestParser(){
         try{
+            Properties config = this.getConfiguration();
+            
             String requestParserName =
                 config.getProperty( BrutosConstants.REQUEST_PARSER_CLASS,
                     BrutosConstants.DEFAULT_REQUEST_PARSER );
@@ -162,7 +156,7 @@ public abstract class AbstractWebApplicationContext
         }
     }
 
-    protected void loadScopes(){
+    protected void initScopes(){
         getScopes().register( WebScopeType.APPLICATION.toString(),
                 new ApplicationScope( getContext() ) );
         getScopes().register( WebScopeType.FLASH.toString(),
@@ -177,8 +171,10 @@ public abstract class AbstractWebApplicationContext
                 new ParamScope() );
     }
     
-    private void overrideConfig(Properties config){
+    protected void overrideConfig(){
+        
         String tmp;
+        Properties config = this.getConfiguration();
         
         tmp = config
                 .getProperty( "org.brandao.brutos.controller.class", 
@@ -296,4 +292,59 @@ public abstract class AbstractWebApplicationContext
         this.servletContext = servletContext;
     }
 
+    public void flush(){
+
+        this.initLogger();
+        
+        this.overrideConfig();
+        
+        this.init();
+        
+        this.initScopes();
+        
+        this.initControllers();
+
+        this.initUploadListener();
+        
+        this.initRequestParser();
+    }
+
+    public ControllerBuilder registerController( Class classtype ){
+        return this.controllerManager.addController(classtype);
+    }
+
+    public ControllerBuilder registerController( String id, Class classType ){
+        return this.controllerManager.addController(id, classType);
+    }
+    
+    public ControllerBuilder registerController( String id, String view, Class classType ){
+        return this.controllerManager.addController(id, view, classType);
+    }
+    
+    public ControllerBuilder registerController( String id, String view,
+           String name, Class classType, String actionId ){
+        return this.controllerManager.addController( id, view,
+           name, classType, actionId );
+    }
+
+    public ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,
+            String name, Class classType, String actionId ){
+        return this.controllerManager.addController( id, view, dispatcherType,
+            name, classType, actionId );
+    }
+    
+    public ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,
+            String name, Class classType, String actionId, ActionType actionType ){
+        return this.controllerManager.addController( id, view, dispatcherType,
+            name, classType, actionId, actionType );
+    }
+    
+    public InterceptorStackBuilder registerInterceptorStack( String name, boolean isDefault ){
+        return this.interceptorManager.addInterceptorStack(name, isDefault);
+    }
+    
+    public InterceptorBuilder registerInterceptor( String name, Class interceptor, boolean isDefault ){
+        return this.interceptorManager.addInterceptor(name, interceptor, isDefault);
+    }
+    
 }

@@ -17,6 +17,8 @@
 
 package org.brandao.brutos.web;
 
+import org.brandao.brutos.xml.XMLComponentDefinitionReader;
+
 /**
  *
  * @author Brandao
@@ -24,4 +26,29 @@ package org.brandao.brutos.web;
 public abstract class AbstractXMLWebApplicationContext
         extends AbstractWebApplicationContext {
 
+    private XMLComponentDefinitionReader definitionReader;
+    
+    public AbstractXMLWebApplicationContext(){
+        this.definitionReader = new XMLComponentDefinitionReader(this);
+    }
+    
+    public void flush(){
+
+        this.initLogger();
+        
+        this.overrideConfig();
+        
+        this.init();
+        
+        this.initScopes();
+        
+        super.loadDefinitions(this.definitionReader);
+        
+        this.initControllers();
+
+        this.initUploadListener();
+        
+        this.initRequestParser();
+    }
+    
 }
