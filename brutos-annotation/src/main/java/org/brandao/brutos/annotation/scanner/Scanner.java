@@ -1,6 +1,6 @@
 /*
  * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,25 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package org.brandao.brutos.annotation.scanner;
 
+import java.util.List;
 
 /**
  *
  * @author Afonso Brandao
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Configuration {
+public interface Scanner {
+
+    void scan();
+
+    List<Class> getClassList();
+    
+    void addFilter(TypeFilter filter);
+
+    void removeFilter(TypeFilter filter);
+    
+    void setBasePackage(String[] basePackage);
     
 }

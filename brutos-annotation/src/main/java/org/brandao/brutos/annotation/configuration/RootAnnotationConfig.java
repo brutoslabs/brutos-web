@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.configuration.converters.InterceptorStackConverter;
@@ -39,7 +40,7 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
         
         List<Object> classList = (List<Object>)source;
         
@@ -59,7 +60,7 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
             
             for(Object item: classList){
                 if(ac.isApplicable(item))
-                    ac.applyConfiguration(item, null, applicationContext);
+                    ac.applyConfiguration(item, null, componentRegistry);
             }
         }
         

@@ -25,7 +25,6 @@ import org.brandao.brutos.annotation.helper.importbean.*;
 import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest;
 import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
 import org.brandao.brutos.mapping.*;
-import org.brandao.brutos.type.*;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.helper.EnumTest;

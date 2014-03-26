@@ -21,7 +21,6 @@ import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.TypeDef;
-import org.brandao.brutos.scanner.TypeFilter;
 import org.brandao.brutos.scanner.vfs.Vfs;
 import org.brandao.brutos.type.TypeFactory;
 
@@ -36,8 +35,9 @@ public class AnnotationTypeTypeFilter implements TypeFilter{
             resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
             return 
-                clazz.isAnnotationPresent(TypeDef.class) 
-                && TypeFactory.class.isAssignableFrom(clazz)
+                resource.matches("(.*\\.)*\\w+TypeFactory") ||
+                (clazz.isAnnotationPresent(TypeDef.class) 
+                && TypeFactory.class.isAssignableFrom(clazz))
                     ?
                 Boolean.TRUE :
                 null;

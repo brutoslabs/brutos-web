@@ -36,10 +36,10 @@ public class KeyCollectionAnnotationConfig
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
     
         try{
-            return applyConfiguration0(source, builder, applicationContext);
+            return applyConfiguration0(source, builder, componentRegistry);
         }
         catch(Exception e){
             throw 
@@ -51,24 +51,20 @@ public class KeyCollectionAnnotationConfig
     }
     
     public Object applyConfiguration0(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
         
         KeyEntry key = (KeyEntry)source;
-        /*
-        boolean isStandardType = TypeManager.isStandardType(key.getClassType());
-        boolean useMapping = key.isUseBean() || !isStandardType;
-        */
         if(AnnotationUtil.isBuildEntity(key.isUseBean(), key.getClassType()))
-            buildKey(key, builder, applicationContext);
+            buildKey(key, builder, componentRegistry);
         else
-            addKey(key, (BeanBuilder)builder, applicationContext);
+            addKey(key, (BeanBuilder)builder, componentRegistry);
         
 
         return builder;
     }
     
     protected void addKey(KeyEntry keyEntry, BeanBuilder builder, 
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         String key = keyEntry.getName();
         EnumerationType enumType = keyEntry.getEnumerated();
@@ -84,11 +80,11 @@ public class KeyCollectionAnnotationConfig
     }
     
     protected void buildKey(KeyEntry key, Object builder, 
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         super.applyInternalConfiguration(
                 key, 
                 builder, 
-                applicationContext);
+                componentRegistry);
     }
     
     

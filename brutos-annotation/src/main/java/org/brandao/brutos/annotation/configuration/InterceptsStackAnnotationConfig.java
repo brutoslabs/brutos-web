@@ -19,8 +19,7 @@ package org.brandao.brutos.annotation.configuration;
 
 import java.util.List;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.InterceptorManager;
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.InterceptorStackBuilder;
 import org.brandao.brutos.annotation.InterceptsStack;
 import org.brandao.brutos.annotation.Param;
@@ -41,10 +40,10 @@ public class InterceptsStackAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
     
         try{
-            return applyConfiguration0(source, builder, applicationContext);
+            return applyConfiguration0(source, builder, componentRegistry);
         }
         catch(Exception e){
             throw 
@@ -56,28 +55,25 @@ public class InterceptsStackAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     public Object applyConfiguration0(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
         
         InterceptorStackEntry stack = (InterceptorStackEntry)source;
-        
-        InterceptorManager interceporManager = 
-                applicationContext.getInterceptorManager();
         
         String name = StringUtil.adjust(stack.getName());
         List<InterceptorStackItem> interceptors = stack.getInterceptors();
         
         InterceptorStackBuilder newBuilder = 
-                interceporManager.addInterceptorStack(name, stack.isDefault());
+                componentRegistry.registerInterceptorStack(name, stack.isDefault());
         
         for(InterceptorStackItem i: interceptors){
-            Interceptor in = interceporManager.getInterceptor(i.getType());
+            Interceptor in = componentRegistry.getInterceptor(i.getType());
             newBuilder.addInterceptor(in.getName());
             Param[] params = i.getInfo().params();
             for(Param p: params){
                 newBuilder.addParameter(StringUtil.adjust(p.name()), StringUtil.adjust(p.value()));
             }
         }
-        super.applyInternalConfiguration(source, newBuilder, applicationContext);
+        super.applyInternalConfiguration(source, newBuilder, componentRegistry);
         return builder;
     }
     

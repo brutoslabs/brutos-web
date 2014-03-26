@@ -27,7 +27,6 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.helper.*;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.ThrowableSafeData;
-import org.brandao.brutos.type.*;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.brandao.brutos.validator.Validator;
 

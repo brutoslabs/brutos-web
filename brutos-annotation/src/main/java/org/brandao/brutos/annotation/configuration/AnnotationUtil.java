@@ -199,4 +199,9 @@ public class AnnotationUtil {
         Properties config = applicationContext.getConfiguration();
         return config.getProperty(BrutosConstants.WEB_APPLICATION_CLASS) != null;
     }
+    
+    public static boolean isWebApplication(ComponentRegistry componentRegistry){
+        return componentRegistry instanceof WebApplicationContext;
+    }
+    
 }

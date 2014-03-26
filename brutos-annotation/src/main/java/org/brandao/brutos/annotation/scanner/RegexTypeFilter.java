@@ -1,6 +1,6 @@
 /*
  * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,49 +15,33 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.scanner;
+package org.brandao.brutos.annotation.scanner;
 
-import org.brandao.brutos.annotation.scanner.TypeFilter;
 import java.util.Properties;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
  *
  * @author Brandao
  */
-public class AnnotationTypeFilter implements TypeFilter{
+public class RegexTypeFilter implements TypeFilter{
 
-    private boolean include;
-    private Class annotation;
+    protected boolean include;
+    protected String regex;
     
     public void setConfiguration(Properties config) {
         this.include = 
             config.getProperty(
-                "filter-type", 
-                BrutosConstants.INCLUDE)
+                "filter-type",BrutosConstants.INCLUDE)
                     .equals(BrutosConstants.INCLUDE);
-        
-        try{
-            this.annotation =
-                ClassUtil.get(config.getProperty(BrutosConstants.EXPRESSION));
-        }
-        catch(Exception e){
-            throw new BrutosException(e);
-        }
+        this.regex =
+            config.getProperty("expression",".*");
     }
 
     public Boolean accepts(String resource) {
-        try{
-            resource = Vfs.toClass(resource);
-            Class clazz = ClassUtil.get(resource);
-            return clazz.isAnnotationPresent(annotation) ? Boolean.valueOf(include) : null;
-        }
-        catch(Exception e){
-            throw new BrutosException(e);
-        }
+        String className = Vfs.toClass(resource);
+        return className.matches(regex)? Boolean.valueOf(include) : null;
     }
     
 }

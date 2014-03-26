@@ -18,7 +18,7 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ParameterBuilder;
 import org.brandao.brutos.PropertyBuilder;
 import org.brandao.brutos.annotation.Identify;
@@ -42,10 +42,10 @@ public class RestrictionAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
     
         try{
-            return applyConfiguration0(source, builder, applicationContext);
+            return applyConfiguration0(source, builder, componentRegistry);
         }
         catch(Exception e){
             throw 
@@ -57,7 +57,7 @@ public class RestrictionAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     public Object applyConfiguration0(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
         
         ParameterBuilder parameterBuilder = 
             builder instanceof ParameterBuilder? 

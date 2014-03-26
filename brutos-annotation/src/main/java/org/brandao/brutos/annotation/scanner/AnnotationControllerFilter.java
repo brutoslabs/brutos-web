@@ -21,7 +21,6 @@ import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.Controller;
-import org.brandao.brutos.scanner.TypeFilter;
 import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
@@ -35,6 +34,7 @@ public class AnnotationControllerFilter implements TypeFilter{
             resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
             return 
+                resource.matches("(.*\\.)*\\w+Controller") || 
                 clazz.isAnnotationPresent(Controller.class)
                     ?
                 Boolean.TRUE :

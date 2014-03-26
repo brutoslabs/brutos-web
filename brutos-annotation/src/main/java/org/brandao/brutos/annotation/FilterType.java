@@ -15,21 +15,18 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
-
-import org.brandao.brutos.ComponentRegistry;
+package org.brandao.brutos.annotation;
 
 /**
  *
  * @author Brandao
  */
-public interface ApplyAnnotationConfig {
+public enum FilterType {
     
-    void setConfiguration(AnnotationConfigEntry annotation);
+    ANNOTATION,
     
-    AnnotationConfigEntry getConfiguration();
+    ASSIGNABLE_TYPE,
     
-    Object applyInternalConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry);
+    CUSTOM;
     
 }

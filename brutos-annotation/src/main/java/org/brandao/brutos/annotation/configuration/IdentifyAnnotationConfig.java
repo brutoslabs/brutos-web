@@ -45,10 +45,10 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
     
         try{
-            return applyConfiguration0(source, builder, applicationContext);
+            return applyConfiguration0(source, builder, componentRegistry);
         }
         catch(Exception e){
             
@@ -79,71 +79,71 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     public Object applyConfiguration0(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
         
         if(source instanceof ActionParamEntry)
-            addIdentify((ActionParamEntry)source, (ActionBuilder)builder, applicationContext);
+            addIdentify((ActionParamEntry)source, (ActionBuilder)builder, componentRegistry);
         else
         if(source instanceof BeanPropertyAnnotation)
-            addIdentify((BeanPropertyAnnotation)source, builder, applicationContext);
+            addIdentify((BeanPropertyAnnotation)source, builder, componentRegistry);
         else
         if(source instanceof ConstructorArgEntry)
-            addIdentify((ConstructorArgEntry)source, (BeanBuilder)builder, applicationContext);
+            addIdentify((ConstructorArgEntry)source, (BeanBuilder)builder, componentRegistry);
             
         return source;
     }
     
     protected void addIdentify(ActionParamEntry source, ActionBuilder builder,
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
 
         ParameterBuilder paramBuilder;
         
         Identify identify = source.getAnnotation(Identify.class);
         
         if(AnnotationUtil.isBuildEntity(identify, source.getType()))
-            paramBuilder = buildParameter(builder,source,applicationContext);
+            paramBuilder = buildParameter(builder, source, componentRegistry);
         else
-            paramBuilder = addParameter(source,builder,applicationContext);
+            paramBuilder = addParameter(source, builder, componentRegistry);
         
-        super.applyInternalConfiguration(source, paramBuilder, applicationContext);
+        super.applyInternalConfiguration(source, paramBuilder, componentRegistry);
         
     }
     
     protected void addIdentify(BeanPropertyAnnotation source, Object builder,
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         PropertyBuilder propertyBuilder;        
 
         Identify identify = source.getAnnotation(Identify.class);
         
         if(AnnotationUtil.isBuildEntity(identify, source.getType()))
-            propertyBuilder = buildProperty(builder, source, applicationContext);
+            propertyBuilder = buildProperty(builder, source, componentRegistry);
         else
-            propertyBuilder = addProperty(source, builder, applicationContext);
+            propertyBuilder = addProperty(source, builder, componentRegistry);
         
         super.applyInternalConfiguration(
-                source, propertyBuilder, applicationContext);
+                source, propertyBuilder, componentRegistry);
         
     }
 
     protected void addIdentify(ConstructorArgEntry source, BeanBuilder builder,
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
 
         ConstructorBuilder constructorBuilder;
         
         Identify identify = source.getAnnotation(Identify.class);
         
         if(AnnotationUtil.isBuildEntity(identify, source.getType()))
-            constructorBuilder = buildConstructorArg(builder,source,applicationContext);
+            constructorBuilder = buildConstructorArg(builder, source, componentRegistry);
         else
-            constructorBuilder = addConstructorArg(source,builder,applicationContext);
+            constructorBuilder = addConstructorArg(source, builder, componentRegistry);
         
-        super.applyInternalConfiguration(source, constructorBuilder, applicationContext);
+        super.applyInternalConfiguration(source, constructorBuilder, componentRegistry);
         
     }
     
     protected ConstructorBuilder addConstructorArg(ConstructorArgEntry source, BeanBuilder builder,
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         Identify identify = source.getAnnotation(Identify.class);
         
@@ -165,16 +165,16 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
     
     protected ConstructorBuilder buildConstructorArg(BeanBuilder builder, 
             ConstructorArgEntry arg, 
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         super.applyInternalConfiguration(new BeanEntryConstructorArg(arg), builder, 
-                applicationContext);
+                componentRegistry);
         
         return builder.getConstructorArg(builder.getConstructorArgSize()-1);
     }
     
     protected PropertyBuilder addProperty(BeanPropertyAnnotation property,Object builder,
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         String propertyName = getPropertyName(property);
         String name = getBeanName(property);
@@ -192,12 +192,12 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         if(builder instanceof BeanBuilder){
             propertyBuilder = addProperty((BeanBuilder)builder,property, propertyName,
                 name, scope, enumProperty, temporalProperty, type,
-                /*mapping*/null, classType, applicationContext);
+                /*mapping*/null, classType, componentRegistry);
         }
         else{
             propertyBuilder = addProperty((ControllerBuilder)builder,property, propertyName,
                 name, scope, enumProperty, temporalProperty, type,
-                /*mapping*/null, classType, applicationContext);
+                /*mapping*/null, classType, componentRegistry);
         }
         
         return propertyBuilder;
@@ -207,7 +207,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         BeanPropertyAnnotation property, String propertyName,
         String name, ScopeType scope, EnumerationType enumProperty,
         String temporalProperty, org.brandao.brutos.type.Type type, 
-        String mapping, Object classType, ConfigurableApplicationContext applicationContext){
+        String mapping, Object classType, ComponentRegistry componentRegistry){
         
         PropertyBuilder builder = 
             beanBuilder.addProperty(name, propertyName, enumProperty, 
@@ -220,7 +220,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         BeanPropertyAnnotation property, String propertyName,
         String name, ScopeType scope, EnumerationType enumProperty,
         String temporalProperty, org.brandao.brutos.type.Type type,
-        String mapping, Object classType, ConfigurableApplicationContext applicationContext){
+        String mapping, Object classType, ComponentRegistry componentRegistry){
         
         PropertyBuilder builder = 
             controllerBuilder.addProperty(propertyName, name, scope, 
@@ -231,10 +231,10 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
 
      protected PropertyBuilder buildProperty(Object beanBuilder, 
             BeanPropertyAnnotation property, 
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
          
         super.applyInternalConfiguration(new BeanEntryProperty(property), beanBuilder, 
-                applicationContext);
+                componentRegistry);
 
         return beanBuilder instanceof BeanBuilder? 
                 ((BeanBuilder)beanBuilder).getProperty(property.getName()) :
@@ -243,16 +243,16 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
     
     protected ParameterBuilder buildParameter(ActionBuilder builder, 
             final ActionParamEntry property, 
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         super.applyInternalConfiguration(new BeanActionParamEntry(property), builder, 
-                applicationContext);
+                componentRegistry);
         
         return builder.getParameter(builder.getParametersSize()-1);
     }
     
     protected ParameterBuilder addParameter(ActionParamEntry source,ActionBuilder builder,
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         Identify identify = source.getAnnotation(Identify.class);
         

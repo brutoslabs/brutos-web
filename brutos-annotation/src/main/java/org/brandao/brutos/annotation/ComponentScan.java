@@ -15,21 +15,30 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
+package org.brandao.brutos.annotation;
 
-import org.brandao.brutos.ComponentRegistry;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  *
  * @author Brandao
  */
-public interface ApplyAnnotationConfig {
+@java.lang.annotation.Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ComponentScan {
     
-    void setConfiguration(AnnotationConfigEntry annotation);
+    String[] basePackage();
     
-    AnnotationConfigEntry getConfiguration();
+    Class[] basePackageClass();
     
-    Object applyInternalConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry);
+    TypeFilter[] includeFilters();
+    
+    TypeFilter[] excludeFilters();
+    
+    boolean useDefaultFilters() default true;
+    
+    Class scanner() default void.class;
     
 }

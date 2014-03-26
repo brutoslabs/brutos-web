@@ -37,10 +37,10 @@ public class ControllerAnnotationConfig
     extends AbstractAnnotationConfig{
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
     
         try{
-            return applyConfiguration0(source, builder, applicationContext);
+            return applyConfiguration0(source, builder, componentRegistry);
         }
         catch(Exception e){
             throw 
@@ -52,7 +52,7 @@ public class ControllerAnnotationConfig
     }
     
     public Object applyConfiguration0(Object arg0, Object arg1,
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         Class source = (Class)arg0;
         ControllerBuilder builder;
@@ -80,7 +80,7 @@ public class ControllerAnnotationConfig
             defaultActionName = annotationController.defaultActionName();
         }
 
-        controllerID = this.getControllerId(applicationContext,annotationController, source);
+        controllerID = this.getControllerId(componentRegistry,annotationController, source);
         
         dispatcher = 
             viewAnnotation == null || "".equals(viewAnnotation.dispatcher())? 
@@ -88,7 +88,7 @@ public class ControllerAnnotationConfig
                 org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
         
         builder =
-                applicationContext.getControllerManager().addController(
+                componentRegistry.registerController(
                     controllerID,
                     null,
                     dispatcher,
@@ -99,7 +99,7 @@ public class ControllerAnnotationConfig
 
         
         view = getView((View) source.getAnnotation(View.class), builder,
-            applicationContext);
+            componentRegistry);
         
         if(annotationController != null && annotationController.value().length > 1){
             String[] ids = annotationController.value();
@@ -114,18 +114,18 @@ public class ControllerAnnotationConfig
         builder.setView(view);
         builder.setDefaultAction(defaultActionName);
         
-        super.applyInternalConfiguration(source, builder, applicationContext);
+        super.applyInternalConfiguration(source, builder, componentRegistry);
 
-        importBeans(builder, applicationContext, builder.getClassType());
-        throwsSafe(builder, source, applicationContext);
-        addProperties(builder, applicationContext, source);
-        addActions( builder, applicationContext, source );
+        importBeans(builder, componentRegistry, builder.getClassType());
+        throwsSafe(builder, source, componentRegistry);
+        addProperties(builder, componentRegistry, source);
+        addActions( builder, componentRegistry, source );
         
         return builder;
     }
     
     protected void throwsSafe(ControllerBuilder builder, Class clazz,
-            ConfigurableApplicationContext applicationContext){
+            ComponentRegistry componentRegistry){
         
         List<ThrowableEntry> list = new ArrayList<ThrowableEntry>();
         ThrowSafeList throwSafeList = (ThrowSafeList) clazz.getAnnotation(ThrowSafeList.class);
@@ -140,12 +140,12 @@ public class ControllerAnnotationConfig
                     AnnotationUtil.toEntry(throwSafe));
         
         for(ThrowableEntry entry: list)
-            super.applyInternalConfiguration(entry, builder, applicationContext);
+            super.applyInternalConfiguration(entry, builder, componentRegistry);
         
     }
     
     protected String getView(View viewAnnotation, ControllerBuilder controller,
-        ConfigurableApplicationContext applicationContext){
+        ComponentRegistry componentRegistry){
         
         boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
         boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
@@ -160,14 +160,14 @@ public class ControllerAnnotationConfig
             if(resolved)
                 return view;
             else
-                return createControllerView(controller, applicationContext, viewAnnotation.value());
+                return createControllerView(controller, componentRegistry, viewAnnotation.value());
         }
         else
             return null;
     }
     
     protected String createControllerView(ControllerBuilder controller,
-            ConfigurableApplicationContext applicationContext, String view){
+            ComponentRegistry componentRegistry, String view){
         
         return applicationContext
                 .getViewResolver()
@@ -175,19 +175,19 @@ public class ControllerAnnotationConfig
     }
     
     protected void addProperties(ControllerBuilder controllerBuilder, 
-            ConfigurableApplicationContext applicationContext, Class clazz){
+            ComponentRegistry componentRegistry, Class clazz){
     
         BeanInstance instance = new BeanInstance(null,clazz);
         List props = instance.getProperties();
         for(int i=0;i<props.size();i++){
             BeanProperty prop = (BeanProperty) props.get(i);
             super.applyInternalConfiguration(new BeanPropertyAnnotationImp(prop), 
-                    controllerBuilder, applicationContext);
+                    controllerBuilder, componentRegistry);
         }
     }
     
     private void addAbstractActions( ControllerBuilder controllerBuilder, 
-            ConfigurableApplicationContext applicationContext, Class clazz, 
+            ComponentRegistry componentRegistry, Class clazz, 
             List<ActionEntry> actionList ){
 
         AbstractActions abstractActions = 
@@ -230,7 +230,7 @@ public class ControllerAnnotationConfig
     }
     
     private void addActions( ControllerBuilder controllerBuilder, 
-            ConfigurableApplicationContext applicationContext, Class clazz, 
+            ComponentRegistry componentRegistry, Class clazz, 
             List<ActionEntry> actionList ){
 
         Actions actions = 
@@ -276,14 +276,14 @@ public class ControllerAnnotationConfig
     }
     
     protected void addActions( ControllerBuilder controllerBuilder, 
-            ConfigurableApplicationContext applicationContext, Class clazz ){
+            ComponentRegistry componentRegistry, Class clazz ){
         
         List<ActionEntry> actionList = new ArrayList<ActionEntry>();
         
-        addAbstractActions( controllerBuilder, applicationContext, clazz, 
+        addAbstractActions( controllerBuilder, componentRegistry, clazz, 
                 actionList );
         
-        addActions( controllerBuilder, applicationContext, clazz, 
+        addActions( controllerBuilder, componentRegistry, clazz, 
                 actionList );
         
         Method[] methods = clazz.getMethods();
@@ -294,42 +294,42 @@ public class ControllerAnnotationConfig
         }
         
         for( ActionEntry m: actionList ){
-            super.applyInternalConfiguration(m, controllerBuilder, applicationContext);
+            super.applyInternalConfiguration(m, controllerBuilder, componentRegistry);
         }
     }
 
     protected void importBeans(ControllerBuilder controllerBuilder, 
-            ConfigurableApplicationContext applicationContext, Class clazz){
+            ComponentRegistry componentRegistry, Class clazz){
     
         ImportBeans beans = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
         
         if(beans != null){
             for(Class bean: beans.value()){
                 ImportBeanEntry beanEntry = new ImportBeanEntry(bean);
-                super.applyInternalConfiguration(beanEntry, controllerBuilder, applicationContext);
+                super.applyInternalConfiguration(beanEntry, controllerBuilder, componentRegistry);
             }
         }
     }
     
-    protected String getControllerName(ApplicationContext applicationContext, 
+    protected String getControllerName(ComponentRegistry componentRegistry, 
             Class controllerClass){
         String id = 
             controllerClass.getSimpleName()
                 .replaceAll("Controller$", "");
         
         id = 
-            (AnnotationUtil.isWebApplication(applicationContext)? "/" : "") + id;
+            (AnnotationUtil.isWebApplication(componentRegistry)? "/" : "") + id;
         
         return id;
     }
     
-    protected String getControllerId(ApplicationContext applicationContext, 
+    protected String getControllerId(ComponentRegistry componentRegistry, 
             Controller annotation, Class controllerClass){
         boolean hasControllerId = 
             annotation != null && annotation.value().length > 0 && 
             !StringUtil.isEmpty(annotation.value()[0]);
         
-        return hasControllerId? annotation.value()[0] : getControllerName(applicationContext, controllerClass);
+        return hasControllerId? annotation.value()[0] : getControllerName(componentRegistry, controllerClass);
     }
     
     public boolean isApplicable(Object source) {

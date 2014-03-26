@@ -36,10 +36,10 @@ public class ThrowSafeListAnnotationConfig extends AbstractAnnotationConfig{
     }
 
     public Object applyConfiguration(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
     
         try{
-            return applyConfiguration0(source, builder, applicationContext);
+            return applyConfiguration0(source, builder, componentRegistry);
         }
         catch(Exception e){
             throw 
@@ -51,7 +51,7 @@ public class ThrowSafeListAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     public Object applyConfiguration0(Object source, Object builder, 
-            ConfigurableApplicationContext applicationContext) {
+            ComponentRegistry componentRegistry) {
 
         if(builder instanceof ActionBuilder)
             addThrowSafeList((ActionBuilder)builder, (Method)source);
