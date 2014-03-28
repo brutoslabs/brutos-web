@@ -24,6 +24,7 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.web.io.ServletContextResource;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
@@ -35,7 +36,6 @@ import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
-import org.brandao.brutos.xml.ContextDefinitionReader;
 
 /**
  *
@@ -43,17 +43,13 @@ import org.brandao.brutos.xml.ContextDefinitionReader;
  */
 public abstract class AbstractWebApplicationContext
         extends AbstractApplicationContext
-        implements ConfigurableWebApplicationContext, ComponentRegistry{
-
-    public static final String defaultConfigContext = "WEB-INF/brutos-config.xml";
-
-    public static final String  contextConfigName   = "contextConfig";
+        implements ConfigurableWebApplicationContext {
 
     protected ServletContext servletContext;
     
-    private String[] locations;
+    protected String[] locations;
     
-    private Resource[] resources;
+    protected Resource[] resources;
     
     public AbstractWebApplicationContext(){
     }
@@ -78,27 +74,11 @@ public abstract class AbstractWebApplicationContext
         return this.resources;
     }
 
+    public abstract void loadDefinitions();
+    
     public void loadDefinitions(
             DefinitionReader definitionReader ){
 
-        String configContext = super.getConfiguration().getProperty(
-            contextConfigName,
-            defaultConfigContext);
-        
-        List contextLocations = 
-            StringUtil.getList(
-                    configContext, 
-                    BrutosConstants.COMMA);
-        
-        if(contextLocations != null){
-            Resource[] contextResources = new Resource[contextLocations.size()];
-            for(int i=0;i<contextResources.length;i++){
-                contextResources[i] =
-                    this.getResource((String) contextLocations.get(i));
-            }
-            definitionReader.loadDefinitions(contextResources);
-        }
-        
         if( resources != null)
             definitionReader.loadDefinitions(resources);
         
@@ -302,6 +282,8 @@ public abstract class AbstractWebApplicationContext
         
         this.initScopes();
         
+        this.loadDefinitions();
+
         this.initControllers();
 
         this.initUploadListener();
@@ -339,12 +321,28 @@ public abstract class AbstractWebApplicationContext
             name, classType, actionId, actionType );
     }
     
+    public Controller getRegisteredController(Class clazz){
+        return super.controllerManager.getController(clazz);
+    }
+    
+    public Controller getRegisteredController(String name){
+        return super.controllerManager.getController(name);
+    }
+
     public InterceptorStackBuilder registerInterceptorStack( String name, boolean isDefault ){
         return this.interceptorManager.addInterceptorStack(name, isDefault);
     }
     
     public InterceptorBuilder registerInterceptor( String name, Class interceptor, boolean isDefault ){
         return this.interceptorManager.addInterceptor(name, interceptor, isDefault);
+    }
+    
+    public Interceptor getRegisteredInterceptor(Class clazz){
+        return this.interceptorManager.getInterceptor(clazz);
+    }
+    
+    public Interceptor getRegisteredInterceptor(String name){
+        return this.interceptorManager.getInterceptor(name);
     }
     
 }

@@ -21,7 +21,7 @@ import javax.servlet.ServletContext;
 import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.web.io.ServletContextResource;
-import org.brandao.brutos.xml.AbstractXMLApplicationContext;
+import org.brandao.brutos.AbstractXMLApplicationContext;
 
 /**
  *
