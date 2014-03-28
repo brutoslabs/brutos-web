@@ -17,10 +17,11 @@
 
 package org.brandao.brutos.annotation;
 
-import java.util.*;
-import org.brandao.brutos.*;
-import org.brandao.brutos.logger.Logger;
-import org.brandao.brutos.logger.LoggerProvider;
+import java.util.Arrays;
+import java.util.List;
+import org.brandao.brutos.AbstractApplicationContext;
+import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.ComponentRegistryAdapter;
 
 /**
  * Classe que permite a configuração de uma aplicação usando 
@@ -36,20 +37,25 @@ import org.brandao.brutos.logger.LoggerProvider;
 public class AnnotationApplicationContext extends AbstractApplicationContext{
     
     private Class[] allClazz;
+    
+    private Class[] configClass;
+    
     private ComponentConfigurer componentConfigurer;
 
     /**
      * Cria uma nova aplicação.
      */
     public AnnotationApplicationContext() {
-        this(new Class[]{}, null);
+        this(null, null);
     }
     
     /**
      * Cria uma nova aplicação.
      * @param clazz Componentes da aplicação.
+     * @throws IllegalArgumentException Lançada se na lista conter classes de
+     * configuração.
      */
-    public AnnotationApplicationContext(Class[] clazz) {
+    public AnnotationApplicationContext(Class[] clazz) throws IllegalArgumentException{
         this(clazz, null);
     }
 
@@ -57,14 +63,52 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
      * Cria uma nova aplicação.
      * @param clazz Componentes da aplicação.
      * @param parent Aplicação.
+     * @throws IllegalArgumentException Lançada se na lista conter classes de
+     * configuração.
      */
     public AnnotationApplicationContext(Class[] clazz,
-            ApplicationContext parent) {
+            ApplicationContext parent) throws IllegalArgumentException{
         super(parent);
+        
+        if(clazz != null)
+            this.checkOnlyComponenetClass(clazz);
+        
         this.allClazz = clazz;
         this.componentConfigurer = new ComponentConfigurer();
     }
 
+    /**
+     * Define as classes de configuração da aplicação.
+     * @param clazz Classes de configuração.
+     * @throws IllegalArgumentException Lançada se na lista conter classes que
+     * não possuem configuração.
+     * @throws IllegalStateException Lançada se as classes da aplicação já foram definidas.
+     */
+    public void setConfigClass(List<Class> clazz) throws IllegalStateException, IllegalArgumentException{
+        
+        if(this.allClazz != null)
+            throw new IllegalStateException("classes have been defined");
+        else{
+            this.configClass = clazz.toArray(new Class[]{});
+            this.checkOnlyConfigurationClass(this.configClass);
+        }
+    }
+    
+    private void checkOnlyConfigurationClass(Class[] list){
+        for(Class c: list){
+            if(!c.isAnnotationPresent(Configuration.class))
+                throw new IllegalArgumentException();
+        }
+    }
+    
+    private void checkOnlyComponenetClass(Class[] list){
+        for(Class c: list){
+            if(c.isAnnotationPresent(Configuration.class))
+                throw new IllegalArgumentException();
+        }
+    }
+    
+    @Override
     public void flush() {
 
         this.initLogger();
@@ -75,7 +119,12 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         
         this.initControllers();
         
-        this.componentConfigurer.init(this);
+        this.componentConfigurer
+                .setComponentList(
+                        allClazz == null? 
+                            Arrays.asList(this.configClass) : 
+                            Arrays.asList(this.allClazz));
+        this.componentConfigurer.init(new ComponentRegistryAdapter(this));
         
     }
     

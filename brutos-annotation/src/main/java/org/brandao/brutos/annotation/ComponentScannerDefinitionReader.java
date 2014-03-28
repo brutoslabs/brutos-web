@@ -57,13 +57,13 @@ public class ComponentScannerDefinitionReader
         this.scanner.removeFilter(value);
     }
     
-    public void loadAnnotationDefinition(){
+    public void loadDefinitions(){
         scanner.scan();
         componentConfigurer.setComponentList(scanner.getClassList());
-        componentConfigurer.init(this);
+        componentConfigurer.init(this.componenetRegistry);
     }
     
-    /*
+    
     protected void build( Element document ){
         super.build(document);
 
@@ -183,6 +183,5 @@ public class ComponentScannerDefinitionReader
         
         return null;
     }
-    */
 
 }

@@ -30,9 +30,13 @@ public interface Scanner {
 
     List<Class> getClassList();
     
-    void addFilter(TypeFilter filter);
-
-    void removeFilter(TypeFilter filter);
+    void addIncludeFilter(TypeFilter filter);
+    
+    void addExcludeFilter(TypeFilter filter);
+    
+    void removeIncludeFilter(TypeFilter filter);
+    
+    void removeExcludeFilter(TypeFilter filter);
     
     void setBasePackage(String[] basePackage);
     
