@@ -89,7 +89,7 @@ public abstract class AbstractApplicationContext
         this.scopes = new Scopes();
     }
 
-    protected void init(){
+    protected void initInstances(){
         this.iocProvider   = IOCProvider.getProvider(this.configuration);
         
         this.iocProvider.configure(this.configuration);
@@ -137,7 +137,7 @@ public abstract class AbstractApplicationContext
 
     }
     
-    protected void initControllers(){
+    protected void initComponents(){
         List controllers = this.controllerManager.getControllers();
         for(int i=0;i<controllers.size();i++){
             Controller controller = (Controller)controllers.get(i);
@@ -150,17 +150,7 @@ public abstract class AbstractApplicationContext
                 .getCurrentLoggerProvider().getLogger(getClass());
     }
     
-    public void flush(){
-        
-        this.initLogger();
-        
-        this.init();
-        
-        this.initScopes();
-        
-        this.initControllers();
-        
-    }
+    protected abstract void loadDefinitions(ComponentRegistry registry);
     
     /**
      * Define o respons�vel por resolver os controladores.
@@ -546,6 +536,20 @@ public abstract class AbstractApplicationContext
 
     public Object getBean(String name){
         return this.getIocProvider().getBean(name);
+    }
+
+    public void flush(){
+        
+        this.initLogger();
+        
+        this.initInstances();
+        
+        this.initScopes();
+        
+        this.loadDefinitions(new ComponentRegistryAdapter(this));
+        
+        this.initComponents();
+        
     }
     
 }

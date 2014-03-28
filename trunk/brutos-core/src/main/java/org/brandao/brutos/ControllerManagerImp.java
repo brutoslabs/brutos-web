@@ -300,7 +300,7 @@ public class ControllerManagerImp implements ControllerManager{
         };
     }
     
-    private void addController( String id, Controller controller ) {
+    private synchronized void addController( String id, Controller controller ) {
         
         if( id != null){
              if(contains(id))
@@ -312,7 +312,7 @@ public class ControllerManagerImp implements ControllerManager{
         classMappedControllers.put( controller.getClassType(), controller);
     }
 
-    private void removeController( String id, Controller controller ) {
+    private synchronized void removeController( String id, Controller controller ) {
         
         if( id != null){
              if(!contains(id))
@@ -380,6 +380,27 @@ public class ControllerManagerImp implements ControllerManager{
 
     public void setApplicationContext(ConfigurableApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
+    }
+
+    public synchronized void removeController(Class clazz) {
+        Controller controller = (Controller) classMappedControllers.get(clazz);
+        
+        if(controller != null){
+            classMappedControllers.remove(clazz);
+            
+            if(!StringUtil.isEmpty(controller.getId()))
+                mappedControllers.remove(controller.getId());
+        }
+    }
+
+    public synchronized void removeController(String name) {
+        Controller controller = (Controller) mappedControllers.get(name);
+        
+        if(controller != null){
+            mappedControllers.remove(name);
+            classMappedControllers.remove(controller.getClassType());
+        }
+        
     }
     
     public static class InternalUpdateImp implements InternalUpdate{

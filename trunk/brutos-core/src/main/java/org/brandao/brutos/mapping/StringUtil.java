@@ -75,4 +75,19 @@ public class StringUtil {
         
         return result;
     }
+    
+    public static String[] getArray(String value, String separator){
+        
+        if(value == null)
+            return null;
+        
+        String[] split = value.split(separator);
+        
+        for(int i=0;i<split.length;i++){
+            split[i] = adjust(split[i]);
+        }
+        
+        return split;
+    }
+    
 }

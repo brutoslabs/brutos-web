@@ -15,13 +15,10 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.xml;
+package org.brandao.brutos;
 
-import java.util.ArrayList;
-import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.io.Resource;
-import java.util.Properties;
-import org.brandao.brutos.DefinitionReader;
+import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 /**
  *
  * @author Brandao
@@ -37,28 +34,16 @@ public abstract class AbstractXMLApplicationContext
         this( null );
     }
 
-    public void configure( Properties config ){
-        super.configure(config);
-        load();
-    }
+    protected void loadDefinitions(
+            ComponentRegistry registry ){
 
-    protected void load(){
-        ControllerDefinitionReader cdr = 
-            new ControllerDefinitionReader(
-                this,
-                new ArrayList(),
-                this);
-
-        loadControllersDefinitions(cdr);
-    }
-
-    protected void loadControllersDefinitions(
-            DefinitionReader definitionReader ){
-
+        XMLComponentDefinitionReader definitionreader
+                = new XMLComponentDefinitionReader(registry);
+        
         Resource[] resources = getContextResources();
         
         if( resources != null)
-            definitionReader.loadDefinitions(resources);
+            definitionreader.loadDefinitions(resources);
     }
 
     protected abstract Resource[] getContextResources();

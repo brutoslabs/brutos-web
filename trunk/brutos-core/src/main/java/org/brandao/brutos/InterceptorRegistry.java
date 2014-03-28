@@ -29,8 +29,8 @@ public interface InterceptorRegistry {
     
     InterceptorBuilder registerInterceptor( String name, Class interceptor, boolean isDefault );
     
-    Interceptor getInterceptor(Class clazz);
+    Interceptor getRegisteredInterceptor(Class clazz);
     
-    Interceptor getInterceptor(String name);
-    
+    Interceptor getRegisteredInterceptor(String name);
+
 }

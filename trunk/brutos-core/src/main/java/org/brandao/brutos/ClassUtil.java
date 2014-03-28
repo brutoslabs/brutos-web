@@ -65,7 +65,6 @@ public final class ClassUtil {
         Class classe = (Class) primitiveType.get( name );
         
         return classe == null? getClasse( name ) : classe;
-        
     }
     
     private static Class getClasse( String name ) throws ClassNotFoundException{
@@ -127,5 +126,18 @@ public final class ClassUtil {
             return TypeManager.getDefaultSetType();
         else
             return clazz;
+    }
+    
+    public static boolean existClass(String className){
+        try{
+            Class.forName(
+                className, 
+                false, 
+                Thread.currentThread().getContextClassLoader());
+            return true;
+        }
+        catch(ClassNotFoundException e){
+            return false;
+        }
     }
 }
