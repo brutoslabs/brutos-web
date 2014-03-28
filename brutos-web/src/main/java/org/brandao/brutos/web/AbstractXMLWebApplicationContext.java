@@ -26,29 +26,19 @@ import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 public abstract class AbstractXMLWebApplicationContext
         extends AbstractWebApplicationContext {
 
-    private XMLComponentDefinitionReader definitionReader;
+    private final XMLComponentDefinitionReader definitionReader;
     
     public AbstractXMLWebApplicationContext(){
         this.definitionReader = new XMLComponentDefinitionReader(this);
     }
     
-    public void flush(){
-
-        this.initLogger();
+    @Override
+    public void loadDefinitions(){
+        if( super.resources != null)
+            definitionReader.loadDefinitions(super.resources);
         
-        this.overrideConfig();
-        
-        this.init();
-        
-        this.initScopes();
-        
-        super.loadDefinitions(this.definitionReader);
-        
-        this.initControllers();
-
-        this.initUploadListener();
-        
-        this.initRequestParser();
+        if( super.locations != null)
+            definitionReader.loadDefinitions(super.locations);
     }
     
 }

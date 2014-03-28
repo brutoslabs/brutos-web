@@ -24,9 +24,9 @@ import javax.servlet.ServletContext;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.Configuration;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -35,6 +35,12 @@ import org.brandao.brutos.logger.LoggerProvider;
 public class ContextLoader {
 
     public static final String CONTEXT_CLASS = "context_class";
+    
+    public static final String[] APPLICATION_CONTEXT = 
+            new String[]{
+                "org.brandao.brutos.annotation.web.AnnotationWebApplicationContext",
+                "org.brandao.brutos.web.XMLWebApplicationContext"};
+    
     private Logger logger;
 
     private static final ConcurrentHashMap<ClassLoader,WebApplicationContext>
@@ -55,20 +61,36 @@ public class ContextLoader {
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-        WebApplicationContext app =
+        logger.info( "Initializing Brutos root WebApplicationContext" );
+
+        ConfigurableWebApplicationContext app =
                     createApplicationContext(servletContext);
         
-        ((ConfigurableWebApplicationContext)app)
-                .setServletContext(servletContext);
-
-        Properties config = getConfiguration(servletContext);
-        config.setProperty(BrutosConstants.WEB_APPLICATION_CLASS, app.getClass().getName());
+        Properties config = app.getConfiguration();
+        
+        String configContext = 
+                servletContext
+                        .getInitParameter(
+                                ConfigurableWebApplicationContext.contextConfigName);
+        configContext = 
+                configContext == null? 
+                    ConfigurableWebApplicationContext.defaultConfigContext : 
+                    configContext;
+        
+        String[] contextLocations = 
+            StringUtil.getArray(
+                    configContext, 
+                    BrutosConstants.COMMA);
+        
+        app.setServletContext(servletContext);
+        app.setLocations(contextLocations);
+        initConfiguration(servletContext, app.getConfiguration());
+        
+        logger.info( "Configuration: " + config.toString() );
         
         initLogger(config);
 
-        logger.info( "Initializing Brutos root WebApplicationContext" );
-        logger.info( "Configuration: " + config.toString() );
-        app.configure(config);
+        app.flush();
         
         currentWebApplicationContext
                     .put(classLoader, app);
@@ -82,28 +104,24 @@ public class ContextLoader {
         this.logger = loggerProvider.getLogger( ContextLoader.class.getName() );
     }
 
-    private Properties getConfiguration( ServletContext servletContext ){
-        Configuration config = new Configuration();
-
+    private void initConfiguration( ServletContext servletContext, Properties config ){
         Enumeration initParameters = servletContext.getInitParameterNames();
 
         while( initParameters.hasMoreElements() ){
             String name = (String) initParameters.nextElement();
             config.setProperty( name, servletContext.getInitParameter( name ) );
         }
-
-        return config;
     }
 
-    private WebApplicationContext createApplicationContext(
+    private ConfigurableWebApplicationContext createApplicationContext(
             ServletContext servletContext){
 
         Class clazz = getApplicationContextClass(servletContext);
 
         if(ConfigurableWebApplicationContext.class.isAssignableFrom(clazz)){
             try{
-                WebApplicationContext app =
-                        (WebApplicationContext) ClassUtil.getInstance(clazz);
+                ConfigurableWebApplicationContext app =
+                        (ConfigurableWebApplicationContext) ClassUtil.getInstance(clazz);
 
 
                 return app;
@@ -123,8 +141,14 @@ public class ContextLoader {
 
         if( contextClassName != null )
             return this.getContextClass(contextClassName);
-        else
-            return this.getContextClass(XMLWebApplicationContext.class.getName());
+        else{
+            for(int i=0;i<APPLICATION_CONTEXT.length;i++){
+                String applicationContextClassName = APPLICATION_CONTEXT[i];
+                if(ClassUtil.existClass(applicationContextClassName))
+                    return this.getContextClass(applicationContextClassName);
+            }
+        }
+        throw new BrutosException("not launch context!");
     }
 
     private Class getContextClass( String contextClassName ){
