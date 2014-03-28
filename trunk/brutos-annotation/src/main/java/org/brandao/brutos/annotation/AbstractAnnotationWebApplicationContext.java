@@ -7,14 +7,8 @@
 package org.brandao.brutos.annotation;
 
 import java.util.List;
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.DefinitionReader;
-import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.AbstractWebApplicationContext;
-import static org.brandao.brutos.web.AbstractWebApplicationContext.contextConfigName;
-import static org.brandao.brutos.web.AbstractWebApplicationContext.defaultConfigContext;
-import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 
 /**
  *
@@ -23,16 +17,17 @@ import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 public class AbstractAnnotationWebApplicationContext 
     extends AbstractWebApplicationContext{
     
-    private ComponentScannerDefinitionReader annotationComponentDefinitionReader;
+    private ComponentScannerDefinitionReader componentScannerDefinitionReader;
     
     
     public AbstractAnnotationWebApplicationContext(){
-        this.annotationComponentDefinitionReader = 
+        this.componentScannerDefinitionReader = 
                 new ComponentScannerDefinitionReader(this);
     }
-    
+
+    @Override
     public void loadDefinitions(
-            ComponentScannerDefinitionReader definitionReader ){
+            DefinitionReader definitionReader ){
 
         if( getResources() != null)
             definitionReader.loadDefinitions(getResources());
@@ -40,7 +35,7 @@ public class AbstractAnnotationWebApplicationContext
         if( getLocations() != null)
             definitionReader.loadDefinitions(getLocations());
         
-        List<String> codeBase = definitionReader.get
+        this.componentScannerDefinitionReader.loadDefinitions();
     }
     
     public void flush(){
@@ -53,7 +48,7 @@ public class AbstractAnnotationWebApplicationContext
         
         this.initScopes();
         
-        super.loadDefinitions(this.annotationComponentDefinitionReader);
+        super.loadDefinitions(this.componentScannerDefinitionReader);
         
         this.initControllers();
 
