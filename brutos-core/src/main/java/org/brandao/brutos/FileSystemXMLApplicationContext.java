@@ -19,7 +19,6 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.io.FileSystemResource;
 import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.xml.AbstractXMLApplicationContext;
 
 /**
  *

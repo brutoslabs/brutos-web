@@ -18,9 +18,7 @@
 package org.brandao.brutos.xml;
 
 import org.brandao.brutos.ComponentRegistry;
-import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DefinitionReader;
-import org.brandao.brutos.io.ResourceLoader;
 
 /**
  *

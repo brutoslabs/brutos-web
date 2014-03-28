@@ -28,19 +28,15 @@ import java.util.Properties;
 public class ApplicationContextWrapper 
         extends AbstractApplicationContext{
 
-    protected ApplicationContext applicationContext;
+    protected ConfigurableApplicationContext applicationContext;
 
     /**
      * Define a aplica��o.
      *
      * @param app Aplica��o.
      */
-    public ApplicationContextWrapper( ApplicationContext app ){
+    public ApplicationContextWrapper( ConfigurableApplicationContext app ){
         this.applicationContext = app;
-    }
-
-    public void configure( Properties config ){
-        this.applicationContext.configure(config);
     }
 
     public void destroy(){
@@ -63,11 +59,12 @@ public class ApplicationContextWrapper
         return this.applicationContext.getScopes();
     }
 
-    public void configure() {
-         this.applicationContext.configure();
-    }
-
     public Object getController(Class clazz) {
         return this.applicationContext.getController(clazz);
     }
+
+    protected void loadDefinitions(ComponentRegistry registry) {
+        throw new UnsupportedOperationException();
+    }
+    
 }

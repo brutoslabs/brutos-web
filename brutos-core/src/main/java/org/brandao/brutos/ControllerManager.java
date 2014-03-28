@@ -192,6 +192,10 @@ public interface ControllerManager {
      */
     void setApplicationContext(ConfigurableApplicationContext applicationContext);
 
+    void removeController(Class clazz);
+    
+    void removeController(String name);
+    
     public static interface InternalUpdate{
         
         void addControllerAlias( Controller controller, String alias );
