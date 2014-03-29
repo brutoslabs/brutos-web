@@ -30,6 +30,11 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.helper.EnumTest;
 import org.brandao.brutos.annotation.helper.MyBean;
 import org.brandao.brutos.annotation.helper.bean.BeanTestFactory;
+import org.brandao.brutos.type.DefaultTypeFactory;
+import org.brandao.brutos.type.IntegerWrapperType;
+import org.brandao.brutos.type.ObjectType;
+import org.brandao.brutos.type.StringType;
+import org.brandao.brutos.type.TypeManager;
 /**
  *
  * @author Brandao
