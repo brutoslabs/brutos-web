@@ -19,13 +19,12 @@ package org.brandao.brutos.scanner;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.brandao.brutos.ByteArrayXMLApplicationContext;
-import org.brandao.brutos.ComponentRegistryAdapter;
+import org.brandao.brutos.annotation.web.AnnotationWebApplicationContext;
 import org.brandao.brutos.helper.TestController;
 import org.brandao.brutos.helper.TestIocProvider;
 import org.brandao.brutos.helper.controller.Test2Controller;
 import org.brandao.brutos.io.ByteArrayResource;
-import org.brandao.brutos.xml.ContextDefinitionReader;
+import org.brandao.brutos.io.Resource;
 
 /**
  *
@@ -39,16 +38,16 @@ public class ScannerTest extends TestCase{
         content +="        <ns1:exclude-filter type=\"regex\" expression=\".*InterceptorController$\"/>";
         content +="        <ns1:exclude-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Intercepts\"/>";
         content +="</ns1:component-scan>";
-        ByteArrayXMLApplicationContext applicationContext = 
-                new ByteArrayXMLApplicationContext(getXML(content).getBytes());
+        AnnotationWebApplicationContext applicationContext = 
+                new AnnotationWebApplicationContext();
         
         applicationContext
-            .getConfiguration().setProperty("org.brandao.brutos.ioc.provider", TestIocProvider.class.getName());
-        ContextDefinitionReader cdr = 
-            new ContextDefinitionReader(new ComponentRegistryAdapter(applicationContext));
-        cdr.loadDefinitions(new ByteArrayResource(getXML(content).getBytes()));
+            .getConfiguration()
+                .setProperty(
+                    "org.brandao.brutos.ioc.provider", 
+                    TestIocProvider.class.getName());
+        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
         applicationContext.flush();
-        applicationContext.setParent(cdr);
         
         Assert.assertNotNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -58,16 +57,16 @@ public class ScannerTest extends TestCase{
 
     public void test2(){
         String content ="<ns1:component-scan base-package=\"org.brandao.brutos.helper.controller\"/>";
-        ByteArrayXMLApplicationContext applicationContext = 
-                new ByteArrayXMLApplicationContext(getXML(content).getBytes());
+        AnnotationWebApplicationContext applicationContext = 
+                new AnnotationWebApplicationContext();
         
         applicationContext
-            .getConfiguration().setProperty("org.brandao.brutos.ioc.provider", TestIocProvider.class.getName());
-        ContextDefinitionReader cdr = 
-            new ContextDefinitionReader( applicationContext, null, applicationContext );
-        cdr.loadDefinitions(new ByteArrayResource(getXML(content).getBytes()));
-        applicationContext.configure();
-        applicationContext.setParent(cdr.getParent());
+            .getConfiguration()
+                .setProperty(
+                    "org.brandao.brutos.ioc.provider", 
+                    TestIocProvider.class.getName());
+        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
+        applicationContext.flush();
         
         Assert.assertNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -77,17 +76,16 @@ public class ScannerTest extends TestCase{
 
     public void test3(){
         String content ="<ns1:component-scan base-package=\"org.brandao.brutos.helper.controller\"/>";
-        ByteArrayXMLApplicationContext applicationContext = 
-                new ByteArrayXMLApplicationContext(getXML(content).getBytes());
+        AnnotationWebApplicationContext applicationContext = 
+                new AnnotationWebApplicationContext();
         
         applicationContext
-            .getConfiguration().setProperty("org.brandao.brutos.ioc.provider", TestIocProvider.class.getName());
-        ContextDefinitionReader cdr = 
-            new ContextDefinitionReader( applicationContext, null, applicationContext );
-        cdr.loadDefinitions(new ByteArrayResource(getXML(content).getBytes()));
-        applicationContext.configure();
-        applicationContext.setParent(cdr.getParent());
-        
+            .getConfiguration()
+                .setProperty(
+                    "org.brandao.brutos.ioc.provider", 
+                    TestIocProvider.class.getName());
+        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
+        applicationContext.flush();
         Assert.assertNull(
             applicationContext.getControllerManager().getController(TestController.class));
         Assert.assertNotNull(
@@ -100,16 +98,16 @@ public class ScannerTest extends TestCase{
         content +="        <ns1:include-filter type=\"regex\" expression=\""+TestController.class.getName().replace(".","\\.")+"\"/>";
         content +="        <ns1:include-filter type=\"regex\" expression=\""+Test2Controller.class.getName().replace(".","\\.")+"\"/>";
         content +="</ns1:component-scan>";
-        ByteArrayXMLApplicationContext applicationContext = 
-                new ByteArrayXMLApplicationContext(getXML(content).getBytes());
+        AnnotationWebApplicationContext applicationContext = 
+                new AnnotationWebApplicationContext();
         
         applicationContext
-            .getConfiguration().setProperty("org.brandao.brutos.ioc.provider", TestIocProvider.class.getName());
-        ContextDefinitionReader cdr = 
-            new ContextDefinitionReader( applicationContext, null, applicationContext );
-        cdr.loadDefinitions(new ByteArrayResource(getXML(content).getBytes()));
-        applicationContext.configure();
-        applicationContext.setParent(cdr.getParent());
+            .getConfiguration()
+                .setProperty(
+                    "org.brandao.brutos.ioc.provider", 
+                    TestIocProvider.class.getName());
+        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
+        applicationContext.flush();
         
         Assert.assertNotNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -119,16 +117,16 @@ public class ScannerTest extends TestCase{
 
     public void test5(){
         String content ="<ns1:component-scan base-package=\"org.brandao.brutos.helper\" use-default-filters=\"false\"/>";
-        ByteArrayXMLApplicationContext applicationContext = 
-                new ByteArrayXMLApplicationContext(getXML(content).getBytes());
+        AnnotationWebApplicationContext applicationContext = 
+                new AnnotationWebApplicationContext();
         
         applicationContext
-            .getConfiguration().setProperty("org.brandao.brutos.ioc.provider", TestIocProvider.class.getName());
-        ContextDefinitionReader cdr = 
-            new ContextDefinitionReader( applicationContext, null, applicationContext );
-        cdr.loadDefinitions(new ByteArrayResource(getXML(content).getBytes()));
-        applicationContext.configure();
-        applicationContext.setParent(cdr.getParent());
+            .getConfiguration()
+                .setProperty(
+                    "org.brandao.brutos.ioc.provider", 
+                    TestIocProvider.class.getName());
+        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
+        applicationContext.flush();
         
         Assert.assertNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -141,16 +139,16 @@ public class ScannerTest extends TestCase{
         content +="<ns1:component-scan base-package=\"org.brandao.brutos.helper\" use-default-filters=\"false\">";
         content +="        <ns1:include-filter type=\"regex\" expression=\".*2Controller$\"/>";
         content +="</ns1:component-scan>";
-        ByteArrayXMLApplicationContext applicationContext = 
-                new ByteArrayXMLApplicationContext(getXML(content).getBytes());
+        AnnotationWebApplicationContext applicationContext = 
+                new AnnotationWebApplicationContext();
         
         applicationContext
-            .getConfiguration().setProperty("org.brandao.brutos.ioc.provider", TestIocProvider.class.getName());
-        ContextDefinitionReader cdr = 
-            new ContextDefinitionReader( applicationContext, null, applicationContext );
-        cdr.loadDefinitions(new ByteArrayResource(getXML(content).getBytes()));
-        applicationContext.configure();
-        applicationContext.setParent(cdr.getParent());
+            .getConfiguration()
+                .setProperty(
+                    "org.brandao.brutos.ioc.provider", 
+                    TestIocProvider.class.getName());
+        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
+        applicationContext.flush();
         
         Assert.assertNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -163,16 +161,16 @@ public class ScannerTest extends TestCase{
         content +="<ns1:component-scan base-package=\"org.brandao.brutos.helper\">";
         content +="        <ns1:exclude-filter type=\"regex\" expression=\".*2Controller$\"/>";
         content +="</ns1:component-scan>";
-        ByteArrayXMLApplicationContext applicationContext = 
-                new ByteArrayXMLApplicationContext(getXML(content).getBytes());
+        AnnotationWebApplicationContext applicationContext = 
+                new AnnotationWebApplicationContext();
         
         applicationContext
-            .getConfiguration().setProperty("org.brandao.brutos.ioc.provider", TestIocProvider.class.getName());
-        ContextDefinitionReader cdr = 
-            new ContextDefinitionReader( applicationContext, null, applicationContext );
-        cdr.loadDefinitions(new ByteArrayResource(getXML(content).getBytes()));
-        applicationContext.configure();
-        applicationContext.setParent(cdr.getParent());
+            .getConfiguration()
+                .setProperty(
+                    "org.brandao.brutos.ioc.provider", 
+                    TestIocProvider.class.getName());
+        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
+        applicationContext.flush();
         
         Assert.assertNotNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -186,16 +184,16 @@ public class ScannerTest extends TestCase{
         content +="        <ns1:exclude-filter type=\"regex\" expression=\".*Test2.*\"/>";
         content +="        <ns1:include-filter type=\"regex\" expression=\".*Controller$\"/>";
         content +="</ns1:component-scan>";
-        ByteArrayXMLApplicationContext applicationContext = 
-                new ByteArrayXMLApplicationContext(getXML(content).getBytes());
+        AnnotationWebApplicationContext applicationContext = 
+                new AnnotationWebApplicationContext();
         
         applicationContext
-            .getConfiguration().setProperty("org.brandao.brutos.ioc.provider", TestIocProvider.class.getName());
-        ContextDefinitionReader cdr = 
-            new ContextDefinitionReader( applicationContext, null, applicationContext );
-        cdr.loadDefinitions(new ByteArrayResource(getXML(content).getBytes()));
-        applicationContext.configure();
-        applicationContext.setParent(cdr.getParent());
+            .getConfiguration()
+                .setProperty(
+                    "org.brandao.brutos.ioc.provider", 
+                    TestIocProvider.class.getName());
+        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
+        applicationContext.flush();
         
         Assert.assertNotNull(
             applicationContext.getControllerManager().getController(TestController.class));
