@@ -32,31 +32,12 @@ public class MatchesValidationRule implements ValidationRule{
     private String regex;
     
     public void validate(Object source, Object value) {
-        Type valueType = null;
-
-        if( source instanceof DependencyBean )
-            valueType = ((DependencyBean)source).getType();
-        else
-        if( source instanceof UseBeanData )
-            valueType = ((UseBeanData)source).getType();
-        else
-            throw new BrutosException( "invalid source: " + source );
-        
-        if( value instanceof String ){
-            if( config.containsKey( RestrictionRules.MATCHES.toString() ) ){
-                String tmp = (String) valueType
-                                .convert(
-                                //.getValue(
-                                config.get(RestrictionRules.MATCHES.toString()));
-
-                if( !((String)value).matches(tmp) )
-                    throw new ValidatorException();
-            }
-        }
+        if( !((String)value).matches(this.regex) )
+                throw new ValidatorException();
     }
 
     public void setConfiguration(Properties config) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.regex = config.getProperty(RestrictionRules.MATCHES.toString());
     }
 
 }

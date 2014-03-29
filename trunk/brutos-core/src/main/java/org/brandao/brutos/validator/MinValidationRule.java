@@ -29,7 +29,9 @@ import org.brandao.brutos.type.Type;
  */
 public class MinValidationRule implements ValidationRule{
 
-    public void validate(Properties config, Object source, Object value) {
+    private String expected;
+    
+    public void validate(Object source, Object value) {
         Type valueType = null;
 
         if( source instanceof DependencyBean )
@@ -40,17 +42,15 @@ public class MinValidationRule implements ValidationRule{
         else
             throw new BrutosException( "invalid source: " + source );
 
-        if( value instanceof Number ){
-            if( config.containsKey( RestrictionRules.MIN.toString() ) ){
-                Number tmp = (Number) valueType
-                                .convert(
-                                //.getValue(
-                                config.get(RestrictionRules.MIN.toString()));
+        Number tmp = (Number) valueType.convert(this.expected);
 
-                if( ((Number)value).doubleValue() < tmp.doubleValue() )
-                    throw new ValidatorException();
-            }
-        }
+        if( ((Number)value).doubleValue() < tmp.doubleValue() )
+            throw new ValidatorException();
     }
 
+    public void setConfiguration(Properties config) {
+        this.expected = config.getProperty(RestrictionRules.MIN.toString());
+    }
+
+    
 }

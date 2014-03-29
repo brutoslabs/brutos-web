@@ -25,11 +25,12 @@ import java.util.Properties;
  */
 public class RequiredValidationRule implements ValidationRule{
 
-    public void validate(Properties config, Object source, Object value) {
-            if( config.containsKey( RestrictionRules.REQUIRED.toString() ) ){
-                if( value == null )
-                    throw new ValidatorException();
-            }
+    public void validate(Object source, Object value) {
+        if( value == null )
+            throw new ValidatorException();
+    }
+
+    public void setConfiguration(Properties config) {
     }
 
 }
