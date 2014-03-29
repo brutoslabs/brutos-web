@@ -29,19 +29,18 @@ import org.brandao.brutos.type.TypeManager;
 public class MaxlengthValidationRule implements ValidationRule{
 
     private Type integerType = TypeManager.getType(Integer.class);
+    
+    private Integer expected;
+    
+    public void validate(Object source, Object value) {
+        if( ((String)value).length() > expected.intValue() )
+            throw new ValidatorException();
+    }
 
-    public void validate(Properties config, Object source, Object value) {
-        if( value instanceof String ){
-            if( config.containsKey( RestrictionRules.MAXLENGTH.toString() ) ){
-                Number tmp = (Number) integerType
-                                .convert(
-                                //.getValue(
-                                config.get(RestrictionRules.MAXLENGTH.toString()));
-
-                if( ((String)value).length() > tmp.intValue() )
-                    throw new ValidatorException();
-            }
-        }
+    public void setConfiguration(Properties config) {
+        this.expected = (Integer)integerType
+                .convert(
+                        config.getProperty(RestrictionRules.MAXLENGTH.toString()));
     }
 
 }
