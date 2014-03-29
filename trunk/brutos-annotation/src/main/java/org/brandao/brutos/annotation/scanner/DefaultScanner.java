@@ -178,5 +178,5 @@ public class DefaultScanner extends AbstractScanner{
             throw new BrutosException(e);
         }
     }
-   
+
 }

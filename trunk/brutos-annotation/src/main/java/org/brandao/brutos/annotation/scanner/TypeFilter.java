@@ -25,6 +25,6 @@ public interface TypeFilter {
 
     void setExpression(String value);
     
-    Boolean accepts( String resource );
+    boolean accepts( String resource );
     
 }

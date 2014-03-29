@@ -36,7 +36,7 @@ public abstract class AbstractAnnotationConfig
 
     protected AnnotationConfigEntry annotation;
     
-    //protected ConfigurableApplicationContext applicationContext;
+    protected ConfigurableApplicationContext applicationContext;
     
     private Converter sourceConverter;
     

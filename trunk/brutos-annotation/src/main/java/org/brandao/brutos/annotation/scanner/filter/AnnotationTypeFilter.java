@@ -50,15 +50,25 @@ public class AnnotationTypeFilter implements TypeFilter{
         }
     }
 
-    public Boolean accepts(String resource) {
+    public boolean accepts(String resource) {
         try{
             resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
-            return clazz.isAnnotationPresent(annotation) ? Boolean.valueOf(include) : null;
+            return clazz.isAnnotationPresent(annotation);
         }
-        catch(Exception e){
+        catch(ClassNotFoundException e){
             throw new BrutosException(e);
         }
     }
-    
+
+    public void setExpression(String value) {
+        try{
+            this.annotation =
+                ClassUtil.get(value);
+        }
+        catch(ClassNotFoundException e){
+            throw new BrutosException(e);
+        }
+    }
+
 }

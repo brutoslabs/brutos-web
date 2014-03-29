@@ -29,42 +29,37 @@ import java.util.Set;
  */
 public abstract class AbstractScanner implements Scanner{
 
-    protected Set listClass;
-    protected Set filters;
+    protected Set<Class> listClass;
+    protected Set<TypeFilter> includeFilters;
+    protected Set<TypeFilter> excludeFilters;
     private String[] basePackage;
     
     public AbstractScanner(){
-        this.listClass = new HashSet();
-        this.filters   = new HashSet();
+        this.listClass      = new HashSet<Class>();
+        this.includeFilters = new HashSet<TypeFilter>();
+        this.excludeFilters = new HashSet<TypeFilter>();
     }
 
-    public void addFilter(TypeFilter filter){
-        filters.add(filter);
-    }
-
-    public void removeFilter(TypeFilter filter){
-        filters.remove(filter);
-    }
-    
     protected boolean accepts(String resource){
         if(!listClass.contains(resource)){
             
-            Boolean value = null;
+            boolean include = false;
             
-            Iterator i = filters.iterator();
-            while(i.hasNext()){
-                TypeFilter filter = (TypeFilter)i.next();
-                Boolean filterValue = filter.accepts(resource);
-                if(filterValue != null){
-                    if(!filterValue.booleanValue())
-                        return false;
-                    else
-                        value = Boolean.TRUE;
+            for(TypeFilter filter: this.includeFilters){
+                if(filter.accepts(resource)){
+                    include = true;
+                    break;
                 }
             }
             
-            if(value != null && value.booleanValue())
+            if(include){
+                for(TypeFilter filter: this.excludeFilters){
+                    if(filter.accepts(resource)){
+                        return false;
+                    }
+                }
                 return true;
+            }
         }
         
         return false;
@@ -82,4 +77,20 @@ public abstract class AbstractScanner implements Scanner{
         this.basePackage = basePackage;
     }
 
+   public void addIncludeFilter(TypeFilter filter) {
+        this.includeFilters.add(filter);
+    }
+
+    public void addExcludeFilter(TypeFilter filter) {
+        this.excludeFilters.add(filter);
+    }
+
+    public void removeIncludeFilter(TypeFilter filter) {
+        this.includeFilters.remove(filter);
+    }
+
+    public void removeExcludeFilter(TypeFilter filter) {
+        this.excludeFilters.remove(filter);
+    }
+    
 }

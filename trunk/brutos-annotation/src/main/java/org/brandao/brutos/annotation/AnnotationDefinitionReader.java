@@ -24,9 +24,9 @@ import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.annotation.scanner.DefaultScanner;
 import org.brandao.brutos.annotation.scanner.Scanner;
 import org.brandao.brutos.annotation.scanner.TypeFilter;
-import org.brandao.brutos.annotation.scanner.filter.AnnotationControllerFilter;
-import org.brandao.brutos.annotation.scanner.filter.AnnotationInterceptorFilter;
-import org.brandao.brutos.annotation.scanner.filter.AnnotationTypeTypeFilter;
+import org.brandao.brutos.annotation.scanner.filter.ControllerFilter;
+import org.brandao.brutos.annotation.scanner.filter.InterceptorFilter;
+import org.brandao.brutos.annotation.scanner.filter.TypeTypeFilter;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.xml.XMLBrutosConstants;
 import org.brandao.brutos.xml.XMLComponentDefinitionReader;
@@ -42,9 +42,9 @@ public class AnnotationDefinitionReader
 
     private static final TypeFilter[] DEFAULT_FILTERS =
             new TypeFilter[]{
-                new AnnotationControllerFilter(),
-                new AnnotationInterceptorFilter(),
-                new AnnotationTypeTypeFilter()
+                new ControllerFilter(),
+                new InterceptorFilter(),
+                new TypeTypeFilter()
             };
     private ComponentConfigurer componentConfigurer;
     
