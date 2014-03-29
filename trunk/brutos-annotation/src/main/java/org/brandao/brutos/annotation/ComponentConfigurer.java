@@ -67,13 +67,16 @@ public class ComponentConfigurer {
     
     private List<Class> componentList;
     
+    private ConfigurableApplicationContext applicationContext;
+    
     private Logger logger;
     
-    public ComponentConfigurer(){
+    public ComponentConfigurer(ConfigurableApplicationContext applicationContext){
+        this.applicationContext = applicationContext;
         this.logger = LoggerProvider
                 .getCurrentLoggerProvider().getLogger(AnnotationApplicationContext.class);
     }
-
+    
     public void init(ComponentRegistry componentRegistry){
         List<Class> compositeClassList = new ArrayList<Class>();
         
@@ -170,6 +173,7 @@ public class ComponentConfigurer {
         
         try{
             AnnotationConfig ac = (AnnotationConfig) ClassUtil.getInstance(clazz);
+            ac.setApplicationContext(this.applicationContext);
             AnnotationConfigEntry r = new AnnotationConfigEntry();
             r.setAnnotationConfig(ac);
             ac.setConfiguration(r);

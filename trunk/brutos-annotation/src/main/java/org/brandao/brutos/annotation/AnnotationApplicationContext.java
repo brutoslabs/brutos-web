@@ -74,7 +74,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
             this.checkOnlyComponenetClass(clazz);
         
         this.allClazz = clazz;
-        this.componentConfigurer = new ComponentConfigurer();
+        this.componentConfigurer = new ComponentConfigurer(this);
     }
 
     /**
