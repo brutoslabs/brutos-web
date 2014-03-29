@@ -1296,24 +1296,18 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
     }
 
     public void loadDefinitions(Resource[] resource) {
-        super.loadDefinitions(resource);
-        
         if( resource != null )
             for( int i=0;i<resource.length;i++ )
                 this.loadDefinitions(resource[i]);
     }
 
     public void loadDefinitions(String[] locations) {
-        super.loadDefinitions(locations);
-        
         if( locations != null )
             for( int i=0;i<locations.length;i++ )
                 this.loadDefinitions(locations[i]);
     }
 
     public void loadDefinitions(String location) {
-        super.loadDefinitions(location);
-        
         Resource resource = this.componenetRegistry.getResource(location);
         this.loadDefinitions(resource);
     }
