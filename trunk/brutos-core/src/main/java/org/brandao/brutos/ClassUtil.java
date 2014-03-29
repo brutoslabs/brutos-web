@@ -83,7 +83,12 @@ public final class ClassUtil {
             throws InstantiationException, IllegalAccessException{
         return clazz.newInstance();
     }
-            
+
+    public static Object getInstance(String name) 
+            throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+        return getClasse(name).newInstance();
+    }
+    
     /*
     public static Object getInstance(Class clazz, 
             ConfigurableApplicationContext context) 

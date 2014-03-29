@@ -17,7 +17,7 @@ import org.brandao.brutos.mapping.Interceptor;
  */
 public class ComponentRegistryAdapter implements ComponentRegistry{
 
-    private ConfigurableApplicationContext configurableApplicationContext;
+    private final ConfigurableApplicationContext configurableApplicationContext;
     
     public ComponentRegistryAdapter(
             ConfigurableApplicationContext configurableApplicationContext){
