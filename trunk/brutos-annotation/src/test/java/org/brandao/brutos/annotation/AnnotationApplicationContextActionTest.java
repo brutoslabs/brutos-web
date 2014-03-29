@@ -27,6 +27,13 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.helper.*;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.ThrowableSafeData;
+import org.brandao.brutos.type.CalendarType;
+import org.brandao.brutos.type.DateTimeType;
+import org.brandao.brutos.type.DefaultDateType;
+import org.brandao.brutos.type.DefaultEnumType;
+import org.brandao.brutos.type.IntegerType;
+import org.brandao.brutos.type.IntegerWrapperType;
+import org.brandao.brutos.type.StringType;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.brandao.brutos.validator.Validator;
 

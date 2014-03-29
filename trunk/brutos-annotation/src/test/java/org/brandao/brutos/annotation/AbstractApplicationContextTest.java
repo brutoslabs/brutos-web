@@ -65,7 +65,8 @@ public abstract class AbstractApplicationContextTest extends TestCase{
         prop.setProperty( BrutosConstants.CONTROLLER_MANAGER_CLASS,
                               WebControllerManager.class.getName() );
         
-        annotationApplicationContext.configure(prop);
+        annotationApplicationContext.setConfiguration(prop);
+        annotationApplicationContext.flush();
         return annotationApplicationContext;
     }
 
