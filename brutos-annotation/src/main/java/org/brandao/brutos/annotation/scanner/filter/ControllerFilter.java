@@ -20,35 +20,31 @@ package org.brandao.brutos.annotation.scanner.filter;
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.annotation.Intercepts;
+import org.brandao.brutos.annotation.Controller;
 import org.brandao.brutos.annotation.scanner.TypeFilter;
-import org.brandao.brutos.interceptor.InterceptorController;
 import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
  *
  * @author Brandao
  */
-public class AnnotationInterceptorFilter implements TypeFilter{
+public class ControllerFilter implements TypeFilter{
 
-    public Boolean accepts(String resource) {
+    public boolean accepts(String resource) {
         try{
             resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
             return 
-                resource.matches("(.*\\.)*\\w+InterceptorController") || 
-                (clazz.isAnnotationPresent(Intercepts.class) 
-                && InterceptorController.class.isAssignableFrom(clazz))?
-                Boolean.TRUE :
-                null;
+                resource.matches("(.*\\.)*\\w+Controller") || 
+                clazz.isAnnotationPresent(Controller.class);
         }
-        catch(Exception e){
+        catch(ClassNotFoundException e){
             throw new BrutosException(e);
         }
-        
     }
 
-    public void setConfiguration(Properties config) {
+    public void setExpression(String value) {
     }
+
     
 }

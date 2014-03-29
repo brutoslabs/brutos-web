@@ -31,18 +31,13 @@ public class RegexTypeFilter implements TypeFilter{
     protected boolean include;
     protected String regex;
     
-    public void setConfiguration(Properties config) {
-        this.include = 
-            config.getProperty(
-                "filter-type",BrutosConstants.INCLUDE)
-                    .equals(BrutosConstants.INCLUDE);
-        this.regex =
-            config.getProperty("expression",".*");
-    }
-
-    public Boolean accepts(String resource) {
+    public boolean accepts(String resource) {
         String className = Vfs.toClass(resource);
         return className.matches(regex)? Boolean.valueOf(include) : null;
+    }
+
+    public void setExpression(String value) {
+        this.regex = value;
     }
     
 }
