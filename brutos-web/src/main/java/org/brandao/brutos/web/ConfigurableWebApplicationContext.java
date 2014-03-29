@@ -39,8 +39,6 @@ public interface ConfigurableWebApplicationContext
     
     void setServletContext( ServletContext servletContext );
     
-    void loadDefinitions(DefinitionReader definitionReader);
-    
     void setLocations(String[] locations);
     
     void setResources(Resource[] resources);
