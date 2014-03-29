@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.web;
 
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.web.AbstractWebApplicationContext;
