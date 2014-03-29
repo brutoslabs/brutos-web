@@ -8,6 +8,7 @@ package org.brandao.brutos.web;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.ActionResolver;
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ControllerResolver;
 import org.brandao.brutos.InterceptorManager;
@@ -35,10 +36,6 @@ public class WebApplicationContextWrapper
         this.applicationContext = app;
     }
 
-    public void configure( Properties config ){
-        this.applicationContext.configure(config);
-    }
-
     public void destroy(){
         this.applicationContext.destroy();
     }
@@ -57,10 +54,6 @@ public class WebApplicationContextWrapper
 
     public Scopes getScopes() {
         return this.applicationContext.getScopes();
-    }
-
-    public void configure() {
-         this.applicationContext.configure();
     }
 
     public ServletContext getContext(){
@@ -138,6 +131,11 @@ public class WebApplicationContextWrapper
 
     public void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider){
         applicationContext.setCodeGeneratorProvider(codeGeneratorProvider);
+    }
+
+    @Override
+    protected void loadDefinitions(ComponentRegistry registry) {
+        throw new UnsupportedOperationException();
     }
 
 }

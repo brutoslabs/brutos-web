@@ -31,7 +31,7 @@ import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.GenericXMLWebApplicationContext;
+import org.brandao.brutos.web.XMLWebApplicationContext;
 
 /**
  *
@@ -40,7 +40,7 @@ import org.brandao.brutos.web.GenericXMLWebApplicationContext;
 public class WebApplicationContextTest extends AbstractTester implements Test{
 
     public ConfigurableWebApplicationContext getApplicationContext(String resourceName) {
-        return new GenericXMLWebApplicationContext(
+        return new XMLWebApplicationContext(
                 new Resource[]{
                     new ClassPathResource( 
                             getClass(),

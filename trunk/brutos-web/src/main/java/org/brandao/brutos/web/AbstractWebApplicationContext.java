@@ -74,19 +74,6 @@ public abstract class AbstractWebApplicationContext
         return this.resources;
     }
 
-    public abstract void loadDefinitions();
-    
-    public void loadDefinitions(
-            DefinitionReader definitionReader ){
-
-        if( resources != null)
-            definitionReader.loadDefinitions(resources);
-        
-        if( locations != null)
-            definitionReader.loadDefinitions(locations);
-        
-    }
-    
     protected void initUploadListener(){
         try{
             Properties config = this.getConfiguration();
@@ -272,25 +259,6 @@ public abstract class AbstractWebApplicationContext
         this.servletContext = servletContext;
     }
 
-    public void flush(){
-
-        this.initLogger();
-        
-        this.overrideConfig();
-        
-        this.init();
-        
-        this.initScopes();
-        
-        this.loadDefinitions();
-
-        this.initControllers();
-
-        this.initUploadListener();
-        
-        this.initRequestParser();
-    }
-
     public ControllerBuilder registerController( Class classtype ){
         return this.controllerManager.addController(classtype);
     }
@@ -343,6 +311,25 @@ public abstract class AbstractWebApplicationContext
     
     public Interceptor getRegisteredInterceptor(String name){
         return this.interceptorManager.getInterceptor(name);
+    }
+
+    public void flush(){
+
+        this.initLogger();
+        
+        this.overrideConfig();
+        
+        this.initInstances();
+        
+        this.initScopes();
+        
+        this.loadDefinitions(new ComponentRegistryAdapter(this));
+
+        this.initComponents();
+
+        this.initUploadListener();
+        
+        this.initRequestParser();
     }
     
 }
