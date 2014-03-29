@@ -29,6 +29,8 @@ import org.brandao.brutos.type.Type;
  */
 public class MatchesValidationRule implements ValidationRule{
 
+    private String regex;
+    
     public void validate(Object source, Object value) {
         Type valueType = null;
 
