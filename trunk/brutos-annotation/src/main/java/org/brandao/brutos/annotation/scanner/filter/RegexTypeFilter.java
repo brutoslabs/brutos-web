@@ -28,12 +28,11 @@ import org.brandao.brutos.scanner.vfs.Vfs;
  */
 public class RegexTypeFilter implements TypeFilter{
 
-    protected boolean include;
     protected String regex;
     
     public boolean accepts(String resource) {
         String className = Vfs.toClass(resource);
-        return className.matches(regex)? Boolean.valueOf(include) : null;
+        return className.matches(regex);
     }
 
     public void setExpression(String value) {
