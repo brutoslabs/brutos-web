@@ -8,7 +8,6 @@ package org.brandao.brutos.annotation.web;
 
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.web.AbstractWebApplicationContext;
-import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 
 /**
  *
