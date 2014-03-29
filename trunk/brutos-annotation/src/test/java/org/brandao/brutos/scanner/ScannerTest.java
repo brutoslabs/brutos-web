@@ -20,6 +20,7 @@ package org.brandao.brutos.scanner;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.brandao.brutos.ByteArrayXMLApplicationContext;
+import org.brandao.brutos.ComponentRegistryAdapter;
 import org.brandao.brutos.helper.TestController;
 import org.brandao.brutos.helper.TestIocProvider;
 import org.brandao.brutos.helper.controller.Test2Controller;
@@ -44,10 +45,10 @@ public class ScannerTest extends TestCase{
         applicationContext
             .getConfiguration().setProperty("org.brandao.brutos.ioc.provider", TestIocProvider.class.getName());
         ContextDefinitionReader cdr = 
-            new ContextDefinitionReader( applicationContext, null, applicationContext );
+            new ContextDefinitionReader(new ComponentRegistryAdapter(applicationContext));
         cdr.loadDefinitions(new ByteArrayResource(getXML(content).getBytes()));
-        applicationContext.configure();
-        applicationContext.setParent(cdr.getParent());
+        applicationContext.flush();
+        applicationContext.setParent(cdr);
         
         Assert.assertNotNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -98,11 +99,6 @@ public class ScannerTest extends TestCase{
         content +="<ns1:component-scan use-default-filters=\"false\">";
         content +="        <ns1:include-filter type=\"regex\" expression=\""+TestController.class.getName().replace(".","\\.")+"\"/>";
         content +="        <ns1:include-filter type=\"regex\" expression=\""+Test2Controller.class.getName().replace(".","\\.")+"\"/>";
-        /*
-        content +="        <ns1:exclude-filter type=\"regex\" expression=\".*InterceptorController$\"/>";
-        content +="        <ns1:exclude-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Intercepts\"/>";
-        content +="        <ns1:exclude-filter type=\"regex\" expression=\".*Type$\"/>";
-        */
         content +="</ns1:component-scan>";
         ByteArrayXMLApplicationContext applicationContext = 
                 new ByteArrayXMLApplicationContext(getXML(content).getBytes());
