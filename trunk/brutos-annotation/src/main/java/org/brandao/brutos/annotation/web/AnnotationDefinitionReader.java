@@ -146,7 +146,7 @@ public class AnnotationDefinitionReader
                 type.length() > 1?
                 Character.toUpperCase(type.charAt(0)) + type.substring(1) :
                 type;
-            return "org.brandao.brutos.annotation.scanner.filter" + name + "TypeFilter";
+            return "org.brandao.brutos.annotation.scanner.filter." + name + "TypeFilter";
         }
     }
     
