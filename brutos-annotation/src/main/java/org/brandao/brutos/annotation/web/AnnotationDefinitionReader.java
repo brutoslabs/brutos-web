@@ -21,6 +21,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ComponentRegistry;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.ComponentConfigurer;
 import org.brandao.brutos.annotation.scanner.DefaultScanner;
 import org.brandao.brutos.annotation.scanner.Scanner;
@@ -51,9 +52,10 @@ public class AnnotationDefinitionReader
     
     private Scanner scanner;
 
-    public AnnotationDefinitionReader(ComponentRegistry componentRegistry) {
+    public AnnotationDefinitionReader(ConfigurableApplicationContext applicationContext, 
+            ComponentRegistry componentRegistry) {
         super(componentRegistry);
-        this.componentConfigurer = new ComponentConfigurer();
+        this.componentConfigurer = new ComponentConfigurer(applicationContext);
         this.scanner             = null;
     }
 

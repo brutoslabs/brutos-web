@@ -41,7 +41,7 @@ public abstract class AbstractAnnotationConfig
     private Converter sourceConverter;
     
     public void setApplicationContext(ConfigurableApplicationContext applicationContext){
-        //this.applicationContext = applicationContext;
+        this.applicationContext = applicationContext;
     }
     
     public void setConfiguration(AnnotationConfigEntry annotation){
