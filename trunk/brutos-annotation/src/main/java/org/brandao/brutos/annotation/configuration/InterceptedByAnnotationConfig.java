@@ -66,7 +66,7 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
             
             if(i.interceptor() != InterceptorController.class){
                 Class<? extends InterceptorController> iClass = i.interceptor();
-                name = componentRegistry.getInterceptor(iClass).getName();
+                name = componentRegistry.getRegisteredInterceptor(iClass).getName();
             }
             else
                 name = StringUtil.isEmpty(i.name()) ? null : StringUtil.adjust(i.name());

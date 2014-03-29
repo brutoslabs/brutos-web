@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.ComponentRegistryAdapter;
+import org.brandao.brutos.ComponentRegistry;
 
 /**
  * Classe que permite a configuração de uma aplicação usando 
@@ -109,23 +109,13 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     }
     
     @Override
-    public void flush() {
-
-        this.initLogger();
-        
-        this.init();
-        
-        this.initScopes();
-        
-        this.initControllers();
-        
+    protected void loadDefinitions(ComponentRegistry registry) {
         this.componentConfigurer
                 .setComponentList(
                         allClazz == null? 
                             Arrays.asList(this.configClass) : 
                             Arrays.asList(this.allClazz));
-        this.componentConfigurer.init(new ComponentRegistryAdapter(this));
-        
+        this.componentConfigurer.init(registry);
     }
     
 }

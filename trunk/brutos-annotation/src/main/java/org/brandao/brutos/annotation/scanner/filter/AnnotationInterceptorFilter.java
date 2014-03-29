@@ -15,49 +15,40 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.scanner;
+package org.brandao.brutos.annotation.scanner.filter;
 
-import org.brandao.brutos.annotation.scanner.TypeFilter;
 import java.util.Properties;
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
+import org.brandao.brutos.annotation.Intercepts;
+import org.brandao.brutos.annotation.scanner.TypeFilter;
+import org.brandao.brutos.interceptor.InterceptorController;
 import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**
  *
  * @author Brandao
  */
-public class AnnotationTypeFilter implements TypeFilter{
-
-    private boolean include;
-    private Class annotation;
-    
-    public void setConfiguration(Properties config) {
-        this.include = 
-            config.getProperty(
-                "filter-type", 
-                BrutosConstants.INCLUDE)
-                    .equals(BrutosConstants.INCLUDE);
-        
-        try{
-            this.annotation =
-                ClassUtil.get(config.getProperty(BrutosConstants.EXPRESSION));
-        }
-        catch(Exception e){
-            throw new BrutosException(e);
-        }
-    }
+public class AnnotationInterceptorFilter implements TypeFilter{
 
     public Boolean accepts(String resource) {
         try{
             resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
-            return clazz.isAnnotationPresent(annotation) ? Boolean.valueOf(include) : null;
+            return 
+                resource.matches("(.*\\.)*\\w+InterceptorController") || 
+                (clazz.isAnnotationPresent(Intercepts.class) 
+                && InterceptorController.class.isAssignableFrom(clazz))?
+                Boolean.TRUE :
+                null;
         }
         catch(Exception e){
             throw new BrutosException(e);
         }
+        
+    }
+
+    public void setConfiguration(Properties config) {
     }
     
 }

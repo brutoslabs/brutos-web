@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.scanner;
+package org.brandao.brutos.annotation.scanner.filter;
 
 import java.util.Properties;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.annotation.scanner.TypeFilter;
 import org.brandao.brutos.scanner.vfs.Vfs;
 
 /**

@@ -66,7 +66,7 @@ public class InterceptsStackAnnotationConfig extends AbstractAnnotationConfig{
                 componentRegistry.registerInterceptorStack(name, stack.isDefault());
         
         for(InterceptorStackItem i: interceptors){
-            Interceptor in = componentRegistry.getInterceptor(i.getType());
+            Interceptor in = componentRegistry.getRegisteredInterceptor(i.getType());
             newBuilder.addInterceptor(in.getName());
             Param[] params = i.getInfo().params();
             for(Param p: params){
