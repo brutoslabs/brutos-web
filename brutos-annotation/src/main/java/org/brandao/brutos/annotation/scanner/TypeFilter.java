@@ -17,15 +17,13 @@
 
 package org.brandao.brutos.annotation.scanner;
 
-import java.util.Properties;
-
 /**
  *
  * @author Afonso Brandao
  */
 public interface TypeFilter {
 
-    void setConfiguration(Properties config);
+    void setExpression(String value);
     
     Boolean accepts( String resource );
     
