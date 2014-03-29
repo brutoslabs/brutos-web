@@ -23,12 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import org.brandao.brutos.helper.controller.AbstractTester;
-import org.brandao.brutos.io.ClassPathResource;
-import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.GenericXMLWebApplicationContext;
 import org.brandao.brutos.web.WebScopeType;
+import org.brandao.brutos.web.XMLWebApplicationContext;
 
 /**
  *
@@ -37,11 +35,10 @@ import org.brandao.brutos.web.WebScopeType;
 public class WebApplicationInterceptorTest extends AbstractTester implements Test{
 
     public ConfigurableWebApplicationContext getApplicationContext(String resourceName) {
-        return new GenericXMLWebApplicationContext(
-                new Resource[]{
-                    new ClassPathResource( 
-                            getClass(),
-                            resourceName )});
+        ConfigurableWebApplicationContext context = new XMLWebApplicationContext();
+        context.setLocations(new String[]{resourceName});
+        context.flush();
+        return context;
     }
 
     public void testInterceptor1(){
