@@ -40,11 +40,10 @@ import org.brandao.brutos.web.XMLWebApplicationContext;
 public class WebApplicationContextTest extends AbstractTester implements Test{
 
     public ConfigurableWebApplicationContext getApplicationContext(String resourceName) {
-        return new XMLWebApplicationContext(
-                new Resource[]{
-                    new ClassPathResource( 
-                            getClass(),
-                            resourceName )});
+        ConfigurableWebApplicationContext context = new XMLWebApplicationContext();
+        context.setLocations(new String[]{resourceName});
+        context.flush();
+        return context;
     }
 
     public void testContext1(){

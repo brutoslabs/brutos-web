@@ -38,8 +38,8 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.GenericXMLWebApplicationContext;
 import org.brandao.brutos.web.WebScopeType;
+import org.brandao.brutos.web.XMLWebApplicationContext;
 
 /**
  *
@@ -51,12 +51,10 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
         super.actionType = ActionType.DETACHED;
     }
     public ConfigurableWebApplicationContext getApplicationContext(String resourceName) {
-        ConfigurableWebApplicationContext app = new GenericXMLWebApplicationContext(
-                new Resource[]{
-                    new ClassPathResource( 
-                            getClass(),
-                            resourceName )});
-        return app;
+        ConfigurableWebApplicationContext context = new XMLWebApplicationContext();
+        context.setLocations(new String[]{resourceName});
+        context.flush();
+        return context;
     }
  
 

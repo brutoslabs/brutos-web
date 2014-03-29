@@ -31,8 +31,8 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.test.MockViewProvider;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.GenericXMLWebApplicationContext;
 import org.brandao.brutos.web.WebScopeType;
+import org.brandao.brutos.web.XMLWebApplicationContext;
 
 /**
  *
@@ -41,11 +41,10 @@ import org.brandao.brutos.web.WebScopeType;
 public class WebApplicationControllerTest extends AbstractTester implements Test{
 
     public ConfigurableWebApplicationContext getApplicationContext(String resourceName) {
-        return new GenericXMLWebApplicationContext(
-                new Resource[]{
-                    new ClassPathResource( 
-                            getClass(),
-                            resourceName )});
+        ConfigurableWebApplicationContext context = new XMLWebApplicationContext();
+        context.setLocations(new String[]{resourceName});
+        context.flush();
+        return context;
     }
  
     public void testController33(){
@@ -67,7 +66,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                     Action form =
                             controller.getActionByName("action");
 
-                    form.load();
+                    //form.load();
                     Class type = form.getParameterType(0);
                     TestCase.assertEquals(List.class, type);
                 }
@@ -94,7 +93,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                     Action form =
                             controller.getActionByName("action");
 
-                    form.load();
+                    //form.load();
                     Class type = form.getParameterType(0);
                     TestCase.assertEquals(List.class, type);
                 }
