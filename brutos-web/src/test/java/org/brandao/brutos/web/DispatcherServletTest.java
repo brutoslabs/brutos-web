@@ -27,8 +27,6 @@ import junit.framework.TestCase;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.helper.controller.AbstractTester;
-import org.brandao.brutos.io.ClassPathResource;
-import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.test.MockInvoker;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
 
@@ -39,11 +37,10 @@ import org.brandao.brutos.web.http.StaticBrutosRequest;
 public class DispatcherServletTest extends AbstractTester implements Test{
 
     public ConfigurableWebApplicationContext getApplicationContext(String resourceName) {
-        return new GenericXMLWebApplicationContext(
-                new Resource[]{
-                    new ClassPathResource(
-                            getClass(),
-                            resourceName )});
+        ConfigurableWebApplicationContext context = new XMLWebApplicationContext();
+        context.setLocations(new String[]{resourceName});
+        context.flush();
+        return context;
     }
 
     public void testInitAndDestroy(){
