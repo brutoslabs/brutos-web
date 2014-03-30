@@ -86,13 +86,10 @@ public class ComponentConfigurer {
         AnnotationConfig rootAnnotationConfig = 
                 createAnnotationTree(compositeClassList);
         
-        List<Object> source = new ArrayList<Object>();
-        source.addAll(Arrays.asList(compositeClassList));
-        
         AnnotationConfig init = 
                 new StartConfiguration((ApplyAnnotationConfig)rootAnnotationConfig);
         
-        init.applyConfiguration(source, compositeClassList, componentRegistry);
+        init.applyConfiguration(compositeClassList, compositeClassList, componentRegistry);
     }
     
     protected AnnotationConfig createAnnotationTree(List<Class> list) {
