@@ -58,9 +58,6 @@ public class WebInvoker extends Invoker{
         ServletResponse oldResponse       = null;
         StaticBrutosRequest staticRequest = null;
         
-        ConfigurableWebApplicationContext context = 
-                (ConfigurableWebApplicationContext)this.applicationContext;
-        
         try{
             staticRequest = new StaticBrutosRequest(request);
             if(isFirstCall){
@@ -75,29 +72,11 @@ public class WebInvoker extends Invoker{
                 requestInfo.setResponse(response);
                 requestInfo.setRequest(staticRequest);
             }
-            /*
-            if(isFirstCall){
-                staticRequest = new StaticBrutosRequest(request);
-                requestInfo   = new RequestInfo();
-                requestInfo.setRequest(staticRequest);
-                requestInfo.setResponse(response);
-                RequestInfo.setCurrent(requestInfo);
-            }
-            else{
-                staticRequest = (StaticBrutosRequest) requestInfo.getRequest();
-                oldRequest  = staticRequest.getRequest();
-                oldResponse = requestInfo.getResponse();
-                requestInfo.setResponse(response);
-                staticRequest.setRequest(request);
-            }
-            */
             this.invoke0(staticRequest, request, response, chain);
         }
         finally{
             if(isFirstCall){
                 RequestInfo.removeCurrent();
-                context.getRequestFactory().destroyRequest();
-                context.getResponseFactory().destroyResponse();
             }
             else{
                 requestInfo.setResponse(oldResponse);

@@ -126,9 +126,6 @@ public abstract class AbstractTester extends TestCase{
                 if(requestInfo != null)
                     requestInfo.removeCurrent();
 
-                context.getRequestFactory().destroyRequest();
-                context.getResponseFactory().destroyResponse();
-                
                 listener.requestDestroyed(sre);
                 listener.sessionDestroyed(hse);
             }
