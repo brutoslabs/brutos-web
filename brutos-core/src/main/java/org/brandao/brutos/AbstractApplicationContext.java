@@ -389,7 +389,7 @@ public abstract class AbstractApplicationContext
      * @return Resposta.
      */
     public MvcResponse getMvcResponse() {
-        return this.responseFactory.getCurrentResponse();
+        return ResponseProvider.getResponse();
     }
 
     /**
@@ -397,7 +397,7 @@ public abstract class AbstractApplicationContext
      * @return Requisi��o.
      */
     public MvcRequest getMvcRequest() {
-        return this.requestFactory.getCurrentRequest();
+        return RequestProvider.getRequest();
     }
 
     public Scopes getScopes() {

@@ -844,8 +844,9 @@ public class ControllerBuilder {
                 .getLogger(ControllerBuilder.class);
     }
     
-    public void setActionType(ActionType actionType){
+    public ControllerBuilder setActionType(ActionType actionType){
         this.controller.setActionType(actionType);
+        return this;
     }
     
     public ActionType getActionType(){

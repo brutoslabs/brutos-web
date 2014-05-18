@@ -50,6 +50,9 @@ public class Invoker {
     protected ActionResolver actionResolver;
     protected ConfigurableApplicationContext applicationContext;
     protected ViewProvider viewProvider;
+    protected RequestProvider requestProvider;
+    protected ResponseProvider responseProvider;
+    
     public Invoker() {
     }
 
@@ -63,6 +66,8 @@ public class Invoker {
         this.actionResolver     = actionResolver;
         this.applicationContext = applicationContext;
         this.viewProvider       = viewProvider;
+        this.requestProvider    = new RequestProvider();
+        this.responseProvider   = new ResponseProvider();
     }
 
     /**
@@ -198,9 +203,12 @@ public class Invoker {
         boolean isFirstCall        = false;
         RequestInstrument requestInstrument;
         ConfigurableInterceptorHandler configurableInterceptorHandler;
-
+        MvcRequest oldRequest      = null;
+        MvcResponse oldresponse    = null;
         
         try{
+            oldRequest         = this.requestProvider.start();
+            oldresponse        = this.responseProvider.start();
             time               = System.currentTimeMillis();
             createdThreadScope = ThreadScope.create();
             requestInstrument  = getRequestInstrument();
@@ -220,7 +228,9 @@ public class Invoker {
             return true;
         }
         finally{
-
+            this.requestProvider.destroy(oldRequest);
+            this.responseProvider.destroy(oldresponse);
+            
             if(createdThreadScope)
                 ThreadScope.destroy();
             
@@ -276,4 +286,10 @@ public class Invoker {
         return context.getInvoker();
     }
     
+    public void flush(){
+        this.requestProvider
+                .setFactory(this.applicationContext.getRequestFactory());
+        this.responseProvider
+                .setFactory(this.applicationContext.getResponseFactory());
+    }
 }

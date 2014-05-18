@@ -19,41 +19,12 @@
 package org.brandao.brutos;
 
 /**
- * F�brica de respostas.
- *
+ * Auxilia o provedor de respostas da aplicação.
+ * 
  * @author Afonso Brandao
  */
-public abstract class MvcResponseFactory {
+public interface MvcResponseFactory {
 
-    private static ThreadLocal responses = new ThreadLocal();
-
-    /**
-     * Obt�m a atual resposta.
-     * @return Resposta.
-     */
-    public MvcResponse getCurrentResponse(){
-
-        MvcResponse request = (MvcResponse) responses.get();
-        
-        if( request == null ){
-            request = getNewResponse();
-            responses.set(request);
-        }
-
-        return request;
-    }
-
-    /**
-     * Destr�i a resposta.
-     */
-    public void destroyResponse(){
-        responses.remove();
-    }
-
-    /**
-     * Obt�m uma nova resposta.
-     * @return Nova resposta.
-     */
-    protected abstract MvcResponse getNewResponse();
+    MvcResponse getResponse();
 
 }
