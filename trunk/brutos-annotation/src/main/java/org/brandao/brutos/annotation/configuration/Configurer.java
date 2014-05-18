@@ -33,22 +33,39 @@ import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
 /**
- *
+ * Provê as definições dos componentes e configuração de uma aplicação.
+ * 
  * @author Brandao
  */
 public interface Configurer {
     
+    /**
+     * Registra os interceptores da aplicação.
+     * @param interceptorManager Gestor dos interceptores.
+     */
     void addInterceptors(InterceptorManager interceptorManager);
     
+    /**
+     * Registra os controladores da aplicação.
+     * @param controllerManager Gestor dos controladores.
+     */
     void addControllers(ControllerManager controllerManager);
     
+    /**
+     * Registra os escopos da aplicação.
+     * @param scopes Gestor dos escopos.
+     */
     void addScopes(Scopes scopes);
             
+    /**
+     * Registra os tipos de dados da aplicação.
+     * @param typeManager Gestor de tipos.
+     */
     void addTypes(TypeManager typeManager);
     
     IOCProvider getIOCProvider();
     
-    InterceptorManager getInterceptorMaanger();
+    InterceptorManager getInterceptorManager();
     
     ControllerManager getControllerManager();
     

@@ -20,7 +20,7 @@ package org.brandao.brutos.annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
+import org.brandao.brutos.annotation.scanner.Scanner;
 /**
  *
  * @author Brandao
@@ -31,14 +31,12 @@ public @interface ComponentScan {
     
     String[] basePackage();
     
-    Class[] basePackageClass();
-    
     TypeFilter[] includeFilters();
     
     TypeFilter[] excludeFilters();
     
     boolean useDefaultFilters() default true;
     
-    Class scanner() default void.class;
+    Class<? extends Scanner> scanner() default Scanner.class;
     
 }
