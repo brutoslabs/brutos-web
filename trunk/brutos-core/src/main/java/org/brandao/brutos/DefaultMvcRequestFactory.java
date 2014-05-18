@@ -22,9 +22,9 @@ package org.brandao.brutos;
  *
  * @author Brandao
  */
-public class DefaultMvcRequestFactory extends MvcRequestFactory{
+public class DefaultMvcRequestFactory implements MvcRequestFactory{
 
-    protected MvcRequest getNewRequest() {
+    public MvcRequest getRequest() {
         return new DefaultMvcRequest();
     }
 

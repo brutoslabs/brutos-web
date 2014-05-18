@@ -24,9 +24,9 @@ import org.brandao.brutos.MvcResponseFactory;
  *
  * @author Brandao
  */
-public class MockMvcResponseFactory extends MvcResponseFactory{
+public class MockMvcResponseFactory implements MvcResponseFactory{
 
-    protected MvcResponse getNewResponse() {
+    public MvcResponse getResponse() {
         return new MockMvcResponse();
     }
 

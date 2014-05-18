@@ -22,9 +22,9 @@ package org.brandao.brutos;
  *
  * @author Brandao
  */
-public class DefaultMvcResponseFactory extends MvcResponseFactory{
+public class DefaultMvcResponseFactory implements MvcResponseFactory{
 
-    protected MvcResponse getNewResponse() {
+    public MvcResponse getResponse() {
         return new DefaultMvcResponse();
     }
 

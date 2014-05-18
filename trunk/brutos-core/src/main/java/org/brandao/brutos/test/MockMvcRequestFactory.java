@@ -24,9 +24,9 @@ import org.brandao.brutos.MvcRequestFactory;
  *
  * @author Brandao
  */
-public class MockMvcRequestFactory extends MvcRequestFactory{
+public class MockMvcRequestFactory implements MvcRequestFactory{
 
-    protected MvcRequest getNewRequest() {
+    public MvcRequest getRequest() {
         return new MockMvcRequest();
     }
 

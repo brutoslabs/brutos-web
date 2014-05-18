@@ -19,41 +19,12 @@
 package org.brandao.brutos;
 
 /**
- * F�bria de requisi��es.
+ * Auxilia o provedor de requisições da aplicação.
  * 
  * @author Afonso Brandao
  */
-public abstract class MvcRequestFactory {
+public interface MvcRequestFactory {
 
-    private static ThreadLocal requests = new ThreadLocal();
-
-    /**
-     * Obt�m a atual requisi��o.
-     * @return Requisi��o.
-     */
-    public MvcRequest getCurrentRequest(){
-
-        MvcRequest request = (MvcRequest) requests.get();
-        
-        if( request == null ){
-            request = getNewRequest();
-            requests.set(request);
-        }
-
-        return request;
-    }
-
-    /**
-     * Destr�i a requisi��o.
-     */
-    public void destroyRequest(){
-        requests.remove();
-    }
-
-    /**
-     * Cria uma nova requisi��o.
-     * @return Nova requisi��o.
-     */
-    protected abstract MvcRequest getNewRequest();
+    MvcRequest getRequest();
 
 }
