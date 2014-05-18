@@ -37,7 +37,7 @@ import org.w3c.dom.NodeList;
 
 /**
  *
- * @author Cliente
+ * @author Brandão
  */
 public class AnnotationDefinitionReader 
     extends XMLComponentDefinitionReader {
