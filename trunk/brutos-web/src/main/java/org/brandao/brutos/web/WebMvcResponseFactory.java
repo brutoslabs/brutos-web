@@ -24,9 +24,9 @@ import org.brandao.brutos.MvcResponseFactory;
  *
  * @author Afonso Brandao
  */
-public class WebMvcResponseFactory extends MvcResponseFactory{
+public class WebMvcResponseFactory implements MvcResponseFactory{
 
-    protected MvcResponse getNewResponse() {
+    public MvcResponse getResponse() {
         RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
         return new WebMvcResponseImp( requestInfo.getResponse() );
     }
