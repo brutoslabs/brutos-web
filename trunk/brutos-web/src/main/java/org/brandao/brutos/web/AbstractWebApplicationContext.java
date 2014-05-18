@@ -25,7 +25,6 @@ import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.web.io.ServletContextResource;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
-import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.view.JSPViewProvider;
@@ -322,6 +321,8 @@ public abstract class AbstractWebApplicationContext
         this.initInstances();
         
         this.initScopes();
+        
+        this.invoker.flush();
         
         this.loadDefinitions(new ComponentRegistryAdapter(this));
 
