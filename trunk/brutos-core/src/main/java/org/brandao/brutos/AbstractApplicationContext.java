@@ -546,6 +546,8 @@ public abstract class AbstractApplicationContext
         
         this.initScopes();
         
+        this.invoker.flush();
+        
         this.loadDefinitions(new ComponentRegistryAdapter(this));
         
         this.initComponents();
