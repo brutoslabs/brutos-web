@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Analisa uma requisição Http.
+ * Analisador de solicitações HTTP.
  *
  * @author Brandao
  */
