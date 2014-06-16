@@ -87,6 +87,7 @@ public class InterceptorStackConverter implements Converter{
         InterceptorStackEntry entry = new InterceptorStackEntry();
         entry.setName(name);
         entry.setInterceptors(list);
+        entry.setDefault(root.get(0).getInfo().isdefault());
         
         for(InterceptorStackItem item: root){
             checkCircularReference(item);
