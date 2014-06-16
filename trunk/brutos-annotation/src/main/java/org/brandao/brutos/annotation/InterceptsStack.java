@@ -23,7 +23,8 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.interceptor.InterceptorController;
 
 /**
- * Usada para definir uma pilha de interceptadores.
+ * Indica que um interceptor em particular pertence a uma 
+ * determinada pilha de interceptores.
  * 
  * <pre>
  * Ex:
@@ -83,4 +84,9 @@ public @interface InterceptsStack {
      */
     Param[] params() default {};
 
+    /**
+     * indica que o inteceptador é global ou não.
+     */
+    boolean isdefault() default false;
+    
 }
