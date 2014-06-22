@@ -116,6 +116,6 @@ public @interface ThrowSafe {
      * Se verdadeiro a vista informada é real, caso contrário ela 
      * será resolvida.
      */
-    boolean resolved() default false;
+    boolean resolved() default true;
     
 }
