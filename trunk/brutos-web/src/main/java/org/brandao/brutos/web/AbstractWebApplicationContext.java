@@ -288,6 +288,13 @@ public abstract class AbstractWebApplicationContext
             name, classType, actionId, actionType );
     }
     
+    public ControllerBuilder registerController(String id, String view, 
+            DispatcherType dispatcherType, boolean resolvedView, String name, 
+            Class classType, String actionId, ActionType actionType) {
+        return this.controllerManager.addController(id, view, dispatcherType, 
+                resolvedView, name, classType, actionId, actionType);
+    }
+    
     public Controller getRegisteredController(Class clazz){
         return super.controllerManager.getController(clazz);
     }
