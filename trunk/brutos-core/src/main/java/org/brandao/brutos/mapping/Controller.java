@@ -76,6 +76,8 @@ public class Controller {
 
     private ActionType actionType;
     
+    private boolean resolvedView;
+    
     private ApplicationContext context;
     /**
      * Cria um novo controlador.
@@ -454,6 +456,14 @@ public class Controller {
 
     public void setContext(ApplicationContext context) {
         this.context = context;
+    }
+
+    public boolean isResolvedView() {
+        return resolvedView;
+    }
+
+    public void setResolvedView(boolean resolvedView) {
+        this.resolvedView = resolvedView;
     }
 
 }

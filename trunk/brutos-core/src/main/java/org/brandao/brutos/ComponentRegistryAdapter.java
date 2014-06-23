@@ -47,6 +47,13 @@ public class ComponentRegistryAdapter implements ComponentRegistry{
         return this.configurableApplicationContext.getControllerManager().addController(id, view, dispatcherType, name, classType, actionId, actionType);
     }
 
+    public ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,
+            boolean resolvedView, String name, Class classType, String actionId, ActionType actionType ){
+        return this.configurableApplicationContext.getControllerManager()
+                .addController( id, view, dispatcherType,
+                    resolvedView, name, classType, actionId, actionType );
+    }
+    
     public Controller getRegisteredController(Class clazz) {
         return this.configurableApplicationContext.getControllerManager().getController(clazz);
     }

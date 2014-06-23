@@ -433,7 +433,36 @@ public class ActionBuilder {
      * @return Contrutor da ação.
      */
     public ActionBuilder addThrowable( Class target, String view, String id, DispatcherType dispatcher ){
+        return this.addThrowable(target, view, id, dispatcher, false);
+    }
+    
+    /**
+     * Intercepta e atribui uma identificaçaoo a uma determinada exceção. O
+     * objeto resultante da exceção pode ser usando na visão.
+     *
+     * @param target Exceção alvo.
+     * @param view Visão. Se omitido, será usada a visão da ação.
+     * @param id Identificação.
+     * @param dispatcher Modo como será direcionado o fluxo para a visão.
+     * @param resolvedView Define se a vista informada é real ou não. 
+     * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
+     * @return Contrutor da ação.
+     */
+    public ActionBuilder addThrowable( Class target, String view, 
+            String id, DispatcherType dispatcher, boolean resolvedView ){
         view = StringUtil.adjust(view);
+        
+        view = 
+            resolvedView? 
+                view : 
+                applicationContext.
+                        getViewResolver()
+                        .getView(
+                                this.controllerBuilder, 
+                                this, 
+                                target, 
+                                view);
+        
         id = StringUtil.adjust(id);
 
         if( target == null )

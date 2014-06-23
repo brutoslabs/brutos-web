@@ -40,6 +40,9 @@ public interface ControllerRegistry {
     ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,
             String name, Class classType, String actionId, ActionType actionType );
     
+    ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,
+            boolean resolvedView, String name, Class classType, String actionId, ActionType actionType );
+    
     Controller getRegisteredController(Class clazz);
     
     Controller getRegisteredController(String name);
