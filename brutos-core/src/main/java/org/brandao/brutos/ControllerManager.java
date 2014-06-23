@@ -98,6 +98,23 @@ public interface ControllerManager {
      */
     ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
             String name, Class classType, String actionId, ActionType actionType );
+
+    /**
+     * Cria um novo controlador.
+     * 
+     * @param id Identificação do controlador.
+     * @param view Visão do controlador.
+     * @param dispatcherType Tipo do direcionamento do fluxo para a visão.
+     * @param name Identificação do controlador dentro do contexto do contêiner IoC.
+     * @param classType Classe do controlador.
+     * @param actionId Parâmetro que identifica a ação.
+     * @param resolvedView Define se a vista informada é real ou não. 
+     * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
+     * @param actionType Estratégia de mapeamento de ação.
+     * @return Construtor do controlador.
+     */
+    ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
+            boolean resolvedView, String name, Class classType, String actionId, ActionType actionType );
     
     /**
      * Verifica a existência de um controlador com uma determinada identificação.

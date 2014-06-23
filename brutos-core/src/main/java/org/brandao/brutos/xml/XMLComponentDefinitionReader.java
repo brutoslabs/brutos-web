@@ -325,6 +325,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         //    ScopeType.valueOf( controller.parseUtil.getAttribute(c,  "scope" ) );
         String actionId = parseUtil.getAttribute(controller,"action-id" );
         String defaultAction = parseUtil.getAttribute(controller,"default-action" );
+        boolean viewresolved = Boolean.valueOf(parseUtil.getAttribute(controller,"view-resolved" )).booleanValue();
 
         Class clazz = null;
         try{
@@ -338,6 +339,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
                 id,
                 view,
                 dispatcher,
+                viewresolved,
                 name,
                 clazz,
                 actionId,
@@ -1058,11 +1060,12 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         String view = parseUtil.getAttribute(actionNode,  "view" );
         DispatcherType dispatcher =
             DispatcherType.valueOf( parseUtil.getAttribute(actionNode,  "dispatcher" ) );
+        boolean resolved = Boolean.valueOf(parseUtil.getAttribute(actionNode, "view-resolved")).booleanValue();
 
         ActionBuilder actionBuilder =
             controllerBuilder.addAction(id, result, 
                 Boolean.parseBoolean(resultRendered), 
-                view, dispatcher, executor);
+                view, dispatcher, resolved, executor);
 
         addParametersAction(
             parseUtil.getElements(
@@ -1192,9 +1195,10 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
     private void addThrowSafe( Element throwSafeNode,
             ControllerBuilder controllerBuilder ){
 
-        String view = parseUtil.getAttribute(throwSafeNode, "view");
-        String target = parseUtil.getAttribute(throwSafeNode, "target");
-        String name = parseUtil.getAttribute(throwSafeNode, "name");
+        String view      = parseUtil.getAttribute(throwSafeNode, "view");
+        boolean resolved = Boolean.valueOf(parseUtil.getAttribute(throwSafeNode, "view-resolved")).booleanValue();
+        String target    = parseUtil.getAttribute(throwSafeNode, "target");
+        String name      = parseUtil.getAttribute(throwSafeNode, "name");
         DispatcherType dispatcher =
             DispatcherType.valueOf(parseUtil.getAttribute(throwSafeNode, "dispatcher"));
         Class targetClass;
@@ -1212,7 +1216,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             throw new BrutosException( ex );
         }
 
-        controllerBuilder.addThrowable(targetClass, view, name, dispatcher);
+        controllerBuilder.addThrowable(targetClass, view, name, dispatcher, resolved);
     }
 
     private void addThrowSafe( NodeList throwSafeNodeList,
@@ -1228,6 +1232,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             ActionBuilder actionBuilder ){
 
         String view = parseUtil.getAttribute(throwSafeNode, "view");
+        boolean viewresolved = Boolean.valueOf(parseUtil.getAttribute(throwSafeNode,"view-resolved" )).booleanValue();
         String target = parseUtil.getAttribute(throwSafeNode, "target");
         String name = parseUtil.getAttribute(throwSafeNode, "name");
         DispatcherType dispatcher =
@@ -1247,7 +1252,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             throw new BrutosException( ex );
         }
 
-        actionBuilder.addThrowable(targetClass, view, name, dispatcher);
+        actionBuilder.addThrowable(targetClass, view, name, dispatcher, viewresolved);
     }
 
     private void addValidator( Element validatorNode,

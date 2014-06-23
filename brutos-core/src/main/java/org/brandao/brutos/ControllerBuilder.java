@@ -238,9 +238,36 @@ public class ControllerBuilder {
      * @param dispatcher Modo como ser� direcionado o fluxo para a vis�o.
      * @return Contrutor do controlador.
      */
-    public ControllerBuilder addThrowable( Class target, String view, String id, DispatcherType dispatcher ){
+    public ControllerBuilder addThrowable( Class target, String view, String id, DispatcherType dispatcher){
+        return this.addThrowable( target, view, id, dispatcher, false );
+    }
+    
+    /**
+     * Intercepta e atribui uma identifica��o a uma determinada exce��o. O
+     * objeto resultante da exce��o pode ser usando na vis�o.
+     *
+     * @param target Exce��o alvo.
+     * @param view Vis�o. Se omitido, ser� usado a vis�o do controlador.
+     * @param id Identifica��o.
+     * @param dispatcher Modo como ser� direcionado o fluxo para a vis�o.
+     * @param resolvedView Define se a vista informada é real ou não. 
+     * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
+     * @return Contrutor do controlador.
+     */
+    public ControllerBuilder addThrowable( Class target, String view, String id, DispatcherType dispatcher, boolean resolvedView ){
 
         view = StringUtil.adjust(view);
+        
+        view = 
+            resolvedView? 
+                view : 
+                applicationContext.
+                        getViewResolver()
+                        .getView(
+                                this, 
+                                null, 
+                                target, 
+                                view);
         
         id = StringUtil.adjust(id);
 
@@ -410,6 +437,11 @@ public class ControllerBuilder {
 
     public ActionBuilder addAction( String id, String resultId, boolean resultRendered, String view, 
             DispatcherType dispatcher, String executor ){
+        return this.addAction(id, resultId, resultRendered, view, dispatcher, false, executor);
+    }
+    
+    public ActionBuilder addAction( String id, String resultId, boolean resultRendered, String view, 
+            DispatcherType dispatcher, boolean resolvedView, String executor ){
         
         id = StringUtil.adjust(id);
         
@@ -435,6 +467,8 @@ public class ControllerBuilder {
      
         Action action = new Action();
         action.setController( controller );
+        action.setResolvedView(resolvedView);
+        
         controller.addAction( id, action );
 
         ActionBuilder actionBuilder = 
@@ -444,11 +478,22 @@ public class ControllerBuilder {
         actionBuilder
                 .setName( id )
                 .setDispatcherType(dispatcher)
-                .setView(view)
-                .setDispatcherType(dispatcher)
                 .setExecutor(executor)
                 .setResult(resultId)
                 .setResultRendered(resultRendered);
+
+        view = 
+            resolvedView? 
+                view : 
+                applicationContext.
+                        getViewResolver()
+                        .getView(
+                                this, 
+                                actionBuilder, 
+                                null, 
+                                view);
+        
+        actionBuilder.setView(view);
         
         printCreateAction(action);
         
@@ -858,6 +903,10 @@ public class ControllerBuilder {
         return property == null? null : new PropertyBuilder( property );
     }
 
+    public boolean isResolvedView(){
+        return this.controller.isResolvedView();
+    }
+    
     private void printCreateAction(Action action){
         
         ActionType type = controller.getActionType();

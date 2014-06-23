@@ -59,6 +59,8 @@ public class Action {
     
     private String view;
     
+    private boolean resolvedView;
+    
     private Type returnType;
 
     private Class returnClass;
@@ -361,6 +363,20 @@ public class Action {
 
     public void setReturnRendered(boolean returnRendered) {
         this.returnRendered = returnRendered;
+    }
+
+    /**
+     * @return the resolvedView
+     */
+    public boolean isResolvedView() {
+        return resolvedView;
+    }
+
+    /**
+     * @param resolvedView the resolvedView to set
+     */
+    public void setResolvedView(boolean resolvedView) {
+        this.resolvedView = resolvedView;
     }
 
 }

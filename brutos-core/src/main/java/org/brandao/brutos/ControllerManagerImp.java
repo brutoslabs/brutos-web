@@ -111,22 +111,14 @@ public class ControllerManagerImp implements ControllerManager{
             return addController( id, view, dispatcherType, name, classType, actionId, 
                     ActionType.PARAMETER);
     }
-    
-    /**
-     * Cria um novo controlador atribuindo uma identificação, uma visão com o tipo
-     * de direcionamento de fluxo, com o nome do parâmetro que identifica a ação
-     * e seu tipo de mapeamento.
-     * @param id Identificação do controlador.
-     * @param view Visão do controlador.
-     * @param dispatcherType
-     * @param name
-     * @param classType
-     * @param actionId
-     * @param actionType
-     * @return 
-     */
+
     public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
             String name, Class classType, String actionId, ActionType actionType ){
+        return this.addController(id, view, dispatcherType, false, name, classType, actionId, actionType);
+    }
+    
+    public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
+            boolean resolvedView, String name, Class classType, String actionId, ActionType actionType ){
 
         id       = StringUtil.adjust(id);
         view     = StringUtil.adjust(view);
@@ -179,6 +171,20 @@ public class ControllerManagerImp implements ControllerManager{
         
         this.current = new ControllerBuilder( controller, this, 
                 interceptorManager, validatorProvider, applicationContext, internalUpdate );
+        
+        view = 
+            resolvedView? 
+                view : 
+                applicationContext.
+                        getViewResolver()
+                        .getView(
+                                this.current, 
+                                null, 
+                                null, 
+                                view);
+        
+        controller.setView(view);
+        controller.setResolvedView(resolvedView);
         
         return this.getCurrent();
     }
