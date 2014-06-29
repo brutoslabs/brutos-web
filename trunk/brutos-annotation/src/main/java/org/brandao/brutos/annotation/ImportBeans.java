@@ -22,7 +22,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Define os "beans" do controlador.
+ * Associa determinados beans a um controlador.
  * 
  * @author Brandao
  */

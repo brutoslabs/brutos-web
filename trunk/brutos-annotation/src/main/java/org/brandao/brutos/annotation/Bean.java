@@ -24,9 +24,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define um "bean".
+ * Indica que uma classe em particular poderá ter os dados de uma 
+ * solicitação disponibilizados em suas propriedades. Se o bean 
+ * não estiver associado ao controlador, ele deve ser importado 
+ * usando a anotação {@link org.brandao.brutos.annotation.ImportBeans}
  * 
- * @author Afosno Brandao
+ * @author Brandao
  */
 @Target({ElementType.TYPE,ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
