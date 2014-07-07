@@ -48,11 +48,11 @@ public @interface KeyCollection {
      * Identificação do "bean" que será injetado.
      * Caso seja omitido, será usado o termo "key".
      */
-    String bean() default "";
+    String bean() default "key";
     
     /**
      * Escopo do valor a ser injetado. Os valores estão 
-     * descritos em <a href="ScopeType.html">ScopeType</a>
+     * descritos em {@link ScopeType}
      * 
      */
     String scope() default "param";
@@ -68,16 +68,14 @@ public @interface KeyCollection {
     Class<?> target() default void.class;
     
     /**
-     * Usado em tipos Enum. Os valores estão 
-     * descritos em <a href="EnumerationType.html">EnumerationType</a>
+     * Usado em tipos enum. Os valores estão 
+     * descritos em {@link EnumerationType}.
      */
     EnumerationType enumerated() default EnumerationType.ORDINAL;
     
     /**
-     * Usado em tipos <a href="http://java.sun.com/j2se/1.5/docs/api/java/util/Date.html">Date</a></code>
-     * e <a href="http://java.sun.com/j2se/1.5/docs/api/java/util/Calendar.html">Calendar</a>.
-     * Deve seguir o padrão definido em  
-     * <a href="http://java.sun.com/j2se/1.5/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</a>.
+     * Usado em tipos {@link java.util.Date} e {@link java.util.Calendar}.
+     * Deve seguir o padrão definido em {@link java.text.SimpleDateFormat}.
      */
     String temporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
     
