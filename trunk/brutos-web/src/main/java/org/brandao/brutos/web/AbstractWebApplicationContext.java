@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.web;
 
-import java.util.List;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.*;
@@ -29,7 +28,6 @@ import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.view.JSPViewProvider;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
-import org.brandao.brutos.web.ioc.SpringIOCProvider;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.ParamScope;
@@ -168,13 +166,6 @@ public abstract class AbstractWebApplicationContext
                               WebActionResolver.class.getName() );
 
         config.put( "org.brandao.brutos.controller.action_resolver",
-                    tmp );
-
-        tmp = config
-                .getProperty( "org.brandao.brutos.ioc.provider",
-                              SpringIOCProvider.class.getName() );
-
-        config.put( "org.brandao.brutos.ioc.provider",
                     tmp );
 
         tmp = config
