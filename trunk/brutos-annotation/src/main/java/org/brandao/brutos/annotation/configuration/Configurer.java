@@ -17,20 +17,12 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.ActionResolver;
 import org.brandao.brutos.ControllerManager;
-import org.brandao.brutos.ControllerResolver;
+import org.brandao.brutos.ControllerRegistry;
 import org.brandao.brutos.InterceptorManager;
-import org.brandao.brutos.MvcRequestFactory;
-import org.brandao.brutos.MvcResponseFactory;
+import org.brandao.brutos.InterceptorRegistry;
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.ViewResolver;
-import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
-import org.brandao.brutos.ioc.IOCProvider;
-import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.type.TypeManager;
-import org.brandao.brutos.validator.ValidatorProvider;
-import org.brandao.brutos.view.ViewProvider;
 
 /**
  * Provê as definições dos componentes e configuração de uma aplicação.
@@ -39,52 +31,12 @@ import org.brandao.brutos.view.ViewProvider;
  */
 public interface Configurer {
     
-    /**
-     * Registra os interceptores da aplicação.
-     * @param interceptorManager Gestor dos interceptores.
-     */
-    void addInterceptors(InterceptorManager interceptorManager);
+    void addInterceptors(InterceptorRegistry interceptorRegistry);
     
-    /**
-     * Registra os controladores da aplicação.
-     * @param controllerManager Gestor dos controladores.
-     */
-    void addControllers(ControllerManager controllerManager);
+    void addControllers(ControllerRegistry controllerRegistry);
     
-    /**
-     * Registra os escopos da aplicação.
-     * @param scopes Gestor dos escopos.
-     */
     void addScopes(Scopes scopes);
             
-    /**
-     * Registra os tipos de dados da aplicação.
-     * @param typeManager Gestor de tipos.
-     */
     void addTypes(TypeManager typeManager);
-    
-    IOCProvider getIOCProvider();
-    
-    InterceptorManager getInterceptorManager();
-    
-    ControllerManager getControllerManager();
-    
-    ViewProvider getViewProvider();
-    
-    ValidatorProvider getValidatorProvider();
-    
-    LoggerProvider getLoggerProvider();
-    
-    ControllerResolver getControllerResolver();
-    
-    ActionResolver getActionResolver();
-    
-    MvcResponseFactory getMvcResponseFactory();
-    
-    MvcRequestFactory getMvcRequestFactory();
-    
-    ViewResolver getViewResolver();
-    
-    CodeGeneratorProvider getCodeGeneratorProvider();
     
 }
