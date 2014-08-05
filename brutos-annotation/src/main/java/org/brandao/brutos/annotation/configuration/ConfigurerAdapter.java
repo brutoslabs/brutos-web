@@ -17,20 +17,10 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.ActionResolver;
-import org.brandao.brutos.ControllerManager;
-import org.brandao.brutos.ControllerResolver;
-import org.brandao.brutos.InterceptorManager;
-import org.brandao.brutos.MvcRequestFactory;
-import org.brandao.brutos.MvcResponseFactory;
+import org.brandao.brutos.ControllerRegistry;
+import org.brandao.brutos.InterceptorRegistry;
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.ViewResolver;
-import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
-import org.brandao.brutos.ioc.IOCProvider;
-import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.type.TypeManager;
-import org.brandao.brutos.validator.ValidatorProvider;
-import org.brandao.brutos.view.ViewProvider;
 
 /**
  *
@@ -38,64 +28,16 @@ import org.brandao.brutos.view.ViewProvider;
  */
 public abstract class ConfigurerAdapter implements Configurer{
 
-    public void addInterceptors(InterceptorManager interceptorManager) {
+    public void addInterceptors(InterceptorRegistry interceptorRegistry){
     }
-
-    public void addControllers(ControllerManager controllerManager) {
+    
+    public void addControllers(ControllerRegistry controllerRegistry){
     }
-
-    public void addScopes(Scopes scopes) {
+    
+    public void addScopes(Scopes scopes){
     }
-
-    public void addTypes(TypeManager typeManager) {
-    }
-
-    public IOCProvider getIOCProvider() {
-        return null;
-    }
-
-    public InterceptorManager getInterceptorMaanger() {
-        return null;
-    }
-
-    public ControllerManager getControllerManager() {
-        return null;
-    }
-
-    public ViewProvider getViewProvider() {
-        return null;
-    }
-
-    public ValidatorProvider getValidatorProvider() {
-        return null;
-    }
-
-    public LoggerProvider getLoggerProvider() {
-        return null;
-    }
-
-    public ControllerResolver getControllerResolver() {
-        return null;
-    }
-
-    public ActionResolver getActionResolver() {
-        return null;
-    }
-
-    public MvcResponseFactory getMvcResponseFactory() {
-        return null;
-    }
-
-    public MvcRequestFactory getMvcRequestFactory() {
-        return null;
-    }
-
-    public ViewResolver getViewResolver() {
-        return null;
-    }
-
-    public CodeGeneratorProvider getCodeGeneratorProvider() {
-        return null;
+            
+    public void addTypes(TypeManager typeManager){
     }
     
 }
