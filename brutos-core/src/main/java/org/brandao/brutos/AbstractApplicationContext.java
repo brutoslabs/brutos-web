@@ -28,6 +28,7 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.proxy.ProxyFactory;
 import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
+import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
@@ -65,7 +66,7 @@ public abstract class AbstractApplicationContext
     
     protected MvcRequestFactory requestFactory;
     
-    private Scopes scopes;
+    protected Scopes scopes;
     
     private ViewResolver viewResolver;
     
@@ -73,6 +74,8 @@ public abstract class AbstractApplicationContext
     
     private ApplicationContext parent;
 
+    protected TypeManager typeManager;
+    
     public AbstractApplicationContext() {
         this(null);
     }
@@ -87,6 +90,7 @@ public abstract class AbstractApplicationContext
             this.configuration = new Configuration(parent.getConfiguration());
             
         this.scopes = new Scopes();
+        this.typeManager = new TypeManager();
     }
 
     protected void initInstances(){
@@ -538,6 +542,10 @@ public abstract class AbstractApplicationContext
         return this.getIocProvider().getBean(name);
     }
 
+    public TypeManager getTypeManager(){
+        return this.typeManager;
+    }
+    
     public void flush(){
         
         this.initLogger();

@@ -1,6 +1,6 @@
 /*
  * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.brandao.brutos;
 
-import org.brandao.brutos.io.ResourceLoader;
+import org.brandao.brutos.scope.Scope;
 
 /**
  *
- * @author Brando
+ * @author Brandao
  */
-public interface ComponentRegistry 
-    extends ControllerRegistry, 
-        InterceptorRegistry, ScopeRegistry, TypeRegistry, ResourceLoader{
+public interface ScopeRegistry {
+    
+    void registerScope(String name, Scope scope);
+    
+    Scope getRegistredScope(String name);
+    
+    Scope getRegistredScope(ScopeType scopeType);
     
 }

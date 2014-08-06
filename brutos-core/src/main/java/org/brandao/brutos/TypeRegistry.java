@@ -1,6 +1,6 @@
 /*
  * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,21 @@
  * limitations under the License.
  */
 
+
 package org.brandao.brutos;
 
-import org.brandao.brutos.io.ResourceLoader;
+import org.brandao.brutos.type.TypeFactory;
 
 /**
  *
- * @author Brando
+ * @author Brandão
  */
-public interface ComponentRegistry 
-    extends ControllerRegistry, 
-        InterceptorRegistry, ScopeRegistry, TypeRegistry, ResourceLoader{
+public interface TypeRegistry {
+    
+    void registerType(TypeFactory factory);
+    
+    void registerType(Class classType, Class type);
+    
+    TypeFactory getRegistredType(Class classType);
     
 }
