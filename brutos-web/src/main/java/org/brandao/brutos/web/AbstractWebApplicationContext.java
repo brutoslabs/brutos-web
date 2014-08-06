@@ -26,6 +26,9 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.type.DefaultTypeFactory;
+import org.brandao.brutos.type.TypeFactory;
+import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.web.view.JSPViewProvider;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
 import org.brandao.brutos.web.scope.ApplicationScope;
@@ -310,6 +313,30 @@ public abstract class AbstractWebApplicationContext
         return this.interceptorManager.getInterceptor(name);
     }
 
+    public void registerScope(String name, Scope scope){
+        this.scopes.register(name, scope);
+    }
+    
+    public Scope getRegistredScope(String name){
+        return this.scopes.get(name);
+    }
+    
+    public Scope getRegistredScope(ScopeType scopeType){
+        return this.scopes.get(scopeType);
+    }
+    
+    public void registerType(TypeFactory factory){
+        TypeManager.register(factory);
+    }
+    
+    public void registerType(Class classType, Class type){
+        TypeManager.register(new DefaultTypeFactory(type, classType));
+    }
+    
+    public TypeFactory getRegistredType(Class classType){
+        return TypeManager.getTypeFactory(classType);
+    }
+    
     public void flush(){
 
         this.initLogger();
