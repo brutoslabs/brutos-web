@@ -21,6 +21,7 @@ package org.brandao.brutos;
 import java.util.Properties;
 import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.ioc.IOCProvider;
+import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
 
@@ -130,6 +131,8 @@ public interface ConfigurableApplicationContext
 
     ViewResolver getViewResolver();
 
+    TypeManager getTypeManager();
+    
     void setParent(ApplicationContext applicationContext);
 
     ApplicationContext getParent();
