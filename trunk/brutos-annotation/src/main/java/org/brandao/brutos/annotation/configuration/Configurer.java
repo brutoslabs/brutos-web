@@ -17,12 +17,10 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ControllerRegistry;
-import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.InterceptorRegistry;
-import org.brandao.brutos.Scopes;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.ScopeRegistry;
+import org.brandao.brutos.TypeRegistry;
 
 /**
  * Provê as definições dos componentes e configuração de uma aplicação.
@@ -35,8 +33,8 @@ public interface Configurer {
     
     void addControllers(ControllerRegistry controllerRegistry);
     
-    void addScopes(Scopes scopes);
+    void addScopes(ScopeRegistry scopeRegistry);
             
-    void addTypes(TypeManager typeManager);
+    void addTypes(TypeRegistry typeRegistry);
     
 }
