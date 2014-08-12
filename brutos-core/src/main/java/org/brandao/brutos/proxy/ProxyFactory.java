@@ -28,7 +28,7 @@ import org.brandao.brutos.mapping.Controller;
  */
 public interface ProxyFactory {
 
-    public Object getNewProxy(Object resource,Controller form, 
+    Object getNewProxy(Object resource,Controller form, 
             ConfigurableApplicationContext app, Invoker invoker)
                 throws BrutosException;
     
