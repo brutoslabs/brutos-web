@@ -17,10 +17,13 @@
 
 package org.brandao.brutos.helper.controller;
 
+import java.io.ByteArrayInputStream;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import junit.framework.TestCase;
 import org.brandao.brutos.FlowController;
+import org.brandao.brutos.ResultAction;
 
 /**
  *
@@ -111,6 +114,38 @@ public class SimpleController {
         throw new UnsupportedOperationException();
     }
 
+    public ResultAction actionWithResultActionType(ResultAction result){
+        result
+            .addInfo("Content-Type", "Content-Type: text/html; charset=utf-8")
+            .setContentType(String.class)
+            .setContent("<html><body>test</body></html>");
+        return result;
+    }
+
+    public ResultAction actionWithResultActionUseDefaultView(ResultAction result){
+        result
+            .addInfo("Content-Type", "Content-Type: text/html; charset=utf-8")
+            .add("value1", BigDecimal.ONE)
+            .add("value2", BigDecimal.TEN);
+        return result;
+    }
+
+    public ResultAction actionWithResultActionUseUnresolvedView(ResultAction result){
+        result
+            .addInfo("Content-Type", "Content-Type: text/html; charset=utf-8")
+            .setView("/jsp/myView.jsp", false)
+            .add("value1", BigDecimal.ONE);
+        return result;
+    }
+
+    public ResultAction actionWithResultActionUseView(ResultAction result){
+        result
+            .addInfo("Content-Type", "Content-Type: text/html; charset=utf-8")
+            .setView("myView")
+            .add("value1", BigDecimal.ONE);
+        return result;
+    }
+    
     public String getProperty1() {
         return property1;
     }
