@@ -24,49 +24,21 @@ import java.util.Map;
  * @author Brandao
  */
 public interface ConfigurableResultAction extends ResultAction{
+
+    String getView();
     
-    ResultParam getResultParam();
+    boolean isResolvedView();
 
-    void setResultParam(ResultParam resultParam);
-
-    ResultTypeParam getResultTypeParam();
-
-    void setResultTypeParam(ResultTypeParam resultTypeParam);
+    Class getContentType();
     
-    public static interface ConfigurableResultTypeParam extends ResultTypeParam{
-
-        Class getType();
-
-        void setType(Class type);
-
-        Object getValue();
-
-        void setValue(Object value);
-        
-        Map getInfos();
-
-        void setInfos(Map infos);
-        
-    }
+    Object getContent();
     
-    public static interface ConfigurableResultParam extends ResultParam{
-        
-        String getView();
+    Map getValues();
 
-        void setView(String view);
+    void setValues(Map values);
 
-        boolean isResolved();
+    Map getInfos();
 
-        void setResolved(boolean resolved);
-
-        Map getValues();
-
-        void setValues(Map values);
-        
-        Map getInfos();
-
-        void setInfos(Map infos);
-        
-    }
+    void setInfos(Map infos);
     
 }
