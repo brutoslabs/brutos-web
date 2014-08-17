@@ -27,176 +27,94 @@ import java.util.Map;
 public class ResultActionImp 
     implements ConfigurableResultAction{
 
-    private ResultParam resultParam;
+    private Map infos;
     
-    private ResultTypeParam resultTypeParam;
+    private Map values;
+    
+    private Class contentType;
+    
+    private Object content;
+    
+    private String view;
+    
+    private boolean resolved;
     
     public ResultActionImp(){
-        this.resultParam = null;
-        this.resultTypeParam = null;
-    }
-
-    public ResultParam use() {
-        return this.use(null, false);
+        this.infos  = new HashMap();
+        this.values = new HashMap();
     }
     
-    public ResultParam use(String view) {
-        return this.use(view, false);
+    public String getView() {
+        return this.view;
     }
 
-    public synchronized ResultParam use(String view, boolean resolved) {
-        if(this.resultParam != null || this.resultTypeParam != null)
+    public boolean isResolvedView() {
+        return this.resolved;
+    }
+
+    public Class getContentType() {
+        return this.contentType;
+    }
+
+    public Object getContent() {
+        return this.content;
+    }
+
+    public Map getValues() {
+        return this.values;
+    }
+
+    public void setValues(Map values) {
+        this.values = values;
+    }
+
+    public Map getInfos() {
+        return this.infos;
+    }
+
+    public void setInfos(Map infos) {
+        this.infos = infos;
+    }
+
+    public ResultAction setView(String view) {
+        return this.setView(view, false);
+    }
+
+    public ResultAction setView(String view, boolean resolved) {
+        if(this.content != null || this.contentType != null)
             throw new IllegalStateException();
         else{
-            this.resultParam = new ResultParamImp(view, resolved, new HashMap(), new HashMap());
-            return this.resultParam;
-        }
-    }
-
-    public synchronized ResultTypeParam use(Class type) {
-        if(this.resultParam != null || this.resultTypeParam != null)
-            throw new IllegalStateException();
-        else{
-            this.resultTypeParam = new ResultTypeParamImp(type, new HashMap());
-            return this.resultTypeParam;
-        }
-    }
-
-    public ResultParam getResultParam() {
-        return resultParam;
-    }
-
-    public void setResultParam(ResultParam resultParam) {
-        this.resultParam = resultParam;
-    }
-
-    public ResultTypeParam getResultTypeParam() {
-        return resultTypeParam;
-    }
-
-    public void setResultTypeParam(ResultTypeParam resultTypeParam) {
-        this.resultTypeParam = resultTypeParam;
-    }
-
-    public static class ResultParamImp 
-        implements ConfigurableResultParam {
-
-        private String view;
-        
-        private boolean resolved;
-        
-        private Map values;
-        
-        private Map infos;
-        
-        public ResultParamImp(String view, boolean resolved, Map values,Map infos){
-            this.resolved = resolved;
-            this.view     = view;
-            this.values   = values;
-            this.infos    = infos;
-        }
-        
-        public synchronized ResultParam include(String name, Object o) {
-            if(this.values.put(name, o) != null)
-                throw new IllegalStateException();
-            else
-                return this;
-        }
-
-        public synchronized ResultParam includeInfo(String name, String o) {
-            if(this.infos.put(name, o) != null)
-                throw new IllegalStateException();
-            else
-                return this;
-        }
-        
-        public String getView() {
-            return view;
-        }
-
-        public void setView(String view) {
             this.view = view;
+            return this;
         }
-
-        public boolean isResolved() {
-            return resolved;
-        }
-
-        public void setResolved(boolean resolved) {
-            this.resolved = resolved;
-        }
-
-        public Map getValues() {
-            return values;
-        }
-
-        public void setValues(Map values) {
-            this.values = values;
-        }
-
-        public Map getInfos() {
-            return infos;
-        }
-
-        public void setInfos(Map infos) {
-            this.infos = infos;
-        }
-
     }
-    
-    public static class ResultTypeParamImp 
-        implements ConfigurableResultTypeParam {
 
-        private Class type;
-        
-        private Object value;
-        
-        private Map infos;
-        
-        public ResultTypeParamImp(Class type, Map infos){
-            this.type  = type;
-            this.value = null;
-            this.infos = infos;
+    public ResultAction setContentType(Class type) {
+        if(this.view != null)
+            throw new IllegalStateException();
+        else{
+            this.contentType = type;
+            return this;
         }
-        
-        public synchronized void include(Object o) {
-            if(this.value != null)
-                throw new IllegalStateException();
-            else
-                this.value = o;
-        }
+    }
 
-        public synchronized ResultTypeParam includeInfo(String name, String o) {
-            if(this.infos.put(name, o) != null)
-                throw new IllegalStateException();
-            else
-                return this;
-        }
-        
-        public Class getType() {
-            return type;
-        }
+    public ResultAction addInfo(String name, String o) {
+        this.infos.put(name, o);
+        return this;
+    }
 
-        public void setType(Class type) {
-            this.type = type;
+    public ResultAction setContent(Object value) {
+        if(this.view != null)
+            throw new IllegalStateException();
+        else{
+            this.content = value;
+            return this;
         }
+    }
 
-        public Object getValue() {
-            return value;
-        }
-
-        public void setValue(Object value) {
-            this.value = value;
-        }
-
-        public Map getInfos() {
-            return infos;
-        }
-
-        public void setInfos(Map infos) {
-            this.infos = infos;
-        }
-        
+    public ResultAction add(String name, Object o) {
+        this.values.put(name, o);
+        return this;
     }
     
 }

@@ -25,16 +25,11 @@ package org.brandao.brutos;
 public interface ResultAction {
     
     /**
-     * Usa a vista padrão da ação
-     */
-    ResultParam use();
-
-    /**
-     * Define a vista da ação a partir do nome.
+     * Define a vista da ação a partir de um nome.
      * 
      * @param view Nome da vista.
      */
-    ResultParam use(String view);
+    ResultAction setView(String view);
 
     /**
      * Define a vista da ação.
@@ -43,51 +38,34 @@ public interface ResultAction {
      * @param resolved Define se a vista informada é real. Se verdadeiro, a vista
      * é real. Caso contrário, a vista será resolvida.
      */
-    ResultParam use(String view, boolean resolved);
+    ResultAction setView(String view, boolean resolved);
 
     /**
-     * Define o tipo da vista.
+     * Define o tipo do conteúdo da vista.
      * @param type Tipo.
      */
-    ResultTypeParam use(Class type);
+    ResultAction setContentType(Class type);
     
-    public static interface ResultTypeParam{
-        
-        /**
-         * Inclui uma nova informação no resultado.
-         * 
-         * @param name Nome da informação.
-         * @param o Informação.
-         */
-        ResultTypeParam includeInfo(String name, String o);
-        
-        /**
-         * Define o valor que representa a vista.
-         * 
-         * @param o Valor.
-         */
-        void include(Object o);
-        
-    }
-
-    public static interface ResultParam{
-        
-        /**
-         * Inclui uma nova informação no resultado.
-         * 
-         * @param name Nome da informação.
-         * @param o Informação.
-         */
-        ResultParam includeInfo(String name, String o);
-
-        /**
-         * Inclui um novo valor no resultado.
-         * 
-         * @param name Nome do valor.
-         * @param o Valor.
-         */
-        ResultParam include(String name, Object o);
-        
-    }
+    /**
+     * Inclui uma nova informação no resultado.
+     * 
+     * @param name Nome da informação.
+     * @param o Informação.
+     */
+    ResultAction addInfo(String name, String o);
+    
+    /**
+     * Define o conteúdo da vista.
+     * @param value contetudo.
+     */
+    ResultAction setContent(Object value);
+    
+    /**
+     * Inclui um novo valor no resultado.
+     * 
+     * @param name Nome do valor.
+     * @param o Valor.
+     */
+    ResultAction add(String name, Object o);
     
 }
