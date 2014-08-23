@@ -56,7 +56,7 @@ public class WebUtil {
             URIMapping map = new URIMapping( value );
             
             String uri = map.getURI(new Object[]{});
-            URI prefix = new URI("http://localhost");
+            URI prefix = new URI("http://serverName");
             prefix.resolve(uri);
         }
         catch(Exception e){
