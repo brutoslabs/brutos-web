@@ -147,7 +147,7 @@ public class URIMapping {
                 value += p.getRegex();
             else
             if(params.length == 0)
-                value += "X";
+                value += "(" + p.getId() + ")";
             else
                 value += String.valueOf(params[p.getIndex()]);
             
