@@ -30,10 +30,10 @@ import org.brandao.brutos.MvcRequestFactory;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.MvcResponseFactory;
 import org.brandao.brutos.ObjectFactory;
+import org.brandao.brutos.RenderView;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.validator.ValidatorProvider;
-import org.brandao.brutos.view.ViewProvider;
 
 /**
  *
@@ -92,8 +92,12 @@ public class WebApplicationContextWrapper
         applicationContext.setInterceptorManager(interceptorManager);
     }
 
-    public ViewProvider getViewProvider(){
-        return applicationContext.getViewProvider();
+    public void setRenderView(RenderView renderView){
+        applicationContext.setRenderView(renderView);
+    }
+    
+    public RenderView getRenderView(){
+        return applicationContext.getRenderView();
     }
 
     public ValidatorProvider getValidatorProvider(){
