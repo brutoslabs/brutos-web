@@ -122,7 +122,7 @@ public interface BrutosConstants {
 
     public final String CONTROLLER_RESOLVER_CLASS = "org.brandao.brutos.controller.class";
     
-    public final String IOC_PROVIDER_CLASS        = "org.brandao.brutos.ioc.provider";
+    public final String OBJECT_FACTORY_CLASS      = "org.brandao.brutos.object_factory";
     
     public final String VALIDATOR_PROVIDER_CLASS  = "org.brandao.brutos.validator.provider";
     
@@ -139,7 +139,7 @@ public interface BrutosConstants {
     public final String DEFAULT_PROXY_PROVIDER_CLASS = "org.brandao.brutos.codegenerator.JavassistCodeGeneratorProvider";
     
     public final String DEFAULT_REQUEST_PARSER       = "org.brandao.brutos.web.http.HttpRequestParserImp";
-    
+
     public final String DEFAULT_VALIDATOR_PROVIDER   = "org.brandao.brutos.validator.DefaultValidatorProvider";
 
     public final String DEFAULT_VIEW_PROVIDER_CLASS  = "org.brandao.brutos.view.DefaultViewProvider";

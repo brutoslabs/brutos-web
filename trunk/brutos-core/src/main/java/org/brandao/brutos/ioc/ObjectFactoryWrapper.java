@@ -23,28 +23,28 @@ import java.util.Properties;
  *
  * @author Afonso Brandao
  */
-public class IOCProviderWrapper extends IOCProvider{
+public class ObjectFactoryWrapper implements ObjectFactory{
 
-    private IOCProvider iocProvider;
+    private ObjectFactory objectFactory;
 
-    public IOCProviderWrapper(IOCProvider iocProvider){
-        this.iocProvider = iocProvider;
+    public ObjectFactoryWrapper(ObjectFactory objectFactory){
+        this.objectFactory = objectFactory;
     }
 
     public Object getBean(String name) {
-        return iocProvider.getBean(name);
+        return objectFactory.getBean(name);
     }
 
     public void configure(Properties properties) {
-        iocProvider.configure(properties);
+        objectFactory.configure(properties);
     }
 
     public void destroy() {
-        iocProvider.destroy();
+        objectFactory.destroy();
     }
 
     public Object getBean(Class clazz) {
-        return iocProvider.getBean(clazz);
+        return objectFactory.getBean(clazz);
     }
 
 }

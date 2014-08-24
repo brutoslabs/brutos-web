@@ -22,7 +22,7 @@ import java.awt.Component;
 import org.brandao.brutos.*;
 import java.io.IOException;
 import java.util.Properties;
-import org.brandao.brutos.ioc.IOCProvider;
+import org.brandao.brutos.ioc.ObjectFactory;
 
 /**
  *
@@ -36,9 +36,9 @@ public class DefaultViewProvider extends ViewProvider{
     protected void show(RequestInstrument requestInstrument,
             String view, DispatcherType dispatcherType) throws IOException {
 
-        IOCProvider iocProvider = requestInstrument.getIocProvider();
+        ObjectFactory objectFactory = requestInstrument.getObjectFactory();
 
-        Object objectView = iocProvider.getBean(view);
+        Object objectView = objectFactory.getBean(view);
 
         if( objectView instanceof Component )
             ((Component)objectView).setVisible(true);

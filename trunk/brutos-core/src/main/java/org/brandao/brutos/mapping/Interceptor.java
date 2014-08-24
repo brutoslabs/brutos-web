@@ -19,7 +19,7 @@ package org.brandao.brutos.mapping;
 
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ioc.IOCProvider;
+import org.brandao.brutos.ioc.ObjectFactory;
 
 /**
  *
@@ -44,9 +44,9 @@ public class Interceptor {
     public Interceptor() {
     }
 
-    public Object getInstance(IOCProvider iocProvider){
-        Object instance = getName() == null? null : iocProvider.getBean(getName());
-        instance = instance == null? iocProvider.getBean(getType()) : instance;
+    public Object getInstance(ObjectFactory objectFactory){
+        Object instance = getName() == null? null : objectFactory.getBean(getName());
+        instance = instance == null? objectFactory.getBean(getType()) : instance;
 
         if( instance == null )
             throw new BrutosException("can't get instance " + getName() + ":" + getType());

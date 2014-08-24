@@ -34,12 +34,12 @@ import org.brandao.brutos.BrutosException;
  *
  * @author Brandao
  */
-public class CDIProvider extends IOCProvider{
+public class CDIObjectFactory implements ObjectFactory{
 
     private BeanManager beanManager;
     private Properties config;
     
-    public CDIProvider(){
+    public CDIObjectFactory(){
     }
     
     public Object getBean(String name) {
