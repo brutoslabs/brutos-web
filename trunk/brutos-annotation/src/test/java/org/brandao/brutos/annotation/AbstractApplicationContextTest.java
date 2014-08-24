@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 import org.brandao.brutos.ActionType;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.test.MockObjectFactory;
-import org.brandao.brutos.test.MockViewProvider;
+import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.web.WebControllerBuilder;
 import org.brandao.brutos.web.WebControllerManager;
 
@@ -44,7 +44,7 @@ public abstract class AbstractApplicationContextTest extends TestCase{
                 MockObjectFactory.class.getName());
         
         prop.setProperty("org.brandao.brutos.view.provider",
-                MockViewProvider.class.getName());
+                MockRenderView.class.getName());
 
         prop.setProperty("org.brandao.brutos.view.prefix",
                 "/WEB-INF/");
