@@ -72,7 +72,7 @@ public interface ApplicationContext {
 
     /**
      * Obtém a instância de um bean a partir de seu nome.
-     * @param clazz Nome do bean.
+     * @param name Nome do bean.
      * @return Bean.
      */
     Object getBean(String name);

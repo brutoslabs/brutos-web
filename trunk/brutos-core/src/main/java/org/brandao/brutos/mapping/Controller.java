@@ -23,7 +23,7 @@ import java.util.*;
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
-import org.brandao.brutos.ioc.ObjectFactory;
+import org.brandao.brutos.ObjectFactory;
 import org.brandao.brutos.scope.Scope;
 
 /**

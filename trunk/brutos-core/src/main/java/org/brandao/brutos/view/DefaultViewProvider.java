@@ -22,7 +22,7 @@ import java.awt.Component;
 import org.brandao.brutos.*;
 import java.io.IOException;
 import java.util.Properties;
-import org.brandao.brutos.ioc.ObjectFactory;
+import org.brandao.brutos.ObjectFactory;
 
 /**
  *

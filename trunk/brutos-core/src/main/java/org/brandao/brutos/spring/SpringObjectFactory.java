@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.ioc;
+package org.brandao.brutos.spring;
 
+import org.brandao.brutos.ObjectFactory;
 import java.util.Properties;
 import org.springframework.context.ApplicationContext;
 

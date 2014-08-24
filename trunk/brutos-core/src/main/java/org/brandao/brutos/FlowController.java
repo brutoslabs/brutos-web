@@ -17,11 +17,6 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
-import org.brandao.brutos.ioc.IOCProvider;
-import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.proxy.ProxyFactory;
-
 /**
  * Altera o fluxo de execução de uma ação.
  * 

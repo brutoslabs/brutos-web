@@ -19,7 +19,7 @@ package org.brandao.brutos.mapping;
 
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ioc.ObjectFactory;
+import org.brandao.brutos.ObjectFactory;
 
 /**
  *

@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.Properties;
 import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.io.DefaultResourceLoader;
-import org.brandao.brutos.ioc.CDIObjectFactory;
-import org.brandao.brutos.ioc.ObjectFactory;
+import org.brandao.brutos.cdi.CDIObjectFactory;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
@@ -109,7 +108,7 @@ public abstract class AbstractApplicationContext
         this.invoker               = 
                                      createInvoker(
                                          controllerResolver,
-                                         iocProvider,
+                                         objectFactory,
                                          controllerManager,
                                          actionResolver,
                                          this,
@@ -384,7 +383,7 @@ public abstract class AbstractApplicationContext
         this.controllerResolver = null;
         this.interceptorManager = null;
         this.invoker = null;
-        this.iocProvider = null;
+        this.objectFactory = null;
         this.loggerProvider = null;
         this.requestFactory = null;
         this.responseFactory = null;
@@ -464,8 +463,8 @@ public abstract class AbstractApplicationContext
         this.configuration = config;
     }
 
-    public void setIocProvider(IOCProvider iocProvider) {
-        this.iocProvider = iocProvider;
+    public void setObjectFactory(ObjectFactory objectFactory) {
+        this.objectFactory = objectFactory;
     }
 
     public InterceptorManager getInterceptorManager() {
@@ -476,8 +475,8 @@ public abstract class AbstractApplicationContext
         return this.controllerManager;
     }
 
-    public IOCProvider getIocProvider() {
-        return this.iocProvider;
+    public ObjectFactory getObjectFactory() {
+        return this.objectFactory;
     }
 
     public ControllerResolver getControllerResolver() {
@@ -518,7 +517,7 @@ public abstract class AbstractApplicationContext
                     "controller not configured: %s",
                     new Object[]{clazz.getName()} ));
 
-        Object resource = controller.getInstance(iocProvider);
+        Object resource = controller.getInstance(this.objectFactory);
 
         ProxyFactory proxyFactory =
                 codeGeneratorProvider
@@ -558,11 +557,11 @@ public abstract class AbstractApplicationContext
     }
 
     public Object getBean(Class clazz){
-        return this.getIocProvider().getBean(clazz);
+        return this.objectFactory.getBean(clazz);
     }
 
     public Object getBean(String name){
-        return this.getIocProvider().getBean(name);
+        return this.objectFactory.getBean(name);
     }
 
     public TypeManager getTypeManager(){

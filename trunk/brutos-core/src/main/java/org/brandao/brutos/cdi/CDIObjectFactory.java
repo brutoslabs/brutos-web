@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.ioc;
+package org.brandao.brutos.cdi;
 
+import org.brandao.brutos.ObjectFactory;
 import java.lang.annotation.Annotation;
 import java.util.Hashtable;
 import java.util.Properties;

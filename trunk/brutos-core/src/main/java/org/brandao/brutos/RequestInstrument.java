@@ -18,7 +18,6 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.ioc.ObjectFactory;
 import org.brandao.brutos.view.ViewProvider;
 
 /**

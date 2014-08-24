@@ -20,7 +20,6 @@ package org.brandao.brutos;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.view.ViewProvider;
 
 /**
@@ -32,18 +31,18 @@ public class RequestInstrumentImp
 
     private ApplicationContext context;
     private boolean hasViewProcessed;
-    private IOCProvider iocProvider;
+    private ObjectFactory objectFactory;
     private ViewProvider viewProvider;
     private List stackRequest;
 
     public RequestInstrumentImp(
             ApplicationContext context,
-            IOCProvider iocProvider,
+            ObjectFactory objectFactory,
             ViewProvider viewProvider){
 
         this.context            = context;
         this.hasViewProcessed   = false;
-        this.iocProvider        = iocProvider;
+        this.objectFactory      = objectFactory;
         this.stackRequest       = new LinkedList();
         this.viewProvider       = viewProvider;
     }
@@ -93,12 +92,12 @@ public class RequestInstrumentImp
         this.hasViewProcessed = hasViewProcessed;
     }
 
-    public IOCProvider getIocProvider() {
-        return iocProvider;
+    public ObjectFactory getObjectFactory() {
+        return objectFactory;
     }
 
-    public void setIocProvider(IOCProvider iocProvider) {
-        this.iocProvider = iocProvider;
+    public void setObjectFactory(ObjectFactory objectFactory) {
+        this.objectFactory = objectFactory;
     }
 
     public ViewProvider getViewProvider() {
