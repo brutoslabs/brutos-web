@@ -6,13 +6,13 @@ package org.brandao.brutos.helper;
 
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ioc.IOCProvider;
+import org.brandao.brutos.ObjectFactory;
 
 /**
  *
  * @author Brandao
  */
-public class TestIocProvider extends IOCProvider{
+public class TestObjectFactory implements ObjectFactory{
 
     public Object getBean(String name) {
         return null;
