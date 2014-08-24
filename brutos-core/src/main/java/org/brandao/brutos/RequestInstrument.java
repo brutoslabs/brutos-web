@@ -18,7 +18,7 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.ioc.IOCProvider;
+import org.brandao.brutos.ioc.ObjectFactory;
 import org.brandao.brutos.view.ViewProvider;
 
 /**
@@ -35,10 +35,10 @@ public interface RequestInstrument extends ViewCheck{
     ApplicationContext getContext();
 
     /**
-     * Obtém o provedor do container IoC.
-     * @return Provedor do container IoC.
+     * Obtém a fábrica de objetos da aplicação.
+     * @return Fábrica de objetos da aplicação.
      */
-    IOCProvider getIocProvider();
+    ObjectFactory getObjectFactory();
 
     /**
      * Obtém o provedor de vista.

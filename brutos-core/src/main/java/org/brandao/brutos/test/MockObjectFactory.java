@@ -26,7 +26,7 @@ import org.brandao.brutos.ioc.*;
  *
  * @author Afonso Brandao
  */
-public class MockIOCProvider extends IOCProvider{
+public class MockObjectFactory implements ObjectFactory{
 
     public Object getBean(String name) {
         return null;

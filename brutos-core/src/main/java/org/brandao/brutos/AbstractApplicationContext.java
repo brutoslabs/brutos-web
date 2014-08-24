@@ -21,7 +21,8 @@ import java.util.List;
 import java.util.Properties;
 import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.io.DefaultResourceLoader;
-import org.brandao.brutos.ioc.IOCProvider;
+import org.brandao.brutos.ioc.CDIObjectFactory;
+import org.brandao.brutos.ioc.ObjectFactory;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
@@ -42,7 +43,7 @@ public abstract class AbstractApplicationContext
 
     protected Logger logger;
 
-    protected IOCProvider iocProvider;
+    protected ObjectFactory objectFactory;
     
     protected InterceptorManager interceptorManager;
     
@@ -94,10 +95,7 @@ public abstract class AbstractApplicationContext
     }
 
     protected void initInstances(){
-        this.iocProvider   = IOCProvider.getProvider(this.configuration);
-        
-        this.iocProvider.configure(this.configuration);
-        
+        this.objectFactory         = getNewObjectFactory(configuration);
         this.interceptorManager    = getNewInterceptorManager();
         this.controllerResolver    = getNewControllerResolver();
         this.actionResolver        = getNewMethodResolver();
@@ -297,8 +295,33 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    protected ObjectFactory getNewObjectFactory(Properties config){
+        try{
+            String className =
+                configuration.getProperty(
+                    BrutosConstants.OBJECT_FACTORY_CLASS,
+                    CDIObjectFactory.class.getName());
+            
+            Class clazz = 
+                    ClassUtil.get(className);
+            
+            ObjectFactory instance = 
+                (ObjectFactory)ClassUtil.getInstance(clazz);
+            
+            instance.configure(config);
+            
+            return instance;
+        }
+        catch( BrutosException e ){
+            throw e;
+        }
+        catch( Throwable e ){
+            throw new BrutosException( e );
+        }
+    }
+    
     protected Invoker createInvoker( 
-            ControllerResolver controllerResolver, IOCProvider iocProvider, 
+            ControllerResolver controllerResolver, ObjectFactory objectFactory, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
             ConfigurableApplicationContext applicationContext, ViewProvider viewProvider ){
         try{
@@ -315,14 +338,14 @@ public abstract class AbstractApplicationContext
                     clazz, 
                     new Class[]{
                         ControllerResolver.class, 
-                        IOCProvider.class, 
+                        ObjectFactory.class, 
                         ControllerManager.class, 
                         ActionResolver.class, 
                         ConfigurableApplicationContext.class, 
                         ViewProvider.class},
                     new Object[]{
                         controllerResolver, 
-                        iocProvider, 
+                        objectFactory, 
                         controllerManager, 
                         actionResolver, 
                         applicationContext, 

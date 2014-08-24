@@ -1,6 +1,6 @@
 /*
  * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package org.brandao.brutos.ioc;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -27,46 +26,48 @@ import org.springframework.context.ApplicationContextAware;
 
 /**
  *
- * @author Afonso Brandão
+ * @author Brandao
  */
-public class SpringIOCProvider 
-    extends IOCProvider implements ApplicationContextAware{
+public class SpringContext implements ApplicationContextAware{
 
+    public static final String DEFAULT_SPRING_CONTEXT = "DEFAULT_SPRING_CONTEXT";
+
+    public static final String SPRING_CONTEXT_NAME    = "org.brandao.brutos.spring.context_name";
+    
     private static final Map currentApplicationCopntext;
     
     static{
         currentApplicationCopntext = new HashMap();
     }
     
-    public SpringIOCProvider(){
+    private String name;
+
+    public SpringContext(String name){
+        this.name = name;
     }
     
-    public void setApplicationContext(
-            ApplicationContext applicationContext) throws BeansException {
-        registerApplicationContext(applicationContext);
+    public SpringContext(){
+        this.name = DEFAULT_SPRING_CONTEXT;
     }
-
-    public static synchronized void registerApplicationContext(
+    
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        registerApplicationContext(this.name, applicationContext);
+    }
+    
+    private static synchronized void registerApplicationContext(String name,
             ApplicationContext applicationContext) throws BeansException {
 
-        ClassLoader classLoader = 
-                Thread.currentThread().getContextClassLoader();
-        
-        if( currentApplicationCopntext.containsKey(classLoader)){
+        if( currentApplicationCopntext.containsKey(name)){
             throw new IllegalStateException(
                     "Multiple application context definitions has been detected.");
         }
         else
-            currentApplicationCopntext.put(classLoader, applicationContext);
+            currentApplicationCopntext.put(name, applicationContext);
     }
     
-    
-    protected ApplicationContext getApplicationContext(){
-        ClassLoader classLoader = 
-                Thread.currentThread().getContextClassLoader();
-        
+    public static ApplicationContext getApplicationContext(String name){
         ApplicationContext applicationContext 
-                = (ApplicationContext) currentApplicationCopntext.get(classLoader);
+                = (ApplicationContext) currentApplicationCopntext.get(name);
     
         if(applicationContext == null)
             throw new BrutosException("application context not found!");
@@ -74,22 +75,4 @@ public class SpringIOCProvider
             return applicationContext;
     }
     
-    public Object getBean(String name) {
-        ApplicationContext applicationContext = this.getApplicationContext();
-        return applicationContext.containsBeanDefinition(name)? 
-                applicationContext.getBean(name) : 
-                null;
-    }
-
-    public Object getBean(Class clazz) {
-        ApplicationContext applicationContext = this.getApplicationContext();
-        return applicationContext.getBean(clazz);
-    }
-
-    public void configure(Properties properties) {
-    }
-
-    public void destroy() {
-    }
-
 }

@@ -20,7 +20,7 @@ package org.brandao.brutos;
 
 import java.util.Properties;
 import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
-import org.brandao.brutos.ioc.IOCProvider;
+import org.brandao.brutos.ioc.ObjectFactory;
 import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
@@ -88,10 +88,10 @@ public interface ConfigurableApplicationContext
     Properties getConfiguration();
 
     /**
-     * Define o provedor do container IOC.
-     * @param iocProvider Provedor do container IOC.
+     * Define a fábrica de objetos da aplicação.
+     * @param objectFactory  Fábrica de objetos da aplicação.
      */
-    void setIocProvider(IOCProvider iocProvider);
+    void setIocProvider(ObjectFactory objectFactory);
 
     /**
      * Obt�m o gestor de interceptadores.
@@ -106,10 +106,10 @@ public interface ConfigurableApplicationContext
     ControllerManager getControllerManager();
 
     /**
-     * Obt�m o provedor do container IOC.
-     * @return Provedor do container IOC.
+     * Obtém a fábrica de objetos da aplicação.
+     * @return Fábrica de objetos da aplicação.
      */
-    IOCProvider getIocProvider();
+    ObjectFactory getObjectFactory();
 
     /**
      * Obt�m o respons�vel por resolver os controladores.

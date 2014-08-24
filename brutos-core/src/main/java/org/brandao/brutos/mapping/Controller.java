@@ -23,7 +23,7 @@ import java.util.*;
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
-import org.brandao.brutos.ioc.IOCProvider;
+import org.brandao.brutos.ioc.ObjectFactory;
 import org.brandao.brutos.scope.Scope;
 
 /**
@@ -109,12 +109,12 @@ public class Controller {
     /**
      * Obtém a instância do controlador.
      * 
-     * @param iocProvider Contêiner IoC.
+     * @param objectFactory Fábrica de objetos da aplicação.
      * @return Instância do controlador.
      */
-    public Object getInstance(IOCProvider iocProvider){
-        Object instance = name == null? null : iocProvider.getBean(name);
-        instance = instance == null? iocProvider.getBean(classType) : instance;
+    public Object getInstance(ObjectFactory objectFactory){
+        Object instance = name == null? null : objectFactory.getBean(name);
+        instance = instance == null? objectFactory.getBean(classType) : instance;
 
         if( instance == null )
             throw new BrutosException("can't get instance " + name + ":" + classType);

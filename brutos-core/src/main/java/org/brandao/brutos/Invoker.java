@@ -19,7 +19,6 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.interceptor.ImpInterceptorHandler;
-import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
@@ -136,7 +135,7 @@ public class Invoker {
         handler.setResourceAction(action);
         handler.setResource(
             resource == null?
-                controller.getInstance(applicationContext.getIocProvider()) :
+                controller.getInstance(applicationContext.getObjectFactory()) :
                 resource);
 
         StackRequestElement stackRequestElement = createStackRequestElement();
