@@ -30,7 +30,6 @@ import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.validator.ValidatorProvider;
-import org.brandao.brutos.view.ViewProvider;
 
 /**
  * 
@@ -48,7 +47,7 @@ public abstract class AbstractApplicationContext
     
     protected ControllerManager controllerManager;
     
-    protected ViewProvider viewProvider;
+    protected RenderView renderView;
     
     protected ValidatorProvider validatorProvider;
     
@@ -103,7 +102,7 @@ public abstract class AbstractApplicationContext
         this.validatorProvider     = ValidatorProvider.getValidatorProvider(this.getConfiguration());
         this.viewResolver          = getNewViewResolver();
         this.controllerManager     = getNewControllerManager();
-        this.viewProvider          = ViewProvider.getProvider(this.getConfiguration());
+        this.renderView            = getNewRenderView(configuration);
         this.codeGeneratorProvider = CodeGeneratorProvider.getProvider(this.getConfiguration());
         this.invoker               = 
                                      createInvoker(
@@ -112,7 +111,7 @@ public abstract class AbstractApplicationContext
                                          controllerManager,
                                          actionResolver,
                                          this,
-                                         viewProvider);
+                                         this.renderView);
     }
     
     protected void initScopes(){
@@ -318,11 +317,36 @@ public abstract class AbstractApplicationContext
             throw new BrutosException( e );
         }
     }
+
+    protected RenderView getNewRenderView(Properties config){
+        try{
+            String className =
+                configuration.getProperty(
+                    BrutosConstants.RENDER_VIEW_CLASS,
+                    DefaultRenderView.class.getName());
+            
+            Class clazz = 
+                    ClassUtil.get(className);
+            
+            RenderView instance = 
+                (RenderView)ClassUtil.getInstance(clazz);
+            
+            instance.configure(config);
+            
+            return instance;
+        }
+        catch( BrutosException e ){
+            throw e;
+        }
+        catch( Throwable e ){
+            throw new BrutosException( e );
+        }
+    }
     
     protected Invoker createInvoker( 
             ControllerResolver controllerResolver, ObjectFactory objectFactory, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
-            ConfigurableApplicationContext applicationContext, ViewProvider viewProvider ){
+            ConfigurableApplicationContext applicationContext, RenderView renderView){
         try{
             String className =
                 configuration.getProperty(
@@ -341,14 +365,14 @@ public abstract class AbstractApplicationContext
                         ControllerManager.class, 
                         ActionResolver.class, 
                         ConfigurableApplicationContext.class, 
-                        ViewProvider.class},
+                        RenderView.class},
                     new Object[]{
                         controllerResolver, 
                         objectFactory, 
                         controllerManager, 
                         actionResolver, 
                         applicationContext, 
-                        viewProvider
+                        renderView
                         });
             
             return instance;
@@ -376,6 +400,8 @@ public abstract class AbstractApplicationContext
      * M�todo invocado quando a aplica��o � finalizada.
      */
     public void destroy(){
+        this.objectFactory.destroy();
+        this.renderView.destroy();
         this.actionResolver = null;
         this.codeGeneratorProvider = null;
         this.configuration = null;
@@ -389,8 +415,6 @@ public abstract class AbstractApplicationContext
         this.responseFactory = null;
         this.scopes.clear();
         this.validatorProvider = null;
-        this.viewProvider = null;
-        this.viewProvider = null;
         this.viewResolver = null;
     }
 
@@ -443,8 +467,12 @@ public abstract class AbstractApplicationContext
         this.interceptorManager = interceptorManager;
     }
 
-    public ViewProvider getViewProvider() {
-        return this.viewProvider;
+    public void setRenderView(RenderView renderView) {
+        this.renderView = renderView;
+    }
+    
+    public RenderView getRenderView() {
+        return this.renderView;
     }
 
     public ValidatorProvider getValidatorProvider() {

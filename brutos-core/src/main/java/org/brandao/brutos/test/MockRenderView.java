@@ -19,7 +19,6 @@ package org.brandao.brutos.test;
 
 import java.util.Properties;
 import org.brandao.brutos.DispatcherType;
-import org.brandao.brutos.view.*;
 import java.io.IOException;
 import org.brandao.brutos.*;
 import org.brandao.brutos.mapping.Action;
@@ -29,14 +28,14 @@ import org.brandao.brutos.type.Type;
  *
  * @author Afonso Brandao
  */
-public class MockViewProvider extends ViewProvider{
+public class MockRenderView extends AbstractRenderView{
 
     private DispatcherType dispatcherType;
     private String view;
     private boolean redirect;
     private Type actionResult;
 
-    public MockViewProvider() {
+    public MockRenderView() {
     }
 
     public void configure(Configuration properties) {
@@ -59,32 +58,6 @@ public class MockViewProvider extends ViewProvider{
         this.redirect = redirect;
     }
 
-    /*
-    public ServletRequest getRequest() {
-        return request;
-    }
-
-    public void setRequest(ServletRequest request) {
-        this.request = request;
-    }
-
-    public HttpServletResponse getResponse() {
-        return response;
-    }
-
-    public void setResponse(HttpServletResponse response) {
-        this.response = response;
-    }
-
-    public ServletContext getContext() {
-        return context;
-    }
-
-    public void setContext(ServletContext context) {
-        this.context = context;
-    }
-    */
-    
     public void configure(Properties properties) {
     }
 
@@ -105,11 +78,8 @@ public class MockViewProvider extends ViewProvider{
     
     public void show(RequestInstrument requestInstrument,
             String view, DispatcherType dispatcherType) throws IOException {
-        //this.context = null;
-        this.redirect = dispatcherType == DispatcherType.REDIRECT? true : false;
+        this.redirect = dispatcherType == DispatcherType.REDIRECT;
         this.dispatcherType = dispatcherType;
-        //this.request = null;
-        //this.response = null;
         this.view = view;
         
     }
@@ -128,6 +98,9 @@ public class MockViewProvider extends ViewProvider{
 
     public void setActionResult(Type actionResult) {
         this.actionResult = actionResult;
+    }
+
+    public void destroy() {
     }
 
 }

@@ -20,7 +20,6 @@ package org.brandao.brutos;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.brandao.brutos.view.ViewProvider;
 
 /**
  *
@@ -32,19 +31,19 @@ public class RequestInstrumentImp
     private ApplicationContext context;
     private boolean hasViewProcessed;
     private ObjectFactory objectFactory;
-    private ViewProvider viewProvider;
+    private RenderView renderView;
     private List stackRequest;
 
     public RequestInstrumentImp(
             ApplicationContext context,
             ObjectFactory objectFactory,
-            ViewProvider viewProvider){
+            RenderView renderView){
 
         this.context            = context;
         this.hasViewProcessed   = false;
         this.objectFactory      = objectFactory;
         this.stackRequest       = new LinkedList();
-        this.viewProvider       = viewProvider;
+        this.renderView         = renderView;
     }
 
     public void push( StackRequestElement stackrequestElement ){
@@ -100,12 +99,12 @@ public class RequestInstrumentImp
         this.objectFactory = objectFactory;
     }
 
-    public ViewProvider getViewProvider() {
-        return viewProvider;
+    public RenderView getRenderView() {
+        return this.renderView;
     }
 
-    public void setViewProvider(ViewProvider viewProvider) {
-        this.viewProvider = viewProvider;
+    public void setRenderView(RenderView renderView) {
+        this.renderView = renderView;
     }
 
 }

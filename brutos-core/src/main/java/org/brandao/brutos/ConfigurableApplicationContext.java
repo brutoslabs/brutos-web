@@ -22,7 +22,6 @@ import java.util.Properties;
 import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.validator.ValidatorProvider;
-import org.brandao.brutos.view.ViewProvider;
 
 /**
  *
@@ -51,10 +50,16 @@ public interface ConfigurableApplicationContext
 
 
     /**
-     * Obt�m o provedor da vis�o.
-     * @return Provedor da vis�o.
+     * Define o renderizador de vista da aplicação.
+     * @param renderView Renderizador de vista da aplicação.
      */
-    ViewProvider getViewProvider();
+    void setRenderView(RenderView renderView);
+    
+    /**
+     * Obtém o renderizador de vista da aplicação.
+     * @return Renderizador de vista da aplicação.
+     */
+    RenderView getRenderView();
 
     /**
      * Obt�m o provedor das regras de valida��o.
