@@ -34,7 +34,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.test.MockObjectFactory;
-import org.brandao.brutos.test.MockViewProvider;
+import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.web.test.MockWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
@@ -70,7 +70,7 @@ public abstract class AbstractTester extends TestCase{
             servletContext.setInitParameter("org.brandao.brutos.action_strategy", actionType.name());
         
         servletContext.setInitParameter("org.brandao.brutos.view.provider",
-                MockViewProvider.class.getName());
+                MockRenderView.class.getName());
 
         ConfigurableWebApplicationContext context = getApplicationContext(handler.getResourceName());
         MockWebApplicationContext

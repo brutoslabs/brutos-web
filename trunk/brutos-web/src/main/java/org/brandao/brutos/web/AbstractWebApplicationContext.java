@@ -29,7 +29,7 @@ import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.DefaultTypeFactory;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.type.TypeManager;
-import org.brandao.brutos.web.view.JSPViewProvider;
+import org.brandao.brutos.web.http.JSPRenderView;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
@@ -173,7 +173,7 @@ public abstract class AbstractWebApplicationContext
 
         tmp = config
                 .getProperty( "org.brandao.brutos.view.provider",
-                              JSPViewProvider.class.getName() );
+                              JSPRenderView.class.getName() );
 
         config.put( "org.brandao.brutos.view.provider",
                     tmp );
