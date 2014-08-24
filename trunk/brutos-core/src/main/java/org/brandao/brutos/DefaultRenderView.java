@@ -18,29 +18,33 @@
 
 package org.brandao.brutos;
 
+import java.awt.Component;
+import java.io.IOException;
+import java.util.Properties;
+
 /**
- * Provê os recursos da aplicação.
+ * Renderizador padrão.
  * 
  * @author Brandao
  */
-public interface RequestInstrument extends ViewCheck{
+public class DefaultRenderView extends AbstractRenderView{
 
-    /**
-     * Obtém o contexto da aplicação.
-     * @return Contexto da aplicação.
-     */
-    ApplicationContext getContext();
+    public void configure(Properties properties) {
+    }
 
-    /**
-     * Obtém a fábrica de objetos da aplicação.
-     * @return Fábrica de objetos da aplicação.
-     */
-    ObjectFactory getObjectFactory();
+    protected void show(RequestInstrument requestInstrument,
+            String view, DispatcherType dispatcherType) throws IOException {
 
-    /**
-     * Obtém o renderizador de vista da aplicação.
-     * @return Renderizador de vista da aplicação.
-     */
-    RenderView getRenderView();
-    
+        ObjectFactory objectFactory = requestInstrument.getObjectFactory();
+
+        Object objectView = objectFactory.getBean(view);
+
+        if( objectView instanceof Component )
+            ((Component)objectView).setVisible(true);
+        
+    }
+
+    public void destroy() {
+    }
+
 }

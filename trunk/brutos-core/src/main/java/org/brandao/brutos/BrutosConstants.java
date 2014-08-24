@@ -126,7 +126,7 @@ public interface BrutosConstants {
     
     public final String VALIDATOR_PROVIDER_CLASS  = "org.brandao.brutos.validator.provider";
     
-    public final String VIEW_PROVIDER_CLASS       = "org.brandao.brutos.view.provider";
+    public final String RENDER_VIEW_CLASS         = "org.brandao.brutos.render_view";
     
     public final String UPLOAD_LISTENER_CLASS     = "org.brandao.brutos.web.upload_listener_factory";
     

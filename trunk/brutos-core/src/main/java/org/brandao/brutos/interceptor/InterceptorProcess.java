@@ -37,9 +37,7 @@ import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.ThrowableSafeData;
-import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.StackRequestElement;
@@ -248,7 +246,7 @@ public class InterceptorProcess implements InterceptorStack{
             StackRequestElement stackRequestElement){
         try{
             requestInstrument
-                    .getViewProvider().show(requestInstrument, stackRequestElement);
+                    .getRenderView().show(requestInstrument, stackRequestElement);
         }
         catch( BrutosException e ){
             throw e;

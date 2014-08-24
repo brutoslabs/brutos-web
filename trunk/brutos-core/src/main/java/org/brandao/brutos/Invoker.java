@@ -24,7 +24,6 @@ import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.ThreadScope;
-import org.brandao.brutos.view.ViewProvider;
 
 /**
  * Classe usada para invocar a aplicação.
@@ -48,7 +47,7 @@ public class Invoker {
     protected ControllerManager controllerManager;
     protected ActionResolver actionResolver;
     protected ConfigurableApplicationContext applicationContext;
-    protected ViewProvider viewProvider;
+    protected RenderView renderView;
     protected RequestProvider requestProvider;
     protected ResponseProvider responseProvider;
     
@@ -57,14 +56,14 @@ public class Invoker {
 
     public Invoker( ControllerResolver controllerResolver, ObjectFactory objectFactory, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
-            ConfigurableApplicationContext applicationContext, ViewProvider viewProvider ){
+            ConfigurableApplicationContext applicationContext, RenderView renderView){
         
         this.controllerResolver = controllerResolver;
         this.objectFactory      = objectFactory;
         this.controllerManager  = controllerManager;
         this.actionResolver     = actionResolver;
         this.applicationContext = applicationContext;
-        this.viewProvider       = viewProvider;
+        this.renderView         = renderView;
         this.requestProvider    = new RequestProvider();
         this.responseProvider   = new ResponseProvider();
     }
@@ -258,7 +257,7 @@ public class Invoker {
                     new RequestInstrumentImp(
                         this.applicationContext,
                         this.objectFactory,
-                        this.viewProvider);
+                        this.renderView);
 
             scope.put(BrutosConstants.REQUEST_INSTRUMENT, requestInstrument);
         }
