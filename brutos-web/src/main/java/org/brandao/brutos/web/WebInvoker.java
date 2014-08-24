@@ -25,7 +25,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.*;
-import org.brandao.brutos.ioc.IOCProvider;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.view.ViewProvider;
 import org.brandao.brutos.web.http.BrutosRequest;
@@ -42,10 +41,10 @@ public class WebInvoker extends Invoker{
         super();
     }
     
-    public WebInvoker(ControllerResolver controllerResolver, IOCProvider iocProvider, 
+    public WebInvoker(ControllerResolver controllerResolver, ObjectFactory objectFactory, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
             ConfigurableApplicationContext applicationContext, ViewProvider viewProvider){
-        super(controllerResolver, iocProvider, controllerManager, actionResolver, 
+        super(controllerResolver, objectFactory, controllerManager, actionResolver, 
             applicationContext, viewProvider);
     }
     
