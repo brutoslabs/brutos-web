@@ -30,11 +30,6 @@ public class ApplicationContextWrapper
 
     protected ConfigurableApplicationContext applicationContext;
 
-    /**
-     * Define a aplica��o.
-     *
-     * @param app Aplica��o.
-     */
     public ApplicationContextWrapper( ConfigurableApplicationContext app ){
         this.applicationContext = app;
     }

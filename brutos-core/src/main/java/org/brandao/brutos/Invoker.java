@@ -44,7 +44,7 @@ public class Invoker {
             .getLogger(Invoker.class);
     
     protected ControllerResolver controllerResolver;
-    protected IOCProvider iocProvider;
+    protected ObjectFactory objectFactory;
     protected ControllerManager controllerManager;
     protected ActionResolver actionResolver;
     protected ConfigurableApplicationContext applicationContext;
@@ -55,12 +55,12 @@ public class Invoker {
     public Invoker() {
     }
 
-    public Invoker( ControllerResolver controllerResolver, IOCProvider iocProvider, 
+    public Invoker( ControllerResolver controllerResolver, ObjectFactory objectFactory, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
             ConfigurableApplicationContext applicationContext, ViewProvider viewProvider ){
         
         this.controllerResolver = controllerResolver;
-        this.iocProvider        = iocProvider;
+        this.objectFactory      = objectFactory;
         this.controllerManager  = controllerManager;
         this.actionResolver     = actionResolver;
         this.applicationContext = applicationContext;
@@ -98,7 +98,7 @@ public class Invoker {
         if( form == null )
             return false;
 
-        ih.setResource( form.getInstance(iocProvider) );
+        ih.setResource( form.getInstance(objectFactory) );
         
         if(ih.getResourceAction() == null)
             ih.setResourceAction( actionResolver.getResourceAction(form, ih) );
@@ -257,7 +257,7 @@ public class Invoker {
             requestInstrument =
                     new RequestInstrumentImp(
                         this.applicationContext,
-                        this.iocProvider,
+                        this.objectFactory,
                         this.viewProvider);
 
             scope.put(BrutosConstants.REQUEST_INSTRUMENT, requestInstrument);

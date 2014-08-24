@@ -17,10 +17,10 @@
 
 package org.brandao.brutos.test;
 
+import org.brandao.brutos.ObjectFactory;
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.ioc.*;
 
 /**
  *

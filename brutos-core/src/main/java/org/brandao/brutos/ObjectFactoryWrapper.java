@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.ioc;
+package org.brandao.brutos;
 
 import java.util.Properties;
 

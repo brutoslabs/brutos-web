@@ -20,7 +20,6 @@ package org.brandao.brutos;
 
 import java.util.Properties;
 import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
-import org.brandao.brutos.ioc.ObjectFactory;
 import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.validator.ValidatorProvider;
 import org.brandao.brutos.view.ViewProvider;
@@ -91,7 +90,7 @@ public interface ConfigurableApplicationContext
      * Define a fábrica de objetos da aplicação.
      * @param objectFactory  Fábrica de objetos da aplicação.
      */
-    void setIocProvider(ObjectFactory objectFactory);
+    void setObjectFactory(ObjectFactory objectFactory);
 
     /**
      * Obt�m o gestor de interceptadores.
