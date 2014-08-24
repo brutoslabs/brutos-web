@@ -21,7 +21,7 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.brandao.brutos.annotation.web.AnnotationWebApplicationContext;
 import org.brandao.brutos.helper.TestController;
-import org.brandao.brutos.helper.TestIocProvider;
+import org.brandao.brutos.helper.TestObjectFactory;
 import org.brandao.brutos.helper.controller.Test2Controller;
 import org.brandao.brutos.io.ByteArrayResource;
 import org.brandao.brutos.io.Resource;
@@ -45,7 +45,7 @@ public class ScannerTest extends TestCase{
             .getConfiguration()
                 .setProperty(
                     "org.brandao.brutos.ioc.provider", 
-                    TestIocProvider.class.getName());
+                    TestObjectFactory.class.getName());
         applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
         applicationContext.flush();
         
@@ -64,7 +64,7 @@ public class ScannerTest extends TestCase{
             .getConfiguration()
                 .setProperty(
                     "org.brandao.brutos.ioc.provider", 
-                    TestIocProvider.class.getName());
+                    TestObjectFactory.class.getName());
         applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
         applicationContext.flush();
         
@@ -83,7 +83,7 @@ public class ScannerTest extends TestCase{
             .getConfiguration()
                 .setProperty(
                     "org.brandao.brutos.ioc.provider", 
-                    TestIocProvider.class.getName());
+                    TestObjectFactory.class.getName());
         applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
         applicationContext.flush();
         Assert.assertNull(
@@ -105,7 +105,7 @@ public class ScannerTest extends TestCase{
             .getConfiguration()
                 .setProperty(
                     "org.brandao.brutos.ioc.provider", 
-                    TestIocProvider.class.getName());
+                    TestObjectFactory.class.getName());
         applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
         applicationContext.flush();
         
@@ -124,7 +124,7 @@ public class ScannerTest extends TestCase{
             .getConfiguration()
                 .setProperty(
                     "org.brandao.brutos.ioc.provider", 
-                    TestIocProvider.class.getName());
+                    TestObjectFactory.class.getName());
         applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
         applicationContext.flush();
         
@@ -146,7 +146,7 @@ public class ScannerTest extends TestCase{
             .getConfiguration()
                 .setProperty(
                     "org.brandao.brutos.ioc.provider", 
-                    TestIocProvider.class.getName());
+                    TestObjectFactory.class.getName());
         applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
         applicationContext.flush();
         
@@ -168,7 +168,7 @@ public class ScannerTest extends TestCase{
             .getConfiguration()
                 .setProperty(
                     "org.brandao.brutos.ioc.provider", 
-                    TestIocProvider.class.getName());
+                    TestObjectFactory.class.getName());
         applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
         applicationContext.flush();
         
@@ -191,7 +191,7 @@ public class ScannerTest extends TestCase{
             .getConfiguration()
                 .setProperty(
                     "org.brandao.brutos.ioc.provider", 
-                    TestIocProvider.class.getName());
+                    TestObjectFactory.class.getName());
         applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
         applicationContext.flush();
         
