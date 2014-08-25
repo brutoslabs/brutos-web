@@ -20,6 +20,7 @@ package org.brandao.brutos.web;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.ActionResolver;
+import org.brandao.brutos.CodeGenerator;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ControllerResolver;
@@ -32,7 +33,6 @@ import org.brandao.brutos.MvcResponseFactory;
 import org.brandao.brutos.ObjectFactory;
 import org.brandao.brutos.RenderView;
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
@@ -141,12 +141,12 @@ public class WebApplicationContextWrapper
         return applicationContext.getActionResolver();
     }
 
-    public CodeGeneratorProvider getCodeGeneratorProvider(){
-        return applicationContext.getCodeGeneratorProvider();
+    public CodeGenerator getCodeGeneratorProvider(){
+        return applicationContext.getCodeGenerator();
     }
 
-    public void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider){
-        applicationContext.setCodeGeneratorProvider(codeGeneratorProvider);
+    public void setCodeGenerator(CodeGenerator codeGenerator){
+        applicationContext.setCodeGenerator(codeGenerator);
     }
 
     @Override
