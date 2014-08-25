@@ -19,7 +19,6 @@
 package org.brandao.brutos;
 
 import java.util.Properties;
-import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.validator.ValidatorProvider;
 
@@ -127,9 +126,9 @@ public interface ConfigurableApplicationContext
      */
     ActionResolver getActionResolver();
 
-    CodeGeneratorProvider getCodeGeneratorProvider();
+    CodeGenerator getCodeGenerator();
 
-    void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider);
+    void setCodeGenerator(CodeGenerator codeGenerator);
 
     void setViewResolver(ViewResolver viewResolver);
 

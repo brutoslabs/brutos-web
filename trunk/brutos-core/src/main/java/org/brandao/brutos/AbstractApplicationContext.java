@@ -19,13 +19,11 @@ package org.brandao.brutos;
 
 import java.util.List;
 import java.util.Properties;
-import org.brandao.brutos.codegenerator.CodeGeneratorProvider;
 import org.brandao.brutos.io.DefaultResourceLoader;
 import org.brandao.brutos.cdi.CDIObjectFactory;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.proxy.ProxyFactory;
 import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.type.TypeManager;
@@ -69,7 +67,7 @@ public abstract class AbstractApplicationContext
     
     private ViewResolver viewResolver;
     
-    protected CodeGeneratorProvider codeGeneratorProvider;
+    protected CodeGenerator codeGenerator;
     
     private ApplicationContext parent;
 
@@ -103,15 +101,11 @@ public abstract class AbstractApplicationContext
         this.viewResolver          = getNewViewResolver();
         this.controllerManager     = getNewControllerManager();
         this.renderView            = getNewRenderView(configuration);
-        this.codeGeneratorProvider = CodeGeneratorProvider.getProvider(this.getConfiguration());
+        this.codeGenerator         = getNewCodeGenerator(configuration);
         this.invoker               = 
-                                     createInvoker(
-                                         controllerResolver,
-                                         objectFactory,
-                                         controllerManager,
-                                         actionResolver,
-                                         this,
-                                         this.renderView);
+            createInvoker(this.controllerResolver, 
+                    this.objectFactory, this.controllerManager, 
+                    this.actionResolver, this, this.renderView);
     }
     
     protected void initScopes(){
@@ -318,6 +312,31 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    protected CodeGenerator getNewCodeGenerator(Properties config){
+        try{
+            String className =
+                configuration.getProperty(
+                    BrutosConstants.CODE_GENERATOR_CLASS,
+                    CDIObjectFactory.class.getName());
+            
+            Class clazz = 
+                    ClassUtil.get(className);
+            
+            CodeGenerator instance = 
+                (CodeGenerator)ClassUtil.getInstance(clazz);
+            
+            instance.configure(config);
+            
+            return instance;
+        }
+        catch( BrutosException e ){
+            throw e;
+        }
+        catch( Throwable e ){
+            throw new BrutosException( e );
+        }
+    }
+    
     protected RenderView getNewRenderView(Properties config){
         try{
             String className =
@@ -402,8 +421,9 @@ public abstract class AbstractApplicationContext
     public void destroy(){
         this.objectFactory.destroy();
         this.renderView.destroy();
+        this.codeGenerator.destroy();
         this.actionResolver = null;
-        this.codeGeneratorProvider = null;
+        this.codeGenerator = null;
         this.configuration = null;
         this.controllerManager = null;
         this.controllerResolver = null;
@@ -515,12 +535,12 @@ public abstract class AbstractApplicationContext
         return this.actionResolver;
     }
 
-    public CodeGeneratorProvider getCodeGeneratorProvider() {
-        return this.codeGeneratorProvider;
+    public CodeGenerator getCodeGenerator() {
+        return this.codeGenerator;
     }
 
-    public void setCodeGeneratorProvider(CodeGeneratorProvider codeGeneratorProvider) {
-        this.codeGeneratorProvider = codeGeneratorProvider;
+    public void setCodeGenerator(CodeGenerator codeGenerator) {
+        this.codeGenerator = codeGenerator;
     }
 
     public ViewResolver getViewResolver() {
@@ -548,7 +568,7 @@ public abstract class AbstractApplicationContext
         Object resource = controller.getInstance(this.objectFactory);
 
         ProxyFactory proxyFactory =
-                codeGeneratorProvider
+                this.codeGenerator
                     .getProxyFactory(controller.getClassType());
 
         Object proxy =

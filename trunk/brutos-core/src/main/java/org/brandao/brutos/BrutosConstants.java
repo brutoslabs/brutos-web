@@ -132,7 +132,7 @@ public interface BrutosConstants {
     
     public final String REQUEST_PARSER_CLASS      = "org.brandao.brutos.web.request_parser";
     
-    public final String PROXY_PROVIDER_CLASS      = "org.brandao.brutos.proxy.provider";
+    public final String CODE_GENERATOR_CLASS      = "org.brandao.brutos.code_generator";
     
     /*vars - end*/
 

@@ -17,6 +17,8 @@
 
 package org.brandao.brutos.proxy;
 
+import org.brandao.brutos.ProxyFactory;
+
 /**
  *
  * @author Brandao

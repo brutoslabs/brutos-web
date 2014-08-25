@@ -16,7 +16,7 @@
  */
 
 
-package org.brandao.brutos.proxy;
+package org.brandao.brutos.javassist;
 
 import javassist.ClassClassPath;
 import javassist.ClassPool;
@@ -28,6 +28,7 @@ import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.proxy.AbstractProxyFactory;
 
 /**
  *
