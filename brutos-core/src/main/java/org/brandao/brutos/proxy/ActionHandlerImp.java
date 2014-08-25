@@ -20,12 +20,7 @@ package org.brandao.brutos.proxy;
 
 import java.lang.reflect.Method;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.DefaultResourceAction;
-import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.RedirectException;
-import org.brandao.brutos.StackRequestElementImp;
-import org.brandao.brutos.interceptor.ImpInterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Action;
 

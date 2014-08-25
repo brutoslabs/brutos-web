@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
+package org.brandao.brutos;
 
-package org.brandao.brutos.proxy;
-
-import javassist.util.proxy.MethodHandler;
 import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
 
@@ -27,12 +26,10 @@ import org.brandao.brutos.mapping.Controller;
  *
  * @author Brandao
  */
-public class JavassistActionHandler extends ActionHandlerImp
-        implements MethodHandler{
+public interface ProxyFactory {
 
-    public JavassistActionHandler(Object resource, Controller form,
-            ConfigurableApplicationContext context, Invoker invoker){
-        super(resource,form,context,invoker);
-    }
-
+    Object getNewProxy(Object resource,Controller form, 
+            ConfigurableApplicationContext app, Invoker invoker)
+                throws BrutosException;
+    
 }
