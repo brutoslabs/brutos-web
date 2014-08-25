@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Properties;
 import org.brandao.brutos.io.DefaultResourceLoader;
 import org.brandao.brutos.cdi.CDIObjectFactory;
+import org.brandao.brutos.javassist.JavassistCodeGenerator;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
@@ -317,7 +318,7 @@ public abstract class AbstractApplicationContext
             String className =
                 configuration.getProperty(
                     BrutosConstants.CODE_GENERATOR_CLASS,
-                    CDIObjectFactory.class.getName());
+                    JavassistCodeGenerator.class.getName());
             
             Class clazz = 
                     ClassUtil.get(className);
