@@ -26,6 +26,7 @@ import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.validator.Validator;
 
 /**
  *
@@ -69,6 +70,8 @@ public class Action {
 
     private DispatcherType dispatcherType;
 
+    private Validator validator;
+    
     public Action() {
         this.parameters = new ArrayList();
         this.parametersType = new ArrayList();
@@ -242,7 +245,7 @@ public class Action {
         Class[] classArgs = new Class[ size ];
         for( int i=0;i<size;i++ ){
             ParameterAction arg = (ParameterAction) parameters.get(i);
-            classArgs[ i ] = arg.getBean().getClassType();
+            classArgs[ i ] = arg.getClassType();
         }
 
         Class tmpClazz = clazz;
@@ -257,14 +260,14 @@ public class Action {
                         
                         ParameterAction arg = 
                                 (ParameterAction) parameters.get(k);
-                        Type type = arg.getBean().getType();
-                        Bean mapping = arg.getBean().getMapping();
+                        Type type = arg.getType();
+                        Bean mapping = arg.getMapping();
                         
                         if( type == null && mapping == null ){
-                            arg.getBean()
-                                    .setType(
-                                        TypeManager.getType(
-                                            params[k]));
+                            arg.
+                                setType(
+                                    TypeManager.getType(
+                                        params[k]));
                         }
                     }
 
@@ -301,19 +304,39 @@ public class Action {
 
     }
 
-    private Class[] getParameterClass(){
+    public Class[] getParameterClass(){
         int length = this.parameters.size();
         Class[] result = new Class[length];
 
         for( int i=0;i<length;i++ ){
             ParameterAction p = 
                     (ParameterAction) this.parameters.get(i);
-            result[i] =  p.getBean().getClassType();
+            result[i] =  p.getClassType();
         }
 
         return result;
     }
 
+    public Object[] getParameterValues(Object controllerInstance){
+        int length = this.parameters.size();
+        Object[] values = new Object[ length ];
+
+        int index = 0;
+        for( int i=0;i<length;i++ ){
+            ParameterAction p = (ParameterAction) this.parameters.get(i);
+            values[index++] = p.getValue();
+        }
+        
+        this.validator.validate(this, controllerInstance, values);
+        
+        return values;
+    }
+
+    public Object[] getParameterValues(Object controllerInstance, Object[] values){
+        this.validator.validate(this, controllerInstance, values);
+        return values;
+    }
+    
     public String getExecutor() {
         return executor;
     }
@@ -365,18 +388,20 @@ public class Action {
         this.returnRendered = returnRendered;
     }
 
-    /**
-     * @return the resolvedView
-     */
     public boolean isResolvedView() {
         return resolvedView;
     }
 
-    /**
-     * @param resolvedView the resolvedView to set
-     */
     public void setResolvedView(boolean resolvedView) {
         this.resolvedView = resolvedView;
+    }
+
+    public Validator getValidator() {
+        return validator;
+    }
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
     }
 
 }

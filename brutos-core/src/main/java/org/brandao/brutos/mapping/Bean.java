@@ -264,8 +264,7 @@ public class Bean {
             IllegalArgumentException, InvocationTargetException{
         
         ConstructorBean cons = this.getConstructor();
-        ConstructorBean conInject = this.getConstructor();
-        if( conInject.isConstructor() ){
+        if( cons.isConstructor() ){
             Constructor insCons = this.getConstructor().getContructor();
             Object[] args = this.getValues(cons, prefix, index, exceptionHandler, force );
 

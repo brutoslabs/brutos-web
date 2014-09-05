@@ -19,16 +19,13 @@ package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.bean.BeanInstance;
-import org.brandao.brutos.validator.Validator;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class PropertyController {
+public class PropertyController extends UseBeanData{
 
-    private UseBeanData bean;
-    
     private boolean request;
     
     private boolean response;
@@ -44,8 +41,6 @@ public class PropertyController {
         BeanInstance instance = null;
         try{
             instance = new BeanInstance( source );
-            /*GetterProperty get = instance.getGetter(name);
-            return get.get();*/
             return instance.get(name);
         }
         catch( Exception e ){
@@ -55,17 +50,23 @@ public class PropertyController {
         }
     }
 
+    public Object getValue(){
+        Object value = super.getValue();
+        super.getValidate().validate(this, value);
+        return value;
+    }
+    public void setValue(Object source){
+        this.setValue(source, this.getValue());
+    }
+    
     public void setValue( Object source, Object value ){
 
-        if( this.name == null )
+        if( this.name == null || value == null)
             return;
         
         BeanInstance instance = null;
         try{
             instance = new BeanInstance( source );
-            /*SetterProperty set = instance.getSetter(name);
-            set.set(value);
-            */
             instance.set(name, value);
         }
         catch( Exception e ){
@@ -73,14 +74,6 @@ public class PropertyController {
                     "can not set property: " +
                     instance.getClassType().getName() + "." + name, e );
         }
-    }
-
-    public UseBeanData getBean() {
-        return bean;
-    }
-
-    public void setBean(UseBeanData bean) {
-        this.bean = bean;
     }
 
     public boolean isRequest() {
@@ -121,8 +114,4 @@ public class PropertyController {
         this.name = name;
     }
 
-    public Validator getValidator() {
-        return bean.getValidate();
-    }
-    
 }
