@@ -18,6 +18,12 @@
 package org.brandao.brutos.validator;
 
 import java.util.Properties;
+import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ConstructorArgBean;
+import org.brandao.brutos.mapping.ConstructorBean;
+import org.brandao.brutos.mapping.ParameterAction;
+import org.brandao.brutos.mapping.PropertyBean;
+import org.brandao.brutos.mapping.PropertyController;
 
 /**
  * Define o objeto que faz a validação dos dados da requisição.
@@ -26,25 +32,22 @@ import java.util.Properties;
  */
 public interface Validator {
 
-    /**
-     * Aplica a configuração no validador.
-     * @param config Configuração.
-     */
-    void configure( Properties config );
+    void configure(Properties config);
 
-    /**
-     * Obtém a validação do validador.
-     * @return Configuração.
-     */
-    Properties getConfiguration();
+    void validate(ConstructorArgBean source, Object value) throws ValidatorException;
     
-    /**
-     * Faz a validação de um objeto.
-     * 
-     * @param source Origem do valor.
-     * @param value Valor a ser validado.
-     * @throws ValidatorException Lançado caso o valor seja considerado inválido.
-     */
-    void validate(Object source, Object value) throws ValidatorException;
+    void validate(ConstructorBean source, Object[] value) throws ValidatorException;
 
+    void validate(ConstructorBean source, Object value) throws ValidatorException;
+    
+    void validate(PropertyBean source, Object value) throws ValidatorException;
+    
+    void validate(PropertyController source, Object value) throws ValidatorException;
+
+    void validate(ParameterAction source, Object value) throws ValidatorException;
+    
+    void validate(Action source, Object controller, Object[] value) throws ValidatorException;
+    
+    void validate(Action source, Object controller, Object value) throws ValidatorException;
+    
 }

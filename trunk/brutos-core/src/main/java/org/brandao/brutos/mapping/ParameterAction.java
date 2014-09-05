@@ -21,32 +21,6 @@ package org.brandao.brutos.mapping;
  *
  * @author Afonso Brandao
  */
-public class ParameterAction {
+public class ParameterAction extends UseBeanData{
 
-    /**
-     * @deprecated 
-     */
-    private int parameterId;
-    
-    private UseBeanData bean;
-
-    public ParameterAction() {
-    }
-
-    public int getParameterId() {
-        return parameterId;
-    }
-
-    public void setParameterId(int parameterId) {
-        this.parameterId = parameterId;
-    }
-
-    public UseBeanData getBean() {
-        return bean;
-    }
-
-    public void setBean(UseBeanData bean) {
-        this.bean = bean;
-    }
-    
 }

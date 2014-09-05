@@ -37,18 +37,15 @@ public class DataInput {
         this.scope = requestScope;
     }
     
-    public void read( Controller form, Object object ){
+    public void read( Controller controller, Object object ){
         try{
-            List fields = form.getProperties();
+            List fields = controller.getProperties();
             for( int i=0;i<fields.size();i++ ){
                 PropertyController ff = (PropertyController) fields.get(i);
-            //for( FieldForm ff: form.getFields() ){
-                //Object val = ff.getBean().getValue( context, request );
-                Object val = ff.getBean().getValue();
-                if( val != null )
-                    ff.setValue( object, val );
+                ff.setValue(object);
             }
-            setDataWebFrame( form, object );
+            scope.put( BrutosConstants.WEBFRAME, object );
+            scope.put( BrutosConstants.CONTROLLER, object );
         }
         catch( BrutosException e ){
             throw e;
@@ -58,23 +55,4 @@ public class DataInput {
         }
     }
     
-    private void setDataWebFrame( Controller form, Object wf ){
-        /*
-        if( wf instanceof WebFrame ){
-            WebFrame w = (WebFrame)wf;
-            w.setName( form.getId() );
-            w.setPage( form.getPage() );
-            w.setDefaultMethodName( form.getDefaultMethodName() );
-            w.setMethodParameterName( form.getMethodId() );
-            w.setRequest( request );
-            w.setResponse( response );
-            w.setSession( request.getSession() );
-            w.setServletContext( context );
-            w.setUpdatable( true );
-        }
-        */
-        //request.setAttribute( BrutosConstants.WEBFRAME, wf );
-        scope.put( BrutosConstants.WEBFRAME, wf );
-        scope.put( BrutosConstants.CONTROLLER, wf );
-    }
 }

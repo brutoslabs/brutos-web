@@ -23,7 +23,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.type.Types;
 import org.brandao.brutos.type.TypeManager;
 
 /**

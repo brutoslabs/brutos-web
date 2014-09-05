@@ -103,10 +103,20 @@ public class ImpInterceptorHandler implements ConfigurableInterceptorHandler{
         IllegalAccessException, ParseException{
         
         if(this.parameters == null){
-            this.parameters =
-                stackRequestElement.getParameters() == null?
-                    getParameters(stackRequestElement.getAction().getMethodForm() ) :
-                    stackRequestElement.getParameters();
+            if(stackRequestElement.getParameters() == null){
+                this.parameters = 
+                        stackRequestElement
+                                .getAction().getMethodForm()
+                                .getParameterValues(this.resource);
+            }
+            else{
+                this.parameters = 
+                        stackRequestElement
+                                .getAction().getMethodForm()
+                                .getParameterValues(
+                                        this.resource, 
+                                        stackRequestElement.getParameters());
+            }
         }
         
         return this.parameters;
@@ -136,25 +146,4 @@ public class ImpInterceptorHandler implements ConfigurableInterceptorHandler{
         return this.stackRequestElement;
     }
 
-    private Object[] getParameters( Action method )
-            throws InstantiationException, IllegalAccessException,
-        ParseException {
-        if( method != null ){
-            Object[] values = new Object[ method.getParameters().size() ];
-
-            int index = 0;
-            //for( ParameterMethodMapping p: method.getParameters() ){
-            List params = method.getParameters();
-            for( int i=0;i<params.size();i++ ){
-                ParameterAction p = (ParameterAction) params.get(i);
-                UseBeanData bean = p.getBean();
-                values[ index++ ] = bean.getValue();
-            }
-
-            return values;
-        }
-        else
-            return null;
-    }
-    
 }

@@ -17,8 +17,6 @@
 
 package org.brandao.brutos.mapping;
 
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
@@ -31,7 +29,7 @@ import org.brandao.brutos.validator.Validator;
  *
  * @author Afonso Brandao
  */
-public class UseBeanData {
+public abstract class UseBeanData {
     
     private String nome;
     
@@ -66,7 +64,7 @@ public class UseBeanData {
         this.mapping = mapping;
     }
 
-    public Object getValue(){
+    protected Object getValue(){
 
         Object value = null;
 
@@ -90,9 +88,6 @@ public class UseBeanData {
                 //value = type.getValue( value );
             }
         }
-
-        if( validate != null )
-            validate.validate(this, value);
 
         return value;
     }
