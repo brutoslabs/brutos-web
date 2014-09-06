@@ -42,4 +42,10 @@ public class PropertyBean extends DependencyBean{
                 this.name : 
                 super.parameterName;
     }
+
+    protected void validate(Object value) {
+        if(this.validator != null)
+            this.validator.validate(this, value);
+    }
+    
 }

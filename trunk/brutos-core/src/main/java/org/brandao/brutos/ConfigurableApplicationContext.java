@@ -20,7 +20,6 @@ package org.brandao.brutos;
 
 import java.util.Properties;
 import org.brandao.brutos.type.TypeManager;
-import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  *
@@ -61,10 +60,10 @@ public interface ConfigurableApplicationContext
     RenderView getRenderView();
 
     /**
-     * Obt�m o provedor das regras de valida��o.
+     * Obtém a fábrica de validadores.
      * @return Provedor das regras de valida��o
      */
-    ValidatorProvider getValidatorProvider();
+    ValidatorFactory getValidatorFactory();
 
     /**
      * Obt�m o respons�vel por executar as a��es.

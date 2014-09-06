@@ -18,12 +18,17 @@
 package org.brandao.brutos.mapping;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.validator.Validator;
+import org.brandao.brutos.validator.ValidatorException;
 
 /**
  * 
@@ -31,6 +36,9 @@ import org.brandao.brutos.type.TypeManager;
  */
 public class ConstructorBean {
 
+    private static final Logger logger = LoggerProvider
+            .getCurrentLoggerProvider().getLogger(Bean.class);
+    
     private List args;
 
     private Constructor contructor;
@@ -41,6 +49,8 @@ public class ConstructorBean {
 
     private Bean bean;
 
+    private Validator validator;
+    
     public ConstructorBean( Bean bean ){
         this.args = new ArrayList();
         this.bean = bean;
@@ -197,7 +207,95 @@ public class ConstructorBean {
 
     }
 
+    public Object getInstance(String prefix, long index,
+            Controller controller, 
+            ValidatorException exceptionHandler, boolean force) 
+            throws InstantiationException, IllegalAccessException, 
+            IllegalArgumentException, InvocationTargetException{
+        
+        Object instance;
+        
+        if( this.isConstructor() ){
+            Constructor insCons = this.getContructor();
+            Object[] args = this.getValues(prefix, index, exceptionHandler, force );
 
+            if( args == null )
+                return null;
+            
+            if( this.validator != null)
+                this.validator.validate(this, args);
+            
+            instance = insCons.newInstance( args );
+            
+            if( this.validator != null)
+                this.validator.validate(this, instance);
+            
+        }
+        else{
+            String factoryName = bean.getFactory();
+            Bean factoryBean =
+                factoryName != null?
+                    controller.getBean(factoryName) :
+                    null;
+
+            Object factoryInstance = null;
+            
+            if( factoryName != null ){
+
+                if( factoryBean == null )
+                    throw new MappingException("bean not found: " + factoryName);
+                
+                factoryInstance = factoryBean.getValue(true);
+
+                if( factoryInstance == null )
+                    return null;
+            }
+
+            Method method = this.getMethod( factoryInstance );
+
+            if( index != -1 && this.size() == 0 )
+                throw new MappingException("infinite loop detected: " + bean.getName());
+            
+            if( this.validator != null)
+                this.validator.validate(method, factoryInstance, args);
+            
+            instance = method.invoke(
+                    factoryName == null?
+                        this.bean.getClassType() :
+                        factoryInstance,
+                    getValues(prefix, index, exceptionHandler, true ) );
+            
+            if( this.validator != null)
+                this.validator.validate(method, factoryInstance, instance);
+            
+        }
+        
+        return instance;
+    }
+    
+    private Object[] getValues( String prefix, 
+            long index, ValidatorException exceptionHandler, boolean force ) {
+        int size = this.size();
+        Object[] values = new Object[ size ];
+
+        boolean exist = false;
+        for( int i=0;i<size;i++ ){
+            ConstructorArgBean arg = this.getConstructorArg(i);
+            values[i] = arg.getValue(prefix, index, exceptionHandler);
+            
+            if(logger.isDebugEnabled())
+                logger.debug(
+                    String.format(
+                        "binding %s to constructor arg: %s", 
+                        new Object[]{values[i],String.valueOf(i)}));
+            
+            if( force || values[i] != null || arg.isNullable()  )
+                exist = true;
+        }
+
+        return exist || size == 0? values : null;
+    }
+    
     public void setContructor(Constructor contructor) {
         this.contructor = contructor;
     }
@@ -224,6 +322,14 @@ public class ConstructorBean {
 
     public void setBean(Bean bean) {
         this.bean = bean;
+    }
+
+    public Validator getValidator() {
+        return validator;
+    }
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
     }
 
 }

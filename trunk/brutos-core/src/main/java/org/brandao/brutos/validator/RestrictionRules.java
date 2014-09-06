@@ -35,6 +35,7 @@ public class RestrictionRules {
     public static final RestrictionRules MATCHES     = new RestrictionRules( "matches" );
     public static final RestrictionRules REQUIRED    = new RestrictionRules( "required" );
     public static final RestrictionRules EQUAL       = new RestrictionRules( "equal" );
+    public static final RestrictionRules CUSTOM      = new RestrictionRules( "custom" );
 
     private final static Map defaultRules = new HashMap();
 
@@ -46,6 +47,7 @@ public class RestrictionRules {
         defaultRules.put( RestrictionRules.MATCHES.toString(),    RestrictionRules.MATCHES );
         defaultRules.put( RestrictionRules.REQUIRED.toString(),   RestrictionRules.REQUIRED );
         defaultRules.put( RestrictionRules.EQUAL.toString(),      RestrictionRules.EQUAL );
+        defaultRules.put( RestrictionRules.CUSTOM.toString(),     RestrictionRules.CUSTOM );
     }
 
     private String name;

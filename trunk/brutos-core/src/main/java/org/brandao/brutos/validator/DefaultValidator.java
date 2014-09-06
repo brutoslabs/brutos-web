@@ -18,12 +18,19 @@
 
 package org.brandao.brutos.validator;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
+import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ConstructorArgBean;
+import org.brandao.brutos.mapping.ConstructorBean;
+import org.brandao.brutos.mapping.ParameterAction;
+import org.brandao.brutos.mapping.PropertyBean;
+import org.brandao.brutos.mapping.PropertyController;
 
 /**
  *
@@ -46,23 +53,31 @@ public class DefaultValidator implements Validator{
     }
 
     private synchronized void init(){
-        this.rules = new HashMap();
+        try{
+            this.rules = new HashMap();
 
-        Iterator keys = config.stringPropertyNames().iterator();
+            Iterator keys = config.stringPropertyNames().iterator();
 
-        while( keys.hasNext() ){
-            String key = (String) keys.next();
-            if( !key.equals("message") ){
-                Class rule = (Class) mappedRules.get(key);
+            while( keys.hasNext() ){
+                String key = (String) keys.next();
+                if( !key.equals("message") ){
+                    Class rule = 
+                        key.equalsIgnoreCase(RestrictionRules.CUSTOM.toString())?
+                            ClassUtil.get(config.getProperty(key)) : 
+                            (Class) mappedRules.get(key);
 
-                if( rule != null ){
-                    ValidationRule ruleInstance = getInstance(rule);
-                    ruleInstance.setConfiguration(this.config);
-                    rules.put(key, ruleInstance);
+                    if( rule != null ){
+                        ValidationRule ruleInstance = getInstance(rule);
+                        ruleInstance.setConfiguration(this.config);
+                        rules.put(key, ruleInstance);
+                    }
                 }
             }
+            this.initialized = true;
         }
-        this.initialized = true;
+        catch(Throwable e){
+            throw new BrutosException(e);
+        }
     }
 
     private ValidationRule getInstance(Class clazz){
@@ -113,6 +128,43 @@ public class DefaultValidator implements Validator{
 
     public Properties getConfiguration() {
         return this.config;
+    }
+
+    public void validate(ConstructorArgBean source, Object value) throws ValidatorException {
+        this.validate(source, value);
+    }
+
+    public void validate(ConstructorBean source, Object[] value) throws ValidatorException {
+    }
+
+    public void validate(ConstructorBean source, Object value) throws ValidatorException {
+        this.validate(source, value);
+    }
+
+    public void validate(PropertyBean source, Object value) throws ValidatorException {
+        this.validate(source, value);
+    }
+
+    public void validate(PropertyController source, Object value) throws ValidatorException {
+        this.validate(source, value);
+    }
+
+    public void validate(ParameterAction source, Object value) throws ValidatorException {
+        this.validate(source, value);
+    }
+
+    public void validate(Action source, Object controller, Object[] value) throws ValidatorException {
+    }
+
+    public void validate(Action source, Object controller, Object value) throws ValidatorException {
+        this.validate(source, value);
+    }
+
+    public void validate(Method source, Object instance, Object[] value) throws ValidatorException {
+    }
+
+    public void validate(Method source, Object instance, Object value) throws ValidatorException {
+        this.validate(source, value);
     }
 
 }

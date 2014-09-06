@@ -124,7 +124,7 @@ public class Bean {
         try{
             obj =
                 instance == null?
-                    getInstanceByConstructor( prefix, index, vex, force ) :
+                    this.constructor.getInstance(prefix, index, this.controller, exceptionHandler, force) :
                     instance;
             
             if( obj == null )
@@ -256,77 +256,6 @@ public class Bean {
 
     public void setConstructor(ConstructorBean constructor) {
         this.constructor = constructor;
-    }
-
-    private Object getInstanceByConstructor( String prefix, long index,
-            ValidatorException exceptionHandler, boolean force ) 
-            throws InstantiationException, IllegalAccessException, 
-            IllegalArgumentException, InvocationTargetException{
-        
-        ConstructorBean cons = this.getConstructor();
-        if( cons.isConstructor() ){
-            Constructor insCons = this.getConstructor().getContructor();
-            Object[] args = this.getValues(cons, prefix, index, exceptionHandler, force );
-
-            if( args == null )
-                return null;
-            
-            return insCons.newInstance( args );
-        }
-        else{
-            Bean factoryBean =
-                this.getFactory() != null?
-                    controller.getBean(factory) :
-                    null;
-
-            Object factoryInstance = null;
-            
-            if( this.getFactory() != null ){
-
-                if( factoryBean == null )
-                    throw new MappingException("bean not found: " + factory);
-                
-                factoryInstance = factoryBean.getValue(true);
-
-                if( factoryInstance == null )
-                    return null;
-            }
-
-            Method method = this.getConstructor().getMethod( factoryInstance );
-
-            if( index != -1 && this.getConstructor().size() == 0 )
-                throw new MappingException("infinite loop: " + 
-                        this.getName());
-            
-            return method.invoke(
-                    factory == null?
-                        this.getClassType() :
-                        factoryInstance,
-                    getValues(cons, prefix, index, exceptionHandler, true ) );
-        }
-    }
-
-    private Object[] getValues( ConstructorBean constructorBean, String prefix, 
-            long index, ValidatorException exceptionHandler, boolean force ) {
-        int size = constructorBean.size();
-        Object[] values = new Object[ size ];
-
-        boolean exist = false;
-        for( int i=0;i<size;i++ ){
-            ConstructorArgBean arg = constructorBean.getConstructorArg(i);
-            values[i] = arg.getValue(prefix, index, exceptionHandler);
-            
-            if(logger.isDebugEnabled())
-                logger.debug(
-                    String.format(
-                        "binding %s to constructor arg: %s", 
-                        new Object[]{values[i],String.valueOf(i)}));
-            
-            if( force || values[i] != null || arg.isNullable()  )
-                exist = true;
-        }
-
-        return exist || size == 0? values : null;
     }
 
     public String getFactory() {

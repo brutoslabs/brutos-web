@@ -22,7 +22,6 @@ import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.type.UnknownTypeException;
-import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  * Constrói uma ação. A ação pode ter ou não parâmetros. Os parâmetros podem ser
@@ -55,17 +54,17 @@ public class ActionBuilder {
     
     Controller controller;
     Action action;
-    ValidatorProvider validatorProvider;
+    ValidatorFactory validatorFactory;
     ControllerBuilder controllerBuilder;
     ConfigurableApplicationContext applicationContext;
     
     public ActionBuilder( Action methodForm, 
-            Controller controller, ValidatorProvider validatorProvider,
+            Controller controller, ValidatorFactory validatorFactory,
             ControllerBuilder controllerBuilder,
             ConfigurableApplicationContext applicationContext) {
         this.controller = controller;
         this.action = methodForm;
-        this.validatorProvider = validatorProvider;
+        this.validatorFactory = validatorFactory;
         this.controllerBuilder = controllerBuilder;
         this.applicationContext = applicationContext;
     }
@@ -346,17 +345,17 @@ public class ActionBuilder {
         
         Configuration validatorConfig = new Configuration();
         
-        UseBeanData useBean = new UseBeanData();
+        ParameterAction parameter = new ParameterAction();
 
-        useBean.setNome( name );
-        useBean.setScopeType( scope );
-        useBean.setValidate( validatorProvider.getValidator( validatorConfig ) );
-        useBean.setStaticValue(value);
-        useBean.setNullable(nullable);
+        parameter.setNome( name );
+        parameter.setScopeType( scope );
+        parameter.setValidate( this.validatorFactory.getValidator(validatorConfig) );
+        parameter.setStaticValue(value);
+        parameter.setNullable(nullable);
         
         if( !StringUtil.isEmpty(mapping) ){
             if( controller.getBean(mapping) != null )
-                useBean.setMapping( controller.getBean( mapping ) );
+                parameter.setMapping( controller.getBean( mapping ) );
             else
                 throw new BrutosException( "mapping name " + mapping + " not found!" );
                 
@@ -377,12 +376,12 @@ public class ActionBuilder {
                 }
             }
             
-            useBean.setType( typeDef );
+            parameter.setType( typeDef );
         }
         else
         if(rawType != null && mapping == null){
             try{
-                useBean.setType( 
+                parameter.setType( 
                         TypeManager.getType( 
                             classType, 
                             enumProperty, 
@@ -398,16 +397,12 @@ public class ActionBuilder {
                                 e.getMessage()} ), e );
             }
             
-            if( useBean.getType() == null )
+            if( parameter.getType() == null )
                 throw new UnknownTypeException( rawType.getName() );
         }
 
-        ParameterAction pmm = new ParameterAction();
-        pmm.setBean( useBean );
-        pmm.setParameterId( 0 );
-        
-        action.addParameter( pmm );
-        return new ParameterBuilder( pmm );
+        action.addParameter( parameter );
+        return new ParameterBuilder( parameter );
     }
 
     /**

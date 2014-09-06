@@ -30,7 +30,7 @@ import org.brandao.brutos.validator.ValidatorException;
  *
  * @author Brandao
  */
-public class DependencyBean {
+public abstract class DependencyBean {
 
     protected String parameterName;
 
@@ -225,7 +225,7 @@ public class DependencyBean {
 
         try{
             if( validator != null )
-                validator.validate(this, result);
+                this.validate(value);
         }
         catch( ValidatorException vex ){
             if( exceptionHandler == null )
@@ -239,6 +239,8 @@ public class DependencyBean {
         return result;
     }
 
+    protected abstract void validate(Object value);
+    
     public boolean isNullable() {
         return nullable;
     }

@@ -28,7 +28,7 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.type.TypeManager;
-import org.brandao.brutos.validator.ValidatorProvider;
+import org.brandao.brutos.validator.DefaultValidatorFactory;
 
 /**
  * 
@@ -48,8 +48,6 @@ public abstract class AbstractApplicationContext
     
     protected RenderView renderView;
     
-    protected ValidatorProvider validatorProvider;
-    
     protected Invoker invoker;
     
     protected Properties configuration;
@@ -67,6 +65,8 @@ public abstract class AbstractApplicationContext
     protected Scopes scopes;
     
     private ViewResolver viewResolver;
+    
+    private ValidatorFactory validatorFactory;
     
     protected CodeGenerator codeGenerator;
     
@@ -98,7 +98,7 @@ public abstract class AbstractApplicationContext
         this.actionResolver        = getNewMethodResolver();
         this.requestFactory        = getMvcRequestFactory();
         this.responseFactory       = getMvcResponseFactory();
-        this.validatorProvider     = ValidatorProvider.getValidatorProvider(this.getConfiguration());
+        this.validatorFactory      = getNewValidatorFactory(configuration);
         this.viewResolver          = getNewViewResolver();
         this.controllerManager     = getNewControllerManager();
         this.renderView            = getNewRenderView(configuration);
@@ -250,7 +250,7 @@ public abstract class AbstractApplicationContext
                 (ControllerManager)ClassUtil.getInstance(clazz);
             
             instance.setInterceptorManager(interceptorManager);
-            instance.setValidatorProvider(validatorProvider);
+            instance.setValidatorProvider(validatorFactory);
             instance.setParent(this.parent == null? 
                             null : 
                             ((ConfigurableApplicationContext)parent).getControllerManager());
@@ -313,6 +313,31 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    protected ValidatorFactory getNewValidatorFactory(Properties config){
+        try{
+            String className =
+                configuration.getProperty(
+                    BrutosConstants.VALIDATOR_FACTORY_CLASS,
+                    DefaultValidatorFactory.class.getName());
+            
+            Class clazz = 
+                    ClassUtil.get(className);
+            
+            ValidatorFactory instance = 
+                (ValidatorFactory)ClassUtil.getInstance(clazz);
+            
+            instance.configure(config);
+            
+            return instance;
+        }
+        catch( BrutosException e ){
+            throw e;
+        }
+        catch( Throwable e ){
+            throw new BrutosException( e );
+        }
+    }
+    
     protected CodeGenerator getNewCodeGenerator(Properties config){
         try{
             String className =
@@ -423,6 +448,7 @@ public abstract class AbstractApplicationContext
         this.objectFactory.destroy();
         this.renderView.destroy();
         this.codeGenerator.destroy();
+        this.validatorFactory.destroy();
         this.actionResolver = null;
         this.codeGenerator = null;
         this.configuration = null;
@@ -435,7 +461,7 @@ public abstract class AbstractApplicationContext
         this.requestFactory = null;
         this.responseFactory = null;
         this.scopes.clear();
-        this.validatorProvider = null;
+        this.validatorFactory = null;
         this.viewResolver = null;
     }
 
@@ -496,8 +522,8 @@ public abstract class AbstractApplicationContext
         return this.renderView;
     }
 
-    public ValidatorProvider getValidatorProvider() {
-        return this.validatorProvider;
+    public ValidatorFactory getValidatorFactory() {
+        return this.validatorFactory;
     }
 
     public Invoker getInvoker() {

@@ -31,19 +31,19 @@ import org.brandao.brutos.validator.Validator;
  */
 public abstract class UseBeanData {
     
-    private String nome;
+    protected String nome;
     
-    private ScopeType scopeType;
+    protected ScopeType scopeType;
 
-    private Bean mapping;
+    protected Bean mapping;
 
-    private Object staticValue;
+    protected Object staticValue;
 
-    private Type type;
+    protected Type type;
 
-    private Validator validate;
+    protected Validator validate;
 
-    private boolean nullable;
+    protected boolean nullable;
 
     public UseBeanData() {
     }
@@ -71,27 +71,28 @@ public abstract class UseBeanData {
         if( !isNullable() ){
             if( mapping != null )
                 value = mapping.getValue(nome == null? null : nome + mapping.getSeparator());
-                //value = mapping.getValue();
             else
             if(staticValue!= null)
                 value = type.convert( staticValue );
-                //value = type.getValue( staticValue );
             else
             if( type instanceof CollectionType || type instanceof ArrayType ){
                 value = nome == null? null : getScope().getCollection(nome);
                 value = type.convert( value );
-                //value = type.getValue( value );
             }
             else{
                 value = nome == null? null : getScope().get(nome);
                 value = type.convert( value );
-                //value = type.getValue( value );
             }
         }
 
+        this.validate(value);
+        
         return value;
     }
 
+    protected abstract void validate(Object value);
+    
+    
     public Class getClassType(){
         //if( type != null )
             return type == null? null : type.getClassType();
