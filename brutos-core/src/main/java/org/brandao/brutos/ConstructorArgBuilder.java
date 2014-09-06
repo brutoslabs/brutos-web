@@ -26,11 +26,11 @@ import org.brandao.brutos.validator.RestrictionRules;
  * 
  * @author Afonso Brandao
  */
-public class ConstructorBuilder extends RestrictionBuilder{
+public class ConstructorArgBuilder extends RestrictionBuilder{
 
     private ConstructorArgBean arg;
     
-    public ConstructorBuilder(ConstructorArgBean arg){
+    public ConstructorArgBuilder(ConstructorArgBean arg){
         super( arg.getValidator().getConfiguration() );
         this.arg = arg;
     }

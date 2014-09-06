@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  * Gerencia os controladores de toda a aplicação.
@@ -186,16 +185,16 @@ public interface ControllerManager {
     void setInterceptorManager(InterceptorManager interceptorManager);
     
     /**
-     * Obtém o provedor dos validadores.
+     * Obtém a fábrica de validadores.
      * @return Provedor dos validadores..
      */
-    ValidatorProvider getValidatorProvider();
+    ValidatorFactory getValidatorFactory();
     
     /**
-     * Define o provedor dos validadores.
-     * @param validatorProvider Provedor dos validadores. 
+     * Define a fábrica de validadores.
+     * @param validatorFactory Provedor dos validadores. 
      */
-    void setValidatorProvider(ValidatorProvider validatorProvider);
+    void setValidatorProvider(ValidatorFactory validatorFactory);
 
     /**
      * Obtém o contexto da aplicação.

@@ -677,7 +677,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
                 throw new BrutosException( ex );
             }
 
-            ConstructorBuilder constructorBuilder =
+            ConstructorArgBuilder constructorBuilder =
                     beanBuilder.addContructorArg(
                         bean,
                         enumProperty,

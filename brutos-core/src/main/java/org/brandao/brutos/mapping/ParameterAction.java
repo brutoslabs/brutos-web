@@ -23,4 +23,8 @@ package org.brandao.brutos.mapping;
  */
 public class ParameterAction extends UseBeanData{
 
+    protected void validate(Object value) {
+        this.validate.validate(this, value);
+    }
+
 }
