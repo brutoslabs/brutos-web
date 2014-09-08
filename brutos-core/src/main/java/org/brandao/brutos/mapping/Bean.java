@@ -55,6 +55,8 @@ public class Bean {
 
     private String indexFormat;
 
+    private BeanInstance beanInstance;
+    
     public Bean( Controller controller ) {
         this.fields = new HashMap();
         this.controller = controller;
@@ -78,6 +80,7 @@ public class Bean {
 
     public void setClassType(Class classType) {
         this.classType = classType;
+        this.beanInstance = new BeanInstance(classType);
     }
 
     public Map getFields() {
@@ -137,12 +140,12 @@ public class Bean {
                     this.getConstructor().isMethodFactory();
 
             Iterator fds = fields.values().iterator();
-            BeanInstance beanInstance = new BeanInstance( obj, classType );
+            //BeanInstance beanInstance = new BeanInstance( obj, classType );
             
             while( fds.hasNext() ){
                 PropertyBean fb = (PropertyBean) fds.next();
 
-                boolean existProperty = resolveAndSetProperty(fb, beanInstance, 
+                boolean existProperty = resolveAndSetProperty(fb, obj, 
                         prefix, index, vex );
                 
                 if( !exist && (existProperty || fb.isNullable()) )
@@ -178,13 +181,12 @@ public class Bean {
         }
     }
     
-    private boolean resolveAndSetProperty(PropertyBean fb, BeanInstance beanInstance, 
+    private boolean resolveAndSetProperty(PropertyBean fb, Object instance, 
             String prefix, long index, ValidatorException vex ){
 
         try{
-            Object property = 
-                    beanInstance.get( fb.getName() );
-            Object value = fb.getValue(prefix, index, vex, property);
+            Object property = fb.getValueFromSource(instance);
+            Object value = fb.getValue(prefix, index, vex, instance, property);
             
             if(logger.isDebugEnabled())
                 logger.debug(
@@ -192,7 +194,7 @@ public class Bean {
                             "binding %s to property: %s", 
                             new Object[]{value,fb.getName()}));
 
-            beanInstance.set( fb.getName(), value );
+            fb.setValueInSource(instance, value);
             return value != null;
         }
         catch( DependencyException e ){
@@ -276,6 +278,20 @@ public class Bean {
 
     public PropertyBean getProperty(String name){
         return (PropertyBean) this.fields.get(name);
+    }
+
+    /**
+     * @return the beanInstance
+     */
+    public BeanInstance getBeanInstance() {
+        return beanInstance;
+    }
+
+    /**
+     * @param beanInstance the beanInstance to set
+     */
+    public void setBeanInstance(BeanInstance beanInstance) {
+        this.beanInstance = beanInstance;
     }
     
 }

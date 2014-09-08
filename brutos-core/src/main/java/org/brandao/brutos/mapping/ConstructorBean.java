@@ -223,12 +223,12 @@ public class ConstructorBean {
                 return null;
             
             if( this.validator != null)
-                this.validator.validate(this, args);
+                this.validator.validate(this, null, args);
             
             instance = insCons.newInstance( args );
             
             if( this.validator != null)
-                this.validator.validate(this, instance);
+                this.validator.validate(this, null, instance);
             
         }
         else{
@@ -257,7 +257,7 @@ public class ConstructorBean {
                 throw new MappingException("infinite loop detected: " + bean.getName());
             
             if( this.validator != null)
-                this.validator.validate(method, factoryInstance, args);
+                this.validator.validate(this, factoryInstance, args);
             
             instance = method.invoke(
                     factoryName == null?
@@ -266,7 +266,7 @@ public class ConstructorBean {
                     getValues(prefix, index, exceptionHandler, true ) );
             
             if( this.validator != null)
-                this.validator.validate(method, factoryInstance, instance);
+                this.validator.validate(this, factoryInstance, instance);
             
         }
         
@@ -281,7 +281,7 @@ public class ConstructorBean {
         boolean exist = false;
         for( int i=0;i<size;i++ ){
             ConstructorArgBean arg = this.getConstructorArg(i);
-            values[i] = arg.getValue(prefix, index, exceptionHandler);
+            values[i] = arg.getValue(prefix, index, exceptionHandler, null);
             
             if(logger.isDebugEnabled())
                 logger.debug(

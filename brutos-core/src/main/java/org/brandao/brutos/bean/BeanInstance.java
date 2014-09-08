@@ -56,49 +56,33 @@ public class BeanInstance {
 
     public void set( String property, Object value ) throws IllegalAccessException, 
             IllegalArgumentException, InvocationTargetException{
-        
-        BeanProperty prop = data.getProperty(property);
-        if(prop == null)
-            throw new BrutosException( "not found: " + clazz.getName() + "." + property );
-        prop.set(object, value);
+        getProperty(property).set(object, value);
     }
 
     public Object get( String property ) throws IllegalAccessException, 
+            IllegalArgumentException, InvocationTargetException{
+        return getProperty(property).get(object);
+    }
+
+    public void set( String property, Object source, Object value ) throws IllegalAccessException, 
+            IllegalArgumentException, InvocationTargetException{
+        getProperty(property).set(source, value);
+    }
+
+    public Object get( String property, Object source ) throws IllegalAccessException, 
+            IllegalArgumentException, InvocationTargetException{
+        return getProperty(property).get(source);
+    }
+    
+    public BeanProperty getProperty( String property ) throws IllegalAccessException, 
             IllegalArgumentException, InvocationTargetException{
         
         BeanProperty prop = data.getProperty(property);
         if(prop == null)
             throw new BrutosException( "not found: " + clazz.getName() + "." + property );
-        
-        return prop.get(object);
+        else
+            return prop;
     }
-    
-    /*
-    public SetterProperty getSetter( String property ){
-        Object access = data.getSetter().get(property);
-        
-        if( access instanceof Method )
-            return new SetterProperty( (Method)access, object );
-        else
-        if( access instanceof Field )
-            return new SetterProperty( (Field)access, object );
-        else
-            throw new BrutosException( "not found: " + clazz.getName() + "." + property );
-    }
-    */
-    /*
-    public GetterProperty getGetter( String property ){
-        Object access = data.getGetter().get(property);
-        
-        if( access instanceof Method )
-            return new GetterProperty( (Method)access, object );
-        else
-        if( access instanceof Field )
-            return new GetterProperty( (Field)access, object );
-        else
-            throw new BrutosException( "not found: " + clazz.getName() + "." + property );
-    }
-    */
     
     private BeanData getBeanData( Class clazz ){
         if( cache.containsKey(clazz) )

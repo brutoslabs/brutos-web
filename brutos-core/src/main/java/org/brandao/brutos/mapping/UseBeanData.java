@@ -64,7 +64,7 @@ public abstract class UseBeanData {
         this.mapping = mapping;
     }
 
-    protected Object getValue(){
+    public Object getValue(Object source){
 
         Object value = null;
 
@@ -85,12 +85,12 @@ public abstract class UseBeanData {
             }
         }
 
-        this.validate(value);
+        this.validate(source, value);
         
         return value;
     }
 
-    protected abstract void validate(Object value);
+    protected abstract void validate(Object source, Object value);
     
     
     public Class getClassType(){

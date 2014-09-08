@@ -36,7 +36,7 @@ public class PropertyBuilder extends RestrictionBuilder{
     }
 
     public PropertyBuilder(PropertyController propertyBean){
-        super( propertyBean.getValidator().getConfiguration() );
+        super( propertyBean.getValidate().getConfiguration() );
         this.propertyBean = propertyBean;
     }
     

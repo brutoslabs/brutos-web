@@ -17,13 +17,10 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.type.TypeManager;
-import org.brandao.brutos.type.UnknownTypeException;
 
 /**
  *
@@ -31,12 +28,18 @@ import org.brandao.brutos.type.UnknownTypeException;
  */
 public class BeanBuilder {
 
-    Controller controller;
-    ControllerBuilder controllerBuilder;
-    Bean mappingBean;
-    ValidatorFactory validatorFactory;
-    ApplicationContext applicationContext;
+    private Controller controller;
+    
+    private  ControllerBuilder controllerBuilder;
+    
+    private  Bean mappingBean;
+    
+    private  ValidatorFactory validatorFactory;
+    
+    private  ApplicationContext applicationContext;
 
+    private ConstructorBuilder constructorBuilder;
+    
     public BeanBuilder(
             Bean mappingBean,
             Controller controller,
@@ -49,6 +52,9 @@ public class BeanBuilder {
         this.controller = controller;
         this.validatorFactory = validatorFactory;
         this.applicationContext = applicationContext;
+        this.constructorBuilder = 
+                new ConstructorBuilder(mappingBean, controllerBuilder, 
+                        validatorFactory, controller);
     }
 
     /**
@@ -254,9 +260,10 @@ public class BeanBuilder {
                     new Object[]{this.mappingBean.getClassType()} ) );
         
         DependencyBean key =
-            this.createDependencyBean(name, null,
+            MappingBeanUtil.createDependencyBean(name, null,
                 enumProperty, temporalProperty, mapping, scope, value, false, 
-                typeDef, type, DEPENDENCY);
+                typeDef, type, MappingBeanUtil.DEPENDENCY, this.mappingBean, 
+                this.validatorFactory, this.controller);
 
         ((MapBean)mappingBean).setKey(key);
         return new KeyBuilder(key);
@@ -367,9 +374,10 @@ public class BeanBuilder {
                     new Object[]{this.mappingBean.getClassType()} ) );
 
         DependencyBean collection =
-            this.createDependencyBean(name, null,
+            MappingBeanUtil.createDependencyBean(name, null,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                typeDef, type, DEPENDENCY);
+                typeDef, type, MappingBeanUtil.DEPENDENCY, this.mappingBean, 
+                this.validatorFactory, this.controller);
 
         ((CollectionBean)mappingBean).setCollection(collection);
         return new ElementBuilder(collection);
@@ -535,9 +543,10 @@ public class BeanBuilder {
                 name;
         
         PropertyBean propertyBean =
-            (PropertyBean) this.createDependencyBean(name, propertyName,
+            (PropertyBean) MappingBeanUtil.createDependencyBean(name, propertyName,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                type, classType, PROPERTY);
+                type, classType, MappingBeanUtil.PROPERTY, this.mappingBean, 
+                this.validatorFactory, this.controller);
 
         getLogger()
             .info(
@@ -553,306 +562,10 @@ public class BeanBuilder {
         return new PropertyBuilder( propertyBean );
     }
 
-    /**
-     * Constr�i o mapeamento de um argumento do construtor.
-     *
-     * @param name Identifica��o.
-     * @param target Classe alvo do mapeamento.
-     * @return Construtor do argumento.
-     */
-    public BeanBuilder buildConstructorArg( String name, Class target ){
-        
-        name = StringUtil.adjust(name);
-        
-        String beanName = this.mappingBean.getName()
-                + "#[" + this.mappingBean.getConstructor().size() + "]";
-
-        BeanBuilder beanBuilder =
-                this.controllerBuilder.buildMappingBean(beanName, target);
-
-        this.addMappedContructorArg(name, beanName);
-
-        return beanBuilder;
-    }
-
-    /**
-     * Constrói o mapeamento de um argumento do construtor.
-     *
-     * @param name Identificação.
-     * @param target Classe alvo do mapeamento.
-     * @param classType Tipo do argumento do contrutor.
-     * @return Construtor do argumento.
-     */
-    public BeanBuilder buildConstructorArg( String name, Class classType, Class target ){
-        
-        name = StringUtil.adjust(name);
-        
-        String beanName = this.mappingBean.getName()
-                + "#[" + this.mappingBean.getConstructor().size() + "]";
-
-        BeanBuilder beanBuilder =
-                this.controllerBuilder.buildMappingBean(beanName, target);
-
-        this.addMappedContructorArg(name, beanName);
-
-        return beanBuilder;
-    }
-
-    /**
-     * Faz o mapeamento de um argumento do construtor.
-     *
-     * @param name Nome do par�metro.
-     * @param enumProperty Usado no mapeamento argumentos do tipo enum.
-     * @return Construtor do argumento.
-     */
-    public ConstructorArgBuilder addContructorArg( String name,
-            EnumerationType enumProperty ){
-        return addContructorArg( name, enumProperty, null, null, 
-                ScopeType.PARAM, null, false, null, null );
-    }
-
-    /**
-     * Faz o mapeamento de um argumento do construtor.
-     *
-     * @param name Nome do par�metro.
-     * @param temporalProperty Usado no mapeamento de datas.
-     * @return Construtor do argumento.
-     */
-    public ConstructorArgBuilder addContructorArg( String name,
-            String temporalProperty ){
-        return addContructorArg( name, EnumerationType.ORDINAL, 
-                temporalProperty, null, ScopeType.PARAM, null, false, null, null );
-    }
-
-    /**
-     * Faz o mapeamento de um argumento do construtor que não possui valor.
-     *
-     * @return Construtor do argumento.
-     */
-    public ConstructorArgBuilder addNullContructorArg(){
-        return addContructorArg( null, EnumerationType.ORDINAL,
-                null, null, ScopeType.PARAM, null, true, null, null );
-    }
-
-    /**
-     * Faz o mapeamento de um argumento do construtor.
-     *
-     * @param name Nome do par�metro.
-     * @param type Faz o processamento do argumento.
-     * @return Construtor do argumento.
-     */
-    public ConstructorArgBuilder addContructorArg( String name,
-            Type type ){
-        return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null,ScopeType.PARAM, null, false, type, null );
-    }
-
-    /**
-     * Faz o mapeamento de um argumento do construtor.
-     *
-     * @param name Nome do par�metro.
-     * @param mapping Mapeamento customizado.
-     * @return Construtor do argumento.
-     */
-    public ConstructorArgBuilder addMappedContructorArg( String name, String mapping ){
-        return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, ScopeType.PARAM, null, false, null, null );
-    }
-
-    /**
-     * Faz o mapeamento de um argumento do construtor.
-     *
-     * @param name Nome do par�metro.
-     * @return Construtor do argumento.
-     */
-    public ConstructorArgBuilder addContructorArg( String name ){
-        return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, ScopeType.PARAM, null, false, null, null );
-    }
-
-    /**
-     * Faz o mapeamento de um argumento do construtor.
-     *
-     * @param name Nome do par�metro.
-     * @param scope Escopo.
-     * @return Construtor do argumento.
-     */
-    public ConstructorArgBuilder addContructorArg( String name, ScopeType scope ){
-        return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, scope, null, false, null, null );
-    }
-
-    /**
-     * Faz o mapeamento de um argumento do construtor.
-     *
-     * @param name Nome do par�metro.
-     * @param value Valor da propriedade. Tem a mesma fun��o do modificador final.
-     * @return Construtor do argumento.
-     */
-    public ConstructorArgBuilder addStaticContructorArg( String name, Object value ){
-        return addContructorArg( name,
-            EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM,
-            value, false, null, null );
-    }
-
-    /**
-     * Faz o mapeamento de um argumento do construtor.
-     *
-     * @param name Nome do par�metro.
-     * @param enumProperty Usado no mapeamento argumentos do tipo enum.
-     * @param temporalProperty Usado no mapeamento de datas.
-     * @param mapping Mapeamento customizado.
-     * @param scope Escopo.
-     * @param value Valor do argumento do contrutor.
-     * @param factory Faz o processamento do argumento.
-     * @param type Tipo do argumento do construtor.
-     * @return Construtor do argumento.
-     */
-    public ConstructorArgBuilder addContructorArg( String name,
-            EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, boolean nullable, Type typeDef, Class type ){
-        return addContructorArg( name, enumProperty, temporalProperty, mapping,
-            scope, value, nullable, typeDef, (Object)type );
+    public ConstructorBuilder getConstructorBuilder(){
+        return this.constructorBuilder;
     }
     
-    public ConstructorArgBuilder addContructorArg( String name,
-            EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, boolean nullable, Type typeDef, Object type ){
-
-        name = StringUtil.adjust(name);
-        name = StringUtil.isEmpty(name)?
-                "arg" + this.mappingBean.getConstructor().size() :
-                name;
-        
-        ConstructorArgBean arg =
-            (ConstructorArgBean) this.createDependencyBean(name, null,
-                enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                typeDef, type, CONSTRUCTOR_ARG);
-
-        getLogger()
-            .info(
-                String.format("%s added constructor arg %s",
-                new Object[]{
-                    this.getPrefixLogger(),
-                    String.valueOf(this.mappingBean.getConstructor().size())} ) );
-        
-        Configuration validatorConfig = new Configuration();
-        arg.setValidator( this.validatorFactory.getValidator(validatorConfig) );
-        this.mappingBean.getConstructor().addConstructorArg(arg);
-        return new ConstructorArgBuilder( arg );
-    }
-
-    private DependencyBean createDependencyBean( String name, String propertyName,
-            EnumerationType enumProperty,String temporalProperty, String mapping, 
-            ScopeType scope, Object value, boolean nullable, Type typeDef, 
-            Object type, int dependencyType ){
-
-        name             = StringUtil.adjust(name);
-        propertyName     = StringUtil.adjust(propertyName);
-        temporalProperty = StringUtil.adjust(temporalProperty);
-        mapping          = StringUtil.adjust(mapping);
-        
-        if( dependencyType == PROPERTY ){
-            if( propertyName == null )
-                throw new BrutosException( "the property name is required!" );
-            else
-            if( this.mappingBean.getFields().containsKey( propertyName ) )
-                throw new BrutosException( "duplicate property name: " + propertyName );
-        }
-
-        DependencyBean dependencyBean;
-        
-        switch(dependencyType){
-            case CONSTRUCTOR_ARG:{
-                dependencyBean = new ConstructorArgBean(this.mappingBean);
-                break;
-            }
-            case PROPERTY:{
-                dependencyBean = new PropertyBean(this.mappingBean);
-                break;
-            }
-            default:
-                throw new BrutosException("invalid dependency type: " + dependencyType);
-                //dependencyBean = new DependencyBean(this.mappingBean);
-        }
-        
-        dependencyBean.setEnumProperty( enumProperty );
-        dependencyBean.setParameterName( name );
-        dependencyBean.setNullable(nullable);
-        
-        if( dependencyType == PROPERTY )
-            ((PropertyBean)dependencyBean).setName(propertyName);
-        else
-        if(StringUtil.isEmpty(name) && StringUtil.isEmpty(mapping)){
-            if(!nullable && value == null)
-                throw new IllegalArgumentException("bean name is required");
-        }
-            
-        dependencyBean.setTemporalType( temporalProperty );
-        dependencyBean.setValue(value);
-        dependencyBean.setScope( applicationContext.getScopes().get(scope) );
-        dependencyBean.setScopeType(scope);
-        BeanInstance bean = new BeanInstance( null, mappingBean.getClassType() );
-
-        if( propertyName != null && !bean.containProperty(propertyName) )
-            throw new BrutosException( "no such property: " +
-                mappingBean.getClassType().getName() + "." + propertyName );
-
-        if( mapping != null )
-            dependencyBean.setMapping( mapping );
-
-        if( typeDef != null ){
-            if(type != null){
-                Class rawType = TypeManager.getRawType(type);
-                if(!typeDef.getClassType().isAssignableFrom(rawType)){
-                    throw new IllegalArgumentException(
-                            String.format(
-                                "expected %s found %s",
-                                new Object[]{
-                                    rawType.getName(),
-                                    typeDef.getClassType().getName()
-                                }
-                            )
-                    );
-                }
-            }
-            
-            dependencyBean.setType( typeDef );
-        }
-        else{
-            try{
-                if( dependencyType == PROPERTY ){
-                    dependencyBean.setType(
-                            TypeManager.getType(
-                                bean.getGenericType(propertyName),
-                                enumProperty,
-                                temporalProperty ) );
-                }
-                else
-                if( type != null ){
-                    dependencyBean
-                            .setType(
-                                TypeManager.getType(
-                                    type, 
-                                    enumProperty, 
-                                    temporalProperty));
-                }
-                
-            }
-            catch( UnknownTypeException e ){
-                throw new UnknownTypeException(
-                        String.format( "%s.%s : %s" ,
-                            new Object[]{
-                                controller.getClassType().getName(),
-                                propertyName,
-                                e.getMessage()} ) );
-            }
-        }
-        Configuration validatorConfig = new Configuration();
-        dependencyBean.setValidator( this.validatorFactory.getValidator(validatorConfig) );
-        return dependencyBean;
-    }
-
     public ControllerBuilder getControllerBuilder(){
         return this.controllerBuilder;
     }
@@ -904,11 +617,5 @@ public class BeanBuilder {
         return LoggerProvider.getCurrentLoggerProvider()
                 .getLogger(ControllerBuilder.class);
     }
-    
-    private final int CONSTRUCTOR_ARG = 0;
-    
-    private final int PROPERTY        = 1;
-    
-    private final int DEPENDENCY      = 2;
     
 }

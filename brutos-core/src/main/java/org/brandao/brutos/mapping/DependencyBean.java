@@ -42,8 +42,6 @@ public abstract class DependencyBean {
 
     protected String temporalType;
 
-    protected Scope scope;
-
     private ScopeType scopeType;
     
     protected Validator validator;
@@ -130,12 +128,7 @@ public abstract class DependencyBean {
     }
 
     public Scope getScope() {
-        //return scope;
         return Scopes.getCurrentScope(scopeType);
-    }
-
-    public void setScope(Scope scope) {
-        this.scope = scope;
     }
 
     public Class getClassType(){
@@ -146,15 +139,15 @@ public abstract class DependencyBean {
     }
 
     public Object getValue(String prefix, long index, 
-            ValidatorException exceptionHandler){
-        return getValue(prefix, index, exceptionHandler, null);
+            ValidatorException exceptionHandler, Object source){
+        return getValue(prefix, index, exceptionHandler, source, null);
     }
     
     public Object getValue(String prefix, long index, 
-            ValidatorException exceptionHandler, Object value){
+            ValidatorException exceptionHandler, Object source, Object value){
         
         try{
-            return getValue0(prefix, index, exceptionHandler, value);
+            return getValue0(prefix, index, exceptionHandler, source, value);
         }
         catch( ValidatorException e ){
             throw e;
@@ -166,9 +159,10 @@ public abstract class DependencyBean {
                     e);
         }
         
-    }    
-    public Object getValue0(String prefix, long index, 
-            ValidatorException exceptionHandler, Object value){
+    }
+    
+    private Object getValue0(String prefix, long index, 
+            ValidatorException exceptionHandler, Object source, Object value){
         
         Object result;
 
@@ -225,7 +219,7 @@ public abstract class DependencyBean {
 
         try{
             if( validator != null )
-                this.validate(value);
+                this.validate(source, result);
         }
         catch( ValidatorException vex ){
             if( exceptionHandler == null )
@@ -239,7 +233,7 @@ public abstract class DependencyBean {
         return result;
     }
 
-    protected abstract void validate(Object value);
+    protected abstract void validate(Object source, Object value);
     
     public boolean isNullable() {
         return nullable;

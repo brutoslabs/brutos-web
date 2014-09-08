@@ -324,7 +324,7 @@ public class Action {
         int index = 0;
         for( int i=0;i<length;i++ ){
             ParameterAction p = (ParameterAction) this.parameters.get(i);
-            values[index++] = p.getValue();
+            values[index++] = p.getValue(controllerInstance);
         }
         
         this.validator.validate(this, controllerInstance, values);
