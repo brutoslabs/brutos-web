@@ -39,22 +39,18 @@ public interface Validator {
     
     void validate(ConstructorArgBean source, Object value) throws ValidatorException;
     
-    void validate(ConstructorBean source, Object[] value) throws ValidatorException;
+    void validate(ConstructorBean source, Object factoryInstance, Object[] value) throws ValidatorException;
 
-    void validate(ConstructorBean source, Object value) throws ValidatorException;
+    void validate(ConstructorBean source, Object factoryInstance, Object value) throws ValidatorException;
     
-    void validate(PropertyBean source, Object value) throws ValidatorException;
+    void validate(PropertyBean source, Object beanInstance, Object value) throws ValidatorException;
     
-    void validate(PropertyController source, Object value) throws ValidatorException;
+    void validate(PropertyController source, Object controllerInstance, Object value) throws ValidatorException;
 
-    void validate(ParameterAction source, Object value) throws ValidatorException;
+    void validate(ParameterAction source, Object controllerInstance, Object value) throws ValidatorException;
     
     void validate(Action source, Object controller, Object[] value) throws ValidatorException;
     
     void validate(Action source, Object controller, Object value) throws ValidatorException;
 
-    void validate(Method source, Object instance, Object[] value) throws ValidatorException;
-    
-    void validate(Method source, Object instance, Object value) throws ValidatorException;
-    
 }

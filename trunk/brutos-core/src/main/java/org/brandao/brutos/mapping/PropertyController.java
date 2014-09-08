@@ -17,8 +17,8 @@
 
 package org.brandao.brutos.mapping;
 
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.bean.BeanInstance;
+import java.lang.reflect.InvocationTargetException;
+import org.brandao.brutos.bean.BeanProperty;
 
 /**
  *
@@ -34,46 +34,9 @@ public class PropertyController extends UseBeanData{
 
     private String name;
     
-    public PropertyController() {
-    }
-
-    public Object getValue( Object source ){
-        BeanInstance instance = null;
-        try{
-            instance = new BeanInstance( source );
-            return instance.get(name);
-        }
-        catch( Exception e ){
-            throw new BrutosException(
-                    "can not get property: " +
-                    instance.getClassType().getName() + "." + name, e );
-        }
-    }
-
-    public Object getValue(){
-        Object value = super.getValue();
-        super.getValidate().validate(this, value);
-        return value;
-    }
-    public void setValue(Object source){
-        this.setValue(source, this.getValue());
-    }
+    private BeanProperty beanProperty;
     
-    public void setValue( Object source, Object value ){
-
-        if( this.name == null || value == null)
-            return;
-        
-        BeanInstance instance = null;
-        try{
-            instance = new BeanInstance( source );
-            instance.set(name, value);
-        }
-        catch( Exception e ){
-            throw new BrutosException(
-                    "can not set property: " +
-                    instance.getClassType().getName() + "." + name, e );
-        }
+    public PropertyController() {
     }
 
     public boolean isRequest() {
@@ -114,4 +77,28 @@ public class PropertyController extends UseBeanData{
         this.name = name;
     }
 
+    protected void validate(Object source, Object value) {
+        this.validate.validate(this, source, value);
+    }
+
+    public BeanProperty getBeanProperty() {
+        return beanProperty;
+    }
+
+    public void setBeanProperty(BeanProperty beanProperty) {
+        this.beanProperty = beanProperty;
+    }
+    
+    public Object getValueFromSource(Object source) 
+            throws IllegalAccessException, IllegalArgumentException, 
+            InvocationTargetException{
+        return this.beanProperty.get(source);
+    }
+    
+    public void setValueInSource(Object source, Object value) 
+            throws IllegalAccessException, IllegalArgumentException, 
+            InvocationTargetException{
+        this.beanProperty.set(source, value);
+    }
+    
 }
