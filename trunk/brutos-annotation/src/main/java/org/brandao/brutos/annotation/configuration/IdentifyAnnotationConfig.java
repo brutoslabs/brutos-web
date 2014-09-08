@@ -129,7 +129,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
     protected void addIdentify(ConstructorArgEntry source, BeanBuilder builder,
             ComponentRegistry componentRegistry){
 
-        ConstructorBuilder constructorBuilder;
+        ConstructorArgBuilder constructorBuilder;
         
         Identify identify = source.getAnnotation(Identify.class);
         
@@ -142,7 +142,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
     }
     
-    protected ConstructorBuilder addConstructorArg(ConstructorArgEntry source, BeanBuilder builder,
+    protected ConstructorArgBuilder addConstructorArg(ConstructorArgEntry source, BeanBuilder builder,
             ComponentRegistry componentRegistry){
         
         Identify identify = source.getAnnotation(Identify.class);
@@ -163,7 +163,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
     }
     
-    protected ConstructorBuilder buildConstructorArg(BeanBuilder builder, 
+    protected ConstructorArgBuilder buildConstructorArg(BeanBuilder builder, 
             ConstructorArgEntry arg, 
             ComponentRegistry componentRegistry){
         
