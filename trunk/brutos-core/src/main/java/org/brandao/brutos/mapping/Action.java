@@ -348,8 +348,20 @@ public class Action {
     public Object invoke( Object source, Object[] args )
         throws IllegalAccessException, IllegalArgumentException,
                 InvocationTargetException{
-        return getMethod() != null?
-            method.invoke( source , args) : null;
+        
+        Object result = null;
+        if(this.method != null){
+            
+            if(this.validator != null)
+                this.validator.validate(this, source, args);
+            
+            result = method.invoke( source , args);
+            
+            if(this.validator != null)
+                this.validator.validate(this, source, result);
+        }
+        
+        return result;
     }
 
     public boolean isAbstract(){
