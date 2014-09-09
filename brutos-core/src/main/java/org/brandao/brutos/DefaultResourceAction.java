@@ -28,43 +28,43 @@ import org.brandao.brutos.mapping.Action;
  */
 public class DefaultResourceAction implements ResourceAction{
 
-    Action method;
+    protected Action action;
 
-    public DefaultResourceAction( Action method ){
-        this.method = method;
+    public DefaultResourceAction( Action action ){
+        this.action = action;
    }
 
     public Object invoke(Object source, Object[] args)
         throws IllegalAccessException, IllegalArgumentException,
         InvocationTargetException {
 
-        return method.invoke( source , args);
+        return action.invoke(source , args);
     }
 
     public Class getResourceClass() {
-        return method.getMethod() == null?
+        return action.getMethod() == null?
                                 null :
-                                method.getMethod().getDeclaringClass();
+                                action.getMethod().getDeclaringClass();
     }
 
     public Method getMethod() {
-        return method.getMethod();
+        return action.getMethod();
     }
 
     public Class returnType() {
-        return method.getMethod().getReturnType();
+        return action.getMethod().getReturnType();
     }
 
     public Class[] getParametersType() {
-        return method.getMethod().getParameterTypes();
+        return action.getMethod().getParameterTypes();
     }
 
     public boolean isAbstract() {
-        return this.method.isAbstract();
+        return this.action.isAbstract();
     }
 
     public Action getMethodForm() {
-        return method;
+        return action;
     }
     
 }

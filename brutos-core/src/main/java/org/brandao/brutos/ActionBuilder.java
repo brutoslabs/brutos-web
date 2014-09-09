@@ -50,18 +50,23 @@ import org.brandao.brutos.type.UnknownTypeException;
  * 
  * @author Afonso Brandao
  */
-public class ActionBuilder {
+public class ActionBuilder extends RestrictionBuilder{
     
-    Controller controller;
-    Action action;
-    ValidatorFactory validatorFactory;
-    ControllerBuilder controllerBuilder;
-    ConfigurableApplicationContext applicationContext;
+    private Controller controller;
+    
+    private Action action;
+    
+    private ValidatorFactory validatorFactory;
+    
+    private ControllerBuilder controllerBuilder;
+    
+    private ConfigurableApplicationContext applicationContext;
     
     public ActionBuilder( Action methodForm, 
             Controller controller, ValidatorFactory validatorFactory,
             ControllerBuilder controllerBuilder,
             ConfigurableApplicationContext applicationContext) {
+        super(methodForm.getValidator().getConfiguration());
         this.controller = controller;
         this.action = methodForm;
         this.validatorFactory = validatorFactory;
