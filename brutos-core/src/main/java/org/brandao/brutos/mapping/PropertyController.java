@@ -36,6 +36,8 @@ public class PropertyController extends UseBeanData{
     
     private BeanProperty beanProperty;
     
+    private Controller controller;
+    
     public PropertyController() {
     }
 
@@ -99,6 +101,14 @@ public class PropertyController extends UseBeanData{
             throws IllegalAccessException, IllegalArgumentException, 
             InvocationTargetException{
         this.beanProperty.set(source, value);
+    }
+
+    public Controller getController() {
+        return controller;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
     
 }

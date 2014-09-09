@@ -41,12 +41,14 @@ public class JSR303Validator implements Validator{
     private javax.validation.Validator objectValidator;
     private ExecutableValidator executableValidator;
     private Properties config;
+    private Class[] groups;
     
     public void configure(Properties config) {
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         this.objectValidator = validatorFactory.getValidator();
         this.executableValidator = this.objectValidator.forExecutables();
         this.config = config;
+        this.groups = new Class[]{};
     }
 
     public Properties getConfiguration() {
@@ -60,8 +62,8 @@ public class JSR303Validator implements Validator{
         Method method = source.getMethod();
         Set constraintViolations =
             method == null?
-                executableValidator.validateConstructorParameters(source.getContructor(), value, new Class[]{}) :
-                executableValidator.validateParameters(factoryInstance, method, value, new Class[]{});
+                executableValidator.validateConstructorParameters(source.getContructor(), value, this.groups) :
+                executableValidator.validateParameters(factoryInstance, method, value, this.groups);
         throwException(constraintViolations);
     }
 
@@ -69,8 +71,8 @@ public class JSR303Validator implements Validator{
         Method method = source.getMethod();
         Set constraintViolations =
             method == null?
-                executableValidator.validateConstructorReturnValue(source.getContructor(), value, new Class[]{}) :
-                executableValidator.validateReturnValue(factoryInstance, method, value, new Class[]{});
+                executableValidator.validateConstructorReturnValue(source.getContructor(), value, this.groups) :
+                executableValidator.validateReturnValue(factoryInstance, method, value, this.groups);
         throwException(constraintViolations);
     }
     
@@ -80,7 +82,7 @@ public class JSR303Validator implements Validator{
         if(method != null){
             Set constraintViolations =
                 executableValidator
-                    .validateParameters(beanInstance, method, new Object[]{value}, new Class[]{});
+                    .validateParameters(beanInstance, method, new Object[]{value}, this.groups);
             throwException(constraintViolations);
         }
         
@@ -92,7 +94,7 @@ public class JSR303Validator implements Validator{
         if(method != null){
             Set constraintViolations =
                 executableValidator
-                    .validateParameters(controllerInstance, method, new Object[]{value}, new Class[]{});
+                    .validateParameters(controllerInstance, method, new Object[]{value}, this.groups);
             throwException(constraintViolations);
         }
         
@@ -108,7 +110,7 @@ public class JSR303Validator implements Validator{
                 .validateParameters(
                         controller, 
                         source.getMethod(), 
-                        value, new Class[]{});
+                        value, this.groups);
         throwException(constraintViolations);
     }
 
@@ -121,7 +123,7 @@ public class JSR303Validator implements Validator{
                     .validateReturnValue(
                             controller, 
                             method, 
-                            value, new Class[]{});
+                            value, this.groups);
             throwException(constraintViolations);
         }
     }

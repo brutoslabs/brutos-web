@@ -345,7 +345,7 @@ public class ActionBuilder {
         
         Configuration validatorConfig = new Configuration();
         
-        ParameterAction parameter = new ParameterAction();
+        ParameterAction parameter = new ParameterAction(this.action);
 
         parameter.setNome( name );
         parameter.setScopeType( scope );
