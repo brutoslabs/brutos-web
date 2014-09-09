@@ -74,8 +74,7 @@ public class BeanInstance {
         return getProperty(property).get(source);
     }
     
-    public BeanProperty getProperty( String property ) throws IllegalAccessException, 
-            IllegalArgumentException, InvocationTargetException{
+    public BeanProperty getProperty( String property ) {
         
         BeanProperty prop = data.getProperty(property);
         if(prop == null)

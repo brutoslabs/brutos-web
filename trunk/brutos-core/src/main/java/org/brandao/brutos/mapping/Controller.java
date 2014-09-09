@@ -24,6 +24,7 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
 import org.brandao.brutos.ObjectFactory;
+import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.scope.Scope;
 
 /**
@@ -79,6 +80,9 @@ public class Controller {
     private boolean resolvedView;
     
     private ApplicationContext context;
+    
+    private BeanInstance beanInstance;
+
     /**
      * Cria um novo controlador.
      */
@@ -206,6 +210,7 @@ public class Controller {
 
     public void setClassType(Class classType) {
         this.classType = classType;
+        this.beanInstance = new BeanInstance( null, classType );
     }
     
     public Action getAction(String id) {
@@ -464,6 +469,20 @@ public class Controller {
 
     public void setResolvedView(boolean resolvedView) {
         this.resolvedView = resolvedView;
+    }
+
+    /**
+     * @return the beanInstance
+     */
+    public BeanInstance getBeanInstance() {
+        return beanInstance;
+    }
+
+    /**
+     * @param beanInstance the beanInstance to set
+     */
+    public void setBeanInstance(BeanInstance beanInstance) {
+        this.beanInstance = beanInstance;
     }
 
 }

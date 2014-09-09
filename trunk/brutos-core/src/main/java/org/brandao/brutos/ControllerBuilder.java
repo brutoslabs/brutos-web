@@ -27,7 +27,6 @@ import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.type.UnknownTypeException;
-import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  * Classe usada para construir um controlador. Com essa classe � poss�vel incluir
@@ -131,15 +130,20 @@ import org.brandao.brutos.validator.ValidatorProvider;
 public class ControllerBuilder {
     
     protected final Controller controller;
+    
     protected ControllerManager controllerManager;
+    
     protected InterceptorManager interceptorManager;
-    protected ValidatorProvider validatorProvider;
+    
+    protected ValidatorFactory validatorFactory;
+    
     protected ConfigurableApplicationContext applicationContext;
+    
     protected InternalUpdate internalUpdate;
 
     public ControllerBuilder(ControllerBuilder builder, InternalUpdate internalUpdate){
         this( builder.controller, builder.controllerManager,
-            builder.interceptorManager, builder.validatorProvider,
+            builder.interceptorManager, builder.validatorFactory,
             builder.applicationContext, internalUpdate );
     }
     
@@ -152,12 +156,12 @@ public class ControllerBuilder {
      * @param validatorProvider
      */
     public ControllerBuilder( Controller controller, ControllerManager controllerManager,
-            InterceptorManager interceptorManager, ValidatorProvider validatorProvider,
+            InterceptorManager interceptorManager, ValidatorFactory validatorFactory,
             ConfigurableApplicationContext applicationContext,InternalUpdate internalUpdate ) {
         this.controller = controller;
         this.controllerManager  = controllerManager;
         this.interceptorManager = interceptorManager;
-        this.validatorProvider  = validatorProvider;
+        this.validatorFactory   = validatorFactory;
         this.applicationContext = applicationContext;
         this.internalUpdate     = internalUpdate;
     }
@@ -371,7 +375,7 @@ public class ControllerBuilder {
         mappingBean.setName( name );
         controller.addBean( name, mappingBean );
         BeanBuilder mb = new BeanBuilder( mappingBean, controller, 
-                this, validatorProvider, applicationContext );
+                this, validatorFactory, applicationContext );
         return mb;
     }
 
@@ -472,7 +476,7 @@ public class ControllerBuilder {
         controller.addAction( id, action );
 
         ActionBuilder actionBuilder = 
-                new ActionBuilder( action, controller, validatorProvider, 
+                new ActionBuilder( action, controller, validatorFactory, 
                     this, this.applicationContext );
 
         actionBuilder
@@ -723,42 +727,46 @@ public class ControllerBuilder {
             throw new BrutosException( "property name is required: " +
                     controller.getClassType().getName() );
 
-        Configuration validatorConfig = new Configuration();
+        if( controller.containsProperty( propertyName ) )
+            throw new BrutosException( "property already defined: " +
+                    controller.getClassType().getName() + "." + propertyName );
         
-        UseBeanData useBean = new UseBeanData();
-        useBean.setNome( id );
-        useBean.setScopeType( scope );
-        useBean.setValidate( validatorProvider.getValidator( validatorConfig ) );
-        useBean.setStaticValue( value );
-        useBean.setNullable(nullable);
+        Configuration validatorConfig = new Configuration();
+
+        BeanInstance bean = this.controller.getBeanInstance();
         
         PropertyController property = new PropertyController();
-        property.setBean( useBean );
+        property.setNome( id );
+        property.setScopeType( scope );
+        property.setValidate( this.validatorFactory.getValidator( validatorConfig ) );
+        property.setStaticValue( value );
+        property.setNullable(nullable);
         property.setName(propertyName);
-
-
-        BeanInstance bean = new BeanInstance( null, controller.getClassType() );
-
-        if( !bean.containProperty(propertyName) )
+        property.setController(this.controller);
+        
+        try{
+            property.setBeanProperty(bean.getProperty(propertyName));
+        }
+        catch(Throwable e){
             throw new BrutosException( "no such property: " +
                 controller.getClassType().getName() + "." + propertyName );
-
+        }
 
         Object genericType = classType == null? bean.getGenericType(propertyName) : classType;
         
         if( mapping != null ){
             if( controller.getBean(mapping) != null )
-                useBean.setMapping( controller.getBean( mapping ) );
+                property.setMapping( controller.getBean( mapping ) );
             else
                 throw new BrutosException( "mapping not found: " + mapping );
 
         }
         else
         if( type != null )
-            useBean.setType( type );
+            property.setType( type );
         else{
             try{
-                useBean.setType(
+                property.setType(
                         TypeManager.getType(
                             genericType,
                             enumProperty,
@@ -773,10 +781,6 @@ public class ControllerBuilder {
                                 e.getMessage()} ) );
             }
         }
-
-        if( controller.containsProperty( propertyName ) )
-            throw new BrutosException( "property already defined: " +
-                    controller.getClassType().getName() + "." + propertyName );
 
         controller.addProperty( property );
 

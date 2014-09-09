@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.validator;
 
-import java.lang.reflect.Method;
 import java.util.Properties;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ConstructorArgBean;
