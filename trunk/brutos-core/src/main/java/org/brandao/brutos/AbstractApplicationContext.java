@@ -250,7 +250,7 @@ public abstract class AbstractApplicationContext
                 (ControllerManager)ClassUtil.getInstance(clazz);
             
             instance.setInterceptorManager(interceptorManager);
-            instance.setValidatorProvider(validatorFactory);
+            instance.setValidatorFactory(validatorFactory);
             instance.setParent(this.parent == null? 
                             null : 
                             ((ConfigurableApplicationContext)parent).getControllerManager());

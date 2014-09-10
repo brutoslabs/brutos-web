@@ -24,7 +24,6 @@ import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  *
@@ -34,7 +33,7 @@ public class ControllerManagerImp implements ControllerManager{
 
     protected Map mappedControllers;
     protected Map classMappedControllers;
-    protected ValidatorProvider validatorProvider;
+    protected ValidatorFactory validatorFactory;
     protected ControllerBuilder current;
     protected ConfigurableApplicationContext applicationContext;
     protected InterceptorManager interceptorManager;
@@ -170,7 +169,7 @@ public class ControllerManagerImp implements ControllerManager{
         controller.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
         
         this.current = new ControllerBuilder( controller, this, 
-                interceptorManager, validatorProvider, applicationContext, internalUpdate );
+                interceptorManager, validatorFactory, applicationContext, internalUpdate );
         
         view = 
             resolvedView? 
@@ -372,12 +371,12 @@ public class ControllerManagerImp implements ControllerManager{
         this.interceptorManager = interceptorManager;
     }
 
-    public ValidatorProvider getValidatorProvider() {
-        return this.validatorProvider;
+    public ValidatorFactory getValidatorFactory() {
+        return this.validatorFactory;
     }
 
-    public void setValidatorProvider(ValidatorProvider validatorProvider) {
-        this.validatorProvider = validatorProvider;
+    public void setValidatorFactory(ValidatorFactory validatorFactory) {
+        this.validatorFactory = validatorFactory;
     }
 
     public ConfigurableApplicationContext getApplicationContext() {
@@ -408,7 +407,7 @@ public class ControllerManagerImp implements ControllerManager{
         }
         
     }
-    
+
     public static class InternalUpdateImp implements InternalUpdate{
         
         private ControllerManagerImp manager;

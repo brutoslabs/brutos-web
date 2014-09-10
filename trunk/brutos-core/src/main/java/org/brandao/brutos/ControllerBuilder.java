@@ -472,7 +472,8 @@ public class ControllerBuilder {
         Action action = new Action();
         action.setController( controller );
         action.setResolvedView(resolvedView);
-        
+        action.setResultValidator(validatorFactory.getValidator(new Configuration()));
+        action.setParametersValidator(validatorFactory.getValidator(new Configuration()));
         controller.addAction( id, action );
 
         ActionBuilder actionBuilder = 
@@ -731,14 +732,12 @@ public class ControllerBuilder {
             throw new BrutosException( "property already defined: " +
                     controller.getClassType().getName() + "." + propertyName );
         
-        Configuration validatorConfig = new Configuration();
-
         BeanInstance bean = this.controller.getBeanInstance();
         
         PropertyController property = new PropertyController();
         property.setNome( id );
         property.setScopeType( scope );
-        property.setValidate( this.validatorFactory.getValidator( validatorConfig ) );
+        property.setValidate( this.validatorFactory.getValidator( new Configuration() ) );
         property.setStaticValue( value );
         property.setNullable(nullable);
         property.setName(propertyName);
