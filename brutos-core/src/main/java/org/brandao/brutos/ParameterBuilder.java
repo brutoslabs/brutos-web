@@ -30,7 +30,7 @@ public class ParameterBuilder extends RestrictionBuilder{
     private ParameterAction parameter;
     
     public ParameterBuilder(ParameterAction value){
-        super( value.getBean().getValidate().getConfiguration() );
+        super( value.getValidate().getConfiguration() );
         this.parameter = value;
     }
 

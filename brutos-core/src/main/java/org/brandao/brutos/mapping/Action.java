@@ -70,7 +70,9 @@ public class Action {
 
     private DispatcherType dispatcherType;
 
-    private Validator validator;
+    private Validator parametersValidator;
+
+    private Validator resultValidator;
     
     public Action() {
         this.parameters = new ArrayList();
@@ -327,13 +329,13 @@ public class Action {
             values[index++] = p.getValue(controllerInstance);
         }
         
-        this.validator.validate(this, controllerInstance, values);
+        this.parametersValidator.validate(this, controllerInstance, values);
         
         return values;
     }
 
     public Object[] getParameterValues(Object controllerInstance, Object[] values){
-        this.validator.validate(this, controllerInstance, values);
+        this.parametersValidator.validate(this, controllerInstance, values);
         return values;
     }
     
@@ -352,13 +354,13 @@ public class Action {
         Object result = null;
         if(this.method != null){
             
-            if(this.validator != null)
-                this.validator.validate(this, source, args);
+            if(this.parametersValidator != null)
+                this.parametersValidator.validate(this, source, args);
             
             result = method.invoke( source , args);
             
-            if(this.validator != null)
-                this.validator.validate(this, source, result);
+            if(this.resultValidator != null)
+                this.resultValidator.validate(this, source, result);
         }
         
         return result;
@@ -408,12 +410,26 @@ public class Action {
         this.resolvedView = resolvedView;
     }
 
-    public Validator getValidator() {
-        return validator;
+    public Validator getParametersValidator() {
+        return this.parametersValidator;
     }
 
-    public void setValidator(Validator validator) {
-        this.validator = validator;
+    public void setParametersValidator(Validator parametersValidator) {
+        this.parametersValidator = parametersValidator;
+    }
+
+    /**
+     * @return the resultValidator
+     */
+    public Validator getResultValidator() {
+        return resultValidator;
+    }
+
+    /**
+     * @param resultValidator the resultValidator to set
+     */
+    public void setResultValidator(Validator resultValidator) {
+        this.resultValidator = resultValidator;
     }
 
 }

@@ -194,7 +194,7 @@ public interface ControllerManager {
      * Define a fábrica de validadores.
      * @param validatorFactory Provedor dos validadores. 
      */
-    void setValidatorProvider(ValidatorFactory validatorFactory);
+    void setValidatorFactory(ValidatorFactory validatorFactory);
 
     /**
      * Obtém o contexto da aplicação.
