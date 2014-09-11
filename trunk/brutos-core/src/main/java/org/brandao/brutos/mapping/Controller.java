@@ -179,16 +179,6 @@ public class Controller {
             fields.add(property);
     }
     
-    /*
-    public List getFields() {
-        return fields;
-    }
-
-    public void setFields(List fields) {
-        this.fields = fields;
-    }
-    */
-    
     /**
      * @deprecated 
      * @return 
