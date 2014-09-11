@@ -134,22 +134,22 @@ public class DefaultValidator implements Validator{
         this.validate(source, value);
     }
 
-    public void validate(ConstructorBean source, Object[] value) throws ValidatorException {
+    public void validate(ConstructorBean source, Object factoryInstance, Object[] value) throws ValidatorException {
     }
 
-    public void validate(ConstructorBean source, Object value) throws ValidatorException {
+    public void validate(ConstructorBean source, Object factoryInstance, Object value) throws ValidatorException {
         this.validate(source, value);
     }
 
-    public void validate(PropertyBean source, Object value) throws ValidatorException {
+    public void validate(PropertyBean source, Object beanInstance, Object value) throws ValidatorException {
         this.validate(source, value);
     }
 
-    public void validate(PropertyController source, Object value) throws ValidatorException {
+    public void validate(PropertyController source, Object beanInstance, Object value) throws ValidatorException {
         this.validate(source, value);
     }
 
-    public void validate(ParameterAction source, Object value) throws ValidatorException {
+    public void validate(ParameterAction source, Object controllerInstance, Object value) throws ValidatorException {
         this.validate(source, value);
     }
 

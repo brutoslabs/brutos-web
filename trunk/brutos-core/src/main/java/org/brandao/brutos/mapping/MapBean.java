@@ -99,18 +99,8 @@ public class MapBean extends CollectionBean{
     private Object getKey( long index, String prefix,
             ValidatorException exceptionHandler ){
         
-        /*
-        if( mappingKey != null )
-            return mappingKey.getValue( null, prefix, index, exceptionHandler, false );
-        else
-        if( keyType != null )
-            return keyType.convert( getKeyScope().get( getKeyName( index, prefix ) ) );
-        else
-            throw new BrutosException(
-                String.format("key mapping not defined: %s", new Object[]{this.getName()} ) );
-        */
         if(key != null)
-            return key.getValue(prefix, index, exceptionHandler);
+            return key.getValue(prefix, index, exceptionHandler, null);
         else
             throw new BrutosException(
                 String.format("key mapping not defined: %s", new Object[]{this.getName()} ) );

@@ -70,7 +70,7 @@ public class CollectionBean extends Bean{
     protected Object get( String prefix, long index, ValidatorException exceptionHandler){
         
         if(collection != null)
-            return collection.getValue(prefix, index, exceptionHandler);
+            return collection.getValue(prefix, index, exceptionHandler, null);
         else
             throw new MappingException(
                 String.format(
@@ -96,7 +96,7 @@ public class CollectionBean extends Bean{
             
             ValidatorException vex = new ValidatorException();
 
-            instance = getInstance( instance,prefix,otherIndex,vex,force);
+            instance = getInstance(instance,prefix,otherIndex,vex,force);
             Collection collectionBean = (Collection)instance;
 
             long index = 0;

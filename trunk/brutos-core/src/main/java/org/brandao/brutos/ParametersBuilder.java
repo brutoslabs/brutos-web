@@ -322,7 +322,7 @@ public class ParametersBuilder extends RestrictionBuilder{
         
         ParameterAction parameter = new ParameterAction(this.action);
 
-        parameter.setNome( name );
+        parameter.setName( name );
         parameter.setScopeType( scope );
         parameter.setValidate( this.validatorFactory.getValidator(validatorConfig) );
         parameter.setStaticValue(value);

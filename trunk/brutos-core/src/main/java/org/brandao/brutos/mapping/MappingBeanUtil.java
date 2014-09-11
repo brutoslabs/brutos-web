@@ -73,8 +73,7 @@ public final class MappingBeanUtil {
                 break;
             }
             default:
-                throw new BrutosException("invalid dependency type: " + dependencyType);
-                //dependencyBean = new DependencyBean(this.mappingBean);
+                dependencyBean = new InnerBean(mappingBean);
         }
         
         dependencyBean.setEnumProperty( enumProperty );

@@ -31,7 +31,7 @@ import org.brandao.brutos.validator.Validator;
  */
 public abstract class UseBeanData {
     
-    protected String nome;
+    protected String name;
     
     protected ScopeType scopeType;
 
@@ -48,12 +48,12 @@ public abstract class UseBeanData {
     public UseBeanData() {
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Bean getMapping() {
@@ -70,17 +70,17 @@ public abstract class UseBeanData {
 
         if( !isNullable() ){
             if( mapping != null )
-                value = mapping.getValue(nome == null? null : nome + mapping.getSeparator());
+                value = mapping.getValue(name == null? null : name + mapping.getSeparator());
             else
             if(staticValue!= null)
                 value = type.convert( staticValue );
             else
             if( type instanceof CollectionType || type instanceof ArrayType ){
-                value = nome == null? null : getScope().getCollection(nome);
+                value = name == null? null : getScope().getCollection(name);
                 value = type.convert( value );
             }
             else{
-                value = nome == null? null : getScope().get(nome);
+                value = name == null? null : getScope().get(name);
                 value = type.convert( value );
             }
         }
