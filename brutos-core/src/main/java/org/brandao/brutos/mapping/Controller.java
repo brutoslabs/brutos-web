@@ -163,7 +163,7 @@ public class Controller {
     public PropertyController getProperty(String name){
         
         for(int i=0;i<fields.size();i++){
-            if( ((PropertyController)fields.get(i)).getName().equals(name) )
+            if( ((PropertyController)fields.get(i)).getPropertyName().equals(name) )
                 return (PropertyController)fields.get(i);
         }
             
@@ -175,7 +175,7 @@ public class Controller {
     }
     
     public void addProperty(PropertyController property){
-        if(!containsProperty(property.getName()))
+        if(!containsProperty(property.getPropertyName()))
             fields.add(property);
     }
     

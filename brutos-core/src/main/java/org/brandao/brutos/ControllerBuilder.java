@@ -735,12 +735,12 @@ public class ControllerBuilder {
         BeanInstance bean = this.controller.getBeanInstance();
         
         PropertyController property = new PropertyController();
-        property.setNome( id );
+        property.setName( id );
         property.setScopeType( scope );
         property.setValidate( this.validatorFactory.getValidator( new Configuration() ) );
         property.setStaticValue( value );
         property.setNullable(nullable);
-        property.setName(propertyName);
+        property.setPropertyName(propertyName);
         property.setController(this.controller);
         
         try{

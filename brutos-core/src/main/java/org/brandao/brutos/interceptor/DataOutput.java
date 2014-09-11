@@ -47,9 +47,9 @@ public class DataOutput {
                 if( ff.getMapping() != null ){
                     Object value = ff.getValueFromSource(object);
                     if( value == null )
-                        ff.getScope().remove(ff.getNome());
+                        ff.getScope().remove(ff.getName());
                     else
-                        ff.getScope().put(ff.getNome(), value);
+                        ff.getScope().put(ff.getName(), value);
                 }
             }
         }
