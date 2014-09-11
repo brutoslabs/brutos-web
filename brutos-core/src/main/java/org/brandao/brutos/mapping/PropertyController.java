@@ -32,7 +32,7 @@ public class PropertyController extends UseBeanData{
     
     private boolean persistenceContext;
 
-    private String name;
+    private String propertyName;
     
     private BeanProperty beanProperty;
     
@@ -67,16 +67,8 @@ public class PropertyController extends UseBeanData{
     
     public boolean equals( Object o ){
         return o instanceof PropertyController? 
-            ((PropertyController)o).name.equals( name ) :
+            ((PropertyController)o).propertyName.equals( propertyName ) :
             false;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     protected void validate(Object source, Object value) {
@@ -103,12 +95,34 @@ public class PropertyController extends UseBeanData{
         this.beanProperty.set(source, value);
     }
 
+    public void setValue(Object source) 
+            throws IllegalAccessException, IllegalArgumentException, 
+            InvocationTargetException {
+        Object value = super.getValue(source);
+        this.setValueInSource(source, value);
+    }
+    
+    
     public Controller getController() {
         return controller;
     }
 
     public void setController(Controller controller) {
         this.controller = controller;
+    }
+
+    /**
+     * @return the propertyName
+     */
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    /**
+     * @param propertyName the propertyName to set
+     */
+    public void setPropertyName(String propertyName) {
+        this.propertyName = propertyName;
     }
     
 }

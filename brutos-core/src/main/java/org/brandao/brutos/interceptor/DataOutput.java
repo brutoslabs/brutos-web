@@ -41,19 +41,15 @@ public class DataOutput {
 
     public void write( Controller form, Object object ){
        try{
-           //HttpSession session = request.getSession();
-           
-            //for( FieldForm ff: form.getFields() ){
             List fields = form.getProperties();
             for( int i=0;i<fields.size();i++ ){
                 PropertyController ff = (PropertyController) fields.get(i);
-                if( ff.getBean() != null ){
-                    UseBeanData ubd = ff.getBean();
-                    Object value = ff.getValue( object );
+                if( ff.getMapping() != null ){
+                    Object value = ff.getValueFromSource(object);
                     if( value == null )
-                        ubd.getScope().remove(ubd.getNome());
+                        ff.getScope().remove(ff.getNome());
                     else
-                        ubd.getScope().put(ubd.getNome(), value);
+                        ff.getScope().put(ff.getNome(), value);
                 }
             }
         }
@@ -66,10 +62,8 @@ public class DataOutput {
     }
     
     public void writeFields( Controller form, Object object ){
-        //Scope requestScope = Scopes.get(ScopeType.REQUEST.toString());
         try{
             Field[] fields = form.getClassType().getDeclaredFields();
-            //for( Field f: fields ){
             for(int i=0;i<fields.length;i++){
                 Field f = fields[i];
                 f.setAccessible( true );

@@ -67,7 +67,7 @@ public class CollectionBean extends Bean{
     }
     */
     
-    protected Object get( String prefix, long index, ValidatorException exceptionHandler ){
+    protected Object get( String prefix, long index, ValidatorException exceptionHandler){
         
         if(collection != null)
             return collection.getValue(prefix, index, exceptionHandler);
@@ -76,15 +76,6 @@ public class CollectionBean extends Bean{
                 String.format(
                     "element of the collection is not defined: %s",
                     new Object[]{this.getName()}));
-        /*
-        if( bean == null )
-            throw new MappingException(
-                String.format(
-                    "element of the collection is not defined: %s",
-                    new Object[]{this.getName()}));
-        else
-            return bean.getValue( null, prefix, index, exceptionHandler, false );
-        */
     }
 
     public Object getValue( boolean force ){
