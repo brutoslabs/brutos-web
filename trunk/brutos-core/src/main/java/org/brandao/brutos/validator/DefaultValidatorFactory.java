@@ -47,6 +47,10 @@ public class DefaultValidatorFactory implements ValidatorFactory{
         int size = staticRules.size();
         for( int i=0;i<size;i++ ){
             RestrictionRules ruleId = (RestrictionRules) staticRules.get(i);
+            
+            if(ruleId.equals(RestrictionRules.CUSTOM))
+                continue;
+            
             Class rule = getClass(ruleId.toString());
             rules.put(ruleId.toString(), rule);
         }

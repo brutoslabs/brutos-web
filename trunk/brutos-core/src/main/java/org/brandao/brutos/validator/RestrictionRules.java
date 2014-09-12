@@ -71,5 +71,25 @@ public class RestrictionRules {
             return null;//return new RestrictionRules( value );
     }
 
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RestrictionRules other = (RestrictionRules) obj;
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+            return false;
+        }
+        return true;
+    }
+
 
 }

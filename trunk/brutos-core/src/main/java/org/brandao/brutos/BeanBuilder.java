@@ -52,9 +52,6 @@ public class BeanBuilder {
         this.controller = controller;
         this.validatorFactory = validatorFactory;
         this.applicationContext = applicationContext;
-        this.constructorBuilder = 
-                new ConstructorBuilder(mappingBean, controllerBuilder, 
-                        validatorFactory, controller);
     }
 
     /**
@@ -562,7 +559,10 @@ public class BeanBuilder {
         return new PropertyBuilder( propertyBean );
     }
 
-    public ConstructorBuilder getConstructorBuilder(){
+    public ConstructorBuilder buildConstructor(){
+        this.constructorBuilder = 
+                new ConstructorBuilder(mappingBean, controllerBuilder, 
+                        validatorFactory, controller);        
         return this.constructorBuilder;
     }
     

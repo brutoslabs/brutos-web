@@ -1,27 +1,28 @@
 /*
- * Brutos Web MVC http://brutos.sourceforge.net/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Brutos Web MVC http://www.brutosframework.com.br/
+ * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
  *
- * This library is free software. You can redistribute it
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later
- * version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.gnu.org/licenses/gpl.html
+ *        http://www.apache.org/licenses/LICENSE-2.0
  *
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.validator;
 
 import java.util.Properties;
 import junit.framework.TestCase;
+import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.mapping.DependencyBean;
+import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.type.IntegerType;
 import org.brandao.brutos.type.StringType;
 
@@ -32,24 +33,22 @@ import org.brandao.brutos.type.StringType;
 public class ValidatorProviderTest extends TestCase{
 
     public void testEqualRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
         
         Properties config = new Properties();
         config.setProperty(RestrictionRules.EQUAL.toString(), "100");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, new Integer(100));
+        v.validate(d, null, new Integer(100));
     }
 
     public void testNotEqualRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
 
         Properties config = new Properties();
@@ -57,7 +56,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, new Integer(10));
+            v.validate(d, null, new Integer(10));
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -66,24 +65,22 @@ public class ValidatorProviderTest extends TestCase{
     }
 
     public void testMinRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
 
         Properties config = new Properties();
         config.setProperty(RestrictionRules.MIN.toString(), "10");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, new Integer(10));
+        v.validate(d, null, new Integer(10));
     }
 
     public void testNotMinRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
 
         Properties config = new Properties();
@@ -91,7 +88,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, new Integer(9));
+            v.validate(d, null, new Integer(9));
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -100,24 +97,22 @@ public class ValidatorProviderTest extends TestCase{
     }
 
     public void testMinLengthRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
         config.setProperty(RestrictionRules.MINLENGTH.toString(), "10");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, "AAAAAAAAAA");
+        v.validate(d, null, "AAAAAAAAAA");
     }
 
     public void testNotMinLengthRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -125,7 +120,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, "AAAAAAAAA");
+            v.validate(d, null, "AAAAAAAAA");
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -134,24 +129,22 @@ public class ValidatorProviderTest extends TestCase{
     }
 
     public void testMaxRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
 
         Properties config = new Properties();
         config.setProperty(RestrictionRules.MAX.toString(), "4");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, new Integer(4));
+        v.validate(d, null, new Integer(4));
     }
 
     public void testNotMaxRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new IntegerType());
 
         Properties config = new Properties();
@@ -159,7 +152,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, new Integer(10));
+            v.validate(d, null, new Integer(10));
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -168,24 +161,22 @@ public class ValidatorProviderTest extends TestCase{
     }
 
     public void testMaxLengthRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
         config.setProperty(RestrictionRules.MAXLENGTH.toString(), "4");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, "AAAA");
+        v.validate(d, null, "AAAA");
     }
 
     public void testNotMaxLengthRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -193,7 +184,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, "AAAAAA");
+            v.validate(d, null, "AAAAAA");
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -203,24 +194,22 @@ public class ValidatorProviderTest extends TestCase{
 
 
     public void testMatchesRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
         config.setProperty(RestrictionRules.MATCHES.toString(), "\\d+");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, "10");
+        v.validate(d, null, "10");
     }
 
     public void testNotMatchesRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -228,7 +217,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, "AA");
+            v.validate(d, null, "AA");
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -237,24 +226,22 @@ public class ValidatorProviderTest extends TestCase{
     }
 
     public void testRequiredRule(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
         config.setProperty(RestrictionRules.REQUIRED.toString(), "true");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, "10");
+        v.validate(d, null, "10");
     }
 
     public void testRequiredRuleError(){
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(new Properties());
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(new Properties());
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -262,7 +249,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, null);
+            v.validate(d, null, null);
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -276,19 +263,18 @@ public class ValidatorProviderTest extends TestCase{
             "org.brandao.brutos.validator.rules.range",
             CustomValidationRule.class.getName());
         
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(configProvider);
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(configProvider);
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
         config.setProperty("range", "10-20");
 
         Validator v = vp.getValidator(config);
-        v.validate(d, new Integer(10));
-        v.validate(d, new Integer(20));
-        v.validate(d, new Integer(15));
+        v.validate(d, null, new Integer(10));
+        v.validate(d, null, new Integer(20));
+        v.validate(d, null, new Integer(15));
     }
 
     public void testErrorCustomRule(){
@@ -297,10 +283,9 @@ public class ValidatorProviderTest extends TestCase{
             "org.brandao.brutos.validator.rules.range",
             CustomValidationRule.class.getName());
 
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(configProvider);
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(configProvider);
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -308,14 +293,14 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, new Integer(9));
+            v.validate(d, null, new Integer(9));
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
         }
 
         try{
-            v.validate(d, new Integer(21));
+            v.validate(d, null, new Integer(21));
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
@@ -326,10 +311,9 @@ public class ValidatorProviderTest extends TestCase{
     public void testMessage(){
         Properties configProvider = new Properties();
 
-        ValidatorProvider vp =
-                ValidatorProvider.getValidatorProvider(configProvider);
-
-        DependencyBean d = new DependencyBean(new Bean(new Controller(null)));
+        ValidatorFactory vp = new DefaultValidatorFactory();
+        vp.configure(configProvider);
+        PropertyBean d = new PropertyBean(new Bean(new Controller(null)));
         d.setType(new StringType());
 
         Properties config = new Properties();
@@ -338,7 +322,7 @@ public class ValidatorProviderTest extends TestCase{
 
         Validator v = vp.getValidator(config);
         try{
-            v.validate(d, "AA");
+            v.validate(d, null, "AA");
             fail("expected ValidatorException");
         }
         catch( ValidatorException e ){
