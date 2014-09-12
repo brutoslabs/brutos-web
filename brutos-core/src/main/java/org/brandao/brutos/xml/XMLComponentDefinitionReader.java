@@ -481,7 +481,8 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
     }
 
     private void addBean( Element beanNode,
-            BeanBuilder bean, String name, String propertyName, 
+            BeanBuilder bean, ConstructorBuilder constructorBuilder, 
+            String name, String propertyName, 
             boolean key, String keyName,
             boolean element, String elementName ){
 
@@ -512,8 +513,8 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             beanBuilder = bean.buildElement( elementName, clazz );
         else
             beanBuilder =
-                propertyName == null?
-                    bean.buildConstructorArg(name, clazz) :
+                constructorBuilder != null?
+                    constructorBuilder.buildConstructorArg(name, clazz) :
                     bean.buildProperty(name, propertyName, clazz);
 
         beanBuilder.setFactory(factory);
@@ -526,7 +527,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
     }
 
     private void addBean( Element beanNode,
-            ActionBuilder actionBuilder, Class paramType){
+            ParametersBuilder parametersBuilder, Class paramType){
 
         String separator     = parseUtil.getAttribute(beanNode,"separator" );
         String indexFormat   = parseUtil.getAttribute(beanNode,"index-format" );
@@ -536,16 +537,13 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         
         Class clazz = null;
         try{
-            clazz = ClassUtil.get(target);/*Class.forName(
-                        target,
-                        true,
-                        Thread.currentThread().getContextClassLoader() );*/
+            clazz = ClassUtil.get(target);
         }
-        catch( Exception ex ){
+        catch( Throwable ex ){
             throw new BrutosException( ex );
         }
 
-        BeanBuilder beanBuilder = actionBuilder.buildParameter(paramType,clazz);
+        BeanBuilder beanBuilder = parametersBuilder.buildParameter(paramType,clazz);
 
         beanBuilder.setFactory(factory);
         beanBuilder.setMethodfactory(methodFactory);
@@ -605,6 +603,8 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
     private void buildConstructorBean( NodeList consList,
             BeanBuilder beanBuilder ){
 
+        ConstructorBuilder constructor = beanBuilder.buildConstructor();
+        
         for( int k=0;k<consList.getLength();k++ ){
             Element conNode = (Element) consList.item(k);
 
@@ -646,7 +646,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             }
             else
             if( beanNode != null ){
-                addBean( beanNode, beanBuilder, bean, null, false, null, false, null);
+                addBean( beanNode, beanBuilder, constructor, bean, null, false, null, false, null);
                 continue;
             }
             else
@@ -678,7 +678,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             }
 
             ConstructorArgBuilder constructorBuilder =
-                    beanBuilder.addContructorArg(
+                    constructor.addContructorArg(
                         bean,
                         enumProperty,
                         temporalProperty,
@@ -732,7 +732,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             }
             else
             if( beanNode != null ){
-                addBean( beanNode, beanBuilder, bean, propertyName, false, null, false, null );
+                addBean( beanNode, beanBuilder, null, bean, propertyName, false, null, false, null );
                 continue;
             }
             else
@@ -904,7 +904,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         }
         else
         if( beanNode != null ){
-            addBean( beanNode, beanBuilder, null, null, true, bean, false, null);
+            addBean( beanNode, beanBuilder, null, null, null, true, bean, false, null);
             return;
         }
         else
@@ -992,7 +992,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         }
         else
         if( beanNode != null ){
-            addBean( beanNode, beanBuilder, null, null, false, null, true, bean);
+            addBean( beanNode, beanBuilder, null, null, null, false, null, true, bean);
             return;
         }
         else
@@ -1085,15 +1085,18 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
 
     private void addParametersAction( NodeList params,
             ActionBuilder actionBuilder ){
+        
+        ParametersBuilder parametersBuilder = actionBuilder.buildParameters();
+        
         for( int k=0;k<params.getLength();k++ ){
             Element paramNode = (Element) params.item(k);
-            addParameterAction( paramNode, actionBuilder );
+            addParameterAction( paramNode, parametersBuilder );
         }
 
     }
 
     private void addParameterAction( Element paramNode,
-            ActionBuilder actionBuilder ){
+            ParametersBuilder parametersBuilder ){
 
         EnumerationType enumProperty =
             EnumerationType.valueOf( parseUtil.getAttribute(paramNode,  "enum-property" ) );
@@ -1136,7 +1139,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         }
         else
         if( beanNode != null ){
-            addBean( beanNode, actionBuilder, typeClass );
+            addBean( beanNode, parametersBuilder, typeClass );
             return;
         }
         else
@@ -1168,7 +1171,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         }
 
         ParameterBuilder parameterBuilder =
-                actionBuilder.addParameter(
+            parametersBuilder.addParameter(
                     bean,
                     scope,
                     enumProperty,
