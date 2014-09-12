@@ -51,7 +51,7 @@ public class DefaultValidatorFactory implements ValidatorFactory{
             if(ruleId.equals(RestrictionRules.CUSTOM))
                 continue;
             
-            Class rule = getClass(ruleId.toString());
+            Class rule = getClass(ruleId.toString(), false);
             rules.put(ruleId.toString(), rule);
         }
 
@@ -61,15 +61,15 @@ public class DefaultValidatorFactory implements ValidatorFactory{
             String key = (String) keys.next();
             if( key.startsWith(PREFIX_NAME) ){
                 String name = key.substring(PREFIX_NAME.length(),key.length());
-                Class rule = getClass(config.getProperty(key));
+                Class rule = getClass(config.getProperty(key), true);
                 rules.put(name.toLowerCase(), rule);
             }
         }
     }
 
-    private Class getClass(String name){
+    private Class getClass(String name, boolean resolved){
         try{
-            String className = getClassName(name);
+            String className = resolved? name : getClassName(name);
             return ClassUtil.get(className);
         }
         catch( Exception e ){
