@@ -20,7 +20,6 @@ package org.brandao.brutos.web;
 import org.brandao.brutos.*;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.web.util.WebUtil;
-import org.brandao.brutos.validator.ValidatorProvider;
 
 /**
  *
@@ -33,10 +32,10 @@ public class WebControllerBuilder extends ControllerBuilder{
     }
     
     public WebControllerBuilder( Controller controller, ControllerManager controllerManager,
-            InterceptorManager interceptorManager, ValidatorProvider validatorProvider,
+            InterceptorManager interceptorManager, ValidatorFactory validatorFactory,
             ConfigurableApplicationContext applicationContext, ControllerManager.InternalUpdate internalUpdate ){
         super( controller, controllerManager, interceptorManager, 
-                validatorProvider, applicationContext, internalUpdate );
+                validatorFactory, applicationContext, internalUpdate );
     }
     
     public ControllerBuilder addAlias( String id ){
