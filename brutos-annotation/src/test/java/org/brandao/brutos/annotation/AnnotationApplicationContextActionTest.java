@@ -811,13 +811,13 @@ public class AnnotationApplicationContextActionTest
         
         ParameterAction parameter = action.getParameter(0);
         
-        Assert.assertEquals("arg0", parameter.getBean().getNome());
-        Assert.assertEquals(int.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(IntegerType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("arg0", parameter.getName());
+        Assert.assertEquals(int.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(IntegerType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
     }
 
     public void testAction21() throws NoSuchMethodException{
@@ -860,23 +860,23 @@ public class AnnotationApplicationContextActionTest
         
         ParameterAction parameter = action.getParameter(0);
         
-        Assert.assertEquals("arg0", parameter.getBean().getNome());
-        Assert.assertEquals(Integer.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(IntegerWrapperType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("arg0", parameter.getName());
+        Assert.assertEquals(Integer.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(IntegerWrapperType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
         
         parameter = action.getParameter(1);
         
-        Assert.assertEquals("arg1", parameter.getBean().getNome());
-        Assert.assertEquals(String.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(StringType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("arg1", parameter.getName());
+        Assert.assertEquals(String.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(StringType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
         
     }
 
@@ -920,23 +920,23 @@ public class AnnotationApplicationContextActionTest
         
         ParameterAction parameter = action.getParameter(0);
         
-        Assert.assertEquals("param1", parameter.getBean().getNome());
-        Assert.assertEquals(Integer.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.REQUEST, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(IntegerWrapperType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("param1", parameter.getName());
+        Assert.assertEquals(Integer.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.REQUEST, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(IntegerWrapperType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
         
         parameter = action.getParameter(1);
         
-        Assert.assertEquals("arg1", parameter.getBean().getNome());
-        Assert.assertEquals(String.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.REQUEST, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(StringType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("arg1", parameter.getName());
+        Assert.assertEquals(String.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.REQUEST, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(StringType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
         
     }
 
@@ -980,23 +980,23 @@ public class AnnotationApplicationContextActionTest
         
         ParameterAction parameter = action.getParameter(0);
         
-        Assert.assertEquals("arg0", parameter.getBean().getNome());
-        Assert.assertEquals(EnumTest.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(org.brandao.brutos.EnumerationType.STRING, ((DefaultEnumType)parameter.getBean().getType()).getEnumType());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("arg0", parameter.getName());
+        Assert.assertEquals(EnumTest.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(org.brandao.brutos.EnumerationType.STRING, ((DefaultEnumType)parameter.getType()).getEnumType());
+        Assert.assertNotNull(parameter.getValidate());
         
         parameter = action.getParameter(1);
         
-        Assert.assertEquals("arg1", parameter.getBean().getNome());
-        Assert.assertEquals(EnumTest.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(org.brandao.brutos.EnumerationType.ORDINAL, ((DefaultEnumType)parameter.getBean().getType()).getEnumType());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("arg1", parameter.getName());
+        Assert.assertEquals(EnumTest.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(org.brandao.brutos.EnumerationType.ORDINAL, ((DefaultEnumType)parameter.getType()).getEnumType());
+        Assert.assertNotNull(parameter.getValidate());
         
     }
 
@@ -1040,30 +1040,30 @@ public class AnnotationApplicationContextActionTest
         
         ParameterAction parameter = action.getParameter(0);
         
-        Assert.assertEquals("arg0", parameter.getBean().getNome());
-        Assert.assertEquals(String.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(StringType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("arg0", parameter.getName());
+        Assert.assertEquals(String.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(StringType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
         
-        Validator validator = parameter.getBean().getValidate();
+        Validator validator = parameter.getValidate();
         Properties config = validator.getConfiguration();
                 
         Assert.assertEquals("true", config.get(RestrictionRules.REQUIRED.toString()));
         
         parameter = action.getParameter(1);
         
-        Assert.assertEquals("arg1", parameter.getBean().getNome());
-        Assert.assertEquals(int.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(IntegerType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("arg1", parameter.getName());
+        Assert.assertEquals(int.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(IntegerType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
 
-        validator = parameter.getBean().getValidate();
+        validator = parameter.getValidate();
         config = validator.getConfiguration();
                 
         Assert.assertEquals("true", config.get(RestrictionRules.REQUIRED.toString()));
@@ -1112,15 +1112,15 @@ public class AnnotationApplicationContextActionTest
         
         ParameterAction parameter = action.getParameter(0);
         
-        Assert.assertEquals("arg0", parameter.getBean().getNome());
-        Assert.assertEquals(String.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(StringType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("arg0", parameter.getName());
+        Assert.assertEquals(String.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(StringType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
         
-        Validator validator = parameter.getBean().getValidate();
+        Validator validator = parameter.getValidate();
         Properties config = validator.getConfiguration();
                 
         Assert.assertEquals("true", config.get(RestrictionRules.REQUIRED.toString()));
@@ -1169,47 +1169,47 @@ public class AnnotationApplicationContextActionTest
         
         ParameterAction parameter = action.getParameter(0);
         
-        Assert.assertEquals("arg0", parameter.getBean().getNome());
-        Assert.assertEquals(Date.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(DefaultDateType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
-        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY,((DateTimeType)parameter.getBean().getType()).getPattern());
+        Assert.assertEquals("arg0", parameter.getName());
+        Assert.assertEquals(Date.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(DefaultDateType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY,((DateTimeType)parameter.getType()).getPattern());
 
         parameter = action.getParameter(1);
         
-        Assert.assertEquals("arg1", parameter.getBean().getNome());
-        Assert.assertEquals(Date.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(DefaultDateType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
-        Assert.assertEquals("MM/dd/yyyy",((DateTimeType)parameter.getBean().getType()).getPattern());
+        Assert.assertEquals("arg1", parameter.getName());
+        Assert.assertEquals(Date.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(DefaultDateType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
+        Assert.assertEquals("MM/dd/yyyy",((DateTimeType)parameter.getType()).getPattern());
 
         parameter = action.getParameter(2);
         
-        Assert.assertEquals("arg2", parameter.getBean().getNome());
-        Assert.assertEquals(Calendar.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(CalendarType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
-        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY,((DateTimeType)parameter.getBean().getType()).getPattern());
+        Assert.assertEquals("arg2", parameter.getName());
+        Assert.assertEquals(Calendar.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(CalendarType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
+        Assert.assertEquals(BrutosConstants.DEFAULT_TEMPORALPROPERTY,((DateTimeType)parameter.getType()).getPattern());
 
         parameter = action.getParameter(3);
         
-        Assert.assertEquals("arg3", parameter.getBean().getNome());
-        Assert.assertEquals(Calendar.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(CalendarType.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
-        Assert.assertEquals("yyyy-MM-dd",((DateTimeType)parameter.getBean().getType()).getPattern());
+        Assert.assertEquals("arg3", parameter.getName());
+        Assert.assertEquals(Calendar.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(CalendarType.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
+        Assert.assertEquals("yyyy-MM-dd",((DateTimeType)parameter.getType()).getPattern());
         
     }
 
@@ -1253,13 +1253,13 @@ public class AnnotationApplicationContextActionTest
         
         ParameterAction parameter = action.getParameter(0);
         
-        Assert.assertEquals("arg0", parameter.getBean().getNome());
-        Assert.assertEquals(int.class, parameter.getBean().getClassType());
-        Assert.assertNull(parameter.getBean().getMapping());
-        Assert.assertEquals(ScopeType.PARAM, parameter.getBean().getScopeType());
-        Assert.assertNull(parameter.getBean().getStaticValue());
-        Assert.assertEquals(TestType4.class, parameter.getBean().getType().getClass());
-        Assert.assertNotNull(parameter.getBean().getValidate());
+        Assert.assertEquals("arg0", parameter.getName());
+        Assert.assertEquals(int.class, parameter.getClassType());
+        Assert.assertNull(parameter.getMapping());
+        Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
+        Assert.assertNull(parameter.getStaticValue());
+        Assert.assertEquals(TestType4.class, parameter.getType().getClass());
+        Assert.assertNotNull(parameter.getValidate());
     }
 
     public void testAction28() throws NoSuchMethodException, Throwable{

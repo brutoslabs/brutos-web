@@ -656,10 +656,10 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyA");
-        Assert.assertEquals(int.class, property.getBean().getClassType());
+        Assert.assertEquals(int.class, property.getClassType());
+        Assert.assertEquals("propertyA", property.getPropertyName());
         Assert.assertEquals("propertyA", property.getName());
-        Assert.assertEquals("propertyA", property.getBean().getNome());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test19() throws NoSuchMethodException{
@@ -673,10 +673,10 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyB");
-        Assert.assertEquals(String.class, property.getBean().getClassType());
-        Assert.assertEquals("propertyB", property.getName());
-        Assert.assertEquals("prop", property.getBean().getNome());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(String.class, property.getClassType());
+        Assert.assertEquals("propertyB", property.getPropertyName());
+        Assert.assertEquals("prop", property.getName());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test20() throws NoSuchMethodException{
@@ -690,11 +690,11 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyC");
-        Assert.assertEquals(Date.class, property.getBean().getClassType());
+        Assert.assertEquals(Date.class, property.getClassType());
+        Assert.assertEquals("propertyC", property.getPropertyName());
         Assert.assertEquals("propertyC", property.getName());
-        Assert.assertEquals("propertyC", property.getBean().getNome());
-        Assert.assertEquals("dd/MM/yyyy", ((DateTimeType)property.getBean().getType()).getPattern());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals("dd/MM/yyyy", ((DateTimeType)property.getType()).getPattern());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test21() throws NoSuchMethodException{
@@ -708,11 +708,11 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyD");
-        Assert.assertEquals(Date.class, property.getBean().getClassType());
+        Assert.assertEquals(Date.class, property.getClassType());
+        Assert.assertEquals("propertyD", property.getPropertyName());
         Assert.assertEquals("propertyD", property.getName());
-        Assert.assertEquals("propertyD", property.getBean().getNome());
-        Assert.assertEquals("yyyy-MM-dd", ((DateTimeType)property.getBean().getType()).getPattern());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals("yyyy-MM-dd", ((DateTimeType)property.getType()).getPattern());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test22() throws NoSuchMethodException{
@@ -726,11 +726,11 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyE");
-        Assert.assertEquals(EnumTest.class, property.getBean().getClassType());
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyE", property.getPropertyName());
         Assert.assertEquals("propertyE", property.getName());
-        Assert.assertEquals("propertyE", property.getBean().getNome());
-        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getBean().getType()).getEnumType());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test23() throws NoSuchMethodException{
@@ -744,11 +744,11 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyF");
-        Assert.assertEquals(EnumTest.class, property.getBean().getClassType());
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyF", property.getPropertyName());
         Assert.assertEquals("propertyF", property.getName());
-        Assert.assertEquals("propertyF", property.getBean().getNome());
-        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getBean().getType()).getEnumType());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test24() throws NoSuchMethodException{
@@ -762,11 +762,11 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyG");
-        Assert.assertEquals(EnumTest.class, property.getBean().getClassType());
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyG", property.getPropertyName());
         Assert.assertEquals("propertyG", property.getName());
-        Assert.assertEquals("propertyG", property.getBean().getNome());
-        Assert.assertEquals(EnumerationType.STRING, ((org.brandao.brutos.type.EnumType)property.getBean().getType()).getEnumType());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(EnumerationType.STRING, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test25() throws NoSuchMethodException{
@@ -780,7 +780,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyH");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -813,7 +813,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyI");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(LinkedHashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -846,7 +846,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyJ");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -881,7 +881,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyK");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -922,7 +922,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyL");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -957,7 +957,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyM");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -982,7 +982,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyN");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(LinkedList.class, beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1007,7 +1007,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyO");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1032,7 +1032,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyP");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1057,7 +1057,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyQ");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1088,7 +1088,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyR");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1129,7 +1129,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyS");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1154,7 +1154,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyT");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1199,7 +1199,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyU");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1244,7 +1244,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyV");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1289,10 +1289,10 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyA");
-        Assert.assertEquals(int.class, property.getBean().getClassType());
+        Assert.assertEquals(int.class, property.getClassType());
+        Assert.assertEquals("propertyA", property.getPropertyName());
         Assert.assertEquals("propertyA", property.getName());
-        Assert.assertEquals("propertyA", property.getBean().getNome());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test41() throws NoSuchMethodException{
@@ -1306,10 +1306,10 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyB");
-        Assert.assertEquals(String.class, property.getBean().getClassType());
-        Assert.assertEquals("propertyB", property.getName());
-        Assert.assertEquals("prop", property.getBean().getNome());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(String.class, property.getClassType());
+        Assert.assertEquals("propertyB", property.getPropertyName());
+        Assert.assertEquals("prop", property.getName());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test42() throws NoSuchMethodException{
@@ -1323,11 +1323,11 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyC");
-        Assert.assertEquals(Date.class, property.getBean().getClassType());
+        Assert.assertEquals(Date.class, property.getClassType());
+        Assert.assertEquals("propertyC", property.getPropertyName());
         Assert.assertEquals("propertyC", property.getName());
-        Assert.assertEquals("propertyC", property.getBean().getNome());
-        Assert.assertEquals("dd/MM/yyyy", ((DateTimeType)property.getBean().getType()).getPattern());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals("dd/MM/yyyy", ((DateTimeType)property.getType()).getPattern());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test43() throws NoSuchMethodException{
@@ -1341,11 +1341,11 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyD");
-        Assert.assertEquals(Date.class, property.getBean().getClassType());
+        Assert.assertEquals(Date.class, property.getClassType());
+        Assert.assertEquals("propertyD", property.getPropertyName());
         Assert.assertEquals("propertyD", property.getName());
-        Assert.assertEquals("propertyD", property.getBean().getNome());
-        Assert.assertEquals("yyyy-MM-dd", ((DateTimeType)property.getBean().getType()).getPattern());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals("yyyy-MM-dd", ((DateTimeType)property.getType()).getPattern());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test44() throws NoSuchMethodException{
@@ -1359,11 +1359,11 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyE");
-        Assert.assertEquals(EnumTest.class, property.getBean().getClassType());
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyE", property.getPropertyName());
         Assert.assertEquals("propertyE", property.getName());
-        Assert.assertEquals("propertyE", property.getBean().getNome());
-        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getBean().getType()).getEnumType());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test45() throws NoSuchMethodException{
@@ -1377,11 +1377,11 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyF");
-        Assert.assertEquals(EnumTest.class, property.getBean().getClassType());
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyF", property.getPropertyName());
         Assert.assertEquals("propertyF", property.getName());
-        Assert.assertEquals("propertyF", property.getBean().getNome());
-        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getBean().getType()).getEnumType());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test46() throws NoSuchMethodException{
@@ -1395,11 +1395,11 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyG");
-        Assert.assertEquals(EnumTest.class, property.getBean().getClassType());
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyG", property.getPropertyName());
         Assert.assertEquals("propertyG", property.getName());
-        Assert.assertEquals("propertyG", property.getBean().getNome());
-        Assert.assertEquals(EnumerationType.STRING, ((org.brandao.brutos.type.EnumType)property.getBean().getType()).getEnumType());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(EnumerationType.STRING, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertNull(property.getMapping());
     }
 
     public void test47() throws NoSuchMethodException{
@@ -1413,7 +1413,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyH");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1446,7 +1446,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyI");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(LinkedHashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1479,7 +1479,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyJ");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1514,7 +1514,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyK");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1555,7 +1555,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyL");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(HashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1590,7 +1590,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyM");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1615,7 +1615,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyN");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(LinkedList.class, beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1640,7 +1640,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyO");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1665,7 +1665,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyP");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1690,7 +1690,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyQ");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1721,7 +1721,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyR");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1762,7 +1762,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyS");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
@@ -1787,7 +1787,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyT");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1832,7 +1832,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyU");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1877,7 +1877,7 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyV");
-        org.brandao.brutos.mapping.Bean beanProperty = property.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
         Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
@@ -1924,51 +1924,51 @@ public class AnnotationApplicationContextControllerTest
                     .getControllerManager().getController(clazz);
         
         PropertyController property = controller.getProperty("propertyA");
-        Assert.assertEquals(int.class, property.getBean().getClassType());
+        Assert.assertEquals(int.class, property.getClassType());
+        Assert.assertEquals("propertyA", property.getPropertyName());
         Assert.assertEquals("propertyA", property.getName());
-        Assert.assertEquals("propertyA", property.getBean().getNome());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertNull(property.getMapping());
         
         property = controller.getProperty("propertyB");
-        Assert.assertEquals(String.class, property.getBean().getClassType());
-        Assert.assertEquals("propertyB", property.getName());
-        Assert.assertEquals("prop", property.getBean().getNome());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(String.class, property.getClassType());
+        Assert.assertEquals("propertyB", property.getPropertyName());
+        Assert.assertEquals("prop", property.getName());
+        Assert.assertNull(property.getMapping());
         
         property = controller.getProperty("propertyC");
-        Assert.assertEquals(Date.class, property.getBean().getClassType());
+        Assert.assertEquals(Date.class, property.getClassType());
+        Assert.assertEquals("propertyC", property.getPropertyName());
         Assert.assertEquals("propertyC", property.getName());
-        Assert.assertEquals("propertyC", property.getBean().getNome());
-        Assert.assertEquals("dd/MM/yyyy", ((DateTimeType)property.getBean().getType()).getMask());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals("dd/MM/yyyy", ((DateTimeType)property.getType()).getMask());
+        Assert.assertNull(property.getMapping());
         
         property = controller.getProperty("propertyD");
-        Assert.assertEquals(Date.class, property.getBean().getClassType());
+        Assert.assertEquals(Date.class, property.getClassType());
+        Assert.assertEquals("propertyD", property.getPropertyName());
         Assert.assertEquals("propertyD", property.getName());
-        Assert.assertEquals("propertyD", property.getBean().getNome());
-        Assert.assertEquals("yyyy-MM-dd", ((DateTimeType)property.getBean().getType()).getMask());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals("yyyy-MM-dd", ((DateTimeType)property.getType()).getMask());
+        Assert.assertNull(property.getMapping());
         
         property = controller.getProperty("propertyE");
-        Assert.assertEquals(EnumTest.class, property.getBean().getClassType());
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyE", property.getPropertyName());
         Assert.assertEquals("propertyE", property.getName());
-        Assert.assertEquals("propertyE", property.getBean().getNome());
-        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getBean().getType()).getEnumType());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertNull(property.getMapping());
 
         property = controller.getProperty("propertyF");
-        Assert.assertEquals(EnumTest.class, property.getBean().getClassType());
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyF", property.getPropertyName());
         Assert.assertEquals("propertyF", property.getName());
-        Assert.assertEquals("propertyF", property.getBean().getNome());
-        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getBean().getType()).getEnumType());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertNull(property.getMapping());
 
         property = controller.getProperty("propertyG");
-        Assert.assertEquals(EnumTest.class, property.getBean().getClassType());
+        Assert.assertEquals(EnumTest.class, property.getClassType());
+        Assert.assertEquals("propertyG", property.getPropertyName());
         Assert.assertEquals("propertyG", property.getName());
-        Assert.assertEquals("propertyG", property.getBean().getNome());
-        Assert.assertEquals(EnumerationType.STRING, ((org.brandao.brutos.type.EnumType)property.getBean().getType()).getEnumType());
-        Assert.assertNull(property.getBean().getMapping());
+        Assert.assertEquals(EnumerationType.STRING, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertNull(property.getMapping());
     }
     */
 }
