@@ -144,66 +144,66 @@ public abstract class AbstractWebApplicationContext
         Properties config = this.getConfiguration();
         
         tmp = config
-                .getProperty( "org.brandao.brutos.controller.class", 
+                .getProperty(BrutosConstants.CONTROLLER_RESOLVER_CLASS, 
                               WebControllerResolver.class.getName() );
 
-        config.put( "org.brandao.brutos.controller.class" ,
+        config.put(BrutosConstants.CONTROLLER_RESOLVER_CLASS,
                     tmp );
 
         tmp = config
-                .getProperty( "org.brandao.brutos.controller.response_factory",
+                .getProperty(BrutosConstants.RESPONSE_FACTORY,
                               WebMvcResponseFactory.class.getName() );
 
-        config.put( "org.brandao.brutos.controller.response_factory",
+        config.put(BrutosConstants.RESPONSE_FACTORY,
                     tmp );
 
         tmp = config
-                .getProperty( "org.brandao.brutos.controller.request_factory",
+                .getProperty(BrutosConstants.REQUEST_FACTORY,
                               WebMvcRequestFactory.class.getName() );
 
-        config.put( "org.brandao.brutos.controller.request_factory",
+        config.put(BrutosConstants.REQUEST_FACTORY,
                     tmp );
 
         tmp = config
-                .getProperty( "org.brandao.brutos.controller.action_resolver",
+                .getProperty(BrutosConstants.ACTION_RESOLVER,
                               WebActionResolver.class.getName() );
 
-        config.put( "org.brandao.brutos.controller.action_resolver",
+        config.put(BrutosConstants.ACTION_RESOLVER,
                     tmp );
 
         tmp = config
-                .getProperty( "org.brandao.brutos.view.provider",
+                .getProperty(BrutosConstants.RENDER_VIEW_CLASS,
                               JSPRenderView.class.getName() );
 
-        config.put( "org.brandao.brutos.view.provider",
+        config.put(BrutosConstants.RENDER_VIEW_CLASS,
                     tmp );
 
         tmp = config
-                .getProperty( "org.brandao.brutos.view.prefix",
+                .getProperty(BrutosConstants.VIEW_RESOLVER_PREFIX,
                               "/WEB-INF" );
         
-        config.put( "org.brandao.brutos.view.prefix",
+        config.put(BrutosConstants.VIEW_RESOLVER_PREFIX,
                     tmp );
 
         tmp = config
-                .getProperty( "org.brandao.brutos.view.suffix",
+                .getProperty(BrutosConstants.VIEW_RESOLVER_SUFFIX,
                               ".jsp" );
         
-        config.put( "org.brandao.brutos.view.suffix",
+        config.put(BrutosConstants.VIEW_RESOLVER_SUFFIX,
                     tmp );
 
         tmp = config
-                .getProperty( "org.brandao.brutos.view.index",
+                .getProperty(BrutosConstants.VIEW_RESOLVER_INDEX,
                               "index" );
         
-        config.put( "org.brandao.brutos.view.index",
+        config.put(BrutosConstants.VIEW_RESOLVER_INDEX,
                     tmp );
 
         tmp = config
-                .getProperty( "org.brandao.brutos.view.separator",
+                .getProperty(BrutosConstants.VIEW_RESOLVER_SEPARATOR,
                               "/" );
         
-        config.put( "org.brandao.brutos.view.separator",
+        config.put(BrutosConstants.VIEW_RESOLVER_SEPARATOR,
                     tmp );
 
         tmp = config

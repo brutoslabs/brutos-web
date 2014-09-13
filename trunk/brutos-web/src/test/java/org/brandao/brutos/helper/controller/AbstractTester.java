@@ -30,11 +30,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSessionEvent;
 import junit.framework.TestCase;
 import org.brandao.brutos.ActionType;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.test.MockObjectFactory;
 import org.brandao.brutos.test.MockRenderView;
+import org.brandao.brutos.validator.DefaultValidatorFactory;
 import org.brandao.brutos.web.test.MockWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
@@ -63,13 +65,16 @@ public abstract class AbstractTester extends TestCase{
         servletContext.setInitParameter("context_class",
                 MockWebApplicationContext.class.getName());
 
-        servletContext.setInitParameter("org.brandao.brutos.ioc.provider",
+        servletContext.setInitParameter(BrutosConstants.OBJECT_FACTORY_CLASS,
                 MockObjectFactory.class.getName());
 
-        if(actionType != null)
-            servletContext.setInitParameter("org.brandao.brutos.action_strategy", actionType.name());
+        servletContext.setInitParameter(BrutosConstants.VALIDATOR_FACTORY_CLASS, 
+                DefaultValidatorFactory.class.getName());
         
-        servletContext.setInitParameter("org.brandao.brutos.view.provider",
+        if(actionType != null)
+            servletContext.setInitParameter(BrutosConstants.ACTION_TYPE, actionType.name());
+        
+        servletContext.setInitParameter(BrutosConstants.RENDER_VIEW_CLASS,
                 MockRenderView.class.getName());
 
         ConfigurableWebApplicationContext context = getApplicationContext(handler.getResourceName());
