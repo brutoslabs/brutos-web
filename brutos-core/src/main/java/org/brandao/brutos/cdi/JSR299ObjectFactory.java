@@ -35,12 +35,12 @@ import org.brandao.brutos.BrutosException;
  *
  * @author Brandao
  */
-public class CDIObjectFactory implements ObjectFactory{
+public class JSR299ObjectFactory implements ObjectFactory{
 
     private BeanManager beanManager;
     private Properties config;
     
-    public CDIObjectFactory(){
+    public JSR299ObjectFactory(){
     }
     
     public Object getBean(String name) {

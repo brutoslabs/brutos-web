@@ -134,6 +134,16 @@ public interface BrutosConstants {
     
     public final String CODE_GENERATOR_CLASS      = "org.brandao.brutos.code_generator";
     
+    public final String VIEW_RESOLVER_AUTO        = "org.brandao.brutos.view.auto";
+
+    public final String VIEW_RESOLVER_PREFIX      = "org.brandao.brutos.view.prefix";
+
+    public final String VIEW_RESOLVER_SUFFIX      = "org.brandao.brutos.view.suffix";
+
+    public final String VIEW_RESOLVER_INDEX       = "org.brandao.brutos.view.index";
+
+    public final String VIEW_RESOLVER_SEPARATOR   = "org.brandao.brutos.view.separator";
+    
     /*vars - end*/
 
     public final String DEFAULT_PROXY_PROVIDER_CLASS = "org.brandao.brutos.codegenerator.JavassistCodeGeneratorProvider";
