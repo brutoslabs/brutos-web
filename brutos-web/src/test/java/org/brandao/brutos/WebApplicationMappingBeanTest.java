@@ -50,11 +50,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
     public WebApplicationMappingBeanTest(){
         super.actionType = ActionType.DETACHED;
     }
-    public ConfigurableWebApplicationContext getApplicationContext(String resourceName) {
-        ConfigurableWebApplicationContext context = new XMLWebApplicationContext();
-        context.setLocations(new String[]{resourceName});
-        context.flush();
-        return context;
+    
+    public Class getApplicationContext(String resourceName) {
+        return XMLWebApplicationContext.class;
     }
  
 
