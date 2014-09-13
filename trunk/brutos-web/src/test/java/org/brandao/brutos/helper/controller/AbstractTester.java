@@ -57,7 +57,7 @@ public abstract class AbstractTester extends TestCase{
     public AbstractTester(){
     }
     
-    public abstract ConfigurableWebApplicationContext getApplicationContext(String resourceName);
+    public abstract Class getApplicationContext(String resourceName);
     
     public void execTest( HandlerTest handler ){
         MockServletContext servletContext = new MockServletContext();
@@ -83,7 +83,7 @@ public abstract class AbstractTester extends TestCase{
                 ResourceLoader.CLASSPATH_URL_PREFIX + handler.getResourceName());
 
         servletContext.setInitParameter(ContextLoader.CONTEXT_CLASS,
-                XMLWebApplicationContext.class.getName());
+                getApplicationContext(handler.getResourceName()).getName());
         
         //ConfigurableWebApplicationContext context = getApplicationContext(handler.getResourceName());
         //MockWebApplicationContext

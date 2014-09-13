@@ -34,11 +34,8 @@ import org.brandao.brutos.web.XMLWebApplicationContext;
  */
 public class WebApplicationInterceptorTest extends AbstractTester implements Test{
 
-    public ConfigurableWebApplicationContext getApplicationContext(String resourceName) {
-        ConfigurableWebApplicationContext context = new XMLWebApplicationContext();
-        context.setLocations(new String[]{resourceName});
-        context.flush();
-        return context;
+    public Class getApplicationContext(String resourceName) {
+        return XMLWebApplicationContext.class;
     }
 
     public void testInterceptor1(){
