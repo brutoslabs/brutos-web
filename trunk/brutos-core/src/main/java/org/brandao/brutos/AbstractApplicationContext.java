@@ -293,7 +293,7 @@ public abstract class AbstractApplicationContext
             String className =
                 configuration.getProperty(
                     BrutosConstants.OBJECT_FACTORY_CLASS,
-                    JSR299ObjectFactory.class.getName());
+                    BrutosConstants.DEFAULT_OBJECT_FACTORY_CLASS);
             
             Class clazz = 
                     ClassUtil.get(className);
