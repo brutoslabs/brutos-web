@@ -146,6 +146,8 @@ public interface BrutosConstants {
     
     /*vars - end*/
 
+    public final String DEFAULT_OBJECT_FACTORY_CLASS = "org.brandao.brutos.cdi.JSR299ObjectFactory";
+    
     public final String DEFAULT_PROXY_PROVIDER_CLASS = "org.brandao.brutos.codegenerator.JavassistCodeGeneratorProvider";
     
     public final String DEFAULT_REQUEST_PARSER       = "org.brandao.brutos.web.http.HttpRequestParserImp";
