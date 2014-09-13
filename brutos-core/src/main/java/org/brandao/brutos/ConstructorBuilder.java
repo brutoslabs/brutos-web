@@ -248,5 +248,14 @@ public class ConstructorBuilder extends RestrictionBuilder{
         return LoggerProvider.getCurrentLoggerProvider()
                 .getLogger(ConstructorBuilder.class);
     }
+
+    public int getConstructorArgSize(){
+        return mappingBean.getConstructor().size();
+    }
+
+    public ConstructorArgBuilder getConstructorArg(int index){
+        ConstructorArgBean arg = mappingBean.getConstructor().getConstructorArg(index);
+        return new ConstructorArgBuilder(arg);
+    }
     
 }
