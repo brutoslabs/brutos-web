@@ -32,7 +32,7 @@ public abstract class AbstractViewResolver implements ViewResolver{
         
         String autoResolver = 
                 this.context.getConfiguration()
-                    .getProperty("org.brandao.brutos.view.auto", 
+                    .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO, 
                     BrutosConstants.DEFAULT_VIEW_RESOLVER);
         
         if(!autoResolver.toLowerCase().equals("true"))
@@ -74,28 +74,28 @@ public abstract class AbstractViewResolver implements ViewResolver{
     public String getPrefix() {
         return this.context
                 .getConfiguration()
-                    .getProperty("org.brandao.brutos.view.prefix", 
+                    .getProperty(BrutosConstants.VIEW_RESOLVER_PREFIX, 
                             BrutosConstants.DEFAULT_PREFIX_VIEW);
     }
 
     public String getSuffix() {
         return this.context
                 .getConfiguration()
-                    .getProperty("org.brandao.brutos.view.suffix", 
+                    .getProperty(BrutosConstants.VIEW_RESOLVER_SUFFIX, 
                             BrutosConstants.DEFAULT_SUFFIX_VIEW);
     }
 
     public String getIndexName() {
         return this.context
                 .getConfiguration()
-                    .getProperty("org.brandao.brutos.view.index", 
+                    .getProperty(BrutosConstants.VIEW_RESOLVER_INDEX, 
                             BrutosConstants.DEFAULT_INDEX_VIEW);
     }
 
     public String getSeparator() {
         return this.context
                 .getConfiguration()
-                    .getProperty("org.brandao.brutos.view.separator", 
+                    .getProperty(BrutosConstants.VIEW_RESOLVER_SEPARATOR, 
                             BrutosConstants.DEFAULT_SEPARATOR_VIEW);
     }
     
