@@ -33,7 +33,7 @@ import org.brandao.brutos.MvcResponseFactory;
 import org.brandao.brutos.ObjectFactory;
 import org.brandao.brutos.RenderView;
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.validator.ValidatorProvider;
+import org.brandao.brutos.ValidatorFactory;
 
 /**
  *
@@ -100,8 +100,8 @@ public class WebApplicationContextWrapper
         return applicationContext.getRenderView();
     }
 
-    public ValidatorProvider getValidatorProvider(){
-        return applicationContext.getValidatorProvider();
+    public ValidatorFactory getValidatorFactory(){
+        return applicationContext.getValidatorFactory();
     }
 
     public Invoker getInvoker(){
