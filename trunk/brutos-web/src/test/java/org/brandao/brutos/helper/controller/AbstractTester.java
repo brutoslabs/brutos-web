@@ -42,7 +42,9 @@ import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.web.RequestInfo;
+import org.brandao.brutos.web.XMLWebApplicationContext;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
+import org.springframework.core.io.ResourceLoader;
 
 /**
  *
@@ -77,9 +79,15 @@ public abstract class AbstractTester extends TestCase{
         servletContext.setInitParameter(BrutosConstants.RENDER_VIEW_CLASS,
                 MockRenderView.class.getName());
 
-        ConfigurableWebApplicationContext context = getApplicationContext(handler.getResourceName());
-        MockWebApplicationContext
-                .setCurrentApplicationContext(context);
+        servletContext.setInitParameter(ConfigurableWebApplicationContext.contextConfigName,
+                ResourceLoader.CLASSPATH_URL_PREFIX + handler.getResourceName());
+
+        servletContext.setInitParameter(ContextLoader.CONTEXT_CLASS,
+                XMLWebApplicationContext.class.getName());
+        
+        //ConfigurableWebApplicationContext context = getApplicationContext(handler.getResourceName());
+        //MockWebApplicationContext
+        //        .setCurrentApplicationContext(context);
         
         RequestInfo requestInfo = null;
         try{

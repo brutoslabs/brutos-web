@@ -61,12 +61,15 @@ public class ContextLoader {
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-        logger.info( "Initializing Brutos root WebApplicationContext" );
-
         ConfigurableWebApplicationContext app =
                     createApplicationContext(servletContext);
         
         Properties config = app.getConfiguration();
+        
+        initConfiguration(servletContext, app.getConfiguration());
+        initLogger(config);
+
+        logger.info( "Initializing Brutos root WebApplicationContext" );
         
         String configContext = 
                 servletContext
@@ -84,12 +87,8 @@ public class ContextLoader {
         
         app.setServletContext(servletContext);
         app.setLocations(contextLocations);
-        initConfiguration(servletContext, app.getConfiguration());
         
         logger.info( "Configuration: " + config.toString() );
-        
-        initLogger(config);
-
         app.flush();
         
         currentWebApplicationContext
