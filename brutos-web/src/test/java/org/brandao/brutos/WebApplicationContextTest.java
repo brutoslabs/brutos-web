@@ -28,7 +28,6 @@ import org.brandao.brutos.helper.controller.SimpleBean;
 import org.brandao.brutos.helper.controller.TypeTest;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
-import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.XMLWebApplicationContext;
 
 /**
