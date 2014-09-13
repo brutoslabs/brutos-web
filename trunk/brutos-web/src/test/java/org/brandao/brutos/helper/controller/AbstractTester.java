@@ -34,6 +34,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
+import org.brandao.brutos.test.MockInvoker;
 import org.brandao.brutos.test.MockObjectFactory;
 import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.validator.DefaultValidatorFactory;
@@ -44,6 +45,7 @@ import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.web.RequestInfo;
 import org.brandao.brutos.web.XMLWebApplicationContext;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
+import org.brandao.brutos.web.test.MockWebInvoker;
 import org.springframework.core.io.ResourceLoader;
 
 /**
@@ -72,6 +74,9 @@ public abstract class AbstractTester extends TestCase{
 
         servletContext.setInitParameter(BrutosConstants.VALIDATOR_FACTORY_CLASS, 
                 DefaultValidatorFactory.class.getName());
+
+        servletContext.setInitParameter(BrutosConstants.INVOKER_CLASS, 
+                MockWebInvoker.class.getName());
         
         if(actionType != null)
             servletContext.setInitParameter(BrutosConstants.ACTION_TYPE, actionType.name());

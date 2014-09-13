@@ -27,8 +27,8 @@ import junit.framework.TestCase;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.helper.controller.AbstractTester;
-import org.brandao.brutos.test.MockInvoker;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
+import org.brandao.brutos.web.test.MockWebInvoker;
 
 /**
  *
@@ -104,14 +104,12 @@ public class DispatcherServletTest extends AbstractTester implements Test{
                         sc.setServletContext(
                             ((ConfigurableWebApplicationContext)app).getContext());
                         
-                        MockInvoker invoker = new MockInvoker();
                         MockHttpServletRequest mr = (MockHttpServletRequest) request;
                         mr.setRequestURI("/TestController.htm");
-                        app.setInvoker(invoker);
 
                         dispatcherServlet.init(sc);
                         dispatcherServlet.processRequest(request, response);
-                        TestCase.assertEquals("/TestController.htm", invoker.getRequestId());
+                        TestCase.assertEquals("/TestController.htm", ((MockWebInvoker)app.getInvoker()).getRequestId());
 
                     }
                     catch(Exception e){
