@@ -144,8 +144,8 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(Object builder, 
             Object source, ComponentRegistry componentRegistry){
         
-        if(builder instanceof ActionBuilder)
-            createBean((ActionBuilder)builder, (BeanActionParamEntry)source, componentRegistry);
+        if(builder instanceof ParametersBuilder)
+            createBean((ParametersBuilder)builder, (BeanActionParamEntry)source, componentRegistry);
         else
         if(builder instanceof ControllerBuilder){
             if(source instanceof BeanPropertyAnnotation){
@@ -167,7 +167,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             else
             if(source instanceof BeanEntryConstructorArg){
                 createBean(
-                    (BeanBuilder)builder, (BeanEntryConstructorArg)source, componentRegistry);
+                    (ConstructorBuilder)builder, (BeanEntryConstructorArg)source, componentRegistry);
             }
             else
             if(source instanceof KeyEntry){
@@ -210,7 +210,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 source.getGenericType(), null, null);
     }
     
-    protected void createBean(ActionBuilder builder, 
+    protected void createBean(ParametersBuilder builder, 
             BeanActionParamEntry actionParam, ComponentRegistry componentRegistry){
         
         
@@ -260,7 +260,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 source.getAnnotation(ElementCollection.class));
     }
 
-    protected void createBean(BeanBuilder builder, 
+    protected void createBean(ConstructorBuilder builder, 
             BeanEntryConstructorArg source, ComponentRegistry componentRegistry){
         
         Target target = source.getAnnotation(Target.class);
@@ -306,7 +306,6 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         Class type = TypeManager.getRawType(genericType);
         
         boolean useDefaultMapping = AnnotationUtil.isUseDefaultMapping(type);
-            /*type == Map.class || type == List.class || type == Set.class;*/
         
         type = ClassUtil.getInstantiableClass(type);
         
@@ -391,10 +390,12 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         Class[] types = constructor.getParameterTypes();
         Annotation[][] annotations = constructor.getParameterAnnotations();
         
+        ConstructorBuilder constructorBuilder = beanBuilder.buildConstructor();
+        
         for(int i=0;i<genericTypes.length;i++){
             ConstructorArgEntry entry = 
                     new ConstructorArgEntry(null,types[i],genericTypes[i],annotations[i],i);
-            super.applyInternalConfiguration(entry, beanBuilder, componentRegistry);
+            super.applyInternalConfiguration(entry, constructorBuilder, componentRegistry);
         }
     }
     

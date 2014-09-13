@@ -60,7 +60,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyA");
         Assert.assertEquals(int.class, property.getClassType());
@@ -87,7 +87,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyB");
         Assert.assertEquals(String.class, property.getClassType());
@@ -114,7 +114,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyC");
         Assert.assertEquals(Date.class, property.getClassType());
@@ -142,7 +142,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyD");
         Assert.assertEquals(Date.class, property.getClassType());
@@ -170,7 +170,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyE");
         Assert.assertEquals(EnumTest.class, property.getClassType());
@@ -198,7 +198,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyF");
         Assert.assertEquals(EnumTest.class, property.getClassType());
@@ -226,7 +226,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyG");
         Assert.assertEquals(EnumTest.class, property.getClassType());
@@ -254,7 +254,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyH");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -297,7 +297,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyI");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -340,7 +340,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyJ");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -385,7 +385,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyK");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -436,7 +436,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyL");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -483,7 +483,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyM");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -517,7 +517,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyN");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -552,7 +552,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyO");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -587,7 +587,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyP");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -622,7 +622,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyQ");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -662,7 +662,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyR");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -713,7 +713,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyS");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -748,7 +748,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyT");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -803,7 +803,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyU");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -858,7 +858,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyV");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -914,7 +914,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyX");
         Assert.assertEquals(BeanConstructorTest.class, property.getClassType());
@@ -944,7 +944,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyA");
         Assert.assertEquals(int.class, property.getClassType());
@@ -971,7 +971,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyB");
         Assert.assertEquals(String.class, property.getClassType());
@@ -998,7 +998,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyC");
         Assert.assertEquals(Date.class, property.getClassType());
@@ -1026,7 +1026,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyD");
         Assert.assertEquals(Date.class, property.getClassType());
@@ -1054,7 +1054,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyE");
         Assert.assertEquals(EnumTest.class, property.getClassType());
@@ -1082,7 +1082,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyF");
         Assert.assertEquals(EnumTest.class, property.getClassType());
@@ -1110,7 +1110,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyG");
         Assert.assertEquals(EnumTest.class, property.getClassType());
@@ -1138,7 +1138,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyH");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1181,7 +1181,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyI");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1224,7 +1224,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyJ");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1269,7 +1269,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyK");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1320,7 +1320,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyL");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1365,7 +1365,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyM");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1400,7 +1400,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyN");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1435,7 +1435,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyO");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1470,7 +1470,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyP");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1505,7 +1505,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyQ");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1546,7 +1546,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyR");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1597,7 +1597,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyS");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1632,7 +1632,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyT");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1687,7 +1687,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyU");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1742,7 +1742,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
 
         PropertyBean property = bean.getProperty("propertyV");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
@@ -1798,7 +1798,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -1827,7 +1827,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -1856,7 +1856,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -1886,7 +1886,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -1916,7 +1916,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -1946,7 +1946,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -1976,7 +1976,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2018,7 +2018,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2048,7 +2048,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2088,7 +2088,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2132,7 +2132,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2177,7 +2177,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2224,7 +2224,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2277,7 +2277,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2324,7 +2324,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2361,7 +2361,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2398,7 +2398,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2435,7 +2435,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2472,7 +2472,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2515,7 +2515,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2568,7 +2568,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2605,7 +2605,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2662,7 +2662,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());
@@ -2719,7 +2719,7 @@ public class AnnotationApplicationContextBeanTest
         
         ParameterAction param = action.getParameter(0);
         
-        org.brandao.brutos.mapping.Bean bean = param.getBean().getMapping();
+        org.brandao.brutos.mapping.Bean bean = param.getMapping();
         
         ConstructorBean constructor = bean.getConstructor();
         Assert.assertEquals(1,constructor.size());

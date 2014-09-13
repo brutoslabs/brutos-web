@@ -203,6 +203,8 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         if(types == null)
             return;
         
+        ParametersBuilder parametersBuilder = builder.buildParameters();
+        
         for(int i=0;i<types.length;i++){
             ActionParamEntry actionParamEntry = 
                 new ActionParamEntry(
@@ -212,7 +214,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                     annotations != null? annotations[i] : null,
                     i);
             
-            super.applyInternalConfiguration(actionParamEntry, builder, componentRegistry);
+            super.applyInternalConfiguration(actionParamEntry, parametersBuilder, componentRegistry);
         }
     }
 

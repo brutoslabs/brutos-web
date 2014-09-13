@@ -82,18 +82,18 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
             ComponentRegistry componentRegistry) {
         
         if(source instanceof ActionParamEntry)
-            addIdentify((ActionParamEntry)source, (ActionBuilder)builder, componentRegistry);
+            addIdentify((ActionParamEntry)source, (ParametersBuilder)builder, componentRegistry);
         else
         if(source instanceof BeanPropertyAnnotation)
             addIdentify((BeanPropertyAnnotation)source, builder, componentRegistry);
         else
         if(source instanceof ConstructorArgEntry)
-            addIdentify((ConstructorArgEntry)source, (BeanBuilder)builder, componentRegistry);
+            addIdentify((ConstructorArgEntry)source, (ConstructorBuilder)builder, componentRegistry);
             
         return source;
     }
     
-    protected void addIdentify(ActionParamEntry source, ActionBuilder builder,
+    protected void addIdentify(ActionParamEntry source, ParametersBuilder builder,
             ComponentRegistry componentRegistry){
 
         ParameterBuilder paramBuilder;
@@ -126,7 +126,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
     }
 
-    protected void addIdentify(ConstructorArgEntry source, BeanBuilder builder,
+    protected void addIdentify(ConstructorArgEntry source, ConstructorBuilder builder,
             ComponentRegistry componentRegistry){
 
         ConstructorArgBuilder constructorBuilder;
@@ -142,7 +142,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
     }
     
-    protected ConstructorArgBuilder addConstructorArg(ConstructorArgEntry source, BeanBuilder builder,
+    protected ConstructorArgBuilder addConstructorArg(ConstructorArgEntry source, ConstructorBuilder builder,
             ComponentRegistry componentRegistry){
         
         Identify identify = source.getAnnotation(Identify.class);
@@ -163,7 +163,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
     }
     
-    protected ConstructorArgBuilder buildConstructorArg(BeanBuilder builder, 
+    protected ConstructorArgBuilder buildConstructorArg(ConstructorBuilder builder, 
             ConstructorArgEntry arg, 
             ComponentRegistry componentRegistry){
         
@@ -241,7 +241,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
                 ((ControllerBuilder)beanBuilder).getProperty(property.getName());
     }
     
-    protected ParameterBuilder buildParameter(ActionBuilder builder, 
+    protected ParameterBuilder buildParameter(ParametersBuilder builder, 
             final ActionParamEntry property, 
             ComponentRegistry componentRegistry){
         
@@ -251,7 +251,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         return builder.getParameter(builder.getParametersSize()-1);
     }
     
-    protected ParameterBuilder addParameter(ActionParamEntry source,ActionBuilder builder,
+    protected ParameterBuilder addParameter(ActionParamEntry source, ParametersBuilder builder,
             ComponentRegistry componentRegistry){
         
         Identify identify = source.getAnnotation(Identify.class);
@@ -265,11 +265,8 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         Target target = source.getAnnotation(Target.class);
         Object classType = target == null? source.getGenericType() : target.value();
         
-        //String mapping = identify != null && identify.mapping()? name : null;
-                
         return builder.addParameter(name, scope, enumProperty, 
-                temporalProperty, /*mapping*/ null, type, null, false, classType);
-        
+                temporalProperty, null, type, null, false, classType);
     }
     
     private String getPropertyName(BeanPropertyAnnotation param){
