@@ -434,7 +434,10 @@ public abstract class AbstractApplicationContext
                     "org.brandao.brutos.view.resolver",
                     DefaultViewResolver.class.getName());
             
-            return (ViewResolver)ClassUtil.getInstance(ClassUtil.get(className));
+            ViewResolver tmp =
+                    (ViewResolver)ClassUtil.getInstance(ClassUtil.get(className));
+            tmp.setApplicationContext(this);
+            return tmp;
         }
         catch( Exception e ){
             throw new BrutosException( e );
