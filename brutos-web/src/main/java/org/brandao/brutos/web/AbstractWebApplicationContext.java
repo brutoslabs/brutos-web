@@ -337,6 +337,18 @@ public abstract class AbstractWebApplicationContext
         return TypeManager.getTypeFactory(classType);
     }
     
+    public void registerProperty(String name, String value){
+        super.getConfiguration().setProperty(name, value);
+    }
+    
+    public String getProperty(String name){
+        return super.getConfiguration().getProperty(name);
+    }
+
+    public Properties getProperties(){
+        return super.getConfiguration();
+    }
+    
     public void flush(){
 
         this.initLogger();
@@ -349,7 +361,7 @@ public abstract class AbstractWebApplicationContext
         
         this.invoker.flush();
         
-        this.loadDefinitions(new ComponentRegistryAdapter(this));
+        this.loadDefinitions(this);
 
         this.initComponents();
 
