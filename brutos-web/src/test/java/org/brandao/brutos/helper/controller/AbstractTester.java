@@ -44,7 +44,6 @@ import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
 import org.brandao.brutos.web.RequestInfo;
-import org.brandao.brutos.web.XMLWebApplicationContext;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
 import org.brandao.brutos.web.test.MockWebInvoker;
 import org.springframework.core.io.ResourceLoader;
@@ -56,6 +55,8 @@ import org.springframework.core.io.ResourceLoader;
 public abstract class AbstractTester extends TestCase{
 
     protected ActionType actionType;
+    
+    private Class invokerClass;
     
     public AbstractTester(){
     }
@@ -77,7 +78,7 @@ public abstract class AbstractTester extends TestCase{
                 DefaultValidatorFactory.class.getName());
 
         servletContext.setInitParameter(BrutosConstants.INVOKER_CLASS, 
-                MockWebInvoker.class.getName());
+                this.invokerClass == null? MockWebInvoker.class.getName() : this.invokerClass.getName());
         
         if(actionType != null)
             servletContext.setInitParameter(BrutosConstants.ACTION_TYPE, actionType.name());
@@ -152,6 +153,20 @@ public abstract class AbstractTester extends TestCase{
         finally{
             listener.contextDestroyed(sce);
         }
+    }
+
+    /**
+     * @return the invokerClass
+     */
+    public Class getInvokerClass() {
+        return invokerClass;
+    }
+
+    /**
+     * @param invokerClass the invokerClass to set
+     */
+    public void setInvokerClass(Class invokerClass) {
+        this.invokerClass = invokerClass;
     }
 
     public static interface HandlerTest{
