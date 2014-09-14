@@ -1,6 +1,6 @@
 /*
  * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,18 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.io.ResourceLoader;
+import java.util.Properties;
 
 /**
  *
- * @author Brando
+ * @author Brandão
  */
-public interface ComponentRegistry 
-    extends ControllerRegistry, 
-        PropertyRegistry, 
-        InterceptorRegistry, ScopeRegistry, TypeRegistry, ResourceLoader{
+public interface PropertyRegistry {
+    
+    void registerProperty(String name, String value);
+    
+    String getProperty(String name);
+
+    Properties getProperties();
     
 }

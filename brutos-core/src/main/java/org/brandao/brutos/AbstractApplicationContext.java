@@ -20,7 +20,6 @@ package org.brandao.brutos;
 import java.util.List;
 import java.util.Properties;
 import org.brandao.brutos.io.DefaultResourceLoader;
-import org.brandao.brutos.cdi.JSR299ObjectFactory;
 import org.brandao.brutos.javassist.JavassistCodeGenerator;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
