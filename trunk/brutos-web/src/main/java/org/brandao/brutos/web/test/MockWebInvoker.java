@@ -60,7 +60,9 @@ public class MockWebInvoker extends WebInvoker{
     }
 
     public String getRequestId() {
-        return requestId;
+        return this.requestId == null? 
+                this.element.getHandler().requestId() : 
+                this.requestId;
     }
 
     public Object getRequest() {

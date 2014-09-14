@@ -25,6 +25,7 @@ import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.AbstractWebApplicationContext;
+import org.brandao.brutos.web.RequestInfo;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebMvcRequest;
 
@@ -38,7 +39,9 @@ public class ParamScope implements Scope{
     }
 
     private ServletRequest getServletRequest(){
-        WebApplicationContext context =
+        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
+        return requestInfo.getRequest();
+        /*WebApplicationContext context =
                 ContextLoader.getCurrentWebApplicationContext();
 
         MvcRequest request = context.getMvcRequest();
@@ -47,6 +50,7 @@ public class ParamScope implements Scope{
                     request.getClass() );
 
         return ((WebMvcRequest)request).getServletRequest();
+        */
     }
 
     public void put(String name, Object value) {
