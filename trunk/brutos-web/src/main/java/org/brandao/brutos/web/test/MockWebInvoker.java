@@ -21,6 +21,7 @@ import org.brandao.brutos.ActionResolver;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ControllerResolver;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ObjectFactory;
 import org.brandao.brutos.RenderView;
 import org.brandao.brutos.StackRequestElement;
@@ -33,10 +34,13 @@ import org.brandao.brutos.web.WebInvoker;
 public class MockWebInvoker extends WebInvoker{
 
     private StackRequestElement element;
-    private String requestId;
-    private Object request;
-    private Object response;
     
+    private String requestId;
+    
+    private Object request;
+    
+    private Object response;
+
     public MockWebInvoker( ControllerResolver controllerResolver, ObjectFactory objectFactory, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
             ConfigurableApplicationContext applicationContext, RenderView renderView){
