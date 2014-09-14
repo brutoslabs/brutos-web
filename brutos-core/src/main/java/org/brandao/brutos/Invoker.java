@@ -243,8 +243,6 @@ public class Invoker {
                             new Object[]{
                                 new Long((System.currentTimeMillis()-time))} ) );
         }
-
-        
     }
 
     private RequestInstrument getRequestInstrument(Scope scope){
