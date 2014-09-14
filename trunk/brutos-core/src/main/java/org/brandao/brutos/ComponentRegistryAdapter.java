@@ -17,6 +17,7 @@
 
 package org.brandao.brutos;
 
+import java.util.Properties;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
 import org.brandao.brutos.mapping.Controller;
@@ -28,7 +29,7 @@ import org.brandao.brutos.type.TypeManager;
 
 /**
  *
- * @author Cliente
+ * @author Brandão
  */
 public class ComponentRegistryAdapter implements ComponentRegistry{
 
@@ -123,6 +124,22 @@ public class ComponentRegistryAdapter implements ComponentRegistry{
 
     public TypeFactory getRegistredType(Class classType) {
         return TypeManager.getTypeFactory(classType);
+    }
+
+    public void registerProperty(String name, String value) {
+        this.configurableApplicationContext
+                .getConfiguration().setProperty(name, value);
+    }
+
+    public String getProperty(String name) {
+        return this.configurableApplicationContext
+                .getConfiguration()
+                .getProperty(name);
+    }
+
+    public Properties getProperties() {
+        return this.configurableApplicationContext
+                .getConfiguration();
     }
     
 }

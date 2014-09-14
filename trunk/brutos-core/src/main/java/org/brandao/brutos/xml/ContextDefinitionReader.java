@@ -20,6 +20,7 @@ package org.brandao.brutos.xml;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -109,8 +110,35 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
                 document,
                 XMLBrutosConstants.XML_BRUTOS_TYPES ) );
         
+        loadContextParams(
+            parseUtil.getElement(
+                document, 
+                XMLBrutosConstants.XML_BRUTOS_CONTEXT_PARAMS ) );
+        
     }
 
+    private void loadContextParams( Element cp ){
+
+        if( cp == null )
+            return;
+        
+        NodeList list = parseUtil
+            .getElements(
+                cp,
+                XMLBrutosConstants.XML_BRUTOS_CONTEXT_PARAM );
+
+        for( int i=0;i<list.getLength();i++ ){
+            Element c = (Element) list.item(i);
+            String name  = parseUtil.getAttribute(c, "name" );
+            String value = parseUtil.getAttribute(c,"value");
+
+            value = value == null? c.getTextContent() : value;
+            
+            super.componenetRegistry.registerProperty(name, value);
+        }
+        
+    }
+    
     private void loadTypes( Element cp ){
 
         if( cp == null )
