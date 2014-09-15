@@ -370,7 +370,11 @@ public class ControllerBuilder {
         else
             mappingBean = new Bean(controller);
 
-
+        ConstructorBean constructor = mappingBean.getConstructor();
+        
+        constructor.setValidator(
+                this.validatorFactory.getValidator(new Configuration()));
+        
         mappingBean.setClassType( target );
         mappingBean.setName( name );
         controller.addBean( name, mappingBean );
