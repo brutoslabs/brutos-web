@@ -21,7 +21,6 @@ import org.brandao.brutos.ActionResolver;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ControllerResolver;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ObjectFactory;
 import org.brandao.brutos.RenderView;
 import org.brandao.brutos.StackRequestElement;
@@ -51,12 +50,12 @@ public class MockWebInvoker extends WebInvoker{
     
     public boolean invoke( StackRequestElement element ){
         this.element = element;
-        return true;
+        return super.invoke(element);
     }
 
     public boolean invoke( String requestId ){
         this.requestId = requestId;
-        return true;
+        return super.invoke(requestId);
     }
 
     public StackRequestElement getElement() {
