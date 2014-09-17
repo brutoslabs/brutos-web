@@ -58,6 +58,8 @@ public abstract class AbstractTester extends TestCase{
     
     private Class invokerClass;
     
+    private Boolean resolveView;
+    
     public AbstractTester(){
     }
     
@@ -92,6 +94,8 @@ public abstract class AbstractTester extends TestCase{
         servletContext.setInitParameter(ContextLoader.CONTEXT_CLASS,
                 getApplicationContext(handler.getResourceName()).getName());
         
+        servletContext.setInitParameter(BrutosConstants.VIEW_RESOLVER_AUTO, 
+                this.resolveView == null? "false" : String.valueOf(this.resolveView));
         //ConfigurableWebApplicationContext context = getApplicationContext(handler.getResourceName());
         //MockWebApplicationContext
         //        .setCurrentApplicationContext(context);
@@ -155,18 +159,20 @@ public abstract class AbstractTester extends TestCase{
         }
     }
 
-    /**
-     * @return the invokerClass
-     */
     public Class getInvokerClass() {
         return invokerClass;
     }
 
-    /**
-     * @param invokerClass the invokerClass to set
-     */
     public void setInvokerClass(Class invokerClass) {
         this.invokerClass = invokerClass;
+    }
+
+    public Boolean isResolveView() {
+        return resolveView;
+    }
+
+    public void setResolveView(Boolean resolveView) {
+        this.resolveView = resolveView;
     }
 
     public static interface HandlerTest{
