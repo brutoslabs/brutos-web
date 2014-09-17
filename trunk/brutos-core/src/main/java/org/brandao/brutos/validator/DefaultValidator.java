@@ -108,7 +108,7 @@ public class DefaultValidator implements Validator{
         return message;
     }
 
-    public void validate(Object source, Object value) throws ValidatorException {
+    public void innerValidate(Object source, Object value) throws ValidatorException {
 
         if( !this.initialized )
             this.init();
@@ -131,40 +131,40 @@ public class DefaultValidator implements Validator{
     }
 
     public void validate(ConstructorArgBean source, Object value) throws ValidatorException {
-        this.validate(source, value);
+        this.innerValidate(source, value);
     }
 
     public void validate(ConstructorBean source, Object factoryInstance, Object[] value) throws ValidatorException {
     }
 
     public void validate(ConstructorBean source, Object factoryInstance, Object value) throws ValidatorException {
-        this.validate(source, value);
+        this.innerValidate(source, value);
     }
 
     public void validate(PropertyBean source, Object beanInstance, Object value) throws ValidatorException {
-        this.validate(source, value);
+        this.innerValidate(source, value);
     }
 
     public void validate(PropertyController source, Object beanInstance, Object value) throws ValidatorException {
-        this.validate(source, value);
+        this.innerValidate(source, value);
     }
 
     public void validate(ParameterAction source, Object controllerInstance, Object value) throws ValidatorException {
-        this.validate(source, value);
+        this.innerValidate(source, value);
     }
 
     public void validate(Action source, Object controller, Object[] value) throws ValidatorException {
     }
 
     public void validate(Action source, Object controller, Object value) throws ValidatorException {
-        this.validate(source, value);
+        this.innerValidate(source, value);
     }
 
     public void validate(Method source, Object instance, Object[] value) throws ValidatorException {
     }
 
     public void validate(Method source, Object instance, Object value) throws ValidatorException {
-        this.validate(source, value);
+        this.innerValidate(source, value);
     }
 
 }
