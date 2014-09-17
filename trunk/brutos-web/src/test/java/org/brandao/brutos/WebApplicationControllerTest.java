@@ -31,6 +31,7 @@ import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.WebScopeType;
 import org.brandao.brutos.web.XMLWebApplicationContext;
+import org.junit.Assert;
 
 /**
  *
@@ -310,28 +311,24 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
     }
 
     public void testController10(){
-        super.execTest(
-            new HandlerTest(){
+        try{
+            super.execTest(
+                new HandlerTest(){
 
-                public String getResourceName() {
-                    return
-                        "org/brandao/brutos/xml/helper/controller/controller-test10.xml";
-                }
-
-                public void run(ConfigurableApplicationContext app,
-                        HttpServletRequest request, HttpServletResponse response) {
-
-                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(WebScopeType.PARAM).put("value", "100");
-                    try{
-                        app.getInvoker().invoke("/testController.htm");
-                        TestCase.fail("expected NoSuchMethodException");
+                    public String getResourceName() {
+                        return
+                            "org/brandao/brutos/xml/helper/controller/controller-test10.xml";
                     }
-                    catch( BrutosException e ){
-                    }
-                }
 
-        });
+                    public void run(ConfigurableApplicationContext app,
+                            HttpServletRequest request, HttpServletResponse response) {
+                    }
+            });
+        }
+        catch(BrutosException e){
+            if(!e.getMessage().matches(".*org\\.brandao\\.brutos\\.helper\\.controller\\.SimpleController\\.actionWithParam\\(\\s+java\\.lang\\.String\\s+\\).*"))
+                Assert.fail("expected BrutosException!");
+        }
     }
 
     public void testController11(){
