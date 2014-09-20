@@ -263,9 +263,9 @@ public class Action {
                         ParameterAction arg = 
                                 (ParameterAction) parameters.get(k);
                         Type type = arg.getType();
-                        Bean mapping = arg.getMapping();
+                        //Bean mapping = arg.getMapping();
                         
-                        if( type == null && mapping == null ){
+                        if( type == null/* && mapping == null */){
                             arg.
                                 setType(
                                     TypeManager.getType(

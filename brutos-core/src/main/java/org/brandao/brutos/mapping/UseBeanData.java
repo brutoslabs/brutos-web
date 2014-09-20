@@ -69,8 +69,10 @@ public abstract class UseBeanData {
         Object value = null;
 
         if( !isNullable() ){
-            if( mapping != null )
+            if( mapping != null ){
                 value = mapping.getValue(name == null? null : name + mapping.getSeparator());
+                value = type.convert(value);
+            }
             else
             if(staticValue!= null)
                 value = type.convert( staticValue );
@@ -94,63 +96,15 @@ public abstract class UseBeanData {
     
     
     public Class getClassType(){
-        //if( type != null )
-            return type == null? null : type.getClassType();
-        //else
-        //if( mapping != null )
-        //    return mapping.getClassType();
-        //else
-        //    return null;
-    }
-    /*
-    public Object getValue( ServletContext context, HttpServletRequest request ) throws InstantiationException, IllegalAccessException, ParseException{
-        if( scope == ScopeType.REQUEST ){
-            if( mapping == null ){
-                return type.getValue( request, context, nome == null? null : getValue( request, nome ) );
-            }
-            else
-                return mapping.getValue( request );
-        }
+        if(type != null)
+            return type.getClassType();
         else
-        if( scope == ScopeType.SESSION ){
-            if( mapping == null )
-                //return type.getValue( request, context, nome == null? null : getValue( request.getSession(), nome ) );
-                return getValue( request.getSession(), nome );
-            else
-                return mapping.getValue( request.getSession() );
-        }
+        if(this.mapping != null)
+            return this.mapping.getClassType();
         else
-        if( scope == ScopeType.APPLICATION ){
-            if( mapping == null )
-                //return type.getValue( request, context, nome == null? null : getValue( context, nome ) );
-                return getValue( context, nome );
-            else
-                return mapping.getValue( request.getSession() );
-        }
-        else{
-            if( mapping == null )
-                return type.getValue( request, context, nome == null? null : getValue( context, nome ) );
-            else
-                return mapping.getValue( context );
-        }
-            
+            return null;
+        //return type == null? null : type.getClassType();
     }
-
-    private Object getValue( HttpServletRequest request, String name ){
-        if( type instanceof CollectionType || type instanceof ArrayType )
-            return ((BrutosRequest)request).getObjects( name );
-        else
-            return ((BrutosRequest)request).getObject(name);
-    }
-
-    private Object getValue( ServletContext context, String name ){
-        return context.getAttribute(name);
-    }
-
-    private Object getValue( HttpSession session, String name ){
-        return session.getAttribute(name);
-    }
-    */
     
     public Type getType() {
         return type;
