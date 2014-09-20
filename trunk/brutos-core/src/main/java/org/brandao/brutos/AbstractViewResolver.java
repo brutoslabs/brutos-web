@@ -36,7 +36,7 @@ public abstract class AbstractViewResolver implements ViewResolver{
                     BrutosConstants.DEFAULT_VIEW_RESOLVER);
         
         if(!autoResolver.toLowerCase().equals("true"))
-            return null;
+            return view;
         
         if(exception != null){
             if(actionBuilder != null){
