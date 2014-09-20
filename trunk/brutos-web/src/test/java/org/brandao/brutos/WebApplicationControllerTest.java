@@ -356,29 +356,25 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
     }
 
     public void testController12(){
-        super.execTest(
-            new HandlerTest(){
+        try{
+            super.execTest(
+                new HandlerTest(){
 
-                public String getResourceName() {
-                    return
-                        "org/brandao/brutos/xml/helper/controller/controller-test12.xml";
-                }
-
-                public void run(ConfigurableApplicationContext app,
-                        HttpServletRequest request, HttpServletResponse response) {
-
-                    app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
-                    try{
-                        app.getInvoker().invoke("/testController.htm");
-                        TestCase.fail("expected IllegalArgumentException");
+                    public String getResourceName() {
+                        return
+                            "org/brandao/brutos/xml/helper/controller/controller-test12.xml";
                     }
-                    catch( BrutosException e ){
-                        if( !(e.getCause() instanceof IllegalArgumentException) )
-                            throw e;
-                    }
-                }
 
-        });
+                    public void run(ConfigurableApplicationContext app,
+                            HttpServletRequest request, HttpServletResponse response) {
+                    }
+            });
+        }
+        catch(BrutosException e){
+            if(!e.getMessage().matches(".*org\\.brandao\\.brutos\\.helper\\.controller\\.SimpleController\\.actionWithParam\\(\\s+java\\.lang\\.String\\s+\\).*"))
+                Assert.fail("expected BrutosException!");
+        }
+        
     }
 
     public void testController13(){
