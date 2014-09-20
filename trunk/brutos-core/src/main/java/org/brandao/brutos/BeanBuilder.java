@@ -554,6 +554,7 @@ public class BeanBuilder {
         
         Configuration validatorConfig = new Configuration();
         propertyBean.setValidator( this.validatorFactory.getValidator(validatorConfig) );
+        propertyBean.setBeanProperty(mappingBean.getBeanInstance().getProperty(propertyName));
         this.mappingBean.getFields().put( propertyName, propertyBean );
 
         return new PropertyBuilder( propertyBean );

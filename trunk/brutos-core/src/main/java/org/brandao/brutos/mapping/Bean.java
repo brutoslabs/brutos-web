@@ -80,7 +80,7 @@ public class Bean {
 
     public void setClassType(Class classType) {
         this.classType = classType;
-        this.beanInstance = new BeanInstance(classType);
+        this.beanInstance = new BeanInstance(null, classType);
     }
 
     public Map getFields() {
