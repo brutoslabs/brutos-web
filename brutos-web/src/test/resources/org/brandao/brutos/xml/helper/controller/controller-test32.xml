@@ -6,7 +6,7 @@
 
     <controller id="/testController.htm" action-type="parameter"         
         class="org.brandao.brutos.helper.controller.SimpleController">
-        <property property-name="property1">
+        <property name="property1">
             <bean target="java.lang.String">
                 <constructor-arg bean="value1" type="java.lang.String"/>
             </bean>
