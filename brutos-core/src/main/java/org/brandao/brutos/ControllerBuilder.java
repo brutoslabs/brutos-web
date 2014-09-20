@@ -764,7 +764,7 @@ public class ControllerBuilder {
                 throw new BrutosException( "mapping not found: " + mapping );
 
         }
-        else
+        //else
         if( type != null )
             property.setType( type );
         else{
