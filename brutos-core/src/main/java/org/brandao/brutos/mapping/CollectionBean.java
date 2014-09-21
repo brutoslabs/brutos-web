@@ -27,18 +27,10 @@ import org.brandao.brutos.validator.ValidatorException;
  */
 public class CollectionBean extends Bean{
 
-    /*
-     * @deprecated 
-     */
-    /*private Class collectionType;
-
-    private Bean bean;
-    */
-    
     private DependencyBean collection;
     
-    public CollectionBean( Controller form ){
-        super( form );
+    public CollectionBean(Controller controller, Bean parent){
+        super(controller, parent);
     }
 
     public void setCollection(DependencyBean collection){
@@ -48,24 +40,6 @@ public class CollectionBean extends Bean{
     public DependencyBean getCollection(){
         return this.collection;
     }
-    
-    /*
-    public Class getCollectionType() {
-        return collectionType;
-    }
-
-    public void setCollectionType(Class collectionType) {
-        this.collectionType = collectionType;
-    }
-
-    public Bean getBean() {
-        return bean;
-    }
-
-    public void setBean(Bean bean) {
-        this.bean = bean;
-    }
-    */
     
     protected Object get( String prefix, long index, ValidatorException exceptionHandler){
         
@@ -146,14 +120,7 @@ public class CollectionBean extends Bean{
                 exceptionHandler,
                 force);
         }
-        /*
-        if( instance == null ){
-            if( collectionType == null )
-                instance = super.getValue(instance,prefix,index,exceptionHandler,force);
-            else
-                instance = collectionType.newInstance();
-        }
-        */
+        
         return instance;
     }
 

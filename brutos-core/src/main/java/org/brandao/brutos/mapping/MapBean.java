@@ -19,8 +19,6 @@ package org.brandao.brutos.mapping;
 
 import java.util.Map;
 import org.brandao.brutos.*;
-import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.ValidatorException;
 
 /**
@@ -29,37 +27,10 @@ import org.brandao.brutos.validator.ValidatorException;
  */
 public class MapBean extends CollectionBean{
 
-    //private Bean mappingKey;
-
-    /*
-     * @deprecated
-     */
-    //private Class collectionType;
-
-    /*
-     * @deprecated
-     */
-    //private Bean bean;
-
-    /*
-     * @deprecated
-     */
-    //private String key;
-
-    /*
-     * @deprecated
-     */
-    //private Type keyType;
-
-    /*
-     * @deprecated
-     */
-    //private ScopeType keyScopeType;
-
     private DependencyBean key;
     
-    public MapBean( Controller form ){
-        super(form);
+    public MapBean( Controller controller, Bean parent ){
+        super(controller, parent);
     }
 
     public void setKey(DependencyBean key){
@@ -69,32 +40,6 @@ public class MapBean extends CollectionBean{
     public DependencyBean getKey(){
         return this.key;
     }
-    
-    /*
-    public void setMappingKey( Bean mappingKey ){
-        this.mappingKey = mappingKey;
-    }
-
-    public void setKey( String name, Type type, ScopeType scope ){
-        this.key = name;
-        this.keyType = type;
-        this.keyScopeType = scope;
-    }
-
-    public Class getCollectionType() {
-        return collectionType;
-    }
-
-    public void setCollectionType(Class collectionType) {
-        this.collectionType = collectionType;
-    }
-    */
-    
-    /*
-    private String getKeyName( long index, String prefix ){
-        return (prefix != null? prefix : "") + key + ( index < 0? "" : "[" + index + "]" );
-    }
-    */
     
     private Object getKey( long index, String prefix,
             ValidatorException exceptionHandler ){
@@ -171,27 +116,6 @@ public class MapBean extends CollectionBean{
         }
     }
 
-    /*
-    public Scope getKeyScope() {
-        Scopes scopes = Invoker.getApplicationContext().getScopes();
-
-        Scope objectScope = scopes
-                .get( keyScopeType.toString() );
-
-        if( objectScope == null )
-            throw new BrutosException( "scope not allowed in context: " + keyScopeType );
-
-        return objectScope;
-    }
-
-    public void setScopeType(ScopeType scope) {
-        this.keyScopeType = scope;
-    }
-
-    public ScopeType getkeyScopeType() {
-        return this.keyScopeType;
-    }
-    */
     public boolean isBean(){
         return false;
     }

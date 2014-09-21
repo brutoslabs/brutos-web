@@ -287,7 +287,7 @@ public class BeanBuilder {
         
         String beanName = mappingBean.getName() + "#key";
         BeanBuilder bb = controllerBuilder
-                    .buildMappingBean(beanName, type);
+                    .buildMappingBean(beanName, this.mappingBean.getName(), type);
 
         setMappedKey(name, beanName);
         return bb;
@@ -307,7 +307,7 @@ public class BeanBuilder {
 
         String beanName = mappingBean.getName() + "#bean";
         BeanBuilder bb = controllerBuilder
-                    .buildMappingBean(beanName, type);
+                    .buildMappingBean(beanName, this.mappingBean.getName(), type);
 
         setMappedElement( name, beanName );
         
@@ -464,7 +464,9 @@ public class BeanBuilder {
         String beanName = this.mappingBean.getName() + "#" + propertyName;
         
         BeanBuilder beanBuilder = 
-                this.controllerBuilder.buildMappingBean(beanName, target);
+                this.controllerBuilder
+                        .buildMappingBean(
+                                beanName, this.mappingBean.getName(), target);
 
         this.addMappedProperty(name, propertyName, beanName);
         
