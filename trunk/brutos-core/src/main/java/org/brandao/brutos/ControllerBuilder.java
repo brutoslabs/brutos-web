@@ -338,6 +338,11 @@ public class ControllerBuilder {
      * cole��o.
      */
     public BeanBuilder buildMappingBean( String name, Class target ){
+        return this.buildMappingBean(name, null, target);
+    }
+    
+    public BeanBuilder buildMappingBean( String name, 
+            String parentBeanName, Class target ){
 
         if( target == null )
             throw new NullPointerException();
@@ -360,15 +365,20 @@ public class ControllerBuilder {
                 "create bean %s[%s]",
                 new Object[]{name,target.getName()}));
         
+        Bean parentBean = 
+                parentBeanName == null?
+                null :
+                this.controller.getBean(parentBeanName);
+        
         Bean mappingBean;
 
         if( Map.class.isAssignableFrom(target) )
-            mappingBean = new MapBean(controller);
+            mappingBean = new MapBean(controller, parentBean);
         else
         if( Collection.class.isAssignableFrom(target) )
-            mappingBean = new CollectionBean(controller);
+            mappingBean = new CollectionBean(controller, parentBean);
         else
-            mappingBean = new Bean(controller);
+            mappingBean = new Bean(controller, parentBean);
 
         ConstructorBean constructor = mappingBean.getConstructor();
         

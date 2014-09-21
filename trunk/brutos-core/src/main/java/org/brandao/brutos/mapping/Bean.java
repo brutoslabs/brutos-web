@@ -17,9 +17,6 @@
 
 package org.brandao.brutos.mapping;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,35 +31,39 @@ import org.brandao.brutos.validator.ValidatorException;
  */
 public class Bean {
 
-    private static final Logger logger = LoggerProvider
-            .getCurrentLoggerProvider().getLogger(Bean.class);
+    protected Bean parent;
     
-    private Controller controller;
+    protected Controller controller;
 
-    private String name;
+    protected String name;
     
-    private Class classType;
+    protected Class classType;
     
-    private Map fields;
+    protected Map fields;
 
-    private boolean hierarchy;
+    protected boolean hierarchy;
 
-    private String separator;
+    protected String separator;
 
-    private ConstructorBean constructor;
+    protected ConstructorBean constructor;
 
-    private String factory;
+    protected String factory;
 
-    private String indexFormat;
+    protected String indexFormat;
 
-    private BeanInstance beanInstance;
+    protected BeanInstance beanInstance;
     
-    public Bean( Controller controller ) {
-        this.fields = new HashMap();
-        this.controller = controller;
-        this.hierarchy = true;
-        this.separator = ".";
+    public Bean(Controller controller) {
+        this(controller, null);
+    }
+    
+    public Bean(Controller controller, Bean parent) {
+        this.fields      = new HashMap();
+        this.controller  = controller;
+        this.hierarchy   = true;
+        this.separator   = ".";
         this.indexFormat = "[$index]";
+        this.parent      = parent;
         this.constructor = new ConstructorBean(this);
     }
 
@@ -115,8 +116,8 @@ public class Bean {
     public Object getValue( Object instance, String prefix, long index, 
                 ValidatorException exceptionHandler, boolean force ){
         
-        if(logger.isDebugEnabled())
-            logger.debug(
+        if(getLogger().isDebugEnabled())
+            getLogger().debug(
                     String.format(
                     "creating instance of bean %s: %s",
                     new Object[]{this.name,this.classType.getName()}));
@@ -188,8 +189,8 @@ public class Bean {
             Object property = fb.getValueFromSource(instance);
             Object value = fb.getValue(prefix, index, vex, instance, property);
             
-            if(logger.isDebugEnabled())
-                logger.debug(
+            if(getLogger().isDebugEnabled())
+                getLogger().debug(
                         String.format(
                             "binding %s to property: %s", 
                             new Object[]{value,fb.getName()}));
@@ -280,18 +281,30 @@ public class Bean {
         return (PropertyBean) this.fields.get(name);
     }
 
-    /**
-     * @return the beanInstance
-     */
     public BeanInstance getBeanInstance() {
         return beanInstance;
     }
 
-    /**
-     * @param beanInstance the beanInstance to set
-     */
     public void setBeanInstance(BeanInstance beanInstance) {
         this.beanInstance = beanInstance;
     }
-    
+
+    private Logger getLogger(){
+        return LoggerProvider
+                .getCurrentLoggerProvider().getLogger(Bean.class);
+    }
+
+    /**
+     * @return the parent
+     */
+    public Bean getParent() {
+        return parent;
+    }
+
+    /**
+     * @param parent the parent to set
+     */
+    public void setParent(Bean parent) {
+        this.parent = parent;
+    }
 }

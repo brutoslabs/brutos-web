@@ -51,9 +51,12 @@ public class ConstructorBean {
 
     private Validator validator;
     
+    private boolean collection;
+    
     public ConstructorBean( Bean bean ){
         this.args = new ArrayList();
         this.bean = bean;
+        this.collection = bean.getParent() != null && bean.getParent().isCollection();
     }
 
     public boolean isConstructor(){
@@ -253,7 +256,7 @@ public class ConstructorBean {
 
             Method method = this.getMethod( factoryInstance );
 
-            if( index != -1 && this.size() == 0 )
+            if(this.collection && this.size() == 0)
                 throw new MappingException("infinite loop detected: " + bean.getName());
             
             if( this.validator != null)
