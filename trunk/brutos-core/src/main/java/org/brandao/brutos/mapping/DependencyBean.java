@@ -178,7 +178,6 @@ public abstract class DependencyBean {
                                     parent.getIndexFormat().replace(
                                         "$index",
                                         String.valueOf(index) );
-
                 String key = pre + param + idx;
 
                 result = getScope().get(key);
@@ -204,14 +203,22 @@ public abstract class DependencyBean {
                 String parameter = getParameterName();
                 if(!(prefix == null && parameter == null)){
                     newPrefix = prefix == null? "" : prefix;
-                    newPrefix += parameter == null? "" : parameter + parent.getSeparator();
+                    newPrefix += parameter == null? "" : parameter;
                 }
             }
 
+            if(newPrefix != null){
+                newPrefix += index < 0?
+                                    "" :
+                                    parent.getIndexFormat().replace(
+                                        "$index",
+                                        String.valueOf(index) );
+                newPrefix += parent.getSeparator();
+            }
             result = dependencyBean.getValue(
                 value,
                 newPrefix,
-                index,
+                -1,//index,
                 exceptionHandler,
                 false);
             
