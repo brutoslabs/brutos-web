@@ -7,11 +7,12 @@
     <controller
         class="org.brandao.brutos.helper.controller.SimpleController">
 
-        <bean name="bean"
+        <bean 
+            index-format="($index)"
+            name="bean"
             target="java.util.LinkedList">
                 <element>
                 <bean
-                    index-format="($index)"
                     target="org.brandao.brutos.helper.controller.SimpleBean">
                     <constructor-arg bean="str" type="java.lang.String">
                         <validator message="str is required">

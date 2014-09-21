@@ -132,9 +132,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(0)", "1");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(1)", "2");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(2)", "3");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(0).arg", "1");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(1).arg", "2");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(2).arg", "3");
                     Bean bean = controller.getBean("bean");
 
                     try{
@@ -164,10 +164,10 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    app.getScopes().get(WebScopeType.PARAM).put("map.key.key[0]", "VALUE");
-                    app.getScopes().get(WebScopeType.PARAM).put("map.key.key[1]", "VALUE2");
-                    app.getScopes().get(WebScopeType.PARAM).put("map.element.value[1]", "valor2");
-                    app.getScopes().get(WebScopeType.PARAM).put("map.element.value[0]", "valor1");
+                    app.getScopes().get(WebScopeType.PARAM).put("map.key[0].key", "VALUE");
+                    app.getScopes().get(WebScopeType.PARAM).put("map.key[1].key", "VALUE2");
+                    app.getScopes().get(WebScopeType.PARAM).put("map.element[1].value", "valor2");
+                    app.getScopes().get(WebScopeType.PARAM).put("map.element[0].value", "valor1");
                     Bean bean = controller.getBean("bean");
 
                     SimpleBean instance = (SimpleBean) bean.getValue();
