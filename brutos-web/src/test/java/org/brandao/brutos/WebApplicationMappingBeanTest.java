@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import org.brandao.brutos.helper.controller.AbstractTester;
+import org.brandao.brutos.helper.controller.BeanTestConstructor9;
 import org.brandao.brutos.helper.controller.EnumTest;
 import org.brandao.brutos.helper.controller.SimpleBean;
 import org.brandao.brutos.helper.controller.SimpleController;
@@ -437,6 +438,34 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
 
                 public String getResourceName() {
                     return
+                        "org/brandao/brutos/xml/helper/bean/bean-test-constructor9-1.xml";
+                }
+
+                public void run(ConfigurableApplicationContext app,
+                        HttpServletRequest request, HttpServletResponse response) {
+
+                    Controller controller =
+                            app.getControllerManager()
+                                .getController(SimpleController.class);
+
+                    app.getScopes().get(WebScopeType.PARAM).put("enum", "VALUE");
+                    Bean bean = controller.getBean("bean");
+
+                    BeanTestConstructor9 instance = (BeanTestConstructor9) bean.getValue();
+
+                    TestCase.assertNotNull(instance);
+                    TestCase.assertEquals(EnumTest.VALUE, instance.getValue());
+                }
+
+        });
+    }
+
+    public void testConstructorArgEnumNumberWithoutType(){
+        super.execTest(
+            new HandlerTest(){
+
+                public String getResourceName() {
+                    return
                         "org/brandao/brutos/xml/helper/bean/bean-test-constructor9.xml";
                 }
 
@@ -450,38 +479,10 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                     app.getScopes().get(WebScopeType.PARAM).put("enum", "1");
                     Bean bean = controller.getBean("bean");
 
-                    SimpleBean instance = (SimpleBean) bean.getValue();
+                    BeanTestConstructor9 instance = (BeanTestConstructor9) bean.getValue();
 
                     TestCase.assertNotNull(instance);
-                    TestCase.assertEquals("1", instance.getArg());
-                }
-
-        });
-    }
-
-    public void testConstructorArgEnumNumberWithoutType(){
-        super.execTest(
-            new HandlerTest(){
-
-                public String getResourceName() {
-                    return
-                        "org/brandao/brutos/xml/helper/bean/bean-test-constructor9-1.xml";
-                }
-
-                public void run(ConfigurableApplicationContext app,
-                        HttpServletRequest request, HttpServletResponse response) {
-
-                    Controller controller =
-                            app.getControllerManager()
-                                .getController(SimpleController.class);
-
-                    app.getScopes().get(WebScopeType.PARAM).put("enum", "VALUE1");
-                    Bean bean = controller.getBean("bean");
-
-                    SimpleBean instance = (SimpleBean) bean.getValue();
-
-                    TestCase.assertNotNull(instance);
-                    TestCase.assertEquals("VALUE1", instance.getArg());
+                    TestCase.assertEquals(EnumTest.VALUE2, instance.getValue());
                 }
 
         });
