@@ -116,10 +116,13 @@ public class ConstructorBean {
                 Class[] params = con.getParameterTypes();
                 for( int k=0;k<params.length;k++ ){
                     if( getConstructorArg(k).getType() == null ){
-                        getConstructorArg(k)
-                                .setType(
-                                    TypeManager.getType(
-                                        params[k]));
+                        ConstructorArgBean argBean =
+                        getConstructorArg(k);
+                        argBean.setType(
+                                TypeManager.getType(
+                                        params[k],
+                                        argBean.getEnumProperty(),
+                                        argBean.getTemporalType()));
                     }
                 }
                 return con;
