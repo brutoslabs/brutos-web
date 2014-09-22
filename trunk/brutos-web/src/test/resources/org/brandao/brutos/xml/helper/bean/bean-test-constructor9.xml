@@ -8,7 +8,7 @@
         class="org.brandao.brutos.helper.controller.SimpleController">
 
         <bean name="bean"
-            target="org.brandao.brutos.helper.controller.SimpleBean">
+            target="org.brandao.brutos.helper.controller.BeanTestConstructor9">
                 <constructor-arg bean="enum" enum-property="ordinal"/>
         </bean>
 
