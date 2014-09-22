@@ -17,7 +17,7 @@
                     </key>
                     <element>
                     <bean target="java.lang.String">
-                        <constructor-arg bean="value"/>
+                        <constructor-arg bean="value" type="java.lang.String"/>
                     </bean>
                     </element>
             </bean>

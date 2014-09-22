@@ -11,7 +11,7 @@
             target="org.brandao.brutos.helper.controller.SimpleBean">
                 <property name="arg">
                     <bean target="java.lang.String">
-                        <constructor-arg>
+                        <constructor-arg type="java.lang.String">
                             <value>Texto</value>
                         </constructor-arg>
                     </bean>
