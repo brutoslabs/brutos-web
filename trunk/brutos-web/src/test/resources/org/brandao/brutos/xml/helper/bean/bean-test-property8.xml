@@ -14,7 +14,7 @@
 
         <bean name="bean2"
             target="java.lang.String">
-                <constructor-arg>
+                <constructor-arg type="java.lang.String">
                     <value>Texto</value>
                 </constructor-arg>
         </bean>
