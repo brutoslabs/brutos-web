@@ -9,7 +9,7 @@
 
         <bean name="bean"
             target="org.brandao.brutos.helper.controller.SimpleBean">
-                <constructor-arg>
+                <constructor-arg type="java.lang.String">
                     <value>1111</value>
                 </constructor-arg>
         </bean>
