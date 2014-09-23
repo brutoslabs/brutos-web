@@ -128,7 +128,7 @@ public class Bean {
         try{
             obj =
                 instance == null?
-                    this.constructor.getInstance(prefix, index, this.controller, exceptionHandler, force) :
+                    this.constructor.getInstance(prefix, index, this.controller, vex, force) :
                     instance;
             
             if( obj == null )
@@ -141,7 +141,6 @@ public class Bean {
                     this.getConstructor().isMethodFactory();
 
             Iterator fds = fields.values().iterator();
-            //BeanInstance beanInstance = new BeanInstance( obj, classType );
             
             while( fds.hasNext() ){
                 PropertyBean fb = (PropertyBean) fds.next();
@@ -162,7 +161,6 @@ public class Bean {
                         return obj;
                 }
                 else{
-
                     exceptionHandler.addCauses(vex.getCauses());
                     return obj;
                 }
