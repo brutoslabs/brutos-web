@@ -11,13 +11,13 @@
             target="java.util.HashMap">
                 <key bean="item">
                 <bean target="java.lang.String">
-                    <constructor-arg bean="arg"/>
+                    <constructor-arg bean="arg" type="java.lang.String"/>
                 </bean>
                 </key>
                 <element bean="item">
                 <bean
                     target="org.brandao.brutos.helper.controller.SimpleBean">
-                    <constructor-arg bean="arg"/>
+                    <constructor-arg bean="arg" type="java.lang.String"/>
                 </bean>
                 </element>
         </bean>

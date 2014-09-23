@@ -11,7 +11,7 @@
             target="java.util.LinkedList">
                 <element>
                     <bean target="org.brandao.brutos.helper.controller.SimpleBean">
-                        <constructor-arg bean="arg"/>
+                        <constructor-arg bean="arg" type="java.lang.String"/>
                     </bean>
                 </element>
         </bean>

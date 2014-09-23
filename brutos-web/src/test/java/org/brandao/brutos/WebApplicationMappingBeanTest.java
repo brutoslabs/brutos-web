@@ -73,9 +73,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(0)", "1");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(1)", "2");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(2)", "3");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(0).arg", "1");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(1).arg", "2");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(2).arg", "3");
                     Bean bean = controller.getBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
@@ -103,9 +103,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(0)", "1");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(1)", "2");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(2)", "3");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(0).arg", "1");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(1).arg", "2");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(2).arg", "3");
                     Bean bean = controller.getBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
@@ -1639,9 +1639,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg[0]", "1");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg[1]", "2");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg[2]", "3");
+                    app.getScopes().get(WebScopeType.PARAM).put("element[0].arg", "1");
+                    app.getScopes().get(WebScopeType.PARAM).put("element[1].arg", "2");
+                    app.getScopes().get(WebScopeType.PARAM).put("element[2].arg", "3");
                     Bean bean = controller.getBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
@@ -1697,9 +1697,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg[0]", "1");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg[1]", "2");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg[2]", "3");
+                    app.getScopes().get(WebScopeType.PARAM).put("element[0].arg", "1");
+                    app.getScopes().get(WebScopeType.PARAM).put("element[1].arg", "2");
+                    app.getScopes().get(WebScopeType.PARAM).put("element[2].arg", "3");
                     Bean bean = controller.getBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
@@ -1727,9 +1727,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(0)", "1");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(1)", "2");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg(2)", "3");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(0).arg", "1");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(1).arg", "2");
+                    app.getScopes().get(WebScopeType.PARAM).put("element(2).arg", "3");
                     Bean bean = controller.getBean("bean");
                     List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
@@ -1757,9 +1757,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg[0]", "1");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg[1]", "2");
-                    app.getScopes().get(WebScopeType.PARAM).put("element.arg[2]", "3");
+                    app.getScopes().get(WebScopeType.PARAM).put("element[0].arg", "1");
+                    app.getScopes().get(WebScopeType.PARAM).put("element[1].arg", "2");
+                    app.getScopes().get(WebScopeType.PARAM).put("element[2].arg", "3");
                     Bean bean = controller.getBean("bean");
                     Set<SimpleBean> instance = (Set<SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
@@ -1817,9 +1817,9 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                             app.getControllerManager()
                                 .getController(SimpleController.class);
 
-                    app.getScopes().get(WebScopeType.PARAM).put("item.arg[0]", "1");
-                    app.getScopes().get(WebScopeType.PARAM).put("item.arg[1]", "2");
-                    app.getScopes().get(WebScopeType.PARAM).put("item.arg[2]", "3");
+                    app.getScopes().get(WebScopeType.PARAM).put("item[0].arg", "1");
+                    app.getScopes().get(WebScopeType.PARAM).put("item[1].arg", "2");
+                    app.getScopes().get(WebScopeType.PARAM).put("item[2].arg", "3");
                     Bean bean = controller.getBean("bean");
                     Map<String,SimpleBean> instance = (Map<String,SimpleBean>) bean.getValue();
                     TestCase.assertEquals(3,instance.size());
