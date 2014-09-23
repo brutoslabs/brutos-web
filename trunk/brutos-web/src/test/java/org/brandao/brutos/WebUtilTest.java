@@ -31,7 +31,13 @@ public class WebUtilTest extends TestCase{
     }
     
     public void testUriCheck2(){
-        WebUtil.checkURI("/{myid:\\d+}|", true);
+        try{
+            WebUtil.checkURI("/{myid:\\d+}|", true);
+            TestCase.fail("expected IllegalArgumentException");
+        }
+        catch(BrutosException e){
+            
+        }
     }
     
 }
