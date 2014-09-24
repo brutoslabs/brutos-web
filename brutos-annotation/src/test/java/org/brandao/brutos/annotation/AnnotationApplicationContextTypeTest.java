@@ -30,7 +30,7 @@ import org.brandao.brutos.type.TypeManager;
  * @author Brandao
  */
 public class AnnotationApplicationContextTypeTest  
-    extends AbstractApplicationContextTest{
+    extends AbstractAnnotationApplicationContextTest{
     
     public void test1() throws NoSuchMethodException{
         Class clazz = TestTypeFactory.class;

@@ -21,18 +21,21 @@ import java.util.Properties;
 import junit.framework.TestCase;
 import org.brandao.brutos.ActionType;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.test.MockObjectFactory;
 import org.brandao.brutos.test.MockRenderView;
-import org.brandao.brutos.web.WebControllerBuilder;
+import org.brandao.brutos.validator.DefaultValidatorFactory;
 import org.brandao.brutos.web.WebControllerManager;
 
 /**
  *
  * @author Brandao
  */
-public abstract class AbstractApplicationContextTest extends TestCase{
+public abstract class AbstractAnnotationApplicationContextTest extends TestCase{
+
+    protected abstract ConfigurableApplicationContext getApplication(Class[] clazz);
     
-    protected AnnotationApplicationContext getApplication(Class[] clazz){
+    /*protected AnnotationApplicationContext getApplication(Class[] clazz){
         AnnotationApplicationContext 
             annotationApplicationContext = 
                 new AnnotationApplicationContext(
@@ -65,9 +68,16 @@ public abstract class AbstractApplicationContextTest extends TestCase{
         prop.setProperty( BrutosConstants.CONTROLLER_MANAGER_CLASS,
                               WebControllerManager.class.getName() );
         
+        prop.setProperty(BrutosConstants.VALIDATOR_FACTORY_CLASS, 
+                DefaultValidatorFactory.class.getName());
+
+        prop.setProperty(BrutosConstants.OBJECT_FACTORY_CLASS,
+                MockObjectFactory.class.getName());
+        
         annotationApplicationContext.setConfiguration(prop);
         annotationApplicationContext.flush();
         return annotationApplicationContext;
     }
-
+    */
+    
 }
