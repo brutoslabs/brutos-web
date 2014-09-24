@@ -33,7 +33,7 @@ import org.brandao.brutos.mapping.InterceptorStack;
  * @author Brandao
  */
 public class AnnotationApplicationContextInterceptorTest 
-    extends AbstractApplicationContextTest{
+    extends AbstractAnnotationApplicationContextTest{
 
     public void test1(){
         

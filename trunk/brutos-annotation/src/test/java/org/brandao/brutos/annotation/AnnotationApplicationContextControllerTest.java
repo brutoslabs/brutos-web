@@ -42,7 +42,7 @@ import org.brandao.brutos.type.ObjectType;
  * @author Brandao
  */
 public class AnnotationApplicationContextControllerTest 
-    extends AbstractApplicationContextTest{
+    extends AbstractAnnotationApplicationContextTest{
 
     public AnnotationApplicationContextControllerTest(){
         TypeManager.remove(List.class);

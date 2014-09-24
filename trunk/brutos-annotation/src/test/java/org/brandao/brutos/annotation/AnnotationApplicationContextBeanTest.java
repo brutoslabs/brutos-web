@@ -37,7 +37,7 @@ import org.brandao.brutos.type.TypeManager;
  * @author Brandao
  */
 public class AnnotationApplicationContextBeanTest 
-    extends AbstractApplicationContextTest{
+    extends AbstractAnnotationApplicationContextTest{
 
     public AnnotationApplicationContextBeanTest(){
         TypeManager.remove(List.class);
