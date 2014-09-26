@@ -24,11 +24,13 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.io.Resource;
+import org.brandao.brutos.io.ResourceLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
@@ -46,19 +48,33 @@ public abstract class AbstractXMLDefinitionReader
         super(componenetRegistry);
     }
 
-    protected Element buildDocument( Resource resource, String schemaLocation ){
+    protected Element buildDocument( Resource resource, String[] schemaLocation ){
         DocumentBuilderFactory documentBuilderFactory =
                 DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder;
 
-        URL schemaURL = Thread.currentThread()
-            .getContextClassLoader()
-                .getResource( schemaLocation );
-
         try{
-            documentBuilderFactory.setNamespaceAware(false);
-            documentBuilderFactory.setValidating(true);
-            documentBuilderFactory.setAttribute(
+            SchemaFactory schemaFactory = 
+                    SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            
+            StreamSource[] streamSource = new StreamSource[schemaLocation.length];
+            //ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            ResourceLoader resourceLoader = getResourceLoader();
+            
+            for(int i=0;i<schemaLocation.length;i++){
+                streamSource[i] = 
+                        new StreamSource(
+                                resourceLoader
+                                    .getResource(schemaLocation[i])
+                                    .getInputStream());
+            }
+            
+            Schema schema = schemaFactory.newSchema(streamSource);
+            
+            documentBuilderFactory.setNamespaceAware(true);
+            documentBuilderFactory.setValidating(false);
+            documentBuilderFactory.setSchema(schema);
+            /*documentBuilderFactory.setAttribute(
                     XMLBrutosConstants.JAXP_SCHEMA_LANGUAGE,
                     XMLBrutosConstants.W3C_XML_SCHEMA
             );
@@ -67,13 +83,8 @@ public abstract class AbstractXMLDefinitionReader
                     XMLBrutosConstants.JAXP_SCHEMA_SOURCE,
                     schemaURL.toString()
             );
-            
-            SchemaFactory schemaFactory = 
-                    SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(schemaURL);
-            
+            */
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            documentBuilderFactory.setSchema(schema);
             InputStream in = resource.getInputStream();
             Document xmlDocument =
                 documentBuilder
