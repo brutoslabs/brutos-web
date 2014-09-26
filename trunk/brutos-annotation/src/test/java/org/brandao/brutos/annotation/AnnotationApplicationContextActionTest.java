@@ -26,13 +26,8 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.helper.*;
-import org.brandao.brutos.annotation.web.AnnotationWebApplicationContext;
-import org.brandao.brutos.io.ByteArrayResource;
-import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.ThrowableSafeData;
-import org.brandao.brutos.test.MockObjectFactory;
-import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.type.CalendarType;
 import org.brandao.brutos.type.DateTimeType;
 import org.brandao.brutos.type.DefaultDateType;
@@ -40,20 +35,15 @@ import org.brandao.brutos.type.DefaultEnumType;
 import org.brandao.brutos.type.IntegerType;
 import org.brandao.brutos.type.IntegerWrapperType;
 import org.brandao.brutos.type.StringType;
-import org.brandao.brutos.validator.DefaultValidatorFactory;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.brandao.brutos.validator.Validator;
-import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.ContextLoader;
-import org.brandao.brutos.web.test.MockWebApplicationContext;
-import org.brandao.brutos.web.test.MockWebInvoker;
 
 /**
  *
  * @author Brandao
  */
 public class AnnotationApplicationContextActionTest 
-    extends AbstractAnnotationApplicationContextTest{
+    extends AbstractWebAnnotationApplicationContextTest{
     
     public void testAction1() throws NoSuchMethodException{
         
@@ -1543,53 +1533,6 @@ public class AnnotationApplicationContextActionTest
         
         Assert.assertEquals(0,action.getParameters().size());
         
-    }
-
-    protected ConfigurableApplicationContext getApplication(Class[] clazz){
-        String xml = "";
-        xml +="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-        xml +="<ns2:controllers";
-        xml +="    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'";
-        xml +="    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'";
-        xml +="    xmlns:ns1='http://www.brutosframework.com.br/schema/context'";
-        xml +="    xsi:schemaLocation='";
-        xml +="    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd";
-        xml +="    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>";
-        xml +="<ns1:component-scan use-default-filters=\"false\">";
-        
-        for(Class c: clazz){
-            xml +="        <ns1:include-filter type=\"regex\" expression=\""+c.getName().replace(".","\\.")+"\"/>";
-        }
-        
-        xml +="</ns1:component-scan>";
-        xml +="</ns2:controllers>";
-        
-        
-        AnnotationWebApplicationContext context =
-                new AnnotationWebApplicationContext();
-        
-        Properties config = context.getConfiguration();
-        
-        config.setProperty(BrutosConstants.OBJECT_FACTORY_CLASS,
-                MockObjectFactory.class.getName());
-
-        config.setProperty(BrutosConstants.VALIDATOR_FACTORY_CLASS, 
-                DefaultValidatorFactory.class.getName());
-
-        config.setProperty(BrutosConstants.INVOKER_CLASS, 
-                MockWebInvoker.class.getName());
-        
-        //config.setProperty(BrutosConstants.ACTION_TYPE, actionType.name());
-        
-        config.setProperty(BrutosConstants.RENDER_VIEW_CLASS,
-                MockRenderView.class.getName());
-
-        config.setProperty(BrutosConstants.VIEW_RESOLVER_AUTO, 
-                "false");
-        
-        context.setResources(new Resource[]{new ByteArrayResource(xml.getBytes())});
-        context.flush();
-        return context;
     }
     
 }
