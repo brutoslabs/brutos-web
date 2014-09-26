@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
+import org.brandao.brutos.io.ResourceLoader;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.w3c.dom.Element;
@@ -34,20 +35,28 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
 
     private final List blackList;
     
+    private final XMLParseUtil parseUtil;
+
     public XMLComponentDefinitionReader(ComponentRegistry componenetRegistry){
         super( componenetRegistry );
-        this.parseUtil = new XMLParseUtil();
+        this.parseUtil = new XMLParseUtil(XMLBrutosConstants.XML_BRUTOS_CONTROLLER_NAMESPACE);
         this.blackList = new ArrayList();
     }
 
     public void loadDefinitions(Resource resource) {
-        super.loadDefinitions(resource);
-        Element document = this.buildDocument(resource, 
-                XMLBrutosConstants.XML_BRUTOS_CONTROLLER_SCHEMA);
+        Element document = 
+                this.buildDocument(resource, 
+                    new String[]{
+                        ResourceLoader.CLASSPATH_URL_PREFIX +
+                                XMLBrutosConstants.XML_BRUTOS_CONTROLLER_SCHEMA,
+                        ResourceLoader.CLASSPATH_URL_PREFIX + 
+                                XMLBrutosConstants.XML_BRUTOS_CONTEXT_SCHEMA});
         this.buildComponents(document, resource);
     }
     
     protected void buildComponents(Element document, Resource resource){
+        super.buildComponents(document, resource);
+        
         loadInterceptors( parseUtil.getElement(
                 document,
                 XMLBrutosConstants.XML_BRUTOS_INTERCEPTORS ) );
@@ -84,10 +93,11 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
                         blackList.add(dependencyResource);
 
                     Element document = 
-                            super.buildDocument(
-                                    dependencyResource, 
-                                    XMLBrutosConstants.XML_BRUTOS_CONTROLLER_SCHEMA);
-                            //this.validate(dependencyResource);
+                        super.buildDocument(
+                                dependencyResource, 
+                                new String[]{
+                                    ResourceLoader.CLASSPATH_URL_PREFIX + 
+                                        XMLBrutosConstants.XML_BRUTOS_CONTROLLER_SCHEMA});
                     this.buildComponents(document, dependencyResource);
                 }
                 catch( BrutosException ex ){
@@ -96,11 +106,8 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
                 catch( Throwable ex ){
                     throw new BrutosException( ex );
                 }
-
             }
-                
         }
-
     }
 
     private void loadInterceptors( Element e ){

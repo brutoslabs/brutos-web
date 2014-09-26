@@ -24,6 +24,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.io.Resource;
+import org.brandao.brutos.io.ResourceLoader;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.type.TypeManager;
@@ -37,7 +38,7 @@ import org.w3c.dom.NodeList;
 public class ContextDefinitionReader 
     extends AbstractXMLDefinitionReader{
 
-    protected XMLParseUtil parseUtil;
+    private final XMLParseUtil parseUtil;
 
     private String scannerClassName;
     
@@ -49,14 +50,19 @@ public class ContextDefinitionReader
     
     private List includeFilters;
     
+    protected Element rootElement;
+    
     public ContextDefinitionReader(ComponentRegistry componenetRegistry){
         super(componenetRegistry);
         this.scannerClassName = null;
+        this.parseUtil = new XMLParseUtil(XMLBrutosConstants.XML_BRUTOS_CONTEXT_NAMESPACE);
     }
     
     public void loadDefinitions(Resource resource) {
         Element document = this.buildDocument(resource, 
-                XMLBrutosConstants.XML_BRUTOS_CONTEXT_SCHEMA);
+                new String[]{
+                    ResourceLoader.CLASSPATH_URL_PREFIX + 
+                            XMLBrutosConstants.XML_BRUTOS_CONTEXT_SCHEMA});
         this.buildComponents(document, resource);
     }
     

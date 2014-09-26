@@ -29,9 +29,20 @@ import org.w3c.dom.NodeList;
  */
 public class XMLParseUtil {
 
+    private String namespace;
+    
+    public XMLParseUtil(){
+        this(null);
+    }
+
+    public XMLParseUtil(String namespace){
+        this.namespace = namespace;
+    }
+    
     public Element getElement( Element e, String name ){
-        //NodeList elements = e.getElementsByTagNameNS("*", name);
-        NodeList elements = e.getElementsByTagName(name);
+        NodeList elements = 
+                e.getElementsByTagNameNS(
+                    this.namespace == null? "*" : this.namespace, name);
         
         for(int i=0;i<elements.getLength();i++){
             Element c = (Element) elements.item(i);
@@ -52,15 +63,19 @@ public class XMLParseUtil {
     public NodeList getElements( Element e, String name ){
         /*CustomNodeList list = new CustomNodeList();
 
-        NodeList es = e.getElementsByTagNameNS("*", name);
+        NodeList es = e.getElementsByTagNameNS(
+                    this.namespace == null? "*" : this.namespace, name);
+        
         for( int i=0;i<es.getLength();i++ ){
             Element c = (Element) es.item(i);
             if( c.getParentNode().equals(e) )
                 list.add(c);
         }
         
-        return list;*/
-        return e.getElementsByTagName(name);
+        return list;
+        */
+        return e.getElementsByTagNameNS(
+                    this.namespace == null? "*" : this.namespace, name);
     }
 
     public String getAttribute( Element e, String name ){
