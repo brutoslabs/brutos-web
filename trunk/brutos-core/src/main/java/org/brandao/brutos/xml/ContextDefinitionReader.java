@@ -17,95 +17,50 @@
 
 package org.brandao.brutos.xml;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Properties;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.ArrayList;
+import java.util.List;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.io.ResourceLoader;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.type.TypeManager;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 /**
  *
  * @author Brandao
  */
-public class ContextDefinitionReader extends AbstractDefinitionReader{
+public class ContextDefinitionReader 
+    extends AbstractXMLDefinitionReader{
 
     protected XMLParseUtil parseUtil;
 
+    private String scannerClassName;
+    
+    private String[] basePackage;
+    
+    private boolean useDefaultfilter;
+    
+    private List excludeFilters;
+    
+    private List includeFilters;
+    
     public ContextDefinitionReader(ComponentRegistry componenetRegistry){
         super(componenetRegistry);
+        this.scannerClassName = null;
     }
     
-    protected Element validate( Resource resource ){
-        DocumentBuilderFactory documentBuilderFactory =
-                DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder;
-
-        URL schemaURL = Thread.currentThread()
-            .getContextClassLoader()
-                .getResource( XMLBrutosConstants.XML_BRUTOS_CONTEXT_SCHEMA );
-
-        try{
-            documentBuilderFactory.setNamespaceAware(true);
-            documentBuilderFactory.setValidating(true);
-            documentBuilderFactory.setAttribute(
-                    XMLBrutosConstants.JAXP_SCHEMA_LANGUAGE,
-                    XMLBrutosConstants.W3C_XML_SCHEMA
-            );
-
-            documentBuilderFactory.setAttribute(
-                    XMLBrutosConstants.JAXP_SCHEMA_SOURCE,
-                    schemaURL.toString()
-            );
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
-
-            InputStream in = resource.getInputStream();
-            Document xmlDocument =
-                documentBuilder
-                    .parse(new InputSource(in));
-            return xmlDocument.getDocumentElement();
-        }
-        catch (BrutosException ex) {
-            throw ex;
-        }
-        catch (SAXParseException ex) {
-            throw new BrutosException(
-                     "Line " + ex.getLineNumber() + " in XML document from "
-                     + resource + " is invalid", ex);
-        }
-        catch (SAXException ex) {
-             throw new BrutosException("XML document from " + resource +
-                     " is invalid", ex);
-        }
-        catch (ParserConfigurationException   ex) {
-             throw new BrutosException("Parser configuration exception parsing "
-                     + "XML from " + resource, ex);
-        }
-        catch (IOException ex) {
-             throw new BrutosException("IOException parsing XML document from "
-                     + resource, ex);
-        }
-        catch (Throwable ex) {
-             throw new BrutosException("Unexpected exception parsing XML document "
-                     + "from " + resource, ex);
-        }
+    public void loadDefinitions(Resource resource) {
+        Element document = this.buildDocument(resource, 
+                XMLBrutosConstants.XML_BRUTOS_CONTEXT_SCHEMA);
+        this.buildComponents(document, resource);
     }
-
-    protected void build( Element document ){
+    
+    protected void buildComponents(Element document, Resource resource){
         loadTypes( parseUtil.getElement(
                 document,
                 XMLBrutosConstants.XML_BRUTOS_TYPES ) );
@@ -115,6 +70,9 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
                 document, 
                 XMLBrutosConstants.XML_BRUTOS_CONTEXT_PARAMS ) );
         
+        localAnnotationConfig(parseUtil.getElement(
+                    document,
+                    XMLBrutosConstants.XML_BRUTOS_COMPONENT_SCAN ) );       
     }
 
     private void loadContextParams( Element cp ){
@@ -168,33 +126,107 @@ public class ContextDefinitionReader extends AbstractDefinitionReader{
             }
 
         }
+    }
 
+    private void localAnnotationConfig(Element element){
+        
+        if(element == null)
+            return;
+        
+        if(this.getScannerClassName() != null)
+            throw new BrutosException("scanner has been defined");
+            
+        this.setScannerClassName(element.getAttribute("scanner-class"));
+                
+        String basePackageText = element.getAttribute("base-package");
+        
+        this.setBasePackage(
+                StringUtil.isEmpty(basePackageText)?
+                    new String[]{""} :
+                StringUtil.getArray(basePackageText, BrutosConstants.COMMA)
+        );
+        
+        this.setUseDefaultfilter(
+                "true".equals(element.getAttribute("use-default-filters")));
+        
+        NodeList list = parseUtil.getElements(element, "exclude-filter");
+        
+        List excludeFilterList = new ArrayList();
+        this.setExcludeFilters(excludeFilterList);
+        
+        for(int i=0;i<list.getLength();i++){
+            Element filterNode = (Element)list.item(i);
+            String expression = filterNode.getAttribute("expression");
+            String type = filterNode.getAttribute("type");
+            String filterClassName = getFilterClassName(expression, type);
+            excludeFilterList.add(new FilterEntity(filterClassName, expression));
+        }
+        
+        list = parseUtil.getElements(element, "include-filter");
+        
+        List includeFilterList = new ArrayList();
+        this.setIncludeFilters(includeFilterList);
+        
+        for(int i=0;i<list.getLength();i++){
+            Element filterNode = (Element)list.item(i);
+            String expression = filterNode.getAttribute("expression");
+            String type = filterNode.getAttribute("type");
+            String filterClassName = getFilterClassName(expression, type);
+            includeFilterList.add(new FilterEntity(filterClassName, expression));
+        }
+        
     }
     
-    public void loadDefinitions(Resource resource) {
-        Element document = this.validate(resource);
-        this.build(document);
+    private String getFilterClassName(String expression, String type){
+        if(XMLBrutosConstants.XML_BRUTOS_CUSTOM_FILTER.equals(type))
+            return expression;
+        else{
+            String name = 
+                type.length() > 1?
+                Character.toUpperCase(type.charAt(0)) + type.substring(1) :
+                type;
+            return "org.brandao.brutos.annotation.scanner.filter." + name + "TypeFilter";
+        }
+    }
+    
+    public String getScannerClassName() {
+        return scannerClassName;
     }
 
-    public void loadDefinitions(Resource[] resource) {
-        if( resource != null )
-            for( int i=0;i<resource.length;i++ )
-                this.loadDefinitions(resource[i]);
+    public void setScannerClassName(String scannerClassName) {
+        this.scannerClassName = scannerClassName;
     }
 
-    public void loadDefinitions(String[] locations) {
-        if( locations != null )
-            for( int i=0;i<locations.length;i++ )
-                this.loadDefinitions(locations[i]);
+    public String[] getBasePackage() {
+        return basePackage;
     }
 
-    public void loadDefinitions(String location) {
-        Resource resource = this.componenetRegistry.getResource(location);
-        this.loadDefinitions(resource);
+    public void setBasePackage(String[] basePackage) {
+        this.basePackage = basePackage;
     }
 
-    public ResourceLoader getResourceLoader() {
-        return this.componenetRegistry;
+    public boolean isUseDefaultfilter() {
+        return useDefaultfilter;
     }
 
+    public void setUseDefaultfilter(boolean useDefaultfilter) {
+        this.useDefaultfilter = useDefaultfilter;
+    }
+
+    public List getExcludeFilters() {
+        return excludeFilters;
+    }
+
+    public void setExcludeFilters(List excludeFilters) {
+        this.excludeFilters = excludeFilters;
+    }
+
+    public List getIncludeFilters() {
+        return includeFilters;
+    }
+
+    public void setIncludeFilters(List includeFilters) {
+        this.includeFilters = includeFilters;
+    }
+    
 }

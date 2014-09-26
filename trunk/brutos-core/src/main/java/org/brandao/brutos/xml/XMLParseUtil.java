@@ -30,8 +30,9 @@ import org.w3c.dom.NodeList;
 public class XMLParseUtil {
 
     public Element getElement( Element e, String name ){
-        NodeList elements = e.getElementsByTagNameNS("*", name);
-
+        //NodeList elements = e.getElementsByTagNameNS("*", name);
+        NodeList elements = e.getElementsByTagName(name);
+        
         for(int i=0;i<elements.getLength();i++){
             Element c = (Element) elements.item(i);
             if( c.getParentNode().equals(e) )
@@ -49,7 +50,7 @@ public class XMLParseUtil {
     }
 
     public NodeList getElements( Element e, String name ){
-        CustomNodeList list = new CustomNodeList();
+        /*CustomNodeList list = new CustomNodeList();
 
         NodeList es = e.getElementsByTagNameNS("*", name);
         for( int i=0;i<es.getLength();i++ ){
@@ -58,7 +59,8 @@ public class XMLParseUtil {
                 list.add(c);
         }
         
-        return list;
+        return list;*/
+        return e.getElementsByTagName(name);
     }
 
     public String getAttribute( Element e, String name ){
