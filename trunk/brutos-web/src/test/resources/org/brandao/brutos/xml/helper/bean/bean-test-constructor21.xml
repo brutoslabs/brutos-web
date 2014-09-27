@@ -9,7 +9,7 @@
 
         <bean name="bean"
             target="org.brandao.brutos.helper.controller.SimpleBean">
-                <constructor-arg value="teste">
+                <constructor-arg value="teste" type="java.lang.String">
                     <validator message="Erro">
                         <rule name="equal">Teste</rule>
                     </validator>
