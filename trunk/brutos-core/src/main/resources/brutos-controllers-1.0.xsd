@@ -56,7 +56,6 @@
         <xsd:attribute name="view" type="xsd:string"/>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="class" type="xsd:string"/>
-        <!--<xsd:attribute name="scope" type="xsd:string" default="request"/>-->
         <xsd:attribute name="action-id" type="xsd:string" default="invoke"/>
         <xsd:attribute name="default-action" type="xsd:string"/>
     </xsd:complexType>
