@@ -33,6 +33,7 @@ import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -54,42 +55,37 @@ public abstract class AbstractXMLDefinitionReader
         DocumentBuilder documentBuilder;
 
         try{
-            SchemaFactory schemaFactory = 
-                    SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            
-            StreamSource[] streamSource = new StreamSource[schemaLocation.length];
-            //ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            String[] sourceSchema = new String[schemaLocation.length];
             ResourceLoader resourceLoader = getResourceLoader();
             
             for(int i=0;i<schemaLocation.length;i++){
-                streamSource[i] = 
-                        new StreamSource(
-                                resourceLoader
-                                    .getResource(schemaLocation[i])
-                                    .getInputStream());
+                sourceSchema[i] = 
+                            resourceLoader
+                                .getResource(
+                                    schemaLocation[i]).getURL().toString();
             }
             
-            Schema schema = schemaFactory.newSchema(streamSource);
-            
             documentBuilderFactory.setNamespaceAware(true);
-            documentBuilderFactory.setValidating(false);
-            documentBuilderFactory.setSchema(schema);
-            /*documentBuilderFactory.setAttribute(
+            documentBuilderFactory.setValidating(true);
+            
+            documentBuilderFactory.setAttribute(
                     XMLBrutosConstants.JAXP_SCHEMA_LANGUAGE,
                     XMLBrutosConstants.W3C_XML_SCHEMA
             );
 
             documentBuilderFactory.setAttribute(
                     XMLBrutosConstants.JAXP_SCHEMA_SOURCE,
-                    schemaURL.toString()
+                    sourceSchema
             );
-            */
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            documentBuilder.setErrorHandler(new ParserErrorHandler());
+
             InputStream in = resource.getInputStream();
             Document xmlDocument =
                 documentBuilder
                     .parse(new InputSource(in));
             
+            xmlDocument.normalize();
             return xmlDocument.getDocumentElement();
         }
         catch (BrutosException ex) {
@@ -97,8 +93,8 @@ public abstract class AbstractXMLDefinitionReader
         }
         catch (SAXParseException ex) {
             throw new BrutosException(
-                     "Line " + ex.getLineNumber() + " in XML document from "
-                     + resource + " is invalid", ex);
+                     "Line " + ex.getLineNumber() + " Column " + ex.getColumnNumber() +
+                     " in XML document from " + resource + " is invalid", ex);
         }
         catch (SAXException ex) {
              throw new BrutosException("XML document from " + resource +

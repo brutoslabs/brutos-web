@@ -115,17 +115,16 @@ public class ContextDefinitionReader
 
         for( int i=0;i<list.getLength();i++ ){
             Element c = (Element) list.item(i);
-            //String name  = parseUtil.getAttribute(c,"class-type" );
             String value = parseUtil.getAttribute(c,"factory");
 
             value = value == null? c.getTextContent() : value;
 
-            //Class type;
             Class factory;
 
             try{
                 factory = ClassUtil.get(value);
-                TypeManager.register((TypeFactory)ClassUtil.getInstance(factory/*,super.handler*/));
+                TypeManager.register(
+                    (TypeFactory)ClassUtil.getInstance(factory));
             }
             catch( Exception e ){
                 throw new BrutosException( e );
