@@ -400,7 +400,10 @@ public class ControllerBuilder {
      * @return Contrutor da a��o.
      */
     public ActionBuilder addAction( String id ){
-        return addAction( id, null, null, DispatcherType.FORWARD, null );
+        return addAction( id, null, null, 
+                !"true".equals(applicationContext.getConfiguration()
+                .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)), 
+                DispatcherType.FORWARD, null );
     }
 
     /**
@@ -411,7 +414,10 @@ public class ControllerBuilder {
      * @return Contrutor da a��o.
      */
     public ActionBuilder addAction( String id, String executor ){
-        return addAction( id, null, null, DispatcherType.FORWARD, executor );
+        return addAction( id, null, null, 
+                !"true".equals(applicationContext.getConfiguration()
+                .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)), 
+                DispatcherType.FORWARD, executor );
     }
 
     /**
@@ -422,8 +428,10 @@ public class ControllerBuilder {
      * @param view Vis�o. Se omitido, ser� usado a vis�o do controldor.
      * @return Contrutor da a��o.
      */
-    public ActionBuilder addAction( String id, String executor, String view ){
-        return addAction( id, null, view, DispatcherType.FORWARD, executor );
+    public ActionBuilder addAction( String id, String executor, String view,
+            boolean resolvedView ){
+        return addAction( id, null, view, 
+                resolvedView, DispatcherType.FORWARD, executor );
     }
     
     /**
@@ -435,8 +443,10 @@ public class ControllerBuilder {
      * @param resultId Identifica��o do resultado da a��o.
      * @return Contrutor da a��o.
      */
-    public ActionBuilder addAction( String id, String resultId, String view, String executor ){
-        return addAction( id, resultId, view, DispatcherType.FORWARD, executor );
+    public ActionBuilder addAction( String id, String resultId, String view, 
+             boolean resolvedView, String executor ){
+        return addAction( id, resultId, view, 
+                resolvedView, DispatcherType.FORWARD, executor );
     }
     /**
      * Adiciona uma nova a��o ao controlador.
@@ -449,13 +459,13 @@ public class ControllerBuilder {
      * @return Contrutor da a��o.
      */
     public ActionBuilder addAction( String id, String resultId, String view, 
-            DispatcherType dispatcher, String executor ){
-        return addAction( id, resultId, false, view, dispatcher, executor );
+             boolean resolvedView, DispatcherType dispatcher, String executor ){
+        return addAction( id, resultId, false, view, resolvedView, dispatcher, executor );
     }
 
     public ActionBuilder addAction( String id, String resultId, boolean resultRendered, String view, 
-            DispatcherType dispatcher, String executor ){
-        return this.addAction(id, resultId, resultRendered, view, dispatcher, false, executor);
+             boolean resolvedView, DispatcherType dispatcher, String executor ){
+        return this.addAction(id, resultId, resultRendered, view, dispatcher, resolvedView, executor);
     }
     
     public ActionBuilder addAction( String id, String resultId, boolean resultRendered, String view, 

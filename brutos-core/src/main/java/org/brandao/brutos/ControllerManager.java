@@ -52,9 +52,12 @@ public interface ControllerManager {
      * @param id Identificação do controlador.
      * @param view Visão do controlador.
      * @param classType Classe do controlador.
+     * @param resolvedView Define se a vista informada é real ou não. 
+     * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
      * @return Construtor do controlador.
      */
-    ControllerBuilder addController( String id, String view, Class classType );
+    ControllerBuilder addController( String id, String view, boolean resolvedView, 
+            Class classType );
     
     /**
      * Cria um novo controlador.
@@ -64,10 +67,12 @@ public interface ControllerManager {
      * @param name Identificação do controlador dentro do contexto do conteinerIoC.
      * @param classType Classe do controlador.
      * @param actionId Parâmetro que identifica a ação.
+     * @param resolvedView Define se a vista informada é real ou não. 
+     * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
      * @return Construtor do controlador.
      */
     ControllerBuilder addController( String id, String view,
-           String name, Class classType, String actionId );
+           boolean resolvedView, String name, Class classType, String actionId );
 
     /**
      * Cria um novo controlador.
@@ -78,9 +83,12 @@ public interface ControllerManager {
      * @param name Identificação do controlador dentro do contexto do conteiner IoC.
      * @param classType Classe do controlador.
      * @param actionId Parâmetro que identifica a ação.
+     * @param resolvedView Define se a vista informada é real ou não. 
+     * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
      * @return Construtor do controlador.
      */
-    ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
+    ControllerBuilder addController( String id, String view, 
+            boolean resolvedView, DispatcherType dispatcherType,
             String name, Class classType, String actionId );
     
     /**
@@ -93,9 +101,12 @@ public interface ControllerManager {
      * @param classType Classe do controlador.
      * @param actionId Parâmetro que identifica a ação.
      * @param actionType Estratégia de mapeamento de ação.
+     * @param resolvedView Define se a vista informada é real ou não. 
+     * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
      * @return Construtor do controlador.
      */
-    ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
+    ControllerBuilder addController( String id, String view, 
+            boolean resolvedView, DispatcherType dispatcherType,
             String name, Class classType, String actionId, ActionType actionType );
 
     /**
