@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation;
 import java.util.List;
 import junit.framework.Assert;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.helper.InterceptorTest1Controller;
 import org.brandao.brutos.annotation.helper.InterceptorTest2Controller;
 import org.brandao.brutos.annotation.helper.InterceptorTest3Controller;
@@ -33,13 +34,13 @@ import org.brandao.brutos.mapping.InterceptorStack;
  * @author Brandao
  */
 public class AnnotationApplicationContextInterceptorTest 
-    extends AbstractAnnotationApplicationContextTest{
+    extends AbstractWebAnnotationApplicationContextTest{
 
     public void test1(){
         
         Class clazz = Test1InterceptorController.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Interceptor interceptor = 
@@ -57,7 +58,7 @@ public class AnnotationApplicationContextInterceptorTest
         
         Class clazz = Test2Interceptor.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Interceptor interceptor = 
@@ -75,7 +76,7 @@ public class AnnotationApplicationContextInterceptorTest
         
         Class clazz = Test3Interceptor.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Interceptor interceptor = 
@@ -93,7 +94,7 @@ public class AnnotationApplicationContextInterceptorTest
         
         Class clazz = Test4Interceptor.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Interceptor interceptor = 
@@ -111,7 +112,7 @@ public class AnnotationApplicationContextInterceptorTest
         
         Class clazz = Test5Interceptor.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Interceptor interceptor = 
@@ -133,7 +134,7 @@ public class AnnotationApplicationContextInterceptorTest
         
         Class clazz = InterceptorTest1Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz,Test1InterceptorController.class});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -157,7 +158,7 @@ public class AnnotationApplicationContextInterceptorTest
         
         Class clazz = InterceptorTest2Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz,Test3Interceptor.class});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -181,7 +182,7 @@ public class AnnotationApplicationContextInterceptorTest
         
         Class clazz = InterceptorTest3Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz,Test3Interceptor.class});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -208,7 +209,7 @@ public class AnnotationApplicationContextInterceptorTest
         
         Class clazz = InterceptorTest4Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(
                     new Class[]{
                         clazz,
@@ -244,7 +245,7 @@ public class AnnotationApplicationContextInterceptorTest
         
         Class clazz = Test6InterceptorController.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(
                     new Class[]{
                         clazz,
@@ -264,7 +265,7 @@ public class AnnotationApplicationContextInterceptorTest
 
     public void testInterceptorstack1(){
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(
                     new Class[]{
                         org.brandao.brutos.annotation.helper.interceptor.stacka.InterceptorAInterceptorController.class,
@@ -296,7 +297,7 @@ public class AnnotationApplicationContextInterceptorTest
 
     public void testInterceptorstack2(){
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(
                     new Class[]{
                         org.brandao.brutos.annotation.helper.interceptor.stackb.InterceptorAInterceptorController.class,
@@ -335,7 +336,7 @@ public class AnnotationApplicationContextInterceptorTest
 
     public void testInterceptorstack3(){
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(
                     new Class[]{
                         org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorAInterceptorController.class,

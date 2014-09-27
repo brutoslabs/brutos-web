@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation;
 import java.util.*;
 import junit.framework.Assert;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.helper.*;
 import org.brandao.brutos.mapping.Action;
@@ -42,7 +43,7 @@ import org.brandao.brutos.type.ObjectType;
  * @author Brandao
  */
 public class AnnotationApplicationContextControllerTest 
-    extends AbstractAnnotationApplicationContextTest{
+    extends AbstractWebAnnotationApplicationContextTest{
 
     public AnnotationApplicationContextControllerTest(){
         TypeManager.remove(List.class);
@@ -52,7 +53,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest1Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -84,7 +85,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest2.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -116,7 +117,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest3Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -148,7 +149,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest4Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -182,7 +183,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest5Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -216,7 +217,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest6Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -230,7 +231,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest7Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -264,7 +265,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest8Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -298,7 +299,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest9Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -332,7 +333,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest10Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -364,7 +365,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest11Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -400,7 +401,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest12Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -442,7 +443,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest13Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -491,7 +492,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest14Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -540,7 +541,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest15Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -582,7 +583,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest16Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -624,7 +625,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest17Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -648,7 +649,7 @@ public class AnnotationApplicationContextControllerTest
     public void test18() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -665,7 +666,7 @@ public class AnnotationApplicationContextControllerTest
     public void test19() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -682,7 +683,7 @@ public class AnnotationApplicationContextControllerTest
     public void test20() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -700,7 +701,7 @@ public class AnnotationApplicationContextControllerTest
     public void test21() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -718,7 +719,7 @@ public class AnnotationApplicationContextControllerTest
     public void test22() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -736,7 +737,7 @@ public class AnnotationApplicationContextControllerTest
     public void test23() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -754,7 +755,7 @@ public class AnnotationApplicationContextControllerTest
     public void test24() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -772,7 +773,7 @@ public class AnnotationApplicationContextControllerTest
     public void test25() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -805,7 +806,7 @@ public class AnnotationApplicationContextControllerTest
     public void test26() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -838,7 +839,7 @@ public class AnnotationApplicationContextControllerTest
     public void test27() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -873,7 +874,7 @@ public class AnnotationApplicationContextControllerTest
     public void test28() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -908,7 +909,7 @@ public class AnnotationApplicationContextControllerTest
     public void test29() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext;
         try{
             TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
@@ -949,7 +950,7 @@ public class AnnotationApplicationContextControllerTest
     public void test30() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -974,7 +975,7 @@ public class AnnotationApplicationContextControllerTest
     public void test31() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -999,7 +1000,7 @@ public class AnnotationApplicationContextControllerTest
     public void test32() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1024,7 +1025,7 @@ public class AnnotationApplicationContextControllerTest
     public void test33() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1049,7 +1050,7 @@ public class AnnotationApplicationContextControllerTest
     public void test34() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1074,7 +1075,7 @@ public class AnnotationApplicationContextControllerTest
     public void test35() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext;
         try{
             TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
@@ -1115,7 +1116,7 @@ public class AnnotationApplicationContextControllerTest
     public void test36() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext;
         try{
             TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
@@ -1146,7 +1147,7 @@ public class AnnotationApplicationContextControllerTest
     public void test37() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1191,7 +1192,7 @@ public class AnnotationApplicationContextControllerTest
     public void test38() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1236,7 +1237,7 @@ public class AnnotationApplicationContextControllerTest
     public void test39() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1281,7 +1282,7 @@ public class AnnotationApplicationContextControllerTest
     public void test40() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1298,7 +1299,7 @@ public class AnnotationApplicationContextControllerTest
     public void test41() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1315,7 +1316,7 @@ public class AnnotationApplicationContextControllerTest
     public void test42() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1333,7 +1334,7 @@ public class AnnotationApplicationContextControllerTest
     public void test43() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1351,7 +1352,7 @@ public class AnnotationApplicationContextControllerTest
     public void test44() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1369,7 +1370,7 @@ public class AnnotationApplicationContextControllerTest
     public void test45() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1387,7 +1388,7 @@ public class AnnotationApplicationContextControllerTest
     public void test46() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1405,7 +1406,7 @@ public class AnnotationApplicationContextControllerTest
     public void test47() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1438,7 +1439,7 @@ public class AnnotationApplicationContextControllerTest
     public void test48() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1471,7 +1472,7 @@ public class AnnotationApplicationContextControllerTest
     public void test49() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1506,7 +1507,7 @@ public class AnnotationApplicationContextControllerTest
     public void test50() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1541,7 +1542,7 @@ public class AnnotationApplicationContextControllerTest
     public void test51() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext;
         try{
             TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
@@ -1582,7 +1583,7 @@ public class AnnotationApplicationContextControllerTest
     public void test52() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1607,7 +1608,7 @@ public class AnnotationApplicationContextControllerTest
     public void test53() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1632,7 +1633,7 @@ public class AnnotationApplicationContextControllerTest
     public void test54() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1657,7 +1658,7 @@ public class AnnotationApplicationContextControllerTest
     public void test55() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1682,7 +1683,7 @@ public class AnnotationApplicationContextControllerTest
     public void test56() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1707,7 +1708,7 @@ public class AnnotationApplicationContextControllerTest
     public void test57() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext;
         try{
             TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
@@ -1748,7 +1749,7 @@ public class AnnotationApplicationContextControllerTest
     public void test58() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext;
         try{
             TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
@@ -1779,7 +1780,7 @@ public class AnnotationApplicationContextControllerTest
     public void test59() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1824,7 +1825,7 @@ public class AnnotationApplicationContextControllerTest
     public void test60() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1869,7 +1870,7 @@ public class AnnotationApplicationContextControllerTest
     public void test61() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1916,7 +1917,7 @@ public class AnnotationApplicationContextControllerTest
         
         Class clazz = ControllerTest19Controller.class;
         
-        AnnotationApplicationContext annotationApplicationContext = 
+        ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
