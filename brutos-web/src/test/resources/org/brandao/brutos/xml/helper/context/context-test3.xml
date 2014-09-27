@@ -7,7 +7,6 @@
    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>
 
    <context:types>
-       <context:type 
-       class-type="org.brandao.brutos.helper.controller.SimpleBean">org.brandao.brutos.helper.controller.TypeTest</context:type>
+       <context:type>org.brandao.brutos.helper.controller.TypeTest</context:type>
    </context:types>
 </controllers>
