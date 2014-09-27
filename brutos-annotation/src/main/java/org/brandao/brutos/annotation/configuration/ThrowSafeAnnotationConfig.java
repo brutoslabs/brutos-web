@@ -71,9 +71,10 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
             actionBuilder
                     .addThrowable(
                         throwSafe.getTarget(), 
-                        throwSafe.isRendered()? 
+                        throwSafe.getView(),
+                        /*throwSafe.isRendered()? 
                             getView(actionBuilder, componentRegistry, throwSafe) : 
-                            null,
+                            null,*/
                         throwSafe.getName(), 
                         throwSafe.getDispatcher());
         }

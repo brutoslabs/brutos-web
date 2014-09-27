@@ -74,6 +74,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
         
         boolean resultRendered = resultView == null? false : resultView.rendered();
+        boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
         
         ActionBuilder actionBuilder =
         controllerBuilder
@@ -81,17 +82,19 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 id, 
                 result,
                 resultRendered,
-                null, 
+                getView(method, viewAnnotation, componentRegistry),
+                resolved,
                 dispatcher,
                 method.isAbstractAction()? null : method.getName() );
 
-        view = getView(
+        /*view = getView(
                 method,
                 viewAnnotation, 
                 actionBuilder,
                 componentRegistry);
+        */
         
-        actionBuilder.setView(view);
+        //actionBuilder.setView(view);
         
         if(action != null && action.value().length > 1){
             String[] ids = action.value();
@@ -156,8 +159,8 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         }
     }
     
-    protected String getView(ActionEntry actionEntry, View viewAnnotation, ActionBuilder action,
-        ComponentRegistry componentRegistry){
+    protected String getView(ActionEntry actionEntry, View viewAnnotation, 
+            /*ActionBuilder action,*/ ComponentRegistry componentRegistry){
         
         if(actionEntry.isAbstractAction()){
             String view = actionEntry.getView();
@@ -168,7 +171,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         }
             
         boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
-        boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
+        //boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
 
         String view = 
             viewAnnotation == null || StringUtil.isEmpty(viewAnnotation.value())?
@@ -176,10 +179,12 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 StringUtil.adjust(viewAnnotation.value());
 
         if(rendered){
-            if(resolved)
+            return view;
+            /*if(resolved)
                 return view;
             else
                 return createActionView(action, componentRegistry, view);
+            */
         }
         else
             return null;

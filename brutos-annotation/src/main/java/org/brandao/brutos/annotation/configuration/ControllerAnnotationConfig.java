@@ -87,10 +87,13 @@ public class ControllerAnnotationConfig
                 BrutosConstants.DEFAULT_DISPATCHERTYPE : 
                 org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
         
+        boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
+        
         builder =
                 componentRegistry.registerController(
                     controllerID,
-                    null,
+                    getView((View) source.getAnnotation(View.class),componentRegistry),
+                    resolved,
                     dispatcher,
                     name,
                     source,
@@ -98,8 +101,8 @@ public class ControllerAnnotationConfig
                     actionType);
 
         
-        view = getView((View) source.getAnnotation(View.class), builder,
-            componentRegistry);
+        //view = getView((View) source.getAnnotation(View.class), builder,
+        //    componentRegistry);
         
         if(annotationController != null && annotationController.value().length > 1){
             String[] ids = annotationController.value();
@@ -111,7 +114,7 @@ public class ControllerAnnotationConfig
             }
         }
             
-        builder.setView(view);
+        //builder.setView(view);
         builder.setDefaultAction(defaultActionName);
         
         super.applyInternalConfiguration(source, builder, componentRegistry);
@@ -144,11 +147,11 @@ public class ControllerAnnotationConfig
         
     }
     
-    protected String getView(View viewAnnotation, ControllerBuilder controller,
+    protected String getView(View viewAnnotation, /*ControllerBuilder controller,*/
         ComponentRegistry componentRegistry){
         
         boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
-        boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
+        //boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
         
         String view = 
             viewAnnotation == null ||StringUtil.isEmpty(viewAnnotation.value())?
@@ -157,10 +160,13 @@ public class ControllerAnnotationConfig
         
         
         if(rendered){
+            return view;
+            /*
             if(resolved)
                 return view;
             else
                 return createControllerView(controller, componentRegistry, view);
+            */
         }
         else
             return null;
