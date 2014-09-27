@@ -160,7 +160,7 @@ public class ControllerAnnotationConfig
             if(resolved)
                 return view;
             else
-                return createControllerView(controller, componentRegistry, viewAnnotation.value());
+                return createControllerView(controller, componentRegistry, view);
         }
         else
             return null;

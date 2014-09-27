@@ -18,26 +18,20 @@
 package org.brandao.brutos.annotation.web;
 
 import java.util.List;
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.ComponentConfigurer;
-import org.brandao.brutos.annotation.FilterType;
 import org.brandao.brutos.annotation.scanner.DefaultScanner;
 import org.brandao.brutos.annotation.scanner.Scanner;
 import org.brandao.brutos.annotation.scanner.TypeFilter;
 import org.brandao.brutos.annotation.scanner.filter.ControllerFilter;
 import org.brandao.brutos.annotation.scanner.filter.InterceptorFilter;
 import org.brandao.brutos.annotation.scanner.filter.TypeTypeFilter;
-import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.xml.FilterEntity;
-import org.brandao.brutos.xml.XMLBrutosConstants;
 import org.brandao.brutos.xml.XMLComponentDefinitionReader;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  *
@@ -102,7 +96,7 @@ public class AnnotationDefinitionReader
             this.scanner.addExcludeFilter(filter);
         }
         
-        List<FilterEntity> includeFilter = super.getExcludeFilters();
+        List<FilterEntity> includeFilter = super.getIncludeFilters();
         
         for(FilterEntity filterDef: includeFilter){
             TypeFilter filter = 
