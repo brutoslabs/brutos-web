@@ -29,15 +29,18 @@ public interface ControllerRegistry {
 
     ControllerBuilder registerController( String id, Class classType );
     
-    ControllerBuilder registerController( String id, String view, Class classType );
+    ControllerBuilder registerController( String id, String view, 
+            boolean resolvedView, Class classType );
     
     ControllerBuilder registerController( String id, String view,
-           String name, Class classType, String actionId );
+           boolean resolvedView, String name, Class classType, String actionId );
 
-    ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,
+    ControllerBuilder registerController( String id, String view, 
+            boolean resolvedView, DispatcherType dispatcherType,
             String name, Class classType, String actionId );
     
-    ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,
+    ControllerBuilder registerController( String id, String view, 
+            boolean resolvedView, DispatcherType dispatcherType,
             String name, Class classType, String actionId, ActionType actionType );
     
     ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,

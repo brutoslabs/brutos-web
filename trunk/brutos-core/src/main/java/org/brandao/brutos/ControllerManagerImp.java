@@ -53,7 +53,9 @@ public class ControllerManagerImp implements ControllerManager{
      * @return Construtor do controlador.
      */
     public ControllerBuilder addController( Class classtype ){
-        return addController( null, null, null, classtype, "invoke" );
+        return addController( null, null, 
+                !"true".equals(applicationContext.getConfiguration()
+                .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)), null, classtype, "invoke" );
     }
 
     /**
@@ -64,7 +66,9 @@ public class ControllerManagerImp implements ControllerManager{
      * @return Construtor do controlador.
      */
     public ControllerBuilder addController( String id, Class classType ){
-        return addController( id, null, null, classType, "invoke" );
+        return addController( id, null, 
+                !"true".equals(applicationContext.getConfiguration()
+                .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)), null, classType, "invoke" );
     }
     
     /**
@@ -75,8 +79,9 @@ public class ControllerManagerImp implements ControllerManager{
      * @param classType Classe do controlador.
      * @return Construtor do controlador.
      */
-    public ControllerBuilder addController( String id, String view, Class classType ){
-        return addController( id, view, null, classType, "invoke" );
+    public ControllerBuilder addController( String id, String view, 
+            boolean resolvedView, Class classType ){
+        return addController( id, view, resolvedView, null, classType, "invoke" );
     }
     
     /**
@@ -90,8 +95,9 @@ public class ControllerManagerImp implements ControllerManager{
      * @return Construtor do controlador.
      */
     public ControllerBuilder addController( String id, String view,
-           String name, Class classType, String actionId ){
-        return addController( id, view, DispatcherType.FORWARD, name, classType, actionId );
+           boolean resolvedView, String name, Class classType, String actionId ){
+        return addController( id, view, resolvedView, 
+                DispatcherType.FORWARD, name, classType, actionId );
     }
 
     /**
@@ -105,15 +111,19 @@ public class ControllerManagerImp implements ControllerManager{
      * @param actionId Parâmetro que identifica a ação.
      * @return Construtor do controlador.
      */
-    public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
+    public ControllerBuilder addController( String id, String view, 
+            boolean resolvedView, DispatcherType dispatcherType,
             String name, Class classType, String actionId ){
-            return addController( id, view, dispatcherType, name, classType, actionId, 
+            return addController( id, view, resolvedView,
+                    dispatcherType, name, classType, actionId, 
                     ActionType.PARAMETER);
     }
 
-    public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
+    public ControllerBuilder addController( String id, String view, 
+            boolean resolvedView, DispatcherType dispatcherType,
             String name, Class classType, String actionId, ActionType actionType ){
-        return this.addController(id, view, dispatcherType, false, name, classType, actionId, actionType);
+        return this.addController(id, view, 
+                dispatcherType, resolvedView, name, classType, actionId, actionType);
     }
     
     public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
