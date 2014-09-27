@@ -34,12 +34,13 @@ public class WebControllerManager extends ControllerManagerImp{
     }
     
     public ControllerBuilder addController( String id, String view, 
-            DispatcherType dispatcherType, String name, Class classType, 
+            boolean resolvedView, DispatcherType dispatcherType, String name, Class classType, 
             String actionId, ActionType actionType ){
         
         
         ControllerBuilder builder =  
             super.addController( id, view,
+                resolvedView,
                 dispatcherType, name, classType, actionId, actionType );
         
         ActionType type = builder.getActionType();

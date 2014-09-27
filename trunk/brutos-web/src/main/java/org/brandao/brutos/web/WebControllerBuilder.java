@@ -44,7 +44,7 @@ public class WebControllerBuilder extends ControllerBuilder{
     }
     
     public ActionBuilder addAction( String id, String resultId, String view, 
-            DispatcherType dispatcher, String executor ){
+            boolean resolvedView, DispatcherType dispatcher, String executor ){
         
         ActionType type = this.controller.getActionType();
         
@@ -55,7 +55,7 @@ public class WebControllerBuilder extends ControllerBuilder{
         
         return
             super.addAction( 
-                id, resultId, view, dispatcher, executor );
+                id, resultId, view, resolvedView, dispatcher, executor );
     }
     
 }

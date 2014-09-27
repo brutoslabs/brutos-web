@@ -260,26 +260,30 @@ public abstract class AbstractWebApplicationContext
         return this.controllerManager.addController(id, classType);
     }
     
-    public ControllerBuilder registerController( String id, String view, Class classType ){
-        return this.controllerManager.addController(id, view, classType);
+    public ControllerBuilder registerController( String id, String view, 
+            boolean resolvedView, Class classType ){
+        return this.controllerManager.addController(id, view, resolvedView,
+                classType);
     }
     
-    public ControllerBuilder registerController( String id, String view,
-           String name, Class classType, String actionId ){
-        return this.controllerManager.addController( id, view,
+    public ControllerBuilder registerController( String id, String view, 
+            boolean resolvedView, String name, Class classType, String actionId ){
+        return this.controllerManager.addController( id, view, resolvedView,
            name, classType, actionId );
     }
 
-    public ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,
+    public ControllerBuilder registerController( String id, String view,  
+            boolean resolvedView, DispatcherType dispatcherType,
             String name, Class classType, String actionId ){
-        return this.controllerManager.addController( id, view, dispatcherType,
-            name, classType, actionId );
+        return this.controllerManager.addController( id, view, resolvedView,
+                dispatcherType, name, classType, actionId );
     }
     
-    public ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,
+    public ControllerBuilder registerController( String id, String view,  
+            boolean resolvedView, DispatcherType dispatcherType,
             String name, Class classType, String actionId, ActionType actionType ){
-        return this.controllerManager.addController( id, view, dispatcherType,
-            name, classType, actionId, actionType );
+        return this.controllerManager.addController( id, view, 
+                resolvedView, dispatcherType, name, classType, actionId, actionType );
     }
     
     public ControllerBuilder registerController(String id, String view, 
