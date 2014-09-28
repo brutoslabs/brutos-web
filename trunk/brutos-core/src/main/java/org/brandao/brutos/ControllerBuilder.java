@@ -229,7 +229,10 @@ public class ControllerBuilder {
      * @return Contrutos do controlador.
      */
     public ControllerBuilder addThrowable( Class target, String id ){
-        return addThrowable( target, null, id, DispatcherType.FORWARD );
+        return addThrowable( target, null, 
+                !"true".equals(applicationContext.getConfiguration()
+                .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)),
+                id, DispatcherType.FORWARD );
     }
 
     /**
@@ -242,8 +245,10 @@ public class ControllerBuilder {
      * @param dispatcher Modo como ser� direcionado o fluxo para a vis�o.
      * @return Contrutor do controlador.
      */
-    public ControllerBuilder addThrowable( Class target, String view, String id, DispatcherType dispatcher){
-        return this.addThrowable( target, view, id, dispatcher, false );
+    public ControllerBuilder addThrowable( Class target, String view, 
+            boolean resolvedView, String id, DispatcherType dispatcher){
+        return this.addThrowable( target, view, id, dispatcher,
+                resolvedView);
     }
     
     /**
@@ -258,7 +263,8 @@ public class ControllerBuilder {
      * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
      * @return Contrutor do controlador.
      */
-    public ControllerBuilder addThrowable( Class target, String view, String id, DispatcherType dispatcher, boolean resolvedView ){
+    public ControllerBuilder addThrowable( Class target, String view, String id, 
+            DispatcherType dispatcher, boolean resolvedView ){
 
         view = StringUtil.adjust(view);
         
