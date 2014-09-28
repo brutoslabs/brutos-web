@@ -29,6 +29,10 @@ public class ThrowableSafeData {
     
     private String view;
     
+    private String originalView;
+    
+    private boolean resolvedView;
+    
     private String parameterName;
 
     private boolean redirect;
@@ -76,6 +80,22 @@ public class ThrowableSafeData {
 
     public void setDispatcher(DispatcherType dispatcher) {
         this.dispatcher = dispatcher;
+    }
+
+    public boolean isResolvedView() {
+        return resolvedView;
+    }
+
+    public void setResolvedView(boolean resolvedView) {
+        this.resolvedView = resolvedView;
+    }
+
+    public String getOriginalView() {
+        return originalView;
+    }
+
+    public void setOriginalView(String originalView) {
+        this.originalView = originalView;
     }
 
 }

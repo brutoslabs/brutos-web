@@ -17,6 +17,8 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.mapping.StringUtil;
+
 /**
  *
  * @author Brandao
@@ -35,8 +37,10 @@ public class DefaultViewResolver extends AbstractViewResolver{
     
     private String getPrefix(Class controllerType, String actionExecutor){
         String resolvedView = this.getPrefix(controllerType);
-        resolvedView       += this.getSeparator();
-        resolvedView       += actionExecutor.toLowerCase();
+        if(!StringUtil.isEmpty(actionExecutor)){
+            resolvedView       += this.getSeparator();
+            resolvedView       += actionExecutor.toLowerCase();
+        }
         return resolvedView;
     }
     
