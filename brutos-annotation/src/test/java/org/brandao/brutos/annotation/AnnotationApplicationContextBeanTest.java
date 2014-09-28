@@ -57,7 +57,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -84,7 +84,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -111,7 +111,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -139,7 +139,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -167,7 +167,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -195,7 +195,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -223,7 +223,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -251,7 +251,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -294,7 +294,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -337,7 +337,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -382,7 +382,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -433,7 +433,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -480,7 +480,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -514,7 +514,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -549,7 +549,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -584,7 +584,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -619,7 +619,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -659,7 +659,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -710,7 +710,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -745,7 +745,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -800,7 +800,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -855,7 +855,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -911,7 +911,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -941,7 +941,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -968,7 +968,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -995,7 +995,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1023,7 +1023,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1051,7 +1051,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1079,7 +1079,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1107,7 +1107,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1135,7 +1135,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1178,7 +1178,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1221,7 +1221,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1266,7 +1266,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1317,7 +1317,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1362,7 +1362,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1397,7 +1397,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1432,7 +1432,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1467,7 +1467,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1502,7 +1502,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1543,7 +1543,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1594,7 +1594,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1629,7 +1629,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1684,7 +1684,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1739,7 +1739,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1795,7 +1795,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1824,7 +1824,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1853,7 +1853,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1883,7 +1883,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1913,7 +1913,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1943,7 +1943,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -1973,7 +1973,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2015,7 +2015,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2045,7 +2045,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2085,7 +2085,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2129,7 +2129,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2174,7 +2174,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2221,7 +2221,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2274,7 +2274,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2321,7 +2321,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2358,7 +2358,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2395,7 +2395,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2432,7 +2432,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2469,7 +2469,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2512,7 +2512,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2565,7 +2565,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2602,7 +2602,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2659,7 +2659,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
@@ -2716,7 +2716,7 @@ public class AnnotationApplicationContextBeanTest
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
         org.brandao.brutos.mapping.Action action = 
-                controller.getActionByName(prefix+"my");
+                controller.getActionByName("/my");
         
         ParameterAction param = action.getParameter(0);
         
