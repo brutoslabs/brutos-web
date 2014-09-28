@@ -69,10 +69,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest1/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -101,10 +102,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest2/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -133,10 +135,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest3/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -167,10 +170,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest4/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -201,10 +205,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest5/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -249,10 +254,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest7/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -283,10 +289,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest8/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -317,10 +324,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest9/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -427,10 +435,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest12/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -476,10 +485,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest13/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -525,10 +535,11 @@ public class AnnotationApplicationContextControllerTest
         
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest14/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -567,10 +578,11 @@ public class AnnotationApplicationContextControllerTest
 
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix+"myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest15/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());
@@ -609,10 +621,11 @@ public class AnnotationApplicationContextControllerTest
 
         String prefix = 
             "/" + clazz.getSimpleName().replaceAll("Controller$", "") + "/";
-        Action action = controller.getActionByName(prefix + "myFirst");
+        Action action = controller.getActionByName("/myFirst");
         
         Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        Assert.assertEquals(prefix+"myFirst",action.getName());
+        Assert.assertEquals(prefix + "myFirst",action.getId());
+        Assert.assertEquals("/myFirst",action.getName());
         Assert.assertEquals(clazz.getMethod("myFirstAction"),action.getMethod());
         Assert.assertEquals("/WEB-INF/controllertest16/myfirstaction/index.jsp",action.getView());
         Assert.assertEquals(clazz.getMethod("myFirstAction").getName(),action.getExecutor());

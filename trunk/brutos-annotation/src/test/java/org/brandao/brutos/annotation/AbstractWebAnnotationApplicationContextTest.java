@@ -105,7 +105,6 @@ public abstract class AbstractWebAnnotationApplicationContextTest
                     new Resource[]{
                         new ByteArrayResource(xml.getBytes())});
         
-        TypeManager.remove(List.class);
         context.flush();
         return context;
     }
