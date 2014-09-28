@@ -488,7 +488,7 @@ public class ControllerBuilder {
         if(type.equals(ActionType.HIERARCHY))
             id = controller.getId() + id;
         */
-        
+
         resultId = StringUtil.adjust(resultId);
 
         view = StringUtil.adjust(view);

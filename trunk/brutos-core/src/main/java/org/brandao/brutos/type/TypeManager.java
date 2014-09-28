@@ -100,7 +100,7 @@ public class TypeManager {
         while (i.hasNext()) {
             TypeFactory factory = (TypeFactory) i.next();
             if (factory.getClassType() == type) {
-                customTypes.remove(factory);
+                staticTypes.remove(factory);
             }
         }
     }
