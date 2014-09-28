@@ -134,6 +134,8 @@ public class ActionBuilder extends RestrictionBuilder{
             String id, DispatcherType dispatcher, boolean resolvedView ){
         view = StringUtil.adjust(view);
         
+        String originalView = view;
+        
         view = 
             resolvedView? 
                 view : 
@@ -160,7 +162,9 @@ public class ActionBuilder extends RestrictionBuilder{
         thr.setParameterName(id);
         thr.setTarget(target);
         thr.setView(view);
-        thr.setRedirect( false );
+        thr.setOriginalView(originalView);
+        thr.setResolvedView(resolvedView);
+        thr.setRedirect(false);
         thr.setDispatcher(dispatcher);
         action.setThrowsSafe(thr);
         return this;
