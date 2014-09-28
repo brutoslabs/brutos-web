@@ -81,7 +81,7 @@ public class ThrowSafeListAnnotationConfig extends AbstractAnnotationConfig{
         String name = throwSafe.name();
         Class<? extends Throwable> target = throwSafe.target();
         String view = throwSafe.view();
-        actionBuilder.addThrowable(target, view, name, dispatcher);
+        //actionBuilder.addThrowable(target, view, name, dispatcher);
     }
     
     protected void addThrowSafe(ControllerBuilder controllerBuilder, ThrowSafe throwSafe){
@@ -92,7 +92,7 @@ public class ThrowSafeListAnnotationConfig extends AbstractAnnotationConfig{
         String name = throwSafe.name();
         Class<? extends Throwable> target = throwSafe.target();
         String view = throwSafe.view();
-        controllerBuilder.addThrowable(target, view, name, dispatcher);
+        //controllerBuilder.addThrowable(target, view, name, dispatcher);
     }
     
 }
