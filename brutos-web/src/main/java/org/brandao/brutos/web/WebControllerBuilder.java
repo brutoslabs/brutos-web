@@ -43,8 +43,8 @@ public class WebControllerBuilder extends ControllerBuilder{
         return super.addAlias(WebUtil.fixURI(id));
     }
     
-    public ActionBuilder addAction( String id, String resultId, String view, 
-            boolean resolvedView, DispatcherType dispatcher, String executor ){
+    public ActionBuilder addAction( String id, String resultId, boolean resultRendered, String view, 
+            DispatcherType dispatcher, boolean resolvedView, String executor ){
         
         ActionType type = this.controller.getActionType();
         
@@ -54,8 +54,8 @@ public class WebControllerBuilder extends ControllerBuilder{
         WebUtil.checkURI(view, false);
         
         return
-            super.addAction( 
-                id, resultId, view, resolvedView, dispatcher, executor );
+            super.addAction(id, resultId, resultRendered, view, 
+            dispatcher, resolvedView, executor);
     }
     
 }
