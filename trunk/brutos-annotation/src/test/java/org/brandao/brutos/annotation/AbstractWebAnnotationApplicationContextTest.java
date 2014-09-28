@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation;
 
+import java.util.List;
 import java.util.Properties;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
@@ -30,6 +31,7 @@ import org.brandao.brutos.validator.DefaultValidatorFactory;
 import org.brandao.brutos.web.WebScopeType;
 import org.brandao.brutos.web.test.MockWebInvoker;
 import junit.framework.TestCase;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -103,6 +105,7 @@ public abstract class AbstractWebAnnotationApplicationContextTest
                     new Resource[]{
                         new ByteArrayResource(xml.getBytes())});
         
+        TypeManager.remove(List.class);
         context.flush();
         return context;
     }
