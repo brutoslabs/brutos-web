@@ -260,4 +260,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
         return new ConstructorArgBuilder(arg);
     }
     
+    public Class getClassType(){
+        return this.mappingBean.getClassType();
+    }
 }
