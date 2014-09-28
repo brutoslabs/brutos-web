@@ -24,7 +24,7 @@ import org.brandao.brutos.annotation.View;
  *
  * @author Brandao
  */
-@Action(value="my", view=@View("/my.jsp"))
+@Action(value="my", view=@View(value = "/my.jsp", resolved = true))
 public class ActionTest32Controller {
 
     public void action(){

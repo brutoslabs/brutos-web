@@ -23,7 +23,8 @@ import org.brandao.brutos.annotation.*;
  *
  * @author Brandao
  */
-@View(value="/WEB-INF/jsp/controller9controller.jsp", dispatcher="redirect")
+@View(value="/WEB-INF/jsp/controller9controller.jsp", dispatcher="redirect", 
+resolved = true)
 public class ControllerTest9Controller {
     
     public Object myFirstAction(){

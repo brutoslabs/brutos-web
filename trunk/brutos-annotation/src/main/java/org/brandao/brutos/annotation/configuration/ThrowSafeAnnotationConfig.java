@@ -71,11 +71,8 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
             actionBuilder
                     .addThrowable(
                         throwSafe.getTarget(), 
-                        throwSafe.getView(),
-                        throwSafe.isRendered(),
-                        /*throwSafe.isRendered()? 
-                            getView(actionBuilder, componentRegistry, throwSafe) : 
-                            null,*/
+                        throwSafe.isRendered()? throwSafe.getView() : null,
+                        throwSafe.isRendered()? throwSafe.isResolved() : true,
                         throwSafe.getName(), 
                         throwSafe.getDispatcher());
         }
@@ -88,11 +85,8 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
             controllerBuilder
                     .addThrowable(
                         throwSafe.getTarget(),
-                        throwSafe.getView(),
-                        throwSafe.isResolved(),
-                        /*throwSafe.isRendered()? 
-                            getView(controllerBuilder, componentRegistry, throwSafe) : 
-                            null,*/
+                        throwSafe.isRendered()? throwSafe.getView() : null,
+                        throwSafe.isRendered()? throwSafe.isResolved() : true,
                         throwSafe.getName(), 
                         throwSafe.getDispatcher());
         }

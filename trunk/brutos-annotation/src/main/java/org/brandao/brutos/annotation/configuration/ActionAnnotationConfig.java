@@ -75,15 +75,16 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         
         boolean resultRendered = resultView == null? false : resultView.rendered();
         boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
-        
+        boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
+
         ActionBuilder actionBuilder =
         controllerBuilder
             .addAction(
                 id, 
                 result,
                 resultRendered,
-                getView(method, viewAnnotation, componentRegistry),
-                resolved,
+                rendered? getView(method, viewAnnotation, componentRegistry) : null,
+                rendered? resolved : true,
                 dispatcher,
                 method.isAbstractAction()? null : method.getName() );
 
@@ -162,6 +163,8 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     protected String getView(ActionEntry actionEntry, View viewAnnotation, 
             /*ActionBuilder action,*/ ComponentRegistry componentRegistry){
         
+        /*
+        Deprecated!
         if(actionEntry.isAbstractAction()){
             String view = actionEntry.getView();
             if(!StringUtil.isEmpty(view))
@@ -169,25 +172,28 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             else
                 throw new BrutosException("invalid view in abstract action: " + actionEntry.getView());
         }
-            
-        boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
+        */
+        
+        //boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
         //boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
 
         String view = 
             viewAnnotation == null || StringUtil.isEmpty(viewAnnotation.value())?
                 null :
                 StringUtil.adjust(viewAnnotation.value());
-
+        
+        return view;
+        /*
         if(rendered){
-            return view;
-            /*if(resolved)
+            if(resolved)
                 return view;
             else
                 return createActionView(action, componentRegistry, view);
-            */
+            
         }
         else
             return null;
+        */
     }
 
     protected String createActionView(ActionBuilder action,

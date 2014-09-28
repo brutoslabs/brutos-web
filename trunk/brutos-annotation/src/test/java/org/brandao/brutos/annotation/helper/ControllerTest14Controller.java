@@ -28,7 +28,8 @@ import org.brandao.brutos.annotation.*;
         target=Exception.class,
         dispatcher="redirect",
         name="ex",
-        view="/WEB-INF/exception.jsp"),
+        view="/WEB-INF/exception.jsp", 
+        resolved = true),
     @ThrowSafe(
         target=RuntimeException.class)
 })
