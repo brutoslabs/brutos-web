@@ -26,7 +26,7 @@ import org.brandao.brutos.annotation.ThrowSafe;
 public class ActionTest8Controller {
 
     @ThrowSafe(target=RuntimeException.class, 
-            dispatcher="redirect", view="/view/exception.jsp")
+            dispatcher="redirect", view="/view/exception.jsp", resolved = true)
     public void myAction(){
     }
     

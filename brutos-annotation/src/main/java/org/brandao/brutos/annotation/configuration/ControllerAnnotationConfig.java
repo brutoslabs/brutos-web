@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,12 +89,13 @@ public class ControllerAnnotationConfig
                 org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
         
         boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
+        boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
         
         builder =
                 componentRegistry.registerController(
                     controllerID,
-                    getView((View) source.getAnnotation(View.class),componentRegistry),
-                    resolved,
+                    rendered? getView((View) source.getAnnotation(View.class),componentRegistry) : null,
+                    rendered? resolved : true,
                     dispatcher,
                     name,
                     source,
@@ -150,7 +152,7 @@ public class ControllerAnnotationConfig
     protected String getView(View viewAnnotation, /*ControllerBuilder controller,*/
         ComponentRegistry componentRegistry){
         
-        boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
+        //boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
         //boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
         
         String view = 
@@ -158,18 +160,18 @@ public class ControllerAnnotationConfig
                 null :
                 StringUtil.adjust(viewAnnotation.value());
         
-        
+        return view;
+        /*        
         if(rendered){
             return view;
-            /*
             if(resolved)
                 return view;
             else
                 return createControllerView(controller, componentRegistry, view);
-            */
         }
         else
             return null;
+        */
     }
     
     protected String createControllerView(ControllerBuilder controller,
@@ -192,7 +194,7 @@ public class ControllerAnnotationConfig
         }
     }
     
-    private void addAbstractActions( ControllerBuilder controllerBuilder, 
+    private void addOldAbstractActions( ControllerBuilder controllerBuilder, 
             ComponentRegistry componentRegistry, Class clazz, 
             List<ActionEntry> actionList ){
 
@@ -202,39 +204,14 @@ public class ControllerAnnotationConfig
         AbstractAction abstractAction = 
                 (AbstractAction)clazz.getAnnotation(AbstractAction.class);
         
-        List<AbstractAction> actions = 
-            new ArrayList<AbstractAction>();
-        
         if(abstractActions != null)
-                actions.addAll(Arrays.asList(abstractActions.value()));
+            throw new BrutosException("@AbstractActions has been deprecated. Use @Actions");
         
-        if(abstractAction!= null)
-            actions.add(abstractAction);
-        
-        for(AbstractAction action: actions){
-            for(String id: action.id()){
-                if(StringUtil.isEmpty(id))
-                    throw new BrutosException("invalid action: " + id);
-                
-                ActionEntry entry = 
-                    new ActionEntry(
-                        id,
-                        null,
-                        controllerBuilder.getClassType(),
-                        null,
-                        null,
-                        null,
-                        null,
-                        action.view(),
-                        action.dispatcher(),
-                        true);
-                
-                actionList.add(entry);
-            }
-        }
+        if(abstractAction != null)
+            throw new BrutosException("@AbstractAction has been deprecated. Use @Action");
         
     }
-    
+
     private void addActions( ControllerBuilder controllerBuilder, 
             ComponentRegistry componentRegistry, Class clazz, 
             List<ActionEntry> actionList ){
@@ -265,14 +242,14 @@ public class ControllerAnnotationConfig
                 ActionEntry entry = 
                     new ActionEntry(
                         id,
-                        null,
+                        new Annotation[]{act.view()},
                         controllerBuilder.getClassType(),
                         null,
                         null,
                         null,
                         null,
-                        act.view().value(),
-                        act.view().dispatcher(),
+                        null,
+                        null,
                         true);
                 
                 actionList.add(entry);
@@ -286,7 +263,7 @@ public class ControllerAnnotationConfig
         
         List<ActionEntry> actionList = new ArrayList<ActionEntry>();
         
-        addAbstractActions( controllerBuilder, componentRegistry, clazz, 
+        addOldAbstractActions( controllerBuilder, componentRegistry, clazz, 
                 actionList );
         
         addActions( controllerBuilder, componentRegistry, clazz, 

@@ -41,8 +41,10 @@ public class ActionEntry {
     
     private Annotation[][] parameterAnnotations;
             
+    @Deprecated
     private String view;
     
+    @Deprecated
     private String dispatcher;
     
     private boolean abstractAction;
@@ -156,18 +158,22 @@ public class ActionEntry {
         this.parameterAnnotations = parameterAnnotations;
     }
 
+    @Deprecated
     public String getView() {
         return view;
     }
 
+    @Deprecated
     public void setView(String view) {
         this.view = view;
     }
 
+    @Deprecated
     public String getDispatcher() {
         return dispatcher;
     }
 
+    @Deprecated
     public void setDispatcher(String dispatcher) {
         this.dispatcher = dispatcher;
     }

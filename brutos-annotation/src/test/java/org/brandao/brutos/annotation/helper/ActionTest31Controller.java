@@ -19,14 +19,17 @@ package org.brandao.brutos.annotation.helper;
 
 import org.brandao.brutos.annotation.AbstractAction;
 import org.brandao.brutos.annotation.AbstractActions;
+import org.brandao.brutos.annotation.Action;
+import org.brandao.brutos.annotation.Actions;
+import org.brandao.brutos.annotation.View;
 
 /**
  *
  * @author Brandao
  */
-@AbstractActions({
-    @AbstractAction(id="my", view="/my.jsp"),
-    @AbstractAction(id="my2", view="/my2.jsp")
+@Actions({
+    @Action(value="my", view=@View(value = "/my.jsp", resolved = true)),
+    @Action(value="my2", view=@View(value = "/my2.jsp", resolved = true))
 })
 
 public class ActionTest31Controller {

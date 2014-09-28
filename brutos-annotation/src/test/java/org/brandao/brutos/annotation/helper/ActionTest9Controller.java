@@ -29,7 +29,7 @@ public class ActionTest9Controller {
     @ThrowSafeList({
         @ThrowSafe(target=RuntimeException.class),
         @ThrowSafe(target=Exception.class, 
-            dispatcher="redirect", view="/view/exception.jsp")
+            dispatcher="redirect", view="/view/exception.jsp", resolved = true)
     })
     public void myAction(){
     }

@@ -28,7 +28,7 @@ import org.brandao.brutos.annotation.View;
 public class ActionTest19Controller {
 
     @Action
-    @View("/controller/view.jsp")
+    @View(value = "/controller/view.jsp", resolved = true)
     @Result("actionResult")
     public void my(){
     }
