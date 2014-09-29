@@ -44,13 +44,11 @@ public class DataOutput {
             List fields = form.getProperties();
             for( int i=0;i<fields.size();i++ ){
                 PropertyController ff = (PropertyController) fields.get(i);
-                if( ff.getMapping() != null ){
-                    Object value = ff.getValueFromSource(object);
-                    if( value == null )
-                        ff.getScope().remove(ff.getName());
-                    else
-                        ff.getScope().put(ff.getName(), value);
-                }
+                Object value = ff.getValueFromSource(object);
+                if( value == null )
+                    ff.getScope().remove(ff.getName());
+                else
+                    ff.getScope().put(ff.getName(), value);
             }
         }
         catch( BrutosException e ){
