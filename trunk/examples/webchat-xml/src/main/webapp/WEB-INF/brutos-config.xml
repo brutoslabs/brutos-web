@@ -11,6 +11,9 @@
         <context:type factory="org.brandao.webchat.controller.type.SerializableObjectTypeFactory"/>
     </context:types>
     
+    <context:params>
+        <context:param name="org.brandao.brutos.view.auto">false</context:param>
+    </context:params>
     <interceptors>
         <interceptor name="checkUserInterceptor"
                      class="org.brandao.webchat.controller.interceptor.CheckUserInterceptor"/>
@@ -18,8 +21,8 @@
     
     <controller id="/Room/{roomID:\d+}" view="/layout/login.jsp" class="org.brandao.webchat.controller.RoomController">
         <interceptor-ref name="checkUserInterceptor"/>
-        <property property-name="roomService" bean="roomID"/>
-        <property property-name="currentUser" bean="sessionUser" scope="session"/>
+        <property name="roomService" bean="roomID"/>
+        <property name="currentUser" bean="sessionUser" scope="session"/>
         <action id="/login" view="/layout/login.jsp"/>
         <action id="/messagePart" view="/layout/messages.jsp"/>
         <action id="/sendPart" view="/layout/send.jsp"/>

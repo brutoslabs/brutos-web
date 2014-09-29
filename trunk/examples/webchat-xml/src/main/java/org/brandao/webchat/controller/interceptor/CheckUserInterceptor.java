@@ -3,12 +3,12 @@ package org.brandao.webchat.controller.interceptor;
 import javax.enterprise.context.ApplicationScoped;
 import org.brandao.brutos.FlowController;
 import org.brandao.brutos.ResourceAction;
-import org.brandao.brutos.WebScopeType;
 import org.brandao.brutos.interceptor.AbstractInterceptor;
 import org.brandao.brutos.interceptor.InterceptedException;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorStack;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.web.WebScopeType;
 import org.brandao.webchat.controller.RoomController;
 import org.brandao.webchat.model.User;
 
