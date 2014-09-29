@@ -44,7 +44,7 @@ public class MaxValidationRule implements ValidationRule{
 
         Number tmp = (Number) valueType.convert(this.expected);
 
-        if( ((Number)value).doubleValue() > tmp.doubleValue() )
+        if( value != null && ((Number)value).doubleValue() > tmp.doubleValue() )
             throw new ValidatorException();
     }
 

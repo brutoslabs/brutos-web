@@ -32,7 +32,7 @@ public class MinlengthValidationRule implements ValidationRule{
     private Integer expected;
     
     public void validate(Object source, Object value) {
-        if( ((String)value).length() < expected.intValue() )
+        if( value != null && ((String)value).length() < expected.intValue() )
             throw new ValidatorException();
     }
 
