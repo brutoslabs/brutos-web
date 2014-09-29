@@ -32,7 +32,7 @@ public class MatchesValidationRule implements ValidationRule{
     private String regex;
     
     public void validate(Object source, Object value) {
-        if( !((String)value).matches(this.regex) )
+        if(value != null && !((String)value).matches(this.regex) )
                 throw new ValidatorException();
     }
 
