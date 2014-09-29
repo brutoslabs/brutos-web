@@ -433,10 +433,12 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 beanBuilder.setFactory(factoryName);
                 beanBuilder.setMethodfactory(method.getName());
                 
+                ConstructorBuilder constructorBuilder = 
+                        beanBuilder.buildConstructor();
                 for(int i=0;i<genericTypes.length;i++){
                     ConstructorArgEntry entry = 
                             new ConstructorArgEntry(null,types[i],genericTypes[i],annotations[i],i);
-                    super.applyInternalConfiguration(entry, beanBuilder, componentRegistry);
+                    super.applyInternalConfiguration(entry, constructorBuilder, componentRegistry);
                 }
             }
         }
