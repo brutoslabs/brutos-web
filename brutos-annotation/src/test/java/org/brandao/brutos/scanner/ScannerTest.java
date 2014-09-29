@@ -18,19 +18,16 @@
 package org.brandao.brutos.scanner;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
-import org.brandao.brutos.annotation.web.AnnotationWebApplicationContext;
+import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.annotation.AbstractWebAnnotationApplicationContextTest;
 import org.brandao.brutos.helper.TestController;
-import org.brandao.brutos.helper.TestObjectFactory;
 import org.brandao.brutos.helper.controller.Test2Controller;
-import org.brandao.brutos.io.ByteArrayResource;
-import org.brandao.brutos.io.Resource;
 
 /**
  *
  * @author Brandao
  */
-public class ScannerTest extends TestCase{
+public class ScannerTest extends AbstractWebAnnotationApplicationContextTest{
     
     public void test1(){
         String content ="";
@@ -38,16 +35,8 @@ public class ScannerTest extends TestCase{
         content +="        <ns1:exclude-filter type=\"regex\" expression=\".*InterceptorController$\"/>";
         content +="        <ns1:exclude-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Intercepts\"/>";
         content +="</ns1:component-scan>";
-        AnnotationWebApplicationContext applicationContext = 
-                new AnnotationWebApplicationContext();
-        
-        applicationContext
-            .getConfiguration()
-                .setProperty(
-                    "org.brandao.brutos.ioc.provider", 
-                    TestObjectFactory.class.getName());
-        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
-        applicationContext.flush();
+        ConfigurableApplicationContext applicationContext = 
+                super.getApplication(content);
         
         Assert.assertNotNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -57,16 +46,8 @@ public class ScannerTest extends TestCase{
 
     public void test2(){
         String content ="<ns1:component-scan base-package=\"org.brandao.brutos.helper.controller\"/>";
-        AnnotationWebApplicationContext applicationContext = 
-                new AnnotationWebApplicationContext();
-        
-        applicationContext
-            .getConfiguration()
-                .setProperty(
-                    "org.brandao.brutos.ioc.provider", 
-                    TestObjectFactory.class.getName());
-        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
-        applicationContext.flush();
+        ConfigurableApplicationContext applicationContext = 
+                super.getApplication(content);
         
         Assert.assertNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -76,16 +57,9 @@ public class ScannerTest extends TestCase{
 
     public void test3(){
         String content ="<ns1:component-scan base-package=\"org.brandao.brutos.helper.controller\"/>";
-        AnnotationWebApplicationContext applicationContext = 
-                new AnnotationWebApplicationContext();
+        ConfigurableApplicationContext applicationContext = 
+                super.getApplication(content);
         
-        applicationContext
-            .getConfiguration()
-                .setProperty(
-                    "org.brandao.brutos.ioc.provider", 
-                    TestObjectFactory.class.getName());
-        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
-        applicationContext.flush();
         Assert.assertNull(
             applicationContext.getControllerManager().getController(TestController.class));
         Assert.assertNotNull(
@@ -98,16 +72,8 @@ public class ScannerTest extends TestCase{
         content +="        <ns1:include-filter type=\"regex\" expression=\""+TestController.class.getName().replace(".","\\.")+"\"/>";
         content +="        <ns1:include-filter type=\"regex\" expression=\""+Test2Controller.class.getName().replace(".","\\.")+"\"/>";
         content +="</ns1:component-scan>";
-        AnnotationWebApplicationContext applicationContext = 
-                new AnnotationWebApplicationContext();
-        
-        applicationContext
-            .getConfiguration()
-                .setProperty(
-                    "org.brandao.brutos.ioc.provider", 
-                    TestObjectFactory.class.getName());
-        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
-        applicationContext.flush();
+        ConfigurableApplicationContext applicationContext = 
+                super.getApplication(content);
         
         Assert.assertNotNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -117,16 +83,8 @@ public class ScannerTest extends TestCase{
 
     public void test5(){
         String content ="<ns1:component-scan base-package=\"org.brandao.brutos.helper\" use-default-filters=\"false\"/>";
-        AnnotationWebApplicationContext applicationContext = 
-                new AnnotationWebApplicationContext();
-        
-        applicationContext
-            .getConfiguration()
-                .setProperty(
-                    "org.brandao.brutos.ioc.provider", 
-                    TestObjectFactory.class.getName());
-        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
-        applicationContext.flush();
+        ConfigurableApplicationContext applicationContext = 
+                super.getApplication(content);
         
         Assert.assertNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -139,16 +97,8 @@ public class ScannerTest extends TestCase{
         content +="<ns1:component-scan base-package=\"org.brandao.brutos.helper\" use-default-filters=\"false\">";
         content +="        <ns1:include-filter type=\"regex\" expression=\".*2Controller$\"/>";
         content +="</ns1:component-scan>";
-        AnnotationWebApplicationContext applicationContext = 
-                new AnnotationWebApplicationContext();
-        
-        applicationContext
-            .getConfiguration()
-                .setProperty(
-                    "org.brandao.brutos.ioc.provider", 
-                    TestObjectFactory.class.getName());
-        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
-        applicationContext.flush();
+        ConfigurableApplicationContext applicationContext = 
+                super.getApplication(content);
         
         Assert.assertNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -161,16 +111,8 @@ public class ScannerTest extends TestCase{
         content +="<ns1:component-scan base-package=\"org.brandao.brutos.helper\">";
         content +="        <ns1:exclude-filter type=\"regex\" expression=\".*2Controller$\"/>";
         content +="</ns1:component-scan>";
-        AnnotationWebApplicationContext applicationContext = 
-                new AnnotationWebApplicationContext();
-        
-        applicationContext
-            .getConfiguration()
-                .setProperty(
-                    "org.brandao.brutos.ioc.provider", 
-                    TestObjectFactory.class.getName());
-        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
-        applicationContext.flush();
+        ConfigurableApplicationContext applicationContext = 
+                super.getApplication(content);
         
         Assert.assertNotNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -184,16 +126,8 @@ public class ScannerTest extends TestCase{
         content +="        <ns1:exclude-filter type=\"regex\" expression=\".*Test2.*\"/>";
         content +="        <ns1:include-filter type=\"regex\" expression=\".*Controller$\"/>";
         content +="</ns1:component-scan>";
-        AnnotationWebApplicationContext applicationContext = 
-                new AnnotationWebApplicationContext();
-        
-        applicationContext
-            .getConfiguration()
-                .setProperty(
-                    "org.brandao.brutos.ioc.provider", 
-                    TestObjectFactory.class.getName());
-        applicationContext.setResources(new Resource[]{new ByteArrayResource(getXML(content).getBytes())});
-        applicationContext.flush();
+        ConfigurableApplicationContext applicationContext = 
+                super.getApplication(content);
         
         Assert.assertNotNull(
             applicationContext.getControllerManager().getController(TestController.class));
@@ -201,19 +135,4 @@ public class ScannerTest extends TestCase{
             applicationContext.getControllerManager().getController(Test2Controller.class));
     }
     
-    private String getXML(String content){
-        String xml = "";
-        xml +="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-        xml +="<ns2:controllers";
-        xml +="    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'";
-        xml +="    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'";
-        xml +="    xmlns:ns1='http://www.brutosframework.com.br/schema/context'";
-        xml +="    xsi:schemaLocation='";
-        xml +="    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd";
-        xml +="    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>";
-        xml +="       <ns1:annotation-config/>";
-        xml +=content;
-        xml +="</ns2:controllers>";
-        return xml;
-    }
 }

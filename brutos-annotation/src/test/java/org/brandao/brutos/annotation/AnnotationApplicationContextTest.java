@@ -27,4 +27,8 @@ public interface AnnotationApplicationContextTest{
 
     ConfigurableApplicationContext getApplication(Class[] clazz);
     
+    ConfigurableApplicationContext getApplication(Class[] clazz, String complement);
+    
+    ConfigurableApplicationContext getApplication(String complement);
+    
 }

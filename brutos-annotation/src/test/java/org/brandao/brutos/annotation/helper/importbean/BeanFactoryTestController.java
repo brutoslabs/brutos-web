@@ -24,7 +24,8 @@ import org.brandao.brutos.annotation.helper.bean.BeanTestFactory;
  *
  * @author Brandao
  */
-@ImportBeans({BeanTestFactory.class})
+@ImportBeans(
+        BeanTestFactory.class)
 public class BeanFactoryTestController {
 
 }

@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.annotation;
 
-import java.util.List;
 import java.util.Properties;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
@@ -31,7 +30,6 @@ import org.brandao.brutos.validator.DefaultValidatorFactory;
 import org.brandao.brutos.web.WebScopeType;
 import org.brandao.brutos.web.test.MockWebInvoker;
 import junit.framework.TestCase;
-import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -42,7 +40,17 @@ public abstract class AbstractWebAnnotationApplicationContextTest
     implements AnnotationApplicationContextTest{
     
     @Override
+    public ConfigurableApplicationContext getApplication(String complement){
+        return this.getApplication(null, complement);
+    }
+    
+    @Override
     public ConfigurableApplicationContext getApplication(Class[] clazz){
+        return this.getApplication(clazz, null);
+    }
+    
+    @Override
+    public ConfigurableApplicationContext getApplication(Class[] clazz, String complement){
         String xml = "";
         xml +="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         xml +="<ns2:controllers";
@@ -52,13 +60,20 @@ public abstract class AbstractWebAnnotationApplicationContextTest
         xml +="    xsi:schemaLocation='";
         xml +="    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd";
         xml +="    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>";
-        xml +="<ns1:component-scan use-default-filters=\"false\">";
         
-        for(Class c: clazz){
-            xml +="        <ns1:include-filter type=\"regex\" expression=\""+c.getName().replace(".","\\.")+"\"/>";
+        if(clazz != null){
+            xml +="<ns1:component-scan use-default-filters=\"false\">";
+
+            for(Class c: clazz){
+                xml +="        <ns1:include-filter type=\"regex\" expression=\""+c.getName().replace(".","\\.")+"\"/>";
+            }
+
+            xml +="</ns1:component-scan>";
         }
         
-        xml +="</ns1:component-scan>";
+        if(complement != null)
+            xml += complement;
+        
         xml +="</ns2:controllers>";
         
         
