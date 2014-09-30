@@ -31,14 +31,14 @@ public interface ValidatorFactory {
      * Aplica as configurações da aplicação
      * @param config Configuração da aplicação.
      */
-    public abstract void configure( Properties config );
+    void configure( Properties config );
 
     /**
      * Obtém um novo validador.
      * @param config Configuração do validador.
      * @return Validador.
      */
-    public abstract Validator getValidator( Properties config );
+    Validator getValidator( Properties config );
 
     /**
      * Destrói a fábrica. Invocado no final da aplicação.
