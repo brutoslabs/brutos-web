@@ -25,7 +25,7 @@ import org.brandao.brutos.web.http.UploadedFile;
  *
  * @author Brandao
  */
-public class BrutosFileTypeTest extends TestCase{
+public class UploadedFileTypeTest extends TestCase{
 
     private Type type = new UploadedFileType();
 
