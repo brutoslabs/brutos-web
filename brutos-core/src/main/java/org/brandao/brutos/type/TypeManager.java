@@ -23,7 +23,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
-import org.brandao.brutos.web.http.BrutosFile;
+import org.brandao.brutos.web.http.UploadedFile;
 import org.brandao.brutos.web.http.Download;
 
 /**
@@ -49,7 +49,7 @@ public class TypeManager {
         staticTypes.add(new DefaultTypeFactory(LongType.class,            Long.TYPE));
         staticTypes.add(new DefaultTypeFactory(ShortType.class,           Short.TYPE));
         staticTypes.add(new DefaultTypeFactory(StringType.class,          String.class));
-        staticTypes.add(new DefaultTypeFactory(BrutosFileType.class,      BrutosFile.class));
+        staticTypes.add(new DefaultTypeFactory(UploadedFileType.class,      UploadedFile.class));
         staticTypes.add(new DefaultTypeFactory(FileType.class,            File.class));
         staticTypes.add(new DefaultTypeFactory(BooleanWrapperType.class,  Boolean.class));
         staticTypes.add(new DefaultTypeFactory(ByteWrapperType.class,     Byte.class));

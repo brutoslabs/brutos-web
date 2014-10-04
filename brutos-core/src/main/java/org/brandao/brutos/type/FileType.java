@@ -26,7 +26,7 @@ import java.io.OutputStream;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
-import org.brandao.brutos.web.http.BrutosFile;
+import org.brandao.brutos.web.http.UploadedFile;
 
 /**
  *
@@ -46,8 +46,8 @@ public class FileType implements Type{
     }
     
     public Object convert(Object value) {
-        if( value instanceof BrutosFile )
-            return ((BrutosFile)value).getFile();
+        if( value instanceof UploadedFile )
+            return ((UploadedFile)value).getFile();
         else
             return null;
     }

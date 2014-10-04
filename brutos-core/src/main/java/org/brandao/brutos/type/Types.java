@@ -31,7 +31,7 @@ import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.Date;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.web.http.BrutosFile;
+import org.brandao.brutos.web.http.UploadedFile;
 import org.brandao.brutos.web.http.Download;
 
 /**
@@ -53,7 +53,7 @@ public class Types {
         types.put( Long.TYPE,           LongType.class );
         types.put( Short.TYPE,          ShortType.class );
         types.put( String.class,        StringType.class );
-        types.put( BrutosFile.class,    BrutosFileType.class );
+        types.put( UploadedFile.class,    UploadedFileType.class );
         types.put( File.class,          FileType.class );
         types.put( Boolean.class,       BooleanWrapperType.class );
         types.put( Byte.class,          ByteWrapperType.class );

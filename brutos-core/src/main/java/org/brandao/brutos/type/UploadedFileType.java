@@ -22,19 +22,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import org.brandao.brutos.MvcResponse;
-import org.brandao.brutos.web.http.BrutosFile;
+import org.brandao.brutos.web.http.UploadedFile;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class BrutosFileType implements Type{
+public class UploadedFileType implements Type{
 
-    public BrutosFileType() {
+    public UploadedFileType() {
     }
     
     public Class getClassType() {
-        return BrutosFile.class;
+        return UploadedFile.class;
     }
 
     /**
@@ -43,7 +43,7 @@ public class BrutosFileType implements Type{
      * @return 
      */
     public Object getValue(Object value) {
-        if( value instanceof BrutosFile )
+        if( value instanceof UploadedFile )
             return value;
         if( value == null )
             return null;
@@ -59,8 +59,8 @@ public class BrutosFileType implements Type{
     }
 
     public void show(MvcResponse response, Object value) throws IOException{
-        if( value instanceof BrutosFile ){
-            BrutosFile f = (BrutosFile)value;
+        if( value instanceof UploadedFile ){
+            UploadedFile f = (UploadedFile)value;
 
             if( f.getFile() != null ){
                 response.setInfo(
