@@ -24,6 +24,7 @@ import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.web.io.ServletContextResource;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.DefaultTypeFactory;
@@ -60,6 +61,10 @@ public abstract class AbstractWebApplicationContext
     
     public void setLocations(String[] locations) {
         this.locations = locations;
+        if(this.locations != null){
+            for(int i=0;i<this.locations.length;i++)
+                this.locations[i] = StringUtil.adjust(this.locations[i]);
+        }
     }
 
     public void setResources(Resource[] resources) {
