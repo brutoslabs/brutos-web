@@ -24,7 +24,7 @@ import java.io.File;
  * 
  * @author Afonso Brandao
  */
-public interface BrutosFile {
+public interface UploadedFile {
 
     /**
      * Obtém o arquivo.

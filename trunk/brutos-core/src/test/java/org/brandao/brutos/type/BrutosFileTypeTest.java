@@ -19,7 +19,7 @@
 package org.brandao.brutos.type;
 
 import junit.framework.TestCase;
-import org.brandao.brutos.web.http.BrutosFile;
+import org.brandao.brutos.web.http.UploadedFile;
 
 /**
  *
@@ -27,7 +27,7 @@ import org.brandao.brutos.web.http.BrutosFile;
  */
 public class BrutosFileTypeTest extends TestCase{
 
-    private Type type = new BrutosFileType();
+    private Type type = new UploadedFileType();
 
     private Object expected1 = null;//new BrutosFile(null);
     private Object test1     = expected1;
