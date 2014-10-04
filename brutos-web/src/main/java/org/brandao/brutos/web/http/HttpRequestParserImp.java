@@ -210,7 +210,7 @@ public class HttpRequestParserImp implements HttpRequestParser{
             return id;
         }
 
-        private BrutosFile getFieldFile( String boundary, String header,
+        private UploadedFile getFieldFile( String boundary, String header,
                 ServletInputStream in ) throws IOException{
 
             len = -1;
@@ -241,7 +241,7 @@ public class HttpRequestParserImp implements HttpRequestParser{
             int filesize = 0;
 
             FileOutputStream fout = null;
-            BrutosFile f = null;
+            UploadedFile f = null;
             try{
                 while( s.indexOf( boundary ) == -1 ){
 

@@ -23,7 +23,7 @@ import java.io.File;
  * 
  * @author Afonso Brandao
  */
-public class BrutosFileImp implements BrutosFile{
+public class BrutosFileImp implements UploadedFile{
     
     private File file = null;
     private String contentType;
