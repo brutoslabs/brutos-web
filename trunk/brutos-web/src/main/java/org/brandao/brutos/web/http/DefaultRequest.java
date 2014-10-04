@@ -172,7 +172,7 @@ public class DefaultRequest extends HttpServletRequestWrapper implements BrutosR
         return true;
     }
     
-    private BrutosFile getFieldFile( String boundary, String header, ServletInputStream in ) throws IOException{
+    private UploadedFile getFieldFile( String boundary, String header, ServletInputStream in ) throws IOException{
         byte[] buf            = new byte[2048];
         int l                 = -1;
         String fileName  = getField0( header, "filename" );
@@ -198,7 +198,7 @@ public class DefaultRequest extends HttpServletRequestWrapper implements BrutosR
         java.io.File arquivo = File.createTempFile("multpart",".tmp");
         arquivo.deleteOnExit();
         
-        BrutosFile f = new BrutosFileImp( arquivo );
+        UploadedFile f = new BrutosFileImp( arquivo );
         f.setFileName( file );
         //f.setContentType( super.getContentType() );
         
