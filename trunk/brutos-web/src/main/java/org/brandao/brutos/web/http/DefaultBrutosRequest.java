@@ -386,7 +386,7 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
 
                         if( fout == null ){
                             File arquivo = getFile( this.path, file );
-                            f = new BrutosFileImp( arquivo );
+                            f = new UploadedFileImp( arquivo );
                             f.setFileName( file );
                             fout = new FileOutputStream( arquivo );
                         }
