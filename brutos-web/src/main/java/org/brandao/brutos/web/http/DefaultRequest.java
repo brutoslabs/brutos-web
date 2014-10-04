@@ -198,7 +198,7 @@ public class DefaultRequest extends HttpServletRequestWrapper implements BrutosR
         java.io.File arquivo = File.createTempFile("multpart",".tmp");
         arquivo.deleteOnExit();
         
-        UploadedFile f = new BrutosFileImp( arquivo );
+        UploadedFile f = new UploadedFileImp( arquivo );
         f.setFileName( file );
         //f.setContentType( super.getContentType() );
         

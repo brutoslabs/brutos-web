@@ -23,21 +23,21 @@ import java.io.File;
  * 
  * @author Afonso Brandao
  */
-public class BrutosFileImp implements UploadedFile{
+public class UploadedFileImp implements UploadedFile{
     
     private File file = null;
     private String contentType;
     private String fileName;
     
-    public BrutosFileImp( File file, String contentType ) {
+    public UploadedFileImp( File file, String contentType ) {
         this( file, contentType, null );
     }
     
-    public BrutosFileImp( File file ) {
+    public UploadedFileImp( File file ) {
         this( file, null, null );
     }
     
-    public BrutosFileImp( File file, String contentType, String fileName ) {
+    public UploadedFileImp( File file, String contentType, String fileName ) {
         setFile(file);
         setContentType(contentType);
         setFileName(fileName);
