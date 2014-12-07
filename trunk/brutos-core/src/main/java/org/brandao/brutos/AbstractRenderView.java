@@ -22,6 +22,7 @@ import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
+import org.brandao.brutos.type.TypeManager;
 
 /**
  * Classe base de um renderizador de vista.
@@ -101,11 +102,6 @@ public abstract class AbstractRenderView implements RenderView{
         
         Object objectThrow = stackRequestElement.getObjectThrow();
         
-        ConfigurableResultAction resultAction = 
-            stackRequestElement.getResultAction() instanceof ConfigurableResultAction? 
-                (ConfigurableResultAction)stackRequestElement.getResultAction() :
-                null;
-        
         if( throwableSafeData != null ){
             if( throwableSafeData.getParameterName() != null )
                 requestScope.put(
@@ -121,16 +117,6 @@ public abstract class AbstractRenderView implements RenderView{
             }
         }
 
-        if(resultAction != null){
-            Object content = resultAction.getContent();
-            if(content != null){
-                ConfigurableApplicationContext appContext = 
-                        (ConfigurableApplicationContext) requestInstrument.getContext();
-                //TypeManager typeManager = appContext.getTypeManager();
-                //Type contentType = stackRequestElement.getHandler().get
-            }
-        }
-        
         if( stackRequestElement.getView() != null ){
             this.showView(requestInstrument, stackRequestElement.getView(),
                 stackRequestElement.getDispatcherType());
@@ -138,7 +124,7 @@ public abstract class AbstractRenderView implements RenderView{
         }
 
         if( method != null ){
-
+            
             if( method.getReturnClass() != void.class ){
                 String var =
                     method.getReturnIn() == null?
@@ -146,7 +132,7 @@ public abstract class AbstractRenderView implements RenderView{
                         method.getReturnIn();
                 requestScope.put(var, stackRequestElement.getResultAction());
                 
-                if(method.isReturnRendered()){
+                if(method.isReturnRendered() || method.getReturnType().isAlwaysRender()){
                     this.showView(requestInstrument, stackRequestElement, method.getReturnType());
                     return;
                 }

@@ -21,6 +21,8 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.web.http.UploadedFile;
@@ -33,13 +35,20 @@ import org.brandao.brutos.web.http.Download;
  */
 public class TypeManager {
 
-    private final static List staticTypes = new LinkedList();
-    private List customTypes = new LinkedList();
+    private final static List staticTypes;
+    
     private static Class defaultListType;
+    
     private static Class defaultSetType;
+    
     private static Class defaultMapType;
+    
+    private final List customTypes;
 
+    private final ConcurrentMap cache;
+    
     static {
+        staticTypes = new LinkedList();
         staticTypes.add(new DefaultTypeFactory(BooleanType.class,         Boolean.TYPE));
         staticTypes.add(new DefaultTypeFactory(ByteType.class,            Byte.TYPE));
         staticTypes.add(new DefaultTypeFactory(CharType.class,            Character.TYPE));
@@ -62,7 +71,7 @@ public class TypeManager {
         staticTypes.add(new DefaultTypeFactory(DownloadType.class,        Download.class));
         staticTypes.add(new DefaultTypeFactory(ListType.class,            List.class));
         staticTypes.add(new DefaultTypeFactory(SetType.class,             Set.class));
-        staticTypes.add(new DefaultTypeFactory(SerializableType.class, Serializable.class));
+        staticTypes.add(new DefaultTypeFactory(SerializableType.class,    Serializable.class));
         staticTypes.add(new DefaultTypeFactory(DefaultDateType.class,     Date.class));
         staticTypes.add(new DefaultTypeFactory(CalendarType.class,        Calendar.class));
         staticTypes.add(new DefaultArrayTypeFactory());
@@ -75,12 +84,18 @@ public class TypeManager {
         defaultMapType = HashMap.class;
     }
 
+    public TypeManager(){
+        this.customTypes = new LinkedList();
+        this.cache = new ConcurrentHashMap();
+    }
+    
     /**
      * Registra um novo tipo.
      * @param factory Fábrica do tipo.
      */
     public void register(TypeFactory factory) {
         customTypes.add(factory);
+        this.cache.clear();
     }
 
     /**
@@ -111,6 +126,8 @@ public class TypeManager {
                 staticTypes.remove(factory);
             }
         }
+        
+        this.cache.clear();
     }
     
     /**
@@ -119,6 +136,7 @@ public class TypeManager {
      */
     public void remove(TypeFactory factory) {
         customTypes.remove(factory);
+        this.cache.clear();
     }
 
     /**
@@ -158,6 +176,25 @@ public class TypeManager {
      * @return Fábrica do tipo.
      */
     public TypeFactory getTypeFactory(Object classType) {
+        
+        TypeFactory factory = (TypeFactory) this.cache.get(classType);
+        
+        if(factory != null)
+            return factory;
+        else{
+            synchronized(this){
+                factory = (TypeFactory) this.cache.get(classType);
+                if(factory != null)
+                    return factory;
+             
+                factory = getInternalTypeFactory(classType);
+                this.cache.put(classType, factory);
+                return factory;
+            }
+        }
+    }
+    
+    private TypeFactory getInternalTypeFactory(Object classType) {
         Class rawType = getRawType(classType);
 
         Iterator i = customTypes.iterator();
