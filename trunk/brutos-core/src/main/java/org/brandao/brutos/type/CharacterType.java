@@ -18,15 +18,13 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class CharacterType implements Type{
+public class CharacterType extends AbstractType{
 
     public CharacterType() {
     }
@@ -35,15 +33,6 @@ public class CharacterType implements Type{
         return Character.class;
     }
 
-    /**
-     * @deprecated 
-     * @param value
-     * @return 
-     */
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         if( value instanceof Character )
             return value;
@@ -57,14 +46,6 @@ public class CharacterType implements Type{
             throw new UnknownTypeException(value.getClass().getName());
     }
 
-    /**
-     * @deprecated 
-     * @param value
-     * @throws IOException 
-     */
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
     }

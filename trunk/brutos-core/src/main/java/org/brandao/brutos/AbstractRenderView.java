@@ -21,6 +21,7 @@ import java.io.IOException;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.type.Type;
 
 /**
  * Classe base de um renderizador de vista.
@@ -65,15 +66,15 @@ public abstract class AbstractRenderView implements RenderView{
      * @throws IOException Lançado se ocorrer algum problema ao renderizar a vista.
      */
     private void showView( RequestInstrument requestInstrument,
-            StackRequestElement stackRequestElement, Action action )
+            StackRequestElement stackRequestElement, Type type )
                 throws IOException{
         requestInstrument.setHasViewProcessed(true);
-        action.getReturnType()
+        type
             .show(
                 stackRequestElement.getHandler().getContext().getMvcResponse(), 
                 stackRequestElement.getResultAction());
     }
-
+    
     /**
      * Renderiza a vista da requisição.
      * 
@@ -87,20 +88,24 @@ public abstract class AbstractRenderView implements RenderView{
         if( requestInstrument.isHasViewProcessed() )
             return;
 
-        Scopes scopes         =
-            requestInstrument.getContext().getScopes();
-        Scope requestScope    =
-            scopes.get(ScopeType.REQUEST.toString());
-        Action method     =
-            stackRequestElement.getAction() == null?
-                null :
-                stackRequestElement.getAction().getMethodForm();
+        Scopes scopes = requestInstrument.getContext().getScopes();
+        Scope requestScope = scopes.get(ScopeType.REQUEST.toString());
+        
+        Action method = 
+                stackRequestElement.getAction() == null? 
+                    null : 
+                    stackRequestElement.getAction().getMethodForm();
 
-        ThrowableSafeData throwableSafeData =
+        ThrowableSafeData throwableSafeData = 
                 stackRequestElement.getThrowableSafeData();
-
+        
         Object objectThrow = stackRequestElement.getObjectThrow();
-
+        
+        ConfigurableResultAction resultAction = 
+            stackRequestElement.getResultAction() instanceof ConfigurableResultAction? 
+                (ConfigurableResultAction)stackRequestElement.getResultAction() :
+                null;
+        
         if( throwableSafeData != null ){
             if( throwableSafeData.getParameterName() != null )
                 requestScope.put(
@@ -116,6 +121,16 @@ public abstract class AbstractRenderView implements RenderView{
             }
         }
 
+        if(resultAction != null){
+            Object content = resultAction.getContent();
+            if(content != null){
+                ConfigurableApplicationContext appContext = 
+                        (ConfigurableApplicationContext) requestInstrument.getContext();
+                //TypeManager typeManager = appContext.getTypeManager();
+                //Type contentType = stackRequestElement.getHandler().get
+            }
+        }
+        
         if( stackRequestElement.getView() != null ){
             this.showView(requestInstrument, stackRequestElement.getView(),
                 stackRequestElement.getDispatcherType());
@@ -132,7 +147,7 @@ public abstract class AbstractRenderView implements RenderView{
                 requestScope.put(var, stackRequestElement.getResultAction());
                 
                 if(method.isReturnRendered()){
-                    this.showView(requestInstrument, stackRequestElement, method);
+                    this.showView(requestInstrument, stackRequestElement, method.getReturnType());
                     return;
                 }
             }
@@ -151,7 +166,7 @@ public abstract class AbstractRenderView implements RenderView{
         }
         else
         if( method != null && method.getReturnType() != null )
-            this.showView(requestInstrument, stackRequestElement, method);
+            this.showView(requestInstrument, stackRequestElement, method.getReturnType());
 
     }
     

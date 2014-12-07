@@ -18,27 +18,17 @@
 
 package org.brandao.brutos.type;
 
-import java.util.Set;
-
 /**
- * Representa o tipo {@link java.util.Set}.
  * 
  * @author Brandao
  */
 public class SetType extends AbstractCollectionType{
 
-    /**
-     * Cria um novo tipo.
-     */
-    public SetType(){
-        super(TypeManager.getDefaultSetType());
-    }
-    
-    /**
-     * @see CollectionType#getClassType() 
-     */
-    public Class getClassType() {
-        return Set.class;
+    @Override
+    protected Class getCollectionClass() {
+        return this.classType == SetType.class?
+                TypeManager.getDefaultSetType() :
+                this.classType;
     }
     
 }

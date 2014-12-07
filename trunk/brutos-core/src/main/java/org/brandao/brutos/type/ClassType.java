@@ -24,7 +24,7 @@ import org.brandao.brutos.MvcResponse;
  *
  * @author Afonso Brandao
  */
-public class ClassType implements Type{
+public class ClassType extends AbstractType{
 
     public ClassType() {
     }

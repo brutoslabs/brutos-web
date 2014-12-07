@@ -25,34 +25,20 @@ import org.brandao.brutos.MvcResponse;
  *
  * @author Afonso Brandao
  */
-public class NullType implements Type{
+public class NullType 
+    extends AbstractType implements Type{
 
     public NullType() {
     }
 
-    /*
-    public Object getValue( HttpServletRequest request, ServletContext context, Object value ) {
-        return null;
-    }
-
-    public void setValue( HttpServletResponse response, ServletContext context, Object value ) throws IOException{
-    }
-    */
     public Class getClassType() {
         return null;
     }
 
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         return null;
     }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
     }
     

@@ -18,15 +18,14 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class IntegerWrapperType implements Type{
+public class IntegerWrapperType 
+    extends AbstractType implements Type{
 
     public IntegerWrapperType() {
     }
@@ -35,10 +34,6 @@ public class IntegerWrapperType implements Type{
         return Integer.class;
     }
 
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         if( value instanceof Integer )
             return value;
@@ -52,9 +47,6 @@ public class IntegerWrapperType implements Type{
             throw new UnknownTypeException();
     }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
     }

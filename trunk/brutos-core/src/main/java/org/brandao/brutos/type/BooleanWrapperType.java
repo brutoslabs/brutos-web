@@ -26,7 +26,7 @@ import org.brandao.brutos.MvcResponse;
  *
  * @author Afonso Brandao
  */
-public class BooleanWrapperType implements Type{
+public class BooleanWrapperType extends AbstractType{
 
     public BooleanWrapperType() {
     }
@@ -35,12 +35,7 @@ public class BooleanWrapperType implements Type{
         return Boolean.class;
     }
 
-    /**
-     * @deprecated 
-     * @param value
-     * @return 
-     */
-    public Object getValue(Object value) {
+    public Object convert(Object value) {
         if( value instanceof Boolean )
             return value;
         else
@@ -51,22 +46,6 @@ public class BooleanWrapperType implements Type{
             return null;
         else
             throw new UnknownTypeException(value.getClass().getName());
-    }
-
-    /**
-     * @deprecated 
-     * @param value
-     * @throws IOException 
-     */
-    public void setValue(Object value) throws IOException {
-        ConfigurableApplicationContext app = 
-                (ConfigurableApplicationContext)Invoker.getCurrentApplicationContext();
-        MvcResponse response = app.getMvcResponse();
-        response.process(value);
-    }
-
-    public Object convert(Object value) {
-        return getValue(value);
     }
 
     public void show(MvcResponse response, Object value) {

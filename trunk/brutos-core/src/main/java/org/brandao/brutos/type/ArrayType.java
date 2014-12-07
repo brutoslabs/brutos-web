@@ -18,24 +18,17 @@
 package org.brandao.brutos.type;
 
 /**
- * Representa qualquer tipo de array.
  * 
  * @author Brandao
  */
 public interface ArrayType extends Type{
 
-    /**
-     * Define o tipo do componente do array.
-     * 
-     * @param type Tipo do componente.
-     */
-    void setComponentType( Class type );
+    void setComponentType(Type type);
 
-    /**
-     * Define o tipo da classe do array.
-     * 
-     * @param classType Tipo da classe.
-     */
-    void setClassType( Class classType );
+    Type getComponentType();
+    
+    void setRawClass(Class value);
+
+    Class getRawClass();
 
 }

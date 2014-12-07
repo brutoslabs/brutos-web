@@ -28,28 +28,19 @@ import org.brandao.brutos.web.http.ParameterList;
  * 
  * @author Brandao
  */
-public class DefaultArrayType implements ArrayType{
+public class DefaultArrayType 
+    extends AbstractType implements ArrayType{
 
-    private org.brandao.brutos.type.Type componentType;
-    private Class classType;
-    private Class arrayComponentType;
+    private Type componentType;
+    private Class rawClass;
 
     public DefaultArrayType(){
-    }
-
-    public void setComponentType(Class type) {
-        this.arrayComponentType = type;
-        this.componentType = TypeManager.getType( type );
-   }
-
-    public Class getClassType() {
-        return this.classType;
     }
 
     private Object getArray(Object value){
         try{
             ParameterList param = (ParameterList)value;
-            Object objList = Array.newInstance( this.arrayComponentType , param.size() );
+            Object objList = Array.newInstance( this.componentType.getClassType() , param.size() );
 
             for( int i=0;i<param.size();i++ )
                 Array.set(
@@ -65,10 +56,6 @@ public class DefaultArrayType implements ArrayType{
         }
     }
 
-    public void setClassType(Class classType) {
-        this.classType = classType;
-    }
-
     public Object convert(Object value) {
         if( value instanceof ParameterList )
             return getArray(value);
@@ -78,6 +65,22 @@ public class DefaultArrayType implements ArrayType{
 
     public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
+    }
+
+    public void setComponentType(Type type) {
+        this.componentType = type;
+    }
+
+    public Type getComponentType() {
+        return this.componentType;
+    }
+
+    public void setRawClass(Class value) {
+        this.rawClass = value;
+    }
+
+    public Class getRawClass() {
+        return this.rawClass;
     }
 
 }

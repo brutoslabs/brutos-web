@@ -645,6 +645,10 @@ public abstract class AbstractApplicationContext
         return this.typeManager;
     }
     
+    public boolean isStandardType(Class clazz) {
+        return this.typeManager.isStandardType(clazz);
+    }
+    
     public void flush(){
         
         this.initLogger();

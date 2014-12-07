@@ -19,15 +19,14 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class LongType implements Type{
+public class LongType 
+ extends AbstractType implements Type{
 
     public LongType() {
     }
@@ -36,10 +35,6 @@ public class LongType implements Type{
         return Long.TYPE;
     }
 
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         if( value instanceof Long )
             return value;
@@ -53,9 +48,6 @@ public class LongType implements Type{
             throw new UnknownTypeException();
     }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
     }

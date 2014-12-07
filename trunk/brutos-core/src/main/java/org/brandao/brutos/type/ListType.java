@@ -19,24 +19,16 @@ package org.brandao.brutos.type;
 import java.util.List;
 
 /**
- * Representa o tipo {@link java.util.List}.
  * 
  * @author Brandao
  */
 public class ListType extends AbstractCollectionType{
 
-    /**
-     * Cria um novo tipo.
-     */
-    public ListType(){
-        super(TypeManager.getDefaultListType());
+    @Override
+    protected Class getCollectionClass() {
+        return this.getClassType() == List.class?
+                TypeManager.getDefaultListType() : 
+                this.getClassType();
     }
     
-    /**
-     * @see CollectionType#getClassType() 
-     */
-    public Class getClassType() {
-        return List.class;
-    }
-
 }

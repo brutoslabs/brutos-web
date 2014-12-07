@@ -21,8 +21,6 @@ package org.brandao.brutos.type;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.Download;
 
@@ -30,7 +28,8 @@ import org.brandao.brutos.web.http.Download;
  *
  * @author Afonso Brandao
  */
-public class DownloadType implements Type{
+public class DownloadType 
+    extends AbstractType implements Type{
 
     public DownloadType() {
     }
@@ -39,10 +38,6 @@ public class DownloadType implements Type{
         return Download.class;
     }
 
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         if( value instanceof Download )
             return value;
@@ -50,9 +45,6 @@ public class DownloadType implements Type{
             return null;
     }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
         if( value instanceof Download ){
             Download download = (Download)value;

@@ -42,8 +42,7 @@ public class TypeTest  extends TestCase{
 
     public void testgetListTypeWithError(){
         try{
-            ListType type = (ListType) TypeManager.getType(List.class);
-            type.setGenericType(List.class);
+            ListType type = (ListType) (new TypeManager()).getType(List.class);
             type.convert(new ParameterList());
             TestCase.fail("expected UnknownTypeException");
         }
@@ -54,10 +53,8 @@ public class TypeTest  extends TestCase{
     public void testgetListType(){
         GenericTypeImp genericType =
                 new GenericTypeImp(List.class,new Class[]{Integer.class});
-        ListType type = (ListType) TypeManager.getType(genericType);
-        type.setGenericType(genericType);
-
-        TestCase.assertEquals(Integer.class, type.getGenericType());
+        ListType type = (ListType) (new TypeManager()).getType(genericType);
+        TestCase.assertEquals(Integer.class, type.getCollectionType().getClassType());
     }
 
 }

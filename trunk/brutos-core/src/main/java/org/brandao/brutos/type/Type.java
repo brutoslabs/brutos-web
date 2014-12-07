@@ -47,4 +47,10 @@ public interface Type {
      */
     Class getClassType();
 
+    /**
+     * Define o tipo da classe.
+     * @param value Tipo da classe.
+     */
+    void setClassType(Class value);
+    
 }

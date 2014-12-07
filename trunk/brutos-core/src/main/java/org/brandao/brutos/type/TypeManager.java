@@ -34,7 +34,7 @@ import org.brandao.brutos.web.http.Download;
 public class TypeManager {
 
     private final static List staticTypes = new LinkedList();
-    private final static List customTypes = new LinkedList();
+    private List customTypes = new LinkedList();
     private static Class defaultListType;
     private static Class defaultSetType;
     private static Class defaultMapType;
@@ -49,7 +49,7 @@ public class TypeManager {
         staticTypes.add(new DefaultTypeFactory(LongType.class,            Long.TYPE));
         staticTypes.add(new DefaultTypeFactory(ShortType.class,           Short.TYPE));
         staticTypes.add(new DefaultTypeFactory(StringType.class,          String.class));
-        staticTypes.add(new DefaultTypeFactory(UploadedFileType.class,      UploadedFile.class));
+        staticTypes.add(new DefaultTypeFactory(UploadedFileType.class,    UploadedFile.class));
         staticTypes.add(new DefaultTypeFactory(FileType.class,            File.class));
         staticTypes.add(new DefaultTypeFactory(BooleanWrapperType.class,  Boolean.class));
         staticTypes.add(new DefaultTypeFactory(ByteWrapperType.class,     Byte.class));
@@ -62,7 +62,7 @@ public class TypeManager {
         staticTypes.add(new DefaultTypeFactory(DownloadType.class,        Download.class));
         staticTypes.add(new DefaultTypeFactory(ListType.class,            List.class));
         staticTypes.add(new DefaultTypeFactory(SetType.class,             Set.class));
-        staticTypes.add(new DefaultTypeFactory(SerializableTypeImp.class, Serializable.class));
+        staticTypes.add(new DefaultTypeFactory(SerializableType.class, Serializable.class));
         staticTypes.add(new DefaultTypeFactory(DefaultDateType.class,     Date.class));
         staticTypes.add(new DefaultTypeFactory(CalendarType.class,        Calendar.class));
         staticTypes.add(new DefaultArrayTypeFactory());
@@ -79,15 +79,23 @@ public class TypeManager {
      * Registra um novo tipo.
      * @param factory Fábrica do tipo.
      */
-    public static void register(TypeFactory factory) {
+    public void register(TypeFactory factory) {
         customTypes.add(factory);
     }
 
     /**
+     * Registra um novo tipo que é compartilhado por todas as aplicações.
+     * @param factory Fábrica do tipo.
+     */
+    public static void registerStaticType(TypeFactory factory) {
+        staticTypes.add(factory);
+    }
+    
+    /**
      * Remove um tipo a partir de sua classe.
      * @param type Classe do tipo.
      */
-    public static void remove(Class type) {
+    public void remove(Class type) {
         Iterator i = customTypes.iterator();
         while (i.hasNext()) {
             TypeFactory factory = (TypeFactory) i.next();
@@ -109,7 +117,7 @@ public class TypeManager {
      * Remove um tipo a apartir sua fábrica.
      * @param factory Fábrica do tipo.
      */
-    public static void remove(TypeFactory factory) {
+    public void remove(TypeFactory factory) {
         customTypes.remove(factory);
     }
 
@@ -117,7 +125,7 @@ public class TypeManager {
      * Obtém todos os tipos registrados.
      * @return Lista contendo todos os tipos registrados.
      */
-    public static List getAllTypes(){
+    public List getAllTypes(){
         return customTypes;
     }
     
@@ -126,7 +134,7 @@ public class TypeManager {
      * @param clazz Classe do tipo.
      * @return Verdadeiro se for um tipo padrão, caso contrário falso.
      */
-    public static boolean isStandardType(Class clazz) {
+    public boolean isStandardType(Class clazz) {
         TypeFactory typeFactory =
                 getTypeFactory(clazz);
 
@@ -139,7 +147,7 @@ public class TypeManager {
      * {@link java.lang.reflect.Type}.
      * @return Tipo.
      */
-    public static Type getType(Object classType) {
+    public Type getType(Object classType) {
         return getType(classType, EnumerationType.ORDINAL, "dd/MM/yyyy");
     }
 
@@ -149,7 +157,7 @@ public class TypeManager {
      * {@link java.lang.reflect.Type}.
      * @return Fábrica do tipo.
      */
-    public static TypeFactory getTypeFactory(Object classType) {
+    public TypeFactory getTypeFactory(Object classType) {
         Class rawType = getRawType(classType);
 
         Iterator i = customTypes.iterator();
@@ -179,38 +187,46 @@ public class TypeManager {
      * @param pattern Formato de uma data.
      * @return Tipo.
      */
-    public static Type getType(
+    public Type getType(
             Object classType, EnumerationType enumType, String pattern) {
 
         Class rawType = getRawType(classType);
-
-        TypeFactory factory =
-                getTypeFactory(rawType);
-
+        TypeFactory factory = getTypeFactory(rawType);
         Type type = factory.getInstance();
 
-        if (type instanceof EnumType) {
-            ((EnumType) type).setEnumType(enumType);
-            ((EnumType) type).setClassType(rawType);
+        type.setClassType((Class)classType);
+        
+        if (type instanceof EnumType){
+            EnumType tmp = (EnumType)type;
+            tmp.setEnumerationType(enumType);
         }
 
-        if (type instanceof SerializableType) {
-            ((SerializableType) type).setClassType(rawType);
+        if(type instanceof DateTimeType){
+            DateTimeType tmp = (DateTimeType)type;
+            tmp.setPattern(pattern);
         }
 
-        if (type instanceof DateTimeType) {
-            ((DateTimeType) type).setPattern(pattern);
+        if(type instanceof GenericType){
+            GenericType tmp = (GenericType)type;
+            
+            tmp.setParameters(getParameters(classType));
+            tmp.setRawClass(rawType);
+        }
+        
+        if(type instanceof CollectionType){
+            Object collectionGenericType = getCollectionType(classType);
+            Class collectionType = getRawType(collectionGenericType);
+            
+            CollectionType tmp = (CollectionType)type;
+            tmp.setCollectionType(this.getType(collectionType));
         }
 
-        if (type instanceof CollectionType) {
-            ((CollectionType) type).setGenericType(classType);
+        if(type instanceof ArrayType){
+            ArrayType tmp = (ArrayType)type;
+            tmp.setComponentType(this.getType(rawType.getComponentType()));
+            tmp.setRawClass(rawType);
         }
-
-        if (type instanceof ArrayType) {
-            ((ArrayType) type).setComponentType(rawType.getComponentType());
-            ((ArrayType) type).setClassType(rawType);
-        }
-
+        
         return type;
     }
 
@@ -293,7 +309,17 @@ public class TypeManager {
      * @return Parâmetro.
      */
     public static Object getParameter(Object type, int index) {
-        try {
+        try{
+            Object args = getParameters(type);
+            return args == null? null : Array.get(args, index);
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+
+    public static Object[] getParameters(Object type) {
+        try{
             Class parameterizedTypeClass =
                     Class.forName("java.lang.reflect.ParameterizedType");
 
@@ -303,15 +329,16 @@ public class TypeManager {
 
                 Object args = getRawType.invoke(type, new Object[]{});
 
-                return Array.get(args, index);
-            } else {
-                return null;
+                return (Object[])args;
             }
-        } catch (Exception e) {
+            else
+                return null;
+        }
+        catch (Exception e){
             return null;
         }
     }
-
+    
     /**
      * Obtém a classe padrão de uma coleção do tipo {@link java.util.List}.
      * @return Classe.

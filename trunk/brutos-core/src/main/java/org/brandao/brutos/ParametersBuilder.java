@@ -357,10 +357,11 @@ public class ParametersBuilder extends RestrictionBuilder{
         if(rawType != null && mapping == null){
             try{
                 parameter.setType( 
-                        TypeManager.getType( 
-                            classType, 
-                            enumProperty, 
-                            temporalProperty ));
+                        this.applicationContext.getTypeManager()
+                            .getType( 
+                                classType, 
+                                enumProperty, 
+                                temporalProperty ));
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException( 

@@ -18,88 +18,50 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Collection;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
 
+
 /**
- * Classe base para tipos de coleções.
  * 
  * @author Brandao
  */
 public abstract class AbstractCollectionType 
-    implements CollectionType{
+    extends AbstractType implements CollectionType{
     
-    protected Class collectionType;
-    protected Class type;
-    protected Type primitiveType;
-    protected Type serializableType;
+    private Type collectionType;
     
-    /**
-     * Cria um novo tipo de coleção.
-     * @param collectionType Tipo de coleção.
-     */
-    public AbstractCollectionType(Class collectionType){
-        this.serializableType = TypeManager.getType( Serializable.class );
-        this.collectionType = collectionType;
+    private Class rawClass;
+    
+    private Object[] parameters;
+    
+    public void setCollectionType(Type type) {
+        this.collectionType = type;
     }
-    
-    /**
-     * @see CollectionType#setGenericType(java.lang.Object) 
-     * 
-     */
-    public void setGenericType(Object classType) {
-        
-        Object collectionGenericType = TypeManager.getCollectionType(classType);
-        
-        if(collectionGenericType != null){
-            Class collectionType = TypeManager.getRawType(collectionGenericType);
-            if( collectionType != null ){
-                this.type = collectionType;
-                this.primitiveType = TypeManager.getType( this.type );
-                if( this.primitiveType == null )
-                    throw new UnknownTypeException( classType.toString() );
-            }
-        }
-        
-    }
-    
-    /**
-     * @see CollectionType#getGenericType()
-     */
-    public Object getGenericType(){
-        return this.type;
-    }
-    
-    /**
-     * Obtém uma lista de objetos.
-     * @param value Coleção de objetos
-     * @return Lista.
-     */
-    protected Collection getCollection(Object value){
 
-        if( this.type == null )
-            throw new UnknownTypeException( "invalid collection type" );
-
-        try{
-            Collection collection = (Collection)ClassUtil.getInstance(this.collectionType);
-
-            ParameterList list = (ParameterList)value;
-            int size = list.size();
-            for( int i=0;i<size;i++ ){
-                Object o = list.get(i);
-                collection.add( this.primitiveType.convert(o) );
-            }
-            return collection;
-        }
-        catch( Throwable e ){
-            throw new BrutosException( e );
-        }
+    public Type getCollectionType() {
+        return this.collectionType;
     }
-    
+
+    public void setRawClass(Class value) {
+        this.rawClass = value;
+    }
+
+    public Class getRawClass() {
+        return this.rawClass;
+    }
+
+    public void setParameters(Object[] value) {
+        this.parameters = value;
+    }
+
+    public Object[] getParameters() {
+        return this.parameters;
+    }
+
     public Object convert(Object value) {
         if( value instanceof ParameterList )
             return getCollection(value);
@@ -108,7 +70,28 @@ public abstract class AbstractCollectionType
     }
 
     public void show(MvcResponse response, Object value) throws IOException {
-        this.serializableType.show( response, value );
+        response.process(value);
+    }
+
+    protected abstract Class getCollectionClass();
+    
+    protected Collection getCollection(Object value){
+
+        try{
+            Collection collection = 
+                (Collection)ClassUtil.getInstance(getCollectionClass());
+
+            ParameterList list = (ParameterList)value;
+            int size = list.size();
+            for( int i=0;i<size;i++ ){
+                Object o = list.get(i);
+                collection.add( this.collectionType.convert(o) );
+            }
+            return collection;
+        }
+        catch( Throwable e ){
+            throw new BrutosException( e );
+        }
     }
     
 }

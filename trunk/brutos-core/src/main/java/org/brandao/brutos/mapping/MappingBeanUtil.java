@@ -18,6 +18,7 @@
 package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
@@ -122,7 +123,8 @@ public final class MappingBeanUtil {
             try{
                 if( dependencyType == PROPERTY ){
                     dependencyBean.setType(
-                            TypeManager.getType(
+                            ((ConfigurableApplicationContext)controller.getContext())
+                                .getTypeManager().getType(
                                 bean.getGenericType(propertyName),
                                 enumProperty,
                                 temporalProperty ) );
@@ -131,7 +133,9 @@ public final class MappingBeanUtil {
                 if( type != null ){
                     dependencyBean
                             .setType(
-                                TypeManager.getType(
+                                ((ConfigurableApplicationContext)controller.getContext())
+                                    .getTypeManager()
+                                        .getType(
                                     type, 
                                     enumProperty, 
                                     temporalProperty));
