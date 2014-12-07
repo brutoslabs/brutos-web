@@ -21,7 +21,6 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.KeyCollection;
 import org.brandao.brutos.annotation.Stereotype;
-import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -54,7 +53,7 @@ public class KeyCollectionAnnotationConfig
             ComponentRegistry componentRegistry) {
         
         KeyEntry key = (KeyEntry)source;
-        if(AnnotationUtil.isBuildEntity(key.isUseBean(), key.getClassType()))
+        if(AnnotationUtil.isBuildEntity(componentRegistry, key.isUseBean(), key.getClassType()))
             buildKey(key, builder, componentRegistry);
         else
             addKey(key, (BeanBuilder)builder, componentRegistry);

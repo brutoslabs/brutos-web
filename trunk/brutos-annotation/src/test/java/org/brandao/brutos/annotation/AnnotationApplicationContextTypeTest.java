@@ -19,6 +19,7 @@ package org.brandao.brutos.annotation;
 
 import junit.framework.Assert;
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.helper.MyBean;
 import org.brandao.brutos.annotation.helper.TestTypeFactory;
 import org.brandao.brutos.annotation.helper.TestType2;
@@ -35,26 +36,28 @@ public class AnnotationApplicationContextTypeTest
     public void test1() throws NoSuchMethodException{
         Class clazz = TestTypeFactory.class;
         
+        ConfigurableApplicationContext app = null;
         try{
-            getApplication(new Class[]{clazz});
-            
-            Assert.assertTrue(TypeManager.isStandardType(MyBean.class));
+            app = getApplication(new Class[]{clazz});
+            Assert.assertTrue(app.getTypeManager().isStandardType(MyBean.class));
         }
         finally{
-            TypeManager.remove(MyBean.class);
+            if(app != null)
+                app.getTypeManager().remove(MyBean.class);
         }
     }
 
     public void test2() throws NoSuchMethodException{
         Class clazz = TestType2.class;
         
+        ConfigurableApplicationContext app = null;
         try{
-            getApplication(new Class[]{clazz});
-            
-            Assert.assertTrue(TypeManager.isStandardType(MyBean.class));
+            app = getApplication(new Class[]{clazz});
+            Assert.assertTrue(app.getTypeManager().isStandardType(MyBean.class));
         }
         finally{
-            TypeManager.remove(TestType2.class);
+            if(app != null)
+                app.getTypeManager().remove(TestType2.class);
         }
     }
 

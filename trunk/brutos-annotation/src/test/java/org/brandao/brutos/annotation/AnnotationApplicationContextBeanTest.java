@@ -41,7 +41,14 @@ public class AnnotationApplicationContextBeanTest
     extends AbstractWebAnnotationApplicationContextTest{
 
     public AnnotationApplicationContextBeanTest(){
-        TypeManager.remove(List.class);
+        //TypeManager.remove(List.class);
+    }
+    
+    @Override
+    public ConfigurableApplicationContext getApplication(Class[] clazz, String complement){
+        ConfigurableApplicationContext context = super.getApplication(clazz, complement);
+        context.getTypeManager().remove(List.class);
+        return context;
     }
     
     public void testBean1() throws NoSuchMethodException{
@@ -417,13 +424,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean12() throws NoSuchMethodException{
         Class clazz = BeanTest1Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -643,13 +651,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean18() throws NoSuchMethodException{
         Class clazz = BeanTest1Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -694,13 +703,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean19() throws NoSuchMethodException{
         Class clazz = BeanTest1Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1301,13 +1311,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean34() throws NoSuchMethodException{
         Class clazz = BeanTest2Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1527,13 +1538,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean40() throws NoSuchMethodException{
         Class clazz = BeanTest2Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1578,13 +1590,14 @@ public class AnnotationApplicationContextBeanTest
     public void testBean41() throws NoSuchMethodException{
         Class clazz = BeanTest2Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -2258,13 +2271,14 @@ public class AnnotationApplicationContextBeanTest
     public void testConstructoBean16() throws NoSuchMethodException{
         Class clazz = BeanTest18Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -2496,13 +2510,14 @@ public class AnnotationApplicationContextBeanTest
     public void testConstructoBean22() throws NoSuchMethodException{
         Class clazz = BeanTest24Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -2549,13 +2564,14 @@ public class AnnotationApplicationContextBeanTest
     public void testConstructoBean23() throws NoSuchMethodException{
         Class clazz = BeanTest25Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 

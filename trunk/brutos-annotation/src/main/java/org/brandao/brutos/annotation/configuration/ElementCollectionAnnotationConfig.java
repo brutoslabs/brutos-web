@@ -21,8 +21,6 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.Stereotype;
-import org.brandao.brutos.annotation.Target;
-import org.brandao.brutos.type.TypeManager;
 
 /**
  *
@@ -41,7 +39,7 @@ public class ElementCollectionAnnotationConfig
         
         ElementEntry element = (ElementEntry)source;
         
-        if(AnnotationUtil.isBuildEntity(element.isUseBean(), element.getClassType()))
+        if(AnnotationUtil.isBuildEntity(componentRegistry, element.isUseBean(), element.getClassType()))
             buildElement(element, builder, componentRegistry);
         else
             addElement(element, (BeanBuilder)builder, componentRegistry);

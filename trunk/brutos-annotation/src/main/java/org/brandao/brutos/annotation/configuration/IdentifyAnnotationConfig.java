@@ -100,7 +100,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
         Identify identify = source.getAnnotation(Identify.class);
         
-        if(AnnotationUtil.isBuildEntity(identify, source.getType()))
+        if(AnnotationUtil.isBuildEntity(componentRegistry, identify, source.getType()))
             paramBuilder = buildParameter(builder, source, componentRegistry);
         else
             paramBuilder = addParameter(source, builder, componentRegistry);
@@ -116,7 +116,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
 
         Identify identify = source.getAnnotation(Identify.class);
         
-        if(AnnotationUtil.isBuildEntity(identify, source.getType()))
+        if(AnnotationUtil.isBuildEntity(componentRegistry, identify, source.getType()))
             propertyBuilder = buildProperty(builder, source, componentRegistry);
         else
             propertyBuilder = addProperty(source, builder, componentRegistry);
@@ -133,7 +133,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
         Identify identify = source.getAnnotation(Identify.class);
         
-        if(AnnotationUtil.isBuildEntity(identify, source.getType()))
+        if(AnnotationUtil.isBuildEntity(componentRegistry, identify, source.getType()))
             constructorBuilder = buildConstructorArg(builder, source, componentRegistry);
         else
             constructorBuilder = addConstructorArg(source, builder, componentRegistry);
