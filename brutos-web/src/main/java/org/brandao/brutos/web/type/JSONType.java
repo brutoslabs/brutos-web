@@ -28,29 +28,10 @@ import org.brandao.jbrgates.JSONEncoder;
 
 /**
 *
-* @author vdesai
- *@author Brandao
+* @author Brandao
 */
-public class JSONType implements SerializableType {
+public class JSONType extends SerializableType {
 
-    private Class classType;
-
-    public Class getClassType() {
-        return getClass(classType);
-    }
-
-    public void setClassType(Class classType) {
-        this.classType = classType;
-    }
-
-    private Class getClass( Class type ){
-        return TypeManager.getRawType(type);
-    }
-
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
          try{
             if( value instanceof String ){
@@ -65,9 +46,6 @@ public class JSONType implements SerializableType {
         }
    }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
         response.setType( "application/json" );
         response.setCharacterEncoding( "UTF-8" );

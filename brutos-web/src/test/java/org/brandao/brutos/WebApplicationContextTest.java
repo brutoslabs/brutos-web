@@ -72,7 +72,7 @@ public class WebApplicationContextTest extends AbstractTester implements Test{
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    Type type = TypeManager.getType(SimpleBean.class);
+                    Type type = (new TypeManager()).getType(SimpleBean.class);
                     TestCase.assertTrue(type instanceof TypeTest);
                 }
 
@@ -91,7 +91,7 @@ public class WebApplicationContextTest extends AbstractTester implements Test{
                 public void run(ConfigurableApplicationContext app,
                         HttpServletRequest request, HttpServletResponse response) {
 
-                    Type type = TypeManager.getType(SimpleBean.class);
+                    Type type = (new TypeManager()).getType(SimpleBean.class);
                     TestCase.assertTrue(type instanceof TypeTest);
                 }
 
