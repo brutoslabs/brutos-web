@@ -335,15 +335,15 @@ public abstract class AbstractWebApplicationContext
     }
     
     public void registerType(TypeFactory factory){
-        TypeManager.register(factory);
+        this.typeManager.register(factory);
     }
     
     public void registerType(Class classType, Class type){
-        TypeManager.register(new DefaultTypeFactory(type, classType));
+        this.typeManager.register(new DefaultTypeFactory(type, classType));
     }
     
     public TypeFactory getRegistredType(Class classType){
-        return TypeManager.getTypeFactory(classType);
+        return this.typeManager.getTypeFactory(classType);
     }
     
     public void registerProperty(String name, String value){

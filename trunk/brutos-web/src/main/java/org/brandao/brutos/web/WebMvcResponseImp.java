@@ -32,14 +32,6 @@ public class WebMvcResponseImp implements WebMvcResponse{
 
     private ServletResponse response;
 
-    /*
-    public static final String CONTENT_TYPE       = "ContentType";
-    public static final String CONTENT_LENGTH     = "ContentLength";
-    public static final String BUFFER_SIZE        = "BufferSize";
-    public static final String CHARACTER_ENCODING = "CharacterEncoding";
-    public static final String LOCALE             = "Locale";
-    */
-    
     public WebMvcResponseImp( ServletResponse response ){
         this.response = response;
     }
@@ -65,35 +57,6 @@ public class WebMvcResponseImp implements WebMvcResponse{
             throw new BrutosException( e );
         }
     }
-
-    /*
-    private void configure( ServletResponse response, Map config, Map info ){
-        if( config != null ){
-            response.setContentType( config.containsKey(CONTENT_TYPE)? (String)config.get( CONTENT_TYPE ) : "text/html"  );
-
-            if( config.containsKey( CONTENT_LENGTH ) )
-                response.setContentLength( ((Integer)config.get(CONTENT_LENGTH)).intValue() );
-
-            if( config.containsKey( BUFFER_SIZE ) )
-                response.setBufferSize( ((Integer)config.get(BUFFER_SIZE)).intValue() );
-
-            if( config.containsKey( CHARACTER_ENCODING ) )
-                response.setCharacterEncoding( (String)config.get(CHARACTER_ENCODING) );
-
-            if( config.containsKey( LOCALE ) )
-                response.setLocale( (Locale)config.get(LOCALE) );
-        }
-
-        if( info != null && response instanceof HttpServletResponse ){
-            HttpServletResponse httpResponse = (HttpServletResponse)response;
-            for(Object o: info.keySet() ){
-                String key = String.valueOf( o );
-                String value = String.valueOf(info.get( o ));
-                httpResponse.addHeader(key, value);
-            }
-        }
-    }
-    */
 
     public void setInfo(String name, String value) {
         if( response instanceof HttpServletResponse )

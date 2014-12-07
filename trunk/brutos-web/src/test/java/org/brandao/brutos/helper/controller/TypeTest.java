@@ -19,6 +19,7 @@ package org.brandao.brutos.helper.controller;
 
 import java.io.IOException;
 import org.brandao.brutos.MvcResponse;
+import org.brandao.brutos.type.AbstractType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeFactory;
 
@@ -26,19 +27,13 @@ import org.brandao.brutos.type.TypeFactory;
  *
  * @author Brandao
  */
-public class TypeTest implements Type,TypeFactory{
+public class TypeTest 
+    extends AbstractType implements TypeFactory{
 
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         return new SimpleBean();
     }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
     }
 
