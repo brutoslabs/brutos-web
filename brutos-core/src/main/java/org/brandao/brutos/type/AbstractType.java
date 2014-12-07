@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 package org.brandao.brutos.type;
 
 /**
@@ -34,4 +33,8 @@ public abstract class AbstractType implements Type{
         this.classType = value;
     }
 
+    public boolean isAlwaysRender(){
+        return false;
+    }
+    
 }

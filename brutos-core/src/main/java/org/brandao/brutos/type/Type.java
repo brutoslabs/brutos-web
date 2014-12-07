@@ -53,4 +53,6 @@ public interface Type {
      */
     void setClassType(Class value);
     
+    boolean isAlwaysRender();
+    
 }
