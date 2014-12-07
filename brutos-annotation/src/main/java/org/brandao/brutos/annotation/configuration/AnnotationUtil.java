@@ -127,7 +127,8 @@ public class AnnotationUtil {
         return BrutosConstants.DEFAULT_SCOPETYPE;
     }
 
-    public static boolean isBuildEntity(Boolean buildIfNecessary, Class type){
+    public static boolean isBuildEntity(TypeRegistry typeRegistry,
+            Boolean buildIfNecessary, Class type){
         //boolean isStandardType = TypeManager.isStandardType(type);
         //isStandardType = isStandardType && !type.isAnnotationPresent(Bean.class);
         /*return
@@ -136,7 +137,7 @@ public class AnnotationUtil {
                 buildIfNecessary.booleanValue()? true : isComplexBean(type);
         */
         return buildIfNecessary == null?
-                !TypeManager.isStandardType(type) && isComplexBean(type): 
+                !typeRegistry.isStandardType(type) && isComplexBean(type): 
                 buildIfNecessary.booleanValue();
     }
 
@@ -148,16 +149,19 @@ public class AnnotationUtil {
         return type == Map.class || type == List.class || type == Set.class;
     }
     
-    public static boolean isBuildEntity(KeyCollection identify, Class type){
-        return isBuildEntity(identify == null? false : identify.useMapping(), type);
+    public static boolean isBuildEntity(TypeRegistry typeRegistry,
+            KeyCollection identify, Class type){
+        return isBuildEntity(typeRegistry, identify == null? false : identify.useMapping(), type);
     }
 
-    public static boolean isBuildEntity(ElementCollection identify, Class type){
-        return isBuildEntity(identify == null? false : identify.useMapping(), type);
+    public static boolean isBuildEntity(TypeRegistry typeRegistry,
+            ElementCollection identify, Class type){
+        return isBuildEntity(typeRegistry, identify == null? false : identify.useMapping(), type);
     }
     
-    public static boolean isBuildEntity(Identify identify, Class type){
-        return isBuildEntity(identify == null? null : identify.useMapping(), type);
+    public static boolean isBuildEntity(TypeRegistry typeRegistry,
+            Identify identify, Class type){
+        return isBuildEntity(typeRegistry, identify == null? null : identify.useMapping(), type);
     }
     
     public static Object getKeyType(Object type){

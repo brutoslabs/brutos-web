@@ -60,7 +60,7 @@ public class TypeDefAnnotationConfig extends AbstractAnnotationConfig{
         try{
             TypeFactory factory = 
                     (TypeFactory)ClassUtil.getInstance((Class)source);
-            TypeManager.register(factory);
+            componentRegistry.registerType(factory);
             return factory;
         }
         catch(Exception e){

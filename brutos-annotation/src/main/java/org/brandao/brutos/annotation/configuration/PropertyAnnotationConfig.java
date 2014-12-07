@@ -43,7 +43,7 @@ public class PropertyAnnotationConfig extends AbstractAnnotationConfig{
         BeanPropertyAnnotation property = (BeanPropertyAnnotation)source;
         
         PropertyBuilder propertyBuilder;        
-        if(!TypeManager.isStandardType(property.getType()))
+        if(!componentRegistry.isStandardType(property.getType()))
             propertyBuilder = buildProperty((BeanBuilder)builder,property,componentRegistry);
         else
             propertyBuilder = addProperty(property,builder, componentRegistry);

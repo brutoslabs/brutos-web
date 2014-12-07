@@ -46,8 +46,16 @@ public class AnnotationApplicationContextControllerTest
     extends AbstractWebAnnotationApplicationContextTest{
 
     public AnnotationApplicationContextControllerTest(){
-        TypeManager.remove(List.class);
+        //TypeManager.remove(List.class);
     }
+    
+    @Override
+    public ConfigurableApplicationContext getApplication(Class[] clazz, String complement){
+        ConfigurableApplicationContext context = super.getApplication(clazz, complement);
+        context.getTypeManager().remove(List.class);
+        return context;
+    }
+    
     
     public void test1() throws NoSuchMethodException{
         
@@ -743,7 +751,7 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(EnumTest.class, property.getClassType());
         Assert.assertEquals("propertyE", property.getPropertyName());
         Assert.assertEquals("propertyE", property.getName());
-        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumerationType());
         Assert.assertNull(property.getMapping());
     }
 
@@ -761,7 +769,7 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(EnumTest.class, property.getClassType());
         Assert.assertEquals("propertyF", property.getPropertyName());
         Assert.assertEquals("propertyF", property.getName());
-        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumerationType());
         Assert.assertNull(property.getMapping());
     }
 
@@ -779,7 +787,7 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(EnumTest.class, property.getClassType());
         Assert.assertEquals("propertyG", property.getPropertyName());
         Assert.assertEquals("propertyG", property.getName());
-        Assert.assertEquals(EnumerationType.STRING, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertEquals(EnumerationType.STRING, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumerationType());
         Assert.assertNull(property.getMapping());
     }
 
@@ -922,13 +930,14 @@ public class AnnotationApplicationContextControllerTest
     public void test29() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1088,13 +1097,14 @@ public class AnnotationApplicationContextControllerTest
     public void test35() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1129,13 +1139,14 @@ public class AnnotationApplicationContextControllerTest
     public void test36() throws NoSuchMethodException{
         Class clazz = ControllerTest18Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1376,7 +1387,7 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(EnumTest.class, property.getClassType());
         Assert.assertEquals("propertyE", property.getPropertyName());
         Assert.assertEquals("propertyE", property.getName());
-        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumerationType());
         Assert.assertNull(property.getMapping());
     }
 
@@ -1394,7 +1405,7 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(EnumTest.class, property.getClassType());
         Assert.assertEquals("propertyF", property.getPropertyName());
         Assert.assertEquals("propertyF", property.getName());
-        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertEquals(EnumerationType.ORDINAL, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumerationType());
         Assert.assertNull(property.getMapping());
     }
 
@@ -1412,7 +1423,7 @@ public class AnnotationApplicationContextControllerTest
         Assert.assertEquals(EnumTest.class, property.getClassType());
         Assert.assertEquals("propertyG", property.getPropertyName());
         Assert.assertEquals("propertyG", property.getName());
-        Assert.assertEquals(EnumerationType.STRING, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumType());
+        Assert.assertEquals(EnumerationType.STRING, ((org.brandao.brutos.type.EnumType)property.getType()).getEnumerationType());
         Assert.assertNull(property.getMapping());
     }
 
@@ -1555,13 +1566,14 @@ public class AnnotationApplicationContextControllerTest
     public void test51() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1721,13 +1733,14 @@ public class AnnotationApplicationContextControllerTest
     public void test57() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 
@@ -1762,13 +1775,14 @@ public class AnnotationApplicationContextControllerTest
     public void test58() throws NoSuchMethodException{
         Class clazz = ControllerTest19Controller.class;
         
-        ConfigurableApplicationContext annotationApplicationContext;
+        ConfigurableApplicationContext annotationApplicationContext = null;
         try{
-            TypeManager.register(new DefaultTypeFactory(ObjectType.class,Object.class ));
+            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
             annotationApplicationContext = getApplication(new Class[]{clazz});
         }
         finally{
-            TypeManager.remove(BeanConstructorTest.class);
+            if(annotationApplicationContext != null)
+                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
         }
         
         org.brandao.brutos.mapping.Controller controller = 

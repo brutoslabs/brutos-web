@@ -986,7 +986,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNull(parameter.getMapping());
         Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
         Assert.assertNull(parameter.getStaticValue());
-        Assert.assertEquals(org.brandao.brutos.EnumerationType.STRING, ((DefaultEnumType)parameter.getType()).getEnumType());
+        Assert.assertEquals(org.brandao.brutos.EnumerationType.STRING, ((DefaultEnumType)parameter.getType()).getEnumerationType());
         Assert.assertNotNull(parameter.getValidate());
         
         parameter = action.getParameter(1);
@@ -996,7 +996,7 @@ public class AnnotationApplicationContextActionTest
         Assert.assertNull(parameter.getMapping());
         Assert.assertEquals(ScopeType.PARAM, parameter.getScopeType());
         Assert.assertNull(parameter.getStaticValue());
-        Assert.assertEquals(org.brandao.brutos.EnumerationType.ORDINAL, ((DefaultEnumType)parameter.getType()).getEnumType());
+        Assert.assertEquals(org.brandao.brutos.EnumerationType.ORDINAL, ((DefaultEnumType)parameter.getType()).getEnumerationType());
         Assert.assertNotNull(parameter.getValidate());
         
     }
