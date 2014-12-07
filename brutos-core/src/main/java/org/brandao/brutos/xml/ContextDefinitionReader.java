@@ -123,7 +123,7 @@ public class ContextDefinitionReader
 
             try{
                 factory = ClassUtil.get(value);
-                TypeManager.register(
+                this.componenetRegistry.registerType(
                     (TypeFactory)ClassUtil.getInstance(factory));
             }
             catch( Exception e ){

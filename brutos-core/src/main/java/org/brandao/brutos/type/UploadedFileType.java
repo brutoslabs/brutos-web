@@ -28,7 +28,8 @@ import org.brandao.brutos.web.http.UploadedFile;
  *
  * @author Afonso Brandao
  */
-public class UploadedFileType implements Type{
+public class UploadedFileType 
+    extends AbstractType implements Type{
 
     public UploadedFileType() {
     }
@@ -37,25 +38,13 @@ public class UploadedFileType implements Type{
         return UploadedFile.class;
     }
 
-    /**
-     * @deprecated 
-     * @param value
-     * @return 
-     */
-    public Object getValue(Object value) {
+    public Object convert(Object value) {
         if( value instanceof UploadedFile )
             return value;
         if( value == null )
             return null;
         else
             throw new UnknownTypeException(value.getClass().getName());
-    }
-
-    public void setValue(Object value) throws IOException {
-    }
-
-    public Object convert(Object value) {
-        return getValue(value);
     }
 
     public void show(MvcResponse response, Object value) throws IOException{

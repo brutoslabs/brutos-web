@@ -22,8 +22,6 @@ package org.brandao.brutos.type;
  * 
  * @author Afonso Brandao
  */
-public interface SerializableType extends Type{
-
-    public void setClassType( Class classType );
+public class SerializableType extends ObjectType{
 
 }

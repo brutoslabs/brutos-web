@@ -32,7 +32,7 @@ public interface TypeFactory {
 
     /**
      * Verifica se a fabrica representa o tipo.
-     * @param Tipo da classe.
+     * @param type da classe.
      */
     boolean matches(Class type);
     

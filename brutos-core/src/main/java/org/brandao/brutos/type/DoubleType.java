@@ -18,15 +18,14 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class DoubleType implements Type{
+public class DoubleType 
+    extends AbstractType implements Type{
 
     public DoubleType() {
     }

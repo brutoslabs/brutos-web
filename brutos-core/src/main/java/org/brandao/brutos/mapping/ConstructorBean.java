@@ -24,6 +24,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.type.TypeManager;
@@ -119,10 +120,11 @@ public class ConstructorBean {
                         ConstructorArgBean argBean =
                         getConstructorArg(k);
                         argBean.setType(
-                                TypeManager.getType(
-                                        params[k],
-                                        argBean.getEnumProperty(),
-                                        argBean.getTemporalType()));
+                                ((ConfigurableApplicationContext)this.getBean().getController().getContext())
+                                    .getTypeManager().getType(
+                                params[k],
+                                argBean.getEnumProperty(),
+                                argBean.getTemporalType()));
                     }
                 }
                 return con;
@@ -161,7 +163,8 @@ public class ConstructorBean {
                         if( getConstructorArg(k).getType() == null ){
                             getConstructorArg(k)
                                     .setType(
-                                        TypeManager.getType(
+                                            ((ConfigurableApplicationContext)this.getBean().getController().getContext())
+                                                .getTypeManager().getType(
                                             params[k]));
                         }
                     }

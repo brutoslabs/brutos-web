@@ -20,33 +20,10 @@ package org.brandao.brutos.type;
 
 import org.brandao.brutos.EnumerationType;
 
-/**
- * Representa o tipo {@link java.lang.Enum}.
- * 
- * @author Brandao
- */
 public interface EnumType extends Type{
 
-    /**
-     * Obtém o tipo do mapeamento do {@link java.lang.Enum}.
-     * 
-     * @return Tipo do mapeamento.
-     */
-    EnumerationType getEnumType();
+    EnumerationType getEnumerationType();
 
-    /**
-     * Define o tipo do mapeamento do {@link java.lang.Enum}. 
-     * Os valores válidos estão descritos em {@link org.brandao.brutos.EnumerationType}.
-     * 
-     * @param type Tipo do mapeamento.
-     */
-    void setEnumType(EnumerationType type);
-    
-    /**
-     * Define o tipo da classe do {@link java.lang.Enum}.
-     * 
-     * @param classType Tipo da classe.
-     */
-    void setClassType( Class classType );
+    void setEnumerationType(EnumerationType type);
     
 }

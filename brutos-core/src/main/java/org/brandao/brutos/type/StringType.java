@@ -25,7 +25,8 @@ import org.brandao.brutos.MvcResponse;
  *
  * @author Afonso Brandao
  */
-public class StringType implements Type{
+public class StringType 
+    extends AbstractType implements Type{
 
     public StringType() {
     }
@@ -34,10 +35,6 @@ public class StringType implements Type{
         return String.class;
     }
 
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         if( value == null )
             return null;
@@ -48,9 +45,6 @@ public class StringType implements Type{
             throw new UnknownTypeException();
     }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
     }

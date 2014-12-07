@@ -127,15 +127,17 @@ public class ComponentRegistryAdapter implements ComponentRegistry{
     }
 
     public void registerType(TypeFactory factory) {
-        TypeManager.register(factory);
+        this.configurableApplicationContext.getTypeManager().register(factory);
     }
 
     public void registerType(Class classType, Class type) {
-        TypeManager.register(new DefaultTypeFactory(type, classType));
+        this.configurableApplicationContext.getTypeManager()
+                .register(new DefaultTypeFactory(type, classType));
     }
 
     public TypeFactory getRegistredType(Class classType) {
-        return TypeManager.getTypeFactory(classType);
+        return this.configurableApplicationContext.getTypeManager()
+                .getTypeFactory(classType);
     }
 
     public void registerProperty(String name, String value) {
@@ -152,6 +154,10 @@ public class ComponentRegistryAdapter implements ComponentRegistry{
     public Properties getProperties() {
         return this.configurableApplicationContext
                 .getConfiguration();
+    }
+
+    public boolean isStandardType(Class clazz) {
+        return this.configurableApplicationContext.getTypeManager().isStandardType(clazz);
     }
     
 }

@@ -22,23 +22,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Implementação padão do tipo {@link java.util.Calendar}.
  * 
  * @author Brandao
  */
 public class CalendarType extends DefaultDateType{
 
-    /**
-     * Cria um novo tipo.
-     */
     public CalendarType(){
     }
     
-    /**
-     * Cria um novo tipo usando um formato de data específico.
-     * 
-     * @param pattern Formato da data.
-     */
     public CalendarType(String pattern) {
         super.setPattern(pattern);
     }
@@ -55,10 +46,6 @@ public class CalendarType extends DefaultDateType{
         return Calendar.class;
     }
 
-    /**
-     * @see DateTimeType#convert(java.lang.Object) 
-     * 
-     */
     public Object convert(Object value) {
         if( value instanceof Calendar )
             return value;

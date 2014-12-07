@@ -23,6 +23,7 @@ import java.util.*;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
@@ -226,8 +227,9 @@ public class Action {
 
             if( returnClassType != void.class ){
                 setReturnType( 
-                        TypeManager.getType( 
-                            returnClassType ) );
+                        ((ConfigurableApplicationContext)this.controller.getContext())
+                                .getTypeManager().getType( 
+                                    returnClassType ) );
             }
 
             setMethod( method );
@@ -268,8 +270,9 @@ public class Action {
                         if( type == null/* && mapping == null */){
                             arg.
                                 setType(
-                                    TypeManager.getType(
-                                        params[k]));
+                                    ((ConfigurableApplicationContext)this.controller.getContext())
+                                            .getTypeManager().getType(
+                                    params[k]));
                         }
                     }
 

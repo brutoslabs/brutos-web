@@ -19,48 +19,31 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.io.Serializable;
 import org.brandao.brutos.MvcResponse;
 
 /**
  *
  * @author Afonso Brandao
  */
-public class ObjectType implements SerializableType{
+public class ObjectType 
+    extends AbstractType {
 
     private Type serializableType;
-    private Class classType;
 
     public ObjectType() {
         this(null);
     }
     
     public ObjectType(Class classType) {
-        this.serializableType = TypeManager.getType( Serializable.class );
         this.classType = classType;
     }
 
-    public Class getClassType() {
-        return classType;
-    }
-
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         return value;
     }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
         serializableType.show(response, value);
     }
 
-    public void setClassType(Class classType) {
-        this.classType = classType;
-    }
-    
 }

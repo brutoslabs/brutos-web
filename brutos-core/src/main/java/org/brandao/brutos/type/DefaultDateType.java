@@ -23,32 +23,21 @@ import java.util.Date;
 import org.brandao.brutos.MvcResponse;
 
 /**
- * Implementação padão do tipo {@link java.util.Date}.
  * 
  * @author Afonso Brandao
  */
-public class DefaultDateType implements DateTimeType{
+public class DefaultDateType 
+    extends AbstractType implements DateTimeType{
 
     private SimpleDateFormat sdf;
     
-    /**
-     * Cria um novo tipo usando um formato de data específico.
-     * 
-     * @param pattern Formato da data.
-     */
     public DefaultDateType(String pattern) {
         this.setPattern(pattern);
     }
 
-    /**
-     * Cria um novo tipo.
-     */
     public DefaultDateType() {
     }
 
-    /**
-     * @see DateTimeType#setPattern(java.lang.String) 
-     */
     public void setPattern( String value ){
         sdf = new SimpleDateFormat( value );
         sdf.setLenient( false );
@@ -67,10 +56,6 @@ public class DefaultDateType implements DateTimeType{
         return Date.class;
     }
 
-    /**
-     * @see DateTimeType#convert(java.lang.Object) 
-     * 
-     */
     public Object convert(Object value) {
         if( value instanceof Date )
             return value;
@@ -84,18 +69,10 @@ public class DefaultDateType implements DateTimeType{
             throw new UnknownTypeException(value.getClass().getName());
     }
 
-    /**
-     * @see DateTimeType#show(org.brandao.brutos.MvcResponse, java.lang.Object) 
-     * 
-     */
     public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
     }
 
-    /**
-     * @see DateTimeType#getPattern() 
-     * 
-     */
     public String getPattern() {
         return this.sdf.toPattern();
     }

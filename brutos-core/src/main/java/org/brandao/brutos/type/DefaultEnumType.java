@@ -28,10 +28,10 @@ import org.brandao.brutos.bean.EnumUtil;
  * 
  * @author Brandao
  */
-public class DefaultEnumType implements EnumType{
+public class DefaultEnumType 
+    extends AbstractType implements EnumType{
 
     private EnumerationType type;
-    private Class classType;
     private Type intType;
     private Type stringType;
     private EnumUtil enumUtil;
@@ -41,27 +41,11 @@ public class DefaultEnumType implements EnumType{
         stringType = new StringType();
     }
 
-    public EnumerationType getEnumType() {
-        return type;
-    }
-
-    public void setEnumType(EnumerationType type) {
-        this.type = type;
-    }
-    
-    public Class getClassType() {
-        return classType;
-    }
-
     public void setClassType(Class classType) {
-        this.classType = classType;
+        super.setClassType(classType);
         this.enumUtil = new EnumUtil(classType);
     }
 
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         try{
             if( value == null )
@@ -87,11 +71,16 @@ public class DefaultEnumType implements EnumType{
         }
     }
 
-    public void setValue(Object value) throws IOException {
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
         response.process(value);
+    }
+
+    public EnumerationType getEnumerationType() {
+        return this.type;
+    }
+
+    public void setEnumerationType(EnumerationType type) {
+        this.type = type;
     }
 
 }

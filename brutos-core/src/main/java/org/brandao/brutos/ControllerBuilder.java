@@ -796,10 +796,11 @@ public class ControllerBuilder {
         else{
             try{
                 property.setType(
-                        TypeManager.getType(
-                            genericType,
-                            enumProperty,
-                            temporalProperty ) );
+                        this.applicationContext.getTypeManager()
+                            .getType(
+                                genericType,
+                                enumProperty,
+                                temporalProperty ) );
             }
             catch( UnknownTypeException e ){
                 throw new UnknownTypeException(

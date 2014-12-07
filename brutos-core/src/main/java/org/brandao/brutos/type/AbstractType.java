@@ -15,38 +15,23 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.type;
 
-import org.brandao.brutos.MvcResponse;
+package org.brandao.brutos.type;
 
 /**
  *
- * @author Afonso Brandao
+ * @author Cliente
  */
-public class BooleanType extends AbstractType{
-
-    public BooleanType() {
+public abstract class AbstractType implements Type{
+    
+    protected Class classType;
+    
+    public Class getClassType(){
+        return this.classType;
     }
 
-    public Class getClassType() {
-        return Boolean.TYPE;
-    }
-
-    public Object convert(Object value) {
-        if( value instanceof Boolean )
-            return value;
-        else
-        if(value instanceof String)
-            return Boolean.valueOf((String)value);
-        else
-        if( value == null )
-            return null;
-        else
-            throw new UnknownTypeException(value.getClass().getName());
-    }
-
-    public void show(MvcResponse response, Object value) {
-        response.process(value);
+    public void setClassType(Class value){
+        this.classType = value;
     }
 
 }

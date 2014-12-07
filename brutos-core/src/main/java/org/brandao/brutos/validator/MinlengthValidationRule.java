@@ -18,6 +18,7 @@
 package org.brandao.brutos.validator;
 
 import java.util.Properties;
+import org.brandao.brutos.type.IntegerType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
 
@@ -27,8 +28,6 @@ import org.brandao.brutos.type.TypeManager;
  */
 public class MinlengthValidationRule implements ValidationRule{
 
-    private Type integerType = TypeManager.getType(Integer.class);
-    
     private Integer expected;
     
     public void validate(Object source, Object value) {
@@ -37,6 +36,7 @@ public class MinlengthValidationRule implements ValidationRule{
     }
 
     public void setConfiguration(Properties config) {
+        Type integerType = new IntegerType();
         this.expected = (Integer)integerType
                 .convert(
                         config.getProperty(RestrictionRules.MINLENGTH.toString()));

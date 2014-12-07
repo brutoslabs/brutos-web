@@ -32,4 +32,6 @@ public interface TypeRegistry {
     
     TypeFactory getRegistredType(Class classType);
     
+    boolean isStandardType(Class clazz);
+    
 }

@@ -15,29 +15,16 @@
  * limitations under the License.
  */
 
-
 package org.brandao.brutos.type;
 
-/**
- * Permite a implementação de tipos que usam generics.
- * 
- * @author Brandao
- */
-public interface GenericType extends Type{
+public interface GenericType extends Type {
 
-    /**
-     * Define o tipo da classe com dados genéricos.
-     * 
-     * @param genericType Tipo da classe. Deve implementar
-     * a interface {@link java.lang.reflect.Type}.
-     */
-    void setGenericType( Object genericType );
+    void setRawClass(Class value);
 
-    /**
-     * Obtém o tipo da classe com dados genéricos.
-     * 
-     * @return Tipo da classe.
-     */
-    public Object getGenericType();
+    Class getRawClass();
+    
+    void setParameters(Object[] value);
+    
+    Object[] getParameters();
     
 }
