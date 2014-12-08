@@ -33,6 +33,7 @@ import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.BeanProperty;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.type.TypeUtil;
 
 /**
  *
@@ -303,7 +304,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             Object genericType, 
             KeyCollection keyCollection, ElementCollection elementCollection){
         
-        Class type = TypeManager.getRawType(genericType);
+        Class type = TypeUtil.getRawType(genericType);
         
         boolean useDefaultMapping = AnnotationUtil.isUseDefaultMapping(type);
         
@@ -336,7 +337,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             Object elementType = AnnotationUtil.getCollectionType(genericType);
 
             ElementEntry elementEntry = 
-                new ElementEntry(TypeManager.getRawType(elementType),(Type)elementType,elementCollection);
+                new ElementEntry(TypeUtil.getRawType(elementType),(Type)elementType,elementCollection);
 
             super.applyInternalConfiguration(
                     elementEntry, 
@@ -354,7 +355,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             Object keyType = AnnotationUtil.getKeyType(genericType);
 
             KeyEntry keyEntry = 
-                new KeyEntry(TypeManager.getRawType(keyType),(Type)keyType,keyCollection);
+                new KeyEntry(TypeUtil.getRawType(keyType),(Type)keyType,keyCollection);
 
             super.applyInternalConfiguration(
                     keyEntry, 
