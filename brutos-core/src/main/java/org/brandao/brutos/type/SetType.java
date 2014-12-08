@@ -27,7 +27,7 @@ public class SetType extends AbstractCollectionType{
     @Override
     protected Class getCollectionClass() {
         return this.classType == SetType.class?
-                TypeManager.getDefaultSetType() :
+                TypeUtil.getDefaultSetType() :
                 this.classType;
     }
     

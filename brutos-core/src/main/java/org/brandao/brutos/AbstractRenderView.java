@@ -22,7 +22,6 @@ import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.type.TypeManager;
 
 /**
  * Classe base de um renderizador de vista.
