@@ -22,6 +22,7 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 
@@ -165,8 +166,8 @@ public class AnnotationUtil {
     }
     
     public static Object getKeyType(Object type){
-        Class rawType = TypeManager.getRawType(type);
-        Object keyType = TypeManager.getKeyType(type);
+        Class rawType = TypeUtil.getRawType(type);
+        Object keyType = TypeUtil.getKeyType(type);
         
         if(keyType != null)
             return keyType;
@@ -178,8 +179,8 @@ public class AnnotationUtil {
     }
     
     public static Object getCollectionType(Object type){
-        Class rawType = TypeManager.getRawType(type);
-        Object elementType = TypeManager.getCollectionType(type);
+        Class rawType = TypeUtil.getRawType(type);
+        Object elementType = TypeUtil.getCollectionType(type);
         
         if(elementType != null)
             return elementType;

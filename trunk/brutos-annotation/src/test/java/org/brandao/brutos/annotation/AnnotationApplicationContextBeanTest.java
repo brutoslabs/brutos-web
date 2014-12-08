@@ -33,6 +33,7 @@ import org.brandao.brutos.type.IntegerWrapperType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.StringType;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.type.TypeUtil;
 /**
  *
  * @author Brandao
@@ -266,7 +267,7 @@ public class AnnotationApplicationContextBeanTest
 
         PropertyBean property = bean.getProperty("propertyH");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
-        Assert.assertEquals(TypeManager.getDefaultMapType(), beanProperty.getClassType());
+        Assert.assertEquals(TypeUtil.getDefaultMapType(), beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
         Assert.assertEquals("myKey", key.getParameterName());
