@@ -26,6 +26,7 @@ import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.type.UnknownTypeException;
 
 /**
@@ -103,7 +104,7 @@ public final class MappingBeanUtil {
 
         if( typeDef != null ){
             if(type != null){
-                Class rawType = TypeManager.getRawType(type);
+                Class rawType = TypeUtil.getRawType(type);
                 if(!typeDef.getClassType().isAssignableFrom(rawType)){
                     throw new IllegalArgumentException(
                             String.format(

@@ -23,6 +23,7 @@ import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.type.UnknownTypeException;
 
 /**
@@ -316,7 +317,7 @@ public class ParametersBuilder extends RestrictionBuilder{
         name = StringUtil.adjust(name);
         temporalProperty = StringUtil.adjust(temporalProperty);
         mapping = StringUtil.adjust(mapping);
-        Class rawType = classType == null? null : TypeManager.getRawType(classType);
+        Class rawType = classType == null? null : TypeUtil.getRawType(classType);
         
         Configuration validatorConfig = new Configuration();
         

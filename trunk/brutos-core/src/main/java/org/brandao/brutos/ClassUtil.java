@@ -22,6 +22,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.type.TypeUtil;
 
 /**
  * 
@@ -104,31 +105,31 @@ public final class ClassUtil {
     public static List getListInstance() 
             throws ClassNotFoundException, InstantiationException, 
             IllegalAccessException{
-        return (List)getInstance(TypeManager.getDefaultListType());
+        return (List)getInstance(TypeUtil.getDefaultListType());
     }
     
     public static Map getMapInstance() 
             throws ClassNotFoundException, InstantiationException, 
             IllegalAccessException{
-        return (Map)getInstance(TypeManager.getDefaultMapType());
+        return (Map)getInstance(TypeUtil.getDefaultMapType());
     }
 
     public static Set getSetInstance() 
             throws ClassNotFoundException, InstantiationException, 
             IllegalAccessException{
-        return (Set)getInstance(TypeManager.getDefaultSetType());
+        return (Set)getInstance(TypeUtil.getDefaultSetType());
     }
     
     public static Class getInstantiableClass(Class clazz){
         
         if(clazz == Map.class)
-            return TypeManager.getDefaultMapType();
+            return TypeUtil.getDefaultMapType();
         else
         if(clazz == List.class)
-            return TypeManager.getDefaultListType();
+            return TypeUtil.getDefaultListType();
         else
         if(clazz == Set.class)
-            return TypeManager.getDefaultSetType();
+            return TypeUtil.getDefaultSetType();
         else
             return clazz;
     }
