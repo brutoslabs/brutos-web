@@ -26,8 +26,8 @@ import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.TypeFactory;
-import org.brandao.brutos.type.TypeManager;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -70,6 +70,10 @@ public class ContextDefinitionReader
         loadTypes( parseUtil.getElement(
                 document,
                 XMLBrutosConstants.XML_BRUTOS_TYPES ) );
+
+        loadScopes( parseUtil.getElement(
+                document,
+                XMLBrutosConstants.XML_BRUTOS_EXTENDED_SCOPES ) );
         
         loadContextParams(
             parseUtil.getElement(
@@ -98,7 +102,7 @@ public class ContextDefinitionReader
 
             value = value == null? c.getTextContent() : value;
             
-            super.componenetRegistry.registerProperty(name, value);
+            super.componentRegistry.registerProperty(name, value);
         }
         
     }
@@ -123,7 +127,7 @@ public class ContextDefinitionReader
 
             try{
                 factory = ClassUtil.get(value);
-                this.componenetRegistry.registerType(
+                this.componentRegistry.registerType(
                     (TypeFactory)ClassUtil.getInstance(factory));
             }
             catch( Exception e ){
@@ -133,6 +137,35 @@ public class ContextDefinitionReader
         }
     }
 
+    private void loadScopes( Element cp ){
+
+        if( cp == null )
+            return;
+        
+        NodeList list = parseUtil
+            .getElements(
+                cp,
+                XMLBrutosConstants.XML_BRUTOS_EXTENDED_SCOPE );
+
+        for( int i=0;i<list.getLength();i++ ){
+            Element c = (Element) list.item(i);
+            String name      = parseUtil.getAttribute(c,"name");
+            String className = parseUtil.getAttribute(c,"class");
+
+            className = className == null? c.getTextContent() : className;
+
+            try{
+                Class scope = ClassUtil.get(className);
+                this.componentRegistry.registerScope(name, 
+                        (Scope) ClassUtil.getInstance(scope));
+            }
+            catch( Exception e ){
+                throw new BrutosException( e );
+            }
+
+        }
+    }
+    
     private void localAnnotationConfig(Element element){
         
         if(element == null)

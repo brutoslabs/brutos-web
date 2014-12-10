@@ -20,7 +20,7 @@ package org.brandao.brutos.validator;
 import java.util.Properties;
 import org.brandao.brutos.type.IntegerType;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.TypeManager;
 
 /**
  *

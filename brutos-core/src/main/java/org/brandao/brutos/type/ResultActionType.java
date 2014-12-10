@@ -30,6 +30,7 @@ import org.brandao.brutos.RenderView;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.StackRequestElement;
+import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.scope.Scope;
 

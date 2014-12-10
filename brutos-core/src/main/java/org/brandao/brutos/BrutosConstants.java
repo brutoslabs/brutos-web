@@ -107,6 +107,8 @@ public interface BrutosConstants {
     public final String INTERCEPTOR_MANAGER_CLASS = "org.brandao.brutos.manager.interceptor";
 
     public final String INVOKER_CLASS             = "org.brandao.brutos.invoker";
+
+    public final String TYPE_MANAGER_CLASS        = "org.brandao.brutos.type.manager";
     
     public final String CDI_BEAN_MANAGER          = "org.brandao.brutos.cdi.bean_manager";
     
@@ -155,6 +157,8 @@ public interface BrutosConstants {
     public final String DEFAULT_VIEW_PROVIDER_CLASS  = "org.brandao.brutos.view.DefaultViewProvider";
     
     public final String DEFAULT_INVOKER_CLASS        = "org.brandao.brutos.Invoker";
+
+    public final String DEFAULT_TYPE_MANAGER_CLASS   = "org.brandao.brutos.type.TypeManagerImp";
     
     public final String DEFAULT_CDI_BEAN_MANAGER = "java:comp/BeanManager";
     

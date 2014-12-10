@@ -19,7 +19,7 @@
 package org.brandao.brutos;
 
 import java.util.Properties;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.TypeManager;
 
 /**
  *

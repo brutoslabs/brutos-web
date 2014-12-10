@@ -26,7 +26,7 @@ import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.validator.DefaultValidatorFactory;
 
 /**
@@ -87,7 +87,6 @@ public abstract class AbstractApplicationContext
             this.configuration = new Configuration(parent.getConfiguration());
             
         this.scopes = new Scopes();
-        this.typeManager = new TypeManager();
     }
 
     protected void initInstances(){
@@ -102,6 +101,7 @@ public abstract class AbstractApplicationContext
         this.controllerManager     = getNewControllerManager();
         this.renderView            = getNewRenderView(configuration);
         this.codeGenerator         = getNewCodeGenerator(configuration);
+        this.typeManager           = getNewTypeManager();
         this.invoker               = 
             createInvoker(this.controllerResolver, 
                     this.objectFactory, this.controllerManager, 
@@ -436,6 +436,22 @@ public abstract class AbstractApplicationContext
             ViewResolver tmp =
                     (ViewResolver)ClassUtil.getInstance(ClassUtil.get(className));
             tmp.setApplicationContext(this);
+            return tmp;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected TypeManager getNewTypeManager(){
+        try{
+            String className = 
+                configuration.getProperty(
+                    BrutosConstants.TYPE_MANAGER_CLASS,
+                    BrutosConstants.DEFAULT_TYPE_MANAGER_CLASS);
+            
+            TypeManager tmp =
+                    (TypeManager)ClassUtil.getInstance(ClassUtil.get(className));
             return tmp;
         }
         catch( Exception e ){

@@ -25,7 +25,7 @@ import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.DefaultTypeFactory;
 import org.brandao.brutos.type.TypeFactory;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.TypeManager;
 
 /**
  *

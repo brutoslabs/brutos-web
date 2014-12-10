@@ -27,14 +27,14 @@ import org.brandao.brutos.io.ResourceLoader;
  */
 public abstract class AbstractDefinitionReader implements DefinitionReader{
 
-    protected ComponentRegistry componenetRegistry;
+    protected ComponentRegistry componentRegistry;
 
     public AbstractDefinitionReader(ComponentRegistry componenetRegistry){
-        this.componenetRegistry = componenetRegistry;
+        this.componentRegistry = componenetRegistry;
     }
  
     public ResourceLoader getResourceLoader() {
-        return this.componenetRegistry;
+        return this.componentRegistry;
     }
     
 }
