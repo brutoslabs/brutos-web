@@ -29,7 +29,7 @@ import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.DefaultTypeFactory;
 import org.brandao.brutos.type.TypeFactory;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.web.http.JSPRenderView;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
 import org.brandao.brutos.web.scope.ApplicationScope;
