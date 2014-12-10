@@ -19,19 +19,24 @@ package org.brandao.brutos.type;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.brandao.brutos.EnumerationType;
-import org.brandao.brutos.web.http.UploadedFile;
+import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.web.http.Download;
+import org.brandao.brutos.web.http.UploadedFile;
 
 /**
- * Faz o gerenciamento dos tipos da aplicação.
- * 
+ *
  * @author Brandao
  */
-public class TypeManager {
+public class TypeManagerImp implements TypeManager{
 
     private final static List staticTypes;
     
@@ -72,7 +77,7 @@ public class TypeManager {
         staticTypes.add(new ObjectTypeFactory());
     }
 
-    public TypeManager(){
+    public TypeManagerImp(){
         this.customTypes = new LinkedList();
         this.cache = new ConcurrentHashMap();
     }
@@ -247,4 +252,5 @@ public class TypeManager {
         return type;
     }
 
+    
 }

@@ -26,7 +26,7 @@ import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.validator.Validator;
 
 /**

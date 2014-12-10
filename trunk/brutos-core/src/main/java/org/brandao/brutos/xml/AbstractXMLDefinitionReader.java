@@ -127,7 +127,7 @@ public abstract class AbstractXMLDefinitionReader
     }
 
     public void loadDefinitions(String location) {
-        Resource resource = this.componenetRegistry.getResource(location);
+        Resource resource = this.componentRegistry.getResource(location);
         this.loadDefinitions(resource);
     }
 

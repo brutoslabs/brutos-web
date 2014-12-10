@@ -101,6 +101,8 @@ public interface XMLBrutosConstants {
     public static final String XML_BRUTOS_PARAM = "param";
     public static final String XML_BRUTOS_TYPES = "types";
     public static final String XML_BRUTOS_TYPE = "type";
+    public static final String XML_BRUTOS_EXTENDED_SCOPES = "extended-scopes";
+    public static final String XML_BRUTOS_EXTENDED_SCOPE = "extended-scope";
     public static final String XML_BRUTOS_VALIDATOR_RULE = "rule";
     public static final String XML_BRUTOS_VALIDATOR = "validator";
     

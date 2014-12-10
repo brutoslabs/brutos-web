@@ -155,7 +155,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             }
 
             InterceptorBuilder interceptorBuilder =
-                componenetRegistry.registerInterceptor(
+                componentRegistry.registerInterceptor(
                     name,
                     clazz,
                     isDefault.booleanValue());
@@ -194,7 +194,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             Boolean isDefault = Boolean.valueOf(parseUtil.getAttribute(c,"default" ));
 
             InterceptorStackBuilder interceptorStackBuilder =
-                componenetRegistry.registerInterceptorStack(
+                componentRegistry.registerInterceptorStack(
                     name,
                     isDefault.booleanValue());
 
@@ -281,7 +281,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             throw new BrutosException( ex );
         }
         ControllerBuilder controllerBuilder =
-            componenetRegistry.registerController(
+            componentRegistry.registerController(
                 id,
                 view,
                 dispatcher,

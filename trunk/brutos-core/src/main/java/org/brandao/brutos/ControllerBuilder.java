@@ -25,7 +25,7 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.type.UnknownTypeException;
 
 /**

@@ -89,5 +89,17 @@ public class StringUtil {
         
         return split;
     }
+
+    public static String toCamelCase(String value){
+
+        if(isEmpty(value))
+            throw new RuntimeException("expected valid string");
+
+        if(value.length() > 1)
+            return Character.toUpperCase(value.charAt(0)) + value.substring(1).toLowerCase();
+        else
+            return String.valueOf(Character.toUpperCase(value.charAt(0)));
+
+    }
     
 }
