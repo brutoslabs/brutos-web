@@ -24,7 +24,6 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
@@ -32,7 +31,6 @@ import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.BeanProperty;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.type.TypeUtil;
 
 /**

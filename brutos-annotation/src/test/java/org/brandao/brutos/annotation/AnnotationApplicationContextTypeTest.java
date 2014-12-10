@@ -18,13 +18,11 @@
 package org.brandao.brutos.annotation;
 
 import junit.framework.Assert;
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.helper.MyBean;
 import org.brandao.brutos.annotation.helper.TestTypeFactory;
 import org.brandao.brutos.annotation.helper.TestType2;
 import org.brandao.brutos.annotation.helper.TestType3;
-import org.brandao.brutos.type.TypeManager;
 
 /**
  *

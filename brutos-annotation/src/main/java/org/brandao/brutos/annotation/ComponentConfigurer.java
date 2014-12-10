@@ -1,7 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Brutos Web MVC http://www.brutosframework.com.br/
+ * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package org.brandao.brutos.annotation;
@@ -25,6 +36,7 @@ import org.brandao.brutos.annotation.configuration.BeanAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ControllerAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.Converter;
 import org.brandao.brutos.annotation.configuration.ElementCollectionAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.ExtendedScopeAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.IdentifyAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.InterceptedByAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.InterceptsAnnotationConfig;
@@ -41,7 +53,7 @@ import org.brandao.brutos.logger.LoggerProvider;
 
 /**
  *
- * @author Cliente
+ * @author Brandao
  */
 public class ComponentConfigurer {
     
@@ -63,6 +75,7 @@ public class ComponentConfigurer {
         defaultAnnotationConfig.add(ThrowSafeListAnnotationConfig.class);
         defaultAnnotationConfig.add(TypeDefAnnotationConfig.class);
         defaultAnnotationConfig.add(IdentifyAnnotationConfig.class);
+        defaultAnnotationConfig.add(ExtendedScopeAnnotationConfig.class);
     }
     
     private List<Class> componentList;
