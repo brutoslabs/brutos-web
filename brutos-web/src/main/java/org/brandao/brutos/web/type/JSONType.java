@@ -22,7 +22,6 @@ import java.io.IOException;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.type.SerializableType;
-import org.brandao.brutos.type.TypeManager;
 import org.brandao.jbrgates.JSONDecoder;
 import org.brandao.jbrgates.JSONEncoder;
 
