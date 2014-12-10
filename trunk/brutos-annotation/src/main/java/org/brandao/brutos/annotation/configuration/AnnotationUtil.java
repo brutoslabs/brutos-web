@@ -21,9 +21,7 @@ import java.util.*;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.type.TypeManager;
 import org.brandao.brutos.type.TypeUtil;
-import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 
 /**
@@ -73,6 +71,14 @@ public class AnnotationUtil {
                clazz.isAnnotationPresent(Controller.class);
         
         return isController && !isTransient(clazz) && !isInterceptor(clazz);
+    }
+
+    public static boolean isScope(Class clazz){
+        boolean isScope = 
+               clazz.getSimpleName().endsWith("Scope") ||
+               clazz.isAnnotationPresent(ExtendedScope.class);
+        
+        return isScope && !isTransient(clazz);
     }
     
     public static boolean isTransient(Class clazz){

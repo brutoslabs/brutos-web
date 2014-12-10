@@ -20,7 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 import org.brandao.brutos.ControllerRegistry;
 import org.brandao.brutos.InterceptorRegistry;
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.TypeManager;
 
 /**
  *

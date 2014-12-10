@@ -61,7 +61,7 @@ public class AnnotationDefinitionReader
         this.localConfig();
         this.scanner.scan();
         this.componentConfigurer.setComponentList(scanner.getClassList());
-        this.componentConfigurer.init(this.componenetRegistry);
+        this.componentConfigurer.init(this.componentRegistry);
     }
     
     private void localConfig(){

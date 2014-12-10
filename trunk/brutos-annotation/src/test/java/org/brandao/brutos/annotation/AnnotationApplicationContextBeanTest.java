@@ -32,7 +32,7 @@ import org.brandao.brutos.type.DefaultTypeFactory;
 import org.brandao.brutos.type.IntegerWrapperType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.StringType;
-import org.brandao.brutos.type.TypeManager;
+import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.type.TypeUtil;
 /**
  *

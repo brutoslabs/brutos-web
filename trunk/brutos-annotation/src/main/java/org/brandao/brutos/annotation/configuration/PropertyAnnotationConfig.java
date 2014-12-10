@@ -23,7 +23,6 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.type.TypeManager;
 
 /**
  *
