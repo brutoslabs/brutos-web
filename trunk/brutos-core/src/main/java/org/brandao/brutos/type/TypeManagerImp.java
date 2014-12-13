@@ -69,7 +69,7 @@ public class TypeManagerImp implements TypeManager{
         defaultTypes.add(new DefaultTypeFactory(LongWrapperType.class,     Long.class));
         defaultTypes.add(new DefaultTypeFactory(ShortWrapperType.class,    Short.class));
         defaultTypes.add(new DefaultTypeFactory(DownloadType.class,        Download.class));
-        defaultTypes.add(new DefaultTypeFactory(ListType.class,            List.class));
+        //defaultTypes.add(new DefaultTypeFactory(ListType.class,            List.class));
         defaultTypes.add(new DefaultTypeFactory(SetType.class,             Set.class));
         defaultTypes.add(new DefaultTypeFactory(SerializableType.class,    Serializable.class));
         defaultTypes.add(new DefaultTypeFactory(DefaultDateType.class,     Date.class));
