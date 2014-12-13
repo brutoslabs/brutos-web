@@ -19,6 +19,7 @@ package org.brandao.brutos.type;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -38,48 +39,45 @@ import org.brandao.brutos.web.http.UploadedFile;
  */
 public class TypeManagerImp implements TypeManager{
 
-    private final static List staticTypes;
+    private final List defaultTypes;
     
     private final List customTypes;
 
     private final ConcurrentMap cache;
     
-    static {
-        staticTypes = new LinkedList();
-        staticTypes.add(new DefaultTypeFactory(BooleanType.class,         Boolean.TYPE));
-        staticTypes.add(new DefaultTypeFactory(ByteType.class,            Byte.TYPE));
-        staticTypes.add(new DefaultTypeFactory(CharType.class,            Character.TYPE));
-        staticTypes.add(new DefaultTypeFactory(DoubleType.class,          Double.TYPE));
-        staticTypes.add(new DefaultTypeFactory(FloatType.class,           Float.TYPE));
-        staticTypes.add(new DefaultTypeFactory(IntegerType.class,         Integer.TYPE));
-        staticTypes.add(new DefaultTypeFactory(LongType.class,            Long.TYPE));
-        staticTypes.add(new DefaultTypeFactory(ShortType.class,           Short.TYPE));
-        staticTypes.add(new DefaultTypeFactory(StringType.class,          String.class));
-        staticTypes.add(new DefaultTypeFactory(UploadedFileType.class,    UploadedFile.class));
-        staticTypes.add(new DefaultTypeFactory(FileType.class,            File.class));
-        staticTypes.add(new DefaultTypeFactory(BooleanWrapperType.class,  Boolean.class));
-        staticTypes.add(new DefaultTypeFactory(ByteWrapperType.class,     Byte.class));
-        staticTypes.add(new DefaultTypeFactory(CharacterType.class,       Character.class));
-        staticTypes.add(new DefaultTypeFactory(DoubleWrapperType.class,   Double.class));
-        staticTypes.add(new DefaultTypeFactory(FloatWrapperType.class,    Float.class));
-        staticTypes.add(new DefaultTypeFactory(IntegerWrapperType.class,  Integer.class));
-        staticTypes.add(new DefaultTypeFactory(LongWrapperType.class,     Long.class));
-        staticTypes.add(new DefaultTypeFactory(ShortWrapperType.class,    Short.class));
-        staticTypes.add(new DefaultTypeFactory(DownloadType.class,        Download.class));
-        staticTypes.add(new DefaultTypeFactory(ListType.class,            List.class));
-        staticTypes.add(new DefaultTypeFactory(SetType.class,             Set.class));
-        staticTypes.add(new DefaultTypeFactory(SerializableType.class,    Serializable.class));
-        staticTypes.add(new DefaultTypeFactory(DefaultDateType.class,     Date.class));
-        staticTypes.add(new DefaultTypeFactory(CalendarType.class,        Calendar.class));
-        staticTypes.add(new DefaultArrayTypeFactory());
-        staticTypes.add(new DefaultEnumTypeFactory());
-        staticTypes.add(new DefaultTypeFactory(ClassType.class,           Class.class));
-        staticTypes.add(new ObjectTypeFactory());
-    }
-
     public TypeManagerImp(){
         this.customTypes = new LinkedList();
         this.cache = new ConcurrentHashMap();
+        defaultTypes = new LinkedList();
+        defaultTypes.add(new DefaultTypeFactory(BooleanType.class,         Boolean.TYPE));
+        defaultTypes.add(new DefaultTypeFactory(ByteType.class,            Byte.TYPE));
+        defaultTypes.add(new DefaultTypeFactory(CharType.class,            Character.TYPE));
+        defaultTypes.add(new DefaultTypeFactory(DoubleType.class,          Double.TYPE));
+        defaultTypes.add(new DefaultTypeFactory(FloatType.class,           Float.TYPE));
+        defaultTypes.add(new DefaultTypeFactory(IntegerType.class,         Integer.TYPE));
+        defaultTypes.add(new DefaultTypeFactory(LongType.class,            Long.TYPE));
+        defaultTypes.add(new DefaultTypeFactory(ShortType.class,           Short.TYPE));
+        defaultTypes.add(new DefaultTypeFactory(StringType.class,          String.class));
+        defaultTypes.add(new DefaultTypeFactory(UploadedFileType.class,    UploadedFile.class));
+        defaultTypes.add(new DefaultTypeFactory(FileType.class,            File.class));
+        defaultTypes.add(new DefaultTypeFactory(BooleanWrapperType.class,  Boolean.class));
+        defaultTypes.add(new DefaultTypeFactory(ByteWrapperType.class,     Byte.class));
+        defaultTypes.add(new DefaultTypeFactory(CharacterType.class,       Character.class));
+        defaultTypes.add(new DefaultTypeFactory(DoubleWrapperType.class,   Double.class));
+        defaultTypes.add(new DefaultTypeFactory(FloatWrapperType.class,    Float.class));
+        defaultTypes.add(new DefaultTypeFactory(IntegerWrapperType.class,  Integer.class));
+        defaultTypes.add(new DefaultTypeFactory(LongWrapperType.class,     Long.class));
+        defaultTypes.add(new DefaultTypeFactory(ShortWrapperType.class,    Short.class));
+        defaultTypes.add(new DefaultTypeFactory(DownloadType.class,        Download.class));
+        defaultTypes.add(new DefaultTypeFactory(ListType.class,            List.class));
+        defaultTypes.add(new DefaultTypeFactory(SetType.class,             Set.class));
+        defaultTypes.add(new DefaultTypeFactory(SerializableType.class,    Serializable.class));
+        defaultTypes.add(new DefaultTypeFactory(DefaultDateType.class,     Date.class));
+        defaultTypes.add(new DefaultTypeFactory(CalendarType.class,        Calendar.class));
+        defaultTypes.add(new DefaultArrayTypeFactory());
+        defaultTypes.add(new DefaultEnumTypeFactory());
+        defaultTypes.add(new DefaultTypeFactory(ClassType.class,           Class.class));
+        defaultTypes.add(new ObjectTypeFactory());
     }
     
     /**
@@ -96,20 +94,34 @@ public class TypeManagerImp implements TypeManager{
      * @param type Classe do tipo.
      */
     public void remove(Class type) {
+        List factoryToRemove = new ArrayList();
+        
         Iterator i = customTypes.iterator();
         while (i.hasNext()) {
             TypeFactory factory = (TypeFactory) i.next();
             if (factory.getClassType() == type) {
-                customTypes.remove(factory);
+                factoryToRemove.add(factory);
             }
         }
 
-        i = staticTypes.iterator();
+        for(int k=0;k<factoryToRemove.size();k++){
+            Object factory = factoryToRemove.get(k);
+            customTypes.remove(factory);
+        }
+            
+        factoryToRemove.clear();
+        
+        i = defaultTypes.iterator();
         while (i.hasNext()) {
             TypeFactory factory = (TypeFactory) i.next();
             if (factory.getClassType() == type) {
-                staticTypes.remove(factory);
+                factoryToRemove.add(factory);
             }
+        }
+        
+        for(int k=0;k<factoryToRemove.size();k++){
+            Object factory = factoryToRemove.get(k);
+            defaultTypes.remove(factory);
         }
         
         this.cache.clear();
@@ -190,7 +202,7 @@ public class TypeManagerImp implements TypeManager{
             }
         }
 
-        i = staticTypes.iterator();
+        i = defaultTypes.iterator();
         while (i.hasNext()) {
             TypeFactory factory = (TypeFactory) i.next();
             if (factory.matches(rawType)) {
@@ -216,7 +228,8 @@ public class TypeManagerImp implements TypeManager{
         TypeFactory factory = getTypeFactory(rawType);
         Type type = factory.getInstance();
 
-        type.setClassType((Class)classType);
+        type.setClassType(
+            classType instanceof Class? (Class)classType : rawType);
         
         if (type instanceof EnumType){
             EnumType tmp = (EnumType)type;
@@ -237,6 +250,10 @@ public class TypeManagerImp implements TypeManager{
         
         if(type instanceof CollectionType){
             Object collectionGenericType = TypeUtil.getCollectionType(classType);
+            
+            if(collectionGenericType == null)
+                collectionGenericType = Object.class;
+            
             Class collectionType = TypeUtil.getRawType(collectionGenericType);
             
             CollectionType tmp = (CollectionType)type;
