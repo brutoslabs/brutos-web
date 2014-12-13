@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.helper.bean;
 import java.util.LinkedList;
 import java.util.List;
 import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.Identify;
 import org.brandao.brutos.annotation.Target;
 
 /**
@@ -30,6 +31,7 @@ import org.brandao.brutos.annotation.Target;
 public class BeanConstructorTest17 {
         
     public BeanConstructorTest17(
+            @Identify(useMapping = true)
             @Target(LinkedList.class)
             List<Integer> propertyN){
     }
