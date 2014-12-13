@@ -19,6 +19,7 @@ package org.brandao.brutos.annotation.helper.bean;
 
 import java.util.List;
 import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.Identify;
 
 /**
  *
@@ -28,6 +29,7 @@ import org.brandao.brutos.annotation.Bean;
 public class BeanConstructorTest18 {
         
     public BeanConstructorTest18(
+            @Identify(useMapping = true)
             List<Integer> propertyO){
     }
 

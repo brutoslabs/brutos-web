@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
+import org.brandao.brutos.annotation.Identify;
 
 /**
  *
@@ -30,6 +31,7 @@ import org.brandao.brutos.annotation.ElementCollection;
 public class BeanConstructorTest16 {
         
     public BeanConstructorTest16(
+            @Identify(useMapping = true)
             @ElementCollection(bean="myElement")
             List<Integer> propertyM){
     }

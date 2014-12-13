@@ -47,7 +47,6 @@ public class AnnotationApplicationContextBeanTest
     @Override
     public ConfigurableApplicationContext getApplication(Class[] clazz, String complement){
         ConfigurableApplicationContext context = super.getApplication(clazz, complement);
-        context.getTypeManager().remove(List.class);
         return context;
     }
     
