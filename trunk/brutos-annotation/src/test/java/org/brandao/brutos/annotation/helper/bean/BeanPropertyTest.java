@@ -136,7 +136,6 @@ public class BeanPropertyTest {
         return propertyH;
     }
 
-    @Identify(useMapping = true)
     @KeyCollection(
         bean="myKey",
         enumerated=EnumerationType.STRING,
@@ -158,7 +157,6 @@ public class BeanPropertyTest {
         return propertyI;
     }
 
-    @Identify(useMapping = true)
     @Target(LinkedHashMap.class)
     public void setPropertyI(Map<String,Integer> propertyI) {
         this.propertyI = propertyI;
@@ -168,7 +166,6 @@ public class BeanPropertyTest {
         return propertyJ;
     }
 
-    @Identify(useMapping = true)
     public void setPropertyJ(Map<BeanConstructorTest,Integer> propertyJ) {
         this.propertyJ = propertyJ;
     }
@@ -177,7 +174,6 @@ public class BeanPropertyTest {
         return propertyK;
     }
 
-    @Identify(useMapping = true)
     public void setPropertyK(Map<String,BeanConstructorTest> propertyK) {
         this.propertyK = propertyK;
     }
@@ -186,7 +182,6 @@ public class BeanPropertyTest {
         return propertyL;
     }
 
-    @Identify(useMapping = true)
     @ElementCollection(bean="myElement", useMapping=true)
     public void setPropertyL(Map<String,BeanConstructorTest> propertyL) {
         this.propertyL = propertyL;
@@ -196,7 +191,6 @@ public class BeanPropertyTest {
         return propertyM;
     }
 
-    @Identify(useMapping = true)
     @ElementCollection(bean="myElement")
     public void setPropertyM(List<Integer> propertyM) {
         this.propertyM = propertyM;
@@ -206,7 +200,6 @@ public class BeanPropertyTest {
         return propertyN;
     }
 
-    @Identify(useMapping = true)
     @Target(LinkedList.class)
     public void setPropertyN(List<Integer> propertyN) {
         this.propertyN = propertyN;
@@ -216,7 +209,6 @@ public class BeanPropertyTest {
         return propertyO;
     }
 
-    @Identify(useMapping = true)
     public void setPropertyO(List<Integer> propertyO) {
         this.propertyO = propertyO;
     }
@@ -225,7 +217,6 @@ public class BeanPropertyTest {
         return propertyP;
     }
 
-    @Identify(useMapping = true)
     public void setPropertyP(List<BeanConstructorTest> propertyP) {
         this.propertyP = propertyP;
     }
@@ -234,7 +225,6 @@ public class BeanPropertyTest {
         return propertyQ;
     }
 
-    @Identify(useMapping = true)
     @ElementCollection(bean="myElement")
     public void setPropertyQ(List<BeanConstructorTest> propertyQ) {
         this.propertyQ = propertyQ;
@@ -244,7 +234,6 @@ public class BeanPropertyTest {
         return propertyR;
     }
 
-    @Identify(useMapping = true)
     @KeyCollection(bean="myKey", useMapping=true)
     @ElementCollection(bean="myElement", useMapping=true)
     public void setPropertyR(Map<BeanConstructorTest,BeanConstructorTest> propertyR) {
@@ -255,7 +244,6 @@ public class BeanPropertyTest {
         return propertyS;
     }
 
-    @Identify(useMapping = true)
     @ElementCollection(bean="myElement", useMapping=true)
     public void setPropertyS(List<BeanConstructorTest> propertyS) {
         this.propertyS = propertyS;
@@ -265,7 +253,6 @@ public class BeanPropertyTest {
         return propertyT;
     }
 
-    @Identify(useMapping = true)
     public void setPropertyT(Map<String,List<BeanConstructorTest>> propertyT) {
         this.propertyT = propertyT;
     }
@@ -274,7 +261,6 @@ public class BeanPropertyTest {
         return propertyU;
     }
 
-    @Identify(useMapping = true)
     public void setPropertyU(Map<String,CustomArrayList> propertyU) {
         this.propertyU = propertyU;
     }
@@ -283,7 +269,6 @@ public class BeanPropertyTest {
         return propertyV;
     }
 
-    @Identify(useMapping = true)
     @ElementCollection(bean="myElement2",useMapping=true)
     public void setPropertyV(Map<String,CustomArrayList> propertyV) {
         this.propertyV = propertyV;

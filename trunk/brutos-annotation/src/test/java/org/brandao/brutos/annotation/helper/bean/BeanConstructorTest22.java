@@ -20,7 +20,6 @@ package org.brandao.brutos.annotation.helper.bean;
 import java.util.List;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
-import org.brandao.brutos.annotation.Identify;
 
 /**
  *
@@ -30,8 +29,7 @@ import org.brandao.brutos.annotation.Identify;
 public class BeanConstructorTest22 {
         
     public BeanConstructorTest22(
-            @Identify(useMapping = true)
-            @ElementCollection(bean="myElement", useMapping=true)
+            @ElementCollection(bean="myElement", useMapping = true)
             List<BeanConstructorTest> propertyS){
     }
 

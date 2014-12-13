@@ -45,6 +45,8 @@ public class ListTypeTest extends TestCase{
             
         };
         
-        CollectionType type = (CollectionType) (new TypeManagerImp()).getType(classType,null,null);
+        TypeManagerImp manager = new TypeManagerImp();
+        manager.register(new DefaultTypeFactory(ListType.class, List.class));
+        CollectionType type = (CollectionType) manager.getType(classType,null,null);
     }
 }

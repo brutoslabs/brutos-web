@@ -31,7 +31,6 @@ import org.brandao.brutos.annotation.Identify;
 public class BeanConstructorTest16 {
         
     public BeanConstructorTest16(
-            @Identify(useMapping = true)
             @ElementCollection(bean="myElement")
             List<Integer> propertyM){
     }

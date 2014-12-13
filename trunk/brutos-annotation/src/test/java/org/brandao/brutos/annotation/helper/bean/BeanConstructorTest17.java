@@ -31,7 +31,6 @@ import org.brandao.brutos.annotation.Target;
 public class BeanConstructorTest17 {
         
     public BeanConstructorTest17(
-            @Identify(useMapping = true)
             @Target(LinkedList.class)
             List<Integer> propertyN){
     }

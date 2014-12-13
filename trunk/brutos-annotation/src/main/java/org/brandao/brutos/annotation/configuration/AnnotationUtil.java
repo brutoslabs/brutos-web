@@ -136,13 +136,6 @@ public class AnnotationUtil {
 
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
             Boolean buildIfNecessary, Class type){
-        //boolean isStandardType = TypeManager.isStandardType(type);
-        //isStandardType = isStandardType && !type.isAnnotationPresent(Bean.class);
-        /*return
-            buildIfNecessary == null?
-                !isStandardType : 
-                buildIfNecessary.booleanValue()? true : isComplexBean(type);
-        */
         return buildIfNecessary == null?
                 !typeRegistry.isStandardType(type) && isComplexBean(type): 
                 buildIfNecessary.booleanValue();
