@@ -29,7 +29,6 @@ import org.brandao.brutos.annotation.Identify;
 public class BeanConstructorTest19 {
         
     public BeanConstructorTest19(
-            @Identify(useMapping = true)
             List<BeanConstructorTest> propertyP){
     }
 

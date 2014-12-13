@@ -46,7 +46,6 @@ public class BeanFieldTest {
     @Enumerated(value=EnumerationType.STRING)
     private EnumTest propertyG;
     
-    @Identify(useMapping = true)
     @KeyCollection(
         bean="myKey",
         enumerated=EnumerationType.STRING,
@@ -62,54 +61,40 @@ public class BeanFieldTest {
     )
     private Map<String,Integer> propertyH;
 
-    @Identify(useMapping = true)
     @Target(LinkedHashMap.class)
     private Map<String,Integer> propertyI;
     
-    @Identify(useMapping = true)
     private Map<BeanConstructorTest,Integer> propertyJ;
 
-    @Identify(useMapping = true)
     private Map<String,BeanConstructorTest> propertyK;
 
-    @Identify(useMapping = true)
     @ElementCollection(bean="myElement", useMapping=true)
     private Map<String,BeanConstructorTest> propertyL;
 
-    @Identify(useMapping = true)
     @ElementCollection(bean="myElement")
     private List<Integer> propertyM;
 
-    @Identify(useMapping = true)
     @Target(LinkedList.class)
     private List<Integer> propertyN;
     
-    @Identify(useMapping = true)
     private List<Integer> propertyO;
 
-    @Identify(useMapping = true)
     private List<BeanConstructorTest> propertyP;
 
-    @Identify(useMapping = true)
     @ElementCollection(bean="myElement")
     private List<BeanConstructorTest> propertyQ;
 
-    @Identify(useMapping = true)
     @KeyCollection(bean="myKey", useMapping=true)
     @ElementCollection(bean="myElement", useMapping=true)
     private Map<BeanConstructorTest,BeanConstructorTest> propertyR;
 
-    @Identify(useMapping = true)
     @ElementCollection(bean="myElement", useMapping=true)
     private List<BeanConstructorTest> propertyS;
 
-    @Identify(useMapping = true)
     private Map<String,List<BeanConstructorTest>> propertyT;
     
-    @Identify(useMapping = true)
     private Map<String,CustomArrayList> propertyU;
 
-    @Identify(useMapping = true)
     @ElementCollection(bean="myElement2",useMapping=true)
     private Map<String,CustomArrayList> propertyV;
 

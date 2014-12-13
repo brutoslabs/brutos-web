@@ -30,7 +30,7 @@ import org.brandao.brutos.annotation.ElementCollection;
 public class BeanConstructorTest25 {
         
     public BeanConstructorTest25(
-            @ElementCollection(bean="myElement2",useMapping=true)
+            @ElementCollection(bean="myElement2", useMapping = true)
             Map<String,CustomArrayList> propertyV){
     }
 
