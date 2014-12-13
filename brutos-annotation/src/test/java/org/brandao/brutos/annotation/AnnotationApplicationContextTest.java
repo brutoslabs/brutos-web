@@ -28,6 +28,8 @@ public interface AnnotationApplicationContextTest{
     ConfigurableApplicationContext getApplication(Class[] clazz);
     
     ConfigurableApplicationContext getApplication(Class[] clazz, String complement);
+
+    ConfigurableApplicationContext getApplication(Class[] clazz, String complement, Class[] types);
     
     ConfigurableApplicationContext getApplication(String complement);
     

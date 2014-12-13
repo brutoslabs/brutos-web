@@ -45,6 +45,6 @@ public class ListTypeTest extends TestCase{
             
         };
         
-        CollectionType type = (CollectionType) (new TypeManager()).getType(classType,null,null);
+        CollectionType type = (CollectionType) (new TypeManagerImp()).getType(classType,null,null);
     }
 }
