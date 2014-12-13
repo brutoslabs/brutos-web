@@ -932,14 +932,7 @@ public class AnnotationApplicationContextControllerTest
         Class clazz = ControllerTest18Controller.class;
         
         ConfigurableApplicationContext annotationApplicationContext = null;
-        try{
-            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
-            annotationApplicationContext = getApplication(new Class[]{clazz});
-        }
-        finally{
-            if(annotationApplicationContext != null)
-                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
-        }
+        annotationApplicationContext = getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -1032,7 +1025,7 @@ public class AnnotationApplicationContextControllerTest
         
         PropertyController property = controller.getProperty("propertyO");
         org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
-        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        Assert.assertEquals(TypeUtil.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
         Assert.assertEquals("element", element.getParameterName());
@@ -1057,7 +1050,7 @@ public class AnnotationApplicationContextControllerTest
         
         PropertyController property = controller.getProperty("propertyP");
         org.brandao.brutos.mapping.Bean beanProperty = property.getMapping();
-        Assert.assertEquals(TypeManager.getDefaultListType(), beanProperty.getClassType());
+        Assert.assertEquals(TypeUtil.getDefaultListType(), beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
         Assert.assertEquals("element", element.getParameterName());
@@ -1099,14 +1092,7 @@ public class AnnotationApplicationContextControllerTest
         Class clazz = ControllerTest18Controller.class;
         
         ConfigurableApplicationContext annotationApplicationContext = null;
-        try{
-            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
-            annotationApplicationContext = getApplication(new Class[]{clazz});
-        }
-        finally{
-            if(annotationApplicationContext != null)
-                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
-        }
+        annotationApplicationContext = getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -1141,14 +1127,7 @@ public class AnnotationApplicationContextControllerTest
         Class clazz = ControllerTest18Controller.class;
         
         ConfigurableApplicationContext annotationApplicationContext = null;
-        try{
-            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
-            annotationApplicationContext = getApplication(new Class[]{clazz});
-        }
-        finally{
-            if(annotationApplicationContext != null)
-                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
-        }
+        annotationApplicationContext = getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -1568,14 +1547,7 @@ public class AnnotationApplicationContextControllerTest
         Class clazz = ControllerTest19Controller.class;
         
         ConfigurableApplicationContext annotationApplicationContext = null;
-        try{
-            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
-            annotationApplicationContext = getApplication(new Class[]{clazz});
-        }
-        finally{
-            if(annotationApplicationContext != null)
-                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
-        }
+        annotationApplicationContext = getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -1735,14 +1707,7 @@ public class AnnotationApplicationContextControllerTest
         Class clazz = ControllerTest19Controller.class;
         
         ConfigurableApplicationContext annotationApplicationContext = null;
-        try{
-            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
-            annotationApplicationContext = getApplication(new Class[]{clazz});
-        }
-        finally{
-            if(annotationApplicationContext != null)
-                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
-        }
+        annotationApplicationContext = getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext
@@ -1777,14 +1742,7 @@ public class AnnotationApplicationContextControllerTest
         Class clazz = ControllerTest19Controller.class;
         
         ConfigurableApplicationContext annotationApplicationContext = null;
-        try{
-            TypeManager.registerStaticType(new DefaultTypeFactory(ObjectType.class,Object.class ));
-            annotationApplicationContext = getApplication(new Class[]{clazz});
-        }
-        finally{
-            if(annotationApplicationContext != null)
-                annotationApplicationContext.getTypeManager().remove(BeanConstructorTest.class);
-        }
+        annotationApplicationContext = getApplication(new Class[]{clazz});
         
         org.brandao.brutos.mapping.Controller controller = 
                 annotationApplicationContext

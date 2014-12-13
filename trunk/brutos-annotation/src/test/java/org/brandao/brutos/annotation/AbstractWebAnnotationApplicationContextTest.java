@@ -48,9 +48,14 @@ public abstract class AbstractWebAnnotationApplicationContextTest
     public ConfigurableApplicationContext getApplication(Class[] clazz){
         return this.getApplication(clazz, null);
     }
-    
+
     @Override
     public ConfigurableApplicationContext getApplication(Class[] clazz, String complement){
+        return this.getApplication(clazz, complement, null);
+    }
+    
+    @Override
+    public ConfigurableApplicationContext getApplication(Class[] clazz, String complement, Class[] types){
         String xml = "";
         xml +="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         xml +="<ns2:controllers";
@@ -71,6 +76,14 @@ public abstract class AbstractWebAnnotationApplicationContextTest
             xml +="</ns1:component-scan>";
         }
         
+        if(types != null){
+            xml += "<ns1:types>";
+            for(Class type: types){
+                xml += "<ns1:type factory=\"" + type.getName() + "\"/>";
+            }
+            xml += "</ns1:types>";
+        }
+
         if(complement != null)
             xml += complement;
         
