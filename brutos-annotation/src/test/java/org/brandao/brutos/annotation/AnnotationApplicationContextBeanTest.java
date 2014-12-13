@@ -42,7 +42,6 @@ public class AnnotationApplicationContextBeanTest
     extends AbstractWebAnnotationApplicationContextTest{
 
     public AnnotationApplicationContextBeanTest(){
-        //TypeManager.remove(List.class);
     }
     
     @Override
