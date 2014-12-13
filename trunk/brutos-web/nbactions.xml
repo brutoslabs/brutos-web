@@ -21,5 +21,36 @@
                 <createChecksum>true</createChecksum>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-Deploy</actionName>
+            <displayName>Deploy</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>deploy</goal>
+            </goals>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-release</actionName>
+            <displayName>release</displayName>
+            <goals>
+                <goal>nexus-staging:release</goal>
+            </goals>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-drop</actionName>
+            <displayName>drop</displayName>
+            <goals>
+                <goal>nexus-staging:drop</goal>
+            </goals>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </action>
         
     </actions>
