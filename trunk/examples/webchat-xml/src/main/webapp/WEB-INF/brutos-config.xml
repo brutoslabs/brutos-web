@@ -8,7 +8,6 @@
 
     <context:types>
         <context:type factory="org.brandao.webchat.controller.type.RoomServiceTypeFactory"/>
-        <context:type factory="org.brandao.webchat.controller.type.SerializableObjectTypeFactory"/>
     </context:types>
     
     <context:params>
@@ -19,7 +18,7 @@
                      class="org.brandao.webchat.controller.interceptor.CheckUserInterceptor"/>
     </interceptors>
     
-    <controller id="/Room/{roomID:\d+}" view="/layout/login.jsp" class="org.brandao.webchat.controller.RoomController">
+    <controller id="/Room/{roomID:\d+}" view="/layout/login.jsp"  class="org.brandao.webchat.controller.RoomController">
         <interceptor-ref name="checkUserInterceptor"/>
         <property name="roomService" bean="roomID"/>
         <property name="currentUser" bean="sessionUser" scope="session"/>
