@@ -107,6 +107,9 @@ public abstract class AbstractApplicationContext
                     this.objectFactory, this.controllerManager, 
                     this.actionResolver, this, this.renderView);
     }
+
+    protected void initTypes(){
+    }
     
     protected void initScopes(){
         getScopes()
@@ -672,6 +675,8 @@ public abstract class AbstractApplicationContext
         this.initInstances();
         
         this.initScopes();
+
+        this.initTypes();
         
         this.invoker.flush();
         
