@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.web;
 
+import java.io.Serializable;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.*;
@@ -36,6 +37,7 @@ import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
+import org.brandao.brutos.web.type.JSONType;
 
 /**
  *
@@ -127,6 +129,12 @@ public abstract class AbstractWebApplicationContext
         }
     }
 
+    protected void initTypes(){
+        super.initTypes();
+        this.typeManager.remove(Serializable.class);
+        this.typeManager.register(new DefaultTypeFactory(JSONType.class, Serializable.class));
+    }
+    
     protected void initScopes(){
         getScopes().register( WebScopeType.APPLICATION.toString(),
                 new ApplicationScope( getContext() ) );
@@ -366,6 +374,8 @@ public abstract class AbstractWebApplicationContext
         this.initInstances();
         
         this.initScopes();
+        
+        this.initTypes();
         
         this.invoker.flush();
         
