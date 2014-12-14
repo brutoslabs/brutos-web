@@ -33,10 +33,7 @@ import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.IntegerWrapperType;
 import org.brandao.brutos.type.StringType;
-import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.ScopeType;
-import org.brandao.brutos.type.DefaultTypeFactory;
-import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.TypeUtil;
 
 /**
