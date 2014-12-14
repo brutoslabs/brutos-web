@@ -17,11 +17,6 @@
     </context-param>
     -->
     
-    <context-param>
-        <param-name>org.brandao.brutos.ioc.provider</param-name>
-        <param-value>org.brandao.brutos.ioc.CDIProvider</param-value>
-    </context-param>
-    
     <filter>
         <filter-name>Brutos Framework Filter</filter-name>
         <filter-class>org.brandao.brutos.web.http.BrutosRequestFilter</filter-class>
