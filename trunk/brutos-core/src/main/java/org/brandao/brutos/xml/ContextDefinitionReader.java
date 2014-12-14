@@ -56,6 +56,10 @@ public class ContextDefinitionReader
         super(componenetRegistry);
         this.scannerClassName = null;
         this.parseUtil = new XMLParseUtil(XMLBrutosConstants.XML_BRUTOS_CONTEXT_NAMESPACE);
+        this.useDefaultfilter = true;
+        this.excludeFilters = new ArrayList();
+        this.includeFilters = new ArrayList();
+        this.basePackage = new String[]{""};
     }
     
     public void loadDefinitions(Resource resource) {
@@ -189,28 +193,22 @@ public class ContextDefinitionReader
         
         NodeList list = parseUtil.getElements(element, "exclude-filter");
         
-        List excludeFilterList = new ArrayList();
-        this.setExcludeFilters(excludeFilterList);
-        
         for(int i=0;i<list.getLength();i++){
             Element filterNode = (Element)list.item(i);
             String expression = filterNode.getAttribute("expression");
             String type = filterNode.getAttribute("type");
             String filterClassName = getFilterClassName(expression, type);
-            excludeFilterList.add(new FilterEntity(filterClassName, expression));
+            excludeFilters.add(new FilterEntity(filterClassName, expression));
         }
         
         list = parseUtil.getElements(element, "include-filter");
         
-        List includeFilterList = new ArrayList();
-        this.setIncludeFilters(includeFilterList);
-        
         for(int i=0;i<list.getLength();i++){
             Element filterNode = (Element)list.item(i);
             String expression = filterNode.getAttribute("expression");
             String type = filterNode.getAttribute("type");
             String filterClassName = getFilterClassName(expression, type);
-            includeFilterList.add(new FilterEntity(filterClassName, expression));
+            includeFilters.add(new FilterEntity(filterClassName, expression));
         }
         
     }
