@@ -26,7 +26,6 @@ import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.validator.Validator;
 
 /**
@@ -91,10 +90,12 @@ public class Action {
 
     public void setName(String name) {
         this.name = name;
-        this.id = 
+        this.id = name;
+        /*
                 this.controller.getId() == null? 
                     name : 
                     this.controller.getId() + name;
+        */
     }
 
     public void addParameter( ParameterAction value ){
