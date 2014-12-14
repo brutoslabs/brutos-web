@@ -63,82 +63,65 @@ public class WebControllerResolver implements ControllerResolver{
         while(controllers.hasNext()){
             Controller controller = (Controller)controllers.next();
             ActionType actionType = controller.getActionType();
+            String controllerId = controller.getId();
             
-            if(this.isMatch(actionType, controller, paramScope, uri) || 
-               this.isMatch(actionType, controller, paramScope, handler, uri))
-                return controller;
-            
+            URIMapping uriMap = getURIMapping( controllerId );
+
+            if(actionType == ActionType.PARAMETER){
+                if(uriMap.matches(controllerId))
+                    return controller;
+            }
+            else{
+                if(actionType == ActionType.HIERARCHY && uriMap.matches(uri)){
+                    updateRequest(uri, paramScope, uriMap);
+                    return controller;
+                }
+                
+                Action action = this.getAction(controller, actionType, uri, paramScope);
+
+                if(action != null){
+                    updateHandler(action, handler);
+                    return controller;
+                }
+            }
         }
 
         return null;
     }
-
-    private boolean isMatch(ActionType actionType, Controller controller, 
-            Scope scope, ConfigurableInterceptorHandler handler, String uri){
-        
-        if(actionType == ActionType.PARAMETER)
-            return false;
-
-        URIMapping uriMap;
-        
+    
+    private Action getAction(Controller controller, ActionType actionType, String uri, Scope paramScope){
         Iterator actionsId = controller.getActions().values().iterator();
         
         while(actionsId.hasNext()){
-            
             Action action = (Action) actionsId.next();
-            
-            String id = action.getName();
-            
-            uriMap = getURIMapping( id );
+
+            String actionId = 
+                    actionType == ActionType.HIERARCHY? 
+                        controller.getId() + action.getId() :
+                        action.getId();
+
+            URIMapping uriMap = getURIMapping( actionId );
+
             if(uriMap.matches(uri)){
-                updateRequest(uri, scope, uriMap);
-
-                ConfigurableApplicationContext context =
-                    (ConfigurableApplicationContext)handler.getContext();
-
-                ActionResolver actionResolver =
-                        context.getActionResolver();
-                
-                ResourceAction resourceAction = 
-                        actionResolver.getResourceAction(action);
-
-                handler.setResourceAction(resourceAction);
-
-                return true;
+                updateRequest(uri, paramScope, uriMap);
+                return action;
             }
         }
         
-        return false;
+        return null;
     }
     
-    private boolean isMatch(ActionType actionType, Controller controller, 
-            Scope scope, String uri){
-        
-        if(actionType == ActionType.DETACHED)
-            return false;
+    private void updateHandler(Action action, ConfigurableInterceptorHandler handler){
+        ConfigurableApplicationContext context =
+            (ConfigurableApplicationContext)handler.getContext();
 
-        URIMapping uriMap;
-        
-        uriMap = getURIMapping( controller.getId() );
+        ActionResolver actionResolver =
+                context.getActionResolver();
 
-        if(uriMap.matches(uri)){
-            updateRequest(uri, scope, uriMap);
-            return true;
-        }
-        else{
-            Iterator alias = controller.getAlias().iterator();
+        ResourceAction resourceAction = 
+                actionResolver.getResourceAction(action);
 
-            while(alias.hasNext()){
-                uriMap = getURIMapping( (String)alias.next() );
-
-                if(uriMap.matches(uri)){
-                    updateRequest(uri, scope, uriMap);
-                    return true;
-                }
-            }
-        }
-        
-        return false;
+        handler.setResourceAction(resourceAction);
     }
     
     private void updateRequest(String uri, Scope paramScope, URIMapping uriMap){
