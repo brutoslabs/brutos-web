@@ -12,11 +12,11 @@ import org.brandao.webchat.model.*;
 
 @RequestScoped
 @Controller("/Room/{roomID:\\d+}")
-@View("/layout/login.jsp")
+@View(value = "/layout/login.jsp", resolved = true)
 @Actions({
-    @Action(value="/messagePart",view=@View("/layout/messages.jsp")),
-    @Action(value="/sendPart",   view=@View("/layout/send.jsp")),
-    @Action(value="/login",      view=@View("/layout/login.jsp"))
+    @Action(value="/messagePart",view=@View(value = "/layout/messages.jsp", resolved = true)),
+    @Action(value="/sendPart",   view=@View(value = "/layout/send.jsp", resolved = true)),
+    @Action(value="/login",      view=@View(value = "/layout/login.jsp", resolved = true))
 })
 public class RoomController {
     
@@ -46,7 +46,7 @@ public class RoomController {
     }
     
     @Action("/enter")
-    @View("/layout/room.jsp")
+    @View(value = "/layout/room.jsp", resolved = true)
     @ThrowSafeList({
         @ThrowSafe(target=ValidatorException.class,   view="/layout/login.jsp"),
         @ThrowSafe(target=UserExistException.class,   view="/layout/login.jsp"),
