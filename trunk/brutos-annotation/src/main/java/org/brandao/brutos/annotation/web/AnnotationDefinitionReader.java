@@ -90,18 +90,22 @@ public class AnnotationDefinitionReader
         
         List<FilterEntity> excludeFilter = super.getExcludeFilters();
         
-        for(FilterEntity filterDef: excludeFilter){
-            TypeFilter filter = 
-                getTypeFilter(filterDef.getExpression(), filterDef.getClassName());
-            this.scanner.addExcludeFilter(filter);
+        if(excludeFilter != null){
+            for(FilterEntity filterDef: excludeFilter){
+                TypeFilter filter = 
+                    getTypeFilter(filterDef.getExpression(), filterDef.getClassName());
+                this.scanner.addExcludeFilter(filter);
+            }
         }
         
         List<FilterEntity> includeFilter = super.getIncludeFilters();
-        
-        for(FilterEntity filterDef: includeFilter){
-            TypeFilter filter = 
-                getTypeFilter(filterDef.getExpression(), filterDef.getClassName());
-            this.scanner.addIncludeFilter(filter);
+
+        if(includeFilter != null){
+            for(FilterEntity filterDef: includeFilter){
+                TypeFilter filter = 
+                    getTypeFilter(filterDef.getExpression(), filterDef.getClassName());
+                this.scanner.addIncludeFilter(filter);
+            }
         }
         
     }
