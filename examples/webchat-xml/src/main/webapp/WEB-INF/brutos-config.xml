@@ -13,6 +13,7 @@
     <context:params>
         <context:param name="org.brandao.brutos.view.auto">false</context:param>
     </context:params>
+    
     <interceptors>
         <interceptor name="checkUserInterceptor"
                      class="org.brandao.webchat.controller.interceptor.CheckUserInterceptor"/>
