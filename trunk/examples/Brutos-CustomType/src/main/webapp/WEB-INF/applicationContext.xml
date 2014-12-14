@@ -8,6 +8,8 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
 
-       <bean id="IndexController" class="br.brandao.controller.IndexController" />
+    <bean class="org.brandao.brutos.spring.SpringContext"/>
+    
+    <bean id="IndexController" class="br.brandao.controller.IndexController" />
        
 </beans>

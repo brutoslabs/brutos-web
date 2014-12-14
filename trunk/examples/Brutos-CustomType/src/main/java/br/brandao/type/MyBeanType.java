@@ -11,6 +11,7 @@ import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.type.AbstractType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
@@ -19,20 +20,12 @@ import org.brandao.brutos.web.ConfigurableWebApplicationContext;
  *
  * @author Afonso Brandao
  */
-public class MyBeanType implements Type,TypeFactory{
+public class MyBeanType extends AbstractType implements Type,TypeFactory{
 
     public Class getClassType() {
         return MyBean.class;
     }
 
-    /**
-     * @deprecated 
-     * 
-     */
-    public Object getValue(Object value) {
-        return null;
-    }
-    
     public Object convert(Object value) {
         ConfigurableWebApplicationContext context =
             (ConfigurableWebApplicationContext) Invoker.getCurrentApplicationContext();
@@ -44,15 +37,6 @@ public class MyBeanType implements Type,TypeFactory{
         return mapping.getValue();
     }
 
-    /**
-     * @deprecated 
-     * @param value
-     * @throws IOException 
-     */
-    public void setValue(Object value) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
     public void show(MvcResponse response, Object value) throws IOException {
         
     }

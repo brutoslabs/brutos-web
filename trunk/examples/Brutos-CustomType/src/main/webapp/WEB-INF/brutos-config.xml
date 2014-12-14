@@ -16,6 +16,10 @@
         <context:type factory="br.brandao.type.MyBeanType"/>
     </context:types>
    
+    <context:params>
+        <context:param name="org.brandao.brutos.view.auto">false</context:param>
+    </context:params>
+   
     <controller id="/index.jbrs" view="/WEB-INF/jsp/index.jsp" action-type="parameter"
                class="br.brandao.controller.IndexController">
         <bean name="myBean" target="br.brandao.beans.MyBean">
