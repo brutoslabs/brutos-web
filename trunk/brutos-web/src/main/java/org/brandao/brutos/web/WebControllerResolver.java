@@ -87,7 +87,7 @@ public class WebControllerResolver implements ControllerResolver{
             
             Action action = (Action) actionsId.next();
             
-            String id = action.getId();
+            String id = action.getName();
             
             uriMap = getURIMapping( id );
             if(uriMap.matches(uri)){
