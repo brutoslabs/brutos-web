@@ -18,6 +18,7 @@
                         value="${web.root}WEB-INF/files/"/>
         <context:param name="org.brandao.brutos.request.max_length"
                         value="3145728"/> <!-- 3 MB -->
+        <context:param name="org.brandao.brutos.view.auto">false</context:param>
     </context:params>
 
     <controller id="/index.jbrs" 
@@ -27,7 +28,7 @@
         <action id="default" view="/WEB-INF/jsp/index.jsf"/>
         
         <action id="upload" view="/WEB-INF/jsp/index.jsf" executor="addFile">
-            <parameter type="org.brandao.brutos.web.http.BrutosFile" bean="arq"/>
+            <parameter type="org.brandao.brutos.web.http.UploadedFile" bean="arq"/>
         </action>
 
         <action id="delete" view="/WEB-INF/jsp/index.jsf" executor="delete">

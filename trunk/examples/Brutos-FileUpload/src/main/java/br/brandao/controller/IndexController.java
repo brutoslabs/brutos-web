@@ -10,8 +10,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import org.brandao.brutos.FlowController;
-import org.brandao.brutos.web.http.BrutosFile;
 import org.brandao.brutos.web.http.Download;
+import org.brandao.brutos.web.http.UploadedFile;
 import org.brandao.brutos.web.http.download.FileDownload;
 /**
  *
@@ -28,7 +28,7 @@ public class IndexController{
         this.dir = dir;
     }
 
-    public void addFile( BrutosFile file ) throws IOException{
+    public void addFile( UploadedFile file ) throws IOException{
         if( file != null )
             this.mensagem = "Nome: " + 
                             file.getFileName() +
