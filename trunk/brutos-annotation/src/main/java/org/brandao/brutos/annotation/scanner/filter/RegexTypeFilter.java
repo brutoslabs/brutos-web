@@ -17,8 +17,7 @@
 
 package org.brandao.brutos.annotation.scanner.filter;
 
-import java.util.Properties;
-import org.brandao.brutos.BrutosConstants;
+import java.util.List;
 import org.brandao.brutos.annotation.scanner.TypeFilter;
 import org.brandao.brutos.scanner.vfs.Vfs;
 
@@ -28,14 +27,17 @@ import org.brandao.brutos.scanner.vfs.Vfs;
  */
 public class RegexTypeFilter implements TypeFilter{
 
-    protected String regex;
+    protected List<String> regex;
     
     public boolean accepts(String resource) {
         String className = Vfs.toClass(resource);
-        return className.matches(regex);
+        for(String s: regex){
+            return className.matches(s);
+        }
+        return false;
     }
 
-    public void setExpression(String value) {
+    public void setExpression(List<String> value) {
         this.regex = value;
     }
     

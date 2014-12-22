@@ -17,7 +17,7 @@
 
 package org.brandao.brutos.annotation.scanner.filter;
 
-import java.util.Properties;
+import java.util.List;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.TypeDef;
@@ -45,7 +45,7 @@ public class TypeTypeFilter implements TypeFilter{
         }
     }
 
-    public void setExpression(String value) {
+    public void setExpression(List<String> value) {
     }
 
 }

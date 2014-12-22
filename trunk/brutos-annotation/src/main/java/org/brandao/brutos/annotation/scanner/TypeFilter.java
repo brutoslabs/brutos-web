@@ -17,14 +17,16 @@
 
 package org.brandao.brutos.annotation.scanner;
 
+import java.util.List;
+
 /**
  *
  * @author Afonso Brandao
  */
 public interface TypeFilter {
 
-    void setExpression(String value);
+    void setExpression(List<String> value);
     
-    boolean accepts( String resource );
+    boolean accepts(String resource);
     
 }

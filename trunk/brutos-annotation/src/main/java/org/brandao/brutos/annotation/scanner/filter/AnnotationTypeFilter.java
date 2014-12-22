@@ -17,7 +17,8 @@
 
 package org.brandao.brutos.annotation.scanner.filter;
 
-import org.brandao.brutos.annotation.scanner.TypeFilter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
@@ -31,40 +32,29 @@ import org.brandao.brutos.scanner.vfs.Vfs;
  */
 public class AnnotationTypeFilter implements TypeFilter{
 
-    private boolean include;
-    private Class annotation;
+    private List<Class> annotation;
     
-    public void setConfiguration(Properties config) {
-        this.include = 
-            config.getProperty(
-                "filter-type", 
-                BrutosConstants.INCLUDE)
-                    .equals(BrutosConstants.INCLUDE);
-        
-        try{
-            this.annotation =
-                ClassUtil.get(config.getProperty(BrutosConstants.EXPRESSION));
-        }
-        catch(Exception e){
-            throw new BrutosException(e);
-        }
-    }
-
     public boolean accepts(String resource) {
         try{
             resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
-            return clazz.isAnnotationPresent(annotation);
+            for(Class an: annotation){
+                return clazz.isAnnotationPresent(an);
+            }
+            return false;
         }
         catch(ClassNotFoundException e){
             throw new BrutosException(e);
         }
     }
 
-    public void setExpression(String value) {
+    public void setExpression(List<String> value) {
         try{
-            this.annotation =
-                ClassUtil.get(value);
+            this.annotation = new ArrayList<Class>();
+            
+            for(String name: value)
+                this.annotation.add(ClassUtil.get(name));
+            
         }
         catch(ClassNotFoundException e){
             throw new BrutosException(e);
