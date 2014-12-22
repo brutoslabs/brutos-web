@@ -26,10 +26,10 @@ import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
-import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.validator.DefaultValidatorFactory;
 
 /**
+ * Classe base de uma aplicação.
  * 
  * @author Afonso Brandao
  */
@@ -149,18 +149,10 @@ public abstract class AbstractApplicationContext
     
     protected abstract void loadDefinitions(ComponentRegistry registry);
     
-    /**
-     * Define o respons�vel por resolver os controladores.
-     * @param controllerResolver Respons�vel por resolver os controladores
-     */
     protected void setControllerResolver( ControllerResolver controllerResolver ){
         this.controllerResolver = controllerResolver;
     }
     
-    /**
-     * Obt�m o respons�vel por resolver os controladores.
-     * @return Respons�vel por resolver os controladores
-     */
     protected ControllerResolver getNewControllerResolver(){
         try{
             Class clazz = ClassUtil.get(configuration.getProperty(
@@ -168,29 +160,12 @@ public abstract class AbstractApplicationContext
                     DefaultControllerResolver.class.getName()));
             
             return (ControllerResolver)ClassUtil.getInstance(clazz);
-            /*
-            ControllerResolver instance = (ControllerResolver) Class.forName(
-                    configuration.getProperty(
-                    "org.brandao.brutos.controller.class",
-                    DefaultControllerResolver.class.getName()
-                ),
-                    true,
-                    Thread.currentThread().getContextClassLoader()
-
-            ).newInstance();
-            
-            return instance;
-            */
         }
         catch( Exception e ){
             throw new BrutosException( e );
         }
     }
 
-    /**
-     * Obt�m a f�brica de respostas.
-     * @return F�brica de respostas.
-     */
     protected MvcResponseFactory getMvcResponseFactory(){
         try{
             Class clazz = ClassUtil.get(configuration.getProperty(
@@ -204,10 +179,6 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    /**
-     * Obt�m a f�brica de requisi��es.
-     * @return F�brica de requisi��es.
-     */
     protected MvcRequestFactory getMvcRequestFactory(){
         try{
             Class clazz = ClassUtil.get(configuration.getProperty(
@@ -221,10 +192,6 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    /**
-     * Obt�m o respons�vel por resolver as a��es.
-     * @return Respons�vel por resolver as a��es.
-     */
     protected ActionResolver getNewMethodResolver(){
         try{
             Class clazz = ClassUtil.get(configuration.getProperty(
@@ -462,9 +429,6 @@ public abstract class AbstractApplicationContext
         }
     }
     
-    /**
-     * M�todo invocado quando a aplica��o � finalizada.
-     */
     public void destroy(){
         this.objectFactory.destroy();
         this.renderView.destroy();
@@ -486,34 +450,18 @@ public abstract class AbstractApplicationContext
         this.viewResolver = null;
     }
 
-    /**
-     * Obt�m a configura��o da aplica��o.
-     * @return Configura��o da aplica��o.
-     */
     public Properties getConfiguration(){
         return configuration;
     }
 
-    /**
-     * Obt�m o provedor de log.
-     * @return Provedor de log.
-     */
     public LoggerProvider getLoggerProvider(){
         return loggerProvider;
     }
 
-    /**
-     * Obt�m o objeto respons�vel por enviar a resposta ao cliente.
-     * @return Resposta.
-     */
     public MvcResponse getMvcResponse() {
         return ResponseProvider.getResponse();
     }
 
-    /**
-     * Obt�m o objeto respons�vel por receber a requisi��o do cliente.
-     * @return Requisi��o.
-     */
     public MvcRequest getMvcRequest() {
         return RequestProvider.getRequest();
     }
