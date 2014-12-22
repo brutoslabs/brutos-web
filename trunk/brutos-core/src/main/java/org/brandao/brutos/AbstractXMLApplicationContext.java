@@ -20,7 +20,8 @@ package org.brandao.brutos;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 /**
- *
+ * Classe base de uma aplicação.
+ * 
  * @author Brandao
  */
 public abstract class AbstractXMLApplicationContext

@@ -47,7 +47,7 @@ public abstract class AbstractRenderView implements RenderView{
      * 
      * @param requestInstrument Recursos da aplicação.
      * @param view Vista a ser renderizada.
-     * @param dispatcherType Tipo de direcionamento do fluxo para visão.
+     * @param dispatcherType Tipo de direcionamento do fluxo para vista.
      * @throws IOException Lançado se ocorrer algum problema ao renderizar a vista.
      */
     private void showView( RequestInstrument requestInstrument,

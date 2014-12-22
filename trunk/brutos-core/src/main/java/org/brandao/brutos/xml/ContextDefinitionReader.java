@@ -18,6 +18,7 @@
 package org.brandao.brutos.xml;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
@@ -197,8 +198,10 @@ public class ContextDefinitionReader
             Element filterNode = (Element)list.item(i);
             String expression = filterNode.getAttribute("expression");
             String type = filterNode.getAttribute("type");
-            String filterClassName = getFilterClassName(expression, type);
-            excludeFilters.add(new FilterEntity(filterClassName, expression));
+            excludeFilters.add(
+                    new FilterEntity(type, 
+                           Arrays.asList( 
+                                expression.split(BrutosConstants.COMMA))));
         }
         
         list = parseUtil.getElements(element, "include-filter");
@@ -207,22 +210,12 @@ public class ContextDefinitionReader
             Element filterNode = (Element)list.item(i);
             String expression = filterNode.getAttribute("expression");
             String type = filterNode.getAttribute("type");
-            String filterClassName = getFilterClassName(expression, type);
-            includeFilters.add(new FilterEntity(filterClassName, expression));
+            includeFilters.add(
+                    new FilterEntity(type, 
+                           Arrays.asList( 
+                                expression.split(BrutosConstants.COMMA))));
         }
         
-    }
-    
-    private String getFilterClassName(String expression, String type){
-        if(XMLBrutosConstants.XML_BRUTOS_CUSTOM_FILTER.equals(type))
-            return expression;
-        else{
-            String name = 
-                type.length() > 1?
-                Character.toUpperCase(type.charAt(0)) + type.substring(1) :
-                type;
-            return "org.brandao.brutos.annotation.scanner.filter." + name + "TypeFilter";
-        }
     }
     
     public String getScannerClassName() {
