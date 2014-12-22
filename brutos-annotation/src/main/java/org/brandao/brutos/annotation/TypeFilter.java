@@ -31,8 +31,8 @@ public @interface TypeFilter {
     
     FilterType type();
     
-    Class value();
+    String[] pattern();
     
-    Param[] configuration() default {};
+    Class[] value();
     
 }

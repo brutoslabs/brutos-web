@@ -17,13 +17,19 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.scanner.DefaultScanner;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.web.WebApplicationContext;
-
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.xml.FilterEntity;
+import org.brandao.brutos.annotation.scanner.Scanner;
+import org.brandao.brutos.xml.XMLBrutosConstants;
 /**
  *
  * @author Brandao
@@ -207,5 +213,259 @@ public class AnnotationUtil {
     public static boolean isWebApplication(ComponentRegistry componentRegistry){
         return componentRegistry instanceof WebApplicationContext;
     }
+
+    public static AnnotationConfig createAnnotationTree(
+            ConfigurableApplicationContext applicationContext, List<Class> list) {
+        return createAnnotationTree(null, applicationContext, list);
+    }
     
+    public static AnnotationConfig createAnnotationTree(
+            AnnotationConfig rootAnnotationConfig,
+            ConfigurableApplicationContext applicationContext, List<Class> list) {
+        
+        Logger logger = LoggerProvider
+                .getCurrentLoggerProvider().getLogger(AnnotationApplicationContext.class);
+        
+        Map<Class,AnnotationConfigEntry> configMap = getAnnotationConfigEntry(applicationContext, list);
+        List<AnnotationConfigEntry> root = new LinkedList<AnnotationConfigEntry>();
+        
+        AnnotationConfigEntry config = null;
+        
+        if(rootAnnotationConfig != null){
+            config = rootAnnotationConfig.getConfiguration();
+            config.setNextAnnotationConfig(root);
+        }
+        
+        for(AnnotationConfigEntry ace: configMap.values()){
+            Stereotype stereotype = ace.getStereotype();
+            
+            if(stereotype.target() == org.brandao.brutos.annotation.Configuration.class){
+                if(config == null){
+                    ace.setNextAnnotationConfig(root);
+                    config = ace;
+                }
+                continue;
+            }
+
+            Class<? extends Annotation>[] after = stereotype.executeAfter();
+            
+            for(Class<? extends Annotation> an: after){
+                if(an == org.brandao.brutos.annotation.Configuration.class){
+                    logger.warn("property after ignored: " + ace.getClass());
+                    continue;
+                }
+                    
+                AnnotationConfigEntry afterEntry = configMap.get(an);
+                
+                if(afterEntry == null)
+                    throw new BrutosException("not found: " + an.getName());
+                
+                afterEntry.getNextAnnotationConfig().add(ace);
+            }
+            
+            if(after.length == 0)
+                root.add(ace);
+        }
+        
+        if(config == null)
+            throw new BrutosException("not found: @" + org.brandao.brutos.annotation.Configuration.class.getName());
+        
+        printConfigurationRoute(logger, config);
+        return config.getAnnotationConfig();
+    }
+
+    protected static Map<Class,AnnotationConfigEntry> getAnnotationConfigEntry(
+            ConfigurableApplicationContext applicationContext, List<Class> list){
+        Map<Class,AnnotationConfigEntry> map = 
+                new HashMap<Class,AnnotationConfigEntry>();
+
+        for(Class clazz: list){
+            
+            if(!clazz.isAnnotationPresent(Stereotype.class) || 
+               !AnnotationConfig.class.isAssignableFrom(clazz))
+                continue;
+            
+            Stereotype st = 
+                    (Stereotype) clazz.getAnnotation(Stereotype.class);
+            
+            AnnotationConfigEntry current = map.get(st.target());
+            AnnotationConfigEntry newConfig = getAnnotationConfig(applicationContext, st, clazz);
+            
+            if(current != null){
+                boolean override = 
+                    newConfig.getStereotype().majorVersion() > current.getStereotype().majorVersion() ||
+                    (newConfig.getStereotype().majorVersion() == current.getStereotype().majorVersion() &&
+                    newConfig.getStereotype().minorVersion() > current.getStereotype().minorVersion());
+                if( override )
+                    map.put(st.target(), newConfig);
+            }
+            else
+                map.put(st.target(), newConfig);
+        }
+        
+        return map;
+    }
+    
+    protected static AnnotationConfigEntry getAnnotationConfig(ConfigurableApplicationContext applicationContext, 
+            Stereotype stereotype, Class clazz) {
+        
+        try{
+            AnnotationConfig ac = (AnnotationConfig) ClassUtil.getInstance(clazz);
+            ac.setApplicationContext(applicationContext);
+            AnnotationConfigEntry r = new AnnotationConfigEntry();
+            r.setAnnotationConfig(ac);
+            ac.setConfiguration(r);
+            r.setStereotype(stereotype);
+            r.setNextAnnotationConfig(new LinkedList<AnnotationConfigEntry>());
+
+            Class<?> sourceConverterClass = stereotype.sourceConverter();
+            
+            if(sourceConverterClass != Converter.class){
+                Converter valueConverter = 
+                        (Converter)ClassUtil.getInstance(sourceConverterClass);
+                ac.setSourceConverter(valueConverter);
+            }
+            
+            return r;
+        }
+        catch( Exception e ){
+            throw new BrutosException(e);
+        }
+    }
+
+    private static void printConfigurationRoute(Logger logger, AnnotationConfigEntry root){
+        nextPart(logger, root, new StringBuilder());
+    }
+    
+    private static void nextPart(Logger logger, AnnotationConfigEntry entry, StringBuilder prefix){
+        
+        prefix.append(entry.getStereotype().target().getSimpleName());
+        
+        for(AnnotationConfigEntry next: entry.getNextAnnotationConfig()){
+            String node =
+                entry.getStereotype().target().getSimpleName() +
+                " -> " +
+                next.getStereotype().target().getSimpleName();
+            
+            if(prefix.indexOf(node) != -1)
+                continue;
+            
+            nextPart(logger, next,new StringBuilder(prefix).append(" -> "));
+        }
+        
+        if(entry.getNextAnnotationConfig().isEmpty())
+            logger.info("route config detected: " + prefix);
+    }
+    
+    public static Scanner createScanner(
+            ConfigurationEntry configuration, 
+            org.brandao.brutos.annotation.scanner.TypeFilter[] defaultFilters){
+        
+        Scanner scanner;
+        try{
+            String scannerClassName = configuration.getScannerClassName();
+            scanner = 
+                StringUtil.isEmpty(scannerClassName)? 
+                    new DefaultScanner() : 
+                    (org.brandao.brutos.annotation.scanner.Scanner)ClassUtil.getInstance(scannerClassName);
+        }
+        catch(Throwable e){
+            throw new BrutosException("failed to create scanner instance", e);
+        }
+                
+        List<String> basePackage = configuration.getBasePackage();
+        
+        scanner.setBasePackage(basePackage.toArray(new String[]{}));
+        
+        if(configuration.isUseDefaultfilter()){
+            org.brandao.brutos.annotation.scanner.TypeFilter[] filters = defaultFilters;
+            for(org.brandao.brutos.annotation.scanner.TypeFilter filter: filters){
+                scanner.addIncludeFilter(filter);
+            }
+        }
+        
+        List<FilterEntity> excludeFilter = configuration.getExcludeFilters();
+        
+        if(excludeFilter != null){
+            for(FilterEntity filterDef: excludeFilter){
+                List<org.brandao.brutos.annotation.scanner.TypeFilter> filter = 
+                    getTypeFilter(filterDef.getExpression(), filterDef.getType());
+                for(org.brandao.brutos.annotation.scanner.TypeFilter t: filter){
+                    scanner.addExcludeFilter(t);
+                }
+            }
+        }
+        
+        List<FilterEntity> includeFilter = configuration.getIncludeFilters();
+
+        if(includeFilter != null){
+            for(FilterEntity filterDef: includeFilter){
+                List<org.brandao.brutos.annotation.scanner.TypeFilter> filter = 
+                    getTypeFilter(filterDef.getExpression(), filterDef.getType());
+                for(org.brandao.brutos.annotation.scanner.TypeFilter t: filter){
+                    scanner.addIncludeFilter(t);
+                }
+            }
+        }
+        
+        return scanner;
+    }
+    
+    public static List<org.brandao.brutos.annotation.scanner.TypeFilter> 
+        getTypeFilter(List<String> expression, String type){
+        try{
+            List<String> classNames = getFilterClassName(expression, type);
+            List<org.brandao.brutos.annotation.scanner.TypeFilter> filterList = 
+                    new ArrayList<org.brandao.brutos.annotation.scanner.TypeFilter>();
+            for(String cn: classNames){
+                Class scannerFilterClass = ClassUtil.get(cn);
+                org.brandao.brutos.annotation.scanner.TypeFilter filter = 
+                        (org.brandao.brutos.annotation.scanner.TypeFilter)
+                        ClassUtil.getInstance(scannerFilterClass);
+                filter.setExpression(expression);
+                filterList.add(filter);
+            }
+            return filterList;
+        }
+        catch (Throwable ex) {
+                throw new BrutosException(
+                    "can't initialize the scanner: " + type,ex);
+        }
+    }
+    
+    public static ConfigurationEntry createDefaultConfiguration(){
+        ConfigurationEntry config = new ConfigurationEntry();
+        config.setUseDefaultfilter(true);
+        config.setBasePackage(Arrays.asList(new String[]{""}));
+        return config;
+    }
+    
+    private static List<String> getFilterClassName(List<String> expression, String type){
+        if(XMLBrutosConstants.XML_BRUTOS_CUSTOM_FILTER.equals(type))
+            return expression;
+        else{
+            String name = 
+                type.length() > 1?
+                Character.toUpperCase(type.charAt(0)) + type.substring(1) :
+                type;
+            return Arrays.asList(
+                new String[]{
+                    "org.brandao.brutos.annotation.scanner.filter." + name + "TypeFilter"});
+        }
+    }
+    
+    public static FilterEntity toFilterEntity(TypeFilter typeFilter){
+        String type = typeFilter.type().getName();
+        List<String> expression;
+
+        if(typeFilter.type() == FilterType.REGEX)
+            expression = Arrays.asList(typeFilter.pattern());
+        else{
+            expression = new ArrayList<String>();
+            for(Class c: typeFilter.value())
+                expression.add(c.getName());
+        }
+
+        return new FilterEntity(type, expression);
+    }
 }

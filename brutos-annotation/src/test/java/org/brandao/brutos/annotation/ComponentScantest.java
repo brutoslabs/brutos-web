@@ -15,31 +15,26 @@
  * limitations under the License.
  */
 
+
 package org.brandao.brutos.annotation;
+
+import org.brandao.brutos.ConfigurableApplicationContext;
 
 /**
  *
  * @author Brandao
  */
-public enum FilterType {
+public class ComponentScanTest 
+    extends AbstractWebAnnotationApplicationContextTest{
     
-    ANNOTATION("annotation"),
-    
-    ASSIGNABLE_TYPE("assignable"),
-
-    REGEX("regex"),
-    
-    CUSTOM("custom");
-    
-    private String name;
-
-    FilterType(String name) {
-        this.name = name;
+    public void test1(){
+        String content ="";
+        content +="<ns1:component-scan base-package=\"org.brandao.brutos.helper\">";
+        content +="        <ns1:exclude-filter type=\"regex\" expression=\".*InterceptorController$\"/>";
+        content +="        <ns1:exclude-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Intercepts\"/>";
+        content +="</ns1:component-scan>";
+        
+        ConfigurableApplicationContext context = this.getApplication(content);
     }
-
-    public String getName() {
-        return name;
-    }
-    
     
 }

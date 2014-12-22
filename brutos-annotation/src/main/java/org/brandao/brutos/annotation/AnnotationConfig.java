@@ -47,6 +47,11 @@ public interface AnnotationConfig {
      * Define a configuração.
      */
     void setConfiguration(AnnotationConfigEntry annotation);
+
+    /**
+     * Obtém a configuração.
+     */
+    AnnotationConfigEntry getConfiguration();
     
     /**
      * Verifica se o recurso vai ser aplicado à entidade.

@@ -17,20 +17,10 @@
 
 package org.brandao.brutos.annotation.web;
 
-import java.util.List;
-import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.ComponentConfigurer;
-import org.brandao.brutos.annotation.scanner.DefaultScanner;
-import org.brandao.brutos.annotation.scanner.Scanner;
-import org.brandao.brutos.annotation.scanner.TypeFilter;
-import org.brandao.brutos.annotation.scanner.filter.ControllerFilter;
-import org.brandao.brutos.annotation.scanner.filter.InterceptorFilter;
-import org.brandao.brutos.annotation.scanner.filter.TypeTypeFilter;
-import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.xml.FilterEntity;
+import org.brandao.brutos.annotation.configuration.AnnotationUtil;
 import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 
 /**
@@ -40,92 +30,20 @@ import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 public class AnnotationDefinitionReader 
     extends XMLComponentDefinitionReader {
 
-    private static final TypeFilter[] DEFAULT_FILTERS =
-            new TypeFilter[]{
-                new ControllerFilter(),
-                new InterceptorFilter(),
-                new TypeTypeFilter()
-            };
-    private ComponentConfigurer componentConfigurer;
+    private ConfigurableApplicationContext applicationContext;
     
-    private Scanner scanner;
-
     public AnnotationDefinitionReader(ConfigurableApplicationContext applicationContext, 
             ComponentRegistry componentRegistry) {
         super(componentRegistry);
-        this.componentConfigurer = new ComponentConfigurer(applicationContext);
-        this.scanner             = null;
+        this.applicationContext = applicationContext;
     }
 
     public void loadDefinitions(){
-        this.localConfig();
-        this.scanner.scan();
-        this.componentConfigurer.setComponentList(scanner.getClassList());
-        this.componentConfigurer.init(this.componentRegistry);
+        ComponentConfigurer componentConfigurer = 
+                new ComponentConfigurer(applicationContext);
+        componentConfigurer.setConfiguration(AnnotationUtil.createDefaultConfiguration());
+        componentConfigurer.init(this.componentRegistry);
     }
     
-    private void localConfig(){
-        
-        try{
-            String scannerClassName = super.getScannerClassName();
-            this.scanner = 
-                StringUtil.isEmpty(scannerClassName)? 
-                    new DefaultScanner() : 
-                    (Scanner)ClassUtil.getInstance(scannerClassName);
-        }
-        catch(Throwable e){
-            throw new BrutosException("failed to create scanner instance", e);
-        }
-                
-        String[] basePackage = super.getBasePackage();
-        
-        this.scanner.setBasePackage(basePackage);
-        
-        if(super.isUseDefaultfilter()){
-            TypeFilter[] filters = loadDefaultFilters();
-            for(TypeFilter filter: filters){
-                this.scanner.addIncludeFilter(filter);
-            }
-        }
-        
-        List<FilterEntity> excludeFilter = super.getExcludeFilters();
-        
-        if(excludeFilter != null){
-            for(FilterEntity filterDef: excludeFilter){
-                TypeFilter filter = 
-                    getTypeFilter(filterDef.getExpression(), filterDef.getClassName());
-                this.scanner.addExcludeFilter(filter);
-            }
-        }
-        
-        List<FilterEntity> includeFilter = super.getIncludeFilters();
-
-        if(includeFilter != null){
-            for(FilterEntity filterDef: includeFilter){
-                TypeFilter filter = 
-                    getTypeFilter(filterDef.getExpression(), filterDef.getClassName());
-                this.scanner.addIncludeFilter(filter);
-            }
-        }
-        
-    }
-    
-    protected TypeFilter[] loadDefaultFilters(){
-        return DEFAULT_FILTERS;
-    }
-    
-    private TypeFilter getTypeFilter(String expression, String className){
-        try{
-            Class scannerFilterClass;
-            scannerFilterClass = ClassUtil.get(className);
-            TypeFilter filter = (TypeFilter)ClassUtil.getInstance(scannerFilterClass);
-            filter.setExpression(expression);
-            return filter;
-        }
-        catch (Throwable ex) {
-                throw new BrutosException(
-                    "can't initialize the scanner: " + className,ex);
-        }
-    }
 
 }

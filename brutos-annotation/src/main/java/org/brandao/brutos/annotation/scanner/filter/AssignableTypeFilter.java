@@ -17,6 +17,8 @@
 
 package org.brandao.brutos.annotation.scanner.filter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
@@ -29,26 +31,30 @@ import org.brandao.brutos.scanner.vfs.Vfs;
  */
 public class AssignableTypeFilter implements TypeFilter{
 
-    private Class expected;
+    private List<Class> expected;
     
-    public void setConfiguration(Properties config) {
-    }
-
     public boolean accepts(String resource) {
         try{
             resource = Vfs.toClass(resource);
             Class clazz = ClassUtil.get(resource);
-            return expected.isAssignableFrom(clazz);
+            for(Class c: expected){
+                return c.isAssignableFrom(clazz);
+            }
+            
+            return false;
         }
         catch(ClassNotFoundException e){
             throw new BrutosException(e);
         }
     }
 
-    public void setExpression(String value) {
+    public void setExpression(List<String> value) {
         try{
-            this.expected =
-                ClassUtil.get(value);
+            this.expected = new ArrayList<Class>();
+            
+            for(String name: value)
+                this.expected.add(ClassUtil.get(name));
+            
         }
         catch(ClassNotFoundException e){
             throw new BrutosException(e);

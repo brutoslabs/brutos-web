@@ -29,11 +29,13 @@ import org.brandao.brutos.annotation.scanner.Scanner;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ComponentScan {
     
-    String[] basePackage();
+    Class[] basePackage() default {};
     
-    TypeFilter[] includeFilters();
+    String[] value() default {};
     
-    TypeFilter[] excludeFilters();
+    TypeFilter[] includeFilters() default {};
+    
+    TypeFilter[] excludeFilters() default {};
     
     boolean useDefaultFilters() default true;
     

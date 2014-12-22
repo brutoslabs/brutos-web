@@ -22,6 +22,8 @@ import java.util.List;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.ComponentRegistry;
+import org.brandao.brutos.annotation.configuration.AnnotationUtil;
+import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
 
 /**
  * Classe que permite a configuração de uma aplicação usando 
@@ -40,8 +42,6 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     
     private Class[] configClass;
     
-    private ComponentConfigurer componentConfigurer;
-
     /**
      * Cria uma nova aplicação.
      */
@@ -74,7 +74,6 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
             this.checkOnlyComponenetClass(clazz);
         
         this.allClazz = clazz;
-        this.componentConfigurer = new ComponentConfigurer(this);
     }
 
     /**
@@ -110,12 +109,22 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     
     @Override
     protected void loadDefinitions(ComponentRegistry registry) {
-        this.componentConfigurer
-                .setComponentList(
-                        allClazz == null? 
-                            Arrays.asList(this.configClass) : 
-                            Arrays.asList(this.allClazz));
-        this.componentConfigurer.init(registry);
+        ComponentConfigurer componentConfigurer = 
+                new ComponentConfigurer(this);
+        
+        ConfigurationEntry configurationEntry = new ConfigurationEntry();
+        
+        if(this.allClazz != null)
+            configurationEntry.setAllClazz(Arrays.asList(this.allClazz));
+        
+        if(this.configClass != null)
+            configurationEntry.setConfigClass(Arrays.asList(this.configClass));
+        
+        configurationEntry.setBasePackage(Arrays.asList(new String[]{""}));
+        
+        componentConfigurer.setConfiguration(configurationEntry);
+        
+        componentConfigurer.init(registry);
     }
     
 }
