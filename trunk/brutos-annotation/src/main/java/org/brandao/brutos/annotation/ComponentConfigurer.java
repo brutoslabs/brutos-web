@@ -68,7 +68,8 @@ public class ComponentConfigurer {
 
             Scanner scanner = 
                     AnnotationUtil.createScanner(startConfig, null);
-
+            scanner.scan();
+            
             List<Class> configurationClass = this.configuration.getConfigClass();
             if(configurationClass == null){
                 configurationClass = scanner.getClassList();

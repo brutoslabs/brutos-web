@@ -17,10 +17,12 @@
 
 package org.brandao.brutos.annotation.web;
 
+import java.util.Arrays;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.ComponentConfigurer;
 import org.brandao.brutos.annotation.configuration.AnnotationUtil;
+import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
 import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 
 /**
@@ -41,7 +43,15 @@ public class AnnotationDefinitionReader
     public void loadDefinitions(){
         ComponentConfigurer componentConfigurer = 
                 new ComponentConfigurer(applicationContext);
-        componentConfigurer.setConfiguration(AnnotationUtil.createDefaultConfiguration());
+        
+        ConfigurationEntry config = new ConfigurationEntry();
+        config.setBasePackage(Arrays.asList(super.getBasePackage()));
+        config.setExcludeFilters(super.getExcludeFilters());
+        config.setIncludeFilters(super.getIncludeFilters());
+        config.setScannerClassName(super.getScannerClassName());
+        config.setUseDefaultfilter(super.isUseDefaultfilter());
+        
+        componentConfigurer.setConfiguration(config);
         componentConfigurer.init(this.componentRegistry);
     }
     

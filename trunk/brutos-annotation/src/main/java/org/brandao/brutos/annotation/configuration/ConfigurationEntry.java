@@ -19,12 +19,11 @@
 package org.brandao.brutos.annotation.configuration;
 
 import java.util.List;
-import java.util.Set;
 import org.brandao.brutos.xml.FilterEntity;
 
 /**
  *
- * @author Cliente
+ * @author Brandao
  */
 public class ConfigurationEntry {
     
