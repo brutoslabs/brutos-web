@@ -19,59 +19,22 @@ package org.brandao.brutos.annotation.configuration;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.brandao.brutos.BrutosException;
-import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.annotation.*;
-import org.brandao.brutos.annotation.configuration.converters.InterceptorStackConverter;
-import org.brandao.brutos.annotation.scanner.Scanner;
-import org.brandao.brutos.annotation.scanner.filter.ControllerFilter;
-import org.brandao.brutos.annotation.scanner.filter.InterceptorFilter;
-import org.brandao.brutos.annotation.scanner.filter.TypeTypeFilter;
-import org.brandao.brutos.xml.FilterEntity;
+import org.brandao.brutos.annotation.configuration.converters.ConfigurationEntryConverter;
 
 /**
  *
  * @author Brandao
  */
 @Stereotype(target=Configuration.class, 
-        sourceConverter=InterceptorStackConverter.class)
+        sourceConverter=ConfigurationEntryConverter.class)
 public class RootAnnotationConfig extends AbstractAnnotationConfig{
 
-    public static final org.brandao.brutos.annotation.scanner.TypeFilter[] DEFAULT_FILTERS =
-            new org.brandao.brutos.annotation.scanner.TypeFilter[]{
-                new ControllerFilter(),
-                new InterceptorFilter(),
-                new TypeTypeFilter()
-            };
-    
-    private static final List<Class> defaultAnnotationConfig = new ArrayList<Class>();
-    
-    static{
-        //defaultAnnotationConfig.add(RootAnnotationConfig.class);
-        defaultAnnotationConfig.add(ActionAnnotationConfig.class);
-        defaultAnnotationConfig.add(InterceptsStackAnnotationConfig.class);
-        defaultAnnotationConfig.add(BeanAnnotationConfig.class);
-        defaultAnnotationConfig.add(KeyCollectionAnnotationConfig.class);
-        defaultAnnotationConfig.add(ElementCollectionAnnotationConfig.class);
-        defaultAnnotationConfig.add(ControllerAnnotationConfig.class);
-        defaultAnnotationConfig.add(InterceptedByAnnotationConfig.class);
-        defaultAnnotationConfig.add(InterceptsAnnotationConfig.class);
-        defaultAnnotationConfig.add(RestrictionAnnotationConfig.class);
-        defaultAnnotationConfig.add(RestrictionsAnnotationConfig.class);
-        defaultAnnotationConfig.add(ThrowSafeAnnotationConfig.class);
-        defaultAnnotationConfig.add(ThrowSafeListAnnotationConfig.class);
-        defaultAnnotationConfig.add(TypeDefAnnotationConfig.class);
-        defaultAnnotationConfig.add(IdentifyAnnotationConfig.class);
-        defaultAnnotationConfig.add(ExtendedScopeAnnotationConfig.class);
-    }
-    
     public boolean isApplicable(Object source) {
         return true;
     }
@@ -92,23 +55,19 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
             ComponentRegistry componentRegistry) 
             throws InstantiationException, IllegalAccessException {
         
-        ConfigurationEntry startConfig = (ConfigurationEntry)source;
+        List<Object> entityList = (List<Object>)source;
+        List<Class> classList = new ArrayList<Class>();
         
-        List<Class> classList = 
-            startConfig.getAllClazz() != null && !startConfig.getAllClazz().isEmpty()?
-                startConfig.getAllClazz() :
-                this.loadConfiguration(
-                        startConfig, 
-                        componentRegistry, 
-                        startConfig.getConfigClass());
-        
-        classList.addAll(defaultAnnotationConfig);
+        for(Object o: entityList){
+            if(o instanceof Class)
+                classList.add((Class)o);
+        }
         
         AnnotationUtil
                 .createAnnotationTree(
                         this,
                         this.applicationContext, 
-                        Arrays.asList( new Class[]{RootAnnotationConfig.class}));
+                        classList);
         
         Map<Class,AnnotationConfigEntry> map = new HashMap<Class,AnnotationConfigEntry>();
 
@@ -141,84 +100,6 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
             InterceptsStack.class,
             Controller.class};
     }
-    
-    private List<Class> loadConfiguration(
-            ConfigurationEntry startConfig,
-            ComponentRegistry componentRegistry, List<Class> configurationClassList) 
-            throws InstantiationException, IllegalAccessException{
-        
-        Set<Class> allClass = new HashSet<Class>();
-        
-        Scanner scanner = AnnotationUtil.createScanner(startConfig, DEFAULT_FILTERS);
-        
-        allClass.addAll(scanner.getClassList());
-        
-        if(configurationClassList == null)
-            return new ArrayList<Class>();
-        
-        for(Class clazz: configurationClassList){
-            
-            if(clazz.isAnnotationPresent(ComponentScan.class)){
-                ComponentScan componentScan = 
-                        (ComponentScan) clazz.getAnnotation(ComponentScan.class);
-
-                ConfigurationEntry configurationEntry = 
-                        createConfigurationEntry(componentScan);
-
-                scanner = AnnotationUtil.createScanner(configurationEntry, DEFAULT_FILTERS);
-                allClass.addAll(scanner.getClassList());
-            }
-            
-            if(Configurer.class.isAssignableFrom(clazz)){
-                Configurer configurer = 
-                        (Configurer) ClassUtil.getInstance(clazz);
-                
-                configurer.addScopes(componentRegistry);
-                configurer.addTypes(componentRegistry);
-                configurer.addInterceptors(componentRegistry);
-                configurer.addControllers(componentRegistry);
-            }
-            
-        }
-        
-        return new ArrayList<Class>(allClass);
-    }
-    
-    private ConfigurationEntry createConfigurationEntry(ComponentScan componentScan){
-        
-        Class[] basePackageClass = componentScan.basePackage();
-        String[] basePackage = componentScan.value();
-        TypeFilter[] excludeFilter = componentScan.excludeFilters();
-        TypeFilter[] includeFilters = componentScan.includeFilters();
-        boolean useDefaultFilters = componentScan.useDefaultFilters();
-        Class scannerClass = componentScan.scanner();
-
-        ConfigurationEntry result = new ConfigurationEntry();
-        result.setUseDefaultfilter(useDefaultFilters);
-        result.setScannerClassName(scannerClass == Scanner.class? null : scannerClass.getName());
-        
-        List<String> basePackageList = new ArrayList<String>();
-        
-        for(Class c: basePackageClass)
-            basePackageList.add(c.getPackage().getName());
-        
-        basePackageList.addAll(Arrays.asList(basePackage));
-        
-        result.setBasePackage(basePackageList);
-        
-        List<FilterEntity> excludeFilterList = new ArrayList<FilterEntity>();
-        result.setExcludeFilters(excludeFilterList);
-        for(TypeFilter e: excludeFilter){
-            excludeFilterList.add(AnnotationUtil.toFilterEntity(e));
-        }
-
-        List<FilterEntity> includeFilterslist = new ArrayList<FilterEntity>();
-        result.setIncludeFilters(includeFilterslist);
-        for(TypeFilter e: includeFilters){
-            includeFilterslist.add(AnnotationUtil.toFilterEntity(e));
-        }
-        
-        return result;
-    }
+   
     
 }

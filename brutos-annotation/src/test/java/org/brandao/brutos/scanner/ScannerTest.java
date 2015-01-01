@@ -29,7 +29,7 @@ import org.brandao.brutos.helper.controller.Test2Controller;
  */
 public class ScannerTest extends AbstractWebAnnotationApplicationContextTest{
     
-    public void test1(){
+    public void testApp1(){
         String content ="";
         content +="<ns1:component-scan base-package=\"org.brandao.brutos.helper\">";
         content +="        <ns1:exclude-filter type=\"regex\" expression=\".*InterceptorController$\"/>";
@@ -125,6 +125,20 @@ public class ScannerTest extends AbstractWebAnnotationApplicationContextTest{
         content +="<ns1:component-scan base-package=\"org.brandao.brutos.helper\" use-default-filters=\"false\">";
         content +="        <ns1:exclude-filter type=\"regex\" expression=\".*Test2.*\"/>";
         content +="        <ns1:include-filter type=\"regex\" expression=\".*Controller$\"/>";
+        content +="</ns1:component-scan>";
+        ConfigurableApplicationContext applicationContext = 
+                super.getApplication(content);
+        
+        Assert.assertNotNull(
+            applicationContext.getControllerManager().getController(TestController.class));
+        Assert.assertNull(
+            applicationContext.getControllerManager().getController(Test2Controller.class));
+    }
+
+    public void test9(){
+        String content = "";
+        content +="<ns1:component-scan base-package=\"org.brandao.brutos.helper\" use-default-filters=\"false\">";
+        content +="        <ns1:include-filter type=\"assignable\" expression=\"java.io.Serializable\"/>";
         content +="</ns1:component-scan>";
         ConfigurableApplicationContext applicationContext = 
                 super.getApplication(content);

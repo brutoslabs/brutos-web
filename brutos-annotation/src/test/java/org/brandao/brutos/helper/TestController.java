@@ -17,10 +17,12 @@
 
 package org.brandao.brutos.helper;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Brandao
  */
-public class TestController {
+public class TestController implements Serializable{
     
 }

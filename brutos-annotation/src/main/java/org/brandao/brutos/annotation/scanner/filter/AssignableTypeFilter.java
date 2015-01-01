@@ -19,7 +19,6 @@ package org.brandao.brutos.annotation.scanner.filter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.scanner.TypeFilter;
