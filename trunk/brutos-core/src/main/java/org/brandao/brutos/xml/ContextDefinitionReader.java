@@ -201,7 +201,7 @@ public class ContextDefinitionReader
             excludeFilters.add(
                     new FilterEntity(type, 
                            Arrays.asList( 
-                                expression.split(BrutosConstants.COMMA))));
+                                StringUtil.getArray(expression, BrutosConstants.COMMA))));
         }
         
         list = parseUtil.getElements(element, "include-filter");
@@ -213,7 +213,7 @@ public class ContextDefinitionReader
             includeFilters.add(
                     new FilterEntity(type, 
                            Arrays.asList( 
-                                expression.split(BrutosConstants.COMMA))));
+                                StringUtil.getArray(expression, BrutosConstants.COMMA))));
         }
         
     }
