@@ -375,7 +375,10 @@ public class AnnotationUtil {
                 
         List<String> basePackage = configuration.getBasePackage();
         
-        scanner.setBasePackage(basePackage.toArray(new String[]{}));
+        scanner.setBasePackage(
+            basePackage == null || basePackage.isEmpty()? 
+                new String[]{""} : 
+                basePackage.toArray(new String[]{}));
         
         if(configuration.isUseDefaultfilter()){
             org.brandao.brutos.annotation.scanner.TypeFilter[] filters = defaultFilters;

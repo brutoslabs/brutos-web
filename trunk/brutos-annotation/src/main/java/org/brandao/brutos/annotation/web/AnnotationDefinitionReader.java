@@ -21,8 +21,8 @@ import java.util.Arrays;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.ComponentConfigurer;
-import org.brandao.brutos.annotation.configuration.AnnotationUtil;
 import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
+import org.brandao.brutos.xml.ScannerEntity;
 import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 
 /**
@@ -45,13 +45,19 @@ public class AnnotationDefinitionReader
                 new ComponentConfigurer(applicationContext);
         
         ConfigurationEntry config = new ConfigurationEntry();
-        config.setBasePackage(Arrays.asList(super.getBasePackage()));
-        config.setExcludeFilters(super.getExcludeFilters());
-        config.setIncludeFilters(super.getIncludeFilters());
-        config.setScannerClassName(super.getScannerClassName());
-        config.setUseDefaultfilter(super.isUseDefaultfilter());
-        
-        componentConfigurer.setConfiguration(config);
+        if(this.getScannerEntity() != null){
+            ScannerEntity scannerEntity = super.getScannerEntity();
+            config.setBasePackage(Arrays.asList(scannerEntity.getBasePackage()));
+            config.setExcludeFilters(scannerEntity.getExcludeFilters());
+            config.setIncludeFilters(scannerEntity.getIncludeFilters());
+            config.setScannerClassName(scannerEntity.getScannerClassName());
+            config.setUseDefaultfilter(scannerEntity.isUseDefaultfilter());
+            config.setCreateBaseScanner(true);
+            componentConfigurer.setConfiguration(config);
+        }
+        else
+            config.setCreateBaseScanner(false);
+
         componentConfigurer.init(this.componentRegistry);
     }
     

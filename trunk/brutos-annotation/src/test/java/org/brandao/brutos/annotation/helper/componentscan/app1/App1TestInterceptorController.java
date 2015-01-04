@@ -15,24 +15,21 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.helper.componentscan.app1;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import org.brandao.brutos.interceptor.AbstractInterceptor;
+import org.brandao.brutos.interceptor.InterceptedException;
+import org.brandao.brutos.interceptor.InterceptorHandler;
+import org.brandao.brutos.interceptor.InterceptorStack;
 
 /**
  *
  * @author Brandao
  */
-@java.lang.annotation.Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface TypeFilter {
-    
-    FilterType type();
-    
-    String[] pattern() default {};
-    
-    Class[] value() default {};
+public class App1TestInterceptorController extends AbstractInterceptor{
+
+    public void intercepted(InterceptorStack stack, 
+            InterceptorHandler handler) throws InterceptedException {
+    }
     
 }

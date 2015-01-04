@@ -15,24 +15,24 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+package org.brandao.brutos.annotation.helper.componentscan.app7;
+
+import org.brandao.brutos.annotation.ComponentScan;
+import org.brandao.brutos.annotation.Configuration;
+import org.brandao.brutos.annotation.FilterType;
+import org.brandao.brutos.annotation.TypeFilter;
 
 /**
  *
  * @author Brandao
  */
-@java.lang.annotation.Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface TypeFilter {
-    
-    FilterType type();
-    
-    String[] pattern() default {};
-    
-    Class[] value() default {};
+@Configuration
+@ComponentScan(
+    basePackage = App7Configuration.class,
+    useDefaultFilters = false,
+    includeFilters = 
+        @TypeFilter(value = App7TestController.class,type = FilterType.ASSIGNABLE_TYPE))
+public class App7Configuration {
     
 }

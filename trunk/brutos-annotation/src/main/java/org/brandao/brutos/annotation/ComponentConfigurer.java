@@ -71,6 +71,7 @@ public class ComponentConfigurer {
             scanner.scan();
             
             List<Class> configurationClass = this.configuration.getConfigClass();
+            
             if(configurationClass == null){
                 configurationClass = scanner.getClassList();
                 this.configuration.setConfigClass(configurationClass);
