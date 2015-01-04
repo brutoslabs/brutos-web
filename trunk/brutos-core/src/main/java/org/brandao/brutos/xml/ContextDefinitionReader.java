@@ -41,26 +41,13 @@ public class ContextDefinitionReader
 
     private final XMLParseUtil parseUtil;
 
-    private String scannerClassName;
-    
-    private String[] basePackage;
-    
-    private boolean useDefaultfilter;
-    
-    private List excludeFilters;
-    
-    private List includeFilters;
+    private ScannerEntity scannerEntity;
     
     protected Element rootElement;
     
     public ContextDefinitionReader(ComponentRegistry componenetRegistry){
         super(componenetRegistry);
-        this.scannerClassName = null;
         this.parseUtil = new XMLParseUtil(XMLBrutosConstants.XML_BRUTOS_CONTEXT_NAMESPACE);
-        this.useDefaultfilter = true;
-        this.excludeFilters = new ArrayList();
-        this.includeFilters = new ArrayList();
-        this.basePackage = new String[]{""};
     }
     
     public void loadDefinitions(Resource resource) {
@@ -175,24 +162,30 @@ public class ContextDefinitionReader
         
         if(element == null)
             return;
-        
-        if(this.getScannerClassName() != null)
+
+        if(this.scannerEntity != null)
             throw new BrutosException("scanner has been defined");
+
+        this.scannerEntity = new ScannerEntity();
             
-        this.setScannerClassName(element.getAttribute("scanner-class"));
+        this.scannerEntity.setScannerClassName(element.getAttribute("scanner-class"));
                 
         String basePackageText = element.getAttribute("base-package");
         
-        this.setBasePackage(
+        this.scannerEntity.setBasePackage(
                 StringUtil.isEmpty(basePackageText)?
                     new String[]{""} :
                 StringUtil.getArray(basePackageText, BrutosConstants.COMMA)
         );
         
-        this.setUseDefaultfilter(
+        this.scannerEntity.setUseDefaultfilter(
                 "true".equals(element.getAttribute("use-default-filters")));
         
         NodeList list = parseUtil.getElements(element, "exclude-filter");
+        
+        List excludeFilters = new ArrayList();
+        
+        this.scannerEntity.setExcludeFilters(excludeFilters);
         
         for(int i=0;i<list.getLength();i++){
             Element filterNode = (Element)list.item(i);
@@ -206,6 +199,10 @@ public class ContextDefinitionReader
         
         list = parseUtil.getElements(element, "include-filter");
         
+        List includeFilters = new ArrayList();
+        
+        this.scannerEntity.setIncludeFilters(includeFilters);
+        
         for(int i=0;i<list.getLength();i++){
             Element filterNode = (Element)list.item(i);
             String expression = filterNode.getAttribute("expression");
@@ -218,44 +215,12 @@ public class ContextDefinitionReader
         
     }
     
-    public String getScannerClassName() {
-        return scannerClassName;
+    public ScannerEntity getScannerEntity() {
+        return scannerEntity;
     }
 
-    public void setScannerClassName(String scannerClassName) {
-        this.scannerClassName = scannerClassName;
-    }
-
-    public String[] getBasePackage() {
-        return basePackage;
-    }
-
-    public void setBasePackage(String[] basePackage) {
-        this.basePackage = basePackage;
-    }
-
-    public boolean isUseDefaultfilter() {
-        return useDefaultfilter;
-    }
-
-    public void setUseDefaultfilter(boolean useDefaultfilter) {
-        this.useDefaultfilter = useDefaultfilter;
-    }
-
-    public List getExcludeFilters() {
-        return excludeFilters;
-    }
-
-    public void setExcludeFilters(List excludeFilters) {
-        this.excludeFilters = excludeFilters;
-    }
-
-    public List getIncludeFilters() {
-        return includeFilters;
-    }
-
-    public void setIncludeFilters(List includeFilters) {
-        this.includeFilters = includeFilters;
+    public void setScannerEntity(ScannerEntity scannerEntity) {
+        this.scannerEntity = scannerEntity;
     }
     
 }
