@@ -15,24 +15,13 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
+package org.brandao.brutos.annotation.helper.componentscan.app8;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import org.brandao.brutos.annotation.helper.componentscan.app7.*;
 
 /**
  *
- * @author Brandao
+ * @author Cliente
  */
-@java.lang.annotation.Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface TypeFilter {
-    
-    FilterType type();
-    
-    String[] pattern() default {};
-    
-    Class[] value() default {};
-    
+public class App8TestController {
 }

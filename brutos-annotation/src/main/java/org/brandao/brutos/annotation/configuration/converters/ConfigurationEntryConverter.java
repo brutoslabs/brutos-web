@@ -114,10 +114,13 @@ public class ConfigurationEntryConverter extends InterceptorStackConverter{
             throws InstantiationException, IllegalAccessException{
         
         Set<Class> allClass = new HashSet<Class>();
+        Scanner scanner;
         
-        Scanner scanner = AnnotationUtil.createScanner(startConfig, DEFAULT_FILTERS);
-        scanner.scan();
-        allClass.addAll(scanner.getClassList());
+        if(startConfig.isCreateBaseScanner()){
+            scanner = AnnotationUtil.createScanner(startConfig, DEFAULT_FILTERS);
+            scanner.scan();
+            allClass.addAll(scanner.getClassList());
+        }
         
         if(configurationClassList == null)
             return new ArrayList<Class>();

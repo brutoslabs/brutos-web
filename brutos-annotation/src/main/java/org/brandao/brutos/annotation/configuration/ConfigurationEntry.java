@@ -41,6 +41,8 @@ public class ConfigurationEntry {
 
     private boolean useDefaultfilter;
     
+    private boolean createBaseScanner;
+    
     public List<String> getBasePackage() {
         return basePackage;
     }
@@ -89,18 +91,20 @@ public class ConfigurationEntry {
         this.configClass = configClass;
     }
 
-    /**
-     * @return the useDefaultfilter
-     */
     public boolean isUseDefaultfilter() {
         return useDefaultfilter;
     }
 
-    /**
-     * @param useDefaultfilter the useDefaultfilter to set
-     */
     public void setUseDefaultfilter(boolean useDefaultfilter) {
         this.useDefaultfilter = useDefaultfilter;
+    }
+
+    public boolean isCreateBaseScanner() {
+        return createBaseScanner;
+    }
+
+    public void setCreateBaseScanner(boolean createBaseScanner) {
+        this.createBaseScanner = createBaseScanner;
     }
 
 }
