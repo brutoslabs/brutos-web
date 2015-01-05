@@ -103,6 +103,9 @@ public class ConfigurationEntryConverter extends InterceptorStackConverter{
 
             return super.converter(classList, componentRegistry);
         }
+        catch(BrutosException e){
+            throw e;
+        }
         catch(Throwable e){
             throw new BrutosException(e);
         }
