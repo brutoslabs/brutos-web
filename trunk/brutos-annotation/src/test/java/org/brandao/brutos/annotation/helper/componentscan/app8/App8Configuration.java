@@ -20,8 +20,6 @@ package org.brandao.brutos.annotation.helper.componentscan.app8;
 
 import org.brandao.brutos.annotation.ComponentScan;
 import org.brandao.brutos.annotation.Configuration;
-import org.brandao.brutos.annotation.FilterType;
-import org.brandao.brutos.annotation.TypeFilter;
 
 /**
  *
@@ -31,8 +29,7 @@ import org.brandao.brutos.annotation.TypeFilter;
 @ComponentScan(
     basePackage = App8Configuration.class,
     useDefaultFilters = false,
-    includeFilters = 
-        @TypeFilter(value = App8TestController.class,type = FilterType.ASSIGNABLE_TYPE))
+    scanner = CustomScanner.class)
 public class App8Configuration {
     
 }

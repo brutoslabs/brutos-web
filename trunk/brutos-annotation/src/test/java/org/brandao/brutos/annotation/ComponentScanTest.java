@@ -19,6 +19,7 @@
 package org.brandao.brutos.annotation;
 
 import junit.framework.Assert;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.helper.componentscan.app1.App1TestController;
 import org.brandao.brutos.annotation.helper.componentscan.app2.App2TestController;
@@ -123,6 +124,26 @@ public class ComponentScanTest
         
         Assert.assertNotNull(
             context.getControllerManager().getController(App7TestController.class));
+        
+    }
+
+    public void testApp8(){
+        String content =
+        "<ns1:component-scan use-default-filters=\"false\" "
+        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app8\"/>";
+        
+        try{
+            this.getApplication(content);
+            Assert.fail("Expected BrutosException");
+        }
+        catch(BrutosException e){
+            if(!"CustomScanner".equals(e.getCause().getMessage()))
+                Assert.fail("Expected BrutosException");
+        }
+        catch(Throwable e){
+            Assert.fail("Expected BrutosException");
+        }
+        
         
     }
     
