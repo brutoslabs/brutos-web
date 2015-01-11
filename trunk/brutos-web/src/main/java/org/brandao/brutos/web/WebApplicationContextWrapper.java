@@ -149,9 +149,11 @@ public class WebApplicationContextWrapper
         applicationContext.setCodeGenerator(codeGenerator);
     }
 
-    @Override
     protected void loadDefinitions(ComponentRegistry registry) {
         throw new UnsupportedOperationException();
     }
 
+    public void flush(){
+        this.applicationContext.flush();
+    }
 }
