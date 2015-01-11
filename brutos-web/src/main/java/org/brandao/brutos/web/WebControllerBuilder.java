@@ -51,11 +51,14 @@ public class WebControllerBuilder extends ControllerBuilder{
         if(!ActionType.PARAMETER.equals(type))
             WebUtil.checkURI(id, true);
         
-        WebUtil.checkURI(view, false);
         
-        return
+        ActionBuilder builder =
             super.addAction(id, resultId, resultRendered, view, 
             dispatcher, resolvedView, executor);
+        
+        WebUtil.checkURI(builder.getView(), false);
+        
+        return builder;
     }
     
 }
