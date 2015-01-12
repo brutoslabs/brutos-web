@@ -130,7 +130,7 @@ public class JSR303Validator implements Validator{
 
     protected void throwException(Set constraintViolations) throws ValidatorException{
         
-        if(constraintViolations.isEmpty()){
+        if(!constraintViolations.isEmpty()){
             Object[] cvs = constraintViolations.toArray(new Object[]{});
             
             ValidatorException ex = new ValidatorException();
