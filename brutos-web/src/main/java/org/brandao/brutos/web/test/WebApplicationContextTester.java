@@ -26,15 +26,11 @@ import com.mockrunner.mock.web.MockServletContext;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpSessionEvent;
-import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.test.MockObjectFactory;
-import org.brandao.brutos.test.MockRenderView;
-import org.brandao.brutos.validator.DefaultValidatorFactory;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
@@ -46,7 +42,7 @@ import org.brandao.brutos.web.DispatcherServlet;
  */
 public class WebApplicationContextTester {
     
-    public static void run(
+    public synchronized static void run(
             String uri, 
             WebApplicationTester tester) throws ServletException, IOException{
         
@@ -90,13 +86,20 @@ public class WebApplicationContextTester {
                 config.setServletContext(servletContext);
                 servlet.init(config);
                 servlet.service(request, response);
-                tester.checkResult(request, response, servletContext);
+                tester.checkResult(
+                        request, 
+                        response, 
+                        servletContext, 
+                        (ConfigurableWebApplicationContext) ContextLoader.getCurrentWebApplicationContext());
             }
             finally{
                 servlet.destroy();
                 listener.requestDestroyed(sre);
                 listener.sessionDestroyed(hse);
             }
+        }
+        catch(BrutosException e){
+            tester.checkException(e);
         }
         finally{
             listener.contextDestroyed(sce);
