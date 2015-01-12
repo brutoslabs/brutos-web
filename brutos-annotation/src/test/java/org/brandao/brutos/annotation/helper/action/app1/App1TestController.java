@@ -36,8 +36,7 @@ import org.brandao.brutos.annotation.View;
                 @View(
                         value = "/test06.jsp", 
                         resolved = true, 
-                        dispatcher = DispatcherType.REDIRECT,
-                        rendered = false))
+                        dispatcher = DispatcherType.REDIRECT))
 })
 @Action(value ="/test03",view = @View("test03"))
 public class App1TestController {
