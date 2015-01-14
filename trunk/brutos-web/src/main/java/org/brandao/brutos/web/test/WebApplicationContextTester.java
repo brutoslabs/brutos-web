@@ -42,9 +42,102 @@ import org.brandao.brutos.web.DispatcherServlet;
  */
 public class WebApplicationContextTester {
     
-    public synchronized static void run(
+    public static void run(
             String uri, 
-            WebApplicationTester tester) throws ServletException, IOException{
+            WebApplicationTester tester, String complement) throws Throwable{
+        run(uri, tester, null, complement);
+    }
+    
+    public static void run(
+            String uri, 
+            WebApplicationTester tester,Class[] clazz) throws Throwable{
+        run(uri, tester, clazz, null);
+    }
+
+    public static void run(
+            String uri, 
+            WebApplicationTester tester, Class[] clazz, String complement) throws Throwable{
+        run(uri, tester, clazz, complement, null, null);
+    }
+
+    public static void run(
+            String uri, 
+            WebApplicationTester tester,
+            Class basePackage) throws Throwable{
+        
+            run(
+                uri, 
+                tester,
+                null, null, null, basePackage);
+    }
+    
+    public static void run(
+            String uri, 
+            WebApplicationTester tester,
+            Class[] clazz, String complement, Class[] types, Class basePackage) throws Throwable{
+        
+        String xml = "";
+        xml +="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+        xml +="<ns2:controllers";
+        xml +="    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'";
+        xml +="    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'";
+        xml +="    xmlns:ns1='http://www.brutosframework.com.br/schema/context'";
+        xml +="    xsi:schemaLocation='";
+        xml +="    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd";
+        xml +="    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>";
+        
+        if(basePackage != null){
+            xml += "<ns1:component-scan use-default-filters=\"false\" base-package=\"" + basePackage.getPackage().getName() + "\"/>";
+        }
+        else
+        if(clazz != null){
+            xml +="<ns1:component-scan use-default-filters=\"false\">";
+
+            for(Class c: clazz){
+                xml +="        <ns1:include-filter type=\"regex\" expression=\""+c.getName().replace(".","\\.")+"\"/>";
+            }
+
+            xml +="</ns1:component-scan>";
+        }
+        
+        if(types != null){
+            xml += "<ns1:types>";
+            for(Class type: types){
+                xml += "<ns1:type factory=\"" + type.getName() + "\"/>";
+            }
+            xml += "</ns1:types>";
+        }
+
+        if(complement != null)
+            xml += complement;
+        
+        xml +="</ns2:controllers>";
+            
+        Map<String,String> requestParams = new HashMap<String,String>();
+        Map<String,String> contextParams = new HashMap<String,String>();
+        contextParams.put(MockXMLWebApplicationContext.XML_CONTENT, xml);
+        run(
+            uri, 
+            tester,
+            contextParams,
+            requestParams);
+    }
+
+    public static void run(
+            String uri, 
+            WebApplicationTester tester) throws Throwable{
+        run(
+            uri, 
+            tester,
+            new HashMap<String,String>(),
+            new HashMap<String,String>());
+    }
+    
+    private synchronized static void run(
+            String uri, 
+            WebApplicationTester tester,
+            Map<String,String> contextParams,
+            Map<String,String> requestParams) throws Throwable{
         
         MockServletContext servletContext = new MockServletContext();
         ServletContextEvent sce = new ServletContextEvent( servletContext );
@@ -54,8 +147,6 @@ public class WebApplicationContextTester {
         servletContext.setInitParameter(ContextLoader.CONTEXT_CLASS,
                 MockXMLWebApplicationContext.class.getName());
 
-        Map<String,String> contextParams = new HashMap<String,String>();
-        
         tester.prepareContext(contextParams);
         
         for(String key: contextParams.keySet())
@@ -76,7 +167,6 @@ public class WebApplicationContextTester {
                 listener.requestInitialized(sre);
                 listener.sessionCreated(hse);
                 
-                Map<String,String> requestParams = new HashMap<String,String>();
                 tester.prepareRequest(requestParams);
                 
                 for(String key: requestParams.keySet())
