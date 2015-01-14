@@ -59,5 +59,10 @@ public class App1TestController {
     public String test4(){
         return "result4";
     }
+
+    @Action("/test0006")
+    public String test6Action(){
+        return "result006";
+    }
     
 }
