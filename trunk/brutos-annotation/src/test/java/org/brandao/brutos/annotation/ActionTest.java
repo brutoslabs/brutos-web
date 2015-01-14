@@ -25,7 +25,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.annotation.helper.action.app1.App1TestController;
+import org.brandao.brutos.annotation.helper.action.fail.Fail2TestController;
+import org.brandao.brutos.annotation.helper.action.fail.Fail3TestController;
+import org.brandao.brutos.annotation.helper.action.fail.Fail4TestController;
+import org.brandao.brutos.annotation.helper.action.fail.FailTestController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
@@ -37,9 +43,9 @@ import org.brandao.brutos.web.test.WebApplicationTester;
  *
  * @author Brandao
  */
-public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
+public class ActionTest extends TestCase {
     
-    public void test1() throws ServletException, IOException{
+    public void test1() throws Throwable{
         final String xmlContent = 
                 "<ns2:controllers\n" +
                 "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
@@ -91,7 +97,7 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
             });
     }
     
-    public void test2() throws ServletException, IOException{
+    public void test2() throws Throwable{
         final String xmlContent = 
                 "<ns2:controllers\n" +
                 "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
@@ -143,7 +149,7 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
             });
     }
 
-    public void test3() throws ServletException, IOException{
+    public void test3() throws Throwable{
         final String xmlContent = 
                 "<ns2:controllers\n" +
                 "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
@@ -195,7 +201,7 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
             });
     }
 
-    public void test4() throws ServletException, IOException{
+    public void test4() throws Throwable{
         final String xmlContent = 
                 "<ns2:controllers\n" +
                 "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
@@ -247,7 +253,7 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
             });
     }
 
-    public void test5() throws ServletException, IOException{
+    public void test5() throws Throwable{
         final String xmlContent = 
                 "<ns2:controllers\n" +
                 "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
@@ -299,7 +305,7 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
             });
     }
 
-    public void test6() throws ServletException, IOException{
+    public void test6() throws Throwable{
         final String xmlContent = 
                 "<ns2:controllers\n" +
                 "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
@@ -351,7 +357,7 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
             });
     }
 
-    public void test7() throws ServletException, IOException{
+    public void test7() throws Throwable{
         final String xmlContent = 
                 "<ns2:controllers\n" +
                 "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
@@ -403,7 +409,7 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
             });
     }
 
-    public void test8() throws ServletException, IOException{
+    public void test8() throws Throwable{
         final String xmlContent = 
                 "<ns2:controllers\n" +
                 "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
@@ -455,7 +461,7 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
             });
     }
 
-    public void test9() throws ServletException, IOException{
+    public void test9() throws Throwable{
         final String xmlContent = 
                 "<ns2:controllers\n" +
                 "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
@@ -507,18 +513,7 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
             });
     }
 
-    public void test10() throws ServletException, IOException{
-        final String xmlContent = 
-                "<ns2:controllers\n" +
-                "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
-                "    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'\n" +
-                "    xmlns:ns1='http://www.brutosframework.com.br/schema/context'\n" +
-                "    xsi:schemaLocation='\n" +
-                "    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd\n" +
-                "    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>\n" +
-                "<ns1:component-scan use-default-filters=\"false\" base-package=\"org.brandao.brutos.annotation.helper.action.app2\"/>\n" +
-                "</ns2:controllers>";
-        
+    public void test10() throws Throwable{
         WebApplicationContextTester.run(
             "", 
             new WebApplicationTester(){
@@ -534,9 +529,37 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
                             "true"
                     );
                     
+                }
+                
+                public void checkException(Throwable e) {
+                    Assert.assertNotNull(e);
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+            },
+            new Class[]{FailTestController.class});
+    }
+
+    public void test11() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester(){
+
+                public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
-                            MockAnnotationWebApplicationContext.XML_CONTENT,
-                            xmlContent
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+                    
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
                     );
                     
                 }
@@ -552,7 +575,112 @@ public class ActionTest extends AbstractWebAnnotationApplicationContextTest{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     Assert.fail();
                 }
-            });
+            },
+            new Class[]{Fail2TestController.class});
+    }
+
+    public void test12() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester(){
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+                    
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+                
+                public void checkException(Throwable e) {
+                    Assert.assertNotNull(e);
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+            },
+            new Class[]{Fail3TestController.class});
+    }
+
+    public void test13() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester(){
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+                    
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+                
+                public void checkException(Throwable e) {
+                    Assert.assertNotNull(e);
+                    Assert.assertEquals("invalid action id", e.getMessage());
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+            },
+            new Class[]{Fail4TestController.class});
+    }
+
+    public void test14() throws Throwable{
+        WebApplicationContextTester.run(
+            "/App1Test/test0006", 
+            new WebApplicationTester(){
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    
+                    MockRenderView renderView = (MockRenderView) applicationContext.getRenderView();
+
+                    Assert.assertEquals("result006", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
+                }
+
+                public void checkException(Throwable e) throws Throwable{
+                    throw e;
+                }
+            },
+            new Class[]{App1TestController.class});
     }
     
 }

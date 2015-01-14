@@ -52,7 +52,8 @@ public class ComponentConfigurer {
     
     public void init(ComponentRegistry componentRegistry){
         
-        if(this.configuration.getAllClazz() == null || this.configuration.getAllClazz().isEmpty()){
+        if(this.configuration.isUseDefaultfilter() && 
+           (this.configuration.getAllClazz() == null || this.configuration.getAllClazz().isEmpty())){
             ConfigurationEntry startConfig = new ConfigurationEntry();
 
             startConfig.setBasePackage(this.configuration.getBasePackage());

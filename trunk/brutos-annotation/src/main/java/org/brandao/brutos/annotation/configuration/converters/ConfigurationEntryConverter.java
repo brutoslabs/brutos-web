@@ -126,7 +126,7 @@ public class ConfigurationEntryConverter extends InterceptorStackConverter{
         }
         
         if(configurationClassList == null)
-            return new ArrayList<Class>();
+            return new ArrayList<Class>(allClass);
         
         for(Class clazz: configurationClassList){
             
