@@ -21,7 +21,10 @@ import java.util.Arrays;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.ComponentConfigurer;
+import org.brandao.brutos.annotation.Configuration;
+import org.brandao.brutos.annotation.FilterType;
 import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
+import org.brandao.brutos.xml.FilterEntity;
 import org.brandao.brutos.xml.ScannerEntity;
 import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 
@@ -45,6 +48,7 @@ public class AnnotationDefinitionReader
                 new ComponentConfigurer(applicationContext);
         
         ConfigurationEntry config = new ConfigurationEntry();
+        
         if(this.getScannerEntity() != null){
             ScannerEntity scannerEntity = super.getScannerEntity();
             config.setBasePackage(Arrays.asList(scannerEntity.getBasePackage()));
@@ -52,12 +56,21 @@ public class AnnotationDefinitionReader
             config.setIncludeFilters(scannerEntity.getIncludeFilters());
             config.setScannerClassName(scannerEntity.getScannerClassName());
             config.setUseDefaultfilter(scannerEntity.isUseDefaultfilter());
-            config.setCreateBaseScanner(true);
-            componentConfigurer.setConfiguration(config);
         }
-        else
-            config.setCreateBaseScanner(false);
+        else{
+            config.setBasePackage(Arrays.asList(new String[]{""}));
+            config.setExcludeFilters(null);
+            config.setIncludeFilters(
+                Arrays.asList(
+                    new FilterEntity[]{
+                        new FilterEntity(
+                            FilterType.ANNOTATION.getName(), 
+                            Arrays.asList( new String[]{Configuration.class.getName()}))}));
+            config.setScannerClassName(null);
+            config.setUseDefaultfilter(false);
+        }
 
+        componentConfigurer.setConfiguration(config);
         componentConfigurer.init(this.componentRegistry);
     }
     

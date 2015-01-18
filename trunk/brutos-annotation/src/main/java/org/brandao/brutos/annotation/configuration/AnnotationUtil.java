@@ -471,4 +471,42 @@ public class AnnotationUtil {
 
         return new FilterEntity(type, expression);
     }
+    
+    public static ConfigurationEntry createConfigurationEntry(ComponentScan componentScan){
+        
+        Class[] basePackageClass = componentScan.basePackage();
+        String[] basePackage = componentScan.value();
+        TypeFilter[] excludeFilter = componentScan.excludeFilters();
+        TypeFilter[] includeFilters = componentScan.includeFilters();
+        boolean useDefaultFilters = componentScan.useDefaultFilters();
+        Class scannerClass = componentScan.scanner();
+
+        ConfigurationEntry result = new ConfigurationEntry();
+        result.setUseDefaultfilter(useDefaultFilters);
+        result.setScannerClassName(scannerClass == Scanner.class? null : scannerClass.getName());
+        
+        List<String> basePackageList = new ArrayList<String>();
+        
+        for(Class c: basePackageClass)
+            basePackageList.add(c.getPackage().getName());
+        
+        basePackageList.addAll(Arrays.asList(basePackage));
+        
+        result.setBasePackage(basePackageList);
+        
+        List<FilterEntity> excludeFilterList = new ArrayList<FilterEntity>();
+        result.setExcludeFilters(excludeFilterList);
+        for(TypeFilter e: excludeFilter){
+            excludeFilterList.add(AnnotationUtil.toFilterEntity(e));
+        }
+
+        List<FilterEntity> includeFilterslist = new ArrayList<FilterEntity>();
+        result.setIncludeFilters(includeFilterslist);
+        for(TypeFilter e: includeFilters){
+            includeFilterslist.add(AnnotationUtil.toFilterEntity(e));
+        }
+        
+        return result;
+    }
+    
 }

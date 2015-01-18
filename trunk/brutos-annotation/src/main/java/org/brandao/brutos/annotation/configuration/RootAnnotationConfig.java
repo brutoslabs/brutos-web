@@ -25,14 +25,14 @@ import java.util.Map;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.annotation.*;
-import org.brandao.brutos.annotation.configuration.converters.ConfigurationEntryConverter;
+import org.brandao.brutos.annotation.configuration.converters.InterceptorStackConverter;
 
 /**
  *
  * @author Brandao
  */
 @Stereotype(target=Configuration.class, 
-        sourceConverter=ConfigurationEntryConverter.class)
+        sourceConverter=InterceptorStackConverter.class)
 public class RootAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
@@ -56,18 +56,6 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
             throws InstantiationException, IllegalAccessException {
         
         List<Object> entityList = (List<Object>)source;
-        List<Class> classList = new ArrayList<Class>();
-        
-        for(Object o: entityList){
-            if(o instanceof Class)
-                classList.add((Class)o);
-        }
-        
-        AnnotationUtil
-                .createAnnotationTree(
-                        this,
-                        this.applicationContext, 
-                        classList);
         
         Map<Class,AnnotationConfigEntry> map = new HashMap<Class,AnnotationConfigEntry>();
 
@@ -83,7 +71,7 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
             
             AnnotationConfig ac = ace.getAnnotationConfig();
             
-            for(Object item: classList){
+            for(Object item: entityList){
                 if(ac.isApplicable(item))
                     ac.applyConfiguration(item, null, componentRegistry);
             }
