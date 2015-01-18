@@ -17,26 +17,78 @@
 
 package org.brandao.brutos.annotation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.configuration.AbstractAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.ActionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.AnnotationConfigEntry;
 import org.brandao.brutos.annotation.configuration.AnnotationUtil;
 import org.brandao.brutos.annotation.configuration.ApplyAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.BeanAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
+import org.brandao.brutos.annotation.configuration.ControllerAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.ElementCollectionAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.ExtendedScopeAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.IdentifyAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.InterceptedByAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.InterceptsAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.InterceptsStackAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.KeyCollectionAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.RestrictionAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.RestrictionsAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.RootAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.ThrowSafeAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.ThrowSafeListAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.TypeDefAnnotationConfig;
 import org.brandao.brutos.annotation.scanner.Scanner;
+import org.brandao.brutos.annotation.scanner.filter.ConfigurationTypeFilter;
+import org.brandao.brutos.annotation.scanner.filter.ControllerFilter;
+import org.brandao.brutos.annotation.scanner.filter.InterceptorFilter;
+import org.brandao.brutos.annotation.scanner.filter.StereotypeTypeFilter;
+import org.brandao.brutos.annotation.scanner.filter.TypeTypeFilter;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.xml.FilterEntity;
 
 /**
  *
  * @author Brandao
  */
 public class ComponentConfigurer {
+    
+    public static final org.brandao.brutos.annotation.scanner.TypeFilter[] DEFAULT_FILTERS =
+            new org.brandao.brutos.annotation.scanner.TypeFilter[]{
+                new StereotypeTypeFilter(),
+                new ConfigurationTypeFilter(),
+                new ControllerFilter(),
+                new InterceptorFilter(),
+                new TypeTypeFilter()
+            };
+    
+    private static final List<Class> defaultAnnotationConfig = new ArrayList<Class>();
+    
+    static{
+        //defaultAnnotationConfig.add(RootAnnotationConfig.class);
+        defaultAnnotationConfig.add(ActionAnnotationConfig.class);
+        defaultAnnotationConfig.add(InterceptsStackAnnotationConfig.class);
+        defaultAnnotationConfig.add(BeanAnnotationConfig.class);
+        defaultAnnotationConfig.add(KeyCollectionAnnotationConfig.class);
+        defaultAnnotationConfig.add(ElementCollectionAnnotationConfig.class);
+        defaultAnnotationConfig.add(ControllerAnnotationConfig.class);
+        defaultAnnotationConfig.add(InterceptedByAnnotationConfig.class);
+        defaultAnnotationConfig.add(InterceptsAnnotationConfig.class);
+        defaultAnnotationConfig.add(RestrictionAnnotationConfig.class);
+        defaultAnnotationConfig.add(RestrictionsAnnotationConfig.class);
+        defaultAnnotationConfig.add(ThrowSafeAnnotationConfig.class);
+        defaultAnnotationConfig.add(ThrowSafeListAnnotationConfig.class);
+        defaultAnnotationConfig.add(TypeDefAnnotationConfig.class);
+        defaultAnnotationConfig.add(IdentifyAnnotationConfig.class);
+        defaultAnnotationConfig.add(ExtendedScopeAnnotationConfig.class);
+    }
     
     private ConfigurationEntry configuration;
     
@@ -52,45 +104,48 @@ public class ComponentConfigurer {
     
     public void init(ComponentRegistry componentRegistry){
         
-        if(this.configuration.isUseDefaultfilter() && 
-           (this.configuration.getAllClazz() == null || this.configuration.getAllClazz().isEmpty())){
-            ConfigurationEntry startConfig = new ConfigurationEntry();
+        Set<Class> resultClassList = new HashSet<Class>();
+        Set<Class> firstClassList = new HashSet<Class>();
 
-            startConfig.setBasePackage(this.configuration.getBasePackage());
-            startConfig.setUseDefaultfilter(false);
-
-            FilterEntity filter = 
-                new FilterEntity(
-                        FilterType.ANNOTATION.getName(), 
-                        Arrays.asList(new String[]{Configuration.class.getName()}));
-
-            startConfig.setIncludeFilters(
-                Arrays.asList(new FilterEntity[]{filter}));
-
-            Scanner scanner = 
-                    AnnotationUtil.createScanner(startConfig, null);
-            scanner.scan();
+        for(Class clazz: defaultAnnotationConfig)
+            resultClassList.add(clazz);
+        
+        if(this.configuration.getConfigClass() == null)
+            this.loadClassList(this.configuration, firstClassList);
+        else{
+            for(Class clazz: this.configuration.getConfigClass())
+                firstClassList.add(clazz);
+        }
+        
+        resultClassList.addAll(firstClassList);
+        
+        for(Class clazz: firstClassList){
             
-            List<Class> configurationClass = this.configuration.getConfigClass();
+            if(!clazz.isAnnotationPresent(Configuration.class))
+                continue;
             
-            if(configurationClass == null){
-                configurationClass = scanner.getClassList();
-                this.configuration.setConfigClass(configurationClass);
+            if(clazz.isAnnotationPresent(ComponentScan.class)){
+                ComponentScan componentScan = 
+                        (ComponentScan) clazz.getAnnotation(ComponentScan.class);
+
+                ConfigurationEntry configurationEntry = 
+                        AnnotationUtil.createConfigurationEntry(componentScan);
+
+                this.loadClassList(configurationEntry, resultClassList);
             }
-            else
-                configurationClass.addAll(scanner.getClassList());
+            
         }
         
         AnnotationConfig rootAnnotationConfig = AnnotationUtil
                 .createAnnotationTree(
                         applicationContext, 
-                        Arrays.asList( new Class[]{RootAnnotationConfig.class}));
+                        this.configuration.getAllClazz());
                 
         
         AnnotationConfig init = 
                 new StartConfiguration((ApplyAnnotationConfig)rootAnnotationConfig);
         
-        init.applyConfiguration(this.configuration, null, componentRegistry);
+        init.applyConfiguration(new ArrayList<Object>(resultClassList), null, componentRegistry);
     }
     
     public ConfigurationEntry getConfiguration() {
@@ -99,6 +154,17 @@ public class ComponentConfigurer {
     
     public void setConfiguration(ConfigurationEntry configuration) {
         this.configuration = configuration;
+    }
+
+    private void loadClassList(ConfigurationEntry configurationEntry, Set<Class> classList){
+            Scanner scanner = 
+                    AnnotationUtil.createScanner(configurationEntry, DEFAULT_FILTERS);
+            scanner.scan();
+            
+            List<Class> tmplist = scanner.getClassList();
+            
+            for(Class clazz: tmplist)
+                classList.add(clazz);
     }
 
     private class StartConfiguration extends AbstractAnnotationConfig{
