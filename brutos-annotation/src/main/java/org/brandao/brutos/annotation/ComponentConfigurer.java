@@ -72,7 +72,7 @@ public class ComponentConfigurer {
     private static final List<Class> defaultAnnotationConfig = new ArrayList<Class>();
     
     static{
-        //defaultAnnotationConfig.add(RootAnnotationConfig.class);
+        defaultAnnotationConfig.add(RootAnnotationConfig.class);
         defaultAnnotationConfig.add(ActionAnnotationConfig.class);
         defaultAnnotationConfig.add(InterceptsStackAnnotationConfig.class);
         defaultAnnotationConfig.add(BeanAnnotationConfig.class);
@@ -136,16 +136,19 @@ public class ComponentConfigurer {
             
         }
         
+        List<Class> classList = new ArrayList<Class>(resultClassList);
+        List<Object> objectList = new ArrayList<Object>(resultClassList);
+        
         AnnotationConfig rootAnnotationConfig = AnnotationUtil
                 .createAnnotationTree(
                         applicationContext, 
-                        this.configuration.getAllClazz());
+                        classList);
                 
         
         AnnotationConfig init = 
                 new StartConfiguration((ApplyAnnotationConfig)rootAnnotationConfig);
         
-        init.applyConfiguration(new ArrayList<Object>(resultClassList), null, componentRegistry);
+        init.applyConfiguration(objectList, null, componentRegistry);
     }
     
     public ConfigurationEntry getConfiguration() {

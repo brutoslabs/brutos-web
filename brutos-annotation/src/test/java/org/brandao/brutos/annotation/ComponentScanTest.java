@@ -45,8 +45,10 @@ public class ComponentScanTest
 
     public void testApp1(){
         String content =
-        "<ns1:component-scan use-default-filters=\"false\" "
-        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app1\"/>";
+        "<ns1:component-scan use-default-filters=\"false\" \n"
+        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app1\"> \n"
+        + "<ns1:include-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Configuration\"/> \n"
+        + "</ns1:component-scan>";
         
         ConfigurableApplicationContext context = this.getApplication(content);
         
