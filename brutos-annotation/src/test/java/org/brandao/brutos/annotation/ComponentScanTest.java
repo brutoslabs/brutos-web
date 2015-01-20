@@ -59,8 +59,10 @@ public class ComponentScanTest
 
     public void testApp2(){
         String content =
-        "<ns1:component-scan use-default-filters=\"false\" "
-        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app2\"/>";
+        "<ns1:component-scan use-default-filters=\"false\" \n"
+        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app2\"> \n"
+        + "<ns1:include-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Configuration\"/> \n"
+        + "</ns1:component-scan>";
         
         ConfigurableApplicationContext context = this.getApplication(content);
         
@@ -71,8 +73,10 @@ public class ComponentScanTest
 
     public void testApp3(){
         String content =
-        "<ns1:component-scan use-default-filters=\"false\" "
-        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app3\"/>";
+        "<ns1:component-scan use-default-filters=\"false\" \n"
+        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app3\"> \n"
+        + "<ns1:include-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Configuration\"/> \n"
+        + "</ns1:component-scan>";
         
         ConfigurableApplicationContext context = this.getApplication(content);
         
@@ -83,8 +87,10 @@ public class ComponentScanTest
 
     public void testApp4(){
         String content =
-        "<ns1:component-scan use-default-filters=\"false\" "
-        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app4\"/>";
+        "<ns1:component-scan use-default-filters=\"false\" \n"
+        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app4\"> \n"
+        + "<ns1:include-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Configuration\"/> \n"
+        + "</ns1:component-scan>";
         
         ConfigurableApplicationContext context = this.getApplication(content);
         
@@ -95,8 +101,10 @@ public class ComponentScanTest
 
     public void testApp5(){
         String content =
-        "<ns1:component-scan use-default-filters=\"false\" "
-        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app5\"/>";
+        "<ns1:component-scan use-default-filters=\"false\" \n"
+        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app5\"> \n"
+        + "<ns1:include-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Configuration\"/> \n"
+        + "</ns1:component-scan>";
         
         ConfigurableApplicationContext context = this.getApplication(content);
         
@@ -107,8 +115,10 @@ public class ComponentScanTest
 
     public void testApp6(){
         String content =
-        "<ns1:component-scan use-default-filters=\"false\" "
-        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app6\"/>";
+        "<ns1:component-scan use-default-filters=\"false\" \n"
+        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app6\"> \n"
+        + "<ns1:include-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Configuration\"/> \n"
+        + "</ns1:component-scan>";
         
         ConfigurableApplicationContext context = this.getApplication(content);
         
@@ -119,8 +129,10 @@ public class ComponentScanTest
 
     public void testApp7(){
         String content =
-        "<ns1:component-scan use-default-filters=\"false\" "
-        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app7\"/>";
+        "<ns1:component-scan use-default-filters=\"false\" \n"
+        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app7\"> \n"
+        + "<ns1:include-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Configuration\"/> \n"
+        + "</ns1:component-scan>";
         
         ConfigurableApplicationContext context = this.getApplication(content);
         
@@ -131,8 +143,10 @@ public class ComponentScanTest
 
     public void testApp8(){
         String content =
-        "<ns1:component-scan use-default-filters=\"false\" "
-        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app8\"/>";
+        "<ns1:component-scan use-default-filters=\"false\" \n"
+        + "base-package=\"org.brandao.brutos.annotation.helper.componentscan.app8\"> \n"
+        + "<ns1:include-filter type=\"annotation\" expression=\"org.brandao.brutos.annotation.Configuration\"/> \n"
+        + "</ns1:component-scan>";
         
         try{
             this.getApplication(content);
