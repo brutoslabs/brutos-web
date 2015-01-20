@@ -18,10 +18,8 @@
 
 package org.brandao.brutos.annotation;
 
-import java.io.IOException;
 import java.util.Map;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
@@ -46,17 +44,6 @@ import org.brandao.brutos.web.test.WebApplicationTester;
 public class ActionTest extends TestCase {
     
     public void test1() throws Throwable{
-        final String xmlContent = 
-                "<ns2:controllers\n" +
-                "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
-                "    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'\n" +
-                "    xmlns:ns1='http://www.brutosframework.com.br/schema/context'\n" +
-                "    xsi:schemaLocation='\n" +
-                "    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd\n" +
-                "    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>\n" +
-                "<ns1:component-scan use-default-filters=\"false\" base-package=\"org.brandao.brutos.annotation.helper.action.app1\"/>\n" +
-                "</ns2:controllers>";
-        
         WebApplicationContextTester.run(
             "/App1Test/test1", 
             new WebApplicationTester(){
@@ -71,12 +58,6 @@ public class ActionTest extends TestCase {
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
                     );
-                    
-                    parameters.put(
-                            MockAnnotationWebApplicationContext.XML_CONTENT,
-                            xmlContent
-                    );
-                    
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
@@ -94,21 +75,11 @@ public class ActionTest extends TestCase {
 
                 public void checkException(Throwable e) {
                 }
-            });
+            },
+            new Class[]{App1TestController.class});
     }
     
     public void test2() throws Throwable{
-        final String xmlContent = 
-                "<ns2:controllers\n" +
-                "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
-                "    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'\n" +
-                "    xmlns:ns1='http://www.brutosframework.com.br/schema/context'\n" +
-                "    xsi:schemaLocation='\n" +
-                "    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd\n" +
-                "    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>\n" +
-                "<ns1:component-scan use-default-filters=\"false\" base-package=\"org.brandao.brutos.annotation.helper.action.app1\"/>\n" +
-                "</ns2:controllers>";
-        
         WebApplicationContextTester.run(
             "/App1Test/test2", 
             new WebApplicationTester(){
@@ -122,11 +93,6 @@ public class ActionTest extends TestCase {
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
-                    );
-                    
-                    parameters.put(
-                            MockAnnotationWebApplicationContext.XML_CONTENT,
-                            xmlContent
                     );
                     
                 }
@@ -146,21 +112,11 @@ public class ActionTest extends TestCase {
                 
                 public void checkException(Throwable e) {
                 }
-            });
+            },
+            new Class[]{App1TestController.class});
     }
 
     public void test3() throws Throwable{
-        final String xmlContent = 
-                "<ns2:controllers\n" +
-                "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
-                "    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'\n" +
-                "    xmlns:ns1='http://www.brutosframework.com.br/schema/context'\n" +
-                "    xsi:schemaLocation='\n" +
-                "    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd\n" +
-                "    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>\n" +
-                "<ns1:component-scan use-default-filters=\"false\" base-package=\"org.brandao.brutos.annotation.helper.action.app1\"/>\n" +
-                "</ns2:controllers>";
-        
         WebApplicationContextTester.run(
             "/App1Test/test00", 
             new WebApplicationTester(){
@@ -174,11 +130,6 @@ public class ActionTest extends TestCase {
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
-                    );
-                    
-                    parameters.put(
-                            MockAnnotationWebApplicationContext.XML_CONTENT,
-                            xmlContent
                     );
                     
                 }
@@ -198,21 +149,11 @@ public class ActionTest extends TestCase {
                     Assert.assertEquals("/WEB-INF/app1test/test3/index.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
-            });
+            },
+            new Class[]{App1TestController.class});
     }
 
     public void test4() throws Throwable{
-        final String xmlContent = 
-                "<ns2:controllers\n" +
-                "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
-                "    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'\n" +
-                "    xmlns:ns1='http://www.brutosframework.com.br/schema/context'\n" +
-                "    xsi:schemaLocation='\n" +
-                "    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd\n" +
-                "    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>\n" +
-                "<ns1:component-scan use-default-filters=\"false\" base-package=\"org.brandao.brutos.annotation.helper.action.app1\"/>\n" +
-                "</ns2:controllers>";
-        
         WebApplicationContextTester.run(
             "/App1Test/test01", 
             new WebApplicationTester(){
@@ -228,11 +169,6 @@ public class ActionTest extends TestCase {
                             "true"
                     );
                     
-                    parameters.put(
-                            MockAnnotationWebApplicationContext.XML_CONTENT,
-                            xmlContent
-                    );
-                    
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
@@ -250,21 +186,11 @@ public class ActionTest extends TestCase {
                     Assert.assertEquals("/WEB-INF/app1test/test4/index.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
-            });
+            },
+            new Class[]{App1TestController.class});
     }
 
     public void test5() throws Throwable{
-        final String xmlContent = 
-                "<ns2:controllers\n" +
-                "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
-                "    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'\n" +
-                "    xmlns:ns1='http://www.brutosframework.com.br/schema/context'\n" +
-                "    xsi:schemaLocation='\n" +
-                "    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd\n" +
-                "    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>\n" +
-                "<ns1:component-scan use-default-filters=\"false\" base-package=\"org.brandao.brutos.annotation.helper.action.app1\"/>\n" +
-                "</ns2:controllers>";
-        
         WebApplicationContextTester.run(
             "/App1Test/test02", 
             new WebApplicationTester(){
@@ -280,11 +206,6 @@ public class ActionTest extends TestCase {
                             "true"
                     );
                     
-                    parameters.put(
-                            MockAnnotationWebApplicationContext.XML_CONTENT,
-                            xmlContent
-                    );
-                    
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
@@ -302,21 +223,11 @@ public class ActionTest extends TestCase {
                     Assert.assertEquals("/WEB-INF/app1test/test4/index.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
-            });
+            },
+            new Class[]{App1TestController.class});
     }
 
     public void test6() throws Throwable{
-        final String xmlContent = 
-                "<ns2:controllers\n" +
-                "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
-                "    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'\n" +
-                "    xmlns:ns1='http://www.brutosframework.com.br/schema/context'\n" +
-                "    xsi:schemaLocation='\n" +
-                "    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd\n" +
-                "    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>\n" +
-                "<ns1:component-scan use-default-filters=\"false\" base-package=\"org.brandao.brutos.annotation.helper.action.app1\"/>\n" +
-                "</ns2:controllers>";
-        
         WebApplicationContextTester.run(
             "/App1Test/test04", 
             new WebApplicationTester(){
@@ -330,11 +241,6 @@ public class ActionTest extends TestCase {
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
-                    );
-                    
-                    parameters.put(
-                            MockAnnotationWebApplicationContext.XML_CONTENT,
-                            xmlContent
                     );
                     
                 }
@@ -354,21 +260,11 @@ public class ActionTest extends TestCase {
                     Assert.assertEquals("/WEB-INF/app1test/test04.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
-            });
+            },
+            new Class[]{App1TestController.class});
     }
 
     public void test7() throws Throwable{
-        final String xmlContent = 
-                "<ns2:controllers\n" +
-                "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
-                "    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'\n" +
-                "    xmlns:ns1='http://www.brutosframework.com.br/schema/context'\n" +
-                "    xsi:schemaLocation='\n" +
-                "    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd\n" +
-                "    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>\n" +
-                "<ns1:component-scan use-default-filters=\"false\" base-package=\"org.brandao.brutos.annotation.helper.action.app1\"/>\n" +
-                "</ns2:controllers>";
-        
         WebApplicationContextTester.run(
             "/App1Test/test05", 
             new WebApplicationTester(){
@@ -382,11 +278,6 @@ public class ActionTest extends TestCase {
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
-                    );
-                    
-                    parameters.put(
-                            MockAnnotationWebApplicationContext.XML_CONTENT,
-                            xmlContent
                     );
                     
                 }
@@ -406,21 +297,11 @@ public class ActionTest extends TestCase {
                     Assert.assertEquals("/test05.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
-            });
+            },
+            new Class[]{App1TestController.class});
     }
 
     public void test8() throws Throwable{
-        final String xmlContent = 
-                "<ns2:controllers\n" +
-                "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
-                "    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'\n" +
-                "    xmlns:ns1='http://www.brutosframework.com.br/schema/context'\n" +
-                "    xsi:schemaLocation='\n" +
-                "    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd\n" +
-                "    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>\n" +
-                "<ns1:component-scan use-default-filters=\"false\" base-package=\"org.brandao.brutos.annotation.helper.action.app1\"/>\n" +
-                "</ns2:controllers>";
-        
         WebApplicationContextTester.run(
             "/App1Test/test06", 
             new WebApplicationTester(){
@@ -434,11 +315,6 @@ public class ActionTest extends TestCase {
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
-                    );
-                    
-                    parameters.put(
-                            MockAnnotationWebApplicationContext.XML_CONTENT,
-                            xmlContent
                     );
                     
                 }
@@ -458,21 +334,11 @@ public class ActionTest extends TestCase {
                     Assert.assertEquals("/test06.jsp", renderView.getView());
                     Assert.assertEquals(org.brandao.brutos.DispatcherType.REDIRECT, renderView.getDispatcherType());
                 }
-            });
+            },
+            new Class[]{App1TestController.class});
     }
 
     public void test9() throws Throwable{
-        final String xmlContent = 
-                "<ns2:controllers\n" +
-                "    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'\n" +
-                "    xmlns:ns2='http://www.brutosframework.com.br/schema/controllers'\n" +
-                "    xmlns:ns1='http://www.brutosframework.com.br/schema/context'\n" +
-                "    xsi:schemaLocation='\n" +
-                "    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd\n" +
-                "    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd'>\n" +
-                "<ns1:component-scan use-default-filters=\"false\" base-package=\"org.brandao.brutos.annotation.helper.action.app1\"/>\n" +
-                "</ns2:controllers>";
-        
         WebApplicationContextTester.run(
             "/App1Test/test03", 
             new WebApplicationTester(){
@@ -486,11 +352,6 @@ public class ActionTest extends TestCase {
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
-                    );
-                    
-                    parameters.put(
-                            MockAnnotationWebApplicationContext.XML_CONTENT,
-                            xmlContent
                     );
                     
                 }
@@ -510,7 +371,8 @@ public class ActionTest extends TestCase {
                     Assert.assertEquals("/WEB-INF/app1test/test03.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
-            });
+            },
+            new Class[]{App1TestController.class});
     }
 
     public void test10() throws Throwable{
