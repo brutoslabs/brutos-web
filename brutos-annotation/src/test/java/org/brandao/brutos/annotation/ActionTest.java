@@ -29,6 +29,7 @@ import org.brandao.brutos.annotation.helper.action.app1.App1TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail2TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail3TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail4TestController;
+import org.brandao.brutos.annotation.helper.action.fail.Fail7TestController;
 import org.brandao.brutos.annotation.helper.action.fail.FailTestController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.test.MockRenderView;
@@ -544,5 +545,38 @@ public class ActionTest extends TestCase {
             },
             new Class[]{App1TestController.class});
     }
-    
+
+    public void test15() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester(){
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+                    
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+                
+                public void checkException(Throwable e) {
+                    Assert.assertNotNull(e);
+                    Assert.assertEquals("invalid action id", e.getMessage());
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+            },
+            new Class[]{Fail7TestController.class});
+    }    
 }
