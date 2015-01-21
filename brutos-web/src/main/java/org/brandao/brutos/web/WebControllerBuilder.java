@@ -40,7 +40,7 @@ public class WebControllerBuilder extends ControllerBuilder{
     
     public ControllerBuilder addAlias( String id ){
         WebUtil.checkURI(id,true);
-        return super.addAlias(WebUtil.fixURI(id));
+        return super.addAlias(id);
     }
     
     public ActionBuilder addAction( String id, String resultId, boolean resultRendered, String view, 
