@@ -49,15 +49,15 @@ import org.brandao.brutos.mapping.*;
  */
 public class ActionBuilder extends RestrictionBuilder{
     
-    private Controller controller;
+    protected Controller controller;
     
-    private Action action;
+    protected Action action;
     
-    private ValidatorFactory validatorFactory;
+    protected ValidatorFactory validatorFactory;
     
-    private ControllerBuilder controllerBuilder;
+    protected ControllerBuilder controllerBuilder;
     
-    private ConfigurableApplicationContext applicationContext;
+    protected ConfigurableApplicationContext applicationContext;
     
     public ActionBuilder( Action methodForm, 
             Controller controller, ValidatorFactory validatorFactory,
@@ -78,6 +78,15 @@ public class ActionBuilder extends RestrictionBuilder{
             throw new BrutosException("invalid alias");
         
         this.controller.addAction(value, action);
+    }
+
+    public void removeAlias(String value){
+        value = StringUtil.adjust(value);
+        
+        if( StringUtil.isEmpty(value) )
+            throw new BrutosException("invalid alias");
+        
+        this.controller.removeAction(value);
     }
     
 
