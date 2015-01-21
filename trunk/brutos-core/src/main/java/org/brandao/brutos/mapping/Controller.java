@@ -215,6 +215,10 @@ public class Controller {
         this.actions.put(id, method);
     }
 
+    public void removeAction(String id){
+        this.actions.remove(id);
+    }
+    
     Map getReverseMethods(){
         return reverseMethods;
     }
