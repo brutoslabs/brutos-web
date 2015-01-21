@@ -22,6 +22,7 @@ import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ActionType;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
@@ -51,4 +52,28 @@ public class WebActionBuilder extends ActionBuilder{
         super.addAlias(value);
     }
 
+    public ActionBuilder addThrowable( Class target, String view, 
+            String id, DispatcherType dispatcher, boolean resolvedView ){
+
+        ActionType type = this.controller.getActionType();
+        
+        if(!ActionType.PARAMETER.equals(type)){
+            WebUtil.checkURI(id, true);
+            
+            if(resolvedView)
+                WebUtil.checkURI(view, true);
+        }
+        return super.addThrowable(target, view, resolvedView, id, dispatcher);
+    }
+    
+    public ActionBuilder setView(String value){
+
+        ActionType type = this.controller.getActionType();
+        
+        if(!ActionType.PARAMETER.equals(type) && this.action.isResolvedView())
+            WebUtil.checkURI(value, true);
+        
+        return super.setView(value);
+    }
+    
 }
