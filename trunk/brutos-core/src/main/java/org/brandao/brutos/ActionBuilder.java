@@ -59,6 +59,11 @@ public class ActionBuilder extends RestrictionBuilder{
     
     protected ConfigurableApplicationContext applicationContext;
     
+    public ActionBuilder(ActionBuilder actionBuilder){
+        this(actionBuilder.action, actionBuilder.controller, 
+                actionBuilder.validatorFactory, actionBuilder.controllerBuilder, 
+                actionBuilder.applicationContext);
+    }
     public ActionBuilder( Action methodForm, 
             Controller controller, ValidatorFactory validatorFactory,
             ControllerBuilder controllerBuilder,
@@ -187,8 +192,21 @@ public class ActionBuilder extends RestrictionBuilder{
         return this.action.getName();
     }
     
-    public ActionBuilder setView(String value){
-        this.action.setView(value);
+    public ActionBuilder setView(String view, boolean resolvedView){
+        
+        view = 
+            resolvedView? 
+                view : 
+                applicationContext.
+                        getViewResolver()
+                        .getView(
+                                this.controllerBuilder, 
+                                this, 
+                                null, 
+                                view);
+        
+        this.action.setView(view);
+        this.action.setResolvedView(resolvedView);
         return this;
     }
     
