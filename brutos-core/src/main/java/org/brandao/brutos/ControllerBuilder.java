@@ -482,13 +482,6 @@ public class ControllerBuilder {
         if(id == null)
             throw new IllegalArgumentException("invalid action id: " + id);
         
-        /*
-        ActionType type = controller.getActionType();
-        
-        if(type.equals(ActionType.HIERARCHY))
-            id = controller.getId() + id;
-        */
-
         resultId = StringUtil.adjust(resultId);
 
         view = StringUtil.adjust(view);
@@ -515,20 +508,8 @@ public class ControllerBuilder {
                 .setDispatcherType(dispatcher)
                 .setExecutor(executor)
                 .setResult(resultId)
-                .setResultRendered(resultRendered);
-
-        view = 
-            resolvedView? 
-                view : 
-                applicationContext.
-                        getViewResolver()
-                        .getView(
-                                this, 
-                                actionBuilder, 
-                                null, 
-                                view);
-        
-        actionBuilder.setView(view);
+                .setResultRendered(resultRendered)
+                .setView(view, resolvedView);
         
         printCreateAction(action);
         
@@ -874,9 +855,22 @@ public class ControllerBuilder {
         return controller.getName();
     }
     
-    public ControllerBuilder setView(String value){
-        value = StringUtil.adjust(value);
-        controller.setView(value);
+    public ControllerBuilder setView(String view, boolean resolvedView){
+        view = StringUtil.adjust(view);
+        
+        view = 
+            resolvedView? 
+                view : 
+                applicationContext.
+                        getViewResolver()
+                        .getView(
+                                this, 
+                                null, 
+                                null, 
+                                view);
+        
+        controller.setView(view);
+        
         return this;
     }
 
