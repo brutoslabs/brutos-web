@@ -34,6 +34,10 @@ import org.brandao.brutos.web.util.WebUtil;
  */
 public class WebActionBuilder extends ActionBuilder{
     
+    public WebActionBuilder(ActionBuilder builder){
+        super(builder);
+    }
+    
     public WebActionBuilder( Action methodForm, 
             Controller controller, ValidatorFactory validatorFactory,
             ControllerBuilder controllerBuilder,
@@ -66,14 +70,14 @@ public class WebActionBuilder extends ActionBuilder{
         return super.addThrowable(target, view, resolvedView, id, dispatcher);
     }
     
-    public ActionBuilder setView(String value){
+    public ActionBuilder setView(String value, boolean viewResolved){
 
         ActionType type = this.controller.getActionType();
         
         if(!ActionType.PARAMETER.equals(type) && this.action.isResolvedView())
             WebUtil.checkURI(value, true);
         
-        return super.setView(value);
+        return super.setView(value, viewResolved);
     }
     
 }
