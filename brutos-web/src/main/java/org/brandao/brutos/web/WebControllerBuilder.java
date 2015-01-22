@@ -48,8 +48,12 @@ public class WebControllerBuilder extends ControllerBuilder{
         
         ActionType type = this.controller.getActionType();
         
-        if(!ActionType.PARAMETER.equals(type))
+        if(!ActionType.PARAMETER.equals(type)){
             WebUtil.checkURI(id, true);
+            
+            if(resolvedView)
+                WebUtil.checkURI(view, true);
+        }
         
         
         ActionBuilder builder =
@@ -58,7 +62,40 @@ public class WebControllerBuilder extends ControllerBuilder{
         
         WebUtil.checkURI(builder.getView(), false);
         
-        return builder;
+        return new WebActionBuilder(builder);
+    }
+    
+    public ControllerBuilder addThrowable( Class target, String view, String id, 
+            DispatcherType dispatcher, boolean resolvedView ){
+        
+        ActionType type = this.controller.getActionType();
+        
+        if(!ActionType.PARAMETER.equals(type)){
+            WebUtil.checkURI(id, true);
+            
+            if(resolvedView)
+                WebUtil.checkURI(view, true);
+        }
+
+        return super.addThrowable( target, view, id, dispatcher, resolvedView );
+    }
+    
+    public ControllerBuilder setDefaultAction( String id ){
+        WebUtil.checkURI(id,true);
+        return super.setDefaultAction(id);
+    }
+    
+    public ControllerBuilder setId(String value){
+        WebUtil.checkURI(value,true);
+        return super.setId(value);
+    }
+    
+    public ControllerBuilder setView(String value, boolean resolvedView){
+        
+        if(this.controller.isResolvedView())
+            WebUtil.checkURI(value,true);
+     
+        return super.setView(value, resolvedView);
     }
     
 }
