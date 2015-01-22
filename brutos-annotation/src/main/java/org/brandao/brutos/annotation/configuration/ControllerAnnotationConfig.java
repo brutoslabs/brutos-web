@@ -115,9 +115,9 @@ public class ControllerAnnotationConfig
                     throw new BrutosException("invalid controller id: " + source.getName());
             }
         }
-            
-        //builder.setView(view);
-        builder.setDefaultAction(defaultActionName);
+
+        if(defaultActionName != null)
+            builder.setDefaultAction(defaultActionName);
         
         super.applyInternalConfiguration(source, builder, componentRegistry);
 
