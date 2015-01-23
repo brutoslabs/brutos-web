@@ -76,22 +76,14 @@ public class ActionBuilder extends RestrictionBuilder{
         this.applicationContext = applicationContext;
     }
 
-    public void addAlias(String value){
-        value = StringUtil.adjust(value);
-        
-        if( StringUtil.isEmpty(value) )
-            throw new BrutosException("invalid alias");
-        
-        this.controller.addAction(value, action);
+    public ActionBuilder addAlias(String value){
+        this.controllerBuilder.addActionAlias(value, this);
+        return this;
     }
 
-    public void removeAlias(String value){
-        value = StringUtil.adjust(value);
-        
-        if( StringUtil.isEmpty(value) )
-            throw new BrutosException("invalid alias");
-        
-        this.controller.removeAction(value);
+    public ActionBuilder removeAlias(String value){
+        this.controllerBuilder.removeActionAlias(value, this);
+        return this;
     }
     
 

@@ -426,16 +426,10 @@ public class Action {
         this.parametersValidator = parametersValidator;
     }
 
-    /**
-     * @return the resultValidator
-     */
     public Validator getResultValidator() {
         return resultValidator;
     }
 
-    /**
-     * @param resultValidator the resultValidator to set
-     */
     public void setResultValidator(Validator resultValidator) {
         this.resultValidator = resultValidator;
     }

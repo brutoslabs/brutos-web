@@ -25,7 +25,6 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.type.UnknownTypeException;
 
 /**
@@ -516,6 +515,40 @@ public class ControllerBuilder {
         return actionBuilder;
     }
 
+    public ControllerBuilder addActionAlias(String id, ActionBuilder parent){
+        
+        id = StringUtil.adjust(id);
+        
+        if( StringUtil.isEmpty(id) )
+            throw new BrutosException("invalid alias");
+        
+        if( controller.getAction( id ) != null )
+            throw new BrutosException( "duplicate action " + id + ": " +
+                controller.getClassType().getName() );
+        
+        Action action = parent.action;
+        action.addAlias(id);
+        controller.addAction( id, parent.action );
+        
+        return this;
+    }
+    
+    public ControllerBuilder removeActionAlias(String id, ActionBuilder parent){
+        
+        id = StringUtil.adjust(id);
+        
+        if( StringUtil.isEmpty(id) )
+            throw new BrutosException("invalid alias");
+        
+        if(controller.getAction(id) == null || !controller.getAction(id).equals(parent.action))
+            throw new BrutosException( "invalid action " + id + ": " +
+                controller.getClassType().getName() );
+
+        
+        controller.removeAction(id);
+        return this;
+    }
+    
     /**
      * Define um novo interceptador do controlador. Se o interceptador for
      * definido como "default", ser� lan�ada uma exce��o. O interceptador dever�
