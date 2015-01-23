@@ -20,7 +20,6 @@ package org.brandao.brutos.web;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Action;
@@ -106,6 +105,7 @@ public class WebControllerResolver implements ControllerResolver{
                 updateRequest(uri, paramScope, uriMap);
                 return action;
             }
+            
         }
         
         return null;
