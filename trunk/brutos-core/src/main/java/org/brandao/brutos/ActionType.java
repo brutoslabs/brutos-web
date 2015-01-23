@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Descreve as estratégias de mapeamento da ação.
+ * Descreve as estratégias de mapeamento de ação.
  * 
  * @author Afonso Brandao
  */
