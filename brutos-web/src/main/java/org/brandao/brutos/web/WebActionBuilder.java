@@ -46,14 +46,14 @@ public class WebActionBuilder extends ActionBuilder{
                 controllerBuilder, applicationContext);
     }
     
-    public void addAlias(String value){
+    public ActionBuilder addAlias(String value){
         
         ActionType type = this.controller.getActionType();
         
         if(!ActionType.PARAMETER.equals(type))
             WebUtil.checkURI(value, true);
         
-        super.addAlias(value);
+        return super.addAlias(value);
     }
 
     public ActionBuilder addThrowable( Class target, String view, 
