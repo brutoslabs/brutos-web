@@ -478,8 +478,8 @@ public class ControllerBuilder {
         
         id = StringUtil.adjust(id);
         
-        if(id == null)
-            throw new IllegalArgumentException("invalid action id: " + id);
+        if(StringUtil.isEmpty(id))
+            throw new IllegalArgumentException("action id cannot be empty");
         
         resultId = StringUtil.adjust(resultId);
 
@@ -519,7 +519,7 @@ public class ControllerBuilder {
         id = StringUtil.adjust(id);
         
         if( StringUtil.isEmpty(id) )
-            throw new BrutosException("invalid alias");
+            throw new BrutosException("action id cannot be empty");
         
         if( controller.getAction( id ) != null )
             throw new BrutosException( "duplicate action " + id + ": " +
