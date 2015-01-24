@@ -232,13 +232,10 @@ public class ControllerAnnotationConfig
             all.add(action);
         
         for(Action act: all){
+            if(act.value().length == 0)
+                throw new BrutosException("action id cannot be empty");
+            
             for(String id: act.value()){
-                if(StringUtil.isEmpty(id))
-                    throw new BrutosException("invalid action: " + id);
-                
-                if(StringUtil.isEmpty(act.view().value()))
-                    throw new BrutosException("view must be informed: " + id);
-                
                 ActionEntry entry = 
                     new ActionEntry(
                         id,
