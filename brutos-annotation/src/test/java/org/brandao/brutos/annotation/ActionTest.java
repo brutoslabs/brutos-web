@@ -26,10 +26,13 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.helper.action.app1.App1TestController;
+import org.brandao.brutos.annotation.helper.action.fail.Fail10TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail2TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail3TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail4TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail7TestController;
+import org.brandao.brutos.annotation.helper.action.fail.Fail8TestController;
+import org.brandao.brutos.annotation.helper.action.fail.Fail9TestController;
 import org.brandao.brutos.annotation.helper.action.fail.FailTestController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.test.MockRenderView;
@@ -75,6 +78,7 @@ public class ActionTest extends TestCase {
                 }
 
                 public void checkException(Throwable e) {
+                    Assert.fail();
                 }
             },
             new Class[]{App1TestController.class});
@@ -112,6 +116,7 @@ public class ActionTest extends TestCase {
                 }
                 
                 public void checkException(Throwable e) {
+                    Assert.fail();
                 }
             },
             new Class[]{App1TestController.class});
@@ -139,6 +144,7 @@ public class ActionTest extends TestCase {
                 }
                 
                 public void checkException(Throwable e) {
+                    Assert.fail();
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -176,6 +182,7 @@ public class ActionTest extends TestCase {
                 }
                 
                 public void checkException(Throwable e) {
+                    Assert.fail();
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -213,6 +220,7 @@ public class ActionTest extends TestCase {
                 }
                 
                 public void checkException(Throwable e) {
+                    Assert.fail();
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -250,6 +258,7 @@ public class ActionTest extends TestCase {
                 }
                 
                 public void checkException(Throwable e) {
+                    Assert.fail();
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -287,6 +296,7 @@ public class ActionTest extends TestCase {
                 }
                 
                 public void checkException(Throwable e) {
+                    Assert.fail();
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -324,6 +334,7 @@ public class ActionTest extends TestCase {
                 }
                 
                 public void checkException(Throwable e) {
+                    Assert.fail();
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -361,6 +372,7 @@ public class ActionTest extends TestCase {
                 }
                 
                 public void checkException(Throwable e) {
+                    Assert.fail();
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -396,6 +408,13 @@ public class ActionTest extends TestCase {
                 
                 public void checkException(Throwable e) {
                     Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("view must be rendered in abstract actions: /test03"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {view must be rendered in abstract actions: /test03}");
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
@@ -429,6 +448,13 @@ public class ActionTest extends TestCase {
                 
                 public void checkException(Throwable e) {
                     Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("view must be informed in abstract actions: /test03"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {view must be informed in abstract actions: /test03}");
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
@@ -462,6 +488,13 @@ public class ActionTest extends TestCase {
                 
                 public void checkException(Throwable e) {
                     Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("view must be informed in abstract actions: /test03"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {view must be informed in abstract actions: /test03}");
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
@@ -495,7 +528,13 @@ public class ActionTest extends TestCase {
                 
                 public void checkException(Throwable e) {
                     Assert.assertNotNull(e);
-                    Assert.assertEquals("invalid action id", e.getMessage());
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("action id is required"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {action id is required}");
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
@@ -540,7 +579,7 @@ public class ActionTest extends TestCase {
                 }
 
                 public void checkException(Throwable e) throws Throwable{
-                    throw e;
+                    Assert.fail();
                 }
             },
             new Class[]{App1TestController.class});
@@ -566,7 +605,13 @@ public class ActionTest extends TestCase {
                 
                 public void checkException(Throwable e) {
                     Assert.assertNotNull(e);
-                    Assert.assertEquals("invalid action id", e.getMessage());
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("expected starts with \"/\": teste"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {expected starts with \"/\": teste}");
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
@@ -579,4 +624,126 @@ public class ActionTest extends TestCase {
             },
             new Class[]{Fail7TestController.class});
     }    
+    
+    public void test16() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester(){
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+                    
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+                
+                public void checkException(Throwable e) {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("duplicate action: /teste"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {duplicate action: /teste}");
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+            },
+            new Class[]{Fail8TestController.class});
+    }    
+
+    public void test17() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester(){
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+                    
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+                
+                public void checkException(Throwable e) {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("duplicate action: /teste"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {duplicate action: /teste}");
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+            },
+            new Class[]{Fail9TestController.class});
+    }    
+
+    public void test18() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester(){
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+                    
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+                
+                public void checkException(Throwable e) {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("expected starts with \"/\": teste00"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {duplicate action: /teste}");
+                    
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+            },
+            new Class[]{Fail10TestController.class});
+    }    
+    
 }
