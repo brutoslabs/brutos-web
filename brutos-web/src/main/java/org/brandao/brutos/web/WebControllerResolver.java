@@ -20,6 +20,7 @@ package org.brandao.brutos.web;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Action;
@@ -89,21 +90,21 @@ public class WebControllerResolver implements ControllerResolver{
     }
     
     private Action getAction(Controller controller, ActionType actionType, String uri, Scope paramScope){
-        Iterator actionsId = controller.getActions().values().iterator();
+        Map<String,Action> actions = controller.getActions();
+        Iterator<String> actionsId = actions.keySet().iterator();
         
         while(actionsId.hasNext()){
-            Action action = (Action) actionsId.next();
-
-            String actionId = 
+            String actionId = (String) actionsId.next();
+            String fullActionId =
                     actionType == ActionType.HIERARCHY? 
-                        controller.getId() + action.getId() :
-                        action.getId();
+                        controller.getId() + actionId :
+                        actionId;
 
-            URIMapping uriMap = getURIMapping( actionId );
+            URIMapping uriMap = getURIMapping( fullActionId );
 
             if(uriMap.matches(uri)){
                 updateRequest(uri, paramScope, uriMap);
-                return action;
+                return actions.get(actionId);
             }
             
         }
