@@ -530,11 +530,11 @@ public class ActionTest extends TestCase {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("action id is required"))
+                        if(ex.getMessage().equals("action id cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {action id is required}");
+                    Assert.fail("expected: {action id cannot be empty}");
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
