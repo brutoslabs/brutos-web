@@ -488,8 +488,7 @@ public class ControllerBuilder {
         executor = StringUtil.adjust(executor);
         
         if( controller.getAction( id ) != null )
-            throw new BrutosException( "duplicate action " + id + ": " +
-                controller.getClassType().getName() );
+            throw new BrutosException( "duplicate action: " + id );
      
         Action action = new Action();
         action.setController( controller );
