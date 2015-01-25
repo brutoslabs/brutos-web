@@ -105,13 +105,16 @@ public class JSR303Validator implements Validator{
     }
 
     public void validate(Action source, Object controller, Object[] value) throws ValidatorException {
-        Set constraintViolations =
-            executableValidator
-                .validateParameters(
-                        controller, 
-                        source.getMethod(), 
-                        value, this.groups);
-        throwException(constraintViolations);
+        Method method = source.getMethod();
+        if(method != null){
+            Set constraintViolations =
+                executableValidator
+                    .validateParameters(
+                            controller, 
+                            method, 
+                            value, this.groups);
+            throwException(constraintViolations);
+        }
     }
 
     public void validate(Action source, Object controller, Object value) throws ValidatorException{
