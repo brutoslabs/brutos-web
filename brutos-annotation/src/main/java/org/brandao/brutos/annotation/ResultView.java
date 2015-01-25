@@ -33,8 +33,8 @@ import java.lang.annotation.Target;
 public @interface ResultView {
  
     /**
-     * Define se o resultado deve ser renderizada. 
-     * Se verdadeiro o resultado será renderizada, caso contrário não.
+     * Define se o resultado deve ser renderizado. 
+     * Se verdadeiro o resultado será renderizado, caso contrário não.
      */
     boolean rendered() default true;
     

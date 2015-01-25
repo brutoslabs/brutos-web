@@ -257,8 +257,8 @@ public class ActionTest extends TestCase {
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
-                public void checkException(Throwable e) {
-                    Assert.fail();
+                public void checkException(Throwable e) throws Throwable{
+                    throw e;
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -295,8 +295,8 @@ public class ActionTest extends TestCase {
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
-                public void checkException(Throwable e) {
-                    Assert.fail();
+                public void checkException(Throwable e) throws Throwable{
+                    throw e;
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -333,8 +333,8 @@ public class ActionTest extends TestCase {
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
-                public void checkException(Throwable e) {
-                    Assert.fail();
+                public void checkException(Throwable e) throws Throwable{
+                    throw e;
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -371,8 +371,8 @@ public class ActionTest extends TestCase {
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
-                public void checkException(Throwable e) {
-                    Assert.fail();
+                public void checkException(Throwable e) throws Throwable{
+                    throw e;
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -579,7 +579,7 @@ public class ActionTest extends TestCase {
                 }
 
                 public void checkException(Throwable e) throws Throwable{
-                    Assert.fail();
+                    throw e;
                 }
             },
             new Class[]{App1TestController.class});

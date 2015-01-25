@@ -87,15 +87,6 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 rendered? resolved : true,
                 dispatcher,
                 method.isAbstractAction()? null : method.getName() );
-
-        /*view = getView(
-                method,
-                viewAnnotation, 
-                actionBuilder,
-                componentRegistry);
-        */
-        
-        //actionBuilder.setView(view);
         
         if(action != null && action.value().length > 1){
             String[] ids = action.value();
