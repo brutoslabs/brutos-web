@@ -491,9 +491,6 @@ public class ControllerBuilder {
         if(StringUtil.isEmpty(view) && StringUtil.isEmpty(executor))
             throw new BrutosException("view must be informed in abstract actions: " + id);
 
-        if(!StringUtil.isEmpty(view) && StringUtil.isEmpty(executor) && !resultRendered)
-            throw new BrutosException("view must be rendered in abstract actions: " + id);
-        
         if( controller.getAction( id ) != null )
             throw new BrutosException( "duplicate action: " + id );
      
