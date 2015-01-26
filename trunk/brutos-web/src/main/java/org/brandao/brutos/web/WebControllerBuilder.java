@@ -51,7 +51,7 @@ public class WebControllerBuilder extends ControllerBuilder{
         if(!ActionType.PARAMETER.equals(type)){
             WebUtil.checkURI(id, true);
             
-            if(resolvedView)
+            if(resolvedView && view != null)
                 WebUtil.checkURI(view, true);
         }
         
@@ -73,7 +73,7 @@ public class WebControllerBuilder extends ControllerBuilder{
         if(!ActionType.PARAMETER.equals(type)){
             WebUtil.checkURI(id, true);
             
-            if(resolvedView)
+            if(resolvedView && view != null)
                 WebUtil.checkURI(view, true);
         }
 
