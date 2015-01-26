@@ -59,7 +59,6 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         ResultView resultView = method.getAnnotation(ResultView.class);
         
         String result;
-        String view;
         org.brandao.brutos.DispatcherType dispatcher;
         String id;
         
@@ -74,20 +73,27 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
                 org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
         
         boolean resultRendered = resultView == null? false : resultView.rendered();
-        boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
         boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
+        boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
+        resolved = rendered? resolved : true;
+        
+        String executor  = method.isAbstractAction()? null : method.getName();
+        String view      = getView(method, viewAnnotation, componentRegistry);
 
+        if(!StringUtil.isEmpty(view) && StringUtil.isEmpty(executor) && !rendered)
+            throw new BrutosException("view must be rendered in abstract actions: " + id);
+        
         ActionBuilder actionBuilder =
         controllerBuilder
             .addAction(
                 id, 
                 result,
                 resultRendered,
-                rendered? getView(method, viewAnnotation, componentRegistry) : null,
-                rendered? resolved : true,
+                view,
+                resolved,
                 dispatcher,
-                method.isAbstractAction()? null : method.getName() );
-        
+                executor);
+
         if(action != null && action.value().length > 1){
             String[] ids = action.value();
             for(int i=1;i<ids.length;i++ ){
@@ -152,39 +158,13 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     protected String getView(ActionEntry actionEntry, View viewAnnotation, 
-            /*ActionBuilder action,*/ ComponentRegistry componentRegistry){
-        
-        /*
-        Deprecated!
-        if(actionEntry.isAbstractAction()){
-            String view = actionEntry.getView();
-            if(!StringUtil.isEmpty(view))
-                return StringUtil.adjust(view);
-            else
-                throw new BrutosException("invalid view in abstract action: " + actionEntry.getView());
-        }
-        */
-        
-        //boolean rendered = viewAnnotation == null? true : viewAnnotation.rendered();
-        //boolean resolved = viewAnnotation == null? false : viewAnnotation.resolved();
-
+            ComponentRegistry componentRegistry){
         String view = 
             viewAnnotation == null || StringUtil.isEmpty(viewAnnotation.value())?
                 null :
                 StringUtil.adjust(viewAnnotation.value());
         
         return view;
-        /*
-        if(rendered){
-            if(resolved)
-                return view;
-            else
-                return createActionView(action, componentRegistry, view);
-            
-        }
-        else
-            return null;
-        */
     }
 
     protected String createActionView(ActionBuilder action,
