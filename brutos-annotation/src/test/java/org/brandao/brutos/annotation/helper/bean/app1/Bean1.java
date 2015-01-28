@@ -15,28 +15,26 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation;
 
+package org.brandao.brutos.annotation.helper.bean.app1;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.brandao.brutos.annotation.Bean;
 
 /**
- * Defini como a ação será mapeada.
- * 
- * @author Afonso Brandao
+ *
+ * @author Cliente
  */
-
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ActionStrategy {
+@Bean
+public class Bean1 {
     
-    /**
-     * Estratégia de mapeamento da ação. Os valores estão 
-     * descritos em {@link ActionStrategyType}.
-     */
-    ActionStrategyType value();
+    private String property;
+
+    public String getProperty() {
+        return property;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
+    }
     
 }
