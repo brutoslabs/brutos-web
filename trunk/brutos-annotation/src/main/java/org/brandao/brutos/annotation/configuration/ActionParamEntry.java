@@ -101,8 +101,7 @@ public class ActionParamEntry {
             
         }
         
-        //return "arg"+index;
-        return null;
+        return "arg"+index;
     }
 
     public void setName(String name) {

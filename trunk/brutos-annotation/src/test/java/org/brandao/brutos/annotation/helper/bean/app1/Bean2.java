@@ -24,8 +24,8 @@ import org.brandao.brutos.annotation.Bean;
  *
  * @author Brandao
  */
-@Bean
-public class Bean1 {
+@Bean("bean")
+public class Bean2 {
     
     private String property;
 
