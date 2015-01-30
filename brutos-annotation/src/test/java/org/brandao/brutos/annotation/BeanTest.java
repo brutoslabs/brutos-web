@@ -25,6 +25,7 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.helper.bean.app1.Bean1TestController;
+import org.brandao.brutos.annotation.helper.bean.app1.Bean2TestController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
@@ -69,4 +70,38 @@ public class BeanTest  extends TestCase{
             },
             new Class[]{Bean1TestController.class});
     }
+    
+    public void test2() throws Throwable{
+        WebApplicationContextTester.run(
+            "/Bean2Test/teste", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                    parameters.put("arg0.property", "action");
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                }
+
+                public void checkException(Throwable e) {
+                    Assert.fail();
+                }
+            },
+            new Class[]{Bean2TestController.class});
+    }
+    
 }

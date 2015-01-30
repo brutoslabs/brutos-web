@@ -15,26 +15,22 @@
  * limitations under the License.
  */
 
-
 package org.brandao.brutos.annotation.helper.bean.app1;
 
-import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.Identify;
+import org.brandao.brutos.annotation.ImportBeans;
+import org.brandao.brutos.annotation.ScopeType;
 
 /**
  *
  * @author Brandao
  */
-@Bean
-public class Bean1 {
+@ImportBeans(Bean1.class)
+public class Bean2TestController {
     
-    private String property;
-
-    public String getProperty() {
-        return property;
-    }
-
-    public void setProperty(String property) {
-        this.property = property;
+    public String testeAction(
+            @Identify(bean="bean1", scope=ScopeType.CONTROLLER) Object arg0){
+        return ((Bean2)arg0).getProperty();
     }
     
 }
