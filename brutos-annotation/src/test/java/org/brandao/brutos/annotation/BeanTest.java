@@ -26,6 +26,7 @@ import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.helper.bean.app1.Bean1TestController;
 import org.brandao.brutos.annotation.helper.bean.app1.Bean2TestController;
+import org.brandao.brutos.annotation.helper.bean.app1.Bean3TestController;
 import org.brandao.brutos.annotation.helper.bean.fail.FailBean1TestController;
 import org.brandao.brutos.annotation.helper.bean.fail.FailBean2TestController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
@@ -247,6 +248,39 @@ public class BeanTest  extends TestCase{
                 }
             },
             new Class[]{Bean1TestController.class});
+    }
+
+    public void test7() throws Throwable{
+        WebApplicationContextTester.run(
+            "/Bean3Test/teste", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                    parameters.put("bean1.property", "action");
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    throw e;
+                }
+            },
+            new Class[]{Bean3TestController.class});
     }
     
 }
