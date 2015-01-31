@@ -24,6 +24,7 @@ import org.brandao.brutos.javassist.JavassistCodeGenerator;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.scope.ControllerScope;
 import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.validator.DefaultValidatorFactory;
@@ -132,6 +133,11 @@ public abstract class AbstractApplicationContext
                 ScopeType.REQUEST.toString(),
                 getScopes().get(ScopeType.THREAD));
 
+        getScopes()
+            .register(
+                ScopeType.CONTROLLER.toString(),
+                new ControllerScope());
+        
     }
     
     protected void initComponents(){
