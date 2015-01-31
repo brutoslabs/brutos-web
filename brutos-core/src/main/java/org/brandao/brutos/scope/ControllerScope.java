@@ -36,7 +36,7 @@ public class ControllerScope implements Scope{
         
         Bean bean = controller.getBean(name);
         
-        return bean == null? null : bean.getValue();
+        return bean == null? null : bean.getValue(name + bean.getSeparator());
     }
 
     public Object getCollection(String name) {
