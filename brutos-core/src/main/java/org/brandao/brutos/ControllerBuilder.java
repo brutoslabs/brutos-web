@@ -354,16 +354,15 @@ public class ControllerBuilder {
 
         name = StringUtil.adjust(name);
         
-        if( name == null )
-            throw new BrutosException( "name is required: " +
-                    controller.getClassType().getName() );
+        if( name == null || !name.matches("[a-zA-Z0-9_#]+"))
+            throw new BrutosException( "invalid bean name: \"" +
+                    name + "\"");
             
         if( target == null )
-            throw new BrutosException( "target is required: " +
-                    controller.getClassType().getName() );
+            throw new BrutosException( "invalid target class");
         
         if( controller.getBean( name ) != null )
-            throw new BrutosException( "duplicate mapping name " + name + " in the " + controller.getClassType().getName() );
+            throw new BrutosException( "duplicate bean name: \"" + name + "\"" );
 
         getLogger().info(
             String.format(
@@ -495,6 +494,7 @@ public class ControllerBuilder {
             throw new BrutosException( "duplicate action: " + id );
      
         Action action = new Action();
+        action.setCode(Action.getNextId());
         action.setController( controller );
         action.setResolvedView(resolvedView);
         action.setResultValidator(validatorFactory.getValidator(new Configuration()));
