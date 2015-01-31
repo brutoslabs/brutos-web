@@ -136,6 +136,7 @@ public abstract class AbstractWebApplicationContext
     }
     
     protected void initScopes(){
+        super.initScopes();
         getScopes().register( WebScopeType.APPLICATION.toString(),
                 new ApplicationScope( getContext() ) );
         getScopes().register( WebScopeType.FLASH.toString(),
