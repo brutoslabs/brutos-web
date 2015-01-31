@@ -25,11 +25,16 @@ import org.brandao.brutos.annotation.ScopeType;
  *
  * @author Brandao
  */
-@ImportBeans(Bean1.class)
+@ImportBeans({Bean1.class, Bean2.class})
 public class Bean2TestController {
     
     public String testeAction(
             @Identify(bean="bean1", scope=ScopeType.CONTROLLER) Object arg0){
+        return ((Bean1)arg0).getProperty();
+    }
+
+    public String teste2Action(
+            @Identify(bean="bean", scope=ScopeType.CONTROLLER) Object arg0){
         return ((Bean2)arg0).getProperty();
     }
     
