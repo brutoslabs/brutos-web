@@ -26,6 +26,8 @@ import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.helper.bean.app1.Bean1TestController;
 import org.brandao.brutos.annotation.helper.bean.app1.Bean2TestController;
+import org.brandao.brutos.annotation.helper.bean.fail.FailBean1TestController;
+import org.brandao.brutos.annotation.helper.bean.fail.FailBean2TestController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
@@ -64,8 +66,8 @@ public class BeanTest  extends TestCase{
                     Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
-                public void checkException(Throwable e) {
-                    Assert.fail();
+                public void checkException(Throwable e) throws Throwable {
+                    throw e;
                 }
             },
             new Class[]{Bean1TestController.class});
@@ -135,6 +137,116 @@ public class BeanTest  extends TestCase{
                 }
             },
             new Class[]{Bean2TestController.class});
+    }
+
+    public void test4() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("invalid bean name: \"bean.\""))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {invalid bean name: \"bean.\"}");
+                }
+            },
+            new Class[]{FailBean1TestController.class});
+    }
+
+    public void test5() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("duplicate bean name: \"failBean2\""))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {duplicate bean name: \"failBean2\"}");
+                }
+            },
+            new Class[]{FailBean2TestController.class});
+    }
+
+    public void test6() throws Throwable{
+        WebApplicationContextTester.run(
+            "/Bean1Test/actionTeste/action", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    throw e;
+                }
+            },
+            new Class[]{Bean1TestController.class});
     }
     
 }
