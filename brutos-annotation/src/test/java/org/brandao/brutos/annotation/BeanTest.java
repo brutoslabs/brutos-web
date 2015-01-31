@@ -89,7 +89,7 @@ public class BeanTest  extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                    parameters.put("arg0.property", "action");
+                    parameters.put("bean1.property", "action");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -97,8 +97,41 @@ public class BeanTest  extends TestCase{
                     Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
-                public void checkException(Throwable e) {
-                    Assert.fail();
+                public void checkException(Throwable e) throws Throwable {
+                    throw e;
+                }
+            },
+            new Class[]{Bean2TestController.class});
+    }
+
+    public void test3() throws Throwable{
+        WebApplicationContextTester.run(
+            "/Bean2Test/teste2", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                    parameters.put("bean.property", "action");
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    throw e;
                 }
             },
             new Class[]{Bean2TestController.class});
