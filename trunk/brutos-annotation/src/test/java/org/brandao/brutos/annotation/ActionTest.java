@@ -732,7 +732,6 @@ public class ActionTest extends TestCase {
                     }while((ex = ex.getCause()) != null);
                     
                     Assert.fail("expected: {duplicate action: /teste}");
-                    
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {

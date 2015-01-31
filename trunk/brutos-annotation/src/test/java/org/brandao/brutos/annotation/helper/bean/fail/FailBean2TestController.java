@@ -15,25 +15,15 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper.bean.app1;
+package org.brandao.brutos.annotation.helper.bean.fail;
 
-import org.brandao.brutos.annotation.Action;
+import org.brandao.brutos.annotation.ImportBeans;
 
 /**
  *
  * @author Brandao
  */
-public class Bean1TestController {
-    
-    public String testeAction(
-            Bean1 arg0){
-        return arg0.getProperty();
-    }
-
-    @Action("/actionTeste/{arg0.property}")
-    public String teste2(
-            Bean1 arg0){
-        return arg0.getProperty();
-    }
+@ImportBeans({FailBean2.class, FailBean3.class})
+public class FailBean2TestController {
     
 }
