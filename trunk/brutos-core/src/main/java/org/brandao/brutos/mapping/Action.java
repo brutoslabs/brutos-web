@@ -34,6 +34,8 @@ import org.brandao.brutos.validator.Validator;
  */
 public class Action {
     
+    private long code;
+    
     private Controller controller;
     
     private String id;
@@ -434,4 +436,18 @@ public class Action {
         this.resultValidator = resultValidator;
     }
 
+    public long getCode() {
+        return code;
+    }
+
+    public void setCode(long code) {
+        this.code = code;
+    }
+    
+    private static long counter = 1;
+    
+    public static synchronized final long getNextId(){
+        return counter++;
+    }
+    
 }
