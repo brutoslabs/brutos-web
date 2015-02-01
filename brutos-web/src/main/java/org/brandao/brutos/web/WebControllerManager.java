@@ -34,6 +34,14 @@ public class WebControllerManager extends ControllerManagerImp{
     }
     
     public ControllerBuilder addController( String id, String view, 
+            boolean resolvedView, DispatcherType dispatcherType,
+            String name, Class classType, String actionId ){
+            return addController( id, view, resolvedView,
+                    dispatcherType, name, classType, actionId, 
+                    ActionType.HIERARCHY);
+    }
+    
+    public ControllerBuilder addController( String id, String view, 
             boolean resolvedView, DispatcherType dispatcherType, String name, Class classType, 
             String actionId, ActionType actionType ){
         
