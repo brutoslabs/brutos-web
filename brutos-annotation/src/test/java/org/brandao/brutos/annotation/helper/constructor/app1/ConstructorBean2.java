@@ -15,37 +15,32 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
+package org.brandao.brutos.annotation.helper.constructor.app1;
 
-import org.brandao.brutos.ControllerRegistry;
-import org.brandao.brutos.InterceptorRegistry;
-import org.brandao.brutos.ScopeRegistry;
-import org.brandao.brutos.Scopes;
-import org.brandao.brutos.TypeManager;
-import org.brandao.brutos.TypeRegistry;
+import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.Constructor;
+import org.brandao.brutos.annotation.Transient;
 
 /**
  *
  * @author Brandao
  */
-public abstract class ConfigurerAdapter implements Configurer{
-
-    public void addInterceptors(InterceptorRegistry interceptorRegistry){
-    }
+@Bean
+public class ConstructorBean2 {
     
-    public void addControllers(ControllerRegistry controllerRegistry){
-    }
+    @Transient
+    private String property;
     
-    public void addScopes(Scopes scopes){
-    }
-            
-    public void addTypes(TypeManager typeManager){
-    }
- 
-    public void addScopes(ScopeRegistry scopeRegistry) {
+    public ConstructorBean2(){
     }
 
-    public void addTypes(TypeRegistry typeRegistry) {
+    @Constructor
+    public ConstructorBean2(String arg0){
+        this.property = arg0;
     }
-    
+
+    public String getProperty() {
+        return property;
+    }
+
 }

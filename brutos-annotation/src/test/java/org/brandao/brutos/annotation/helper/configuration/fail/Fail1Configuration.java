@@ -15,37 +15,21 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.configuration;
+package org.brandao.brutos.annotation.helper.configuration.fail;
 
 import org.brandao.brutos.ControllerRegistry;
-import org.brandao.brutos.InterceptorRegistry;
-import org.brandao.brutos.ScopeRegistry;
-import org.brandao.brutos.Scopes;
-import org.brandao.brutos.TypeManager;
-import org.brandao.brutos.TypeRegistry;
+import org.brandao.brutos.annotation.configuration.ConfigurerAdapter;
 
 /**
  *
  * @author Brandao
  */
-public abstract class ConfigurerAdapter implements Configurer{
+public class Fail1Configuration extends ConfigurerAdapter{
 
-    public void addInterceptors(InterceptorRegistry interceptorRegistry){
-    }
-    
+    @Override
     public void addControllers(ControllerRegistry controllerRegistry){
-    }
-    
-    public void addScopes(Scopes scopes){
-    }
-            
-    public void addTypes(TypeManager typeManager){
-    }
- 
-    public void addScopes(ScopeRegistry scopeRegistry) {
-    }
-
-    public void addTypes(TypeRegistry typeRegistry) {
-    }
-    
+        controllerRegistry
+            .registerController("/controller", Object.class)
+                .addAction("/myAction", null, "/myView.jsp", true);
+    }    
 }

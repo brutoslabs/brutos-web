@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.configuration.AbstractAnnotationConfig;
@@ -31,6 +33,7 @@ import org.brandao.brutos.annotation.configuration.AnnotationUtil;
 import org.brandao.brutos.annotation.configuration.ApplyAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.BeanAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
+import org.brandao.brutos.annotation.configuration.Configurer;
 import org.brandao.brutos.annotation.configuration.ControllerAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ElementCollectionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ExtendedScopeAnnotationConfig;
@@ -123,6 +126,22 @@ public class ComponentConfigurer {
             
             if(!clazz.isAnnotationPresent(Configuration.class))
                 continue;
+            
+            if(Configurer.class.isAssignableFrom(clazz)){
+                Configurer configurer = null;
+                try{
+                    configurer = (Configurer) ClassUtil.getInstance(clazz);
+                }
+                catch(Throwable e){
+                    throw new BrutosException(e);
+                }
+                
+                configurer.addControllers(componentRegistry);
+                configurer.addInterceptors(componentRegistry);
+                configurer.addScopes(componentRegistry);
+                configurer.addTypes(componentRegistry);
+                
+            }
             
             if(clazz.isAnnotationPresent(ComponentScan.class)){
                 ComponentScan componentScan = 
