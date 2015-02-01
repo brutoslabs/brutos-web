@@ -17,13 +17,20 @@
 
 package org.brandao.brutos.annotation.helper.controller.app1;
 
+import org.brandao.brutos.annotation.Action;
 import org.brandao.brutos.annotation.Controller;
+import org.brandao.brutos.annotation.Identify;
 
 /**
  *
  * @author Brandao
  */
-@Controller
+@Controller("/controller/{value}")
 public class Controller3TestController {
 
+    @Action("/{value}")
+    public String[] myAction(
+            @Identify(bean="value") String[] value){
+        return value;
+    }
 }
