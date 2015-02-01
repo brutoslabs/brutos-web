@@ -116,7 +116,7 @@ public class ControllerAnnotationConfig
             }
         }
 
-        if(defaultActionName != null)
+        if(!StringUtil.isEmpty(defaultActionName))
             builder.setDefaultAction(defaultActionName);
         
         super.applyInternalConfiguration(source, builder, componentRegistry);

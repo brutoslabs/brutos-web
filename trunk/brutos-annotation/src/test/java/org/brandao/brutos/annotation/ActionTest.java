@@ -27,6 +27,7 @@ import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.helper.action.app1.App1TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail10TestController;
+import org.brandao.brutos.annotation.helper.action.fail.Fail11TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail2TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail3TestController;
 import org.brandao.brutos.annotation.helper.action.fail.Fail4TestController;
@@ -743,6 +744,46 @@ public class ActionTest extends TestCase {
                 }
             },
             new Class[]{Fail10TestController.class});
+    }    
+
+    public void test19() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester(){
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+                    
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+                
+                public void checkException(Throwable e) {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("invalid action: \"/\": action"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {invalid action: \"/\": action}");
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+            },
+            new Class[]{Fail11TestController.class});
     }    
     
 }

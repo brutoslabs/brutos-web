@@ -23,11 +23,17 @@ import org.brandao.brutos.annotation.Controller;
  *
  * @author Brandao
  */
-@Controller("/myController/{arg0}")
+@Controller("/myController/{property}")
 public class Controller8Test {
 
-    public String teste1Action(String arg0){
-        return arg0;
+    private String property;
+
+    public String getProperty() {
+        return property;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
     }
     
 }

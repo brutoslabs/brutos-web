@@ -15,15 +15,15 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper.controller.app1;
-
-import org.brandao.brutos.annotation.Controller;
+package org.brandao.brutos.annotation.helper.action.fail;
 
 /**
  *
  * @author Brandao
  */
-@Controller({"/mycontroller","/mycontroller2"})
-public class Controller6Test {
-
+public class Fail11TestController {
+    
+    public void Action(){
+    }
+    
 }
