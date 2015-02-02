@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.annotation.helper.controller.app1.Controller10Test;
+import org.brandao.brutos.annotation.helper.controller.app1.Controller11Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller1TestController;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller2TestController;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller3TestController;
@@ -32,6 +34,7 @@ import org.brandao.brutos.annotation.helper.controller.app1.Controller5Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller6Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller7Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller8Test;
+import org.brandao.brutos.annotation.helper.controller.app1.Controller9Test;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
@@ -356,6 +359,144 @@ public class ControllerTest  extends TestCase{
                 }
             },
             new Class[]{Controller8Test.class});
+    }
+
+    public void test10() throws Throwable{
+        WebApplicationContextTester.run(
+            "/Controller9Test", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    
+                    MockRenderView render = (MockRenderView) applicationContext.getRenderView();
+                    Assert.assertEquals("/WEB-INF/controller9test/teste1action/index.jsp", render.getView());
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    throw e;
+                }
+            },
+            new Class[]{Controller9Test.class});
+    }
+
+    public void test11() throws Throwable{
+        WebApplicationContextTester.run(
+            "/Controller10Test", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    
+                    MockRenderView render = (MockRenderView) applicationContext.getRenderView();
+                    Assert.assertEquals("/page.jsp", render.getView());
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    throw e;
+                }
+            },
+            new Class[]{Controller10Test.class});
+    }
+
+    public void test12() throws Throwable{
+        WebApplicationContextTester.run(
+            "/Controller10Test", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    
+                    org.brandao.brutos.mapping.Controller controller = 
+                            applicationContext.getControllerManager().getController(Controller11Test.class);
+                    
+                    Assert.assertEquals("controllerName", controller.getName());
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    throw e;
+                }
+            },
+            new Class[]{Controller11Test.class});
+    }
+
+    public void test13() throws Throwable{
+        WebApplicationContextTester.run(
+            "/Controller10Test", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    
+                    MockRenderView render = (MockRenderView) applicationContext.getRenderView();
+                    Assert.assertEquals("/page.jsp", render.getView());
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    throw e;
+                }
+            },
+            new Class[]{Controller12Test.class});
     }
     
 }
