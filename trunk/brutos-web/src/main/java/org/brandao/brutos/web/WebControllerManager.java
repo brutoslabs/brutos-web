@@ -42,21 +42,20 @@ public class WebControllerManager extends ControllerManagerImp{
     }
     
     public ControllerBuilder addController( String id, String view, 
-            boolean resolvedView, DispatcherType dispatcherType, String name, Class classType, 
+            boolean resolvedView, DispatcherType dispatcherType, String name, 
+            Class classType, 
             String actionId, ActionType actionType ){
         
+        if(!ActionType.DETACHED.equals(actionType))
+            WebUtil.checkURI(id, true);
+        
+        if(resolvedView && view != null)
+            WebUtil.checkURI(view, true);
         
         ControllerBuilder builder =  
             super.addController( id, view,
                 resolvedView,
                 dispatcherType, name, classType, actionId, actionType );
-        
-        ActionType type = builder.getActionType();
-        
-        if(ActionType.PARAMETER.equals(type) || ActionType.HIERARCHY.equals(type))
-            WebUtil.checkURI(builder.getId(), true);
-        
-        WebUtil.checkURI(builder.getView(), false);
         
         return new WebControllerBuilder(builder, this.internalUpdate);
     }
