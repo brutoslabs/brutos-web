@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.annotation.helper.action.fail.Fail2TestController;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller10Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller11Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller1TestController;
@@ -35,6 +36,11 @@ import org.brandao.brutos.annotation.helper.controller.app1.Controller6Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller7Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller8Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller9Test;
+import org.brandao.brutos.annotation.helper.controller.fail.Fail1TestController;
+import org.brandao.brutos.annotation.helper.controller.fail.Fail2Test;
+import org.brandao.brutos.annotation.helper.controller.fail.Fail3Test;
+import org.brandao.brutos.annotation.helper.controller.fail.Fail4Test;
+import org.brandao.brutos.annotation.helper.controller.fail.Fail5Test;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
@@ -467,7 +473,7 @@ public class ControllerTest  extends TestCase{
 
     public void test13() throws Throwable{
         WebApplicationContextTester.run(
-            "/Controller10Test", 
+            "", 
             new WebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
@@ -487,16 +493,177 @@ public class ControllerTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    
-                    MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/page.jsp", render.getView());
+                    Assert.fail();
                 }
 
                 public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("expected starts with \"/\": \"controller\""))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {expected starts with \"/\": \"controller\"}");
                 }
             },
-            new Class[]{Controller12Test.class});
+            new Class[]{Fail1TestController.class});
+    }
+
+    public void test14() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("expected starts with \"/\": \"controller\""))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {expected starts with \"/\": \"controller\"}");
+                }
+            },
+            new Class[]{Fail2Test.class});
+    }
+
+    public void test15() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("duplicate controller: \"/controller\""))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {duplicate controller: \"/controller\"}");
+                }
+            },
+            new Class[]{Fail3Test.class});
+    }
+
+    public void test16() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("invalid action id: \"a.ction\""))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {invalid action id: \"a.ction\"}");
+                }
+            },
+            new Class[]{Fail4Test.class});
+    }
+
+    public void test17() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail();
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("action not found: \"/teste1\""))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {action not found: \"/teste1\"}");
+                }
+            },
+            new Class[]{Fail5Test.class});
     }
     
 }
