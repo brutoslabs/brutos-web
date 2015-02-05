@@ -319,7 +319,7 @@ public class ControllerManagerImp implements ControllerManager{
         
         if( id != null){
              if(contains(id))
-                throw new BrutosException( String.format("duplicate id: %s", new Object[]{id} ) );
+                throw new BrutosException( String.format("duplicate controller: %s", new Object[]{id} ) );
             else
                 mappedControllers.put(id, controller);
         }
