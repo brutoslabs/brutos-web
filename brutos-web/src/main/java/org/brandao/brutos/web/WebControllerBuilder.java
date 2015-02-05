@@ -39,7 +39,7 @@ public class WebControllerBuilder extends ControllerBuilder{
     }
     
     public ControllerBuilder addAlias( String id ){
-        WebUtil.checkURI(id,true);
+        WebUtil.checkURI(id, true);
         return super.addAlias(id);
     }
     
