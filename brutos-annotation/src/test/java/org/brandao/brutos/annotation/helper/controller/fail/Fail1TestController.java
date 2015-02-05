@@ -23,7 +23,7 @@ import org.brandao.brutos.annotation.Controller;
  *
  * @author Brandao
  */
-@Controller(defaultActionName = "/teste1")
-public class Fail6Test {
+@Controller("controller")
+public class Fail1TestController {
 
 }
