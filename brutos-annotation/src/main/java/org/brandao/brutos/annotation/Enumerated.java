@@ -47,6 +47,6 @@ public @interface Enumerated {
     /**
      * Estratégia de mapeamento do enum.
      */
-    EnumerationType value() default EnumerationType.ORDINAL;
+    EnumerationType value() default EnumerationType.AUTO;
    
 }
