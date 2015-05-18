@@ -69,7 +69,11 @@ public final class ClassUtil {
     }
     
     private static Class getClasse( String name ) throws ClassNotFoundException{
-        return Class.forName( name, true, Thread.currentThread().getContextClassLoader() );
+        return getClasse( name, true );
+    }
+
+    private static Class getClasse( String name, boolean initialize ) throws ClassNotFoundException{
+        return Class.forName( name, initialize, Thread.currentThread().getContextClassLoader() );
     }
     
     public static Object getInstance(Class clazz, Class[] params, Object[] values) 
