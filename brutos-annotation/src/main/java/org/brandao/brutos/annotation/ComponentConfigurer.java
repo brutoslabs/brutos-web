@@ -127,22 +127,6 @@ public class ComponentConfigurer {
             if(!clazz.isAnnotationPresent(Configuration.class))
                 continue;
             
-            if(Configurer.class.isAssignableFrom(clazz)){
-                Configurer configurer = null;
-                try{
-                    configurer = (Configurer) ClassUtil.getInstance(clazz);
-                }
-                catch(Throwable e){
-                    throw new BrutosException(e);
-                }
-                
-                configurer.addControllers(componentRegistry);
-                configurer.addInterceptors(componentRegistry);
-                configurer.addScopes(componentRegistry);
-                configurer.addTypes(componentRegistry);
-                
-            }
-            
             if(clazz.isAnnotationPresent(ComponentScan.class)){
                 ComponentScan componentScan = 
                         (ComponentScan) clazz.getAnnotation(ComponentScan.class);
@@ -168,6 +152,30 @@ public class ComponentConfigurer {
                 new StartConfiguration((ApplyAnnotationConfig)rootAnnotationConfig);
         
         init.applyConfiguration(objectList, null, componentRegistry);
+        
+        for(Class clazz: firstClassList){
+            
+            if(!clazz.isAnnotationPresent(Configuration.class))
+                continue;
+            
+            if(Configurer.class.isAssignableFrom(clazz)){
+                Configurer configurer = null;
+                try{
+                    configurer = (Configurer) ClassUtil.getInstance(clazz);
+                }
+                catch(Throwable e){
+                    throw new BrutosException(e);
+                }
+                
+                configurer.addControllers(componentRegistry);
+                configurer.addInterceptors(componentRegistry);
+                configurer.addScopes(componentRegistry);
+                configurer.addTypes(componentRegistry);
+                
+            }
+            
+        }
+        
     }
     
     public ConfigurationEntry getConfiguration() {
