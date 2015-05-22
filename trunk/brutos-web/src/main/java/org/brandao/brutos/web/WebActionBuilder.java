@@ -62,12 +62,11 @@ public class WebActionBuilder extends ActionBuilder{
         ActionType type = this.controller.getActionType();
         
         if(!ActionType.PARAMETER.equals(type)){
-            WebUtil.checkURI(id, true);
-            
             if(resolvedView)
                 WebUtil.checkURI(view, true);
         }
-        return super.addThrowable(target, view, resolvedView, id, dispatcher);
+        
+        return super.addThrowable(target, view, id, dispatcher, resolvedView);
     }
     
     public ActionBuilder setView(String value, boolean viewResolved){

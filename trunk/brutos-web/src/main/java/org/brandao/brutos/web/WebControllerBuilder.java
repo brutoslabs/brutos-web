@@ -71,8 +71,6 @@ public class WebControllerBuilder extends ControllerBuilder{
         ActionType type = this.controller.getActionType();
         
         if(!ActionType.PARAMETER.equals(type)){
-            WebUtil.checkURI(id, true);
-            
             if(resolvedView && view != null)
                 WebUtil.checkURI(view, true);
         }
