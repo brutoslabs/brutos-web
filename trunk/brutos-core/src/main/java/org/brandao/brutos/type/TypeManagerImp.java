@@ -19,6 +19,8 @@ package org.brandao.brutos.type;
 
 import java.io.File;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -74,6 +76,8 @@ public class TypeManagerImp implements TypeManager{
         defaultTypes.add(new DefaultTypeFactory(SerializableType.class,    Serializable.class));
         defaultTypes.add(new DefaultTypeFactory(DefaultDateType.class,     Date.class));
         defaultTypes.add(new DefaultTypeFactory(CalendarType.class,        Calendar.class));
+        defaultTypes.add(new DefaultTypeFactory(BigDecimalType.class,      BigDecimal.class));
+        defaultTypes.add(new DefaultTypeFactory(BigIntegerType.class,      BigInteger.class));
         defaultTypes.add(new DefaultArrayTypeFactory());
         defaultTypes.add(new DefaultEnumTypeFactory());
         defaultTypes.add(new DefaultTypeFactory(ClassType.class,           Class.class));
