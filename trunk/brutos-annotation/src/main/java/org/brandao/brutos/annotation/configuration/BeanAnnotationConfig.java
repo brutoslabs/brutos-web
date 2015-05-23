@@ -78,10 +78,10 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             Object source, Object builder, 
             ComponentRegistry componentRegistry) {
 
-        Class clazz = ((BeanEntry)source).getBeanType();
+        //Class clazz = ((BeanEntry)source).getBeanType();
         
-        if(requiredBeanAnnotation(clazz))
-            throw new BrutosException("expected @Bean");    
+        //if(requiredBeanAnnotation(clazz))
+        //    throw new BrutosException("expected @Bean");    
         
         boolean isRoot = StringUtil.isEmpty(path);
         
