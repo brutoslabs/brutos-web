@@ -39,7 +39,7 @@ public class ElementCollectionAnnotationConfig
         
         ElementEntry element = (ElementEntry)source;
         
-        if(AnnotationUtil.isBuildEntity(componentRegistry, element.isUseBean(), element.getClassType()))
+        if(AnnotationUtil.isBuildEntity(componentRegistry, element.getMappingType(), element.getClassType()))
             buildElement(element, builder, componentRegistry);
         else
             addElement(element, (BeanBuilder)builder, componentRegistry);

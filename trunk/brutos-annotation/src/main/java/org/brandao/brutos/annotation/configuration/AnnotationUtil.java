@@ -143,10 +143,18 @@ public class AnnotationUtil {
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
             Boolean buildIfNecessary, Class type){
         return buildIfNecessary == null?
-                !typeRegistry.isStandardType(type) && isComplexBean(type): 
+                !typeRegistry.isStandardType(type)/* && isComplexBean(type)*/: 
                 buildIfNecessary.booleanValue();
     }
 
+    public static boolean isBuildEntity(TypeRegistry typeRegistry,
+            MappingTypes mappingType, Class type){
+        return isBuildEntity(
+                typeRegistry,
+                mappingType == MappingTypes.AUTO? false : mappingType.equals(MappingTypes.COMPLEX),
+                type);
+    }
+    
     public static boolean isComplexBean(Class type){
         return isUseDefaultMapping(type) || type.isAnnotationPresent(Bean.class);
     }
@@ -157,17 +165,32 @@ public class AnnotationUtil {
     
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
             KeyCollection identify, Class type){
-        return isBuildEntity(typeRegistry, identify == null? false : identify.useMapping(), type);
+        return isBuildEntity(
+                typeRegistry, 
+                identify == null? 
+                    false : 
+                    identify.mappingType() == MappingTypes.AUTO? false : identify.mappingType().equals(MappingTypes.COMPLEX), 
+                type);
     }
 
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
             ElementCollection identify, Class type){
-        return isBuildEntity(typeRegistry, identify == null? false : identify.useMapping(), type);
+        return isBuildEntity(
+                typeRegistry, 
+                identify == null? 
+                    false : 
+                    identify.mappingType() == MappingTypes.AUTO? false : identify.mappingType().equals(MappingTypes.COMPLEX), 
+                type);
     }
     
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
             Identify identify, Class type){
-        return isBuildEntity(typeRegistry, identify == null? null : identify.useMapping(), type);
+        return isBuildEntity(
+                typeRegistry, 
+                identify == null? 
+                    null : 
+                    identify.mappingType() == MappingTypes.AUTO? null : identify.mappingType().equals(MappingTypes.COMPLEX),
+                type);
     }
     
     public static Object getKeyType(Object type){

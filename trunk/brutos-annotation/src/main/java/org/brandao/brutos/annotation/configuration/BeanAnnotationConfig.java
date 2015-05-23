@@ -452,8 +452,8 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         for(int i=0;i<props.size();i++){
             BeanProperty prop = (BeanProperty) props.get(i);
             BeanPropertyAnnotationImp annotationProp = new BeanPropertyAnnotationImp(prop);
-            BeanEntryProperty beanEntry = new BeanEntryProperty(annotationProp);
-            super.applyInternalConfiguration(beanEntry, 
+            //BeanEntryProperty beanEntry = new BeanEntryProperty(annotationProp);
+            super.applyInternalConfiguration(annotationProp, 
                     beanBuilder, componentRegistry);
         }
     }

@@ -70,9 +70,9 @@ public @interface ElementCollection {
     String scope() default "param";
 
     /**
-     * Usado em tipos não primitivos. Força o uso do mapeamento do "bean".
+     * Define o tipo de mapeamento do bean.
      */
-    boolean useMapping() default false;
+    MappingTypes mappingType() default MappingTypes.AUTO;
 
     /**
      * Classe alvo do mapeamento.
