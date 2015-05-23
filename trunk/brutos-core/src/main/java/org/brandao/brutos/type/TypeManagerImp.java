@@ -41,14 +41,14 @@ import org.brandao.brutos.web.http.UploadedFile;
  */
 public class TypeManagerImp implements TypeManager{
 
-    private final List defaultTypes;
+    private final List<TypeFactory> defaultTypes;
     
-    private final List customTypes;
+    private final List<TypeFactory> customTypes;
 
     private final ConcurrentMap cache;
     
     public TypeManagerImp(){
-        this.customTypes = new LinkedList();
+        this.customTypes = new LinkedList<TypeFactory>();
         this.cache = new ConcurrentHashMap();
         defaultTypes = new LinkedList();
         defaultTypes.add(new DefaultTypeFactory(BooleanType.class,         Boolean.TYPE));
@@ -72,7 +72,7 @@ public class TypeManagerImp implements TypeManager{
         defaultTypes.add(new DefaultTypeFactory(ShortWrapperType.class,    Short.class));
         defaultTypes.add(new DefaultTypeFactory(DownloadType.class,        Download.class));
         //defaultTypes.add(new DefaultTypeFactory(ListType.class,            List.class));
-        defaultTypes.add(new DefaultTypeFactory(SetType.class,             Set.class));
+        //defaultTypes.add(new DefaultTypeFactory(SetType.class,             Set.class));
         defaultTypes.add(new DefaultTypeFactory(SerializableType.class,    Serializable.class));
         defaultTypes.add(new DefaultTypeFactory(DefaultDateType.class,     Date.class));
         defaultTypes.add(new DefaultTypeFactory(CalendarType.class,        Calendar.class));
