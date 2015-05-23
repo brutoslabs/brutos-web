@@ -53,7 +53,7 @@ public class KeyCollectionAnnotationConfig
             ComponentRegistry componentRegistry) {
         
         KeyEntry key = (KeyEntry)source;
-        if(AnnotationUtil.isBuildEntity(componentRegistry, key.isUseBean(), key.getClassType()))
+        if(AnnotationUtil.isBuildEntity(componentRegistry, key.getMappingType(), key.getClassType()))
             buildKey(key, builder, componentRegistry);
         else
             addKey(key, (BeanBuilder)builder, componentRegistry);

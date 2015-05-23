@@ -22,6 +22,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.ElementCollection;
+import org.brandao.brutos.annotation.MappingTypes;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -34,7 +35,7 @@ public class ElementEntry implements BeanEntry{
     
     private ScopeType scopeType;
     
-    private Boolean useBean;
+    private MappingTypes mappingType;
     
     private Class<?> classType;
     
@@ -62,7 +63,7 @@ public class ElementEntry implements BeanEntry{
                     null : 
                     ScopeType.valueOf(definition.scope());
 
-            this.useBean = definition.useMapping();
+            this.mappingType = definition.mappingType();
             this.target = 
                     definition.target() == void.class?
                         null :
@@ -83,7 +84,7 @@ public class ElementEntry implements BeanEntry{
         else{
             this.name = null;
             this.scopeType = BrutosConstants.DEFAULT_SCOPETYPE;
-            this.useBean = null;
+            this.mappingType = MappingTypes.SIMPLE;
             this.target = null;
             this.enumerated = 
                     EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE);
@@ -110,13 +111,6 @@ public class ElementEntry implements BeanEntry{
         this.scopeType = scopeType;
     }
 
-    public Boolean isUseBean() {
-        return useBean;
-    }
-
-    public void setUseBean(boolean useBean) {
-        this.useBean = useBean;
-    }
 
     public Class<?> getClassType() {
         return classType;
@@ -168,6 +162,14 @@ public class ElementEntry implements BeanEntry{
 
     public void setGenericType(Type genericType) {
         this.genericType = genericType;
+    }
+
+    public MappingTypes getMappingType() {
+        return mappingType;
+    }
+
+    public void setMappingType(MappingTypes mappingType) {
+        this.mappingType = mappingType;
     }
     
 }

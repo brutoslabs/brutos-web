@@ -23,6 +23,7 @@ import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.KeyCollection;
+import org.brandao.brutos.annotation.MappingTypes;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -35,7 +36,7 @@ public class KeyEntry implements BeanEntry{
     
     private ScopeType scopeType;
     
-    private Boolean useBean;
+    private MappingTypes mappingType;
     
     private Class<?> classType;
     
@@ -63,7 +64,7 @@ public class KeyEntry implements BeanEntry{
                     BrutosConstants.DEFAULT_SCOPETYPE : 
                     ScopeType.valueOf(definition.scope());
 
-            this.useBean = definition.useMapping();
+            this.mappingType = definition.mappingType();
             this.target = 
                     definition.target() == void.class?
                         ClassUtil.getInstantiableClass(type) :
@@ -84,7 +85,7 @@ public class KeyEntry implements BeanEntry{
         else{
             this.name = null;
             this.scopeType = BrutosConstants.DEFAULT_SCOPETYPE;
-            this.useBean = null;
+            this.mappingType = MappingTypes.SIMPLE;
             this.target = null;
             this.enumerated = 
                     EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE);
@@ -109,14 +110,6 @@ public class KeyEntry implements BeanEntry{
 
     public void setScopeType(ScopeType scopeType) {
         this.scopeType = scopeType;
-    }
-
-    public Boolean isUseBean() {
-        return useBean;
-    }
-
-    public void setUseBean(boolean useBean) {
-        this.useBean = useBean;
     }
 
     public Class<?> getClassType() {
@@ -169,6 +162,14 @@ public class KeyEntry implements BeanEntry{
 
     public void setGenericType(Type genericType) {
         this.genericType = genericType;
+    }
+    
+    public MappingTypes getMappingType() {
+        return mappingType;
+    }
+
+    public void setMappingType(MappingTypes mappingType) {
+        this.mappingType = mappingType;
     }
     
 }
