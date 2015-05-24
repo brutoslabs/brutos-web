@@ -292,17 +292,12 @@ public class Bean {
                 .getCurrentLoggerProvider().getLogger(Bean.class);
     }
 
-    /**
-     * @return the parent
-     */
     public Bean getParent() {
         return parent;
     }
 
-    /**
-     * @param parent the parent to set
-     */
     public void setParent(Bean parent) {
         this.parent = parent;
     }
+    
 }
