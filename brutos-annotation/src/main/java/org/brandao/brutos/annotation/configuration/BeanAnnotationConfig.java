@@ -248,7 +248,9 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 target.value();
         
         BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
-        builder.addParameterMapping(actionParam.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType), classType);
+        builder.addParameterMapping(
+        		actionParam.getName(), 
+        		beanBuilder != null? beanBuilder.getName() : getBeanName(classType), classType);
         
         //BeanBuilder beanBuilder = 
         //    builder.buildParameter(actionParam.getName(), classType);
@@ -270,7 +272,10 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 target.value();
         
         BeanBuilder beanBuilder = this.createBean(builder, classType);
-        builder.addPropertyMapping(source.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
+        builder.addPropertyMapping(
+        		source.getName(),
+        		AnnotationUtil.getBeanName(source),
+        		beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
         
         //BeanBuilder beanBuilder = 
         //    builder.buildProperty(source.getName(), classType);
@@ -291,7 +296,10 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 target.value();
         
         BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
-        builder.addMappedProperty(null, source.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
+        builder.addMappedProperty(
+        		AnnotationUtil.getBeanName(source), 
+        		source.getName(), 
+        		beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
         
         //BeanBuilder beanBuilder = 
         //    builder.buildProperty(source.getName(), classType);
@@ -313,7 +321,9 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 target.value();
         
         BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
-        builder.addMappedContructorArg(source.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
+        builder.addMappedContructorArg(
+        		source.getName(), 
+        		beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
         
         //BeanBuilder beanBuilder = 
         //    builder.buildConstructorArg(source.getName(), classType);

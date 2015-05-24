@@ -23,7 +23,6 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
-import org.brandao.brutos.mapping.StringUtil;
 
 /**
  *
@@ -177,7 +176,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
             ComponentRegistry componentRegistry){
         
         String propertyName = getPropertyName(property);
-        String name = getBeanName(property);
+        String name = AnnotationUtil.getBeanName(property);
         ScopeType scope = AnnotationUtil.getScope(property.getAnnotation(Identify.class));
         EnumerationType enumProperty = AnnotationUtil.getEnumerationType(property.getAnnotation(Enumerated.class));
         String temporalProperty = AnnotationUtil.getTemporalProperty(property.getAnnotation(Temporal.class));
@@ -271,17 +270,6 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
     
     private String getPropertyName(BeanPropertyAnnotation param){
         return param.getName();
-    }
-
-    private String getBeanName(BeanPropertyAnnotation property){
-        Identify id = property.getAnnotation(Identify.class);
-        if(id != null){
-            String bean = StringUtil.adjust(id.bean());
-            if(!StringUtil.isEmpty(bean))
-                return id.bean();
-        }
-        
-        return property.getName();
     }
 
     public Class<? extends Annotation>[] getExecutionOrder(){

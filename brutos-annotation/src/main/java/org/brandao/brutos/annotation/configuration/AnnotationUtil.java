@@ -21,6 +21,7 @@ import java.lang.annotation.Annotation;
 import java.util.*;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.annotation.scanner.DefaultScanner;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.StringUtil;
@@ -530,6 +531,17 @@ public class AnnotationUtil {
         }
         
         return result;
+    }
+
+    public static String getBeanName(BeanPropertyAnnotation property){
+        Identify id = property.getAnnotation(Identify.class);
+        if(id != null){
+            String bean = StringUtil.adjust(id.bean());
+            if(!StringUtil.isEmpty(bean))
+                return id.bean();
+        }
+        
+        return property.getName();
     }
     
 }
