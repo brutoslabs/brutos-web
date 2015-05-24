@@ -51,8 +51,11 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
 
     private String path;
     
+    private int count;
+    
     public BeanAnnotationConfig(){
         this.path = "";
+        this.count = 1;
     }
     
     public boolean isApplicable(Object source) {
@@ -181,6 +184,21 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         }
     }
     
+    private String getBeanName(Class type){
+    	return type.getName().replace(".", "#");
+    }
+    
+    protected BeanBuilder createBean(ControllerBuilder controllerBuilder, Class type){
+    	
+    	if(Map.class.isAssignableFrom(type) ||Collection.class.isAssignableFrom(type))
+            return controllerBuilder.buildMappingBean(getBeanName(type) + "#" + count++ , type);
+    	else
+    	if(controllerBuilder.getBean(type.getName().replace(".", "#")) == null)
+            return controllerBuilder.buildMappingBean(getBeanName(type), type);
+        else
+            return null;
+    }
+    
     protected void createBean(BeanBuilder builder, 
             KeyEntry source, ComponentRegistry componentRegistry){
         
@@ -188,11 +206,16 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 ClassUtil.getInstantiableClass(source.getClassType()) : 
                 source.getTarget();
         
-        BeanBuilder beanBuilder = 
-            builder.buildKey(source.getName(), classType);
+        BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
+        builder.setMappedKey(source.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
         
-        createBean(beanBuilder, componentRegistry, 
-                source.getGenericType(), null, null);
+        //BeanBuilder beanBuilder = 
+        //    builder.buildKey(source.getName(), classType);
+
+        if(beanBuilder != null){
+            createBean(beanBuilder, componentRegistry, 
+                    source.getGenericType(), null, null);
+        }
     }
 
     protected void createBean(BeanBuilder builder, 
@@ -202,11 +225,17 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 ClassUtil.getInstantiableClass(source.getClassType()) : 
                 source.getTarget();
         
-        BeanBuilder beanBuilder = 
-            builder.buildElement(source.getName(), classType);
+        BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
+        builder.setMappedElement(source.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
         
-        createBean(beanBuilder, componentRegistry, 
-                source.getGenericType(), null, null);
+        //BeanBuilder beanBuilder = 
+        //    builder.buildElement(source.getName(), classType);
+        
+        if(beanBuilder != null){
+            createBean(beanBuilder, componentRegistry, 
+                    source.getGenericType(), null, null);
+        }
+        
     }
     
     protected void createBean(ParametersBuilder builder, 
@@ -218,13 +247,18 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 ClassUtil.getInstantiableClass(actionParam.getType()) : 
                 target.value();
         
-        BeanBuilder beanBuilder = 
-            builder.buildParameter(actionParam.getName(), classType);
+        BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
+        builder.addParameterMapping(actionParam.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType), classType);
         
-        createBean(beanBuilder, componentRegistry, 
-                actionParam.getGenericType(), 
-                actionParam.getAnnotation(KeyCollection.class),
-                actionParam.getAnnotation(ElementCollection.class));
+        //BeanBuilder beanBuilder = 
+        //    builder.buildParameter(actionParam.getName(), classType);
+        
+        if(beanBuilder != null){
+            createBean(beanBuilder, componentRegistry, 
+                    actionParam.getGenericType(), 
+                    actionParam.getAnnotation(KeyCollection.class),
+                    actionParam.getAnnotation(ElementCollection.class));
+        }
     }
 
     protected void createBean(ControllerBuilder builder, 
@@ -235,12 +269,17 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 ClassUtil.getInstantiableClass(source.getType()) : 
                 target.value();
         
-        BeanBuilder beanBuilder = 
-            builder.buildProperty(source.getName(), classType);
+        BeanBuilder beanBuilder = this.createBean(builder, classType);
+        builder.addPropertyMapping(source.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
         
-        createBean(beanBuilder, componentRegistry, source.getGenericType(), 
-                source.getAnnotation(KeyCollection.class),
-                source.getAnnotation(ElementCollection.class));
+        //BeanBuilder beanBuilder = 
+        //    builder.buildProperty(source.getName(), classType);
+        
+        if(beanBuilder != null){
+            createBean(beanBuilder, componentRegistry, source.getGenericType(), 
+                    source.getAnnotation(KeyCollection.class),
+                    source.getAnnotation(ElementCollection.class));
+        }
     }
     
     protected void createBean(BeanBuilder builder, 
@@ -251,12 +290,18 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 ClassUtil.getInstantiableClass(source.getType()) : 
                 target.value();
         
-        BeanBuilder beanBuilder = 
-            builder.buildProperty(source.getName(), classType);
+        BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
+        builder.addMappedProperty(null, source.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
         
-        createBean(beanBuilder, componentRegistry, source.getGenericType(), 
-                source.getAnnotation(KeyCollection.class),
-                source.getAnnotation(ElementCollection.class));
+        //BeanBuilder beanBuilder = 
+        //    builder.buildProperty(source.getName(), classType);
+        
+        if(beanBuilder != null){
+            createBean(beanBuilder, componentRegistry, source.getGenericType(), 
+                    source.getAnnotation(KeyCollection.class),
+                    source.getAnnotation(ElementCollection.class));
+        }
+        
     }
 
     protected void createBean(ConstructorBuilder builder, 
@@ -267,12 +312,17 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 ClassUtil.getInstantiableClass(source.getType()) : 
                 target.value();
         
-        BeanBuilder beanBuilder = 
-            builder.buildConstructorArg(source.getName(), classType);
+        BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
+        builder.addMappedContructorArg(source.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
         
-        createBean(beanBuilder, componentRegistry, source.getGenericType(), 
-                source.getAnnotation(KeyCollection.class),
-                source.getAnnotation(ElementCollection.class));
+        //BeanBuilder beanBuilder = 
+        //    builder.buildConstructorArg(source.getName(), classType);
+        
+        if(beanBuilder != null){
+            createBean(beanBuilder, componentRegistry, source.getGenericType(), 
+                    source.getAnnotation(KeyCollection.class),
+                    source.getAnnotation(ElementCollection.class));
+        }
     }
 
     protected void createBean(ControllerBuilder builder, 
