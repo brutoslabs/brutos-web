@@ -391,4 +391,8 @@ public class ParametersBuilder extends RestrictionBuilder{
         return new ParameterBuilder(param);
     }
     
+    public ControllerBuilder getControllerBuilder(){
+        return this.controllerBuilder;
+    }
+    
 }

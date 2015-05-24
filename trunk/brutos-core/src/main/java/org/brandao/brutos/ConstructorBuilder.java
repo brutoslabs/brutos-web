@@ -263,4 +263,9 @@ public class ConstructorBuilder extends RestrictionBuilder{
     public Class getClassType(){
         return this.mappingBean.getClassType();
     }
+    
+    public ControllerBuilder getControllerBuilder(){
+        return this.controllerBuilder;
+    }
+    
 }
