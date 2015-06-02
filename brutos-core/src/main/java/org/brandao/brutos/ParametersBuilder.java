@@ -379,7 +379,7 @@ public class ParametersBuilder extends RestrictionBuilder{
         }
 
         action.addParameter( parameter );
-        return new ParameterBuilder( parameter );
+        return new ParameterBuilder(parameter, this);
     }
 
     public int getParametersSize(){
@@ -388,7 +388,7 @@ public class ParametersBuilder extends RestrictionBuilder{
     
     public ParameterBuilder getParameter(int index){
         ParameterAction param = this.action.getParameter(index);
-        return new ParameterBuilder(param);
+        return new ParameterBuilder(param, this);
     }
     
     public ControllerBuilder getControllerBuilder(){

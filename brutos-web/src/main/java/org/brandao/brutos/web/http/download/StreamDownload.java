@@ -39,22 +39,18 @@ public class StreamDownload implements Download{
         this.contentLength = contentLength;
     }
 
-    @Override
     public String getContentType() {
         return null;
     }
 
-    @Override
     public Map<String, String> getHeader() {
         return header;
     }
 
-    @Override
     public long getContentLength() {
         return contentLength;
     }
 
-    @Override
     public void write(OutputStream out) throws IOException {
         try{
             byte[] data = new byte[2048];

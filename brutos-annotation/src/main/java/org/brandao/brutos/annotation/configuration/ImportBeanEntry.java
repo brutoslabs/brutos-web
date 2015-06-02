@@ -24,6 +24,7 @@ package org.brandao.brutos.annotation.configuration;
 public class ImportBeanEntry implements BeanEntry{
     
     private Class clazz;
+    
     public ImportBeanEntry(Class clazz){
         this.clazz = clazz;
     }

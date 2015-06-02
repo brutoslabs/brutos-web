@@ -79,14 +79,14 @@ public class Controller {
     
     private boolean resolvedView;
     
-    private ApplicationContext context;
+    private ConfigurableApplicationContext context;
     
     private BeanInstance beanInstance;
 
     /**
      * Cria um novo controlador.
      */
-    public Controller(ApplicationContext context) {
+    public Controller(ConfigurableApplicationContext context) {
         this.fields             = new ArrayList();
         this.mappingBeans       = new LinkedHashMap();
         this.actions            = new LinkedHashMap();
@@ -449,11 +449,11 @@ public class Controller {
         this.actionType = actionType;
     }
 
-    public ApplicationContext getContext() {
+    public ConfigurableApplicationContext getContext() {
         return context;
     }
 
-    public void setContext(ApplicationContext context) {
+    public void setContext(ConfigurableApplicationContext context) {
         this.context = context;
     }
 

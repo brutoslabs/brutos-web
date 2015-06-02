@@ -350,7 +350,7 @@ public class ControllerBuilder {
             String parentBeanName, Class target ){
 
         if( target == null )
-            throw new NullPointerException();
+            throw new BrutosException("invalid target class");
 
         name = StringUtil.adjust(name);
         
@@ -358,9 +358,6 @@ public class ControllerBuilder {
             throw new BrutosException( "invalid bean name: \"" +
                     name + "\"");
             
-        if( target == null )
-            throw new BrutosException( "invalid target class");
-        
         if( controller.getBean( name ) != null )
             throw new BrutosException( "duplicate bean name: \"" + name + "\"" );
 
@@ -831,7 +828,7 @@ public class ControllerBuilder {
 
         controller.addProperty( property );
 
-        return new PropertyBuilder( property );
+        return new PropertyBuilder(property, this);
     }
 
     /**
@@ -964,7 +961,7 @@ public class ControllerBuilder {
 
     public PropertyBuilder getProperty(String name){
         PropertyController property = (PropertyController) controller.getProperty(name);
-        return property == null? null : new PropertyBuilder( property );
+        return property == null? null : new PropertyBuilder(property, this);
     }
 
     public boolean isResolvedView(){

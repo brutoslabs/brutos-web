@@ -543,5 +543,18 @@ public class AnnotationUtil {
         
         return property.getName();
     }
+
+    public static String getBeanName(Class<?> type){
+    	
+        Bean bean = (Bean)type.getAnnotation(Bean.class);
+        String name = StringUtil.adjust(bean.value());
+        name = 
+            StringUtil.isEmpty(name)? 
+                StringUtil.getVariableFormat(type.getSimpleName()) : 
+                name;
+    	
+    	return name;
+    	
+    }
     
 }

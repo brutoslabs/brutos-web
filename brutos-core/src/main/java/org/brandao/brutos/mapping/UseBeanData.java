@@ -37,6 +37,8 @@ public abstract class UseBeanData {
 
     protected Bean mapping;
 
+    protected MetaBean metaBean;
+    
     protected Object staticValue;
 
     protected Type type;
@@ -69,21 +71,26 @@ public abstract class UseBeanData {
         Object value = null;
 
         if( !isNullable() ){
-            if( mapping != null ){
-                value = mapping.getValue(name == null? null : name + mapping.getSeparator());
-                value = type.convert(value);
+        	if(this.metaBean != null){
+                value = this.metaBean.getValue(this.name == null? null : this.name + mapping.getSeparator());
+                value = this.type.convert(value);
+        	}
+        	else
+            if( this.mapping != null ){
+                value = this.mapping.getValue(this.name == null? null : this.name + mapping.getSeparator());
+                value = this.type.convert(value);
             }
             else
-            if(staticValue!= null)
-                value = type.convert( staticValue );
+            if(this.staticValue!= null)
+                value = this.type.convert( this.staticValue );
             else
-            if( type instanceof CollectionType || type instanceof ArrayType ){
-                value = name == null? null : getScope().getCollection(name);
-                value = type.convert( value );
+            if( this.type instanceof CollectionType || this.type instanceof ArrayType ){
+                value = this.name == null? null : getScope().getCollection(this.name);
+                value = this.type.convert( value );
             }
             else{
-                value = name == null? null : getScope().get(name);
-                value = type.convert( value );
+                value = this.name == null? null : getScope().get(this.name);
+                value = this.type.convert( value );
             }
         }
 
@@ -103,7 +110,6 @@ public abstract class UseBeanData {
             return this.mapping.getClassType();
         else
             return null;
-        //return type == null? null : type.getClassType();
     }
     
     public Type getType() {
@@ -158,4 +164,13 @@ public abstract class UseBeanData {
     public void setNullable(boolean nullable) {
         this.nullable = nullable;
     }
+
+	public MetaBean getMetaBean() {
+		return metaBean;
+	}
+
+	public void setMetaBean(MetaBean metaBean) {
+		this.metaBean = metaBean;
+	}
+    
 }

@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ControllerRegistry;
 import org.brandao.brutos.InterceptorRegistry;
 import org.brandao.brutos.ScopeRegistry;

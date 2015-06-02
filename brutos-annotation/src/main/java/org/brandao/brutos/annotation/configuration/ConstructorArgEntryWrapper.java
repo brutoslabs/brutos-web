@@ -90,7 +90,7 @@ public class ConstructorArgEntryWrapper
 
     @Override
     public void setIndex(int index) {
-        this.setIndex(index);
+    	constructorArgEntry.setIndex(index);
     }
     
 }
