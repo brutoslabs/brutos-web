@@ -182,7 +182,7 @@ public class BeanPropertyTest {
         return propertyL;
     }
 
-    @ElementCollection(bean="myElement", useMapping=true)
+    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     public void setPropertyL(Map<String,BeanConstructorTest> propertyL) {
         this.propertyL = propertyL;
     }
@@ -234,8 +234,8 @@ public class BeanPropertyTest {
         return propertyR;
     }
 
-    @KeyCollection(bean="myKey", useMapping=true)
-    @ElementCollection(bean="myElement", useMapping=true)
+    @KeyCollection(bean="myKey", mappingType=MappingTypes.COMPLEX)
+    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     public void setPropertyR(Map<BeanConstructorTest,BeanConstructorTest> propertyR) {
         this.propertyR = propertyR;
     }
@@ -244,7 +244,7 @@ public class BeanPropertyTest {
         return propertyS;
     }
 
-    @ElementCollection(bean="myElement", useMapping=true)
+    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     public void setPropertyS(List<BeanConstructorTest> propertyS) {
         this.propertyS = propertyS;
     }
@@ -269,7 +269,7 @@ public class BeanPropertyTest {
         return propertyV;
     }
 
-    @ElementCollection(bean="myElement2",useMapping=true)
+    @ElementCollection(bean="myElement2", mappingType=MappingTypes.COMPLEX)
     public void setPropertyV(Map<String,CustomArrayList> propertyV) {
         this.propertyV = propertyV;
     }

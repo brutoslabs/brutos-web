@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation.helper.bean.app1;
 
 import org.brandao.brutos.annotation.Identify;
+import org.brandao.brutos.annotation.MappingTypes;
 
 /**
  *
@@ -26,7 +27,7 @@ import org.brandao.brutos.annotation.Identify;
 public class Bean3TestController {
     
     public String testeAction(
-            @Identify(bean="bean1", useMapping = true) Bean1 arg0){
+            @Identify(bean="bean1", mappingType=MappingTypes.COMPLEX) Bean1 arg0){
         return arg0.getProperty();
     }
 

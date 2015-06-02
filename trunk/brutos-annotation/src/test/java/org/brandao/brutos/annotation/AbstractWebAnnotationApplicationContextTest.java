@@ -39,22 +39,18 @@ public abstract class AbstractWebAnnotationApplicationContextTest
     extends TestCase 
     implements AnnotationApplicationContextTest{
     
-    @Override
     public ConfigurableApplicationContext getApplication(String complement){
         return this.getApplication(null, complement);
     }
     
-    @Override
     public ConfigurableApplicationContext getApplication(Class[] clazz){
         return this.getApplication(clazz, null);
     }
 
-    @Override
     public ConfigurableApplicationContext getApplication(Class[] clazz, String complement){
         return this.getApplication(clazz, complement, null);
     }
     
-    @Override
     public ConfigurableApplicationContext getApplication(Class[] clazz, String complement, Class[] types){
         String xml = "";
         xml +="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";

@@ -20,13 +20,14 @@ package org.brandao.brutos.annotation.helper.bean;
 import java.util.ArrayList;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
+import org.brandao.brutos.annotation.MappingTypes;
 
 /**
  *
  * @author Brandao
  */
 @Bean
-@ElementCollection(bean="myElement",useMapping=true)
+@ElementCollection(bean="myElement",mappingType=MappingTypes.COMPLEX)
 public class CustomArrayList extends ArrayList<BeanConstructorTest>{
     
 }

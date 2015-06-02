@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation.helper;
 
 import org.brandao.brutos.annotation.Identify;
+import org.brandao.brutos.annotation.MappingTypes;
 import org.brandao.brutos.annotation.ScopeType;
 
 /**
@@ -27,7 +28,7 @@ import org.brandao.brutos.annotation.ScopeType;
 public class ActionTest28Controller {
 
     public void myAction(
-            @Identify(bean="sdf", useMapping=true)
+            @Identify(bean="sdf", mappingType=MappingTypes.COMPLEX)
             ScopeType a){
     }
     
