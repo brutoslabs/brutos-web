@@ -19,6 +19,9 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.ConstructorArgBean;
+import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MetaBean;
+import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
@@ -30,9 +33,12 @@ public class ConstructorArgBuilder extends RestrictionBuilder{
 
     private ConstructorArgBean arg;
     
-    public ConstructorArgBuilder(ConstructorArgBean arg){
+    private ConstructorBuilder constructorBuilder;
+    
+    public ConstructorArgBuilder(ConstructorArgBean arg, ConstructorBuilder constructorBuilder){
         super( arg.getValidator().getConfiguration() );
         this.arg = arg;
+        this.constructorBuilder = constructorBuilder;
     }
 
     public RestrictionBuilder addRestriction( RestrictionRules ruleId, Object value ){
@@ -43,5 +49,57 @@ public class ConstructorArgBuilder extends RestrictionBuilder{
         return super.setMessage(message);
     }
 
+    public ConstructorBuilder getConstructorBuilder(){
+    	return this.constructorBuilder;
+    }
+    
+    public MetaBeanBuilder buildMetaBean(String name, Class<?> classType){
+    	return this.buildMetaBean(name, ScopeType.PARAM, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+    			BrutosConstants.DEFAULT_TEMPORALPROPERTY, classType, null);
+    }
+
+    public MetaBeanBuilder buildMetaBean(String name, 
+            EnumerationType enumProperty, String temporalProperty, 
+            Class<?> classType){
+    	return this.buildMetaBean(name, ScopeType.PARAM, enumProperty, 
+    			temporalProperty, classType, null);
+    }
+
+    public MetaBeanBuilder buildMetaBean(String name, Type type ){
+    	return this.buildMetaBean(name, ScopeType.PARAM, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+    			BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, type);
+    }
+
+    public MetaBeanBuilder buildMetaBean(String name, ScopeType scope, Class<?> classType){
+    	return this.buildMetaBean(name, scope, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+    			BrutosConstants.DEFAULT_TEMPORALPROPERTY, classType, null);
+    }
+
+    public MetaBeanBuilder buildMetaBean(String name, ScopeType scope, Type type){
+    	return this.buildMetaBean(name, scope, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+    			BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, type);
+    }
+    
+    public MetaBeanBuilder buildMetaBean(String name, 
+            ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
+            Class<?> classType, Type type ){
+
+    	Controller controller = this.arg.getBean().getController();
+
+		MetaBean metaBean = new MetaBean(controller);
+
+		this.arg.setMetaBean(metaBean);
+		
+    	MetaBeanBuilder builder = 
+    			new MetaBeanBuilder(
+    					metaBean,
+    					name, 
+    					scope, 
+    					enumProperty, 
+    					temporalProperty, classType, 
+    					type);
+    	
+    	return builder; 
+    }
 
 }

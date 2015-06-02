@@ -34,18 +34,18 @@ public class ConstructorBuilder extends RestrictionBuilder{
 
     private Bean mappingBean;
     
-    private ControllerBuilder controllerBuilder;
+    private BeanBuilder beanBuilder;
     
     private ValidatorFactory validatorFactory;
 
     private Controller controller;
 
     public ConstructorBuilder(Bean mappingBean, 
-            ControllerBuilder controllerBuilder, 
+    		BeanBuilder beanBuilder, 
             ValidatorFactory validatorFactory, Controller controller) {
         super(mappingBean.getConstructor().getValidator().getConfiguration());
         this.mappingBean = mappingBean;
-        this.controllerBuilder = controllerBuilder;
+        this.beanBuilder = beanBuilder;
         this.validatorFactory = validatorFactory;
         this.controller = controller;
     }
@@ -65,7 +65,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
                 + "#[" + this.mappingBean.getConstructor().size() + "]";
 
         BeanBuilder beanBuilder =
-                this.controllerBuilder.buildMappingBean(
+                this.beanBuilder.getControllerBuilder().buildMappingBean(
                         beanName, this.mappingBean.getName(), target);
 
         this.addMappedContructorArg(name, beanName);
@@ -89,7 +89,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
                 + "#[" + this.mappingBean.getConstructor().size() + "]";
 
         BeanBuilder beanBuilder =
-                this.controllerBuilder.buildMappingBean(
+                this.beanBuilder.getControllerBuilder().buildMappingBean(
                         beanName, this.mappingBean.getName(), target);
 
         this.addMappedContructorArg(name, beanName);
@@ -239,7 +239,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
         Configuration validatorConfig = new Configuration();
         arg.setValidator( this.validatorFactory.getValidator(validatorConfig) );
         this.mappingBean.getConstructor().addConstructorArg(arg);
-        return new ConstructorArgBuilder( arg );
+        return new ConstructorArgBuilder(arg, this);
     }
 
     protected String getPrefixLogger(){
@@ -257,15 +257,15 @@ public class ConstructorBuilder extends RestrictionBuilder{
 
     public ConstructorArgBuilder getConstructorArg(int index){
         ConstructorArgBean arg = mappingBean.getConstructor().getConstructorArg(index);
-        return new ConstructorArgBuilder(arg);
+        return new ConstructorArgBuilder(arg, this);
     }
     
     public Class getClassType(){
         return this.mappingBean.getClassType();
     }
     
-    public ControllerBuilder getControllerBuilder(){
-        return this.controllerBuilder;
+    public BeanBuilder getBeanBuilder(){
+        return this.beanBuilder;
     }
     
 }

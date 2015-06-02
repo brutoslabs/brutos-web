@@ -18,6 +18,7 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
+import org.brandao.brutos.annotation.AnyKeyCollection;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.KeyCollection;
 import org.brandao.brutos.annotation.Stereotype;
@@ -72,10 +73,24 @@ public class KeyCollectionAnnotationConfig
         org.brandao.brutos.type.Type type = 
                 keyEntry.getType() == null? null : AnnotationUtil.getTypeInstance(keyEntry.getType());
         
-        Object classType = keyEntry.getTarget() == null? keyEntry.getGenericType() : keyEntry.getTarget();
+        Object classType;
         
-        builder.setKey(
+        if(keyEntry.isAnnotationPresent(AnyKeyCollection.class))
+        	classType = Object.class;
+        else{
+        	classType = 
+        			keyEntry.getTarget() == null? 
+        					keyEntry.getGenericType() : 
+    						keyEntry.getTarget();
+        }
+        
+        KeyBuilder keyBuilder = builder.setKey(
             key, enumType, tempType, null, scope, null, type, classType);
+        
+        super.applyInternalConfiguration(
+                key, 
+                keyBuilder, 
+                componentRegistry);
     }
     
     protected void buildKey(KeyEntry key, Object builder, 

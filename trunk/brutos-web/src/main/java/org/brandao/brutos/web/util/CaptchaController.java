@@ -61,22 +61,18 @@ public class CaptchaController {
 
         Download download = new Download() {
 
-            @Override
             public String getContentType() {
                 return "image/jpeg";
             }
 
-            @Override
             public Map<String, String> getHeader() {
                 return null;
             }
 
-            @Override
             public long getContentLength() {
                 return -1;
             }
 
-            @Override
             public void write(OutputStream out) throws IOException {
                 Imagem i = new Imagem();
                 BufferedImage bi = i.getImage( value );

@@ -38,6 +38,8 @@ public abstract class DependencyBean {
 
     protected String mapping;
 
+    protected MetaBean metaBean;
+    
     protected EnumerationType enumProperty;
 
     protected String temporalType;
@@ -166,8 +168,39 @@ public abstract class DependencyBean {
         
         Object result;
 
-        if( mapping == null ){
-            
+    	if(this.mapping != null){
+            Bean dependencyBean =
+                    controller.getBean( mapping );
+
+                if( dependencyBean == null )
+                    throw new BrutosException( "mapping not found: " + mapping );
+
+                String newPrefix = null;
+                if(parent.isHierarchy()){
+                    String parameter = getParameterName();
+                    if(!(prefix == null && parameter == null)){
+                        newPrefix = prefix == null? "" : prefix;
+                        newPrefix += parameter == null? "" : parameter;
+                    }
+                }
+
+                if(newPrefix != null){
+                    newPrefix += index < 0?
+                                        "" :
+                                        parent.getIndexFormat().replace(
+                                            "$index",
+                                            String.valueOf(index) );
+                    newPrefix += parent.getSeparator();
+                }
+                result = dependencyBean.getValue(
+                    value,
+                    newPrefix,
+                    -1,
+                    exceptionHandler,
+                    false);
+    	}
+    	else
+    	if(this.metaBean == null){
             if( isStatic() )
                 result = getValue();
             else{
@@ -188,40 +221,10 @@ public abstract class DependencyBean {
                 isNullable()? 
                     null : 
                     type.convert( result );
-                    //type.getValue( result );
-            
         }
-        else{
-            Bean dependencyBean =
-                controller.getBean( mapping );
-
-            if( dependencyBean == null )
-                throw new BrutosException( "mapping not found: " + mapping );
-
-            String newPrefix = null;
-            if(parent.isHierarchy()){
-                String parameter = getParameterName();
-                if(!(prefix == null && parameter == null)){
-                    newPrefix = prefix == null? "" : prefix;
-                    newPrefix += parameter == null? "" : parameter;
-                }
-            }
-
-            if(newPrefix != null){
-                newPrefix += index < 0?
-                                    "" :
-                                    parent.getIndexFormat().replace(
-                                        "$index",
-                                        String.valueOf(index) );
-                newPrefix += parent.getSeparator();
-            }
-            result = dependencyBean.getValue(
-                value,
-                newPrefix,
-                -1,//index,
-                exceptionHandler,
-                false);
-            
+    	else{
+        	result = this.metaBean.getValue(prefix);
+        	result = type.convert(result);
         }
 
         try{
@@ -261,5 +264,13 @@ public abstract class DependencyBean {
     public void setScopeType(ScopeType scopeType) {
         this.scopeType = scopeType;
     }
-    
+
+	public MetaBean getMetaBean() {
+		return metaBean;
+	}
+
+	public void setMetaBean(MetaBean metaBean) {
+		this.metaBean = metaBean;
+	}
+
 }

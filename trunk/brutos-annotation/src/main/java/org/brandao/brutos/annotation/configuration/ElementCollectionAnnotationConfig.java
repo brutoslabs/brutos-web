@@ -18,9 +18,11 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
+import org.brandao.brutos.annotation.AnyElementCollection;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.mapping.MappingException;
 
 /**
  *
@@ -34,12 +36,23 @@ public class ElementCollectionAnnotationConfig
         return source instanceof ElementEntry;
     }
 
-    public Object applyConfiguration(Object source, Object builder, 
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		try{
+			return this.applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new MappingException("can't create element of collection: "
+					+ ((ElementEntry) source).getName(), e);
+		}
+	}
+    
+    public Object applyConfiguration0(Object source, Object builder, 
             ComponentRegistry componentRegistry) {
         
         ElementEntry element = (ElementEntry)source;
         
-        if(AnnotationUtil.isBuildEntity(componentRegistry, element.getMappingType(), element.getClassType()))
+        if(!element.isAnnotationPresent(AnyElementCollection.class) && AnnotationUtil.isBuildEntity(componentRegistry, element.getMappingType(), element.getClassType()))
             buildElement(element, builder, componentRegistry);
         else
             addElement(element, (BeanBuilder)builder, componentRegistry);
@@ -56,12 +69,28 @@ public class ElementCollectionAnnotationConfig
         String tempType = elementEntry.getTemporal();
         ScopeType scope = elementEntry.getScopeType();
         org.brandao.brutos.type.Type type = 
-                elementEntry.getType() == null? null : AnnotationUtil.getTypeInstance(elementEntry.getType());
+                elementEntry.getType() == null? 
+            		null : 
+        			AnnotationUtil.getTypeInstance(elementEntry.getType());
         
-        Object classType = elementEntry.getTarget() == null? elementEntry.getGenericType() : elementEntry.getTarget();
+        Object classType;
         
-        builder.setElement(
+        if(elementEntry.isAnnotationPresent(AnyElementCollection.class))
+        	classType = Object.class;
+        else{
+        	classType = 
+        			elementEntry.getTarget() == null? 
+    					elementEntry.getGenericType() : 
+						elementEntry.getTarget();
+        }
+        
+        ElementBuilder elementBuilder = builder.setElement(
             element, enumType, tempType, null, scope, null, false, type, classType);
+        
+        super.applyInternalConfiguration(
+        		elementEntry, 
+                elementBuilder, 
+                componentRegistry);
     }
     
     protected void buildElement(ElementEntry element, Object builder, 

@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.EnumerationType;
@@ -49,11 +50,14 @@ public class ElementEntry implements BeanEntry{
     
     private Class<? extends org.brandao.brutos.type.Type> type;
     
+    private Annotation[] annotation;
+    
     public ElementEntry(){
-        this(null, null, null);
+        this(null, null, null, null);
     }
 
-    public ElementEntry(Class<?> classType, Type genericType, ElementCollection definition){
+    public ElementEntry(Class<?> classType, Type genericType, ElementCollection definition, Annotation[] annotation){
+    	this.annotation = annotation;
         this.classType = classType;
         this.genericType = genericType;
         if(definition != null){
@@ -152,7 +156,7 @@ public class ElementEntry implements BeanEntry{
         this.type = type;
     }
 
-    public Class getBeanType() {
+    public Class<?> getBeanType() {
         return this.getClassType();
     }
 
@@ -170,6 +174,25 @@ public class ElementEntry implements BeanEntry{
 
     public void setMappingType(MappingTypes mappingType) {
         this.mappingType = mappingType;
+    }
+    
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
+        for( Annotation a: this.annotation ){
+            if( a.annotationType().isAssignableFrom(annotation) )
+                return true;
+        }
+        
+        return false;
+    }
+    
+    @SuppressWarnings("unchecked")
+	public <T> T getAnnotation(Class<T> annotation){
+        for( Annotation a: this.annotation ){
+            if( a.annotationType().isAssignableFrom(annotation) )
+                return (T) a;
+        }
+        
+        return null;
     }
     
 }

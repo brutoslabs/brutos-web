@@ -28,7 +28,7 @@ import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
  *
  * @author Brandao
  */
-@Stereotype(target=Identify.class,executeAfter={Controller.class, Bean.class,Action.class})
+@Stereotype(target=Identify.class,executeAfter={Controller.class,Bean.class,Action.class})
 public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
@@ -99,7 +99,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
         Identify identify = source.getAnnotation(Identify.class);
         
-        if(AnnotationUtil.isBuildEntity(componentRegistry, identify, source.getType()))
+        if(!source.isAnnotationPresent(Any.class) && AnnotationUtil.isBuildEntity(componentRegistry, identify, source.getType()))
             paramBuilder = buildParameter(builder, source, componentRegistry);
         else
             paramBuilder = addParameter(source, builder, componentRegistry);
@@ -115,7 +115,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
 
         Identify identify = source.getAnnotation(Identify.class);
         
-        if(AnnotationUtil.isBuildEntity(componentRegistry, identify, source.getType()))
+        if(!source.isAnnotationPresent(Any.class) && AnnotationUtil.isBuildEntity(componentRegistry, identify, source.getType()))
             propertyBuilder = buildProperty(builder, source, componentRegistry);
         else
             propertyBuilder = addProperty(source, builder, componentRegistry);
@@ -132,7 +132,7 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
         Identify identify = source.getAnnotation(Identify.class);
         
-        if(AnnotationUtil.isBuildEntity(componentRegistry, identify, source.getType()))
+        if(!source.isAnnotationPresent(Any.class) && AnnotationUtil.isBuildEntity(componentRegistry, identify, source.getType()))
             constructorBuilder = buildConstructorArg(builder, source, componentRegistry);
         else
             constructorBuilder = addConstructorArg(source, builder, componentRegistry);
@@ -146,14 +146,20 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
         Identify identify = source.getAnnotation(Identify.class);
         
-        String name = source.getName() == null? "arg"+source.getIndex() : source.getName();
+        String name = source.getName() == null? source.getDefaultName() : source.getName();
         ScopeType scope = AnnotationUtil.getScope(identify);
         EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
         String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
         
-        Target target = source.getAnnotation(Target.class);
-        Object classType = target == null? source.getGenericType() : target.value();
+        Object classType;
+        
+        if(source.isAnnotationPresent(Any.class))
+        	classType = Object.class;
+        else{
+	        Target target = source.getAnnotation(Target.class);
+	        classType = target == null? source.getGenericType() : target.value();
+        }
         
         //String mapping = identify != null && identify.useMapping()? name : null;
                 
@@ -182,8 +188,14 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         String temporalProperty = AnnotationUtil.getTemporalProperty(property.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(property.getAnnotation(Type.class));
         
-        Target target = property.getAnnotation(Target.class);
-        Object classType = target == null? property.getGenericType() : target.value();
+        Object classType;
+        
+        if(property.isAnnotationPresent(Any.class))
+        	classType = Object.class;
+        else{
+	        Target target = property.getAnnotation(Target.class);
+	        classType = target == null? property.getGenericType() : target.value();
+        }
         
         //String mapping = identify != null && identify.mapping()? name : null;
 
@@ -255,14 +267,20 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         
         Identify identify = source.getAnnotation(Identify.class);
         
-        String name = source.getName() == null? "arg" + source.getIndex() : source.getName();
+        String name = source.getName() == null? source.getDefaultName() : source.getName();
         ScopeType scope = AnnotationUtil.getScope(identify);
         EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
         String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
         
-        Target target = source.getAnnotation(Target.class);
-        Object classType = target == null? source.getGenericType() : target.value();
+        Object classType;
+        
+        if(source.isAnnotationPresent(Any.class))
+        	classType = Object.class;
+        else{
+	        Target target = source.getAnnotation(Target.class);
+	        classType = target == null? source.getGenericType() : target.value();
+        }
         
         return builder.addParameter(name, scope, enumProperty, 
                 temporalProperty, null, type, null, false, classType);
@@ -272,7 +290,8 @@ public class IdentifyAnnotationConfig extends AbstractAnnotationConfig{
         return param.getName();
     }
 
-    public Class<? extends Annotation>[] getExecutionOrder(){
+	@SuppressWarnings("unchecked")
+	public Class<? extends Annotation>[] getExecutionOrder(){
         return new Class[]{
           Bean.class,
           Restriction.class,

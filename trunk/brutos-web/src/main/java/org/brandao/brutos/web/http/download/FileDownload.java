@@ -48,22 +48,18 @@ public class FileDownload implements Download{
         this.header      = header;
     }
 
-    @Override
     public String getContentType() {
         return this.contentType;
     }
 
-    @Override
     public Map<String, String> getHeader() {
         return this.header;
     }
 
-    @Override
     public long getContentLength() {
         return file.length();
     }
 
-    @Override
     public void write(OutputStream out) throws IOException {
         FileInputStream fin = null;
         try{

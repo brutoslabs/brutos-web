@@ -101,9 +101,14 @@ public class ActionParamEntry {
             
         }
         
-        return "arg"+index;
+        //return "arg"+index;
+        return null;
     }
 
+    public String getDefaultName(){
+    	return "arg"+index;
+    }
+    
     public void setName(String name) {
         this.name = name;
     }

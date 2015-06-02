@@ -59,6 +59,8 @@ public class ActionBuilder extends RestrictionBuilder{
     
     protected ConfigurableApplicationContext applicationContext;
     
+    protected ParametersBuilder parametersBuilder;
+    
     public ActionBuilder(ActionBuilder actionBuilder){
         this(actionBuilder.action, actionBuilder.controller, 
                 actionBuilder.validatorFactory, actionBuilder.controllerBuilder, 
@@ -74,6 +76,10 @@ public class ActionBuilder extends RestrictionBuilder{
         this.validatorFactory = validatorFactory;
         this.controllerBuilder = controllerBuilder;
         this.applicationContext = applicationContext;
+        this.parametersBuilder = 
+        		new ParametersBuilder(controller, 
+	                action, validatorFactory, controllerBuilder, 
+	                applicationContext);
     }
 
     public ActionBuilder addAlias(String value){
@@ -88,10 +94,7 @@ public class ActionBuilder extends RestrictionBuilder{
     
 
     public ParametersBuilder buildParameters(){
-        return 
-            new ParametersBuilder(controller, 
-                    action, validatorFactory, controllerBuilder, 
-                    applicationContext);
+        return this.parametersBuilder;
     }
     
     /**
@@ -276,7 +279,7 @@ public class ActionBuilder extends RestrictionBuilder{
     
     public ParameterBuilder getParameter(int index){
         ParameterAction param = this.action.getParameter(index);
-        return new ParameterBuilder(param);
+        return new ParameterBuilder(param, this.parametersBuilder);
     }
     
 }

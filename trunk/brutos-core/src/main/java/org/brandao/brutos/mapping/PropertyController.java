@@ -111,16 +111,10 @@ public class PropertyController extends UseBeanData{
         this.controller = controller;
     }
 
-    /**
-     * @return the propertyName
-     */
     public String getPropertyName() {
         return propertyName;
     }
 
-    /**
-     * @param propertyName the propertyName to set
-     */
     public void setPropertyName(String propertyName) {
         this.propertyName = propertyName;
     }

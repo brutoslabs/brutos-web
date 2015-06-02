@@ -43,6 +43,7 @@ import org.brandao.brutos.type.TypeUtil;
     executeAfter={
         Controller.class,
         Identify.class,
+        Any.class,
         KeyCollection.class,
         ElementCollection.class
     }
@@ -184,17 +185,13 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         }
     }
     
-    private String getBeanName(Class type){
-    	return type.getName().replace(".", "#");
-    }
-    
     protected BeanBuilder createBean(ControllerBuilder controllerBuilder, Class type){
     	
     	if(Map.class.isAssignableFrom(type) ||Collection.class.isAssignableFrom(type))
-            return controllerBuilder.buildMappingBean(getBeanName(type) + "#" + count++ , type);
+            return controllerBuilder.buildMappingBean(AnnotationUtil.getBeanName(type) + "#" + count++ , type);
     	else
-    	if(controllerBuilder.getBean(type.getName().replace(".", "#")) == null)
-            return controllerBuilder.buildMappingBean(getBeanName(type), type);
+    	if(controllerBuilder.getBean(AnnotationUtil.getBeanName(type)) == null)
+            return controllerBuilder.buildMappingBean(AnnotationUtil.getBeanName(type), type);
         else
             return null;
     }
@@ -207,14 +204,14 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 source.getTarget();
         
         BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
-        builder.setMappedKey(source.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
+        builder.setMappedKey(source.getName(), beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType));
         
         //BeanBuilder beanBuilder = 
         //    builder.buildKey(source.getName(), classType);
 
         if(beanBuilder != null){
             createBean(beanBuilder, componentRegistry, 
-                    source.getGenericType(), null, null);
+                    source.getGenericType(), null, null, null, null);
         }
     }
 
@@ -226,14 +223,14 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 source.getTarget();
         
         BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
-        builder.setMappedElement(source.getName(), beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
+        builder.setMappedElement(source.getName(), beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType));
         
         //BeanBuilder beanBuilder = 
         //    builder.buildElement(source.getName(), classType);
         
         if(beanBuilder != null){
             createBean(beanBuilder, componentRegistry, 
-                    source.getGenericType(), null, null);
+                    source.getGenericType(), null, null, null, null);
         }
         
     }
@@ -250,7 +247,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
         builder.addParameterMapping(
         		actionParam.getName(), 
-        		beanBuilder != null? beanBuilder.getName() : getBeanName(classType), classType);
+        		beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType), classType);
         
         //BeanBuilder beanBuilder = 
         //    builder.buildParameter(actionParam.getName(), classType);
@@ -259,7 +256,9 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             createBean(beanBuilder, componentRegistry, 
                     actionParam.getGenericType(), 
                     actionParam.getAnnotation(KeyCollection.class),
-                    actionParam.getAnnotation(ElementCollection.class));
+                    actionParam.getAnnotation(AnyKeyCollection.class),
+                    actionParam.getAnnotation(ElementCollection.class),
+                    actionParam.getAnnotation(AnyElementCollection.class));
         }
     }
 
@@ -275,7 +274,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         builder.addPropertyMapping(
         		source.getName(),
         		AnnotationUtil.getBeanName(source),
-        		beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
+        		beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType));
         
         //BeanBuilder beanBuilder = 
         //    builder.buildProperty(source.getName(), classType);
@@ -283,7 +282,9 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         if(beanBuilder != null){
             createBean(beanBuilder, componentRegistry, source.getGenericType(), 
                     source.getAnnotation(KeyCollection.class),
-                    source.getAnnotation(ElementCollection.class));
+                    source.getAnnotation(AnyKeyCollection.class),
+                    source.getAnnotation(ElementCollection.class),
+            		source.getAnnotation(AnyElementCollection.class));
         }
     }
     
@@ -299,7 +300,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         builder.addMappedProperty(
         		AnnotationUtil.getBeanName(source), 
         		source.getName(), 
-        		beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
+        		beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType));
         
         //BeanBuilder beanBuilder = 
         //    builder.buildProperty(source.getName(), classType);
@@ -307,7 +308,9 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         if(beanBuilder != null){
             createBean(beanBuilder, componentRegistry, source.getGenericType(), 
                     source.getAnnotation(KeyCollection.class),
-                    source.getAnnotation(ElementCollection.class));
+                    source.getAnnotation(AnyKeyCollection.class),
+                    source.getAnnotation(ElementCollection.class),
+            		source.getAnnotation(AnyElementCollection.class));
         }
         
     }
@@ -320,10 +323,10 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 ClassUtil.getInstantiableClass(source.getType()) : 
                 target.value();
         
-        BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
+        BeanBuilder beanBuilder = this.createBean(builder.getBeanBuilder().getControllerBuilder(), classType);
         builder.addMappedContructorArg(
         		source.getName(), 
-        		beanBuilder != null? beanBuilder.getName() : getBeanName(classType));
+        		beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType));
         
         //BeanBuilder beanBuilder = 
         //    builder.buildConstructorArg(source.getName(), classType);
@@ -331,7 +334,9 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         if(beanBuilder != null){
             createBean(beanBuilder, componentRegistry, source.getGenericType(), 
                     source.getAnnotation(KeyCollection.class),
-                    source.getAnnotation(ElementCollection.class));
+                    source.getAnnotation(AnyKeyCollection.class),
+                    source.getAnnotation(ElementCollection.class),
+            		source.getAnnotation(AnyElementCollection.class));
         }
     }
 
@@ -352,7 +357,9 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         createBean(beanBuilder, componentRegistry, 
                 type, 
                 (KeyCollection)type.getAnnotation(KeyCollection.class),
-                (ElementCollection)type.getAnnotation(ElementCollection.class));
+                (AnyKeyCollection)type.getAnnotation(AnyKeyCollection.class),
+                (ElementCollection)type.getAnnotation(ElementCollection.class),
+        		(AnyElementCollection)type.getAnnotation(AnyElementCollection.class));
             
         addfactories(beanBuilder, componentRegistry, type);
     }
@@ -360,7 +367,10 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(BeanBuilder beanBuilder, 
             ComponentRegistry componentRegistry, 
             Object genericType, 
-            KeyCollection keyCollection, ElementCollection elementCollection){
+            KeyCollection keyCollection, 
+            AnyKeyCollection anyKeyCollection, 
+            ElementCollection elementCollection,
+            AnyElementCollection anyElementCollection){
         
         Class type = TypeUtil.getRawType(genericType);
         
@@ -379,9 +389,28 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
 
         if(elementCollection == null)
             elementCollection = (ElementCollection) type.getAnnotation(ElementCollection.class);
+
+        if(anyKeyCollection == null)
+        	anyKeyCollection = (AnyKeyCollection) type.getAnnotation(AnyKeyCollection.class);
+
+        if(anyElementCollection == null)
+        	anyElementCollection = (AnyElementCollection) type.getAnnotation(AnyElementCollection.class);
         
-        setKey(beanBuilder, componentRegistry, genericType, type, keyCollection);
-        setElement(beanBuilder, componentRegistry, genericType, type, elementCollection);
+        setKey(
+        		beanBuilder, 
+        		componentRegistry, 
+        		genericType, 
+        		type, 
+        		keyCollection,
+        		anyKeyCollection);
+        
+        setElement(
+        		beanBuilder, 
+        		componentRegistry, 
+        		genericType, 
+        		type, 
+        		elementCollection,
+        		anyElementCollection);
         
         
     }
@@ -389,13 +418,18 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void setElement(BeanBuilder beanBuilder, 
             ComponentRegistry componentRegistry, 
             Object genericType, Class type, 
-            ElementCollection elementCollection){
+            ElementCollection elementCollection, 
+            AnyElementCollection anyElementCollection){
         
         if(AnnotationUtil.isCollection(type)){
             Object elementType = AnnotationUtil.getCollectionType(genericType);
 
             ElementEntry elementEntry = 
-                new ElementEntry(TypeUtil.getRawType(elementType),(Type)elementType,elementCollection);
+                new ElementEntry(
+                		TypeUtil.getRawType(elementType),
+                		(Type)elementType,
+                		elementCollection,
+                		anyElementCollection == null? new Annotation[]{} : new Annotation[]{anyElementCollection});
 
             super.applyInternalConfiguration(
                     elementEntry, 
@@ -407,13 +441,18 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void setKey(BeanBuilder beanBuilder, 
             ComponentRegistry componentRegistry, 
             Object genericType, Class type, 
-            KeyCollection keyCollection){
+            KeyCollection keyCollection,
+            AnyKeyCollection anyKeyCollection){
         
         if(AnnotationUtil.isMap(type)){
             Object keyType = AnnotationUtil.getKeyType(genericType);
 
             KeyEntry keyEntry = 
-                new KeyEntry(TypeUtil.getRawType(keyType),(Type)keyType,keyCollection);
+                new KeyEntry(
+                		TypeUtil.getRawType(keyType),
+                		(Type)keyType,
+                		keyCollection,
+                		anyKeyCollection == null? new Annotation[]{} : new Annotation[]{anyKeyCollection});
 
             super.applyInternalConfiguration(
                     keyEntry, 
