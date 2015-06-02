@@ -68,7 +68,7 @@ public class BeanFieldNamedTest {
 
     private Map<String,BeanConstructorTest> propertyK;
 
-    @ElementCollection(bean="myElement", useMapping=true)
+    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     private Map<String,BeanConstructorTest> propertyL;
 
     @ElementCollection(bean="myElement")
@@ -84,11 +84,11 @@ public class BeanFieldNamedTest {
     @ElementCollection(bean="myElement")
     private List<BeanConstructorTest> propertyQ;
 
-    @KeyCollection(bean="myKey", useMapping=true)
-    @ElementCollection(bean="myElement", useMapping=true)
+    @KeyCollection(bean="myKey", mappingType=MappingTypes.COMPLEX)
+    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     private Map<BeanConstructorTest,BeanConstructorTest> propertyR;
 
-    @ElementCollection(bean="myElement", useMapping=true)
+    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     private List<BeanConstructorTest> propertyS;
 
     private Map<String,List<BeanConstructorTest>> propertyT;

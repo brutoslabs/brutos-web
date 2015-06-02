@@ -46,7 +46,7 @@ public class ControllerTest18Controller {
     @Enumerated(value=EnumerationType.STRING)
     private EnumTest propertyG;
     
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     @KeyCollection(
         bean="myKey",
         enumerated=EnumerationType.STRING,
@@ -62,55 +62,55 @@ public class ControllerTest18Controller {
     )
     private Map<String,Integer> propertyH;
 
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     @Target(LinkedHashMap.class)
     private Map<String,Integer> propertyI;
     
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     private Map<BeanConstructorTest,Integer> propertyJ;
 
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     private Map<String,BeanConstructorTest> propertyK;
 
-    @Identify(useMapping = true)
-    @ElementCollection(bean="myElement", useMapping=true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
+    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     private Map<String,BeanConstructorTest> propertyL;
 
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement")
     private List<Integer> propertyM;
 
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     @Target(LinkedList.class)
     private List<Integer> propertyN;
     
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     private List<Integer> propertyO;
 
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     private List<BeanConstructorTest> propertyP;
 
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement")
     private List<BeanConstructorTest> propertyQ;
 
-    @Identify(useMapping = true)
-    @KeyCollection(bean="myKey", useMapping=true)
-    @ElementCollection(bean="myElement", useMapping=true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
+    @KeyCollection(bean="myKey", mappingType=MappingTypes.COMPLEX)
+    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     private Map<BeanConstructorTest,BeanConstructorTest> propertyR;
 
-    @Identify(useMapping = true)
-    @ElementCollection(bean="myElement", useMapping=true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
+    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     private List<BeanConstructorTest> propertyS;
 
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     private Map<String,List<BeanConstructorTest>> propertyT;
     
-    @Identify(useMapping = true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
     private Map<String,CustomArrayList> propertyU;
 
-    @Identify(useMapping = true)
-    @ElementCollection(bean="myElement2",useMapping=true)
+    @Identify(mappingType=MappingTypes.COMPLEX)
+    @ElementCollection(bean="myElement2",mappingType=MappingTypes.COMPLEX)
     private Map<String,CustomArrayList> propertyV;
     
     public Object myFirstAction(){

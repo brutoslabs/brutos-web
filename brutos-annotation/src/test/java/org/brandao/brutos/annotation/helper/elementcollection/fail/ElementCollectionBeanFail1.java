@@ -16,13 +16,17 @@
  */
 
 
-package org.brandao.brutos.annotation.helper.elementcollection.app1;
+package org.brandao.brutos.annotation.helper.elementcollection.fail;
+
+import java.util.List;
+
+import org.brandao.brutos.annotation.ElementCollection;
 
 /**
  *
- * @author Cliente
+ * @author Brandao
  */
-public class ElementCollectionBeanTest1 {
+public class ElementCollectionBeanFail1 {
     
     private List<Integer> property;
     

@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.helper.bean;
 import java.util.Map;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
+import org.brandao.brutos.annotation.MappingTypes;
 
 /**
  *
@@ -29,7 +30,7 @@ import org.brandao.brutos.annotation.ElementCollection;
 public class BeanConstructorTest15 {
         
     public BeanConstructorTest15(
-            @ElementCollection(bean="myElement", useMapping = true)
+            @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
             Map<String,BeanConstructorTest> propertyL){
     }
 

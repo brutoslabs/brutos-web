@@ -21,6 +21,7 @@ import java.util.Map;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.KeyCollection;
+import org.brandao.brutos.annotation.MappingTypes;
 
 /**
  *
@@ -30,8 +31,8 @@ import org.brandao.brutos.annotation.KeyCollection;
 public class BeanConstructorTest21 {
         
     public BeanConstructorTest21(
-            @KeyCollection(bean="myKey", useMapping = true)
-            @ElementCollection(bean="myElement", useMapping = true)
+            @KeyCollection(bean="myKey", mappingType=MappingTypes.COMPLEX)
+            @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
             Map<BeanConstructorTest,BeanConstructorTest> propertyR){
     }
 
