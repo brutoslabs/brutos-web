@@ -57,6 +57,9 @@ public class ConstructorTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -94,6 +97,9 @@ public class ConstructorTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                     parameters.put("constructorBean2.arg0", "action");
                 }
@@ -132,6 +138,9 @@ public class ConstructorTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                     parameters.put("constructorBean3.arg0", "action");
                     parameters.put("constructorBean3.arg1", "action2");

@@ -55,6 +55,9 @@ public class ConfigurationTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -90,6 +93,9 @@ public class ConfigurationTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 

@@ -115,11 +115,13 @@ public class WebApplicationContextTester {
             
         Map<String,String> requestParams = new HashMap<String,String>();
         Map<String,String> contextParams = new HashMap<String,String>();
+        Map<String,String> sessionParams = new HashMap<String,String>();
         contextParams.put(MockXMLWebApplicationContext.XML_CONTENT, xml);
         run(
             uri, 
             tester,
             contextParams,
+            sessionParams,
             requestParams);
     }
 
@@ -130,6 +132,7 @@ public class WebApplicationContextTester {
             uri, 
             tester,
             new HashMap<String,String>(),
+            new HashMap<String,String>(),
             new HashMap<String,String>());
     }
     
@@ -137,6 +140,7 @@ public class WebApplicationContextTester {
             String uri, 
             WebApplicationTester tester,
             Map<String,String> contextParams,
+            Map<String,String> sessionParams,
             Map<String,String> requestParams) throws Throwable{
         
         MockServletContext servletContext = new MockServletContext();
@@ -165,6 +169,12 @@ public class WebApplicationContextTester {
                 request.setRequestURI(uri);
                 request.setContextPath("");
                 listener.requestInitialized(sre);
+                
+                tester.prepareSession(sessionParams);
+
+                for(String key: sessionParams.keySet())
+                	session.setAttribute(key, sessionParams.get(key));
+                
                 listener.sessionCreated(hse);
                 
                 tester.prepareRequest(requestParams);

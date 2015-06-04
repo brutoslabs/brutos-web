@@ -58,6 +58,9 @@ public class ActionStrategyTypeTest extends TestCase {
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -90,6 +93,9 @@ public class ActionStrategyTypeTest extends TestCase {
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                     parameters.put("invoke", "teste");
                 }
@@ -123,6 +129,9 @@ public class ActionStrategyTypeTest extends TestCase {
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -155,6 +164,9 @@ public class ActionStrategyTypeTest extends TestCase {
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
