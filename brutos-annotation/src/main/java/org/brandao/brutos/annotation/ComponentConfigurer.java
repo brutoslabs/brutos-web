@@ -30,6 +30,9 @@ import org.brandao.brutos.annotation.configuration.AbstractAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ActionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.AnnotationConfigEntry;
 import org.brandao.brutos.annotation.configuration.AnnotationUtil;
+import org.brandao.brutos.annotation.configuration.AnyAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.AnyElementCollectionAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.AnyKeyCollectionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ApplyAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.BeanAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
@@ -91,6 +94,9 @@ public class ComponentConfigurer {
         defaultAnnotationConfig.add(TypeDefAnnotationConfig.class);
         defaultAnnotationConfig.add(IdentifyAnnotationConfig.class);
         defaultAnnotationConfig.add(ExtendedScopeAnnotationConfig.class);
+        defaultAnnotationConfig.add(AnyAnnotationConfig.class);
+        defaultAnnotationConfig.add(AnyElementCollectionAnnotationConfig.class);
+        defaultAnnotationConfig.add(AnyKeyCollectionAnnotationConfig.class);
     }
     
     private ConfigurationEntry configuration;

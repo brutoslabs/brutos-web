@@ -65,6 +65,9 @@ public class ActionTest extends TestCase {
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -103,6 +106,9 @@ public class ActionTest extends TestCase {
                     
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -141,6 +147,9 @@ public class ActionTest extends TestCase {
                     
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
@@ -179,6 +188,9 @@ public class ActionTest extends TestCase {
                     
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
@@ -217,6 +229,9 @@ public class ActionTest extends TestCase {
                     
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
@@ -255,6 +270,9 @@ public class ActionTest extends TestCase {
                     
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
@@ -293,6 +311,9 @@ public class ActionTest extends TestCase {
                     
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
@@ -331,6 +352,9 @@ public class ActionTest extends TestCase {
                     
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
@@ -369,6 +393,9 @@ public class ActionTest extends TestCase {
                     
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
                 
@@ -418,6 +445,9 @@ public class ActionTest extends TestCase {
                     Assert.fail("expected: {view must be rendered in abstract actions: /test03}");
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -458,6 +488,9 @@ public class ActionTest extends TestCase {
                     Assert.fail("expected: {view must be informed in abstract actions: /test03}");
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -498,6 +531,9 @@ public class ActionTest extends TestCase {
                     Assert.fail("expected: {view must be informed in abstract actions: /test03}");
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -538,6 +574,9 @@ public class ActionTest extends TestCase {
                     Assert.fail("expected: {action id cannot be empty}");
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -567,6 +606,9 @@ public class ActionTest extends TestCase {
                     
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -615,6 +657,9 @@ public class ActionTest extends TestCase {
                     Assert.fail("expected: {expected starts with \"/\": teste}");
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -655,6 +700,9 @@ public class ActionTest extends TestCase {
                     Assert.fail("expected: {duplicate action: /teste}");
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -695,6 +743,9 @@ public class ActionTest extends TestCase {
                     Assert.fail("expected: {duplicate action: /teste}");
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -735,6 +786,9 @@ public class ActionTest extends TestCase {
                     Assert.fail("expected: {duplicate action: /teste}");
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -775,6 +829,9 @@ public class ActionTest extends TestCase {
                     Assert.fail("expected: {invalid action: \"/\": action}");
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 

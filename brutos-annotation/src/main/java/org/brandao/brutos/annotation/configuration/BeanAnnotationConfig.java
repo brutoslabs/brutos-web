@@ -147,7 +147,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(Object builder, 
             Object source, ComponentRegistry componentRegistry){
         
-        if(builder instanceof ParametersBuilder)
+        if(builder instanceof ParametersBuilder && source instanceof BeanActionParamEntry)
             createBean((ParametersBuilder)builder, (BeanActionParamEntry)source, componentRegistry);
         else
         if(builder instanceof ControllerBuilder){
@@ -162,23 +162,23 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             }
         }
         else{
-            checkCircularReference(builder,source);
-            if(source instanceof BeanPropertyAnnotation){
+            //checkCircularReference(builder,source);
+            if(source instanceof BeanPropertyAnnotation && builder instanceof BeanBuilder){
                 createBean(
                     (BeanBuilder)builder, (BeanEntryProperty)source, componentRegistry);
             }
             else
-            if(source instanceof BeanEntryConstructorArg){
+            if(source instanceof BeanEntryConstructorArg && builder instanceof ConstructorBuilder){
                 createBean(
                     (ConstructorBuilder)builder, (BeanEntryConstructorArg)source, componentRegistry);
             }
             else
-            if(source instanceof KeyEntry){
+            if(source instanceof KeyEntry && builder instanceof BeanBuilder){
                 createBean(
                     (BeanBuilder)builder, (KeyEntry)source, componentRegistry);
             }
             else
-            if(source instanceof ElementEntry){
+            if(source instanceof ElementEntry && builder instanceof BeanBuilder){
                 createBean(
                     (BeanBuilder)builder, (ElementEntry)source, componentRegistry);
             }

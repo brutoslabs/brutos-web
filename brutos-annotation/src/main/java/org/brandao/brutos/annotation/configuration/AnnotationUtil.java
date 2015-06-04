@@ -195,6 +195,10 @@ public class AnnotationUtil {
     }
     
     public static Object getKeyType(Object type){
+    	
+    	if(type == null)
+    		return null;
+    	
         Class rawType = TypeUtil.getRawType(type);
         Object keyType = TypeUtil.getKeyType(type);
         
@@ -208,6 +212,10 @@ public class AnnotationUtil {
     }
     
     public static Object getCollectionType(Object type){
+    	
+    	if(type == null)
+    		return null;
+    	
         Class rawType = TypeUtil.getRawType(type);
         Object elementType = TypeUtil.getCollectionType(type);
         
@@ -547,7 +555,7 @@ public class AnnotationUtil {
     public static String getBeanName(Class<?> type){
     	
         Bean bean = (Bean)type.getAnnotation(Bean.class);
-        String name = StringUtil.adjust(bean.value());
+        String name = bean == null? null : StringUtil.adjust(bean.value());
         name = 
             StringUtil.isEmpty(name)? 
                 StringUtil.getVariableFormat(type.getSimpleName()) : 

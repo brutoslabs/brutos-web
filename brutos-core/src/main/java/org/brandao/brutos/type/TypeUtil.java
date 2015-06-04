@@ -45,13 +45,17 @@ public final class TypeUtil {
     }
     
     /**
-     * Obtém a classe base de um tipo que usa generics.
+     * Obtém a classe base de um tipo genérico.
      * @param type Classe. Pode ser uma {@link java.lang.Class} ou 
      * {@link java.lang.reflect.Type}.
      * @return Classe base.
      */
     public static Class getRawType(Object type) {
-        try {
+    	
+    	if(type == null)
+    		return null;
+    	
+        try{
             Class parameterizedTypeClass =
                     Class.forName("java.lang.reflect.ParameterizedType");
 

@@ -16,18 +16,22 @@
  */
 
 
-package org.brandao.brutos.annotation.helper.elementcollection.fail;
-
-import java.util.List;
-
-import org.brandao.brutos.annotation.ElementCollection;
+package org.brandao.brutos.annotation.helper.keycollection.app1;
 
 /**
  *
  * @author Brandao
  */
-public class ElementCollectionBeanFail1 {
-    
-    private List<Integer> property;
+public class KeyCollectionBeanTest0 {
+
+    private String property;
+
+    public String getProperty() {
+        return property;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
+    }
     
 }

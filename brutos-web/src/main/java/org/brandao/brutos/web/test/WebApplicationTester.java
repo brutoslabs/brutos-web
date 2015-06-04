@@ -33,6 +33,8 @@ public interface WebApplicationTester {
 
     void prepareRequest(Map<String,String> parameters);
     
+    void prepareSession(Map<String,String> parameters);
+    
     void checkException(Throwable e) throws Throwable;
     
     void checkResult(HttpServletRequest request, 

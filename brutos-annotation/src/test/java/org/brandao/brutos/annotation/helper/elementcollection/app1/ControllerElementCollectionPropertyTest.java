@@ -3,6 +3,7 @@ package org.brandao.brutos.annotation.helper.elementcollection.app1;
 import java.util.Date;
 import java.util.List;
 
+import org.brandao.brutos.annotation.Controller;
 import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.EnumerationType;
 import org.brandao.brutos.annotation.MappingTypes;
@@ -10,7 +11,8 @@ import org.brandao.brutos.annotation.ScopeType;
 import org.brandao.brutos.annotation.helper.EnumTest;
 import org.brandao.brutos.type.StringType;
 
-public class ElementCollectionPropertyTest {
+@Controller("/controller")
+public class ControllerElementCollectionPropertyTest {
 
     private List<Integer> property;
 
@@ -35,6 +37,9 @@ public class ElementCollectionPropertyTest {
     private List<ElementCollectionBeanTest0> property11;
 
     private List<EnumTest> property12;
+    
+    public void testAction(){
+    }
     
 	public List<Integer> getProperty() {
 		return property;

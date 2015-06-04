@@ -58,6 +58,9 @@ public class BeanTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                     parameters.put("arg0.property", "action");
                 }
@@ -91,6 +94,9 @@ public class BeanTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                     parameters.put("bean1.property", "action");
                 }
@@ -124,6 +130,9 @@ public class BeanTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                     parameters.put("bean.property", "action");
                 }
@@ -157,6 +166,9 @@ public class BeanTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -196,6 +208,9 @@ public class BeanTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -235,6 +250,9 @@ public class BeanTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                 }
 
@@ -267,6 +285,9 @@ public class BeanTest  extends TestCase{
                     );
                 }
 
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
                 public void prepareRequest(Map<String, String> parameters) {
                     parameters.put("bean1.property", "action");
                 }
