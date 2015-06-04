@@ -4,6 +4,7 @@ import java.util.List;
 
 public class ControllerElementCollectionPropertyFailTest {
 
-	private List property;
-	
+	public List getProperty(){
+		return null;
+	}
 }
