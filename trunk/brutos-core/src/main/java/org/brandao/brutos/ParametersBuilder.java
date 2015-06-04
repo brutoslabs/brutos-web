@@ -19,16 +19,17 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.type.UnknownTypeException;
 
 /**
- *
- * @author Cliente
+ * Monta os parâmetros de uma ação.
+ * 
+ * @author Brandao
  */
 public class ParametersBuilder extends RestrictionBuilder{
     
@@ -54,13 +55,13 @@ public class ParametersBuilder extends RestrictionBuilder{
     }
     
     /**
-     * Configura um novo par�metro.
+     * Adiciona um novo parâmetro.
      *
-     * @param name Identifica��o do par�metro.
+     * @param name Nome do parâmetro.
      * @param scope Escopo.
-     * @param enumProperty Usado na configura��o de par�metros do tipo enum.
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
+     * @param enumProperty Tipo de mapeamento de {@link java.lang.Enum}.
+     * @param classType Tipo do parâmetro.
+     * @return Construtor do parâmetro.
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty, Class classType ){
         return addParameter( name, scope, enumProperty, null, null, null, 
@@ -68,7 +69,7 @@ public class ParametersBuilder extends RestrictionBuilder{
     }
 
     /**
-     * Configura um novo parâmetro que não possui valor.
+     * Adiciona um novo parâmetro que recebe somente valores nulos.
      *
      * @return Contrutor do parâmetro.
      */
@@ -76,15 +77,15 @@ public class ParametersBuilder extends RestrictionBuilder{
         return addParameter( null, null, null, null, null, null,
                 null, false, null );
     }
-    
+
     /**
-     * Configura um novo par�metro.
-     *
-     * @param name Identifica��o do par�metro.
+     * Adiciona um novo parâmetro.
+     * 
+     * @param name Nome do parâmetro.
      * @param scope Escopo.
-     * @param temporalProperty Usado na configura��o de datas.
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
+     * @param temporalProperty Padrão de mapeamento de tipos {@link java.util.Calendar} e {@link java.util.Date} 
+     * @param classType
+     * @return
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty, Class classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, 
@@ -310,21 +311,27 @@ public class ParametersBuilder extends RestrictionBuilder{
                 mapping, typeDef, value, nullable, (Object)classType );
     }
     
-    public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
+    public ParameterBuilder addParameter(String name, ScopeType scope, EnumerationType enumProperty,
             String temporalProperty, String mapping, Type typeDef, Object value,
-            boolean nullable, Object classType ){
+            boolean nullable, Object classType){
 
         name = StringUtil.adjust(name);
         temporalProperty = StringUtil.adjust(temporalProperty);
         mapping = StringUtil.adjust(mapping);
-        Class rawType = classType == null? null : TypeUtil.getRawType(classType);
+        Class rawType = TypeUtil.getRawType(classType);
+
+        if(StringUtil.isEmpty(name))
+        	throw new MappingException("invalid parameter name");
+
+        if(scope == null)
+        	throw new MappingException("invalid scope");
         
         Configuration validatorConfig = new Configuration();
         
         ParameterAction parameter = new ParameterAction(this.action);
 
-        parameter.setName( name );
-        parameter.setScopeType( scope );
+        parameter.setName(name);
+        parameter.setScopeType(scope);
         parameter.setValidate( this.validatorFactory.getValidator(validatorConfig) );
         parameter.setStaticValue(value);
         parameter.setNullable(nullable);
@@ -333,14 +340,14 @@ public class ParametersBuilder extends RestrictionBuilder{
             if( controller.getBean(mapping) != null )
                 parameter.setMapping( controller.getBean( mapping ) );
             else
-                throw new BrutosException( "mapping name " + mapping + " not found!" );
+                throw new MappingException( "mapping name " + mapping + " not found!" );
                 
         }
         
         if( typeDef != null ){
             if(classType != null){
                 if(!typeDef.getClassType().isAssignableFrom(rawType)){
-                    throw new IllegalArgumentException(
+                    throw new MappingException(
                             String.format(
                                 "expected %s found %s",
                                 new Object[]{
