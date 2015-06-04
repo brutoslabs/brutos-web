@@ -23,17 +23,13 @@ public class ElementCollectionBeanTest0Type implements Type{
 	}
 
 	public Class getClassType() {
-		// TODO Auto-generated method stub
-		return null;
+		return ElementCollectionBeanTest0.class;
 	}
 
 	public void setClassType(Class value) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public boolean isAlwaysRender() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
