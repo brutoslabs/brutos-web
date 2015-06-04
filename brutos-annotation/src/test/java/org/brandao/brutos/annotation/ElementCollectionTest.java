@@ -51,9 +51,9 @@ public class ElementCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0[0].element", "0");
-                	parameters.put("arg0[1].element", "1");
-                	parameters.put("arg0[3].element", "3");
+                	parameters.put("arg0.element[0]", "0");
+                	parameters.put("arg0.element[1]", "1");
+                	parameters.put("arg0.element[3]", "3");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 

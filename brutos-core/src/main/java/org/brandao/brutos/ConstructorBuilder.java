@@ -23,12 +23,13 @@ import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.ConstructorArgBean;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingBeanUtil;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.Type;
 
 /**
  *
- * @author Brandão
+ * @author Brandao
  */
 public class ConstructorBuilder extends RestrictionBuilder{
 
@@ -219,9 +220,18 @@ public class ConstructorBuilder extends RestrictionBuilder{
             ScopeType scope, Object value, boolean nullable, Type typeDef, Object type ){
 
         name = StringUtil.adjust(name);
+
+        if(StringUtil.isEmpty(name))
+        	throw new MappingException("invalid constructor arg name");
+        
+        if(scope == null)
+        	throw new MappingException("invalid scope");
+        
+        /*
         name = StringUtil.isEmpty(name)?
                 "arg" + this.mappingBean.getConstructor().size() :
                 name;
+        */
         
         ConstructorArgBean arg =
             (ConstructorArgBean) MappingBeanUtil.createDependencyBean(name, null,
