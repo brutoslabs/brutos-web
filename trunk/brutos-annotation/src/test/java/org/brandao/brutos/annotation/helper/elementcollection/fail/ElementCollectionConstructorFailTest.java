@@ -4,6 +4,7 @@ import java.util.List;
 
 public class ElementCollectionConstructorFailTest {
 
-	private List property;
+	public ElementCollectionConstructorFailTest(List list){
+	}
 	
 }

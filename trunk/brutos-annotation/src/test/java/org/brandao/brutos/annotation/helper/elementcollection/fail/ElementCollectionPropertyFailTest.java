@@ -4,7 +4,8 @@ import java.util.List;
 
 public class ElementCollectionPropertyFailTest {
 
-	public ElementCollectionPropertyFailTest(List list){
+	public List getProperty(){
+		return null;
 	}
 	
 }
