@@ -152,7 +152,11 @@ public class AnnotationUtil {
             MappingTypes mappingType, Class type){
         return isBuildEntity(
                 typeRegistry,
-                mappingType == MappingTypes.AUTO? false : mappingType.equals(MappingTypes.COMPLEX),
+                mappingType == null?
+                		null :
+                		(mappingType == MappingTypes.AUTO? 
+                				false : 
+                				mappingType.equals(MappingTypes.COMPLEX)),
                 type);
     }
     

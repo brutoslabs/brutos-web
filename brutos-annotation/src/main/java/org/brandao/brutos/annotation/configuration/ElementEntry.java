@@ -88,7 +88,7 @@ public class ElementEntry implements BeanEntry{
         else{
             this.name = null;
             this.scopeType = BrutosConstants.DEFAULT_SCOPETYPE;
-            this.mappingType = MappingTypes.SIMPLE;
+            this.mappingType = null;
             this.target = null;
             this.enumerated = 
                     EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE);
