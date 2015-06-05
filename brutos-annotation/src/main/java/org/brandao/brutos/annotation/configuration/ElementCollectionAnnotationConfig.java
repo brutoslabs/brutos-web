@@ -51,8 +51,16 @@ public class ElementCollectionAnnotationConfig
             ComponentRegistry componentRegistry) {
         
         ElementEntry element = (ElementEntry)source;
-        
-        if(!element.isAnnotationPresent(AnyElementCollection.class) && AnnotationUtil.isBuildEntity(componentRegistry, element.getMappingType(), element.getClassType()))
+
+        Class elementType =
+        	element.getTarget() != null?
+        			element.getTarget() :
+    				element.getClassType();
+        			
+		if(elementType == null)
+			throw new MappingException("unknown element type");
+		
+        if(!element.isAnnotationPresent(AnyElementCollection.class) && AnnotationUtil.isBuildEntity(componentRegistry, element.getMappingType(), elementType))
             buildElement(element, builder, componentRegistry);
         else
             addElement(element, (BeanBuilder)builder, componentRegistry);
