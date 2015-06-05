@@ -11,7 +11,7 @@ public class ElementCollectionConstructor8Test {
 	@Transient
 	private List entity;
 	
-	public ElementCollectionConstructor8Test(@ElementCollection(type=StringType.class, target=String.class)List entity){
+	public ElementCollectionConstructor8Test(@ElementCollection(type=TestStringType.class, target=String.class)List entity){
 		this.entity = entity;
 	}
 

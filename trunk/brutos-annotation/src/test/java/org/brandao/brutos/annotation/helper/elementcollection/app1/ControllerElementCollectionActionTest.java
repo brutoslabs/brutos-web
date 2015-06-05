@@ -118,7 +118,7 @@ public class ControllerElementCollectionActionTest {
 	}
 
     
-	public void property8Action(@ElementCollection(type=StringType.class) List property8) {
+	public void property8Action(@ElementCollection(type=TestStringType.class, target=String.class) List property8) {
 		this.property8 = property8;
 	}
 

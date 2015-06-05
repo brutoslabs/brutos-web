@@ -400,8 +400,8 @@ public class ElementCollectionTest extends TestCase{
                 	
                 	Assert.assertNotNull(result);
                 	Assert.assertEquals(2, result.size());
-                	Assert.assertEquals("0", result.get(0));
-                	Assert.assertEquals("1", result.get(1));
+                	Assert.assertEquals("xx-0", result.get(0));
+                	Assert.assertEquals("xx-1", result.get(1));
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -1022,8 +1022,8 @@ public class ElementCollectionTest extends TestCase{
                 	
                 	Assert.assertNotNull(property8);
                 	Assert.assertEquals(2, property8.size());
-                	Assert.assertEquals("0", property8.get(0));
-                	Assert.assertEquals("1", property8.get(1));
+                	Assert.assertEquals("xx-0", property8.get(0));
+                	Assert.assertEquals("xx-1", property8.get(1));
 
                 	List<ElementCollectionBeanTest0> property9 = controller.property9.getEntity();
                 	
@@ -1185,8 +1185,8 @@ public class ElementCollectionTest extends TestCase{
                 	
                 	Assert.assertNotNull(property8);
                 	Assert.assertEquals(2, property8.size());
-                	Assert.assertEquals("0", property8.get(0));
-                	Assert.assertEquals("1", property8.get(1));
+                	Assert.assertEquals("xx-0", property8.get(0));
+                	Assert.assertEquals("xx-1", property8.get(1));
 
                 	List<ElementCollectionBeanTest0> property9 = controller.property9;
                 	
@@ -1348,8 +1348,8 @@ public class ElementCollectionTest extends TestCase{
                 	
                 	Assert.assertNotNull(property8);
                 	Assert.assertEquals(2, property8.size());
-                	Assert.assertEquals("0", property8.get(0));
-                	Assert.assertEquals("1", property8.get(1));
+                	Assert.assertEquals("xx-0", property8.get(0));
+                	Assert.assertEquals("xx-1", property8.get(1));
 
                 	List<ElementCollectionBeanTest0> property9 = controller.getProperty9();
                 	

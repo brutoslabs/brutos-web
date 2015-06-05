@@ -102,7 +102,7 @@ public class ElementCollectionPropertyTest {
 		return property8;
 	}
 
-    @ElementCollection(type=StringType.class)
+    @ElementCollection(type=TestStringType.class, target=String.class)
 	public void setProperty8(List property8) {
 		this.property8 = property8;
 	}
