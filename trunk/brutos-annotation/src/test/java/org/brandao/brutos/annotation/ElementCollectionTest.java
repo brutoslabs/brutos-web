@@ -694,12 +694,12 @@ public class ElementCollectionTest extends TestCase{
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
-                	parameters.put("property1.property5.elx[0]", "0");
-                	parameters.put("property1.property5.elx[1]", "1");
+                	parameters.put("property1.property5.element[0]", "0");
+                	parameters.put("property1.property5.element[1]", "1");
                 	
                 	// Property 2
-                	parameters.put("property2.property5.elx[0]", "0");
-                	parameters.put("property2.property5.elx[1]", "1");
+                	parameters.put("property2.property5.element[0]", "0");
+                	parameters.put("property2.property5.element[1]", "1");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -767,8 +767,8 @@ public class ElementCollectionTest extends TestCase{
                 	
                 	Assert.assertNotNull(property1Property8);
                 	Assert.assertEquals(2, property1Property8.size());
-                	Assert.assertEquals("0", property1Property8.get(0));
-                	Assert.assertEquals("1", property1Property8.get(1));
+                	Assert.assertEquals("xx-0", property1Property8.get(0));
+                	Assert.assertEquals("xx-1", property1Property8.get(1));
 
                 	List<ElementCollectionBeanTest0> property1Property9 = controller.getProperty1().property9;
                 	
@@ -859,8 +859,8 @@ public class ElementCollectionTest extends TestCase{
                 	
                 	Assert.assertNotNull(property2Property8);
                 	Assert.assertEquals(2, property2Property8.size());
-                	Assert.assertEquals("0", property2Property8.get(0));
-                	Assert.assertEquals("1", property2Property8.get(1));
+                	Assert.assertEquals("xx-0", property2Property8.get(0));
+                	Assert.assertEquals("xx-1", property2Property8.get(1));
 
                 	List<ElementCollectionBeanTest0> property2Property9 = controller.getProperty2().getProperty9();
                 	
@@ -1268,8 +1268,8 @@ public class ElementCollectionTest extends TestCase{
                 	parameters.put("property9.element[0]", "0");
                 	parameters.put("property9.element[1]", "1");
 
-                	parameters.put("property10.element.property", "0");
-                	parameters.put("property10.element.property", "1");
+                	parameters.put("property10.element[0].property", "0");
+                	parameters.put("property10.element[1].property", "1");
 
                 	parameters.put("property11.element[0].property", "0");
                 	parameters.put("property11.element[1].property", "1");
