@@ -24,6 +24,7 @@ import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.type.UnknownTypeException;
@@ -144,6 +145,12 @@ public final class MappingBeanUtil {
                                     type, 
                                     enumProperty, 
                                     temporalProperty));
+                    
+                    Type definedType = dependencyBean.getType();
+                    Class<?> rawType = TypeUtil.getRawType(type);
+                    
+                    if(definedType.getClass() == ObjectType.class && type != Object.class)
+                    	throw new MappingException("unknown type: " + rawType.getName());
                 }
                 
             }
@@ -156,6 +163,7 @@ public final class MappingBeanUtil {
                                 e.getMessage()} ) );
             }
         }
+        
         Configuration validatorConfig = new Configuration();
         dependencyBean.setValidator( validatorFactory.getValidator(validatorConfig) );
         return dependencyBean;

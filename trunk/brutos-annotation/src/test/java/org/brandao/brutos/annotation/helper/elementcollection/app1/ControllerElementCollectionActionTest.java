@@ -127,7 +127,10 @@ public class ControllerElementCollectionActionTest {
 	}
 
     
-	public void property9Action(@ElementCollection(mappingType=MappingTypes.SIMPLE) List<ElementCollectionBeanTest0> property9) {
+	public void property9Action(@ElementCollection(
+			mappingType=MappingTypes.SIMPLE,
+			type=ElementCollectionBeanTest0Type.class) 
+			List<ElementCollectionBeanTest0> property9) {
 		this.property9 = property9;
 	}
 

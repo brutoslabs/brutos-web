@@ -479,9 +479,9 @@ public class ElementCollectionTest extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.element[0]", "0");
-                	parameters.put("arg0.element[1]", "1");
-                	parameters.put("arg0.element[3]", "3");
+                	parameters.put("arg0.element[0].property", "0");
+                	parameters.put("arg0.element[1].property", "1");
+                	parameters.put("arg0.element[3].property", "3");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -526,9 +526,9 @@ public class ElementCollectionTest extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.element[0]", "0");
-                	parameters.put("arg0.element[1]", "1");
-                	parameters.put("arg0.element[3]", "3");
+                	parameters.put("arg0.element[0].property", "0");
+                	parameters.put("arg0.element[1].property", "1");
+                	parameters.put("arg0.element[3].property", "3");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
