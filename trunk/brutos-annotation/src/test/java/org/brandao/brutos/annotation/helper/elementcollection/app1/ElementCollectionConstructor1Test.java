@@ -2,8 +2,11 @@ package org.brandao.brutos.annotation.helper.elementcollection.app1;
 
 import java.util.List;
 
+import org.brandao.brutos.annotation.Transient;
+
 public class ElementCollectionConstructor1Test {
 
+	@Transient
 	private List<Integer> entity;
 	
 	public ElementCollectionConstructor1Test(List<Integer> entity){

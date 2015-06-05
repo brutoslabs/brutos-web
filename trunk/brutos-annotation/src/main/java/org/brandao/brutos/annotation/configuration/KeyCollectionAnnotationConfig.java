@@ -22,6 +22,7 @@ import org.brandao.brutos.annotation.AnyKeyCollection;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.KeyCollection;
 import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.mapping.MappingException;
 
 /**
  *
@@ -54,7 +55,16 @@ public class KeyCollectionAnnotationConfig
             ComponentRegistry componentRegistry) {
         
         KeyEntry key = (KeyEntry)source;
-        if(AnnotationUtil.isBuildEntity(componentRegistry, key.getMappingType(), key.getClassType()))
+        
+        Class keyType =
+        		key.getTarget() != null?
+        				key.getTarget() :
+    					key.getClassType();
+        
+		if(keyType == null)
+			throw new MappingException("unknown key type");
+    				
+        if(AnnotationUtil.isBuildEntity(componentRegistry, key.getMappingType(), keyType))
             buildKey(key, builder, componentRegistry);
         else
             addKey(key, (BeanBuilder)builder, componentRegistry);

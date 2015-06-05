@@ -142,21 +142,19 @@ public class AnnotationUtil {
     }
 
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
-            Boolean buildIfNecessary, Class type){
-        return buildIfNecessary == null?
-                !typeRegistry.isStandardType(type)/* && isComplexBean(type)*/: 
-                buildIfNecessary.booleanValue();
+            Boolean build, Class type){
+        return build == null?
+                !typeRegistry.isStandardType(type) : 
+                build.booleanValue();
     }
 
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
             MappingTypes mappingType, Class type){
         return isBuildEntity(
                 typeRegistry,
-                mappingType == null?
+                mappingType == null || mappingType == MappingTypes.AUTO?
                 		null :
-                		(mappingType == MappingTypes.AUTO? 
-                				false : 
-                				mappingType.equals(MappingTypes.COMPLEX)),
+        				mappingType.equals(MappingTypes.COMPLEX),
                 type);
     }
     
@@ -172,9 +170,9 @@ public class AnnotationUtil {
             KeyCollection identify, Class type){
         return isBuildEntity(
                 typeRegistry, 
-                identify == null? 
-                    false : 
-                    identify.mappingType() == MappingTypes.AUTO? false : identify.mappingType().equals(MappingTypes.COMPLEX), 
+                identify == null || identify.mappingType() == MappingTypes.AUTO?
+                		null :
+            			identify.equals(MappingTypes.COMPLEX),
                 type);
     }
 
@@ -182,9 +180,9 @@ public class AnnotationUtil {
             ElementCollection identify, Class type){
         return isBuildEntity(
                 typeRegistry, 
-                identify == null? 
-                    false : 
-                    identify.mappingType() == MappingTypes.AUTO? false : identify.mappingType().equals(MappingTypes.COMPLEX), 
+                identify == null || identify.mappingType() == MappingTypes.AUTO?
+                		null :
+            			identify.equals(MappingTypes.COMPLEX),
                 type);
     }
     
@@ -192,9 +190,9 @@ public class AnnotationUtil {
             Identify identify, Class type){
         return isBuildEntity(
                 typeRegistry, 
-                identify == null? 
-                    null : 
-                    identify.mappingType() == MappingTypes.AUTO? null : identify.mappingType().equals(MappingTypes.COMPLEX),
+                identify == null || identify.mappingType() == MappingTypes.AUTO?
+                		null :
+            			identify.equals(MappingTypes.COMPLEX),
                 type);
     }
     

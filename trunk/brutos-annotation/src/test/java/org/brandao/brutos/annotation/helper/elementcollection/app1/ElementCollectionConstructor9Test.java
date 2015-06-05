@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.MappingTypes;
+import org.brandao.brutos.annotation.Transient;
 
 public class ElementCollectionConstructor9Test {
 
+	@Transient
 	private List<ElementCollectionBeanTest0> entity;
 	
 	public ElementCollectionConstructor9Test(
