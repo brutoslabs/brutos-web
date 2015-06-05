@@ -54,7 +54,7 @@ public class ElementCollectionFieldTest {
     @ElementCollection(target=Integer.class)
     public List property7;
 
-    @ElementCollection(type=StringType.class)
+    @ElementCollection(type=TestStringType.class, target=String.class)
     public List property8;
 
     @ElementCollection(mappingType=MappingTypes.SIMPLE, type=ElementCollectionBeanTest0Type.class)
