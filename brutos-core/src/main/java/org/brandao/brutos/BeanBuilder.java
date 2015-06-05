@@ -366,7 +366,7 @@ public class BeanBuilder {
                 name;
         
         if( !mappingBean.isCollection() && !mappingBean.isMap() )
-            throw new BrutosException(
+            throw new MappingException(
                 String.format("is not allowed for this type: %s",
                     new Object[]{this.mappingBean.getClassType()} ) );
 
