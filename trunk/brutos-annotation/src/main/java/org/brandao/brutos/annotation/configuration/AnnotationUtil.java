@@ -130,7 +130,7 @@ public class AnnotationUtil {
             return BrutosConstants.DEFAULT_ENUMERATIONTYPE;
     }
     
-    public static org.brandao.brutos.ScopeType getScope(Identify value){
+    public static org.brandao.brutos.ScopeType getScope(Basic value){
         
         if(value != null){
             String scope = StringUtil.adjust(value.scope());
@@ -187,7 +187,7 @@ public class AnnotationUtil {
     }
     
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
-            Identify identify, Class type){
+            Basic identify, Class type){
         return isBuildEntity(
                 typeRegistry, 
                 identify == null || identify.mappingType() == MappingTypes.AUTO?
@@ -195,7 +195,7 @@ public class AnnotationUtil {
             			identify.equals(MappingTypes.COMPLEX),
                 type);
     }
-    
+
     public static Object getKeyType(Object type){
     	
     	if(type == null)
@@ -544,11 +544,12 @@ public class AnnotationUtil {
     }
 
     public static String getBeanName(BeanPropertyAnnotation property){
-        Identify id = property.getAnnotation(Identify.class);
-        if(id != null){
-            String bean = StringUtil.adjust(id.bean());
+        Basic basic = property.getAnnotation(Basic.class);
+        
+        if(basic != null){
+            String bean = StringUtil.adjust(basic.bean());
             if(!StringUtil.isEmpty(bean))
-                return id.bean();
+                return basic.bean();
         }
         
         return property.getName();

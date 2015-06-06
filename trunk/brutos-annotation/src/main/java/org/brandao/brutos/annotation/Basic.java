@@ -23,19 +23,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Usada para especificar o parâmetro de uma ação, propriedade de um “bean”, 
+ * Usada para especificar o parâmetro de uma ação, propriedade de um bean, 
  * propriedade de um controlador e o argumento de um construtor.
  * Os itens citados podem ser de tipos primitivos ou não. 
  * No caso de tipos não primitivos, podem ser criados mapeamentos 
- * para a definição de como os valores da requisição serão injetados 
- * no "bean". Além de ser possível a configuração de tipos Enum e Date.
+ * para a definição de como os valores da requisição serão disponibilizados.
  * 
  * <pre>
  * Ex1:
  * public class MyController{
  * 
  *    public void myAction(
- *       &#064;Identify(bean="indice")
+ *       &#064;Basic(bean="indice")
  *       int index){
  *       ...
  *    }
@@ -47,7 +46,7 @@ import java.lang.annotation.Target;
  * &#064;Bean
  * public class MyBean{
  *    
- *    &#064;Identify(bean="indice")
+ *    &#064;Basic(bean="indice")
  *    private int index;
  * 
  * }
@@ -60,7 +59,7 @@ import java.lang.annotation.Target;
  *    
  *    private int index;
  * 
- *    &#064;Identify(bean="indice")
+ *    &#064;Basic(bean="indice")
  *    public void setIndex(int value){
  *       this.index = value;
  *    }
@@ -77,7 +76,7 @@ import java.lang.annotation.Target;
  *    private int index;
  * 
  *    public MyBean(
- *         &#064;Identify(bean="indice")
+ *         &#064;Basic(bean="indice")
  *         int value){
  *       this.index = value;
  *    }
@@ -91,23 +90,24 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Identify {
+public @interface Basic {
     
     /**
-     * Identificação do "bean" que será injetado.
+     * Bean que será disponibilizado.
      * 
      */
     String bean() default "";
     
     /**
-     * Escopo do valor a ser injetado. Os valores estão 
-     * descritos em <a href="ScopeType.html">ScopeType</a>
+     * Escopo do bean. Os escopos estão 
+     * descritos em {@link ScopeType}
      * 
      */
-    String scope() default "param";
+    String scope() default ScopeType.PARAM;
 
     /**
-     * Define o tipo de mapeamento do bean.
+     * Define o tipo de mapeamento do bean. Os tipos estão 
+     * descritos em {@link MappingTypes}
      */
     MappingTypes mappingType() default MappingTypes.AUTO;
     

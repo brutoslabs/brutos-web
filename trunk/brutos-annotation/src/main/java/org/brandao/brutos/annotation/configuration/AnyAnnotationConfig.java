@@ -13,8 +13,8 @@ import org.brandao.brutos.ParameterBuilder;
 import org.brandao.brutos.PropertyBuilder;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.Any;
+import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.Enumerated;
-import org.brandao.brutos.annotation.Identify;
 import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.Temporal;
@@ -24,7 +24,7 @@ import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
-@Stereotype(target=Any.class,executeAfter={Identify.class})
+@Stereotype(target=Any.class,executeAfter={Basic.class})
 public class AnyAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
@@ -96,15 +96,15 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig{
             ComponentRegistry componentRegistry) throws InstantiationException, IllegalAccessException{
 
         Any any = source.getAnnotation(Any.class);
-        Identify identify = any.metaBean();
+        Basic basic = any.metaBean();
         Class<?> classType = any.metaType();
         
         String name = 
-        		StringUtil.isEmpty(identify.bean())?
+        		StringUtil.isEmpty(basic.bean())?
         				(source.getName() == null? source.getDefaultName() : source.getName()) :
-        				identify.bean();
+        					basic.bean();
         				
-        ScopeType scope = AnnotationUtil.getScope(identify);
+        ScopeType scope = AnnotationUtil.getScope(basic);
         EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
         String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
@@ -123,15 +123,15 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig{
             ComponentRegistry componentRegistry) throws InstantiationException, IllegalAccessException{
         
         Any any = source.getAnnotation(Any.class);
-        Identify identify = any.metaBean();
+        Basic basic = any.metaBean();
         Class<?> classType = any.metaType();
     	
         String name = 
-        		StringUtil.isEmpty(identify.bean())?
+        		StringUtil.isEmpty(basic.bean())?
         				source.getName() :
-        				identify.bean();
+        					basic.bean();
         
-        ScopeType scope = AnnotationUtil.getScope(identify);
+        ScopeType scope = AnnotationUtil.getScope(basic);
         EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
         String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
@@ -151,15 +151,15 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig{
             ComponentRegistry componentRegistry) throws InstantiationException, IllegalAccessException{
 
         Any any = source.getAnnotation(Any.class);
-        Identify identify = any.metaBean();
+        Basic basic = any.metaBean();
         Class<?> classType = any.metaType();
 
         String name = 
-        		StringUtil.isEmpty(identify.bean())?
+        		StringUtil.isEmpty(basic.bean())?
         				(source.getName() == null? source.getDefaultName() : source.getName()) :
-        				identify.bean();
+        					basic.bean();
         
-        ScopeType scope = AnnotationUtil.getScope(identify);
+        ScopeType scope = AnnotationUtil.getScope(basic);
         EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
         String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
