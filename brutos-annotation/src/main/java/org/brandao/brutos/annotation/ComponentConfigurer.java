@@ -40,7 +40,7 @@ import org.brandao.brutos.annotation.configuration.Configurer;
 import org.brandao.brutos.annotation.configuration.ControllerAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ElementCollectionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ExtendedScopeAnnotationConfig;
-import org.brandao.brutos.annotation.configuration.IdentifyAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.BasicAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.InterceptedByAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.InterceptsAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.InterceptsStackAnnotationConfig;
@@ -92,7 +92,7 @@ public class ComponentConfigurer {
         defaultAnnotationConfig.add(ThrowSafeAnnotationConfig.class);
         defaultAnnotationConfig.add(ThrowSafeListAnnotationConfig.class);
         defaultAnnotationConfig.add(TypeDefAnnotationConfig.class);
-        defaultAnnotationConfig.add(IdentifyAnnotationConfig.class);
+        defaultAnnotationConfig.add(BasicAnnotationConfig.class);
         defaultAnnotationConfig.add(ExtendedScopeAnnotationConfig.class);
         defaultAnnotationConfig.add(AnyAnnotationConfig.class);
         defaultAnnotationConfig.add(AnyElementCollectionAnnotationConfig.class);

@@ -18,7 +18,7 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
-import org.brandao.brutos.annotation.Identify;
+import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.Restriction;
 import org.brandao.brutos.annotation.Restrictions;
 import org.brandao.brutos.annotation.Stereotype;
@@ -29,7 +29,7 @@ import org.brandao.brutos.validator.RestrictionRules;
  *
  * @author Brandao
  */
-@Stereotype(target=Restrictions.class,executeAfter=Identify.class)
+@Stereotype(target=Restrictions.class,executeAfter=Basic.class)
 public class RestrictionsAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {

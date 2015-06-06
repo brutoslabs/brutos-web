@@ -10,8 +10,8 @@ import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.MetaBeanBuilder;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.AnyElementCollection;
+import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.ElementCollection;
-import org.brandao.brutos.annotation.Identify;
 import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.mapping.MappingException;
@@ -46,17 +46,17 @@ public class AnyElementCollectionAnnotationConfig extends
 		AnyElementCollection anyElementCollection = 
 				elementEntry.getAnnotation(AnyElementCollection.class);
 		
-		Identify identify = anyElementCollection.metaBean();
+		Basic basic = anyElementCollection.metaBean();
 		Class<?> metaType = anyElementCollection.metaType();
 		
 		String element = 
-				StringUtil.isEmpty(identify.bean())? 
+				StringUtil.isEmpty(basic.bean())? 
 						elementEntry.getName() : 
-						identify.bean();
+							basic.bean();
 						
 		EnumerationType enumType = elementEntry.getEnumerated();
 		String tempType = elementEntry.getTemporal();
-		ScopeType scope = AnnotationUtil.getScope(identify);
+		ScopeType scope = AnnotationUtil.getScope(basic);
 		org.brandao.brutos.type.Type type = 
 				elementEntry.getType() == null? 
 					null :

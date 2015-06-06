@@ -11,7 +11,7 @@ import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Any {
 
-	Identify metaBean() default @Identify;
+	Basic metaBean() default @Basic;
 	
 	Class<?> metaType() default String.class;
 

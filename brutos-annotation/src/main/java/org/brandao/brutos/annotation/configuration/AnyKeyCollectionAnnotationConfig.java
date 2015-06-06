@@ -10,7 +10,7 @@ import org.brandao.brutos.KeyBuilder;
 import org.brandao.brutos.MetaBeanBuilder;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.AnyKeyCollection;
-import org.brandao.brutos.annotation.Identify;
+import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.KeyCollection;
 import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.Stereotype;
@@ -46,17 +46,17 @@ public class AnyKeyCollectionAnnotationConfig extends AbstractAnnotationConfig {
 		AnyKeyCollection anyKeyCollection = 
 				keyEntry.getAnnotation(AnyKeyCollection.class);
 		
-		Identify identify = anyKeyCollection.metaBean();
+		Basic basic = anyKeyCollection.metaBean();
 		Class<?> metaType = anyKeyCollection.metaType();
 		
 		String key = 
-				StringUtil.isEmpty(identify.bean())? 
+				StringUtil.isEmpty(basic.bean())? 
 						keyEntry.getName() : 
-						identify.bean();
+							basic.bean();
 						
 		EnumerationType enumType = keyEntry.getEnumerated();
 		String tempType = keyEntry.getTemporal();
-		ScopeType scope = AnnotationUtil.getScope(identify);
+		ScopeType scope = AnnotationUtil.getScope(basic);
 		org.brandao.brutos.type.Type type = 
 				keyEntry.getType() == null ? 
 						null : 

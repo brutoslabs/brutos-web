@@ -42,7 +42,7 @@ import org.brandao.brutos.type.TypeUtil;
         Bean.class, 
     executeAfter={
         Controller.class,
-        Identify.class,
+        Basic.class,
         Any.class,
         KeyCollection.class,
         ElementCollection.class
