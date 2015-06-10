@@ -17,8 +17,8 @@
 
 package org.brandao.brutos.annotation.helper.bean;
 
+import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.Bean;
-import org.brandao.brutos.annotation.Identify;
 
 /**
  *
@@ -28,7 +28,7 @@ import org.brandao.brutos.annotation.Identify;
 public class BeanConstructorTest2 {
     
     public BeanConstructorTest2(
-            @Identify(bean="prop")String propertyB){
+    		@Basic(bean="prop")String propertyB){
     }
     
 }

@@ -30,7 +30,7 @@ public class BeanFieldNamedTest {
     
     private int propertyA;
 
-    @Identify(bean="prop")
+    @Basic(bean="prop")
     private String propertyB;
     
     private Date propertyC;

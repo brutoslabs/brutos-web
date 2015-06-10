@@ -80,6 +80,11 @@ public @interface KeyCollection {
     String temporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
     
     /**
+     * Permite definir múltiplos tipos de chaves.
+     */
+    Any any() default @Any;
+    
+    /**
      * Define o uso de um tipo específico de dados.
      */
     Class<? extends org.brandao.brutos.type.Type> type() default org.brandao.brutos.type.Type.class;

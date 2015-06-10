@@ -88,7 +88,7 @@ public class ControllerTest19Controller {
         return propertyB;
     }
 
-    @Identify(bean="prop")
+    @Basic(bean="prop")
     public void setPropertyB(String propertyB) {
         this.propertyB = propertyB;
     }
@@ -140,7 +140,7 @@ public class ControllerTest19Controller {
         return propertyH;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     @KeyCollection(
         bean="myKey",
         enumerated=EnumerationType.STRING,
@@ -162,7 +162,7 @@ public class ControllerTest19Controller {
         return propertyI;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     @Target(LinkedHashMap.class)
     public void setPropertyI(Map<String,Integer> propertyI) {
         this.propertyI = propertyI;
@@ -172,7 +172,7 @@ public class ControllerTest19Controller {
         return propertyJ;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     public void setPropertyJ(Map<BeanConstructorTest,Integer> propertyJ) {
         this.propertyJ = propertyJ;
     }
@@ -181,7 +181,7 @@ public class ControllerTest19Controller {
         return propertyK;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     public void setPropertyK(Map<String,BeanConstructorTest> propertyK) {
         this.propertyK = propertyK;
     }
@@ -190,7 +190,7 @@ public class ControllerTest19Controller {
         return propertyL;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     public void setPropertyL(Map<String,BeanConstructorTest> propertyL) {
         this.propertyL = propertyL;
@@ -200,7 +200,7 @@ public class ControllerTest19Controller {
         return propertyM;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement")
     public void setPropertyM(List<Integer> propertyM) {
         this.propertyM = propertyM;
@@ -210,7 +210,7 @@ public class ControllerTest19Controller {
         return propertyN;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     @Target(LinkedList.class)
     public void setPropertyN(List<Integer> propertyN) {
         this.propertyN = propertyN;
@@ -220,7 +220,7 @@ public class ControllerTest19Controller {
         return propertyO;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     public void setPropertyO(List<Integer> propertyO) {
         this.propertyO = propertyO;
     }
@@ -229,7 +229,7 @@ public class ControllerTest19Controller {
         return propertyP;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     public void setPropertyP(List<BeanConstructorTest> propertyP) {
         this.propertyP = propertyP;
     }
@@ -238,7 +238,7 @@ public class ControllerTest19Controller {
         return propertyQ;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement")
     public void setPropertyQ(List<BeanConstructorTest> propertyQ) {
         this.propertyQ = propertyQ;
@@ -248,7 +248,7 @@ public class ControllerTest19Controller {
         return propertyR;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     @KeyCollection(bean="myKey", mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     public void setPropertyR(Map<BeanConstructorTest,BeanConstructorTest> propertyR) {
@@ -259,7 +259,7 @@ public class ControllerTest19Controller {
         return propertyS;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     public void setPropertyS(List<BeanConstructorTest> propertyS) {
         this.propertyS = propertyS;
@@ -269,7 +269,7 @@ public class ControllerTest19Controller {
         return propertyT;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     public void setPropertyT(Map<String,List<BeanConstructorTest>> propertyT) {
         this.propertyT = propertyT;
     }
@@ -278,7 +278,7 @@ public class ControllerTest19Controller {
         return propertyU;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     public void setPropertyU(Map<String,CustomArrayList> propertyU) {
         this.propertyU = propertyU;
     }
@@ -287,7 +287,7 @@ public class ControllerTest19Controller {
         return propertyV;
     }
 
-    @Identify(mappingType=MappingTypes.COMPLEX)
+    @Basic(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement2",mappingType=MappingTypes.COMPLEX)
     public void setPropertyV(Map<String,CustomArrayList> propertyV) {
         this.propertyV = propertyV;

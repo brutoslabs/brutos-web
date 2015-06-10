@@ -19,7 +19,6 @@ package org.brandao.brutos.annotation.helper.bean;
 
 import java.util.List;
 import org.brandao.brutos.annotation.Bean;
-import org.brandao.brutos.annotation.Identify;
 
 /**
  *

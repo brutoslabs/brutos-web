@@ -115,9 +115,9 @@ public class ActionTestController {
     }
 
     public void my20Action(
-            @Identify(bean="param1",scope="request")
+            @Basic(bean="param1",scope="request")
             Integer a,
-            @Identify(scope="request")
+            @Basic(scope="request")
             String b){
     }
 
@@ -167,7 +167,7 @@ public class ActionTestController {
     }
 
     public void my25Action(
-            @Identify(bean="integer",mappingType=MappingTypes.COMPLEX)
+    		@Basic(bean="integer",mappingType=MappingTypes.COMPLEX)
             Integer a){
     }
 

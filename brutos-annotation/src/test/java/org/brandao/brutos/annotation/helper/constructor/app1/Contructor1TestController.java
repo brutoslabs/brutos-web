@@ -17,7 +17,7 @@
 
 package org.brandao.brutos.annotation.helper.constructor.app1;
 
-import org.brandao.brutos.annotation.Identify;
+import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.ImportBeans;
 import org.brandao.brutos.annotation.ScopeType;
 
@@ -32,17 +32,17 @@ import org.brandao.brutos.annotation.ScopeType;
 public class Contructor1TestController {
     
     public ConstructorBean1 test1Action(
-        @Identify(bean = "constructorBean1", scope = ScopeType.CONTROLLER) Object arg0){
+    		@Basic(bean = "constructorBean1", scope = ScopeType.CONTROLLER) Object arg0){
         return (ConstructorBean1)arg0;
     }
 
     public ConstructorBean2 test2Action(
-        @Identify(bean = "constructorBean2", scope = ScopeType.CONTROLLER) Object arg0){
+    		@Basic(bean = "constructorBean2", scope = ScopeType.CONTROLLER) Object arg0){
         return (ConstructorBean2)arg0;
     }
 
     public ConstructorBean3 test3Action(
-        @Identify(bean = "constructorBean3", scope = ScopeType.CONTROLLER) Object arg0){
+    		@Basic(bean = "constructorBean3", scope = ScopeType.CONTROLLER) Object arg0){
         return (ConstructorBean3)arg0;
     }
     

@@ -18,7 +18,7 @@
 package org.brandao.brutos.annotation.helper;
 
 import org.brandao.brutos.annotation.Constructor;
-import org.brandao.brutos.annotation.Identify;
+import org.brandao.brutos.annotation.Basic;
 
 
 /**
@@ -27,16 +27,16 @@ import org.brandao.brutos.annotation.Identify;
  */
 public class MyBean {
     
-    @Identify(bean="bean1", scope="request")
+	@Basic(bean="bean1", scope="request")
     private int prop1;
     
     private int prop2;
     
     @Constructor
     public MyBean(
-            @Identify(bean="idade")
+    		@Basic(bean="idade")
             int value,
-            @Identify(bean="idade2")
+            @Basic(bean="idade2")
             int value2){
         this.prop1 = value;
     }
@@ -45,7 +45,7 @@ public class MyBean {
         this.prop1 = value;
     }
     
-    @Identify(bean="bean1", scope="session")
+    @Basic(bean="bean1", scope="session")
     public int getProp1(){
         return prop1;
     }

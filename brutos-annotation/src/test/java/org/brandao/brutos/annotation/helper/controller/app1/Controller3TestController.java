@@ -18,8 +18,8 @@
 package org.brandao.brutos.annotation.helper.controller.app1;
 
 import org.brandao.brutos.annotation.Action;
+import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.Controller;
-import org.brandao.brutos.annotation.Identify;
 
 /**
  *
@@ -30,7 +30,7 @@ public class Controller3TestController {
 
     @Action("/{value}")
     public String[] myAction(
-            @Identify(bean="value") String[] value){
+    		@Basic(bean="value") String[] value){
         return value;
     }
 }

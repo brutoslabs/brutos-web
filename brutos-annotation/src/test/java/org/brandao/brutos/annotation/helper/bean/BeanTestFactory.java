@@ -17,8 +17,8 @@
 
 package org.brandao.brutos.annotation.helper.bean;
 
+import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.Bean;
-import org.brandao.brutos.annotation.Identify;
 import org.brandao.brutos.annotation.helper.MyBean;
 
 /**
@@ -40,9 +40,9 @@ public class BeanTestFactory {
 
     @Bean("bean3")
     public MyBean createMyBean3(
-            @Identify(bean="value1")
+    		@Basic(bean="value1")
             int v1, 
-            @Identify(bean="value2")
+            @Basic(bean="value2")
             int v2){
         return new MyBean(v1,v2);
     }
