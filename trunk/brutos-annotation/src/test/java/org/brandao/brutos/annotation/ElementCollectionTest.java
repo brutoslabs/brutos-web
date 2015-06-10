@@ -20,7 +20,14 @@ import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerEle
 import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionFieldTest;
 import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionPropertyTest;
 import org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0;
+import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionBeanConstructorFailTest;
+import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionBeanFieldFailTest;
+import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionBeanPropertyFailTest;
+import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionFieldFailTest;
+import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionPropertyFailTest;
+import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionUnknownTypeTest;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
@@ -1386,5 +1393,264 @@ public class ElementCollectionTest extends TestCase{
                 }
             },
             new Class[]{ControllerElementCollectionPropertyTest.class});
+    }
+    
+    public void testControllerElementCollectionBeanConstructorFailTest() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                	Assert.fail("expected: {unknown element type}");
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                	
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("unknown element type"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {unknown element type}");
+                }
+            },
+            new Class[]{ControllerElementCollectionBeanConstructorFailTest.class});
     }           
+
+    public void testControllerElementCollectionBeanFieldFailTest() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                	Assert.fail("expected: {unknown element type}");
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                	
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("unknown element type"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {unknown element type}");
+                }
+            },
+            new Class[]{ControllerElementCollectionBeanFieldFailTest.class});
+    }           
+
+    public void testControllerElementCollectionBeanPropertyFailTest() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                	Assert.fail("expected: {unknown element type}");
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                	
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("unknown element type"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {unknown element type}");
+                }
+            },
+            new Class[]{ControllerElementCollectionBeanPropertyFailTest.class});
+    }           
+
+    public void testControllerElementCollectionFieldFailTest() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                	Assert.fail("expected: {unknown element type}");
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                	
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("unknown element type"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {unknown element type}");
+                }
+            },
+            new Class[]{ControllerElementCollectionFieldFailTest.class});
+    }           
+
+    public void testControllerElementCollectionPropertyFailTest() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                	Assert.fail("expected: {unknown element type}");
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                	
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("unknown element type"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {unknown element type}");
+                }
+            },
+            new Class[]{ControllerElementCollectionPropertyFailTest.class});
+    }           
+
+    public void testControllerElementCollectionUnknownTypeTest() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0}");
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                	
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0}");
+                }
+            },
+            new Class[]{ControllerElementCollectionUnknownTypeTest.class});
+    }           
+    
 }

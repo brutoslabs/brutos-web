@@ -7,8 +7,6 @@ import org.brandao.brutos.annotation.KeyCollection;
 
 public class KeyCollectionBeanFailTest0 {
 
-	@KeyCollection(bean="xxx")
-	@ElementCollection(bean="xxx")
-	private Map<Integer,Integer> property;
+	private Map property;
 	
 }
