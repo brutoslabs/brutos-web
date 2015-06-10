@@ -17,7 +17,7 @@
 
 package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.annotation.Identify;
+import org.brandao.brutos.annotation.Basic;
 
 /**
  *
@@ -26,9 +26,9 @@ import org.brandao.brutos.annotation.Identify;
 public class ActionTest22Controller {
 
     public void myAction(
-            @Identify(bean="param1",scope="request")
+    		@Basic(bean="param1",scope="request")
             Integer a,
-            @Identify(scope="request")
+            @Basic(scope="request")
             String b){
     }
     

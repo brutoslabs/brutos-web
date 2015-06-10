@@ -401,8 +401,12 @@
   <!-- *************************************************************** -->
 
     <xsd:complexType name="meta-value">
-          <xsd:attribute name="value" type="xsd:string" use="required"/>
-          <xsd:attribute name="bean" type="xsd:string" use="required"/>
+        <xsd:choice>
+            <xsd:element name="ref" type="mapping-ref" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="bean" type="mapping-bean" minOccurs="0" maxOccurs="1"/>
+        </xsd:choice>
+        <xsd:attribute name="value" type="xsd:string" use="required"/>
+        <xsd:attribute name="bean" type="xsd:string"/>
     </xsd:complexType>
 
   <!-- *************************************************************** -->

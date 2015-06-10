@@ -84,7 +84,7 @@ public class BeanPropertyTest {
         return propertyB;
     }
 
-    @Identify(bean="prop")
+    @Basic(bean="prop")
     public void setPropertyB(String propertyB) {
         this.propertyB = propertyB;
     }

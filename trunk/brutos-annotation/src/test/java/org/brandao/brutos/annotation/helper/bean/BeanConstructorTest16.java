@@ -18,10 +18,8 @@
 package org.brandao.brutos.annotation.helper.bean;
 
 import java.util.List;
-import java.util.Map;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
-import org.brandao.brutos.annotation.Identify;
 
 /**
  *
