@@ -17,8 +17,10 @@ import org.brandao.brutos.annotation.helper.EnumTest;
 import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionActionTest;
 import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionBeanTest;
 import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionConstructorTest;
+import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionCustomCollectionTest;
 import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionFieldTest;
 import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionPropertyTest;
+import org.brandao.brutos.annotation.helper.elementcollection.app1.CustomList;
 import org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0;
 import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionBeanConstructorFailTest;
 import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionBeanFieldFailTest;
@@ -1069,6 +1071,107 @@ public class ElementCollectionTest extends TestCase{
             new Class[]{ControllerElementCollectionConstructorTest.class});
     }        
 
+    public void testControllerElementCollectionCustomCollectionTest() throws Throwable{
+        WebApplicationContextTester.run(
+            "/controller", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareRequest(Map<String, String> parameters) {
+                	
+                	parameters.put("property.element[0].subElement[0]", "1");
+                	parameters.put("property.element[0].subElement[1]", "2");
+                	parameters.put("property.element[0].subElement[2]", "3");
+                	
+                	parameters.put("property.element[1].subElement[0]", "4");
+                	parameters.put("property.element[1].subElement[1]", "5");
+                	parameters.put("property.element[1].subElement[2]", "6");
+                	
+                	parameters.put("property.element[2].subElement[0]", "7");
+                	parameters.put("property.element[2].subElement[1]", "8");
+                	parameters.put("property.element[2].subElement[3]", "9");
+                	
+                	//Property2
+                	
+                	parameters.put("property2.element[0].element[0]", "10");
+                	parameters.put("property2.element[0].element[1]", "11");
+                	parameters.put("property2.element[0].element[2]", "12");
+                	
+                	parameters.put("property2.element[1].element[0]", "13");
+                	parameters.put("property2.element[1].element[1]", "14");
+                	parameters.put("property2.element[1].element[2]", "15");
+                	
+                	parameters.put("property2.element[2].element[0]", "16");
+                	parameters.put("property2.element[2].element[1]", "17");
+                	parameters.put("property2.element[2].element[3]", "18");
+                	
+                }
+
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+
+                	ControllerElementCollectionCustomCollectionTest controller = 
+                			(ControllerElementCollectionCustomCollectionTest)request.getAttribute("Controller");
+
+                	List<CustomList> property = controller.property;
+                	
+                	Assert.assertEquals(3, property.size());
+                	
+                	Assert.assertEquals(3, property.get(0).size());
+                	Assert.assertEquals(new Integer(1), property.get(0).get(0));
+                	Assert.assertEquals(new Integer(2), property.get(0).get(1));
+                	Assert.assertEquals(new Integer(3), property.get(0).get(2));
+                	
+                	Assert.assertEquals(3, property.get(1).size());
+                	Assert.assertEquals(new Integer(4), property.get(1).get(0));
+                	Assert.assertEquals(new Integer(5), property.get(1).get(1));
+                	Assert.assertEquals(new Integer(6), property.get(1).get(2));
+
+                	Assert.assertEquals(2, property.get(2).size());
+                	Assert.assertEquals(new Integer(7), property.get(2).get(0));
+                	Assert.assertEquals(new Integer(8), property.get(2).get(1));
+
+                	List<List<Integer>> property2 = controller.property2;
+                	
+                	Assert.assertEquals(3, property2.size());
+                	
+                	Assert.assertEquals(3, property2.get(0).size());
+                	Assert.assertEquals(new Integer(10), property2.get(0).get(0));
+                	Assert.assertEquals(new Integer(11), property2.get(0).get(1));
+                	Assert.assertEquals(new Integer(12), property2.get(0).get(2));
+                	
+                	Assert.assertEquals(3, property2.get(1).size());
+                	Assert.assertEquals(new Integer(13), property2.get(1).get(0));
+                	Assert.assertEquals(new Integer(14), property2.get(1).get(1));
+                	Assert.assertEquals(new Integer(15), property2.get(1).get(2));
+
+                	Assert.assertEquals(2, property2.get(2).size());
+                	Assert.assertEquals(new Integer(16), property2.get(2).get(0));
+                	Assert.assertEquals(new Integer(17), property2.get(2).get(1));
+                	
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    throw e;
+                }
+            },
+            new Class[]{ControllerElementCollectionCustomCollectionTest.class});
+    }        
+    
     public void testFieldTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
