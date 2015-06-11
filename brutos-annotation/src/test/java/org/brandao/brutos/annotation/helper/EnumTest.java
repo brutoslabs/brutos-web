@@ -26,6 +26,8 @@ public enum EnumTest {
 
     VALUE1,
     
-    VALUE2
-            
+    VALUE2,
+
+    VALUE3
+    
 }

@@ -18,6 +18,8 @@
 
 package org.brandao.brutos.annotation.helper.keycollection.app1;
 
+import org.brandao.brutos.annotation.Constructor;
+
 /**
  *
  * @author Brandao
@@ -26,6 +28,14 @@ public class KeyCollectionBeanTest0 {
 
     private String property;
 
+    @Constructor
+    public KeyCollectionBeanTest0(){
+    }
+    
+    public KeyCollectionBeanTest0(String property){
+    	this.property = property;
+    }
+    
     public String getProperty() {
         return property;
     }
@@ -33,5 +43,31 @@ public class KeyCollectionBeanTest0 {
     public void setProperty(String property) {
         this.property = property;
     }
-    
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((property == null) ? 0 : property.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		KeyCollectionBeanTest0 other = (KeyCollectionBeanTest0) obj;
+		if (property == null) {
+			if (other.property != null)
+				return false;
+		} else if (!property.equals(other.property))
+			return false;
+		return true;
+	}
+
 }
