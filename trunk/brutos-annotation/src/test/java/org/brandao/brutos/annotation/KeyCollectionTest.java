@@ -31,6 +31,8 @@ import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerEle
 import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionActionTest;
 import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionBeanTest;
 import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionConstructorTest;
+import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionFieldTest;
+import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionPropertyTest;
 import org.brandao.brutos.annotation.helper.keycollection.app1.KeyCollectionBeanTest0;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.mapping.MappingException;
@@ -1113,95 +1115,95 @@ public class KeyCollectionTest extends TestCase{
                 	ControllerKeyCollectionConstructorTest controller = 
                 			(ControllerKeyCollectionConstructorTest)request.getAttribute("Controller");
                 	
-                	List<Integer> property1 = controller.property1.getEntity();
+                	Map<Integer,String> property1 = controller.property1.getEntity();
                 	
                 	Assert.assertNotNull(property1);
                 	Assert.assertEquals(2, property1.size());
-                	Assert.assertEquals(new Integer(0), property1.get(0));
-                	Assert.assertEquals(new Integer(1), property1.get(1));
+                	Assert.assertEquals("x0", property1.get(0));
+                	Assert.assertEquals("x1", property1.get(1));
                 	
-                	List<Integer> property2 = controller.property2.getEntity();
+                	Map<Integer,String> property2 = controller.property2.getEntity();
                 	
                 	Assert.assertNotNull(property2);
                 	Assert.assertEquals(2, property2.size());
-                	Assert.assertEquals(new Integer(0), property2.get(0));
-                	Assert.assertEquals(new Integer(1), property2.get(1));
+                	Assert.assertEquals("x0", property2.get(0));
+                	Assert.assertEquals("x1", property2.get(1));
 
-                	List<Integer> property3 = controller.property3.getEntity();
+                	Map<Integer,String> property3 = controller.property3.getEntity();
                 	
                 	Assert.assertNotNull(property3);
                 	Assert.assertEquals(2, property3.size());
-                	Assert.assertEquals(new Integer(0), property3.get(0));
-                	Assert.assertEquals(new Integer(1), property3.get(1));
+                	Assert.assertEquals("x0", property3.get(0));
+                	Assert.assertEquals("x1", property3.get(1));
 
-                	List<EnumTest> property4 = controller.property4.getEntity();
+                	Map<EnumTest,String> property4 = controller.property4.getEntity();
                 	
                 	Assert.assertNotNull(property4);
                 	Assert.assertEquals(2, property4.size());
-                	Assert.assertEquals(EnumTest.VALUE1, property4.get(0));
-                	Assert.assertEquals(EnumTest.VALUE2, property4.get(1));
+                	Assert.assertEquals("xVALUE1", property4.get(EnumTest.VALUE1));
+                	Assert.assertEquals("xVALUE2", property4.get(EnumTest.VALUE2));
 
-                	List<Integer> property5 = controller.property5.getEntity();
+                	Map<Integer,String> property5 = controller.property5.getEntity();
                 	
                 	Assert.assertNotNull(property5);
                 	Assert.assertEquals(2, property5.size());
-                	Assert.assertEquals(new Integer(0), property5.get(0));
-                	Assert.assertEquals(new Integer(1), property5.get(1));
+                	Assert.assertEquals("x0", property5.get(0));
+                	Assert.assertEquals("x0", property5.get(1));
 
-                	List<Date> property6 = controller.property6.getEntity();
+                	Map<Date,String> property6 = controller.property6.getEntity();
                 	
                 	Assert.assertNotNull(property6);
                 	Assert.assertEquals(2, property6.size());
                 	
                 	try {
-						Assert.assertEquals(sdf.parseObject("01-01-2015"), property6.get(0));
-	                	Assert.assertEquals(sdf.parseObject("02-01-2015"), property6.get(1));
+						Assert.assertEquals("x01-01-2015", property6.get(sdf.parseObject("01-01-2015")));
+	                	Assert.assertEquals("x02-01-2015", property6.get(sdf.parseObject("02-01-2015")));
 					}
                 	catch (ParseException e) {
                 		throw new RuntimeException(e);
 					}
                 
-                	List<Integer> property7 = controller.property7.getEntity();
+                	Map property7 = controller.property7.getEntity();
                 	
                 	Assert.assertNotNull(property7);
                 	Assert.assertEquals(2, property7.size());
-                	Assert.assertEquals(new Integer(0), property7.get(0));
-                	Assert.assertEquals(new Integer(1), property7.get(1));
+                	Assert.assertEquals("x0", property7.get(0));
+                	Assert.assertEquals("x1", property7.get(1));
 
-                	List<String> property8 = controller.property8.getEntity();
+                	Map property8 = controller.property8.getEntity();
                 	
                 	Assert.assertNotNull(property8);
                 	Assert.assertEquals(2, property8.size());
-                	Assert.assertEquals("xx-0", property8.get(0));
-                	Assert.assertEquals("xx-1", property8.get(1));
+                	Assert.assertEquals("x0", property8.get("xx-0"));
+                	Assert.assertEquals("x1", property8.get("xx-1"));
 
-                	List<ElementCollectionBeanTest0> property9 = controller.property9.getEntity();
+                	Map<KeyCollectionBeanTest0,String> property9 = controller.property9.getEntity();
                 	
                 	Assert.assertNotNull(property9);
                 	Assert.assertEquals(2, property9.size());
-                	Assert.assertEquals("0", property9.get(0).getProperty());
-                	Assert.assertEquals("1", property9.get(1).getProperty());
+                	Assert.assertEquals("x0", property9.get(new KeyCollectionBeanTest0("0")));
+                	Assert.assertEquals("x1", property9.get(new KeyCollectionBeanTest0("1")));
 
-                	List<ElementCollectionBeanTest0> property10 = controller.property10.getEntity();
+                	Map<KeyCollectionBeanTest0,String> property10 = controller.property10.getEntity();
                 	
                 	Assert.assertNotNull(property10);
                 	Assert.assertEquals(2, property10.size());
-                	Assert.assertEquals("0", property10.get(0).getProperty());
-                	Assert.assertEquals("1", property10.get(1).getProperty());
+                	Assert.assertEquals("x0", property10.get(new KeyCollectionBeanTest0("0")));
+                	Assert.assertEquals("x1", property10.get(new KeyCollectionBeanTest0("1")));
 
-                	List<ElementCollectionBeanTest0> property11 = controller.property11.getEntity();
+                	Map<KeyCollectionBeanTest0,String> property11 = controller.property11.getEntity();
                 	
                 	Assert.assertNotNull(property11);
                 	Assert.assertEquals(2, property11.size());
-                	Assert.assertEquals("0", property11.get(0).getProperty());
-                	Assert.assertEquals("1", property11.get(1).getProperty());
+                	Assert.assertEquals("x0", property11.get(new KeyCollectionBeanTest0("0")));
+                	Assert.assertEquals("x1", property11.get(new KeyCollectionBeanTest0("1")));
 
-                	List<EnumTest> property12 = controller.property12.getEntity();
+                	Map<EnumTest,String> property12 = controller.property12.getEntity();
                 	
                 	Assert.assertNotNull(property12);
                 	Assert.assertEquals(2, property12.size());
-                	Assert.assertEquals(EnumTest.VALUE1, property12.get(0));
-                	Assert.assertEquals(EnumTest.VALUE2, property12.get(1));
+                	Assert.assertEquals("x0", property12.get(EnumTest.VALUE1));
+                	Assert.assertEquals("x1", property12.get(EnumTest.VALUE2));
                 	
                 }
 
@@ -1313,7 +1315,7 @@ public class KeyCollectionTest extends TestCase{
             new Class[]{ControllerElementCollectionCustomCollectionTest.class});
     }        
     
-    public void testFieldTest() throws Throwable{
+    public void testControllerKeyCollectionFieldTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
             new WebApplicationTester() {
@@ -1332,140 +1334,165 @@ public class KeyCollectionTest extends TestCase{
 
                 public void prepareRequest(Map<String, String> parameters) {
                 	
-                	parameters.put("property.element[0]", "0");
-                	parameters.put("property.element[1]", "1");
+                	parameters.put("property.key[0]", "0");
+                	parameters.put("property.key[1]", "1");
+                	parameters.put("property.element[0]", "x0");
+                	parameters.put("property.element[1]", "x1");
                 	
-                	parameters.put("property2.element[0]", "0");
-                	parameters.put("property2.element[1]", "1");
+                	parameters.put("property2.key[0]", "0");
+                	parameters.put("property2.key[1]", "1");
+                	parameters.put("property2.element[0]", "x0");
+                	parameters.put("property2.element[1]", "x1");
 
                 	parameters.put("property3.elx[0]", "0");
                 	parameters.put("property3.elx[1]", "1");
+                	parameters.put("property3.element[0]", "x0");
+                	parameters.put("property3.element[1]", "x1");
 
-                	parameters.put("property4.element[0]", "VALUE1");
-                	parameters.put("property4.element[1]", "VALUE2");
+                	parameters.put("property4.key[0]", "VALUE1");
+                	parameters.put("property4.key[1]", "VALUE2");
+                	parameters.put("property4.element[0]", "xVALUE1");
+                	parameters.put("property4.element[1]", "xVALUE2");
 
-                	parameters.put("property6.element[0]", "01-01-2015");
-                	parameters.put("property6.element[1]", "02-01-2015");
+                	parameters.put("property5.element[0]", "x0");
+                	parameters.put("property5.element[1]", "x1");
+                	
+                	parameters.put("property6.key[0]", "01-01-2015");
+                	parameters.put("property6.key[1]", "02-01-2015");
+                	parameters.put("property6.element[0]", "x01-01-2015");
+                	parameters.put("property6.element[1]", "x02-01-2015");
 
-                	parameters.put("property7.element[0]", "0");
-                	parameters.put("property7.element[1]", "1");
+                	parameters.put("property7.key[0]", "0");
+                	parameters.put("property7.key[1]", "1");
+                	parameters.put("property7.element[0]", "x0");
+                	parameters.put("property7.element[1]", "x1");
 
-                	parameters.put("property8.element[0]", "0");
-                	parameters.put("property8.element[1]", "1");
+                	parameters.put("property8.key[0]", "0");
+                	parameters.put("property8.key[1]", "1");
+                	parameters.put("property8.element[0]", "x0");
+                	parameters.put("property8.element[1]", "x1");
 
-                	parameters.put("property9.element[0]", "0");
-                	parameters.put("property9.element[1]", "1");
+                	parameters.put("property9.key[0]", "0");
+                	parameters.put("property9.key[1]", "1");
+                	parameters.put("property9.element[0]", "x0");
+                	parameters.put("property9.element[1]", "x1");
 
-                	parameters.put("property10.element[0].property", "0");
-                	parameters.put("property10.element[1].property", "1");
+                	parameters.put("property10.key[0].property", "0");
+                	parameters.put("property10.key[1].property", "1");
+                	parameters.put("property10.element[0]", "x0");
+                	parameters.put("property10.element[1]", "x1");
 
-                	parameters.put("property11.element[0].property", "0");
-                	parameters.put("property11.element[1].property", "1");
+                	parameters.put("property11.key[0].property", "0");
+                	parameters.put("property11.key[1].property", "1");
+                	parameters.put("property11.element[0]", "x0");
+                	parameters.put("property11.element[1]", "x1");
 
-                	parameters.put("property12.element[0]", "0");
-                	parameters.put("property12.element[1]", "1");            	
+                	parameters.put("property12.key[0]", "0");
+                	parameters.put("property12.key[1]", "1");            	
+                	parameters.put("property12.element[0]", "x0");
+                	parameters.put("property12.element[1]", "x1");            	
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
-                	parameters.put("property5.element[0]", "0");
-                	parameters.put("property5.element[1]", "1");
+                	parameters.put("property5.key[0]", "0");
+                	parameters.put("property5.key[1]", "1");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	ControllerElementCollectionFieldTest controller = 
-                			(ControllerElementCollectionFieldTest)request.getAttribute("Controller");
+                	ControllerKeyCollectionFieldTest controller = 
+                			(ControllerKeyCollectionFieldTest)request.getAttribute("Controller");
                 	
-                	List<Integer> property1 = controller.property;
+                	Map<Integer,String> property1 = controller.property;
                 	
                 	Assert.assertNotNull(property1);
                 	Assert.assertEquals(2, property1.size());
-                	Assert.assertEquals(new Integer(0), property1.get(0));
-                	Assert.assertEquals(new Integer(1), property1.get(1));
+                	Assert.assertEquals("x0", property1.get(0));
+                	Assert.assertEquals("x1", property1.get(1));
                 	
-                	List<Integer> property2 = controller.property2;
+                	Map<Integer,String> property2 = controller.property2;
                 	
                 	Assert.assertNotNull(property2);
                 	Assert.assertEquals(2, property2.size());
-                	Assert.assertEquals(new Integer(0), property2.get(0));
-                	Assert.assertEquals(new Integer(1), property2.get(1));
+                	Assert.assertEquals("x0", property2.get(0));
+                	Assert.assertEquals("x1", property2.get(1));
 
-                	List<Integer> property3 = controller.property3;
+                	Map<Integer,String> property3 = controller.property3;
                 	
                 	Assert.assertNotNull(property3);
                 	Assert.assertEquals(2, property3.size());
-                	Assert.assertEquals(new Integer(0), property3.get(0));
-                	Assert.assertEquals(new Integer(1), property3.get(1));
+                	Assert.assertEquals("x0", property3.get(0));
+                	Assert.assertEquals("x1", property3.get(1));
 
-                	List<EnumTest> property4 = controller.property4;
+                	Map<EnumTest,String> property4 = controller.property4;
                 	
                 	Assert.assertNotNull(property4);
                 	Assert.assertEquals(2, property4.size());
-                	Assert.assertEquals(EnumTest.VALUE1, property4.get(0));
-                	Assert.assertEquals(EnumTest.VALUE2, property4.get(1));
+                	Assert.assertEquals("xVALUE1", property4.get(EnumTest.VALUE1));
+                	Assert.assertEquals("xVALUE2", property4.get(EnumTest.VALUE2));
 
-                	List<Integer> property5 = controller.property5;
+                	Map<Integer,String> property5 = controller.property5;
                 	
                 	Assert.assertNotNull(property5);
                 	Assert.assertEquals(2, property5.size());
-                	Assert.assertEquals(new Integer(0), property5.get(0));
-                	Assert.assertEquals(new Integer(1), property5.get(1));
+                	Assert.assertEquals("x0", property5.get(0));
+                	Assert.assertEquals("x1", property5.get(1));
 
-                	List<Date> property6 = controller.property6;
+                	Map<Date,String> property6 = controller.property6;
                 	
                 	Assert.assertNotNull(property6);
                 	Assert.assertEquals(2, property6.size());
                 	
                 	try {
-						Assert.assertEquals(sdf.parseObject("01-01-2015"), property6.get(0));
-	                	Assert.assertEquals(sdf.parseObject("02-01-2015"), property6.get(1));
+						Assert.assertEquals("x01-01-2015", property6.get(sdf.parseObject("01-01-2015")));
+	                	Assert.assertEquals("x02-01-2015", property6.get(sdf.parseObject("02-01-2015")));
 					}
                 	catch (ParseException e) {
                 		throw new RuntimeException(e);
 					}
                 
-                	List<Integer> property7 = controller.property7;
+                	Map property7 = controller.property7;
                 	
                 	Assert.assertNotNull(property7);
                 	Assert.assertEquals(2, property7.size());
-                	Assert.assertEquals(new Integer(0), property7.get(0));
-                	Assert.assertEquals(new Integer(1), property7.get(1));
+                	Assert.assertEquals("x0", property7.get(0));
+                	Assert.assertEquals("x1", property7.get(1));
 
-                	List<String> property8 = controller.property8;
+                	Map property8 = controller.property8;
                 	
                 	Assert.assertNotNull(property8);
                 	Assert.assertEquals(2, property8.size());
-                	Assert.assertEquals("xx-0", property8.get(0));
-                	Assert.assertEquals("xx-1", property8.get(1));
+                	Assert.assertEquals("x0", property8.get("xx-0"));
+                	Assert.assertEquals("x1", property8.get("xx-1"));
 
-                	List<ElementCollectionBeanTest0> property9 = controller.property9;
+                	Map<KeyCollectionBeanTest0,String> property9 = controller.property9;
                 	
                 	Assert.assertNotNull(property9);
                 	Assert.assertEquals(2, property9.size());
-                	Assert.assertEquals("0", property9.get(0).getProperty());
-                	Assert.assertEquals("1", property9.get(1).getProperty());
+                	Assert.assertEquals("x0", property9.get(new KeyCollectionBeanTest0("0")));
+                	Assert.assertEquals("x1", property9.get(new KeyCollectionBeanTest0("1")));
 
-                	List<ElementCollectionBeanTest0> property10 = controller.property10;
+                	Map<KeyCollectionBeanTest0,String> property10 = controller.property10;
                 	
                 	Assert.assertNotNull(property10);
                 	Assert.assertEquals(2, property10.size());
-                	Assert.assertEquals("0", property10.get(0).getProperty());
-                	Assert.assertEquals("1", property10.get(1).getProperty());
+                	Assert.assertEquals("x0", property10.get(new KeyCollectionBeanTest0("0")));
+                	Assert.assertEquals("x1", property10.get(new KeyCollectionBeanTest0("1")));
 
-                	List<ElementCollectionBeanTest0> property11 = controller.property11;
+                	Map<KeyCollectionBeanTest0,String> property11 = controller.property11;
                 	
                 	Assert.assertNotNull(property11);
                 	Assert.assertEquals(2, property11.size());
-                	Assert.assertEquals("0", property11.get(0).getProperty());
-                	Assert.assertEquals("1", property11.get(1).getProperty());
+                	Assert.assertEquals("x0", property11.get(new KeyCollectionBeanTest0("0")));
+                	Assert.assertEquals("x1", property11.get(new KeyCollectionBeanTest0("1")));
 
-                	List<EnumTest> property12 = controller.property12;
+                	Map<EnumTest,String> property12 = controller.property12;
                 	
                 	Assert.assertNotNull(property12);
                 	Assert.assertEquals(2, property12.size());
-                	Assert.assertEquals(EnumTest.VALUE1, property12.get(0));
-                	Assert.assertEquals(EnumTest.VALUE2, property12.get(1));
+                	Assert.assertEquals("x0", property12.get(EnumTest.VALUE1));
+                	Assert.assertEquals("x1", property12.get(EnumTest.VALUE2));
                 	
                 }
 
@@ -1473,10 +1500,10 @@ public class KeyCollectionTest extends TestCase{
                     throw e;
                 }
             },
-            new Class[]{ControllerElementCollectionFieldTest.class});
+            new Class[]{ControllerKeyCollectionFieldTest.class});
     }        
     
-    public void testPropertyTest() throws Throwable{
+    public void testControllerKeyCollectionPropertyTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
             new WebApplicationTester() {
@@ -1537,106 +1564,105 @@ public class KeyCollectionTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	ControllerElementCollectionPropertyTest controller = 
-                			(ControllerElementCollectionPropertyTest)request.getAttribute("Controller");
+                	ControllerKeyCollectionPropertyTest controller = 
+                			(ControllerKeyCollectionPropertyTest)request.getAttribute("Controller");
                 	
-                	List<Integer> property1 = controller.getProperty();
+                	Map<Integer,String> property1 = controller.getProperty();
                 	
                 	Assert.assertNotNull(property1);
                 	Assert.assertEquals(2, property1.size());
-                	Assert.assertEquals(new Integer(0), property1.get(0));
-                	Assert.assertEquals(new Integer(1), property1.get(1));
+                	Assert.assertEquals("x0", property1.get(0));
+                	Assert.assertEquals("x1", property1.get(1));
                 	
-                	List<Integer> property2 = controller.getProperty2();
+                	Map<Integer,String> property2 = controller.getProperty2();
                 	
                 	Assert.assertNotNull(property2);
                 	Assert.assertEquals(2, property2.size());
-                	Assert.assertEquals(new Integer(0), property2.get(0));
-                	Assert.assertEquals(new Integer(1), property2.get(1));
+                	Assert.assertEquals("x0", property2.get(0));
+                	Assert.assertEquals("x1", property2.get(1));
 
-                	List<Integer> property3 = controller.getProperty3();
+                	Map<Integer,String> property3 = controller.getProperty3();
                 	
                 	Assert.assertNotNull(property3);
                 	Assert.assertEquals(2, property3.size());
-                	Assert.assertEquals(new Integer(0), property3.get(0));
-                	Assert.assertEquals(new Integer(1), property3.get(1));
+                	Assert.assertEquals("x0", property3.get(0));
+                	Assert.assertEquals("x1", property3.get(1));
 
-                	List<EnumTest> property4 = controller.getProperty4();
+                	Map<EnumTest,String> property4 = controller.getProperty4();
                 	
                 	Assert.assertNotNull(property4);
                 	Assert.assertEquals(2, property4.size());
-                	Assert.assertEquals(EnumTest.VALUE1, property4.get(0));
-                	Assert.assertEquals(EnumTest.VALUE2, property4.get(1));
+                	Assert.assertEquals("xVALUE1", property4.get(EnumTest.VALUE1));
+                	Assert.assertEquals("xVALUE2", property4.get(EnumTest.VALUE2));
 
-                	List<Integer> property5 = controller.getProperty5();
+                	Map<Integer,String> property5 = controller.getProperty5();
                 	
                 	Assert.assertNotNull(property5);
                 	Assert.assertEquals(2, property5.size());
-                	Assert.assertEquals(new Integer(0), property5.get(0));
-                	Assert.assertEquals(new Integer(1), property5.get(1));
+                	Assert.assertEquals("x0", property5.get(0));
+                	Assert.assertEquals("x1", property5.get(1));
 
-                	List<Date> property6 = controller.getProperty6();
+                	Map<Date,String> property6 = controller.getProperty6();
                 	
                 	Assert.assertNotNull(property6);
                 	Assert.assertEquals(2, property6.size());
                 	
                 	try {
-						Assert.assertEquals(sdf.parseObject("01-01-2015"), property6.get(0));
-	                	Assert.assertEquals(sdf.parseObject("02-01-2015"), property6.get(1));
+						Assert.assertEquals("x01-01-2015", property6.get(sdf.parseObject("01-01-2015")));
+	                	Assert.assertEquals("x02-01-2015", property6.get(sdf.parseObject("02-01-2015")));
 					}
                 	catch (ParseException e) {
                 		throw new RuntimeException(e);
 					}
                 
-                	List<Integer> property7 = controller.getProperty7();
+                	Map property7 = controller.getProperty7();
                 	
                 	Assert.assertNotNull(property7);
                 	Assert.assertEquals(2, property7.size());
-                	Assert.assertEquals(new Integer(0), property7.get(0));
-                	Assert.assertEquals(new Integer(1), property7.get(1));
+                	Assert.assertEquals("x0", property7.get(0));
+                	Assert.assertEquals("x1", property7.get(1));
 
-                	List<String> property8 = controller.getProperty8();
+                	Map property8 = controller.getProperty8();
                 	
                 	Assert.assertNotNull(property8);
                 	Assert.assertEquals(2, property8.size());
-                	Assert.assertEquals("xx-0", property8.get(0));
-                	Assert.assertEquals("xx-1", property8.get(1));
+                	Assert.assertEquals("x0", property8.get("xx-0"));
+                	Assert.assertEquals("x1", property8.get("xx-1"));
 
-                	List<ElementCollectionBeanTest0> property9 = controller.getProperty9();
+                	Map<KeyCollectionBeanTest0,String> property9 = controller.getProperty9();
                 	
                 	Assert.assertNotNull(property9);
                 	Assert.assertEquals(2, property9.size());
-                	Assert.assertEquals("0", property9.get(0).getProperty());
-                	Assert.assertEquals("1", property9.get(1).getProperty());
+                	Assert.assertEquals("x0", property9.get(new KeyCollectionBeanTest0("0")));
+                	Assert.assertEquals("x1", property9.get(new KeyCollectionBeanTest0("1")));
 
-                	List<ElementCollectionBeanTest0> property10 = controller.getProperty10();
+                	Map<KeyCollectionBeanTest0,String> property10 = controller.getProperty10();
                 	
                 	Assert.assertNotNull(property10);
                 	Assert.assertEquals(2, property10.size());
-                	Assert.assertEquals("0", property10.get(0).getProperty());
-                	Assert.assertEquals("1", property10.get(1).getProperty());
+                	Assert.assertEquals("x0", property10.get(new KeyCollectionBeanTest0("0")));
+                	Assert.assertEquals("x1", property10.get(new KeyCollectionBeanTest0("1")));
 
-                	List<ElementCollectionBeanTest0> property11 = controller.getProperty11();
+                	Map<KeyCollectionBeanTest0,String> property11 = controller.getProperty11();
                 	
                 	Assert.assertNotNull(property11);
                 	Assert.assertEquals(2, property11.size());
-                	Assert.assertEquals("0", property11.get(0).getProperty());
-                	Assert.assertEquals("1", property11.get(1).getProperty());
+                	Assert.assertEquals("x0", property11.get(new KeyCollectionBeanTest0("0")));
+                	Assert.assertEquals("x1", property11.get(new KeyCollectionBeanTest0("1")));
 
-                	List<EnumTest> property12 = controller.getProperty12();
+                	Map<EnumTest,String> property12 = controller.getProperty12();
                 	
                 	Assert.assertNotNull(property12);
                 	Assert.assertEquals(2, property12.size());
-                	Assert.assertEquals(EnumTest.VALUE1, property12.get(0));
-                	Assert.assertEquals(EnumTest.VALUE2, property12.get(1));
-                	
+                	Assert.assertEquals("x0", property12.get(EnumTest.VALUE1));
+                	Assert.assertEquals("x1", property12.get(EnumTest.VALUE2));
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     throw e;
                 }
             },
-            new Class[]{ControllerElementCollectionPropertyTest.class});
+            new Class[]{ControllerKeyCollectionPropertyTest.class});
     }
     
     public void testControllerElementCollectionBeanConstructorFailTest() throws Throwable{
