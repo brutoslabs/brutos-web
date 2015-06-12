@@ -3,7 +3,6 @@ package org.brandao.brutos.annotation;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -14,28 +13,21 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.brandao.brutos.annotation.helper.EnumTest;
-import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionActionTest;
-import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionBeanTest;
-import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionConstructorTest;
-import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionCustomCollectionTest;
-import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionFieldTest;
-import org.brandao.brutos.annotation.helper.elementcollection.app1.ControllerElementCollectionPropertyTest;
-import org.brandao.brutos.annotation.helper.elementcollection.app1.CustomList;
-import org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0;
-import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionBeanConstructorFailTest;
-import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionBeanFieldFailTest;
-import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionBeanPropertyFailTest;
-import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionFieldFailTest;
-import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionPropertyFailTest;
-import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionUnknownTypeTest;
 import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionActionTest;
 import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionBeanTest;
 import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionConstructorTest;
+import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionCustomCollectionTest;
 import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionFieldTest;
 import org.brandao.brutos.annotation.helper.keycollection.app1.ControllerKeyCollectionPropertyTest;
+import org.brandao.brutos.annotation.helper.keycollection.app1.CustomMap;
 import org.brandao.brutos.annotation.helper.keycollection.app1.KeyCollectionBeanTest0;
+import org.brandao.brutos.annotation.helper.keycollection.fail.ControllerKeyCollectionBeanConstructorFailTest;
+import org.brandao.brutos.annotation.helper.keycollection.fail.ControllerKeyCollectionBeanFieldFailTest;
+import org.brandao.brutos.annotation.helper.keycollection.fail.ControllerKeyCollectionBeanPropertyFailTest;
+import org.brandao.brutos.annotation.helper.keycollection.fail.ControllerKeyCollectionFieldFailTest;
+import org.brandao.brutos.annotation.helper.keycollection.fail.ControllerKeyCollectionPropertyFailTest;
+import org.brandao.brutos.annotation.helper.keycollection.fail.ControllerKeyCollectionUnknownTypeTest;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
-import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
@@ -1214,7 +1206,7 @@ public class KeyCollectionTest extends TestCase{
             new Class[]{ControllerKeyCollectionConstructorTest.class});
     }        
 
-    public void testControllerElementCollectionCustomCollectionTest() throws Throwable{
+    public void testControllerKeyCollectionCustomCollectionTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
             new WebApplicationTester() {
@@ -1233,32 +1225,55 @@ public class KeyCollectionTest extends TestCase{
 
                 public void prepareRequest(Map<String, String> parameters) {
                 	
-                	parameters.put("property.element[0].subElement[0]", "1");
-                	parameters.put("property.element[0].subElement[1]", "2");
-                	parameters.put("property.element[0].subElement[2]", "3");
+                	parameters.put("property.key[0].subKey[0]", "1");
+                	parameters.put("property.key[0].subKey[1]", "2");
+                	parameters.put("property.key[0].subKey[2]", "3");
+                	parameters.put("property.key[0].element[0]", "x1");
+                	parameters.put("property.key[0].element[1]", "x2");
+                	parameters.put("property.key[0].element[2]", "x3");
+                	parameters.put("property.element[0]", "xx0");
                 	
-                	parameters.put("property.element[1].subElement[0]", "4");
-                	parameters.put("property.element[1].subElement[1]", "5");
-                	parameters.put("property.element[1].subElement[2]", "6");
+                	parameters.put("property.key[1].subKey[0]", "4");
+                	parameters.put("property.key[1].subKey[1]", "5");
+                	parameters.put("property.key[1].subKey[2]", "6");
+                	parameters.put("property.key[1].element[0]", "x4");
+                	parameters.put("property.key[1].element[1]", "x5");
+                	parameters.put("property.key[1].element[2]", "x6");
+                	parameters.put("property.element[1]", "xx1");
                 	
-                	parameters.put("property.element[2].subElement[0]", "7");
-                	parameters.put("property.element[2].subElement[1]", "8");
-                	parameters.put("property.element[2].subElement[3]", "9");
+                	parameters.put("property.key[2].subKey[0]", "7");
+                	parameters.put("property.key[2].subKey[1]", "8");
+                	parameters.put("property.key[2].subKey[3]", "9");
+                	parameters.put("property.key[2].element[0]", "x7");
+                	parameters.put("property.key[2].element[1]", "x8");
+                	parameters.put("property.key[2].element[3]", "x9");
+                	parameters.put("property.element[2]", "xx2");
                 	
                 	//Property2
                 	
-                	parameters.put("property2.element[0].element[0]", "10");
-                	parameters.put("property2.element[0].element[1]", "11");
-                	parameters.put("property2.element[0].element[2]", "12");
+                	parameters.put("property2.key[0].key[0]", "10");
+                	parameters.put("property2.key[0].key[1]", "11");
+                	parameters.put("property2.key[0].key[2]", "12");
+                	parameters.put("property2.key[0].element[0]", "x10");
+                	parameters.put("property2.key[0].element[1]", "x11");
+                	parameters.put("property2.key[0].element[2]", "x12");
+                	parameters.put("property2.element[0]", "xx3");
                 	
-                	parameters.put("property2.element[1].element[0]", "13");
-                	parameters.put("property2.element[1].element[1]", "14");
-                	parameters.put("property2.element[1].element[2]", "15");
+                	parameters.put("property2.key[1].key[0]", "13");
+                	parameters.put("property2.key[1].key[1]", "14");
+                	parameters.put("property2.key[1].key[2]", "15");
+                	parameters.put("property2.key[1].element[0]", "x13");
+                	parameters.put("property2.key[1].element[1]", "x14");
+                	parameters.put("property2.key[1].element[2]", "x15");
+                	parameters.put("property2.element[1]", "xx4");
                 	
-                	parameters.put("property2.element[2].element[0]", "16");
-                	parameters.put("property2.element[2].element[1]", "17");
-                	parameters.put("property2.element[2].element[3]", "18");
-                	
+                	parameters.put("property2.key[2].key[0]", "16");
+                	parameters.put("property2.key[2].key[1]", "17");
+                	parameters.put("property2.key[2].key[3]", "18");
+                	parameters.put("property2.key[2].element[0]", "x16");
+                	parameters.put("property2.key[2].element[1]", "x17");
+                	parameters.put("property2.key[2].element[3]", "x18");
+                	parameters.put("property2.element[2]", "xx5");
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
@@ -1267,44 +1282,54 @@ public class KeyCollectionTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	ControllerElementCollectionCustomCollectionTest controller = 
-                			(ControllerElementCollectionCustomCollectionTest)request.getAttribute("Controller");
+                	ControllerKeyCollectionCustomCollectionTest controller = 
+                			(ControllerKeyCollectionCustomCollectionTest)request.getAttribute("Controller");
 
-                	List<CustomList> property = controller.property;
+                	Map<CustomMap,String> property = controller.property;
                 	
                 	Assert.assertEquals(3, property.size());
                 	
-                	Assert.assertEquals(3, property.get(0).size());
-                	Assert.assertEquals(new Integer(1), property.get(0).get(0));
-                	Assert.assertEquals(new Integer(2), property.get(0).get(1));
-                	Assert.assertEquals(new Integer(3), property.get(0).get(2));
+                	CustomMap key1 = new CustomMap();
+                	key1.put(1, "x1");
+                	key1.put(2, "x2");
+                	key1.put(3, "x3");
+
+                	CustomMap key2 = new CustomMap();
+                	key1.put(4, "x4");
+                	key1.put(5, "x5");
+                	key1.put(6, "x6");
                 	
-                	Assert.assertEquals(3, property.get(1).size());
-                	Assert.assertEquals(new Integer(4), property.get(1).get(0));
-                	Assert.assertEquals(new Integer(5), property.get(1).get(1));
-                	Assert.assertEquals(new Integer(6), property.get(1).get(2));
+                	CustomMap key3 = new CustomMap();
+                	key1.put(7, "x7");
+                	key1.put(8, "x8");
+                	key1.put(9, "x9");
+                	
+                	Assert.assertEquals("xx0", property.get(key1));
+                	Assert.assertEquals("xx1", property.get(key2));
+                	Assert.assertEquals("xx2", property.get(key3));
 
-                	Assert.assertEquals(2, property.get(2).size());
-                	Assert.assertEquals(new Integer(7), property.get(2).get(0));
-                	Assert.assertEquals(new Integer(8), property.get(2).get(1));
-
-                	List<List<Integer>> property2 = controller.property2;
+                	Map<Map<Integer,String>,String> property2 = controller.property2;
                 	
                 	Assert.assertEquals(3, property2.size());
                 	
-                	Assert.assertEquals(3, property2.get(0).size());
-                	Assert.assertEquals(new Integer(10), property2.get(0).get(0));
-                	Assert.assertEquals(new Integer(11), property2.get(0).get(1));
-                	Assert.assertEquals(new Integer(12), property2.get(0).get(2));
-                	
-                	Assert.assertEquals(3, property2.get(1).size());
-                	Assert.assertEquals(new Integer(13), property2.get(1).get(0));
-                	Assert.assertEquals(new Integer(14), property2.get(1).get(1));
-                	Assert.assertEquals(new Integer(15), property2.get(1).get(2));
+                	CustomMap key4 = new CustomMap();
+                	key1.put(10, "x10");
+                	key1.put(11, "x11");
+                	key1.put(12, "x12");
 
-                	Assert.assertEquals(2, property2.get(2).size());
-                	Assert.assertEquals(new Integer(16), property2.get(2).get(0));
-                	Assert.assertEquals(new Integer(17), property2.get(2).get(1));
+                	CustomMap key5 = new CustomMap();
+                	key1.put(13, "x13");
+                	key1.put(14, "x14");
+                	key1.put(15, "x15");
+                	
+                	CustomMap key6 = new CustomMap();
+                	key1.put(16, "x16");
+                	key1.put(17, "x17");
+                	key1.put(18, "x18");
+                	
+                	Assert.assertEquals("xx3", property.get(key4));
+                	Assert.assertEquals("xx4", property.get(key5));
+                	Assert.assertEquals("xx5", property.get(key6));
                 	
                 }
 
@@ -1312,7 +1337,7 @@ public class KeyCollectionTest extends TestCase{
                     throw e;
                 }
             },
-            new Class[]{ControllerElementCollectionCustomCollectionTest.class});
+            new Class[]{ControllerKeyCollectionCustomCollectionTest.class});
     }        
     
     public void testControllerKeyCollectionFieldTest() throws Throwable{
@@ -1665,7 +1690,7 @@ public class KeyCollectionTest extends TestCase{
             new Class[]{ControllerKeyCollectionPropertyTest.class});
     }
     
-    public void testControllerElementCollectionBeanConstructorFailTest() throws Throwable{
+    public void testControllerKeyCollectionBeanConstructorFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
             new WebApplicationTester() {
@@ -1690,7 +1715,7 @@ public class KeyCollectionTest extends TestCase{
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                	Assert.fail("expected: {unknown element type}");
+                	Assert.fail("expected: {unknown key type}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -1698,17 +1723,17 @@ public class KeyCollectionTest extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknown element type"))
+                        if(ex.getMessage().equals("unknown key type"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknown element type}");
+                    Assert.fail("expected: {unknown key type}");
                 }
             },
-            new Class[]{ControllerElementCollectionBeanConstructorFailTest.class});
+            new Class[]{ControllerKeyCollectionBeanConstructorFailTest.class});
     }           
 
-    public void testControllerElementCollectionBeanFieldFailTest() throws Throwable{
+    public void testControllerKeyCollectionBeanFieldFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
             new WebApplicationTester() {
@@ -1733,7 +1758,7 @@ public class KeyCollectionTest extends TestCase{
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                	Assert.fail("expected: {unknown element type}");
+                	Assert.fail("expected: {unknown key type}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -1741,17 +1766,17 @@ public class KeyCollectionTest extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknown element type"))
+                        if(ex.getMessage().equals("unknown key type"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknown element type}");
+                    Assert.fail("expected: {unknown key type}");
                 }
             },
-            new Class[]{ControllerElementCollectionBeanFieldFailTest.class});
+            new Class[]{ControllerKeyCollectionBeanFieldFailTest.class});
     }           
 
-    public void testControllerElementCollectionBeanPropertyFailTest() throws Throwable{
+    public void testControllerKeyCollectionBeanPropertyFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
             new WebApplicationTester() {
@@ -1776,7 +1801,7 @@ public class KeyCollectionTest extends TestCase{
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                	Assert.fail("expected: {unknown element type}");
+                	Assert.fail("expected: {unknown key type}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -1784,17 +1809,17 @@ public class KeyCollectionTest extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknown element type"))
+                        if(ex.getMessage().equals("unknown key type"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknown element type}");
+                    Assert.fail("expected: {unknown key type}");
                 }
             },
-            new Class[]{ControllerElementCollectionBeanPropertyFailTest.class});
+            new Class[]{ControllerKeyCollectionBeanPropertyFailTest.class});
     }           
 
-    public void testControllerElementCollectionFieldFailTest() throws Throwable{
+    public void testControllerKeyCollectionFieldFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
             new WebApplicationTester() {
@@ -1819,7 +1844,7 @@ public class KeyCollectionTest extends TestCase{
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                	Assert.fail("expected: {unknown element type}");
+                	Assert.fail("expected: {unknown key type}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -1827,17 +1852,17 @@ public class KeyCollectionTest extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknown element type"))
+                        if(ex.getMessage().equals("unknown key type"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknown element type}");
+                    Assert.fail("expected: {unknown key type}");
                 }
             },
-            new Class[]{ControllerElementCollectionFieldFailTest.class});
+            new Class[]{ControllerKeyCollectionFieldFailTest.class});
     }           
 
-    public void testControllerElementCollectionPropertyFailTest() throws Throwable{
+    public void testControllerKeyCollectionPropertyFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
             new WebApplicationTester() {
@@ -1862,7 +1887,7 @@ public class KeyCollectionTest extends TestCase{
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                	Assert.fail("expected: {unknown element type}");
+                	Assert.fail("expected: {unknown key type}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -1870,17 +1895,17 @@ public class KeyCollectionTest extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknown element type"))
+                        if(ex.getMessage().equals("unknown key type"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknown element type}");
+                    Assert.fail("expected: {unknown key type}");
                 }
             },
-            new Class[]{ControllerElementCollectionPropertyFailTest.class});
+            new Class[]{ControllerKeyCollectionPropertyFailTest.class});
     }           
 
-    public void testControllerElementCollectionUnknownTypeTest() throws Throwable{
+    public void testControllerKeyCollectionUnknownTypeTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
             new WebApplicationTester() {
@@ -1905,7 +1930,7 @@ public class KeyCollectionTest extends TestCase{
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0}");
+                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.KeyCollectionBeanTest0}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -1913,14 +1938,14 @@ public class KeyCollectionTest extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0"))
+                        if(ex.getMessage().equals("unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.KeyCollectionBeanTest0"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0}");
+                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.KeyCollectionBeanTest0}");
                 }
             },
-            new Class[]{ControllerElementCollectionUnknownTypeTest.class});
+            new Class[]{ControllerKeyCollectionUnknownTypeTest.class});
     }           
     
 }
