@@ -268,13 +268,12 @@ public class KeyCollectionTest extends TestCase{
                 	parameters.put("arg0.key[0]", "0");
                 	parameters.put("arg0.key[1]", "1");
                 	parameters.put("arg0.key[3]", "3");
-                	
-                	parameters.put("arg0.element[0]", "0");
-                	parameters.put("arg0.element[1]", "1");
-                	parameters.put("arg0.element[3]", "3");
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
+                	parameters.put("arg0.element[0]", "x0");
+                	parameters.put("arg0.element[1]", "x1");
+                	parameters.put("arg0.element[3]", "x3");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -585,9 +584,13 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.element[0].property", "0");
-                	parameters.put("arg0.element[1].property", "1");
-                	parameters.put("arg0.element[3].property", "3");
+                	parameters.put("arg0.key[0].property", "0");
+                	parameters.put("arg0.key[1].property", "1");
+                	parameters.put("arg0.key[3].property", "3");
+                	
+                	parameters.put("arg0.element[0]", "x0");
+                	parameters.put("arg0.element[1]", "x1");
+                	parameters.put("arg0.element[3]", "x3");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1140,7 +1143,7 @@ public class KeyCollectionTest extends TestCase{
                 	Assert.assertNotNull(property5);
                 	Assert.assertEquals(2, property5.size());
                 	Assert.assertEquals("x0", property5.get(0));
-                	Assert.assertEquals("x0", property5.get(1));
+                	Assert.assertEquals("x1", property5.get(1));
 
                 	Map<Date,String> property6 = controller.property6.getEntity();
                 	
@@ -1295,14 +1298,13 @@ public class KeyCollectionTest extends TestCase{
                 	key1.put(3, "x3");
 
                 	CustomMap key2 = new CustomMap();
-                	key1.put(4, "x4");
-                	key1.put(5, "x5");
-                	key1.put(6, "x6");
+                	key2.put(4, "x4");
+                	key2.put(5, "x5");
+                	key2.put(6, "x6");
                 	
                 	CustomMap key3 = new CustomMap();
-                	key1.put(7, "x7");
-                	key1.put(8, "x8");
-                	key1.put(9, "x9");
+                	key3.put(7, "x7");
+                	key3.put(8, "x8");
                 	
                 	Assert.assertEquals("xx0", property.get(key1));
                 	Assert.assertEquals("xx1", property.get(key2));
@@ -1313,23 +1315,22 @@ public class KeyCollectionTest extends TestCase{
                 	Assert.assertEquals(3, property2.size());
                 	
                 	CustomMap key4 = new CustomMap();
-                	key1.put(10, "x10");
-                	key1.put(11, "x11");
-                	key1.put(12, "x12");
+                	key4.put(10, "x10");
+                	key4.put(11, "x11");
+                	key4.put(12, "x12");
 
                 	CustomMap key5 = new CustomMap();
-                	key1.put(13, "x13");
-                	key1.put(14, "x14");
-                	key1.put(15, "x15");
+                	key5.put(13, "x13");
+                	key5.put(14, "x14");
+                	key5.put(15, "x15");
                 	
                 	CustomMap key6 = new CustomMap();
-                	key1.put(16, "x16");
-                	key1.put(17, "x17");
-                	key1.put(18, "x18");
+                	key6.put(16, "x16");
+                	key6.put(17, "x17");
                 	
-                	Assert.assertEquals("xx3", property.get(key4));
-                	Assert.assertEquals("xx4", property.get(key5));
-                	Assert.assertEquals("xx5", property.get(key6));
+                	Assert.assertEquals("xx3", property2.get(key4));
+                	Assert.assertEquals("xx4", property2.get(key5));
+                	Assert.assertEquals("xx5", property2.get(key6));
                 	
                 }
 
@@ -1547,43 +1548,68 @@ public class KeyCollectionTest extends TestCase{
 
                 public void prepareRequest(Map<String, String> parameters) {
                 	
-                	parameters.put("property.element[0]", "0");
-                	parameters.put("property.element[1]", "1");
+                	parameters.put("property.key[0]", "0");
+                	parameters.put("property.key[1]", "1");
+                	parameters.put("property.element[0]", "x0");
+                	parameters.put("property.element[1]", "x1");
                 	
-                	parameters.put("property2.element[0]", "0");
-                	parameters.put("property2.element[1]", "1");
+                	parameters.put("property2.key[0]", "0");
+                	parameters.put("property2.key[1]", "1");
+                	parameters.put("property2.element[0]", "x0");
+                	parameters.put("property2.element[1]", "x1");
 
                 	parameters.put("property3.elx[0]", "0");
                 	parameters.put("property3.elx[1]", "1");
+                	parameters.put("property3.element[0]", "x0");
+                	parameters.put("property3.element[1]", "x1");
 
-                	parameters.put("property4.element[0]", "VALUE1");
-                	parameters.put("property4.element[1]", "VALUE2");
+                	parameters.put("property4.key[0]", "VALUE1");
+                	parameters.put("property4.key[1]", "VALUE2");
+                	parameters.put("property4.element[0]", "xVALUE1");
+                	parameters.put("property4.element[1]", "xVALUE2");
 
-                	parameters.put("property6.element[0]", "01-01-2015");
-                	parameters.put("property6.element[1]", "02-01-2015");
+                	parameters.put("property5.element[0]", "x0");
+                	parameters.put("property5.element[1]", "x1");
+                	
+                	parameters.put("property6.key[0]", "01-01-2015");
+                	parameters.put("property6.key[1]", "02-01-2015");
+                	parameters.put("property6.element[0]", "x01-01-2015");
+                	parameters.put("property6.element[1]", "x02-01-2015");
 
-                	parameters.put("property7.element[0]", "0");
-                	parameters.put("property7.element[1]", "1");
+                	parameters.put("property7.key[0]", "0");
+                	parameters.put("property7.key[1]", "1");
+                	parameters.put("property7.element[0]", "x0");
+                	parameters.put("property7.element[1]", "x1");
 
-                	parameters.put("property8.element[0]", "0");
-                	parameters.put("property8.element[1]", "1");
+                	parameters.put("property8.key[0]", "0");
+                	parameters.put("property8.key[1]", "1");
+                	parameters.put("property8.element[0]", "x0");
+                	parameters.put("property8.element[1]", "x1");
 
-                	parameters.put("property9.element[0]", "0");
-                	parameters.put("property9.element[1]", "1");
+                	parameters.put("property9.key[0]", "0");
+                	parameters.put("property9.key[1]", "1");
+                	parameters.put("property9.element[0]", "x0");
+                	parameters.put("property9.element[1]", "x1");
 
-                	parameters.put("property10.element[0].property", "0");
-                	parameters.put("property10.element[1].property", "1");
+                	parameters.put("property10.key[0].property", "0");
+                	parameters.put("property10.key[1].property", "1");
+                	parameters.put("property10.element[0]", "x0");
+                	parameters.put("property10.element[1]", "x1");
 
-                	parameters.put("property11.element[0].property", "0");
-                	parameters.put("property11.element[1].property", "1");
+                	parameters.put("property11.key[0].property", "0");
+                	parameters.put("property11.key[1].property", "1");
+                	parameters.put("property11.element[0]", "x0");
+                	parameters.put("property11.element[1]", "x1");
 
-                	parameters.put("property12.element[0]", "0");
-                	parameters.put("property12.element[1]", "1");            	
+                	parameters.put("property12.key[0]", "0");
+                	parameters.put("property12.key[1]", "1");            	
+                	parameters.put("property12.element[0]", "x0");
+                	parameters.put("property12.element[1]", "x1");            	
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
-                	parameters.put("property5.element[0]", "0");
-                	parameters.put("property5.element[1]", "1");
+                	parameters.put("property5.key[0]", "0");
+                	parameters.put("property5.key[1]", "1");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1930,7 +1956,7 @@ public class KeyCollectionTest extends TestCase{
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.KeyCollectionBeanTest0}");
+                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.keycollection.app1.KeyCollectionBeanTest0}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -1938,11 +1964,11 @@ public class KeyCollectionTest extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.KeyCollectionBeanTest0"))
+                        if(ex.getMessage().equals("unknown type: org.brandao.brutos.annotation.helper.keycollection.app1.KeyCollectionBeanTest0"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.KeyCollectionBeanTest0}");
+                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.keycollection.app1.KeyCollectionBeanTest0}");
                 }
             },
             new Class[]{ControllerKeyCollectionUnknownTypeTest.class});
