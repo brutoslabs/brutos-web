@@ -23,6 +23,6 @@ public @interface ExtendedScope {
     /**
      * Identificação do escopo.
      */
-    String value();
+    String value() default "";
     
 }
