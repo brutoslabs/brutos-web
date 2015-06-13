@@ -83,6 +83,7 @@ public class RootAnnotationConfig extends AbstractAnnotationConfig{
     public Class<? extends Annotation>[] getExecutionOrder(){
         return new Class[]{
             TypeDef.class,
+            ExtendedScope.class,
             Intercepts.class,
             InterceptsStack.class,
             Controller.class};

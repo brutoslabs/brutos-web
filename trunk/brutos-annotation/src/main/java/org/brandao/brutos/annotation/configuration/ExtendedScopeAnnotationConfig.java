@@ -18,11 +18,11 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.annotation.ExtendedScope;
 import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.scope.Scope;
 
@@ -43,7 +43,7 @@ public class ExtendedScopeAnnotationConfig extends AbstractAnnotationConfig{
         }
         catch(Exception e){
             throw 
-                new BrutosException(
+                new MappingException(
                         "can't create new scope",
                         e );
         }
@@ -55,21 +55,22 @@ public class ExtendedScopeAnnotationConfig extends AbstractAnnotationConfig{
         ExtendedScope extendedScope = 
             (ExtendedScope) sourceClass.getAnnotation(ExtendedScope.class);
         
-        String name = extendedScope.value();
+        String name = extendedScope == null? null : extendedScope.value();
         name = 
             name == null? 
                 StringUtil.toCamelCase(sourceClass.getSimpleName().replaceAll("Scope$", "")) :
                 name;
+                
         if(!Scope.class.isAssignableFrom(sourceClass))
-            throw new BrutosException(sourceClass.getName() + " must implement " + Scope.class.getName());
+            throw new MappingException(sourceClass.getName() + " must implement " + Scope.class.getSimpleName());
         
         try{
             Scope scope = (Scope) ClassUtil.getInstance(sourceClass);
             componentRegistry.registerScope(name, scope);
             return scope;
         }
-        catch( Exception e ){
-            throw new BrutosException( e );
+        catch( Throwable e ){
+            throw new MappingException( e );
         }
         
     }
