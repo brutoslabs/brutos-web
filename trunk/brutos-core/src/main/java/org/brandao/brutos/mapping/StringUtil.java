@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class StringUtil {
     
-    public static String getVariableFormat(String value){
+    public static String toVariableFormat(String value){
         if(isEmpty(value))
             return null;
         

@@ -67,7 +67,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyA");
@@ -89,7 +89,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyB");
@@ -111,7 +111,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyC");
@@ -134,7 +134,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyD");
@@ -157,7 +157,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyE");
@@ -180,7 +180,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyF");
@@ -203,7 +203,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyG");
@@ -226,7 +226,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyH");
@@ -264,7 +264,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyI");
@@ -302,7 +302,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyJ");
@@ -342,7 +342,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyK");
@@ -382,7 +382,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyL");
@@ -424,7 +424,7 @@ public class AnnotationApplicationContextImportBeanTest
         
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyM");
@@ -453,7 +453,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyN");
@@ -483,7 +483,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyO");
@@ -513,7 +513,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyP");
@@ -543,7 +543,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyQ");
@@ -573,7 +573,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyR");
@@ -613,7 +613,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyS");
@@ -643,7 +643,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyT");
@@ -693,7 +693,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyU");
@@ -743,7 +743,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyV");
@@ -794,7 +794,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyA");
@@ -816,7 +816,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyB");
@@ -838,7 +838,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyC");
@@ -861,7 +861,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyD");
@@ -884,7 +884,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyE");
@@ -907,7 +907,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyF");
@@ -930,7 +930,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyG");
@@ -953,7 +953,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyH");
@@ -991,7 +991,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyI");
@@ -1029,7 +1029,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyJ");
@@ -1069,7 +1069,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyK");
@@ -1109,7 +1109,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyL");
@@ -1149,7 +1149,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyM");
@@ -1179,7 +1179,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyN");
@@ -1209,7 +1209,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyO");
@@ -1239,7 +1239,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyP");
@@ -1269,7 +1269,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyQ");
@@ -1299,7 +1299,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyR");
@@ -1339,7 +1339,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyS");
@@ -1369,7 +1369,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyT");
@@ -1419,7 +1419,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyU");
@@ -1469,7 +1469,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
 
         PropertyBean property = bean.getProperty("propertyV");
@@ -1540,7 +1540,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1564,7 +1564,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1588,7 +1588,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1613,7 +1613,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1638,7 +1638,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1663,7 +1663,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1688,7 +1688,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1725,7 +1725,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1750,7 +1750,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1785,7 +1785,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1824,7 +1824,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1864,7 +1864,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1906,7 +1906,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1948,7 +1948,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -1990,7 +1990,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -2022,7 +2022,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -2054,7 +2054,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -2086,7 +2086,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -2118,7 +2118,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -2150,7 +2150,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -2192,7 +2192,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -2224,7 +2224,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -2276,7 +2276,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();
@@ -2328,7 +2328,7 @@ public class AnnotationApplicationContextImportBeanTest
                     .getControllerManager().getController(clazz);
         
         ImportBeans ant = (ImportBeans) clazz.getAnnotation(ImportBeans.class);
-        String beanName = StringUtil.getVariableFormat(ant.value()[0].getSimpleName());
+        String beanName = StringUtil.toVariableFormat(ant.value()[0].getSimpleName());
         org.brandao.brutos.mapping.Bean bean = controller.getBean(beanName);
         
         ConstructorBean constructor = bean.getConstructor();

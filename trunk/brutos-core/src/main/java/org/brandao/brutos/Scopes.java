@@ -31,28 +31,38 @@ import org.brandao.brutos.logger.LoggerProvider;
  */
 public class Scopes{
 
-    private Map scopes;
+    private Map<String,Scope> scopes;
 
     public Scopes() {
-        scopes = new HashMap();
+        scopes = new HashMap<String,Scope>();
     }
 
     public void register( String id, Scope scope ){
 
+    	if(id == null)
+    		throw new NullPointerException("id");
+
+    	if(scope == null)
+    		throw new NullPointerException("scope");
+    	
         if( getLogger().isInfoEnabled() )
             getLogger().info(
                 (scopes.containsKey(id)?
                     "override scope: " :
                     "registred scope: ") + id );
         
-        scopes.put( id, scope );
+        scopes.put(id,scope);
     }
 
     public void remove( String id ){
+    	
+    	if(id == null)
+    		throw new NullPointerException("id");
+    	
         if( getLogger().isInfoEnabled() )
             getLogger().info( "removed scope: " + id );
 
-        scopes.remove( id );
+        scopes.remove(id);
     }
 
     public Scope get( String id ){
@@ -63,7 +73,7 @@ public class Scopes{
         return get( scopeId.toString() );
     }
 
-    public Map getScopes(){
+    public Map<String,Scope> getScopes(){
         return Collections.unmodifiableMap(scopes);
     }
 
