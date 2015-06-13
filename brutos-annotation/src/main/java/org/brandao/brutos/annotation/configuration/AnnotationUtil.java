@@ -561,7 +561,7 @@ public class AnnotationUtil {
         String name = bean == null? null : StringUtil.adjust(bean.value());
         name = 
             StringUtil.isEmpty(name)? 
-                StringUtil.getVariableFormat(type.getSimpleName()) : 
+                StringUtil.toVariableFormat(type.getSimpleName()) : 
                 name;
     	
     	return name;

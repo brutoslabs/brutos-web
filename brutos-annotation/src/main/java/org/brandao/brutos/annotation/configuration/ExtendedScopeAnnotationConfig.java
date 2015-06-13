@@ -57,10 +57,13 @@ public class ExtendedScopeAnnotationConfig extends AbstractAnnotationConfig{
         
         String name = extendedScope == null? null : extendedScope.value();
         name = 
-            name == null? 
-                StringUtil.toCamelCase(sourceClass.getSimpleName().replaceAll("Scope$", "")) :
+            StringUtil.isEmpty(name)? 
+                StringUtil.toVariableFormat(sourceClass.getSimpleName().replaceAll("Scope$", "")) :
                 name;
                 
+        if(StringUtil.isEmpty(name))
+            throw new MappingException("invalid scope name: " + sourceClass.getName());
+        	
         if(!Scope.class.isAssignableFrom(sourceClass))
             throw new MappingException(sourceClass.getName() + " must implement " + Scope.class.getSimpleName());
         

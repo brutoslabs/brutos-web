@@ -91,7 +91,7 @@ public class ScopeTest extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
                 	Scopes scopes = applicationContext.getScopes();
-                	Scope scope = scopes.get("ScopeBeta");
+                	Scope scope = scopes.get("scopeBeta");
                 	Assert.assertNotNull(scope);
                 	Assert.assertTrue(scope instanceof ScopeB);
                 }
@@ -130,7 +130,7 @@ public class ScopeTest extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
                 	Scopes scopes = applicationContext.getScopes();
-                	Scope scope = scopes.get("C");
+                	Scope scope = scopes.get("c");
                 	Assert.assertNotNull(scope);
                 	Assert.assertTrue(scope instanceof CScope);
                 }
@@ -169,7 +169,7 @@ public class ScopeTest extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
                 	Scopes scopes = applicationContext.getScopes();
-                	Scope scope = scopes.get("MyScope");
+                	Scope scope = scopes.get("myScope");
                 	Assert.assertNotNull(scope);
                 	Assert.assertTrue(scope instanceof DScope);
                 }
