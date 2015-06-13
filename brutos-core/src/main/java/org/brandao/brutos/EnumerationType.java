@@ -28,6 +28,11 @@ import java.util.Map;
 public class EnumerationType {
 
     /**
+     * O mapeamento depende do valor.
+     */
+    public static final EnumerationType AUTO = new EnumerationType( "auto" );
+	
+    /**
      * O enum é mapeado como um inteiro.
      */
     public static final EnumerationType ORDINAL = new EnumerationType( "ordinal" );
@@ -40,6 +45,7 @@ public class EnumerationType {
     private final static Map defaultTypes = new HashMap();
 
     static{
+        defaultTypes.put( AUTO.toString(), AUTO );
         defaultTypes.put( ORDINAL.toString(), ORDINAL );
         defaultTypes.put( STRING.toString(), STRING );
     }

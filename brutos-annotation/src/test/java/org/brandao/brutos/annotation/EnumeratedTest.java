@@ -238,7 +238,7 @@ public class EnumeratedTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0", "0");
+                	parameters.put("arg0", "10");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -279,7 +279,7 @@ public class EnumeratedTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0", "1");
+                	parameters.put("arg0", "VALUE12");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 

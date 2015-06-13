@@ -54,17 +54,33 @@ public class DefaultEnumType
             if( this.classType.isAssignableFrom(value.getClass()) )
                 return value;
             else
-            if( type == EnumerationType.ORDINAL ){
-                Object constants =
-                    this.enumUtil.getEnumConstants();
+            if(value instanceof String){
+            	String tmp = (String)value;
+            	Object result = null;
+            	
+                if( type == EnumerationType.AUTO ){
+                	result = this.enumUtil.valueByIndex(tmp);
+                	
+                	if(result == null)
+                		result = this.enumUtil.valueByName(tmp);
+                }
+                else
+                if( type == EnumerationType.ORDINAL ){
+                    result = this.enumUtil.valueByIndex(tmp);
+                }
+                else
+                    result = this.enumUtil.valueByName(tmp);
 
-                return Array.get(
-                    constants,
-                    ((Integer)intType.convert( value )).intValue());
+            	if(result == null)
+            		throw new UnknownTypeException("enum not found: " + this.classType.getName() + "." + value);
+            	else
+            		return result;
             }
             else
-                return enumUtil
-                    .valueOf( (String)stringType.convert( value ) );
+            	throw new UnknownTypeException(value.getClass().getName());
+        }
+        catch( UnknownTypeException e ){
+        	throw e;
         }
         catch( Exception e ){
             throw new UnknownTypeException(e);
