@@ -17,12 +17,12 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.interceptor.InterceptorController;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -45,7 +45,7 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
         }
         catch(Exception e){
             throw 
-                new BrutosException(
+                new MappingException(
                         "can't create interception: " + ((Class)source).getName(),
                         e );
         }

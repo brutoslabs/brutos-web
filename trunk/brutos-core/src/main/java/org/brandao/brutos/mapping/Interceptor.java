@@ -29,9 +29,9 @@ public class Interceptor {
     
     private String name;
     
-    private Class type;
+    private Class<?> type;
     
-    private Map properties;
+    private Map<String,Object> properties;
     
     boolean def;
     
@@ -62,15 +62,15 @@ public class Interceptor {
         this.name = name;
     }
 
-    public Class getType() {
+    public Class<?> getType() {
         return parent == null? type : parent.getType();
     }
 
-    public void setType(Class type) {
+    public void setType(Class<?> type) {
         this.type = type;
     }
 
-    public Map getProperties() {
+    public Map<String,Object> getProperties() {
         return properties;
     }
 
@@ -78,7 +78,7 @@ public class Interceptor {
         properties.put( name, value );
     }
     
-    public void setProperties(Map properties) {
+    public void setProperties(Map<String,Object> properties) {
         this.properties = properties;
         
     }
@@ -96,10 +96,32 @@ public class Interceptor {
     public boolean isDefault(){
         return parent == null? this.def : parent.isDefault();
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Interceptor other = (Interceptor) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
     
-    public boolean equals( Object o ){
-        return o instanceof Interceptor?
-                    ((Interceptor)o).getName().equals( getName() ) : 
-                    false;
-    }
+    
+    
 }
