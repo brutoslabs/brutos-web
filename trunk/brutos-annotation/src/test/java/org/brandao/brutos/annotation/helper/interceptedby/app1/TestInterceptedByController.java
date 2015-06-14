@@ -9,4 +9,8 @@ import org.brandao.brutos.annotation.InterceptedBy;
 		@Intercept(interceptor=TestNameInterceptorController.class))
 public class TestInterceptedByController {
 
+	public boolean testAction(){
+		return true;
+	}
+	
 }

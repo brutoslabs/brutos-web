@@ -9,9 +9,13 @@ import org.brandao.brutos.annotation.Param;
 @InterceptedBy(
 		@Intercept(
 			interceptor=TestNameInterceptorController.class,
-			params=@Param(name="param",value="param1")
+			params=@Param(name="param1",value="value1")
 		)
 )
 public class Test2InterceptedByController {
 
+	public boolean testAction(){
+		return true;
+	}
+	
 }

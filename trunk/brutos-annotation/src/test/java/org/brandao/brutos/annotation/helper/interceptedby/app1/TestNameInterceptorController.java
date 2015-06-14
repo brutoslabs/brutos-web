@@ -25,6 +25,8 @@ public class TestNameInterceptorController
 			request.setAttribute(key, prop.get(key));
 		}
 		
+		request.setAttribute("intercepted.testName", "true");
+		
 		stack.next(handler);
 	}
 
