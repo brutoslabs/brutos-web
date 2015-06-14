@@ -20,6 +20,7 @@ package org.brandao.brutos.mapping;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
+
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
@@ -38,23 +39,23 @@ public class Controller {
     
     private String id;
     
-    private Class classType;
+    private Class<?> classType;
     
     private String actionId;
     
-    private Map mappingBeans;
+    private Map<String,Bean> mappingBeans;
     
-    private List fields;
+    private List<PropertyController> fields;
     
-    private Map actions;
+    private Map<String,Action> actions;
 
-    private Map reverseMethods;
+    private Map<ReverseActionKey,List<Action>> reverseMethods;
     
     private ActionListener actionListener;
 
-    private Map throwsSafe;
+    private Map<Class<?>,ThrowableSafeData> throwsSafe;
 
-    private List alias;
+    private List<String> alias;
 
     /**
      * @deprecated 
@@ -67,13 +68,13 @@ public class Controller {
     
     private String defaultAction;
     
-    private List interceptorStack;
+    private List<Interceptor> interceptorStack;
     
     private InterceptorProcess interceptorProcess;
 
     private DispatcherType dispatcherType;
 
-    private List defaultInterceptorList;
+    private List<Interceptor> defaultInterceptorList;
 
     private ActionType actionType;
     
@@ -87,13 +88,13 @@ public class Controller {
      * Cria um novo controlador.
      */
     public Controller(ConfigurableApplicationContext context) {
-        this.fields             = new ArrayList();
-        this.mappingBeans       = new LinkedHashMap();
-        this.actions            = new LinkedHashMap();
-        this.interceptorStack   = new ArrayList();
-        this.alias              = new ArrayList();
-        this.reverseMethods     = new LinkedHashMap();
-        this.throwsSafe         = new LinkedHashMap();
+        this.fields             = new ArrayList<PropertyController>();
+        this.mappingBeans       = new LinkedHashMap<String, Bean>();
+        this.actions            = new LinkedHashMap<String, Action>();
+        this.interceptorStack   = new ArrayList<Interceptor>();
+        this.alias              = new ArrayList<String>();
+        this.reverseMethods     = new LinkedHashMap<ReverseActionKey, List<Action>>();
+        this.throwsSafe         = new LinkedHashMap<Class<?>, ThrowableSafeData>();
         this.interceptorProcess = new InterceptorProcess();
         this.scope              = ScopeType.PARAM;
         this.redirect           = false;
@@ -170,7 +171,7 @@ public class Controller {
         return null;
     }
 
-    public List getProperties() {
+    public List<PropertyController> getProperties() {
         return fields;
     }
     
@@ -194,11 +195,11 @@ public class Controller {
         this.setActionListener(acion);
     }
 
-    public Class getClassType() {
+    public Class<?> getClassType() {
         return classType;
     }
 
-    public void setClassType(Class classType) {
+    public void setClassType(Class<?> classType) {
         this.classType = classType;
         this.beanInstance = new BeanInstance( null, classType );
     }
@@ -207,7 +208,7 @@ public class Controller {
         return (Action)actions.get(id);
     }
     
-    public Map getActions() {
+    public Map<String,Action> getActions() {
         return actions;
     }
     
@@ -219,7 +220,7 @@ public class Controller {
         this.actions.remove(id);
     }
     
-    Map getReverseMethods(){
+    Map<ReverseActionKey,List<Action>> getReverseMethods(){
         return reverseMethods;
     }
 
@@ -227,10 +228,10 @@ public class Controller {
         
         ReverseActionKey key = new ReverseActionKey(method);
 
-        List list = (List)reverseMethods.get(key);
+        List<Action> list = (List<Action>)reverseMethods.get(key);
 
         if( list == null ){
-            list = new LinkedList();
+            list = new LinkedList<Action>();
             reverseMethods.put(key, list);
         }
 
@@ -241,7 +242,7 @@ public class Controller {
 
         ReverseActionKey key = new ReverseActionKey(method);
 
-        List list = (List)reverseMethods.get(key);
+        List<Action> list = reverseMethods.get(key);
 
         if(list == null || list.size() > 1)
             throw new
@@ -252,15 +253,20 @@ public class Controller {
         return (Action) list.get(0);
     }
     
-    public void setMethods(Map methods) {
+    public void setMethods(Map<String,Action> methods) {
         this.actions = methods;
     }
     
     public void addInterceptor( Interceptor[] interceptor ){
-        getInterceptorStack().addAll( Arrays.asList( interceptor ) );
+    	
+    	for(Interceptor i: interceptor){
+    		if(this.interceptorStack.contains(i))
+    			throw new MappingException("interceptor already associated with the controller: " + i.getName());
+    		this.interceptorStack.add(i);
+    	}
     }
     
-    public List getInterceptors(){
+    public List<Interceptor> getInterceptors(){
         return getInterceptorStack();
     }
 
@@ -292,13 +298,14 @@ public class Controller {
         
         this.interceptorProcess.flush();
         
-        Iterator keys = actions.keySet().iterator();
+        Iterator<String> keys = actions.keySet().iterator();
 
         while(keys.hasNext()){
-            String key = (String)keys.next();
-            Action ac = (Action) actions.get(key);
+            String key = keys.next();
+            Action ac = actions.get(key);
             ac.flush();
         }
+        
     }
     
     public void fieldsToRequest( Object webFrame ) {
@@ -319,11 +326,11 @@ public class Controller {
         }
     }
     
-    public ThrowableSafeData getThrowsSafe( Class thr ) {
+    public ThrowableSafeData getThrowsSafe( Class<?> thr ) {
         return (ThrowableSafeData) throwsSafe.get(thr);
     }
 
-    public void removeThrowsSafe(Class thr) {
+    public void removeThrowsSafe(Class<?> thr) {
         this.throwsSafe.remove( thr );
     }
 
@@ -340,7 +347,7 @@ public class Controller {
         return index == -1? null : (String)this.alias.remove(index);
     }
     
-    public List getAlias(){
+    public List<String> getAlias(){
         return this.alias;
     }
 
@@ -401,11 +408,11 @@ public class Controller {
         this.actionListener = action;
     }
 
-    public List getInterceptorStack() {
+    public List<Interceptor> getInterceptorStack() {
         return interceptorStack;
     }
 
-    public void setInterceptorStack(List interceptorStack) {
+    public void setInterceptorStack(List<Interceptor> interceptorStack) {
         this.interceptorStack = interceptorStack;
     }
 
@@ -433,11 +440,11 @@ public class Controller {
         this.dispatcherType = dispatcherType;
     }
 
-    public List getDefaultInterceptorList() {
+    public List<Interceptor> getDefaultInterceptorList() {
         return defaultInterceptorList;
     }
 
-    public void setDefaultInterceptorList(List defaultInterceptorList) {
+    public void setDefaultInterceptorList(List<Interceptor> defaultInterceptorList) {
         this.defaultInterceptorList = defaultInterceptorList;
     }
 

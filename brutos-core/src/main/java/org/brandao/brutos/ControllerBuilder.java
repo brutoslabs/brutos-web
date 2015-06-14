@@ -19,6 +19,7 @@
 package org.brandao.brutos;
 
 import java.util.*;
+
 import org.brandao.brutos.ControllerManager.InternalUpdate;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.logger.Logger;
@@ -565,12 +566,13 @@ public class ControllerBuilder {
         else
             it = new Interceptor( parent );
         
-        it.setProperties( new HashMap() );
+        it.setProperties( new HashMap<String, Object>() );
         
-        Set keys = parent.getProperties().keySet();
-        Iterator iKeys = keys.iterator();
+        Set<String> keys = parent.getProperties().keySet();
+        Iterator<String> iKeys = keys.iterator();
+        
         while( iKeys.hasNext() ){
-            String key = (String) iKeys.next();
+            String key = iKeys.next();
             Object value = parent.getProperties().get( key );
             it.getProperties().put( key, value );
         }
@@ -581,7 +583,7 @@ public class ControllerBuilder {
                 new Object[]{this.controller.getClassType().getName(),name}));
         
         controller.addInterceptor( new Interceptor[]{it} );
-        return new InterceptorBuilder( it, interceptorManager );
+        return new InterceptorBuilder(it, interceptorManager);
     }
 
 

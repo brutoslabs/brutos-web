@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import org.brandao.brutos.annotation.helper.extendedscope.fail.ScopeE;
 import org.brandao.brutos.annotation.helper.interceptedby.app1.Test2InterceptedByController;
 import org.brandao.brutos.annotation.helper.interceptedby.app1.Test3InterceptedByController;
 import org.brandao.brutos.annotation.helper.interceptedby.app1.Test4InterceptedByController;
@@ -16,6 +17,7 @@ import org.brandao.brutos.annotation.helper.interceptedby.app1.Test5InterceptedB
 import org.brandao.brutos.annotation.helper.interceptedby.app1.TestInterceptedByController;
 import org.brandao.brutos.annotation.helper.interceptedby.app1.TestName2InterceptorController;
 import org.brandao.brutos.annotation.helper.interceptedby.app1.TestNameInterceptorController;
+import org.brandao.brutos.annotation.helper.interceptedby.fail.Test1InterceptedByFailController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
@@ -248,6 +250,49 @@ public class InterceptedByTest extends TestCase{
         		Test5InterceptedByController.class, 
         		TestNameInterceptorController.class, 
         		TestName2InterceptorController.class});
+    }
+
+    public void testFailScopeE() throws Throwable{
+        WebApplicationContextTester.run(
+            "", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                	
+                    Assert.fail("expected: {interceptor already associated with the controller: testName}");
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                    Assert.assertNotNull(e);
+                    Throwable ex = e;
+                    do{
+                        if(ex.getMessage().equals("interceptor already associated with the controller: testName"))
+                            return;
+                    }while((ex = ex.getCause()) != null);
+                    
+                    Assert.fail("expected: {interceptor already associated with the controller: testName}");
+                }
+            },
+            new Class[]{Test1InterceptedByFailController.class, TestNameInterceptorController.class});
     }
     
 }
