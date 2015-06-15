@@ -18,13 +18,13 @@
 package org.brandao.brutos.annotation.configuration.converters;
 
 import java.util.*;
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.annotation.InterceptsStack;
 import org.brandao.brutos.annotation.InterceptsStackList;
 import org.brandao.brutos.annotation.configuration.Converter;
 import org.brandao.brutos.annotation.configuration.InterceptorStackEntry;
 import org.brandao.brutos.interceptor.InterceptorController;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -34,16 +34,17 @@ import org.brandao.brutos.mapping.StringUtil;
 
 public class InterceptorStackConverter implements Converter{
 
-    public Object converter(Object value, 
+    @SuppressWarnings("unchecked")
+	public Object converter(Object value, 
             ComponentRegistry componentRegistry) {
         
         List<Object> list = (List<Object>)value;
         
-        Map<String,Map<Class,InterceptorStackItem>> stacksInfo =
+        Map<String,Map<Class<?>,InterceptorStackItem>> stacksInfo =
                 groupInfo(list);
         
         for(String key: stacksInfo.keySet()){
-            Map<Class,InterceptorStackItem> stackData =
+            Map<Class<?>,InterceptorStackItem> stackData =
                     stacksInfo.get(key);
 
             list.add(getInterceptorStackEntry(key, stackData));
@@ -52,15 +53,15 @@ public class InterceptorStackConverter implements Converter{
     }
 
     private InterceptorStackEntry getInterceptorStackEntry(String name, 
-            Map<Class,InterceptorStackItem> stackData){
+            Map<Class<?>,InterceptorStackItem> stackData){
         
         List<InterceptorStackItem> root = new ArrayList<InterceptorStackItem>();
         
-        for(Class keyItem: stackData.keySet()){
+        for(Class<?> keyItem: stackData.keySet()){
 
             InterceptorStackItem item = stackData.get(keyItem);
 
-            Class after = item.getInfo().executeAfter();
+            Class<?> after = item.getInfo().executeAfter();
 
             if(after == InterceptorController.class){
                 root.add(item);
@@ -70,7 +71,7 @@ public class InterceptorStackConverter implements Converter{
             InterceptorStackItem previous = stackData.get(after);
 
             if(previous == null)
-                throw new BrutosException(
+                throw new MappingException(
                     "does not compose the interceptor stack " + name + ": " +
                         after.getSimpleName());
 
@@ -79,7 +80,7 @@ public class InterceptorStackConverter implements Converter{
         }
         
         if(root.isEmpty())
-            throw new BrutosException("first interceptor not found: " + name);
+            throw new MappingException("first interceptor not found: " + name);
         
         List<InterceptorStackItem> list = new ArrayList<InterceptorStackItem>();
         
@@ -105,33 +106,33 @@ public class InterceptorStackConverter implements Converter{
         
     }
     
-    private Map<String,Map<Class,InterceptorStackItem>> groupInfo(List<Object> clazzList){
-        Map<String,Map<Class,InterceptorStackItem>> stacks = 
-                new HashMap<String,Map<Class,InterceptorStackItem>>();
+    private Map<String,Map<Class<?>,InterceptorStackItem>> groupInfo(List<Object> clazzList){
+        Map<String,Map<Class<?>,InterceptorStackItem>> stacks = 
+                new HashMap<String,Map<Class<?>,InterceptorStackItem>>();
         
         for(Object itemList: clazzList){
             
             if(!(itemList instanceof Class))
                 continue;
             
-            Class clazz = (Class)itemList;
+            Class<?> clazz = (Class<?>)itemList;
             List<InterceptsStack> stacksDefinition = getStacksDefinition(clazz);
             
             for(InterceptsStack is: stacksDefinition){
                 String name = StringUtil.adjust(is.name());
                 if(name == null)
-                    throw new BrutosException("invalid interceptor stack name: " 
+                    throw new MappingException("invalid interceptor stack name: " 
                             + clazz.getSimpleName());
                 
-                Map<Class,InterceptorStackItem> stack = stacks.get(name);
+                Map<Class<?>,InterceptorStackItem> stack = stacks.get(name);
                 
                 if(stack == null){
-                    stack = new HashMap<Class,InterceptorStackItem>();
+                    stack = new HashMap<Class<?>,InterceptorStackItem>();
                     stacks.put(name, stack);
                 }
                 
                 if(stack.containsKey(clazz))
-                    throw new BrutosException("duplicate interceptor stack name: "
+                    throw new MappingException("duplicate interceptor stack name: "
                             + clazz.getSimpleName());
                 
                 InterceptorStackItem item = 
@@ -143,7 +144,7 @@ public class InterceptorStackConverter implements Converter{
         return stacks;
     }
     
-    private List<InterceptsStack> getStacksDefinition(Class clazz){
+    private List<InterceptsStack> getStacksDefinition(Class<?> clazz){
         List<InterceptsStack> stacksDefinition = 
                 new ArrayList<InterceptsStack>();
 
@@ -179,7 +180,7 @@ public class InterceptorStackConverter implements Converter{
                 next.getType().getSimpleName();
             
             if(prefix.indexOf(node) != -1){
-                throw new BrutosException(
+                throw new MappingException(
                     "detected circular reference in interceptor stack " + 
                     entry.getName() + ": " + node);
             }
@@ -192,7 +193,7 @@ public class InterceptorStackConverter implements Converter{
         
         private String name;
         
-        private Class type;
+        private Class<?> type;
         
         private InterceptsStack info;
         
@@ -200,7 +201,7 @@ public class InterceptorStackConverter implements Converter{
         
         private InterceptorStackItem previous;
 
-        public InterceptorStackItem(String name, Class type){
+        public InterceptorStackItem(String name, Class<?> type){
             this.name = name;
             this.type = type;
             this.next = new ArrayList<InterceptorStackItem>();
@@ -238,11 +239,11 @@ public class InterceptorStackConverter implements Converter{
             this.next.add(next);
         }
 
-        public Class getType() {
+        public Class<?> getType() {
             return type;
         }
 
-        public void setType(Class type) {
+        public void setType(Class<?> type) {
             this.type = type;
         }
         
