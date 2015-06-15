@@ -22,6 +22,7 @@ import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.interceptor.InterceptorController;
+import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
@@ -34,7 +35,7 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
 
     public boolean isApplicable(Object source) {
         return source instanceof Class && 
-               ((Class)source).isAnnotationPresent( InterceptedBy.class );
+               ((Class<?>)source).isAnnotationPresent( InterceptedBy.class );
     }
 
     public Object applyConfiguration(Object source, Object builder, 
@@ -46,7 +47,7 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
         catch(Exception e){
             throw 
                 new MappingException(
-                        "can't create interception: " + ((Class)source).getName(),
+                        "can't create interception on controller " + ((Class<?>)source).getName(),
                         e );
         }
         
@@ -56,7 +57,7 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
             ComponentRegistry componentRegistry) {
         
         ControllerBuilder controllerBuilder = (ControllerBuilder)builder;
-        Class clazz = (Class)source;
+        Class<?> clazz = (Class<?>)source;
         InterceptedBy interceptedBy = (InterceptedBy)clazz.getAnnotation(InterceptedBy.class);
         
         for(Intercept i: interceptedBy.value()){
@@ -66,10 +67,18 @@ public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
             
             if(i.interceptor() != InterceptorController.class){
                 Class<? extends InterceptorController> iClass = i.interceptor();
-                name = componentRegistry.getRegisteredInterceptor(iClass).getName();
+                Interceptor interceptor = componentRegistry.getRegisteredInterceptor(iClass);
+                
+                if(interceptor == null)
+                	throw new MappingException("interceptor not found: " + iClass.getName());
+                
+                name = interceptor.getName();
             }
             else
                 name = StringUtil.isEmpty(i.name()) ? null : StringUtil.adjust(i.name());
+            
+            if(StringUtil.isEmpty(name))
+            	throw new MappingException("invalid interceptor name");
             
             ib = controllerBuilder.addInterceptor(name);
             

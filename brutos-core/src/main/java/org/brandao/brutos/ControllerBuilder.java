@@ -175,14 +175,14 @@ public class ControllerBuilder {
     public ControllerBuilder addAlias( String id ){
         
         if(ActionType.DETACHED.equals(controller.getActionType())){
-                throw new IllegalArgumentException(
+                throw new MappingException(
                     "alias not allowed: " + controller.getClassType().getName() );
         }
         
         id = StringUtil.adjust(id);
         
         if( StringUtil.isEmpty(id) )
-            throw new BrutosException("invalid alias");
+            throw new MappingException("invalid alias");
 
         getLogger().info(
                 String.format(
@@ -203,14 +203,14 @@ public class ControllerBuilder {
     public ControllerBuilder removeAlias( String id ){
         
         if(ActionType.DETACHED.equals(controller.getActionType())){
-                throw new IllegalArgumentException(
+                throw new MappingException(
                     "alias not allowed: " + controller.getClassType().getName() );
         }
         
         id = StringUtil.adjust(id);
         
         if( StringUtil.isEmpty(id) )
-            throw new BrutosException("invalid alias");
+            throw new MappingException("invalid alias");
 
         getLogger().info(
                 String.format(
@@ -228,7 +228,7 @@ public class ControllerBuilder {
      * @param id Identifica��o.
      * @return Contrutos do controlador.
      */
-    public ControllerBuilder addThrowable( Class target, String id ){
+    public ControllerBuilder addThrowable( Class<?> target, String id ){
         return addThrowable( target, null, 
                 !"true".equals(applicationContext.getConfiguration()
                 .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)),
@@ -245,7 +245,7 @@ public class ControllerBuilder {
      * @param dispatcher Modo como ser� direcionado o fluxo para a vis�o.
      * @return Contrutor do controlador.
      */
-    public ControllerBuilder addThrowable( Class target, String view, 
+    public ControllerBuilder addThrowable( Class<?> target, String view, 
             boolean resolvedView, String id, DispatcherType dispatcher){
         return this.addThrowable( target, view, id, dispatcher,
                 resolvedView);
@@ -263,7 +263,7 @@ public class ControllerBuilder {
      * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
      * @return Contrutor do controlador.
      */
-    public ControllerBuilder addThrowable( Class target, String view, String id, 
+    public ControllerBuilder addThrowable( Class<?> target, String view, String id, 
             DispatcherType dispatcher, boolean resolvedView ){
 
         view = StringUtil.adjust(view);
@@ -282,10 +282,10 @@ public class ControllerBuilder {
         id = StringUtil.adjust(id);
 
         if( target == null )
-            throw new BrutosException( "target is required: " + controller.getClassType().getName() );
+            throw new MappingException( "target is required: " + controller.getClassType().getName() );
 
         if( !Throwable.class.isAssignableFrom( target ) )
-            throw new BrutosException( "target is not allowed: " +target.getName() );
+            throw new MappingException( "target is not allowed: " +target.getName() );
 
         if(dispatcher == null)
             dispatcher = BrutosConstants.DEFAULT_DISPATCHERTYPE;
@@ -340,27 +340,27 @@ public class ControllerBuilder {
      * @param target Alvo do mapeamento.
      * @return Construtor do mapeamento.
      * @throws java.lang.NullPointerException Lan�ado se target for igual a null.
-     * @throws org.brandao.brutos.BrutosException Lan�ado se o target for uma
+     * @throws org.brandao.brutos.MappingException Lan�ado se o target for uma
      * cole��o.
      */
-    public BeanBuilder buildMappingBean( String name, Class target ){
+    public BeanBuilder buildMappingBean( String name, Class<?> target ){
         return this.buildMappingBean(name, null, target);
     }
     
     public BeanBuilder buildMappingBean( String name, 
-            String parentBeanName, Class target ){
+            String parentBeanName, Class<?> target ){
 
         if( target == null )
-            throw new BrutosException("invalid target class");
+            throw new MappingException("invalid target class");
 
         name = StringUtil.adjust(name);
         
         if( name == null || !name.matches("[a-zA-Z0-9_#]+"))
-            throw new BrutosException( "invalid bean name: \"" +
+            throw new MappingException( "invalid bean name: \"" +
                     name + "\"");
             
         if( controller.getBean( name ) != null )
-            throw new BrutosException( "duplicate bean name: \"" + name + "\"" );
+            throw new MappingException( "duplicate bean name: \"" + name + "\"" );
 
         getLogger().info(
             String.format(
@@ -476,7 +476,7 @@ public class ControllerBuilder {
         id = StringUtil.adjust(id);
         
         if(StringUtil.isEmpty(id))
-            throw new IllegalArgumentException("action id cannot be empty");
+            throw new MappingException("action id cannot be empty");
         
         resultId = StringUtil.adjust(resultId);
 
@@ -486,10 +486,10 @@ public class ControllerBuilder {
         
         
         if(StringUtil.isEmpty(view) && StringUtil.isEmpty(executor))
-            throw new BrutosException("view must be informed in abstract actions: " + id);
+            throw new MappingException("view must be informed in abstract actions: " + id);
 
         if( controller.getAction( id ) != null )
-            throw new BrutosException( "duplicate action: " + id );
+            throw new MappingException( "duplicate action: " + id );
      
         Action action = new Action();
         action.setCode(Action.getNextId());
@@ -521,10 +521,10 @@ public class ControllerBuilder {
         id = StringUtil.adjust(id);
         
         if( StringUtil.isEmpty(id) )
-            throw new BrutosException("action id cannot be empty");
+            throw new MappingException("action id cannot be empty");
         
         if( controller.getAction( id ) != null )
-            throw new BrutosException( "duplicate action " + id + ": " +
+            throw new MappingException( "duplicate action " + id + ": " +
                 controller.getClassType().getName() );
         
         Action action = parent.action;
@@ -539,10 +539,10 @@ public class ControllerBuilder {
         id = StringUtil.adjust(id);
         
         if( StringUtil.isEmpty(id) )
-            throw new BrutosException("invalid alias");
+            throw new MappingException("invalid alias");
         
         if(controller.getAction(id) == null || !controller.getAction(id).equals(parent.action))
-            throw new BrutosException( "invalid action " + id + ": " +
+            throw new MappingException( "invalid action " + id + ": " +
                 controller.getClassType().getName() );
 
         
@@ -557,14 +557,28 @@ public class ControllerBuilder {
      * @param name Nome do interceptador. Se n�o encontrado, ser� lan�ada uma exce��o.
      * @return Construtor do interceptador.
      */
-    public InterceptorBuilder addInterceptor( String name ){
+    public InterceptorBuilder addInterceptor(String name){
+
+    	name = StringUtil.adjust(name);
+    	
+    	if(StringUtil.isEmpty(name))
+    		throw new MappingException("interceptor name must be informed");
+    	
+    	if(!this.interceptorManager.containsInterceptor(name))
+    		throw new MappingException("interceptor not found: " + name);
+    	
         Interceptor parent = interceptorManager.getInterceptor( name );
+        
+        if(this.controller.isInterceptedBy(parent))
+    		throw new MappingException("interceptor already intercept this controller: " + name);
+        
         Interceptor it;
         
         if( parent instanceof InterceptorStack )
             it = new InterceptorStack( (InterceptorStack) parent );
         else
             it = new Interceptor( parent );
+
         
         it.setProperties( new HashMap<String, Object>() );
         
@@ -573,8 +587,8 @@ public class ControllerBuilder {
         
         while( iKeys.hasNext() ){
             String key = iKeys.next();
-            Object value = parent.getProperties().get( key );
-            it.getProperties().put( key, value );
+            Object value = parent.getProperties().get(key);
+            it.getProperties().put(key, value);
         }
         
         getLogger().info(
@@ -582,7 +596,8 @@ public class ControllerBuilder {
                 "%s intercepted by %s",
                 new Object[]{this.controller.getClassType().getName(),name}));
         
-        controller.addInterceptor( new Interceptor[]{it} );
+        controller.addInterceptor(it);
+        
         return new InterceptorBuilder(it, interceptorManager);
     }
 
@@ -771,11 +786,11 @@ public class ControllerBuilder {
         mapping          = StringUtil.adjust(mapping);
         
         if( propertyName == null )
-            throw new BrutosException( "property name is required: " +
+            throw new MappingException( "property name is required: " +
                     controller.getClassType().getName() );
 
         if( controller.containsProperty( propertyName ) )
-            throw new BrutosException( "property already defined: " +
+            throw new MappingException( "property already defined: " +
                     controller.getClassType().getName() + "." + propertyName );
         
         BeanInstance bean = this.controller.getBeanInstance();
@@ -793,7 +808,7 @@ public class ControllerBuilder {
             property.setBeanProperty(bean.getProperty(propertyName));
         }
         catch(Throwable e){
-            throw new BrutosException( "no such property: " +
+            throw new MappingException( "no such property: " +
                 controller.getClassType().getName() + "." + propertyName );
         }
 
@@ -803,7 +818,7 @@ public class ControllerBuilder {
             if( controller.getBean(mapping) != null )
                 property.setMapping( controller.getBean( mapping ) );
             else
-                throw new BrutosException( "mapping not found: " + mapping );
+                throw new MappingException( "mapping not found: " + mapping );
 
         }
         //else
@@ -819,7 +834,7 @@ public class ControllerBuilder {
                                 temporalProperty ) );
             }
             catch( UnknownTypeException e ){
-                throw new UnknownTypeException(
+                throw new MappingException(
                         String.format( "%s.%s : %s" ,
                             new Object[]{
                                 controller.getClassType().getName(),
@@ -839,7 +854,7 @@ public class ControllerBuilder {
      * @param clazz Tipo da propriedade.
      * @return Construtor da propriedade.
      */
-    public BeanBuilder buildProperty( String propertyName, Class clazz ){
+    public BeanBuilder buildProperty( String propertyName, Class<?> clazz ){
         String beanName = this.controller.getName() + "Controller#" + propertyName;
 
         BeanBuilder beanBuilder =
@@ -855,7 +870,7 @@ public class ControllerBuilder {
      * @return Classe do controlador.
      */
 
-    public Class getClassType(){
+    public Class<?> getClassType(){
         return controller.getClassType();
     }
     
@@ -931,7 +946,7 @@ public class ControllerBuilder {
         value = StringUtil.adjust(value);
         
         if(StringUtil.isEmpty(value))
-            throw new BrutosException("invalid dispatcher type");
+            throw new MappingException("invalid dispatcher type");
         
         this.setDispatcherType(DispatcherType.valueOf(value));
         

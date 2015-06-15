@@ -26,16 +26,23 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
+import org.brandao.brutos.mapping.StringUtil;
 
 /**
- *
- * @author Brandao
+ * Implementação padrão do gestor de interceptores.
+ * 
+ * @see {@link InterceptorManager}}
+ * @author Brandao Afonso
  */
-public class InterceptorManagerImp implements InterceptorManager{
+public class InterceptorManagerImp 
+	implements InterceptorManager{
 
-    private Map interceptors;
-    private Map reverseInterceptors;
-    private List defaultInterceptors;
+    private Map<String, Interceptor> interceptors;
+    
+    private Map<Class<?>,Interceptor> reverseInterceptors;
+    
+    private List<Interceptor> defaultInterceptors;
+    
     private InterceptorManager parent;
     
     public InterceptorManagerImp() {
@@ -43,52 +50,55 @@ public class InterceptorManagerImp implements InterceptorManager{
     }
 
     public InterceptorManagerImp(InterceptorManager parent) {
-        this.interceptors = new HashMap();
-        this.reverseInterceptors = new HashMap();
-        this.defaultInterceptors = new ArrayList();
-        this.parent = parent;
+        this.interceptors        = new HashMap<String, Interceptor>();
+        this.reverseInterceptors = new HashMap<Class<?>, Interceptor>();
+        this.defaultInterceptors = new ArrayList<Interceptor>();
+        this.parent              = parent;
     }
     
     public InterceptorStackBuilder addInterceptorStack( String name, boolean isDefault ){
         Interceptor in;
         
-        name = name == null || name.length() == 0? null : name;
+        name = StringUtil.isEmpty(name)? null : name;
+
+        if( name == null )
+            throw new BrutosException("interceptor name is required!");
         
         if( interceptors.containsKey( name ) )
-            throw new BrutosException( "conflict interceptor name: " + name );
-        
-        if( name == null )
-            throw new BrutosException( "interceptor name is required!" );
+            throw new BrutosException("conflict interceptor name: " + name);
         
         in = new InterceptorStack();
         
         if( isDefault )
             defaultInterceptors.add( in );
         
-        in.setName( name );
-        in.setDefault( isDefault );
-        in.setProperties( new HashMap() );
-        interceptors.put( name, in );
+        in.setName(name);
+        in.setDefault(isDefault);
+        in.setProperties(new HashMap<String, Object>());
+        interceptors.put(name, in);
         
         return new InterceptorStackBuilder( in, this );
     }
     
-    public InterceptorBuilder addInterceptor( String name, Class interceptor, boolean isDefault ){
+    public InterceptorBuilder addInterceptor( String name, Class<?> interceptor, boolean isDefault ){
         Interceptor in;
         
-        name = name == null || name.length() == 0? null : name;
-        
-        if( interceptors.containsKey( name ) )
-            throw new BrutosException( "conflict interceptor name: " + name );
-        
+        name = StringUtil.isEmpty(name)? null : name;
+
         if( interceptor == null )
-            throw new BrutosException( "interceptor class is required!" );
+            throw new BrutosException("interceptor class is required!");
         
         if( name == null )
-            throw new BrutosException( "interceptor name is required!" );
+            throw new BrutosException("interceptor name is required!");
         
-        if( !org.brandao.brutos.interceptor.Interceptor.class.isAssignableFrom( interceptor ) )
-            throw new BrutosException( "is not a interceptor: " + interceptor.getName() );
+        if( this.interceptors.containsKey( name ) )
+            throw new BrutosException("conflict interceptor name: " + name);
+
+        if( this.reverseInterceptors.containsKey(interceptor) )
+            throw new BrutosException("conflict interceptor: " + interceptor.getName());
+        
+        if( !org.brandao.brutos.interceptor.InterceptorController.class.isAssignableFrom( interceptor ) )
+            throw new BrutosException("must implement interface InterceptorController:" + interceptor.getName());
         
         in = new Interceptor();
         
@@ -97,14 +107,14 @@ public class InterceptorManagerImp implements InterceptorManager{
         
         in.setType( interceptor );
         in.setName( name );
-        in.setProperties( new HashMap() );
+        in.setProperties( new HashMap<String, Object>() );
         in.setDefault( isDefault );
         interceptors.put( name, in );
         reverseInterceptors.put(interceptor, in);
         
         getLogger().info("created interceptor: " + interceptor.getName());
-        return new InterceptorBuilder( in, this );
         
+        return new InterceptorBuilder( in, this );
     }
 
     public Interceptor getInterceptor( String name ){
@@ -112,28 +122,36 @@ public class InterceptorManagerImp implements InterceptorManager{
             if(parent != null)
                 return (Interceptor) parent.getInterceptor( name );
             else
-                throw new BrutosException( "interceptor not found: " + name );
+                return null;
         }
         else
             return (Interceptor) interceptors.get( name );
     }
 
-    public Interceptor getInterceptor( Class clazz ){
+    public boolean containsInterceptor(String name){
+    	return this.interceptors.containsKey(name) || this.parent.containsInterceptor(name);
+    }
+    
+    public Interceptor getInterceptor(Class<?> clazz){
         if( !reverseInterceptors.containsKey( clazz ) ){
             if(parent != null)
                 return (Interceptor) parent.getInterceptor( clazz );
             else
-                throw new BrutosException( "interceptor not found: " + clazz.getName() );
+                return null;
         }
         else
             return (Interceptor) reverseInterceptors.get( clazz );
     }
     
-    public List getDefaultInterceptors(){
-        List tmp;
+    public boolean containsInterceptor(Class<?> clazz){
+    	return this.reverseInterceptors.containsKey(clazz) || this.parent.containsInterceptor(clazz);
+    }
+    
+    public List<Interceptor> getDefaultInterceptors(){
+        List<Interceptor> tmp;
         
         if(parent != null){
-            tmp = new ArrayList(parent.getDefaultInterceptors());
+            tmp = new ArrayList<Interceptor>(parent.getDefaultInterceptors());
             tmp.addAll(this.defaultInterceptors);
         }
         else
