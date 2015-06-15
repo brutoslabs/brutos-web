@@ -21,10 +21,16 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 
-import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorProcess;
+import org.brandao.brutos.ActionType;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ObjectFactory;
+import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.Scopes;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.scope.Scope;
 
@@ -256,14 +262,33 @@ public class Controller {
     public void setMethods(Map<String,Action> methods) {
         this.actions = methods;
     }
+
+    public void addInterceptor( Interceptor interceptor ){
+    	this.addInterceptor(new Interceptor[]{interceptor});
+    }
     
     public void addInterceptor( Interceptor[] interceptor ){
-    	
     	for(Interceptor i: interceptor){
     		if(this.interceptorStack.contains(i))
-    			throw new MappingException("interceptor already associated with the controller: " + i.getName());
+    			throw new BrutosException("interceptor already associated with the controller: " + i.getName());
     		this.interceptorStack.add(i);
     	}
+    }
+
+    public void removeInterceptor( Interceptor interceptor ){
+    	this.removeInterceptor(new Interceptor[]{interceptor});
+    }
+    
+    public void removeInterceptor( Interceptor[] interceptor ){
+    	for(Interceptor i: interceptor){
+    		if(!this.interceptorStack.contains(i))
+    			throw new BrutosException("interceptor not found: " + i.getName());
+    		this.interceptorStack.remove(i);
+    	}
+    }
+    
+    public boolean isInterceptedBy(Interceptor interceptor){
+    	return this.interceptorStack.contains(interceptor);
     }
     
     public List<Interceptor> getInterceptors(){

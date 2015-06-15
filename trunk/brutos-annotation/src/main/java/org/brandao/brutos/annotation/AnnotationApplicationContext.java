@@ -22,7 +22,6 @@ import java.util.List;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.ComponentRegistry;
-import org.brandao.brutos.annotation.configuration.AnnotationUtil;
 import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
 
 /**
@@ -38,9 +37,9 @@ import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
  */
 public class AnnotationApplicationContext extends AbstractApplicationContext{
     
-    private Class[] allClazz;
+    private Class<?>[] allClazz;
     
-    private Class[] configClass;
+    private Class<?>[] configClass;
     
     /**
      * Cria uma nova aplicação.
@@ -55,7 +54,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
      * @throws IllegalArgumentException Lançada se na lista conter classes de
      * configuração.
      */
-    public AnnotationApplicationContext(Class[] clazz) throws IllegalArgumentException{
+    public AnnotationApplicationContext(Class<?>[] clazz) throws IllegalArgumentException{
         this(clazz, null);
     }
 
@@ -66,7 +65,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
      * @throws IllegalArgumentException Lançada se na lista conter classes de
      * configuração.
      */
-    public AnnotationApplicationContext(Class[] clazz,
+    public AnnotationApplicationContext(Class<?>[] clazz,
             ApplicationContext parent) throws IllegalArgumentException{
         super(parent);
         
@@ -83,7 +82,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
      * não possuem configuração.
      * @throws IllegalStateException Lançada se as classes da aplicação já foram definidas.
      */
-    public void setConfigClass(List<Class> clazz) throws IllegalStateException, IllegalArgumentException{
+    public void setConfigClass(List<Class<?>> clazz) throws IllegalStateException, IllegalArgumentException{
         
         if(this.allClazz != null)
             throw new IllegalStateException("classes have been defined");
@@ -93,15 +92,15 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
         }
     }
     
-    private void checkOnlyConfigurationClass(Class[] list){
-        for(Class c: list){
+    private void checkOnlyConfigurationClass(Class<?>[] list){
+        for(Class<?> c: list){
             if(!c.isAnnotationPresent(Configuration.class))
                 throw new IllegalArgumentException();
         }
     }
     
-    private void checkOnlyComponenetClass(Class[] list){
-        for(Class c: list){
+    private void checkOnlyComponenetClass(Class<?>[] list){
+        for(Class<?> c: list){
             if(c.isAnnotationPresent(Configuration.class))
                 throw new IllegalArgumentException();
         }

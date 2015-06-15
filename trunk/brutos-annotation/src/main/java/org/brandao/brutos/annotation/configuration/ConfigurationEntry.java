@@ -35,9 +35,9 @@ public class ConfigurationEntry {
     
     private List<FilterEntity> includeFilters;
     
-    private List<Class> allClazz;
+    private List<Class<?>> allClazz;
     
-    private List<Class> configClass;
+    private List<Class<?>> configClass;
 
     private boolean useDefaultfilter;
     
@@ -73,19 +73,19 @@ public class ConfigurationEntry {
         this.includeFilters = includeFilters;
     }
 
-    public List<Class> getAllClazz() {
+    public List<Class<?>> getAllClazz() {
         return allClazz;
     }
 
-    public void setAllClazz(List<Class> allClazz) {
+    public void setAllClazz(List<Class<?>> allClazz) {
         this.allClazz = allClazz;
     }
 
-    public List<Class> getConfigClass() {
+    public List<Class<?>> getConfigClass() {
         return configClass;
     }
 
-    public void setConfigClass(List<Class> configClass) {
+    public void setConfigClass(List<Class<?>> configClass) {
         this.configClass = configClass;
     }
 

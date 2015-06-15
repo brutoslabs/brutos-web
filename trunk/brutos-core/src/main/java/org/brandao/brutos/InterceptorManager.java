@@ -77,7 +77,7 @@ public interface InterceptorManager {
      * interceptadas.
      * @return Construtor do interceptador.
      */
-    InterceptorBuilder addInterceptor( String name, Class interceptor, boolean isDefault );
+    InterceptorBuilder addInterceptor( String name, Class<?> interceptor, boolean isDefault );
 
     /**
      * Obtém um interceptador a partir do nome.
@@ -87,17 +87,31 @@ public interface InterceptorManager {
     Interceptor getInterceptor( String name );
 
     /**
+     * Verifica se existe um determinado interceptor
+     * @param name Nome do interceptor.
+     * @return Verdadeiro se existir um interceptor. Caso contrário, falso.
+     */
+    boolean containsInterceptor(String name);
+    
+    /**
      * Obtém um interceptador a partir de sua classe.
      * @param clazz Classe do interceptador.
      * @return Mapeamento.
      */
-    Interceptor getInterceptor( Class clazz );
+    Interceptor getInterceptor( Class<?> clazz );
+
+    /**
+     * Verifica se existe um determinado interceptor
+     * @param clazz Nome do interceptor.
+     * @return Verdadeiro se existir um interceptor. Caso contrário, falso.
+     */
+    boolean containsInterceptor(Class<?> clazz);
     
     /**
      * Obtém os interceptadores globais.
      * @return Interceptadores globais.
      */
-    List getDefaultInterceptors();
+    List<Interceptor> getDefaultInterceptors();
     
     /**
      * Define o gestor de interceptador associado ao atual.

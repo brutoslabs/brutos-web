@@ -27,33 +27,40 @@ import org.brandao.brutos.BrutosException;
  */
 public class InterceptorStack extends Interceptor{
     
-    private List interceptors;
+    private List<Interceptor> interceptors;
 
     public InterceptorStack( InterceptorStack parent ) {
         super(parent);
-        this.interceptors = new ArrayList( parent.interceptors );
+        this.interceptors = new ArrayList<Interceptor>( parent.interceptors );
     }
     
     public InterceptorStack() {
-        this.interceptors = new ArrayList();
+        this.interceptors = new ArrayList<Interceptor>();
     }
 
-    public List getInterceptors() {
+    public List<Interceptor> getInterceptors() {
         return interceptors;
     }
 
-    public void setInterceptors(List interceptors) {
+    public void setInterceptors(List<Interceptor> interceptors) {
         this.interceptors = interceptors;
     }
     
     public void addInterceptor( Interceptor interceptor ){
         if( interceptors.contains( interceptor ) )
-            throw new BrutosException( "interceptor already added: " + interceptor.getName() );
+            throw new BrutosException("interceptor already added: " + interceptor.getName());
         else
-            interceptors.add( interceptor );
+            interceptors.add(interceptor);
+    }
+
+    public boolean containsInterceptor(Interceptor interceptor){
+        return interceptors.contains(interceptor);
     }
     
-    public boolean removeInterceptor( Interceptor interceptor ){
-        return interceptors.remove( interceptor );
+    public void removeInterceptor(Interceptor interceptor){
+    	if(this.containsInterceptor(interceptor))
+    		interceptors.remove(interceptor);
+    	else
+			throw new BrutosException("interceptor not found: " + interceptor.getName());
     }
 }
