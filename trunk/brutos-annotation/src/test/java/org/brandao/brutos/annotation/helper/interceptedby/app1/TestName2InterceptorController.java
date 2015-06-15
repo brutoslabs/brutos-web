@@ -16,7 +16,7 @@ public class TestName2InterceptorController
 	public void intercepted(InterceptorStack stack, InterceptorHandler handler)
 			throws InterceptedException {
 		
-		Map<String,String> prop = this.props;
+		Map<String,Object> prop = this.props;
 		
 		RequestInfo rq = RequestInfo.getCurrentRequestInfo();
 		ServletRequest request = rq.getRequest();

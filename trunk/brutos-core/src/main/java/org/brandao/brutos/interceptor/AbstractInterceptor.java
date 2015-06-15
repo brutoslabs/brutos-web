@@ -18,8 +18,10 @@
 package org.brandao.brutos.interceptor;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
 import org.brandao.brutos.ResourceAction;
 
 /**
@@ -28,8 +30,9 @@ import org.brandao.brutos.ResourceAction;
  */
 public abstract class AbstractInterceptor implements InterceptorController{
     
-    protected Map props;
-    private List excludeMethods;
+    protected Map<String,Object> props;
+    
+    private Set<String> excludeMethods;
     
     public AbstractInterceptor() {
     }
@@ -43,14 +46,14 @@ public abstract class AbstractInterceptor implements InterceptorController{
             return true;
     }
     
-    public void setProperties( Map props ){
+    public void setProperties( Map<String,Object> props ){
         this.props = props;
         
         if( props != null ){
             if( props.containsKey( "excludeMethods" ) ){
                 String em = (String)props.get( "excludeMethods" );
                 String[] ems = em.split( "," );
-                this.excludeMethods = Arrays.asList( ems );
+                this.excludeMethods = new HashSet<String>(Arrays.asList( ems ));
             }
         }
     }
