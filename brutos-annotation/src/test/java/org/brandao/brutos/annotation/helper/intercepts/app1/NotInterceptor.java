@@ -1,4 +1,4 @@
-package org.brandao.brutos.annotation.helper.interceptedby.app1;
+package org.brandao.brutos.annotation.helper.intercepts.app1;
 
 import java.util.Map;
 
@@ -10,12 +10,12 @@ import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorStack;
 import org.brandao.brutos.web.RequestInfo;
 
-public class TestNameInterceptorController 
+public class NotInterceptor 
 	extends AbstractInterceptor{
 
 	public void intercepted(InterceptorStack stack, InterceptorHandler handler)
 			throws InterceptedException {
-		
+
 		Map<String,Object> prop = this.props;
 		
 		RequestInfo rq = RequestInfo.getCurrentRequestInfo();
@@ -25,9 +25,10 @@ public class TestNameInterceptorController
 			request.setAttribute(key, prop.get(key));
 		}
 		
-		request.setAttribute("intercepted.testName", "true");
+		request.setAttribute("intercepted.interceptor7", "true");
 		
 		stack.next(handler);
+		
 	}
 
 }

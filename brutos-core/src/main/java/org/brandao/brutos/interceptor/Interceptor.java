@@ -37,7 +37,7 @@ public interface Interceptor {
      * Define a configuração inicial do interceptador.
      * @param props Configuração inicial.
      */
-    public void setProperties( Map props );
+    public void setProperties( Map<String,Object> props );
 
     /**
      * Verifica se o interceptador foi configurado.
