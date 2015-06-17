@@ -9,7 +9,62 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
 
 /**
- * Define uma associação que permite mais de um tipo de bean.
+ * Permite mapear uma associação para mais de um tipo de bean. 
+ * Em um bean ela pode ser usada nas propriedades ou nos argumentos 
+ * de um construtor. Em um controlador ela pode ser usada nas propriedades 
+ * ou nos parâmetros de uma ação.
+ * 
+ * <pre>
+ * Ex:
+ * 
+ * &#064;Controller("/controller")
+ * public class PropertyController{
+ *
+ *    public void saveProperty(
+ *        &#064;Basic(bean="property")
+ *        &#064;Any(
+ *            metaBean=&#064;Basic(bean="property_type")
+ *            metaValues={
+ *                &#064;MetaValue(name="Decimal", target=DecimalProperty.class),
+ *                &#064;MetaValue(name="Set”, target=SetProperty.class)
+ *            }
+ *        )
+ *        Property property){
+ *        ...
+ *    }
+ * }
+ *
+ * public interface Property{
+ *
+ *     Object getName();
+ *
+ * }
+ *
+ * public abstract class AbstractProperty{
+ *    
+ *     private String name;
+ *
+ *     public Stirng getName(){
+ *         return this.name;
+ *     }
+ *
+ * }
+ *
+ * public class DecimalProperty extends AbstractProperty{
+ *     
+ *     private int length;
+ *
+ *     private int decimals;
+ *     ...
+ * }
+ *
+ * public class SetProperty extends AbstractProperty {
+ *     
+ *     private List &#60;String&#62; values;
+ *     ...
+ * }
+ *
+ * </pre>
  * 
  * @author Brandao
  * 
