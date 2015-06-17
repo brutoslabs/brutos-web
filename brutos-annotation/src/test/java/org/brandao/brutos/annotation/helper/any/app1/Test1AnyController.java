@@ -1,5 +1,7 @@
 package org.brandao.brutos.annotation.helper.any.app1;
 
+import java.util.Date;
+
 import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.Controller;
@@ -48,6 +50,20 @@ public class Test1AnyController {
 				metaValues={
 					@MetaValue(name="0", target=DecimalProperty.class),
 					@MetaValue(name="1", target=SetProperty.class)
+				}
+			)
+			Property property){
+		this.property = property;
+	}
+
+	public void test4Action(
+			@Any(
+				metaBean=@Basic(bean="propertyType"),
+				metaType=Date.class,
+				metaTemporal="yyyy-MM-dd",
+				metaValues={
+					@MetaValue(name="2015-01-01", target=DecimalProperty.class),
+					@MetaValue(name="2015-01-02", target=SetProperty.class)
 				}
 			)
 			Property property){
