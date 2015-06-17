@@ -7,28 +7,28 @@ import org.brandao.brutos.annotation.DispatcherType;
 import org.brandao.brutos.annotation.View;
 
 @Controller("/controller")
-@Action(value="/action", view=@View(value="/view01.jsp",resolved=true))
+@Action(value="/action1", view=@View(value="/view01.jsp",resolved=true))
 @Actions({
 	@Action(value="/action2", view=@View("view02")),
 	@Action(value="/action3", view=@View("view03"))
 })
-
+@View("controller")
 public class Test1ViewController {
 
 	@View("view04")
-	public void test1Action(){
+	public void action4Action(){
 	}
 
 	@View(value="/view05.jsp", resolved=true)
-	public void test2Action(){
+	public void action5Action(){
 	}
 
 	@View(value="view06", dispatcher=DispatcherType.INCLUDE)
-	public void test3Action(){
+	public void action6Action(){
 	}
 
 	@View(rendered=false)
-	public void test4Action(){
+	public void action7Action(){
 	}
 	
 }
