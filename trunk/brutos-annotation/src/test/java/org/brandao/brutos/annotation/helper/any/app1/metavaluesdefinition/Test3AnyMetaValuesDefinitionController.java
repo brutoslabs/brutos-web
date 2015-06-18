@@ -3,16 +3,19 @@ package org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition;
 import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.Controller;
+import org.brandao.brutos.annotation.EnumerationType;
 import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.helper.any.app1.Property;
+import org.brandao.brutos.annotation.helper.any.app1.PropertyType;
 
 @Controller("/controller")
-public class Test2AnyController {
+public class Test3AnyMetaValuesDefinitionController {
 
 	@Basic(bean="propertyA")
 	@Any(
 		metaBean=@Basic(bean="propertyType"),
-		metaType=String.class,
+		metaType=PropertyType.class,
+		metaEnumerated=EnumerationType.STRING,
 		metaValuesDefinition=TestMetaValuesDefinition.class
 	)
 	public Property property1;
@@ -26,7 +29,8 @@ public class Test2AnyController {
 	@Basic(bean="propertyB")
 	@Any(
 		metaBean=@Basic(bean="propertyType2"),
-		metaType=String.class,
+		metaType=PropertyType.class,
+		metaEnumerated=EnumerationType.STRING,
 		metaValuesDefinition=TestMetaValuesDefinition.class
 	)
 	public void setProperty2(Property property2) {

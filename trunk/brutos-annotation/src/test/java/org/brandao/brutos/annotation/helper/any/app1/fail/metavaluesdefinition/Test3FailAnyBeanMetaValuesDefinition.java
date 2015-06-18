@@ -5,9 +5,9 @@ import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.helper.any.app1.Property;
 
-public class Test3FailAnyBean {
+public class Test3FailAnyBeanMetaValuesDefinition {
 
-	public Test3FailAnyBean(
+	public Test3FailAnyBeanMetaValuesDefinition(
 			@Any(
 					metaBean=@Basic(bean="teste"),
 					metaValuesDefinition=TestEmptyMetaValuesDefinition.class
