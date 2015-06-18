@@ -25,6 +25,19 @@ import org.brandao.brutos.annotation.helper.any.app1.Test6AnyController;
 import org.brandao.brutos.annotation.helper.any.app1.Test7AnyController;
 import org.brandao.brutos.annotation.helper.any.app1.Test8AnyController;
 import org.brandao.brutos.annotation.helper.any.app1.Test9AnyController;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test1AnyBeanMetaValuesDefinition;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test1AnyMetaValuesDefinitionController;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test2AnyBeanMetaValuesDefinition;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test2AnyMetaValuesDefinitionController;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test3AnyBeanMetaValuesDefinition;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test3AnyMetaValuesDefinitionController;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test4AnyBeanMetaValuesDefinition;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test4AnyMetaValuesDefinitionController;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test5AnyMetaValuesDefinitionController;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test6AnyMetaValuesDefinitionController;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test7AnyMetaValuesDefinitionController;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test8AnyMetaValuesDefinitionController;
+import org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition.Test9AnyMetaValuesDefinitionController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
@@ -1729,7 +1742,7 @@ public class AnyTest extends TestCase{
             new Class[]{Test9AnyController.class});
     }    
 
-	public void testTest1ResultViewController_test1Action_decimal_meta() throws Throwable{
+	public void testTest1AnyMetaValuesDefinitionController_test1Action_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test1", 
 	        new WebApplicationTester() {
@@ -1759,7 +1772,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test1AnyController controller = (Test1AnyController)request.getAttribute("Controller");
+	            	Test1AnyMetaValuesDefinitionController controller = (Test1AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property = 
 	            			controller.getProperty();
@@ -1775,10 +1788,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test1AnyController.class});
+	        new Class[]{Test1AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest1ResultViewController_test1Action_set() throws Throwable{
+	public void testTest1AnyMetaValuesDefinitionController_test1Action_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test1", 
 	        new WebApplicationTester() {
@@ -1808,7 +1821,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test1AnyController controller = (Test1AnyController)request.getAttribute("Controller");
+	            	Test1AnyMetaValuesDefinitionController controller = (Test1AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property = 
 	            			controller.getProperty();
@@ -1828,10 +1841,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test1AnyController.class});
+	        new Class[]{Test1AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest1ResultViewController_test2Action_decimal() throws Throwable{
+	public void testTest1AnyMetaValuesDefinitionController_test2Action_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test2", 
 	        new WebApplicationTester() {
@@ -1861,7 +1874,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test1AnyController controller = (Test1AnyController)request.getAttribute("Controller");
+	            	Test1AnyMetaValuesDefinitionController controller = (Test1AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property = 
 	            			controller.getProperty();
@@ -1877,10 +1890,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test1AnyController.class});
+	        new Class[]{Test1AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest1ResultViewController_test2Action_set() throws Throwable{
+	public void testTest1AnyMetaValuesDefinitionController_test2Action_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test2", 
 	        new WebApplicationTester() {
@@ -1910,7 +1923,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test1AnyController controller = (Test1AnyController)request.getAttribute("Controller");
+	            	Test1AnyMetaValuesDefinitionController controller = (Test1AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property = 
 	            			controller.getProperty();
@@ -1930,10 +1943,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test1AnyController.class});
+	        new Class[]{Test1AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest1ResultViewController_test3Action_decimal() throws Throwable{
+	public void testTest1AnyMetaValuesDefinitionController_test3Action_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test3", 
 	        new WebApplicationTester() {
@@ -1963,7 +1976,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test1AnyController controller = (Test1AnyController)request.getAttribute("Controller");
+	            	Test1AnyMetaValuesDefinitionController controller = (Test1AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property = 
 	            			controller.getProperty();
@@ -1979,10 +1992,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test1AnyController.class});
+	        new Class[]{Test1AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest1ResultViewController_test3Action_set() throws Throwable{
+	public void testTest1AnyMetaValuesDefinitionController_test3Action_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test3", 
 	        new WebApplicationTester() {
@@ -2012,7 +2025,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test1AnyController controller = (Test1AnyController)request.getAttribute("Controller");
+	            	Test1AnyMetaValuesDefinitionController controller = (Test1AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property = 
 	            			controller.getProperty();
@@ -2032,10 +2045,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test1AnyController.class});
+	        new Class[]{Test1AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest1ResultViewController_test4Action_decimal() throws Throwable{
+	public void testTest1AnyMetaValuesDefinitionController_test4Action_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test4", 
 	        new WebApplicationTester() {
@@ -2065,7 +2078,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test1AnyController controller = (Test1AnyController)request.getAttribute("Controller");
+	            	Test1AnyMetaValuesDefinitionController controller = (Test1AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property = 
 	            			controller.getProperty();
@@ -2081,10 +2094,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test1AnyController.class});
+	        new Class[]{Test1AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest1ResultViewController_test4Action_set() throws Throwable{
+	public void testTest1AnyMetaValuesDefinitionController_test4Action_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test4", 
 	        new WebApplicationTester() {
@@ -2114,7 +2127,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test1AnyController controller = (Test1AnyController)request.getAttribute("Controller");
+	            	Test1AnyMetaValuesDefinitionController controller = (Test1AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property = 
 	            			controller.getProperty();
@@ -2134,10 +2147,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test1AnyController.class});
+	        new Class[]{Test1AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest2AnyController_decimal() throws Throwable{
+	public void testTest2AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2173,7 +2186,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test2AnyController controller = (Test2AnyController)request.getAttribute("Controller");
+	            	Test2AnyMetaValuesDefinitionController controller = (Test2AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			controller.property1;
@@ -2199,10 +2212,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test2AnyController.class});
+	        new Class[]{Test2AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest2AnyController_set() throws Throwable{
+	public void testTest2AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2240,7 +2253,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test2AnyController controller = (Test2AnyController)request.getAttribute("Controller");
+	            	Test2AnyMetaValuesDefinitionController controller = (Test2AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			controller.property1;
@@ -2276,10 +2289,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test2AnyController.class});
+	        new Class[]{Test2AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest3AnyController_decimal() throws Throwable{
+	public void testTest3AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2315,7 +2328,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test3AnyController controller = (Test3AnyController)request.getAttribute("Controller");
+	            	Test3AnyMetaValuesDefinitionController controller = (Test3AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			controller.property1;
@@ -2341,10 +2354,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test3AnyController.class});
+	        new Class[]{Test3AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest3AnyController_set() throws Throwable{
+	public void testTest3AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2382,7 +2395,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test3AnyController controller = (Test3AnyController)request.getAttribute("Controller");
+	            	Test3AnyMetaValuesDefinitionController controller = (Test3AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			controller.property1;
@@ -2418,10 +2431,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test3AnyController.class});
+	        new Class[]{Test3AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest4AnyController_decimal() throws Throwable{
+	public void testTest4AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2457,7 +2470,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test4AnyController controller = (Test4AnyController)request.getAttribute("Controller");
+	            	Test4AnyMetaValuesDefinitionController controller = (Test4AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			controller.property1;
@@ -2483,10 +2496,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test4AnyController.class});
+	        new Class[]{Test4AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest4AnyController_set() throws Throwable{
+	public void testTest4AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2524,7 +2537,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test4AnyController controller = (Test4AnyController)request.getAttribute("Controller");
+	            	Test4AnyMetaValuesDefinitionController controller = (Test4AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			controller.property1;
@@ -2560,10 +2573,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test4AnyController.class});
+	        new Class[]{Test4AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest5AnyController_decimal() throws Throwable{
+	public void testTest5AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2599,7 +2612,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test5AnyController controller = (Test5AnyController)request.getAttribute("Controller");
+	            	Test5AnyMetaValuesDefinitionController controller = (Test5AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			controller.property1;
@@ -2625,10 +2638,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test5AnyController.class});
+	        new Class[]{Test5AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest5AnyController_set() throws Throwable{
+	public void testTest5AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2666,7 +2679,7 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test5AnyController controller = (Test5AnyController)request.getAttribute("Controller");
+	            	Test5AnyMetaValuesDefinitionController controller = (Test5AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			controller.property1;
@@ -2702,10 +2715,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test5AnyController.class});
+	        new Class[]{Test5AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest6AnyController_decimal() throws Throwable{
+	public void testTest6AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2746,9 +2759,9 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test6AnyController controller = (Test6AnyController)request.getAttribute("Controller");
+	            	Test6AnyMetaValuesDefinitionController controller = (Test6AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
-	            	Test1AnyBean bean = controller.property1;
+	            	Test1AnyBeanMetaValuesDefinition bean = controller.property1;
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			bean.property1;
@@ -2783,10 +2796,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test6AnyController.class});
+	        new Class[]{Test6AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest6AnyController_set() throws Throwable{
+	public void testTest6AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2830,9 +2843,9 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	
-	            	Test6AnyController controller = (Test6AnyController)request.getAttribute("Controller");
+	            	Test6AnyMetaValuesDefinitionController controller = (Test6AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
-	            	Test1AnyBean bean = controller.property1;
+	            	Test1AnyBeanMetaValuesDefinition bean = controller.property1;
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			bean.property1;
@@ -2882,10 +2895,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test6AnyController.class});
+	        new Class[]{Test6AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest7AnyController_decimal() throws Throwable{
+	public void testTest7AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -2926,9 +2939,9 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test7AnyController controller = (Test7AnyController)request.getAttribute("Controller");
+	            	Test7AnyMetaValuesDefinitionController controller = (Test7AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
-	            	Test2AnyBean bean = controller.property1;
+	            	Test2AnyBeanMetaValuesDefinition bean = controller.property1;
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			bean.property1;
@@ -2963,10 +2976,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test7AnyController.class});
+	        new Class[]{Test7AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest7AnyController_set() throws Throwable{
+	public void testTest7AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -3010,9 +3023,9 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	
-	            	Test7AnyController controller = (Test7AnyController)request.getAttribute("Controller");
+	            	Test7AnyMetaValuesDefinitionController controller = (Test7AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
-	            	Test2AnyBean bean = controller.property1;
+	            	Test2AnyBeanMetaValuesDefinition bean = controller.property1;
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			bean.property1;
@@ -3062,10 +3075,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test7AnyController.class});
+	        new Class[]{Test7AnyMetaValuesDefinitionController.class});
 	}    
 	
-	public void testTest8AnyController_decimal() throws Throwable{
+	public void testTest8AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -3106,9 +3119,9 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test8AnyController controller = (Test8AnyController)request.getAttribute("Controller");
+	            	Test8AnyMetaValuesDefinitionController controller = (Test8AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
-	            	Test3AnyBean bean = controller.property1;
+	            	Test3AnyBeanMetaValuesDefinition bean = controller.property1;
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			bean.property1;
@@ -3143,10 +3156,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test8AnyController.class});
+	        new Class[]{Test8AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest8AnyController_set() throws Throwable{
+	public void testTest8AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -3190,9 +3203,9 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	
-	            	Test8AnyController controller = (Test8AnyController)request.getAttribute("Controller");
+	            	Test8AnyMetaValuesDefinitionController controller = (Test8AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
-	            	Test3AnyBean bean = controller.property1;
+	            	Test3AnyBeanMetaValuesDefinition bean = controller.property1;
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			bean.property1;
@@ -3242,10 +3255,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test8AnyController.class});
+	        new Class[]{Test8AnyMetaValuesDefinitionController.class});
 	}    
 	
-	public void testTest9AnyController_decimal() throws Throwable{
+	public void testTest9AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -3286,9 +3299,9 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	            	
-	            	Test9AnyController controller = (Test9AnyController)request.getAttribute("Controller");
+	            	Test9AnyMetaValuesDefinitionController controller = (Test9AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
-	            	Test4AnyBean bean = controller.property1;
+	            	Test4AnyBeanMetaValuesDefinition bean = controller.property1;
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			bean.property1;
@@ -3323,10 +3336,10 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test9AnyController.class});
+	        new Class[]{Test9AnyMetaValuesDefinitionController.class});
 	}
 	
-	public void testTest9AnyController_set() throws Throwable{
+	public void testTest9AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
 	        new WebApplicationTester() {
@@ -3370,9 +3383,9 @@ public class AnyTest extends TestCase{
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
 	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 	
-	            	Test9AnyController controller = (Test9AnyController)request.getAttribute("Controller");
+	            	Test9AnyMetaValuesDefinitionController controller = (Test9AnyMetaValuesDefinitionController)request.getAttribute("Controller");
 	            	
-	            	Test4AnyBean bean = controller.property1;
+	            	Test4AnyBeanMetaValuesDefinition bean = controller.property1;
 	            	
 	            	org.brandao.brutos.annotation.helper.any.app1.Property property1 = 
 	            			bean.property1;
@@ -3422,7 +3435,7 @@ public class AnyTest extends TestCase{
 	                throw e;
 	            }
 	        },
-	        new Class[]{Test9AnyController.class});
+	        new Class[]{Test9AnyMetaValuesDefinitionController.class});
 	}    
 
 }
