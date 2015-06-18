@@ -1,4 +1,4 @@
-package org.brandao.brutos.annotation.helper.any.fail;
+package org.brandao.brutos.annotation.helper.any.app1.fail;
 
 
 import org.brandao.brutos.annotation.Any;
@@ -7,16 +7,14 @@ import org.brandao.brutos.annotation.Controller;
 import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.helper.any.app1.DecimalProperty;
 import org.brandao.brutos.annotation.helper.any.app1.Property;
-import org.brandao.brutos.annotation.helper.any.app1.SetProperty;
 
 @Controller("/controller")
-public class Test2FailAnyController {
+public class Test11FailAnyController {
 
 	@Any(
-		metaBean=@Basic,
+		metaBean=@Basic(bean="teste"),
 		metaValues={
-				@MetaValue(name="decimal", target=DecimalProperty.class),
-				@MetaValue(name="set", target=SetProperty.class)
+				@MetaValue(name="0", target=DecimalProperty.class)
 			}
 	)
 	private Property property;
