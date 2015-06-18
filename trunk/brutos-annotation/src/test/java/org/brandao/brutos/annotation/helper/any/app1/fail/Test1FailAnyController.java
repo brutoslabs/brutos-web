@@ -1,4 +1,4 @@
-package org.brandao.brutos.annotation.helper.any.fail;
+package org.brandao.brutos.annotation.helper.any.app1.fail;
 
 
 import org.brandao.brutos.annotation.Any;
