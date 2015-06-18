@@ -76,7 +76,7 @@ public @interface Any {
 	/**
 	 * Variável que representa as informações de meta dados.
 	 */
-	Basic metaBean() default @Basic;
+	Basic metaBean();
 
 	/**
 	 * Tipo da variável que representa as informações de meta dados.

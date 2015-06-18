@@ -30,6 +30,7 @@ public class Test1AnyController {
 	}
 
 	public void test2Action(
+			@Basic(bean="property")
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
 				metaType=PropertyType.class,
@@ -44,6 +45,7 @@ public class Test1AnyController {
 	}
 	
 	public void test3Action(
+			@Basic(bean="property")
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
 				metaType=Integer.class,
@@ -57,6 +59,7 @@ public class Test1AnyController {
 	}
 
 	public void test4Action(
+			@Basic(bean="property")
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
 				metaType=Date.class,
