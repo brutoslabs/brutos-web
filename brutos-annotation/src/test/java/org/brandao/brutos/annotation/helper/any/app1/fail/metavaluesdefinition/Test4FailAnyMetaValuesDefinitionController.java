@@ -3,8 +3,8 @@ package org.brandao.brutos.annotation.helper.any.app1.fail.metavaluesdefinition;
 import org.brandao.brutos.annotation.Controller;
 
 @Controller("/controller")
-public class Test5FailAnyController {
+public class Test4FailAnyMetaValuesDefinitionController {
 
-	private Test3FailAnyBean property;
+	private Test2FailAnyBeanMetaValuesDefinition property;
 	
 }

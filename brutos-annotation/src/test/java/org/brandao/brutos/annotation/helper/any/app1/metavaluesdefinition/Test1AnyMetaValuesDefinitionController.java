@@ -12,7 +12,7 @@ import org.brandao.brutos.annotation.helper.any.app1.Property;
 import org.brandao.brutos.annotation.helper.any.app1.PropertyType;
 
 @Controller("/controller")
-public class Test1AnyController {
+public class Test1AnyMetaValuesDefinitionController {
 
 	@Transient
 	private Property property;

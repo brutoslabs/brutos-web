@@ -8,7 +8,7 @@ import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.Transient;
 import org.brandao.brutos.annotation.helper.any.app1.Property;
 
-public class Test4AnyBean {
+public class Test4AnyBeanMetaValuesDefinition {
 
 	@Basic(bean="propertyA")
 	@Any(
@@ -24,7 +24,7 @@ public class Test4AnyBean {
 	@Transient
 	private Property property3;
 	
-	public Test4AnyBean(
+	public Test4AnyBeanMetaValuesDefinition(
 			@Basic(bean="propertyC")
 			@Any(
 				metaBean=@Basic(bean="propertyType3"),

@@ -10,7 +10,7 @@ import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.helper.any.app1.Property;
 
 @Controller("/controller")
-public class Test5AnyController {
+public class Test5AnyMetaValuesDefinitionController {
 
 	@Basic(bean="propertyA")
 	@Any(
