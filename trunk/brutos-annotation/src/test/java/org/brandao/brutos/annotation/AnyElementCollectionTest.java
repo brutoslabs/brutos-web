@@ -3027,20 +3027,20 @@ public class AnyElementCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.element[0].propertyA.propertyType", "decimal");
-	            	parameters.put("property1.element[0].propertyA.name", "propName1");
-	            	parameters.put("property1.element[0].propertyA.length", "1");
-	            	parameters.put("property1.element[0].propertyA.decimals", "2");
+	            	parameters.put("property1.propertyA.element[0].propertyType", "decimal");
+	            	parameters.put("property1.propertyA.element[0].name", "propName1");
+	            	parameters.put("property1.propertyA.element[0].length", "1");
+	            	parameters.put("property1.propertyA.element[0].decimals", "2");
 	            	
-	            	parameters.put("property1.element[0].propertyB.propertyType2", "decimal");
-	            	parameters.put("property1.element[0].propertyB.name", "propName2");
-	            	parameters.put("property1.element[0].propertyB.length", "3");
-	            	parameters.put("property1.element[0].propertyB.decimals", "4");
+	            	parameters.put("property1.propertyB.element[0].propertyType2", "decimal");
+	            	parameters.put("property1.propertyB.element[0].name", "propName2");
+	            	parameters.put("property1.propertyB.element[0].length", "3");
+	            	parameters.put("property1.propertyB.element[0].decimals", "4");
 	
-	            	parameters.put("property1.element[0].propertyC.propertyType3", "decimal");
-	            	parameters.put("property1.element[0].propertyC.name", "propName3");
-	            	parameters.put("property1.element[0].propertyC.length", "5");
-	            	parameters.put("property1.element[0].propertyC.decimals", "6");
+	            	parameters.put("property1.propertyC.element[0].propertyType3", "decimal");
+	            	parameters.put("property1.propertyC.element[0].name", "propName3");
+	            	parameters.put("property1.propertyC.element[0].length", "5");
+	            	parameters.put("property1.propertyC.element[0].decimals", "6");
 	            	
 	            }
 	
@@ -3120,23 +3120,23 @@ public class AnyElementCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.element[0].propertyA.propertyType", "set");
-	            	parameters.put("property1.element[0].propertyA.name", "propName1");
-	            	parameters.put("property1.element[0].propertyA.values[0]", "VALUE1");
-	            	parameters.put("property1.element[0].propertyA.values[1]", "VALUE2");
-	            	parameters.put("property1.element[0].propertyA.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyA.element[0].propertyType", "set");
+	            	parameters.put("property1.propertyA.element[0].name", "propName1");
+	            	parameters.put("property1.propertyA.element[0].values[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.element[0].values[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.element[0].values[2]", "VALUEX");
 	            	
-	            	parameters.put("property1.element[0].propertyB.propertyType2", "set");
-	            	parameters.put("property1.element[0].propertyB.name", "propName2");
-	            	parameters.put("property1.element[0].propertyB.values[0]", "VALUE3");
-	            	parameters.put("property1.element[0].propertyB.values[1]", "VALUE4");
-	            	parameters.put("property1.element[0].propertyB.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyB.element[0].propertyType2", "set");
+	            	parameters.put("property1.propertyB.element[0].name", "propName2");
+	            	parameters.put("property1.propertyB.element[0].values[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.element[0].values[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.element[0].values[2]", "VALUEX");
 	
-	            	parameters.put("property1.element[0].propertyC.propertyType2", "set");
-	            	parameters.put("property1.element[0].propertyC.name", "propName3");
-	            	parameters.put("property1.element[0].propertyC.values[0]", "VALUE5");
-	            	parameters.put("property1.element[0].propertyC.values[1]", "VALUE6");
-	            	parameters.put("property1.element[0].propertyC.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyC.element[0].propertyType2", "set");
+	            	parameters.put("property1.propertyC.element[0].name", "propName3");
+	            	parameters.put("property1.propertyC.element[0].values[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.element[0].values[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.element[0].values[2]", "VALUEX");
 	            	
 	            }
 	
@@ -3231,20 +3231,20 @@ public class AnyElementCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.element[0].propertyA.propertyType", "DECIMAL");
-	            	parameters.put("property1.element[0].propertyA.name", "propName1");
-	            	parameters.put("property1.element[0].propertyA.length", "1");
-	            	parameters.put("property1.element[0].propertyA.decimals", "2");
+	            	parameters.put("property1.propertyA.element[0].propertyType", "DECIMAL");
+	            	parameters.put("property1.propertyA.element[0].name", "propName1");
+	            	parameters.put("property1.propertyA.element[0].length", "1");
+	            	parameters.put("property1.propertyA.element[0].decimals", "2");
 	            	
-	            	parameters.put("property1.element[0].propertyB.propertyType2", "DECIMAL");
-	            	parameters.put("property1.element[0].propertyB.name", "propName2");
-	            	parameters.put("property1.element[0].propertyB.length", "3");
-	            	parameters.put("property1.element[0].propertyB.decimals", "4");
+	            	parameters.put("property1.propertyB.element[0].propertyType2", "DECIMAL");
+	            	parameters.put("property1.propertyB.element[0].name", "propName2");
+	            	parameters.put("property1.propertyB.element[0].length", "3");
+	            	parameters.put("property1.propertyB.element[0].decimals", "4");
 	
-	            	parameters.put("property1.element[0].propertyC.propertyType3", "DECIMAL");
-	            	parameters.put("property1.element[0].propertyC.name", "propName3");
-	            	parameters.put("property1.element[0].propertyC.length", "5");
-	            	parameters.put("property1.element[0].propertyC.decimals", "6");
+	            	parameters.put("property1.propertyC.element[0].propertyType3", "DECIMAL");
+	            	parameters.put("property1.propertyC.element[0].name", "propName3");
+	            	parameters.put("property1.propertyC.element[0].length", "5");
+	            	parameters.put("property1.propertyC.element[0].decimals", "6");
 	            	
 	            }
 	
