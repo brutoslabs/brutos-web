@@ -7,8 +7,8 @@ import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.EnumerationType;
 import org.brandao.brutos.annotation.Transient;
-import org.brandao.brutos.annotation.helper.any.app1.Property;
-import org.brandao.brutos.annotation.helper.any.app1.PropertyType;
+import org.brandao.brutos.annotation.helper.any.app2.Property;
+import org.brandao.brutos.annotation.helper.any.app2.PropertyType;
 
 public class Test2AnyBeanMetaValuesDefinition {
 
