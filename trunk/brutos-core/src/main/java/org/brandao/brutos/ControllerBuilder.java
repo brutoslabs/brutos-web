@@ -317,9 +317,12 @@ public class ControllerBuilder {
      * @param id Identifica��o da ��o.
      * @return Contrutor do controlador.
      */
-    public ControllerBuilder setDefaultAction( String id ){
+    public ControllerBuilder setDefaultAction(String id){
 
         id = StringUtil.adjust(id);
+        
+        if(this.controller.getAction(id) == null)
+        	throw new MappingException("action not found: \"" + id + "\"");
         
         if( id != null ){
             getLogger().info(
@@ -928,9 +931,12 @@ public class ControllerBuilder {
     }
     
     public ControllerBuilder setActionId(String value){
-        value = StringUtil.adjust(value);
-        if(value == null)
+    	
+        if(StringUtil.isEmpty(value))
             value = BrutosConstants.DEFAULT_ACTION_ID;
+        else
+        if(!value.matches("[a-zA-Z0-9_#]+"))
+        	throw new MappingException("invalid action id: \"" + value + "\"");
         
         controller.setActionId(value);
         
