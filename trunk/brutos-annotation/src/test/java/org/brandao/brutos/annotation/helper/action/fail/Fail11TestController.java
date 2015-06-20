@@ -17,12 +17,15 @@
 
 package org.brandao.brutos.annotation.helper.action.fail;
 
+import org.brandao.brutos.annotation.Action;
+
 /**
  *
  * @author Brandao
  */
 public class Fail11TestController {
     
+	@Action("/ klkjjh")
     public void Action(){
     }
     

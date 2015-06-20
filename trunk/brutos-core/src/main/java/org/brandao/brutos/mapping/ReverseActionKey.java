@@ -27,7 +27,7 @@ public class ReverseActionKey {
 
     private String methodName;
 
-    private Class[] parametersType;
+    private Class<?>[] parametersType;
 
     private final int hashCode;
 
@@ -53,7 +53,7 @@ public class ReverseActionKey {
         return methodName;
     }
 
-    public Class[] getParametersType() {
+    public Class<?>[] getParametersType() {
         return parametersType;
     }
 
@@ -71,7 +71,7 @@ public class ReverseActionKey {
         if( !this.methodName.equals(key.getMethodName()) )
             return false;
 
-        Class[] keyTypes = key.getParametersType();
+        Class<?>[] keyTypes = key.getParametersType();
         if( this.parametersType.length != keyTypes.length )
             return false;
 

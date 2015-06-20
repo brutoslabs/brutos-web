@@ -55,6 +55,7 @@ public class Controller {
     
     private Map<String,Action> actions;
 
+    //TODO: update to Map<ReverseActionKey,Action>
     private Map<ReverseActionKey,List<Action>> reverseMethods;
     
     private ActionListener actionListener;
@@ -244,13 +245,16 @@ public class Controller {
         list.add( action );
     }
 
-    public Action getMethod( Method method ){
+    public Action getMethod(Method method){
 
         ReverseActionKey key = new ReverseActionKey(method);
 
         List<Action> list = reverseMethods.get(key);
 
-        if(list == null || list.size() > 1)
+        if(list == null)
+        	return null;
+        
+        if(list.size() > 1)
             throw new
                 BrutosException(
                     String.format("Ambiguous reference to action: %s",
