@@ -172,7 +172,7 @@ public class AnnotationUtil {
                 typeRegistry, 
                 identify == null || identify.mappingType() == MappingTypes.AUTO?
                 		null :
-            			identify.equals(MappingTypes.COMPLEX),
+            			identify.mappingType().equals(MappingTypes.COMPLEX),
                 type);
     }
 
@@ -182,7 +182,7 @@ public class AnnotationUtil {
                 typeRegistry, 
                 identify == null || identify.mappingType() == MappingTypes.AUTO?
                 		null :
-            			identify.equals(MappingTypes.COMPLEX),
+            			identify.mappingType().equals(MappingTypes.COMPLEX),
                 type);
     }
     
@@ -192,7 +192,7 @@ public class AnnotationUtil {
                 typeRegistry, 
                 identify == null || identify.mappingType() == MappingTypes.AUTO?
                 		null :
-            			identify.equals(MappingTypes.COMPLEX),
+            			identify.mappingType().equals(MappingTypes.COMPLEX),
                 type);
     }
 

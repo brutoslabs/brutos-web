@@ -157,7 +157,9 @@ public class TypeManagerImp implements TypeManager{
         TypeFactory typeFactory =
                 getTypeFactory(clazz);
 
-        return typeFactory != null && typeFactory.getClassType() != Object.class;
+        return
+        	(clazz == Object.class && typeFactory != null) ||
+    		(typeFactory != null && typeFactory.getClassType() != Object.class);
     }
 
     /**
