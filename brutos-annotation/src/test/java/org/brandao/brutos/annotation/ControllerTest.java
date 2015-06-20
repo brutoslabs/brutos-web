@@ -658,7 +658,7 @@ public class ControllerTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail();
+                    Assert.fail("expected: {invalid action id: \"a.ction\"}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {

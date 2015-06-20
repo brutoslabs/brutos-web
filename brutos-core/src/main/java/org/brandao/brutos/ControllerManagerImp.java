@@ -157,14 +157,12 @@ public class ControllerManagerImp implements ControllerManager{
         if(!ActionType.DETACHED.equals(actionType))
             throw new IllegalArgumentException("invalid class type: " + classType);
             
+        //Controller controller = new Controller(this.applicationContext);
+        
         Controller controller = new Controller(this.applicationContext);
-        controller.setId( id );
-        controller.setName( name );
-        controller.setView( view );
-        controller.setClassType( classType );
-        controller.setActionId( actionId );
-        controller.setDispatcherType(dispatcherType);
-        controller.setActionType(actionType);
+        
+        
+        controller.setClassType(classType);
         
         printCreateController(controller);
         
@@ -174,26 +172,20 @@ public class ControllerManagerImp implements ControllerManager{
         ac.setPostAction( getMethodAction( "postAction", controller.getClassType() ) );
         controller.setActionListener( ac );
         
-        addController( controller.getId(), controller );
-        
         controller.setDefaultInterceptorList( interceptorManager.getDefaultInterceptors() );
-        
+
         this.current = new ControllerBuilder( controller, this, 
                 interceptorManager, validatorFactory, applicationContext, internalUpdate );
         
-        view = 
-            resolvedView? 
-                view : 
-                applicationContext.
-                        getViewResolver()
-                        .getView(
-                                this.current, 
-                                null, 
-                                null, 
-                                view);
+        this.current
+        	.setId(id)
+        	.setName(name)
+        	.setView(view, resolvedView)
+        	.setActionId(actionId)
+        	.setDispatcherType(dispatcherType)
+        	.setActionType(actionType);
         
-        controller.setView(view);
-        controller.setResolvedView(resolvedView);
+        addController( controller.getId(), controller );
         
         return this.getCurrent();
     }
@@ -204,7 +196,6 @@ public class ControllerManagerImp implements ControllerManager{
             return method;
         }
         catch( Exception e ){
-            //throw new BrutosException( e );
             return null;
         }
     }
