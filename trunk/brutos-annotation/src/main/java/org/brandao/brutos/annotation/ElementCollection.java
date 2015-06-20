@@ -94,7 +94,7 @@ public @interface ElementCollection {
     /**
      * Permite definir múltiplos tipos de elementos.
      */
-    Any any() default @Any;
+    Any any() default @Any(metaBean = @Basic);
     
     /**
      * Define o uso de um tipo específico de dados.

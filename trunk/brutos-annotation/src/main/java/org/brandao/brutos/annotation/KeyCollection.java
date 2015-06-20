@@ -82,7 +82,7 @@ public @interface KeyCollection {
     /**
      * Permite definir múltiplos tipos de chaves.
      */
-    Any any() default @Any;
+    Any any() default @Any(metaBean = @Basic);
     
     /**
      * Define o uso de um tipo específico de dados.
