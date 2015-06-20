@@ -29,7 +29,6 @@ import org.brandao.brutos.annotation.helper.actionstrategy.app1.ActionStrategyTe
 import org.brandao.brutos.annotation.helper.actionstrategy.app1.ActionStrategyTest3Controller;
 import org.brandao.brutos.annotation.helper.actionstrategy.app1.ActionStrategyTest4Controller;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
-import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.test.WebApplicationContextTester;

@@ -65,4 +65,7 @@ public class App1TestController {
         return "result006";
     }
     
+    public void action(){
+    }
+    
 }

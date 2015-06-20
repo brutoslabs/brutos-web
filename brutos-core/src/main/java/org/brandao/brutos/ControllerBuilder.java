@@ -524,8 +524,7 @@ public class ControllerBuilder {
             throw new MappingException("action id cannot be empty");
         
         if( controller.getAction( id ) != null )
-            throw new MappingException( "duplicate action " + id + ": " +
-                controller.getClassType().getName() );
+            throw new MappingException( "duplicate action: " + id);
         
         Action action = parent.action;
         action.addAlias(id);

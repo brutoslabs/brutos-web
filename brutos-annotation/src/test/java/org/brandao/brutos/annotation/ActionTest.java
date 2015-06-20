@@ -416,6 +416,59 @@ public class ActionTest extends TestCase {
             new Class[]{App1TestController.class});
     }
 
+    public void test() throws Throwable{
+        WebApplicationContextTester.run(
+            "/App1Test/action", 
+            new WebApplicationTester(){
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+                    
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+                
+                public void checkException(Throwable e) throws Throwable{
+                    throw e;
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    
+                	org.brandao.brutos.mapping.Controller controller = 
+                			applicationContext.getControllerManager().getController(App1TestController.class);
+                	
+                	org.brandao.brutos.mapping.Action a;
+                	try{
+                		a = controller.getMethod(App1TestController.class.getDeclaredMethod("action"));
+                	}
+                	catch(Throwable e){
+                		throw new RuntimeException(e);
+                	}
+                	
+                	Assert.assertNull(a);
+                	
+                    MockRenderView renderView = (MockRenderView) applicationContext.getRenderView();
+
+                    Assert.assertNull(request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    Assert.assertNull(renderView.getView());
+                }
+            },
+            new Class[]{App1TestController.class});
+    }
+    
     public void test10() throws Throwable{
         WebApplicationContextTester.run(
             "", 
@@ -822,11 +875,11 @@ public class ActionTest extends TestCase {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("invalid action: \"/\": action"))
+                        if(ex.getMessage().equals("Illegal character in path at index 1: / klkjjh"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {invalid action: \"/\": action}");
+                    Assert.fail("expected: {Illegal character in path at index 1: / klkjjh}");
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
@@ -837,7 +890,7 @@ public class ActionTest extends TestCase {
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail();
+                    Assert.fail("expected: {Illegal character in path at index 1: / klkjjh}");
                 }
             },
             new Class[]{Fail11TestController.class});
