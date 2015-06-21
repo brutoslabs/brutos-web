@@ -19,8 +19,8 @@ package org.brandao.brutos.web;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Action;
@@ -65,28 +65,49 @@ public class WebControllerResolver implements ControllerResolver{
             ActionType actionType = controller.getActionType();
             String controllerId = controller.getId();
             
-            URIMapping uriMap = getURIMapping( controllerId );
-
-            if(actionType == ActionType.PARAMETER){
-                if(uriMap.matches(controllerId))
-                    return controller;
-            }
-            else{
-                if(actionType == ActionType.HIERARCHY && uriMap.matches(uri)){
-                    updateRequest(uri, paramScope, uriMap);
-                    return controller;
-                }
-                
-                Action action = this.getAction(controller, actionType, uri, paramScope);
-
-                if(action != null){
-                    updateHandler(action, handler);
-                    return controller;
-                }
+            if(this.matches(uri, paramScope, controllerId, actionType, controller, handler))
+            	return controller;
+            
+            List<String> alias = controller.getAlias();
+            
+            if(!alias.isEmpty()){
+            	for(String aliasURI: alias){
+	                if(this.matches(uri, paramScope, aliasURI, actionType, controller, handler))
+	                	return controller;
+            	}
+            	
             }
         }
 
         return null;
+    }
+    
+    private boolean matches(String uri, Scope scope, String controllerId, 
+    		ActionType actionType, 
+    		Controller controller,
+    		ConfigurableInterceptorHandler handler){
+    	
+        URIMapping uriMap = getURIMapping( controllerId );
+
+        if(actionType == ActionType.PARAMETER){
+            if(uriMap.matches(controllerId))
+                return true;
+        }
+        else{
+            if(actionType == ActionType.HIERARCHY && uriMap.matches(uri)){
+                updateRequest(uri, scope, uriMap);
+                return true;
+            }
+            
+            Action action = this.getAction(controller, actionType, uri, scope);
+
+            if(action != null){
+                updateHandler(action, handler);
+                return true;
+            }
+        }
+    	
+        return false;
     }
     
     private Action getAction(Controller controller, ActionType actionType, String uri, Scope paramScope){
