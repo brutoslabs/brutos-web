@@ -52,11 +52,11 @@ public class ImportBeansTest extends TestCase{
                 	
                 	Assert.assertNotNull(controller);
                 	Assert.assertNotNull(controller.getBean("beanTest"));
-                	Assert.assertEquals(BeanTest.class,controller.getBean("beanTest").getClassType());
+                	Assert.assertEquals(org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest.class,controller.getBean("beanTest").getClassType());
                 	Assert.assertNotNull(controller.getBean("beanTest2"));
-                	Assert.assertEquals(BeanTest2.class,controller.getBean("beanTest2").getClassType());
+                	Assert.assertEquals(org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest2.class,controller.getBean("beanTest2").getClassType());
                 	Assert.assertNotNull(controller.getBean("beanName"));
-                	Assert.assertEquals(BeanTest3.class,controller.getBean("beanName").getClassType());
+                	Assert.assertEquals(org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest3.class,controller.getBean("beanName").getClassType());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
