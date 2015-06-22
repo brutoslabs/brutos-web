@@ -345,7 +345,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         
             Class type  = source.getBeanType();
             Bean bean = (Bean)type.getAnnotation(Bean.class);
-            String name = StringUtil.adjust(bean.value());
+            String name = bean == null? null : StringUtil.adjust(bean.value());
             name = 
                 StringUtil.isEmpty(name)? 
                     StringUtil.toVariableFormat(type.getSimpleName()) : 
