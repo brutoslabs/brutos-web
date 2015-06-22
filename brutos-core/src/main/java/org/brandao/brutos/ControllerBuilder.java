@@ -936,7 +936,7 @@ public class ControllerBuilder {
             value = BrutosConstants.DEFAULT_ACTION_ID;
         else
         if(!value.matches("[a-zA-Z0-9_#]+"))
-        	throw new MappingException("invalid action id: \"" + value + "\"");
+        	throw new MappingException("invalid action id: " + value);
         
         controller.setActionId(value);
         

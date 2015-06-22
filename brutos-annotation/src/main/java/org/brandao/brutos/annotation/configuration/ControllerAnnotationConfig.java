@@ -116,15 +116,15 @@ public class ControllerAnnotationConfig
             }
         }
 
-        if(!StringUtil.isEmpty(defaultActionName))
-            builder.setDefaultAction(defaultActionName);
-        
         super.applyInternalConfiguration(source, builder, componentRegistry);
 
         importBeans(builder, componentRegistry, builder.getClassType());
         throwsSafe(builder, source, componentRegistry);
         addProperties(builder, componentRegistry, source);
         addActions( builder, componentRegistry, source );
+
+        if(!StringUtil.isEmpty(defaultActionName))
+            builder.setDefaultAction(defaultActionName);
         
         return builder;
     }

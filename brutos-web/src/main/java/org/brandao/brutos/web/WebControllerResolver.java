@@ -90,8 +90,10 @@ public class WebControllerResolver implements ControllerResolver{
         URIMapping uriMap = getURIMapping( controllerId );
 
         if(actionType == ActionType.PARAMETER){
-            if(uriMap.matches(controllerId))
+            if(uriMap.matches(uri)){
+                updateRequest(uri, scope, uriMap);
                 return true;
+            }
         }
         else{
             if(actionType == ActionType.HIERARCHY && uriMap.matches(uri)){

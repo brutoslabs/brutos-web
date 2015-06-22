@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.annotation.helper.action.fail.Fail2TestController;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller10Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller11Test;
 import org.brandao.brutos.annotation.helper.controller.app1.Controller1TestController;
@@ -532,18 +531,18 @@ public class ControllerTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail();
+                    Assert.fail("expected: {expected starts with \"/\": controller}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("expected starts with \"/\": \"controller\""))
+                        if(ex.getMessage().equals("expected starts with \"/\": controller"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {expected starts with \"/\": \"controller\"}");
+                    Assert.fail("expected: {expected starts with \"/\": controller}");
                 }
             },
             new Class[]{Fail1TestController.class});
@@ -581,11 +580,11 @@ public class ControllerTest  extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("expected starts with \"/\": \"controller\""))
+                        if(ex.getMessage().equals("expected starts with \"/\": controller"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {expected starts with \"/\": \"controller\"}");
+                    Assert.fail("expected: {expected starts with \"/\": controller}");
                 }
             },
             new Class[]{Fail2Test.class});
@@ -623,11 +622,11 @@ public class ControllerTest  extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("duplicate controller: \"/controller\""))
+                        if(ex.getMessage().equals("duplicate controller: /controller"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {duplicate controller: \"/controller\"}");
+                    Assert.fail("expected: {duplicate controller: /controller}");
                 }
             },
             new Class[]{Fail3Test.class});
@@ -658,18 +657,18 @@ public class ControllerTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {invalid action id: \"a.ction\"}");
+                    Assert.fail("expected: {invalid action id: a.ction}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("invalid action id: \"a.ction\""))
+                        if(ex.getMessage().equals("invalid action id: a.ction"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {invalid action id: \"a.ction\"}");
+                    Assert.fail("expected: {invalid action id: a.ction}");
                 }
             },
             new Class[]{Fail4Test.class});
