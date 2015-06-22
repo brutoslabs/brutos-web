@@ -149,9 +149,12 @@ public class WebControllerResolver implements ControllerResolver{
     }
     
     private void updateRequest(String uri, Scope paramScope, URIMapping uriMap){
-        Map<String,String> params = uriMap.getParameters(uri);
-        for(String key: params.keySet() )
-            paramScope.put(key, params.get(key) );
+        Map<String,List<String>> params = uriMap.getParameters(uri);
+        for(String key: params.keySet() ){
+        	for(String value: params.get(key)){
+        		paramScope.put(key, value);
+        	}
+        }
     }
     
     public Controller getController(ControllerManager controllerManager, Class controllerClass) {

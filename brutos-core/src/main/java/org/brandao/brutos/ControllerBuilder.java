@@ -186,8 +186,8 @@ public class ControllerBuilder {
 
         getLogger().info(
                 String.format(
-                "added alias: %s => %s",
-                new Object[]{id,controller.getClassType().getName()}));
+                "adding alias %s on controller %s",
+                new Object[]{id,controller.getClassType().getSimpleName()}));
         
         controller.addAlias(id);
         internalUpdate.addControllerAlias(controller,id);
@@ -214,8 +214,8 @@ public class ControllerBuilder {
 
         getLogger().info(
                 String.format(
-                "removed alias: %s => %s",
-                new Object[]{id,controller.getClassType().getName()}));
+                "removing alias %s on controller %s",
+                new Object[]{id,controller.getClassType().getSimpleName()}));
         
         internalUpdate.removeControllerAlias(controller,id);
         return this;
@@ -292,13 +292,10 @@ public class ControllerBuilder {
         
         getLogger().info(
                 String.format(
-                "%s => %s",
+                "adding exception %s on controller %s",
                 new Object[]{
-                    target.getName(),
-                    view == null?
-                        (controller.getView() == null? "empty" : controller.getView()) :
-                        view
-                    }));
+                    target.getSimpleName(),
+                    controller.getClassType().getSimpleName()}));
         
         ThrowableSafeData thr = new ThrowableSafeData();
         thr.setParameterName(id);
@@ -327,8 +324,8 @@ public class ControllerBuilder {
         if( id != null ){
             getLogger().info(
                 String.format(
-                    "default action defined %s: %s",
-                    new Object[]{id,controller.getClassType().getName()}));
+                    "adding default action %s on controller %s",
+                    new Object[]{id,controller.getClassType().getSimpleName()}));
 
                 controller.setDefaultAction( id );
         }
@@ -367,8 +364,8 @@ public class ControllerBuilder {
 
         getLogger().info(
             String.format(
-                "create bean %s[%s]",
-                new Object[]{name,target.getName()}));
+                "adding bean %s[%s]",
+                new Object[]{name,target.getSimpleName()}));
         
         Bean parentBean = 
                 parentBeanName == null?
@@ -514,7 +511,10 @@ public class ControllerBuilder {
                 .setResultRendered(resultRendered)
                 .setView(view, resolvedView);
         
-        printCreateAction(action);
+        getLogger().info(
+                String.format(
+                    "adding action %s on controller %s",
+                    new Object[]{action.getId(), this.controller.getClassType().getSimpleName()}));
         
         return actionBuilder;
     }
@@ -595,8 +595,8 @@ public class ControllerBuilder {
         
         getLogger().info(
             String.format(
-                "%s intercepted by %s",
-                new Object[]{this.controller.getClassType().getName(),name}));
+                "adding interceptor %s on controller %s",
+                new Object[]{name, this.controller.getClassType().getSimpleName()}));
         
         controller.addInterceptor(it);
         
@@ -847,6 +847,11 @@ public class ControllerBuilder {
 
         controller.addProperty( property );
 
+        getLogger().info(
+                String.format(
+                    "adding property %s on controller %s",
+                    new Object[]{propertyName, this.controller.getClassType().getSimpleName()}));
+        
         return new PropertyBuilder(property, this);
     }
 
@@ -940,6 +945,11 @@ public class ControllerBuilder {
         
         controller.setActionId(value);
         
+        getLogger().info(
+                String.format(
+                    "override the action id to %s on controller %s",
+                    new Object[]{value, this.controller.getClassType().getSimpleName()}));
+        
         return this;
     }
     
@@ -988,35 +998,6 @@ public class ControllerBuilder {
 
     public boolean isResolvedView(){
         return this.controller.isResolvedView();
-    }
-    
-    private void printCreateAction(Action action){
-        
-        ActionType type = controller.getActionType();
-        String log;
-        
-        if(type.equals(ActionType.PARAMETER)){
-            log = 
-                controller + 
-                "[" +
-                controller.getId() + 
-                "?" + 
-                controller.getActionId() + 
-                "=" +
-                action.getName() + 
-                "]";
-        }
-        else{
-            log = 
-                controller + 
-                "[" +
-                action.getName() + 
-                "]";
-            
-        }
-        
-        getLogger()
-            .info(log);
     }
     
 }

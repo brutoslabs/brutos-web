@@ -34,13 +34,12 @@ public class URIMapping {
     
     private String uriPattern;
 
-    private List parameters;
+    private List<URIParameter> parameters;
 
     public URIMapping( String uri ) throws MalformedURLException{
         createMap( uri );
         this.originalURI = uri;
         this.uriPattern   = getURIPattern(null);
-        //this.uriPattern = getURIPattern( uri );
     }
 
     private void createMap( String uri ) throws MalformedURLException{
@@ -53,11 +52,11 @@ public class URIMapping {
     }
     private void createMap0( String uri ) throws MalformedURLException{
         //fragmentos da uri
-        List frags = new ArrayList();
+        List<String> frags = new ArrayList<String>();
         // identificados detectados
-        List ids   = new ArrayList();
+        List<String> ids   = new ArrayList<String>();
         // regex detectados
-        List regex = new ArrayList();
+        List<String> regex = new ArrayList<String>();
 
         //inicio de um identificador
         int index = uri.indexOf("{");
@@ -137,8 +136,8 @@ public class URIMapping {
         if(parameters.isEmpty())
             return this.originalURI;
         
-        for( int i=0;i<parameters.size();i++ ){
-            URIParameter p = (URIParameter)parameters.get(i);
+        for(int i=0;i<parameters.size();i++ ){
+            URIParameter p = parameters.get(i);
             
             if(i == 0 && p.getStart() != null)
                 value = p.getStart();
@@ -168,64 +167,23 @@ public class URIMapping {
         return StringUtil.isEmpty(regex)? "\\w{1,}" : regex;
     }
     
-    /*
-    private String getRegex(String value){
-        int index = value.indexOf(":");
-        return index == -1? null : value.substring(index+1,value.length());
-    }
-    */
-    /*
-    private String getURIPattern( String uri ){
-
-        if( uri == null )
-            throw new NullPointerException();
-
-        String regex = "";
-
-        int index = uri.indexOf("{");
-        int index2 = -1;
-        int old = 0;
-        while( index != -1 ){
-            index2 = uri.indexOf("}", index );
-
-            String id = index+1 < index2? uri.substring( index+1, index2 ) : null;
-
-            if( id == null )
-                return "";
-
-            String words = uri.substring( old, index );
-            String regexParam = getRegex(id);
-
-            regex += words;
-
-            regex += regexParam == null || regexParam.trim().length() == 0?
-                "\\w{1,}" :
-                regexParam;
-
-            old = index2+1;
-            index = uri.indexOf("{", index + 1 );
-        }
-
-        if( index2 == -1 )
-            regex = uri;
-        else
-            regex += uri.substring( index2+1, uri.length() );
-
-        return regex;
-    }
-    */
-    
-    public Map getParameters( String uri ){
+    public Map<String,List<String>> getParameters(String uri){
         int start = 0;
         int end   = 0;
-        Map<String,String> params = new HashMap<String,String>();
+        Map<String,List<String>> params = new HashMap<String,List<String>>();
 
         for( int i=0;i<parameters.size();i++ ){
             URIParameter p = (URIParameter)parameters.get(i);
             start = p.getStart() == null? 0 : uri.indexOf( p.getStart(), start ) + p.getStart().length();
             end   = p.getEnd() == null? uri.length() : uri.indexOf( p.getEnd(), start + 1 );
 
-            params.put(p.getId(), uri.substring(start, end) );
+            List<String> values = params.get(p.getId());
+            if(values == null){
+            	values = new ArrayList<String>();
+            	params.put(p.getId(), values);
+            }
+            
+            values.add(uri.substring(start, end));
         }
 
         return params;

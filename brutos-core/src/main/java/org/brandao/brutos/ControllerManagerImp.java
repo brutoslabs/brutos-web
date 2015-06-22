@@ -164,8 +164,6 @@ public class ControllerManagerImp implements ControllerManager{
         
         controller.setClassType(classType);
         
-        printCreateController(controller);
-        
         //Action
         ActionListener ac = new ActionListener();
         ac.setPreAction( getMethodAction( "preAction", controller.getClassType() ) );
@@ -186,6 +184,11 @@ public class ControllerManagerImp implements ControllerManager{
         	.setActionType(actionType);
         
         addController( controller.getId(), controller );
+        
+        getLogger().info(
+                String.format(
+                    "adding controller %s",
+                    new Object[]{classType.getSimpleName()}));
         
         return this.getCurrent();
     }
@@ -341,22 +344,6 @@ public class ControllerManagerImp implements ControllerManager{
     
     public ControllerManager getParent(){
         return this.parent;
-    }
-    
-    private void printCreateController(Controller controller){
-        
-        ActionType type = controller.getActionType();
-        
-        if(type.equals(ActionType.PARAMETER)){
-            String log = 
-                controller + 
-                "[" +
-                controller.getId() +
-                "]";
-            getLogger()
-                .info(log);
-        }
-        
     }
     
     public Logger getLogger(){
