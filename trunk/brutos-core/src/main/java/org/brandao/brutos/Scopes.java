@@ -48,8 +48,8 @@ public class Scopes{
         if( getLogger().isInfoEnabled() )
             getLogger().info(
                 (scopes.containsKey(id)?
-                    "override scope: " :
-                    "registred scope: ") + id );
+                    "override scope " :
+                    "adding scope ") + id );
         
         scopes.put(id,scope);
     }
