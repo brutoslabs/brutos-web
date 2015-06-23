@@ -102,7 +102,7 @@ public class InterceptedByTest extends TestCase{
                 	Assert.assertEquals("true",request.getAttribute("intercepted.testName"));
                 	Assert.assertNull(request.getAttribute("intercepted.testName2"));
                 	
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
@@ -324,18 +324,18 @@ public class InterceptedByTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {interceptor name must be informed}");
+                    Assert.fail("expected: {invalid interceptor name}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("interceptor name must be informed"))
+                        if(ex.getMessage().equals("invalid interceptor name"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {interceptor name must be informed}");
+                    Assert.fail("expected: {invalid interceptor name}");
                 }
             },
             new Class[]{Test2InterceptedByFailController.class});
