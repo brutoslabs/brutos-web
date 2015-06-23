@@ -274,7 +274,7 @@ public class Controller {
     public void addInterceptor( Interceptor[] interceptor ){
     	for(Interceptor i: interceptor){
     		if(this.interceptorStack.contains(i))
-    			throw new BrutosException("interceptor already associated with the controller: " + i.getName());
+    			throw new BrutosException(i.getName() + " already associated with the controller");
     		this.interceptorStack.add(i);
     	}
     }
