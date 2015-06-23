@@ -35,7 +35,7 @@ public interface ControllerManager {
      * @param classtype Classe do controlador.
      * @return Construtor do controlador.
      */
-    ControllerBuilder addController( Class classtype );
+    ControllerBuilder addController( Class<?> classtype );
 
     /**
      * Cria um novo controlador.
@@ -44,7 +44,7 @@ public interface ControllerManager {
      * @param classType Classe do controlador.
      * @return Construtor do controlador.
      */
-    ControllerBuilder addController( String id, Class classType );
+    ControllerBuilder addController( String id, Class<?> classType );
     
     /**
      * Cria um novo controlador.
@@ -57,7 +57,7 @@ public interface ControllerManager {
      * @return Construtor do controlador.
      */
     ControllerBuilder addController( String id, String view, boolean resolvedView, 
-            Class classType );
+            Class<?> classType );
     
     /**
      * Cria um novo controlador.
@@ -72,7 +72,7 @@ public interface ControllerManager {
      * @return Construtor do controlador.
      */
     ControllerBuilder addController( String id, String view,
-           boolean resolvedView, String name, Class classType, String actionId );
+           boolean resolvedView, String name, Class<?> classType, String actionId );
 
     /**
      * Cria um novo controlador.
@@ -89,7 +89,7 @@ public interface ControllerManager {
      */
     ControllerBuilder addController( String id, String view, 
             boolean resolvedView, DispatcherType dispatcherType,
-            String name, Class classType, String actionId );
+            String name, Class<?> classType, String actionId );
     
     /**
      * Cria um novo controlador.
@@ -107,7 +107,7 @@ public interface ControllerManager {
      */
     ControllerBuilder addController( String id, String view, 
             boolean resolvedView, DispatcherType dispatcherType,
-            String name, Class classType, String actionId, ActionType actionType );
+            String name, Class<?> classType, String actionId, ActionType actionType );
 
     /**
      * Cria um novo controlador.
@@ -124,7 +124,7 @@ public interface ControllerManager {
      * @return Construtor do controlador.
      */
     ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
-            boolean resolvedView, String name, Class classType, String actionId, ActionType actionType );
+            boolean resolvedView, String name, Class<?> classType, String actionId, ActionType actionType );
     
     /**
      * Verifica a existência de um controlador com uma determinada identificação.
@@ -145,19 +145,19 @@ public interface ControllerManager {
      * @param controllerClass Classe do controlador.
      * @return Mapeamento do controlador.
      */
-    Controller getController( Class controllerClass );
+    Controller getController( Class<?> controllerClass );
 
     /**
      * Obtém o mapeamento de todos os controladores.
      * @return Controladores.
      */
-    List getControllers();
+    List<Controller> getControllers();
 
     /**
      * Obtém o mapeamento de todos os controladores.
      * @return Controladores.
      */
-    Iterator getAllControllers();
+    Iterator<Controller> getAllControllers();
     
     /**
      * Obtém o controlador que está atualmente está sendo construido.
@@ -219,7 +219,7 @@ public interface ControllerManager {
      */
     void setApplicationContext(ConfigurableApplicationContext applicationContext);
 
-    void removeController(Class clazz);
+    void removeController(Class<?> clazz);
     
     void removeController(String name);
     
