@@ -241,7 +241,7 @@ public class InterceptedByTest extends TestCase{
                 	Assert.assertEquals("true",request.getAttribute("intercepted.testName"));
                 	Assert.assertEquals("true",request.getAttribute("intercepted.testName2"));
                 	
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
