@@ -14,7 +14,7 @@ import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorStack;
 import org.brandao.brutos.web.RequestInfo;
 
-@Intercepts
+@Intercepts(isDefault=false)
 @InterceptsStackList({
 	@InterceptsStack(
 		name="stackA",
@@ -52,8 +52,8 @@ public class Interceptor3 extends AbstractInterceptor {
 			request.setAttribute(key, prop.get(key));
 		}
 
-		request.setAttribute("intercepted.interceptor3", count);
-		request.setAttribute("count", count++);
+		request.setAttribute("intercepted.interceptor3", count++);
+		request.setAttribute("count", count);
 		
 		stack.next(handler);
 

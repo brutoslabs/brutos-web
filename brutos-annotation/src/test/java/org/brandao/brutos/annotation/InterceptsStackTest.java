@@ -54,36 +54,25 @@ public class InterceptsStackTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value1_1_a",request.getAttribute("param1_1_ax"));
-                	Assert.assertEquals("value1_2_a",request.getAttribute("param1_2_ax"));
-
-                	//Assert.assertEquals("value2_1_a",request.getAttribute("param2_1_a"));
-                	//Assert.assertEquals("value2_2_a",request.getAttribute("param2_2_a"));
+                	Assert.assertEquals(true,request.getAttribute("result"));                	
                 	
-                	Assert.assertEquals("value3_1_a",request.getAttribute("param3_1_ax"));
-                	Assert.assertEquals("value3_2_a",request.getAttribute("param3_2_ax"));
+                	Assert.assertEquals("value1_1_ax",request.getAttribute("param1_1_a"));
+                	Assert.assertEquals("value1_2_ax",request.getAttribute("param1_2_a"));
 
-                	Assert.assertEquals("value4_1_a",request.getAttribute("param4_1_a"));
-                	Assert.assertEquals("value4_2_a",request.getAttribute("param4_2_a"));
+                	Assert.assertEquals("value3_1_ax",request.getAttribute("param3_1_a"));
+                	Assert.assertEquals("value3_2_ax",request.getAttribute("param3_2_a"));
 
-                	//Assert.assertNull(request.getAttribute("param1_1_a"));
-                	//Assert.assertNull(request.getAttribute("param1_2_a"));
+                	Assert.assertNull(request.getAttribute("param4_1_a"));
+                	Assert.assertNull(request.getAttribute("param4_2_a"));
 
                 	Assert.assertNull(request.getAttribute("param2_1_a"));
                 	Assert.assertNull(request.getAttribute("param2_2_a"));
                 	
-                	//Assert.assertNull(request.getAttribute("param3_1_a"));
-                	//Assert.assertNull(request.getAttribute("param3_2_a"));
-
-                	//Assert.assertNull(request.getAttribute("param4_1_a"));
-                	//Assert.assertNull(request.getAttribute("param4_2_a"));
-                	
-                	Assert.assertEquals("1",request.getAttribute("intercepted.interceptor1"));
-                	Assert.assertEquals("2",request.getAttribute("intercepted.interceptor3"));
-                	Assert.assertEquals("3",request.getAttribute("intercepted.interceptor4"));
+                	Assert.assertEquals(1,request.getAttribute("intercepted.interceptor1"));
+                	Assert.assertEquals(2,request.getAttribute("intercepted.interceptor3"));
+                	Assert.assertEquals(3,request.getAttribute("intercepted.interceptor4"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
-                	Assert.assertEquals("true",request.getAttribute("result"));                	
                 }
 
                 public void checkException(Throwable e) throws Throwable {

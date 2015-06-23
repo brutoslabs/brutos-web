@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Set;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
+import org.brandao.brutos.mapping.MappingException;
 
 /**
  * Classe usada para construir uma pilha de interceptadores. Com essa classe �
@@ -68,19 +69,26 @@ public class InterceptorStackBuilder {
     public InterceptorStackBuilder addInterceptor( String interceptorName ){
         Interceptor in = manager.getInterceptor( interceptorName );
         
-        current = new Interceptor( in );
-        current.setProperties( new HashMap() );
+        if(in == null)
+    		throw new MappingException("interceptor not found: " + interceptorName);
+        	
+        if(in.isDefault())
+    		throw new MappingException("interceptor can't be added in the stack: " + in.getName());
         
-        Set keys = in.getProperties().keySet();
-        Iterator iKeys = keys.iterator();
+        current = new Interceptor( in );
+        current.setProperties( new HashMap<String,Object>() );
+        
+        Set<String> keys = in.getProperties().keySet();
+        Iterator<String> iKeys = keys.iterator();
+        
         while( iKeys.hasNext() ){
-            String key = (String) iKeys.next();
-        //for( String key: keys ){
+            String key = iKeys.next();
             Object value = in.getProperties().get( key );
-            current.getProperties().put( /*in.getName() + "." +*/ key, value );
+            current.getProperties().put( key, value );
         }
         
         ((InterceptorStack)interceptor).addInterceptor( current );
+        
         return this;
     }
     
@@ -95,7 +103,7 @@ public class InterceptorStackBuilder {
         if( current == null )
             throw new BrutosException( "addInterceptor() is not invoked!" );
         
-        /*interceptor*/current.setProperty( /*current.getName() + "." +*/ name, value );
+        current.setProperty(name, value);
         return this;
     }
     
