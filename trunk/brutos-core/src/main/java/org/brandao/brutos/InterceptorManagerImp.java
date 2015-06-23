@@ -77,6 +77,8 @@ public class InterceptorManagerImp
         in.setProperties(new HashMap<String, Object>());
         interceptors.put(name, in);
         
+        getLogger().info("adding interceptor stack " + name);
+        
         return new InterceptorStackBuilder( in, this );
     }
     
@@ -112,7 +114,7 @@ public class InterceptorManagerImp
         interceptors.put( name, in );
         reverseInterceptors.put(interceptor, in);
         
-        getLogger().info("created interceptor: " + interceptor.getName());
+        getLogger().info("adding interceptor " + interceptor.getSimpleName());
         
         return new InterceptorBuilder( in, this );
     }
@@ -129,7 +131,7 @@ public class InterceptorManagerImp
     }
 
     public boolean containsInterceptor(String name){
-    	return this.interceptors.containsKey(name) || this.parent.containsInterceptor(name);
+    	return this.interceptors.containsKey(name) || (this.parent != null && this.parent.containsInterceptor(name));
     }
     
     public Interceptor getInterceptor(Class<?> clazz){
@@ -144,7 +146,7 @@ public class InterceptorManagerImp
     }
     
     public boolean containsInterceptor(Class<?> clazz){
-    	return this.reverseInterceptors.containsKey(clazz) || this.parent.containsInterceptor(clazz);
+    	return this.reverseInterceptors.containsKey(clazz) || (this.parent != null && this.parent.containsInterceptor(clazz));
     }
     
     public List<Interceptor> getDefaultInterceptors(){

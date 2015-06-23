@@ -4,12 +4,14 @@ import java.util.Map;
 
 import javax.servlet.ServletRequest;
 
+import org.brandao.brutos.annotation.Intercepts;
 import org.brandao.brutos.interceptor.AbstractInterceptor;
 import org.brandao.brutos.interceptor.InterceptedException;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorStack;
 import org.brandao.brutos.web.RequestInfo;
 
+@Intercepts(isDefault=false)
 public class TestNameInterceptorController 
 	extends AbstractInterceptor{
 

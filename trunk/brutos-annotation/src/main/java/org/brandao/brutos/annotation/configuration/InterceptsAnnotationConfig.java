@@ -63,6 +63,8 @@ public class InterceptsAnnotationConfig extends AbstractAnnotationConfig{
                 clazz.getSimpleName().replaceAll("InterceptorController$", "") :
                 StringUtil.adjust(intercepts.name());
         
+        name = StringUtil.toVariableFormat(name);
+        
         boolean isDefault = intercepts == null || intercepts.isDefault();
         InterceptorBuilder newBuilder = 
                 componentRegistry.registerInterceptor(name, clazz, isDefault);
