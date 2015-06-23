@@ -571,6 +571,9 @@ public class ControllerBuilder {
     	
         Interceptor parent = interceptorManager.getInterceptor( name );
         
+        if(parent.isDefault())
+    		throw new MappingException("interceptor already intercept this controller: " + name);
+        	
         if(this.controller.isInterceptedBy(parent))
     		throw new MappingException("interceptor already intercept this controller: " + name);
         
