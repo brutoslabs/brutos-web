@@ -26,13 +26,14 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
- *
+ * Implementação padrão do gestor de controladores.
+ * 
  * @author Brandao
  */
 public class ControllerManagerImp implements ControllerManager{
 
-    protected Map mappedControllers;
-    protected Map classMappedControllers;
+    protected Map<String,Controller> mappedControllers;
+    protected Map<Class<?>,Controller> classMappedControllers;
     protected ValidatorFactory validatorFactory;
     protected ControllerBuilder current;
     protected ConfigurableApplicationContext applicationContext;
@@ -41,8 +42,8 @@ public class ControllerManagerImp implements ControllerManager{
     protected InternalUpdate internalUpdate;
     
     public ControllerManagerImp() {
-        this.mappedControllers      = new HashMap();
-        this.classMappedControllers = new HashMap();
+        this.mappedControllers      = new HashMap<String,Controller>();
+        this.classMappedControllers = new HashMap<Class<?>,Controller>();
         this.internalUpdate         = new InternalUpdateImp(this);
     }
 
@@ -52,7 +53,7 @@ public class ControllerManagerImp implements ControllerManager{
      * @param classtype Classe do controlador.
      * @return Construtor do controlador.
      */
-    public ControllerBuilder addController( Class classtype ){
+    public ControllerBuilder addController( Class<?> classtype ){
         return addController( null, null, 
                 !"true".equals(applicationContext.getConfiguration()
                 .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)), null, classtype, "invoke" );
@@ -65,7 +66,7 @@ public class ControllerManagerImp implements ControllerManager{
      * @param classType Classe do controlador.
      * @return Construtor do controlador.
      */
-    public ControllerBuilder addController( String id, Class classType ){
+    public ControllerBuilder addController( String id, Class<?> classType ){
         return addController( id, null, 
                 !"true".equals(applicationContext.getConfiguration()
                 .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)), null, classType, "invoke" );
@@ -80,7 +81,7 @@ public class ControllerManagerImp implements ControllerManager{
      * @return Construtor do controlador.
      */
     public ControllerBuilder addController( String id, String view, 
-            boolean resolvedView, Class classType ){
+            boolean resolvedView, Class<?> classType ){
         return addController( id, view, resolvedView, null, classType, "invoke" );
     }
     
@@ -95,7 +96,7 @@ public class ControllerManagerImp implements ControllerManager{
      * @return Construtor do controlador.
      */
     public ControllerBuilder addController( String id, String view,
-           boolean resolvedView, String name, Class classType, String actionId ){
+           boolean resolvedView, String name, Class<?> classType, String actionId ){
         return addController( id, view, resolvedView, 
                 DispatcherType.FORWARD, name, classType, actionId );
     }
@@ -113,7 +114,7 @@ public class ControllerManagerImp implements ControllerManager{
      */
     public ControllerBuilder addController( String id, String view, 
             boolean resolvedView, DispatcherType dispatcherType,
-            String name, Class classType, String actionId ){
+            String name, Class<?> classType, String actionId ){
             return addController( id, view, resolvedView,
                     dispatcherType, name, classType, actionId, 
                     ActionType.PARAMETER);
@@ -121,14 +122,22 @@ public class ControllerManagerImp implements ControllerManager{
 
     public ControllerBuilder addController( String id, String view, 
             boolean resolvedView, DispatcherType dispatcherType,
-            String name, Class classType, String actionId, ActionType actionType ){
+            String name, Class<?> classType, String actionId, ActionType actionType ){
         return this.addController(id, view, 
                 dispatcherType, resolvedView, name, classType, actionId, actionType);
     }
     
     public ControllerBuilder addController( String id, String view, DispatcherType dispatcherType,
-            boolean resolvedView, String name, Class classType, String actionId, ActionType actionType ){
+            boolean resolvedView, String name, Class<?> classType, String actionId, ActionType actionType ){
 
+        if(classType == null)
+            throw new IllegalArgumentException("invalid class type: " + classType);
+        
+        this.getLogger().info(
+                String.format(
+                    "adding controller %s",
+                    new Object[]{classType.getSimpleName()}));
+    	
         id       = StringUtil.adjust(id);
         view     = StringUtil.adjust(view);
         actionId = StringUtil.adjust(actionId);
@@ -143,9 +152,6 @@ public class ControllerManagerImp implements ControllerManager{
             actionType = ActionType.valueOf(strategyName.toUpperCase());
         }
         
-        if(classType == null)
-            throw new IllegalArgumentException("invalid class type: " + classType);
-        
         if( StringUtil.isEmpty(actionId) )
             actionId = BrutosConstants.DEFAULT_ACTION_ID;
         
@@ -157,8 +163,6 @@ public class ControllerManagerImp implements ControllerManager{
         if(!ActionType.DETACHED.equals(actionType))
             throw new IllegalArgumentException("invalid class type: " + classType);
             
-        //Controller controller = new Controller(this.applicationContext);
-        
         Controller controller = new Controller(this.applicationContext);
         
         
@@ -185,15 +189,10 @@ public class ControllerManagerImp implements ControllerManager{
         
         addController( controller.getId(), controller );
         
-        getLogger().info(
-                String.format(
-                    "adding controller %s",
-                    new Object[]{classType.getSimpleName()}));
-        
         return this.getCurrent();
     }
     
-    private Method getMethodAction( String methodName, Class classe ){
+    private Method getMethodAction( String methodName, Class<?> classe ){
         try{
             Method method = classe.getDeclaredMethod( methodName, new Class[]{} );
             return method;
@@ -233,7 +232,7 @@ public class ControllerManagerImp implements ControllerManager{
      * @param controllerClass Classe do controlador.
      * @return Mapeamento do controlador.
      */
-    public Controller getController( Class controllerClass ){
+    public Controller getController( Class<?> controllerClass ){
         Controller controller = (Controller)classMappedControllers.get( controllerClass );
         
         if(controller == null && parent != null)
@@ -246,10 +245,10 @@ public class ControllerManagerImp implements ControllerManager{
      * Obtém o mapeamento de todos os controladores.
      * @return Controladores.
      */
-    public List getControllers() {
-        List tmp;
+    public List<Controller> getControllers() {
+        List<Controller> tmp;
         
-        tmp = new LinkedList(classMappedControllers.values());
+        tmp = new LinkedList<Controller>(classMappedControllers.values());
         
         if(parent != null)
             tmp.addAll(parent.getControllers());
@@ -257,11 +256,11 @@ public class ControllerManagerImp implements ControllerManager{
         return Collections.unmodifiableList( tmp );
     }
 
-    public Iterator getAllControllers(){
-        return new Iterator(){
+    public Iterator<Controller> getAllControllers(){
+        return new Iterator<Controller>(){
             
-            private Iterator currentIterator;
-            private Iterator parentIterator;
+            private Iterator<Controller> currentIterator;
+            private Iterator<Controller> parentIterator;
             private int index;
             private int maxSize;
             {
@@ -284,7 +283,7 @@ public class ControllerManagerImp implements ControllerManager{
                     return parentIterator != null? parentIterator.hasNext() : false;
             }
 
-            public Object next() {
+            public Controller next() {
                 try{
                     if(index < maxSize)
                         return currentIterator.next();
@@ -375,7 +374,7 @@ public class ControllerManagerImp implements ControllerManager{
         this.applicationContext = applicationContext;
     }
 
-    public synchronized void removeController(Class clazz) {
+    public synchronized void removeController(Class<?> clazz) {
         Controller controller = (Controller) classMappedControllers.get(clazz);
         
         if(controller != null){
