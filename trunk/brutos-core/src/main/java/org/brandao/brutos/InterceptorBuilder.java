@@ -46,6 +46,7 @@ import org.brandao.brutos.mapping.MappingException;
 public class InterceptorBuilder {
 
     private Interceptor interceptor;
+    
     private InterceptorManager manager;
 
     public InterceptorBuilder( Interceptor interceptor, InterceptorManager manager ) {
@@ -61,7 +62,7 @@ public class InterceptorBuilder {
      */
     public InterceptorBuilder addParameter( String name, String value ){
     	
-    	if(name == null || !name.matches("([a-zA-Z0-9_]+)(\\.[a-zA-Z0-9_]+)+"))
+    	if(name == null || !name.matches("([a-zA-Z0-9_]+)(\\.[a-zA-Z0-9_]+)*"))
     		throw new MappingException("invalid parameter name: " + name);
     	
         interceptor.setProperty( name, value );

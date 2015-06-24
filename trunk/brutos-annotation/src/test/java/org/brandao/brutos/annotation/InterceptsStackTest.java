@@ -234,18 +234,18 @@ public class InterceptsStackTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {invalid parameter name: param1_1}");
+                    Assert.fail("expected: {interceptor must be informed on parameter: param1_1}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("invalid parameter name: param1_1"))
+                        if(ex.getMessage().equals("interceptor must be informed on parameter: param1_1"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {invalid parameter name: param1_1}");
+                    Assert.fail("expected: {interceptor must be informed on parameter: param1_1}");
                 }
             },
             new Class[]{Test1FailinterceptsStack.class, Interceptor1Fail.class});
