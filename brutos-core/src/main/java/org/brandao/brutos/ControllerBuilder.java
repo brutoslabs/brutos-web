@@ -787,20 +787,21 @@ public class ControllerBuilder {
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             String mapping, Object value, boolean nullable, Object classType, Type type ){
 
-        id               = StringUtil.adjust(id);
-        propertyName     = StringUtil.adjust(propertyName);
-        temporalProperty = StringUtil.adjust(temporalProperty);
-        mapping          = StringUtil.adjust(mapping);
+        id                 = StringUtil.adjust(id);
+        propertyName       = StringUtil.adjust(propertyName);
+        temporalProperty   = StringUtil.adjust(temporalProperty);
+        mapping            = StringUtil.adjust(mapping);
+        BeanInstance bean  = this.controller.getBeanInstance();
+        Object genericType = classType == null? bean.getGenericType(propertyName) : classType;
         
         if( propertyName == null )
-            throw new MappingException( "property name is required: " +
-                    controller.getClassType().getName() );
+            throw new MappingException("property name is required: " +
+                    controller.getClassType().getName());
 
-        if( controller.containsProperty( propertyName ) )
-            throw new MappingException( "property already defined: " +
-                    controller.getClassType().getName() + "." + propertyName );
+        if( controller.containsProperty(propertyName) )
+            throw new MappingException("property already added: " +
+                    controller.getClassType().getName() + "." + propertyName);
         
-        BeanInstance bean = this.controller.getBeanInstance();
         
         PropertyController property = new PropertyController();
         property.setName( id );
@@ -819,37 +820,32 @@ public class ControllerBuilder {
                 controller.getClassType().getName() + "." + propertyName );
         }
 
-        Object genericType = classType == null? bean.getGenericType(propertyName) : classType;
+        if(type == null){
+            try{
+                type = 
+	        		this.applicationContext.getTypeManager()
+	                		.getType(genericType, enumProperty, temporalProperty );
+                
+            }
+            catch( UnknownTypeException e ){
+                throw new MappingException(e);
+            }
+        }
+        
+        property.setType(type);
         
         if( mapping != null ){
             if( controller.getBean(mapping) != null )
                 property.setMapping( controller.getBean( mapping ) );
             else
                 throw new MappingException( "mapping not found: " + mapping );
-
         }
-        //else
-        if( type != null )
-            property.setType( type );
         else{
-            try{
-                property.setType(
-                        this.applicationContext.getTypeManager()
-                            .getType(
-                                genericType,
-                                enumProperty,
-                                temporalProperty ) );
-                
-                Type definedType = property.getType();
-                Class<?> rawType = TypeUtil.getRawType(genericType);
-                
-                if(definedType.getClass() == ObjectType.class && rawType != Object.class)
-                	throw new MappingException("unknown type: " + rawType.getSimpleName());
-                
-            }
-            catch( UnknownTypeException e ){
-                throw new MappingException(e);
-            }
+            Type definedType = property.getType();
+            Class<?> rawType = TypeUtil.getRawType(genericType);
+            
+            if(definedType.getClass() == ObjectType.class && rawType != Object.class)
+            	throw new MappingException("unknown type: " + rawType.getSimpleName());
         }
 
         controller.addProperty( property );
