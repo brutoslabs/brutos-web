@@ -1738,7 +1738,7 @@ public class ElementCollectionTest extends TestCase{
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0}");
+                    Assert.fail("expected: {unknown type: ElementCollectionBeanTest0}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -1746,11 +1746,11 @@ public class ElementCollectionTest extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0"))
+                        if(ex.getMessage().equals("unknown type: ElementCollectionBeanTest0"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.elementcollection.app1.ElementCollectionBeanTest0}");
+                    Assert.fail("expected: {unknown type: ElementCollectionBeanTest0}");
                 }
             },
             new Class[]{ControllerElementCollectionUnknownTypeTest.class});
