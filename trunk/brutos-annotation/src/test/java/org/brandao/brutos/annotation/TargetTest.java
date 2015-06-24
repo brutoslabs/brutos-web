@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.annotation.helper.target.app1.Test1TargetBean;
 import org.brandao.brutos.annotation.helper.target.app1.Test1TargetController;
 import org.brandao.brutos.annotation.helper.target.fail.Test1FailTargetController;
@@ -61,7 +60,7 @@ public class TargetTest extends TestCase{
                 	Assert.assertEquals(new Long(2), controller.getProperty2());
                 	Assert.assertEquals(new BigDecimal(3), controller.property3);
                 	
-                	Test1TargetBean bean = controller.property4;
+                	Test1TargetBean bean = (Test1TargetBean) controller.property4;
                 	Assert.assertNotNull(bean);
                 	
                 	Assert.assertEquals(new Integer(4), bean.property1);
@@ -103,18 +102,18 @@ public class TargetTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {unknow type: Test1TargetBean}");
+                    Assert.fail("expected: {unknown type: Test1TargetBean}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknow type: Test1TargetBean"))
+                        if(ex.getMessage().equals("unknown type: Test1TargetBean"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknow type: Test1TargetBean}");
+                    Assert.fail("expected: {unknown type: Test1TargetBean}");
                 }
             },
             new Class[]{Test1FailTargetController.class});

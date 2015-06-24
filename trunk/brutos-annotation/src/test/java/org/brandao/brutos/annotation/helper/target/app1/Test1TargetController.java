@@ -17,7 +17,8 @@ public class Test1TargetController {
 	@Transient
 	public Object property3;
 	
-	public Test1TargetBean property4;
+	@Target(Test1TargetBean.class)
+	public Object property4;
 	
 	public Object getProperty2() {
 		return property2;

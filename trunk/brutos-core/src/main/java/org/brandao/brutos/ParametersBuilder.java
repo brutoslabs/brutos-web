@@ -22,6 +22,7 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.type.UnknownTypeException;
@@ -372,7 +373,7 @@ public class ParametersBuilder extends RestrictionBuilder{
                                 temporalProperty ));
             }
             catch( UnknownTypeException e ){
-                throw new UnknownTypeException( 
+                throw new MappingException( 
                         String.format( "%s.%s(...) index %d : %s" ,
                             new Object[]{
                                 this.controller.getClassType().getName(),
@@ -381,8 +382,10 @@ public class ParametersBuilder extends RestrictionBuilder{
                                 e.getMessage()} ), e );
             }
             
-            if( parameter.getType() == null )
-                throw new UnknownTypeException( rawType.getName() );
+            Type definedType = parameter.getType();
+            
+            if(definedType.getClass() == ObjectType.class && rawType != Object.class)
+            	throw new MappingException("unknown type: " + rawType.getSimpleName());
         }
 
         action.addParameter( parameter );

@@ -156,10 +156,8 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig{
         
         if(source.isAnnotationPresent(Any.class))
         	classType = Object.class;
-        else{
-	        Target target = source.getAnnotation(Target.class);
-	        classType = target == null? source.getGenericType() : target.value();
-        }
+        else
+	        classType = source.getGenericType();
         
         //String mapping = identify != null && identify.useMapping()? name : null;
                 
@@ -192,10 +190,8 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig{
         
         if(property.isAnnotationPresent(Any.class))
         	classType = Object.class;
-        else{
-	        Target target = property.getAnnotation(Target.class);
-	        classType = target == null? property.getGenericType() : target.value();
-        }
+        else
+	        classType = property.getGenericType();
         
         //String mapping = identify != null && identify.mapping()? name : null;
 
@@ -277,10 +273,8 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig{
         
         if(source.isAnnotationPresent(Any.class))
         	classType = Object.class;
-        else{
-	        Target target = source.getAnnotation(Target.class);
-	        classType = target == null? source.getGenericType() : target.value();
-        }
+        else
+	        classType = source.getGenericType();
         
         return builder.addParameter(name, scope, enumProperty, 
                 temporalProperty, null, type, null, false, classType);

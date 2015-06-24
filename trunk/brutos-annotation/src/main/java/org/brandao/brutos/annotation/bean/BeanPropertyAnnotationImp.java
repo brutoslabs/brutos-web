@@ -18,6 +18,8 @@
 package org.brandao.brutos.annotation.bean;
 
 import java.lang.annotation.Annotation;
+
+import org.brandao.brutos.annotation.Target;
 import org.brandao.brutos.bean.BeanProperty;
 import org.brandao.brutos.bean.BeanPropertyWrapper;
 
@@ -32,6 +34,16 @@ public class BeanPropertyAnnotationImp
         super(beanProperty);
     }
 
+    public Object getGenericType(){
+    	Target target = this.getAnnotation(Target.class);
+        return target == null? super.getGenericType() : target.value();
+    }
+    
+    public Class getType(){
+    	Target target = this.getAnnotation(Target.class);
+        return target == null? super.getType() : target.value();
+    }
+    
     public <T extends Annotation> T getAnnotation(Class<T> annotation) {
         
         if(this.beanProperty.getSet() != null){
