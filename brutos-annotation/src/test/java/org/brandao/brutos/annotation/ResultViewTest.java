@@ -48,11 +48,8 @@ public class ResultViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
-                	
                 	Test1ResultViewController controller = (Test1ResultViewController)request.getAttribute("Controller");
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/WEB-INF/test1resultviewcontroller/testaction/index.jsp", renderView.getView());
                 	Assert.assertNull(request.getAttribute("result"));
@@ -93,11 +90,8 @@ public class ResultViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
-                	
                 	Test1ResultViewController controller = (Test1ResultViewController)request.getAttribute("Controller");
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/WEB-INF/test1resultviewcontroller/test1action/index.jsp", renderView.getView());
                 	Assert.assertEquals(true, request.getAttribute("result"));
@@ -138,11 +132,8 @@ public class ResultViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
-                	
                 	Test1ResultViewController controller = (Test1ResultViewController)request.getAttribute("Controller");
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertNull(renderView.getView());
                 	Assert.assertEquals(true, request.getAttribute("result"));
@@ -183,18 +174,18 @@ public class ResultViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: the action not return any value: test1}");
+                    Assert.fail("expected: the action not return any value: test1Action}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("the action not return any value: test1"))
+                        if(ex.getMessage().equals("the action not return any value: test1Action"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {the action not return any value: test1}");
+                    Assert.fail("expected: {the action not return any value: test1Action}");
                 }
             },
             new Class[]{Test1FailResultViewController.class});
