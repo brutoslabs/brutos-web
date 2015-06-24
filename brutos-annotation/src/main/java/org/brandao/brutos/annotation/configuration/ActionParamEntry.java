@@ -21,6 +21,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 import org.brandao.brutos.annotation.Basic;
+import org.brandao.brutos.annotation.Target;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -69,7 +70,8 @@ public class ActionParamEntry {
     }
     
     public Type getGenericType() {
-        return genericType;
+       	Target target = this.getAnnotation(Target.class);
+        return target == null? this.genericType : target.value();
     }
 
     public void setGenericType(Type genericType) {
@@ -77,7 +79,8 @@ public class ActionParamEntry {
     }
 
     public Class getType() {
-        return type;
+    	Target target = this.getAnnotation(Target.class);
+        return target == null? this.type : target.value();
     }
 
     public void setType(Class type) {

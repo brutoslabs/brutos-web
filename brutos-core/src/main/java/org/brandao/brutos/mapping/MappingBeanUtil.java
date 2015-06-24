@@ -131,7 +131,7 @@ public final class MappingBeanUtil {
                     dependencyBean.setType(
                             ((ConfigurableApplicationContext)controller.getContext())
                                 .getTypeManager().getType(
-                                bean.getGenericType(propertyName),
+                                type == null? bean.getGenericType(propertyName) : type,
                                 enumProperty,
                                 temporalProperty ) );
                 }
@@ -150,17 +150,12 @@ public final class MappingBeanUtil {
                     Class<?> rawType = TypeUtil.getRawType(type);
                     
                     if(definedType.getClass() == ObjectType.class && type != Object.class)
-                    	throw new MappingException("unknown type: " + rawType.getName());
+                    	throw new MappingException("unknown type: " + rawType.getSimpleName());
                 }
                 
             }
             catch( UnknownTypeException e ){
-                throw new UnknownTypeException(
-                        String.format( "%s.%s : %s" ,
-                            new Object[]{
-                                controller.getClassType().getName(),
-                                propertyName,
-                                e.getMessage()} ) );
+                throw new MappingException(e);
             }
         }
         

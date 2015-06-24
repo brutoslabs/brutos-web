@@ -25,7 +25,9 @@ import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
+import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
+import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.type.UnknownTypeException;
 
 /**
@@ -837,14 +839,16 @@ public class ControllerBuilder {
                                 genericType,
                                 enumProperty,
                                 temporalProperty ) );
+                
+                Type definedType = property.getType();
+                Class<?> rawType = TypeUtil.getRawType(genericType);
+                
+                if(definedType.getClass() == ObjectType.class && rawType != Object.class)
+                	throw new MappingException("unknown type: " + rawType.getSimpleName());
+                
             }
             catch( UnknownTypeException e ){
-                throw new MappingException(
-                        String.format( "%s.%s : %s" ,
-                            new Object[]{
-                                controller.getClassType().getName(),
-                                propertyName,
-                                e.getMessage()} ) );
+                throw new MappingException(e);
             }
         }
 
