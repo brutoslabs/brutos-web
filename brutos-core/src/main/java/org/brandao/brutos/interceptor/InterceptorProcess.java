@@ -49,12 +49,12 @@ public class InterceptorProcess implements InterceptorStack{
     
     private Controller form;
     
-    private InterceptorStackFlow start;
+    private InterceptorEntry start;
     
-    private ThreadLocal<InterceptorStackFlow> stackPos;
+    private ThreadLocal<InterceptorEntry> stackPos;
             
     public InterceptorProcess() {
-        this.stackPos = new ThreadLocal<InterceptorStackFlow>();
+        this.stackPos = new ThreadLocal<InterceptorEntry>();
     }
 
     public synchronized void reset(){
@@ -63,7 +63,7 @@ public class InterceptorProcess implements InterceptorStack{
     
     public void process( InterceptorHandler handler ){
         
-    	InterceptorStackFlow oldPos = null;
+    	InterceptorEntry oldPos = null;
         
         try{
             oldPos = stackPos.get();
@@ -158,8 +158,8 @@ public class InterceptorProcess implements InterceptorStack{
     }
 
     public void next(InterceptorHandler handler) throws InterceptedException{
-    	InterceptorStackFlow pos = stackPos.get();
-    	InterceptorStackFlow next = pos.getNext();
+    	InterceptorEntry pos = stackPos.get();
+    	InterceptorEntry next = pos.getNext();
     	
         stackPos.set(next);
 
@@ -169,7 +169,7 @@ public class InterceptorProcess implements InterceptorStack{
             invoke( (ConfigurableInterceptorHandler)handler );
     }
 
-    private void next(InterceptorHandler handler, InterceptorStackFlow pos)
+    private void next(InterceptorHandler handler, InterceptorEntry pos)
             throws InterceptedException{
 
         ConfigurableApplicationContext context =

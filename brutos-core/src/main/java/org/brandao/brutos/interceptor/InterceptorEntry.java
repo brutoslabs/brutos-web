@@ -2,14 +2,14 @@ package org.brandao.brutos.interceptor;
 
 import org.brandao.brutos.mapping.Interceptor;
 
-public class InterceptorStackFlow {
+public class InterceptorEntry {
 
 	private org.brandao.brutos.mapping.Interceptor interceptor;
 	
-	private InterceptorStackFlow next;
+	private InterceptorEntry next;
 	
 	
-	public InterceptorStackFlow(Interceptor interceptor) {
+	public InterceptorEntry(Interceptor interceptor) {
 		this.interceptor = interceptor;
 	}
 
@@ -21,11 +21,11 @@ public class InterceptorStackFlow {
 		this.interceptor = interceptor;
 	}
 
-	public InterceptorStackFlow getNext() {
+	public InterceptorEntry getNext() {
 		return next;
 	}
 
-	public void setNext(InterceptorStackFlow next) {
+	public void setNext(InterceptorEntry next) {
 		this.next = next;
 	}
 
