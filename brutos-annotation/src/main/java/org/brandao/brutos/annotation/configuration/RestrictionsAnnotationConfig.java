@@ -23,6 +23,7 @@ import org.brandao.brutos.annotation.Restriction;
 import org.brandao.brutos.annotation.Restrictions;
 import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.validator.RestrictionRules;
 
 /**
@@ -71,7 +72,7 @@ public class RestrictionsAnnotationConfig extends AbstractAnnotationConfig{
             return builder;
         
         Restrictions restrictions = this.getAnnotation(source);
-        String message = restrictions.message();
+        String message = StringUtil.adjust(restrictions.message());
         RestrictionBuilder restrictionBuilder = null;
         Restriction[] rules = restrictions.rules();
         
@@ -98,7 +99,7 @@ public class RestrictionsAnnotationConfig extends AbstractAnnotationConfig{
                 restrictionBuilder
                     .addRestriction(RestrictionRules.valueOf(rule), value);
             }
-            restrictionBuilder.setMessage(message);
+            restrictionBuilder.setMessage(message == null? r.message() : message);
         }
         
         
