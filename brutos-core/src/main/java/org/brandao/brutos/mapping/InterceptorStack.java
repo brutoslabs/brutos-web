@@ -70,12 +70,6 @@ public class InterceptorStack extends Interceptor{
         return interceptors.contains(interceptor);
     }
     
-    @Override
-    public void setProperty( String name, Object value ){
-    	checkProperty(name, this);
-    	super.setProperty(name, value);
-    }
-    
     public void removeInterceptor(Interceptor interceptor){
     	if(this.containsInterceptor(interceptor))
     		interceptors.remove(interceptor);
@@ -83,15 +77,26 @@ public class InterceptorStack extends Interceptor{
 			throw new BrutosException("interceptor not found: " + interceptor.getName());
     }
     
-    private void checkProperty(String name, InterceptorStack stack){
+    @Override
+    protected void checkProperty(String name, Interceptor stack){
+    	
+    	if(name == null)
+    		throw new BrutosException("parameter name must be informed");
+
+    	if(name.indexOf(".") == -1)
+    		throw new BrutosException("interceptor must be informed on parameter: " + name);
+
+		if(!name.matches("([a-zA-Z0-9_]+)(\\.[a-zA-Z0-9_]+)+"))
+			throw new BrutosException("invalid parameter name: " + name);
+    	
     	String[] parts = name.split("\\.");
     	
-    	if(parts.length < 2)
-    		throw new BrutosException("interceptor must be informed on parameter: " + name);
+    	
+    	
     	
     	String[] route = Arrays.copyOf(parts, parts.length - 1);
     	
-    	this.checkProperty(route, 0, stack);
+    	this.checkProperty(route, 0, (InterceptorStack)stack);
     }
     
     private void checkProperty(String[] route, int indexRoute, InterceptorStack stack){

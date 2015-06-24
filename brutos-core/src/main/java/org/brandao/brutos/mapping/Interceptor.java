@@ -75,12 +75,12 @@ public class Interceptor {
     }
 
     public void setProperty( String name, Object value ){
-        properties.put( name, value );
+    	checkProperty(name, this);
+        properties.put(name, value);
     }
     
     public void setProperties(Map<String,Object> properties) {
         this.properties = properties;
-        
     }
     
     public Object getProperty( String name ){
@@ -97,6 +97,14 @@ public class Interceptor {
         return parent == null? this.def : parent.isDefault();
     }
 
+    protected void checkProperty(String name, Interceptor stack){
+    	if(name == null)
+    		throw new BrutosException("parameter name must be informed");
+    	
+		if(!name.matches("([a-zA-Z0-9_]+)"))
+			throw new BrutosException("invalid parameter name: " + name);
+    }
+    
 	@Override
 	public int hashCode() {
 		final int prime = 31;

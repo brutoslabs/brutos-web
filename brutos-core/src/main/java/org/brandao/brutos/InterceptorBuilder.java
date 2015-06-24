@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.Interceptor;
+import org.brandao.brutos.mapping.InterceptorStack;
 import org.brandao.brutos.mapping.MappingException;
 
 /**
@@ -61,11 +62,7 @@ public class InterceptorBuilder {
      * @return Construtor do interceptador.
      */
     public InterceptorBuilder addParameter( String name, String value ){
-    	
-    	if(name == null || !name.matches("([a-zA-Z0-9_]+)(\\.[a-zA-Z0-9_]+)*"))
-    		throw new MappingException("invalid parameter name: " + name);
-    	
-        interceptor.setProperty( name, value );
+        interceptor.setProperty(name, value);
         return this;
     }
 }

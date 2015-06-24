@@ -14,9 +14,10 @@ import org.brandao.brutos.web.RequestInfo;
 
 @Intercepts(
 		params={
-				@Param(name="param7.1", value="value7.1"),
-				@Param(name="param7.2", value="value7.2")
-		}
+				@Param(name="param7_1", value="value7_1"),
+				@Param(name="param7_2", value="value7_2")
+		},
+		isDefault=false
 )
 public class Interceptor7 
 	extends AbstractInterceptor{

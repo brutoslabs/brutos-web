@@ -16,6 +16,7 @@ import org.brandao.brutos.annotation.helper.intercepts.app1.Interceptor4;
 import org.brandao.brutos.annotation.helper.intercepts.app1.Interceptor5ControllerInterceptor;
 import org.brandao.brutos.annotation.helper.intercepts.app1.Interceptor6;
 import org.brandao.brutos.annotation.helper.intercepts.app1.Interceptor7;
+import org.brandao.brutos.annotation.helper.intercepts.app1.Interceptor8InterceptorController;
 import org.brandao.brutos.annotation.helper.intercepts.app1.NotInterceptor;
 import org.brandao.brutos.annotation.helper.intercepts.app1.Test1Intercepts;
 import org.brandao.brutos.annotation.helper.intercepts.app1.Test2Intercepts;
@@ -63,18 +64,19 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value1.1",request.getAttribute("param1.1"));
-                	Assert.assertEquals("value1.2",request.getAttribute("param1.2"));
+                	Assert.assertEquals("value1_1",request.getAttribute("param1_1"));
+                	Assert.assertEquals("value1_2",request.getAttribute("param1_2"));
                 	
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor1"));
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor6"));
+                	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor8"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor3"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor4"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor5"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor7"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
@@ -90,7 +92,8 @@ public class InterceptsTest extends TestCase{
         		Interceptor4.class,
         		Interceptor5ControllerInterceptor.class,
         		Interceptor6.class,
-        		Interceptor7.class
+        		Interceptor7.class,
+        		Interceptor8InterceptorController.class
     		});
     }
 
@@ -120,18 +123,19 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value2.1",request.getAttribute("param2.1"));
-                	Assert.assertEquals("value2.2",request.getAttribute("param2.2"));
+                	Assert.assertEquals("value2_1",request.getAttribute("param2_1"));
+                	Assert.assertEquals("value2_2",request.getAttribute("param2_2"));
                 	
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor2"));
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor6"));
+                	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor8"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor1"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor3"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor4"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor5"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor7"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
@@ -147,7 +151,8 @@ public class InterceptsTest extends TestCase{
         		Interceptor4.class,
         		Interceptor5ControllerInterceptor.class,
         		Interceptor6.class,
-        		Interceptor7.class
+        		Interceptor7.class,
+        		Interceptor8InterceptorController.class
     		});
     }
 
@@ -177,18 +182,19 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value3.1",request.getAttribute("param3.1"));
-                	Assert.assertEquals("value3.2",request.getAttribute("param3.2"));
+                	Assert.assertEquals("value3_1",request.getAttribute("param3_1"));
+                	Assert.assertEquals("value3_2",request.getAttribute("param3_2"));
                 	
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor3"));
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor6"));
+                	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor8"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor1"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor4"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor5"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor7"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
@@ -204,7 +210,8 @@ public class InterceptsTest extends TestCase{
         		Interceptor4.class,
         		Interceptor5ControllerInterceptor.class,
         		Interceptor6.class,
-        		Interceptor7.class
+        		Interceptor7.class,
+        		Interceptor8InterceptorController.class
     		});
     }
     
@@ -234,18 +241,16 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	//Assert.assertEquals("value3.1",request.getAttribute("param3.1"));
-                	//Assert.assertEquals("value3.2",request.getAttribute("param3.2"));
-                	
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor4"));
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor6"));
+                	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor8"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor1"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor3"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor5"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor7"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
@@ -261,7 +266,8 @@ public class InterceptsTest extends TestCase{
         		Interceptor4.class,
         		Interceptor5ControllerInterceptor.class,
         		Interceptor6.class,
-        		Interceptor7.class
+        		Interceptor7.class,
+        		Interceptor8InterceptorController.class
     		});
     }
 
@@ -291,18 +297,16 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	//Assert.assertEquals("value3.1",request.getAttribute("param3.1"));
-                	//Assert.assertEquals("value3.2",request.getAttribute("param3.2"));
-                	
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor4"));
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor6"));
+                	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor8"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor1"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor3"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor5"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor7"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
@@ -318,7 +322,8 @@ public class InterceptsTest extends TestCase{
         		Interceptor4.class,
         		Interceptor5ControllerInterceptor.class,
         		Interceptor6.class,
-        		Interceptor7.class
+        		Interceptor7.class,
+        		Interceptor8InterceptorController.class
     		});
     }
     
@@ -348,18 +353,16 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	//Assert.assertEquals("value3.1",request.getAttribute("param3.1"));
-                	//Assert.assertEquals("value3.2",request.getAttribute("param3.2"));
-                	
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor5"));
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor6"));
+                	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor8"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor1"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor3"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor4"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor7"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
@@ -375,7 +378,8 @@ public class InterceptsTest extends TestCase{
         		Interceptor4.class,
         		Interceptor5ControllerInterceptor.class,
         		Interceptor6.class,
-        		Interceptor7.class
+        		Interceptor7.class,
+        		Interceptor8InterceptorController.class
     		});
     }
     
@@ -405,11 +409,8 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	//Assert.assertEquals("value3.1",request.getAttribute("param3.1"));
-                	//Assert.assertEquals("value3.2",request.getAttribute("param3.2"));
-                	
-                	//Assert.assertEquals("true",request.getAttribute("intercepted.interceptor5"));
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor6"));
+                	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor8"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor1"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
@@ -417,7 +418,7 @@ public class InterceptsTest extends TestCase{
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor4"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor5"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor7"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
@@ -433,7 +434,8 @@ public class InterceptsTest extends TestCase{
         		Interceptor4.class,
         		Interceptor5ControllerInterceptor.class,
         		Interceptor6.class,
-        		Interceptor7.class
+        		Interceptor7.class,
+        		Interceptor8InterceptorController.class
     		});
     }    
 
@@ -463,12 +465,13 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value7.1",request.getAttribute("param7.1x"));
-                	Assert.assertEquals("value7.2",request.getAttribute("param7.2x"));
+                	Assert.assertEquals("value7_1",request.getAttribute("param7_1x"));
+                	Assert.assertEquals("value7_2",request.getAttribute("param7_2x"));
                 	
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor7"));
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor6"));
-                	
+                	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor8"));
+
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor1"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor3"));
@@ -490,7 +493,8 @@ public class InterceptsTest extends TestCase{
         		Interceptor4.class,
         		Interceptor5ControllerInterceptor.class,
         		Interceptor6.class,
-        		Interceptor7.class
+        		Interceptor7.class,
+        		Interceptor8InterceptorController.class
     		});
     }    
     
@@ -521,6 +525,7 @@ public class InterceptsTest extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor6"));
+                	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor8"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor1"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
@@ -528,7 +533,7 @@ public class InterceptsTest extends TestCase{
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor4"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor5"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor7"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
@@ -545,7 +550,8 @@ public class InterceptsTest extends TestCase{
         		Interceptor5ControllerInterceptor.class,
         		Interceptor6.class,
         		Interceptor7.class,
-        		NotInterceptor.class
+        		NotInterceptor.class,
+        		Interceptor8InterceptorController.class
     		});
     }
     
@@ -575,18 +581,18 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {must implement interface InterceptorController: org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor1FailControllerInterceptor}");
+                    Assert.fail("expected: {must implement interface InterceptorController: Interceptor1FailControllerInterceptor}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("must implement interface InterceptorController: org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor1FailControllerInterceptor"))
+                        if(ex.getMessage().equals("must implement interface InterceptorController: Interceptor1FailControllerInterceptor"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {must implement interface InterceptorController: org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor1FailControllerInterceptor}");
+                    Assert.fail("expected: {must implement interface InterceptorController: Interceptor1FailControllerInterceptor}");
                 }
             },
             new Class[]{Interceptor1FailControllerInterceptor.class});
@@ -618,18 +624,18 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {must implement interface InterceptorController: org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor2FailControllerInterceptor}");
+                    Assert.fail("expected: {must implement interface InterceptorController: Interceptor2FailControllerInterceptor}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("must implement interface InterceptorController: org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor2FailControllerInterceptor"))
+                        if(ex.getMessage().equals("must implement interface InterceptorController: Interceptor2FailControllerInterceptor"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {must implement interface InterceptorController: org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor2FailControllerInterceptor}");
+                    Assert.fail("expected: {must implement interface InterceptorController: Interceptor2FailControllerInterceptor}");
                 }
             },
             new Class[]{Interceptor2FailControllerInterceptor.class});
@@ -661,18 +667,18 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {must implement interface InterceptorController: org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor3Fail}");
+                    Assert.fail("expected: {must implement interface InterceptorController: Interceptor3Fail}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("must implement interface InterceptorController: org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor3Fail"))
+                        if(ex.getMessage().equals("must implement interface InterceptorController: Interceptor3Fail"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {must implement interface InterceptorController: org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor3Fail}");
+                    Assert.fail("expected: {must implement interface InterceptorController: Interceptor3Fail}");
                 }
             },
             new Class[]{Interceptor3Fail.class});
