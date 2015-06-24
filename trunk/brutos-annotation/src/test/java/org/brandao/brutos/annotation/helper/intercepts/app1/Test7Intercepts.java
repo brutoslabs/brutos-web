@@ -8,7 +8,7 @@ import org.brandao.brutos.annotation.Param;
 @Controller("/controller")
 @InterceptedBy(
 		@Intercept(
-			interceptor=Interceptor3.class,
+			interceptor=Interceptor7.class,
 			params={
 				@Param(name="param7_1", value="value7_1x"),
 				@Param(name="param7_2", value="value7_2x")
