@@ -105,7 +105,7 @@ public class InterceptorProcessConfigurationBuilder {
 		
 		for(String key: origin.keySet()){
 			if(prefix == null || key.startsWith(prefix))
-				dest.put(key.substring(prefix.length()), origin.get(key));
+				dest.put(prefix == null? key : key.substring(prefix.length()), origin.get(key));
 		}
 		
 	}

@@ -87,7 +87,7 @@ public class InterceptorStack extends Interceptor{
     	String[] parts = name.split("\\.");
     	
     	if(parts.length < 2)
-    		throw new BrutosException("interceptor must be informed");
+    		throw new BrutosException("interceptor must be informed on parameter: " + name);
     	
     	String[] route = Arrays.copyOf(parts, parts.length - 1);
     	
