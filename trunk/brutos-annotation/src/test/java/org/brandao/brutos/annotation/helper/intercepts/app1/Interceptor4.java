@@ -11,7 +11,7 @@ import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorStack;
 import org.brandao.brutos.web.RequestInfo;
 
-@Intercepts(name="interceptorX")
+@Intercepts(name="interceptorX", isDefault=false)
 public class Interceptor4 
 	extends AbstractInterceptor{
 

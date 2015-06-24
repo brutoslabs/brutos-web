@@ -10,8 +10,8 @@ import org.brandao.brutos.annotation.Param;
 		@Intercept(
 			interceptor=Interceptor1ControllerInterceptor.class,
 			params={
-				@Param(name="param1.1", value="value1.1"),
-				@Param(name="param1.2", value="value1.2")
+				@Param(name="param1_1", value="value1_1"),
+				@Param(name="param1_2", value="value1_2")
 			}
 ))
 public class Test1Intercepts {

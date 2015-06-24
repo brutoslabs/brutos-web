@@ -11,7 +11,7 @@ import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorStack;
 import org.brandao.brutos.web.RequestInfo;
 
-@Intercepts
+@Intercepts(isDefault=false)
 public class Interceptor2ControllerInterceptor 
 	extends AbstractInterceptor{
 

@@ -4,15 +4,13 @@ import java.util.Map;
 
 import javax.servlet.ServletRequest;
 
-import org.brandao.brutos.annotation.Intercepts;
 import org.brandao.brutos.interceptor.AbstractInterceptor;
 import org.brandao.brutos.interceptor.InterceptedException;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorStack;
 import org.brandao.brutos.web.RequestInfo;
 
-@Intercepts(name="interceptorX2", isDefault=false)
-public class Interceptor5ControllerInterceptor 
+public class Interceptor8InterceptorController 
 	extends AbstractInterceptor{
 
 	public void intercepted(InterceptorStack stack, InterceptorHandler handler)
@@ -27,7 +25,7 @@ public class Interceptor5ControllerInterceptor
 			request.setAttribute(key, prop.get(key));
 		}
 		
-		request.setAttribute("intercepted.interceptor5", "true");
+		request.setAttribute("intercepted.interceptor8", "true");
 		
 		stack.next(handler);
 		

@@ -100,7 +100,7 @@ public class InterceptorManagerImp
             throw new BrutosException("conflict interceptor: " + interceptor.getName());
         
         if( !org.brandao.brutos.interceptor.InterceptorController.class.isAssignableFrom( interceptor ) )
-            throw new BrutosException("must implement interface InterceptorController:" + interceptor.getName());
+            throw new BrutosException("must implement interface InterceptorController: " + interceptor.getSimpleName());
         
         in = new Interceptor();
         
