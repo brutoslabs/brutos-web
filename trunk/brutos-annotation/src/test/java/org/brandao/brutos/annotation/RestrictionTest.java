@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.helper.restriction.app1.Test1RestrictionController;
 import org.brandao.brutos.annotation.helper.restriction.fail.Test1FailRestrictionController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
+import org.brandao.brutos.validator.DefaultValidator;
+import org.brandao.brutos.validator.DefaultValidatorFactory;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
@@ -34,6 +37,12 @@ public class RestrictionTest extends TestCase{
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
                     );
+                    
+                    parameters.put(
+                            BrutosConstants.VALIDATOR_FACTORY_CLASS,
+                            DefaultValidatorFactory.class.getName()
+                    );
+                    
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
@@ -68,6 +77,11 @@ public class RestrictionTest extends TestCase{
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
+                    );
+                    
+                    parameters.put(
+                            BrutosConstants.VALIDATOR_FACTORY_CLASS,
+                            DefaultValidatorFactory.class.getName()
                     );
                 }
 
@@ -113,6 +127,11 @@ public class RestrictionTest extends TestCase{
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
                     );
+                    
+                    parameters.put(
+                            BrutosConstants.VALIDATOR_FACTORY_CLASS,
+                            DefaultValidatorFactory.class.getName()
+                    );
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
@@ -147,6 +166,11 @@ public class RestrictionTest extends TestCase{
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
+                    );
+                    
+                    parameters.put(
+                            BrutosConstants.VALIDATOR_FACTORY_CLASS,
+                            DefaultValidatorFactory.class.getName()
                     );
                 }
 
@@ -192,6 +216,11 @@ public class RestrictionTest extends TestCase{
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
                     );
+                    
+                    parameters.put(
+                            BrutosConstants.VALIDATOR_FACTORY_CLASS,
+                            DefaultValidatorFactory.class.getName()
+                    );
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
@@ -226,6 +255,11 @@ public class RestrictionTest extends TestCase{
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
+                    );
+                    
+                    parameters.put(
+                            BrutosConstants.VALIDATOR_FACTORY_CLASS,
+                            DefaultValidatorFactory.class.getName()
                     );
                 }
 
@@ -271,6 +305,11 @@ public class RestrictionTest extends TestCase{
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
                     );
+                    
+                    parameters.put(
+                            BrutosConstants.VALIDATOR_FACTORY_CLASS,
+                            DefaultValidatorFactory.class.getName()
+                    );
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
@@ -305,6 +344,11 @@ public class RestrictionTest extends TestCase{
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
+                    );
+                    
+                    parameters.put(
+                            BrutosConstants.VALIDATOR_FACTORY_CLASS,
+                            DefaultValidatorFactory.class.getName()
                     );
                 }
 
@@ -349,6 +393,11 @@ public class RestrictionTest extends TestCase{
                     parameters.put(
                             MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
                             "true"
+                    );
+                    
+                    parameters.put(
+                            BrutosConstants.VALIDATOR_FACTORY_CLASS,
+                            DefaultValidatorFactory.class.getName()
                     );
                 }
 

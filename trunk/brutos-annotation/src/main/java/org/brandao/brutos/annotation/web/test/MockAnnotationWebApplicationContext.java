@@ -46,10 +46,19 @@ public class MockAnnotationWebApplicationContext
     @Override
     protected void overrideConfig(){
         Properties config = this.getConfiguration();
-        config.put(BrutosConstants.RENDER_VIEW_CLASS, MockRenderView.class.getName());
-        config.put(BrutosConstants.INVOKER_CLASS, MockWebInvoker.class.getName());
-        config.put(BrutosConstants.OBJECT_FACTORY_CLASS, MockObjectFactory.class.getName());
-        config.put(BrutosConstants.VALIDATOR_FACTORY_CLASS, JSR303ValidatorFactory.class.getName());
+
+        if(config.get(BrutosConstants.RENDER_VIEW_CLASS) == null)
+        	config.put(BrutosConstants.RENDER_VIEW_CLASS, MockRenderView.class.getName());
+        
+        if(config.get(BrutosConstants.INVOKER_CLASS) == null)
+        	config.put(BrutosConstants.INVOKER_CLASS, MockWebInvoker.class.getName());
+        
+        if(config.get(BrutosConstants.OBJECT_FACTORY_CLASS) == null)
+        	config.put(BrutosConstants.OBJECT_FACTORY_CLASS, MockObjectFactory.class.getName());
+        
+        if(config.get(BrutosConstants.VALIDATOR_FACTORY_CLASS) == null)
+        	config.put(BrutosConstants.VALIDATOR_FACTORY_CLASS, JSR303ValidatorFactory.class.getName());
+        
         super.overrideConfig();
         
         this.ignoreResources = "true".equals(config.getProperty(IGNORE_RESOURCES, "false"));
