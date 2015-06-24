@@ -49,7 +49,7 @@ public class Interceptor3 extends AbstractInterceptor {
 			count = 1;
 		
 		for (String key : prop.keySet()) {
-			request.setAttribute(key, prop.get(key));
+			request.setAttribute("i3."+key, prop.get(key));
 		}
 
 		request.setAttribute("intercepted.interceptor3", count++);
