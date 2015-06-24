@@ -477,7 +477,7 @@ public class InterceptsTest extends TestCase{
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor3"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor4"));
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor5"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
