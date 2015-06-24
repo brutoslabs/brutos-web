@@ -101,9 +101,13 @@ public class InterceptorStackBuilder {
     public InterceptorStackBuilder addParameter( String name, String value ){
         
         if( current == null )
-            throw new BrutosException( "addInterceptor() is not invoked!" );
-        
-        current.setProperty(name, value);
+            throw new MappingException( "addInterceptor() is not invoked!" );
+
+    	if(name == null || !name.matches("([a-zA-Z0-9_]+)(\\.[a-zA-Z0-9_]+)+"))
+    		throw new MappingException("invalid parameter name: " + name);
+    	
+        //current.setProperty(name, value);
+    	interceptor.setProperty(name, value);
         return this;
     }
     

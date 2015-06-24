@@ -82,7 +82,14 @@ public class InterceptorProcess implements InterceptorStack{
         }
     }
             
+    //TODO: move to InterceptorStack
     public synchronized void flush(){
+    	
+    	InterceptorProcessConfigurationBuilder
+    		ipcb = new InterceptorProcessConfigurationBuilder(this.form);
+    	this.stack = ipcb.getStack();
+    	
+    	/*
         this.stack = new LinkedList();
         
         List interceptors = 
@@ -113,7 +120,7 @@ public class InterceptorProcess implements InterceptorStack{
                     i 
             );
         }
-
+     */
     }
 
     public void addInterceptor( org.brandao.brutos.mapping.Interceptor i ){
@@ -168,7 +175,6 @@ public class InterceptorProcess implements InterceptorStack{
         Set keys = properties.keySet();
         Iterator iKeys = keys.iterator();
 
-        //for( String key: keys ){
         while( iKeys.hasNext() ){
             String key = (String) iKeys.next();
             Object value = propertiesScope.get( path + key );
@@ -209,10 +215,15 @@ public class InterceptorProcess implements InterceptorStack{
         org.brandao.brutos.interceptor.InterceptorController interceptor =
             (org.brandao.brutos.interceptor.InterceptorController) i.getInstance(context.getObjectFactory());
 
+        /*
         if( !interceptor.isConfigured() )
             interceptor.setProperties( (Map) i
                     .getProperty( String.valueOf( form.hashCode()  )  ) );
-
+        */
+        
+        if( !interceptor.isConfigured() )
+            interceptor.setProperties(i.getProperties());
+        
         if( interceptor.accept( handler ) ){
             if( logger.isDebugEnabled() )
                 logger.debug( this.form.getClassType().getName() +

@@ -70,7 +70,7 @@ public class InterceptsStackAnnotationConfig extends AbstractAnnotationConfig{
             newBuilder.addInterceptor(in.getName());
             Param[] params = i.getInfo().params();
             for(Param p: params){
-                newBuilder.addParameter(StringUtil.adjust(p.name()), StringUtil.adjust(p.value()));
+                newBuilder.addParameter(in.getName() + "." + StringUtil.adjust(p.name()), StringUtil.adjust(p.value()));
             }
         }
         super.applyInternalConfiguration(source, newBuilder, componentRegistry);

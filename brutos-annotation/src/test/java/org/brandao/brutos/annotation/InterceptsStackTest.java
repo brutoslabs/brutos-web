@@ -114,36 +114,24 @@ public class InterceptsStackTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value1_1_b",request.getAttribute("param1_1_bx"));
-                	Assert.assertEquals("value1_2_b",request.getAttribute("param1_2_bx"));
+                	Assert.assertEquals("value1_1_bx",request.getAttribute("param1_1_b"));
+                	Assert.assertEquals("value1_2_bx",request.getAttribute("param1_2_b"));
 
-                	//Assert.assertEquals("value2_1_b",request.getAttribute("param2_1_b"));
-                	//Assert.assertEquals("value2_2_b",request.getAttribute("param2_2_b"));
-                	
-                	Assert.assertEquals("value3_1_b",request.getAttribute("param3_1_bx"));
-                	Assert.assertEquals("value3_2_b",request.getAttribute("param3_2_bx"));
+                	Assert.assertEquals("value3_1_bx",request.getAttribute("param3_1_b"));
+                	Assert.assertEquals("value3_2_bx",request.getAttribute("param3_2_b"));
 
                 	Assert.assertEquals("value4_1_b",request.getAttribute("param4_1_b"));
                 	Assert.assertEquals("value4_2_b",request.getAttribute("param4_2_b"));
 
-                	//Assert.assertNull(request.getAttribute("param1_1_b"));
-                	//Assert.assertNull(request.getAttribute("param1_2_b"));
-
                 	Assert.assertNull(request.getAttribute("param2_1_b"));
                 	Assert.assertNull(request.getAttribute("param2_2_b"));
                 	
-                	//Assert.assertNull(request.getAttribute("param3_1_b"));
-                	//Assert.assertNull(request.getAttribute("param3_2_b"));
-
-                	//Assert.assertNull(request.getAttribute("param4_1_b"));
-                	//Assert.assertNull(request.getAttribute("param4_2_b"));
-                	
-                	Assert.assertEquals("1",request.getAttribute("intercepted.interceptor1"));
-                	Assert.assertEquals("2",request.getAttribute("intercepted.interceptor3"));
-                	Assert.assertEquals("3",request.getAttribute("intercepted.interceptor4"));
+                	Assert.assertEquals(1,request.getAttribute("intercepted.interceptor1"));
+                	Assert.assertEquals(2,request.getAttribute("intercepted.interceptor3"));
+                	Assert.assertEquals(3,request.getAttribute("intercepted.interceptor4"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
@@ -192,30 +180,18 @@ public class InterceptsStackTest extends TestCase{
                 	Assert.assertEquals("value2_1_c",request.getAttribute("param2_1_c"));
                 	Assert.assertEquals("value2_2_c",request.getAttribute("param2_2_c"));
                 	
-                	//Assert.assertEquals("value3_1_c",request.getAttribute("param3_1_c"));
-                	//Assert.assertEquals("value3_2_c",request.getAttribute("param3_2_c"));
-
-                	//Assert.assertEquals("value4_1_c",request.getAttribute("param4_1_c"));
-                	//Assert.assertEquals("value4_2_c",request.getAttribute("param4_2_c"));
-
-                	//Assert.assertNull(request.getAttribute("param1_1_c"));
-                	//Assert.assertNull(request.getAttribute("param1_2_c"));
-
-                	//Assert.assertNull(request.getAttribute("param2_1_c"));
-                	//Assert.assertNull(request.getAttribute("param2_2_c"));
-                	
                 	Assert.assertNull(request.getAttribute("param3_1_c"));
                 	Assert.assertNull(request.getAttribute("param3_2_c"));
 
                 	Assert.assertNull(request.getAttribute("param4_1_c"));
                 	Assert.assertNull(request.getAttribute("param4_2_c"));
                 	
-                	Assert.assertEquals("1",request.getAttribute("intercepted.interceptor1"));
-                	Assert.assertEquals("2",request.getAttribute("intercepted.interceptor2"));
-                	Assert.assertEquals("3",request.getAttribute("intercepted.interceptor4"));
+                	Assert.assertEquals(1,request.getAttribute("intercepted.interceptor1"));
+                	Assert.assertEquals(2,request.getAttribute("intercepted.interceptor2"));
+                	Assert.assertEquals(3,request.getAttribute("intercepted.interceptor4"));
                 	
                 	Assert.assertNull(request.getAttribute("intercepted.interceptor3"));
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
