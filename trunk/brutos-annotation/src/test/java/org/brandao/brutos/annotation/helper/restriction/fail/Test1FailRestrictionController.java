@@ -4,7 +4,7 @@ import org.brandao.brutos.annotation.Controller;
 import org.brandao.brutos.annotation.Restriction;
 import org.brandao.brutos.annotation.RestrictionsRules;
 
-@Controller("/cotnroller")
+@Controller("/controller")
 public class Test1FailRestrictionController {
 
 	@Restriction(rule=RestrictionsRules.MAX, value="10", message="property1 > 10")
