@@ -27,7 +27,7 @@ public class DefaultViewResolver extends AbstractViewResolver{
 
     private String getPrefix(Class controllerType){
         String controllerName = controllerType.getSimpleName();
-        controllerName = controllerName.replaceAll("Controller$", "");
+        //controllerName = controllerName.replaceAll("Controller$", "");
         controllerName = controllerName.toLowerCase();
         
         String resolvedView = this.getSeparator();
