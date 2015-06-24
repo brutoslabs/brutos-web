@@ -381,7 +381,7 @@ public class RestrictionTest extends TestCase{
 
     public void testTest1FailRestrictionController() throws Throwable{
         WebApplicationContextTester.run(
-            "/controller/test", 
+            "/controller", 
             new WebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
@@ -405,24 +405,24 @@ public class RestrictionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg1", "1");
+                	parameters.put("property1", "1");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: numberformatexceptio}");
+                    Assert.fail("expected: {java.lang.String cannot be cast to java.lang.Number}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("numberformatexceptio"))
+                        if(ex.getMessage().equals("java.lang.String cannot be cast to java.lang.Number"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {numberformatexceptio}");
+                    Assert.fail("expected: {java.lang.String cannot be cast to java.lang.Number}");
                 }
             },
             new Class[]{Test1FailRestrictionController.class});
