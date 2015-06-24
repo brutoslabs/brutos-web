@@ -44,7 +44,7 @@ public class Interceptor4 extends AbstractInterceptor {
 			count = 1;
 		
 		for (String key : prop.keySet()) {
-			request.setAttribute(key, prop.get(key));
+			request.setAttribute("i4."+key, prop.get(key));
 		}
 
 		request.setAttribute("intercepted.interceptor4", count++);

@@ -11,7 +11,9 @@ import org.brandao.brutos.annotation.Param;
 		name="stackB",
 		params={
 				@Param(name="interceptor3.param3_1_b", value="value3_1_bx"),
-				@Param(name="interceptor3.param3_2_b", value="value3_2_bx")
+				@Param(name="interceptor3.param3_2_b", value="value3_2_bx"),
+				@Param(name="interceptor4.param4_1_b", value="value4_1_b"),
+				@Param(name="interceptor4.param4_2_b", value="value4_2_b")
 		}
 	)
 })
