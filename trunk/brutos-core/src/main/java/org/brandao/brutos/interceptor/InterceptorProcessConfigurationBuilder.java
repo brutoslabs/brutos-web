@@ -16,7 +16,7 @@ public class InterceptorProcessConfigurationBuilder {
 		this.controller = controller;		
 	}
 	
-	public InterceptorStackFlow getStack(){
+	public InterceptorEntry getStack(){
 		List<Interceptor> stack = new ArrayList<Interceptor>(); 
 		
 		for(Interceptor i: controller.getDefaultInterceptorList()){
@@ -27,11 +27,11 @@ public class InterceptorProcessConfigurationBuilder {
 			this.buildStack(i, stack);
 		}
 		
-		InterceptorStackFlow flow = new InterceptorStackFlow(null);
-		InterceptorStackFlow root = flow;
+		InterceptorEntry flow = new InterceptorEntry(null);
+		InterceptorEntry root = flow;
 		
 		for(Interceptor i: stack){
-			InterceptorStackFlow next = new InterceptorStackFlow(i);
+			InterceptorEntry next = new InterceptorEntry(i);
 			flow.setNext(next);
 			flow = next;
 		}
