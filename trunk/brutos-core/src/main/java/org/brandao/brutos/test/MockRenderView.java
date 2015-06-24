@@ -31,9 +31,12 @@ import org.brandao.brutos.type.Type;
 public class MockRenderView extends AbstractRenderView{
 
     private DispatcherType dispatcherType;
+    
     private String view;
+    
     private boolean redirect;
-    private Type actionResult;
+    
+    private Object actionResult;
 
     public MockRenderView() {
     }
@@ -71,7 +74,7 @@ public class MockRenderView extends AbstractRenderView{
                 stackRequestElement.getAction().getMethodForm();
         
         if(method != null && method.isReturnRendered())
-            this.actionResult = method.getReturnType();
+            this.actionResult = stackRequestElement.getResultAction();
         else
             super.show(requestInstrument, stackRequestElement );
     }
@@ -92,7 +95,7 @@ public class MockRenderView extends AbstractRenderView{
         this.dispatcherType = dispatcherType;
     }
 
-    public Type getActionResult() {
+    public Object getActionResult() {
         return actionResult;
     }
 

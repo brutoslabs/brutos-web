@@ -136,7 +136,7 @@ public class ResultViewTest extends TestCase{
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertNull(renderView.getView());
-                	Assert.assertEquals(true, request.getAttribute("result"));
+                	Assert.assertEquals(true, renderView.getActionResult());
                 	Assert.assertEquals("v1", controller.value);
                 }
 
