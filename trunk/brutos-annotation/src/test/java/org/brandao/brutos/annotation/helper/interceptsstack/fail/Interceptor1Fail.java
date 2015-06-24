@@ -8,7 +8,7 @@ import org.brandao.brutos.interceptor.InterceptedException;
 import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorStack;
 
-@Intercepts
+@Intercepts(isDefault=false)
 @InterceptsStackList(
 		@InterceptsStack(
 		name="stackA"))

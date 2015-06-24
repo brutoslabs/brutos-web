@@ -18,6 +18,7 @@
 package org.brandao.brutos.mapping;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.brandao.brutos.BrutosException;
 
@@ -53,8 +54,26 @@ public class InterceptorStack extends Interceptor{
             interceptors.add(interceptor);
     }
 
+    public Interceptor getInterceptor(String name){
+    	for(Interceptor interceptor: this.interceptors){
+			if(interceptor.getName().equals(name))
+				return interceptor;
+    	}
+    	return null;
+    }
+
+    public boolean containsInterceptor(String name){
+    	return this.getInterceptor(name) != null;
+    }
+    
     public boolean containsInterceptor(Interceptor interceptor){
         return interceptors.contains(interceptor);
+    }
+    
+    @Override
+    public void setProperty( String name, Object value ){
+    	checkProperty(name, this);
+    	super.setProperty(name, value);
     }
     
     public void removeInterceptor(Interceptor interceptor){
@@ -63,4 +82,32 @@ public class InterceptorStack extends Interceptor{
     	else
 			throw new BrutosException("interceptor not found: " + interceptor.getName());
     }
+    
+    private void checkProperty(String name, InterceptorStack stack){
+    	String[] parts = name.split("\\.");
+    	
+    	if(parts.length < 2)
+    		throw new BrutosException("interceptor must be informed");
+    	
+    	String[] route = Arrays.copyOf(parts, parts.length - 1);
+    	
+    	this.checkProperty(route, 0, stack);
+    }
+    
+    private void checkProperty(String[] route, int indexRoute, InterceptorStack stack){
+    	
+    	if(indexRoute < route.length - 1){
+    		Interceptor interceptor = stack.getInterceptor(route[indexRoute]);
+			
+    		if(!(interceptor instanceof InterceptorStack))
+				throw new BrutosException("is not an interceptor stack: " + route[indexRoute]);
+    		
+    		this.checkProperty(route, indexRoute++, (InterceptorStack)interceptor);
+    	}
+    	else{
+    		if(!stack.containsInterceptor(route[indexRoute]))
+        		throw new BrutosException("interceptor not found: " + route[indexRoute]);
+    	}
+    }
+    
 }
