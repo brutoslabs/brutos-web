@@ -28,7 +28,7 @@ import org.brandao.brutos.annotation.helper.intercepts.app1.Test6Intercepts;
 import org.brandao.brutos.annotation.helper.intercepts.app1.Test7Intercepts;
 import org.brandao.brutos.annotation.helper.intercepts.app1.TestNotInterceptorIntercepts;
 import org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor1FailControllerInterceptor;
-import org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor2FailControllerInterceptor;
+import org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor2FailInterceptorController;
 import org.brandao.brutos.annotation.helper.intercepts.fail.Interceptor3Fail;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
@@ -465,8 +465,8 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value7_1",request.getAttribute("param7_1x"));
-                	Assert.assertEquals("value7_2",request.getAttribute("param7_2x"));
+                	Assert.assertEquals("value7_1x",request.getAttribute("param7_1"));
+                	Assert.assertEquals("value7_2x",request.getAttribute("param7_2"));
                 	
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor7"));
                 	Assert.assertEquals("true",request.getAttribute("intercepted.interceptor6"));
@@ -624,21 +624,21 @@ public class InterceptsTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {must implement interface InterceptorController: Interceptor2FailControllerInterceptor}");
+                    Assert.fail("expected: {must implement interface InterceptorController: Interceptor2FailInterceptorController}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("must implement interface InterceptorController: Interceptor2FailControllerInterceptor"))
+                        if(ex.getMessage().equals("must implement interface InterceptorController: Interceptor2FailInterceptorController"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {must implement interface InterceptorController: Interceptor2FailControllerInterceptor}");
+                    Assert.fail("expected: {must implement interface InterceptorController: Interceptor2FailInterceptorController}");
                 }
             },
-            new Class[]{Interceptor2FailControllerInterceptor.class});
+            new Class[]{Interceptor2FailInterceptorController.class});
     }
 
     public void testInterceptor3Fail() throws Throwable{
