@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -81,7 +82,12 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         String view      = getView(method, viewAnnotation, componentRegistry);
 
         if(!StringUtil.isEmpty(view) && StringUtil.isEmpty(executor) && !rendered)
-            throw new BrutosException("view must be rendered in abstract actions: " + id);
+            throw new MappingException("view must be rendered in abstract actions: " + id);
+        
+        if(method.getReturnType() == void.class){
+        	if(resultAnnotation != null || resultView != null)
+        		throw new MappingException("the action not return any value: " + method.getName()); 
+        }
         
         ActionBuilder actionBuilder =
         controllerBuilder

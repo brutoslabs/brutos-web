@@ -45,7 +45,7 @@ public class ResultTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.assertEquals("true",request.getAttribute("result"));
+                	Assert.assertEquals(true,request.getAttribute("result"));
                 	Assert.assertNull(request.getAttribute("resultAction"));
                 }
 
@@ -82,7 +82,7 @@ public class ResultTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.assertEquals("true",request.getAttribute("resultAction"));
+                	Assert.assertEquals(true,request.getAttribute("resultAction"));
                 	Assert.assertNull(request.getAttribute("result"));
                 }
 
@@ -119,18 +119,18 @@ public class ResultTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: the action not return any value: test1}");
+                    Assert.fail("expected: the action not return any value: test1Action}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("the action not return any value: test1"))
+                        if(ex.getMessage().equals("the action not return any value: test1Action"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {the action not return any value: test1}");
+                    Assert.fail("expected: {the action not return any value: test1Action}");
                 }
             },
             new Class[]{Test1FailResultController.class});

@@ -249,6 +249,7 @@ public class ControllerAnnotationConfig
                         null,
                         null,
                         null,
+                        null,
                         true);
                 
                 actionList.add(entry);

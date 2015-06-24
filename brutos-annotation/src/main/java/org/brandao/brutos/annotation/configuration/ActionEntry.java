@@ -31,16 +31,18 @@ public class ActionEntry {
     
     private Annotation[] annotation;
 
-    private Class[] exceptionTypes;
+    private Class<?>[] exceptionTypes;
             
-    private Class controllerClass;
+    private Class<?> controllerClass;
     
     private Type[] genericParameterTypes;
     
-    private Class[] parameterTypes;
+    private Class<?>[] parameterTypes;
     
     private Annotation[][] parameterAnnotations;
             
+    private Class<?> returnType;
+    
     @Deprecated
     private String view;
     
@@ -57,14 +59,16 @@ public class ActionEntry {
             method.getExceptionTypes(),
             method.getGenericParameterTypes(),
             method.getParameterTypes(),
+            method.getReturnType(),
             method.getParameterAnnotations(),
             null,
             null,
             false);
     }
     
-    public ActionEntry(String name, Annotation[] annotation, Class controllerClass, 
-            Class[] exceptionTypes, Type[] genericParameterTypes, Class[] parameterTypes,
+    public ActionEntry(String name, Annotation[] annotation, Class<?> controllerClass, 
+            Class<?>[] exceptionTypes, Type[] genericParameterTypes, Class<?>[] parameterTypes,
+            Class<?> returnType,
             Annotation[][] parameterAnnotations, String view, String dispatcher, boolean abstractAction){
         this.name = name;
         this.annotation = annotation;
@@ -76,6 +80,7 @@ public class ActionEntry {
         this.abstractAction = abstractAction;
         this.dispatcher = dispatcher;
         this.view = view;
+        this.returnType = returnType;
     }
     
     public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
@@ -90,7 +95,8 @@ public class ActionEntry {
         return false;
     }
     
-    public <T> T getAnnotation(Class<T> annotation){
+    @SuppressWarnings("unchecked")
+	public <T> T getAnnotation(Class<T> annotation){
         if(this.annotation == null)
             return null;
         
@@ -118,19 +124,19 @@ public class ActionEntry {
         this.annotation = annotation;
     }
 
-    public void setExceptionTypes(Class[] exceptionTypes) {
+    public void setExceptionTypes(Class<?>[] exceptionTypes) {
         this.exceptionTypes = exceptionTypes;
     }
     
-    public Class[] getExceptionTypes() {
+    public Class<?>[] getExceptionTypes() {
         return this.exceptionTypes;
     }
 
-    public Class getControllerClass() {
+    public Class<?> getControllerClass() {
         return controllerClass;
     }
 
-    public void setControllerClass(Class controllerClass) {
+    public void setControllerClass(Class<?> controllerClass) {
         this.controllerClass = controllerClass;
     }
 
@@ -142,11 +148,11 @@ public class ActionEntry {
         this.genericParameterTypes = genericTypes;
     }
 
-    public Class[] getParameterTypes() {
+    public Class<?>[] getParameterTypes() {
         return parameterTypes;
     }
 
-    public void setParameterTypes(Class[] parameterTypes) {
+    public void setParameterTypes(Class<?>[] parameterTypes) {
         this.parameterTypes = parameterTypes;
     }
 
@@ -185,5 +191,13 @@ public class ActionEntry {
     public void setAbstractAction(boolean abstractAction) {
         this.abstractAction = abstractAction;
     }
-   
+
+	public Class<?> getReturnType() {
+		return returnType;
+	}
+
+	public void setReturnType(Class<?> returnType) {
+		this.returnType = returnType;
+	}
+
 }
