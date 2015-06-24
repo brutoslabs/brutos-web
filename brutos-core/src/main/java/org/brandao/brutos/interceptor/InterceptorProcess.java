@@ -19,12 +19,6 @@ package org.brandao.brutos.interceptor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.RequestInstrument;
@@ -54,24 +48,26 @@ public class InterceptorProcess implements InterceptorStack{
                 .getLogger(InterceptorProcess.class.getName());
     
     private Controller form;
-    private List stack;
-    private ThreadLocal stackPos;
+    
+    private InterceptorStackFlow start;
+    
+    private ThreadLocal<InterceptorStackFlow> stackPos;
             
     public InterceptorProcess() {
-        this.stackPos = new ThreadLocal();
+        this.stackPos = new ThreadLocal<InterceptorStackFlow>();
     }
 
     public synchronized void reset(){
-        this.stack = null;
+        this.start = null;
     }
     
     public void process( InterceptorHandler handler ){
         
-        Integer oldPos = null;
+    	InterceptorStackFlow oldPos = null;
         
         try{
-            oldPos = (Integer) stackPos.get();
-            stackPos.set( new Integer(0) );
+            oldPos = stackPos.get();
+            stackPos.set( this.start );
             next( handler );
         }
         finally{
@@ -82,47 +78,13 @@ public class InterceptorProcess implements InterceptorStack{
         }
     }
             
-    //TODO: move to InterceptorStack
     public synchronized void flush(){
-    	
     	InterceptorProcessConfigurationBuilder
     		ipcb = new InterceptorProcessConfigurationBuilder(this.form);
-    	this.stack = ipcb.getStack();
-    	
-    	/*
-        this.stack = new LinkedList();
-        
-        List interceptors = 
-            form.getDefaultInterceptorList();
-
-
-        if( interceptors != null ){
-            for( int idx=0;idx<interceptors.size();idx++ ){
-                Interceptor i =
-                        (Interceptor) interceptors.get(idx);
-                processInterceptor(
-                        new StringBuffer(),
-                        i.getProperties(),
-                        i
-                );
-            }
-        }
-
-        interceptors =
-            form.getInterceptors();
-
-            for( int idx=0;idx<interceptors.size();idx++ ){
-                Interceptor i =
-                        (Interceptor) interceptors.get(idx);
-            processInterceptor( 
-                    new StringBuffer(),
-                    i.getProperties(), 
-                    i 
-            );
-        }
-     */
+    	this.start = ipcb.getStack();
     }
 
+    /*
     public void addInterceptor( org.brandao.brutos.mapping.Interceptor i ){
         processInterceptor( 
                 new StringBuffer( String.valueOf( form.hashCode() ) ), 
@@ -185,7 +147,8 @@ public class InterceptorProcess implements InterceptorStack{
         
         return props;
     }
-
+    */
+    
     public Controller getForm() {
         return form;
     }
@@ -195,32 +158,28 @@ public class InterceptorProcess implements InterceptorStack{
     }
 
     public void next(InterceptorHandler handler) throws InterceptedException{
-        Integer pos = (Integer) stackPos.get();
-        stackPos.set( new Integer(pos.intValue() + 1) );
+    	InterceptorStackFlow pos = stackPos.get();
+    	InterceptorStackFlow next = pos.getNext();
+    	
+        stackPos.set(next);
 
-        if( pos.intValue() < this.stack.size() )
-            next0(handler, pos);
+        if( next != null )
+        	next(handler, next);
         else
             invoke( (ConfigurableInterceptorHandler)handler );
     }
 
-    private void next0(InterceptorHandler handler, Integer pos)
+    private void next(InterceptorHandler handler, InterceptorStackFlow pos)
             throws InterceptedException{
 
         ConfigurableApplicationContext context =
                 (ConfigurableApplicationContext) handler.getContext();
 
-        Interceptor i = (Interceptor) stack.get( pos.intValue() );
+        Interceptor i = pos.getInterceptor();
 
         org.brandao.brutos.interceptor.InterceptorController interceptor =
             (org.brandao.brutos.interceptor.InterceptorController) i.getInstance(context.getObjectFactory());
 
-        /*
-        if( !interceptor.isConfigured() )
-            interceptor.setProperties( (Map) i
-                    .getProperty( String.valueOf( form.hashCode()  )  ) );
-        */
-        
         if( !interceptor.isConfigured() )
             interceptor.setProperties(i.getProperties());
         
