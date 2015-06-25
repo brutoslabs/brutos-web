@@ -46,23 +46,30 @@ public final class MappingBeanUtil {
             EnumerationType enumProperty,
             String temporalProperty, String mapping, 
             ScopeType scope, Object value, boolean nullable, Type typeDef, 
-            Object type, int dependencyType, Bean mappingBean,
+            Object classType, int dependencyType, Bean mappingBean,
             ValidatorFactory validatorFactory,
             Controller controller){
 
+        BeanInstance bean = new BeanInstance( null, mappingBean.getClassType() );
+    	
+        if( dependencyType == PROPERTY ){
+            if( StringUtil.isEmpty(propertyName) )
+                throw new MappingException( "the property name is required!" );
+            else
+            if( mappingBean.getFields().containsKey( propertyName ) )
+                throw new MappingException( "duplicate property name: " + propertyName );
+        }
+    	
+        classType = 
+    		dependencyType == PROPERTY && classType == null? 
+				bean.getGenericType(propertyName) : classType;
+    	
         name             = StringUtil.adjust(name);
         propertyName     = StringUtil.adjust(propertyName);
         temporalProperty = StringUtil.adjust(temporalProperty);
         mapping          = StringUtil.adjust(mapping);
+        Class rawType    = TypeUtil.getRawType(classType);
         
-        if( dependencyType == PROPERTY ){
-            if( propertyName == null )
-                throw new BrutosException( "the property name is required!" );
-            else
-            if( mappingBean.getFields().containsKey( propertyName ) )
-                throw new BrutosException( "duplicate property name: " + propertyName );
-        }
-
         DependencyBean dependencyBean;
         
         switch(dependencyType){
@@ -93,70 +100,52 @@ public final class MappingBeanUtil {
         dependencyBean.setTemporalType( temporalProperty );
         dependencyBean.setValue(value);
         dependencyBean.setScopeType(scope);
-        BeanInstance bean = new BeanInstance( null, mappingBean.getClassType() );
 
         if( propertyName != null && !bean.containProperty(propertyName) )
             throw new BrutosException( "no such property: " +
                 mappingBean.getClassType().getName() + "." + propertyName );
 
-        if( mapping != null )
-            dependencyBean.setMapping( mapping );
-
-        if( typeDef != null ){
-            if(type != null){
-                Class<?> rawType = TypeUtil.getRawType(type);
-                Class<?> typeDefClassType = typeDef.getClassType();
-                
-                if(typeDefClassType == null)
-                	throw new MappingException("typedef provide invalid class type: " + typeDefClassType);
-                
-                if(!typeDef.getClassType().isAssignableFrom(rawType)){
-                    throw new IllegalArgumentException(
-                            String.format(
-                                "expected %s found %s",
-                                new Object[]{
-                                    rawType.getName(),
-                                    typeDef.getClassType().getName()
-                                }
-                            )
-                    );
-                }
+        if(typeDef == null){
+        	if(classType != null){
+	            try{
+	                typeDef = 
+	                		((ConfigurableApplicationContext)controller.getContext()).getTypeManager()
+		                		.getType(classType, enumProperty, temporalProperty );
+	                
+	            }
+	            catch( UnknownTypeException e ){
+	                throw new MappingException(e);
+	            }
+	        }
+        }
+        else
+    	if(classType != null){
+            if(!typeDef.getClassType().isAssignableFrom(rawType)){
+                throw new MappingException(
+                        String.format(
+                            "expected %s found %s",
+                            new Object[]{
+                                rawType.getName(),
+                                typeDef.getClassType().getName()
+                            }
+                        )
+                );
             }
-            
-            dependencyBean.setType( typeDef );
+        }
+        
+        dependencyBean.setType(typeDef);
+        
+        if(!StringUtil.isEmpty(mapping)){
+            if( controller.getBean(mapping) != null )
+            	dependencyBean.setMapping(mapping);
+            else
+                throw new MappingException( "mapping name " + mapping + " not found!" );
         }
         else{
-            try{
-                if( dependencyType == PROPERTY ){
-                    dependencyBean.setType(
-                            ((ConfigurableApplicationContext)controller.getContext())
-                                .getTypeManager().getType(
-                                type == null? bean.getGenericType(propertyName) : type,
-                                enumProperty,
-                                temporalProperty ) );
-                }
-                else
-                if( type != null ){
-                    dependencyBean
-                            .setType(
-                                ((ConfigurableApplicationContext)controller.getContext())
-                                    .getTypeManager()
-                                        .getType(
-                                    type, 
-                                    enumProperty, 
-                                    temporalProperty));
-                    
-                    Type definedType = dependencyBean.getType();
-                    Class<?> rawType = TypeUtil.getRawType(type);
-                    
-                    if(definedType.getClass() == ObjectType.class && type != Object.class)
-                    	throw new MappingException("unknown type: " + rawType.getSimpleName());
-                }
-                
-            }
-            catch( UnknownTypeException e ){
-                throw new MappingException(e);
-            }
+            Type definedType = dependencyBean.getType();
+            
+            if(definedType.getClass() == ObjectType.class && rawType != Object.class)
+            	throw new MappingException("unknown type: " + rawType.getSimpleName());
         }
         
         Configuration validatorConfig = new Configuration();
