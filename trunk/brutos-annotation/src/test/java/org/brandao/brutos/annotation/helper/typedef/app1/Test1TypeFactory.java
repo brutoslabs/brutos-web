@@ -11,7 +11,7 @@ public class Test1TypeFactory
 	}
 
 	public boolean matches(Class type) {
-		return Type.class.isAssignableFrom(type);
+		return Test.class.isAssignableFrom(type);
 	}
 
 	public Class getClassType() {

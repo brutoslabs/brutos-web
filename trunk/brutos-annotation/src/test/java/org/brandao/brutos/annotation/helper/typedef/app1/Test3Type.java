@@ -5,14 +5,14 @@ import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeFactory;
 
 @TypeDef
-public class Test3Type {
+public class Test3Type implements TypeFactory{
 
 	public Type getInstance() {
 		return null;
 	}
 
 	public boolean matches(Class type) {
-		return Type.class.isAssignableFrom(type);
+		return Test.class.isAssignableFrom(type);
 	}
 
 	public Class getClassType() {
