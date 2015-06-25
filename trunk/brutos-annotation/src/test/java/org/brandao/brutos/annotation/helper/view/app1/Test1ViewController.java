@@ -12,7 +12,7 @@ import org.brandao.brutos.annotation.View;
 	@Action(value="/action2", view=@View("view02")),
 	@Action(value="/action3", view=@View("view03"))
 })
-@View("controller")
+@View(value="controller",dispatcher=DispatcherType.INCLUDE)
 public class Test1ViewController {
 
 	@View("view04")
