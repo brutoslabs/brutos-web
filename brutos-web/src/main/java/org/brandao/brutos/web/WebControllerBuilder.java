@@ -19,6 +19,7 @@ package org.brandao.brutos.web;
 
 import org.brandao.brutos.*;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -46,36 +47,46 @@ public class WebControllerBuilder extends ControllerBuilder{
     public ActionBuilder addAction( String id, String resultId, boolean resultRendered, String view, 
             DispatcherType dispatcher, boolean resolvedView, String executor ){
         
+    	
         ActionType type = this.controller.getActionType();
         
         if(!ActionType.PARAMETER.equals(type)){
             WebUtil.checkURI(id, true);
             
+            /*
             if(resolvedView && view != null)
                 WebUtil.checkURI(view, true);
+            */
         }
-        
         
         ActionBuilder builder =
             super.addAction(id, resultId, resultRendered, view, 
             dispatcher, resolvedView, executor);
         
-        WebUtil.checkURI(builder.getView(), false);
+        WebUtil.checkURI(builder.getView(), resolvedView && view != null);
         
         return new WebActionBuilder(builder);
     }
     
-    public ControllerBuilder addThrowable( Class target, String view, String id, 
+    public ControllerBuilder addThrowable( Class<?> target, String view, String id, 
             DispatcherType dispatcher, boolean resolvedView ){
         
+        /*
         ActionType type = this.controller.getActionType();
         
         if(!ActionType.PARAMETER.equals(type)){
             if(resolvedView && view != null)
                 WebUtil.checkURI(view, true);
         }
+        */
+        
+		ControllerBuilder builder = super.addThrowable(target, view, id, dispatcher, resolvedView);
 
-        return super.addThrowable( target, view, id, dispatcher, resolvedView );
+        ThrowableSafeData thr = this.controller.getThrowsSafe(target);
+		
+        WebUtil.checkURI(thr.getView(), resolvedView && view != null);
+
+        return builder;
     }
     
     public ControllerBuilder setDefaultAction( String id ){
@@ -90,9 +101,11 @@ public class WebControllerBuilder extends ControllerBuilder{
     
     public ControllerBuilder setView(String value, boolean resolvedView){
         
-        if(this.controller.isResolvedView())
-            WebUtil.checkURI(value,true);
+        //if(this.controller.isResolvedView())
+        //    WebUtil.checkURI(value,true);
      
+    	WebUtil.checkURI(value, resolvedView && value != null);
+    	
         return super.setView(value, resolvedView);
     }
     

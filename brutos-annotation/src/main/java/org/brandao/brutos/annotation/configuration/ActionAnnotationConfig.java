@@ -213,9 +213,13 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         ThrowSafeList throwSafeList = method.getAnnotation(ThrowSafeList.class);
         ThrowSafe throwSafe = method.getAnnotation(ThrowSafe.class);
         
-        if(throwSafeList != null)
+        if(throwSafeList != null){
+            if(throwSafeList.value().length == 0)
+            	throw new MappingException("exception not informed");
+            
             list.addAll(
                     AnnotationUtil.toList(AnnotationUtil.toList(throwSafeList)));
+        }
 
         if(throwSafe != null)
             list.add(

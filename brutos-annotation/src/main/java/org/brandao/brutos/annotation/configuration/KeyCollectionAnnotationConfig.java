@@ -18,11 +18,11 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
-import org.brandao.brutos.annotation.AnyKeyCollection;
+import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.KeyCollection;
 import org.brandao.brutos.annotation.Stereotype;
-import org.brandao.brutos.mapping.MappingException;
+import org.brandao.brutos.type.TypeUtil;
 
 /**
  *
@@ -56,15 +56,7 @@ public class KeyCollectionAnnotationConfig
         
         KeyEntry key = (KeyEntry)source;
         
-        Class keyType =
-        		key.getTarget() != null?
-        				key.getTarget() :
-    					key.getClassType();
-        
-		if(keyType == null)
-			throw new MappingException("unknown key type");
-    				
-        if(AnnotationUtil.isBuildEntity(componentRegistry, key.getMappingType(), keyType))
+        if(!key.isAnnotationPresent(Any.class) && AnnotationUtil.isBuildEntity(componentRegistry, key.getMappingType(), key.getClassType()))
             buildKey(key, builder, componentRegistry);
         else
             addKey(key, (BeanBuilder)builder, componentRegistry);
@@ -83,19 +75,16 @@ public class KeyCollectionAnnotationConfig
         org.brandao.brutos.type.Type type = 
                 keyEntry.getType() == null? null : AnnotationUtil.getTypeInstance(keyEntry.getType());
         
-        Object classType;
+        KeyBuilder keyBuilder;
         
-        if(keyEntry.isAnnotationPresent(AnyKeyCollection.class))
-        	classType = Object.class;
-        else{
-        	classType = 
-        			keyEntry.getTarget() == null? 
-        					keyEntry.getGenericType() : 
-    						keyEntry.getTarget();
+        if(keyEntry.isAnnotationPresent(Any.class)){
+            keyBuilder = builder.setGenericKey(
+                    key, TypeUtil.getRawType(keyEntry.getGenericType()));
         }
-        
-        KeyBuilder keyBuilder = builder.setKey(
-            key, enumType, tempType, null, scope, null, type, classType);
+        else{
+            keyBuilder = builder.setKey(
+                    key, enumType, tempType, null, scope, null, type, keyEntry.getGenericType());
+        }
         
         super.applyInternalConfiguration(
                 key, 

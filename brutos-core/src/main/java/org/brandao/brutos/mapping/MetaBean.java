@@ -8,7 +8,7 @@ import org.brandao.brutos.Scopes;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 
-public class MetaBean {
+public class MetaBean extends Bean{
 
     private Type type;
 
@@ -21,6 +21,7 @@ public class MetaBean {
 	private Controller controller;
 	
 	public MetaBean(Controller controller){
+		super(controller);
 		this.metaValues = new HashMap<Object,String>();
 		this.controller = controller;
 	}

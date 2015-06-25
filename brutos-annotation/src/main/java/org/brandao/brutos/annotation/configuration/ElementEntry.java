@@ -117,7 +117,7 @@ public class ElementEntry implements BeanEntry{
 
 
     public Class<?> getClassType() {
-        return classType;
+        return this.target == null? this.classType : this.target;
     }
 
     public void setClassType(Class<?> classType) {
@@ -161,7 +161,7 @@ public class ElementEntry implements BeanEntry{
     }
 
     public Type getGenericType() {
-        return genericType;
+        return this.target == null? this.genericType : this.target;
     }
 
     public void setGenericType(Type genericType) {

@@ -72,7 +72,7 @@ public abstract class UseBeanData {
 
         if( !isNullable() ){
         	if(this.metaBean != null){
-                value = this.metaBean.getValue(this.name == null? null : this.name + mapping.getSeparator());
+                value = this.metaBean.getValue(this.name == null? null : this.name + metaBean.getSeparator());
                 value = this.type.convert(value);
         	}
         	else

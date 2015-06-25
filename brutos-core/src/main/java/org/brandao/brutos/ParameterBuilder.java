@@ -18,8 +18,10 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.ParameterAction;
+import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.RestrictionRules;
 
@@ -87,6 +89,9 @@ public class ParameterBuilder extends RestrictionBuilder{
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             Class<?> classType, Type type ){
 
+    	if(!(this.parameter.getType() instanceof AnyType))
+    		throw new MappingException("can't add meta bean");
+    	
     	Controller controller = this.parameter.getAction().getController();
 
 		MetaBean metaBean = new MetaBean(controller);
