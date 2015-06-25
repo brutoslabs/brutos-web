@@ -8,16 +8,4 @@ import org.brandao.brutos.type.TypeFactory;
 @TypeDef
 public class Test2FailTypeFactory {
 
-	public Type getInstance() {
-		return null;
-	}
-
-	public boolean matches(Class type) {
-		return Type.class.isAssignableFrom(type);
-	}
-
-	public Class getClassType() {
-		return Test.class;
-	}
-
 }
