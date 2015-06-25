@@ -443,18 +443,18 @@ public class ThrowSafeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.fail("expected {duplicate exception mapping: Exception1}");
+                	Assert.fail("expected {the exception has been added on controller: Exception1}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("duplicate exception mapping: Exception1"))
+                        if(ex.getMessage().equals("the exception has been added on controller: Exception1"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {duplicate exception mapping: Exception1}");
+                    Assert.fail("expected: {the exception has been added on controller: Exception1}");
                 }
             },
             new Class[]{Test1FailThrowSafeController.class});
@@ -486,18 +486,18 @@ public class ThrowSafeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.fail("expected {duplicate exception mapping: Exception2}");
+                	Assert.fail("expected {the exception has been added on action: Exception2}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("duplicate exception mapping: Exception2"))
+                        if(ex.getMessage().equals("the exception has been added on action: Exception2"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {duplicate exception mapping: Exception2}");
+                    Assert.fail("expected: {the exception has been added on action: Exception2}");
                 }
             },
             new Class[]{Test2FailThrowSafeController.class});

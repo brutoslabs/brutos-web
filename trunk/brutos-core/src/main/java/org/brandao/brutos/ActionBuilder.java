@@ -105,7 +105,7 @@ public class ActionBuilder extends RestrictionBuilder{
      * @param id Identificação.
      * @return Contrutor da ação.
      */
-    public ActionBuilder addThrowable( Class target, String id ){
+    public ActionBuilder addThrowable( Class<?> target, String id ){
         return addThrowable( target, null, 
                 !"true".equals(applicationContext.getConfiguration()
                 .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)),
@@ -122,7 +122,7 @@ public class ActionBuilder extends RestrictionBuilder{
      * @param dispatcher Modo como será direcionado o fluxo para a visão.
      * @return Contrutor da ação.
      */
-    public ActionBuilder addThrowable( Class target, String view, 
+    public ActionBuilder addThrowable( Class<?> target, String view, 
             boolean resolvedView, String id, DispatcherType dispatcher ){
         return this.addThrowable(target, view, id, dispatcher, resolvedView);
     }
@@ -139,7 +139,7 @@ public class ActionBuilder extends RestrictionBuilder{
      * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
      * @return Contrutor da ação.
      */
-    public ActionBuilder addThrowable( Class target, String view, 
+    public ActionBuilder addThrowable( Class<?> target, String view, 
             String id, DispatcherType dispatcher, boolean resolvedView ){
         view = StringUtil.adjust(view);
         
@@ -164,6 +164,9 @@ public class ActionBuilder extends RestrictionBuilder{
         if( !Throwable.class.isAssignableFrom( target ) )
             throw new BrutosException( "target is not allowed: " +target.getName() );
 
+        if(this.action.getThrowsSafeOnAction(target) != null)
+            throw new MappingException( "the exception has been added on action: " + target.getSimpleName() );
+        
         if(dispatcher == null)
             dispatcher = BrutosConstants.DEFAULT_DISPATCHERTYPE;
         
@@ -175,7 +178,7 @@ public class ActionBuilder extends RestrictionBuilder{
         thr.setResolvedView(resolvedView);
         thr.setRedirect(false);
         thr.setDispatcher(dispatcher);
-        action.setThrowsSafe(thr);
+        this.action.setThrowsSafe(thr);
         return this;
     }
 
