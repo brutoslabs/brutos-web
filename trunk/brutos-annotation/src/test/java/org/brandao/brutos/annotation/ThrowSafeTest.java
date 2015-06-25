@@ -51,13 +51,10 @@ public class ThrowSafeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
-                	
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/test1action/exception4.jsp", renderView.getView());
-                	Assert.assertEquals(DispatcherType.FORWARD, renderView.getDispatcherType());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -130,7 +127,7 @@ public class ThrowSafeTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("exceptionType", "exception2");
+                	parameters.put("arg0.exceptionType", "exception2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -171,7 +168,7 @@ public class ThrowSafeTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("exceptionType", "exception3");
+                	parameters.put("arg0.exceptionType", "exception3");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -210,7 +207,7 @@ public class ThrowSafeTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("exceptionType", "exception4");
+                	parameters.put("arg0.exceptionType", "exception4");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -254,7 +251,7 @@ public class ThrowSafeTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("exceptionType", "exception1");
+                	parameters.put("arg0.exceptionType", "exception1");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -294,7 +291,7 @@ public class ThrowSafeTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("exceptionType", "exception2");
+                	parameters.put("arg0.exceptionType", "exception2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -303,7 +300,7 @@ public class ThrowSafeTest extends TestCase{
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/exception2.jsp",renderView.getView());
-                	Assert.assertEquals(DispatcherType.INCLUDE,renderView.getDispatcherType());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE,renderView.getDispatcherType());
                 	Assert.assertNotNull(request.getAttribute("ex"));
                 }
 
@@ -335,7 +332,7 @@ public class ThrowSafeTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("exceptionType", "exception3");
+                	parameters.put("arg0.exceptionType", "exception3");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -344,7 +341,7 @@ public class ThrowSafeTest extends TestCase{
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/test.jsp",renderView.getView());
-                	Assert.assertEquals(DispatcherType.FORWARD,renderView.getDispatcherType());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD,renderView.getDispatcherType());
                 	Assert.assertNotNull(request.getAttribute("exception"));
                 }
 
@@ -376,7 +373,7 @@ public class ThrowSafeTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("exceptionType", "exception4");
+                	parameters.put("arg0.exceptionType", "exception4");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
