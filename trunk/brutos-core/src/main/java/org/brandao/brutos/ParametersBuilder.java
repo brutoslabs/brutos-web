@@ -320,7 +320,7 @@ public class ParametersBuilder extends RestrictionBuilder{
         temporalProperty = StringUtil.adjust(temporalProperty);
         mapping = StringUtil.adjust(mapping);
         Class rawType = TypeUtil.getRawType(classType);
-
+        
         if(StringUtil.isEmpty(name))
         	throw new MappingException("invalid parameter name");
 
@@ -337,56 +337,55 @@ public class ParametersBuilder extends RestrictionBuilder{
         parameter.setStaticValue(value);
         parameter.setNullable(nullable);
         
+        if(typeDef == null){
+        	if(classType != null){
+	            try{
+	                typeDef = 
+		        		this.applicationContext.getTypeManager()
+		                		.getType(classType, enumProperty, temporalProperty );
+	                
+	            }
+	            catch( UnknownTypeException e ){
+	                throw new MappingException( 
+	                        String.format( "%s.%s(...) index %d : %s" ,
+	                            new Object[]{
+	                                this.controller.getClassType().getName(),
+	                                action.getExecutor(),
+	                                new Integer(action.getParamterSize()),
+	                                e.getMessage()} ), e );
+	            }
+	        }
+        }
+        else
+    	if(classType != null){
+            if(!typeDef.getClassType().isAssignableFrom(rawType)){
+                throw new MappingException(
+                        String.format(
+                            "expected %s found %s",
+                            new Object[]{
+                                rawType.getName(),
+                                typeDef.getClassType().getName()
+                            }
+                        )
+                );
+            }
+        }
+        
+        parameter.setType(typeDef);
+        
         if( !StringUtil.isEmpty(mapping) ){
             if( controller.getBean(mapping) != null )
                 parameter.setMapping( controller.getBean( mapping ) );
             else
                 throw new MappingException( "mapping name " + mapping + " not found!" );
-                
         }
-        
-        if( typeDef != null ){
-            if(classType != null){
-                if(!typeDef.getClassType().isAssignableFrom(rawType)){
-                    throw new MappingException(
-                            String.format(
-                                "expected %s found %s",
-                                new Object[]{
-                                    rawType.getName(),
-                                    typeDef.getClassType().getName()
-                                }
-                            )
-                    );
-                }
-            }
-            
-            parameter.setType( typeDef );
-        }
-        else
-        if(rawType != null && mapping == null){
-            try{
-                parameter.setType( 
-                        this.applicationContext.getTypeManager()
-                            .getType( 
-                                classType, 
-                                enumProperty, 
-                                temporalProperty ));
-            }
-            catch( UnknownTypeException e ){
-                throw new MappingException( 
-                        String.format( "%s.%s(...) index %d : %s" ,
-                            new Object[]{
-                                this.controller.getClassType().getName(),
-                                action.getExecutor(),
-                                new Integer(action.getParamterSize()),
-                                e.getMessage()} ), e );
-            }
-            
+        else{
             Type definedType = parameter.getType();
             
             if(definedType.getClass() == ObjectType.class && rawType != Object.class)
             	throw new MappingException("unknown type: " + rawType.getSimpleName());
         }
+        
 
         action.addParameter( parameter );
         return new ParameterBuilder(parameter, this);

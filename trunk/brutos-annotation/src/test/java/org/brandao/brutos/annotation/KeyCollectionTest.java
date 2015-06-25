@@ -1956,7 +1956,7 @@ public class KeyCollectionTest extends TestCase{
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.keycollection.app1.KeyCollectionBeanTest0}");
+                    Assert.fail("expected: {unknown type: KeyCollectionBeanTest0}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -1964,11 +1964,11 @@ public class KeyCollectionTest extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknown type: org.brandao.brutos.annotation.helper.keycollection.app1.KeyCollectionBeanTest0"))
+                        if(ex.getMessage().equals("unknown type: KeyCollectionBeanTest0"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknown type: org.brandao.brutos.annotation.helper.keycollection.app1.KeyCollectionBeanTest0}");
+                    Assert.fail("expected: {unknown type: KeyCollectionBeanTest0}");
                 }
             },
             new Class[]{ControllerKeyCollectionUnknownTypeTest.class});
