@@ -46,13 +46,10 @@ public class ViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
-                	
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/view01.jsp", renderView.getView());
-                	Assert.assertEquals(DispatcherType.FORWARD, renderView.getDispatcherType());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -88,13 +85,10 @@ public class ViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
-                	
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/WEB-INF/test1viewcontroller/view02.jsp", renderView.getView());
-                	Assert.assertEquals(DispatcherType.FORWARD, renderView.getDispatcherType());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -130,13 +124,10 @@ public class ViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
-                	
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/WEB-INF/test1viewcontroller/view03.jsp", renderView.getView());
-                	Assert.assertEquals(DispatcherType.FORWARD, renderView.getDispatcherType());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -172,13 +163,10 @@ public class ViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
-                	
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/WEB-INF/test1viewcontroller/action4action/view04.jsp", renderView.getView());
-                	Assert.assertEquals(DispatcherType.FORWARD, renderView.getDispatcherType());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -214,13 +202,10 @@ public class ViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
-                	
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/view05.jsp", renderView.getView());
-                	Assert.assertEquals(DispatcherType.FORWARD, renderView.getDispatcherType());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -256,13 +241,10 @@ public class ViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
-                	
-                	Assert.assertEquals("/WEB-INF/test1viewcontroller/action4action/view06.jsp", renderView.getView());
-                	Assert.assertEquals(DispatcherType.INCLUDE, renderView.getDispatcherType());
+                	Assert.assertEquals("/WEB-INF/test1viewcontroller/action6action/view06.jsp", renderView.getView());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE, renderView.getDispatcherType());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -298,13 +280,10 @@ public class ViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	RequestInstrument requestInstrument = 
-                			applicationContext.getInvoker().getRequestInstrument();
-                	
-                	MockRenderView renderView = (MockRenderView) requestInstrument.getRenderView();
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
                 	Assert.assertEquals("/WEB-INF/test1viewcontroller/controller.jsp", renderView.getView());
-                	Assert.assertEquals(DispatcherType.INCLUDE, renderView.getDispatcherType());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE, renderView.getDispatcherType());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
