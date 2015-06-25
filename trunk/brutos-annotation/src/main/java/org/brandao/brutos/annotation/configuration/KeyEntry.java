@@ -20,7 +20,6 @@ package org.brandao.brutos.annotation.configuration;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import org.brandao.brutos.BrutosConstants;
-import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.KeyCollection;
@@ -71,7 +70,7 @@ public class KeyEntry implements BeanEntry{
             this.mappingType = definition.mappingType();
             this.target = 
                     definition.target() == void.class?
-                        ClassUtil.getInstantiableClass(type) :
+                        null :
                         definition.target();
 
             this.enumerated = 
@@ -117,7 +116,7 @@ public class KeyEntry implements BeanEntry{
     }
 
     public Class<?> getClassType() {
-        return classType;
+        return this.target == null? this.classType : this.target;
     }
 
     public void setClassType(Class<?> classType) {
@@ -156,12 +155,12 @@ public class KeyEntry implements BeanEntry{
         this.type = type;
     }
 
-    public Class getBeanType() {
+    public Class<?> getBeanType() {
         return this.getClassType();
     }
 
     public Type getGenericType() {
-        return genericType;
+        return this.target == null? this.genericType : this.target;
     }
 
     public void setGenericType(Type genericType) {
@@ -185,7 +184,8 @@ public class KeyEntry implements BeanEntry{
         return false;
     }
     
-    public <T> T getAnnotation(Class<T> annotation){
+    @SuppressWarnings("unchecked")
+	public <T> T getAnnotation(Class<T> annotation){
         for( Annotation a: this.annotation ){
             if( a.annotationType().isAssignableFrom(annotation) )
                 return (T) a;

@@ -18,11 +18,12 @@
 package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.*;
-import org.brandao.brutos.annotation.AnyElementCollection;
+import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.mapping.MappingException;
+import org.brandao.brutos.type.TypeUtil;
 
 /**
  *
@@ -52,15 +53,7 @@ public class ElementCollectionAnnotationConfig
         
         ElementEntry element = (ElementEntry)source;
 
-        Class elementType =
-        	element.getTarget() != null?
-        			element.getTarget() :
-    				element.getClassType();
-        			
-		if(elementType == null)
-			throw new MappingException("unknown element type");
-		
-        if(!element.isAnnotationPresent(AnyElementCollection.class) && AnnotationUtil.isBuildEntity(componentRegistry, element.getMappingType(), elementType))
+        if(!element.isAnnotationPresent(Any.class) && AnnotationUtil.isBuildEntity(componentRegistry, element.getMappingType(), element.getClassType()))
             buildElement(element, builder, componentRegistry);
         else
             addElement(element, (BeanBuilder)builder, componentRegistry);
@@ -81,19 +74,17 @@ public class ElementCollectionAnnotationConfig
             		null : 
         			AnnotationUtil.getTypeInstance(elementEntry.getType());
         
-        Object classType;
+        ElementBuilder elementBuilder;
         
-        if(elementEntry.isAnnotationPresent(AnyElementCollection.class))
-        	classType = Object.class;
+        if(elementEntry.isAnnotationPresent(Any.class)){
+            elementBuilder = builder.setGenericElement(
+                    element, TypeUtil.getRawType(elementEntry.getGenericType()));
+        }
         else{
-        	classType = 
-        			elementEntry.getTarget() == null? 
-    					elementEntry.getGenericType() : 
-						elementEntry.getTarget();
+            elementBuilder = builder.setElement(
+                    element, enumType, tempType, null, scope, null, false, type, elementEntry.getGenericType());
         }
         
-        ElementBuilder elementBuilder = builder.setElement(
-            element, enumType, tempType, null, scope, null, false, type, classType);
         
         super.applyInternalConfiguration(
         		elementEntry, 

@@ -26,6 +26,7 @@ import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -56,25 +57,38 @@ public class WebActionBuilder extends ActionBuilder{
         return super.addAlias(value);
     }
 
-    public ActionBuilder addThrowable( Class target, String view, 
+    public ActionBuilder addThrowable( Class<?> target, String view, 
             String id, DispatcherType dispatcher, boolean resolvedView ){
 
+    	/*
         ActionType type = this.controller.getActionType();
         
         if(!ActionType.PARAMETER.equals(type)){
-            if(resolvedView)
+            if(resolvedView && view != null)
                 WebUtil.checkURI(view, true);
         }
+        */
+    	
+        ActionBuilder builder = super.addThrowable(target, view, id, dispatcher, resolvedView);
         
-        return super.addThrowable(target, view, id, dispatcher, resolvedView);
+        ThrowableSafeData thr = this.action.getThrowsSafeOnAction(target);
+		
+        WebUtil.checkURI(thr.getView(), resolvedView && view != null);
+
+        return builder;
+        
     }
     
     public ActionBuilder setView(String value, boolean viewResolved){
 
+    	/*
         ActionType type = this.controller.getActionType();
         
         if(!ActionType.PARAMETER.equals(type) && this.action.isResolvedView())
             WebUtil.checkURI(value, true);
+        */
+    	
+        WebUtil.checkURI(value, viewResolved && value != null);
         
         return super.setView(value, viewResolved);
     }

@@ -17,7 +17,8 @@ import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
-@Stereotype(target = AnyElementCollection.class, executeAfter = ElementCollection.class)
+@Deprecated
+//@Stereotype(target = AnyElementCollection.class, executeAfter = ElementCollection.class)
 public class AnyElementCollectionAnnotationConfig extends
 		AbstractAnnotationConfig {
 

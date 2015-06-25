@@ -27,6 +27,7 @@ import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.BeanProperty;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -136,9 +137,13 @@ public class ControllerAnnotationConfig
         ThrowSafeList throwSafeList = (ThrowSafeList) clazz.getAnnotation(ThrowSafeList.class);
         ThrowSafe throwSafe = (ThrowSafe) clazz.getAnnotation(ThrowSafe.class);
         
-        if(throwSafeList != null)
+        if(throwSafeList != null){
+            if(throwSafeList.value().length == 0)
+            	throw new MappingException("exception not informed");
+            
             list.addAll(
                     AnnotationUtil.toList(AnnotationUtil.toList(throwSafeList)));
+        }
 
         if(throwSafe != null)
             list.add(

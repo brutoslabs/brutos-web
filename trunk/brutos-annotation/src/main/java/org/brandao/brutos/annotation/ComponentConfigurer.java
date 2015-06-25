@@ -95,8 +95,8 @@ public class ComponentConfigurer {
         defaultAnnotationConfig.add(BasicAnnotationConfig.class);
         defaultAnnotationConfig.add(ExtendedScopeAnnotationConfig.class);
         defaultAnnotationConfig.add(AnyAnnotationConfig.class);
-        defaultAnnotationConfig.add(AnyElementCollectionAnnotationConfig.class);
-        defaultAnnotationConfig.add(AnyKeyCollectionAnnotationConfig.class);
+        //defaultAnnotationConfig.add(AnyElementCollectionAnnotationConfig.class);
+        //defaultAnnotationConfig.add(AnyKeyCollectionAnnotationConfig.class);
     }
     
     private ConfigurationEntry configuration;

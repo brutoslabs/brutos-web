@@ -22,6 +22,7 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeUtil;
@@ -64,7 +65,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @param classType Tipo do parâmetro.
      * @return Construtor do parâmetro.
      */
-    public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty, Class classType ){
+    public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty, Class<?> classType ){
         return addParameter( name, scope, enumProperty, null, null, null, 
                 null, false, classType );
     }
@@ -88,7 +89,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @param classType
      * @return
      */
-    public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty, Class classType ){
+    public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty, Class<?> classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, 
                 temporalProperty, null, null, null, false, classType );
     }
@@ -114,7 +115,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @param classType Tipo do par�metro.
      * @return Contrutor do par�metro.
      */
-    public ParameterBuilder addParameter( String name, EnumerationType enumProperty, Class classType ){
+    public ParameterBuilder addParameter( String name, EnumerationType enumProperty, Class<?> classType ){
         return addParameter( name, ScopeType.PARAM, enumProperty, null, null,
                 null, null, false, classType );
     }
@@ -127,7 +128,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @param classType Tipo do par�metro.
      * @return Contrutor do par�metro.
      */
-    public ParameterBuilder addParameter( String name, ScopeType scope, Class classType ){
+    public ParameterBuilder addParameter( String name, ScopeType scope, Class<?> classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy", 
                 null, null, null, false, classType );
     }
@@ -140,7 +141,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @param classType Tipo do par�metro.
      * @return Contrutor do par�metro.
      */
-    public ParameterBuilder addParameter( String name, String temporalProperty, Class classType ){
+    public ParameterBuilder addParameter( String name, String temporalProperty, Class<?> classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL,
                 temporalProperty, null, null, null, false, classType );
     }
@@ -165,7 +166,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @param classType Tipo do par�metro.
      * @return Contrutor do par�metro.
      */
-    public ParameterBuilder addParameterMapping( String mapping, Class classType ){
+    public ParameterBuilder addParameterMapping( String mapping, Class<?> classType ){
         return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, null, false, classType );
     }
@@ -179,7 +180,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @param classType Tipo do par�metro.
      * @return Contrutor do par�metro.
      */
-    public ParameterBuilder addParameterMapping( String name, String mapping, Class classType ){
+    public ParameterBuilder addParameterMapping( String name, String mapping, Class<?> classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, null, false, classType );
     }
@@ -194,7 +195,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @param classType Tipo do par�metro.
      * @return Contrutor do par�metro.
      */
-    public ParameterBuilder addParameterMapping( String name, String mapping, ScopeType scope, Class classType ){
+    public ParameterBuilder addParameterMapping( String name, String mapping, ScopeType scope, Class<?> classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, null, false, classType );
     }
@@ -205,7 +206,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @param classType Tipo do par�metro.
      * @return Contrutor do par�metro.
      */
-    public ParameterBuilder addParameter( String name, Class classType ){
+    public ParameterBuilder addParameter( String name, Class<?> classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null, null, false, classType );
     }
@@ -217,7 +218,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @return Contrutor do par�metro.
      */
 
-    public BeanBuilder buildParameter( Class classType ){
+    public BeanBuilder buildParameter( Class<?> classType ){
         String beanName = 
                 this.action.getCode()+"#"+this.action.getParamterSize();
         BeanBuilder bb = this.controllerBuilder
@@ -234,7 +235,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @return Contrutor do par�metro.
      */
 
-    public BeanBuilder buildParameter( String name, Class classType ){
+    public BeanBuilder buildParameter( String name, Class<?> classType ){
         String beanName = 
                 this.action.getCode()+"#"+this.action.getParamterSize();
         BeanBuilder bb = this.controllerBuilder
@@ -252,7 +253,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @return Contrutor do par�metro.
      */
 
-    public BeanBuilder buildParameter( Class classType, Class beanType ){
+    public BeanBuilder buildParameter( Class<?> classType, Class<?> beanType ){
         String beanName =
                 this.action.getCode()+"#"+this.action.getParamterSize();
         BeanBuilder bb = this.controllerBuilder
@@ -270,7 +271,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @return Contrutor do par�metro.
      */
 
-    public BeanBuilder buildParameter( String name, Class classType, Class beanType ){
+    public BeanBuilder buildParameter( String name, Class<?> classType, Class<?> beanType ){
         String beanName =
                 this.action.getCode()+"#"+this.action.getParamterSize();
         BeanBuilder bb = this.controllerBuilder
@@ -287,7 +288,7 @@ public class ParametersBuilder extends RestrictionBuilder{
      * @param value Valor do Par�metro.
      * @return Contrutor do par�metro.
      */
-    public ParameterBuilder addStaticParameter( Class classType, Object value ){
+    public ParameterBuilder addStaticParameter( Class<?> classType, Object value ){
         return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null, value, false, classType );
     }
@@ -307,19 +308,29 @@ public class ParametersBuilder extends RestrictionBuilder{
      */
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
             String temporalProperty, String mapping, Type typeDef, Object value,
-            boolean nullable, Class classType ){
+            boolean nullable, Class<?> classType ){
         return addParameter( name, scope, enumProperty, temporalProperty, 
                 mapping, typeDef, value, nullable, (Object)classType );
     }
+
+	public ParameterBuilder addGenericParameter(String name, Class<?> classType){
+		return 
+			this.addParameter(name, BrutosConstants.DEFAULT_SCOPETYPE, 
+				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
+				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, 
+				new AnyType(classType), null,
+	            false, classType);		
+	}
     
-    public ParameterBuilder addParameter(String name, ScopeType scope, EnumerationType enumProperty,
+    @SuppressWarnings("unchecked")
+	public ParameterBuilder addParameter(String name, ScopeType scope, EnumerationType enumProperty,
             String temporalProperty, String mapping, Type typeDef, Object value,
             boolean nullable, Object classType){
 
         name = StringUtil.adjust(name);
         temporalProperty = StringUtil.adjust(temporalProperty);
         mapping = StringUtil.adjust(mapping);
-        Class rawType = TypeUtil.getRawType(classType);
+        Class<?> rawType = TypeUtil.getRawType(classType);
         
         if(StringUtil.isEmpty(name))
         	throw new MappingException("invalid parameter name");
@@ -382,12 +393,12 @@ public class ParametersBuilder extends RestrictionBuilder{
         else{
             Type definedType = parameter.getType();
             
+            //TODO: remove ObjectType and use if mapping not null
             if(definedType.getClass() == ObjectType.class && rawType != Object.class)
             	throw new MappingException("unknown type: " + rawType.getSimpleName());
         }
-        
 
-        action.addParameter( parameter );
+        action.addParameter(parameter);
         return new ParameterBuilder(parameter, this);
     }
 

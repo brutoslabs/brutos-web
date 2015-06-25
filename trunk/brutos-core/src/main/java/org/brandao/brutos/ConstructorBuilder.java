@@ -25,6 +25,7 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingBeanUtil;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
 
 /**
@@ -58,7 +59,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
      * @param target Classe alvo do mapeamento.
      * @return Construtor do argumento.
      */
-    public BeanBuilder buildConstructorArg( String name, Class target ){
+    public BeanBuilder buildConstructorArg( String name, Class<?> target ){
         
         name = StringUtil.adjust(name);
         
@@ -82,7 +83,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
      * @param classType Tipo do argumento do contrutor.
      * @return Construtor do argumento.
      */
-    public BeanBuilder buildConstructorArg( String name, Class classType, Class target ){
+    public BeanBuilder buildConstructorArg( String name, Class<?> classType, Class<?> target ){
         
         name = StringUtil.adjust(name);
         
@@ -210,9 +211,16 @@ public class ConstructorBuilder extends RestrictionBuilder{
      */
     public ConstructorArgBuilder addContructorArg( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, boolean nullable, Type typeDef, Class type ){
+            ScopeType scope, Object value, boolean nullable, Type typeDef, Class<?> type ){
         return addContructorArg( name, enumProperty, temporalProperty, mapping,
             scope, value, nullable, typeDef, (Object)type );
+    }
+
+    public ConstructorArgBuilder addGenericContructorArg(String name, Class<?> type){
+    	return 
+			this.addContructorArg(name, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null,
+                BrutosConstants.DEFAULT_SCOPETYPE, null, false, new AnyType(type), type );
     }
     
     public ConstructorArgBuilder addContructorArg( String name,
@@ -270,7 +278,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
         return new ConstructorArgBuilder(arg, this);
     }
     
-    public Class getClassType(){
+    public Class<?> getClassType(){
         return this.mappingBean.getClassType();
     }
     

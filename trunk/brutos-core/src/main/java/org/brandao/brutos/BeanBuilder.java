@@ -20,6 +20,7 @@ package org.brandao.brutos;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
+import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
 
 /**
@@ -241,6 +242,12 @@ public class BeanBuilder {
         return setKey( name, enumProperty, temporalProperty, mapping,
                 scope, value, typeDef, (Object)type );
     }
+
+    public KeyBuilder setGenericKey( String name, Class<?> classType ){
+    	return this.setKey(name,
+    			BrutosConstants.DEFAULT_ENUMERATIONTYPE, BrutosConstants.DEFAULT_TEMPORALPROPERTY, 
+    			null, BrutosConstants.DEFAULT_SCOPETYPE, null, new AnyType(classType), (Object)classType);
+    }
     
     public KeyBuilder setKey( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
@@ -354,6 +361,13 @@ public class BeanBuilder {
             ScopeType scope, Object value, boolean nullable, Type typeDef, Class type ){
         return setElement( name, enumProperty, temporalProperty, mapping,
                 scope, value, nullable, typeDef, (Object)type );
+    }
+
+    public ElementBuilder setGenericElement( String name, Class<?> classType ){
+    	return this.setElement( name,
+                BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+                BrutosConstants.DEFAULT_TEMPORALPROPERTY, 
+                null, BrutosConstants.DEFAULT_SCOPETYPE, null, false, new AnyType(classType), (Object)classType);
     }
     
     public ElementBuilder setElement( String name,
@@ -530,6 +544,14 @@ public class BeanBuilder {
             ScopeType scope, Object value, boolean nullable, Type type ){
         return addProperty(name,propertyName,enumProperty,temporalProperty,mapping, 
             scope, value, nullable, null, type );
+    }
+
+    public PropertyBuilder addGenericProperty( String name, String propertyName, Class<?> classType ){
+    	
+    	return this.addProperty(name, propertyName,
+                BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+                BrutosConstants.DEFAULT_TEMPORALPROPERTY,
+                null,BrutosConstants.DEFAULT_SCOPETYPE, null, false, classType, new AnyType(classType));
     }
     
     public PropertyBuilder addProperty( String name, String propertyName,

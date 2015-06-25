@@ -25,6 +25,7 @@ import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
+import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeUtil;
@@ -784,6 +785,14 @@ public class ControllerBuilder {
             String mapping, Object value, boolean nullable, Type type ){
         return addProperty(propertyName,id,scope,enumProperty,temporalProperty, 
             mapping,value,nullable,null,type);
+    }
+
+    public PropertyBuilder addGenericProperty(String propertyName, String id, Class<?> classType){
+    	return
+			this.addProperty( propertyName, id, 
+		            BrutosConstants.DEFAULT_SCOPETYPE, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+		            BrutosConstants.DEFAULT_TEMPORALPROPERTY, 
+		            null, null, false, classType, new AnyType(classType) );
     }
     
     public PropertyBuilder addProperty( String propertyName, String id, 

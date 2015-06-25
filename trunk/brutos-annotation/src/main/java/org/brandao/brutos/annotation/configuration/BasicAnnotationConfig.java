@@ -23,6 +23,7 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
+import org.brandao.brutos.type.TypeUtil;
 
 /**
  *
@@ -152,17 +153,14 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig{
         String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
         
-        Object classType;
-        
-        if(source.isAnnotationPresent(Any.class))
-        	classType = Object.class;
-        else
-	        classType = source.getGenericType();
-        
-        //String mapping = identify != null && identify.useMapping()? name : null;
-                
-        return builder.addContructorArg(name, enumProperty, temporalProperty, 
-                /*mapping*/null, scope, null, false, type, classType);
+        if(source.isAnnotationPresent(Any.class)){
+            return builder.addGenericContructorArg(name, 
+            		TypeUtil.getRawType(source.getGenericType()));
+        }
+        else{
+            return builder.addContructorArg(name, enumProperty, temporalProperty, 
+                    null, scope, null, false, type, source.getGenericType());
+        }
         
     }
     
@@ -186,56 +184,34 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig{
         String temporalProperty = AnnotationUtil.getTemporalProperty(property.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(property.getAnnotation(Type.class));
         
-        Object classType;
         
-        if(property.isAnnotationPresent(Any.class))
-        	classType = Object.class;
-        else
-	        classType = property.getGenericType();
-        
-        //String mapping = identify != null && identify.mapping()? name : null;
-
-        PropertyBuilder propertyBuilder;
-        if(builder instanceof BeanBuilder){
-            propertyBuilder = addProperty((BeanBuilder)builder,property, propertyName,
-                name, scope, enumProperty, temporalProperty, type,
-                /*mapping*/null, classType, componentRegistry);
+        if(property.isAnnotationPresent(Any.class)){
+            if(builder instanceof BeanBuilder){
+                return ((BeanBuilder)builder).addGenericProperty(name, propertyName, 
+                		TypeUtil.getRawType(property.getGenericType()));
+            }
+            else{
+                return ((ControllerBuilder)builder).addGenericProperty(propertyName, name, 
+                		TypeUtil.getRawType(property.getGenericType()));
+            }
         }
         else{
-            propertyBuilder = addProperty((ControllerBuilder)builder,property, propertyName,
-                name, scope, enumProperty, temporalProperty, type,
-                /*mapping*/null, classType, componentRegistry);
+            if(builder instanceof BeanBuilder){
+                return ((BeanBuilder)builder)
+                		.addProperty( name, propertyName,
+                	            enumProperty, temporalProperty, null, 
+                	            scope, null, false, property.getGenericType(), type);
+            }
+            else{
+                return ((ControllerBuilder)builder)
+                		.addProperty(propertyName, name, 
+                        scope, enumProperty, temporalProperty, 
+                        null, null, false, property.getGenericType(), type);
+            }
         }
         
-        return propertyBuilder;
     }
     
-    protected PropertyBuilder addProperty(BeanBuilder beanBuilder, 
-        BeanPropertyAnnotation property, String propertyName,
-        String name, ScopeType scope, EnumerationType enumProperty,
-        String temporalProperty, org.brandao.brutos.type.Type type, 
-        String mapping, Object classType, ComponentRegistry componentRegistry){
-        
-        PropertyBuilder builder = 
-            beanBuilder.addProperty(name, propertyName, enumProperty, 
-            temporalProperty, mapping, scope, null, false, classType, type);
-        
-        return builder;
-    }
-
-    protected PropertyBuilder addProperty(ControllerBuilder controllerBuilder, 
-        BeanPropertyAnnotation property, String propertyName,
-        String name, ScopeType scope, EnumerationType enumProperty,
-        String temporalProperty, org.brandao.brutos.type.Type type,
-        String mapping, Object classType, ComponentRegistry componentRegistry){
-        
-        PropertyBuilder builder = 
-            controllerBuilder.addProperty(propertyName, name, scope, 
-                enumProperty, temporalProperty, mapping, null, false, classType, type);
-        
-        return builder;
-    }
-
      protected PropertyBuilder buildProperty(Object beanBuilder, 
             BeanPropertyAnnotation property, 
             ComponentRegistry componentRegistry){
@@ -269,15 +245,13 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig{
         String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
         org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
         
-        Object classType;
-        
-        if(source.isAnnotationPresent(Any.class))
-        	classType = Object.class;
-        else
-	        classType = source.getGenericType();
-        
-        return builder.addParameter(name, scope, enumProperty, 
-                temporalProperty, null, type, null, false, classType);
+        if(source.isAnnotationPresent(Any.class)){
+            return builder.addGenericParameter(name, TypeUtil.getRawType(source.getGenericType()));
+        }
+        else{
+            return builder.addParameter(name, scope, enumProperty, 
+                    temporalProperty, null, type, null, false, source.getGenericType());
+        }
     }
     
     private String getPropertyName(BeanPropertyAnnotation param){
@@ -287,6 +261,7 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig{
 	@SuppressWarnings("unchecked")
 	public Class<? extends Annotation>[] getExecutionOrder(){
         return new Class[]{
+		  Any.class,
           Bean.class,
           Restriction.class,
           Restrictions.class
