@@ -10,7 +10,7 @@ import org.brandao.brutos.annotation.Transient;
 @Controller("/controller")
 public class Test1TemporalController {
 
-	@Temporal("yyyy_mm_dd")
+	@Temporal("yyyy_MM_dd")
 	public Date property1;
 	
 	private Calendar property2;
@@ -24,7 +24,7 @@ public class Test1TemporalController {
 		return property2;
 	}
 
-	@Temporal("yyyy-mm-dd")
+	@Temporal("yyyy-MM-dd")
 	public void setProperty2(Calendar property2) {
 		this.property2 = property2;
 	}

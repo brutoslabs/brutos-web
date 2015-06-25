@@ -20,6 +20,7 @@ package org.brandao.brutos.mapping;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
+
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
@@ -44,17 +45,17 @@ public class Action {
 
     private String simpleName;
     
-    private List alias;
+    private List<String> alias;
     
     private String executor;
 
-    private List parameters;
+    private List<ParameterAction> parameters;
     
-    private Map throwsSafe;
+    private Map<Class<?>,ThrowableSafeData> throwsSafe;
     
     private Method method;
     
-    private List parametersType;
+    private List<Class<?>> parametersType;
     
     private String returnIn;
     
@@ -66,7 +67,7 @@ public class Action {
     
     private Type returnType;
 
-    private Class returnClass;
+    private Class<?> returnClass;
 
     private boolean redirect;
 
@@ -77,13 +78,13 @@ public class Action {
     private Validator resultValidator;
     
     public Action() {
-        this.parameters = new ArrayList();
-        this.parametersType = new ArrayList();
-        this.throwsSafe = new HashMap();
+        this.parameters = new ArrayList<ParameterAction>();
+        this.parametersType = new ArrayList<Class<?>>();
+        this.throwsSafe = new HashMap<Class<?>, ThrowableSafeData>();
         this.dispatcherType = DispatcherType.INCLUDE;
         this.returnClass = void.class;
         this.redirect = false;
-        this.alias = new ArrayList();
+        this.alias = new ArrayList<String>();
     }
 
     public String getName() {
@@ -93,11 +94,6 @@ public class Action {
     public void setName(String name) {
         this.name = name;
         this.id = name;
-        /*
-                this.controller.getId() == null? 
-                    name : 
-                    this.controller.getId() + name;
-        */
     }
 
     public void addParameter( ParameterAction value ){
@@ -112,15 +108,19 @@ public class Action {
         parameters.remove(index);
     }
     
-    public List getParameters() {
+    public List<ParameterAction> getParameters() {
         return parameters;
     }
 
-    public void setParameters(List parameters) {
+    public void setParameters(List<ParameterAction> parameters) {
         this.parameters = parameters;
     }
 
-    public ThrowableSafeData getThrowsSafe( Class thr ) {
+    public ThrowableSafeData getThrowsSafeOnAction( Class<?> thr ) {
+        return throwsSafe.get(thr);
+    }
+    
+    public ThrowableSafeData getThrowsSafe( Class<?> thr ) {
         return (ThrowableSafeData) (
                 throwsSafe.containsKey(thr) ?
                     throwsSafe.get(thr) :
@@ -135,8 +135,8 @@ public class Action {
         return this.parameters.size();
     }
 
-    public Class getParameterType( int index ){
-        return (Class) this.parametersType.get( index );
+    public Class<?> getParameterType( int index ){
+        return this.parametersType.get( index );
     }
 
     public java.lang.reflect.Type getGenericParameterType( int index ){
@@ -151,11 +151,11 @@ public class Action {
         this.method = method;
     }
 
-    public List getParametersType() {
+    public List<Class<?>> getParametersType() {
         return parametersType;
     }
 
-    public void setParametersType(List parametersType) {
+    public void setParametersType(List<Class<?>> parametersType) {
         this.parametersType = parametersType;
     }
 
@@ -196,11 +196,11 @@ public class Action {
         this.returnType = returnType;
     }
 
-    public Class getReturnClass() {
+    public Class<?> getReturnClass() {
         return returnClass;
     }
 
-    public void setReturnClass(Class returnClass) {
+    public void setReturnClass(Class<?> returnClass) {
         this.returnClass = returnClass;
     }
 
@@ -230,7 +230,7 @@ public class Action {
             controller.addReserveMethod(method, this);
             setParametersType( Arrays.asList( method.getParameterTypes() ) );
 
-            Class returnClassType = method.getReturnType();
+            Class<?> returnClassType = method.getReturnType();
 
             if( returnClassType != void.class ){
                 setReturnType( 
@@ -251,22 +251,22 @@ public class Action {
 
     }
 
-    private Method getMethod( String name, Class clazz ){
+    private Method getMethod( String name, Class<?> clazz ){
         int size = parameters.size();
-        Class[] classArgs = new Class[ size ];
+        Class<?>[] classArgs = new Class[ size ];
         for( int i=0;i<size;i++ ){
             ParameterAction arg = (ParameterAction) parameters.get(i);
             classArgs[ i ] = arg.getClassType();
         }
 
-        Class tmpClazz = clazz;
+        Class<?> tmpClazz = clazz;
         while( tmpClazz != Object.class ){
             Method[] methods = tmpClazz.getDeclaredMethods();
             for( int i=0;i<methods.length;i++ ){
                 Method m = methods[i];
                 if( m.getName().equals(name) &&
                     isCompatible( m, classArgs ) ){
-                    Class[] params = m.getParameterTypes();
+                    Class<?>[] params = m.getParameterTypes();
                     for( int k=0;k<params.length;k++ ){
                         
                         ParameterAction arg = 
@@ -291,7 +291,7 @@ public class Action {
         String msg = "not found: " + clazz.getName() + "." + name + "( ";
 
         for( int i=0;i<classArgs.length;i++ ){
-            Class arg = classArgs[i];
+            Class<?> arg = classArgs[i];
             msg += i != 0? ", " : "";
             msg += arg == null? "?" : arg.getName();
         }
@@ -300,8 +300,9 @@ public class Action {
         throw new BrutosException( msg );
     }
 
-    private boolean isCompatible( Method m, Class[] classArgs ){
-        Class[] params = m.getParameterTypes();
+    @SuppressWarnings("unchecked")
+	private boolean isCompatible( Method m, Class<?>[] classArgs ){
+        Class<?>[] params = m.getParameterTypes();
         if( params.length == classArgs.length ){
             for( int i=0;i<params.length;i++ ){
                 if( classArgs[i] != null &&
@@ -316,9 +317,9 @@ public class Action {
 
     }
 
-    public Class[] getParameterClass(){
+    public Class<?>[] getParameterClass(){
         int length = this.parameters.size();
-        Class[] result = new Class[length];
+        Class<?>[] result = new Class[length];
 
         for( int i=0;i<length;i++ ){
             ParameterAction p = 
@@ -388,7 +389,7 @@ public class Action {
         this.alias.remove(value);
     }
 
-    public List getAlias(){
+    public List<String> getAlias(){
         return this.alias;
     }
 

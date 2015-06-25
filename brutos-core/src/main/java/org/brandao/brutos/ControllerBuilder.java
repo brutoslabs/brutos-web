@@ -284,11 +284,14 @@ public class ControllerBuilder {
         id = StringUtil.adjust(id);
 
         if( target == null )
-            throw new MappingException( "target is required: " + controller.getClassType().getName() );
+            throw new MappingException( "target is required: " + controller.getClassType().getSimpleName() );
 
         if( !Throwable.class.isAssignableFrom( target ) )
-            throw new MappingException( "target is not allowed: " +target.getName() );
+            throw new MappingException( "target is not allowed: " +target.getSimpleName() );
 
+        if(this.controller.getThrowsSafe(target) != null)
+            throw new MappingException( "the exception has been added on controller: " + target.getSimpleName() );
+        	
         if(dispatcher == null)
             dispatcher = BrutosConstants.DEFAULT_DISPATCHERTYPE;
         
@@ -305,7 +308,7 @@ public class ControllerBuilder {
         thr.setView(view);
         thr.setRedirect( false );
         thr.setDispatcher( dispatcher );
-        controller.setThrowsSafe(thr);
+        this.controller.setThrowsSafe(thr);
         return this;
     }
 
@@ -834,6 +837,11 @@ public class ControllerBuilder {
                 throw new MappingException(e);
             }
         }
+        
+        /*
+        if(!(type instanceof DateTimeType) && temporalProperty != null)
+        	throw new MappingException("not a temporal type: " + propertyName);
+        */
         
         property.setType(type);
         
