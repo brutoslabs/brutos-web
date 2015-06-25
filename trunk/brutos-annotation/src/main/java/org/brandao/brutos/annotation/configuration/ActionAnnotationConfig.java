@@ -20,9 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.mapping.MappingException;
@@ -185,7 +183,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             ActionEntry method, ComponentRegistry componentRegistry){
         
         Type[] genericTypes = method.getGenericParameterTypes();
-        Class[] types = method.getParameterTypes();
+        Class<?>[] types = method.getParameterTypes();
         Annotation[][] annotations = method.getParameterAnnotations();
         
         if(types == null)
@@ -206,7 +204,8 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         }
     }
 
-    protected void throwsSafe(ActionBuilder builder, ActionEntry method,
+    @SuppressWarnings("unchecked")
+	protected void throwsSafe(ActionBuilder builder, ActionEntry method,
             ComponentRegistry componentRegistry){
         
         List<ThrowableEntry> list = new ArrayList<ThrowableEntry>();
@@ -225,22 +224,18 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
             list.add(
                     AnnotationUtil.toEntry(throwSafe));
         
-        Map<Class<? extends Throwable>,ThrowableEntry> map = 
-                new HashMap<Class<? extends Throwable>,ThrowableEntry>();
-        
-        Class[] exs = method.getExceptionTypes();
+        Class<?>[] exs = method.getExceptionTypes();
         
         if(exs != null){
-            for(Class ex: exs){
-                ThrowableEntry entry = new ThrowableEntry(ex);
-                map.put(ex,entry);
+            for(Class<?> ex: exs){
+                ThrowableEntry entry = new ThrowableEntry((Class<? extends Throwable>) ex);
+                if(!list.contains(entry)){
+                	list.add(entry);
+                }
             }
         }
         
         for(ThrowableEntry entry: list)
-            map.put(entry.getTarget(),entry);
-        
-        for(ThrowableEntry entry: map.values())
             super.applyInternalConfiguration(entry, builder, componentRegistry);
         
     }

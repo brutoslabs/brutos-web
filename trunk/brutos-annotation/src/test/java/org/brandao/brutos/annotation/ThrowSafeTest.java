@@ -176,7 +176,7 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertNull(renderView.getView());
+                	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/test2action/index.jsp",renderView.getView());
                 	Assert.assertNotNull(request.getAttribute("exception"));
                 }
 
@@ -186,6 +186,7 @@ public class ThrowSafeTest extends TestCase{
             },
             new Class[]{Test1ThrowSafeController.class});
     }    
+    
     public void testTest1ResultViewController_test2Action_Exception4() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test2", 
@@ -259,7 +260,8 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertNull(renderView.getView());
+                	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/test3action/index.jsp",renderView.getView());
+                	Assert.assertNotNull(request.getAttribute("exception"));
                 }
 
                 public void checkException(Throwable e) throws Throwable {

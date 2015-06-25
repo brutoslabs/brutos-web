@@ -161,7 +161,7 @@ public class ActionBuilder extends RestrictionBuilder{
         if( target == null )
             throw new BrutosException( "target is required: " + controller.getClassType().getName() );
 
-        if( !Throwable.class.isAssignableFrom( target ) )
+        if( !Throwable.class.isAssignableFrom(target) )
             throw new BrutosException( "target is not allowed: " +target.getName() );
 
         if(this.action.getThrowsSafeOnAction(target) != null)
