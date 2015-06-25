@@ -7,6 +7,7 @@ import org.brandao.brutos.annotation.DispatcherType;
 import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.ThrowSafe;
 import org.brandao.brutos.annotation.ThrowSafeList;
+import org.brandao.brutos.annotation.View;
 
 @Controller("/controller")
 @ThrowSafe(target=Exception1.class)
@@ -52,6 +53,13 @@ public class Test1ThrowSafeController {
 			)
 			Throwable trw) throws Throwable {
 		throw trw;
+	}
+
+
+	@ThrowSafe(target=Exception1.class, rendered=false)
+	@View(rendered=false)
+	public void test4Action() throws Throwable {
+		throw new Exception1();
 	}
 	
 }

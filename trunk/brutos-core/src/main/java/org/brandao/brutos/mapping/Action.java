@@ -172,11 +172,6 @@ public class Action {
     }
 
     public void setView(String view) {
-        view = StringUtil.adjust(view);
-        
-        if(StringUtil.isEmpty(view))
-            throw new BrutosException("invalid view");
-        
         this.view = view;
     }
 

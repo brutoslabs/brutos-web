@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.annotation.helper.throwsafe.app1.Exception4;
 import org.brandao.brutos.annotation.helper.throwsafe.app1.Test1ThrowSafeController;
 import org.brandao.brutos.annotation.helper.throwsafe.fail.Test1FailThrowSafeController;
@@ -398,6 +397,46 @@ public class ThrowSafeTest extends TestCase{
             new Class[]{Test1ThrowSafeController.class});
     }
 
+    public void testTest1ResultViewController_test4Action() throws Throwable{
+        WebApplicationContextTester.run(
+            "/controller/test4", 
+            new WebApplicationTester() {
+
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+
+                public void prepareSession(Map<String, String> parameters) {
+                }
+                
+                public void prepareRequest(Map<String, String> parameters) {
+                }
+
+                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                        ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                	
+                	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
+                	
+                	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/index.jsp",renderView.getView());
+                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD,renderView.getDispatcherType());
+                	Assert.assertNotNull(request.getAttribute("exception"));
+                }
+
+                public void checkException(Throwable e) throws Throwable {
+                	throw e;
+                }
+            },
+            new Class[]{Test1ThrowSafeController.class});
+    }
+    
     public void testTest1FailThrowSafeController() throws Throwable{
         WebApplicationContextTester.run(
             "", 
