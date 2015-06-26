@@ -592,11 +592,13 @@ public class AnnotationUtil {
    }
 
     public static Annotation[] getAnnotations(KeyCollection annotation){
-    	return existAnnotation(annotation.any())? new Annotation[]{annotation.any()} : null;
+    	return annotation == null || !existAnnotation(annotation.any())? 
+    			new Annotation[]{} : new Annotation[]{annotation.any()};
     }
 
     public static Annotation[] getAnnotations(ElementCollection annotation){
-    	return existAnnotation(annotation.any())? new Annotation[]{annotation.any()} : null;
+    	return annotation == null || !existAnnotation(annotation.any())? 
+    			new Annotation[]{} : new Annotation[]{annotation.any()};
     }
     
    public static boolean existAnnotation(Any annotation){

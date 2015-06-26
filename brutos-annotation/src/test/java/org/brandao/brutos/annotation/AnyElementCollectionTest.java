@@ -81,7 +81,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
                 	
@@ -122,8 +122,8 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.element[0].propertyType", "set");
                 	parameters.put("property.element[0].name", "propName");
-                	parameters.put("property.element[0].values[0]", "VALUE1");
-                	parameters.put("property.element[0].values[1]", "VALUE2");
+                	parameters.put("property.element[0].values.element[0]", "VALUE1");
+                	parameters.put("property.element[0].values.element[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -134,7 +134,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
                 	
@@ -143,7 +143,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNull(props);
+                	Assert.assertNotNull(props);
                 	Assert.assertEquals(2, props.size());
                 	Assert.assertEquals("VALUE1", props.get(0));
                 	Assert.assertEquals("VALUE2", props.get(1));
@@ -179,7 +179,7 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.element[0].propertyType", "DECIMAL");
                 	parameters.put("property.element[0].name", "propName");
-                	parameters.put("property.element[0]length", "10");
+                	parameters.put("property.element[0].length", "10");
                 	parameters.put("property.element[0].decimals", "2");
                 }
 
@@ -191,7 +191,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
                 	
@@ -232,8 +232,8 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.element[0].propertyType", "SET");
                 	parameters.put("property.element[0].name", "propName");
-                	parameters.put("property.element[0].values[0]", "VALUE1");
-                	parameters.put("property.element[0].values[1]", "VALUE2");
+                	parameters.put("property.element[0].values.element[0]", "VALUE1");
+                	parameters.put("property.element[0].values.element[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -244,7 +244,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
                 	
@@ -253,7 +253,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNull(props);
+                	Assert.assertNotNull(props);
                 	Assert.assertEquals(2, props.size());
                 	Assert.assertEquals("VALUE1", props.get(0));
                 	Assert.assertEquals("VALUE2", props.get(1));
@@ -301,7 +301,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
                 	
@@ -342,8 +342,8 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.element[0].propertyType", "1");
                 	parameters.put("property.element[0].name", "propName");
-                	parameters.put("property.element[0].values[0]", "VALUE1");
-                	parameters.put("property.element[0].values[1]", "VALUE2");
+                	parameters.put("property.element[0].values.element[0]", "VALUE1");
+                	parameters.put("property.element[0].values.element[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -354,7 +354,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
                 	
@@ -363,7 +363,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNull(props);
+                	Assert.assertNotNull(props);
                 	Assert.assertEquals(2, props.size());
                 	Assert.assertEquals("VALUE1", props.get(0));
                 	Assert.assertEquals("VALUE2", props.get(1));
@@ -411,7 +411,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
                 	
@@ -452,8 +452,8 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.element[0].propertyType", "2015-01-02");
                 	parameters.put("property.element[0].name", "propName");
-                	parameters.put("property.element[0].values[0]", "VALUE1");
-                	parameters.put("property.element[0].values[1]", "VALUE2");
+                	parameters.put("property.element[0].values.element[0]", "VALUE1");
+                	parameters.put("property.element[0].values.element[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -464,7 +464,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
                 	
@@ -473,7 +473,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNull(props);
+                	Assert.assertNotNull(props);
                 	Assert.assertEquals(2, props.size());
                 	Assert.assertEquals("VALUE1", props.get(0));
                 	Assert.assertEquals("VALUE2", props.get(1));
@@ -527,7 +527,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -540,7 +540,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -582,15 +582,15 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.element[0].propertyType", "set");
                 	parameters.put("propertyA.element[0].name", "propName");
-                	parameters.put("propertyA.element[0].values[0]", "VALUE1");
-                	parameters.put("propertyA.element[0].values[1]", "VALUE2");
-                	parameters.put("propertyA.element[0].values[2]", "VALUEX");
+                	parameters.put("propertyA.element[0].values.element[0]", "VALUE1");
+                	parameters.put("propertyA.element[0].values.element[1]", "VALUE2");
+                	parameters.put("propertyA.element[0].values.element[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.element[0].propertyType2", "set");
                 	parameters.put("propertyB.element[0].name", "propName");
-                	parameters.put("propertyB.element[0].values[0]", "VALUE3");
-                	parameters.put("propertyB.element[0].values[1]", "VALUE4");
-                	parameters.put("propertyB.element[0].values[2]", "VALUEXX");
+                	parameters.put("propertyB.element[0].values.element[0]", "VALUE3");
+                	parameters.put("propertyB.element[0].values.element[1]", "VALUE4");
+                	parameters.put("propertyB.element[0].values.element[3]", "VALUEXX");
                 	
                 }
 
@@ -602,7 +602,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -612,7 +612,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -620,7 +620,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -630,7 +630,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));
@@ -685,7 +685,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -698,7 +698,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -740,15 +740,15 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.element[0].propertyType", "SET");
                 	parameters.put("propertyA.element[0].name", "propName");
-                	parameters.put("propertyA.element[0].values[0]", "VALUE1");
-                	parameters.put("propertyA.element[0].values[1]", "VALUE2");
-                	parameters.put("propertyA.element[0].values[2]", "VALUEX");
+                	parameters.put("propertyA.element[0].values.element[0]", "VALUE1");
+                	parameters.put("propertyA.element[0].values.element[1]", "VALUE2");
+                	parameters.put("propertyA.element[0].values.element[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.element[0].propertyType2", "SET");
                 	parameters.put("propertyB.element[0].name", "propName");
-                	parameters.put("propertyB.element[0].values[0]", "VALUE3");
-                	parameters.put("propertyB.element[0].values[1]", "VALUE4");
-                	parameters.put("propertyB.element[0].values[2]", "VALUEXX");
+                	parameters.put("propertyB.element[0].values.element[0]", "VALUE3");
+                	parameters.put("propertyB.element[0].values.element[1]", "VALUE4");
+                	parameters.put("propertyB.element[0].values.element[3]", "VALUEXX");
                 	
                 }
 
@@ -760,7 +760,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -770,7 +770,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -778,7 +778,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -788,7 +788,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));
@@ -843,7 +843,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -856,7 +856,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -898,15 +898,15 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.element[0].propertyType", "1");
                 	parameters.put("propertyA.element[0].name", "propName");
-                	parameters.put("propertyA.element[0].values[0]", "VALUE1");
-                	parameters.put("propertyA.element[0].values[1]", "VALUE2");
-                	parameters.put("propertyA.element[0].values[2]", "VALUEX");
+                	parameters.put("propertyA.element[0].values.element[0]", "VALUE1");
+                	parameters.put("propertyA.element[0].values.element[1]", "VALUE2");
+                	parameters.put("propertyA.element[0].values.element[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.element[0].propertyType2", "1");
                 	parameters.put("propertyB.element[0].name", "propName");
-                	parameters.put("propertyB.element[0].values[0]", "VALUE3");
-                	parameters.put("propertyB.element[0].values[1]", "VALUE4");
-                	parameters.put("propertyB.element[0].values[2]", "VALUEXX");
+                	parameters.put("propertyB.element[0].values.element[0]", "VALUE3");
+                	parameters.put("propertyB.element[0].values.element[1]", "VALUE4");
+                	parameters.put("propertyB.element[0].values.element[3]", "VALUEXX");
                 	
                 }
 
@@ -918,7 +918,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -928,7 +928,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -936,7 +936,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -946,7 +946,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));
@@ -1001,7 +1001,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -1014,7 +1014,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -1056,15 +1056,15 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.element[0].propertyType", "2015-01-02");
                 	parameters.put("propertyA.element[0].name", "propName");
-                	parameters.put("propertyA.element[0].values[0]", "VALUE1");
-                	parameters.put("propertyA.element[0].values[1]", "VALUE2");
-                	parameters.put("propertyA.element[0].values[2]", "VALUEX");
+                	parameters.put("propertyA.element[0].values.element[0]", "VALUE1");
+                	parameters.put("propertyA.element[0].values.element[1]", "VALUE2");
+                	parameters.put("propertyA.element[0].values.element[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.element[0].propertyType2", "2015-01-02");
                 	parameters.put("propertyB.element[0].name", "propName");
-                	parameters.put("propertyB.element[0].values[0]", "VALUE3");
-                	parameters.put("propertyB.element[0].values[1]", "VALUE4");
-                	parameters.put("propertyB.element[0].values[2]", "VALUEXX");
+                	parameters.put("propertyB.element[0].values.element[0]", "VALUE3");
+                	parameters.put("propertyB.element[0].values.element[1]", "VALUE4");
+                	parameters.put("propertyB.element[0].values.element[3]", "VALUEXX");
                 	
                 }
 
@@ -1076,7 +1076,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -1086,7 +1086,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -1094,17 +1094,17 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
                 	Assert.assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
+                	Assert.assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));
@@ -1166,7 +1166,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -1179,7 +1179,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -1192,7 +1192,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
                 	
@@ -1234,21 +1234,21 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.element[0].propertyType", "set");
                 	parameters.put("property1.propertyA.element[0].name", "propName1");
-                	parameters.put("property1.propertyA.element[0].values[0]", "VALUE1");
-                	parameters.put("property1.propertyA.element[0].values[1]", "VALUE2");
-                	parameters.put("property1.propertyA.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyA.element[0].values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.element[0].values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.element[0].values.element[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.element[0].propertyType2", "set");
                 	parameters.put("property1.propertyB.element[0].name", "propName2");
-                	parameters.put("property1.propertyB.element[0].values[0]", "VALUE3");
-                	parameters.put("property1.propertyB.element[0].values[1]", "VALUE4");
-                	parameters.put("property1.propertyB.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyB.element[0].values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.element[0].values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.element[0].values.element[3]", "VALUEX");
 
-                	parameters.put("property1.propertyC.element[0].propertyType2", "set");
+                	parameters.put("property1.propertyC.element[0].propertyType3", "set");
                 	parameters.put("property1.propertyC.element[0].name", "propName3");
-                	parameters.put("property1.propertyC.element[0].values[0]", "VALUE5");
-                	parameters.put("property1.propertyC.element[0].values[1]", "VALUE6");
-                	parameters.put("property1.propertyC.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyC.element[0].values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.element[0].values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.element[0].values.element[3]", "VALUEX");
                 	
                 }
 
@@ -1262,7 +1262,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -1272,7 +1272,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -1280,7 +1280,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -1290,7 +1290,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -1298,7 +1298,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 
@@ -1308,7 +1308,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNull(props3);
+                	Assert.assertNotNull(props3);
                 	Assert.assertEquals(2, props3.size());
                 	Assert.assertEquals("VALUE5", props3.get(0));
                 	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -1370,7 +1370,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -1383,7 +1383,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -1396,7 +1396,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
                 	
@@ -1438,21 +1438,21 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.element[0].propertyType", "SET");
                 	parameters.put("property1.propertyA.element[0].name", "propName1");
-                	parameters.put("property1.propertyA.element[0].values[0]", "VALUE1");
-                	parameters.put("property1.propertyA.element[0].values[1]", "VALUE2");
-                	parameters.put("property1.propertyA.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyA.element[0].values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.element[0].values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.element[0].values.element[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.element[0].propertyType2", "SET");
                 	parameters.put("property1.propertyB.element[0].name", "propName2");
-                	parameters.put("property1.propertyB.element[0].values[0]", "VALUE3");
-                	parameters.put("property1.propertyB.element[0].values[1]", "VALUE4");
-                	parameters.put("property1.propertyB.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyB.element[0].values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.element[0].values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.element[0].values.element[3]", "VALUEX");
 
-                	parameters.put("property1.propertyC.element[0].propertyType2", "SET");
+                	parameters.put("property1.propertyC.element[0].propertyType3", "SET");
                 	parameters.put("property1.propertyC.element[0].name", "propName3");
-                	parameters.put("property1.propertyC.element[0].values[0]", "VALUE5");
-                	parameters.put("property1.propertyC.element[0].values[1]", "VALUE6");
-                	parameters.put("property1.propertyC.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyC.element[0].values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.element[0].values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.element[0].values.element[3]", "VALUEX");
                 	
                 }
 
@@ -1466,7 +1466,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -1476,7 +1476,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -1484,7 +1484,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -1494,7 +1494,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -1502,7 +1502,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 
@@ -1512,7 +1512,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNull(props3);
+                	Assert.assertNotNull(props3);
                 	Assert.assertEquals(2, props3.size());
                 	Assert.assertEquals("VALUE5", props3.get(0));
                 	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -1574,7 +1574,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -1587,7 +1587,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -1600,7 +1600,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
                 	
@@ -1642,21 +1642,21 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.element[0].propertyType", "1");
                 	parameters.put("property1.propertyA.element[0].name", "propName1");
-                	parameters.put("property1.propertyA.element[0].values[0]", "VALUE1");
-                	parameters.put("property1.propertyA.element[0].values[1]", "VALUE2");
-                	parameters.put("property1.propertyA.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyA.element[0].values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.element[0].values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.element[0].values.element[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.element[0].propertyType2", "1");
                 	parameters.put("property1.propertyB.element[0].name", "propName2");
-                	parameters.put("property1.propertyB.element[0].values[0]", "VALUE3");
-                	parameters.put("property1.propertyB.element[0].values[1]", "VALUE4");
-                	parameters.put("property1.propertyB.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyB.element[0].values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.element[0].values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.element[0].values.element[3]", "VALUEX");
 
-                	parameters.put("property1.propertyC.element[0].propertyType2", "1");
+                	parameters.put("property1.propertyC.element[0].propertyType3", "1");
                 	parameters.put("property1.propertyC.element[0].name", "propName3");
-                	parameters.put("property1.propertyC.element[0].values[0]", "VALUE5");
-                	parameters.put("property1.propertyC.element[0].values[1]", "VALUE6");
-                	parameters.put("property1.propertyC.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyC.element[0].values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.element[0].values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.element[0].values.element[3]", "VALUEX");
                 	
                 }
 
@@ -1670,7 +1670,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -1680,7 +1680,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -1688,7 +1688,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -1698,7 +1698,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -1706,7 +1706,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 
@@ -1716,7 +1716,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNull(props3);
+                	Assert.assertNotNull(props3);
                 	Assert.assertEquals(2, props3.size());
                 	Assert.assertEquals("VALUE5", props3.get(0));
                 	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -1778,7 +1778,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -1791,7 +1791,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -1804,7 +1804,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
                 	
@@ -1846,21 +1846,21 @@ public class AnyElementCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.element[0].propertyType", "2015-01-02");
                 	parameters.put("property1.propertyA.element[0].name", "propName1");
-                	parameters.put("property1.propertyA.element[0].values[0]", "VALUE1");
-                	parameters.put("property1.propertyA.element[0].values[1]", "VALUE2");
-                	parameters.put("property1.propertyA.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyA.element[0].values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.element[0].values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.element[0].values.element[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.element[0].propertyType2", "2015-01-02");
                 	parameters.put("property1.propertyB.element[0].name", "propName2");
-                	parameters.put("property1.propertyB.element[0].values[0]", "VALUE3");
-                	parameters.put("property1.propertyB.element[0].values[1]", "VALUE4");
-                	parameters.put("property1.propertyB.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyB.element[0].values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.element[0].values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.element[0].values.element[3]", "VALUEX");
 
-                	parameters.put("property1.propertyC.element[0].propertyType2", "2015-01-02");
+                	parameters.put("property1.propertyC.element[0].propertyType3", "2015-01-02");
                 	parameters.put("property1.propertyC.element[0].name", "propName3");
-                	parameters.put("property1.propertyC.element[0].values[0]", "VALUE5");
-                	parameters.put("property1.propertyC.element[0].values[1]", "VALUE6");
-                	parameters.put("property1.propertyC.element[0].values[2]", "VALUEX");
+                	parameters.put("property1.propertyC.element[0].values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.element[0].values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.element[0].values.element[3]", "VALUEX");
                 	
                 }
 
@@ -1874,7 +1874,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 
@@ -1884,7 +1884,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -1892,7 +1892,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 
@@ -1902,7 +1902,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -1910,7 +1910,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 
@@ -1920,7 +1920,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNull(props3);
+                	Assert.assertNotNull(props3);
                 	Assert.assertEquals(2, props3.size());
                 	Assert.assertEquals("VALUE5", props3.get(0));
                 	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -1969,7 +1969,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
 	            	
@@ -2010,8 +2010,8 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property.element[0].propertyType", "set");
 	            	parameters.put("property.element[0].name", "propName");
-	            	parameters.put("property.element[0].values[0]", "VALUE1");
-	            	parameters.put("property.element[0].values[1]", "VALUE2");
+	            	parameters.put("property.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("property.element[0].values.element[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -2022,7 +2022,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
 	            	
@@ -2031,7 +2031,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props = ((SetProperty)property).getValues();
 	            	
-	            	Assert.assertNull(props);
+	            	Assert.assertNotNull(props);
 	            	Assert.assertEquals(2, props.size());
 	            	Assert.assertEquals("VALUE1", props.get(0));
 	            	Assert.assertEquals("VALUE2", props.get(1));
@@ -2079,7 +2079,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
 	            	
@@ -2120,8 +2120,8 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property.element[0].propertyType", "SET");
 	            	parameters.put("property.element[0].name", "propName");
-	            	parameters.put("property.element[0].values[0]", "VALUE1");
-	            	parameters.put("property.element[0].values[1]", "VALUE2");
+	            	parameters.put("property.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("property.element[0].values.element[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -2132,7 +2132,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
 	            	
@@ -2141,7 +2141,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props = ((SetProperty)property).getValues();
 	            	
-	            	Assert.assertNull(props);
+	            	Assert.assertNotNull(props);
 	            	Assert.assertEquals(2, props.size());
 	            	Assert.assertEquals("VALUE1", props.get(0));
 	            	Assert.assertEquals("VALUE2", props.get(1));
@@ -2189,7 +2189,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
 	            	
@@ -2230,8 +2230,8 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property.element[0].propertyType", "1");
 	            	parameters.put("property.element[0].name", "propName");
-	            	parameters.put("property.element[0].values[0]", "VALUE1");
-	            	parameters.put("property.element[0].values[1]", "VALUE2");
+	            	parameters.put("property.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("property.element[0].values.element[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -2242,7 +2242,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
 	            	
@@ -2251,7 +2251,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props = ((SetProperty)property).getValues();
 	            	
-	            	Assert.assertNull(props);
+	            	Assert.assertNotNull(props);
 	            	Assert.assertEquals(2, props.size());
 	            	Assert.assertEquals("VALUE1", props.get(0));
 	            	Assert.assertEquals("VALUE2", props.get(1));
@@ -2299,7 +2299,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
 	            	
@@ -2340,8 +2340,8 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property.element[0].propertyType", "2015-01-02");
 	            	parameters.put("property.element[0].name", "propName");
-	            	parameters.put("property.element[0].values[0]", "VALUE1");
-	            	parameters.put("property.element[0].values[1]", "VALUE2");
+	            	parameters.put("property.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("property.element[0].values.element[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -2352,7 +2352,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property = list.get(0);
 	            	
@@ -2361,7 +2361,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props = ((SetProperty)property).getValues();
 	            	
-	            	Assert.assertNull(props);
+	            	Assert.assertNotNull(props);
 	            	Assert.assertEquals(2, props.size());
 	            	Assert.assertEquals("VALUE1", props.get(0));
 	            	Assert.assertEquals("VALUE2", props.get(1));
@@ -2415,7 +2415,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -2428,7 +2428,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -2470,15 +2470,15 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.element[0].propertyType", "set");
 	            	parameters.put("propertyA.element[0].name", "propName");
-	            	parameters.put("propertyA.element[0].values[0]", "VALUE1");
-	            	parameters.put("propertyA.element[0].values[1]", "VALUE2");
-	            	parameters.put("propertyA.element[0].values[2]", "VALUEX");
+	            	parameters.put("propertyA.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.element[0].values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.element[0].values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.element[0].propertyType2", "set");
 	            	parameters.put("propertyB.element[0].name", "propName");
-	            	parameters.put("propertyB.element[0].values[0]", "VALUE3");
-	            	parameters.put("propertyB.element[0].values[1]", "VALUE4");
-	            	parameters.put("propertyB.element[0].values[2]", "VALUEXX");
+	            	parameters.put("propertyB.element[0].values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.element[0].values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.element[0].values.element[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2490,7 +2490,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -2500,7 +2500,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -2508,7 +2508,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -2518,7 +2518,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));
@@ -2573,7 +2573,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -2586,7 +2586,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -2628,15 +2628,15 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.element[0].propertyType", "SET");
 	            	parameters.put("propertyA.element[0].name", "propName");
-	            	parameters.put("propertyA.element[0].values[0]", "VALUE1");
-	            	parameters.put("propertyA.element[0].values[1]", "VALUE2");
-	            	parameters.put("propertyA.element[0].values[2]", "VALUEX");
+	            	parameters.put("propertyA.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.element[0].values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.element[0].values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.element[0].propertyType2", "SET");
 	            	parameters.put("propertyB.element[0].name", "propName");
-	            	parameters.put("propertyB.element[0].values[0]", "VALUE3");
-	            	parameters.put("propertyB.element[0].values[1]", "VALUE4");
-	            	parameters.put("propertyB.element[0].values[2]", "VALUEXX");
+	            	parameters.put("propertyB.element[0].values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.element[0].values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.element[0].values.element[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2648,7 +2648,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -2658,7 +2658,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -2666,7 +2666,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -2676,7 +2676,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));
@@ -2731,7 +2731,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -2744,7 +2744,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -2786,15 +2786,15 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.element[0].propertyType", "1");
 	            	parameters.put("propertyA.element[0].name", "propName");
-	            	parameters.put("propertyA.element[0].values[0]", "VALUE1");
-	            	parameters.put("propertyA.element[0].values[1]", "VALUE2");
-	            	parameters.put("propertyA.element[0].values[2]", "VALUEX");
+	            	parameters.put("propertyA.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.element[0].values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.element[0].values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.element[0].propertyType2", "1");
 	            	parameters.put("propertyB.element[0].name", "propName");
-	            	parameters.put("propertyB.element[0].values[0]", "VALUE3");
-	            	parameters.put("propertyB.element[0].values[1]", "VALUE4");
-	            	parameters.put("propertyB.element[0].values[2]", "VALUEXX");
+	            	parameters.put("propertyB.element[0].values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.element[0].values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.element[0].values.element[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2806,7 +2806,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -2816,7 +2816,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -2824,7 +2824,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -2834,7 +2834,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));
@@ -2889,7 +2889,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -2902,7 +2902,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -2944,15 +2944,15 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.element[0].propertyType", "2015-01-02");
 	            	parameters.put("propertyA.element[0].name", "propName");
-	            	parameters.put("propertyA.element[0].values[0]", "VALUE1");
-	            	parameters.put("propertyA.element[0].values[1]", "VALUE2");
-	            	parameters.put("propertyA.element[0].values[2]", "VALUEX");
+	            	parameters.put("propertyA.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.element[0].values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.element[0].values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.element[0].propertyType2", "2015-01-02");
 	            	parameters.put("propertyB.element[0].name", "propName");
-	            	parameters.put("propertyB.element[0].values[0]", "VALUE3");
-	            	parameters.put("propertyB.element[0].values[1]", "VALUE4");
-	            	parameters.put("propertyB.element[0].values[2]", "VALUEXX");
+	            	parameters.put("propertyB.element[0].values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.element[0].values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.element[0].values.element[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2964,7 +2964,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -2974,7 +2974,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -2982,7 +2982,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -2992,7 +2992,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));
@@ -3054,7 +3054,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -3067,7 +3067,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -3080,7 +3080,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 	            	
@@ -3122,21 +3122,21 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.element[0].propertyType", "set");
 	            	parameters.put("property1.propertyA.element[0].name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].values[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.element[0].values[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyA.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.element[0].values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.element[0].values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.element[0].propertyType2", "set");
 	            	parameters.put("property1.propertyB.element[0].name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].values[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.element[0].values[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyB.element[0].values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.element[0].values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.element[0].values.element[3]", "VALUEX");
 	
-	            	parameters.put("property1.propertyC.element[0].propertyType2", "set");
+	            	parameters.put("property1.propertyC.element[0].propertyType3", "set");
 	            	parameters.put("property1.propertyC.element[0].name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].values[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.element[0].values[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyC.element[0].values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.element[0].values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.element[0].values.element[3]", "VALUEX");
 	            	
 	            }
 	
@@ -3150,7 +3150,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -3160,7 +3160,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -3168,7 +3168,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -3178,7 +3178,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -3186,7 +3186,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 	
@@ -3196,7 +3196,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props3 = ((SetProperty)property3).getValues();
 	            	
-	            	Assert.assertNull(props3);
+	            	Assert.assertNotNull(props3);
 	            	Assert.assertEquals(2, props3.size());
 	            	Assert.assertEquals("VALUE5", props3.get(0));
 	            	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -3258,7 +3258,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -3271,7 +3271,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -3284,7 +3284,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 	            	
@@ -3326,21 +3326,21 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.element[0].propertyType", "SET");
 	            	parameters.put("property1.propertyA.element[0].name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].values[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.element[0].values[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyA.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.element[0].values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.element[0].values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.element[0].propertyType2", "SET");
 	            	parameters.put("property1.propertyB.element[0].name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].values[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.element[0].values[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyB.element[0].values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.element[0].values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.element[0].values.element[3]", "VALUEX");
 	
-	            	parameters.put("property1.propertyC.element[0].propertyType2", "SET");
+	            	parameters.put("property1.propertyC.element[0].propertyType3", "SET");
 	            	parameters.put("property1.propertyC.element[0].name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].values[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.element[0].values[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyC.element[0].values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.element[0].values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.element[0].values.element[3]", "VALUEX");
 	            	
 	            }
 	
@@ -3354,7 +3354,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -3364,7 +3364,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -3372,7 +3372,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -3382,7 +3382,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -3390,7 +3390,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 	
@@ -3400,7 +3400,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props3 = ((SetProperty)property3).getValues();
 	            	
-	            	Assert.assertNull(props3);
+	            	Assert.assertNotNull(props3);
 	            	Assert.assertEquals(2, props3.size());
 	            	Assert.assertEquals("VALUE5", props3.get(0));
 	            	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -3462,7 +3462,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -3475,7 +3475,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -3488,7 +3488,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 	            	
@@ -3530,21 +3530,21 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.element[0].propertyType", "1");
 	            	parameters.put("property1.propertyA.element[0].name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].values[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.element[0].values[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyA.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.element[0].values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.element[0].values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.element[0].propertyType2", "1");
 	            	parameters.put("property1.propertyB.element[0].name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].values[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.element[0].values[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyB.element[0].values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.element[0].values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.element[0].values.element[3]", "VALUEX");
 	
-	            	parameters.put("property1.propertyC.element[0].propertyType2", "1");
+	            	parameters.put("property1.propertyC.element[0].propertyType3", "1");
 	            	parameters.put("property1.propertyC.element[0].name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].values[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.element[0].values[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyC.element[0].values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.element[0].values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.element[0].values.element[3]", "VALUEX");
 	            	
 	            }
 	
@@ -3558,7 +3558,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -3568,7 +3568,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -3576,7 +3576,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -3586,7 +3586,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -3594,7 +3594,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 	
@@ -3604,7 +3604,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props3 = ((SetProperty)property3).getValues();
 	            	
-	            	Assert.assertNull(props3);
+	            	Assert.assertNotNull(props3);
 	            	Assert.assertEquals(2, props3.size());
 	            	Assert.assertEquals("VALUE5", props3.get(0));
 	            	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -3666,7 +3666,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -3679,7 +3679,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -3692,7 +3692,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 	            	
@@ -3734,21 +3734,21 @@ public class AnyElementCollectionTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.element[0].propertyType", "2015-01-02");
 	            	parameters.put("property1.propertyA.element[0].name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].values[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.element[0].values[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyA.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.element[0].values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.element[0].values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.element[0].propertyType2", "2015-01-02");
 	            	parameters.put("property1.propertyB.element[0].name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].values[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.element[0].values[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyB.element[0].values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.element[0].values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.element[0].values.element[3]", "VALUEX");
 	
-	            	parameters.put("property1.propertyC.element[0].propertyType2", "2015-01-02");
+	            	parameters.put("property1.propertyC.element[0].propertyType3", "2015-01-02");
 	            	parameters.put("property1.propertyC.element[0].name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].values[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.element[0].values[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.element[0].values[2]", "VALUEX");
+	            	parameters.put("property1.propertyC.element[0].values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.element[0].values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.element[0].values.element[3]", "VALUEX");
 	            	
 	            }
 	
@@ -3762,7 +3762,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
 	
@@ -3772,7 +3772,7 @@ public class AnyElementCollectionTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -3780,7 +3780,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list2.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
 	
@@ -3790,7 +3790,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -3798,7 +3798,7 @@ public class AnyElementCollectionTest extends TestCase{
                 	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list3.size());
                 	
                 	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
 	
@@ -3808,7 +3808,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	List<String> props3 = ((SetProperty)property3).getValues();
 	            	
-	            	Assert.assertNull(props3);
+	            	Assert.assertNotNull(props3);
 	            	Assert.assertEquals(2, props3.size());
 	            	Assert.assertEquals("VALUE5", props3.get(0));
 	            	Assert.assertEquals("VALUE6", props3.get(1));                	
