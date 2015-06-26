@@ -1,5 +1,6 @@
 package org.brandao.brutos.annotation;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import org.brandao.brutos.annotation.helper.any.app3.Test10AnyController;
+import org.brandao.brutos.annotation.helper.any.app3.Test5AnyBean;
 import org.brandao.brutos.annotation.helper.any.app3.DecimalProperty;
 import org.brandao.brutos.annotation.helper.any.app3.SetProperty;
 import org.brandao.brutos.annotation.helper.any.app3.Test1AnyBean;
@@ -3003,7 +3006,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 			bean.getProperty3();
                 	
                 	Assert.assertEquals(1, list3.size());
-                	Assert.assertEquals("valuexxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE5"})));
+                	Assert.assertEquals("valuexxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
 	            	
 	            }
 	
@@ -3014,4 +3017,107 @@ public class AnyKeyCollectionTest extends TestCase{
 	        new Class[]{Test9AnyMetaValuesDefinitionController.class});
 	}    
 
+	public void testTest10Controller() throws Throwable{
+	    WebApplicationContextTester.run(
+	        "/controller/test", 
+	        new WebApplicationTester() {
+	
+	            public void prepareContext(Map<String, String> parameters) {
+	                parameters.put(
+	                        ContextLoader.CONTEXT_CLASS,
+	                        MockAnnotationWebApplicationContext.class.getName()
+	                );
+	
+	                parameters.put(
+	                        MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+	                        "true"
+	                );
+	            }
+	
+	            public void prepareSession(Map<String, String> parameters) {
+	            }
+	            
+	            public void prepareRequest(Map<String, String> parameters) {
+	            	parameters.put("property1.propertyA.key[0].propertyType", "set");
+	            	parameters.put("property1.propertyA.key[0].name", "propName1");
+	            	parameters.put("property1.propertyA.key[0].values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.key[0].values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.key[0].values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.element[0]", "valuex");
+	            	
+	            	parameters.put("property1.propertyB.key[0].propertyType2", "set");
+	            	parameters.put("property1.propertyB.key[0].name", "propName2");
+	            	parameters.put("property1.propertyB.key[0].values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.key[0].values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.key[0].values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.element[0]", "valuexx");
+	
+	            	parameters.put("property1.propertyC.key[0].propertyType3", "set");
+	            	parameters.put("property1.propertyC.key[0].name", "propName3");
+	            	parameters.put("property1.propertyC.key[0].values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.key[0].values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.key[0].values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.element[0]", "valuexxx");
+
+	            	parameters.put("propertyD.key[0].propertyType4", "set");
+	            	parameters.put("propertyD.key[0].name", "propName4");
+	            	parameters.put("propertyD.key[0].values.element[0]", "VALUE7");
+	            	parameters.put("propertyD.key[0].values.element[1]", "VALUE8");
+	            	parameters.put("propertyD.key[0].values.element[3]", "VALUEX");
+	            	parameters.put("propertyD.element[0]", "valuexxxx");
+	            	
+	            	parameters.put("propertyE.key[0].propertyType5", "set");
+	            	parameters.put("propertyE.key[0].name", "propName5");
+	            	parameters.put("propertyE.key[0].values.element[0]", "VALUE9");
+	            	parameters.put("propertyE.key[0].values.element[1]", "VALUE10");
+	            	parameters.put("propertyE.key[0].values.element[3]", "VALUEX");
+	            	parameters.put("propertyE.element[0]", "valuexxxxx");
+	            }
+	
+	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+	
+	            	Test10AnyController controller = (Test10AnyController)request.getAttribute("Controller");
+	            	
+	            	Test5AnyBean bean = controller.property1;
+	            	
+                	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
+                			bean.property1;
+                	
+                	Assert.assertEquals(1, list.size());
+                	Assert.assertEquals("valuex", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
+	            	
+                	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
+                			bean.getProperty2();
+                	
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
+	
+                	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
+                			bean.getProperty3();
+                	
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
+
+                	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list4 = 
+                			controller.property2;
+                	
+                	Assert.assertEquals(1, list4.size());
+                	Assert.assertEquals("valuexxxx", list4.get(new SetProperty("propName4", new String[]{"VALUE7","VALUE8"})));
+
+                	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list5 = 
+                			controller.property3;
+                	
+                	Assert.assertEquals(1, list5.size());
+                	Assert.assertEquals("valuexxxxx", list5.get(new SetProperty("propName5", new String[]{"VALUE9","VALUE10"})));
+                	
+	            }
+	
+	            public void checkException(Throwable e) throws Throwable {
+	                throw e;
+	            }
+	        },
+	        new Class[]{Test10AnyController.class});
+	}    
+	
 }

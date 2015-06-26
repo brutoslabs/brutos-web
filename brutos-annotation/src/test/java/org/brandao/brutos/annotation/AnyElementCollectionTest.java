@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
+import org.brandao.brutos.annotation.helper.any.app2.Test10AnyController;
+import org.brandao.brutos.annotation.helper.any.app2.Test5AnyBean;
 import org.brandao.brutos.annotation.helper.any.app2.DecimalProperty;
 import org.brandao.brutos.annotation.helper.any.app2.SetProperty;
 import org.brandao.brutos.annotation.helper.any.app2.Test1AnyBean;
@@ -3822,4 +3824,161 @@ public class AnyElementCollectionTest extends TestCase{
 	        new Class[]{Test9AnyMetaValuesDefinitionController.class});
 	}    
 
+	public void testTest10Controller() throws Throwable{
+	    WebApplicationContextTester.run(
+	        "/controller/test", 
+	        new WebApplicationTester() {
+	
+	            public void prepareContext(Map<String, String> parameters) {
+	                parameters.put(
+	                        ContextLoader.CONTEXT_CLASS,
+	                        MockAnnotationWebApplicationContext.class.getName()
+	                );
+	
+	                parameters.put(
+	                        MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+	                        "true"
+	                );
+	            }
+	
+	            public void prepareSession(Map<String, String> parameters) {
+	            }
+	            
+	            public void prepareRequest(Map<String, String> parameters) {
+	            	parameters.put("property1.propertyA.element[0].propertyType", "set");
+	            	parameters.put("property1.propertyA.element[0].name", "propName1");
+	            	parameters.put("property1.propertyA.element[0].values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.element[0].values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.element[0].values.element[3]", "VALUEX");
+	            	
+	            	parameters.put("property1.propertyB.element[0].propertyType2", "set");
+	            	parameters.put("property1.propertyB.element[0].name", "propName2");
+	            	parameters.put("property1.propertyB.element[0].values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.element[0].values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.element[0].values.element[3]", "VALUEX");
+	
+	            	parameters.put("property1.propertyC.element[0].propertyType3", "set");
+	            	parameters.put("property1.propertyC.element[0].name", "propName3");
+	            	parameters.put("property1.propertyC.element[0].values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.element[0].values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.element[0].values.element[3]", "VALUEX");
+
+	            	parameters.put("propertyD.element[0].propertyType4", "set");
+	            	parameters.put("propertyD.element[0].name", "propName4");
+	            	parameters.put("propertyD.element[0].values.element[0]", "VALUE7");
+	            	parameters.put("propertyD.element[0].values.element[1]", "VALUE8");
+	            	parameters.put("propertyD.element[0].values.element[3]", "VALUEX");
+	            	
+	            	parameters.put("propertyE.element[0].propertyType5", "set");
+	            	parameters.put("propertyE.element[0].name", "propName5");
+	            	parameters.put("propertyE.element[0].values.element[0]", "VALUE9");
+	            	parameters.put("propertyE.element[0].values.element[1]", "VALUE10");
+	            	parameters.put("propertyE.element[0].values.element[3]", "VALUEX");
+	            }
+	
+	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+	                    ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+	
+	            	Test10AnyController controller = (Test10AnyController)request.getAttribute("Controller");
+	            	
+	            	Test5AnyBean bean = controller.property1;
+	            	
+                	List<org.brandao.brutos.annotation.helper.any.app2.Property> list = 
+                			bean.property1;
+                	
+                	Assert.assertEquals(1, list.size());
+                	
+                	org.brandao.brutos.annotation.helper.any.app2.Property property1 = list.get(0);
+	
+	            	Assert.assertEquals("propName1", property1.getName());
+	            	
+	            	Assert.assertTrue(property1 instanceof SetProperty);
+	            	
+	            	List<String> props1 = ((SetProperty)property1).getValues();
+	            	
+	            	Assert.assertNotNull(props1);
+	            	Assert.assertEquals(2, props1.size());
+	            	Assert.assertEquals("VALUE1", props1.get(0));
+	            	Assert.assertEquals("VALUE2", props1.get(1));
+	            	
+                	List<org.brandao.brutos.annotation.helper.any.app2.Property> list2 = 
+                			bean.getProperty2();
+                	
+                	Assert.assertEquals(1, list2.size());
+                	
+                	org.brandao.brutos.annotation.helper.any.app2.Property property2 = list2.get(0);
+	
+	            	Assert.assertEquals("propName2", property2.getName());
+	            	
+	            	Assert.assertTrue(property2 instanceof SetProperty);
+	
+	            	List<String> props2 = ((SetProperty)property2).getValues();
+	            	
+	            	Assert.assertNotNull(props2);
+	            	Assert.assertEquals(2, props2.size());
+	            	Assert.assertEquals("VALUE3", props2.get(0));
+	            	Assert.assertEquals("VALUE4", props2.get(1));                	
+	
+                	List<org.brandao.brutos.annotation.helper.any.app2.Property> list3 = 
+                			bean.getProperty3();
+                	
+                	Assert.assertEquals(1, list3.size());
+                	
+                	org.brandao.brutos.annotation.helper.any.app2.Property property3 = list3.get(0);
+	
+	            	Assert.assertEquals("propName3", property3.getName());
+	            	
+	            	Assert.assertTrue(property3 instanceof SetProperty);
+	
+	            	List<String> props3 = ((SetProperty)property3).getValues();
+	            	
+	            	Assert.assertNotNull(props3);
+	            	Assert.assertEquals(2, props3.size());
+	            	Assert.assertEquals("VALUE5", props3.get(0));
+	            	Assert.assertEquals("VALUE6", props3.get(1));                   	
+
+                	List<org.brandao.brutos.annotation.helper.any.app2.Property> list4 = 
+                			controller.property2;
+                	
+                	Assert.assertEquals(1, list4.size());
+                	
+                	org.brandao.brutos.annotation.helper.any.app2.Property property4 = list4.get(0);
+	
+	            	Assert.assertEquals("propName4", property4.getName());
+	            	
+	            	Assert.assertTrue(property4 instanceof SetProperty);
+	
+	            	List<String> props4 = ((SetProperty)property4).getValues();
+	            	
+	            	Assert.assertNotNull(props4);
+	            	Assert.assertEquals(2, props4.size());
+	            	Assert.assertEquals("VALUE7", props4.get(0));
+	            	Assert.assertEquals("VALUE8", props4.get(1));                   	
+	            
+                	List<org.brandao.brutos.annotation.helper.any.app2.Property> list5 = 
+                			controller.property3;
+                	
+                	Assert.assertEquals(1, list5.size());
+                	
+                	org.brandao.brutos.annotation.helper.any.app2.Property property5 = list5.get(0);
+	
+	            	Assert.assertEquals("propName5", property5.getName());
+	            	
+	            	Assert.assertTrue(property5 instanceof SetProperty);
+	
+	            	List<String> props5 = ((SetProperty)property5).getValues();
+	            	
+	            	Assert.assertNotNull(props5);
+	            	Assert.assertEquals(2, props5.size());
+	            	Assert.assertEquals("VALUE9", props5.get(0));
+	            	Assert.assertEquals("VALUE10", props5.get(1));           	            	
+	            }
+	
+	            public void checkException(Throwable e) throws Throwable {
+	                throw e;
+	            }
+	        },
+	        new Class[]{Test10AnyController.class});
+	}    
+	
 }
