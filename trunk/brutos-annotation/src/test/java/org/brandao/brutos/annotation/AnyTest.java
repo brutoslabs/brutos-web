@@ -1812,7 +1812,7 @@ public class AnyTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyType", "set");
+	            	parameters.put("property.propertyType", "set");
 	            	parameters.put("property.name", "propName");
 	            	parameters.put("property.values.element[0]", "VALUE1");
 	            	parameters.put("property.values.element[1]", "VALUE2");
@@ -1865,7 +1865,7 @@ public class AnyTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyType", "DECIMAL");
+	            	parameters.put("property.propertyType", "DECIMAL");
 	            	parameters.put("property.name", "propName");
 	            	parameters.put("property.length", "10");
 	            	parameters.put("property.decimals", "2");
@@ -1914,7 +1914,7 @@ public class AnyTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyType", "SET");
+	            	parameters.put("property.propertyType", "SET");
 	            	parameters.put("property.name", "propName");
 	            	parameters.put("property.values.element[0]", "VALUE1");
 	            	parameters.put("property.values.element[1]", "VALUE2");
@@ -1967,7 +1967,7 @@ public class AnyTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyType", "0");
+	            	parameters.put("property.propertyType", "0");
 	            	parameters.put("property.name", "propName");
 	            	parameters.put("property.length", "10");
 	            	parameters.put("property.decimals", "2");
@@ -2016,7 +2016,7 @@ public class AnyTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyType", "1");
+	            	parameters.put("property.propertyType", "1");
 	            	parameters.put("property.name", "propName");
 	            	parameters.put("property.values.element[0]", "VALUE1");
 	            	parameters.put("property.values.element[1]", "VALUE2");
@@ -2069,7 +2069,7 @@ public class AnyTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyType", "2015-01-01");
+	            	parameters.put("property.propertyType", "2015-01-01");
 	            	parameters.put("property.name", "propName");
 	            	parameters.put("property.length", "10");
 	            	parameters.put("property.decimals", "2");
@@ -2118,7 +2118,7 @@ public class AnyTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyType", "2015-01-02");
+	            	parameters.put("property.propertyType", "2015-01-02");
 	            	parameters.put("property.name", "propName");
 	            	parameters.put("property.values.element[0]", "VALUE1");
 	            	parameters.put("property.values.element[1]", "VALUE2");
