@@ -81,7 +81,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 10, 2)));
                 }
 
@@ -163,7 +163,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.key[0].propertyType", "DECIMAL");
                 	parameters.put("property.key[0].name", "propName");
-                	parameters.put("property.key[0]length", "10");
+                	parameters.put("property.key[0].length", "10");
                 	parameters.put("property.key[0].decimals", "2");
                 	parameters.put("property.element[0]", "valuex");
                 }
@@ -176,7 +176,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 10, 2)));
                 }
 
@@ -223,7 +223,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
                 }
 
@@ -270,7 +270,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 10, 2)));
                 }
 
@@ -317,7 +317,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
                 }
 
@@ -364,7 +364,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 10, 2)));
                 }
 
@@ -411,7 +411,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
                 }
 
@@ -465,14 +465,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 1, 2)));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName", 3, 4)));
                 	
                 }
 
@@ -528,14 +528,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
                 	
                 }
 
@@ -589,14 +589,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 1, 2)));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName", 3, 4)));
                 	
                 }
 
@@ -652,14 +652,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
                 	
                 }
 
@@ -713,14 +713,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 1, 2)));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName", 3, 4)));
                 	
                 }
 
@@ -776,14 +776,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
                 	
                 }
 
@@ -837,14 +837,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 1, 2)));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName", 3, 4)));
                 	
                 }
 
@@ -888,7 +888,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	parameters.put("propertyB.key[0].values.element[0]", "VALUE3");
                 	parameters.put("propertyB.key[0].values.element[1]", "VALUE4");
                 	parameters.put("propertyB.key[0].values.element[3]", "VALUEXX");
-                	parameters.put("propertyB.element[0]", "valuex");
+                	parameters.put("propertyB.element[0]", "valuexx");
                 	
                 }
 
@@ -900,14 +900,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
                 	
                 }
 
@@ -969,20 +969,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName1", 1, 2)));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName2", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName2", 3, 4)));
 
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new DecimalProperty("propName3", 5, 6)));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName3", 5, 6)));
                 	
                 }
 
@@ -1047,20 +1047,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
 
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxxx", list.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
                 	
                 }
 
@@ -1122,20 +1122,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propNam1e", 1, 2)));
+                	Assert.assertEquals(1, list.size());
+                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName1", 1, 2)));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName2", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName2", 3, 4)));
 
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new DecimalProperty("propName3", 5, 6)));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName3", 5, 6)));
                 	
                 }
 
@@ -1200,21 +1200,21 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
 
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
 
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
                 	
                 }
 
@@ -1276,20 +1276,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName1", 1, 2)));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName2", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName2", 3, 4)));
 
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new DecimalProperty("propName3", 5, 6)));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName3", 5, 6)));
                 	
                 }
 
@@ -1354,20 +1354,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
 
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
                 	
                 }
 
@@ -1426,20 +1426,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName1", 1, 2)));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName2", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName2", 3, 4)));
 
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new DecimalProperty("propName", 5, 6)));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName", 5, 6)));
                 	
                 }
 
@@ -1504,20 +1504,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuexx", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
 
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
                 	
                 }
 
@@ -1564,7 +1564,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 10, 2)));
 	            }
 	
@@ -1611,7 +1611,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
 	            }
 	
@@ -1658,7 +1658,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 10, 2)));
 	            }
 	
@@ -1705,7 +1705,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
 	            }
 	
@@ -1752,7 +1752,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 10, 2)));
 	            }
 	
@@ -1799,7 +1799,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
 	            }
 	
@@ -1846,7 +1846,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 10, 2)));
 	            }
 	
@@ -1893,7 +1893,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
 	            }
 	
@@ -1947,14 +1947,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 1, 2)));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName", 3, 4)));
 	            	
 	            }
 	
@@ -2010,14 +2010,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
 	            	
 	            }
 	
@@ -2071,14 +2071,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 1, 2)));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName", 3, 4)));
 	            	
 	            }
 	
@@ -2134,14 +2134,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
 	            	
 	            }
 	
@@ -2195,14 +2195,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 1, 2)));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName", 3, 4)));
 	            	
 	            }
 	
@@ -2258,14 +2258,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
 	            	
 	            }
 	
@@ -2319,14 +2319,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName", 1, 2)));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName", 3, 4)));
 	            	
 	            }
 	
@@ -2381,14 +2381,14 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			controller.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName", new String[]{"VALUE1","VALUE2"})));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			controller.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName", new String[]{"VALUE3","VALUE4"})));
 	            	
 	            }
 	
@@ -2450,20 +2450,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName1", 1, 2)));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName2", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName2", 3, 4)));
 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new DecimalProperty("propName3", 5, 6)));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName3", 5, 6)));
 	            	
 	            }
 	
@@ -2528,20 +2528,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
 	            	
 	            }
 	
@@ -2603,20 +2603,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName1", 1, 2)));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName2", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName2", 3, 4)));
 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new DecimalProperty("propName3", 5, 6)));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName3", 5, 6)));
 	            	
 	            }
 	
@@ -2681,20 +2681,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE6"})));
 	            	
 	            }
 	
@@ -2756,20 +2756,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName1", 1, 2)));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName2", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName2", 3, 4)));
 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new DecimalProperty("propName3", 5, 6)));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName3", 5, 6)));
 	            	
 	            }
 	
@@ -2834,20 +2834,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE5"})));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE5"})));
 	            	
 	            }
 	
@@ -2909,20 +2909,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName1", 1, 2)));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName2", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName2", 3, 4)));
 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new DecimalProperty("propName3", 5, 6)));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName3", 5, 6)));
 	            	
 	            }
 	
@@ -2987,20 +2987,20 @@ public class AnyKeyCollectionTest extends TestCase{
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list = 
                 			bean.property1;
                 	
-                	Assert.assertEquals(1, list);
+                	Assert.assertEquals(1, list.size());
                 	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName1", 1, 2)));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
-                	Assert.assertEquals(1, list2);
-                	Assert.assertEquals("valuexx", list.get(new DecimalProperty("propName2", 3, 4)));
+                	Assert.assertEquals(1, list2.size());
+                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName2", 3, 4)));
 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals(1, list3);
-                	Assert.assertEquals("valuexxx", list.get(new DecimalProperty("propName3", 5, 6)));
+                	Assert.assertEquals(1, list3.size());
+                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName3", 5, 6)));
 	            	
 	            }
 	
