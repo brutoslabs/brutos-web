@@ -87,7 +87,7 @@ public class KeyCollectionAnnotationConfig
         }
         
         super.applyInternalConfiguration(
-                key, 
+        		keyEntry, 
                 keyBuilder, 
                 componentRegistry);
     }

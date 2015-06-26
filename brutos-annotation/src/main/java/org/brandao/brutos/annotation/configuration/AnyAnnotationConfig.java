@@ -17,13 +17,10 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.ElementCollection;
-import org.brandao.brutos.annotation.Enumerated;
 import org.brandao.brutos.annotation.KeyCollection;
 import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.Stereotype;
-import org.brandao.brutos.annotation.Temporal;
 import org.brandao.brutos.annotation.Transient;
-import org.brandao.brutos.annotation.Type;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
@@ -77,6 +74,16 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig{
             if(source instanceof ConstructorArgEntry){
                 type = "constructor arg";
                 name = ((ConstructorArgEntry)source).getName();
+            }
+            else
+            if(source instanceof KeyEntry){
+                type = "key";
+                name = ((KeyEntry)source).getName();
+            }
+            else
+            if(source instanceof ElementEntry){
+                type = "element";
+                name = ((ElementEntry)source).getName();
             }
             
             throw 
