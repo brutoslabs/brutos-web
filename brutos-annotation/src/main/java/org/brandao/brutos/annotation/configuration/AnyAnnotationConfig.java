@@ -148,7 +148,7 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig{
         		propertyBuilder.buildMetaBean(name, scope, enumProperty, temporalProperty, classType, type);
         
         this.buildMetaValues(any, builder, 
-        		propertyBuilder.getBeanBuilder().getControllerBuilder(), componentRegistry);
+        		propertyBuilder.getControllerBuilder(), componentRegistry);
         
         super.applyInternalConfiguration(
                 source, propertyBuilder, componentRegistry);

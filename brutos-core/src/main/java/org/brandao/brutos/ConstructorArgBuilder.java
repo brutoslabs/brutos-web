@@ -89,7 +89,7 @@ public class ConstructorArgBuilder extends RestrictionBuilder{
     	if(!(this.arg.getType() instanceof AnyType))
     		throw new MappingException("can't add meta bean");
     	
-    	Controller controller = this.arg.getBean().getController();
+    	Controller controller = this.arg.getParent().getController();
 
 		MetaBean metaBean = new MetaBean(controller);
 
