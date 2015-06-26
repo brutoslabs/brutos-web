@@ -82,7 +82,7 @@ public class ElementBuilder extends RestrictionBuilder{
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             Class<?> classType, Type type ){
 
-    	Controller controller = this.element.getBean().getController();
+    	Controller controller = this.element.getParent().getController();
 
 		MetaBean metaBean = new MetaBean(controller);
 

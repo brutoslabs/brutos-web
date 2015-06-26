@@ -82,7 +82,7 @@ public class KeyBuilder extends RestrictionBuilder{
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             Class<?> classType, Type type ){
 
-    	Controller controller = this.key.getBean().getController();
+    	Controller controller = this.key.getParent().getController();
 
 		MetaBean metaBean = new MetaBean(controller);
 
