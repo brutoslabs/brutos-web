@@ -19,7 +19,7 @@ public class Test2AnyBeanMetaValuesDefinition {
 				metaBean=@Basic(bean="propertyType"),
 				metaType=PropertyType.class,
 				metaEnumerated=EnumerationType.STRING,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestEnumMetaValuesDefinition.class
 			)
 		)
 	public List<Property> property1;
@@ -37,7 +37,7 @@ public class Test2AnyBeanMetaValuesDefinition {
 						metaBean=@Basic(bean="propertyType3"),
 						metaType=PropertyType.class,
 						metaEnumerated=EnumerationType.STRING,
-						metaValuesDefinition=TestMetaValuesDefinition.class
+						metaValuesDefinition=TestEnumMetaValuesDefinition.class
 					)
 				)
 			List<Property> property3 ){
@@ -55,7 +55,7 @@ public class Test2AnyBeanMetaValuesDefinition {
 				metaBean=@Basic(bean="propertyType2"),
 				metaType=PropertyType.class,
 				metaEnumerated=EnumerationType.STRING,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestEnumMetaValuesDefinition.class
 			)
 		)
 	public void setProperty2(List<Property> property2) {

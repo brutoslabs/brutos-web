@@ -40,7 +40,7 @@ public class Test1AnyMetaValuesDefinitionController {
 						metaBean=@Basic(bean="propertyType"),
 						metaType=PropertyType.class,
 						metaEnumerated=EnumerationType.STRING,
-						metaValuesDefinition=TestMetaValuesDefinition.class
+						metaValuesDefinition=TestEnumMetaValuesDefinition.class
 					)
 				)
 			List<Property> property){
@@ -54,7 +54,7 @@ public class Test1AnyMetaValuesDefinitionController {
 					@Any(
 						metaBean=@Basic(bean="propertyType"),
 						metaType=Integer.class,
-						metaValuesDefinition=TestMetaValuesDefinition.class
+						metaValuesDefinition=TestDecimalMetaValuesDefinition.class
 					)
 				)
 			List<Property> property){
@@ -69,7 +69,7 @@ public class Test1AnyMetaValuesDefinitionController {
 						metaBean=@Basic(bean="propertyType"),
 						metaType=Date.class,
 						metaTemporal="yyyy-MM-dd",
-						metaValuesDefinition=TestMetaValuesDefinition.class
+						metaValuesDefinition=TestDateMetaValuesDefinition.class
 					)
 				)
 			List<Property> property){

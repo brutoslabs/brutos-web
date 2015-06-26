@@ -626,7 +626,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	Assert.assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
+                	Assert.assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
@@ -784,7 +784,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	Assert.assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
+                	Assert.assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
@@ -942,7 +942,7 @@ public class AnyElementCollectionTest extends TestCase{
 
                 	Assert.assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
+                	Assert.assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
@@ -2514,7 +2514,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	Assert.assertEquals("propName", property2.getName());
 	            	
-	            	Assert.assertTrue(property2 instanceof DecimalProperty);
+	            	Assert.assertTrue(property2 instanceof SetProperty);
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
@@ -2672,7 +2672,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	Assert.assertEquals("propName", property2.getName());
 	            	
-	            	Assert.assertTrue(property2 instanceof DecimalProperty);
+	            	Assert.assertTrue(property2 instanceof SetProperty);
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
@@ -2830,7 +2830,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	Assert.assertEquals("propName", property2.getName());
 	            	
-	            	Assert.assertTrue(property2 instanceof DecimalProperty);
+	            	Assert.assertTrue(property2 instanceof SetProperty);
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
@@ -2988,7 +2988,7 @@ public class AnyElementCollectionTest extends TestCase{
 	
 	            	Assert.assertEquals("propName", property2.getName());
 	            	
-	            	Assert.assertTrue(property2 instanceof DecimalProperty);
+	            	Assert.assertTrue(property2 instanceof SetProperty);
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	

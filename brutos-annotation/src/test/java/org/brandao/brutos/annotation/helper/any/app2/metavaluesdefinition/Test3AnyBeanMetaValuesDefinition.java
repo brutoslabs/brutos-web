@@ -16,7 +16,7 @@ public class Test3AnyBeanMetaValuesDefinition {
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
 				metaType=Integer.class,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestDecimalMetaValuesDefinition.class
 			)
 		)
 	public List<Property> property1;
@@ -33,7 +33,7 @@ public class Test3AnyBeanMetaValuesDefinition {
 					@Any(
 						metaBean=@Basic(bean="propertyType3"),
 						metaType=Integer.class,
-						metaValuesDefinition=TestMetaValuesDefinition.class
+						metaValuesDefinition=TestDecimalMetaValuesDefinition.class
 					)
 				)
 			List<Property> property3 ){
@@ -50,7 +50,7 @@ public class Test3AnyBeanMetaValuesDefinition {
 			@Any(
 				metaBean=@Basic(bean="propertyType2"),
 				metaType=Integer.class,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestDecimalMetaValuesDefinition.class
 			)
 		)
 	public void setProperty2(List<Property> property2) {
