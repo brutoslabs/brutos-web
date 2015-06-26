@@ -111,7 +111,7 @@ public class PropertyBuilder extends RestrictionBuilder{
     	
     	Controller controller = 
 				this.propertyBean instanceof PropertyBean?
-					((PropertyBean)this.propertyBean).getBean().getController() :
+					((PropertyBean)this.propertyBean).getParent().getController() :
 					((PropertyController)this.propertyBean).getController();
 
 		MetaBean metaBean = new MetaBean(controller);

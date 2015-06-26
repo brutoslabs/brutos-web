@@ -2,8 +2,6 @@ package org.brandao.brutos.annotation.helper.any.app1.metavaluesdefinition;
 
 import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Basic;
-import org.brandao.brutos.annotation.EnumerationType;
-import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.Transient;
 import org.brandao.brutos.annotation.helper.any.app1.Property;
 
@@ -13,7 +11,7 @@ public class Test3AnyBeanMetaValuesDefinition {
 	@Any(
 		metaBean=@Basic(bean="propertyType"),
 		metaType=Integer.class,
-		metaValuesDefinition=TestMetaValuesDefinition.class
+		metaValuesDefinition=TestDecimalMetaValuesDefinition.class
 	)
 	public Property property1;
 	
@@ -27,7 +25,7 @@ public class Test3AnyBeanMetaValuesDefinition {
 			@Any(
 				metaBean=@Basic(bean="propertyType3"),
 				metaType=Integer.class,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestDecimalMetaValuesDefinition.class
 			)
 			Property property3 ){
 		this.property3 = property3;
@@ -41,7 +39,7 @@ public class Test3AnyBeanMetaValuesDefinition {
 	@Any(
 		metaBean=@Basic(bean="propertyType2"),
 		metaType=Integer.class,
-		metaValuesDefinition=TestMetaValuesDefinition.class
+		metaValuesDefinition=TestDecimalMetaValuesDefinition.class
 	)
 	public void setProperty2(Property property2) {
 		this.property2 = property2;

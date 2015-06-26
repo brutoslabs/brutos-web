@@ -29,6 +29,10 @@ public class MetaBean extends Bean{
 
     public void putMetaValue(String value, String mapping){
     	Object metaValue = this.type.convert(value);
+    	
+    	if(metaValue == null)
+    		throw new MappingException("invalid meta value: " + value);
+    		
     	this.putMetaValue(metaValue, mapping);
     }
 	

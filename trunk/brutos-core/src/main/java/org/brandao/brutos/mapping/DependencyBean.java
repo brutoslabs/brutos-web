@@ -223,7 +223,16 @@ public abstract class DependencyBean {
                     type.convert( result );
         }
     	else{
-        	result = this.metaBean.getValue(prefix);
+            String pre   = prefix != null? prefix : "";
+            String param = getParameterName();
+            String idx   = index < 0?
+                                "" :
+                                parent.getIndexFormat().replace(
+                                    "$index",
+                                    String.valueOf(index) );
+            String key = pre + param + idx + parent.getSeparator();
+
+        	result = this.metaBean.getValue(key);
         	result = type.convert(result);
         }
 
