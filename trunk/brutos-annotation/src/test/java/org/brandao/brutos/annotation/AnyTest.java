@@ -118,8 +118,8 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.propertyType", "set");
                 	parameters.put("property.name", "propName");
-                	parameters.put("property.values[0]", "VALUE1");
-                	parameters.put("property.values[1]", "VALUE2");
+                	parameters.put("property.values.element[0]", "VALUE1");
+                	parameters.put("property.values.element[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -135,7 +135,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNull(props);
+                	Assert.assertNotNull(props);
                 	Assert.assertEquals(2, props.size());
                 	Assert.assertEquals("VALUE1", props.get(0));
                 	Assert.assertEquals("VALUE2", props.get(1));
@@ -220,8 +220,8 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.propertyType", "SET");
                 	parameters.put("property.name", "propName");
-                	parameters.put("property.values[0]", "VALUE1");
-                	parameters.put("property.values[1]", "VALUE2");
+                	parameters.put("property.values.element[0]", "VALUE1");
+                	parameters.put("property.values.element[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -237,7 +237,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNull(props);
+                	Assert.assertNotNull(props);
                 	Assert.assertEquals(2, props.size());
                 	Assert.assertEquals("VALUE1", props.get(0));
                 	Assert.assertEquals("VALUE2", props.get(1));
@@ -322,8 +322,8 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.propertyType", "1");
                 	parameters.put("property.name", "propName");
-                	parameters.put("property.values[0]", "VALUE1");
-                	parameters.put("property.values[1]", "VALUE2");
+                	parameters.put("property.values.element[0]", "VALUE1");
+                	parameters.put("property.values.element[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -339,7 +339,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNull(props);
+                	Assert.assertNotNull(props);
                 	Assert.assertEquals(2, props.size());
                 	Assert.assertEquals("VALUE1", props.get(0));
                 	Assert.assertEquals("VALUE2", props.get(1));
@@ -424,8 +424,8 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.propertyType", "2015-01-02");
                 	parameters.put("property.name", "propName");
-                	parameters.put("property.values[0]", "VALUE1");
-                	parameters.put("property.values[1]", "VALUE2");
+                	parameters.put("property.values.element[0]", "VALUE1");
+                	parameters.put("property.values.element[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -441,7 +441,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNull(props);
+                	Assert.assertNotNull(props);
                 	Assert.assertEquals(2, props.size());
                 	Assert.assertEquals("VALUE1", props.get(0));
                 	Assert.assertEquals("VALUE2", props.get(1));
@@ -542,15 +542,15 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.propertyType", "set");
                 	parameters.put("propertyA.name", "propName");
-                	parameters.put("propertyA.values[0]", "VALUE1");
-                	parameters.put("propertyA.values[1]", "VALUE2");
-                	parameters.put("propertyA.values[2]", "VALUEX");
+                	parameters.put("propertyA.values.element[0]", "VALUE1");
+                	parameters.put("propertyA.values.element[1]", "VALUE2");
+                	parameters.put("propertyA.values.element[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.propertyType2", "set");
                 	parameters.put("propertyB.name", "propName");
-                	parameters.put("propertyB.values[0]", "VALUE3");
-                	parameters.put("propertyB.values[1]", "VALUE4");
-                	parameters.put("propertyB.values[2]", "VALUEXX");
+                	parameters.put("propertyB.values.element[0]", "VALUE3");
+                	parameters.put("propertyB.values.element[1]", "VALUE4");
+                	parameters.put("propertyB.values.element[3]", "VALUEXX");
                 	
                 }
 
@@ -568,7 +568,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -578,11 +578,11 @@ public class AnyTest extends TestCase{
 
                 	Assert.assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
+                	Assert.assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));
@@ -684,15 +684,15 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.propertyType", "SET");
                 	parameters.put("propertyA.name", "propName");
-                	parameters.put("propertyA.values[0]", "VALUE1");
-                	parameters.put("propertyA.values[1]", "VALUE2");
-                	parameters.put("propertyA.values[2]", "VALUEX");
+                	parameters.put("propertyA.values.element[0]", "VALUE1");
+                	parameters.put("propertyA.values.element[1]", "VALUE2");
+                	parameters.put("propertyA.values.element[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.propertyType2", "SET");
                 	parameters.put("propertyB.name", "propName");
-                	parameters.put("propertyB.values[0]", "VALUE3");
-                	parameters.put("propertyB.values[1]", "VALUE4");
-                	parameters.put("propertyB.values[2]", "VALUEXX");
+                	parameters.put("propertyB.values.element[0]", "VALUE3");
+                	parameters.put("propertyB.values.element[1]", "VALUE4");
+                	parameters.put("propertyB.values.element[3]", "VALUEXX");
                 	
                 }
 
@@ -710,7 +710,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -724,7 +724,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));
@@ -826,15 +826,15 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.propertyType", "1");
                 	parameters.put("propertyA.name", "propName");
-                	parameters.put("propertyA.values[0]", "VALUE1");
-                	parameters.put("propertyA.values[1]", "VALUE2");
-                	parameters.put("propertyA.values[2]", "VALUEX");
+                	parameters.put("propertyA.values.element[0]", "VALUE1");
+                	parameters.put("propertyA.values.element[1]", "VALUE2");
+                	parameters.put("propertyA.values.element[2]", "VALUEX");
                 	
                 	parameters.put("propertyB.propertyType2", "1");
                 	parameters.put("propertyB.name", "propName");
-                	parameters.put("propertyB.values[0]", "VALUE3");
-                	parameters.put("propertyB.values[1]", "VALUE4");
-                	parameters.put("propertyB.values[2]", "VALUEXX");
+                	parameters.put("propertyB.values.element[0]", "VALUE3");
+                	parameters.put("propertyB.values.element[1]", "VALUE4");
+                	parameters.put("propertyB.values.element[2]", "VALUEXX");
                 	
                 }
 
@@ -852,7 +852,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -866,7 +866,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));
@@ -968,15 +968,15 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.propertyType", "2015-01-02");
                 	parameters.put("propertyA.name", "propName");
-                	parameters.put("propertyA.values[0]", "VALUE1");
-                	parameters.put("propertyA.values[1]", "VALUE2");
-                	parameters.put("propertyA.values[2]", "VALUEX");
+                	parameters.put("propertyA.values.element[0]", "VALUE1");
+                	parameters.put("propertyA.values.element[1]", "VALUE2");
+                	parameters.put("propertyA.values.element[2]", "VALUEX");
                 	
                 	parameters.put("propertyB.propertyType2", "2015-01-02");
                 	parameters.put("propertyB.name", "propName");
-                	parameters.put("propertyB.values[0]", "VALUE3");
-                	parameters.put("propertyB.values[1]", "VALUE4");
-                	parameters.put("propertyB.values[2]", "VALUEXX");
+                	parameters.put("propertyB.values.element[0]", "VALUE3");
+                	parameters.put("propertyB.values.element[1]", "VALUE4");
+                	parameters.put("propertyB.values.element[2]", "VALUEXX");
                 	
                 }
 
@@ -994,7 +994,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -1008,7 +1008,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));
@@ -1126,21 +1126,21 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.propertyType", "set");
                 	parameters.put("property1.propertyA.name", "propName1");
-                	parameters.put("property1.propertyA.values[0]", "VALUE1");
-                	parameters.put("property1.propertyA.values[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values[2]", "VALUEX");
+                	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.values.element[2]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "set");
                 	parameters.put("property1.propertyB.name", "propName2");
-                	parameters.put("property1.propertyB.values[0]", "VALUE3");
-                	parameters.put("property1.propertyB.values[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values[2]", "VALUEX");
+                	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.values.element[2]", "VALUEX");
 
                 	parameters.put("property1.propertyC.propertyType2", "set");
                 	parameters.put("property1.propertyC.name", "propName3");
-                	parameters.put("property1.propertyC.values[0]", "VALUE5");
-                	parameters.put("property1.propertyC.values[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values[2]", "VALUEX");
+                	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.values.element[2]", "VALUEX");
                 	
                 }
 
@@ -1160,7 +1160,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -1174,7 +1174,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -1306,21 +1306,21 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.propertyType", "SET");
                 	parameters.put("property1.propertyA.name", "propName1");
-                	parameters.put("property1.propertyA.values[0]", "VALUE1");
-                	parameters.put("property1.propertyA.values[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values[2]", "VALUEX");
+                	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.values.element[2]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "SET");
                 	parameters.put("property1.propertyB.name", "propName2");
-                	parameters.put("property1.propertyB.values[0]", "VALUE3");
-                	parameters.put("property1.propertyB.values[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values[2]", "VALUEX");
+                	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.values.element[2]", "VALUEX");
 
                 	parameters.put("property1.propertyC.propertyType2", "SET");
                 	parameters.put("property1.propertyC.name", "propName3");
-                	parameters.put("property1.propertyC.values[0]", "VALUE5");
-                	parameters.put("property1.propertyC.values[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values[2]", "VALUEX");
+                	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.values.element[2]", "VALUEX");
                 	
                 }
 
@@ -1340,7 +1340,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -1354,7 +1354,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -1368,7 +1368,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNull(props3);
+                	Assert.assertNotNull(props3);
                 	Assert.assertEquals(2, props3.size());
                 	Assert.assertEquals("VALUE5", props3.get(0));
                 	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -1486,21 +1486,21 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.propertyType", "1");
                 	parameters.put("property1.propertyA.name", "propName1");
-                	parameters.put("property1.propertyA.values[0]", "VALUE1");
-                	parameters.put("property1.propertyA.values[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values[2]", "VALUEX");
+                	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.values.element[2]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "1");
                 	parameters.put("property1.propertyB.name", "propName2");
-                	parameters.put("property1.propertyB.values[0]", "VALUE3");
-                	parameters.put("property1.propertyB.values[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values[2]", "VALUEX");
+                	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.values.element[2]", "VALUEX");
 
                 	parameters.put("property1.propertyC.propertyType2", "1");
                 	parameters.put("property1.propertyC.name", "propName3");
-                	parameters.put("property1.propertyC.values[0]", "VALUE5");
-                	parameters.put("property1.propertyC.values[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values[2]", "VALUEX");
+                	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.values.element[2]", "VALUEX");
                 	
                 }
 
@@ -1520,7 +1520,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -1534,7 +1534,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -1548,7 +1548,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNull(props3);
+                	Assert.assertNotNull(props3);
                 	Assert.assertEquals(2, props3.size());
                 	Assert.assertEquals("VALUE5", props3.get(0));
                 	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -1666,21 +1666,21 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.propertyType", "2015-01-02");
                 	parameters.put("property1.propertyA.name", "propName1");
-                	parameters.put("property1.propertyA.values[0]", "VALUE1");
-                	parameters.put("property1.propertyA.values[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values[2]", "VALUEX");
+                	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.values.element[2]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "2015-01-02");
                 	parameters.put("property1.propertyB.name", "propName2");
-                	parameters.put("property1.propertyB.values[0]", "VALUE3");
-                	parameters.put("property1.propertyB.values[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values[2]", "VALUEX");
+                	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.values.element[2]", "VALUEX");
 
                 	parameters.put("property1.propertyC.propertyType2", "2015-01-02");
                 	parameters.put("property1.propertyC.name", "propName3");
-                	parameters.put("property1.propertyC.values[0]", "VALUE5");
-                	parameters.put("property1.propertyC.values[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values[2]", "VALUEX");
+                	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.values.element[2]", "VALUEX");
                 	
                 }
 
@@ -1700,7 +1700,7 @@ public class AnyTest extends TestCase{
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNull(props1);
+                	Assert.assertNotNull(props1);
                 	Assert.assertEquals(2, props1.size());
                 	Assert.assertEquals("VALUE1", props1.get(0));
                 	Assert.assertEquals("VALUE2", props1.get(1));
@@ -1714,7 +1714,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNull(props2);
+                	Assert.assertNotNull(props2);
                 	Assert.assertEquals(2, props2.size());
                 	Assert.assertEquals("VALUE3", props2.get(0));
                 	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -1728,7 +1728,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNull(props3);
+                	Assert.assertNotNull(props3);
                 	Assert.assertEquals(2, props3.size());
                 	Assert.assertEquals("VALUE5", props3.get(0));
                 	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -1814,8 +1814,8 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyType", "set");
 	            	parameters.put("property.name", "propName");
-	            	parameters.put("property.values[0]", "VALUE1");
-	            	parameters.put("property.values[1]", "VALUE2");
+	            	parameters.put("property.values.element[0]", "VALUE1");
+	            	parameters.put("property.values.element[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1831,7 +1831,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props = ((SetProperty)property).getValues();
 	            	
-	            	Assert.assertNull(props);
+	            	Assert.assertNotNull(props);
 	            	Assert.assertEquals(2, props.size());
 	            	Assert.assertEquals("VALUE1", props.get(0));
 	            	Assert.assertEquals("VALUE2", props.get(1));
@@ -1916,8 +1916,8 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyType", "SET");
 	            	parameters.put("property.name", "propName");
-	            	parameters.put("property.values[0]", "VALUE1");
-	            	parameters.put("property.values[1]", "VALUE2");
+	            	parameters.put("property.values.element[0]", "VALUE1");
+	            	parameters.put("property.values.element[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1933,7 +1933,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props = ((SetProperty)property).getValues();
 	            	
-	            	Assert.assertNull(props);
+	            	Assert.assertNotNull(props);
 	            	Assert.assertEquals(2, props.size());
 	            	Assert.assertEquals("VALUE1", props.get(0));
 	            	Assert.assertEquals("VALUE2", props.get(1));
@@ -2018,8 +2018,8 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyType", "1");
 	            	parameters.put("property.name", "propName");
-	            	parameters.put("property.values[0]", "VALUE1");
-	            	parameters.put("property.values[1]", "VALUE2");
+	            	parameters.put("property.values.element[0]", "VALUE1");
+	            	parameters.put("property.values.element[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -2035,7 +2035,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props = ((SetProperty)property).getValues();
 	            	
-	            	Assert.assertNull(props);
+	            	Assert.assertNotNull(props);
 	            	Assert.assertEquals(2, props.size());
 	            	Assert.assertEquals("VALUE1", props.get(0));
 	            	Assert.assertEquals("VALUE2", props.get(1));
@@ -2120,8 +2120,8 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyType", "2015-01-02");
 	            	parameters.put("property.name", "propName");
-	            	parameters.put("property.values[0]", "VALUE1");
-	            	parameters.put("property.values[1]", "VALUE2");
+	            	parameters.put("property.values.element[0]", "VALUE1");
+	            	parameters.put("property.values.element[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -2137,7 +2137,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props = ((SetProperty)property).getValues();
 	            	
-	            	Assert.assertNull(props);
+	            	Assert.assertNotNull(props);
 	            	Assert.assertEquals(2, props.size());
 	            	Assert.assertEquals("VALUE1", props.get(0));
 	            	Assert.assertEquals("VALUE2", props.get(1));
@@ -2238,15 +2238,15 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.propertyType", "set");
 	            	parameters.put("propertyA.name", "propName");
-	            	parameters.put("propertyA.values[0]", "VALUE1");
-	            	parameters.put("propertyA.values[1]", "VALUE2");
-	            	parameters.put("propertyA.values[2]", "VALUEX");
+	            	parameters.put("propertyA.values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.propertyType2", "set");
 	            	parameters.put("propertyB.name", "propName");
-	            	parameters.put("propertyB.values[0]", "VALUE3");
-	            	parameters.put("propertyB.values[1]", "VALUE4");
-	            	parameters.put("propertyB.values[2]", "VALUEXX");
+	            	parameters.put("propertyB.values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.values.element[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2264,7 +2264,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -2274,11 +2274,11 @@ public class AnyTest extends TestCase{
 	
 	            	Assert.assertEquals("propName", property2.getName());
 	            	
-	            	Assert.assertTrue(property2 instanceof DecimalProperty);
+	            	Assert.assertTrue(property2 instanceof SetProperty);
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));
@@ -2380,15 +2380,15 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.propertyType", "SET");
 	            	parameters.put("propertyA.name", "propName");
-	            	parameters.put("propertyA.values[0]", "VALUE1");
-	            	parameters.put("propertyA.values[1]", "VALUE2");
-	            	parameters.put("propertyA.values[2]", "VALUEX");
+	            	parameters.put("propertyA.values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.propertyType2", "SET");
 	            	parameters.put("propertyB.name", "propName");
-	            	parameters.put("propertyB.values[0]", "VALUE3");
-	            	parameters.put("propertyB.values[1]", "VALUE4");
-	            	parameters.put("propertyB.values[2]", "VALUEXX");
+	            	parameters.put("propertyB.values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.values.element[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2406,7 +2406,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -2416,11 +2416,11 @@ public class AnyTest extends TestCase{
 	
 	            	Assert.assertEquals("propName", property2.getName());
 	            	
-	            	Assert.assertTrue(property2 instanceof DecimalProperty);
+	            	Assert.assertTrue(property2 instanceof SetProperty);
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));
@@ -2522,15 +2522,15 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.propertyType", "1");
 	            	parameters.put("propertyA.name", "propName");
-	            	parameters.put("propertyA.values[0]", "VALUE1");
-	            	parameters.put("propertyA.values[1]", "VALUE2");
-	            	parameters.put("propertyA.values[2]", "VALUEX");
+	            	parameters.put("propertyA.values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.propertyType2", "1");
 	            	parameters.put("propertyB.name", "propName");
-	            	parameters.put("propertyB.values[0]", "VALUE3");
-	            	parameters.put("propertyB.values[1]", "VALUE4");
-	            	parameters.put("propertyB.values[2]", "VALUEXX");
+	            	parameters.put("propertyB.values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.values.element[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2548,7 +2548,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -2558,11 +2558,11 @@ public class AnyTest extends TestCase{
 	
 	            	Assert.assertEquals("propName", property2.getName());
 	            	
-	            	Assert.assertTrue(property2 instanceof DecimalProperty);
+	            	Assert.assertTrue(property2 instanceof SetProperty);
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));
@@ -2664,15 +2664,15 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.propertyType", "2015-01-02");
 	            	parameters.put("propertyA.name", "propName");
-	            	parameters.put("propertyA.values[0]", "VALUE1");
-	            	parameters.put("propertyA.values[1]", "VALUE2");
-	            	parameters.put("propertyA.values[2]", "VALUEX");
+	            	parameters.put("propertyA.values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.propertyType2", "2015-01-02");
 	            	parameters.put("propertyB.name", "propName");
-	            	parameters.put("propertyB.values[0]", "VALUE3");
-	            	parameters.put("propertyB.values[1]", "VALUE4");
-	            	parameters.put("propertyB.values[2]", "VALUEXX");
+	            	parameters.put("propertyB.values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.values.element[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2690,7 +2690,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -2700,11 +2700,11 @@ public class AnyTest extends TestCase{
 	
 	            	Assert.assertEquals("propName", property2.getName());
 	            	
-	            	Assert.assertTrue(property2 instanceof DecimalProperty);
+	            	Assert.assertTrue(property2 instanceof SetProperty);
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));
@@ -2822,21 +2822,21 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.propertyType", "set");
 	            	parameters.put("property1.propertyA.name", "propName1");
-	            	parameters.put("property1.propertyA.values[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.values[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.propertyType2", "set");
 	            	parameters.put("property1.propertyB.name", "propName2");
-	            	parameters.put("property1.propertyB.values[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.values[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 	
 	            	parameters.put("property1.propertyC.propertyType2", "set");
 	            	parameters.put("property1.propertyC.name", "propName3");
-	            	parameters.put("property1.propertyC.values[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.values[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
 	            	
 	            }
 	
@@ -2856,7 +2856,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -2870,7 +2870,7 @@ public class AnyTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -2884,7 +2884,7 @@ public class AnyTest extends TestCase{
 	
 	            	List<String> props3 = ((SetProperty)property3).getValues();
 	            	
-	            	Assert.assertNull(props3);
+	            	Assert.assertNotNull(props3);
 	            	Assert.assertEquals(2, props3.size());
 	            	Assert.assertEquals("VALUE5", props3.get(0));
 	            	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -3002,21 +3002,21 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.propertyType", "SET");
 	            	parameters.put("property1.propertyA.name", "propName1");
-	            	parameters.put("property1.propertyA.values[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.values[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.propertyType2", "SET");
 	            	parameters.put("property1.propertyB.name", "propName2");
-	            	parameters.put("property1.propertyB.values[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.values[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 	
 	            	parameters.put("property1.propertyC.propertyType2", "SET");
 	            	parameters.put("property1.propertyC.name", "propName3");
-	            	parameters.put("property1.propertyC.values[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.values[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
 	            	
 	            }
 	
@@ -3036,7 +3036,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -3050,7 +3050,7 @@ public class AnyTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -3064,7 +3064,7 @@ public class AnyTest extends TestCase{
 	
 	            	List<String> props3 = ((SetProperty)property3).getValues();
 	            	
-	            	Assert.assertNull(props3);
+	            	Assert.assertNotNull(props3);
 	            	Assert.assertEquals(2, props3.size());
 	            	Assert.assertEquals("VALUE5", props3.get(0));
 	            	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -3182,21 +3182,21 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.propertyType", "1");
 	            	parameters.put("property1.propertyA.name", "propName1");
-	            	parameters.put("property1.propertyA.values[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.values[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.propertyType2", "1");
 	            	parameters.put("property1.propertyB.name", "propName2");
-	            	parameters.put("property1.propertyB.values[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.values[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 	
 	            	parameters.put("property1.propertyC.propertyType2", "1");
 	            	parameters.put("property1.propertyC.name", "propName3");
-	            	parameters.put("property1.propertyC.values[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.values[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
 	            	
 	            }
 	
@@ -3216,7 +3216,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -3230,7 +3230,7 @@ public class AnyTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -3244,7 +3244,7 @@ public class AnyTest extends TestCase{
 	
 	            	List<String> props3 = ((SetProperty)property3).getValues();
 	            	
-	            	Assert.assertNull(props3);
+	            	Assert.assertNotNull(props3);
 	            	Assert.assertEquals(2, props3.size());
 	            	Assert.assertEquals("VALUE5", props3.get(0));
 	            	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -3362,21 +3362,21 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.propertyType", "2015-01-02");
 	            	parameters.put("property1.propertyA.name", "propName1");
-	            	parameters.put("property1.propertyA.values[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.values[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.values.element[2]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.propertyType2", "2015-01-02");
 	            	parameters.put("property1.propertyB.name", "propName2");
-	            	parameters.put("property1.propertyB.values[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.values[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.values.element[2]", "VALUEX");
 	
 	            	parameters.put("property1.propertyC.propertyType2", "2015-01-02");
 	            	parameters.put("property1.propertyC.name", "propName3");
-	            	parameters.put("property1.propertyC.values[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.values[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.values[2]", "VALUEX");
+	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.values.element[2]", "VALUEX");
 	            	
 	            }
 	
@@ -3396,7 +3396,7 @@ public class AnyTest extends TestCase{
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNull(props1);
+	            	Assert.assertNotNull(props1);
 	            	Assert.assertEquals(2, props1.size());
 	            	Assert.assertEquals("VALUE1", props1.get(0));
 	            	Assert.assertEquals("VALUE2", props1.get(1));
@@ -3410,7 +3410,7 @@ public class AnyTest extends TestCase{
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNull(props2);
+	            	Assert.assertNotNull(props2);
 	            	Assert.assertEquals(2, props2.size());
 	            	Assert.assertEquals("VALUE3", props2.get(0));
 	            	Assert.assertEquals("VALUE4", props2.get(1));                	
@@ -3424,7 +3424,7 @@ public class AnyTest extends TestCase{
 	
 	            	List<String> props3 = ((SetProperty)property3).getValues();
 	            	
-	            	Assert.assertNull(props3);
+	            	Assert.assertNotNull(props3);
 	            	Assert.assertEquals(2, props3.size());
 	            	Assert.assertEquals("VALUE5", props3.get(0));
 	            	Assert.assertEquals("VALUE6", props3.get(1));                	
