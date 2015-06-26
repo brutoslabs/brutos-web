@@ -720,7 +720,7 @@ public class AnyTest extends TestCase{
 
                 	Assert.assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
+                	Assert.assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
@@ -828,13 +828,13 @@ public class AnyTest extends TestCase{
                 	parameters.put("propertyA.name", "propName");
                 	parameters.put("propertyA.values.element[0]", "VALUE1");
                 	parameters.put("propertyA.values.element[1]", "VALUE2");
-                	parameters.put("propertyA.values.element[2]", "VALUEX");
+                	parameters.put("propertyA.values.element[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.propertyType2", "1");
                 	parameters.put("propertyB.name", "propName");
                 	parameters.put("propertyB.values.element[0]", "VALUE3");
                 	parameters.put("propertyB.values.element[1]", "VALUE4");
-                	parameters.put("propertyB.values.element[2]", "VALUEXX");
+                	parameters.put("propertyB.values.element[3]", "VALUEXX");
                 	
                 }
 
@@ -862,7 +862,7 @@ public class AnyTest extends TestCase{
 
                 	Assert.assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
+                	Assert.assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
@@ -970,13 +970,13 @@ public class AnyTest extends TestCase{
                 	parameters.put("propertyA.name", "propName");
                 	parameters.put("propertyA.values.element[0]", "VALUE1");
                 	parameters.put("propertyA.values.element[1]", "VALUE2");
-                	parameters.put("propertyA.values.element[2]", "VALUEX");
+                	parameters.put("propertyA.values.element[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.propertyType2", "2015-01-02");
                 	parameters.put("propertyB.name", "propName");
                 	parameters.put("propertyB.values.element[0]", "VALUE3");
                 	parameters.put("propertyB.values.element[1]", "VALUE4");
-                	parameters.put("propertyB.values.element[2]", "VALUEXX");
+                	parameters.put("propertyB.values.element[3]", "VALUEXX");
                 	
                 }
 
@@ -1004,7 +1004,7 @@ public class AnyTest extends TestCase{
 
                 	Assert.assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
+                	Assert.assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
@@ -1128,19 +1128,19 @@ public class AnyTest extends TestCase{
                 	parameters.put("property1.propertyA.name", "propName1");
                 	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
                 	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "set");
                 	parameters.put("property1.propertyB.name", "propName2");
                 	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
                 	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 
-                	parameters.put("property1.propertyC.propertyType2", "set");
+                	parameters.put("property1.propertyC.propertyType3", "set");
                 	parameters.put("property1.propertyC.name", "propName3");
                 	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
                 	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
                 	
                 }
 
@@ -1188,7 +1188,7 @@ public class AnyTest extends TestCase{
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNull(props3);
+                	Assert.assertNotNull(props3);
                 	Assert.assertEquals(2, props3.size());
                 	Assert.assertEquals("VALUE5", props3.get(0));
                 	Assert.assertEquals("VALUE6", props3.get(1));                	
@@ -1308,19 +1308,19 @@ public class AnyTest extends TestCase{
                 	parameters.put("property1.propertyA.name", "propName1");
                 	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
                 	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "SET");
                 	parameters.put("property1.propertyB.name", "propName2");
                 	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
                 	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 
-                	parameters.put("property1.propertyC.propertyType2", "SET");
+                	parameters.put("property1.propertyC.propertyType3", "SET");
                 	parameters.put("property1.propertyC.name", "propName3");
                 	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
                 	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
                 	
                 }
 
@@ -1488,19 +1488,19 @@ public class AnyTest extends TestCase{
                 	parameters.put("property1.propertyA.name", "propName1");
                 	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
                 	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "1");
                 	parameters.put("property1.propertyB.name", "propName2");
                 	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
                 	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 
-                	parameters.put("property1.propertyC.propertyType2", "1");
+                	parameters.put("property1.propertyC.propertyType3", "1");
                 	parameters.put("property1.propertyC.name", "propName3");
                 	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
                 	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
                 	
                 }
 
@@ -1668,19 +1668,19 @@ public class AnyTest extends TestCase{
                 	parameters.put("property1.propertyA.name", "propName1");
                 	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
                 	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "2015-01-02");
                 	parameters.put("property1.propertyB.name", "propName2");
                 	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
                 	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 
-                	parameters.put("property1.propertyC.propertyType2", "2015-01-02");
+                	parameters.put("property1.propertyC.propertyType3", "2015-01-02");
                 	parameters.put("property1.propertyC.name", "propName3");
                 	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
                 	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values.element[2]", "VALUEX");
+                	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
                 	
                 }
 
@@ -1763,7 +1763,7 @@ public class AnyTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyType", "decimal");
+	            	parameters.put("property.propertyType", "decimal");
 	            	parameters.put("property.name", "propName");
 	            	parameters.put("property.length", "10");
 	            	parameters.put("property.decimals", "2");
@@ -2832,7 +2832,7 @@ public class AnyTest extends TestCase{
 	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
 	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 	
-	            	parameters.put("property1.propertyC.propertyType2", "set");
+	            	parameters.put("property1.propertyC.propertyType3", "set");
 	            	parameters.put("property1.propertyC.name", "propName3");
 	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
 	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
@@ -3012,7 +3012,7 @@ public class AnyTest extends TestCase{
 	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
 	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 	
-	            	parameters.put("property1.propertyC.propertyType2", "SET");
+	            	parameters.put("property1.propertyC.propertyType3", "SET");
 	            	parameters.put("property1.propertyC.name", "propName3");
 	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
 	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
@@ -3192,7 +3192,7 @@ public class AnyTest extends TestCase{
 	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
 	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 	
-	            	parameters.put("property1.propertyC.propertyType2", "1");
+	            	parameters.put("property1.propertyC.propertyType3", "1");
 	            	parameters.put("property1.propertyC.name", "propName3");
 	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
 	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
@@ -3364,19 +3364,19 @@ public class AnyTest extends TestCase{
 	            	parameters.put("property1.propertyA.name", "propName1");
 	            	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
 	            	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.values.element[2]", "VALUEX");
+	            	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.propertyType2", "2015-01-02");
 	            	parameters.put("property1.propertyB.name", "propName2");
 	            	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
 	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.values.element[2]", "VALUEX");
+	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
 	
-	            	parameters.put("property1.propertyC.propertyType2", "2015-01-02");
+	            	parameters.put("property1.propertyC.propertyType3", "2015-01-02");
 	            	parameters.put("property1.propertyC.name", "propName3");
 	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
 	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.values.element[2]", "VALUEX");
+	            	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
 	            	
 	            }
 	

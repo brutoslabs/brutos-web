@@ -5,8 +5,6 @@ import java.util.Date;
 import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.Controller;
-import org.brandao.brutos.annotation.EnumerationType;
-import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.helper.any.app1.Property;
 
 @Controller("/controller")
@@ -17,7 +15,7 @@ public class Test5AnyMetaValuesDefinitionController {
 		metaBean=@Basic(bean="propertyType"),
 		metaType=Date.class,
 		metaTemporal="yyyy-MM-dd",
-		metaValuesDefinition=TestMetaValuesDefinition.class
+		metaValuesDefinition=TestDateMetaValuesDefinition.class
 	)
 	public Property property1;
 	
@@ -32,7 +30,7 @@ public class Test5AnyMetaValuesDefinitionController {
 		metaBean=@Basic(bean="propertyType2"),
 		metaType=Date.class,
 		metaTemporal="yyyy-MM-dd",
-		metaValuesDefinition=TestMetaValuesDefinition.class
+		metaValuesDefinition=TestDateMetaValuesDefinition.class
 	)
 	public void setProperty2(Property property2) {
 		this.property2 = property2;

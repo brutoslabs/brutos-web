@@ -6,7 +6,6 @@ import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.Controller;
 import org.brandao.brutos.annotation.EnumerationType;
-import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.Transient;
 import org.brandao.brutos.annotation.helper.any.app1.Property;
 import org.brandao.brutos.annotation.helper.any.app1.PropertyType;
@@ -34,7 +33,7 @@ public class Test1AnyMetaValuesDefinitionController {
 				metaBean=@Basic(bean="propertyType"),
 				metaType=PropertyType.class,
 				metaEnumerated=EnumerationType.STRING,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestEnumMetaValuesDefinition.class
 			)
 			Property property){
 		this.property = property;
@@ -45,7 +44,7 @@ public class Test1AnyMetaValuesDefinitionController {
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
 				metaType=Integer.class,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestDecimalMetaValuesDefinition.class
 			)
 			Property property){
 		this.property = property;
@@ -57,7 +56,7 @@ public class Test1AnyMetaValuesDefinitionController {
 				metaBean=@Basic(bean="propertyType"),
 				metaType=Date.class,
 				metaTemporal="yyyy-MM-dd",
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestDateMetaValuesDefinition.class
 			)
 			Property property){
 		this.property = property;

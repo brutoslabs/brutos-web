@@ -15,7 +15,7 @@ public class Test4AnyBeanMetaValuesDefinition {
 		metaBean=@Basic(bean="propertyType"),
 		metaType=Date.class,
 		metaTemporal="yyyy-MM-dd",
-		metaValuesDefinition=TestMetaValuesDefinition.class
+		metaValuesDefinition=TestDateMetaValuesDefinition.class
 	)
 	public Property property1;
 	
@@ -30,7 +30,7 @@ public class Test4AnyBeanMetaValuesDefinition {
 				metaBean=@Basic(bean="propertyType3"),
 				metaType=Date.class,
 				metaTemporal="yyyy-MM-dd",
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestDateMetaValuesDefinition.class
 			)
 			Property property3 ){
 		this.property3 = property3;
@@ -45,7 +45,7 @@ public class Test4AnyBeanMetaValuesDefinition {
 		metaBean=@Basic(bean="propertyType2"),
 		metaType=Date.class,
 		metaTemporal="yyyy-MM-dd",
-		metaValuesDefinition=TestMetaValuesDefinition.class
+		metaValuesDefinition=TestDateMetaValuesDefinition.class
 	)
 	public void setProperty2(Property property2) {
 		this.property2 = property2;
