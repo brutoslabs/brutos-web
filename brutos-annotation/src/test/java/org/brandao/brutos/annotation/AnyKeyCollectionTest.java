@@ -1409,13 +1409,13 @@ public class AnyKeyCollectionTest extends TestCase{
                 	parameters.put("property1.propertyB.key[0].name", "propName2");
                 	parameters.put("property1.propertyB.key[0].length", "3");
                 	parameters.put("property1.propertyB.key[0].decimals", "4");
-                	parameters.put("property1.propertyA.element[0]", "valuexx");
+                	parameters.put("property1.propertyB.element[0]", "valuexx");
 
                 	parameters.put("property1.propertyC.key[0].propertyType3", "2015-01-01");
                 	parameters.put("property1.propertyC.key[0].name", "propName3");
                 	parameters.put("property1.propertyC.key[0].length", "5");
                 	parameters.put("property1.propertyC.key[0].decimals", "6");
-                	parameters.put("property1.propertyA.element[0]", "valuexxx");
+                	parameters.put("property1.propertyC.element[0]", "valuexxx");
                 	
                 }
 
@@ -1442,7 +1442,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 			bean.getProperty3();
                 	
                 	Assert.assertEquals(1, list3.size());
-                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName", 5, 6)));
+                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName3", 5, 6)));
                 	
                 }
 
@@ -1508,7 +1508,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 			bean.property1;
                 	
                 	Assert.assertEquals(1, list.size());
-                	Assert.assertEquals("valuexx", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
+                	Assert.assertEquals("valuex", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
                 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
@@ -2512,7 +2512,7 @@ public class AnyKeyCollectionTest extends TestCase{
 	            	parameters.put("property1.propertyB.key[0].values.element[3]", "VALUEX");
 	            	parameters.put("property1.propertyB.element[0]", "valuexx");
 	
-	            	parameters.put("property1.propertyC.key[0].propertyType2", "set");
+	            	parameters.put("property1.propertyC.key[0].propertyType3", "set");
 	            	parameters.put("property1.propertyC.key[0].name", "propName3");
 	            	parameters.put("property1.propertyC.key[0].values.element[0]", "VALUE5");
 	            	parameters.put("property1.propertyC.key[0].values.element[1]", "VALUE6");
@@ -2665,7 +2665,7 @@ public class AnyKeyCollectionTest extends TestCase{
 	            	parameters.put("property1.propertyB.key[0].values.element[3]", "VALUEX");
 	            	parameters.put("property1.propertyB.element[0]", "valuexx");
 	
-	            	parameters.put("property1.propertyC.key[0].propertyType2", "SET");
+	            	parameters.put("property1.propertyC.key[0].propertyType3", "SET");
 	            	parameters.put("property1.propertyC.key[0].name", "propName3");
 	            	parameters.put("property1.propertyC.key[0].values.element[0]", "VALUE5");
 	            	parameters.put("property1.propertyC.key[0].values.element[1]", "VALUE6");
@@ -2818,7 +2818,7 @@ public class AnyKeyCollectionTest extends TestCase{
 	            	parameters.put("property1.propertyB.key[0].values.element[3]", "VALUEX");
 	            	parameters.put("property1.propertyB.element[0]", "valuexx");
 	
-	            	parameters.put("property1.propertyC.key[0].propertyType2", "1");
+	            	parameters.put("property1.propertyC.key[0].propertyType3", "1");
 	            	parameters.put("property1.propertyC.key[0].name", "propName3");
 	            	parameters.put("property1.propertyC.key[0].values.element[0]", "VALUE5");
 	            	parameters.put("property1.propertyC.key[0].values.element[1]", "VALUE6");
@@ -2971,7 +2971,7 @@ public class AnyKeyCollectionTest extends TestCase{
 	            	parameters.put("property1.propertyB.key[0].values.element[3]", "VALUEX");
 	            	parameters.put("property1.propertyB.element[0]", "valuexx");
 	
-	            	parameters.put("property1.propertyC.key[0].propertyType2", "2015-01-02");
+	            	parameters.put("property1.propertyC.key[0].propertyType3", "2015-01-02");
 	            	parameters.put("property1.propertyC.key[0].name", "propName3");
 	            	parameters.put("property1.propertyC.key[0].values.element[0]", "VALUE5");
 	            	parameters.put("property1.propertyC.key[0].values.element[1]", "VALUE6");
@@ -2991,19 +2991,19 @@ public class AnyKeyCollectionTest extends TestCase{
                 			bean.property1;
                 	
                 	Assert.assertEquals(1, list.size());
-                	Assert.assertEquals("valuex", list.get(new DecimalProperty("propName1", 1, 2)));
+                	Assert.assertEquals("valuex", list.get(new SetProperty("propName1", new String[]{"VALUE1","VALUE2"})));
 	            	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list2 = 
                 			bean.getProperty2();
                 	
                 	Assert.assertEquals(1, list2.size());
-                	Assert.assertEquals("valuexx", list2.get(new DecimalProperty("propName2", 3, 4)));
+                	Assert.assertEquals("valuexx", list2.get(new SetProperty("propName2", new String[]{"VALUE3","VALUE4"})));
 	
                 	Map<org.brandao.brutos.annotation.helper.any.app3.Property,String> list3 = 
                 			bean.getProperty3();
                 	
                 	Assert.assertEquals(1, list3.size());
-                	Assert.assertEquals("valuexxx", list3.get(new DecimalProperty("propName3", 5, 6)));
+                	Assert.assertEquals("valuexxx", list3.get(new SetProperty("propName3", new String[]{"VALUE5","VALUE5"})));
 	            	
 	            }
 	
