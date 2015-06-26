@@ -56,7 +56,7 @@ public class AnnotationUtil {
         return result;
     }
     
-    public static boolean isInterceptor(Class clazz){
+    public static boolean isInterceptor(Class<?> clazz){
         boolean isInterceptor =
             clazz.getSimpleName().endsWith("InterceptorController") ||
             clazz.isAnnotationPresent(Intercepts.class);
@@ -64,7 +64,7 @@ public class AnnotationUtil {
         return isInterceptor && !isTransient(clazz);
     }
 
-    public static boolean isInterceptorStack(Class clazz){
+    public static boolean isInterceptorStack(Class<?> clazz){
         boolean isInterceptor =
             isInterceptor(clazz) && 
             (clazz.isAnnotationPresent(InterceptsStackList.class) ||
@@ -73,7 +73,7 @@ public class AnnotationUtil {
         return isInterceptor;
     }
     
-    public static boolean isController(Class clazz){
+    public static boolean isController(Class<?> clazz){
         boolean isController = 
                clazz.getSimpleName().endsWith("Controller") ||
                clazz.isAnnotationPresent(Controller.class);
@@ -81,7 +81,7 @@ public class AnnotationUtil {
         return isController && !isTransient(clazz) && !isInterceptor(clazz);
     }
 
-    public static boolean isScope(Class clazz){
+    public static boolean isScope(Class<?> clazz){
         boolean isScope = 
                clazz.getSimpleName().endsWith("Scope") ||
                clazz.isAnnotationPresent(ExtendedScope.class);
@@ -89,7 +89,7 @@ public class AnnotationUtil {
         return isScope && !isTransient(clazz);
     }
     
-    public static boolean isTransient(Class clazz){
+    public static boolean isTransient(Class<?> clazz){
         return clazz.isAnnotationPresent(Transient.class);
     }
 
@@ -166,14 +166,14 @@ public class AnnotationUtil {
     }
 
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
-            Boolean build, Class type){
+            Boolean build, Class<?> type){
         return build == null?
                 !typeRegistry.isStandardType(type) : 
                 build.booleanValue();
     }
 
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
-            MappingTypes mappingType, Class type){
+            MappingTypes mappingType, Class<?> type){
         return isBuildEntity(
                 typeRegistry,
                 mappingType == null || mappingType == MappingTypes.AUTO?
@@ -182,16 +182,16 @@ public class AnnotationUtil {
                 type);
     }
     
-    public static boolean isComplexBean(Class type){
+    public static boolean isComplexBean(Class<?> type){
         return isUseDefaultMapping(type) || type.isAnnotationPresent(Bean.class);
     }
     
-    public static boolean isUseDefaultMapping(Class type){
+    public static boolean isUseDefaultMapping(Class<?> type){
         return type == Map.class || type == List.class || type == Set.class;
     }
     
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
-            KeyCollection identify, Class type){
+            KeyCollection identify, Class<?> type){
         return isBuildEntity(
                 typeRegistry, 
                 identify == null || identify.mappingType() == MappingTypes.AUTO?
@@ -201,7 +201,7 @@ public class AnnotationUtil {
     }
 
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
-            ElementCollection identify, Class type){
+            ElementCollection identify, Class<?> type){
         return isBuildEntity(
                 typeRegistry, 
                 identify == null || identify.mappingType() == MappingTypes.AUTO?
@@ -211,7 +211,7 @@ public class AnnotationUtil {
     }
     
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
-            Basic identify, Class type){
+            Basic identify, Class<?> type){
         return isBuildEntity(
                 typeRegistry, 
                 identify == null || identify.mappingType() == MappingTypes.AUTO?
@@ -225,7 +225,7 @@ public class AnnotationUtil {
     	if(type == null)
     		return null;
     	
-        Class rawType = TypeUtil.getRawType(type);
+        Class<?> rawType = TypeUtil.getRawType(type);
         Object keyType = TypeUtil.getKeyType(type);
         
         if(keyType != null)
@@ -242,7 +242,7 @@ public class AnnotationUtil {
     	if(type == null)
     		return null;
     	
-        Class rawType = TypeUtil.getRawType(type);
+        Class<?> rawType = TypeUtil.getRawType(type);
         Object elementType = TypeUtil.getCollectionType(type);
         
         if(elementType != null)
@@ -255,11 +255,11 @@ public class AnnotationUtil {
             
     }
 
-    public static boolean isCollection(Class clazz){
+    public static boolean isCollection(Class<?> clazz){
         return isMap(clazz) || Collection.class.isAssignableFrom(clazz);
     }
     
-    public static boolean isMap(Class clazz){
+    public static boolean isMap(Class<?> clazz){
         return Map.class.isAssignableFrom(clazz);
     }
     
@@ -273,18 +273,18 @@ public class AnnotationUtil {
     }
 
     public static AnnotationConfig createAnnotationTree(
-            ConfigurableApplicationContext applicationContext, List<Class> list) {
+            ConfigurableApplicationContext applicationContext, List<Class<?>> list) {
         return createAnnotationTree(null, applicationContext, list);
     }
     
     public static AnnotationConfig createAnnotationTree(
             AnnotationConfig rootAnnotationConfig,
-            ConfigurableApplicationContext applicationContext, List<Class> list) {
+            ConfigurableApplicationContext applicationContext, List<Class<?>> list) {
         
         Logger logger = LoggerProvider
                 .getCurrentLoggerProvider().getLogger(AnnotationApplicationContext.class);
         
-        Map<Class,AnnotationConfigEntry> configMap = getAnnotationConfigEntry(applicationContext, list);
+        Map<Class<?>,AnnotationConfigEntry> configMap = getAnnotationConfigEntry(applicationContext, list);
         List<AnnotationConfigEntry> root = new LinkedList<AnnotationConfigEntry>();
         
         AnnotationConfigEntry config = null;
@@ -332,12 +332,12 @@ public class AnnotationUtil {
         return config.getAnnotationConfig();
     }
 
-    protected static Map<Class,AnnotationConfigEntry> getAnnotationConfigEntry(
-            ConfigurableApplicationContext applicationContext, List<Class> list){
-        Map<Class,AnnotationConfigEntry> map = 
-                new HashMap<Class,AnnotationConfigEntry>();
+    protected static Map<Class<?>,AnnotationConfigEntry> getAnnotationConfigEntry(
+            ConfigurableApplicationContext applicationContext, List<Class<?>> list){
+        Map<Class<?>,AnnotationConfigEntry> map = 
+                new HashMap<Class<?>,AnnotationConfigEntry>();
 
-        for(Class clazz: list){
+        for(Class<?> clazz: list){
             
             if(!clazz.isAnnotationPresent(Stereotype.class) || 
                !AnnotationConfig.class.isAssignableFrom(clazz))
@@ -365,7 +365,7 @@ public class AnnotationUtil {
     }
     
     protected static AnnotationConfigEntry getAnnotationConfig(ConfigurableApplicationContext applicationContext, 
-            Stereotype stereotype, Class clazz) {
+            Stereotype stereotype, Class<?> clazz) {
         
         try{
             AnnotationConfig ac = (AnnotationConfig) ClassUtil.getInstance(clazz);
@@ -479,7 +479,7 @@ public class AnnotationUtil {
             List<org.brandao.brutos.annotation.scanner.TypeFilter> filterList = 
                     new ArrayList<org.brandao.brutos.annotation.scanner.TypeFilter>();
             for(String cn: classNames){
-                Class scannerFilterClass = ClassUtil.get(cn);
+                Class<?> scannerFilterClass = ClassUtil.get(cn);
                 org.brandao.brutos.annotation.scanner.TypeFilter filter = 
                         (org.brandao.brutos.annotation.scanner.TypeFilter)
                         ClassUtil.getInstance(scannerFilterClass);
@@ -523,7 +523,7 @@ public class AnnotationUtil {
             expression = Arrays.asList(typeFilter.pattern());
         else{
             expression = new ArrayList<String>();
-            for(Class c: typeFilter.value())
+            for(Class<?> c: typeFilter.value())
                 expression.add(c.getName());
         }
 
@@ -532,12 +532,12 @@ public class AnnotationUtil {
     
     public static ConfigurationEntry createConfigurationEntry(ComponentScan componentScan){
         
-        Class[] basePackageClass = componentScan.basePackage();
+        Class<?>[] basePackageClass = componentScan.basePackage();
         String[] basePackage = componentScan.value();
         TypeFilter[] excludeFilter = componentScan.excludeFilters();
         TypeFilter[] includeFilters = componentScan.includeFilters();
         boolean useDefaultFilters = componentScan.useDefaultFilters();
-        Class scannerClass = componentScan.scanner();
+        Class<?> scannerClass = componentScan.scanner();
 
         ConfigurationEntry result = new ConfigurationEntry();
         result.setUseDefaultfilter(useDefaultFilters);
@@ -545,7 +545,7 @@ public class AnnotationUtil {
         
         List<String> basePackageList = new ArrayList<String>();
         
-        for(Class c: basePackageClass)
+        for(Class<?> c: basePackageClass)
             basePackageList.add(c.getPackage().getName());
         
         basePackageList.addAll(Arrays.asList(basePackage));
@@ -589,7 +589,27 @@ public class AnnotationUtil {
                 name;
     	
     	return name;
-    	
+   }
+
+    public static Annotation[] getAnnotations(KeyCollection annotation){
+    	return existAnnotation(annotation.any())? new Annotation[]{annotation.any()} : null;
+    }
+
+    public static Annotation[] getAnnotations(ElementCollection annotation){
+    	return existAnnotation(annotation.any())? new Annotation[]{annotation.any()} : null;
     }
     
+   public static boolean existAnnotation(Any annotation){
+	   
+	   if(annotation == null)
+		   return false;
+	   
+	   boolean hasAny = !StringUtil.isEmpty(annotation.metaBean().bean());
+	   hasAny = hasAny || annotation.metaTypeDef() != org.brandao.brutos.type.Type.class;
+	   hasAny = hasAny || annotation.metaType() != void.class;
+	   hasAny = hasAny || annotation.metaValues().length != 0;
+	   hasAny = hasAny || annotation.metaValuesDefinition() != MetaValuesDefinition.class;
+	   
+	   return hasAny;
+   }
 }

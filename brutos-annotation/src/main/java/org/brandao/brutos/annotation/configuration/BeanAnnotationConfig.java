@@ -100,12 +100,16 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         return builder;
     }
 
-    private boolean requiredBeanAnnotation(Class clazz){
+	@Deprecated
+    @SuppressWarnings("unused")
+    private boolean requiredBeanAnnotation(Class<?> clazz){
         return clazz != Map.class && 
                !Collection.class.isAssignableFrom(clazz) &&
                !clazz.isAnnotationPresent(Bean.class);
     }
     
+    @Deprecated
+    @SuppressWarnings("unused")
     private void checkCircularReference(Object builder, Object source){
         
         try{
@@ -133,11 +137,12 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             path += node;
     }
     
-    private String getNode(Class clazz, String name){
+    private String getNode(Class<?> clazz, String name){
         return "["+clazz.getName()+"]." + name;
     }
 
-    private Class getType(Class type){
+    @SuppressWarnings("unused")
+	private Class<?> getType(Class<?> type){
         if(type.getSuperclass() != Object.class)
             return getType(type.getSuperclass());
         else
@@ -185,7 +190,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         }
     }
     
-    protected BeanBuilder createBean(ControllerBuilder controllerBuilder, Class type){
+    protected BeanBuilder createBean(ControllerBuilder controllerBuilder, Class<?> type){
     	
     	if(Map.class.isAssignableFrom(type) ||Collection.class.isAssignableFrom(type))
             return controllerBuilder.buildMappingBean(AnnotationUtil.getBeanName(type) + "#" + count++ , type);
@@ -199,7 +204,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(BeanBuilder builder, 
             KeyEntry source, ComponentRegistry componentRegistry){
         
-        Class classType = source.getTarget() == null? 
+        Class<?> classType = source.getTarget() == null? 
                 ClassUtil.getInstantiableClass(source.getClassType()) : 
                 source.getTarget();
         
@@ -218,7 +223,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(BeanBuilder builder, 
             ElementEntry source, ComponentRegistry componentRegistry){
         
-        Class classType = source.getTarget() == null? 
+        Class<?> classType = source.getTarget() == null? 
                 ClassUtil.getInstantiableClass(source.getClassType()) : 
                 source.getTarget();
         
@@ -240,7 +245,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         
         
         Target target = actionParam.getAnnotation(Target.class);
-        Class classType = target == null? 
+        Class<?> classType = target == null? 
                 ClassUtil.getInstantiableClass(actionParam.getType()) : 
                 target.value();
         
@@ -264,7 +269,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             BeanEntryProperty source, ComponentRegistry componentRegistry){
         
         Target target = source.getAnnotation(Target.class);
-        Class classType = target == null? 
+        Class<?> classType = target == null? 
                 ClassUtil.getInstantiableClass(source.getType()) : 
                 target.value();
         
@@ -288,7 +293,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             BeanEntryProperty source, ComponentRegistry componentRegistry){
         
         Target target = source.getAnnotation(Target.class);
-        Class classType = target == null? 
+        Class<?> classType = target == null? 
                 ClassUtil.getInstantiableClass(source.getType()) : 
                 target.value();
         
@@ -313,7 +318,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             BeanEntryConstructorArg source, ComponentRegistry componentRegistry){
         
         Target target = source.getAnnotation(Target.class);
-        Class classType = target == null? 
+        Class<?> classType = target == null? 
                 ClassUtil.getInstantiableClass(source.getType()) : 
                 target.value();
         
@@ -335,7 +340,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     protected void createBean(ControllerBuilder builder, 
             ImportBeanEntry source, ComponentRegistry componentRegistry){
         
-            Class type  = source.getBeanType();
+            Class<?> type  = source.getBeanType();
             Bean bean = (Bean)type.getAnnotation(Bean.class);
             String name = bean == null? null : StringUtil.adjust(bean.value());
             name = 
@@ -360,7 +365,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             KeyCollection keyCollection, 
             ElementCollection elementCollection){
         
-        Class type = TypeUtil.getRawType(genericType);
+        Class<?> type = TypeUtil.getRawType(genericType);
         
         boolean useDefaultMapping = AnnotationUtil.isUseDefaultMapping(type);
         
@@ -397,7 +402,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
 
     protected void setElement(BeanBuilder beanBuilder, 
             ComponentRegistry componentRegistry, 
-            Object genericType, Class type, 
+            Object genericType, Class<?> type, 
             ElementCollection elementCollection){
         
         if(AnnotationUtil.isCollection(type)){
@@ -408,9 +413,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 		TypeUtil.getRawType(elementType),
                 		(Type)elementType,
                 		elementCollection,
-                		elementCollection == null || StringUtil.isEmpty(elementCollection.any().metaBean().bean())? 
-                				new Annotation[]{} : 
-            					new Annotation[]{elementCollection.any()});
+                		AnnotationUtil.getAnnotations(elementCollection));
 
             super.applyInternalConfiguration(
                     elementEntry, 
@@ -421,7 +424,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     
     protected void setKey(BeanBuilder beanBuilder, 
             ComponentRegistry componentRegistry, 
-            Object genericType, Class type, 
+            Object genericType, Class<?> type, 
             KeyCollection keyCollection){
         
         if(AnnotationUtil.isMap(type)){
@@ -432,9 +435,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 		TypeUtil.getRawType(keyType),
                 		(Type)keyType,
                 		keyCollection,
-                		keyCollection == null || StringUtil.isEmpty(keyCollection.any().metaBean().bean())? 
-                				new Annotation[]{} : 
-            					new Annotation[]{keyCollection.any()});
+                		AnnotationUtil.getAnnotations(keyCollection));
 
             super.applyInternalConfiguration(
                     keyEntry, 
@@ -444,16 +445,16 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     protected void addConstructor(BeanBuilder beanBuilder, 
-            ComponentRegistry componentRegistry, Class clazz){
+            ComponentRegistry componentRegistry, Class<?> clazz){
         
-        Constructor[] constructors = clazz.getDeclaredConstructors();
+        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
         
-        Constructor constructor = null;
+        Constructor<?> constructor = null;
         
         if(constructors.length == 1)
             constructor = constructors[0];
         else{
-            for(Constructor c: constructors){
+            for(Constructor<?> c: constructors){
                 if(c.isAnnotationPresent(org.brandao.brutos.annotation.Constructor.class)){
                     if(constructor != null)
                         throw new BrutosException("expected @Constructor");
@@ -467,7 +468,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             throw new BrutosException("can't determine the constructor of the bean: " + clazz.getName());
         
         Type[] genericTypes = (Type[]) constructor.getGenericParameterTypes();
-        Class[] types = constructor.getParameterTypes();
+        Class<?>[] types = constructor.getParameterTypes();
         Annotation[][] annotations = constructor.getParameterAnnotations();
         
         ConstructorBuilder constructorBuilder = beanBuilder.buildConstructor();
@@ -480,7 +481,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     protected void addfactories(BeanBuilder factoryBuilder, 
-            ComponentRegistry componentRegistry, Class clazz){
+            ComponentRegistry componentRegistry, Class<?> clazz){
         
         Method[] methods = clazz.getDeclaredMethods();
         String factoryName = factoryBuilder.getName();
@@ -490,13 +491,13 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
             if(method.isAnnotationPresent(Bean.class)){
                 Bean bean = method.getAnnotation(Bean.class);
                 Type[] genericTypes = (Type[]) method.getGenericParameterTypes();
-                Class[] types = method.getParameterTypes();
+                Class<?>[] types = method.getParameterTypes();
                 Annotation[][] annotations = method.getParameterAnnotations();
                 
                 ControllerBuilder controllerBuilder = 
                         factoryBuilder.getControllerBuilder();
                 
-                Class type  = method.getReturnType();
+                Class<?> type  = method.getReturnType();
                 String name = StringUtil.adjust(bean.value());
                 name = 
                     StringUtil.isEmpty(name)? 
@@ -526,14 +527,12 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
     }
     
     protected void addProperties(BeanBuilder beanBuilder, 
-            ComponentRegistry componentRegistry, Class clazz){
+            ComponentRegistry componentRegistry, Class<?> clazz){
     
         BeanInstance instance = new BeanInstance(null,clazz);
-        List props = instance.getProperties();
-        for(int i=0;i<props.size();i++){
-            BeanProperty prop = (BeanProperty) props.get(i);
+        List<BeanProperty> props = instance.getProperties();
+        for(BeanProperty prop: props){
             BeanPropertyAnnotationImp annotationProp = new BeanPropertyAnnotationImp(prop);
-            //BeanEntryProperty beanEntry = new BeanEntryProperty(annotationProp);
             super.applyInternalConfiguration(annotationProp, 
                     beanBuilder, componentRegistry);
         }

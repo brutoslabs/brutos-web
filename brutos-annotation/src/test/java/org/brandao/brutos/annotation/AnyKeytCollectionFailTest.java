@@ -57,18 +57,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values is required}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta values not found"))
+                        if(ex.getMessage().equals("meta values is required"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values is required}");
                 }
             },
             new Class[]{Test1FailAnyController.class});
@@ -99,18 +100,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values is required}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta values not found"))
+                        if(ex.getMessage().equals("meta values is required"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values is required}");
                 }
             },
             new Class[]{Test2FailAnyController.class});
@@ -141,18 +143,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("undefined meta bean"))
+                        if(ex.getMessage().equals("meta bean name cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
             },
             new Class[]{Test3FailAnyController.class});
@@ -183,18 +186,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("undefined meta bean"))
+                        if(ex.getMessage().equals("meta bean name cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
             },
             new Class[]{Test4FailAnyController.class});
@@ -225,18 +229,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("undefined meta bean"))
+                        if(ex.getMessage().equals("meta bean name cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
             },
             new Class[]{Test5FailAnyController.class});
@@ -267,18 +272,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("undefined meta bean"))
+                        if(ex.getMessage().equals("meta bean name cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
             },
             new Class[]{Test6FailAnyController.class});
@@ -309,18 +315,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("undefined meta bean"))
+                        if(ex.getMessage().equals("meta bean name cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
             },
             new Class[]{Test7FailAnyController.class});
@@ -351,18 +358,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("undefined meta bean"))
+                        if(ex.getMessage().equals("meta bean name cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
             },
             new Class[]{Test8FailAnyController.class});
@@ -393,18 +401,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("undefined meta bean"))
+                        if(ex.getMessage().equals("meta bean name cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
             },
             new Class[]{Test9FailAnyController.class});
@@ -435,18 +444,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("undefined meta bean"))
+                        if(ex.getMessage().equals("meta bean name cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {undefined meta bean}");
+                    Assert.fail("expected: {meta bean name cannot be empty}");
                 }
             },
             new Class[]{Test10FailAnyController.class});
@@ -477,18 +487,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta values not found"))
+                        if(ex.getMessage().equals("meta values cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values cannot be empty}");
                 }
             },
             new Class[]{Test1FailAnyMetaValuesDefinitionController.class});
@@ -519,18 +530,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta values not found"))
+                        if(ex.getMessage().equals("meta values cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values cannot be empty}");
                 }
             },
             new Class[]{Test2FailAnyMetaValuesDefinitionController.class});
@@ -561,18 +573,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta values not found"))
+                        if(ex.getMessage().equals("meta values cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values cannot be empty}");
                 }
             },
             new Class[]{Test3FailAnyMetaValuesDefinitionController.class});
@@ -603,18 +616,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta values not found"))
+                        if(ex.getMessage().equals("meta values cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values cannot be empty}");
                 }
             },
             new Class[]{Test4FailAnyMetaValuesDefinitionController.class});
@@ -645,18 +659,19 @@ public class AnyKeytCollectionFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values cannot be empty}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta values not found"))
+                        if(ex.getMessage().equals("meta values cannot be empty"))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
-                    Assert.fail("expected: {meta values not found}");
+                    Assert.fail("expected: {meta values cannot be empty}");
                 }
             },
             new Class[]{Test5FailAnyMetaValuesDefinitionController.class});

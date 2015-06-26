@@ -81,7 +81,7 @@ public @interface Any {
 	/**
 	 * Tipo da variável que representa as informações de meta dados.
 	 */
-	Class<?> metaType() default String.class;
+	Class<?> metaType() default void.class;
 
     /**
      * Usado em tipos enum. Os valores estão 
