@@ -117,9 +117,9 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig{
         
         String name = StringUtil.adjust(basic.bean());
         ScopeType scope = AnnotationUtil.getScope(basic);
-        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
-        String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
-        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
+        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
+        String temporalProperty = AnnotationUtil.getTemporalProperty(any);
+        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
         
         MetaBeanBuilder builder = 
         		paramBuilder.buildMetaBean(name, scope, enumProperty, temporalProperty, classType, type);
@@ -140,9 +140,9 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig{
     	
         String name = StringUtil.adjust(basic.bean());
         ScopeType scope = AnnotationUtil.getScope(basic);
-        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
-        String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
-        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
+        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
+        String temporalProperty = AnnotationUtil.getTemporalProperty(any);
+        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
         
         MetaBeanBuilder builder = 
         		propertyBuilder.buildMetaBean(name, scope, enumProperty, temporalProperty, classType, type);
@@ -164,9 +164,9 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig{
 
         String name = StringUtil.adjust(basic.bean());
         ScopeType scope = AnnotationUtil.getScope(basic);
-        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
-        String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
-        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
+        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
+        String temporalProperty = AnnotationUtil.getTemporalProperty(any);
+        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
         
 
         MetaBeanBuilder builder = 
@@ -188,9 +188,9 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig{
 
         String name = StringUtil.adjust(basic.bean());
         ScopeType scope = AnnotationUtil.getScope(basic);
-        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
-        String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
-        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
+        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
+        String temporalProperty = AnnotationUtil.getTemporalProperty(any);
+        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
         
 
         MetaBeanBuilder builder = 
@@ -212,9 +212,9 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig{
 
         String name = StringUtil.adjust(basic.bean());
         ScopeType scope = AnnotationUtil.getScope(basic);
-        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
-        String temporalProperty = AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
-        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
+        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
+        String temporalProperty = AnnotationUtil.getTemporalProperty(any);
+        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
         
 
         MetaBeanBuilder builder = 

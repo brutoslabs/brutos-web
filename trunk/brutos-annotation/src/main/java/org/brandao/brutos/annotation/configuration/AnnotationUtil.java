@@ -21,6 +21,7 @@ import java.lang.annotation.Annotation;
 import java.util.*;
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.annotation.EnumerationType;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.annotation.scanner.DefaultScanner;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -91,17 +92,28 @@ public class AnnotationUtil {
     public static boolean isTransient(Class clazz){
         return clazz.isAnnotationPresent(Transient.class);
     }
-    
-    public static org.brandao.brutos.type.Type getTypeInstance(Type value){
-        if(value != null){
-            Class typeClass = value.value();
-            return (org.brandao.brutos.type.Type)getTypeInstance(typeClass);
-        }
+
+    public static org.brandao.brutos.type.Type getTypeInstance(Any value){
+    	if(value != null){
+    		return value.metaTypeDef() == org.brandao.brutos.type.Type.class? 
+				null :
+				(org.brandao.brutos.type.Type)getTypeInstance(value.metaTypeDef());
+    	}
         else
             return null;
     }
     
-    public static org.brandao.brutos.type.Type getTypeInstance(Class value){
+    public static org.brandao.brutos.type.Type getTypeInstance(Type value){
+    	if(value != null){
+    		return value.value() == org.brandao.brutos.type.Type.class? 
+				null :
+				(org.brandao.brutos.type.Type)getTypeInstance(value.value());
+    	}
+        else
+            return null;
+    }
+    
+    public static org.brandao.brutos.type.Type getTypeInstance(Class<?> value){
         try{
             if(value != null)
                 return (org.brandao.brutos.type.Type)ClassUtil.getInstance(value);
@@ -112,6 +124,10 @@ public class AnnotationUtil {
             throw new BrutosException(e);
         }
     }
+
+    public static String getTemporalProperty(Any value){
+    	return value == null? BrutosConstants.DEFAULT_TEMPORALPROPERTY : value.metaTemporal();
+    }
     
     public static String getTemporalProperty(Temporal value){
         if(value != null)
@@ -120,11 +136,19 @@ public class AnnotationUtil {
             return BrutosConstants.DEFAULT_TEMPORALPROPERTY;
     }
     
+    public static org.brandao.brutos.EnumerationType getEnumerationType(Any value){
+    	return getEnumerationType(value == null? null : value.metaEnumerated());
+    }
+
     public static org.brandao.brutos.EnumerationType getEnumerationType(Enumerated value){
+    	return getEnumerationType(value == null? null : value.value());
+    }
+
+    public static org.brandao.brutos.EnumerationType getEnumerationType(EnumerationType value){
         if(value != null){
             return 
                 org.brandao.brutos.EnumerationType
-                    .valueOf(value.value().name().toLowerCase());
+                    .valueOf(value.name().toLowerCase());
         }
         else
             return BrutosConstants.DEFAULT_ENUMERATIONTYPE;
