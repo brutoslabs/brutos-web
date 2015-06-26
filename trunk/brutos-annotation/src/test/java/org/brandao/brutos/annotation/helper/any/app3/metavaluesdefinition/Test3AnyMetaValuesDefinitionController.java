@@ -20,7 +20,7 @@ public class Test3AnyMetaValuesDefinitionController {
 				metaBean=@Basic(bean="propertyType"),
 				metaType=PropertyType.class,
 				metaEnumerated=EnumerationType.STRING,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestEnumMetaValuesDefinition.class
 			)
 		)
 	public Map<Property,String> property1;
@@ -38,7 +38,7 @@ public class Test3AnyMetaValuesDefinitionController {
 				metaBean=@Basic(bean="propertyType2"),
 				metaType=PropertyType.class,
 				metaEnumerated=EnumerationType.STRING,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestEnumMetaValuesDefinition.class
 			)
 		)
 	public void setProperty2(Map<Property,String> property2) {

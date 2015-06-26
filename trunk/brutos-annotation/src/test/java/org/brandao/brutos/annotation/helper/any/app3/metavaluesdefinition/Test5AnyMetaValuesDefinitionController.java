@@ -19,7 +19,7 @@ public class Test5AnyMetaValuesDefinitionController {
 				metaBean=@Basic(bean="propertyType"),
 				metaType=Date.class,
 				metaTemporal="yyyy-MM-dd",
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestDateMetaValuesDefinition.class
 			)
 		)
 	public Map<Property,String> property1;
@@ -37,7 +37,7 @@ public class Test5AnyMetaValuesDefinitionController {
 				metaBean=@Basic(bean="propertyType2"),
 				metaType=Date.class,
 				metaTemporal="yyyy-MM-dd",
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestDateMetaValuesDefinition.class
 			)
 		)
 	public void setProperty2(Map<Property,String> property2) {
