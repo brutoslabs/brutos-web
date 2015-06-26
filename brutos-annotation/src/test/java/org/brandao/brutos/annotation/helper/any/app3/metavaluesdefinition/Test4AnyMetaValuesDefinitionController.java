@@ -17,7 +17,7 @@ public class Test4AnyMetaValuesDefinitionController {
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
 				metaType=Integer.class,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestDecimalMetaValuesDefinition.class
 			)
 		)
 	public Map<Property,String> property1;
@@ -34,7 +34,7 @@ public class Test4AnyMetaValuesDefinitionController {
 			@Any(
 				metaBean=@Basic(bean="propertyType2"),
 				metaType=Integer.class,
-				metaValuesDefinition=TestMetaValuesDefinition.class
+				metaValuesDefinition=TestDecimalMetaValuesDefinition.class
 			)
 		)
 	public void setProperty2(Map<Property,String> property2) {
