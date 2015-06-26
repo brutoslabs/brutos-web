@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.brandao.brutos.annotation.configuration.MetaValueDefinition;
 import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
-import org.brandao.brutos.annotation.helper.any.app1.DecimalProperty;
-import org.brandao.brutos.annotation.helper.any.app1.SetProperty;
+import org.brandao.brutos.annotation.helper.any.app2.DecimalProperty;
+import org.brandao.brutos.annotation.helper.any.app2.SetProperty;
 
 public class TestMetaValuesDefinition 
 	implements MetaValuesDefinition{

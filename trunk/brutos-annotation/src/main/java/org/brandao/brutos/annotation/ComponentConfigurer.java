@@ -113,10 +113,10 @@ public class ComponentConfigurer {
     
     public void init(ComponentRegistry componentRegistry){
         
-        Set<Class> resultClassList = new HashSet<Class>();
-        Set<Class> firstClassList = new HashSet<Class>();
+        Set<Class<?>> resultClassList = new HashSet<Class<?>>();
+        Set<Class<?>> firstClassList = new HashSet<Class<?>>();
 
-        for(Class clazz: defaultAnnotationConfig)
+        for(Class<?> clazz: defaultAnnotationConfig)
             resultClassList.add(clazz);
         
         if(this.configuration.getConfigClass() == null)
@@ -145,7 +145,7 @@ public class ComponentConfigurer {
             
         }
         
-        List<Class> classList = new ArrayList<Class>(resultClassList);
+        List<Class<?>> classList = new ArrayList<Class<?>>(resultClassList);
         List<Object> objectList = new ArrayList<Object>(resultClassList);
         
         AnnotationConfig rootAnnotationConfig = AnnotationUtil
@@ -192,7 +192,7 @@ public class ComponentConfigurer {
         this.configuration = configuration;
     }
 
-    private void loadClassList(ConfigurationEntry configurationEntry, Set<Class> classList){
+    private void loadClassList(ConfigurationEntry configurationEntry, Set<Class<?>> classList){
             Scanner scanner = 
                     AnnotationUtil.createScanner(configurationEntry, DEFAULT_FILTERS);
             scanner.scan();
