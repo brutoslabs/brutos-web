@@ -279,9 +279,6 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         		AnnotationUtil.getBeanName(source),
         		beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType));
         
-        //BeanBuilder beanBuilder = 
-        //    builder.buildProperty(source.getName(), classType);
-        
         if(beanBuilder != null){
             createBean(beanBuilder, componentRegistry, source.getGenericType(), 
                     source.getAnnotation(KeyCollection.class),

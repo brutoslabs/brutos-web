@@ -25,6 +25,8 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.helper.*;
 import org.brandao.brutos.annotation.helper.bean.BeanConstructorTest;
 import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
+import org.brandao.brutos.annotation.helper.bean.NewArrayList;
+import org.brandao.brutos.annotation.helper.bean.NewHashMap;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
@@ -308,7 +310,7 @@ public class AnnotationApplicationContextBeanTest
 
         PropertyBean property = bean.getProperty("propertyI");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
-        Assert.assertEquals(LinkedHashMap.class, beanProperty.getClassType());
+        Assert.assertEquals(NewHashMap.class, beanProperty.getClassType());
         
         DependencyBean key = ((MapBean)beanProperty).getKey();
         Assert.assertEquals("key", key.getParameterName());
@@ -522,7 +524,7 @@ public class AnnotationApplicationContextBeanTest
 
         PropertyBean property = bean.getProperty("propertyN");
         org.brandao.brutos.mapping.Bean beanProperty = property.getBean();
-        Assert.assertEquals(LinkedList.class, beanProperty.getClassType());
+        Assert.assertEquals(NewArrayList.class, beanProperty.getClassType());
         
         DependencyBean element = ((CollectionBean)beanProperty).getCollection();
         Assert.assertEquals("element", element.getParameterName());

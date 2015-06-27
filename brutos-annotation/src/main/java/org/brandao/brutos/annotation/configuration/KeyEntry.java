@@ -115,6 +115,10 @@ public class KeyEntry implements BeanEntry{
         this.scopeType = scopeType;
     }
 
+    public Class<?> getDeclaredClassType() {
+        return this.classType;
+    }
+    
     public Class<?> getClassType() {
         return this.target == null? this.classType : this.target;
     }
@@ -159,6 +163,10 @@ public class KeyEntry implements BeanEntry{
         return this.getClassType();
     }
 
+    public Type getDeclaredGenericType() {
+    	return this.genericType;
+    }
+    
     public Type getGenericType() {
         return this.target == null? this.genericType : this.target;
     }

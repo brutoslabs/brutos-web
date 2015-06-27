@@ -145,5 +145,13 @@ public class BeanPropertyImp implements BeanProperty{
     public void setName(String name) {
         this.name = name;
     }
+
+	public Object getDeclaredGenericType() {
+		return this.getGenericType();
+	}
+
+	public Class getDeclaredType() {
+		return this.getType();
+	}
     
 }
