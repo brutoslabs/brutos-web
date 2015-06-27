@@ -228,7 +228,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
                             paramNode.getTextContent() :
                             paramValue;
 
-                    interceptorStackBuilder.addParameter(paramName, paramValue);
+                    interceptorStackBuilder.addParameter(interceptorRefName + "." + paramName, paramValue);
                 }
 
             }

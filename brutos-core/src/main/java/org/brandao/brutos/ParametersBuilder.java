@@ -220,7 +220,7 @@ public class ParametersBuilder extends RestrictionBuilder{
 
     public BeanBuilder buildParameter( Class<?> classType ){
         String beanName = 
-                this.action.getCode()+"#"+this.action.getParamterSize();
+                this.action.getCode() + "#" + this.action.getParamterSize();
         BeanBuilder bb = this.controllerBuilder
                     .buildMappingBean(beanName, null, classType);
 
@@ -237,7 +237,7 @@ public class ParametersBuilder extends RestrictionBuilder{
 
     public BeanBuilder buildParameter( String name, Class<?> classType ){
         String beanName = 
-                this.action.getCode()+"#"+this.action.getParamterSize();
+                this.action.getCode() + "#" + this.action.getParamterSize();
         BeanBuilder bb = this.controllerBuilder
                     .buildMappingBean(beanName, null, classType);
 

@@ -64,7 +64,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
         name = StringUtil.adjust(name);
         
         String beanName = this.mappingBean.getName()
-                + "#[" + this.mappingBean.getConstructor().size() + "]";
+                + "#" + this.mappingBean.getConstructor().size();
 
         BeanBuilder beanBuilder =
                 this.beanBuilder.getControllerBuilder().buildMappingBean(
@@ -88,7 +88,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
         name = StringUtil.adjust(name);
         
         String beanName = this.mappingBean.getName()
-                + "#[" + this.mappingBean.getConstructor().size() + "]";
+                + "#" + this.mappingBean.getConstructor().size();
 
         BeanBuilder beanBuilder =
                 this.beanBuilder.getControllerBuilder().buildMappingBean(
