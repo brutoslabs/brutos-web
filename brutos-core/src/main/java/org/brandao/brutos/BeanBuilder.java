@@ -333,6 +333,12 @@ public class BeanBuilder {
         return setElement( name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
             ScopeType.PARAM, null, false, null, null );
     }
+    
+    public ElementBuilder setMappedElement(String name, String ref, Class classType){
+        return setElement( name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
+            ScopeType.PARAM, null, false, null, classType );
+    }
+    
     public ElementBuilder setElement( String name, EnumerationType enumProperty, Class classType ){
         return setElement( name, enumProperty, "dd/MM/yyyy", null,
                 ScopeType.PARAM, null, false, null, classType );

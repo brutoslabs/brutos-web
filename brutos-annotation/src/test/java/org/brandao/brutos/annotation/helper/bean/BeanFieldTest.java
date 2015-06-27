@@ -62,8 +62,8 @@ public class BeanFieldTest {
     private Map<String,Integer> propertyH;
 
     @Target(NewHashMap.class)
-    @ElementCollection(target=String.class)
-    @KeyCollection(target=Integer.class)
+    @KeyCollection(target=String.class)
+    @ElementCollection(target=Integer.class)
     private Map<String,Integer> propertyI;
     
     private Map<BeanConstructorTest,Integer> propertyJ;

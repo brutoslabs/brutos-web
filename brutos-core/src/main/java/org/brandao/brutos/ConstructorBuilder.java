@@ -160,6 +160,11 @@ public class ConstructorBuilder extends RestrictionBuilder{
                 mapping, ScopeType.PARAM, null, false, null, null );
     }
 
+    public ConstructorArgBuilder addMappedContructorArg( String name, String mapping, Class<?> type ){
+        return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
+                mapping, ScopeType.PARAM, null, false, null, (Object)type );
+    }
+    
     /**
      * Faz o mapeamento de um argumento do construtor.
      *

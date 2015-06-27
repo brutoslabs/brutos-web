@@ -228,7 +228,10 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
                 source.getTarget();
         
         BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
-        builder.setMappedElement(source.getName(), beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType));
+        builder.setMappedElement(
+        		source.getName(), 
+        		beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType),
+				classType);
         
         //BeanBuilder beanBuilder = 
         //    builder.buildElement(source.getName(), classType);
@@ -252,7 +255,8 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         BeanBuilder beanBuilder = this.createBean(builder.getControllerBuilder(), classType);
         builder.addParameterMapping(
         		actionParam.getName(), 
-        		beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType), classType);
+        		beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType), 
+        		classType);
         
         //BeanBuilder beanBuilder = 
         //    builder.buildParameter(actionParam.getName(), classType);
@@ -322,7 +326,8 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig{
         BeanBuilder beanBuilder = this.createBean(builder.getBeanBuilder().getControllerBuilder(), classType);
         builder.addMappedContructorArg(
         		source.getName(), 
-        		beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType));
+        		beanBuilder != null? beanBuilder.getName() : AnnotationUtil.getBeanName(classType),
+				classType);
         
         //BeanBuilder beanBuilder = 
         //    builder.buildConstructorArg(source.getName(), classType);

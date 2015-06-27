@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.helper.bean;
 import java.util.LinkedList;
 import java.util.List;
 import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.Target;
 
 /**
@@ -30,7 +31,8 @@ import org.brandao.brutos.annotation.Target;
 public class BeanConstructorTest17 {
         
     public BeanConstructorTest17(
-            @Target(LinkedList.class)
+            @Target(NewArrayList.class)
+            @ElementCollection(target=Integer.class)
             List<Integer> propertyN){
     }
 

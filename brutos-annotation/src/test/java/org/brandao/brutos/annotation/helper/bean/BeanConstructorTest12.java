@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.brandao.brutos.annotation.Bean;
+import org.brandao.brutos.annotation.ElementCollection;
+import org.brandao.brutos.annotation.KeyCollection;
 import org.brandao.brutos.annotation.Target;
 
 /**
@@ -31,7 +33,9 @@ import org.brandao.brutos.annotation.Target;
 public class BeanConstructorTest12 {
         
     public BeanConstructorTest12(
-            @Target(LinkedHashMap.class)
+            @Target(NewHashMap.class)
+            @KeyCollection(target=String.class)
+            @ElementCollection(target=Integer.class)
             Map<String,Integer> propertyI){
     }
 
