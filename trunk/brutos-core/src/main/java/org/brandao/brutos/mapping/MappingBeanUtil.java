@@ -24,6 +24,7 @@ import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.type.NullType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeUtil;
@@ -105,6 +106,14 @@ public final class MappingBeanUtil {
                 mappingBean.getClassType().getName() + "." + propertyName );
 
         if(typeDef == null){
+        	
+        	if(nullable){
+        		if(classType == null)
+                	throw new MappingException("type must be informed");
+        			
+            	typeDef = new NullType((Class)classType);
+        	}
+        	else
         	if(classType != null){
 	            try{
 	                typeDef = 
@@ -124,8 +133,8 @@ public final class MappingBeanUtil {
                         String.format(
                             "expected %s found %s",
                             new Object[]{
-                                rawType.getName(),
-                                typeDef.getClassType().getName()
+                                rawType.getSimpleName(),
+                                typeDef.getClassType().getSimpleName()
                             }
                         )
                 );

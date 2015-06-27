@@ -6,6 +6,7 @@
 package org.brandao.brutos.web;
 
 import java.net.MalformedURLException;
+import java.util.List;
 import java.util.Map;
 import junit.framework.TestCase;
 
@@ -20,8 +21,8 @@ public class URIMappingTest extends TestCase{
 
         TestCase.assertTrue(urim.matches("/test/myid"));
 
-        Map params = urim.getParameters("/test/myid");
-        TestCase.assertEquals("myid", params.get("id"));
+        Map<String,List<String>> params = urim.getParameters("/test/myid");
+        TestCase.assertEquals("myid", params.get("id").get(0));
     }
 
     public void test2() throws MalformedURLException{
@@ -38,9 +39,9 @@ public class URIMappingTest extends TestCase{
         URIMapping urim = new URIMapping("/{id:\\d+}-{name}.htm");
 
         TestCase.assertTrue(urim.matches("/10-teste.htm"));
-        Map params = urim.getParameters("10-teste.htm");
-        TestCase.assertEquals("10", params.get("id"));
-        TestCase.assertEquals("teste", params.get("name"));
+        Map<String,List<String>> params = urim.getParameters("10-teste.htm");
+        TestCase.assertEquals("10", params.get("id").get(0));
+        TestCase.assertEquals("teste", params.get("name").get(0));
     }
 
     public void test5() throws MalformedURLException{

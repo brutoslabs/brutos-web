@@ -834,9 +834,11 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
             });
             TestCase.fail("expected IllegalArgumentException");
         }
-        catch(IllegalArgumentException e){
-            if(!e.getMessage().matches("expected .* found .*"))
+        catch(BrutosException e){
+            if(!e.getMessage().matches("expected EnumTest found SimpleBean")){
+            	e.printStackTrace();
                 TestCase.fail();
+            }
         }
         
     }
@@ -972,8 +974,10 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                         TestCase.fail("expected NullPointerException");
                     }
                     catch( BrutosException e ){
-                        if( !(e.getCause() instanceof IllegalArgumentException))
+                        if( !(e.getCause() instanceof IllegalArgumentException)){
+                        	e.printStackTrace();
                             TestCase.fail("expected NullPointerException");
+                        }
                     }
                 }
 
