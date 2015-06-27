@@ -21,6 +21,7 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.AnyType;
+import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
 
 /**
@@ -258,6 +259,9 @@ public class BeanBuilder {
                 "key" :
                 name;
 
+        if(type == null && mapping == null)
+			throw new MappingException("unknown key type");
+        
         if( !mappingBean.isMap() )
             throw new BrutosException(
                 String.format("is not allowed for this type: %s",
@@ -378,6 +382,9 @@ public class BeanBuilder {
         name = StringUtil.isEmpty(name)?
                 "element" :
                 name;
+
+        if(type == null && mapping == null)
+			throw new MappingException("unknown element type");
         
         if( !mappingBean.isCollection() && !mappingBean.isMap() )
             throw new MappingException(

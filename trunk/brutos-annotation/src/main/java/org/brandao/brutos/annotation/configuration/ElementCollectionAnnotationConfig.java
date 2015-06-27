@@ -57,7 +57,6 @@ public class ElementCollectionAnnotationConfig
             buildElement(element, builder, componentRegistry);
         else
             addElement(element, (BeanBuilder)builder, componentRegistry);
-        
 
         return builder;
     }

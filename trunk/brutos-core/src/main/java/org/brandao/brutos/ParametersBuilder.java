@@ -332,8 +332,8 @@ public class ParametersBuilder extends RestrictionBuilder{
         mapping = StringUtil.adjust(mapping);
         Class<?> rawType = TypeUtil.getRawType(classType);
         
-        if(StringUtil.isEmpty(name))
-        	throw new IllegalArgumentException("parameter name is required");
+        if(StringUtil.isEmpty(name) && value == null && !nullable)
+        	throw new IllegalArgumentException("bean name is required");
         
         if(scope == null)
         	throw new MappingException("invalid scope");

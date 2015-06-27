@@ -229,8 +229,8 @@ public class ConstructorBuilder extends RestrictionBuilder{
 
         name = StringUtil.adjust(name);
 
-        if(StringUtil.isEmpty(name))
-        	throw new MappingException("invalid constructor arg name");
+        if(StringUtil.isEmpty(name) && value == null && !nullable)
+        	throw new IllegalArgumentException("bean name is required");
         
         if(scope == null)
         	throw new MappingException("invalid scope");

@@ -291,9 +291,6 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
                 actionId,
                 actionType);
 
-        if(defaultAction != null)
-        	controllerBuilder.setDefaultAction(defaultAction);
-
         loadAliasController(
             parseUtil
                 .getElements(
@@ -336,6 +333,9 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             controllerBuilder
             );
 
+        if(defaultAction != null)
+        	controllerBuilder.setDefaultAction(defaultAction);
+        
     }
 
     private void loadAliasController( NodeList aliasNode, 

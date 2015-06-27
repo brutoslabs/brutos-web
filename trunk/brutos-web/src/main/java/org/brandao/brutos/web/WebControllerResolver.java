@@ -87,18 +87,30 @@ public class WebControllerResolver implements ControllerResolver{
     		Controller controller,
     		ConfigurableInterceptorHandler handler){
     	
-        URIMapping uriMap = getURIMapping( controllerId );
-
         if(actionType == ActionType.PARAMETER){
+        	
+        	if(controllerId == null)
+        		throw new BrutosException("invalid controller id: " + controllerId);
+        	
+            URIMapping uriMap = getURIMapping( controllerId );
+
             if(uriMap.matches(uri)){
                 updateRequest(uri, scope, uriMap);
                 return true;
             }
         }
         else{
-            if(actionType == ActionType.HIERARCHY && uriMap.matches(uri)){
-                updateRequest(uri, scope, uriMap);
-                return true;
+            if(actionType == ActionType.HIERARCHY){
+            	
+            	if(controllerId == null)
+            		throw new BrutosException("invalid controller id: " + controllerId);
+            	
+                URIMapping uriMap = getURIMapping( controllerId );
+                
+                if(uriMap.matches(uri)){
+	                updateRequest(uri, scope, uriMap);
+	                return true;
+                }
             }
             
             Action action = this.getAction(controller, actionType, uri, scope);

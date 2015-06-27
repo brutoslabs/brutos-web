@@ -41,7 +41,8 @@ public final class MappingBeanUtil {
     
     public static final int DEPENDENCY      = 2;
     
-    public static DependencyBean createDependencyBean( 
+    @SuppressWarnings("unchecked")
+	public static DependencyBean createDependencyBean( 
             String name, String propertyName,
             EnumerationType enumProperty,
             String temporalProperty, String mapping, 
@@ -68,7 +69,7 @@ public final class MappingBeanUtil {
         propertyName     = StringUtil.adjust(propertyName);
         temporalProperty = StringUtil.adjust(temporalProperty);
         mapping          = StringUtil.adjust(mapping);
-        Class rawType    = TypeUtil.getRawType(classType);
+        Class<?> rawType = TypeUtil.getRawType(classType);
         
         DependencyBean dependencyBean;
         
@@ -92,10 +93,8 @@ public final class MappingBeanUtil {
         if( dependencyType == PROPERTY )
             ((PropertyBean)dependencyBean).setName(propertyName);
         else
-        if(StringUtil.isEmpty(name) && StringUtil.isEmpty(mapping)){
-            if(!nullable && value == null)
-                throw new IllegalArgumentException("bean name is required");
-        }
+        if(StringUtil.isEmpty(name) && !nullable && value == null)
+            throw new IllegalArgumentException("bean name is required");
             
         dependencyBean.setTemporalType( temporalProperty );
         dependencyBean.setValue(value);
