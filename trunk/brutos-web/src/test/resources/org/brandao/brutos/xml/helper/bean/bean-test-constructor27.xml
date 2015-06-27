@@ -11,7 +11,7 @@
             target="org.brandao.brutos.helper.controller.SimpleBean">
                 <property name="bean">
                     <bean target="org.brandao.brutos.helper.controller.SimpleBean">
-                        <constructor-arg>
+                        <constructor-arg bean="arg0">
                             <bean target="org.brandao.brutos.helper.controller.SimpleBean">
                                 <property name="arg" bean="bean_arg"/>
                             </bean>

@@ -7,11 +7,11 @@
     <controller
         class="org.brandao.brutos.helper.controller.SimpleController">
 
-        <bean name="bean"
-            target="org.brandao.brutos.helper.controller.SimpleBean">
-                <property name="date">
-                    <ref bean="bean2" mapping="true"/>
-                </property>
+        <bean name="factoryDate"
+            target="java.text.SimpleDateFormat">
+                <constructor-arg type="java.lang.String">
+                    <value>dd/MM/yyyy</value>
+                </constructor-arg>
         </bean>
 
         <bean name="bean2"
@@ -21,11 +21,11 @@
                 </constructor-arg>
         </bean>
 
-        <bean name="factoryDate"
-            target="java.text.SimpleDateFormat">
-                <constructor-arg type="java.lang.String">
-                    <value>dd/MM/yyyy</value>
-                </constructor-arg>
+        <bean name="bean"
+            target="org.brandao.brutos.helper.controller.SimpleBean">
+                <property name="date">
+                    <ref bean="bean2" mapping="true"/>
+                </property>
         </bean>
 
     </controller>
