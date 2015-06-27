@@ -84,4 +84,12 @@ public class BeanPropertyWrapper implements BeanProperty{
     public void setName(String name) {
         this.beanProperty.setName(name);
     }
+
+	public Object getDeclaredGenericType() {
+		return this.beanProperty.getGenericType();
+	}
+
+	public Class getDeclaredType() {
+		return this.beanProperty.getType();
+	}
 }

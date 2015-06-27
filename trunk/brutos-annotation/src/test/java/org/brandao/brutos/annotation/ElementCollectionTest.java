@@ -29,7 +29,6 @@ import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerEle
 import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionPropertyFailTest;
 import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerElementCollectionUnknownTypeTest;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
-import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.test.WebApplicationContextTester;

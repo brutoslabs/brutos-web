@@ -33,6 +33,10 @@ public interface BeanProperty {
     Object get(Object o) throws IllegalAccessException, 
             IllegalArgumentException, InvocationTargetException;
 
+    Object getDeclaredGenericType();
+    
+    Class getDeclaredType();
+    
     Object getGenericType();
     
     Class getType();

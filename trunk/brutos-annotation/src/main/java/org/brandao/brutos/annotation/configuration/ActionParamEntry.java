@@ -68,6 +68,10 @@ public class ActionParamEntry {
         
         return null;
     }
+
+    public Type getDeclaredGenericType() {
+        return this.genericType;
+    }
     
     public Type getGenericType() {
        	Target target = this.getAnnotation(Target.class);
@@ -78,6 +82,10 @@ public class ActionParamEntry {
         this.genericType = genericType;
     }
 
+    public Class getDeclaredType() {
+        return this.type;
+    }
+    
     public Class getType() {
     	Target target = this.getAnnotation(Target.class);
         return target == null? this.type : target.value();

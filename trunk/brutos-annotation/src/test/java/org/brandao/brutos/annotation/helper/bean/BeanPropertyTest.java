@@ -157,7 +157,9 @@ public class BeanPropertyTest {
         return propertyI;
     }
 
-    @Target(LinkedHashMap.class)
+    @Target(NewHashMap.class)
+    @ElementCollection(target=String.class)
+    @KeyCollection(target=Integer.class)
     public void setPropertyI(Map<String,Integer> propertyI) {
         this.propertyI = propertyI;
     }
@@ -200,7 +202,8 @@ public class BeanPropertyTest {
         return propertyN;
     }
 
-    @Target(LinkedList.class)
+    @Target(NewArrayList.class)
+    @ElementCollection(target=Integer.class)
     public void setPropertyN(List<Integer> propertyN) {
         this.propertyN = propertyN;
     }
