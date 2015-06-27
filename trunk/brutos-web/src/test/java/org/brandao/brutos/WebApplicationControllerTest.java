@@ -28,7 +28,6 @@ import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.validator.ValidatorException;
-import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.WebScopeType;
 import org.brandao.brutos.web.XMLWebApplicationContext;
 import org.junit.Assert;
@@ -326,8 +325,10 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
             });
         }
         catch(BrutosException e){
-            if(!e.getMessage().matches(".*org\\.brandao\\.brutos\\.helper\\.controller\\.SimpleController\\.actionWithParam\\(\\s+java\\.lang\\.String\\s+\\).*"))
+            if(!e.getMessage().matches(".*org\\.brandao\\.brutos\\.helper\\.controller\\.SimpleController\\.actionWithParam\\(\\s+java\\.lang\\.String\\s+\\).*")){
+            	e.printStackTrace();
                 Assert.fail("expected BrutosException!");
+            }
         }
     }
 
@@ -344,7 +345,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                         HttpServletRequest request, HttpServletResponse response) {
 
                     app.getScopes().get(WebScopeType.PARAM).put("invoke", "testAction");
-                    app.getScopes().get(WebScopeType.PARAM).put("value", "100");
+                    app.getScopes().get(WebScopeType.PARAM).put("arg0.value", "100");
                     app.getInvoker().invoke("/testController.htm");
 
                     MockRenderView view = (MockRenderView) app.getRenderView();
@@ -371,8 +372,10 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
             });
         }
         catch(BrutosException e){
-            if(!e.getMessage().matches(".*org\\.brandao\\.brutos\\.helper\\.controller\\.SimpleController\\.actionWithParam\\(\\s+java\\.lang\\.String\\s+\\).*"))
+            if(!e.getMessage().matches(".*org\\.brandao\\.brutos\\.helper\\.controller\\.SimpleController\\.actionWithParam\\(\\s+java\\.lang\\.String\\s+\\).*")){
+            	e.printStackTrace();
                 Assert.fail("expected BrutosException!");
+            }
         }
         
     }

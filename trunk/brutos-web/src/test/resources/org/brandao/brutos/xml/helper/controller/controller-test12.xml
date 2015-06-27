@@ -8,9 +8,9 @@
         class="org.brandao.brutos.helper.controller.SimpleController">
             <action id="testAction" view="/viewAction.jsp" dispatcher="redirect"
             executor="actionWithParam">
-                <parameter type="int">
+                <parameter bean="arg0" type="int">
                     <bean target="java.lang.String">
-                        <constructor-arg value="100"/>
+                        <constructor-arg bean="arg0" value="100"/>
                     </bean>
                 </parameter>
             </action>

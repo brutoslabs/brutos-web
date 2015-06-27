@@ -32,13 +32,10 @@ import org.brandao.brutos.helper.controller.BeanTestConstructor9;
 import org.brandao.brutos.helper.controller.EnumTest;
 import org.brandao.brutos.helper.controller.SimpleBean;
 import org.brandao.brutos.helper.controller.SimpleController;
-import org.brandao.brutos.io.ClassPathResource;
-import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.validator.ValidatorException;
-import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.WebScopeType;
 import org.brandao.brutos.web.XMLWebApplicationContext;
 
@@ -52,7 +49,7 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
         super.actionType = ActionType.DETACHED;
     }
     
-    public Class getApplicationContext(String resourceName) {
+    public Class<?> getApplicationContext(String resourceName) {
         return XMLWebApplicationContext.class;
     }
  

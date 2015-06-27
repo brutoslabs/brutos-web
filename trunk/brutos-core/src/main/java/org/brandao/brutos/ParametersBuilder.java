@@ -333,8 +333,8 @@ public class ParametersBuilder extends RestrictionBuilder{
         Class<?> rawType = TypeUtil.getRawType(classType);
         
         if(StringUtil.isEmpty(name))
-        	throw new MappingException("invalid parameter name");
-
+        	throw new IllegalArgumentException("parameter name is required");
+        
         if(scope == null)
         	throw new MappingException("invalid scope");
         
@@ -394,7 +394,7 @@ public class ParametersBuilder extends RestrictionBuilder{
             Type definedType = parameter.getType();
             
             //TODO: remove ObjectType and use if mapping not null
-            if(definedType.getClass() == ObjectType.class && rawType != Object.class)
+            if(definedType != null && definedType.getClass() == ObjectType.class && rawType != Object.class)
             	throw new MappingException("unknown type: " + rawType.getSimpleName());
         }
 

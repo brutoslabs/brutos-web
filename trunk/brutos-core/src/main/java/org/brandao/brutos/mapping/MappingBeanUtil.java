@@ -144,7 +144,7 @@ public final class MappingBeanUtil {
         else{
             Type definedType = dependencyBean.getType();
             
-            if(definedType.getClass() == ObjectType.class && rawType != Object.class)
+            if(definedType != null && definedType.getClass() == ObjectType.class && rawType != Object.class)
             	throw new MappingException("unknown type: " + rawType.getSimpleName());
         }
         
