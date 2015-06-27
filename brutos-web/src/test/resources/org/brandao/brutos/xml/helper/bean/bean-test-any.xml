@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<controllers xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xmlns='http://www.brutosframework.com.br/schema/controllers'
+	xsi:schemaLocation='http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd'>
+
+	<controller class="org.brandao.brutos.helper.controller.SimpleController">
+
+		<action id="/action" executor="action">
+			<parameter>
+				<any bean="parameter_type" type="java.lang.String">
+					<meta-value bean="stringParameter" value="S" />
+					<meta-value value="I">
+						<ref bean="integerParameter"/>
+					</meta-value>
+					<meta-value value="L">
+						<bean target="java.lang.Long">
+							<constructor-arg bean="value"/>
+						</bean>
+					</meta-value>
+				</any>
+			</parameter>
+		</action>
+	</controller>
+
+</controllers>

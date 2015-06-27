@@ -9,7 +9,7 @@
 
         <bean name="bean"
             target="org.brandao.brutos.helper.controller.SimpleBean">
-                <constructor-arg
+                <constructor-arg bean="arg0"
                     type-def="org.brandao.brutos.helper.controller.TypeTest"/>
         </bean>
     </controller>

@@ -7,18 +7,18 @@
     <controller
         class="org.brandao.brutos.helper.controller.SimpleController">
 
-        <bean name="bean"
-            target="org.brandao.brutos.helper.controller.SimpleBean">
-                <property name="date">
-                    <ref bean="bean2" mapping="true"/>
-                </property>
-        </bean>
-
         <bean name="bean2"
             target="java.util.Date" factory="factoryDate" method-factory="parse">
                 <constructor-arg type="java.lang.String">
                     <value>29/08/1984</value>
                 </constructor-arg>
+        </bean>
+
+        <bean name="bean"
+            target="org.brandao.brutos.helper.controller.SimpleBean">
+                <property name="date">
+                    <ref bean="bean2" mapping="true"/>
+                </property>
         </bean>
 
         <bean name="factoryDate"

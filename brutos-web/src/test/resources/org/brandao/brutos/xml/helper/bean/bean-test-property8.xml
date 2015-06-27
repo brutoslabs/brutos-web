@@ -7,11 +7,6 @@
     <controller
         class="org.brandao.brutos.helper.controller.SimpleController">
 
-        <bean name="bean"
-            target="org.brandao.brutos.helper.controller.SimpleBean">
-                <property name="arg" bean="bean2" mapping="true"/>
-        </bean>
-
         <bean name="bean2"
             target="java.lang.String">
                 <constructor-arg type="java.lang.String">
@@ -19,6 +14,10 @@
                 </constructor-arg>
         </bean>
 
+        <bean name="bean"
+            target="org.brandao.brutos.helper.controller.SimpleBean">
+                <property name="arg" bean="bean2" mapping="true"/>
+        </bean>
 
     </controller>
 

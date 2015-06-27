@@ -7,12 +7,12 @@
     <controller
         class="org.brandao.brutos.helper.controller.SimpleController">
 
+        <bean name="data" target="java.util.Date"/>
+        
         <bean name="bean"
             target="org.brandao.brutos.helper.controller.SimpleBean">
                 <constructor-arg bean="data" mapping="true" type="java.util.Date"/>
         </bean>
-
-        <bean name="data" target="java.util.Date"/>
 
     </controller>
 
