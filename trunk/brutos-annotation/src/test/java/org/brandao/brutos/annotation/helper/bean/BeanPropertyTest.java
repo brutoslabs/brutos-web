@@ -158,8 +158,8 @@ public class BeanPropertyTest {
     }
 
     @Target(NewHashMap.class)
-    @ElementCollection(target=String.class)
-    @KeyCollection(target=Integer.class)
+    @KeyCollection(target=String.class)
+    @ElementCollection(target=Integer.class)
     public void setPropertyI(Map<String,Integer> propertyI) {
         this.propertyI = propertyI;
     }
