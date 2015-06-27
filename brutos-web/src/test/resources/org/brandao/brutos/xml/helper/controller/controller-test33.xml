@@ -8,7 +8,7 @@
         class="org.brandao.brutos.helper.controller.SimpleController">
 
         <action id="action" executor="actionWithCollectionParam">
-            <parameter>
+            <parameter bean="arg0">
                 <bean target="java.util.LinkedList"/>
             </parameter>
         </action>

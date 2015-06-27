@@ -1531,9 +1531,10 @@ public class ElementCollectionTest extends TestCase{
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("unknown element type"))
+                        if("unknown element type".equals(ex.getMessage()))
                             return;
                     }while((ex = ex.getCause()) != null);
+                    e.printStackTrace();
                     
                     Assert.fail("expected: {unknown element type}");
                 }

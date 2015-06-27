@@ -167,6 +167,10 @@ public class AnnotationUtil {
 
     public static boolean isBuildEntity(TypeRegistry typeRegistry,
             Boolean build, Class<?> type){
+    	
+    	if(type == null)
+    		return false;
+		else
         return build == null?
                 !typeRegistry.isStandardType(type) : 
                 build.booleanValue();
