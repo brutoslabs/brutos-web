@@ -214,7 +214,6 @@
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
-        <!--<xsd:attribute name="name" type="xsd:string"/>-->
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
         <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>

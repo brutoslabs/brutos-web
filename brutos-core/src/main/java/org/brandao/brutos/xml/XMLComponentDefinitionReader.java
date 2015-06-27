@@ -291,7 +291,8 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
                 actionId,
                 actionType);
 
-        controllerBuilder.setDefaultAction(defaultAction);
+        if(defaultAction != null)
+        	controllerBuilder.setDefaultAction(defaultAction);
 
         loadAliasController(
             parseUtil
@@ -472,7 +473,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
 
     }
 
-    private void addBean( Element beanNode,
+    private void addBean( String name, Element beanNode,
             ParametersBuilder parametersBuilder, Class paramType){
 
         String separator     = parseUtil.getAttribute(beanNode,"separator" );
@@ -489,7 +490,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             throw new BrutosException( ex );
         }
 
-        BeanBuilder beanBuilder = parametersBuilder.buildParameter(paramType,clazz);
+        BeanBuilder beanBuilder = parametersBuilder.buildParameter(name, paramType,clazz);
 
         beanBuilder.setFactory(factory);
         beanBuilder.setMethodfactory(methodFactory);
@@ -606,13 +607,6 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             try{
                 if( factoryName != null ){
                     factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
-                    /*
-                    factory = (Type)Class.forName(
-                                factoryName,
-                                true,
-                                Thread.currentThread().getContextClassLoader() )
-                                    .newInstance();
-                    */
                 }
                 
                 if(typeName != null)
@@ -1085,7 +1079,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         }
         else
         if( beanNode != null ){
-            addBean( beanNode, parametersBuilder, typeClass );
+            addBean(bean, beanNode, parametersBuilder, typeClass );
             return;
         }
         else
