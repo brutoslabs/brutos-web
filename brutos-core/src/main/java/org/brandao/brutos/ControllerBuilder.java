@@ -26,6 +26,7 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.AnyType;
+import org.brandao.brutos.type.NullType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeUtil;
@@ -837,9 +838,17 @@ public class ControllerBuilder {
 
         if(type == null){
             try{
-                type = 
-	        		this.applicationContext.getTypeManager()
-	                		.getType(genericType, enumProperty, temporalProperty );
+            	if(nullable){
+            		if(classType == null)
+                    	throw new MappingException("type must be informed");
+            			
+                	type = new NullType((Class<?>)classType);
+            	}
+            	else{
+	                type = 
+		        		this.applicationContext.getTypeManager()
+		                		.getType(genericType, enumProperty, temporalProperty );
+            	}
                 
             }
             catch( UnknownTypeException e ){
