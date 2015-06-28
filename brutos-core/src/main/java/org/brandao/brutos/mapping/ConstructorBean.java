@@ -28,6 +28,7 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.TypeManager;
+import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.validator.Validator;
 import org.brandao.brutos.validator.ValidatorException;
 
@@ -119,12 +120,17 @@ public class ConstructorBean {
                     if( getConstructorArg(k).getType() == null ){
                         ConstructorArgBean argBean =
                         getConstructorArg(k);
-                        argBean.setType(
-                                ((ConfigurableApplicationContext)this.getBean().getController().getContext())
-                                    .getTypeManager().getType(
-                                params[k],
-                                argBean.getEnumProperty(),
-                                argBean.getTemporalType()));
+                        
+                        if(argBean.getMetaBean() != null)
+                        	argBean.setType(new AnyType(params[k]));
+                        else{
+	                        argBean.setType(
+	                                ((ConfigurableApplicationContext)this.getBean().getController().getContext())
+	                                    .getTypeManager().getType(
+	                                params[k],
+	                                argBean.getEnumProperty(),
+	                                argBean.getTemporalType()));
+                        }
                     }
                 }
                 return con;

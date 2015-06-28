@@ -25,7 +25,6 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingBeanUtil;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
 
 /**
@@ -162,7 +161,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
 
     public ConstructorArgBuilder addMappedContructorArg( String name, String mapping, Class<?> type ){
         return addContructorArg( name, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, ScopeType.PARAM, null, false, null, (Object)type );
+                mapping, ScopeType.PARAM, null, false, false, null, (Object)type );
     }
     
     /**
@@ -218,19 +217,26 @@ public class ConstructorBuilder extends RestrictionBuilder{
             EnumerationType enumProperty, String temporalProperty, String mapping,
             ScopeType scope, Object value, boolean nullable, Type typeDef, Class<?> type ){
         return addContructorArg( name, enumProperty, temporalProperty, mapping,
-            scope, value, nullable, typeDef, (Object)type );
+            scope, value, nullable, false, typeDef, (Object)type );
     }
 
     public ConstructorArgBuilder addGenericContructorArg(String name, Class<?> type){
     	return 
 			this.addContructorArg(name, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
 				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null,
-                BrutosConstants.DEFAULT_SCOPETYPE, null, false, new AnyType(type), type );
+                BrutosConstants.DEFAULT_SCOPETYPE, null, false, true, null, type );
+    }
+
+    public ConstructorArgBuilder addGenericContructorArg(String name){
+    	return 
+			this.addContructorArg(name, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null,
+                BrutosConstants.DEFAULT_SCOPETYPE, null, false, true, null, null);
     }
     
     public ConstructorArgBuilder addContructorArg( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, boolean nullable, Type typeDef, Object type ){
+            ScopeType scope, Object value, boolean nullable, boolean generic, Type typeDef, Object type ){
 
         name = StringUtil.adjust(name);
 
@@ -248,8 +254,8 @@ public class ConstructorBuilder extends RestrictionBuilder{
         
         ConstructorArgBean arg =
             (ConstructorArgBean) MappingBeanUtil.createDependencyBean(name, null,
-                enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                typeDef, type, MappingBeanUtil.CONSTRUCTOR_ARG, this.mappingBean, 
+                enumProperty, temporalProperty, mapping, scope, value, nullable,
+                generic, typeDef, type, MappingBeanUtil.CONSTRUCTOR_ARG, this.mappingBean, 
                 this.validatorFactory, this.controller);
 
         getLogger()

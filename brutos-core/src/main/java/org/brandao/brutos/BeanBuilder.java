@@ -247,12 +247,20 @@ public class BeanBuilder {
     public KeyBuilder setGenericKey( String name, Class<?> classType ){
     	return this.setKey(name,
     			BrutosConstants.DEFAULT_ENUMERATIONTYPE, BrutosConstants.DEFAULT_TEMPORALPROPERTY, 
-    			null, BrutosConstants.DEFAULT_SCOPETYPE, null, new AnyType(classType), (Object)classType);
+    			null, BrutosConstants.DEFAULT_SCOPETYPE, null, true, null, (Object)classType);
+    }
+
+    public KeyBuilder setKey( String name,
+            EnumerationType enumProperty, String temporalProperty, String mapping,
+            ScopeType scope, Object value, Type typeDef, Object type ){
+    	
+    	return this.setKey(name, enumProperty, temporalProperty, mapping,
+                scope, value, false, typeDef, type );
     }
     
     public KeyBuilder setKey( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, Type typeDef, Object type ){
+            ScopeType scope, Object value, boolean generic, Type typeDef, Object type ){
 
         name = StringUtil.adjust(name);
         name = StringUtil.isEmpty(name)?
@@ -270,7 +278,7 @@ public class BeanBuilder {
         DependencyBean key =
             MappingBeanUtil.createDependencyBean(name, null,
                 enumProperty, temporalProperty, mapping, scope, value, false, 
-                typeDef, type, MappingBeanUtil.DEPENDENCY, this.mappingBean, 
+                generic, typeDef, type, MappingBeanUtil.DEPENDENCY, this.mappingBean, 
                 this.validatorFactory, this.controller);
 
         ((MapBean)mappingBean).setKey(key);
@@ -377,12 +385,19 @@ public class BeanBuilder {
     	return this.setElement( name,
                 BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
                 BrutosConstants.DEFAULT_TEMPORALPROPERTY, 
-                null, BrutosConstants.DEFAULT_SCOPETYPE, null, false, new AnyType(classType), (Object)classType);
+                null, BrutosConstants.DEFAULT_SCOPETYPE, null, false, true, null, (Object)classType);
+    }
+
+    public ElementBuilder setElement( String name,
+            EnumerationType enumProperty, String temporalProperty, String mapping,
+            ScopeType scope, Object value, boolean nullable, Type typeDef, Object type ){
+    	return this.setElement(name, enumProperty, temporalProperty, mapping,
+                scope, value, nullable, false, typeDef, type );
     }
     
     public ElementBuilder setElement( String name,
             EnumerationType enumProperty, String temporalProperty, String mapping,
-            ScopeType scope, Object value, boolean nullable, Type typeDef, Object type ){
+            ScopeType scope, Object value, boolean nullable, boolean generic, Type typeDef, Object type ){
 
         name = StringUtil.adjust(name);
         name = StringUtil.isEmpty(name)?
@@ -400,7 +415,7 @@ public class BeanBuilder {
         DependencyBean collection =
             MappingBeanUtil.createDependencyBean(name, null,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                typeDef, type, MappingBeanUtil.DEPENDENCY, this.mappingBean, 
+                generic, typeDef, type, MappingBeanUtil.DEPENDENCY, this.mappingBean, 
                 this.validatorFactory, this.controller);
 
         ((CollectionBean)mappingBean).setCollection(collection);
@@ -560,16 +575,29 @@ public class BeanBuilder {
     }
 
     public PropertyBuilder addGenericProperty( String name, String propertyName, Class<?> classType ){
-    	
     	return this.addProperty(name, propertyName,
                 BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
                 BrutosConstants.DEFAULT_TEMPORALPROPERTY,
-                null,BrutosConstants.DEFAULT_SCOPETYPE, null, false, classType, new AnyType(classType));
+                null,BrutosConstants.DEFAULT_SCOPETYPE, null, false, true, classType, null);
+    }
+
+    public PropertyBuilder addGenericProperty( String name, String propertyName){
+    	return this.addProperty(name, propertyName,
+                BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+                BrutosConstants.DEFAULT_TEMPORALPROPERTY,
+                null,BrutosConstants.DEFAULT_SCOPETYPE, null, false, true, null, null);
     }
     
     public PropertyBuilder addProperty( String name, String propertyName,
             EnumerationType enumProperty, String temporalProperty, String mapping, 
             ScopeType scope, Object value, boolean nullable, Object classType, Type type ){
+    	return this.addProperty(name, propertyName, enumProperty, temporalProperty, mapping, 
+                scope, value, nullable, false, classType, type );
+    }
+    
+    public PropertyBuilder addProperty( String name, String propertyName,
+            EnumerationType enumProperty, String temporalProperty, String mapping, 
+            ScopeType scope, Object value, boolean nullable, boolean generic, Object classType, Type type ){
 
         name = StringUtil.adjust(name);
         name = StringUtil.isEmpty(name)?
@@ -579,7 +607,7 @@ public class BeanBuilder {
         PropertyBean propertyBean =
             (PropertyBean) MappingBeanUtil.createDependencyBean(name, propertyName,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                type, classType, MappingBeanUtil.PROPERTY, this.mappingBean, 
+                generic, type, classType, MappingBeanUtil.PROPERTY, this.mappingBean, 
                 this.validatorFactory, this.controller);
 
         getLogger()

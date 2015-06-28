@@ -86,12 +86,12 @@ public class ConstructorArgBuilder extends RestrictionBuilder{
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             Class<?> classType, Type type ){
 
-    	if(!(this.arg.getType() instanceof AnyType))
+    	MetaBean metaBean = this.arg.getMetaBean();
+    	
+    	if(metaBean == null)
     		throw new MappingException("can't add meta bean");
     	
     	Controller controller = this.arg.getParent().getController();
-
-		MetaBean metaBean = new MetaBean(controller);
 
 		this.arg.setMetaBean(metaBean);
 		

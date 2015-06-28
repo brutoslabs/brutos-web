@@ -159,7 +159,7 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig{
         }
         else{
             return builder.addContructorArg(name, enumProperty, temporalProperty, 
-                    null, scope, null, false, type, source.getGenericType());
+                    null, scope, null, false, false, type, source.getGenericType());
         }
         
     }

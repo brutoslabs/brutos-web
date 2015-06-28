@@ -741,6 +741,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         Type factory = null;
         boolean nullable = false;
 
+        Element any        = parseUtil.getElement( propNode, "any");
         Element mappingRef = parseUtil.getElement( propNode, "ref");
         Element beanNode   = parseUtil.getElement( propNode, "bean");
         Element valueNode  = parseUtil.getElement( propNode, "value");
@@ -787,17 +788,24 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             throw new BrutosException( ex );
         }
 
-        PropertyBuilder propertyBuilder =
-                controllerBuilder.addProperty(
-                    propertyName,
-                    bean,
-                    scope,
-                    enumProperty,
-                    temporalProperty,
-                    mapping? bean : null,
-                    value,
-                    nullable,
-                    factory);
+        PropertyBuilder propertyBuilder;
+        
+        //if(any != null){
+        //    propertyBuilder = controllerBuilder.addGenericProperty(propertyName, bean, classType);
+        //}
+        //else{
+	        propertyBuilder =
+	                controllerBuilder.addProperty(
+	                    propertyName,
+	                    bean,
+	                    scope,
+	                    enumProperty,
+	                    temporalProperty,
+	                    mapping? bean : null,
+	                    value,
+	                    nullable,
+	                    factory);
+        //}
 
         addValidator(validatorNode, propertyBuilder);
 
