@@ -20,6 +20,7 @@ package org.brandao.brutos;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
+import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.AnyType;
@@ -318,14 +319,30 @@ public class ParametersBuilder extends RestrictionBuilder{
 			this.addParameter(name, BrutosConstants.DEFAULT_SCOPETYPE, 
 				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
 				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, 
-				new AnyType(classType), null,
-	            false, classType);		
+				null, null,
+	            false, true, classType);		
 	}
-    
-    @SuppressWarnings("unchecked")
+
+	public ParameterBuilder addGenericParameter(String name){
+		return 
+			this.addParameter(name, BrutosConstants.DEFAULT_SCOPETYPE, 
+				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
+				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, 
+				null, null,
+	            false, true, null);		
+	}
+
 	public ParameterBuilder addParameter(String name, ScopeType scope, EnumerationType enumProperty,
             String temporalProperty, String mapping, Type typeDef, Object value,
             boolean nullable, Object classType){
+		return this.addParameter(name, scope, enumProperty, temporalProperty, mapping, typeDef, value,
+	            nullable, false, classType);
+	}
+	
+    @SuppressWarnings("unchecked")
+	public ParameterBuilder addParameter(String name, ScopeType scope, EnumerationType enumProperty,
+            String temporalProperty, String mapping, Type typeDef, Object value,
+            boolean nullable, boolean generic, Object classType){
 
         name = StringUtil.adjust(name);
         temporalProperty = StringUtil.adjust(temporalProperty);
@@ -384,6 +401,14 @@ public class ParametersBuilder extends RestrictionBuilder{
         
         parameter.setType(typeDef);
         
+        if(generic){
+        	parameter.setMetaBean(new MetaBean(this.controller));
+        	
+        	if(parameter.getType() == null)
+        		parameter.setType(new AnyType(rawType));
+        	
+        }
+        else
         if( !StringUtil.isEmpty(mapping) ){
             if( controller.getBean(mapping) != null )
                 parameter.setMapping( controller.getBean( mapping ) );

@@ -89,13 +89,11 @@ public class ParameterBuilder extends RestrictionBuilder{
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             Class<?> classType, Type type ){
 
-    	if(!(this.parameter.getType() instanceof AnyType))
+    	MetaBean metaBean = this.parameter.getMetaBean();
+    	
+    	if(metaBean == null)
     		throw new MappingException("can't add meta bean");
     	
-    	Controller controller = this.parameter.getAction().getController();
-
-		MetaBean metaBean = new MetaBean(controller);
-
 		this.parameter.setMetaBean(metaBean);
 					
     	MetaBeanBuilder builder = 

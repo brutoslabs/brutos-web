@@ -24,6 +24,7 @@ import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.bean.BeanInstance;
+import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.NullType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
@@ -47,7 +48,7 @@ public final class MappingBeanUtil {
             String name, String propertyName,
             EnumerationType enumProperty,
             String temporalProperty, String mapping, 
-            ScopeType scope, Object value, boolean nullable, Type typeDef, 
+            ScopeType scope, Object value, boolean nullable, boolean generic, Type typeDef, 
             Object classType, int dependencyType, Bean mappingBean,
             ValidatorFactory validatorFactory,
             Controller controller){
@@ -106,7 +107,6 @@ public final class MappingBeanUtil {
                 mappingBean.getClassType().getName() + "." + propertyName );
 
         if(typeDef == null){
-        	
         	if(nullable){
         		if(classType == null)
                 	throw new MappingException("type must be informed");
@@ -143,6 +143,14 @@ public final class MappingBeanUtil {
         
         dependencyBean.setType(typeDef);
         
+        if(generic){
+        	dependencyBean.setMetaBean(new MetaBean(controller));
+        	
+        	if(dependencyBean.getType() == null)
+        		dependencyBean.setType(new AnyType(rawType));
+        	
+        }
+        else
         if(!StringUtil.isEmpty(mapping)){
             if( controller.getBean(mapping) != null )
             	dependencyBean.setMapping(mapping);

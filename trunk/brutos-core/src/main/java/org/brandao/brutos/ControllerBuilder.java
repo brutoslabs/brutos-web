@@ -793,12 +793,27 @@ public class ControllerBuilder {
 			this.addProperty( propertyName, id, 
 		            BrutosConstants.DEFAULT_SCOPETYPE, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
 		            BrutosConstants.DEFAULT_TEMPORALPROPERTY, 
-		            null, null, false, classType, new AnyType(classType) );
+		            null, null, false, true, classType, null );
+    }
+
+    public PropertyBuilder addGenericProperty(String propertyName, String id){
+    	return
+			this.addProperty( propertyName, id, 
+		            BrutosConstants.DEFAULT_SCOPETYPE, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+		            BrutosConstants.DEFAULT_TEMPORALPROPERTY, 
+		            null, null, false, true, null, null );
     }
     
     public PropertyBuilder addProperty( String propertyName, String id, 
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             String mapping, Object value, boolean nullable, Object classType, Type type ){
+    	return this.addProperty(propertyName, id, scope, enumProperty, temporalProperty, 
+                mapping, value, nullable, false, classType, type );
+    }
+    
+    public PropertyBuilder addProperty( String propertyName, String id, 
+            ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
+            String mapping, Object value, boolean nullable, boolean generic, Object classType, Type type ){
 
         id                 = StringUtil.adjust(id);
         propertyName       = StringUtil.adjust(propertyName);
@@ -837,23 +852,22 @@ public class ControllerBuilder {
         }
 
         if(type == null){
-            try{
-            	if(nullable){
-            		if(classType == null)
-                    	throw new MappingException("type must be informed");
-            			
-                	type = new NullType((Class<?>)classType);
-            	}
-            	else{
+        	if(nullable){
+        		if(classType == null)
+                	throw new MappingException("type must be informed");
+        			
+            	type = new NullType((Class<?>)classType);
+        	}
+        	else{
+	            try{
 	                type = 
 		        		this.applicationContext.getTypeManager()
 		                		.getType(genericType, enumProperty, temporalProperty );
-            	}
-                
-            }
-            catch( UnknownTypeException e ){
-                throw new MappingException(e);
-            }
+	            }
+	            catch( UnknownTypeException e ){
+	                throw new MappingException(e);
+	            }
+        	}
         }
         
         /*
@@ -863,6 +877,14 @@ public class ControllerBuilder {
         
         property.setType(type);
         
+        if(generic){
+        	property.setMetaBean(new MetaBean(this.controller));
+        	
+        	if(property.getType() == null)
+        		property.setType(new AnyType(rawType));
+        	
+        }
+        else
         if( mapping != null ){
             if( controller.getBean(mapping) != null )
                 property.setMapping( controller.getBean( mapping ) );

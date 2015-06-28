@@ -26,6 +26,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
 
@@ -266,15 +267,17 @@ public class Action {
                         
                         ParameterAction arg = 
                                 (ParameterAction) parameters.get(k);
-                        Type type = arg.getType();
-                        //Bean mapping = arg.getMapping();
                         
-                        if( type == null/* && mapping == null */){
-                            arg.
-                                setType(
-                                    ((ConfigurableApplicationContext)this.controller.getContext())
-                                            .getTypeManager().getType(
-                                    params[k]));
+                        if(arg.getType() == null){
+                        	if(arg.getMetaBean() != null)
+                        		arg.setType(new AnyType(params[k]));
+                        	else{
+	                            arg.
+	                                setType(
+	                                    ((ConfigurableApplicationContext)this.controller.getContext())
+	                                            .getTypeManager().getType(
+	                                    params[k]));
+                        	}
                         }
                     }
 

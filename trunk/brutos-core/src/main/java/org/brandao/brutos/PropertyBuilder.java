@@ -17,7 +17,6 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.PropertyBean;
@@ -99,22 +98,13 @@ public class PropertyBuilder extends RestrictionBuilder{
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             Class<?> classType, Type type ){
 
-    	if(this.propertyBean instanceof PropertyBean && 
-    	   !(((PropertyBean)this.propertyBean).getType() instanceof AnyType)){
-    		throw new MappingException("can't add meta bean");
-    	}
-    	
-    	if(this.propertyBean instanceof PropertyController && 
-    	    	   !(((PropertyController)this.propertyBean).getType() instanceof AnyType)){
-    		throw new MappingException("can't add meta bean");
-    	}
-    	
-    	Controller controller = 
+    	MetaBean metaBean = 
 				this.propertyBean instanceof PropertyBean?
-					((PropertyBean)this.propertyBean).getParent().getController() :
-					((PropertyController)this.propertyBean).getController();
+					((PropertyBean)this.propertyBean).getMetaBean() :
+					((PropertyController)this.propertyBean).getMetaBean();
 
-		MetaBean metaBean = new MetaBean(controller);
+		if(metaBean == null)
+    		throw new MappingException("can't add meta bean");
 
 		if(this.propertyBean instanceof PropertyBean)
 			((PropertyBean)this.propertyBean).setMetaBean(metaBean);
