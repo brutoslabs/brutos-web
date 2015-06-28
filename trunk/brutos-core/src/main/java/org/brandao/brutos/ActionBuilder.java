@@ -282,7 +282,7 @@ public class ActionBuilder extends RestrictionBuilder{
     
     public ParameterBuilder getParameter(int index){
         ParameterAction param = this.action.getParameter(index);
-        return new ParameterBuilder(param, this.parametersBuilder);
+        return new ParameterBuilder(param, this.parametersBuilder, this.validatorFactory);
     }
     
 }

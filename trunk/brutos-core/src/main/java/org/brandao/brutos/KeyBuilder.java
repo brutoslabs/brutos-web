@@ -27,16 +27,22 @@ import org.brandao.brutos.validator.RestrictionRules;
  * 
  * @author Afonso Brandao
  */
-public class KeyBuilder extends RestrictionBuilder{
+public class KeyBuilder 
+	extends RestrictionBuilder
+	implements GenericBuilder{
 
     private DependencyBean key;
     
     private BeanBuilder beanBuilder;
     
-    public KeyBuilder(DependencyBean key, BeanBuilder beanBuilder){
+    private ValidatorFactory validatorFactory;
+    
+    public KeyBuilder(DependencyBean key, BeanBuilder beanBuilder,
+    		ValidatorFactory validatorFactory){
         super( key.getValidator().getConfiguration() );
         this.key = key;
         this.beanBuilder = beanBuilder;
+        this.validatorFactory = validatorFactory;
     }
 
     public BeanBuilder getBeanBuilder(){
@@ -95,7 +101,10 @@ public class KeyBuilder extends RestrictionBuilder{
     					scope, 
     					enumProperty, 
     					temporalProperty, classType, 
-    					type);
+    					type,
+    					this.validatorFactory,
+    					this.beanBuilder.getControllerBuilder(),
+    					this.beanBuilder.getName() + "#key");
     	
     	return builder; 
     }

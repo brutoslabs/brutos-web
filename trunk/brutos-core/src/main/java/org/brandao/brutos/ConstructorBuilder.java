@@ -268,7 +268,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
         Configuration validatorConfig = new Configuration();
         arg.setValidator( this.validatorFactory.getValidator(validatorConfig) );
         this.mappingBean.getConstructor().addConstructorArg(arg);
-        return new ConstructorArgBuilder(arg, this);
+        return new ConstructorArgBuilder(arg, this, this.validatorFactory);
     }
 
     protected String getPrefixLogger(){
@@ -286,7 +286,7 @@ public class ConstructorBuilder extends RestrictionBuilder{
 
     public ConstructorArgBuilder getConstructorArg(int index){
         ConstructorArgBean arg = mappingBean.getConstructor().getConstructorArg(index);
-        return new ConstructorArgBuilder(arg, this);
+        return new ConstructorArgBuilder(arg, this, this.validatorFactory);
     }
     
     public Class<?> getClassType(){
