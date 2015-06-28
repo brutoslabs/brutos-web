@@ -801,17 +801,13 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             }
 
             PropertyBuilder propertyBuilder =
-                    beanBuilder.addProperty(
-                        bean,
-                        propertyName,
-                        enumProperty,
-                        temporalProperty,
-                        mapping? bean : null,
-                        scope,
-                        value,
-                        nullable,
-                        factory);
+            		beanBuilder.addProperty(bean, propertyName, enumProperty, temporalProperty, 
+            				mapping? bean : null, scope, value, nullable, 
+            				anyNode != null, null, factory);
 
+            if(anyNode != null)
+            	this.buildAny(anyNode, propertyBuilder);
+            
             addValidator(validatorNode, propertyBuilder);
         }
     }
@@ -913,6 +909,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         //boolean nullable = false;
         Class<?> type = null;
 
+        Element anyNode        = parseUtil.getElement(conNode,"any");
         Element mappingRef     = parseUtil.getElement(conNode,"ref");
         Element beanNode       = parseUtil.getElement(conNode,"bean");
         Element valueNode      = parseUtil.getElement(conNode,"value");
@@ -957,18 +954,14 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             throw new BrutosException( ex );
         }
 
-        RestrictionBuilder keyBuilder =
-                beanBuilder
-                .setKey(
-                    bean, 
-                    enumProperty, 
-                    temporalProperty, 
-                    mapping? bean : null, 
-                    scope, 
-                    value, 
-                    factory, 
-                    type);
+        KeyBuilder keyBuilder =
+            beanBuilder
+            	.setKey(bean, enumProperty, temporalProperty, mapping? bean : null, 
+            			scope, value, anyNode != null, factory, type);
 
+        if(anyNode != null)
+        	this.buildAny(anyNode, keyBuilder);
+        
         addValidator(validatorNode, keyBuilder);
 
     }
@@ -993,6 +986,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         boolean nullable = false;
         Class<?> type = null;
 
+        Element anyNode        = parseUtil.getElement(conNode,"any");
         Element mappingRef     = parseUtil.getElement(conNode,"ref");
         Element beanNode       = parseUtil.getElement(conNode,"bean");
         Element valueNode      = parseUtil.getElement(conNode,"value");
@@ -1029,13 +1023,6 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             if( factoryName != null ){
                 factory = 
                     (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
-                /*
-                factory = (Type)Class.forName(
-                            factoryName,
-                            true,
-                            Thread.currentThread().getContextClassLoader() )
-                                .newInstance();
-                */
             }
 
             if(typeName != null)
@@ -1046,19 +1033,14 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             throw new BrutosException( ex );
         }
 
-        RestrictionBuilder elementBuilder =
-                beanBuilder
-                .setElement(
-                    bean, 
-                    enumProperty, 
-                    temporalProperty, 
-                    mapping? bean : null, 
-                    scope, 
-                    value, 
-                    nullable,
-                    factory, 
-                    type);
+        ElementBuilder elementBuilder =
+            beanBuilder
+                .setElement(bean, enumProperty, temporalProperty, 
+            		mapping? bean : null, scope, value, nullable, anyNode != null, factory, type);
 
+        if(anyNode != null)
+        	this.buildAny(anyNode, elementBuilder);
+        
         addValidator(validatorNode, elementBuilder);
 
     }

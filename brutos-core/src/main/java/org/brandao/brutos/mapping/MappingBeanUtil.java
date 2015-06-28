@@ -144,11 +144,10 @@ public final class MappingBeanUtil {
         dependencyBean.setType(typeDef);
         
         if(generic){
-        	dependencyBean.setMetaBean(new MetaBean(controller));
-        	
-        	if(dependencyBean.getType() == null)
-        		dependencyBean.setType(new AnyType(rawType));
-        	
+        	MetaBean metaBean = new MetaBean(controller);
+        	metaBean.setClassType(rawType);
+        	metaBean.setType(typeDef);
+        	dependencyBean.setMetaBean(metaBean);
         }
         else
         if(!StringUtil.isEmpty(mapping)){

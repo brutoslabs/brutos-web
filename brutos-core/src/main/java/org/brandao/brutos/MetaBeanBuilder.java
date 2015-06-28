@@ -28,7 +28,6 @@ public class MetaBeanBuilder {
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             Class<?> classType, Type type, ValidatorFactory validatorFactory,
             ControllerBuilder controller, String origin){
-		
         this.metaBean         = metaBean;
         this.enumProperty     = enumProperty;
         this.temporalProperty = temporalProperty;
@@ -154,6 +153,8 @@ public class MetaBeanBuilder {
 	}
 
 	public MetaBeanBuilder setClassType(Class<?> classType){
+		
+		this.metaBean.setClassType(classType);
 		
     	if(this.metaBean.getType() == null){
         	Type type = 

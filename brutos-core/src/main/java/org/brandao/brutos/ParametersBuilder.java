@@ -402,11 +402,10 @@ public class ParametersBuilder extends RestrictionBuilder{
         parameter.setType(typeDef);
         
         if(generic){
-        	parameter.setMetaBean(new MetaBean(this.controller));
-        	
-        	if(parameter.getType() == null)
-        		parameter.setType(new AnyType(rawType));
-        	
+        	MetaBean metaBean = new MetaBean(controller);
+        	metaBean.setClassType(rawType);
+        	metaBean.setType(typeDef);
+        	parameter.setMetaBean(metaBean);
         }
         else
         if( !StringUtil.isEmpty(mapping) ){
@@ -424,7 +423,7 @@ public class ParametersBuilder extends RestrictionBuilder{
         }
 
         action.addParameter(parameter);
-        return new ParameterBuilder(parameter, this);
+        return new ParameterBuilder(parameter, this, this.validatorFactory);
     }
 
     public int getParametersSize(){
@@ -433,7 +432,7 @@ public class ParametersBuilder extends RestrictionBuilder{
     
     public ParameterBuilder getParameter(int index){
         ParameterAction param = this.action.getParameter(index);
-        return new ParameterBuilder(param, this);
+        return new ParameterBuilder(param, this, this.validatorFactory);
     }
     
     public ControllerBuilder getControllerBuilder(){

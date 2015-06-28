@@ -878,11 +878,10 @@ public class ControllerBuilder {
         property.setType(type);
         
         if(generic){
-        	property.setMetaBean(new MetaBean(this.controller));
-        	
-        	if(property.getType() == null)
-        		property.setType(new AnyType(rawType));
-        	
+        	MetaBean metaBean = new MetaBean(controller);
+        	metaBean.setClassType(rawType);
+        	metaBean.setType(type);
+        	property.setMetaBean(metaBean);
         }
         else
         if( mapping != null ){

@@ -29,7 +29,7 @@ public class RestrictionBuilder{
 
     private Properties config;
     
-    public RestrictionBuilder( Properties config){
+    public RestrictionBuilder(Properties config){
         this.config = config;
     }
 

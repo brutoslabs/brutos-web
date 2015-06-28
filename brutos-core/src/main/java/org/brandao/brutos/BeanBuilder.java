@@ -282,7 +282,7 @@ public class BeanBuilder {
                 this.validatorFactory, this.controller);
 
         ((MapBean)mappingBean).setKey(key);
-        return new KeyBuilder(key, this);
+        return new KeyBuilder(key, this, this.validatorFactory);
     }
     
     /**
@@ -419,7 +419,7 @@ public class BeanBuilder {
                 this.validatorFactory, this.controller);
 
         ((CollectionBean)mappingBean).setCollection(collection);
-        return new ElementBuilder(collection, this);
+        return new ElementBuilder(collection, this, this.validatorFactory);
     }
     
     /**
@@ -622,7 +622,7 @@ public class BeanBuilder {
         propertyBean.setBeanProperty(mappingBean.getBeanInstance().getProperty(propertyName));
         this.mappingBean.getFields().put( propertyName, propertyBean );
 
-        return new PropertyBuilder(propertyBean, this);
+        return new PropertyBuilder(propertyBean, this, this.validatorFactory);
     }
 
     public ConstructorBuilder buildConstructor(){
@@ -638,12 +638,12 @@ public class BeanBuilder {
 
     public PropertyBuilder getProperty(String name){
         PropertyBean property = (PropertyBean) mappingBean.getFields().get(name);
-        return property == null? null : new PropertyBuilder(property, this);
+        return property == null? null : new PropertyBuilder(property, this, this.validatorFactory);
     }
     
     public ConstructorArgBuilder getConstructorArg(int index){
         ConstructorArgBean arg = mappingBean.getConstructor().getConstructorArg(index);
-        return new ConstructorArgBuilder(arg, this.constructorBuilder);
+        return new ConstructorArgBuilder(arg, this.constructorBuilder, this.validatorFactory);
     }
 
     public String getName(){

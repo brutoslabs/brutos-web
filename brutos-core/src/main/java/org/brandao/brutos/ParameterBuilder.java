@@ -17,11 +17,9 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.ParameterAction;
-import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.RestrictionRules;
 
@@ -36,10 +34,14 @@ public class ParameterBuilder extends RestrictionBuilder{
     
     private ParametersBuilder parametersBuilder;
     
-    public ParameterBuilder(ParameterAction value, ParametersBuilder parametersBuilder){
+    private ValidatorFactory validatorFactory;
+    
+    public ParameterBuilder(ParameterAction value, 
+    		ParametersBuilder parametersBuilder, ValidatorFactory validatorFactory){
         super( value.getValidate().getConfiguration() );
         this.parameter = value;
         this.parametersBuilder = parametersBuilder;
+        this.validatorFactory = validatorFactory;
     }
 
     public RestrictionBuilder addRestriction( RestrictionRules ruleId, Object value ){
@@ -103,7 +105,10 @@ public class ParameterBuilder extends RestrictionBuilder{
     					scope, 
     					enumProperty, 
     					temporalProperty, classType, 
-    					type);
+    					type,
+    					this.validatorFactory,
+    					this.parametersBuilder.getControllerBuilder(),
+    					this.parameter.getName());
     	
     	return builder; 
     }

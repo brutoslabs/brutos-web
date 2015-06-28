@@ -17,6 +17,7 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.PropertyBean;
@@ -39,11 +40,15 @@ public class PropertyBuilder
     
     private BeanBuilder beanBuilder;
     
-    public PropertyBuilder(PropertyBean propertyBean, BeanBuilder beanBuilder){
+    private ValidatorFactory validatorFactory;
+    
+    public PropertyBuilder(PropertyBean propertyBean, BeanBuilder beanBuilder,
+    		ValidatorFactory validatorFactory){
         super(propertyBean.getValidator().getConfiguration() );
         this.propertyBean = propertyBean;
         this.controllerBuilder = beanBuilder.getControllerBuilder();
         this.beanBuilder = beanBuilder;
+        this.validatorFactory = validatorFactory;
     }
 
     public PropertyBuilder(PropertyController propertyBean, ControllerBuilder controllerBuilder){
@@ -99,6 +104,17 @@ public class PropertyBuilder
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             Class<?> classType, Type type ){
 
+
+    	String propertyName = 
+				this.propertyBean instanceof PropertyBean?
+					((PropertyBean)this.propertyBean).getName() :
+					((PropertyController)this.propertyBean).getName();
+    	
+    	Bean parent = 
+				this.propertyBean instanceof PropertyBean?
+					((PropertyBean)this.propertyBean).getParent() :
+					null;
+    	
     	MetaBean metaBean = 
 				this.propertyBean instanceof PropertyBean?
 					((PropertyBean)this.propertyBean).getMetaBean() :
@@ -118,8 +134,12 @@ public class PropertyBuilder
     					name, 
     					scope, 
     					enumProperty, 
-    					temporalProperty, classType, 
-    					type);
+    					temporalProperty, 
+    					classType, 
+    					type,
+    					validatorFactory,
+    					this.controllerBuilder,
+    					(parent == null? "" : parent.getName() + "#") + propertyName);
     	
     	return builder; 
     }
