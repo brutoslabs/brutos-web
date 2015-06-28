@@ -17,27 +17,27 @@ public class MetaBean extends Bean{
     
     private String name;
     
-	private Map<Object, String> metaValues;
+	private Map<Object, DependencyBean> metaValues;
 	
 	private Controller controller;
 	
 	public MetaBean(Controller controller){
 		super(controller);
-		this.metaValues = new HashMap<Object,String>();
+		this.metaValues = new HashMap<Object,DependencyBean>();
 		this.controller = controller;
 	}
 
-    public void putMetaValue(String value, String mapping){
+    public void putMetaValue(String value, DependencyBean bean){
     	Object metaValue = this.type.convert(value);
     	
     	if(metaValue == null)
     		throw new MappingException("invalid meta value: " + value);
     		
-    	this.putMetaValue(metaValue, mapping);
+    	this.putMetaValue(metaValue, bean);
     }
 	
-    public void putMetaValue(Object value, String mapping){
-    	if(this.metaValues.put(value, mapping) != null)
+    public void putMetaValue(Object value, DependencyBean bean){
+    	if(this.metaValues.put(value, bean) != null)
     		throw new MappingException("duplicate meta value: " + value);
     }
 
@@ -63,13 +63,12 @@ public class MetaBean extends Bean{
         if(metaValue == null)
         	return null;
         
-        String beanName = this.metaValues.get(metaValue);
-        Bean bean = this.controller.getBean(beanName);
+        DependencyBean bean = this.metaValues.get(metaValue);
         
         if(bean == null)
         	throw new MappingException("bean not found: " + metaValue);
         
-        return bean.getValue(instance, prefix, index, exceptionHandler, force);
+        return bean.getValue(prefix, index, exceptionHandler, this, null);
     }
     
     public Scope getScope() {
@@ -108,4 +107,7 @@ public class MetaBean extends Bean{
 		this.controller = controller;
 	}
 
+	public int getSize(){
+		return this.metaValues.size();
+	}
 }

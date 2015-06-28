@@ -1,5 +1,8 @@
 package org.brandao.brutos;
 
+
+import org.brandao.brutos.mapping.DependencyBean;
+import org.brandao.brutos.mapping.MappingBeanUtil;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.StringUtil;
@@ -15,13 +18,22 @@ public class MetaBeanBuilder {
 	
 	private String temporalProperty;
 	
+	private ValidatorFactory validatorFactory;
+	
+	private ControllerBuilder controller;
+	
+	private String origin;
+	
 	public MetaBeanBuilder(MetaBean metaBean, String name, 
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
-            Class<?> classType, Type type){
+            Class<?> classType, Type type, ValidatorFactory validatorFactory,
+            ControllerBuilder controller, String origin){
 		
         this.metaBean         = metaBean;
         this.enumProperty     = enumProperty;
         this.temporalProperty = temporalProperty;
+        this.validatorFactory = validatorFactory;
+        this.controller       = controller;
         
         this.setScope(scope);
         this.setName(name);
@@ -31,12 +43,40 @@ public class MetaBeanBuilder {
         else
         	this.setType(type);
 	}
-	
-	public MetaBeanBuilder addMetaValue(String value, String mapping){
-		this.metaBean.putMetaValue(value, mapping);
-		return this;
-	}
 
+	public MetaBeanBuilder addMetaValue(Object value, String mapping){
+		return this.addMetaValue(value, BrutosConstants.DEFAULT_ENUMERATIONTYPE, 
+				BrutosConstants.DEFAULT_TEMPORALPROPERTY, mapping,
+	            BrutosConstants.DEFAULT_SCOPETYPE, null, null );
+	}
+	
+    public BeanBuilder buildMetaValue( Object value, Class<?> clazz ){
+        String beanName = this.origin + "#" + this.metaBean.getName() + "#" + this.metaBean.getSize();
+
+        BeanBuilder beanBuilder = this.controller.buildMappingBean(beanName, clazz);
+
+        this.addMetaValue(value, beanName);
+
+        return beanBuilder;
+    }
+
+    public MetaBeanBuilder addMetaValue( Object value,
+            EnumerationType enumProperty, String temporalProperty, String mapping,
+            ScopeType scope, Type typeDef, Object type ){
+
+        if(type == null && mapping == null)
+			throw new MappingException("unknown bean type");
+        
+        DependencyBean dependency =
+            MappingBeanUtil.createDependencyBean(this.metaBean.getName(), null,
+                enumProperty, temporalProperty, mapping, scope, null, false, 
+                false, typeDef, type, MappingBeanUtil.DEPENDENCY, this.metaBean, 
+                this.validatorFactory, this.controller.controller);
+
+        this.metaBean.putMetaValue(value, dependency);
+        return this;
+    }
+	
 	public MetaBeanBuilder removeMetaValue(String value){
 		this.metaBean.removeMetaValue(value);
 		return this;
