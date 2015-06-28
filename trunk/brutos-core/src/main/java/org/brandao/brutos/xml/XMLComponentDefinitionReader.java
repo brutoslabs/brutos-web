@@ -33,14 +33,14 @@ import org.w3c.dom.NodeList;
  */
 public class XMLComponentDefinitionReader extends ContextDefinitionReader{
 
-    private final List blackList;
+    private final List<Resource> blackList;
     
     private final XMLParseUtil parseUtil;
 
     public XMLComponentDefinitionReader(ComponentRegistry componenetRegistry){
         super( componenetRegistry );
         this.parseUtil = new XMLParseUtil(XMLBrutosConstants.XML_BRUTOS_CONTROLLER_NAMESPACE);
-        this.blackList = new ArrayList();
+        this.blackList = new ArrayList<Resource>();
     }
 
     public void loadDefinitions(Resource resource) {
@@ -142,7 +142,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             String name       = parseUtil.getAttribute(c,"name" );
             String clazzName  = parseUtil.getAttribute(c,"class" );
             Boolean isDefault = Boolean.valueOf(parseUtil.getAttribute(c,"default" ));
-            Class clazz;
+            Class<?> clazz;
 
             try{
                 clazz = Class.forName(
@@ -273,7 +273,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         String defaultAction = parseUtil.getAttribute(controller,"default-action" );
         boolean viewresolved = Boolean.valueOf(parseUtil.getAttribute(controller,"view-resolved" )).booleanValue();
 
-        Class clazz = null;
+        Class<?> clazz = null;
         try{
             clazz = ClassUtil.get(clazzName);
         }
@@ -402,7 +402,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         String methodFactory = parseUtil.getAttribute(beanNode,"method-factory" );
         String target        = parseUtil.getAttribute(beanNode,"target" );
 
-        Class clazz = null;
+        Class<?> clazz = null;
         try{
             clazz = Class.forName(
                         target,
@@ -440,7 +440,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         String methodFactory = parseUtil.getAttribute(beanNode,"method-factory" );
         String target        = parseUtil.getAttribute(beanNode,"target" );
 
-        Class clazz = null;
+        Class<?> clazz = null;
         try{
             clazz = Class.forName(
                         target,
@@ -474,7 +474,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
     }
 
     private void addBean( String name, Element beanNode,
-            ParametersBuilder parametersBuilder, Class paramType){
+            ParametersBuilder parametersBuilder, Class<?> paramType){
 
         String separator     = parseUtil.getAttribute(beanNode,"separator" );
         String indexFormat   = parseUtil.getAttribute(beanNode,"index-format" );
@@ -482,7 +482,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         String methodFactory = parseUtil.getAttribute(beanNode,"method-factory" );
         String target        = parseUtil.getAttribute(beanNode,"target" );
         
-        Class clazz = null;
+        Class<?> clazz = null;
         try{
             clazz = ClassUtil.get(target);
         }
@@ -547,6 +547,118 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         
     }
 
+    private void buildAny(Element anyNode, GenericBuilder builder){
+    	
+        String enumPropertyName = parseUtil.getAttribute(anyNode, "enum-property");
+        EnumerationType enumProperty =
+            EnumerationType.valueOf(enumPropertyName);
+        String temporalProperty = parseUtil.getAttribute(anyNode, "temporal-property");
+        String bean = parseUtil.getAttribute(anyNode, "bean");
+        String scopeName = parseUtil.getAttribute(anyNode, "scope");
+        ScopeType scope = ScopeType.valueOf(scopeName);
+        String factoryName = parseUtil.getAttribute(anyNode, "type-def");
+        String typeName = parseUtil.getAttribute(anyNode, "type");
+        Type factory = null;
+        Class<?> type = null;
+
+        try{
+            if( factoryName != null ){
+                factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
+            }
+            
+            if(typeName != null)
+                type = ClassUtil.get(typeName);
+
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+        
+        MetaBeanBuilder metaBeanBuilder = 
+        		builder.buildMetaBean(bean, scope, enumProperty, temporalProperty, type, factory);
+        
+        NodeList metaValueList = parseUtil.getElements(anyNode, "meta-value");
+        
+        for(int i=0;i<metaValueList.getLength();i++){
+        	Element metaValue = (Element)metaValueList.item(i);
+        	
+        	buildMetaBean(metaValue, metaBeanBuilder);
+        	
+        }
+        
+    }
+
+    private void buildMetaBean(Element metaValue, MetaBeanBuilder metaBeanBuilder){
+
+    	String bean        = parseUtil.getAttribute(metaValue,"bean");
+    	String value       = parseUtil.getAttribute(metaValue,"value");
+        Element mappingRef = parseUtil.getElement(metaValue,"ref");
+        Element beanNode   = parseUtil.getElement(metaValue,"bean");
+    	
+        if( mappingRef != null ){
+            bean                         = parseUtil.getAttribute(mappingRef, "bean");
+            String enumPropertyName      = parseUtil.getAttribute(mappingRef, "enum-property");
+            EnumerationType enumProperty = EnumerationType.valueOf(enumPropertyName);
+            String temporalProperty      = parseUtil.getAttribute(mappingRef, "temporal-property");
+            String scopeName             = parseUtil.getAttribute(mappingRef, "scope");
+            ScopeType scope              = ScopeType.valueOf(scopeName);
+            String factoryName           = parseUtil.getAttribute(mappingRef, "type-def");
+            String typeName              = parseUtil.getAttribute(mappingRef, "type");
+            Type factory                 = null;
+            Class<?> type                = null;
+
+            try{
+                if( factoryName != null ){
+                    factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
+                }
+                
+                if(typeName != null)
+                    type = ClassUtil.get(typeName);
+
+            }
+            catch( Exception ex ){
+                throw new BrutosException( ex );
+            }
+            
+            metaBeanBuilder.addMetaValue(value, enumProperty, temporalProperty, null, scope, factory, type);
+        }
+        else
+        if(beanNode != null)
+        	this.addBean(value, beanNode, metaBeanBuilder);
+        else
+        	metaBeanBuilder.addMetaValue(value, bean);
+        
+    }
+    
+    private void addBean(Object value, Element beanNode, MetaBeanBuilder metaBeanBuilder){
+
+        String separator     = parseUtil.getAttribute(beanNode,"separator" );
+        String indexFormat   = parseUtil.getAttribute(beanNode,"index-format" );
+        String factory       = parseUtil.getAttribute(beanNode,"factory" );
+        String methodFactory = parseUtil.getAttribute(beanNode,"method-factory" );
+        String target        = parseUtil.getAttribute(beanNode,"target" );
+
+        Class<?> clazz = null;
+        try{
+            clazz = Class.forName(
+                        target,
+                        true,
+                        Thread.currentThread().getContextClassLoader() );
+        }
+        catch( Exception ex ){
+            throw new BrutosException( ex );
+        }
+
+        BeanBuilder beanBuilder = metaBeanBuilder.buildMetaValue(value, clazz);
+
+        beanBuilder.setFactory(factory);
+        beanBuilder.setMethodfactory(methodFactory);
+        beanBuilder.setSeparator(separator);
+        beanBuilder.setIndexFormat(indexFormat);
+
+        buildBean( beanNode, beanBuilder );
+    }
+    
     private void buildConstructorBean( NodeList consList,
             BeanBuilder beanBuilder ){
 
@@ -570,8 +682,9 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             String typeName = parseUtil.getAttribute(conNode, "type");
             Type factory = null;
             boolean nullable = false;
-            Class type = null;
+            Class<?> type = null;
 
+            Element anyNode        = parseUtil.getElement(conNode,"any");
             Element mappingRef     = parseUtil.getElement(conNode,"ref");
             Element beanNode       = parseUtil.getElement(conNode,"bean");
             Element valueNode      = parseUtil.getElement(conNode,"value");
@@ -618,17 +731,12 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             }
 
             ConstructorArgBuilder constructorBuilder =
-                    constructor.addContructorArg(
-                        bean,
-                        enumProperty,
-                        temporalProperty,
-                        mapping? bean : null,
-                        scope,
-                        value,
-                        nullable,
-                        factory,
-                        type);
+        		constructor.addContructorArg(bean, enumProperty, temporalProperty, 
+        				mapping? bean : null, scope, value, nullable, anyNode != null, factory, type);
 
+            if(anyNode != null)
+            	this.buildAny(anyNode, constructorBuilder);
+            
             addValidator(validatorNode, constructorBuilder);
         }
 
@@ -653,6 +761,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             Type factory = null;
             boolean nullable = false;
             
+            Element anyNode    = parseUtil.getElement( propNode, "any");
             Element mappingRef = parseUtil.getElement( propNode, "ref");
             Element beanNode   = parseUtil.getElement( propNode, "bean");
             Element valueNode  = parseUtil.getElement( propNode, "value");
@@ -684,16 +793,8 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             nullable = true;
 
             try{
-                if( factoryName != null ){
+                if( factoryName != null )
                     factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
-                    /*
-                    factory = (Type)Class.forName(
-                                factoryName,
-                                true,
-                                Thread.currentThread().getContextClassLoader() )
-                                    .newInstance();
-                    */
-                }
             }
             catch( Exception ex ){
                 throw new BrutosException( ex );
@@ -741,7 +842,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         Type factory = null;
         boolean nullable = false;
 
-        Element any        = parseUtil.getElement( propNode, "any");
+        Element anyNode    = parseUtil.getElement( propNode, "any");
         Element mappingRef = parseUtil.getElement( propNode, "ref");
         Element beanNode   = parseUtil.getElement( propNode, "bean");
         Element valueNode  = parseUtil.getElement( propNode, "value");
@@ -773,40 +874,21 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             nullable = true;
 
         try{
-            if( factoryName != null ){
+            if( factoryName != null )
                 factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
-                /*
-                factory = (Type)Class.forName(
-                            factoryName,
-                            true,
-                            Thread.currentThread().getContextClassLoader() )
-                                .newInstance();
-                */
-            }
         }
         catch( Exception ex ){
             throw new BrutosException( ex );
         }
 
-        PropertyBuilder propertyBuilder;
+        PropertyBuilder propertyBuilder =
+        		controllerBuilder.addProperty(
+        				propertyName, bean, scope, enumProperty, temporalProperty, 
+        				mapping? bean : null, value, nullable, anyNode != null, null, factory);
+        		
+        if(anyNode != null)
+        	this.buildAny(anyNode, propertyBuilder);
         
-        //if(any != null){
-        //    propertyBuilder = controllerBuilder.addGenericProperty(propertyName, bean, classType);
-        //}
-        //else{
-	        propertyBuilder =
-	                controllerBuilder.addProperty(
-	                    propertyName,
-	                    bean,
-	                    scope,
-	                    enumProperty,
-	                    temporalProperty,
-	                    mapping? bean : null,
-	                    value,
-	                    nullable,
-	                    factory);
-        //}
-
         addValidator(validatorNode, propertyBuilder);
 
     }
@@ -828,14 +910,14 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         String factoryName = parseUtil.getAttribute(conNode, "type-def");
         String typeName = parseUtil.getAttribute(conNode, "type");
         Type factory = null;
-        boolean nullable = false;
-        Class type = null;
+        //boolean nullable = false;
+        Class<?> type = null;
 
         Element mappingRef     = parseUtil.getElement(conNode,"ref");
         Element beanNode       = parseUtil.getElement(conNode,"bean");
         Element valueNode      = parseUtil.getElement(conNode,"value");
         Element validatorNode  = parseUtil.getElement(conNode,"validator");
-        Element nullNode       = parseUtil.getElement(conNode, "null");
+        //Element nullNode       = parseUtil.getElement(conNode, "null");
         if( mappingRef != null ){
             enumProperty =
                 EnumerationType.valueOf(
@@ -859,21 +941,13 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         if( valueNode != null ){
             value = valueNode.getTextContent();
         }
-        else
-        if( nullNode != null )
-            nullable = true;
+        //else
+        //if( nullNode != null )
+        //    nullable = true;
 
         try{
-            if( factoryName != null ){
+            if( factoryName != null )
                 factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
-                /*
-                factory = (Type)Class.forName(
-                            factoryName,
-                            true,
-                            Thread.currentThread().getContextClassLoader() )
-                                .newInstance();
-                */
-            }
 
             if(typeName != null)
                 type = ClassUtil.get(typeName);
@@ -917,7 +991,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         String typeName = parseUtil.getAttribute(conNode, "type");
         Type factory = null;
         boolean nullable = false;
-        Class type = null;
+        Class<?> type = null;
 
         Element mappingRef     = parseUtil.getElement(conNode,"ref");
         Element beanNode       = parseUtil.getElement(conNode,"bean");
@@ -1057,7 +1131,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         String factoryName = parseUtil.getAttribute(paramNode,  "type-def" );
         String type = parseUtil.getAttribute(paramNode,  "type" );
         Type factory = null;
-        Class typeClass = null;
+        Class<?> typeClass = null;
         boolean nullable = false;
 
         try{
@@ -1152,7 +1226,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         String name      = parseUtil.getAttribute(throwSafeNode, "name");
         DispatcherType dispatcher =
             DispatcherType.valueOf(parseUtil.getAttribute(throwSafeNode, "dispatcher"));
-        Class targetClass;
+        Class<?> targetClass;
 
         try{
             targetClass = Class.forName(
@@ -1188,7 +1262,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         String name = parseUtil.getAttribute(throwSafeNode, "name");
         DispatcherType dispatcher =
             DispatcherType.valueOf(parseUtil.getAttribute(throwSafeNode, "dispatcher"));
-        Class targetClass;
+        Class<?> targetClass;
 
         try{
             targetClass = Class.forName(

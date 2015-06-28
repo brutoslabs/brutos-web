@@ -21,7 +21,6 @@ import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.mapping.PropertyController;
-import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.RestrictionRules;
 
@@ -30,7 +29,9 @@ import org.brandao.brutos.validator.RestrictionRules;
  * 
  * @author Afonso Brandao
  */
-public class PropertyBuilder extends RestrictionBuilder{
+public class PropertyBuilder 
+	extends RestrictionBuilder 
+	implements GenericBuilder{
 
     private Object propertyBean;
     
