@@ -51,10 +51,12 @@ public class PropertyBuilder
         this.validatorFactory = validatorFactory;
     }
 
-    public PropertyBuilder(PropertyController propertyBean, ControllerBuilder controllerBuilder){
+    public PropertyBuilder(PropertyController propertyBean, ControllerBuilder controllerBuilder,
+    		ValidatorFactory validatorFactory){
         super( propertyBean.getValidate().getConfiguration() );
         this.propertyBean = propertyBean;
         this.controllerBuilder = controllerBuilder;
+        this.validatorFactory = validatorFactory;
     }
     
     public ControllerBuilder getControllerBuilder(){

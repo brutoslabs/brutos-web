@@ -34,13 +34,21 @@ public class MetaBeanBuilder {
         this.validatorFactory = validatorFactory;
         this.controller       = controller;
         
+    	if(type == null){
+        	type = 
+                    this.metaBean
+                    .getController()
+                    .getContext().getTypeManager()
+                        .getType(
+                    		classType,
+                            this.enumProperty,
+                            this.temporalProperty );
+    	}
+    	
         this.setScope(scope);
         this.setName(name);
-        
-        if(type == null)
-        	this.setClassType(classType);
-        else
-        	this.setType(type);
+    	this.setClassType(classType);
+    	this.setType(type);
 	}
 
 	public MetaBeanBuilder addMetaValue(Object value, String mapping){
@@ -72,7 +80,12 @@ public class MetaBeanBuilder {
                 false, typeDef, type, this.metaBean, 
                 this.validatorFactory, this.controller.controller);
 
-        this.metaBean.putMetaValue(value, dependency);
+        Object metaValue = this.metaBean.getType().convert(value);
+        
+        if(metaValue == null)
+        	throw new MappingException("invalid meta value: " + value);
+        
+        this.metaBean.putMetaValue(metaValue, dependency);
         return this;
     }
 	
@@ -156,6 +169,7 @@ public class MetaBeanBuilder {
 		
 		this.metaBean.setClassType(classType);
 		
+		/*
     	if(this.metaBean.getType() == null){
         	Type type = 
                     this.metaBean
@@ -170,7 +184,7 @@ public class MetaBeanBuilder {
     	}
     	else
 			throw new MappingException("type has been defined");
-        		
+    	*/	
         
         return this;
 	}

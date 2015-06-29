@@ -11,23 +11,15 @@ import org.brandao.brutos.validator.ValidatorException;
 
 public class MetaBean extends Bean{
 
-    private Type type;
-    
-    private ScopeType scopeType;
-    
-    //private String name;
-    
-    
 	private Map<Object, DependencyBean> metaValues;
 	
-	/*
-	private Controller controller;
-	*/
+	private Type type;
+	
+	private ScopeType scopeType;
 	
 	public MetaBean(Controller controller){
 		super(controller);
 		this.metaValues = new HashMap<Object,DependencyBean>();
-		this.controller = controller;
 	}
 
     public void putMetaValue(String value, DependencyBean bean){
@@ -73,7 +65,7 @@ public class MetaBean extends Bean{
         
         return bean.getValue(prefix, index, exceptionHandler, this, null);
     }
-    
+
     public Scope getScope() {
         return Scopes.getCurrentScope(scopeType);
     }
@@ -94,7 +86,6 @@ public class MetaBean extends Bean{
 		this.scopeType = scopeType;
 	}
 
-	/*
 	public String getName() {
 		return name;
 	}
@@ -103,16 +94,8 @@ public class MetaBean extends Bean{
 		this.name = name;
 	}
 
-	public Controller getController() {
-		return controller;
-	}
-
-	public void setController(Controller controller) {
-		this.controller = controller;
-	}
-   */
-    
 	public int getSize(){
 		return this.metaValues.size();
 	}
+
 }
