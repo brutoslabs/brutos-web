@@ -527,11 +527,11 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
 
         if( keyNode != null )
             buildKeyCollection(keyNode, beanBuilder);
-            //addBean(keyNode, beanBuilder, null, null, true, false);
-        else
+        /*else
         if( beanBuilder.isMap() )
             throw new BrutosException("key node is required in Map" );
-
+        */
+        
         Element elementNode =
             parseUtil
                 .getElement(
@@ -540,11 +540,10 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         
         if( elementNode != null )
             buildElementCollection(elementNode, beanBuilder);
-            //addBean(elementNode, beanBuilder, null, null, false, true);
-        else
-        if( beanBuilder.isMap() )
+        /*else
+        if(beanBuilder.isCollection())
             throw new BrutosException("element node is required in Collection");
-        
+        */
     }
 
     private void buildAny(Element anyNode, GenericBuilder builder){
