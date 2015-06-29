@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controllers xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xmlns='http://www.brutosframework.com.br/schema/controllers'
+	xsi:schemaLocation='http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd'>
+
+	<controller id="/controller"
+		class="org.brandao.brutos.helper.any.app1.fail.Test10FailAnyController">
+
+		<bean name="decimalProperty" target="org.brandao.brutos.helper.any.DecimalProperty">
+			<property name="length" />
+			<property name="decimals" />
+		</bean>
+
+		<bean name="setProperty" target="org.brandao.brutos.helper.any.SetProperty">
+			<property name="length" />
+			<property name="decimals" />
+			<property name="values">
+				<bean target="java.util.ArrayList">
+					<element type="java.lang.String" />
+				</bean>
+			</property>
+		</bean>
+
+		<property name="property">
+		    <bean target="org.brandao.brutos.annotation.helper.any.app1.fail.Test3FailAnyBean">
+				<constructor-arg bean="property">
+					<any>
+						<meta-value value="0" bean="decimalProperty" />
+						<meta-value value="1" bean="setProperty" />
+					</any>
+				</constructor-arg>
+			</bean>
+		</property>
+
+	</controller>
+
+</controllers>

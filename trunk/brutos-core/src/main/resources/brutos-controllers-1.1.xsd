@@ -416,7 +416,7 @@
         </xsd:sequence>
         <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
-        <xsd:attribute name="bean" type="xsd:string"/>
+        <xsd:attribute name="bean" type="xsd:string" use="required"/>
         <xsd:attribute name="scope" type="xsd:string" default="param"/>
         <xsd:attribute name="type-def" type="xsd:string"/>
         <xsd:attribute name="type" type="xsd:string" use="required"/>

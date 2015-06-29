@@ -25,7 +25,6 @@ import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
-import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.NullType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
