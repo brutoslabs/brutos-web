@@ -253,9 +253,9 @@ public class ConstructorBuilder extends RestrictionBuilder{
         */
         
         ConstructorArgBean arg =
-            (ConstructorArgBean) MappingBeanUtil.createDependencyBean(name, null,
+            (ConstructorArgBean) MappingBeanUtil.createConstructorArg(name,
                 enumProperty, temporalProperty, mapping, scope, value, nullable,
-                generic, typeDef, type, MappingBeanUtil.CONSTRUCTOR_ARG, this.mappingBean, 
+                generic, typeDef, type, this.mappingBean, 
                 this.validatorFactory, this.controller);
 
         getLogger()
