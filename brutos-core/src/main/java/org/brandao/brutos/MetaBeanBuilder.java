@@ -67,9 +67,9 @@ public class MetaBeanBuilder {
 			throw new MappingException("unknown bean type");
         
         DependencyBean dependency =
-            MappingBeanUtil.createDependencyBean(this.metaBean.getName(), null,
+            MappingBeanUtil.createMetaBeanValue(
                 enumProperty, temporalProperty, mapping, scope, null, false, 
-                false, typeDef, type, MappingBeanUtil.DEPENDENCY, this.metaBean, 
+                false, typeDef, type, this.metaBean, 
                 this.validatorFactory, this.controller.controller);
 
         this.metaBean.putMetaValue(value, dependency);

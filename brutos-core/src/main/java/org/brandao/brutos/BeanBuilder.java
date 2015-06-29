@@ -276,9 +276,9 @@ public class BeanBuilder {
                     new Object[]{this.mappingBean.getClassType()} ) );
         
         DependencyBean key =
-            MappingBeanUtil.createDependencyBean(name, null,
+            MappingBeanUtil.createDependencyBean(name,
                 enumProperty, temporalProperty, mapping, scope, value, false, 
-                generic, typeDef, type, MappingBeanUtil.DEPENDENCY, this.mappingBean, 
+                generic, typeDef, type, this.mappingBean, 
                 this.validatorFactory, this.controller);
 
         ((MapBean)mappingBean).setKey(key);
@@ -413,9 +413,9 @@ public class BeanBuilder {
                     new Object[]{this.mappingBean.getClassType()} ) );
 
         DependencyBean collection =
-            MappingBeanUtil.createDependencyBean(name, null,
+            MappingBeanUtil.createDependencyBean(name,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                generic, typeDef, type, MappingBeanUtil.DEPENDENCY, this.mappingBean, 
+                generic, typeDef, type, this.mappingBean, 
                 this.validatorFactory, this.controller);
 
         ((CollectionBean)mappingBean).setCollection(collection);
@@ -605,9 +605,9 @@ public class BeanBuilder {
                 name;
         
         PropertyBean propertyBean =
-            (PropertyBean) MappingBeanUtil.createDependencyBean(name, propertyName,
+            (PropertyBean) MappingBeanUtil.createProperty(name, propertyName,
                 enumProperty, temporalProperty, mapping, scope, value, nullable, 
-                generic, type, classType, MappingBeanUtil.PROPERTY, this.mappingBean, 
+                generic, type, classType, this.mappingBean, 
                 this.validatorFactory, this.controller);
 
         getLogger()
