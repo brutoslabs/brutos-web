@@ -74,7 +74,7 @@ public final class MappingBeanUtil {
         return createDependencyBean( 
                 name, enumProperty, temporalProperty, mapping, 
                 scope, value, nullable, generic, typeDef, 
-                classType, dependencyBean, bean, mappingBean, validatorFactory, controller);        
+                classType, dependencyBean, mappingBean, validatorFactory, controller);        
     }
 
 	public static DependencyBean createConstructorArg( 
@@ -87,7 +87,6 @@ public final class MappingBeanUtil {
             Controller controller){
     	
 		ConstructorArgBean dependencyBean = new ConstructorArgBean(mappingBean);
-        BeanInstance bean = new BeanInstance( null, mappingBean.getClassType() );
     	
         if(StringUtil.isEmpty(name) && !nullable && value == null)
             throw new IllegalArgumentException("bean name is required");
@@ -95,7 +94,7 @@ public final class MappingBeanUtil {
         return createDependencyBean( 
                 name, enumProperty, temporalProperty, mapping, 
                 scope, value, nullable, generic, typeDef, 
-                classType, dependencyBean, bean, mappingBean, validatorFactory, controller);        
+                classType, dependencyBean, mappingBean, validatorFactory, controller);        
     }
 
 	public static DependencyBean createMetaBeanValue( 
@@ -107,12 +106,11 @@ public final class MappingBeanUtil {
             Controller controller){
     	
 		ConstructorArgBean dependencyBean = new ConstructorArgBean(mappingBean);
-        BeanInstance bean = new BeanInstance( null, mappingBean.getClassType() );
     	
         return createDependencyBean( 
                 null, enumProperty, temporalProperty, mapping, 
                 scope, value, nullable, generic, typeDef, 
-                classType, dependencyBean, bean, mappingBean, validatorFactory, controller);        
+                classType, dependencyBean, mappingBean, validatorFactory, controller);        
     }
 	
 	public static DependencyBean createDependencyBean( 
@@ -125,12 +123,11 @@ public final class MappingBeanUtil {
             Controller controller){
 		
 		InnerBean dependencyBean = new InnerBean(mappingBean);
-        BeanInstance bean = new BeanInstance( null, mappingBean.getClassType() );
 		
         return createDependencyBean( 
                 name, enumProperty, temporalProperty, mapping, 
                 scope, value, nullable, generic, typeDef, 
-                classType, dependencyBean, bean, mappingBean, validatorFactory, controller);        
+                classType, dependencyBean, mappingBean, validatorFactory, controller);        
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -139,7 +136,7 @@ public final class MappingBeanUtil {
             EnumerationType enumProperty,
             String temporalProperty, String mapping, 
             ScopeType scope, Object value, boolean nullable, boolean generic, Type typeDef, 
-            Object classType, DependencyBean dependencyBean, BeanInstance bean, Bean mappingBean,
+            Object classType, DependencyBean dependencyBean, Bean mappingBean,
             ValidatorFactory validatorFactory,
             Controller controller){
 		

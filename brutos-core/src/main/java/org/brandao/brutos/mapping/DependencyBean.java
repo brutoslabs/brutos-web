@@ -178,6 +178,30 @@ public abstract class DependencyBean {
                 String newPrefix = null;
                 if(parent.isHierarchy()){
                     String parameter = getParameterName();
+                    if(parameter != null)
+                        newPrefix = parameter == null? "" : parameter;
+                }
+
+                if(newPrefix != null){
+                    newPrefix += index < 0?
+                                        "" :
+                                        parent.getIndexFormat().replace(
+                                            "$index",
+                                            String.valueOf(index) );
+                    newPrefix += parent.getSeparator();
+                }
+                
+                if(prefix != null){
+                	if(newPrefix != null)
+                		newPrefix = prefix + newPrefix;
+                	else
+                		newPrefix = prefix;
+                }
+                
+                /*
+                String newPrefix = null;
+                if(parent.isHierarchy()){
+                    String parameter = getParameterName();
                     if(!(prefix == null && parameter == null)){
                         newPrefix = prefix == null? "" : prefix;
                         newPrefix += parameter == null? "" : parameter;
@@ -192,6 +216,7 @@ public abstract class DependencyBean {
                                             String.valueOf(index) );
                     newPrefix += parent.getSeparator();
                 }
+                */
                 result = dependencyBean.getValue(
                     value,
                     newPrefix,

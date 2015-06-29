@@ -904,7 +904,7 @@ public class ControllerBuilder {
                     "adding property %s on controller %s",
                     new Object[]{propertyName, this.controller.getClassType().getSimpleName()}));
         
-        return new PropertyBuilder(property, this);
+        return new PropertyBuilder(property, this, this.validatorFactory);
     }
 
     /**
@@ -1045,7 +1045,7 @@ public class ControllerBuilder {
 
     public PropertyBuilder getProperty(String name){
         PropertyController property = (PropertyController) controller.getProperty(name);
-        return property == null? null : new PropertyBuilder(property, this);
+        return property == null? null : new PropertyBuilder(property, this, this.validatorFactory);
     }
 
     public boolean isResolvedView(){
