@@ -173,6 +173,10 @@ public final class MappingBeanUtil {
 	            catch( UnknownTypeException e ){
 	                throw new MappingException(e);
 	            }
+	            
+	            if(typeDef == null)
+	            	typeDef = new ObjectType(rawType);
+	            
 	        }
         }
         else
@@ -205,12 +209,13 @@ public final class MappingBeanUtil {
             else
                 throw new MappingException( "mapping name " + mapping + " not found!" );
         }
-        else{
+        /*else{
             Type definedType = dependencyBean.getType();
             
             if(definedType != null && definedType.getClass() == ObjectType.class && rawType != Object.class)
             	throw new MappingException("unknown type: " + rawType.getSimpleName());
         }
+        */
         
         Configuration validatorConfig = new Configuration();
         dependencyBean.setValidator( validatorFactory.getValidator(validatorConfig) );
