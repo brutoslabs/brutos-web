@@ -814,8 +814,8 @@ public class ControllerBuilder {
             ScopeType scope, EnumerationType enumProperty, String temporalProperty, 
             String mapping, Object value, boolean nullable, boolean generic, Object classType, Type type ){
 
-        id                 = StringUtil.adjust(id);
         propertyName       = StringUtil.adjust(propertyName);
+        id                 = StringUtil.isEmpty(id)? propertyName : StringUtil.adjust(id);
         temporalProperty   = StringUtil.adjust(temporalProperty);
         mapping            = StringUtil.adjust(mapping);
         BeanInstance bean  = this.controller.getBeanInstance();
@@ -879,7 +879,7 @@ public class ControllerBuilder {
         if(generic){
         	MetaBean metaBean = new MetaBean(controller);
         	metaBean.setClassType(rawType);
-        	metaBean.setType(type);
+        	//metaBean.setType(type);
         	property.setMetaBean(metaBean);
         }
         else

@@ -56,6 +56,17 @@ public class WebApplicationContextTester {
 
     public static void run(
             String uri, 
+            WebApplicationTester tester, String[] resources) throws Throwable{
+    	run(
+            uri, 
+            tester,
+            new HashMap<String,String>(),
+            new HashMap<String,String>(),
+            new HashMap<String,String>());    
+	}
+    
+    public static void run(
+            String uri, 
             WebApplicationTester tester, Class[] clazz, String complement) throws Throwable{
         run(uri, tester, clazz, complement, null, null);
     }

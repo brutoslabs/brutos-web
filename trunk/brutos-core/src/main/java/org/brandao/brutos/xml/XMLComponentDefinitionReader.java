@@ -1123,6 +1123,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             throw new BrutosException( ex );
         }
 
+        Element anyNode    = parseUtil.getElement( paramNode, "any");
         Element mappingRef = parseUtil.getElement( paramNode, "ref");
         Element beanNode   = parseUtil.getElement( paramNode, "bean");
         Element valueNode  = parseUtil.getElement( paramNode, "value");
@@ -1154,17 +1155,8 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
             nullable = true;
         
         try{
-            if( factoryName != null ){
+            if( factoryName != null )
                 factory = (Type)ClassUtil.getInstance(ClassUtil.get(factoryName));
-                /*factory = (Type)Class.forName(
-                            factoryName,
-                            true,
-                            Thread.currentThread().getContextClassLoader() )
-                                .newInstance();*/
-            }
-
-            //if( type == null )
-            //    throw new BrutosException( "tag type is required in parameter" );
         }
         catch( BrutosException ex ){
             throw ex;
@@ -1183,8 +1175,11 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
                     factory,
                     value,
                     nullable,
+                    anyNode != null,
                     typeClass);
 
+        if(anyNode != null)
+        	this.buildAny(anyNode, parameterBuilder);
         addValidator(validatorNode, parameterBuilder);
         
     }

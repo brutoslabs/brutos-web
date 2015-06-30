@@ -4,16 +4,16 @@
 	xsi:schemaLocation='http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd'>
 
 	<controller id="/controller"
-		class="org.brandao.brutos.helper.any.Test7AnyController">
+		class="org.brandao.brutos.helper.any.app1.Test7AnyController">
 
-		<bean name="decimalProperty" target="org.brandao.brutos.helper.any.DecimalProperty">
+		<bean name="decimalProperty" target="org.brandao.brutos.helper.any.app1.DecimalProperty">
+			<property name="name" />
 			<property name="length" />
 			<property name="decimals" />
 		</bean>
 
-		<bean name="setProperty" target="org.brandao.brutos.helper.any.SetProperty">
-			<property name="length" />
-			<property name="decimals" />
+		<bean name="setProperty" target="org.brandao.brutos.helper.any.app1.SetProperty">
+			<property name="name" />
 			<property name="values">
 				<bean target="java.util.ArrayList">
 					<element type="java.lang.String" />
@@ -22,27 +22,27 @@
 		</bean>
 
 		<property name="property1">
-			<bean target="org.brandao.brutos.helper.any.Test2AnyBean">
+			<bean target="org.brandao.brutos.helper.any.app1.Test2AnyBean">
 
 				<constructor-arg bean="propertyC">
-				<any bean="propertyType3" enum-property="string" 
-				    type="org.brandao.brutos.helper.any.PropertyType">
+					<any bean="propertyType3" enum-property="string"
+						type="org.brandao.brutos.helper.any.app1.PropertyType">
 						<meta-value value="DECIMAL" bean="decimalProperty" />
 						<meta-value value="SET" bean="setProperty" />
 					</any>
 				</constructor-arg>
 
 				<property name="property1" bean="propertyA">
-				<any bean="propertyType" enum-property="string" 
-				    type="org.brandao.brutos.helper.any.PropertyType">
+					<any bean="propertyType" enum-property="string"
+						type="org.brandao.brutos.helper.any.app1.PropertyType">
 						<meta-value value="DECIMAL" bean="decimalProperty" />
 						<meta-value value="SET" bean="setProperty" />
 					</any>
 				</property>
 
 				<property name="property2" bean="propertyB">
-				<any bean="propertyType2" enum-property="string" 
-				    type="org.brandao.brutos.helper.any.PropertyType">
+					<any bean="propertyType2" enum-property="string"
+						type="org.brandao.brutos.helper.any.app1.PropertyType">
 						<meta-value value="DECIMAL" bean="decimalProperty" />
 						<meta-value value="SET" bean="setProperty" />
 					</any>

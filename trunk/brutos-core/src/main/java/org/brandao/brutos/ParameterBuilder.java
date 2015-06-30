@@ -28,7 +28,9 @@ import org.brandao.brutos.validator.RestrictionRules;
  *
  * @author Afonso Brandao
  */
-public class ParameterBuilder extends RestrictionBuilder{
+public class ParameterBuilder 
+	extends RestrictionBuilder
+	implements GenericBuilder{
 
     private ParameterAction parameter;
     
