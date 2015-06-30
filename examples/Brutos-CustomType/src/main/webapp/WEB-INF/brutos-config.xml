@@ -30,7 +30,7 @@
         </bean>
 
         <action id="show" executor="show">
-            <parameter type="br.brandao.beans.MyBean"/>
+            <parameter bean="bean" type="br.brandao.beans.MyBean"/>
         </action>
 
     </controller>
