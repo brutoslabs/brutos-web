@@ -6,6 +6,10 @@
         <param-value>org.brandao.brutos.spring.SpringObjectFactory</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>context_class</param-name>
+        <param-value>br.brandao.ApplicationContext</param-value>
+    </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -24,6 +28,7 @@
         <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
         <param-value>client</param-value>
     </context-param>
+    <!--
     <filter>
         <filter-name>BRUTOS FILTER</filter-name>
         <filter-class>org.brandao.brutos.web.http.BrutosRequestFilter</filter-class>
@@ -32,13 +37,12 @@
         <filter-name>BRUTOS FILTER</filter-name>
         <servlet-name>BRUTOS SERVLET</servlet-name>
         <dispatcher>REQUEST</dispatcher>
-    </filter-mapping>
-    <!--<listener>
-        <listener-class>org.brandao.brutos.web.ContextLoaderListener</listener-class>
-    </listener>-->
+    </filter-mapping>-->
+    <!--
     <listener>
         <listener-class>br.brandao.ApplicationContext</listener-class>
     </listener>
+    -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
