@@ -31,14 +31,14 @@ public class RoomController {
         return roomService;
     }
     
-    @Identify(bean="roomID")
+    @Basic(bean="roomID")
     public void setRoomService(RoomService roomService){
         this.roomService = roomService;
     }
     
     @Action("/send")
     public void sendMessage(
-            @Identify(useMapping=true)
+            @Basic(bean="message")
             MessageDTO message) throws UserNotFoundException{
         roomService.sendMessage(
             message.rebuild(
@@ -48,13 +48,13 @@ public class RoomController {
     @Action("/enter")
     @View(value = "/layout/room.jsp", resolved = true)
     @ThrowSafeList({
-        @ThrowSafe(target=ValidatorException.class,   view="/layout/login.jsp"),
-        @ThrowSafe(target=UserExistException.class,   view="/layout/login.jsp"),
-        @ThrowSafe(target=MaxUsersException.class,    view="/layout/login.jsp"),
-        @ThrowSafe(target=NullPointerException.class, view="/layout/login.jsp")
+        @ThrowSafe(target=ValidatorException.class,   view="/layout/login.jsp", resolved=true),
+        @ThrowSafe(target=UserExistException.class,   view="/layout/login.jsp", resolved=true),
+        @ThrowSafe(target=MaxUsersException.class,    view="/layout/login.jsp", resolved=true),
+        @ThrowSafe(target=NullPointerException.class, view="/layout/login.jsp", resolved=true)
     })
     public void putUser(
-            @Identify(useMapping=true)
+            @Basic(bean="user")
             UserDTO userDTO) 
             throws UserExistException, MaxUsersException{
 
@@ -71,7 +71,8 @@ public class RoomController {
     
     @Action("/exit")
     public void removeUser(
-            @Identify(bean="user",scope=ScopeType.SESSION)
+            @Basic(bean="user", mappingType = MappingTypes.SIMPLE, 
+                    scope=ScopeType.SESSION)
             User user ) throws UserNotFoundException{
         if(user != null)
             user.exitRoom();
@@ -110,7 +111,7 @@ public class RoomController {
         return currentUser;
     }
 
-    @Identify(bean="sessionUser", scope=ScopeType.SESSION)
+    @Basic(bean="sessionUser", mappingType = MappingTypes.SIMPLE, scope=ScopeType.SESSION)
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }
