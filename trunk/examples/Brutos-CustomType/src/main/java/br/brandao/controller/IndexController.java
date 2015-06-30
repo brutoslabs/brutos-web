@@ -9,7 +9,7 @@ import br.brandao.beans.MyBean;
 
 /**
  *
- * @author Afonso Brandão
+ * @author Brandao
  */
 public class IndexController {
 
