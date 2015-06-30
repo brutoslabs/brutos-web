@@ -4,16 +4,16 @@
 	xsi:schemaLocation='http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd'>
 
 	<controller id="/controller"
-		class="org.brandao.brutos.helper.any.Test2AnyController">
+		class="org.brandao.brutos.helper.any.app1.Test2AnyController">
 
-		<bean name="decimalProperty" target="org.brandao.brutos.helper.any.DecimalProperty">
+		<bean name="decimalProperty" target="org.brandao.brutos.helper.any.app1.DecimalProperty">
+			<property name="name" />
 			<property name="length" />
 			<property name="decimals" />
 		</bean>
 
-		<bean name="setProperty" target="org.brandao.brutos.helper.any.SetProperty">
-			<property name="length" />
-			<property name="decimals" />
+		<bean name="setProperty" target="org.brandao.brutos.helper.any.app1.SetProperty">
+			<property name="name" />
 			<property name="values">
 				<bean target="java.util.ArrayList">
 					<element type="java.lang.String" />

@@ -404,7 +404,7 @@ public class ParametersBuilder extends RestrictionBuilder{
         if(generic){
         	MetaBean metaBean = new MetaBean(controller);
         	metaBean.setClassType(rawType);
-        	metaBean.setType(typeDef);
+        	//metaBean.setType(typeDef);
         	parameter.setMetaBean(metaBean);
         }
         else

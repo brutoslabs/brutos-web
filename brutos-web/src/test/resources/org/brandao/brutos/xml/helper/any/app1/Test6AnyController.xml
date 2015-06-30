@@ -4,16 +4,16 @@
 	xsi:schemaLocation='http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd'>
 
 	<controller id="/controller"
-		class="org.brandao.brutos.helper.any.Test6AnyController">
+		class="org.brandao.brutos.helper.any.app1.Test6AnyController">
 
-		<bean name="decimalProperty" target="org.brandao.brutos.helper.any.DecimalProperty">
+		<bean name="decimalProperty" target="org.brandao.brutos.helper.any.app1.DecimalProperty">
+			<property name="name" />
 			<property name="length" />
 			<property name="decimals" />
 		</bean>
 
-		<bean name="setProperty" target="org.brandao.brutos.helper.any.SetProperty">
-			<property name="length" />
-			<property name="decimals" />
+		<bean name="setProperty" target="org.brandao.brutos.helper.any.app1.SetProperty">
+			<property name="name" />
 			<property name="values">
 				<bean target="java.util.ArrayList">
 					<element type="java.lang.String" />
@@ -22,7 +22,7 @@
 		</bean>
 
 		<property name="property1">
-			<bean target="org.brandao.brutos.helper.any.Test1AnyBean">
+			<bean target="org.brandao.brutos.helper.any.app1.Test1AnyBean">
 
 				<constructor-arg bean="propertyC">
 					<any bean="propertyType3" type="java.lang.String">
@@ -39,7 +39,7 @@
 				</property>
 
 				<property name="property2" bean="propertyB">
-					<any bean="propertyType" type="java.lang.String">
+					<any bean="propertyType2" type="java.lang.String">
 						<meta-value value="decimal" bean="decimalProperty" />
 						<meta-value value="set" bean="setProperty" />
 					</any>

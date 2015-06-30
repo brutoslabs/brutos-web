@@ -67,6 +67,8 @@ public final class MappingBeanUtil {
         if(StringUtil.isEmpty(name) && !nullable && value == null)
             throw new IllegalArgumentException("bean name is required");
         
+        name = StringUtil.isEmpty(name)? propertyName : StringUtil.adjust(name);
+        
         classType = classType == null? bean.getGenericType(propertyName) : classType;
         
         dependencyBean.setName(propertyName);
@@ -193,7 +195,7 @@ public final class MappingBeanUtil {
         if(generic){
         	MetaBean metaBean = new MetaBean(controller);
         	metaBean.setClassType(rawType);
-        	metaBean.setType(typeDef);
+        	//metaBean.setType(typeDef);
         	dependencyBean.setMetaBean(metaBean);
         }
         else

@@ -580,7 +580,8 @@ public class AnnotationUtil {
                 return basic.bean();
         }
         
-        return property.getName();
+        //return property.getName();
+        return null;
     }
 
     public static String getBeanName(Class<?> type){

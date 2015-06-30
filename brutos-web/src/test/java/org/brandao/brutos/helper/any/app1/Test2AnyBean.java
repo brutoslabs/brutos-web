@@ -8,7 +8,7 @@ public class Test2AnyBean {
 
 	private Property property3;
 	
-	public Test2AnyBean(Property property3 ){
+	public Test2AnyBean(Property property3){
 		this.property3 = property3;
 	}
 	
