@@ -29,20 +29,20 @@ public interface ConfigurableApplicationContext
         extends ApplicationContext{
 
     /**
-     * Obt�m a f�brica de requisi��o.
-     * @return F�brica.
+     * Obtém a fábrica de requisições.
+     * @return Fábrica.
      */
     MvcRequestFactory getRequestFactory();
 
     /**
-     * Obt�m a f�brica de resposta.
-     * @return F�brica.
+     * Obtém a fábrica de resposta.
+     * @return Fábrica.
      */
     MvcResponseFactory getResponseFactory();
 
     /**
-     * Define o gestor de interceptadores.
-     * @param interceptorManager Gestor de interceptadores.
+     * Define o gestor de interceptores.
+     * @param interceptorManager Gestor de interceptores.
      */
     void setInterceptorManager(InterceptorManager interceptorManager);
 
@@ -61,13 +61,13 @@ public interface ConfigurableApplicationContext
 
     /**
      * Obtém a fábrica de validadores.
-     * @return Provedor das regras de valida��o
+     * @return Provedor das regras de validação
      */
     ValidatorFactory getValidatorFactory();
 
     /**
-     * Obt�m o respons�vel por executar as a��es.
-     * @return Respons�vel por executar as a��es.
+     * Obtém o responsável por executar as ações.
+     * @return Responsável por executar as ações.
      */
     Invoker getInvoker();
 
@@ -78,10 +78,10 @@ public interface ConfigurableApplicationContext
     void setInvoker(Invoker value);
 
     /**
-     * Define as configura��es da aplica��o.
-     * @param config Configura��o.
+     * Define as configurações da aplicação.
+     * @param Configuração Configuração.
      */
-    void setConfiguration( Properties config );
+    void setConfiguration(Properties config);
 
     /**
      * Obtém a configuração da aplicação.
@@ -96,13 +96,13 @@ public interface ConfigurableApplicationContext
     void setObjectFactory(ObjectFactory objectFactory);
 
     /**
-     * Obt�m o gestor de interceptadores.
+     * Obtém o gestor de interceptadores.
      * @return Gestor de interceptadores.
      */
     InterceptorManager getInterceptorManager();
 
     /**
-     * Obt�m o gestor de controladores.
+     * Obtém o gestor de controladores.
      * @return Gestor de controladores.
      */
     ControllerManager getControllerManager();
@@ -114,14 +114,14 @@ public interface ConfigurableApplicationContext
     ObjectFactory getObjectFactory();
 
     /**
-     * Obt�m o respons�vel por resolver os controladores.
-     * @return Respons�vel por resolver os controladores.
+     * Obtém o responsável por resolver os controladores.
+     * @return Responsável por resolver os controladores.
      */
     ControllerResolver getControllerResolver();
 
     /**
-     * Obt�m o respons�vel por resolver as a��es.
-     * @return Respons�vel por resolver as a��es.
+     * Obtém o responsável por resolver as ações.
+     * @return Responsável por resolver as ações.
      */
     ActionResolver getActionResolver();
 

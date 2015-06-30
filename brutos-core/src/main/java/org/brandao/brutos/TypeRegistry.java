@@ -28,10 +28,10 @@ public interface TypeRegistry {
     
     void registerType(TypeFactory factory);
     
-    void registerType(Class classType, Class type);
+    void registerType(Class<?> classType, Class<?> type);
     
-    TypeFactory getRegistredType(Class classType);
+    TypeFactory getRegistredType(Class<?> classType);
     
-    boolean isStandardType(Class clazz);
+    boolean isStandardType(Class<?> clazz);
     
 }

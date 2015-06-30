@@ -103,11 +103,13 @@ public class ContextLoader {
         this.logger = loggerProvider.getLogger( ContextLoader.class.getName() );
     }
 
-    private void initConfiguration( ServletContext servletContext, Properties config ){
-        Enumeration initParameters = servletContext.getInitParameterNames();
+    @SuppressWarnings("unchecked")
+	private void initConfiguration( ServletContext servletContext, Properties config ){
+        Enumeration<String> initParameters = 
+        		servletContext.getInitParameterNames();
 
         while( initParameters.hasMoreElements() ){
-            String name = (String) initParameters.nextElement();
+            String name = initParameters.nextElement();
             config.setProperty( name, servletContext.getInitParameter( name ) );
         }
     }
@@ -115,7 +117,7 @@ public class ContextLoader {
     private ConfigurableWebApplicationContext createApplicationContext(
             ServletContext servletContext){
 
-        Class clazz = getApplicationContextClass(servletContext);
+        Class<?> clazz = getApplicationContextClass(servletContext);
 
         if(ConfigurableWebApplicationContext.class.isAssignableFrom(clazz)){
             try{
@@ -135,7 +137,7 @@ public class ContextLoader {
                     clazz.getName());
     }
 
-    private Class getApplicationContextClass(ServletContext servletContext){
+    private Class<?> getApplicationContextClass(ServletContext servletContext){
         String contextClassName = servletContext.getInitParameter(CONTEXT_CLASS);
 
         if( contextClassName != null )
@@ -150,7 +152,7 @@ public class ContextLoader {
         throw new BrutosException("not launch context!");
     }
 
-    private Class getContextClass( String contextClassName ){
+    private Class<?> getContextClass( String contextClassName ){
         try {
             return Thread.currentThread().getContextClassLoader().loadClass(contextClassName);
         } catch (ClassNotFoundException ex) {

@@ -831,7 +831,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
                         HttpServletRequest request, HttpServletResponse response) {
 
                     app.getScopes().get(WebScopeType.PARAM).put("invoke", "testProperty1");
-                    app.getScopes().get(WebScopeType.PARAM).put("value1", "teste");
+                    app.getScopes().get(WebScopeType.PARAM).put("property1.value1", "teste");
                     app.getInvoker().invoke("/testController.htm");
                 }
 
