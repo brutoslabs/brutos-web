@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
-import org.brandao.brutos.annotation.Identify;
+import org.brandao.brutos.annotation.Basic;
+import org.brandao.brutos.annotation.MappingTypes;
 import org.brandao.brutos.annotation.ResultView;
 import org.brandao.brutos.annotation.ScopeType;
 import org.brandao.brutos.validator.ValidatorException;
@@ -98,7 +99,7 @@ public class RoomController {
         return currentUser;
     }
 
-    @Identify(scope=ScopeType.SESSION)
+    @Basic(scope=ScopeType.SESSION, mappingType = MappingTypes.SIMPLE)
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
     }

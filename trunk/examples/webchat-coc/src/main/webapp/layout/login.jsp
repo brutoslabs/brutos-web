@@ -9,7 +9,7 @@
         <h1>Enter Chat</h1>
         <form method="POST" action="${pageContext.servletContext.contextPath}/Room/enter">
             <input type="hidden" name="roomService" value="${param.roomService}">
-            <label for="nick">Nick</label><input type="text" size="20" name="nick" id="nick"><br>
+            <label for="nick">Nick</label><input type="text" size="20" name="arg0.nick" id="nick"><br>
             <input type="submit" value="enter">
         </form>
     </body>
