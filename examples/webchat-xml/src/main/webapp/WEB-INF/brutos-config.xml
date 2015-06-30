@@ -27,7 +27,7 @@
         <action id="/messagePart" view="/layout/messages.jsp"/>
         <action id="/sendPart" view="/layout/send.jsp"/>
         <action id="/send" executor="sendMessage">
-            <parameter>
+            <parameter bean="message">
                 <bean target="org.brandao.webchat.controller.entity.MessageDTO">
                     <property name="origin">
                         <bean target="org.brandao.webchat.controller.entity.UserDTO">
@@ -59,7 +59,7 @@
             </parameter>
         </action>
         <action id="/enter" executor="putUser" view="/layout/room.jsp">
-            <parameter>
+            <parameter bean="user">
                 <bean target="org.brandao.webchat.controller.entity.UserDTO">
                     <property name="nick" bean="nick">
                         <validator message="msgError">
