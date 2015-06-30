@@ -23,7 +23,6 @@ import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeUtil;
@@ -383,6 +382,9 @@ public class ParametersBuilder extends RestrictionBuilder{
 	                                e.getMessage()} ), e );
 	            }
 	        }
+                
+            if(typeDef == null)
+                typeDef = new ObjectType(rawType);
         }
         else
     	if(classType != null){
@@ -402,10 +404,9 @@ public class ParametersBuilder extends RestrictionBuilder{
         parameter.setType(typeDef);
         
         if(generic){
-        	MetaBean metaBean = new MetaBean(controller);
-        	metaBean.setClassType(rawType);
-        	//metaBean.setType(typeDef);
-        	parameter.setMetaBean(metaBean);
+            MetaBean metaBean = new MetaBean(controller);
+            metaBean.setClassType(rawType);
+            parameter.setMetaBean(metaBean);
         }
         else
         if( !StringUtil.isEmpty(mapping) ){
@@ -414,13 +415,14 @@ public class ParametersBuilder extends RestrictionBuilder{
             else
                 throw new MappingException( "mapping name " + mapping + " not found!" );
         }
-        else{
+        /*else{
             Type definedType = parameter.getType();
             
             //TODO: remove ObjectType and use if mapping not null
             if(definedType != null && definedType.getClass() == ObjectType.class && rawType != Object.class)
             	throw new MappingException("unknown type: " + rawType.getSimpleName());
         }
+        */
 
         action.addParameter(parameter);
         return new ParameterBuilder(parameter, this, this.validatorFactory);

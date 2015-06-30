@@ -867,6 +867,10 @@ public class ControllerBuilder {
 	                throw new MappingException(e);
 	            }
         	}
+        	
+            if(type == null)
+                type = new ObjectType(rawType);
+        	
         }
         
         /*
@@ -889,13 +893,14 @@ public class ControllerBuilder {
             else
                 throw new MappingException( "mapping not found: " + mapping );
         }
-        else{
+        /*else{
             Type definedType = property.getType();
             
             if(definedType.getClass() == ObjectType.class && rawType != Object.class)
             	throw new MappingException("unknown type: " + rawType.getSimpleName());
         }
-
+        */
+        
         controller.addProperty( property );
 
         getLogger().info(
