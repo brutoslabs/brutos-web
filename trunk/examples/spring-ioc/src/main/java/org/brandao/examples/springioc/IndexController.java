@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-@Controller(defaultActionName = "index")
+@Controller(defaultActionName = "/index")
 @ActionStrategy(ActionStrategyType.DETACHED)
 public class IndexController {
 
