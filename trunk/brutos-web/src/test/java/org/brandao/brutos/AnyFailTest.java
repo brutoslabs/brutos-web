@@ -27,7 +27,6 @@ import org.brandao.brutos.web.test.WebApplicationTester;
 
 public class AnyFailTest extends TestCase{
     
-    
     public void testTest1FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
@@ -40,8 +39,8 @@ public class AnyFailTest extends TestCase{
                     );
 
                     parameters.put(
-                            MockXMLWebApplicationContext.IGNORE_RESOURCES,
-                            "true"
+                            MockXMLWebApplicationContext.contextConfigName,
+                            "classpath:org/brandao/brutos/xml/helper/any/fail/app1/Test1FailAnyController.xml"
                     );
                 }
 
@@ -53,19 +52,19 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta values is required}");
+                    Assert.fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta values is required"))
+                        if(ex.getMessage().equals("cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected."))
                             return;
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {meta values is required}");
+                    Assert.fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
                 }
             },
             new Class[]{Test1FailAnyController.class});
@@ -83,8 +82,8 @@ public class AnyFailTest extends TestCase{
                     );
 
                     parameters.put(
-                            MockXMLWebApplicationContext.IGNORE_RESOURCES,
-                            "true"
+                            MockXMLWebApplicationContext.contextConfigName,
+                            "classpath:org/brandao/brutos/xml/helper/any/fail/app1/Test2FailAnyController.xml"
                     );
                 }
 
@@ -96,19 +95,19 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta values is required}");
+                    Assert.fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta values is required"))
+                        if(ex.getMessage().equals("cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected."))
                             return;
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {meta values is required}");
+                    Assert.fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
                 }
             },
             new Class[]{Test2FailAnyController.class});
@@ -126,8 +125,8 @@ public class AnyFailTest extends TestCase{
                     );
 
                     parameters.put(
-                            MockXMLWebApplicationContext.IGNORE_RESOURCES,
-                            "true"
+                            MockXMLWebApplicationContext.contextConfigName,
+                            "classpath:org/brandao/brutos/xml/helper/any/fail/app1/Test3FailAnyController.xml"
                     );
                 }
 
@@ -139,19 +138,19 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta bean name cannot be empty"))
+                        if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
                             return;
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test3FailAnyController.class});
@@ -169,8 +168,8 @@ public class AnyFailTest extends TestCase{
                     );
 
                     parameters.put(
-                            MockXMLWebApplicationContext.IGNORE_RESOURCES,
-                            "true"
+                            MockXMLWebApplicationContext.contextConfigName,
+                            "classpath:org/brandao/brutos/xml/helper/any/fail/app1/Test4FailAnyController.xml"
                     );
                 }
 
@@ -182,19 +181,19 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta bean name cannot be empty"))
+                        if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
                             return;
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test4FailAnyController.class});
@@ -212,8 +211,8 @@ public class AnyFailTest extends TestCase{
                     );
 
                     parameters.put(
-                            MockXMLWebApplicationContext.IGNORE_RESOURCES,
-                            "true"
+                            MockXMLWebApplicationContext.contextConfigName,
+                            "classpath:org/brandao/brutos/xml/helper/any/fail/app1/Test5FailAnyController.xml"
                     );
                 }
 
@@ -225,19 +224,19 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta bean name cannot be empty"))
+                        if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
                             return;
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test5FailAnyController.class});
@@ -255,8 +254,8 @@ public class AnyFailTest extends TestCase{
                     );
 
                     parameters.put(
-                            MockXMLWebApplicationContext.IGNORE_RESOURCES,
-                            "true"
+                            MockXMLWebApplicationContext.contextConfigName,
+                            "classpath:org/brandao/brutos/xml/helper/any/fail/app1/Test6FailAnyController.xml"
                     );
                 }
 
@@ -268,19 +267,19 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta bean name cannot be empty"))
+                        if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
                             return;
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test6FailAnyController.class});
@@ -298,8 +297,8 @@ public class AnyFailTest extends TestCase{
                     );
 
                     parameters.put(
-                            MockXMLWebApplicationContext.IGNORE_RESOURCES,
-                            "true"
+                            MockXMLWebApplicationContext.contextConfigName,
+                            "classpath:org/brandao/brutos/xml/helper/any/fail/app1/Test7FailAnyController.xml"
                     );
                 }
 
@@ -311,19 +310,19 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta bean name cannot be empty"))
+                        if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
                             return;
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test7FailAnyController.class});
@@ -341,8 +340,8 @@ public class AnyFailTest extends TestCase{
                     );
 
                     parameters.put(
-                            MockXMLWebApplicationContext.IGNORE_RESOURCES,
-                            "true"
+                            MockXMLWebApplicationContext.contextConfigName,
+                            "classpath:org/brandao/brutos/xml/helper/any/fail/app1/Test8FailAnyController.xml"
                     );
                 }
 
@@ -354,19 +353,19 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta bean name cannot be empty"))
+                        if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
                             return;
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test8FailAnyController.class});
@@ -384,8 +383,8 @@ public class AnyFailTest extends TestCase{
                     );
 
                     parameters.put(
-                            MockXMLWebApplicationContext.IGNORE_RESOURCES,
-                            "true"
+                            MockXMLWebApplicationContext.contextConfigName,
+                            "classpath:org/brandao/brutos/xml/helper/any/fail/app1/Test9FailAnyController.xml"
                     );
                 }
 
@@ -397,19 +396,19 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta bean name cannot be empty"))
+                        if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
                             return;
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test9FailAnyController.class});
@@ -427,8 +426,8 @@ public class AnyFailTest extends TestCase{
                     );
 
                     parameters.put(
-                            MockXMLWebApplicationContext.IGNORE_RESOURCES,
-                            "true"
+                            MockXMLWebApplicationContext.contextConfigName,
+                            "classpath:org/brandao/brutos/xml/helper/any/fail/app1/Test10FailAnyController.xml"
                     );
                 }
 
@@ -440,19 +439,19 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
                     Throwable ex = e;
                     do{
-                        if(ex.getMessage().equals("meta bean name cannot be empty"))
+                        if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
                             return;
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {meta bean name cannot be empty}");
+                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test10FailAnyController.class});
