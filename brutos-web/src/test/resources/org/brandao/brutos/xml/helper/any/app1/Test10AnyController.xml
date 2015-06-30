@@ -55,7 +55,7 @@
 			</any>
 		</property>
 
-		<action id="/test">
+		<action id="/test" executor="testAction">
 			<parameter bean="propertyE">
 				<any bean="propertyType5" type="java.lang.String">
 					<meta-value value="decimal" bean="decimalProperty" />
