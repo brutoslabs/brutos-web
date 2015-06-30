@@ -8,7 +8,7 @@
     <body>
         <h1>Enter Chat</h1>
         <form method="POST" action="${param.roomID}/enter">
-            <label for="nick">Nick</label><input type="text" size="20" name="nick" id="nick"><br>
+            <label for="nick">Nick</label><input type="text" size="20" name="user.nick" id="nick"><br>
             <input type="submit" value="enter">
         </form>
     </body>
