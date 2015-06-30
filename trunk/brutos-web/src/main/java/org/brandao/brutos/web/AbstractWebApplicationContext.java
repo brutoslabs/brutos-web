@@ -87,7 +87,7 @@ public abstract class AbstractWebApplicationContext
                 config.getProperty( BrutosConstants.UPLOAD_LISTENER_CLASS,
                     DefaultUploadListenerFactory.class.getName() );
 
-            Class ulfClass = Class.forName(
+            Class<?> ulfClass = Class.forName(
                 uploadListenerFactoryName,
                 true,
                 Thread.currentThread().getContextClassLoader() );
@@ -112,7 +112,7 @@ public abstract class AbstractWebApplicationContext
                 config.getProperty( BrutosConstants.REQUEST_PARSER_CLASS,
                     BrutosConstants.DEFAULT_REQUEST_PARSER );
 
-            Class rpClass = Class.forName(
+            Class<?> rpClass = Class.forName(
                 requestParserName,
                 true,
                 Thread.currentThread().getContextClassLoader() );
@@ -265,48 +265,48 @@ public abstract class AbstractWebApplicationContext
         this.servletContext = servletContext;
     }
 
-    public ControllerBuilder registerController( Class classtype ){
+    public ControllerBuilder registerController( Class<?> classtype ){
         return this.controllerManager.addController(classtype);
     }
 
-    public ControllerBuilder registerController( String id, Class classType ){
+    public ControllerBuilder registerController( String id, Class<?> classType ){
         return this.controllerManager.addController(id, classType);
     }
     
     public ControllerBuilder registerController( String id, String view, 
-            boolean resolvedView, Class classType ){
+            boolean resolvedView, Class<?> classType ){
         return this.controllerManager.addController(id, view, resolvedView,
                 classType);
     }
     
     public ControllerBuilder registerController( String id, String view, 
-            boolean resolvedView, String name, Class classType, String actionId ){
+            boolean resolvedView, String name, Class<?> classType, String actionId ){
         return this.controllerManager.addController( id, view, resolvedView,
            name, classType, actionId );
     }
 
     public ControllerBuilder registerController( String id, String view,  
             boolean resolvedView, DispatcherType dispatcherType,
-            String name, Class classType, String actionId ){
+            String name, Class<?> classType, String actionId ){
         return this.controllerManager.addController( id, view, resolvedView,
                 dispatcherType, name, classType, actionId );
     }
     
     public ControllerBuilder registerController( String id, String view,  
             boolean resolvedView, DispatcherType dispatcherType,
-            String name, Class classType, String actionId, ActionType actionType ){
+            String name, Class<?> classType, String actionId, ActionType actionType ){
         return this.controllerManager.addController( id, view, 
                 resolvedView, dispatcherType, name, classType, actionId, actionType );
     }
     
     public ControllerBuilder registerController(String id, String view, 
             DispatcherType dispatcherType, boolean resolvedView, String name, 
-            Class classType, String actionId, ActionType actionType) {
+            Class<?> classType, String actionId, ActionType actionType) {
         return this.controllerManager.addController(id, view, dispatcherType, 
                 resolvedView, name, classType, actionId, actionType);
     }
     
-    public Controller getRegisteredController(Class clazz){
+    public Controller getRegisteredController(Class<?> clazz){
         return super.controllerManager.getController(clazz);
     }
     
@@ -318,11 +318,11 @@ public abstract class AbstractWebApplicationContext
         return this.interceptorManager.addInterceptorStack(name, isDefault);
     }
     
-    public InterceptorBuilder registerInterceptor( String name, Class interceptor, boolean isDefault ){
+    public InterceptorBuilder registerInterceptor( String name, Class<?> interceptor, boolean isDefault ){
         return this.interceptorManager.addInterceptor(name, interceptor, isDefault);
     }
     
-    public Interceptor getRegisteredInterceptor(Class clazz){
+    public Interceptor getRegisteredInterceptor(Class<?> clazz){
         return this.interceptorManager.getInterceptor(clazz);
     }
     
@@ -346,11 +346,11 @@ public abstract class AbstractWebApplicationContext
         this.typeManager.register(factory);
     }
     
-    public void registerType(Class classType, Class type){
+    public void registerType(Class<?> classType, Class<?> type){
         this.typeManager.register(new DefaultTypeFactory(type, classType));
     }
     
-    public TypeFactory getRegistredType(Class classType){
+    public TypeFactory getRegistredType(Class<?> classType){
         return this.typeManager.getTypeFactory(classType);
     }
     

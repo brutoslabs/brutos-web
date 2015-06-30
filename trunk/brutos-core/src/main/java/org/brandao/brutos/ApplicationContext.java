@@ -52,7 +52,7 @@ public interface ApplicationContext {
 
     /**
      * Obtém os escopos da aplicação.
-     * @return
+     * @return Escopos.
      */
     Scopes getScopes();
 
@@ -61,14 +61,14 @@ public interface ApplicationContext {
      * @param clazz Classe que representa o controlador.
      * @return Controlador.
      */
-    Object getController(Class clazz);
+    Object getController(Class<?> clazz);
     
     /**
      * Obtém a instância de um bean a partir de sua classe.
      * @param clazz Classe que representa o bean.
      * @return Bean.
      */
-    Object getBean(Class clazz);
+    Object getBean(Class<?> clazz);
 
     /**
      * Obtém a instância de um bean a partir de seu nome.

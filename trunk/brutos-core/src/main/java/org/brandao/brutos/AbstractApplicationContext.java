@@ -32,7 +32,7 @@ import org.brandao.brutos.validator.DefaultValidatorFactory;
 /**
  * Classe base de uma aplicação.
  * 
- * @author Afonso Brandao
+ * @author Brandao
  */
 public abstract class AbstractApplicationContext
         extends DefaultResourceLoader 
@@ -109,9 +109,15 @@ public abstract class AbstractApplicationContext
                     this.actionResolver, this, this.renderView);
     }
 
+    /**
+     * Configura os tipos de dados da aplicação.
+     */
     protected void initTypes(){
     }
     
+    /**
+     * Configura os escopos da aplicação.
+     */
     protected void initScopes(){
         getScopes()
             .register(
@@ -140,28 +146,40 @@ public abstract class AbstractApplicationContext
         
     }
     
+    /**
+     * Configura os componenetes da aplicação.
+     */
     protected void initComponents(){
-        List controllers = this.controllerManager.getControllers();
-        for(int i=0;i<controllers.size();i++){
-            Controller controller = (Controller)controllers.get(i);
+        List<Controller> controllers = this.controllerManager.getControllers();
+        for(Controller controller: controllers)
             controller.flush();
-        }
     }
     
+    /**
+     * Configura o gerador de log da aplicação.
+     */
     protected void initLogger(){
         this.logger = LoggerProvider
                 .getCurrentLoggerProvider().getLogger(getClass());
     }
     
+    /**
+     * Carrega as definições dos componentes da aplicação.
+     * @param registry Registro dos componentes.
+     */
     protected abstract void loadDefinitions(ComponentRegistry registry);
     
     protected void setControllerResolver( ControllerResolver controllerResolver ){
         this.controllerResolver = controllerResolver;
     }
     
+    /**
+     * Gera a instância do resolutor de controladores da aplicação.
+     * @return Resolutor de controladores.
+     */
     protected ControllerResolver getNewControllerResolver(){
         try{
-            Class clazz = ClassUtil.get(configuration.getProperty(
+            Class<?> clazz = ClassUtil.get(configuration.getProperty(
                     BrutosConstants.CONTROLLER_RESOLVER_CLASS,
                     DefaultControllerResolver.class.getName()));
             
@@ -172,9 +190,13 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    /**
+     * Fábrica de respostas da aplicação.
+     * @return Fábrica.
+     */
     protected MvcResponseFactory getMvcResponseFactory(){
         try{
-            Class clazz = ClassUtil.get(configuration.getProperty(
+            Class<?> clazz = ClassUtil.get(configuration.getProperty(
                     BrutosConstants.RESPONSE_FACTORY,
                     DefaultMvcResponseFactory.class.getName()));
             
@@ -185,9 +207,13 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    /**
+     * Fábrica de solicitações da aplicação.
+     * @return Fábrica.
+     */
     protected MvcRequestFactory getMvcRequestFactory(){
         try{
-            Class clazz = ClassUtil.get(configuration.getProperty(
+            Class<?> clazz = ClassUtil.get(configuration.getProperty(
                     BrutosConstants.REQUEST_FACTORY,
                     DefaultMvcRequestFactory.class.getName()));
             
@@ -198,9 +224,13 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    /**
+     * Gera a instância do resolutor de ações da aplicação.
+     * @return Resolutor de ações.
+     */
     protected ActionResolver getNewMethodResolver(){
         try{
-            Class clazz = ClassUtil.get(configuration.getProperty(
+            Class<?> clazz = ClassUtil.get(configuration.getProperty(
                     BrutosConstants.ACTION_RESOLVER,
                     DefaultActionResolver.class.getName()));
             
@@ -211,6 +241,10 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    /**
+     * Gera a instância do gestor de controladores da aplicação.
+     * @return Gestor de controladores.
+     */
     protected ControllerManager getNewControllerManager(){
         try{
             String className =
@@ -218,7 +252,7 @@ public abstract class AbstractApplicationContext
                     BrutosConstants.CONTROLLER_MANAGER_CLASS,
                     ControllerManagerImp.class.getName());
             
-            Class clazz = 
+            Class<?> clazz = 
                     ClassUtil.get(className);
             
             ControllerManager instance = 
@@ -238,6 +272,10 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    /**
+     * Gera a instância do gestor de interceptores da aplicação.
+     * @return Gestor de interceptores.
+     */
     protected InterceptorManager getNewInterceptorManager(){
         try{
             String className =
@@ -245,7 +283,7 @@ public abstract class AbstractApplicationContext
                     BrutosConstants.INTERCEPTOR_MANAGER_CLASS,
                     InterceptorManagerImp.class.getName());
             
-            Class clazz = 
+            Class<?> clazz = 
                     ClassUtil.get(className);
             
             InterceptorManager instance = 
@@ -263,6 +301,10 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    /**
+     * Gera a instância da fábrica de objetos da aplicação.
+     * @return Fábrica de objetos.
+     */
     protected ObjectFactory getNewObjectFactory(Properties config){
         try{
             String className =
@@ -270,7 +312,7 @@ public abstract class AbstractApplicationContext
                     BrutosConstants.OBJECT_FACTORY_CLASS,
                     BrutosConstants.DEFAULT_OBJECT_FACTORY_CLASS);
             
-            Class clazz = 
+            Class<?> clazz = 
                     ClassUtil.get(className);
             
             ObjectFactory instance = 
@@ -295,7 +337,7 @@ public abstract class AbstractApplicationContext
                     BrutosConstants.VALIDATOR_FACTORY_CLASS,
                     DefaultValidatorFactory.class.getName());
             
-            Class clazz = 
+            Class<?> clazz = 
                     ClassUtil.get(className);
             
             ValidatorFactory instance = 
@@ -320,7 +362,7 @@ public abstract class AbstractApplicationContext
                     BrutosConstants.CODE_GENERATOR_CLASS,
                     JavassistCodeGenerator.class.getName());
             
-            Class clazz = 
+            Class<?> clazz = 
                     ClassUtil.get(className);
             
             CodeGenerator instance = 
@@ -345,7 +387,7 @@ public abstract class AbstractApplicationContext
                     BrutosConstants.RENDER_VIEW_CLASS,
                     DefaultRenderView.class.getName());
             
-            Class clazz = 
+            Class<?> clazz = 
                     ClassUtil.get(className);
             
             RenderView instance = 
@@ -373,7 +415,7 @@ public abstract class AbstractApplicationContext
                     BrutosConstants.INVOKER_CLASS,
                     BrutosConstants.DEFAULT_INVOKER_CLASS);
             
-            Class clazz = 
+            Class<?> clazz = 
                     ClassUtil.get(className);
             
             Invoker instance = 
@@ -553,7 +595,7 @@ public abstract class AbstractApplicationContext
         this.viewResolver = viewResolver;
     }
     
-    public Object getController(Class clazz){
+    public Object getController(Class<?> clazz){
 
         Controller controller =
             controllerResolver
@@ -606,7 +648,7 @@ public abstract class AbstractApplicationContext
         return this.parent;
     }
 
-    public Object getBean(Class clazz){
+    public Object getBean(Class<?> clazz){
         return this.objectFactory.getBean(clazz);
     }
 
@@ -618,7 +660,7 @@ public abstract class AbstractApplicationContext
         return this.typeManager;
     }
     
-    public boolean isStandardType(Class clazz) {
+    public boolean isStandardType(Class<?> clazz) {
         return this.typeManager.isStandardType(clazz);
     }
     
