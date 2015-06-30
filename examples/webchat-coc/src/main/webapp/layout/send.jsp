@@ -28,8 +28,8 @@
                  $("#msg").focus();
                  
                  return {
-                     "dest.nick"  : destino,
-                     "message": message
+                     "arg0.dest.nick"  : destino,
+                     "arg0.message": message
                  };
                  /*return {
                      "dest"  : {
