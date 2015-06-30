@@ -67,7 +67,7 @@ public class AnnotationDefinitionReader
                             FilterType.ANNOTATION.getName(), 
                             Arrays.asList( new String[]{Configuration.class.getName()}))}));
             config.setScannerClassName(null);
-            config.setUseDefaultfilter(false);
+            config.setUseDefaultfilter(true);
         }
 
         componentConfigurer.setConfiguration(config);
