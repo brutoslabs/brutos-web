@@ -10,7 +10,6 @@ import org.brandao.webchat.model.UserNotFoundException;
 @Bean
 public class MessageDTO implements Serializable{
 
-    @Identify(useMapping=true)
     private UserDTO origin;
     
     @Restrictions(
@@ -19,7 +18,6 @@ public class MessageDTO implements Serializable{
         },
         message="msgError"
     )
-    @Identify(useMapping=true)
     private UserDTO dest;
 
     @Restrictions(
