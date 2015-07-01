@@ -26,9 +26,10 @@ import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
  *
  * @author Brandao
  */
+@SuppressWarnings("unused")
 public class ControllerTest18Controller {
     
-    private int propertyA;
+	private int propertyA;
 
     @Basic(bean="prop")
     private String propertyB;
@@ -46,7 +47,6 @@ public class ControllerTest18Controller {
     @Enumerated(value=EnumerationType.STRING)
     private EnumTest propertyG;
     
-    @Basic(mappingType=MappingTypes.COMPLEX)
     @KeyCollection(
         bean="myKey",
         enumerated=EnumerationType.STRING,
@@ -62,54 +62,43 @@ public class ControllerTest18Controller {
     )
     private Map<String,Integer> propertyH;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
-    @Target(LinkedHashMap.class)
+    @Target(NewHashMap.class)
+    @KeyCollection(target=String.class)
+    @ElementCollection(target=Integer.class)
     private Map<String,Integer> propertyI;
     
-    @Basic(mappingType=MappingTypes.COMPLEX)
     private Map<BeanConstructorTest,Integer> propertyJ;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
     private Map<String,BeanConstructorTest> propertyK;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     private Map<String,BeanConstructorTest> propertyL;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement")
     private List<Integer> propertyM;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
-    @Target(LinkedList.class)
+    @Target(NewArrayList.class)
+    @ElementCollection(target=Integer.class)
     private List<Integer> propertyN;
     
-    @Basic(mappingType=MappingTypes.COMPLEX)
     private List<Integer> propertyO;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
     private List<BeanConstructorTest> propertyP;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement")
     private List<BeanConstructorTest> propertyQ;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
     @KeyCollection(bean="myKey", mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     private Map<BeanConstructorTest,BeanConstructorTest> propertyR;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
     private List<BeanConstructorTest> propertyS;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
     private Map<String,List<BeanConstructorTest>> propertyT;
     
-    @Basic(mappingType=MappingTypes.COMPLEX)
     private Map<String,CustomArrayList> propertyU;
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
     @ElementCollection(bean="myElement2",mappingType=MappingTypes.COMPLEX)
     private Map<String,CustomArrayList> propertyV;
     

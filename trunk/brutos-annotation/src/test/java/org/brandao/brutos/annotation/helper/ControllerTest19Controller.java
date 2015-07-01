@@ -162,8 +162,9 @@ public class ControllerTest19Controller {
         return propertyI;
     }
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
-    @Target(LinkedHashMap.class)
+    @Target(NewHashMap.class)
+    @KeyCollection(target=String.class)
+    @ElementCollection(target=Integer.class)
     public void setPropertyI(Map<String,Integer> propertyI) {
         this.propertyI = propertyI;
     }
@@ -210,8 +211,8 @@ public class ControllerTest19Controller {
         return propertyN;
     }
 
-    @Basic(mappingType=MappingTypes.COMPLEX)
-    @Target(LinkedList.class)
+    @Target(NewArrayList.class)
+    @ElementCollection(target=Integer.class)
     public void setPropertyN(List<Integer> propertyN) {
         this.propertyN = propertyN;
     }
