@@ -61,20 +61,23 @@ public class BeanFieldNamedTest {
     )
     private Map<String,Integer> propertyH;
 
-    @Target(LinkedHashMap.class)
+    @Target(NewHashMap.class)
+    @KeyCollection(target=String.class)
+    @ElementCollection(target=Integer.class)
     private Map<String,Integer> propertyI;
     
     private Map<BeanConstructorTest,Integer> propertyJ;
 
     private Map<String,BeanConstructorTest> propertyK;
 
-    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
+    @ElementCollection(bean="myElement")
     private Map<String,BeanConstructorTest> propertyL;
 
     @ElementCollection(bean="myElement")
     private List<Integer> propertyM;
 
-    @Target(LinkedList.class)
+    @Target(NewArrayList.class)
+    @ElementCollection(target=Integer.class)
     private List<Integer> propertyN;
     
     private List<Integer> propertyO;
@@ -84,11 +87,11 @@ public class BeanFieldNamedTest {
     @ElementCollection(bean="myElement")
     private List<BeanConstructorTest> propertyQ;
 
-    @KeyCollection(bean="myKey", mappingType=MappingTypes.COMPLEX)
-    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
+    @KeyCollection(bean="myKey")
+    @ElementCollection(bean="myElement")
     private Map<BeanConstructorTest,BeanConstructorTest> propertyR;
 
-    @ElementCollection(bean="myElement", mappingType=MappingTypes.COMPLEX)
+    @ElementCollection(bean="myElement")
     private List<BeanConstructorTest> propertyS;
 
     private Map<String,List<BeanConstructorTest>> propertyT;
