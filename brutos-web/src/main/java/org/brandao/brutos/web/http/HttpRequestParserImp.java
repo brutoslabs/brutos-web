@@ -154,7 +154,7 @@ public class HttpRequestParserImp implements HttpRequestParser{
             len      = -1;
             boundary = getboundary();
 
-            if( ( len = readData( buffer, in ) ) != 0 ){
+            if( ( len = readData( buffer, in ) ) > 0 ){
                 String s = new String( buffer, 0, len-2 );
                 noFields = !s.endsWith( boundary );
             }
