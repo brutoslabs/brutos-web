@@ -29,7 +29,7 @@ import org.brandao.brutos.interceptor.InterceptorStack;
  *
  * @author Brandao
  */
-@Intercepts
+@Intercepts(isDefault=false)
 @InterceptsStackList({
     @InterceptsStack(name="stackA", 
             executeAfter=InterceptorB.class),

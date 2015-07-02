@@ -27,7 +27,7 @@ import org.brandao.brutos.interceptor.InterceptorStack;
  *
  * @author Brandao
  */
-@Intercepts(name="testInterceptor")
+@Intercepts(name="testInterceptor", isDefault=false)
 public class Test3Interceptor extends AbstractInterceptor{
 
     public void intercepted(InterceptorStack stack, InterceptorHandler handler) throws InterceptedException {

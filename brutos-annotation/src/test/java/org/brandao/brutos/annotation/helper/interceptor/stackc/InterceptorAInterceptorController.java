@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.helper.interceptor.stackc;
 
+import org.brandao.brutos.annotation.Intercepts;
 import org.brandao.brutos.annotation.InterceptsStack;
 import org.brandao.brutos.annotation.InterceptsStackList;
 import org.brandao.brutos.interceptor.AbstractInterceptor;
@@ -32,6 +33,7 @@ import org.brandao.brutos.interceptor.InterceptorStack;
     @InterceptsStack(name="stackA"),
     @InterceptsStack(name="stackB")
 })
+@Intercepts(isDefault=false)
 public class InterceptorAInterceptorController extends AbstractInterceptor{
 
     public void intercepted(InterceptorStack stack, InterceptorHandler handler) throws InterceptedException {

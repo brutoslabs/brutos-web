@@ -15,25 +15,26 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.helper.interceptor.stackb;
+package org.brandao.brutos.annotation.helper;
 
-import org.brandao.brutos.annotation.Intercepts;
-import org.brandao.brutos.annotation.InterceptsStack;
-import org.brandao.brutos.interceptor.AbstractInterceptor;
-import org.brandao.brutos.interceptor.InterceptedException;
-import org.brandao.brutos.interceptor.InterceptorHandler;
-import org.brandao.brutos.interceptor.InterceptorStack;
+import org.brandao.brutos.annotation.Intercept;
+import org.brandao.brutos.annotation.InterceptedBy;
+import org.brandao.brutos.annotation.helper.interceptor.Test6InterceptorController;
 
 /**
  *
  * @author Brandao
  */
-@InterceptsStack(name="stackB")
-@Intercepts(isDefault=false)
-public class InterceptorAInterceptorController extends AbstractInterceptor{
 
-    public void intercepted(InterceptorStack stack, InterceptorHandler handler) throws InterceptedException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+@InterceptedBy(
+        value=@Intercept(
+                interceptor=Test6InterceptorController.class
+            )
+)
+public class InterceptorTest5Controller {
     
+    public Object myFirstAction(){
+        return null;
+    }
+
 }
