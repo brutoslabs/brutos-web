@@ -19,7 +19,6 @@ package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ComponentRegistry;
-import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.InterceptorBuilder;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.annotation.Intercepts;

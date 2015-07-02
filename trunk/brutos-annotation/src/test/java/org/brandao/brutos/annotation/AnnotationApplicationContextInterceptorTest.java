@@ -25,6 +25,7 @@ import org.brandao.brutos.annotation.helper.InterceptorTest1Controller;
 import org.brandao.brutos.annotation.helper.InterceptorTest2Controller;
 import org.brandao.brutos.annotation.helper.InterceptorTest3Controller;
 import org.brandao.brutos.annotation.helper.InterceptorTest4Controller;
+import org.brandao.brutos.annotation.helper.InterceptorTest5Controller;
 import org.brandao.brutos.annotation.helper.interceptor.*;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
@@ -38,7 +39,7 @@ public class AnnotationApplicationContextInterceptorTest
 
     public void test1(){
         
-        Class clazz = Test1InterceptorController.class;
+        Class<?> clazz = Test1InterceptorController.class;
         
         ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
@@ -47,16 +48,16 @@ public class AnnotationApplicationContextInterceptorTest
                 annotationApplicationContext
                     .getInterceptorManager().getInterceptor(clazz);
         
-        Assert.assertEquals("Test1", interceptor.getName());
+        Assert.assertEquals("test1", interceptor.getName());
         Assert.assertEquals(clazz, interceptor.getType());
         Assert.assertNotNull(interceptor.getProperties());
         Assert.assertEquals(0,interceptor.getProperties().size());
-        Assert.assertEquals(true,interceptor.isDefault());
+        Assert.assertEquals(false,interceptor.isDefault());
     }
     
     public void test2(){
         
-        Class clazz = Test2Interceptor.class;
+        Class<?> clazz = Test2Interceptor.class;
         
         ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
@@ -65,7 +66,7 @@ public class AnnotationApplicationContextInterceptorTest
                 annotationApplicationContext
                     .getInterceptorManager().getInterceptor(clazz);
         
-        Assert.assertEquals("Test2Interceptor", interceptor.getName());
+        Assert.assertEquals("test2Interceptor", interceptor.getName());
         Assert.assertEquals(clazz, interceptor.getType());
         Assert.assertNotNull(interceptor.getProperties());
         Assert.assertEquals(0,interceptor.getProperties().size());
@@ -74,7 +75,7 @@ public class AnnotationApplicationContextInterceptorTest
 
     public void test3(){
         
-        Class clazz = Test3Interceptor.class;
+        Class<?> clazz = Test3Interceptor.class;
         
         ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
@@ -87,12 +88,12 @@ public class AnnotationApplicationContextInterceptorTest
         Assert.assertEquals(clazz, interceptor.getType());
         Assert.assertNotNull(interceptor.getProperties());
         Assert.assertEquals(0,interceptor.getProperties().size());
-        Assert.assertEquals(true,interceptor.isDefault());
+        Assert.assertEquals(false,interceptor.isDefault());
     }
 
     public void test4(){
         
-        Class clazz = Test4Interceptor.class;
+        Class<?> clazz = Test4Interceptor.class;
         
         ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
@@ -101,7 +102,7 @@ public class AnnotationApplicationContextInterceptorTest
                 annotationApplicationContext
                     .getInterceptorManager().getInterceptor(clazz);
         
-        Assert.assertEquals("Test4Interceptor", interceptor.getName());
+        Assert.assertEquals("test4Interceptor", interceptor.getName());
         Assert.assertEquals(clazz, interceptor.getType());
         Assert.assertNotNull(interceptor.getProperties());
         Assert.assertEquals(0,interceptor.getProperties().size());
@@ -110,7 +111,7 @@ public class AnnotationApplicationContextInterceptorTest
 
     public void test5(){
         
-        Class clazz = Test5Interceptor.class;
+        Class<?> clazz = Test5Interceptor.class;
         
         ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz});
@@ -119,7 +120,7 @@ public class AnnotationApplicationContextInterceptorTest
                 annotationApplicationContext
                     .getInterceptorManager().getInterceptor(clazz);
         
-        Assert.assertEquals("Test5Interceptor", interceptor.getName());
+        Assert.assertEquals("test5Interceptor", interceptor.getName());
         Assert.assertEquals(clazz, interceptor.getType());
         Assert.assertNotNull(interceptor.getProperties());
         Assert.assertEquals(true,interceptor.isDefault());
@@ -132,7 +133,7 @@ public class AnnotationApplicationContextInterceptorTest
 
     public void test6(){
         
-        Class clazz = InterceptorTest1Controller.class;
+        Class<?> clazz = InterceptorTest1Controller.class;
         
         ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz,Test1InterceptorController.class});
@@ -147,16 +148,16 @@ public class AnnotationApplicationContextInterceptorTest
         
         Interceptor interceptor = interceptors.get(0);
         
-        Assert.assertEquals("Test1", interceptor.getName());
+        Assert.assertEquals("test1", interceptor.getName());
         Assert.assertEquals(Test1InterceptorController.class, interceptor.getType());
         Assert.assertNotNull(interceptor.getProperties());
         Assert.assertEquals(0,interceptor.getProperties().size());
-        Assert.assertEquals(true,interceptor.isDefault());
+        Assert.assertEquals(false,interceptor.isDefault());
     }
 
     public void test7(){
         
-        Class clazz = InterceptorTest2Controller.class;
+        Class<?> clazz = InterceptorTest2Controller.class;
         
         ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz,Test3Interceptor.class});
@@ -175,12 +176,12 @@ public class AnnotationApplicationContextInterceptorTest
         Assert.assertEquals(Test3Interceptor.class, interceptor.getType());
         Assert.assertNotNull(interceptor.getProperties());
         Assert.assertEquals(0,interceptor.getProperties().size());
-        Assert.assertEquals(true,interceptor.isDefault());
+        Assert.assertEquals(false,interceptor.isDefault());
     }
 
     public void test8(){
         
-        Class clazz = InterceptorTest3Controller.class;
+        Class<?> clazz = InterceptorTest3Controller.class;
         
         ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(new Class[]{clazz,Test3Interceptor.class});
@@ -207,7 +208,7 @@ public class AnnotationApplicationContextInterceptorTest
 
     public void test9(){
         
-        Class clazz = InterceptorTest4Controller.class;
+        Class<?> clazz = InterceptorTest4Controller.class;
         
         ConfigurableApplicationContext annotationApplicationContext = 
                 getApplication(
@@ -235,7 +236,7 @@ public class AnnotationApplicationContextInterceptorTest
 
         interceptor = interceptors.get(1);
         
-        Assert.assertEquals("Test1", interceptor.getName());
+        Assert.assertEquals("test1", interceptor.getName());
         Assert.assertEquals(Test1InterceptorController.class, interceptor.getType());
         Assert.assertNotNull(interceptor.getProperties());
         Assert.assertEquals(0,interceptor.getProperties().size());
@@ -243,23 +244,27 @@ public class AnnotationApplicationContextInterceptorTest
 
     public void test10(){
         
-        Class clazz = Test6InterceptorController.class;
-        
-        ConfigurableApplicationContext annotationApplicationContext = 
-                getApplication(
-                    new Class[]{
-                        clazz,
-                        Test3Interceptor.class,
-                        Test1InterceptorController.class});
+        Class<?> clazz = Test6InterceptorController.class;
         
         try{
-            annotationApplicationContext
-                .getInterceptorManager().getInterceptor(clazz);
-            Assert.fail();
+            getApplication(
+                new Class[]{
+            		InterceptorTest5Controller.class,
+                    clazz,
+                    Test3Interceptor.class,
+                    Test1InterceptorController.class});
+            Assert.fail("expected: {interceptor not found: org.brandao.brutos.annotation.helper.interceptor.Test6InterceptorController}");
         }
         catch(BrutosException e){
-            if(!e.getMessage().startsWith("interceptor not found"))
-                Assert.fail();
+            Assert.assertNotNull(e);
+            Throwable ex = e;
+            do{
+                if(ex.getMessage().equals("interceptor not found: org.brandao.brutos.annotation.helper.interceptor.Test6InterceptorController"))
+                    return;
+            }while((ex = ex.getCause()) != null);
+            e.printStackTrace();
+            
+            Assert.fail("expected: {interceptor not found: org.brandao.brutos.annotation.helper.interceptor.Test6InterceptorController}");
         }
     }
 
@@ -322,11 +327,10 @@ public class AnnotationApplicationContextInterceptorTest
                 org.brandao.brutos.annotation.helper.interceptor.stackb.InterceptorB.class,
                 list.get(1).getType());
         
-        Interceptor i = list.get(1);
-        Assert.assertNotNull(i.getProperties());
-        Assert.assertEquals(2,i.getProperties().size());
-        Assert.assertEquals("value1",i.getProperties().get("param1"));
-        Assert.assertEquals("value2",i.getProperties().get("param2"));
+        Assert.assertNotNull(stack.getProperties());
+        Assert.assertEquals(2,stack.getProperties().size());
+        Assert.assertEquals("value1",stack.getProperties().get("interceptorB.param1"));
+        Assert.assertEquals("value2",stack.getProperties().get("interceptorB.param2"));
         
         Assert.assertEquals(
                 org.brandao.brutos.annotation.helper.interceptor.stackb.InterceptorC.class,
@@ -381,11 +385,10 @@ public class AnnotationApplicationContextInterceptorTest
                 org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorB.class,
                 list.get(1).getType());
         
-        Interceptor i = list.get(1);
-        Assert.assertNotNull(i.getProperties());
-        Assert.assertEquals(2,i.getProperties().size());
-        Assert.assertEquals("value1",i.getProperties().get("param1"));
-        Assert.assertEquals("value2",i.getProperties().get("param2"));
+        Assert.assertNotNull(stack.getProperties());
+        Assert.assertEquals(2,stack.getProperties().size());
+        Assert.assertEquals("value1",stack.getProperties().get("interceptorB.param1"));
+        Assert.assertEquals("value2",stack.getProperties().get("interceptorB.param2"));
         
         Assert.assertEquals(
                 org.brandao.brutos.annotation.helper.interceptor.stackc.InterceptorC.class,
