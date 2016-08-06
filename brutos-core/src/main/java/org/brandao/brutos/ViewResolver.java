@@ -18,39 +18,92 @@
 package org.brandao.brutos;
 
 /**
- * Determina as vistas da aplicação.
+ * Resolutor de vista. Resolve as vistas dos controladores
+ * ações e exceções.
  * 
  * @author Brandao
  */
 public interface ViewResolver {
     
     /**
-     * Obtém uma visão.
+     * Resolve a vista de um componenete da aplicação.
+     * 
      * @param controllerBuilder Construtor do controlador.
      * @param actionBuilder Construtor da ação.
-     * @param exceptionType Classe que representa a exceção.
-     * @param view Vista.
-     * @return Visão.
+     * @param exceptionType Exceção.
+     * @param view Nome da vista.
+     * @return Vista.
      */
     String getView(ControllerBuilder controllerBuilder, ActionBuilder actionBuilder, 
-            Class exceptionType, String view);
+            Class<?> exceptionType, String view);
 
+    /**
+     * Define o contexto do resolutor de vista.
+     * @param context
+     */
     void setApplicationContext(ApplicationContext context);
     
+    /**
+     * Obtém o prefixo das vistas.
+     * 
+     * @return Prefixo.
+     */
     String getPrefix();
     
+    /**
+     * Obtém o sufixo das vistas.
+     * @return Sufixo.
+     */
     String getSuffix();
     
+    /**
+     * Obtém o nome padrão de um componente.
+     * @return
+     */
     String getIndexName();
     
+    /**
+     * Obtém o separador usado para compor uma vista.
+     * @return
+     */
     String getSeparator();
     
-    String getControllerView(Class controllerType, String view);
+    /**
+     * Obtém a vista de um controlador.
+     * 
+     * @param controllerType Controlador. 
+     * @param view Nome da vista.
+     * @return Vista.
+     */
+    String getControllerView(Class<?> controllerType, String view);
     
-    String getActionView(Class controllerType, String actionExecutor, String view);
+    /**
+     * Obtém a vista de uma ação.
+     * 
+     * @param controllerType Controlador.
+     * @param actionExecutor Nome do método executor da ação.
+     * @param view Nome da vista.
+     * @return Vista.
+     */
+    String getActionView(Class<?> controllerType, String actionExecutor, String view);
     
-    String getExceptionView(Class controllerType, String actionExecutor, Class exceptionType, String view);
+    /**
+     * Obtém a vista de uma exeção mapeada em nível de ação.
+     * @param controllerType Controlador.
+     * @param actionExecutor Nome do método executor da ação.
+     * @param exceptionType Exceção.
+     * @param view Noma da vista.
+     * @return Vista.
+     */
+    String getExceptionView(Class<?> controllerType, String actionExecutor, Class<?> exceptionType, String view);
     
-    String getExceptionView(Class controllerType, Class exceptionType, String view);
+    /**
+     * Obtém a vista de uma exeção mapeada em nível de controlador.
+     * @param controllerType Controlador.
+     * @param exceptionType Exceção.
+     * @param view Nome da vista.
+     * @return Vista.
+     */
+    String getExceptionView(Class<?> controllerType, Class<?> exceptionType, String view);
     
 }

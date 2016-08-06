@@ -27,14 +27,24 @@ import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 public abstract class AbstractXMLApplicationContext
         extends AbstractApplicationContext{
 
+	/**
+	 * @see AbstractApplicationContext#AbstractApplicationContext(ApplicationContext)
+	 * @param parent
+	 */
     public AbstractXMLApplicationContext( AbstractApplicationContext parent ){
         super(parent);
     }
 
+    /**
+     * @see AbstractApplicationContext#AbstractApplicationContext()
+     */
     public AbstractXMLApplicationContext(){
         this( null );
     }
 
+    /**
+     * Carrega todas as definições dos componenetes da aplicação.
+     */
     protected void loadDefinitions(
             ComponentRegistry registry ){
 
@@ -47,6 +57,10 @@ public abstract class AbstractXMLApplicationContext
             definitionreader.loadDefinitions(resources);
     }
 
+    /**
+     * Obtém as fontes de metadados da aplicação.
+     * @return Metadados.
+     */
     protected abstract Resource[] getContextResources();
     
 }

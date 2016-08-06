@@ -21,28 +21,32 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
+ * Renderiza as vistas da aplicação.
  *
  * @author Brandao
  */
 public interface RenderView {
     
     /**
-     * Aplica as configurações da aplicação.
+     * Configura o renderizador.
      * 
-     * @param properties Configuração da aplicação.
+     * @param properties Configuração.
      */
     void configure( Properties properties );
 
     /**
-     * Renderiza a vista da requisição.
+     * Renderiza a vista de uma solicitação.
      * 
      * @param requestInstrument Recursos da aplicação.
-     * @param stackRequestElement Informações da requisição.
+     * @param stackRequestElement Informações da solicitação.
      * @throws IOException Lançado se ocorrer algum problema ao renderizar a vista.
      */
     void show( RequestInstrument requestInstrument,
             StackRequestElement stackRequestElement ) throws IOException;
     
+    /**
+     * Destrói o renderizador.
+     */
     void destroy();
     
 }

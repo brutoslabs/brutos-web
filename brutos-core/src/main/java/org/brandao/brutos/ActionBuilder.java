@@ -21,31 +21,21 @@ package org.brandao.brutos;
 import org.brandao.brutos.mapping.*;
 
 /**
- * Constrói uma ação. A ação pode ter ou não parâmetros. Os parâmetros podem ser
- * obtidos tanto da requisição, sessão ou do contexto. Podendo ser de tipo primitivo
- * ou não. No caso de um objeto complexo, é possével usar um mapeamento predefinido.
- * Se a ação retornar algum valor, este será processado e incluído na requisição,
- * para posteriormente ser usada na visão. As exceções lançaadas durante a execução
- * da ação podem alterar o fluxo lógico da aplicação. <p>No exemplo a seguir, depois
- * de executar a ação showPerson é exibida a visão personView.jsp e se for lançada
- * a exceção NotExistPerson a visão error.jsp será exibida</p>.
+ * Constrói uma ação.
+ * <p>Um controlador pode possuir uma ou mais ações. Essas ações 
+ * podem ser representadas por métodos. Esses métodos podem ter ou 
+ * não parâmetros. Os parâmetros podem ser de tipo primitivo ou não. 
+ * No caso de tipos não primitivos, pode-se criar um mapeamento para 
+ * definir como os dados de uma solicitação serão disponibilizados em 
+ * suas propriedades. Além de ser possível o uso de parâmetros dos tipos
+ * {@link java.io.File}, {@link java.lang.Enum}, {@link java.util.Date}, 
+ * {@link java.util.Calendar}, {@link java.util.Map}, 
+ * {@link java.util.Set} e {@link java.util.List}. Se a ação retornar algum 
+ * valor, este será processado e disponibilizado na vista.</p> 
+ * <p>As exceções lançadas dentro do método podem ser interceptadas e alterar
+ * o fluxo lógico da aplicação.</p>
  * 
- * <pre>
- * public class MyController{
- *
- *   public void showPerson( int id ){
- *     ...
- *   }
- * }
- *
- * controllerBuilder
- *   .addAction( "show", "showPerson", "personView.jsp" )
- *   .addThrowable( NotExistPerson.class, "error.jsp", "exception", DispatcherType.FORWARD )
- *   .addParameter( "idPerson", int.class );
- *   
- * </pre>
- * 
- * @author Afonso Brandao
+ * @author Brandao
  */
 public class ActionBuilder extends RestrictionBuilder{
     
@@ -61,18 +51,30 @@ public class ActionBuilder extends RestrictionBuilder{
     
     protected ParametersBuilder parametersBuilder;
     
+    /**
+     * Constrói um novo construtor de uma ação a partir de outro.
+     * @param actionBuilder Construtor de uma ação.
+     */
     public ActionBuilder(ActionBuilder actionBuilder){
         this(actionBuilder.action, actionBuilder.controller, 
                 actionBuilder.validatorFactory, actionBuilder.controllerBuilder, 
                 actionBuilder.applicationContext);
     }
-    public ActionBuilder( Action methodForm, 
+    /**
+     * 
+     * @param methodForm
+     * @param controller
+     * @param validatorFactory
+     * @param controllerBuilder
+     * @param applicationContext
+     */
+    public ActionBuilder( Action action, 
             Controller controller, ValidatorFactory validatorFactory,
             ControllerBuilder controllerBuilder,
             ConfigurableApplicationContext applicationContext) {
-        super(methodForm.getResultValidator().getConfiguration());
+        super(action.getResultValidator().getConfiguration());
         this.controller = controller;
-        this.action = methodForm;
+        this.action = action;
         this.validatorFactory = validatorFactory;
         this.controllerBuilder = controllerBuilder;
         this.applicationContext = applicationContext;
