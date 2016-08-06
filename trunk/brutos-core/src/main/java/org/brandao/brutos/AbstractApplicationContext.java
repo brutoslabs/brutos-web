@@ -74,10 +74,17 @@ public abstract class AbstractApplicationContext
 
     protected TypeManager typeManager;
     
+    /**
+     * Constrói uma nova aplicação. 
+     */
     public AbstractApplicationContext() {
         this(null);
     }
 
+    /**
+     * Constrói uma nova aplicação dependente de outra.
+     * @param parent Aplicação.
+     */
     public AbstractApplicationContext( ApplicationContext parent ) {
         
         this.parent = parent;
@@ -90,6 +97,9 @@ public abstract class AbstractApplicationContext
         this.scopes = new Scopes();
     }
 
+    /**
+     * Inicia todos os recursos da aplicação.
+     */
     protected void initInstances(){
         this.objectFactory         = getNewObjectFactory(configuration);
         this.interceptorManager    = getNewInterceptorManager();
@@ -191,7 +201,7 @@ public abstract class AbstractApplicationContext
     }
 
     /**
-     * Fábrica de respostas da aplicação.
+     * Gera a instância da fábrica de respostas da aplicação.
      * @return Fábrica.
      */
     protected MvcResponseFactory getMvcResponseFactory(){
@@ -208,7 +218,7 @@ public abstract class AbstractApplicationContext
     }
 
     /**
-     * Fábrica de solicitações da aplicação.
+     * Gera a instância da fábrica de solicitações da aplicação.
      * @return Fábrica.
      */
     protected MvcRequestFactory getMvcRequestFactory(){
@@ -330,6 +340,11 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    /**
+     * Gera a instância do gerador de validação da aplicação.
+     * @param config Configuração.
+     * @return Gerador de validação.
+     */
     protected ValidatorFactory getNewValidatorFactory(Properties config){
         try{
             String className =
@@ -355,6 +370,11 @@ public abstract class AbstractApplicationContext
         }
     }
     
+    /**
+     * Gera a instância do gerador de código e proxy da aplicação.
+     * @param config Configuração.
+     * @return Gerador de código e proxy.
+     */
     protected CodeGenerator getNewCodeGenerator(Properties config){
         try{
             String className =
@@ -380,6 +400,11 @@ public abstract class AbstractApplicationContext
         }
     }
     
+    /**
+     * Gera a instância do renderizador de vistas da aplicação.
+     * @param config
+     * @return
+     */
     protected RenderView getNewRenderView(Properties config){
         try{
             String className =
@@ -405,6 +430,16 @@ public abstract class AbstractApplicationContext
         }
     }
     
+    /**
+     * Gera a instância do executor da aplicação.
+     * @param controllerResolver Resolutor de controladores.
+     * @param objectFactory Fábrica de objetos.
+     * @param controllerManager Gestor de constroladores.
+     * @param actionResolver Resolutor de ações.
+     * @param applicationContext Aplicação.
+     * @param renderView Renderizador de vistas.
+     * @return Executor da aplicação.
+     */
     protected Invoker createInvoker( 
             ControllerResolver controllerResolver, ObjectFactory objectFactory, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
@@ -444,6 +479,10 @@ public abstract class AbstractApplicationContext
         }
     }
     
+    /**
+     * Gera a instância do resolutor de vista da aplicação.
+     * @return Resolutor de vista.
+     */
     protected ViewResolver getNewViewResolver(){
         try{
             String className = 
@@ -461,6 +500,10 @@ public abstract class AbstractApplicationContext
         }
     }
 
+    /**
+     * Gera o gestor de tipos da aplicação.
+     * @return Gestor de tipos.
+     */
     protected TypeManager getNewTypeManager(){
         try{
             String className = 
@@ -477,6 +520,9 @@ public abstract class AbstractApplicationContext
         }
     }
     
+    /**
+     * Destrói a aplicação. 
+     */
     public void destroy(){
         this.objectFactory.destroy();
         this.renderView.destroy();

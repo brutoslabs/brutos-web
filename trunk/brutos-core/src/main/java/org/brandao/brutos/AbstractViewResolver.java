@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 /**
+ * Classe base de um resolutor de vista.
  * 
  * @author Brandao
  */
@@ -25,8 +26,11 @@ public abstract class AbstractViewResolver implements ViewResolver{
 
     private ApplicationContext context;
     
+    /**
+     * @see ViewResolver#getView(ControllerBuilder, ActionBuilder, Class, String)
+     */
     public String getView(ControllerBuilder controllerBuilder, 
-            ActionBuilder actionBuilder, Class exception, String view) {
+            ActionBuilder actionBuilder, Class<?> exception, String view) {
         
         String autoResolver = 
                 this.context.getConfiguration()
