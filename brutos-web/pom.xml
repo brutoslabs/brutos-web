@@ -5,9 +5,8 @@
     <groupId>org.brandao</groupId>
     <artifactId>brutos-web</artifactId>
     <packaging>jar</packaging>
-    <version>2.0-rc1</version>
+    <version>2.0-rc2</version>
     <name>brutos-web</name>
-    <description>Brutos application framework is a MVC controller.</description>
     <url>http://www.brutosframework.com.br/</url>
     
     <licenses>
@@ -157,7 +156,7 @@
         <dependency>
             <groupId>org.brandao</groupId>
             <artifactId>brutos-core</artifactId>
-            <version>2.0-rc1</version>
+            <version>2.0-rc2</version>
         </dependency>
         <dependency>
             <groupId>commons-digester</groupId>
@@ -238,4 +237,5 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <description>Brutos web. This artifact depends on the brutos-core.</description>
 </project>
