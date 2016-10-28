@@ -5,9 +5,9 @@
     <groupId>org.brandao</groupId>
     <artifactId>brutos-core</artifactId>
     <packaging>jar</packaging>
-    <version>2.0-rc1</version>
+    <version>2.0-rc2</version>
     <name>brutos-core</name>
-    <description>Brutos application framework is a MVC controller.</description>
+    <description>Brutos Application Framework.</description>
     <url>http://www.brutosframework.com.br/</url>
     
     <licenses>
