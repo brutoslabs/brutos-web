@@ -35,7 +35,7 @@ import java.lang.annotation.Target;
 public @interface AbstractActions {
     
     /**
-     * Coleção de ações
+     * Coleção de ações.
      */
     AbstractAction[] value();
     

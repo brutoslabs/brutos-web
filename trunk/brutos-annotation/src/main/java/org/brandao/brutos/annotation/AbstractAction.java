@@ -47,7 +47,7 @@ import java.lang.annotation.Target;
 public @interface AbstractAction {
     
     /**
-     * Identificação da Ação. 
+     * Identificação da ação. 
      */
     String[] id();
     
@@ -58,7 +58,7 @@ public @interface AbstractAction {
     
     /**
      * Define como o fluxo de execução será direcionado para a visão.
-     * Os valores estão descritos em <a href="DispatcherType.html">DispatcherType</a>.
+     * Os valores estão descritos em {@link DispatcherType}.
      */
     String dispatcher() default "forward";
     
