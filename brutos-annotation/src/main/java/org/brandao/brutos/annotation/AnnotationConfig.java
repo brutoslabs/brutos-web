@@ -24,8 +24,7 @@ import org.brandao.brutos.annotation.configuration.AnnotationConfigEntry;
 import org.brandao.brutos.annotation.configuration.Converter;
 
 /**
- * Usada na configuração de novos recursos usando anotação ou 
- * "Convention over configuration".
+ * Usada na configuração de novos recursos.
  * 
  * @author Brandao
  */
@@ -56,7 +55,7 @@ public interface AnnotationConfig {
     /**
      * Verifica se o recurso vai ser aplicado à entidade.
      * @param source Entidade.
-     * @return Verdadeiro se o recurso for ser aplicado a entidade, caso
+     * @return Verdadeiro se o recurso for aplicado a entidade, caso
      * contrário falso.
      */
     boolean isApplicable(Object source);

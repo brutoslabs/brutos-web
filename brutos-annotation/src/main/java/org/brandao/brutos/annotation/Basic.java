@@ -23,11 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Usada para especificar o parâmetro de uma ação, propriedade de um bean, 
- * propriedade de um controlador e o argumento de um construtor.
- * Os itens citados podem ser de tipos primitivos ou não. 
- * No caso de tipos não primitivos, podem ser criados mapeamentos 
- * para a definição de como os valores da requisição serão disponibilizados.
+ * Pode ser usada para especificar o parâmetro de uma ação, 
+ * propriedade de uma entidade ou um controlador e o argumento de um construtor.
  * 
  * <pre>
  * Ex1:
@@ -93,20 +90,20 @@ import java.lang.annotation.Target;
 public @interface Basic {
     
     /**
-     * Bean que será disponibilizado.
+     * Nome da entidade.
      * 
      */
     String bean() default "";
     
     /**
-     * Escopo do bean. Os escopos estão 
+     * Escopo da entidade. Os escopos estão 
      * descritos em {@link ScopeType}
      * 
      */
     String scope() default ScopeType.PARAM;
 
     /**
-     * Define o tipo de mapeamento do bean. Os tipos estão 
+     * Tipo do mapeamento da entidade. Os tipos estão 
      * descritos em {@link MappingTypes}
      */
     MappingTypes mappingType() default MappingTypes.AUTO;

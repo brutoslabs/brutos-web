@@ -9,10 +9,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
 
 /**
- * Permite mapear uma associação para mais de um tipo de bean. 
- * Em um bean ela pode ser usada nas propriedades ou nos argumentos 
- * de um construtor. Em um controlador ela pode ser usada nas propriedades 
- * ou nos parâmetros de uma ação.
+ * Permite mapear uma associação para mais de um tipo de entidade.
  * 
  * <pre>
  * Ex:
@@ -74,40 +71,39 @@ import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
 public @interface Any {
 
 	/**
-	 * Variável que representa as informações de meta dados.
+	 * Mapeamento dos metadados.
 	 */
 	Basic metaBean();
 
 	/**
-	 * Tipo da variável que representa as informações de meta dados.
+	 * Tipo dos metadados.
 	 */
 	Class<?> metaType() default void.class;
 
     /**
-     * Usado em tipos enum. Os valores estão 
+     * Usado se os metadados forem do tipo enum. Os valores estão 
      * descritos em {@link EnumerationType}.
      */
     EnumerationType metaEnumerated() default EnumerationType.ORDINAL;
     
     /**
-     * Usado em tipos {@link java.util.Date} e {@link java.util.Calendar}.
+     * Usado se os metadados forem do tipo {@link java.util.Date} ou {@link java.util.Calendar}.
      * Deve seguir o padrão definido em {@link java.text.SimpleDateFormat}.
      */
     String metaTemporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
 	
 	/**
-	 * Associa um valor de informação de meta dados a um bean.
-	 * @return
+	 * Especificação dos tipos de mapeamentos.
 	 */
 	MetaValue[] metaValues() default {};
 
 	/**
-	 * Permite em tempo de execução associar um valor de informação de meta dados a um bean.
+	 * Permite, em tempo de execução, definir os tipos de mapeamento.
 	 */
 	Class<? extends MetaValuesDefinition> metaValuesDefinition() default MetaValuesDefinition.class;
 	
     /**
-     * Define o uso de um tipo específico de dados.
+     * Tipo dos metadados.
      */
     Class<? extends org.brandao.brutos.type.Type> metaTypeDef() default org.brandao.brutos.type.Type.class;
 	
