@@ -24,9 +24,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indica que uma classe em particular poderá ter os dados de uma 
- * solicitação disponibilizados em suas propriedades. Se o bean 
- * não estiver associado ao controlador, ele deve ser importado 
+ * Indica que uma classe em particular pode ter os dados de uma 
+ * solicitação disponibilizados em suas propriedades. Se a entidade 
+ * não estiver associada ao controlador, ele deve ser importado 
  * usando a anotação {@link org.brandao.brutos.annotation.ImportBeans}
  * 
  * @author Brandao
@@ -36,8 +36,7 @@ import java.lang.annotation.Target;
 public @interface Bean {
 
     /**
-     * Identificação do "bean".
-     * Caso seja omitido, será usado o nome da classe.
+     * Identificação da entidade. Se omitida, será usado o nome da classe.
      */
     String value() default "";
     

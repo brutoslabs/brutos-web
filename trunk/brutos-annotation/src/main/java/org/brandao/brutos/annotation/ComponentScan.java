@@ -22,7 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import org.brandao.brutos.annotation.scanner.Scanner;
 /**
- *
+ * Define a configuração do escaneamento de componentes.
+ * 
  * @author Brandao
  */
 @java.lang.annotation.Target(ElementType.TYPE)
