@@ -24,19 +24,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define uma ação do controlador. Uma ação pode ser representada por um método. 
- * Esse método pode ter ou não parâmetros. Os parâmetros podem ser de tipo 
- * primitivo ou não. No caso de tipos não primitivos, podem ser criados 
- * mapeamentos para a definição de como os valores da requisição serão 
- * injetados nas propriedades do "bean". Além de ser possível a configuração 
- * de propriedades do tipo Enum e Date. Se o método retornar algum valor, 
- * este será processado e incluído na requisição, para posteriormente ser 
- * usada na visão. As exceções lançadas dentro do método podem alterar o 
- * fluxo lógico da aplicação.
- * 
- * <p>Também é possível definir uma ação sem a utilização da anotação.
- * Nesse caso, o nome do método terá que seguir a nomenclatura 
- * <b><code>&lt;nome-da-ação&gt;Action</code></b>.</p>
+ * Define uma ação do controlador. Pode ser representada por um método 
+ * com ou sem parâmetros. Um parâmetro pode ser um objeto ou um tipo primitivo,
+ * se for um objeto, pode ser criado um mapeamentos para definir como os dados 
+ * de uma requisição serão injetados nas propriedades do parâmetro.
+ * <p>Se o método retornar algum valor, este será processado e incluído na requisição 
+ * para posteriormente ser usada na visão.</p> 
+ * <p>As exceções lançadas dentro do método podem alterar o fluxo lógico da aplicação.</p>
  * 
  * <pre>
  * Ex1:
@@ -44,14 +38,6 @@ import java.lang.annotation.Target;
  * 
  *    &#064;Action
  *    public void root(){
- *       ...
- *    }
- * }
- * 
- * Ex2:
- * public class TestController{
- * 
- *    public void rootAction(){
  *       ...
  *    }
  * }
@@ -66,7 +52,7 @@ import java.lang.annotation.Target;
 public @interface Action {
     
     /**
-     * Identificação da Ação.
+     * Identificação da ação.
      */
     String[] value() default {};
     
