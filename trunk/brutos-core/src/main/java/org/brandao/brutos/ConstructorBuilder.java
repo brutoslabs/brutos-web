@@ -240,8 +240,14 @@ public class ConstructorBuilder extends RestrictionBuilder{
 
         name = StringUtil.adjust(name);
 
+        if(StringUtil.isEmpty(name) && (StringUtil.isEmpty(mapping) && !generic && value == null && !nullable)){
+        	throw new IllegalArgumentException("bean name is required");
+        }
+
+        /*
         if(StringUtil.isEmpty(name) && value == null && !nullable)
         	throw new IllegalArgumentException("bean name is required");
+        */
         
         if(scope == null)
         	throw new MappingException("invalid scope");
