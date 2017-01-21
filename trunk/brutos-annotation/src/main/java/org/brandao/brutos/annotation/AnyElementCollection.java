@@ -7,16 +7,33 @@ import java.lang.annotation.Target;
 
 import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
 
+/**
+ * Permite mapear uma coleção para mais de um tipo de entidade.
+ * @author Brandao
+ *
+ */
 @Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AnyElementCollection {
 
+	/**
+	 * Mapeamento dos metadados.
+	 */
 	Basic metaBean();
 	
+	/**
+	 * Tipo dos metadados.
+	 */
 	Class<?> metaType();
 
+	/**
+	 * Especificação dos tipos de mapeamentos.
+	 */
 	MetaValue[] metaValues() default {};
 
+	/**
+	 * Permite, em tempo de execução, definir os tipos de mapeamento.
+	 */
 	Class<? extends MetaValuesDefinition> metaValuesDefinition() default MetaValuesDefinition.class;
 	
 }
