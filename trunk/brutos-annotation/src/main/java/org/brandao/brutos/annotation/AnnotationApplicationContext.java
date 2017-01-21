@@ -26,12 +26,12 @@ import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
 
 /**
  * Classe que permite a configuração de uma aplicação usando 
- * anotações e "Convention over configuration".
+ * anotações.
  * <p>Para que a configuração seja carregada em uma 
- * aplicação web, é necessário a utilização das tags 
+ * aplicação web, é necessária a utilização das tags 
  * <b><code>&lt;context:annotation-config/&gt;</code></b> e 
  * <b><code>&lt;context:component-scan/&gt;</code></b> no 
- * arquivo de configuração brutos-config.xml</p>
+ * arquivo de configuração <code>brutos-config.xml</code</p>
  * 
  * @author Afonso Brandao
  */
@@ -49,7 +49,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     }
     
     /**
-     * Cria uma nova aplicação.
+     * Cria uma nova aplicação especificando os componentes.
      * @param clazz Componentes da aplicação.
      * @throws IllegalArgumentException Lançada se na lista conter classes de
      * configuração.
@@ -59,9 +59,9 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
     }
 
     /**
-     * Cria uma nova aplicação.
+     * Cria uma nova aplicação especificando os componentes e uma aplicação parente.
      * @param clazz Componentes da aplicação.
-     * @param parent Aplicação.
+     * @param parent Aplicação parente.
      * @throws IllegalArgumentException Lançada se na lista conter classes de
      * configuração.
      */
@@ -80,7 +80,7 @@ public class AnnotationApplicationContext extends AbstractApplicationContext{
      * @param clazz Classes de configuração.
      * @throws IllegalArgumentException Lançada se na lista conter classes que
      * não possuem configuração.
-     * @throws IllegalStateException Lançada se as classes da aplicação já foram definidas.
+     * @throws IllegalStateException Lançada se as classes da aplicação já tenham sido informadas.
      */
     public void setConfigClass(List<Class<?>> clazz) throws IllegalStateException, IllegalArgumentException{
         

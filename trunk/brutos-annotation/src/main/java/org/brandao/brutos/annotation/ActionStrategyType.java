@@ -18,7 +18,7 @@
 package org.brandao.brutos.annotation;
 
 /**
- * Descreve as estratégias de mapeamento da ação.
+ * Descreve as estratégias de mapeamento de uma ação.
  * 
  * @author Afonso Brandao
  */
