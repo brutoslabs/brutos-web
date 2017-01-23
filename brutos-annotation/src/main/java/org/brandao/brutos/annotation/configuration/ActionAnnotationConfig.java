@@ -208,9 +208,13 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
 	protected void throwsSafe(ActionBuilder builder, ActionEntry method,
             ComponentRegistry componentRegistry){
         
-        List<ThrowableEntry> list = new ArrayList<ThrowableEntry>();
-        ThrowSafeList throwSafeList = method.getAnnotation(ThrowSafeList.class);
-        ThrowSafe throwSafe = method.getAnnotation(ThrowSafe.class);
+        List<ThrowableEntry> list 					= new ArrayList<ThrowableEntry>();
+        ThrowSafeList throwSafeList 				= method.getAnnotation(ThrowSafeList.class);
+        ThrowSafe throwSafe 						= method.getAnnotation(ThrowSafe.class);
+        DefaultThrowSafe defualtThrowSafe 			= 
+        		method.isAnnotationPresent(DefaultThrowSafe.class)?
+        			method.getAnnotation(DefaultThrowSafe.class) :
+    				builder.getControllerBuilder().getClassType().getAnnotation(DefaultThrowSafe.class);
         
         if(throwSafeList != null){
             if(throwSafeList.value().length == 0)
@@ -228,7 +232,11 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig{
         
         if(exs != null){
             for(Class<?> ex: exs){
-                ThrowableEntry entry = new ThrowableEntry((Class<? extends Throwable>) ex);
+                ThrowableEntry entry =
+                		defualtThrowSafe == null?
+                				new ThrowableEntry((Class<? extends Throwable>) ex) :
+                				new ThrowableEntry(defualtThrowSafe, (Class<? extends Throwable>) ex);
+                	
                 if(!list.contains(entry)){
                 	list.add(entry);
                 }
