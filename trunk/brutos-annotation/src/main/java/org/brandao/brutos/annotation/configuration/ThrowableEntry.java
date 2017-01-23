@@ -19,6 +19,7 @@ package org.brandao.brutos.annotation.configuration;
 
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.annotation.DefaultThrowSafe;
 import org.brandao.brutos.annotation.ThrowSafe;
 import org.brandao.brutos.mapping.StringUtil;
 
@@ -65,6 +66,22 @@ public class ThrowableEntry {
         
         this.rendered   = value.rendered();
         this.target     = value.target();
+        this.view       = StringUtil.adjust(value.view());
+        this.resolved   = value.resolved();
+    }
+
+    public ThrowableEntry(DefaultThrowSafe value, Class<? extends Throwable> target){
+        this.dispatcher = StringUtil.isEmpty(value.dispatcher())?
+                null :
+                DispatcherType.valueOf(StringUtil.adjust(value.dispatcher()));
+        
+        this.enabled    = value.enabled();
+        this.name       = StringUtil.isEmpty(value.name())?
+                BrutosConstants.DEFAULT_EXCEPTION_NAME : 
+                StringUtil.adjust(value.name());
+        
+        this.rendered   = value.rendered();
+        this.target     = target;
         this.view       = StringUtil.adjust(value.view());
         this.resolved   = value.resolved();
     }
