@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 
 /**
  * Indica que uma classe em particular pode ter os dados de uma 
- * solicitação disponibilizados em suas propriedades. Se a entidade 
+ * solicitação disponibilizados em suas propriedades. Se 
  * não estiver associada ao controlador, ele deve ser importado 
  * usando a anotação {@link org.brandao.brutos.annotation.ImportBeans}
  * 
