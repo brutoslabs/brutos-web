@@ -21,11 +21,12 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
- * Usado em tipos <a href="http://java.sun.com/j2se/1.5/docs/api/java/util/Date.html">Date</a></code> 
- * e <a href="http://java.sun.com/j2se/1.5/docs/api/java/util/Calendar.html">Calendar</a>. 
- * Define o formato da data.
+ * Define o mapeamento de um {@link Date}, {@link Calendar}. 
  * 
  * @author Afonso Brandao
  */
@@ -34,8 +35,7 @@ import java.lang.annotation.Target;
 public @interface Temporal {
     
     /**
-     * Formato da data. Deve seguir o padrão definido em  
-     * <a href="http://java.sun.com/j2se/1.5/docs/api/java/text/SimpleDateFormat.html">SimpleDateFormat</a>.
+     * Formato da data. Deve seguir o padrão definido em {@link SimpleDateFormat}.
      */
     String value();
     

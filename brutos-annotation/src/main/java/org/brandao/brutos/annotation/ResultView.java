@@ -23,6 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Defini se o resultado da ação deve, ou não, ser renderizado.
  * Usado para definir se o resultado será renderizado ou
  * disponibilizado na visão.
  * 
@@ -33,8 +34,8 @@ import java.lang.annotation.Target;
 public @interface ResultView {
  
     /**
-     * Define se o resultado deve ser renderizado. 
-     * Se verdadeiro o resultado será renderizado, caso contrário não.
+     * Renderiza o resultado da ação. 
+     * Se verdadeiro, o resultado será renderizado, caso contrário não.
      */
     boolean rendered();
     

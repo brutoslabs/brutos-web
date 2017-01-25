@@ -24,7 +24,7 @@ import org.brandao.brutos.annotation.configuration.Converter;
 /**
  * Usada para integrar um novo recurso. 
  * A classe que possui essa anotação deve implementar a interface
- * <a href="AnnotationConfig.html">org.brandao.brutos.annotation.AnnotationConfig</a>.
+ * {@link AnnotationConfig}.
  * 
  * @author Brandao
  */
@@ -39,7 +39,7 @@ public @interface Stereotype {
     
     /**
      * Define que esse recurso seja configurado após a 
-     * configuração de um outro recurso em específico.
+     * configuração de um outro recurso.
      */
     Class<? extends Annotation>[] executeAfter() default {};
     

@@ -30,17 +30,12 @@ public interface ScopeType {
     public static final String REQUEST     = "request";
     
     /**
-     * O contexto é a aplicação.
-     */
-    public static final String SINGLETON   = "singleton";
-    
-    /**
      * O contexto são os parâmetros da requisição.
      */
     public static final String PARAM       = "param";
     
     /**
-     * O contexto é um "thread".
+     * O contexto é uma <code>Thread</code>.
      */
     public static final String THREAD      = "thread";
     
@@ -50,12 +45,12 @@ public interface ScopeType {
     public static final String IOC         = "ioc";
     
     /**
-     * O contexto é o controlador.
+     * O contexto é um controlador.
      */
     public static final String CONTROLLER  = "controller";
 
     /**
-     * O contexto é a sessão.
+     * O contexto é uma sessão.
      */
     public static final String SESSION = "session";
     
