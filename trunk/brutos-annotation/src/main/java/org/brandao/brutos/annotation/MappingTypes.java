@@ -31,12 +31,12 @@ public enum MappingTypes {
     AUTO,
     
     /**
-     * O bean é mapeado para um valor.
+     * É um valor primitivo ou equivalente.
      */
     SIMPLE,
     
     /**
-     * O bean é mapeado para um objeto.
+     * É um objeto.
      */
     COMPLEX;
     

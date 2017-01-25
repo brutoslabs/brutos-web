@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Usado para especificar uma regra de validação.
+ * Especifica uma regra de validação.
  * 
  * @author Brandao
  */
@@ -33,7 +33,7 @@ public @interface Restriction {
     
     /**
      * Regra de validação. Os valores estão descritos em 
-     * <a href="RestrictionsRules.html">ScopeType</a>
+     * {@link RestrictionsRules}.
      */
     String rule();
     
@@ -43,7 +43,7 @@ public @interface Restriction {
     String value();
     
     /**
-     * Mensagem retornada caso o valor não esteja de acordo com a 
+     * Mensagem exibida, caso o valor não esteja de acordo com a 
      * regra de validação.
      */
     String message() default "";
