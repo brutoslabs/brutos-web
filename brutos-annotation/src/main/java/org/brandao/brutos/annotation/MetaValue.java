@@ -1,7 +1,7 @@
 package org.brandao.brutos.annotation;
 
 /**
- * Representa o tipo que uma propriedade pode assumir.
+ * Especifica um tipo de mapeamento.
  * 
  * @author Brandao
  *
@@ -9,12 +9,12 @@ package org.brandao.brutos.annotation;
 public @interface MetaValue {
 	
 	/**
-	 * Identificação do tipo.
+	 * Nome do mapeamento.
 	 */
 	String name();
 
 	/**
-	 * Classe que representa o tipo. 
+	 * Classe alvo do mapeamento. 
 	 */
 	Class<?> target();
 	

@@ -18,7 +18,7 @@
 package org.brandao.brutos.annotation;
 
 /**
- * Usado na configuração dos componentes.
+ * Usado na configuração de componente.
  * 
  * @author Afonso Brandao
  */

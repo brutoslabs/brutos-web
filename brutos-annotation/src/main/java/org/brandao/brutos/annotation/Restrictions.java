@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Especifica varias regras de validação.
+ * Coleção de regra de validação.
  * 
  * @author Brandao
  */
@@ -32,12 +32,12 @@ import java.lang.annotation.Target;
 public @interface Restrictions {
    
     /**
-     * Coleção de regras de validação.
+     * Coleção de regra de validação.
      */
     Restriction[] rules();
     
     /**
-     * Mensagem retornada caso o valor não esteja de acordo com a 
+     * Mensagem exibida, caso o valor não esteja de acordo com a 
      * regra de validação.
      */
     String message() default "";

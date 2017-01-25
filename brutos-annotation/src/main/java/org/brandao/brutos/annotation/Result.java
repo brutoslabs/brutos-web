@@ -23,8 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Usado para atribuir uma identificação ao resultado da ação. Se for omitido,
- * será usado "result".
+ * Nomeia o resultado de uma ação. Se omitido,
+ * será usado <code>result</code>.
  * 
  * <pre>
  * Ex:
@@ -47,7 +47,7 @@ import java.lang.annotation.Target;
 public @interface Result {
  
     /**
-     * Identificação do resultado.
+     * Nome.
      */
     String value();
     
