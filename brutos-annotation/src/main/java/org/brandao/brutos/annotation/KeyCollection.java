@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.BrutosConstants;
 
 /**
- * Especifica as chaves de uma coleção de "beans".
+ * Especifica as chaves de uma coleção.
  * 
  * <pre>
  * Ex:
@@ -45,30 +45,31 @@ import org.brandao.brutos.BrutosConstants;
 public @interface KeyCollection {
     
     /**
-     * Identificação do "bean" que será injetado.
-     * Caso seja omitido, será usado o termo "key".
+     * Nome da entidade. Se omitido, será <code>element</code>.
+     * 
      */
     String bean() default "key";
     
     /**
-     * Escopo do valor a ser injetado. Os valores estão 
+     * Escopo da entidade. Os escopos estão 
      * descritos em {@link ScopeType}
      * 
      */
     String scope() default "param";
 
     /**
-     * Define o tipo de mapeamento do bean.
+     * Tipo do mapeamento da entidade. Os tipos estão 
+     * descritos em {@link MappingTypes}
      */
     MappingTypes mappingType() default MappingTypes.AUTO;
     
     /**
-     * Class alvo do mapeamento.
+     * Classe alvo do mapeamento.
      */
     Class<?> target() default void.class;
     
     /**
-     * Usado em tipos enum. Os valores estão 
+     * Usado em tipos {@link java.lang.Enum}. Os valores estão 
      * descritos em {@link EnumerationType}.
      */
     EnumerationType enumerated() default EnumerationType.ORDINAL;
@@ -80,12 +81,12 @@ public @interface KeyCollection {
     String temporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
     
     /**
-     * Permite definir múltiplos tipos de chaves.
+     * Permite definir múltiplos tipos de elementos.
      */
     Any any() default @Any(metaBean = @Basic);
     
     /**
-     * Define o uso de um tipo específico de dados.
+     * Define o uso de um tipo específico.
      */
     Class<? extends org.brandao.brutos.type.Type> type() default org.brandao.brutos.type.Type.class;
     

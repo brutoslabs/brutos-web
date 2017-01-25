@@ -24,9 +24,9 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.interceptor.InterceptorController;
 
 /**
- * Usada para especificar uma interceptação.
+ * Especifica uma interceptação.
  * 
- * @author Afonso Brandao
+ * @author Brandao
  */
 @Target(ElementType.ANNOTATION_TYPE)
 @Retention(RetentionPolicy.RUNTIME)

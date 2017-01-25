@@ -97,7 +97,7 @@ public @interface ElementCollection {
     Any any() default @Any(metaBean = @Basic);
     
     /**
-     * Define o uso de um tipo específico de dados.
+     * Define o uso de um tipo específico.
      */
     Class<? extends org.brandao.brutos.type.Type> type() default org.brandao.brutos.type.Type.class;
     

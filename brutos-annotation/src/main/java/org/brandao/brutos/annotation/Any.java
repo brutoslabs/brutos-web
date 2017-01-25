@@ -103,7 +103,7 @@ public @interface Any {
 	Class<? extends MetaValuesDefinition> metaValuesDefinition() default MetaValuesDefinition.class;
 	
     /**
-     * Define o uso de um tipo específico de metadados.
+     * Define o uso de um tipo específico.
      */
     Class<? extends org.brandao.brutos.type.Type> metaTypeDef() default org.brandao.brutos.type.Type.class;
 	

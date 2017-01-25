@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define os interceptadores do controlador.
+ * Define os interceptadores de um controlador.
  * <pre>
  * Ex:
  * &#064;InterceptedBy(

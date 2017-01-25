@@ -24,7 +24,7 @@ import org.brandao.brutos.interceptor.InterceptorController;
 
 /**
  * Indica que um interceptor em particular pertence a uma 
- * determinada pilha de interceptores.
+ * determinada pilha de interceptadores.
  * 
  * <pre>
  * Ex:
@@ -85,7 +85,7 @@ public @interface InterceptsStack {
     Param[] params() default {};
 
     /**
-     * indica que o inteceptador é global ou não.
+     * indica que o inteceptador é global.
      */
     boolean isdefault() default false;
     
