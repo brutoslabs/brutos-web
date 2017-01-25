@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Usado para especificar o mapeamento de um Enum.
+ * Especifica o mapeamento de um {@link java.lang.Enum}.
  * 
  * <pre>
  * Ex:
@@ -45,7 +45,7 @@ import java.lang.annotation.Target;
 public @interface Enumerated {
 
     /**
-     * Estratégia de mapeamento do enum.
+     * Estratégia de mapeamento do {@link java.lang.Enum}.
      */
     EnumerationType value() default EnumerationType.AUTO;
    

@@ -24,11 +24,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define uma ação do controlador. Pode ser representada por um método 
- * com ou sem parâmetros. Um parâmetro pode ser um objeto ou um tipo primitivo,
- * se for um objeto, pode ser criado um mapeamentos para definir como os dados 
- * de uma requisição serão injetados nas propriedades do parâmetro.
- * <p>Se o método retornar algum valor, este será processado e incluído na requisição 
+ * Define uma ação de um controlador. Pode ser representada por um método 
+ * com ou sem parâmetros. Um parâmetro pode ser um objeto ou um tipo primitivo.
+ * Se for um objeto, pode ser criado um mapeamentos para definir como os dados 
+ * de uma solicitação serão injetados em suas propriedades.
+ * <p>Se o método produzir um resultado, este será processado e incluído na requisição 
  * para posteriormente ser usada na visão.</p> 
  * <p>As exceções lançadas dentro do método podem alterar o fluxo lógico da aplicação.</p>
  * 

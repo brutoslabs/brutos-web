@@ -23,24 +23,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define um controlador. Um controlador pode ter ações, ações com
- * ou sem método associado (executor), várias identificações e uma
+ * Indica que uma classe é um controlador. Um controlador pode ter ações, com
+ * ou sem métodos, várias identificações e uma
  * ação padrão.
- * <p>Uma ação pode ser representada por um método. Esse método pode ter ou não 
- * parâmetros. Os parâmetros podem ser de tipo primitivo ou não. No caso 
- * de tipos não primitivos, podem ser criados mapeamentos para a definição de como 
- * os valores da requisição serão injetados nas propriedades do "bean". 
- * Além de ser possível a configuração de propriedades do tipo Enum e Date. 
- * Se o método retornar algum valor, este será processado e incluído na 
- * requisição, para posteriormente ser usada na visão. As exceções lançadas 
- * dentro do método podem alterar o fluxo lógico da aplicação.</p>
- * 
- * <p>Também é possível definir um controlador sem a necessidade da utilização
- * de anotação. Nesse caso, o nome da classe tem que seguir a nomenclatura
- * <b><code>&lt;nome-do-controlador&gt;Controller</code></b>.</p>
- * 
- * <p>Uma ação padrão é aquela ação que será executada nos casos em que 
- * não for identificada uma ação.</p>
+ * <p>Uma ação pode ser representada por um método que pode ter ou não 
+ * parâmetros que podem ser objetos ou tipos primitivos. 
+ * Se forem objetos, podem ser criados mapeamentos para se definir como os 
+ * valores de uma solicitação serão injetados em suas propriedades. 
+ * Se o método produzir um resultado, este será processado e incluído na 
+ * solicitação para posteriormente ser usada na visão.</p>
+ * <p>As exceções lançadas dentro do método podem alterar o fluxo lógico da aplicação.</p>
  * 
  * <pre>
  * Ex1:
@@ -198,13 +190,13 @@ import java.lang.annotation.Target;
 public @interface Controller{
 
     /**
-     * Define a ação que será executada por padrão.
+     * Ação que será executada por padrão.
      */
     String defaultActionName() default "";
 
     /**
      * Nome do controlador.
-     * O nome do controlador é a identificação do mesmo no container IoC.
+     * O nome do controlador é o mesmo da instância no container IoC.
      */
     String name() default "";
 
@@ -214,8 +206,7 @@ public @interface Controller{
     String[] value() default {};
 
     /**
-     * Parâmetro da requisição usada para a identificação da ação a 
-     * ser executada.
+     * Parâmetro que indica qual acção será executada.
      */
     String actionId() default "invoke";
 

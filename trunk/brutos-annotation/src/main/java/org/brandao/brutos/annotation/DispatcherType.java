@@ -18,7 +18,7 @@
 package org.brandao.brutos.annotation;
 
 /**
- * Descreve as opções pré-definidas de direcionamento de fluxo para a visão.
+ * Descreve as opções pré-definidas de direcionamento do fluxo para a visão.
  * 
  * @author Brandao
  */
@@ -30,12 +30,12 @@ public interface DispatcherType {
     public final String INCLUDE  = "include";
 
     /**
-     *  A requisição é encaminhada para a visão.
+     *  A solicitação é encaminhada para a visão.
      */
     public static final String FORWARD  = "forward";
 
     /**
-     *  A requisição é redirecionada para a visão.
+     *  A solicitação é redirecionada para a visão.
      */
     public static final String REDIRECT = "redirect";
     

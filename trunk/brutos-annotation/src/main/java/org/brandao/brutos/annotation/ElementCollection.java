@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.BrutosConstants;
 
 /**
- * Especifica os elementos de uma coleção de "beans".
+ * Especifica os elementos de uma coleção.
  * 
  * <pre>
  * Ex1:
@@ -56,21 +56,21 @@ import org.brandao.brutos.BrutosConstants;
 public @interface ElementCollection {
     
     /**
-     * Identificação do "bean" que será injetado.
-     * Caso seja omitido, será usado "element".
+     * Nome da entidade. Se omitido, será <code>element</code>.
      * 
      */
     String bean() default "element";
     
     /**
-     * Escopo do valor a ser injetado. Os escopos estão 
-     * descritos em {@link ScopeType}.
+     * Escopo da entidade. Os escopos estão 
+     * descritos em {@link ScopeType}
      * 
      */
     String scope() default "param";
 
     /**
-     * Define o tipo de mapeamento do bean.
+     * Tipo do mapeamento da entidade. Os tipos estão 
+     * descritos em {@link MappingTypes}
      */
     MappingTypes mappingType() default MappingTypes.AUTO;
 
@@ -80,7 +80,7 @@ public @interface ElementCollection {
     Class<?> target() default void.class;
     
     /**
-     * Usado em tipos enum. Os valores estão 
+     * Usado em tipos {@link java.lang.Enum}. Os valores estão 
      * descritos em {@link EnumerationType}.
      */
     EnumerationType enumerated() default EnumerationType.ORDINAL;
