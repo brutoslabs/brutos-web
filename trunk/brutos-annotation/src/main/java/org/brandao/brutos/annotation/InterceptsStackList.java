@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define uma coleção de pilhas de interceptadores.
+ * Especifica uma coleção de pilhas de interceptadores.
  * 
  * @author Brandao
  */

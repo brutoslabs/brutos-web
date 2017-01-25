@@ -14,14 +14,14 @@ import java.lang.annotation.Target;
 /**
  * Indica um no escopo.
  * 
- * @author Cliente
+ * @author Brandao
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExtendedScope {
     
     /**
-     * Identificação do escopo.
+     * Nome do escopo.
      */
     String value() default "";
     

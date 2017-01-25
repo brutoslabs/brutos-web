@@ -18,24 +18,24 @@
 package org.brandao.brutos.annotation;
 
 /**
- * Descreve os tipos que um Enum pode ser mapeado.
+ * Descreve os tipos de mapeamento de um {@link Enum}.
  * 
  * @author Brandao
  */
 public enum EnumerationType {
     
     /**
-     * O Enum é mapeado de acordo com o valor.
+     * O mapeamento depende do valor.
      */
     AUTO,
     
     /**
-     * O Enum é mapeado como inteiro.
+     * O {@link Enum} é um inteiro.
      */
     ORDINAL,
     
     /**
-     * O Enum é mapeado como string.
+     * O {@link Enum} é uma {@link String}.
      */
     STRING;
     

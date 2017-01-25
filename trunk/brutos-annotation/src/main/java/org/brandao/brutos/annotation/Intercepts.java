@@ -23,12 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define um interceptador. Com ela é possível determinar o nome 
- * e a configuração do mesmo.
- * <p>Também é possível definir um interceptador sem a necessidade do uso de
- * anotação. Nesse caso, além da implementação da interface
- * InterceptorController, é necessário que o nome da classe siga a nomenclatura
- * <b><code>&lt;nome-do-interceptador&gt;InterceptorController</code></b>.</p>
+ * Especifica um interceptador.
  * 
  * <pre>
  * Ex1:
@@ -60,14 +55,14 @@ import java.lang.annotation.Target;
 public @interface Intercepts {
 
     /**
-     * Nome do interceptador. Se for omitido, será usado o nome da 
+     * Nome do interceptador. Se omitido, será usado o nome da 
      * classe.
      */
     String name() default "";
 
     /**
      * Indica que é um interceptador global. Se verdadeiro,
-     * todos os controladores serão interceptados. Caso contrário, 
+     * todos os controladores serão interceptados, senão 
      * terá que ser definido quais controladores deverão ser 
      * interceptados.
      */
