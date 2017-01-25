@@ -21,16 +21,10 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import org.brandao.brutos.BrutosConstants;
 
 /**
- * Usado para interceptar e tratar exceções. 
- * Pode ser definida no controlador ou na ação. Se definida no 
- * controlador, todas as exceções lançadas em todas as ações serão 
- * tratadas de acordo com o que foi definida na configuração.
- * Por padrão, todas as exceções declaradas no método executor da ação 
- * que não tenham sido especificadas as configurações, serão interceptadas 
- * e configuradas com as opções padrão da anotação.
+ * Intercepta e trata uma exceção.
+ *  
  * <pre>
  * Ex1:
  * &#064;ThrowSafe(target=NullPointerException.class)

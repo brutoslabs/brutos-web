@@ -23,7 +23,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Define a classe alvo do mapeamento.
+ * Define a classe alvo de um mapeamento.
  * <pre>
  * Ex:
  * public class MyController{
