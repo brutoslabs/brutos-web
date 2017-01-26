@@ -22,11 +22,13 @@ public class TypeTest  extends TestCase{
         TestCase.assertEquals(List.class, type);
     }
 
+    /*
     public void testgetListType(){
         GenericTypeImp genericType =
                 new GenericTypeImp(List.class,new Class[]{Integer.class});
         ListType type = (ListType) (new TypeManagerImp()).getType(genericType);
         TestCase.assertEquals(Integer.class, type.getCollectionType().getClassType());
     }
+    */
 
 }
