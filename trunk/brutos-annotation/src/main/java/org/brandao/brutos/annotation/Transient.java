@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * O controlador, ação ou propriedade que possuir essa anotação, 
+ * O controlador, ação ou propriedade que possuir essa anotação 
  * será ignorada.
  * 
  * <pre>
