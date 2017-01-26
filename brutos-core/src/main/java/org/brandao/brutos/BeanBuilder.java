@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos;
 
@@ -24,10 +9,7 @@ import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
 
-/**
- *
- * @author Brandao
- */
+
 public class BeanBuilder {
 
     private Controller controller;
@@ -56,11 +38,7 @@ public class BeanBuilder {
         this.applicationContext = applicationContext;
     }
 
-    /**
-     * Define a fábrica do bean.
-     * @param factory Fábrica.
-     * @return Construtor do bean.
-     */
+    
     public BeanBuilder setFactory( String factory ){
         getLogger()
             .info(
@@ -72,11 +50,7 @@ public class BeanBuilder {
         return this;
     }
 
-    /**
-     * Define o nome do m�todo da f�brica.
-     * @param methodFactory Nome do m�todo.
-     * @return Construtor do mapeamento.
-     */
+    
     public BeanBuilder setMethodfactory( String methodFactory ){
 
         getLogger()
@@ -90,11 +64,7 @@ public class BeanBuilder {
         return this;
     }
 
-    /**
-     * Define o separador. Se n�o informado, o separador ser� ".".
-     * @param separator Separador
-     * @return Construtor do mapeamento.
-     */
+    
     public BeanBuilder setSeparator( String separator ){
         
         getLogger()
@@ -108,95 +78,46 @@ public class BeanBuilder {
         return this;
     }
 
-    /**
-     * Faz o mapeamento de uma propriedade.
-     *
-     * @param name Nome do par�metro.
-     * @param propertyName Nome da propriedade
-     * @param enumProperty Usado no mapeamento de enum.
-     * @return Construtor do mapeamento.
-     */
+    
     public PropertyBuilder addProperty( String name, String propertyName,
             EnumerationType enumProperty ){
         return addProperty( name, propertyName, enumProperty, null, null, 
                 ScopeType.PARAM, null, false, null );
     }
 
-    /**
-     * Faz o mapeamento de uma propriedade que não possui valor.
-     *
-     * @param name Nome do par�metro.
-     * @return Construtor do mapeamento.
-     */
+    
     public PropertyBuilder addNullProperty( String propertyName ){
         return addProperty( null, propertyName, null, null, null,
                 ScopeType.PARAM, null, true, null );
     }
     
-    /**
-     * Faz o mapeamento de uma propriedade.
-     *
-     * @param name Nome do par�metro.
-     * @param propertyName Nome da propriedade
-     * @param temporalProperty Usado no mapeamento de datas.
-     * @return Construtor do mapeamento.
-     */
+    
     public PropertyBuilder addProperty( String name, String propertyName,
             String temporalProperty ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, 
                 temporalProperty, null, ScopeType.PARAM, null, false, null );
     }
     
-    /**
-     * Faz o mapeamento de uma propriedade.
-     *
-     * @param name Nome do par�metro.
-     * @param propertyName Nome da propriedade
-     * @param type Faz o processamento da propriedade.
-     * @return Construtor do mapeamento.
-     */
+    
     public PropertyBuilder addProperty( String name, String propertyName,
             Type type ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null,ScopeType.PARAM, null, false, type );
     }
     
-    /**
-     * Faz o mapeamento de uma propriedade.
-     *
-     * @param name Nome do par�metro.
-     * @param propertyName Nome da propriedade
-     * @param mapping Mapeamento customizado.
-     * @return Construtor do mapeamento.
-     */
+    
     public PropertyBuilder addMappedProperty( String name, String propertyName, String mapping ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, ScopeType.PARAM, null, false, null );
     }
 
-    /**
-     * Faz o mapeamento de uma propriedade.
-     *
-     * @param propertyName Nome da propriedade
-     * @param mapping Mapeamento customizado.
-     * @return Construtor do mapeamento.
-     */
+    
     public PropertyBuilder addMappedProperty( String propertyName, String mapping ){
         return addProperty( null, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, ScopeType.PARAM, null, false, null );
     }
 
-    /**
-     * Define o tipo da chave.
-     *
-     * @param ref Nome do mapeamento.
-     * @return Construtor do mapeamento.
-     * @throws java.lang.NullPointerException Lan�ado se o nome do mapeamento for igual a null.
-     * @throws org.brandao.brutos.NotFoundMappingBeanException Lan�ado se o
-     * mapeamento n�o for encontrado.
-     * @throws org.brandao.brutos.BrutosException Lançado se a classe alvo do
-     * mapeamento não for uma coleção.
-     */
+    
     public KeyBuilder setMappedKey( String name, String ref ){
         return setKey( name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
             ScopeType.PARAM, null, null, null );
@@ -285,14 +206,7 @@ public class BeanBuilder {
         return new KeyBuilder(key, this, this.validatorFactory);
     }
     
-    /**
-     * Contr�i o mapeamento da chave usada para acessar os elementos de uma cole��o.
-     * 
-     * @param type Classe alvo do mapeamento.
-     * @return Construtor do mapeamento.
-     * @throws org.brandao.brutos.BrutosException Lan�ado se a classe alvo do
-     * mapeamento n�o for uma cole��o.
-     */
+    
     public BeanBuilder buildKey( Class type ){
         return buildKey(null, type);
     }
@@ -312,12 +226,7 @@ public class BeanBuilder {
         return bb;
     }
     
-    /**
-     * Constr�i o mapeamento dos elementos de uma cole��o.
-     *
-     * @param type Classe alvo do mapeamento.
-     * @return Construtor do mapeamento dos elementos.
-     */
+    
     public BeanBuilder buildElement( Class type ){
         return buildElement(null, type);
     }
@@ -422,11 +331,7 @@ public class BeanBuilder {
         return new ElementBuilder(collection, this, this.validatorFactory);
     }
     
-    /**
-     * Define a representa��o do �ndice do objeto em uma cole��o.
-     * @param indexFormat Representa��o.
-     * @return Construtor do mapeamento.
-     */
+    
     public BeanBuilder setIndexFormat( String indexFormat ){
         indexFormat = StringUtil.adjust(indexFormat);
         
@@ -440,61 +345,13 @@ public class BeanBuilder {
         return this;
     }
 
-    /**
-     * Define o tipo da cole��o.
-     * 
-     * @param ref Nome do mapeamento.
-     * @return Construtor do mapeamento.
-     * @throws java.lang.NullPointerException Lan�ado se o nome do mapeamento for igual a null.
-     * @throws org.brandao.brutos.NotFoundMappingBeanException Lan�ado se o
-     * mapeamento n�o for encontrado.
-     * @throws org.brandao.brutos.BrutosException Lan�ado se a classe alvo do
-     * mapeamento n�o for uma cole��o.
-     */
+    
     public RestrictionBuilder setElement( String ref ){
         return setMappedElement(null,ref);
-        /*
-        ref = StringUtil.adjust(ref);
         
-        if( StringUtil.isEmpty(ref) )
-            throw new IllegalArgumentException();
-
-        if( !mappingBean.isCollection() && !mappingBean.isMap() )
-            throw new BrutosException(
-                String.format("is not allowed for this type: %s",
-                    new Object[]{this.mappingBean.getClassType()} ) );
-        
-        if( controller.getBean(ref) == null )
-            throw new NotFoundMappingBeanException(
-                    String.format(
-                        "mapping %s not found: %s",
-                        new Object[]{
-                            ref,
-                            controller.getClassType().getName()
-            }) );
-
-        getLogger()
-            .info(
-                String.format("%s defined element %s",
-                new Object[]{
-                    this.getPrefixLogger(),
-                    ref} ) );
-        
-        Bean bean = (Bean) controller.getBean( ref );
-
-        ((CollectionBean)mappingBean).setBean( bean );
-        return this;
-        */
     }
 
-    /**
-     * Constr�i o mapeamento de uma propriedade.
-     * 
-     * @param name Identifica��o.
-     * @param propertyName Nome da propriedade
-     * @param target Classe alvo do mapeamento.
-     * @return Construtor da propriedade.
-     */
+    
     public BeanBuilder buildProperty( String propertyName, Class target ){
         return buildProperty( null, propertyName, target );
     }
@@ -515,58 +372,26 @@ public class BeanBuilder {
         return beanBuilder;
     }
 
-    /**
-     * Faz o mapeamento de uma propriedade.
-     *
-     * @param name Nome do par�metro.
-     * @param propertyName Nome da propriedade
-     * @return Construtor do mapeamento.
-     */
+    
     public PropertyBuilder addProperty( String name, String propertyName ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy", 
                 null, ScopeType.PARAM, null, false, null );
     }
 
-    /**
-     * Faz o mapeamento de uma propriedade.
-     *
-     * @param name Nome do par�metro.
-     * @param propertyName Nome da propriedade
-     * @param scope Escopo.
-     * @return Construtor do mapeamento.
-     */
+    
     public PropertyBuilder addProperty( String name, String propertyName, ScopeType scope ){
         return addProperty( name, propertyName, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, scope, null, false, null );
     }
 
-    /**
-     * Faz o mapeamento de uma propriedade.
-     *
-     * @param name Nome do par�metro.
-     * @param propertyName Nome da propriedade
-     * @param value Valor da propriedade. Tem a mesma fun��o do modificador final.
-     * @return Construtor do mapeamento.
-     */
+    
     public PropertyBuilder addStaticProperty( String name, String propertyName, Object value ){
         return addProperty( null, propertyName,
             EnumerationType.ORDINAL, "dd/MM/yyyy", null, ScopeType.PARAM, value,
             false, null );
     }
 
-    /**
-     * Faz o mapeamento de uma propriedade.
-     * 
-     * @param name Nome do par�metro.
-     * @param propertyName Nome da propriedade
-     * @param enumProperty Usado no mapeamento de enum.
-     * @param temporalProperty Usado no mapeamento de datas.
-     * @param mapping Mapeamento customizado.
-     * @param scope Escopo.
-     * @param value Valor da propriedade.
-     * @param type Faz o processamento da propriedade.
-     * @return Construtor do mapeamento.
-     */
+    
     public PropertyBuilder addProperty( String name, String propertyName,
             EnumerationType enumProperty, String temporalProperty, String mapping, 
             ScopeType scope, Object value, boolean nullable, Type type ){
@@ -658,19 +483,12 @@ public class BeanBuilder {
         return mappingBean.getClassType();
     }
     
-    /**
-     * Verifica se � o mapeamento de um Map.
-     * @return Verdadeiro se � o mapeamento de um Map, caso contr�rio falso.
-     */
+    
     public boolean isMap(){
         return this.mappingBean.isMap();
     }
 
-    /**
-     * Verifica se � o mapeamento de uma Collection.
-     * @return Verdadeiro se � o mapeamento de uma Collection,
-     * caso contr�rio falso.
-     */
+    
     public boolean isCollection(){
         return this.mappingBean.isCollection();
     }

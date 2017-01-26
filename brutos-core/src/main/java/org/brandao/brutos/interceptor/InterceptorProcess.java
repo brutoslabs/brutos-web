@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos.interceptor;
 
@@ -37,10 +22,7 @@ import org.brandao.brutos.Scopes;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.validator.ValidatorException;
 
-/**
- *
- * @author Afonso Brandao
- */
+
 public class InterceptorProcess implements InterceptorStack{
 
     private Logger logger =
@@ -84,70 +66,7 @@ public class InterceptorProcess implements InterceptorStack{
     	this.start = ipcb.getStack();
     }
 
-    /*
-    public void addInterceptor( org.brandao.brutos.mapping.Interceptor i ){
-        processInterceptor( 
-                new StringBuffer( String.valueOf( form.hashCode() ) ), 
-                i.getProperties(), 
-                i 
-        );
-    }
     
-    private void processInterceptor( StringBuffer path, 
-            Map propertiesScope,
-            Interceptor interceptor ){
-        
-        if( interceptor instanceof org.brandao.brutos.mapping.InterceptorStack ){
-            List ins = 
-                    ((org.brandao.brutos.mapping.InterceptorStack)interceptor)
-                        .getInterceptors();
-
-            for( int idx=0;idx<ins.size();idx++ ){
-                Interceptor i =
-                        (Interceptor) ins.get(idx);
-                
-                if( path.indexOf( i.getName() ) == -1 ){
-                    processInterceptor( 
-                        path.append( i.getName() ).append( "." ),
-                        propertiesScope,
-                        i
-                    );
-                }
-            }
-        }
-        else{
-            String index = String.valueOf( form.hashCode() );
-            Map properties = (Map)interceptor.getProperty( index );
-            
-            if( properties == null ){
-                properties = getScopeProperties( path.toString(), propertiesScope,
-                                            interceptor.getProperties() );
-                interceptor.setProperty( index, properties );
-            }
-            
-            stack.add( interceptor );
-        }
-    }
-
-    private Map getScopeProperties( String path, 
-            Map propertiesScope, Map properties ){
-        
-        Map props = new HashMap();
-        
-        Set keys = properties.keySet();
-        Iterator iKeys = keys.iterator();
-
-        while( iKeys.hasNext() ){
-            String key = (String) iKeys.next();
-            Object value = propertiesScope.get( path + key );
-            
-            value = value == null? properties.get( key ) : value;
-            props.put( key, value );
-        }
-        
-        return props;
-    }
-    */
     
     public Controller getForm() {
         return form;

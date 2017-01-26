@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos;
 
@@ -28,11 +13,7 @@ import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.type.UnknownTypeException;
 
-/**
- * Monta os parâmetros de uma ação.
- * 
- * @author Brandao
- */
+
 public class ParametersBuilder extends RestrictionBuilder{
     
     private Controller controller;
@@ -56,167 +37,78 @@ public class ParametersBuilder extends RestrictionBuilder{
         this.applicationContext = applicationContext;
     }
     
-    /**
-     * Adiciona um novo parâmetro.
-     *
-     * @param name Nome do parâmetro.
-     * @param scope Escopo.
-     * @param enumProperty Tipo de mapeamento de {@link java.lang.Enum}.
-     * @param classType Tipo do parâmetro.
-     * @return Construtor do parâmetro.
-     */
+    
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty, Class<?> classType ){
         return addParameter( name, scope, enumProperty, null, null, null, 
                 null, false, classType );
     }
 
-    /**
-     * Adiciona um novo parâmetro que recebe somente valores nulos.
-     *
-     * @return Contrutor do parâmetro.
-     */
+    
     public ParameterBuilder addNullParameter(){
         return addParameter( null, null, null, null, null, null,
                 null, false, null );
     }
 
-    /**
-     * Adiciona um novo parâmetro.
-     * 
-     * @param name Nome do parâmetro.
-     * @param scope Escopo.
-     * @param temporalProperty Padrão de mapeamento de tipos {@link java.util.Calendar} e {@link java.util.Date} 
-     * @param classType
-     * @return
-     */
+    
     public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty, Class<?> classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, 
                 temporalProperty, null, null, null, false, classType );
     }
     
-    /**
-     * Configura um novo par�metro.
-     *
-     * @param name Identifica��o do par�metro.
-     * @param scope Escopo.
-     * @param type Faz o processamento do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addParameter( String name, ScopeType scope, Type typeDef ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, typeDef, null, false, typeDef.getClassType() );
     }
     
-    /**
-     * Configura um novo par�metro.
-     *
-     * @param name Identifica��o do par�metro.
-     * @param enumProperty Usado na configura��o de par�metros do tipo enum.
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addParameter( String name, EnumerationType enumProperty, Class<?> classType ){
         return addParameter( name, ScopeType.PARAM, enumProperty, null, null,
                 null, null, false, classType );
     }
     
-    /**
-     * Configura um novo par�metro.
-     *
-     * @param name Identifica��o do par�metro.
-     * @param scope Escopo.
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addParameter( String name, ScopeType scope, Class<?> classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy", 
                 null, null, null, false, classType );
     }
     
-    /**
-     * Configura um novo par�metro.
-     *
-     * @param name Identifica��o do par�metro.
-     * @param temporalProperty Usado na configura��o de datas.
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addParameter( String name, String temporalProperty, Class<?> classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL,
                 temporalProperty, null, null, null, false, classType );
     }
     
-    /**
-     * Configura um novo par�metro.
-     *
-     * @param name Identifica��o do par�metro.
-     * @param type Faz o processamento do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addParameter( String name, Type typeDef ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, typeDef, null, false, typeDef.getClassType() );
     }
     
-    /**
-     * Configura um novo par�metro.
-     *
-     * @param mapping Nome do mapeamento do par�metro. Esse mapeamento
-     * deve ser previamente criado com o m�todo buildMappingBean(...).
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addParameterMapping( String mapping, Class<?> classType ){
         return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, null, false, classType );
     }
 
-    /**
-     * Configura um novo par�metro.
-     *
-     * @param name Identifica��o do par�metro.
-     * @param mapping Nome do mapeamento do par�metro. Esse mapeamento
-     * deve ser previamente criado com o m�todo buildMappingBean(...).
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addParameterMapping( String name, String mapping, Class<?> classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, null, false, classType );
     }
     
-    /**
-     * Configura um novo par�metro.
-     *
-     * @param name Identifica��o do par�metro.
-     * @param scope Escopo.
-     * @param mapping Nome do mapeamento do par�metro. Esse mapeamento
-     * deve ser previamente criado com o m�todo buildMappingBean(...).
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addParameterMapping( String name, String mapping, ScopeType scope, Class<?> classType ){
         return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 mapping, null, null, false, classType );
     }
-    /**
-     * Configura um novo par�metro.
-     *
-     * @param name Identifica��o do par�metro.
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addParameter( String name, Class<?> classType ){
         return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null, null, false, classType );
     }
 
-    /**
-     * Constr�i um novo par�metro.
-     *
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
 
     public BeanBuilder buildParameter( Class<?> classType ){
         String beanName = 
@@ -228,12 +120,7 @@ public class ParametersBuilder extends RestrictionBuilder{
         return bb;
     }
 
-    /**
-     * Constrói um novo parâmetro.
-     *
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
 
     public BeanBuilder buildParameter( String name, Class<?> classType ){
         String beanName = 
@@ -245,13 +132,7 @@ public class ParametersBuilder extends RestrictionBuilder{
         return bb;
     }
     
-    /**
-     * Constrói um novo parâmetro.
-     *
-     * @param classType Tipo do parâmetro.
-     * @param beanType Tipo do bean.
-     * @return Contrutor do par�metro.
-     */
+    
 
     public BeanBuilder buildParameter( Class<?> classType, Class<?> beanType ){
         String beanName =
@@ -263,13 +144,7 @@ public class ParametersBuilder extends RestrictionBuilder{
         return bb;
     }
 
-    /**
-     * Constrói um novo parâmetro.
-     *
-     * @param classType Tipo do parâmetro.
-     * @param beanType Tipo do bean.
-     * @return Contrutor do par�metro.
-     */
+    
 
     public BeanBuilder buildParameter( String name, Class<?> classType, Class<?> beanType ){
         String beanName =
@@ -281,31 +156,13 @@ public class ParametersBuilder extends RestrictionBuilder{
         return bb;
     }
     
-    /**
-     * Configura um novo par�metro.
-     *
-     * @param classType Tipo do par�metro.
-     * @param value Valor do Par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addStaticParameter( Class<?> classType, Object value ){
         return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
                 null, null, value, false, classType );
     }
 
-    /**
-     * Configura um novo par�metro.
-     * 
-     * @param name Identifica��o do par�metro.
-     * @param scope Escopo.
-     * @param enumProperty Usado na configura��o de par�metros do tipo enum.
-     * @param mapping Nome do mapeamento do par�metro. Esse mapeamento
-     * deve ser previamente criado com o m�todo buildMappingBean(...).
-     * @param temporalProperty Usado na configura��o de datas.
-     * @param type Faz o processamento do par�metro.
-     * @param classType Tipo do par�metro.
-     * @return Contrutor do par�metro.
-     */
+    
     public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
             String temporalProperty, String mapping, Type typeDef, Object value,
             boolean nullable, Class<?> classType ){
@@ -419,14 +276,7 @@ public class ParametersBuilder extends RestrictionBuilder{
             else
                 throw new MappingException( "mapping name " + mapping + " not found!" );
         }
-        /*else{
-            Type definedType = parameter.getType();
-            
-            //TODO: remove ObjectType and use if mapping not null
-            if(definedType != null && definedType.getClass() == ObjectType.class && rawType != Object.class)
-            	throw new MappingException("unknown type: " + rawType.getSimpleName());
-        }
-        */
+        
 
         action.addParameter(parameter);
         return new ParameterBuilder(parameter, this, this.validatorFactory);

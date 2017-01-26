@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos.mapping;
 
@@ -34,11 +19,7 @@ import org.brandao.brutos.Scopes;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.scope.Scope;
 
-/**
- * Define um objeto que representa um controlador dentro da aplicação.
- * 
- * @author Brandao
- */
+
 public class Controller {
 
     private String name;
@@ -64,9 +45,7 @@ public class Controller {
 
     private List<String> alias;
 
-    /**
-     * @deprecated 
-     */
+    
     private ScopeType scope;
     
     private String view;
@@ -91,9 +70,7 @@ public class Controller {
     
     private BeanInstance beanInstance;
 
-    /**
-     * Cria um novo controlador.
-     */
+    
     public Controller(ConfigurableApplicationContext context) {
         this.fields             = new ArrayList<PropertyController>();
         this.mappingBeans       = new LinkedHashMap<String, Bean>();
@@ -110,20 +87,12 @@ public class Controller {
         this.interceptorProcess.setForm( this );
     }
 
-    /**
-     * Obtém o parâmetro que identifica a ação.
-     * @return Nome do parâmetro.
-     */
+    
     public String getActionId() {
         return actionId;
     }
 
-    /**
-     * Obtém a instância do controlador.
-     * 
-     * @param objectFactory Fábrica de objetos da aplicação.
-     * @return Instância do controlador.
-     */
+    
     public Object getInstance(ObjectFactory objectFactory){
         Object instance = name == null? null : objectFactory.getBean(name);
         instance = instance == null? objectFactory.getBean(classType) : instance;
@@ -134,19 +103,12 @@ public class Controller {
             return instance;
     }
 
-    /**
-     * Define o parâmetro que identifica a ação.
-     * @param actionId Nome do parâmetro.
-     */
+    
     public void setActionId(String actionId) {
         this.actionId = actionId;
     }
 
-    /**
-     * Obtém o mapeamento de um bean a partir de seu nome.
-     * @param name Nome do bean.
-     * @return Bean.
-     */
+    
     public Bean getBean(String name){
         return (Bean)mappingBeans.get(name);
     }
@@ -154,15 +116,7 @@ public class Controller {
     public void addBean(String name, Bean bean){
         mappingBeans.put(name, bean);
     }
-    /*
-    public Map getMappingBeans() {
-        return mappingBeans;
-    }
-
-    public void setMappingBeans(Map mappingBeans) {
-        this.mappingBeans = mappingBeans;
-    }
-    */
+    
     
     public boolean containsProperty(String name){
         return getProperty(name) != null;
@@ -187,17 +141,12 @@ public class Controller {
             fields.add(property);
     }
     
-    /**
-     * @deprecated 
-     * @return 
-     */
+    
     public ActionListener getAcion() {
         return getActionListener();
     }
 
-    /**
-     * @deprecated 
-     */
+    
     public void setAcion(ActionListener acion) {
         this.setActionListener(acion);
     }
@@ -299,10 +248,7 @@ public class Controller {
         return getInterceptorStack();
     }
 
-    /**
-     * @deprecated 
-     * @return
-     */
+    
     public Object getInstance(){
         try{
             return getClassType().newInstance();
@@ -380,18 +326,12 @@ public class Controller {
         return this.alias;
     }
 
-    /**
-     * @deprecated
-     * @return .
-     */
+    
     public ScopeType getScope() {
         return scope;
     }
 
-    /**
-     * @deprecated 
-     * @param scope
-     */
+    
     public void setScope(ScopeType scope) {
         this.scope = scope;
     }
@@ -501,16 +441,12 @@ public class Controller {
         this.resolvedView = resolvedView;
     }
 
-    /**
-     * @return the beanInstance
-     */
+    
     public BeanInstance getBeanInstance() {
         return beanInstance;
     }
 
-    /**
-     * @param beanInstance the beanInstance to set
-     */
+    
     public void setBeanInstance(BeanInstance beanInstance) {
         this.beanInstance = beanInstance;
     }

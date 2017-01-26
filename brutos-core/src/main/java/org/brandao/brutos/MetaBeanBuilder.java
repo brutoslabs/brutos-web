@@ -169,22 +169,7 @@ public class MetaBeanBuilder {
 		
 		this.metaBean.setClassType(classType);
 		
-		/*
-    	if(this.metaBean.getType() == null){
-        	Type type = 
-                    this.metaBean
-                    .getController()
-                    .getContext().getTypeManager()
-                        .getType(
-                    		classType,
-                            this.enumProperty,
-                            this.temporalProperty );
-        	
-        	this.metaBean.setType(type);
-    	}
-    	else
-			throw new MappingException("type has been defined");
-    	*/	
+			
         
         return this;
 	}

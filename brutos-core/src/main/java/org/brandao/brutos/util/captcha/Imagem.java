@@ -1,28 +1,10 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos.util.captcha;
 
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author Afonso Brand�o
- */
+
 public class Imagem {
     
     public Imagem() {
@@ -36,11 +18,7 @@ public class Imagem {
                                                         new java.awt.Color(177, 242, 255 ),
                                                         new java.awt.Color(115, 203, 193 ),
                                                         new java.awt.Color( 35, 250, 175 )};
-        /*
-                                                        new java.awt.Color(107, 172, 187 ),
-                                                        new java.awt.Color(95, 183, 173 ),
-                                                        new java.awt.Color( 15, 236, 155 )};
-         */
+        
 
         java.awt.image.BufferedImage image = null;
         java.awt.Graphics2D g = null;
