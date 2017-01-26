@@ -27,21 +27,7 @@ import org.brandao.brutos.helper.any.app1.Test6AnyController;
 import org.brandao.brutos.helper.any.app1.Test7AnyController;
 import org.brandao.brutos.helper.any.app1.Test8AnyController;
 import org.brandao.brutos.helper.any.app1.Test9AnyController;
-/*
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test1AnyBeanMetaValuesDefinition;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test1AnyMetaValuesDefinitionController;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test2AnyBeanMetaValuesDefinition;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test2AnyMetaValuesDefinitionController;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test3AnyBeanMetaValuesDefinition;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test3AnyMetaValuesDefinitionController;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test4AnyBeanMetaValuesDefinition;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test4AnyMetaValuesDefinitionController;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test5AnyMetaValuesDefinitionController;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test6AnyMetaValuesDefinitionController;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test7AnyMetaValuesDefinitionController;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test8AnyMetaValuesDefinitionController;
-import org.brandao.brutos.helper.any.metavaluesdefinition.Test9AnyMetaValuesDefinitionController;
-*/
+
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.test.MockXMLWebApplicationContext;

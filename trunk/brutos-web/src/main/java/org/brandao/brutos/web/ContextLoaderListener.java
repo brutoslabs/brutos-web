@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 
 package org.brandao.brutos.web;
@@ -28,10 +13,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import org.brandao.brutos.BrutosConstants;
 
-/**
- * 
- * @author Afonso Brandao
- */
+
 public class ContextLoaderListener implements ServletContextListener,
         HttpSessionListener, ServletRequestListener{
     
@@ -66,32 +48,11 @@ public class ContextLoaderListener implements ServletContextListener,
     }
 
     public void requestDestroyed(ServletRequestEvent sre) {
-        /*
-        ThreadScope.destroy();
-        RequestInfo.removeCurrent();
-        ConfigurableWebApplicationContext context =
-            (ConfigurableWebApplicationContext)ContextLoader
-                .getCurrentWebApplicationContext();
         
-        if(context != null){
-            context.getRequestFactory().destroyRequest();
-            context.getResponseFactory().destroyResponse();
-        }
-        */
     }
 
     public void requestInitialized(ServletRequestEvent sre) {
-        /*
-        StaticBrutosRequest staticRequest;
-
-        ServletRequest request = sre.getServletRequest();
-
-        staticRequest = new StaticBrutosRequest(request);
-
-        RequestInfo requestInfo = new RequestInfo();
-        requestInfo.setRequest(staticRequest);
-        RequestInfo.setCurrent(requestInfo);
-        */
+        
     }
     
 }
