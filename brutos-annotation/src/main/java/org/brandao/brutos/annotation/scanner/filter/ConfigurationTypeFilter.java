@@ -23,7 +23,7 @@ import org.brandao.brutos.annotation.Configuration;
 
 /**
  *
- * @author Cliente
+ * @author Brandao
  */
 public class ConfigurationTypeFilter extends AnnotationTypeFilter{
     
