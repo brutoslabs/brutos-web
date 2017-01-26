@@ -23,7 +23,7 @@ import org.brandao.brutos.annotation.Stereotype;
 
 /**
  *
- * @author Cliente
+ * @author Brandao
  */
 public class StereotypeTypeFilter extends AnnotationTypeFilter{
     
