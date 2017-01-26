@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://brutos.sourceforge.net/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * This library is free software. You can redistribute it 
- * and/or modify it under the terms of the GNU General Public
- * License (GPL) version 3.0 or (at your option) any later 
- * version.
- * You may obtain a copy of the License at
- * 
- * http://www.gnu.org/licenses/gpl.html 
- * 
- * Distributed WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied.
- *
- */
+
 
 package org.brandao.brutos.web.http;
 
@@ -35,11 +20,7 @@ import org.brandao.jbrgates.JSONDecoder;
 
 
 
-/**
- *
- * @deprecated
- * @author Afonso Brandao
- */
+
 public class DefaultBrutosRequest extends ServletRequestWrapper implements BrutosRequest{
 
     private Map parameters;
@@ -57,39 +38,13 @@ public class DefaultBrutosRequest extends ServletRequestWrapper implements Bruto
     }
 
     public UploadListener getUploadListener(){
-    /*
-        if( uploadListener == null ){
-            Scope contextScope = Scopes.get( ScopeType.APPLICATION );
-
-            UploadListenerFactory uploadListenerFactory =
-                    (UploadListenerFactory) contextScope
-                        .get( BrutosConstants.UPLOAD_LISTENER_FACTORY );
-
-            this.uploadListener =
-                    uploadListenerFactory.getNewUploadListener(uploadEvent);
-        }
-
-        return this.uploadListener;
-     */
+    
         throw new UnsupportedOperationException();
     }
     
     private void initialize(){
         throw new UnsupportedOperationException();
-        /*
-         ApplicationContext context = WebApplicationContext.getCurrentApplicationContext();
-        if( context != null ){
-            maxLength =
-                Long.parseLong(
-                    context.getConfiguration()
-                        .getProperty( "org.brandao.brutos.request.max_length", "0" ) );
-
-            path = context
-                    .getConfiguration()
-                        .getProperty( "org.brandao.brutos.request.path", null );
-
-        }
-        */
+        
     }
     
     public void parseRequest(){

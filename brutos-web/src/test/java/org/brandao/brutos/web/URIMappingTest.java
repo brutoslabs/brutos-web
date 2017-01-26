@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package org.brandao.brutos.web;
 
@@ -10,10 +7,7 @@ import java.util.List;
 import java.util.Map;
 import junit.framework.TestCase;
 
-/**
- *
- * @author Brandao
- */
+
 public class URIMappingTest extends TestCase{
 
     public void test1() throws MalformedURLException{
