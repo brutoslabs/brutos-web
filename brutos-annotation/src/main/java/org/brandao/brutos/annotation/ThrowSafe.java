@@ -81,7 +81,7 @@ public @interface ThrowSafe {
     Class<? extends Throwable> target();
     
     /**
-     * Nome da exceção. Se não for informado, será assumido
+     * Nome da exceção. Se não informado, será assumido
      * <code>exception</code>.
      */
     String name() default "exception";
@@ -93,7 +93,7 @@ public @interface ThrowSafe {
     String dispatcher() default "forward";
     
     /**
-     * Define a renderização, ou não, da vista. 
+     * Determina a renderização, ou não, da vista. 
      * Se verdadeiro a visão será renderizada, caso contrário não.
      */
     boolean rendered() default true;
