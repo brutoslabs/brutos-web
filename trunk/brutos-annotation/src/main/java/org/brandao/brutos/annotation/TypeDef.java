@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.type.TypeFactory;
 
 /**
- * Indica um novo tipo. A classe que possuir essa anotação tem que
+ * Indica um novo tipo. A classe que possui essa anotação tem que
  * implementar a interface {@link TypeFactory}.
  * 
  * @author Brandao
