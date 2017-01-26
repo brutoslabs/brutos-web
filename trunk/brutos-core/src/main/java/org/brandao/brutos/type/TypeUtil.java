@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos.type;
 
@@ -26,10 +11,7 @@ import java.util.HashSet;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
 
-/**
- *
- * @author Brandao
- */
+
 public final class TypeUtil {
     
     private static Class defaultListType;
@@ -44,12 +26,7 @@ public final class TypeUtil {
         defaultMapType = HashMap.class;
     }
     
-    /**
-     * Obtém a classe base de um tipo genérico.
-     * @param type Classe. Pode ser uma {@link java.lang.Class} ou 
-     * {@link java.lang.reflect.Type}.
-     * @return Classe base.
-     */
+    
     public static Class getRawType(Object type) {
     	
     	if(type == null)
@@ -81,12 +58,7 @@ public final class TypeUtil {
         }
     }
 
-    /**
-     * Obtém o tipo dos objetos de uma coleção.
-     * @param type Classe. Pode ser uma {@link java.lang.Class} ou 
-     * {@link java.lang.reflect.Type}.
-     * @return Tipo da coleção.
-     */
+    
     public static Object getCollectionType(Object type) {
         int index = -1;
 
@@ -101,12 +73,7 @@ public final class TypeUtil {
         return getParameter(type, index);
     }
 
-    /**
-     * Obtém o tipo da chave de uma coleção.
-     * @param type Classe. Pode ser uma {@link java.lang.Class} ou 
-     * {@link java.lang.reflect.Type}.
-     * @return Tipo da chave.
-     */
+    
     public static Object getKeyType(Object type) {
         int index = -1;
 
@@ -119,13 +86,7 @@ public final class TypeUtil {
         return getParameter(type, index);
     }
 
-    /**
-     * Obtém o parâmetro de um tipo que usa generics.
-     * @param type Classe. Pode ser uma {@link java.lang.Class} ou 
-     * {@link java.lang.reflect.Type}.
-     * @param index Índice do parâmetro.
-     * @return Parâmetro.
-     */
+    
     public static Object getParameter(Object type, int index) {
         try{
             Object args = getParameters(type);

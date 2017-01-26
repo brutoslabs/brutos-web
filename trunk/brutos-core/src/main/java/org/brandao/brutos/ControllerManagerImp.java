@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos;
 
@@ -25,11 +10,7 @@ import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.StringUtil;
 
-/**
- * Implementação padrão do gestor de controladores.
- * 
- * @author Brandao
- */
+
 public class ControllerManagerImp implements ControllerManager{
 
     protected Map<String,Controller> mappedControllers;
@@ -47,71 +28,34 @@ public class ControllerManagerImp implements ControllerManager{
         this.internalUpdate         = new InternalUpdateImp(this);
     }
 
-    /**
-     * Cria um novo controlador.
-     *
-     * @param classtype Classe do controlador.
-     * @return Construtor do controlador.
-     */
+    
     public ControllerBuilder addController( Class<?> classtype ){
         return addController( null, null, 
                 !"true".equals(applicationContext.getConfiguration()
                 .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)), null, classtype, "invoke" );
     }
 
-    /**
-     * Cria um novo controlador atribuindo uma identificação.
-     *
-     * @param id Identificação do controlador.
-     * @param classType Classe do controlador.
-     * @return Construtor do controlador.
-     */
+    
     public ControllerBuilder addController( String id, Class<?> classType ){
         return addController( id, null, 
                 !"true".equals(applicationContext.getConfiguration()
                 .getProperty(BrutosConstants.VIEW_RESOLVER_AUTO)), null, classType, "invoke" );
     }
     
-    /**
-     * Cria um novo controlador atribuindo uma identificação e uma visão.
-     *
-     * @param id Identificação do controlador.
-     * @param view Visão do controlador.
-     * @param classType Classe do controlador.
-     * @return Construtor do controlador.
-     */
+    
     public ControllerBuilder addController( String id, String view, 
             boolean resolvedView, Class<?> classType ){
         return addController( id, view, resolvedView, null, classType, "invoke" );
     }
     
-    /**
-     * Cria um novo controlador atribuindo uma identificação, uma visão e
-     * com o nome do parâmetro que identifica a ação.
-     * @param id Identificação do controlador.
-     * @param view Visão do controlador.
-     * @param name Identificação do controlador dentro do contexto do conteinerIoC.
-     * @param classType Classe do controlador.
-     * @param actionId Parâmetro que identifica a ação.
-     * @return Construtor do controlador.
-     */
+    
     public ControllerBuilder addController( String id, String view,
            boolean resolvedView, String name, Class<?> classType, String actionId ){
         return addController( id, view, resolvedView, 
                 DispatcherType.FORWARD, name, classType, actionId );
     }
 
-    /**
-     * Cria um novo controlador atribuindo uma identificação, uma visão com o tipo
-     * de direcionamento de fluxo e nome do parâmetro que identifica a ação.
-     * @param id Identificação do controlador.
-     * @param view Visão do controlador.
-     * @param dispatcherType Tipo do direcionamento do fluxo para a visão.
-     * @param name Identificação do controlador dentro do contexto do conteinerIoC.
-     * @param classType Classe do controlador.
-     * @param actionId Parâmetro que identifica a ação.
-     * @return Construtor do controlador.
-     */
+    
     public ControllerBuilder addController( String id, String view, 
             boolean resolvedView, DispatcherType dispatcherType,
             String name, Class<?> classType, String actionId ){
@@ -202,21 +146,13 @@ public class ControllerManagerImp implements ControllerManager{
         }
     }
 
-    /**
-     * Verifica se existe um controlador mapeado para uma determinada identifica��o
-     * @param id Identifica��o.
-     * @return Verdadeiro se existir um mapeamento, coso contr�rio falso.
-     */
+    
     public boolean contains( String id ){
         boolean result = this.mappedControllers.containsKey( id );
         return !result && parent != null? parent.contains( id ) : result;
     }
     
-    /**
-     * Obt�m o mapeamento de um controlador.
-     * @param id Identifica��o do controlador.
-     * @return Mapeamento do controlador.
-     */
+    
     public Controller getController( String id ){
         Controller controller = (Controller)mappedControllers.get( id );
         
@@ -227,11 +163,7 @@ public class ControllerManagerImp implements ControllerManager{
         
     }
 
-    /**
-     * Obt�m o mapeamento de um controlador.
-     * @param controllerClass Classe do controlador.
-     * @return Mapeamento do controlador.
-     */
+    
     public Controller getController( Class<?> controllerClass ){
         Controller controller = (Controller)classMappedControllers.get( controllerClass );
         
@@ -241,10 +173,7 @@ public class ControllerManagerImp implements ControllerManager{
             return controller;
     }
 
-    /**
-     * Obtém o mapeamento de todos os controladores.
-     * @return Controladores.
-     */
+    
     public List<Controller> getControllers() {
         List<Controller> tmp;
         

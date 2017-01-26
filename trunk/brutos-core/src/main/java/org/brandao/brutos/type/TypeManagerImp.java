@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos.type;
 
@@ -35,10 +20,7 @@ import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.web.http.Download;
 import org.brandao.brutos.web.http.UploadedFile;
 
-/**
- *
- * @author Brandao
- */
+
 public class TypeManagerImp implements TypeManager{
 
     private final List<TypeFactory> defaultTypes;
@@ -84,19 +66,13 @@ public class TypeManagerImp implements TypeManager{
         defaultTypes.add(new ObjectTypeFactory());
     }
     
-    /**
-     * Registra um novo tipo.
-     * @param factory Fábrica do tipo.
-     */
+    
     public void register(TypeFactory factory) {
         customTypes.add(factory);
         this.cache.clear();
     }
 
-    /**
-     * Remove um tipo a partir de sua classe.
-     * @param type Classe do tipo.
-     */
+    
     public void remove(Class type) {
         List factoryToRemove = new ArrayList();
         
@@ -131,28 +107,18 @@ public class TypeManagerImp implements TypeManager{
         this.cache.clear();
     }
     
-    /**
-     * Remove um tipo a apartir sua fábrica.
-     * @param factory Fábrica do tipo.
-     */
+    
     public void remove(TypeFactory factory) {
         customTypes.remove(factory);
         this.cache.clear();
     }
 
-    /**
-     * Obtém todos os tipos registrados.
-     * @return Lista contendo todos os tipos registrados.
-     */
+    
     public List getAllTypes(){
         return customTypes;
     }
     
-    /**
-     * Verifica se a classe representa um tipo padrão.
-     * @param clazz Classe do tipo.
-     * @return Verdadeiro se for um tipo padrão, caso contrário falso.
-     */
+    
     public boolean isStandardType(Class clazz) {
         TypeFactory typeFactory =
                 getTypeFactory(clazz);
@@ -162,22 +128,12 @@ public class TypeManagerImp implements TypeManager{
     		(typeFactory != null && typeFactory.getClassType() != Object.class);
     }
 
-    /**
-     * Obtém um tipo a partir de sua classe.
-     * @param classType Classe do tipo. Pode ser uma {@link java.lang.Class} ou 
-     * {@link java.lang.reflect.Type}.
-     * @return Tipo.
-     */
+    
     public Type getType(Object classType) {
         return getType(classType, EnumerationType.ORDINAL, "dd/MM/yyyy");
     }
 
-    /**
-     * Obtém a fábrica do tipo a partir de sua classe.
-     * @param classType Classe do tipo. Pode ser uma {@link java.lang.Class} ou 
-     * {@link java.lang.reflect.Type}.
-     * @return Fábrica do tipo.
-     */
+    
     public TypeFactory getTypeFactory(Object classType) {
         
         TypeFactory factory = (TypeFactory) this.cache.get(classType);
@@ -219,14 +175,7 @@ public class TypeManagerImp implements TypeManager{
         return null;
     }
 
-    /**
-     * Obtém o tipo a partir de sua classe.
-     * @param classType Classe do tipo. Pode ser uma {@link java.lang.Class} ou 
-     * {@link java.lang.reflect.Type}.
-     * @param enumType Tipo do mapeamento de Enum.
-     * @param pattern Formato de uma data.
-     * @return Tipo.
-     */
+    
     public Type getType(
             Object classType, EnumerationType enumType, String pattern) {
 

@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos;
 
@@ -29,11 +14,7 @@ import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.validator.DefaultValidatorFactory;
 
-/**
- * Classe base de uma aplicação.
- * 
- * @author Brandao
- */
+
 public abstract class AbstractApplicationContext
         extends DefaultResourceLoader 
         implements ConfigurableApplicationContext{
@@ -74,17 +55,12 @@ public abstract class AbstractApplicationContext
 
     protected TypeManager typeManager;
     
-    /**
-     * Constrói uma nova aplicação. 
-     */
+    
     public AbstractApplicationContext() {
         this(null);
     }
 
-    /**
-     * Constrói uma nova aplicação dependente de outra.
-     * @param parent Aplicação.
-     */
+    
     public AbstractApplicationContext( ApplicationContext parent ) {
         
         this.parent = parent;
@@ -97,9 +73,7 @@ public abstract class AbstractApplicationContext
         this.scopes = new Scopes();
     }
 
-    /**
-     * Inicia todos os recursos da aplicação.
-     */
+    
     protected void initInstances(){
         this.objectFactory         = getNewObjectFactory(configuration);
         this.interceptorManager    = getNewInterceptorManager();
@@ -119,15 +93,11 @@ public abstract class AbstractApplicationContext
                     this.actionResolver, this, this.renderView);
     }
 
-    /**
-     * Configura os tipos de dados da aplicação.
-     */
+    
     protected void initTypes(){
     }
     
-    /**
-     * Configura os escopos da aplicação.
-     */
+    
     protected void initScopes(){
         getScopes()
             .register(
@@ -156,37 +126,27 @@ public abstract class AbstractApplicationContext
         
     }
     
-    /**
-     * Configura os componenetes da aplicação.
-     */
+    
     protected void initComponents(){
         List<Controller> controllers = this.controllerManager.getControllers();
         for(Controller controller: controllers)
             controller.flush();
     }
     
-    /**
-     * Configura o gerador de log da aplicação.
-     */
+    
     protected void initLogger(){
         this.logger = LoggerProvider
                 .getCurrentLoggerProvider().getLogger(getClass());
     }
     
-    /**
-     * Carrega as definições dos componentes da aplicação.
-     * @param registry Registro dos componentes.
-     */
+    
     protected abstract void loadDefinitions(ComponentRegistry registry);
     
     protected void setControllerResolver( ControllerResolver controllerResolver ){
         this.controllerResolver = controllerResolver;
     }
     
-    /**
-     * Gera a instância do resolutor de controladores da aplicação.
-     * @return Resolutor de controladores.
-     */
+    
     protected ControllerResolver getNewControllerResolver(){
         try{
             Class<?> clazz = ClassUtil.get(configuration.getProperty(
@@ -200,10 +160,7 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    /**
-     * Gera a instância da fábrica de respostas da aplicação.
-     * @return Fábrica.
-     */
+    
     protected MvcResponseFactory getMvcResponseFactory(){
         try{
             Class<?> clazz = ClassUtil.get(configuration.getProperty(
@@ -217,10 +174,7 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    /**
-     * Gera a instância da fábrica de solicitações da aplicação.
-     * @return Fábrica.
-     */
+    
     protected MvcRequestFactory getMvcRequestFactory(){
         try{
             Class<?> clazz = ClassUtil.get(configuration.getProperty(
@@ -234,10 +188,7 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    /**
-     * Gera a instância do resolutor de ações da aplicação.
-     * @return Resolutor de ações.
-     */
+    
     protected ActionResolver getNewMethodResolver(){
         try{
             Class<?> clazz = ClassUtil.get(configuration.getProperty(
@@ -251,10 +202,7 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    /**
-     * Gera a instância do gestor de controladores da aplicação.
-     * @return Gestor de controladores.
-     */
+    
     protected ControllerManager getNewControllerManager(){
         try{
             String className =
@@ -282,10 +230,7 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    /**
-     * Gera a instância do gestor de interceptores da aplicação.
-     * @return Gestor de interceptores.
-     */
+    
     protected InterceptorManager getNewInterceptorManager(){
         try{
             String className =
@@ -311,10 +256,7 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    /**
-     * Gera a instância da fábrica de objetos da aplicação.
-     * @return Fábrica de objetos.
-     */
+    
     protected ObjectFactory getNewObjectFactory(Properties config){
         try{
             String className =
@@ -340,11 +282,7 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    /**
-     * Gera a instância do gerador de validação da aplicação.
-     * @param config Configuração.
-     * @return Gerador de validação.
-     */
+    
     protected ValidatorFactory getNewValidatorFactory(Properties config){
         try{
             String className =
@@ -370,11 +308,7 @@ public abstract class AbstractApplicationContext
         }
     }
     
-    /**
-     * Gera a instância do gerador de código e proxy da aplicação.
-     * @param config Configuração.
-     * @return Gerador de código e proxy.
-     */
+    
     protected CodeGenerator getNewCodeGenerator(Properties config){
         try{
             String className =
@@ -400,11 +334,7 @@ public abstract class AbstractApplicationContext
         }
     }
     
-    /**
-     * Gera a instância do renderizador de vistas da aplicação.
-     * @param config
-     * @return
-     */
+    
     protected RenderView getNewRenderView(Properties config){
         try{
             String className =
@@ -430,16 +360,7 @@ public abstract class AbstractApplicationContext
         }
     }
     
-    /**
-     * Gera a instância do executor da aplicação.
-     * @param controllerResolver Resolutor de controladores.
-     * @param objectFactory Fábrica de objetos.
-     * @param controllerManager Gestor de constroladores.
-     * @param actionResolver Resolutor de ações.
-     * @param applicationContext Aplicação.
-     * @param renderView Renderizador de vistas.
-     * @return Executor da aplicação.
-     */
+    
     protected Invoker createInvoker( 
             ControllerResolver controllerResolver, ObjectFactory objectFactory, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
@@ -479,10 +400,7 @@ public abstract class AbstractApplicationContext
         }
     }
     
-    /**
-     * Gera a instância do resolutor de vista da aplicação.
-     * @return Resolutor de vista.
-     */
+    
     protected ViewResolver getNewViewResolver(){
         try{
             String className = 
@@ -500,10 +418,7 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    /**
-     * Gera o gestor de tipos da aplicação.
-     * @return Gestor de tipos.
-     */
+    
     protected TypeManager getNewTypeManager(){
         try{
             String className = 
@@ -520,9 +435,7 @@ public abstract class AbstractApplicationContext
         }
     }
     
-    /**
-     * Destrói a aplicação. 
-     */
+    
     public void destroy(){
         this.objectFactory.destroy();
         this.renderView.destroy();

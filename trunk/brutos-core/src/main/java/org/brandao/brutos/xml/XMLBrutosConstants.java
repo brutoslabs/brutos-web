@@ -1,26 +1,8 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos.xml;
 
-/**
- *
- * @author Afonso Brandao
- */
+
 public interface XMLBrutosConstants {
     
     public static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
@@ -41,13 +23,9 @@ public interface XMLBrutosConstants {
     public static final String XML_BRUTOS_CUSTOM_FILTER = "custom";
     public static final String XML_BRUTOS_CONTEXT_PARAM = "param";
 
-    /**
-     * @deprecated
-     */
+    
     public static final String XML_BRUTOS_WEB_FRAMES = "web-frames";
-    /**
-     * @deprecated
-     */
+    
     public static final String XML_BRUTOS_WEB_FRAME = "web-frame";
 
     public static final String XML_BRUTOS_CONTROLLERS = "controllers";
@@ -73,13 +51,9 @@ public interface XMLBrutosConstants {
     public static final String XML_BRUTOS_BEAN_CONSTRUCTOR_ARG = "constructor-arg";
     public static final String XML_BRUTOS_BEAN_PROPERY = "property";
     
-    /**
-     * @deprecated
-     */
+    
     public static final String XML_BRUTOS_PROPERTIES = "properties";
-    /**
-     * @deprecated
-     */
+    
     public static final String XML_BRUTOS_PROPERTIES_PROP = "prop";
     
     public static final String XML_BRUTOS_PARAMETER = "parameter";

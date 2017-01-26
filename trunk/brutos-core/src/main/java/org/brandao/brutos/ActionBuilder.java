@@ -1,42 +1,11 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 
 package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.*;
 
-/**
- * Constrói uma ação.
- * <p>Um controlador pode possuir uma ou mais ações. Essas ações 
- * podem ser representadas por métodos. Esses métodos podem ter ou 
- * não parâmetros. Os parâmetros podem ser de tipo primitivo ou não. 
- * No caso de tipos não primitivos, pode-se criar um mapeamento para 
- * definir como os dados de uma solicitação serão disponibilizados em 
- * suas propriedades. Além de ser possível o uso de parâmetros dos tipos
- * {@link java.io.File}, {@link java.lang.Enum}, {@link java.util.Date}, 
- * {@link java.util.Calendar}, {@link java.util.Map}, 
- * {@link java.util.Set} e {@link java.util.List}. Se a ação retornar algum 
- * valor, este será processado e disponibilizado na vista.</p> 
- * <p>As exceções lançadas dentro do método podem ser interceptadas e alterar
- * o fluxo lógico da aplicação.</p>
- * 
- * @author Brandao
- */
+
 public class ActionBuilder extends RestrictionBuilder{
     
     protected Controller controller;
@@ -51,23 +20,13 @@ public class ActionBuilder extends RestrictionBuilder{
     
     protected ParametersBuilder parametersBuilder;
     
-    /**
-     * Constrói um novo construtor de uma ação a partir de outro.
-     * @param actionBuilder Construtor de uma ação.
-     */
+    
     public ActionBuilder(ActionBuilder actionBuilder){
         this(actionBuilder.action, actionBuilder.controller, 
                 actionBuilder.validatorFactory, actionBuilder.controllerBuilder, 
                 actionBuilder.applicationContext);
     }
-    /**
-     * 
-     * @param methodForm
-     * @param controller
-     * @param validatorFactory
-     * @param controllerBuilder
-     * @param applicationContext
-     */
+    
     public ActionBuilder( Action action, 
             Controller controller, ValidatorFactory validatorFactory,
             ControllerBuilder controllerBuilder,
@@ -99,14 +58,7 @@ public class ActionBuilder extends RestrictionBuilder{
         return this.parametersBuilder;
     }
     
-    /**
-     * Intercepta e atribui uma identificaçao a uma determinada exceçao. O
-     * objeto resultante da exceção pode ser usando na visão.
-     *
-     * @param target Exceçao alvo.
-     * @param id Identificação.
-     * @return Contrutor da ação.
-     */
+    
     public ActionBuilder addThrowable( Class<?> target, String id ){
         return addThrowable( target, null, 
                 !"true".equals(applicationContext.getConfiguration()
@@ -114,33 +66,13 @@ public class ActionBuilder extends RestrictionBuilder{
                 id, DispatcherType.FORWARD );
     }
 
-    /**
-     * Intercepta e atribui uma identificaçaoo a uma determinada exceção. O
-     * objeto resultante da exceção pode ser usando na visão.
-     *
-     * @param target Exceção alvo.
-     * @param view Visão. Se omitido, será usada a visão da ação.
-     * @param id Identificação.
-     * @param dispatcher Modo como será direcionado o fluxo para a visão.
-     * @return Contrutor da ação.
-     */
+    
     public ActionBuilder addThrowable( Class<?> target, String view, 
             boolean resolvedView, String id, DispatcherType dispatcher ){
         return this.addThrowable(target, view, id, dispatcher, resolvedView);
     }
     
-    /**
-     * Intercepta e atribui uma identificaçaoo a uma determinada exceção. O
-     * objeto resultante da exceção pode ser usando na visão.
-     *
-     * @param target Exceção alvo.
-     * @param view Visão. Se omitido, será usada a visão da ação.
-     * @param id Identificação.
-     * @param dispatcher Modo como será direcionado o fluxo para a visão.
-     * @param resolvedView Define se a vista informada é real ou não. 
-     * Se verdadeiro a vista informada é real, caso contrário ela será resolvida.
-     * @return Contrutor da ação.
-     */
+    
     public ActionBuilder addThrowable( Class<?> target, String view, 
             String id, DispatcherType dispatcher, boolean resolvedView ){
         view = StringUtil.adjust(view);

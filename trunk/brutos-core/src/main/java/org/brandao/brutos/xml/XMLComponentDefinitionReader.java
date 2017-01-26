@@ -1,19 +1,4 @@
-/*
- * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009-2012 Afonso Brandao. (afonso.rbn@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 package org.brandao.brutos.xml;
 
@@ -27,10 +12,7 @@ import org.brandao.brutos.validator.RestrictionRules;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-/**
- *
- * @author Brandao
- */
+
 public class XMLComponentDefinitionReader extends ContextDefinitionReader{
 
     private final List<Resource> blackList;
@@ -527,10 +509,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
 
         if( keyNode != null )
             buildKeyCollection(keyNode, beanBuilder);
-        /*else
-        if( beanBuilder.isMap() )
-            throw new BrutosException("key node is required in Map" );
-        */
+        
         
         Element elementNode =
             parseUtil
@@ -540,10 +519,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader{
         
         if( elementNode != null )
             buildElementCollection(elementNode, beanBuilder);
-        /*else
-        if(beanBuilder.isCollection())
-            throw new BrutosException("element node is required in Collection");
-        */
+        
     }
 
     private void buildAny(Element anyNode, GenericBuilder builder){
