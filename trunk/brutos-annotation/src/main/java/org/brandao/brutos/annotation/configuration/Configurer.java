@@ -17,15 +17,12 @@
 
 package org.brandao.brutos.annotation.configuration;
 
-import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ControllerRegistry;
 import org.brandao.brutos.InterceptorRegistry;
 import org.brandao.brutos.ScopeRegistry;
 import org.brandao.brutos.TypeRegistry;
 
 /**
- * Provê as definições dos componentes e configuração de uma aplicação.
- * 
  * @author Brandao
  */
 public interface Configurer {
