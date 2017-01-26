@@ -24,14 +24,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define o uso de um tipo específico de dados.
+ * Define o uso de um tipo específico.
  * 
- * @author Afonso Brandao
+ * @author Brandao
  */
 @Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Type {
 
+	/**
+	 * Tipo.
+	 */
     Class<? extends org.brandao.brutos.type.Type> value();
    
 }

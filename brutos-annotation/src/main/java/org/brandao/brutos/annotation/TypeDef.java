@@ -22,11 +22,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.brandao.brutos.type.TypeFactory;
+
 /**
- * Especifica um novo tipo. A classe que possui essa anotação tem 
- * implementar a interface <a href="../type/TypeFactory">TypeFactory</a>.
+ * Indica um novo tipo. A classe que possuir essa anotação tem que
+ * implementar a interface {@link TypeFactory}.
  * 
- * @author Afonso Brandao
+ * @author Brandao
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
