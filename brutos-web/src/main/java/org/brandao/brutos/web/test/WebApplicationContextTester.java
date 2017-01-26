@@ -141,8 +141,8 @@ public class WebApplicationContextTester {
         ContextLoaderListener listener = new ContextLoaderListener();
 
 
-        servletContext.setInitParameter(ContextLoader.CONTEXT_CLASS,
-                MockXMLWebApplicationContext.class.getName());
+        //servletContext.setInitParameter(ContextLoader.CONTEXT_CLASS,
+        //        MockXMLWebApplicationContext.class.getName());
 
         tester.prepareContext(contextParams);
         
