@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
 
 /**
- * Permite mapear uma coleção para mais de um tipo de entidade.
+ * Permite criar mais de um mapeamento para os elementos de uma coleção.
  * @author Brandao
  *
  */
