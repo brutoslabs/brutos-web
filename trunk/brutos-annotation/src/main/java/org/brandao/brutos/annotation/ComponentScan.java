@@ -1,6 +1,6 @@
 /*
  * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Copyright (C) 2009-2017 Afonso Brandao. (afonso.rbn@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import org.brandao.brutos.annotation.scanner.Scanner;
+
 /**
  * Define a configuração do escaneamento de componentes.
  * 
