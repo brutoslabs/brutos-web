@@ -26,7 +26,7 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
 
 /**
- * Permite mapear uma associação para mais de um tipo de entidade.
+ * Permite criar mais de um mapeamento para uma entidade.
  * 
  * <pre>
  * Ex:
