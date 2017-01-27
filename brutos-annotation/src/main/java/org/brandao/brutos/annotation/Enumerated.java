@@ -1,6 +1,6 @@
 /*
  * Brutos Web MVC http://www.brutosframework.com.br/
- * Copyright (C) 2009 Afonso Brandao. (afonso.rbn@gmail.com)
+ * Copyright (C) 2009-2017 Afonso Brandao. (afonso.rbn@gmail.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
  */
 
 package org.brandao.brutos.annotation;
-
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
