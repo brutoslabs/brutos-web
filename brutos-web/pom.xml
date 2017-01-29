@@ -6,6 +6,7 @@
 	<packaging>jar</packaging>
 	<version>2.0-rc2</version>
 	<name>brutos-web</name>
+	<description>Brutos web. This artifact depends on the brutos-core.</description>
 	<url>http://www.brutosframework.com.br/</url>
 
 	<licenses>
@@ -168,5 +169,4 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<additionalparam>-Xdoclint:none</additionalparam>
 	</properties>
-	<description>Brutos web. This artifact depends on the brutos-core.</description>
 </project>
