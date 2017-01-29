@@ -130,28 +130,25 @@
 		</plugins>
 	</build>
 	<dependencies>
+		<!-- jboss -->
 		<dependency>
 			<groupId>org.jboss</groupId>
 			<artifactId>jboss-vfs</artifactId>
 			<version>3.2.12.Final</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- tests -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>4.3.5.RELEASE</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -160,22 +157,20 @@
 			<version>4.3.5.RELEASE</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- bean validation -->
 		<dependency>
-			<groupId>org.picocontainer</groupId>
-			<artifactId>picocontainer</artifactId>
-			<version>2.8.3</version>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- javassist -->
 		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.21.0-GA</version>
 		</dependency>
-		<dependency>
-			<groupId>org.brandao</groupId>
-			<artifactId>jbrgates</artifactId>
-			<version>1.1-b1</version>
-		</dependency>
+		<!-- CDI -->
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
@@ -187,6 +182,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<additionalparam>-Xdoclint:none</additionalparam>
 	</properties>
 </project>
 
