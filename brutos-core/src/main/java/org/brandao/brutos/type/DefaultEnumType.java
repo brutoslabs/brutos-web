@@ -4,9 +4,11 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.bean.EnumUtil;
+import org.brandao.brutos.mapping.StringUtil;
 
 
 public class DefaultEnumType 
@@ -29,7 +31,7 @@ public class DefaultEnumType
 
     public Object convert(Object value) {
         try{
-            if( value == null )
+            if( value == null)
                 return null;
             else
             if( this.classType.isAssignableFrom(value.getClass()) )
@@ -37,6 +39,11 @@ public class DefaultEnumType
             else
             if(value instanceof String){
             	String tmp = (String)value;
+            	
+            	if(StringUtil.isEmpty(tmp)){
+            		return null;
+            	}
+            	
             	Object result = null;
             	
                 if( type == EnumerationType.AUTO ){
