@@ -22,7 +22,7 @@ public class StringType
             return null;
         else
         if( value instanceof String )
-            return value;
+            return ((String) value).isEmpty()? null : value;
         else
             throw new UnknownTypeException();
     }
