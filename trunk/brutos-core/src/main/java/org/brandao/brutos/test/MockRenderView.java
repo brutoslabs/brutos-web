@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.test;
 
 import java.util.Properties;
@@ -9,83 +7,79 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.type.Type;
 
+public class MockRenderView extends AbstractRenderView {
 
-public class MockRenderView extends AbstractRenderView{
+	private DispatcherType dispatcherType;
 
-    private DispatcherType dispatcherType;
-    
-    private String view;
-    
-    private boolean redirect;
-    
-    private Object actionResult;
+	private String view;
 
-    public MockRenderView() {
-    }
+	private boolean redirect;
 
-    public void configure(Configuration properties) {
-    }
+	private Object actionResult;
 
+	public MockRenderView() {
+	}
 
-    public String getView() {
-        return view;
-    }
+	public void configure(Configuration properties) {
+	}
 
-    public void setView(String view) {
-        this.view = view;
-    }
+	public String getView() {
+		return view;
+	}
 
-    public boolean isRedirect() {
-        return redirect;
-    }
+	public void setView(String view) {
+		this.view = view;
+	}
 
-    public void setRedirect(boolean redirect) {
-        this.redirect = redirect;
-    }
+	public boolean isRedirect() {
+		return redirect;
+	}
 
-    public void configure(Properties properties) {
-    }
+	public void setRedirect(boolean redirect) {
+		this.redirect = redirect;
+	}
 
-    public void show( RequestInstrument requestInstrument,
-            StackRequestElement stackRequestElement ) throws IOException,
-            ViewException{
-        
-        Action method     =
-            stackRequestElement.getAction() == null?
-                null :
-                stackRequestElement.getAction().getMethodForm();
-        
-        if(method != null && method.isReturnRendered())
-            this.actionResult = stackRequestElement.getResultAction();
-        else
-            super.show(requestInstrument, stackRequestElement );
-    }
-    
-    public void show(RequestInstrument requestInstrument,
-            String view, DispatcherType dispatcherType) throws IOException {
-        this.redirect = dispatcherType == DispatcherType.REDIRECT;
-        this.dispatcherType = dispatcherType;
-        this.view = view;
-        
-    }
+	public void configure(Properties properties) {
+	}
 
-    public DispatcherType getDispatcherType() {
-        return dispatcherType;
-    }
+	public void show(RequestInstrument requestInstrument,
+			StackRequestElement stackRequestElement) throws IOException,
+			ViewException {
 
-    public void setDispatcherType(DispatcherType dispatcherType) {
-        this.dispatcherType = dispatcherType;
-    }
+		Action method = stackRequestElement.getAction() == null ? null
+				: stackRequestElement.getAction().getMethodForm();
 
-    public Object getActionResult() {
-        return actionResult;
-    }
+		if (method != null && method.isReturnRendered())
+			this.actionResult = stackRequestElement.getResultAction();
+		else
+			super.show(requestInstrument, stackRequestElement);
+	}
 
-    public void setActionResult(Type actionResult) {
-        this.actionResult = actionResult;
-    }
+	public void show(RequestInstrument requestInstrument, String view,
+			DispatcherType dispatcherType) throws IOException {
+		this.redirect = dispatcherType == DispatcherType.REDIRECT;
+		this.dispatcherType = dispatcherType;
+		this.view = view;
 
-    public void destroy() {
-    }
+	}
+
+	public DispatcherType getDispatcherType() {
+		return dispatcherType;
+	}
+
+	public void setDispatcherType(DispatcherType dispatcherType) {
+		this.dispatcherType = dispatcherType;
+	}
+
+	public Object getActionResult() {
+		return actionResult;
+	}
+
+	public void setActionResult(Type actionResult) {
+		this.actionResult = actionResult;
+	}
+
+	public void destroy() {
+	}
 
 }

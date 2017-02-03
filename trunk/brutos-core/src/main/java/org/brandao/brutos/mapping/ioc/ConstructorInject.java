@@ -8,187 +8,189 @@ import java.util.List;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 
-
 public class ConstructorInject {
-    
-    private List args;
-    
-    private Constructor contructor;
 
-    private Method method;
+	private List args;
 
-    private String methodFactory;
+	private Constructor contructor;
 
-    private Injectable inject;
+	private Method method;
 
-    public ConstructorInject( Injectable inject ){
-        this.args = new ArrayList();
-        this.inject = inject;
-    }
+	private String methodFactory;
 
-    
-    public ConstructorInject( Constructor constructor, Injectable[] args ) {
-        this.contructor = constructor;
-        this.args = args.length == 0? new ArrayList() : Arrays.asList( args );
-    }
+	private Injectable inject;
 
-    public void setMethodFactory( String method ){
-        this.methodFactory = method;
-    }
+	public ConstructorInject(Injectable inject) {
+		this.args = new ArrayList();
+		this.inject = inject;
+	}
 
-    public String getMethodFactory(){
-        return this.methodFactory;
-    }
+	public ConstructorInject(Constructor constructor, Injectable[] args) {
+		this.contructor = constructor;
+		this.args = args.length == 0 ? new ArrayList() : Arrays.asList(args);
+	}
 
-    public void addArg( Injectable arg ){
-        args.add(arg);
-    }
+	public void setMethodFactory(String method) {
+		this.methodFactory = method;
+	}
 
-    public void removeArg( Injectable arg ){
-        args.remove(arg);
-    }
+	public String getMethodFactory() {
+		return this.methodFactory;
+	}
 
-    public Injectable getArg( int index ){
-        return (Injectable) args.get(index);
-    }
+	public void addArg(Injectable arg) {
+		args.add(arg);
+	}
 
-    public int length(){
-        return args.size();
-    }
+	public void removeArg(Injectable arg) {
+		args.remove(arg);
+	}
 
-    public List getArgs() {
-        return args;
-    }
+	public Injectable getArg(int index) {
+		return (Injectable) args.get(index);
+	}
 
-    public void setArgs(List args) {
-        this.args = args;
-    }
+	public int length() {
+		return args.size();
+	}
 
-    public boolean isConstructor(){
-        return methodFactory == null;
-    }
+	public List getArgs() {
+		return args;
+	}
 
-    public boolean isMethodFactory(){
-        return methodFactory != null;
-    }
+	public void setArgs(List args) {
+		this.args = args;
+	}
 
-    public Constructor getContructor() {
-        if( contructor == null )
-            contructor = getContructor( inject.getTarget() );
-        return contructor;
-    }
+	public boolean isConstructor() {
+		return methodFactory == null;
+	}
 
-    public void setContructor(Constructor contructor) {
-        this.contructor = contructor;
-    }
+	public boolean isMethodFactory() {
+		return methodFactory != null;
+	}
 
-    public Method getMethod( Object factory ) {
-        if( method == null ){
-            Class clazz = factory == null?
-                                inject.getTarget() :
-                                factory.getClass();
+	public Constructor getContructor() {
+		if (contructor == null)
+			contructor = getContructor(inject.getTarget());
+		return contructor;
+	}
 
-            method = getMethod( methodFactory, clazz );
-            if( method.getReturnType() == void.class )
-                throw new BrutosException( "invalid return: " + method.toString() );
-        }
-        return method;
-    }
+	public void setContructor(Constructor contructor) {
+		this.contructor = contructor;
+	}
 
-    private Constructor getContructor( Class clazz ){
-        Class[] classArgs = new Class[ args.size() ];
+	public Method getMethod(Object factory) {
+		if (method == null) {
+			Class clazz = factory == null ? inject.getTarget() : factory
+					.getClass();
 
-        //int i=0;
-        //for( Injectable arg: args ){
-        for(int i=0;i<args.size();i++){
-            Injectable arg = (Injectable) args.get(i);
-            if( arg.getTarget() != null )
-                classArgs[ i ] = arg.getTarget();
-            //i++;
-        }
+			method = getMethod(methodFactory, clazz);
+			if (method.getReturnType() == void.class)
+				throw new BrutosException("invalid return: "
+						+ method.toString());
+		}
+		return method;
+	}
 
-        //for( Constructor con: clazz.getConstructors() ){
-        Constructor[] cons = clazz.getConstructors();
-        for(int i=0;i<cons.length;i++){
-            Constructor con = cons[i];
-            if( isCompatible( con, classArgs ) )
-                return con;
-        }
+	private Constructor getContructor(Class clazz) {
+		Class[] classArgs = new Class[args.size()];
 
-        String msg = "not found: " + clazz.getName() + "( ";
+		// int i=0;
+		// for( Injectable arg: args ){
+		for (int i = 0; i < args.size(); i++) {
+			Injectable arg = (Injectable) args.get(i);
+			if (arg.getTarget() != null)
+				classArgs[i] = arg.getTarget();
+			// i++;
+		}
 
-        for( int i=0;i<classArgs.length;i++ ){
-            Class arg = classArgs[i];
-            msg += i != 0? ", " : "";
-            msg += arg == null? "?" : arg.getName();
-        }
-        msg += " )";
+		// for( Constructor con: clazz.getConstructors() ){
+		Constructor[] cons = clazz.getConstructors();
+		for (int i = 0; i < cons.length; i++) {
+			Constructor con = cons[i];
+			if (isCompatible(con, classArgs))
+				return con;
+		}
 
-        throw new BrutosException( msg );
-    }
+		String msg = "not found: " + clazz.getName() + "( ";
 
-    private Method getMethod( String name, Class clazz ){
-        Class[] classArgs = new Class[ args.size() ];
+		for (int i = 0; i < classArgs.length; i++) {
+			Class arg = classArgs[i];
+			msg += i != 0 ? ", " : "";
+			msg += arg == null ? "?" : arg.getName();
+		}
+		msg += " )";
 
-        //int i=0;
-        //for( Injectable arg: args ){
-        for(int i=0;i<args.size();i++){
-            Injectable arg = (Injectable) args.get(i);
-            if( arg.getTarget() != null )
-                classArgs[ i ] = arg.getTarget();
-            //i++;
-        }
+		throw new BrutosException(msg);
+	}
 
-        Method[] methods = clazz.getDeclaredMethods();
-        //for( Method m: clazz.getDeclaredMethods() ){
-        for( int i=0;i<methods.length;i++ ){
-            Method m = methods[i];
-            if( m.getName().equals(name) && 
-                
-                isCompatible( m, classArgs ) )
-                return m;
-        }
+	private Method getMethod(String name, Class clazz) {
+		Class[] classArgs = new Class[args.size()];
 
-        String msg = "not found: " + clazz.getName() + "( ";
+		// int i=0;
+		// for( Injectable arg: args ){
+		for (int i = 0; i < args.size(); i++) {
+			Injectable arg = (Injectable) args.get(i);
+			if (arg.getTarget() != null)
+				classArgs[i] = arg.getTarget();
+			// i++;
+		}
 
-        for( int i=0;i<classArgs.length;i++ ){
-            Class arg = classArgs[i];
-            msg += i != 0? ", " : "";
-            msg += arg == null? "?" : arg.getName();
-        }
-        msg += " )";
+		Method[] methods = clazz.getDeclaredMethods();
+		// for( Method m: clazz.getDeclaredMethods() ){
+		for (int i = 0; i < methods.length; i++) {
+			Method m = methods[i];
+			if (m.getName().equals(name) &&
 
-        throw new BrutosException( msg );
-    }
+			isCompatible(m, classArgs))
+				return m;
+		}
 
-    private boolean isCompatible( Constructor m, Class[] classArgs ){
-        Class[] params = m.getParameterTypes();
-        if( params.length == classArgs.length ){
-            for( int i=0;i<params.length;i++ ){
-                if( classArgs[i] != null && !params[i].isAssignableFrom( classArgs[i] ) )
-                //if( classArgs[i] != null && !ClassType.getWrapper( params[i] ).isAssignableFrom( ClassType.getWrapper( classArgs[i] ) ) )
-                    return false;
-            }
-            return true;
-        }
-        else
-            return false;
+		String msg = "not found: " + clazz.getName() + "( ";
 
-    }
+		for (int i = 0; i < classArgs.length; i++) {
+			Class arg = classArgs[i];
+			msg += i != 0 ? ", " : "";
+			msg += arg == null ? "?" : arg.getName();
+		}
+		msg += " )";
 
-    private boolean isCompatible( Method m, Class[] classArgs ){
-        Class[] params = m.getParameterTypes();
-        if( params.length == classArgs.length ){
-            for( int i=0;i<params.length;i++ ){
-                //if( classArgs[i] != null && !params[i].isAssignableFrom( classArgs[i] ) )
-                if( classArgs[i] != null && !ClassUtil.getWrapper( params[i] ).isAssignableFrom( ClassUtil.getWrapper( classArgs[i] ) ) )
-                    return false;
-            }
-            return true;
-        }
-        else
-            return false;
+		throw new BrutosException(msg);
+	}
 
-    }
+	private boolean isCompatible(Constructor m, Class[] classArgs) {
+		Class[] params = m.getParameterTypes();
+		if (params.length == classArgs.length) {
+			for (int i = 0; i < params.length; i++) {
+				if (classArgs[i] != null
+						&& !params[i].isAssignableFrom(classArgs[i]))
+					// if( classArgs[i] != null && !ClassType.getWrapper(
+					// params[i] ).isAssignableFrom( ClassType.getWrapper(
+					// classArgs[i] ) ) )
+					return false;
+			}
+			return true;
+		} else
+			return false;
+
+	}
+
+	private boolean isCompatible(Method m, Class[] classArgs) {
+		Class[] params = m.getParameterTypes();
+		if (params.length == classArgs.length) {
+			for (int i = 0; i < params.length; i++) {
+				// if( classArgs[i] != null && !params[i].isAssignableFrom(
+				// classArgs[i] ) )
+				if (classArgs[i] != null
+						&& !ClassUtil.getWrapper(params[i]).isAssignableFrom(
+								ClassUtil.getWrapper(classArgs[i])))
+					return false;
+			}
+			return true;
+		} else
+			return false;
+
+	}
 
 }

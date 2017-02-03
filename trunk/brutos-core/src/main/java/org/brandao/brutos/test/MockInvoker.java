@@ -1,45 +1,42 @@
-
-
 package org.brandao.brutos.test;
 
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.StackRequestElement;
 
+public class MockInvoker extends Invoker {
 
-public class MockInvoker extends Invoker{
+	private StackRequestElement element;
+	private String requestId;
+	private Object request;
+	private Object response;
 
-    private StackRequestElement element;
-    private String requestId;
-    private Object request;
-    private Object response;
-    
-    public MockInvoker(){
-    }
-    
-    public boolean invoke( StackRequestElement element ){
-        this.element = element;
-        return true;
-    }
+	public MockInvoker() {
+	}
 
-    public boolean invoke( String requestId ){
-        this.requestId = requestId;
-        return true;
-    }
+	public boolean invoke(StackRequestElement element) {
+		this.element = element;
+		return true;
+	}
 
-    public StackRequestElement getElement() {
-        return element;
-    }
+	public boolean invoke(String requestId) {
+		this.requestId = requestId;
+		return true;
+	}
 
-    public String getRequestId() {
-        return requestId;
-    }
+	public StackRequestElement getElement() {
+		return element;
+	}
 
-    public Object getRequest() {
-        return request;
-    }
+	public String getRequestId() {
+		return requestId;
+	}
 
-    public Object getResponse() {
-        return response;
-    }
+	public Object getRequest() {
+		return request;
+	}
+
+	public Object getResponse() {
+		return response;
+	}
 
 }
