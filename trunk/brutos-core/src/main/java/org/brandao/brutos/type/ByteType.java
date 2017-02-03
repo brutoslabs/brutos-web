@@ -9,6 +9,8 @@ import org.brandao.brutos.MvcResponse;
 
 public class ByteType extends AbstractType{
 
+	private static final byte DEFAULT_VALUE = 0;
+	
     public ByteType() {
     }
 
@@ -21,7 +23,7 @@ public class ByteType extends AbstractType{
             return value;
         else
         if( value instanceof String )
-            return ((String) value).isEmpty()? (byte)0 : Byte.valueOf((String)value );
+            return ((String) value).isEmpty()? DEFAULT_VALUE : Byte.valueOf((String)value );
         else
         if( value == null )
             return null;

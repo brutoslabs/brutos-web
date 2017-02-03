@@ -8,6 +8,8 @@ import org.brandao.brutos.MvcResponse;
 
 public class CharType extends AbstractType{
 
+	private static final char DEFAULT_VALUE = 0;
+	
     public CharType() {
     }
 
@@ -20,7 +22,7 @@ public class CharType extends AbstractType{
             return value;
         else
         if( value instanceof String )
-            return ((String) value).isEmpty()? (char)0 : ((String)value).charAt(0);
+            return ((String) value).isEmpty()? DEFAULT_VALUE : ((String)value).charAt(0);
         else
         if( value == null)
             return null;
