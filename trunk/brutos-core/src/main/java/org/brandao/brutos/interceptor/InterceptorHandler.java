@@ -4,20 +4,19 @@ import java.text.ParseException;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.ResourceAction;
 
-
 public interface InterceptorHandler {
 
-    ResourceAction getResourceAction();
-    
-    Object getResource();
+	ResourceAction getResourceAction();
 
-    String requestId();
+	Object getResource();
 
-    ApplicationContext getContext();
-    
-    Object[] getParameters() throws InstantiationException, IllegalAccessException,
-        ParseException;
-    
-    Object getResult();
+	String requestId();
+
+	ApplicationContext getContext();
+
+	Object[] getParameters() throws InstantiationException,
+			IllegalAccessException, ParseException;
+
+	Object getResult();
 
 }

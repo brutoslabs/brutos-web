@@ -5,10 +5,9 @@ import org.brandao.brutos.mapping.Interceptor;
 public class InterceptorEntry {
 
 	private org.brandao.brutos.mapping.Interceptor interceptor;
-	
+
 	private InterceptorEntry next;
-	
-	
+
 	public InterceptorEntry(Interceptor interceptor) {
 		this.interceptor = interceptor;
 	}
@@ -17,7 +16,8 @@ public class InterceptorEntry {
 		return interceptor;
 	}
 
-	public void setInterceptor(org.brandao.brutos.mapping.Interceptor interceptor) {
+	public void setInterceptor(
+			org.brandao.brutos.mapping.Interceptor interceptor) {
 		this.interceptor = interceptor;
 	}
 
