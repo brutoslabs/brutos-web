@@ -19,7 +19,7 @@ public class BooleanType extends AbstractType{
             return value;
         else
         if(value instanceof String)
-            return Boolean.valueOf((String)value);
+            return ((String) value).isEmpty()? false : Boolean.valueOf((String)value);
         else
         if( value == null )
             return null;

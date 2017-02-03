@@ -15,7 +15,7 @@ public class BigIntegerType
             return (BigInteger)value;
         else
         if(value instanceof String)
-            return new BigInteger((String)value);
+            return ((String) value).isEmpty()? null : new BigInteger((String)value);
         else
         if(value == null)
             return null;

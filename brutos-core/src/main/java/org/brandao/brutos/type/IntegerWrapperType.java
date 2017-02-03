@@ -21,7 +21,7 @@ public class IntegerWrapperType
             return value;
         else
         if( value instanceof String )
-            return Integer.valueOf( (String)value );
+            return ((String) value).isEmpty()? null : Integer.valueOf( (String)value );
         else
         if( value == null )
             return null;

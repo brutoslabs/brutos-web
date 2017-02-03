@@ -15,7 +15,7 @@ public class BigDecimalType
             return (BigDecimal)value;
         else
         if(value instanceof String)
-            return new BigDecimal((String)value);
+            return ((String) value).isEmpty()? null : new BigDecimal((String)value);
         else
         if(value == null)
             return null;
