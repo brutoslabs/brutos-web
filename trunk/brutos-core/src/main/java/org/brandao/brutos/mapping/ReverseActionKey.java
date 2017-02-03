@@ -1,68 +1,65 @@
-
-
 package org.brandao.brutos.mapping;
 
 import java.lang.reflect.Method;
 
-
 public class ReverseActionKey {
 
-    private String methodName;
+	private String methodName;
 
-    private Class<?>[] parametersType;
+	private Class<?>[] parametersType;
 
-    private final int hashCode;
+	private final int hashCode;
 
-    public ReverseActionKey(Method method){
-        this.methodName = method.getName();
-        this.parametersType = method.getParameterTypes();
-        this.hashCode = createHashCode();
-    }
+	public ReverseActionKey(Method method) {
+		this.methodName = method.getName();
+		this.parametersType = method.getParameterTypes();
+		this.hashCode = createHashCode();
+	}
 
-    private int createHashCode(){
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + this.methodName.hashCode();
+	private int createHashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.methodName.hashCode();
 
-        int len = this.parametersType.length;
-        for( int i=0;i<len;i++ )
-            result = prime * result + this.parametersType[i].hashCode();
-        
-        return result;
-    }
+		int len = this.parametersType.length;
+		for (int i = 0; i < len; i++)
+			result = prime * result + this.parametersType[i].hashCode();
 
-    public String getMethodName() {
-        return methodName;
-    }
+		return result;
+	}
 
-    public Class<?>[] getParametersType() {
-        return parametersType;
-    }
+	public String getMethodName() {
+		return methodName;
+	}
 
-    public int hashCode(){
-        return this.hashCode;
-    }
+	public Class<?>[] getParametersType() {
+		return parametersType;
+	}
 
-    public boolean equals(Object o){
-        
-        if( !(o instanceof ReverseActionKey) )
-            return false;
+	public int hashCode() {
+		return this.hashCode;
+	}
 
-        ReverseActionKey key = ((ReverseActionKey)o);
+	public boolean equals(Object o) {
 
-        if( !this.methodName.equals(key.getMethodName()) )
-            return false;
+		if (!(o instanceof ReverseActionKey))
+			return false;
 
-        Class<?>[] keyTypes = key.getParametersType();
-        if( this.parametersType.length != keyTypes.length )
-            return false;
+		ReverseActionKey key = ((ReverseActionKey) o);
 
-        int len = this.parametersType.length;
-        for( int i=0;i<len;i++ ){
-            if( !this.parametersType[i].equals(keyTypes[i]) )
-                return false;
-        }
+		if (!this.methodName.equals(key.getMethodName()))
+			return false;
 
-        return true;
-    }
+		Class<?>[] keyTypes = key.getParametersType();
+		if (this.parametersType.length != keyTypes.length)
+			return false;
+
+		int len = this.parametersType.length;
+		for (int i = 0; i < len; i++) {
+			if (!this.parametersType[i].equals(keyTypes[i]))
+				return false;
+		}
+
+		return true;
+	}
 }

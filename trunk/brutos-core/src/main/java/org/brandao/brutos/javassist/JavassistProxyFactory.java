@@ -1,6 +1,3 @@
-
-
-
 package org.brandao.brutos.javassist;
 
 import javassist.ClassClassPath;
@@ -15,45 +12,40 @@ import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.proxy.AbstractProxyFactory;
 
+public class JavassistProxyFactory extends AbstractProxyFactory {
 
-public class JavassistProxyFactory extends AbstractProxyFactory{
-    
-    private ClassPool pool = null;
-    private ProxyFactory factory;
-    
-    public JavassistProxyFactory( Class superClass, ClassPool pool )
-            throws Exception{
-        super( superClass );
-        this.pool = pool;
-        pool.insertClassPath( new ClassClassPath( superClass ) );
-        proxyClass = createProxyClass( superClass );
-    }
+	private ClassPool pool = null;
+	private ProxyFactory factory;
 
-    public Object getNewProxy(Object resource,Controller form,
-            ConfigurableApplicationContext context, 
-            Invoker invoker) throws BrutosException{
+	public JavassistProxyFactory(Class superClass, ClassPool pool)
+			throws Exception {
+		super(superClass);
+		this.pool = pool;
+		pool.insertClassPath(new ClassClassPath(superClass));
+		proxyClass = createProxyClass(superClass);
+	}
 
-        MethodHandler handler = 
-                new JavassistActionHandler(
-                    resource,
-                    form,
-                    context,
-                    invoker);
+	public Object getNewProxy(Object resource, Controller form,
+			ConfigurableApplicationContext context, Invoker invoker)
+			throws BrutosException {
 
-        try{
-            ProxyObject instance = (ProxyObject)ClassUtil.getInstance(proxyClass);
-            instance.setHandler(handler);
-            return instance;
-        }
-        catch( Exception e ){
-            throw new BrutosException(e);
-        }
-    }
+		MethodHandler handler = new JavassistActionHandler(resource, form,
+				context, invoker);
 
-    private Class createProxyClass( Class clazz ) throws Exception{
-        factory = new ProxyFactory();
-        factory.setSuperclass(clazz);
-        return factory.createClass();
-    }
+		try {
+			ProxyObject instance = (ProxyObject) ClassUtil
+					.getInstance(proxyClass);
+			instance.setHandler(handler);
+			return instance;
+		} catch (Exception e) {
+			throw new BrutosException(e);
+		}
+	}
+
+	private Class createProxyClass(Class clazz) throws Exception {
+		factory = new ProxyFactory();
+		factory.setSuperclass(clazz);
+		return factory.createClass();
+	}
 
 }

@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.mapping;
 
 import java.lang.reflect.Constructor;
@@ -12,321 +10,311 @@ import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.validator.Validator;
 import org.brandao.brutos.validator.ValidatorException;
 
-
 public class ConstructorBean {
 
-    private static final Logger logger = LoggerProvider
-            .getCurrentLoggerProvider().getLogger(Bean.class);
-    
-    private List args;
+	private static final Logger logger = LoggerProvider
+			.getCurrentLoggerProvider().getLogger(Bean.class);
 
-    private Constructor contructor;
+	private List args;
 
-    private Method method;
+	private Constructor contructor;
 
-    private String methodFactory;
+	private Method method;
 
-    private Bean bean;
+	private String methodFactory;
 
-    private Validator validator;
-    
-    private boolean collection;
-    
-    public ConstructorBean( Bean bean ){
-        this.args = new ArrayList();
-        this.bean = bean;
-        this.collection = bean.getParent() != null && bean.getParent().isCollection();
-    }
+	private Bean bean;
 
-    public boolean isConstructor(){
-        return getMethodFactory() == null;
-    }
+	private Validator validator;
 
-    public boolean isMethodFactory(){
-        return getMethodFactory() != null;
-    }
+	private boolean collection;
 
-    public Constructor getContructor() {
-        initIfNecessary();
-        return contructor;
-    }
+	public ConstructorBean(Bean bean) {
+		this.args = new ArrayList();
+		this.bean = bean;
+		this.collection = bean.getParent() != null
+				&& bean.getParent().isCollection();
+	}
 
-    private synchronized void initIfNecessary(){
-        if(contructor == null)
-            setContructor(getContructor(getBean().getClassType()));
-    }
-    
-    public Method getMethod( Object factory ) {
-        if( getMethod() == null ){
-            Class clazz = factory == null?
-                                getBean().getClassType() :
-                                factory.getClass();
+	public boolean isConstructor() {
+		return getMethodFactory() == null;
+	}
 
-            setMethod(getMethod(getMethodFactory(), clazz));
-            if( getMethod().getReturnType() == void.class )
-                throw new BrutosException( "invalid return: " + getMethod().toString() );
-        }
-        return getMethod();
-    }
+	public boolean isMethodFactory() {
+		return getMethodFactory() != null;
+	}
 
-    public void addConstructorArg( ConstructorArgBean arg ){
-        this.args.add(arg);
-    }
+	public Constructor getContructor() {
+		initIfNecessary();
+		return contructor;
+	}
 
-    public ConstructorArgBean getConstructorArg(int index){
-        return (ConstructorArgBean)args.get(index);
-    }
+	private synchronized void initIfNecessary() {
+		if (contructor == null)
+			setContructor(getContructor(getBean().getClassType()));
+	}
 
-    public int size(){
-        return this.args.size();
-    }
-    
-    private Constructor getContructor( Class clazz ){
-        int size = size();
-        Class[] classArgs = new Class[ size ];
-        for( int i=0;i<size;i++ ){
-            ConstructorArgBean arg = getConstructorArg(i);
-            classArgs[ i ] = arg.getClassType();
-        }
-        Constructor[] cons = clazz.getConstructors();
-        for( int i=0;i<cons.length;i++ ){
-            Constructor con = cons[i];
-            if( isCompatible( con, classArgs ) ){
-                Class[] params = con.getParameterTypes();
-                for( int k=0;k<params.length;k++ ){
-                    if( getConstructorArg(k).getType() == null ){
-                        ConstructorArgBean argBean =
-                        getConstructorArg(k);
-                        
-                        if(argBean.getMetaBean() != null)
-                        	argBean.setType(new AnyType(params[k]));
-                        else{
-	                        argBean.setType(
-	                                ((ConfigurableApplicationContext)this.getBean().getController().getContext())
-	                                    .getTypeManager().getType(
-	                                params[k],
-	                                argBean.getEnumProperty(),
-	                                argBean.getTemporalType()));
-                        }
-                    }
-                }
-                return con;
-            }
-        }
+	public Method getMethod(Object factory) {
+		if (getMethod() == null) {
+			Class clazz = factory == null ? getBean().getClassType() : factory
+					.getClass();
 
-        String msg = "not found: " + clazz.getName() + "( ";
+			setMethod(getMethod(getMethodFactory(), clazz));
+			if (getMethod().getReturnType() == void.class)
+				throw new BrutosException("invalid return: "
+						+ getMethod().toString());
+		}
+		return getMethod();
+	}
 
-        for( int i=0;i<classArgs.length;i++ ){
-            Class arg = classArgs[i];
-            msg += i != 0? ", " : "";
-            msg += arg == null? "?" : arg.getName();
-        }
-        msg += " )";
+	public void addConstructorArg(ConstructorArgBean arg) {
+		this.args.add(arg);
+	}
 
-        throw new BrutosException( msg );
-    }
+	public ConstructorArgBean getConstructorArg(int index) {
+		return (ConstructorArgBean) args.get(index);
+	}
 
-    private Method getMethod( String name, Class clazz ){
-        int size = size();
-        Class[] classArgs = new Class[ size ];
-        for( int i=0;i<size;i++ ){
-            ConstructorArgBean arg = getConstructorArg(i);
-            classArgs[ i ] = arg.getClassType();
-        }
+	public int size() {
+		return this.args.size();
+	}
 
-        Class tmpClazz = clazz;
-        while( tmpClazz != Object.class ){
-            Method[] methods = tmpClazz.getDeclaredMethods();
-            for( int i=0;i<methods.length;i++ ){
-                Method m = methods[i];
-                if( m.getName().equals(name) &&
-                    isCompatible( m, classArgs ) ){
-                    Class[] params = m.getParameterTypes();
-                    for( int k=0;k<params.length;k++ ){
-                        if( getConstructorArg(k).getType() == null ){
-                            getConstructorArg(k)
-                                    .setType(
-                                            ((ConfigurableApplicationContext)this.getBean().getController().getContext())
-                                                .getTypeManager().getType(
-                                            params[k]));
-                        }
-                    }
+	private Constructor getContructor(Class clazz) {
+		int size = size();
+		Class[] classArgs = new Class[size];
+		for (int i = 0; i < size; i++) {
+			ConstructorArgBean arg = getConstructorArg(i);
+			classArgs[i] = arg.getClassType();
+		}
+		Constructor[] cons = clazz.getConstructors();
+		for (int i = 0; i < cons.length; i++) {
+			Constructor con = cons[i];
+			if (isCompatible(con, classArgs)) {
+				Class[] params = con.getParameterTypes();
+				for (int k = 0; k < params.length; k++) {
+					if (getConstructorArg(k).getType() == null) {
+						ConstructorArgBean argBean = getConstructorArg(k);
 
-                    return m;
-                }
-            }
-            tmpClazz = tmpClazz.getSuperclass();
-        }
-        String msg = "not found: " + clazz.getName() + "." + name + "( ";
+						if (argBean.getMetaBean() != null)
+							argBean.setType(new AnyType(params[k]));
+						else {
+							argBean.setType(((ConfigurableApplicationContext) this
+									.getBean().getController().getContext())
+									.getTypeManager().getType(params[k],
+											argBean.getEnumProperty(),
+											argBean.getTemporalType()));
+						}
+					}
+				}
+				return con;
+			}
+		}
 
-        for( int i=0;i<classArgs.length;i++ ){
-            Class arg = classArgs[i];
-            msg += i != 0? ", " : "";
-            msg += arg == null? "?" : arg.getName();
-        }
-        msg += " )";
+		String msg = "not found: " + clazz.getName() + "( ";
 
-        throw new BrutosException( msg );
-    }
+		for (int i = 0; i < classArgs.length; i++) {
+			Class arg = classArgs[i];
+			msg += i != 0 ? ", " : "";
+			msg += arg == null ? "?" : arg.getName();
+		}
+		msg += " )";
 
-    private boolean isCompatible( Constructor m, Class[] classArgs ){
-        Class[] params = m.getParameterTypes();
-        if( params.length == classArgs.length ){
-            for( int i=0;i<params.length;i++ ){
-                if( classArgs[i] != null && !params[i].isAssignableFrom( classArgs[i] ) )
-                    return false;
-            }
-            return true;
-        }
-        else
-            return false;
+		throw new BrutosException(msg);
+	}
 
-    }
+	private Method getMethod(String name, Class clazz) {
+		int size = size();
+		Class[] classArgs = new Class[size];
+		for (int i = 0; i < size; i++) {
+			ConstructorArgBean arg = getConstructorArg(i);
+			classArgs[i] = arg.getClassType();
+		}
 
-    private boolean isCompatible( Method m, Class[] classArgs ){
-        Class[] params = m.getParameterTypes();
-        if( params.length == classArgs.length ){
-            for( int i=0;i<params.length;i++ ){
-                if( classArgs[i] != null && 
-                        !ClassUtil.getWrapper( params[i] )
-                            .isAssignableFrom( ClassUtil.getWrapper( classArgs[i] ) ) )
-                    return false;
-            }
-            return true;
-        }
-        else
-            return false;
+		Class tmpClazz = clazz;
+		while (tmpClazz != Object.class) {
+			Method[] methods = tmpClazz.getDeclaredMethods();
+			for (int i = 0; i < methods.length; i++) {
+				Method m = methods[i];
+				if (m.getName().equals(name) && isCompatible(m, classArgs)) {
+					Class[] params = m.getParameterTypes();
+					for (int k = 0; k < params.length; k++) {
+						if (getConstructorArg(k).getType() == null) {
+							getConstructorArg(k).setType(
+									((ConfigurableApplicationContext) this
+											.getBean().getController()
+											.getContext()).getTypeManager()
+											.getType(params[k]));
+						}
+					}
 
-    }
+					return m;
+				}
+			}
+			tmpClazz = tmpClazz.getSuperclass();
+		}
+		String msg = "not found: " + clazz.getName() + "." + name + "( ";
 
-    public Object getInstance(String prefix, long index,
-            Controller controller, 
-            ValidatorException exceptionHandler, boolean force) 
-            throws InstantiationException, IllegalAccessException, 
-            IllegalArgumentException, InvocationTargetException{
-        
-        Object instance;
-        
-        if( this.isConstructor() ){
-            Constructor insCons = this.getContructor();
-            Object[] args = this.getValues(prefix, index, exceptionHandler, force );
+		for (int i = 0; i < classArgs.length; i++) {
+			Class arg = classArgs[i];
+			msg += i != 0 ? ", " : "";
+			msg += arg == null ? "?" : arg.getName();
+		}
+		msg += " )";
 
-            if( args == null )
-                return null;
-            
-            if( this.validator != null)
-                this.validator.validate(this, null, args);
-            
-            instance = insCons.newInstance( args );
-            
-            if( this.validator != null)
-                this.validator.validate(this, null, instance);
-            
-        }
-        else{
-            String factoryName = bean.getFactory();
-            Bean factoryBean =
-                factoryName != null?
-                    controller.getBean(factoryName) :
-                    null;
+		throw new BrutosException(msg);
+	}
 
-            Object factoryInstance = null;
-            
-            if( factoryName != null ){
+	private boolean isCompatible(Constructor m, Class[] classArgs) {
+		Class[] params = m.getParameterTypes();
+		if (params.length == classArgs.length) {
+			for (int i = 0; i < params.length; i++) {
+				if (classArgs[i] != null
+						&& !params[i].isAssignableFrom(classArgs[i]))
+					return false;
+			}
+			return true;
+		} else
+			return false;
 
-                if( factoryBean == null )
-                    throw new MappingException("bean not found: " + factoryName);
-                
-                factoryInstance = factoryBean.getValue(true);
+	}
 
-                if( factoryInstance == null )
-                    return null;
-            }
+	private boolean isCompatible(Method m, Class[] classArgs) {
+		Class[] params = m.getParameterTypes();
+		if (params.length == classArgs.length) {
+			for (int i = 0; i < params.length; i++) {
+				if (classArgs[i] != null
+						&& !ClassUtil.getWrapper(params[i]).isAssignableFrom(
+								ClassUtil.getWrapper(classArgs[i])))
+					return false;
+			}
+			return true;
+		} else
+			return false;
 
-            Method method = this.getMethod( factoryInstance );
+	}
 
-            if(this.collection && this.size() == 0)
-                throw new MappingException("infinite loop detected: " + bean.getName());
-            
-            if( this.validator != null)
-                this.validator.validate(this, factoryInstance, args);
-            
-            instance = method.invoke(
-                    factoryName == null?
-                        this.bean.getClassType() :
-                        factoryInstance,
-                    getValues(prefix, index, exceptionHandler, true ) );
-            
-            if( this.validator != null)
-                this.validator.validate(this, factoryInstance, instance);
-            
-        }
-        
-        return instance;
-    }
-    
-    private Object[] getValues( String prefix, 
-            long index, ValidatorException exceptionHandler, boolean force ) {
-        int size = this.size();
-        Object[] values = new Object[ size ];
+	public Object getInstance(String prefix, long index, Controller controller,
+			ValidatorException exceptionHandler, boolean force)
+			throws InstantiationException, IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException {
 
-        boolean exist = false;
-        for( int i=0;i<size;i++ ){
-            ConstructorArgBean arg = this.getConstructorArg(i);
-            values[i] = arg.getValue(prefix, index, exceptionHandler, null);
-            
-            if(logger.isDebugEnabled())
-                logger.debug(
-                    String.format(
-                        "binding %s to constructor arg: %s", 
-                        new Object[]{values[i],String.valueOf(i)}));
-            
-            if( force || values[i] != null || arg.isNullable()  )
-                exist = true;
-        }
+		Object instance;
 
-        return exist || size == 0? values : null;
-    }
-    
-    public void setContructor(Constructor contructor) {
-        this.contructor = contructor;
-    }
+		if (this.isConstructor()) {
+			Constructor insCons = this.getContructor();
+			Object[] args = this.getValues(prefix, index, exceptionHandler,
+					force);
 
-    public Method getMethod() {
-        return method;
-    }
+			if (args == null)
+				return null;
 
-    public void setMethod(Method method) {
-        this.method = method;
-    }
+			if (this.validator != null)
+				this.validator.validate(this, null, args);
 
-    public String getMethodFactory() {
-        return methodFactory;
-    }
+			instance = insCons.newInstance(args);
 
-    public void setMethodFactory(String methodFactory) {
-        this.methodFactory = methodFactory;
-    }
+			if (this.validator != null)
+				this.validator.validate(this, null, instance);
 
-    public Bean getBean() {
-        return bean;
-    }
+		} else {
+			String factoryName = bean.getFactory();
+			Bean factoryBean = factoryName != null ? controller
+					.getBean(factoryName) : null;
 
-    public void setBean(Bean bean) {
-        this.bean = bean;
-    }
+			Object factoryInstance = null;
 
-    public Validator getValidator() {
-        return validator;
-    }
+			if (factoryName != null) {
 
-    public void setValidator(Validator validator) {
-        this.validator = validator;
-    }
+				if (factoryBean == null)
+					throw new MappingException("bean not found: " + factoryName);
+
+				factoryInstance = factoryBean.getValue(true);
+
+				if (factoryInstance == null)
+					return null;
+			}
+
+			Method method = this.getMethod(factoryInstance);
+
+			if (this.collection && this.size() == 0)
+				throw new MappingException("infinite loop detected: "
+						+ bean.getName());
+
+			if (this.validator != null)
+				this.validator.validate(this, factoryInstance, args);
+
+			instance = method.invoke(
+					factoryName == null ? this.bean.getClassType()
+							: factoryInstance,
+					getValues(prefix, index, exceptionHandler, true));
+
+			if (this.validator != null)
+				this.validator.validate(this, factoryInstance, instance);
+
+		}
+
+		return instance;
+	}
+
+	private Object[] getValues(String prefix, long index,
+			ValidatorException exceptionHandler, boolean force) {
+		int size = this.size();
+		Object[] values = new Object[size];
+
+		boolean exist = false;
+		for (int i = 0; i < size; i++) {
+			ConstructorArgBean arg = this.getConstructorArg(i);
+			values[i] = arg.getValue(prefix, index, exceptionHandler, null);
+
+			if (logger.isDebugEnabled())
+				logger.debug(String.format("binding %s to constructor arg: %s",
+						new Object[] { values[i], String.valueOf(i) }));
+
+			if (force || values[i] != null || arg.isNullable())
+				exist = true;
+		}
+
+		return exist || size == 0 ? values : null;
+	}
+
+	public void setContructor(Constructor contructor) {
+		this.contructor = contructor;
+	}
+
+	public Method getMethod() {
+		return method;
+	}
+
+	public void setMethod(Method method) {
+		this.method = method;
+	}
+
+	public String getMethodFactory() {
+		return methodFactory;
+	}
+
+	public void setMethodFactory(String methodFactory) {
+		this.methodFactory = methodFactory;
+	}
+
+	public Bean getBean() {
+		return bean;
+	}
+
+	public void setBean(Bean bean) {
+		this.bean = bean;
+	}
+
+	public Validator getValidator() {
+		return validator;
+	}
+
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
 
 }

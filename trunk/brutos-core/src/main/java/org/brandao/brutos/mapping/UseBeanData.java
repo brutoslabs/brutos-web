@@ -8,134 +8,129 @@ import org.brandao.brutos.type.CollectionType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
 
-
 public abstract class UseBeanData {
-    
-    protected String name;
-    
-    protected ScopeType scopeType;
 
-    protected Bean mapping;
+	protected String name;
 
-    protected MetaBean metaBean;
-    
-    protected Object staticValue;
+	protected ScopeType scopeType;
 
-    protected Type type;
+	protected Bean mapping;
 
-    protected Validator validate;
+	protected MetaBean metaBean;
 
-    protected boolean nullable;
+	protected Object staticValue;
 
-    public UseBeanData() {
-    }
+	protected Type type;
 
-    public String getName() {
-        return name;
-    }
+	protected Validator validate;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	protected boolean nullable;
 
-    public Bean getMapping() {
-        return mapping;
-    }
+	public UseBeanData() {
+	}
 
-    public void setMapping(Bean mapping) {
-        this.mapping = mapping;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Object getValue(Object source){
+	public void setName(String name) {
+		this.name = name;
+	}
 
-        Object value = null;
+	public Bean getMapping() {
+		return mapping;
+	}
 
-        if( !isNullable() ){
-        	if(this.metaBean != null){
-                value = this.metaBean.getValue(this.name == null? null : this.name + metaBean.getSeparator());
-                value = this.type.convert(value);
-        	}
-        	else
-            if( this.mapping != null ){
-                value = this.mapping.getValue(this.name == null? null : this.name + mapping.getSeparator());
-                value = this.type.convert(value);
-            }
-            else
-            if(this.staticValue!= null)
-                value = this.type.convert( this.staticValue );
-            else
-            if( this.type instanceof CollectionType || this.type instanceof ArrayType ){
-                value = this.name == null? null : getScope().getCollection(this.name);
-                value = this.type.convert( value );
-            }
-            else{
-                value = this.name == null? null : getScope().get(this.name);
-                value = this.type.convert( value );
-            }
-        }
+	public void setMapping(Bean mapping) {
+		this.mapping = mapping;
+	}
 
-        this.validate(source, value);
-        
-        return value;
-    }
+	public Object getValue(Object source) {
 
-    protected abstract void validate(Object source, Object value);
-    
-    
-    public Class getClassType(){
-        if(type != null)
-            return type.getClassType();
-        else
-        if(this.mapping != null)
-            return this.mapping.getClassType();
-        else
-            return null;
-    }
-    
-    public Type getType() {
-        return type;
-    }
+		Object value = null;
 
-    public void setType(Type type) {
-        this.type = type;
-    }
+		if (!isNullable()) {
+			if (this.metaBean != null) {
+				value = this.metaBean.getValue(this.name == null ? null
+						: this.name + metaBean.getSeparator());
+				value = this.type.convert(value);
+			} else if (this.mapping != null) {
+				value = this.mapping.getValue(this.name == null ? null
+						: this.name + mapping.getSeparator());
+				value = this.type.convert(value);
+			} else if (this.staticValue != null)
+				value = this.type.convert(this.staticValue);
+			else if (this.type instanceof CollectionType
+					|| this.type instanceof ArrayType) {
+				value = this.name == null ? null : getScope().getCollection(
+						this.name);
+				value = this.type.convert(value);
+			} else {
+				value = this.name == null ? null : getScope().get(this.name);
+				value = this.type.convert(value);
+			}
+		}
 
-    public Scope getScope() {
-        return Scopes.getCurrentScope(scopeType);
-        
-    }
+		this.validate(source, value);
 
-    public void setScopeType(ScopeType scope) {
-        this.scopeType = scope;
-    }
+		return value;
+	}
 
-    public ScopeType getScopeType() {
-        return this.scopeType;
-    }
+	protected abstract void validate(Object source, Object value);
 
-    public Validator getValidate() {
-        return validate;
-    }
+	public Class getClassType() {
+		if (type != null)
+			return type.getClassType();
+		else if (this.mapping != null)
+			return this.mapping.getClassType();
+		else
+			return null;
+	}
 
-    public void setValidate(Validator validate) {
-        this.validate = validate;
-    }
+	public Type getType() {
+		return type;
+	}
 
-    public Object getStaticValue() {
-        return staticValue;
-    }
+	public void setType(Type type) {
+		this.type = type;
+	}
 
-    public void setStaticValue(Object staticValue) {
-        this.staticValue = staticValue;
-    }
+	public Scope getScope() {
+		return Scopes.getCurrentScope(scopeType);
 
-    public boolean isNullable() {
-        return nullable;
-    }
+	}
 
-    public void setNullable(boolean nullable) {
-        this.nullable = nullable;
-    }
+	public void setScopeType(ScopeType scope) {
+		this.scopeType = scope;
+	}
+
+	public ScopeType getScopeType() {
+		return this.scopeType;
+	}
+
+	public Validator getValidate() {
+		return validate;
+	}
+
+	public void setValidate(Validator validate) {
+		this.validate = validate;
+	}
+
+	public Object getStaticValue() {
+		return staticValue;
+	}
+
+	public void setStaticValue(Object staticValue) {
+		this.staticValue = staticValue;
+	}
+
+	public boolean isNullable() {
+		return nullable;
+	}
+
+	public void setNullable(boolean nullable) {
+		this.nullable = nullable;
+	}
 
 	public MetaBean getMetaBean() {
 		return metaBean;
@@ -144,5 +139,5 @@ public abstract class UseBeanData {
 	public void setMetaBean(MetaBean metaBean) {
 		this.metaBean = metaBean;
 	}
-    
+
 }
