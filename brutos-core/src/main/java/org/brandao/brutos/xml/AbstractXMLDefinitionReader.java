@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.xml;
 
 import java.io.IOException;

@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.validator;
 
 import java.util.Properties;

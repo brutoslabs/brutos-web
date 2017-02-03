@@ -1,9 +1,5 @@
-
-
-
 package org.brandao.brutos;
 
-
-public interface ResourceMethod extends ResourceAction{
+public interface ResourceMethod extends ResourceAction {
 
 }

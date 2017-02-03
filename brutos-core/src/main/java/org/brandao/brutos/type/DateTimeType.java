@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.type;
 
 public interface DateTimeType extends Type{

@@ -1,6 +1,3 @@
-
-
-
 package org.brandao.brutos.type;
 
 import org.brandao.brutos.EnumerationType;

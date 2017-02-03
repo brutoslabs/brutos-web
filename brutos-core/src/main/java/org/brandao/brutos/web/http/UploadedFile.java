@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.web.http;
 
 import java.io.File;

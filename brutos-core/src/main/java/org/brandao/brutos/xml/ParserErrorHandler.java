@@ -1,4 +1,3 @@
-
 package org.brandao.brutos.xml;
 
 import java.util.List;

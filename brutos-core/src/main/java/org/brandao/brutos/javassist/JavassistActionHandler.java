@@ -1,6 +1,3 @@
-
-
-
 package org.brandao.brutos.javassist;
 
 import javassist.util.proxy.MethodHandler;

@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.test;
 
 import java.util.concurrent.ConcurrentHashMap;

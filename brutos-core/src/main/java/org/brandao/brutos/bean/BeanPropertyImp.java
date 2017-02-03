@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.bean;
 
 import java.lang.reflect.Field;

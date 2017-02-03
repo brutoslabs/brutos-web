@@ -1,19 +1,15 @@
-
-
-
 package org.brandao.brutos;
-
 
 public interface StackRequest {
 
-    void push( StackRequestElement stackrequestElement );
+	void push(StackRequestElement stackrequestElement);
 
-    StackRequestElement getCurrent();
+	StackRequestElement getCurrent();
 
-    StackRequestElement getNext( StackRequestElement stackrequestElement );
+	StackRequestElement getNext(StackRequestElement stackrequestElement);
 
-    boolean isEmpty();
-    
-    void pop();
+	boolean isEmpty();
+
+	void pop();
 
 }

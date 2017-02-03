@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.bean;
 
 import org.brandao.brutos.BrutosException;

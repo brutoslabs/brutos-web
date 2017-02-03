@@ -1,26 +1,23 @@
-
-
 package org.brandao.brutos;
 
 import java.util.Map;
 
+public interface ConfigurableResultAction extends ResultAction {
 
-public interface ConfigurableResultAction extends ResultAction{
+	String getView();
 
-    String getView();
-    
-    boolean isResolvedView();
+	boolean isResolvedView();
 
-    Class getContentType();
-    
-    Object getContent();
-    
-    Map getValues();
+	Class getContentType();
 
-    void setValues(Map values);
+	Object getContent();
 
-    Map getInfos();
+	Map getValues();
 
-    void setInfos(Map infos);
-    
+	void setValues(Map values);
+
+	Map getInfos();
+
+	void setInfos(Map infos);
+
 }

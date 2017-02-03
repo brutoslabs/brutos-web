@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.cdi;
 
 import org.brandao.brutos.ObjectFactory;

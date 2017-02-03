@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
@@ -10,252 +8,233 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.ThreadScope;
 
-
 public class Invoker {
 
-    private static final ThreadLocal currentApp;
+	private static final ThreadLocal currentApp;
 
-    static{
-        currentApp = new ThreadLocal();
-    }
-    
-    protected Logger logger = 
-            LoggerProvider.getCurrentLoggerProvider()
-            .getLogger(Invoker.class);
-    
-    protected ControllerResolver controllerResolver;
-    protected ObjectFactory objectFactory;
-    protected ControllerManager controllerManager;
-    protected ActionResolver actionResolver;
-    protected ConfigurableApplicationContext applicationContext;
-    protected RenderView renderView;
-    protected RequestProvider requestProvider;
-    protected ResponseProvider responseProvider;
-    
-    public Invoker() {
-    }
+	static {
+		currentApp = new ThreadLocal();
+	}
 
-    public Invoker( ControllerResolver controllerResolver, ObjectFactory objectFactory, 
-            ControllerManager controllerManager, ActionResolver actionResolver, 
-            ConfigurableApplicationContext applicationContext, RenderView renderView){
-        
-        this.controllerResolver = controllerResolver;
-        this.objectFactory      = objectFactory;
-        this.controllerManager  = controllerManager;
-        this.actionResolver     = actionResolver;
-        this.applicationContext = applicationContext;
-        this.renderView         = renderView;
-        this.requestProvider    = new RequestProvider();
-        this.responseProvider   = new ResponseProvider();
-    }
+	protected Logger logger = LoggerProvider.getCurrentLoggerProvider()
+			.getLogger(Invoker.class);
 
-    
-    public boolean invoke( String requestId ){
-        return invoke(requestId, null);
-    }
-    
-    
-    public boolean invoke( String requestId, Throwable externalThrow ){
+	protected ControllerResolver controllerResolver;
+	protected ObjectFactory objectFactory;
+	protected ControllerManager controllerManager;
+	protected ActionResolver actionResolver;
+	protected ConfigurableApplicationContext applicationContext;
+	protected RenderView renderView;
+	protected RequestProvider requestProvider;
+	protected ResponseProvider responseProvider;
 
-        ImpInterceptorHandler ih = new ImpInterceptorHandler();
-        ih.setRequestId(requestId);
-        ih.setContext(applicationContext);
-        
-        Controller form = controllerResolver.getController(controllerManager, ih);
+	public Invoker() {
+	}
 
+	public Invoker(ControllerResolver controllerResolver,
+			ObjectFactory objectFactory, ControllerManager controllerManager,
+			ActionResolver actionResolver,
+			ConfigurableApplicationContext applicationContext,
+			RenderView renderView) {
 
-        if( form == null )
-            return false;
+		this.controllerResolver = controllerResolver;
+		this.objectFactory = objectFactory;
+		this.controllerManager = controllerManager;
+		this.actionResolver = actionResolver;
+		this.applicationContext = applicationContext;
+		this.renderView = renderView;
+		this.requestProvider = new RequestProvider();
+		this.responseProvider = new ResponseProvider();
+	}
 
-        ih.setResource( form.getInstance(objectFactory) );
-        
-        if(ih.getResourceAction() == null)
-            ih.setResourceAction( actionResolver.getResourceAction(form, ih) );
+	public boolean invoke(String requestId) {
+		return invoke(requestId, null);
+	}
 
+	public boolean invoke(String requestId, Throwable externalThrow) {
 
-        StackRequestElement element = createStackRequestElement();
+		ImpInterceptorHandler ih = new ImpInterceptorHandler();
+		ih.setRequestId(requestId);
+		ih.setContext(applicationContext);
 
-        element.setAction(ih.getResourceAction());
-        element.setController(form);
-        element.setHandler(ih);
-        element.setResource(ih.getResource());
-        element.setObjectThrow(externalThrow);
-        return invoke(element);
-    }
+		Controller form = controllerResolver.getController(controllerManager,
+				ih);
 
-    public Object invoke( Controller controller, ResourceAction action,
-            Object[] parameters ){
-        return invoke(controller, action, null, parameters);
-    }
+		if (form == null)
+			return false;
 
-    public Object invoke( Controller controller, ResourceAction action, Object resource,
-            Object[] parameters ){
+		ih.setResource(form.getInstance(objectFactory));
 
-        if( controller == null )
-            throw new IllegalArgumentException("controller not found");
+		if (ih.getResourceAction() == null)
+			ih.setResourceAction(actionResolver.getResourceAction(form, ih));
 
-        if( action == null )
-            throw new IllegalArgumentException("action not found");
+		StackRequestElement element = createStackRequestElement();
 
-        // create factory or other solution
-        ImpInterceptorHandler handler = new ImpInterceptorHandler();
+		element.setAction(ih.getResourceAction());
+		element.setController(form);
+		element.setHandler(ih);
+		element.setResource(ih.getResource());
+		element.setObjectThrow(externalThrow);
+		return invoke(element);
+	}
 
-        handler.setContext(applicationContext);
-        handler.setResourceAction(action);
-        handler.setResource(
-            resource == null?
-                controller.getInstance(applicationContext.getObjectFactory()) :
-                resource);
+	public Object invoke(Controller controller, ResourceAction action,
+			Object[] parameters) {
+		return invoke(controller, action, null, parameters);
+	}
 
-        StackRequestElement stackRequestElement = createStackRequestElement();
+	public Object invoke(Controller controller, ResourceAction action,
+			Object resource, Object[] parameters) {
 
-        stackRequestElement.setAction(action);
-        stackRequestElement.setController(controller);
-        stackRequestElement.setHandler(handler);
-        stackRequestElement.setParameters(parameters);
-        stackRequestElement.setResource(handler.getResource());
+		if (controller == null)
+			throw new IllegalArgumentException("controller not found");
 
-        invoke(stackRequestElement);
-        return stackRequestElement.getResultAction();
-    }
+		if (action == null)
+			throw new IllegalArgumentException("action not found");
 
+		// create factory or other solution
+		ImpInterceptorHandler handler = new ImpInterceptorHandler();
 
-    public Object invoke( Class controllerClass, String actionId ){
-        Controller controller =
-            applicationContext
-                .getControllerResolver()
-                    .getController(controllerManager, controllerClass);
+		handler.setContext(applicationContext);
+		handler.setResourceAction(action);
+		handler.setResource(resource == null ? controller
+				.getInstance(applicationContext.getObjectFactory()) : resource);
 
+		StackRequestElement stackRequestElement = createStackRequestElement();
 
-        // create factory or other solution
-        ImpInterceptorHandler ih = new ImpInterceptorHandler();
-        ih.setRequestId(controller.getId());
-        ih.setContext(applicationContext);
+		stackRequestElement.setAction(action);
+		stackRequestElement.setController(controller);
+		stackRequestElement.setHandler(handler);
+		stackRequestElement.setParameters(parameters);
+		stackRequestElement.setResource(handler.getResource());
 
-        ResourceAction action =
-                applicationContext
-                .getActionResolver()
-                .getResourceAction(controller, actionId, ih);
+		invoke(stackRequestElement);
+		return stackRequestElement.getResultAction();
+	}
 
-        return this.invoke(controller, action, null);
-    }
+	public Object invoke(Class controllerClass, String actionId) {
+		Controller controller = applicationContext.getControllerResolver()
+				.getController(controllerManager, controllerClass);
 
-    public RequestInstrument getRequestInstrument(){
-        Scopes scopes = applicationContext.getScopes();
-        Scope requestScope = scopes.get(ScopeType.REQUEST);
+		// create factory or other solution
+		ImpInterceptorHandler ih = new ImpInterceptorHandler();
+		ih.setRequestId(controller.getId());
+		ih.setContext(applicationContext);
 
-        RequestInstrument requestInstrument =
-                getRequestInstrument(requestScope);
+		ResourceAction action = applicationContext.getActionResolver()
+				.getResourceAction(controller, actionId, ih);
 
-        return requestInstrument;
-    }
-    
-    public StackRequest getStackRequest(){
-        RequestInstrument requestInstrument = getRequestInstrument();
-        return getStackRequest(requestInstrument);
-    }
+		return this.invoke(controller, action, null);
+	}
 
-    public StackRequest getStackRequest(RequestInstrument value){
-        return (StackRequest)value;
-    }
-    
-    public StackRequestElement getStackRequestElement(){
-        return getStackRequest().getCurrent();
-    }
+	public RequestInstrument getRequestInstrument() {
+		Scopes scopes = applicationContext.getScopes();
+		Scope requestScope = scopes.get(ScopeType.REQUEST);
 
-    public boolean invoke( StackRequestElement element ){
+		RequestInstrument requestInstrument = getRequestInstrument(requestScope);
 
-        long time = -1;
-        boolean createdThreadScope = false;
-        StackRequest stackRequest  = null;
-        boolean isFirstCall        = false;
-        RequestInstrument requestInstrument;
-        ConfigurableInterceptorHandler configurableInterceptorHandler;
-        MvcRequest oldRequest      = null;
-        MvcResponse oldresponse    = null;
-        
-        try{
-            oldRequest         = this.requestProvider.start();
-            oldresponse        = this.responseProvider.start();
-            time               = System.currentTimeMillis();
-            createdThreadScope = ThreadScope.create();
-            requestInstrument  = getRequestInstrument();
-            stackRequest       = getStackRequest(requestInstrument);
-            isFirstCall        = stackRequest.isEmpty();
-            configurableInterceptorHandler = element.getHandler();
-            
-            configurableInterceptorHandler.setRequestInstrument(requestInstrument);
-            configurableInterceptorHandler.setStackRequestElement(element);
-            
-            if( isFirstCall )
-                currentApp.set( this.applicationContext );
+		return requestInstrument;
+	}
 
-            stackRequest.push(element);
-            element.getController()
-                    .proccessBrutosAction( element.getHandler() );
-            return true;
-        }
-        finally{
-            this.requestProvider.destroy(oldRequest);
-            this.responseProvider.destroy(oldresponse);
-            
-            if(createdThreadScope)
-                ThreadScope.destroy();
-            
-            stackRequest.pop();
+	public StackRequest getStackRequest() {
+		RequestInstrument requestInstrument = getRequestInstrument();
+		return getStackRequest(requestInstrument);
+	}
 
-            if( isFirstCall )
-                currentApp.remove();
+	public StackRequest getStackRequest(RequestInstrument value) {
+		return (StackRequest) value;
+	}
 
-            if( logger.isDebugEnabled() )
-                logger.debug(
-                        String.format( "Request processed in %d ms",
-                            new Object[]{
-                                new Long((System.currentTimeMillis()-time))} ) );
-        }
-    }
+	public StackRequestElement getStackRequestElement() {
+		return getStackRequest().getCurrent();
+	}
 
-    private RequestInstrument getRequestInstrument(Scope scope){
-        RequestInstrument requestInstrument = 
-                (RequestInstrument)
-                    scope.get(BrutosConstants.REQUEST_INSTRUMENT);
+	public boolean invoke(StackRequestElement element) {
 
-        if( requestInstrument == null ){
-            requestInstrument =
-                    new RequestInstrumentImp(
-                        this.applicationContext,
-                        this.objectFactory,
-                        this.renderView);
+		long time = -1;
+		boolean createdThreadScope = false;
+		StackRequest stackRequest = null;
+		boolean isFirstCall = false;
+		RequestInstrument requestInstrument;
+		ConfigurableInterceptorHandler configurableInterceptorHandler;
+		MvcRequest oldRequest = null;
+		MvcResponse oldresponse = null;
 
-            scope.put(BrutosConstants.REQUEST_INSTRUMENT, requestInstrument);
-        }
+		try {
+			oldRequest = this.requestProvider.start();
+			oldresponse = this.responseProvider.start();
+			time = System.currentTimeMillis();
+			createdThreadScope = ThreadScope.create();
+			requestInstrument = getRequestInstrument();
+			stackRequest = getStackRequest(requestInstrument);
+			isFirstCall = stackRequest.isEmpty();
+			configurableInterceptorHandler = element.getHandler();
 
-        return requestInstrument;
-    }
+			configurableInterceptorHandler
+					.setRequestInstrument(requestInstrument);
+			configurableInterceptorHandler.setStackRequestElement(element);
 
-    StackRequestElement createStackRequestElement(){
-        return new StackRequestElementImp();
-    }
+			if (isFirstCall)
+				currentApp.set(this.applicationContext);
 
-    
-    public static ApplicationContext getCurrentApplicationContext(){
-        return (ApplicationContext) currentApp.get();
-    }
+			stackRequest.push(element);
+			element.getController().proccessBrutosAction(element.getHandler());
+			return true;
+		} finally {
+			this.requestProvider.destroy(oldRequest);
+			this.responseProvider.destroy(oldresponse);
 
-    public static Invoker getInstance(){
-        ConfigurableApplicationContext context =
-                (ConfigurableApplicationContext)getCurrentApplicationContext();
+			if (createdThreadScope)
+				ThreadScope.destroy();
 
-        if( context == null )
-            throw new BrutosException("can not get invoker");
+			stackRequest.pop();
 
-        return context.getInvoker();
-    }
-    
-    public void flush(){
-        this.requestProvider
-                .setFactory(this.applicationContext.getRequestFactory());
-        this.responseProvider
-                .setFactory(this.applicationContext.getResponseFactory());
-    }
+			if (isFirstCall)
+				currentApp.remove();
+
+			if (logger.isDebugEnabled())
+				logger.debug(String.format("Request processed in %d ms",
+						new Object[] { new Long(
+								(System.currentTimeMillis() - time)) }));
+		}
+	}
+
+	private RequestInstrument getRequestInstrument(Scope scope) {
+		RequestInstrument requestInstrument = (RequestInstrument) scope
+				.get(BrutosConstants.REQUEST_INSTRUMENT);
+
+		if (requestInstrument == null) {
+			requestInstrument = new RequestInstrumentImp(
+					this.applicationContext, this.objectFactory,
+					this.renderView);
+
+			scope.put(BrutosConstants.REQUEST_INSTRUMENT, requestInstrument);
+		}
+
+		return requestInstrument;
+	}
+
+	StackRequestElement createStackRequestElement() {
+		return new StackRequestElementImp();
+	}
+
+	public static ApplicationContext getCurrentApplicationContext() {
+		return (ApplicationContext) currentApp.get();
+	}
+
+	public static Invoker getInstance() {
+		ConfigurableApplicationContext context = (ConfigurableApplicationContext) getCurrentApplicationContext();
+
+		if (context == null)
+			throw new BrutosException("can not get invoker");
+
+		return context.getInvoker();
+	}
+
+	public void flush() {
+		this.requestProvider.setFactory(this.applicationContext
+				.getRequestFactory());
+		this.responseProvider.setFactory(this.applicationContext
+				.getResponseFactory());
+	}
 }

@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.type;
 
 import java.lang.reflect.Array;

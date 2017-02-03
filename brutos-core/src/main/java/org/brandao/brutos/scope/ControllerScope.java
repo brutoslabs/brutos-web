@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.scope;
 
 import org.brandao.brutos.Invoker;

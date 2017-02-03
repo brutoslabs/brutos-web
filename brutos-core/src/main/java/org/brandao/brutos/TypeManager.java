@@ -1,35 +1,24 @@
-
-
 package org.brandao.brutos;
 
 import org.brandao.brutos.type.*;
 import java.util.*;
 
-
 public interface TypeManager {
-    
-    
-    void register(TypeFactory factory);
 
-    
-    void remove(Class type);
-    
-    
-    void remove(TypeFactory factory);
+	void register(TypeFactory factory);
 
-    
-    List getAllTypes();
-    
-    
-    boolean isStandardType(Class clazz);
+	void remove(Class type);
 
-    
-    Type getType(Object classType);
+	void remove(TypeFactory factory);
 
-    
-    TypeFactory getTypeFactory(Object classType);
-    
-    
-    Type getType(Object classType, EnumerationType enumType, String pattern);
+	List getAllTypes();
+
+	boolean isStandardType(Class clazz);
+
+	Type getType(Object classType);
+
+	TypeFactory getTypeFactory(Object classType);
+
+	Type getType(Object classType, EnumerationType enumType, String pattern);
 
 }

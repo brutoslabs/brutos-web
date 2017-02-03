@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.ScopeType;
