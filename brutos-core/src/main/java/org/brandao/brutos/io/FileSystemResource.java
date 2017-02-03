@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.io;
 
 import java.io.File;
@@ -8,45 +6,42 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+public class FileSystemResource extends AbstractResource {
 
-public class FileSystemResource extends AbstractResource{
+	private String path;
 
-    private String path;
+	private File file;
 
-    private File file;
-    
-    public FileSystemResource( String path ){
-        this.path = path;
-        this.file = new File(path);
-    }
-    
-    public URL getURL() throws IOException {
-        return
-            new URL( ResourceLoader.FILE_URL_PREFIX
-                + this.file.getAbsolutePath() );
-    }
+	public FileSystemResource(String path) {
+		this.path = path;
+		this.file = new File(path);
+	}
 
-    public Resource getRelativeResource(String relativePath) throws IOException {
-        return new FileSystemResource(
-                this.createRelativePath(this.path, relativePath) );
-    }
+	public URL getURL() throws IOException {
+		return new URL(ResourceLoader.FILE_URL_PREFIX
+				+ this.file.getAbsolutePath());
+	}
 
-    public InputStream getInputStream() throws IOException {
-        return new FileInputStream(this.file);
-    }
+	public Resource getRelativeResource(String relativePath) throws IOException {
+		return new FileSystemResource(this.createRelativePath(this.path,
+				relativePath));
+	}
 
-    public boolean exists() {
-        return this.file.exists();
-    }
+	public InputStream getInputStream() throws IOException {
+		return new FileInputStream(this.file);
+	}
 
-    public boolean equals( Object e ){
-        return e instanceof FileSystemResource?
-            ((FileSystemResource)e).path.equals( this.path ) :
-            false;
-    }
+	public boolean exists() {
+		return this.file.exists();
+	}
 
-    public String getName() {
-        return this.path;
-    }
+	public boolean equals(Object e) {
+		return e instanceof FileSystemResource ? ((FileSystemResource) e).path
+				.equals(this.path) : false;
+	}
+
+	public String getName() {
+		return this.path;
+	}
 
 }

@@ -9,66 +9,66 @@ import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.ValidatorException;
 
-public class MetaBean extends Bean{
+public class MetaBean extends Bean {
 
 	private Map<Object, DependencyBean> metaValues;
-	
+
 	private Type type;
-	
+
 	private ScopeType scopeType;
-	
-	public MetaBean(Controller controller){
+
+	public MetaBean(Controller controller) {
 		super(controller);
-		this.metaValues = new HashMap<Object,DependencyBean>();
+		this.metaValues = new HashMap<Object, DependencyBean>();
 	}
 
-    public void putMetaValue(String value, DependencyBean bean){
-    	Object metaValue = this.type.convert(value);
-    	
-    	if(metaValue == null)
-    		throw new MappingException("invalid meta value: " + value);
-    		
-    	this.putMetaValue(metaValue, bean);
-    }
-	
-    public void putMetaValue(Object value, DependencyBean bean){
-    	if(this.metaValues.put(value, bean) != null)
-    		throw new MappingException("duplicate meta value: " + value);
-    }
+	public void putMetaValue(String value, DependencyBean bean) {
+		Object metaValue = this.type.convert(value);
 
-    public void removeMetaValue(Object value){
-    	this.metaValues.remove(value);
-    }
+		if (metaValue == null)
+			throw new MappingException("invalid meta value: " + value);
 
-    public void removeMetaValue(String value){
-    	Object metaValue = this.type.convert(value);
-    	this.metaValues.remove(metaValue);
-    }
-    
-    @Override
-    public Object getValue( Object instance, String prefix, long index, 
-            ValidatorException exceptionHandler, boolean force ){
-    	
-        String pre = prefix != null? prefix : "";
-        String key = pre + this.name;
+		this.putMetaValue(metaValue, bean);
+	}
 
-        Object metaValue = this.getScope().get(key);
-        metaValue = this.type.convert(metaValue);
+	public void putMetaValue(Object value, DependencyBean bean) {
+		if (this.metaValues.put(value, bean) != null)
+			throw new MappingException("duplicate meta value: " + value);
+	}
 
-        if(metaValue == null)
-        	return null;
-        
-        DependencyBean bean = this.metaValues.get(metaValue);
-        
-        if(bean == null)
-        	throw new MappingException("bean not found: " + metaValue);
-        
-        return bean.getValue(prefix, index, exceptionHandler, this, null);
-    }
+	public void removeMetaValue(Object value) {
+		this.metaValues.remove(value);
+	}
 
-    public Scope getScope() {
-        return Scopes.getCurrentScope(scopeType);
-    }
+	public void removeMetaValue(String value) {
+		Object metaValue = this.type.convert(value);
+		this.metaValues.remove(metaValue);
+	}
+
+	@Override
+	public Object getValue(Object instance, String prefix, long index,
+			ValidatorException exceptionHandler, boolean force) {
+
+		String pre = prefix != null ? prefix : "";
+		String key = pre + this.name;
+
+		Object metaValue = this.getScope().get(key);
+		metaValue = this.type.convert(metaValue);
+
+		if (metaValue == null)
+			return null;
+
+		DependencyBean bean = this.metaValues.get(metaValue);
+
+		if (bean == null)
+			throw new MappingException("bean not found: " + metaValue);
+
+		return bean.getValue(prefix, index, exceptionHandler, this, null);
+	}
+
+	public Scope getScope() {
+		return Scopes.getCurrentScope(scopeType);
+	}
 
 	public Type getType() {
 		return type;
@@ -94,7 +94,7 @@ public class MetaBean extends Bean{
 		this.name = name;
 	}
 
-	public int getSize(){
+	public int getSize() {
 		return this.metaValues.size();
 	}
 

@@ -1,42 +1,37 @@
-
-
 package org.brandao.brutos.io;
 
+public abstract class AbstractResource implements Resource {
 
-public abstract class AbstractResource implements Resource{
+	protected String createRelativePath(String path, String relativePath) {
 
-    protected String createRelativePath( String path, String relativePath ){
+		path = cleanPath(path);
+		// path = path.endsWith("/")? path.substring(0,path.length()-1) : path;
 
-        path = cleanPath( path );
-        //path = path.endsWith("/")? path.substring(0,path.length()-1) : path;
+		relativePath = this.cleanPath(relativePath);
 
-        relativePath = this.cleanPath( relativePath );
+		int index = path.lastIndexOf("/");
 
-        int index = path.lastIndexOf("/");
-        
-        if( index != -1 ){
-            String newPath = path.substring(0,index);
-            if( !relativePath.startsWith("/") )
-                newPath += "/";
-            return newPath + relativePath;
-        }
-        else
-            return relativePath;
-        
-        
-    }
+		if (index != -1) {
+			String newPath = path.substring(0, index);
+			if (!relativePath.startsWith("/"))
+				newPath += "/";
+			return newPath + relativePath;
+		} else
+			return relativePath;
 
-    protected String cleanPath( String path ){
-        path = path.replace( "\\" , "/");
-        path = path.replaceAll( "/+" , "/");
-        return path;
-    }
+	}
 
-    public boolean isOpen(){
-        return false;
-    }
+	protected String cleanPath(String path) {
+		path = path.replace("\\", "/");
+		path = path.replaceAll("/+", "/");
+		return path;
+	}
 
-    public String toString(){
-        return getName();
-    }
+	public boolean isOpen() {
+		return false;
+	}
+
+	public String toString() {
+		return getName();
+	}
 }

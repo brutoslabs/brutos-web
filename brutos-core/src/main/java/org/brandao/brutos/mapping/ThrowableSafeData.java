@@ -2,80 +2,79 @@ package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.DispatcherType;
 
-
 public class ThrowableSafeData {
-    
-    private Class target;
-    
-    private String view;
-    
-    private String originalView;
-    
-    private boolean resolvedView;
-    
-    private String parameterName;
 
-    private boolean redirect;
+	private Class target;
 
-    private DispatcherType dispatcher;
+	private String view;
 
-    public ThrowableSafeData() {
-    }
+	private String originalView;
 
-    public Class getTarget() {
-        return target;
-    }
+	private boolean resolvedView;
 
-    public void setTarget(Class target) {
-        this.target = target;
-    }
+	private String parameterName;
 
-    public String getView() {
-        return view;
-    }
+	private boolean redirect;
 
-    public void setView(String uri) {
-        this.view = uri;
-    }
+	private DispatcherType dispatcher;
 
-    public String getParameterName() {
-        return parameterName;
-    }
+	public ThrowableSafeData() {
+	}
 
-    public void setParameterName(String parameterName) {
-        this.parameterName = parameterName;
-    }
+	public Class getTarget() {
+		return target;
+	}
 
-    public boolean isRedirect() {
-        return redirect;
-    }
+	public void setTarget(Class target) {
+		this.target = target;
+	}
 
-    public void setRedirect(boolean redirect) {
-        this.redirect = redirect;
-    }
+	public String getView() {
+		return view;
+	}
 
-    public DispatcherType getDispatcher() {
-        return dispatcher;
-    }
+	public void setView(String uri) {
+		this.view = uri;
+	}
 
-    public void setDispatcher(DispatcherType dispatcher) {
-        this.dispatcher = dispatcher;
-    }
+	public String getParameterName() {
+		return parameterName;
+	}
 
-    public boolean isResolvedView() {
-        return resolvedView;
-    }
+	public void setParameterName(String parameterName) {
+		this.parameterName = parameterName;
+	}
 
-    public void setResolvedView(boolean resolvedView) {
-        this.resolvedView = resolvedView;
-    }
+	public boolean isRedirect() {
+		return redirect;
+	}
 
-    public String getOriginalView() {
-        return originalView;
-    }
+	public void setRedirect(boolean redirect) {
+		this.redirect = redirect;
+	}
 
-    public void setOriginalView(String originalView) {
-        this.originalView = originalView;
-    }
+	public DispatcherType getDispatcher() {
+		return dispatcher;
+	}
+
+	public void setDispatcher(DispatcherType dispatcher) {
+		this.dispatcher = dispatcher;
+	}
+
+	public boolean isResolvedView() {
+		return resolvedView;
+	}
+
+	public void setResolvedView(boolean resolvedView) {
+		this.resolvedView = resolvedView;
+	}
+
+	public String getOriginalView() {
+		return originalView;
+	}
+
+	public void setOriginalView(String originalView) {
+		this.originalView = originalView;
+	}
 
 }

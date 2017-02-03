@@ -1,63 +1,57 @@
-
-
 package org.brandao.brutos.logger;
 
 import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 
-
-
 public abstract class LoggerProvider {
 
-    private static LoggerProvider currentLoggerProvider;
+	private static LoggerProvider currentLoggerProvider;
 
-    static{
-        Properties config = new Properties();
-        setCurrentLoggerProvider(getProvider(config));
-    }
+	static {
+		Properties config = new Properties();
+		setCurrentLoggerProvider(getProvider(config));
+	}
 
-    public static LoggerProvider getProvider( Properties config ){
+	public static LoggerProvider getProvider(Properties config) {
 
-        String loggerName = config.getProperty(
-                                "org.brandao.brutos.logger.provider",
-                                "org.brandao.brutos.logger.JavaLoggerProvider" );
-        
-        LoggerProvider logger       = null;
+		String loggerName = config.getProperty(
+				"org.brandao.brutos.logger.provider",
+				"org.brandao.brutos.logger.JavaLoggerProvider");
 
-        try{
-            Class loggerClass = ClassUtil.get(loggerName);
-            logger = (LoggerProvider)ClassUtil.getInstance(loggerClass);
-            
-        }
-        catch( ClassNotFoundException e ){
-            throw new BrutosException( e );
-        }
-        catch( InstantiationException e ){
-            throw new BrutosException( e );
-        }
-        catch( IllegalAccessException e ){
-            throw new BrutosException( e );
-        }
+		LoggerProvider logger = null;
 
-        logger.configure( config );
-        return logger;
-    }
+		try {
+			Class loggerClass = ClassUtil.get(loggerName);
+			logger = (LoggerProvider) ClassUtil.getInstance(loggerClass);
 
-    public static LoggerProvider getCurrentLoggerProvider() {
-        return currentLoggerProvider;
-    }
+		} catch (ClassNotFoundException e) {
+			throw new BrutosException(e);
+		} catch (InstantiationException e) {
+			throw new BrutosException(e);
+		} catch (IllegalAccessException e) {
+			throw new BrutosException(e);
+		}
 
-    public static void setCurrentLoggerProvider(LoggerProvider aCurrentLoggerProvider) {
-        currentLoggerProvider = aCurrentLoggerProvider;
-    }
+		logger.configure(config);
+		return logger;
+	}
 
-    public abstract void configure( Properties config );
+	public static LoggerProvider getCurrentLoggerProvider() {
+		return currentLoggerProvider;
+	}
 
-    public abstract void destroy();
+	public static void setCurrentLoggerProvider(
+			LoggerProvider aCurrentLoggerProvider) {
+		currentLoggerProvider = aCurrentLoggerProvider;
+	}
 
-    public abstract Logger getLogger( String name );
-    
-    public abstract Logger getLogger( Class clazz );
+	public abstract void configure(Properties config);
+
+	public abstract void destroy();
+
+	public abstract Logger getLogger(String name);
+
+	public abstract Logger getLogger(Class clazz);
 
 }

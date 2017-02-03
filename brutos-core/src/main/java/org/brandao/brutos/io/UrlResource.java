@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.io;
 
 import java.io.IOException;
@@ -8,50 +6,47 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+public class UrlResource extends AbstractResource {
 
-public class UrlResource extends AbstractResource{
+	private String path;
 
-    private String path;
+	private URL url;
 
-    private URL url;
-    
-    public UrlResource( String path ) throws MalformedURLException{
-        this.path = path;
-        this.url = new URL( path );
-    }
-    
-    public UrlResource( URL url ) throws MalformedURLException{
-        this.url = url;
-        this.path = url.toString();
-    }
+	public UrlResource(String path) throws MalformedURLException {
+		this.path = path;
+		this.url = new URL(path);
+	}
 
-    public URL getURL() throws IOException {
-        return new URL(this.path);
-    }
+	public UrlResource(URL url) throws MalformedURLException {
+		this.url = url;
+		this.path = url.toString();
+	}
 
-    public Resource getRelativeResource(String relativePath) throws IOException {
-        return new UrlResource(
-                new URL(this.url, relativePath) );
-    }
+	public URL getURL() throws IOException {
+		return new URL(this.path);
+	}
 
-    public boolean exists() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	public Resource getRelativeResource(String relativePath) throws IOException {
+		return new UrlResource(new URL(this.url, relativePath));
+	}
 
-    public InputStream getInputStream() throws IOException {
-        URLConnection con = this.url.openConnection();
-        con.setUseCaches(false);
-        return con.getInputStream();
-    }
+	public boolean exists() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    public boolean equals( Object e ){
-        return e instanceof UrlResource?
-            ((UrlResource)e).path.equals( this.path ) :
-            false;
-    }
+	public InputStream getInputStream() throws IOException {
+		URLConnection con = this.url.openConnection();
+		con.setUseCaches(false);
+		return con.getInputStream();
+	}
 
-    public String getName() {
-        return this.path;
-    }
+	public boolean equals(Object e) {
+		return e instanceof UrlResource ? ((UrlResource) e).path
+				.equals(this.path) : false;
+	}
+
+	public String getName() {
+		return this.path;
+	}
 
 }

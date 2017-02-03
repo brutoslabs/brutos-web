@@ -3,100 +3,96 @@ package org.brandao.brutos.mapping;
 import java.lang.reflect.InvocationTargetException;
 import org.brandao.brutos.bean.BeanProperty;
 
+public class PropertyController extends UseBeanData {
 
-public class PropertyController extends UseBeanData{
+	private boolean request;
 
-    private boolean request;
-    
-    private boolean response;
-    
-    private boolean persistenceContext;
+	private boolean response;
 
-    private String propertyName;
-    
-    private BeanProperty beanProperty;
-    
-    private Controller controller;
-    
-    public PropertyController() {
-    }
+	private boolean persistenceContext;
 
-    public boolean isRequest() {
-        return request;
-    }
+	private String propertyName;
 
-    public void setRequest(boolean request) {
-        this.request = request;
-    }
+	private BeanProperty beanProperty;
 
-    public boolean isResponse() {
-        return response;
-    }
+	private Controller controller;
 
-    public void setResponse(boolean response) {
-        this.response = response;
-    }
+	public PropertyController() {
+	}
 
-    public boolean isPersistenceContext() {
-        return persistenceContext;
-    }
+	public boolean isRequest() {
+		return request;
+	}
 
-    public void setPersistenceContext(boolean persistenceContext) {
-        this.persistenceContext = persistenceContext;
-    }
-    
-    public boolean equals( Object o ){
-        return o instanceof PropertyController? 
-            ((PropertyController)o).propertyName.equals( propertyName ) :
-            false;
-    }
+	public void setRequest(boolean request) {
+		this.request = request;
+	}
 
-    protected void validate(Object source, Object value) {
-        this.validate.validate(this, source, value);
-    }
+	public boolean isResponse() {
+		return response;
+	}
 
-    public BeanProperty getBeanProperty() {
-        return beanProperty;
-    }
+	public void setResponse(boolean response) {
+		this.response = response;
+	}
 
-    public void setBeanProperty(BeanProperty beanProperty) {
-        this.beanProperty = beanProperty;
-    }
-    
-    public Object getValueFromSource(Object source) 
-            throws IllegalAccessException, IllegalArgumentException, 
-            InvocationTargetException{
-        return this.beanProperty.get(source);
-    }
-    
-    public void setValueInSource(Object source, Object value) 
-            throws IllegalAccessException, IllegalArgumentException, 
-            InvocationTargetException{
-        this.beanProperty.set(source, value);
-    }
+	public boolean isPersistenceContext() {
+		return persistenceContext;
+	}
 
-    public void setValue(Object source) 
-            throws IllegalAccessException, IllegalArgumentException, 
-            InvocationTargetException {
-        Object value = super.getValue(source);
-        this.setValueInSource(source, value);
-    }
-    
-    
-    public Controller getController() {
-        return controller;
-    }
+	public void setPersistenceContext(boolean persistenceContext) {
+		this.persistenceContext = persistenceContext;
+	}
 
-    public void setController(Controller controller) {
-        this.controller = controller;
-    }
+	public boolean equals(Object o) {
+		return o instanceof PropertyController ? ((PropertyController) o).propertyName
+				.equals(propertyName) : false;
+	}
 
-    public String getPropertyName() {
-        return propertyName;
-    }
+	protected void validate(Object source, Object value) {
+		this.validate.validate(this, source, value);
+	}
 
-    public void setPropertyName(String propertyName) {
-        this.propertyName = propertyName;
-    }
-    
+	public BeanProperty getBeanProperty() {
+		return beanProperty;
+	}
+
+	public void setBeanProperty(BeanProperty beanProperty) {
+		this.beanProperty = beanProperty;
+	}
+
+	public Object getValueFromSource(Object source)
+			throws IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException {
+		return this.beanProperty.get(source);
+	}
+
+	public void setValueInSource(Object source, Object value)
+			throws IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException {
+		this.beanProperty.set(source, value);
+	}
+
+	public void setValue(Object source) throws IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException {
+		Object value = super.getValue(source);
+		this.setValueInSource(source, value);
+	}
+
+	public Controller getController() {
+		return controller;
+	}
+
+	public void setController(Controller controller) {
+		this.controller = controller;
+	}
+
+	public String getPropertyName() {
+		return propertyName;
+	}
+
+	public void setPropertyName(String propertyName) {
+		this.propertyName = propertyName;
+	}
+
 }
