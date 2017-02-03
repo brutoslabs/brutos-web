@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.test;
 
 import java.io.IOException;
@@ -9,73 +7,72 @@ import java.util.Locale;
 import java.util.Map;
 import org.brandao.brutos.MvcRequest;
 
+public class MockMvcRequest implements MvcRequest {
 
-public class MockMvcRequest implements MvcRequest{
+	private Map values;
+	private Map property;
+	private InputStream input;
+	private String type;
+	private int length;
+	private String characterEncoding;
+	private Locale locale;
 
-    private Map values;
-    private Map property;
-    private InputStream input;
-    private String type;
-    private int length;
-    private String characterEncoding;
-    private Locale locale;
-    
-    public MockMvcRequest(){
-        this( new HashMap(), new HashMap() );
-    }
+	public MockMvcRequest() {
+		this(new HashMap(), new HashMap());
+	}
 
-    public MockMvcRequest( Map values, Map property ){
-        this(values,property,null);
-    }
+	public MockMvcRequest(Map values, Map property) {
+		this(values, property, null);
+	}
 
-    public MockMvcRequest( Map values, Map property, InputStream input ){
-        this.values = values;
-        this.property = property;
-        this.input = input;
-    }
-    
-    public Object getValue(String name) {
-        return values.get(name);
-    }
+	public MockMvcRequest(Map values, Map property, InputStream input) {
+		this.values = values;
+		this.property = property;
+		this.input = input;
+	}
 
-    public Object getProperty(String name) {
-        return this.property.get(name);
-    }
+	public Object getValue(String name) {
+		return values.get(name);
+	}
 
-    public InputStream getStream() throws IOException {
-        return input;
-    }
+	public Object getProperty(String name) {
+		return this.property.get(name);
+	}
 
-    public String getType() {
-        return this.type;
-    }
+	public InputStream getStream() throws IOException {
+		return input;
+	}
 
-    public int getLength() {
-        return length;
-    }
+	public String getType() {
+		return this.type;
+	}
 
-    public String getCharacterEncoding() {
-        return this.characterEncoding;
-    }
+	public int getLength() {
+		return length;
+	}
 
-    public Locale getLocale() {
-        return locale;
-    }
+	public String getCharacterEncoding() {
+		return this.characterEncoding;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public Locale getLocale() {
+		return locale;
+	}
 
-    public void setLength(int length) {
-        this.length = length;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public void setCharacterEncoding(String characterEncoding) {
-        this.characterEncoding = characterEncoding;
-    }
+	public void setLength(int length) {
+		this.length = length;
+	}
 
-    public void setLocale(Locale locale) {
-        this.locale = locale;
-    }
+	public void setCharacterEncoding(String characterEncoding) {
+		this.characterEncoding = characterEncoding;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
 
 }

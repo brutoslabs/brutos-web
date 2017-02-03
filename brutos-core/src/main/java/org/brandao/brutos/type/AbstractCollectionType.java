@@ -7,71 +7,68 @@ import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
 
+public abstract class AbstractCollectionType extends AbstractType implements
+		CollectionType {
 
+	private Type collectionType;
 
-public abstract class AbstractCollectionType 
-    extends AbstractType implements CollectionType{
-    
-    private Type collectionType;
-    
-    private Class rawClass;
-    
-    private Object[] parameters;
-    
-    public void setCollectionType(Type type) {
-        this.collectionType = type;
-    }
+	private Class rawClass;
 
-    public Type getCollectionType() {
-        return this.collectionType;
-    }
+	private Object[] parameters;
 
-    public void setRawClass(Class value) {
-        this.rawClass = value;
-    }
+	public void setCollectionType(Type type) {
+		this.collectionType = type;
+	}
 
-    public Class getRawClass() {
-        return this.rawClass;
-    }
+	public Type getCollectionType() {
+		return this.collectionType;
+	}
 
-    public void setParameters(Object[] value) {
-        this.parameters = value;
-    }
+	public void setRawClass(Class value) {
+		this.rawClass = value;
+	}
 
-    public Object[] getParameters() {
-        return this.parameters;
-    }
+	public Class getRawClass() {
+		return this.rawClass;
+	}
 
-    public Object convert(Object value) {
-        if( value instanceof ParameterList )
-            return getCollection(value);
-        else
-            return value;
-    }
+	public void setParameters(Object[] value) {
+		this.parameters = value;
+	}
 
-    public void show(MvcResponse response, Object value) throws IOException {
-        response.process(value);
-    }
+	public Object[] getParameters() {
+		return this.parameters;
+	}
 
-    protected abstract Class getCollectionClass();
-    
-    protected Collection getCollection(Object value){
+	public Object convert(Object value) {
+		if (value instanceof ParameterList)
+			return getCollection(value);
+		else
+			return value;
+	}
 
-        try{
-            Collection collection = 
-                (Collection)ClassUtil.getInstance(getCollectionClass());
+	public void show(MvcResponse response, Object value) throws IOException {
+		response.process(value);
+	}
 
-            ParameterList list = (ParameterList)value;
-            int size = list.size();
-            for( int i=0;i<size;i++ ){
-                Object o = list.get(i);
-                collection.add( this.collectionType.convert(o) );
-            }
-            return collection;
-        }
-        catch( Throwable e ){
-            throw new BrutosException( e );
-        }
-    }
-    
+	protected abstract Class getCollectionClass();
+
+	protected Collection getCollection(Object value) {
+
+		try {
+			Collection collection = (Collection) ClassUtil
+					.getInstance(getCollectionClass());
+
+			ParameterList list = (ParameterList) value;
+			int size = list.size();
+			for (int i = 0; i < size; i++) {
+				Object o = list.get(i);
+				collection.add(this.collectionType.convert(o));
+			}
+			return collection;
+		} catch (Throwable e) {
+			throw new BrutosException(e);
+		}
+	}
+
 }
