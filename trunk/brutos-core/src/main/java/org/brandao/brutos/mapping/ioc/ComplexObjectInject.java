@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.mapping.ioc;
 
 import java.util.ArrayList;

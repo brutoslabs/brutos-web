@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos;
 
 import java.util.Properties;
@@ -10,136 +8,148 @@ import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.DefaultTypeFactory;
 import org.brandao.brutos.type.TypeFactory;
-import org.brandao.brutos.TypeManager;
 
+public class ComponentRegistryAdapter implements ComponentRegistry {
 
-public class ComponentRegistryAdapter implements ComponentRegistry{
+	private final ConfigurableApplicationContext configurableApplicationContext;
 
-    private final ConfigurableApplicationContext configurableApplicationContext;
-    
-    public ComponentRegistryAdapter(
-            ConfigurableApplicationContext configurableApplicationContext){
-        this.configurableApplicationContext = configurableApplicationContext;
-    }
-    public ControllerBuilder registerController(Class classtype) {
-        return this.configurableApplicationContext.getControllerManager().addController(classtype);
-    }
+	public ComponentRegistryAdapter(
+			ConfigurableApplicationContext configurableApplicationContext) {
+		this.configurableApplicationContext = configurableApplicationContext;
+	}
 
-    public ControllerBuilder registerController(String id, Class classType) {
-        return this.configurableApplicationContext.getControllerManager().addController(id, classType);
-    }
+	public ControllerBuilder registerController(Class classtype) {
+		return this.configurableApplicationContext.getControllerManager()
+				.addController(classtype);
+	}
 
-    public ControllerBuilder registerController(String id, String view, 
-            boolean resolvedView, Class classType) {
-        return this.configurableApplicationContext.getControllerManager()
-                .addController(id, view, resolvedView, classType);
-    }
+	public ControllerBuilder registerController(String id, Class classType) {
+		return this.configurableApplicationContext.getControllerManager()
+				.addController(id, classType);
+	}
 
-    public ControllerBuilder registerController(String id, String view, 
-            boolean resolvedView, String name, Class classType, String actionId) {
-        return this.configurableApplicationContext.getControllerManager()
-                .addController(id, view, resolvedView, name, classType, actionId);
-    }
+	public ControllerBuilder registerController(String id, String view,
+			boolean resolvedView, Class classType) {
+		return this.configurableApplicationContext.getControllerManager()
+				.addController(id, view, resolvedView, classType);
+	}
 
-    public ControllerBuilder registerController(String id, String view, 
-            boolean resolvedView, DispatcherType dispatcherType, 
-            String name, Class classType, String actionId) {
-        return this.configurableApplicationContext.getControllerManager()
-                .addController(id, view, resolvedView, 
-                        dispatcherType, name, classType, actionId);
-    }
+	public ControllerBuilder registerController(String id, String view,
+			boolean resolvedView, String name, Class classType, String actionId) {
+		return this.configurableApplicationContext.getControllerManager()
+				.addController(id, view, resolvedView, name, classType,
+						actionId);
+	}
 
-    public ControllerBuilder registerController(String id, String view, 
-            boolean resolvedView, DispatcherType dispatcherType, 
-            String name, Class classType, String actionId, ActionType actionType) {
-        return this.configurableApplicationContext.getControllerManager()
-                .addController(id, view, resolvedView,
-                        dispatcherType, name, classType, actionId, actionType);
-    }
+	public ControllerBuilder registerController(String id, String view,
+			boolean resolvedView, DispatcherType dispatcherType, String name,
+			Class classType, String actionId) {
+		return this.configurableApplicationContext.getControllerManager()
+				.addController(id, view, resolvedView, dispatcherType, name,
+						classType, actionId);
+	}
 
-    public ControllerBuilder registerController( String id, String view, DispatcherType dispatcherType,
-            boolean resolvedView, String name, Class classType, String actionId, ActionType actionType ){
-        return this.configurableApplicationContext.getControllerManager()
-                .addController( id, view, dispatcherType,
-                    resolvedView, name, classType, actionId, actionType );
-    }
-    
-    public Controller getRegisteredController(Class clazz) {
-        return this.configurableApplicationContext.getControllerManager().getController(clazz);
-    }
+	public ControllerBuilder registerController(String id, String view,
+			boolean resolvedView, DispatcherType dispatcherType, String name,
+			Class classType, String actionId, ActionType actionType) {
+		return this.configurableApplicationContext.getControllerManager()
+				.addController(id, view, resolvedView, dispatcherType, name,
+						classType, actionId, actionType);
+	}
 
-    public Controller getRegisteredController(String name) {
-        return this.configurableApplicationContext.getControllerManager().getController(name);
-    }
+	public ControllerBuilder registerController(String id, String view,
+			DispatcherType dispatcherType, boolean resolvedView, String name,
+			Class classType, String actionId, ActionType actionType) {
+		return this.configurableApplicationContext.getControllerManager()
+				.addController(id, view, dispatcherType, resolvedView, name,
+						classType, actionId, actionType);
+	}
 
-    public InterceptorStackBuilder registerInterceptorStack(String name, boolean isDefault) {
-        return this.configurableApplicationContext.getInterceptorManager().addInterceptorStack(name, isDefault);
-    }
+	public Controller getRegisteredController(Class clazz) {
+		return this.configurableApplicationContext.getControllerManager()
+				.getController(clazz);
+	}
 
-    public InterceptorBuilder registerInterceptor(String name, Class interceptor, boolean isDefault) {
-        return this.configurableApplicationContext.getInterceptorManager().addInterceptor(name, interceptor, isDefault);
-    }
+	public Controller getRegisteredController(String name) {
+		return this.configurableApplicationContext.getControllerManager()
+				.getController(name);
+	}
 
-    public Interceptor getRegisteredInterceptor(Class clazz) {
-        return this.configurableApplicationContext.getInterceptorManager().getInterceptor(clazz);
-    }
+	public InterceptorStackBuilder registerInterceptorStack(String name,
+			boolean isDefault) {
+		return this.configurableApplicationContext.getInterceptorManager()
+				.addInterceptorStack(name, isDefault);
+	}
 
-    public Interceptor getRegisteredInterceptor(String name) {
-        return this.configurableApplicationContext.getInterceptorManager().getInterceptor(name);
-    }
+	public InterceptorBuilder registerInterceptor(String name,
+			Class interceptor, boolean isDefault) {
+		return this.configurableApplicationContext.getInterceptorManager()
+				.addInterceptor(name, interceptor, isDefault);
+	}
 
-    public Resource getResource(String path) {
-        return ((ResourceLoader)this.configurableApplicationContext).getResource(path);
-    }
+	public Interceptor getRegisteredInterceptor(Class clazz) {
+		return this.configurableApplicationContext.getInterceptorManager()
+				.getInterceptor(clazz);
+	}
 
-    public ClassLoader getClassloader() {
-        return ((ResourceLoader)this.configurableApplicationContext).getClassloader();
-    }
+	public Interceptor getRegisteredInterceptor(String name) {
+		return this.configurableApplicationContext.getInterceptorManager()
+				.getInterceptor(name);
+	}
 
-    public void registerScope(String name, Scope scope) {
-        this.configurableApplicationContext.getScopes().register(name, scope);
-    }
+	public Resource getResource(String path) {
+		return ((ResourceLoader) this.configurableApplicationContext)
+				.getResource(path);
+	}
 
-    public Scope getRegistredScope(String name) {
-        return this.configurableApplicationContext.getScopes().get(name);
-    }
+	public ClassLoader getClassloader() {
+		return ((ResourceLoader) this.configurableApplicationContext)
+				.getClassloader();
+	}
 
-    public Scope getRegistredScope(ScopeType scopeType) {
-        return this.configurableApplicationContext.getScopes().get(scopeType);
-    }
+	public void registerScope(String name, Scope scope) {
+		this.configurableApplicationContext.getScopes().register(name, scope);
+	}
 
-    public void registerType(TypeFactory factory) {
-        this.configurableApplicationContext.getTypeManager().register(factory);
-    }
+	public Scope getRegistredScope(String name) {
+		return this.configurableApplicationContext.getScopes().get(name);
+	}
 
-    public void registerType(Class classType, Class type) {
-        this.configurableApplicationContext.getTypeManager()
-                .register(new DefaultTypeFactory(type, classType));
-    }
+	public Scope getRegistredScope(ScopeType scopeType) {
+		return this.configurableApplicationContext.getScopes().get(scopeType);
+	}
 
-    public TypeFactory getRegistredType(Class classType) {
-        return this.configurableApplicationContext.getTypeManager()
-                .getTypeFactory(classType);
-    }
+	public void registerType(TypeFactory factory) {
+		this.configurableApplicationContext.getTypeManager().register(factory);
+	}
 
-    public void registerProperty(String name, String value) {
-        this.configurableApplicationContext
-                .getConfiguration().setProperty(name, value);
-    }
+	public void registerType(Class classType, Class type) {
+		this.configurableApplicationContext.getTypeManager().register(
+				new DefaultTypeFactory(type, classType));
+	}
 
-    public String getProperty(String name) {
-        return this.configurableApplicationContext
-                .getConfiguration()
-                .getProperty(name);
-    }
+	public TypeFactory getRegistredType(Class classType) {
+		return this.configurableApplicationContext.getTypeManager()
+				.getTypeFactory(classType);
+	}
 
-    public Properties getProperties() {
-        return this.configurableApplicationContext
-                .getConfiguration();
-    }
+	public void registerProperty(String name, String value) {
+		this.configurableApplicationContext.getConfiguration().setProperty(
+				name, value);
+	}
 
-    public boolean isStandardType(Class clazz) {
-        return this.configurableApplicationContext.getTypeManager().isStandardType(clazz);
-    }
-    
+	public String getProperty(String name) {
+		return this.configurableApplicationContext.getConfiguration()
+				.getProperty(name);
+	}
+
+	public Properties getProperties() {
+		return this.configurableApplicationContext.getConfiguration();
+	}
+
+	public boolean isStandardType(Class clazz) {
+		return this.configurableApplicationContext.getTypeManager()
+				.isStandardType(clazz);
+	}
+
 }

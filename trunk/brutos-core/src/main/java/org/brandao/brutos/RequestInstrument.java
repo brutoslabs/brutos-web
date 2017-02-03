@@ -1,18 +1,11 @@
-
-
-
 package org.brandao.brutos;
 
+public interface RequestInstrument extends ViewCheck {
 
-public interface RequestInstrument extends ViewCheck{
+	ApplicationContext getContext();
 
-    
-    ApplicationContext getContext();
+	ObjectFactory getObjectFactory();
 
-    
-    ObjectFactory getObjectFactory();
+	RenderView getRenderView();
 
-    
-    RenderView getRenderView();
-    
 }

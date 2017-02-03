@@ -1,31 +1,26 @@
-
-
 package org.brandao.brutos;
-
 
 public class DispatcherView {
 
-    private DispatcherType dispatcher;
+	private DispatcherType dispatcher;
 
-    public DispatcherView(){
-        this(null);
-    }
-    
-    public DispatcherView(DispatcherType dispatcher){
-        this.dispatcher = dispatcher;
-    }
+	public DispatcherView() {
+		this(null);
+	}
 
-    
-    public void to( String value ){
-        StackRequestElement request = 
-                Invoker.getInstance().getStackRequest().getCurrent();
-        request.setDispatcherType(dispatcher);
-        request.setView(value);
-    }
+	public DispatcherView(DispatcherType dispatcher) {
+		this.dispatcher = dispatcher;
+	}
 
-    
-    public void toRedirectNow( String value ){
-        throw new RedirectException( value, dispatcher );
-    }
+	public void to(String value) {
+		StackRequestElement request = Invoker.getInstance().getStackRequest()
+				.getCurrent();
+		request.setDispatcherType(dispatcher);
+		request.setView(value);
+	}
+
+	public void toRedirectNow(String value) {
+		throw new RedirectException(value, dispatcher);
+	}
 
 }

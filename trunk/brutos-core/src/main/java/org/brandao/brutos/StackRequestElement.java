@@ -1,72 +1,49 @@
-
-
 package org.brandao.brutos;
 
 import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 
-
 public interface StackRequestElement {
 
-    
-    Throwable getObjectThrow();
+	Throwable getObjectThrow();
 
-    
-    ThrowableSafeData getThrowableSafeData();
+	ThrowableSafeData getThrowableSafeData();
 
-    
-    Object[] getParameters();
+	Object[] getParameters();
 
-    
-    Controller getController();
+	Controller getController();
 
-    
-    ResourceAction getAction();
+	ResourceAction getAction();
 
-    
-    Object getResultAction();
+	Object getResultAction();
 
-    
-    Object getResource();
-    
-    
-    ConfigurableInterceptorHandler getHandler();
+	Object getResource();
 
-    
-    String getView();
+	ConfigurableInterceptorHandler getHandler();
 
-    
-    DispatcherType getDispatcherType();
+	String getView();
 
-    
-    void setObjectThrow(Throwable objectThrow);
+	DispatcherType getDispatcherType();
 
-    
-    void setThrowableSafeData(ThrowableSafeData throwableSafeData);
+	void setObjectThrow(Throwable objectThrow);
 
-    
-    void setParameters(Object[] parameters);
+	void setThrowableSafeData(ThrowableSafeData throwableSafeData);
 
-    
-    void setController(Controller controller);
+	void setParameters(Object[] parameters);
 
-    
-    void setAction(ResourceAction action);
+	void setController(Controller controller);
 
-    
-    void setResultAction(Object resultAction);
+	void setAction(ResourceAction action);
 
-    
-    void setHandler(ConfigurableInterceptorHandler handler);
+	void setResultAction(Object resultAction);
 
-    
-    void setResource( Object resource );
+	void setHandler(ConfigurableInterceptorHandler handler);
 
-    
-    void setView( String view );
+	void setResource(Object resource);
 
-    
-    void setDispatcherType( DispatcherType dispatcherType );
+	void setView(String view);
+
+	void setDispatcherType(DispatcherType dispatcherType);
 
 }

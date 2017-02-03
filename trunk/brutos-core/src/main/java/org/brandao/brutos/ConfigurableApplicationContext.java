@@ -1,78 +1,56 @@
-
-
-
 package org.brandao.brutos;
 
 import java.util.Properties;
 import org.brandao.brutos.TypeManager;
 
+public interface ConfigurableApplicationContext extends ApplicationContext {
 
-public interface ConfigurableApplicationContext 
-        extends ApplicationContext{
+	MvcRequestFactory getRequestFactory();
 
-    
-    MvcRequestFactory getRequestFactory();
+	MvcResponseFactory getResponseFactory();
 
-    
-    MvcResponseFactory getResponseFactory();
+	void setInterceptorManager(InterceptorManager interceptorManager);
 
-    
-    void setInterceptorManager(InterceptorManager interceptorManager);
+	void setRenderView(RenderView renderView);
 
+	RenderView getRenderView();
 
-    
-    void setRenderView(RenderView renderView);
-    
-    
-    RenderView getRenderView();
+	ValidatorFactory getValidatorFactory();
 
-    
-    ValidatorFactory getValidatorFactory();
+	Invoker getInvoker();
 
-    
-    Invoker getInvoker();
+	void setInvoker(Invoker value);
 
-    
-    void setInvoker(Invoker value);
+	void setConfiguration(Properties config);
 
-    
-    void setConfiguration(Properties config);
+	Properties getConfiguration();
 
-    
-    Properties getConfiguration();
+	void setObjectFactory(ObjectFactory objectFactory);
 
-    
-    void setObjectFactory(ObjectFactory objectFactory);
+	InterceptorManager getInterceptorManager();
 
-    
-    InterceptorManager getInterceptorManager();
+	ControllerManager getControllerManager();
 
-    
-    ControllerManager getControllerManager();
+	ObjectFactory getObjectFactory();
 
-    
-    ObjectFactory getObjectFactory();
+	ControllerResolver getControllerResolver();
 
-    
-    ControllerResolver getControllerResolver();
+	ActionResolver getActionResolver();
 
-    
-    ActionResolver getActionResolver();
+	CodeGenerator getCodeGenerator();
 
-    CodeGenerator getCodeGenerator();
+	void setCodeGenerator(CodeGenerator codeGenerator);
 
-    void setCodeGenerator(CodeGenerator codeGenerator);
+	void setViewResolver(ViewResolver viewResolver);
 
-    void setViewResolver(ViewResolver viewResolver);
+	ViewResolver getViewResolver();
 
-    ViewResolver getViewResolver();
+	TypeManager getTypeManager();
 
-    TypeManager getTypeManager();
-    
-    void setParent(ApplicationContext applicationContext);
+	void setParent(ApplicationContext applicationContext);
 
-    ApplicationContext getParent();
-    
-    void flush();
-    
+	ApplicationContext getParent();
+
+	void flush();
+
 }

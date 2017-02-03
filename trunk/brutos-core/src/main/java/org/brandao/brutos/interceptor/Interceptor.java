@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.interceptor;
 
 import java.util.Map;

@@ -1,35 +1,23 @@
-
-
-
 package org.brandao.brutos;
 
 import java.util.Properties;
 
-
 public interface ApplicationContext {
 
-    
-    void destroy();
+	void destroy();
 
-    
-    Properties getConfiguration();
+	Properties getConfiguration();
 
-    
-    MvcRequest getMvcRequest();
+	MvcRequest getMvcRequest();
 
-    
-    MvcResponse getMvcResponse();
+	MvcResponse getMvcResponse();
 
-    
-    Scopes getScopes();
+	Scopes getScopes();
 
-    
-    Object getController(Class<?> clazz);
-    
-    
-    Object getBean(Class<?> clazz);
+	Object getController(Class<?> clazz);
 
-    
-    Object getBean(String name);
-    
+	Object getBean(Class<?> clazz);
+
+	Object getBean(String name);
+
 }

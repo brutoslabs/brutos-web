@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.Action;
@@ -13,286 +11,266 @@ import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.type.UnknownTypeException;
 
+public class ParametersBuilder extends RestrictionBuilder {
 
-public class ParametersBuilder extends RestrictionBuilder{
-    
-    private Controller controller;
-    
-    private Action action;
-    
-    private ValidatorFactory validatorFactory;
-    
-    private ControllerBuilder controllerBuilder;
-    
-    private ConfigurableApplicationContext applicationContext;
+	private Controller controller;
 
-    public ParametersBuilder(Controller controller, Action action, 
-            ValidatorFactory validatorFactory, ControllerBuilder controllerBuilder, 
-            ConfigurableApplicationContext applicationContext) {
-        super(action.getParametersValidator().getConfiguration());
-        this.controller = controller;
-        this.action = action;
-        this.validatorFactory = validatorFactory;
-        this.controllerBuilder = controllerBuilder;
-        this.applicationContext = applicationContext;
-    }
-    
-    
-    public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty, Class<?> classType ){
-        return addParameter( name, scope, enumProperty, null, null, null, 
-                null, false, classType );
-    }
+	private Action action;
 
-    
-    public ParameterBuilder addNullParameter(){
-        return addParameter( null, null, null, null, null, null,
-                null, false, null );
-    }
+	private ValidatorFactory validatorFactory;
 
-    
-    public ParameterBuilder addParameter( String name, ScopeType scope, String temporalProperty, Class<?> classType ){
-        return addParameter( name, scope, EnumerationType.ORDINAL, 
-                temporalProperty, null, null, null, false, classType );
-    }
-    
-    
-    public ParameterBuilder addParameter( String name, ScopeType scope, Type typeDef ){
-        return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, typeDef, null, false, typeDef.getClassType() );
-    }
-    
-    
-    public ParameterBuilder addParameter( String name, EnumerationType enumProperty, Class<?> classType ){
-        return addParameter( name, ScopeType.PARAM, enumProperty, null, null,
-                null, null, false, classType );
-    }
-    
-    
-    public ParameterBuilder addParameter( String name, ScopeType scope, Class<?> classType ){
-        return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy", 
-                null, null, null, false, classType );
-    }
-    
-    
-    public ParameterBuilder addParameter( String name, String temporalProperty, Class<?> classType ){
-        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL,
-                temporalProperty, null, null, null, false, classType );
-    }
-    
-    
-    public ParameterBuilder addParameter( String name, Type typeDef ){
-        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, typeDef, null, false, typeDef.getClassType() );
-    }
-    
-    
-    public ParameterBuilder addParameterMapping( String mapping, Class<?> classType ){
-        return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null, null, false, classType );
-    }
+	private ControllerBuilder controllerBuilder;
 
-    
-    public ParameterBuilder addParameterMapping( String name, String mapping, Class<?> classType ){
-        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null, null, false, classType );
-    }
-    
-    
-    public ParameterBuilder addParameterMapping( String name, String mapping, ScopeType scope, Class<?> classType ){
-        return addParameter( name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                mapping, null, null, false, classType );
-    }
-    
-    public ParameterBuilder addParameter( String name, Class<?> classType ){
-        return addParameter( name, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, null, null, false, classType );
-    }
+	private ConfigurableApplicationContext applicationContext;
 
-    
+	public ParametersBuilder(Controller controller, Action action,
+			ValidatorFactory validatorFactory,
+			ControllerBuilder controllerBuilder,
+			ConfigurableApplicationContext applicationContext) {
+		super(action.getParametersValidator().getConfiguration());
+		this.controller = controller;
+		this.action = action;
+		this.validatorFactory = validatorFactory;
+		this.controllerBuilder = controllerBuilder;
+		this.applicationContext = applicationContext;
+	}
 
-    public BeanBuilder buildParameter( Class<?> classType ){
-        String beanName = 
-                this.action.getCode() + "#" + this.action.getParamterSize();
-        BeanBuilder bb = this.controllerBuilder
-                    .buildMappingBean(beanName, null, classType);
+	public ParameterBuilder addParameter(String name, ScopeType scope,
+			EnumerationType enumProperty, Class<?> classType) {
+		return addParameter(name, scope, enumProperty, null, null, null, null,
+				false, classType);
+	}
 
-        this.addParameterMapping(beanName, classType);
-        return bb;
-    }
+	public ParameterBuilder addNullParameter() {
+		return addParameter(null, null, null, null, null, null, null, false,
+				null);
+	}
 
-    
+	public ParameterBuilder addParameter(String name, ScopeType scope,
+			String temporalProperty, Class<?> classType) {
+		return addParameter(name, scope, EnumerationType.ORDINAL,
+				temporalProperty, null, null, null, false, classType);
+	}
 
-    public BeanBuilder buildParameter( String name, Class<?> classType ){
-        String beanName = 
-                this.action.getCode() + "#" + this.action.getParamterSize();
-        BeanBuilder bb = this.controllerBuilder
-                    .buildMappingBean(beanName, null, classType);
+	public ParameterBuilder addParameter(String name, ScopeType scope,
+			Type typeDef) {
+		return addParameter(name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
+				null, typeDef, null, false, typeDef.getClassType());
+	}
 
-        this.addParameterMapping(name, beanName, classType);
-        return bb;
-    }
-    
-    
+	public ParameterBuilder addParameter(String name,
+			EnumerationType enumProperty, Class<?> classType) {
+		return addParameter(name, ScopeType.PARAM, enumProperty, null, null,
+				null, null, false, classType);
+	}
 
-    public BeanBuilder buildParameter( Class<?> classType, Class<?> beanType ){
-        String beanName =
-                this.action.getCode()+"#"+this.action.getParamterSize();
-        BeanBuilder bb = this.controllerBuilder
-                    .buildMappingBean(beanName, null, beanType);
+	public ParameterBuilder addParameter(String name, ScopeType scope,
+			Class<?> classType) {
+		return addParameter(name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
+				null, null, null, false, classType);
+	}
 
-        this.addParameterMapping(beanName, classType);
-        return bb;
-    }
+	public ParameterBuilder addParameter(String name, String temporalProperty,
+			Class<?> classType) {
+		return addParameter(name, ScopeType.PARAM, EnumerationType.ORDINAL,
+				temporalProperty, null, null, null, false, classType);
+	}
 
-    
+	public ParameterBuilder addParameter(String name, Type typeDef) {
+		return addParameter(name, ScopeType.PARAM, EnumerationType.ORDINAL,
+				"dd/MM/yyyy", null, typeDef, null, false,
+				typeDef.getClassType());
+	}
 
-    public BeanBuilder buildParameter( String name, Class<?> classType, Class<?> beanType ){
-        String beanName =
-                this.action.getCode()+"#"+this.action.getParamterSize();
-        BeanBuilder bb = this.controllerBuilder
-                    .buildMappingBean(beanName, null, beanType);
+	public ParameterBuilder addParameterMapping(String mapping,
+			Class<?> classType) {
+		return addParameter(null, ScopeType.PARAM, EnumerationType.ORDINAL,
+				"dd/MM/yyyy", mapping, null, null, false, classType);
+	}
 
-        this.addParameterMapping(name, beanName, classType);
-        return bb;
-    }
-    
-    
-    public ParameterBuilder addStaticParameter( Class<?> classType, Object value ){
-        return addParameter( null, ScopeType.PARAM, EnumerationType.ORDINAL, "dd/MM/yyyy",
-                null, null, value, false, classType );
-    }
+	public ParameterBuilder addParameterMapping(String name, String mapping,
+			Class<?> classType) {
+		return addParameter(name, ScopeType.PARAM, EnumerationType.ORDINAL,
+				"dd/MM/yyyy", mapping, null, null, false, classType);
+	}
 
-    
-    public ParameterBuilder addParameter( String name, ScopeType scope, EnumerationType enumProperty,
-            String temporalProperty, String mapping, Type typeDef, Object value,
-            boolean nullable, Class<?> classType ){
-        return addParameter( name, scope, enumProperty, temporalProperty, 
-                mapping, typeDef, value, nullable, (Object)classType );
-    }
+	public ParameterBuilder addParameterMapping(String name, String mapping,
+			ScopeType scope, Class<?> classType) {
+		return addParameter(name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
+				mapping, null, null, false, classType);
+	}
 
-	public ParameterBuilder addGenericParameter(String name, Class<?> classType){
-		return 
-			this.addParameter(name, BrutosConstants.DEFAULT_SCOPETYPE, 
+	public ParameterBuilder addParameter(String name, Class<?> classType) {
+		return addParameter(name, ScopeType.PARAM, EnumerationType.ORDINAL,
+				"dd/MM/yyyy", null, null, null, false, classType);
+	}
+
+	public BeanBuilder buildParameter(Class<?> classType) {
+		String beanName = this.action.getCode() + "#"
+				+ this.action.getParamterSize();
+		BeanBuilder bb = this.controllerBuilder.buildMappingBean(beanName,
+				null, classType);
+
+		this.addParameterMapping(beanName, classType);
+		return bb;
+	}
+
+	public BeanBuilder buildParameter(String name, Class<?> classType) {
+		String beanName = this.action.getCode() + "#"
+				+ this.action.getParamterSize();
+		BeanBuilder bb = this.controllerBuilder.buildMappingBean(beanName,
+				null, classType);
+
+		this.addParameterMapping(name, beanName, classType);
+		return bb;
+	}
+
+	public BeanBuilder buildParameter(Class<?> classType, Class<?> beanType) {
+		String beanName = this.action.getCode() + "#"
+				+ this.action.getParamterSize();
+		BeanBuilder bb = this.controllerBuilder.buildMappingBean(beanName,
+				null, beanType);
+
+		this.addParameterMapping(beanName, classType);
+		return bb;
+	}
+
+	public BeanBuilder buildParameter(String name, Class<?> classType,
+			Class<?> beanType) {
+		String beanName = this.action.getCode() + "#"
+				+ this.action.getParamterSize();
+		BeanBuilder bb = this.controllerBuilder.buildMappingBean(beanName,
+				null, beanType);
+
+		this.addParameterMapping(name, beanName, classType);
+		return bb;
+	}
+
+	public ParameterBuilder addStaticParameter(Class<?> classType, Object value) {
+		return addParameter(null, ScopeType.PARAM, EnumerationType.ORDINAL,
+				"dd/MM/yyyy", null, null, value, false, classType);
+	}
+
+	public ParameterBuilder addParameter(String name, ScopeType scope,
+			EnumerationType enumProperty, String temporalProperty,
+			String mapping, Type typeDef, Object value, boolean nullable,
+			Class<?> classType) {
+		return addParameter(name, scope, enumProperty, temporalProperty,
+				mapping, typeDef, value, nullable, (Object) classType);
+	}
+
+	public ParameterBuilder addGenericParameter(String name, Class<?> classType) {
+		return this.addParameter(name, BrutosConstants.DEFAULT_SCOPETYPE,
 				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, 
-				null, null,
-	            false, true, classType);		
+				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, null, null,
+				false, true, classType);
 	}
 
-	public ParameterBuilder addGenericParameter(String name){
-		return 
-			this.addParameter(name, BrutosConstants.DEFAULT_SCOPETYPE, 
+	public ParameterBuilder addGenericParameter(String name) {
+		return this.addParameter(name, BrutosConstants.DEFAULT_SCOPETYPE,
 				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, 
-				null, null,
-	            false, true, null);		
+				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, null, null,
+				false, true, null);
 	}
 
-	public ParameterBuilder addParameter(String name, ScopeType scope, EnumerationType enumProperty,
-            String temporalProperty, String mapping, Type typeDef, Object value,
-            boolean nullable, Object classType){
-		return this.addParameter(name, scope, enumProperty, temporalProperty, mapping, typeDef, value,
-	            nullable, false, classType);
+	public ParameterBuilder addParameter(String name, ScopeType scope,
+			EnumerationType enumProperty, String temporalProperty,
+			String mapping, Type typeDef, Object value, boolean nullable,
+			Object classType) {
+		return this.addParameter(name, scope, enumProperty, temporalProperty,
+				mapping, typeDef, value, nullable, false, classType);
 	}
-	
-    @SuppressWarnings("unchecked")
-	public ParameterBuilder addParameter(String name, ScopeType scope, EnumerationType enumProperty,
-            String temporalProperty, String mapping, Type typeDef, Object value,
-            boolean nullable, boolean generic, Object classType){
 
-        name = StringUtil.adjust(name);
-        temporalProperty = StringUtil.adjust(temporalProperty);
-        mapping = StringUtil.adjust(mapping);
-        Class<?> rawType = TypeUtil.getRawType(classType);
-        
-        if(StringUtil.isEmpty(name) && (StringUtil.isEmpty(mapping) && !generic && value == null && !nullable)){
-        	throw new IllegalArgumentException("bean name is required");
-        }
-        
-        //if(StringUtil.isEmpty(name) && value == null && !nullable)
-        //	throw new IllegalArgumentException("bean name is required");
-        
-        if(scope == null)
-        	throw new MappingException("invalid scope");
-        
-        Configuration validatorConfig = new Configuration();
-        
-        ParameterAction parameter = new ParameterAction(this.action);
+	@SuppressWarnings("unchecked")
+	public ParameterBuilder addParameter(String name, ScopeType scope,
+			EnumerationType enumProperty, String temporalProperty,
+			String mapping, Type typeDef, Object value, boolean nullable,
+			boolean generic, Object classType) {
 
-        parameter.setName(name);
-        parameter.setScopeType(scope);
-        parameter.setValidate( this.validatorFactory.getValidator(validatorConfig) );
-        parameter.setStaticValue(value);
-        parameter.setNullable(nullable);
-        
-        if(typeDef == null){
-        	if(classType != null){
-	            try{
-	                typeDef = 
-		        		this.applicationContext.getTypeManager()
-		                		.getType(classType, enumProperty, temporalProperty );
-	                
-	            }
-	            catch( UnknownTypeException e ){
-	                throw new MappingException( 
-	                        String.format( "%s.%s(...) index %d : %s" ,
-	                            new Object[]{
-	                                this.controller.getClassType().getName(),
-	                                action.getExecutor(),
-	                                new Integer(action.getParamterSize()),
-	                                e.getMessage()} ), e );
-	            }
-	        }
-                
-            if(typeDef == null)
-                typeDef = new ObjectType(rawType);
-        }
-        else
-    	if(classType != null){
-            if(!typeDef.getClassType().isAssignableFrom(rawType)){
-                throw new MappingException(
-                        String.format(
-                            "expected %s found %s",
-                            new Object[]{
-                                rawType.getName(),
-                                typeDef.getClassType().getName()
-                            }
-                        )
-                );
-            }
-        }
-        
-        parameter.setType(typeDef);
-        
-        if(generic){
-            MetaBean metaBean = new MetaBean(controller);
-            metaBean.setClassType(rawType);
-            parameter.setMetaBean(metaBean);
-        }
-        else
-        if( !StringUtil.isEmpty(mapping) ){
-            if( controller.getBean(mapping) != null )
-                parameter.setMapping( controller.getBean( mapping ) );
-            else
-                throw new MappingException( "mapping name " + mapping + " not found!" );
-        }
-        
+		name = StringUtil.adjust(name);
+		temporalProperty = StringUtil.adjust(temporalProperty);
+		mapping = StringUtil.adjust(mapping);
+		Class<?> rawType = TypeUtil.getRawType(classType);
 
-        action.addParameter(parameter);
-        return new ParameterBuilder(parameter, this, this.validatorFactory);
-    }
+		if (StringUtil.isEmpty(name)
+				&& (StringUtil.isEmpty(mapping) && !generic && value == null && !nullable)) {
+			throw new IllegalArgumentException("bean name is required");
+		}
 
-    public int getParametersSize(){
-        return this.action.getParamterSize();
-    }
-    
-    public ParameterBuilder getParameter(int index){
-        ParameterAction param = this.action.getParameter(index);
-        return new ParameterBuilder(param, this, this.validatorFactory);
-    }
-    
-    public ControllerBuilder getControllerBuilder(){
-        return this.controllerBuilder;
-    }
-    
+		// if(StringUtil.isEmpty(name) && value == null && !nullable)
+		// throw new IllegalArgumentException("bean name is required");
+
+		if (scope == null)
+			throw new MappingException("invalid scope");
+
+		Configuration validatorConfig = new Configuration();
+
+		ParameterAction parameter = new ParameterAction(this.action);
+
+		parameter.setName(name);
+		parameter.setScopeType(scope);
+		parameter.setValidate(this.validatorFactory
+				.getValidator(validatorConfig));
+		parameter.setStaticValue(value);
+		parameter.setNullable(nullable);
+
+		if (typeDef == null) {
+			if (classType != null) {
+				try {
+					typeDef = this.applicationContext.getTypeManager().getType(
+							classType, enumProperty, temporalProperty);
+
+				} catch (UnknownTypeException e) {
+					throw new MappingException(String.format(
+							"%s.%s(...) index %d : %s",
+							new Object[] {
+									this.controller.getClassType().getName(),
+									action.getExecutor(),
+									new Integer(action.getParamterSize()),
+									e.getMessage() }), e);
+				}
+			}
+
+			if (typeDef == null)
+				typeDef = new ObjectType(rawType);
+		} else if (classType != null) {
+			if (!typeDef.getClassType().isAssignableFrom(rawType)) {
+				throw new MappingException(String.format(
+						"expected %s found %s",
+						new Object[] { rawType.getName(),
+								typeDef.getClassType().getName() }));
+			}
+		}
+
+		parameter.setType(typeDef);
+
+		if (generic) {
+			MetaBean metaBean = new MetaBean(controller);
+			metaBean.setClassType(rawType);
+			parameter.setMetaBean(metaBean);
+		} else if (!StringUtil.isEmpty(mapping)) {
+			if (controller.getBean(mapping) != null)
+				parameter.setMapping(controller.getBean(mapping));
+			else
+				throw new MappingException("mapping name " + mapping
+						+ " not found!");
+		}
+
+		action.addParameter(parameter);
+		return new ParameterBuilder(parameter, this, this.validatorFactory);
+	}
+
+	public int getParametersSize() {
+		return this.action.getParamterSize();
+	}
+
+	public ParameterBuilder getParameter(int index) {
+		ParameterAction param = this.action.getParameter(index);
+		return new ParameterBuilder(param, this, this.validatorFactory);
+	}
+
+	public ControllerBuilder getControllerBuilder() {
+		return this.controllerBuilder;
+	}
+
 }

@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.type;
 
 public class DefaultEnumTypeFactory implements TypeFactory{

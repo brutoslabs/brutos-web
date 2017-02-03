@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.scanner.vfs;
 
 import java.util.jar.JarFile;

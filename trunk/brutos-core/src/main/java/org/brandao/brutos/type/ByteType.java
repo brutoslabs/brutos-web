@@ -1,6 +1,3 @@
-
-
-
 package org.brandao.brutos.type;
 
 import java.io.IOException;

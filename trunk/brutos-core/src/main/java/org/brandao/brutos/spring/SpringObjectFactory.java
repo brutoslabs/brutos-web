@@ -1,5 +1,3 @@
-
-
 package org.brandao.brutos.spring;
 
 import org.brandao.brutos.ObjectFactory;
