@@ -22,7 +22,7 @@ public class LongWrapperType
             return value;
         else
         if( value instanceof String )
-            return Long.valueOf( (String)value );
+            return ((String) value).isEmpty()? null : Long.valueOf( (String)value );
         else
         if( value == null )
             return null;

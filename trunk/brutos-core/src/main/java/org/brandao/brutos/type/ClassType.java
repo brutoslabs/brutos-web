@@ -13,7 +13,8 @@ public class ClassType extends AbstractType{
 
     public Object toValue( String value ){
         try{
-            return Class.forName( value, true, Thread.currentThread().getContextClassLoader() );
+            return Class.forName( value, true, 
+            		Thread.currentThread().getContextClassLoader() );
         }
         catch( Exception e ){
             return null;
@@ -32,8 +33,12 @@ public class ClassType extends AbstractType{
         if( value instanceof Class )
             return value;
         else
-        if( value == null || value instanceof String )
-            return toValue( (String)value );
+        if(value instanceof String )
+            return ((String) value).isEmpty()? null : toValue( (String)value );
+        else
+        if(value == null){
+        	return null;
+        }
         else
             throw new UnknownTypeException();
     }

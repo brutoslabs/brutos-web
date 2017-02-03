@@ -30,7 +30,7 @@ public class ByteWrapperType extends AbstractType{
             return value;
         else
         if( value instanceof String )
-            return Byte.valueOf((String)value);
+            return ((String) value).isEmpty()? null : Byte.valueOf((String)value);
         else
         if( value == null )
             return null;

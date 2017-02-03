@@ -20,7 +20,7 @@ public class CharacterType extends AbstractType{
             return value;
         else
         if( value instanceof String )
-            return Character.valueOf(((String)value).charAt(0));
+            return ((String) value).isEmpty()? null : Character.valueOf(((String)value).charAt(0));
         else
         if( value == null)
             return null;

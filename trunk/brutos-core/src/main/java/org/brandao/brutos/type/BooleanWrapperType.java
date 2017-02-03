@@ -2,9 +2,6 @@
 
 package org.brandao.brutos.type;
 
-import java.io.IOException;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MvcResponse;
 
 
@@ -22,7 +19,7 @@ public class BooleanWrapperType extends AbstractType{
             return value;
         else
         if( value instanceof String )
-            return Boolean.valueOf((String)value);
+            return ((String) value).isEmpty()? null : Boolean.valueOf((String)value);
         else
         if( value == null )
             return null;

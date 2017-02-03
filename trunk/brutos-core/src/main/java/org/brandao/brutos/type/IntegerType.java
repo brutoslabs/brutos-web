@@ -22,7 +22,7 @@ public class IntegerType
             return value;
         else
         if( value instanceof String )
-            return Integer.valueOf( (String)value );
+            return ((String) value).isEmpty()? 0 : Integer.valueOf( (String)value );
         else
         if( value == null )
             return null;

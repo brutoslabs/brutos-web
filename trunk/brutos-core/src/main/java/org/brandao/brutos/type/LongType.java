@@ -22,7 +22,7 @@ public class LongType
             return value;
         else
         if( value instanceof String )
-            return Long.valueOf( (String)value );
+            return ((String) value).isEmpty()? 0L : Long.valueOf( (String)value );
         else
         if( value == null )
             return null;
