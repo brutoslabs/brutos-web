@@ -1,4 +1,4 @@
-^/*
+/*
  * Brutos Web MVC http://www.brutosframework.com.br/
  * Copyright (C) 2009-2017 Afonso Brandao. (afonso.rbn@gmail.com)
  *
