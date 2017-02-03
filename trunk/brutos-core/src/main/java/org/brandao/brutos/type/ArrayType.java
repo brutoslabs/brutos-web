@@ -1,16 +1,13 @@
-
-
 package org.brandao.brutos.type;
 
+public interface ArrayType extends Type {
 
-public interface ArrayType extends Type{
+	void setComponentType(Type type);
 
-    void setComponentType(Type type);
+	Type getComponentType();
 
-    Type getComponentType();
-    
-    void setRawClass(Class value);
+	void setRawClass(Class value);
 
-    Class getRawClass();
+	Class getRawClass();
 
 }

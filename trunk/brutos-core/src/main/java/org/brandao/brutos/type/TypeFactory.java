@@ -1,13 +1,11 @@
-
-
 package org.brandao.brutos.type;
 
 public interface TypeFactory {
 
-    Type getInstance();
+	Type getInstance();
 
-    boolean matches(Class type);
-    
-    Class getClassType();
-    
+	boolean matches(Class type);
+
+	Class getClassType();
+
 }

@@ -1,21 +1,20 @@
 package org.brandao.brutos.type;
 
+public class ObjectTypeFactory implements TypeFactory {
 
-public class ObjectTypeFactory implements TypeFactory{
+	public ObjectTypeFactory() {
+	}
 
-    public ObjectTypeFactory(){
-    }
-    
-    public Type getInstance() {
-        return new ObjectType();
-    }
+	public Type getInstance() {
+		return new ObjectType();
+	}
 
-    public Class getClassType() {
-        return Object.class;
-    }
+	public Class getClassType() {
+		return Object.class;
+	}
 
-    public boolean matches(Class type) {
-        return true;
-    }
-    
+	public boolean matches(Class type) {
+		return true;
+	}
+
 }

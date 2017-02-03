@@ -4,19 +4,18 @@ import java.io.IOException;
 
 import org.brandao.brutos.MvcResponse;
 
-public class AnyType implements Type{
+public class AnyType implements Type {
 
 	private Class<?> type;
-	
-	public AnyType(Class<?> type){
+
+	public AnyType(Class<?> type) {
 		this.type = type;
 	}
-	
+
 	public Object convert(Object value) {
-		if(value == null)
+		if (value == null)
 			return null;
-		else
-		if(type.isAssignableFrom(value.getClass()))
+		else if (type.isAssignableFrom(value.getClass()))
 			return value;
 		else
 			throw new UnknownTypeException(value.getClass().getSimpleName());
