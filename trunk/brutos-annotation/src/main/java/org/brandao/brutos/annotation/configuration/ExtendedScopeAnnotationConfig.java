@@ -29,52 +29,51 @@ import org.brandao.brutos.scope.Scope;
  *
  * @author Brandao
  */
-@Stereotype(target=ExtendedScope.class)
-public class ExtendedScopeAnnotationConfig extends AbstractAnnotationConfig{
+@Stereotype(target = ExtendedScope.class)
+public class ExtendedScopeAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return source instanceof Class && AnnotationUtil.isScope((Class)source);
-    }
+	public boolean isApplicable(Object source) {
+		return source instanceof Class
+				&& AnnotationUtil.isScope((Class) source);
+	}
 
-    public Object applyConfiguration(Object source, Object builder, ComponentRegistry componentRegistry) {
-        try{
-            return this.applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            throw 
-                new MappingException(
-                        "can't create new scope",
-                        e );
-        }
-    }
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+		try {
+			return this.applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new MappingException("can't create new scope", e);
+		}
+	}
 
-    public Object applyConfiguration0(Object source, Object builder, ComponentRegistry componentRegistry) {
-        
-        Class sourceClass = (Class)source;
-        ExtendedScope extendedScope = 
-            (ExtendedScope) sourceClass.getAnnotation(ExtendedScope.class);
-        
-        String name = extendedScope == null? null : extendedScope.value();
-        name = 
-            StringUtil.isEmpty(name)? 
-                StringUtil.toVariableFormat(sourceClass.getSimpleName().replaceAll("Scope$", "")) :
-                name;
-                
-        if(StringUtil.isEmpty(name))
-            throw new MappingException("invalid scope name: " + sourceClass.getName());
-        	
-        if(!Scope.class.isAssignableFrom(sourceClass))
-            throw new MappingException(sourceClass.getName() + " must implement " + Scope.class.getSimpleName());
-        
-        try{
-            Scope scope = (Scope) ClassUtil.getInstance(sourceClass);
-            componentRegistry.registerScope(name, scope);
-            return scope;
-        }
-        catch( Throwable e ){
-            throw new MappingException( e );
-        }
-        
-    }
-            
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		Class sourceClass = (Class) source;
+		ExtendedScope extendedScope = (ExtendedScope) sourceClass
+				.getAnnotation(ExtendedScope.class);
+
+		String name = extendedScope == null ? null : extendedScope.value();
+		name = StringUtil.isEmpty(name) ? StringUtil
+				.toVariableFormat(sourceClass.getSimpleName().replaceAll(
+						"Scope$", "")) : name;
+
+		if (StringUtil.isEmpty(name))
+			throw new MappingException("invalid scope name: "
+					+ sourceClass.getName());
+
+		if (!Scope.class.isAssignableFrom(sourceClass))
+			throw new MappingException(sourceClass.getName()
+					+ " must implement " + Scope.class.getSimpleName());
+
+		try {
+			Scope scope = (Scope) ClassUtil.getInstance(sourceClass);
+			componentRegistry.registerScope(name, scope);
+			return scope;
+		} catch (Throwable e) {
+			throw new MappingException(e);
+		}
+
+	}
+
 }

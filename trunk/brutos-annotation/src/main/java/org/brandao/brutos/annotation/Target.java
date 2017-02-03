@@ -23,6 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * Define a classe alvo de um mapeamento.
+ * 
  * <pre>
  * Ex:
  * public class MyController{
@@ -36,13 +37,14 @@ import java.lang.annotation.RetentionPolicy;
  * 
  * @author Afonso Brandao
  */
-@java.lang.annotation.Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
+@java.lang.annotation.Target({ ElementType.METHOD, ElementType.PARAMETER,
+		ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Target {
-   
-    /**
-     * Classe alvo.
-     */
-    Class<?> value();
-    
+
+	/**
+	 * Classe alvo.
+	 */
+	Class<?> value();
+
 }

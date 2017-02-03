@@ -26,11 +26,12 @@ import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
 
 /**
  * Permite criar mais de um mapeamento para as chaves de uma coleção.
-
+ * 
  * @author Brandao
  *
  */
-@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD,ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD,
+		ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AnyKeyCollection {
 
@@ -38,7 +39,7 @@ public @interface AnyKeyCollection {
 	 * Mapeamento dos metadados.
 	 */
 	Basic metaBean();
-	
+
 	/**
 	 * Tipo dos metadados.
 	 */
@@ -53,5 +54,5 @@ public @interface AnyKeyCollection {
 	 * Permite, em tempo de execução, definir os tipos de mapeamento.
 	 */
 	Class<? extends MetaValuesDefinition> metaValuesDefinition() default MetaValuesDefinition.class;
-	
+
 }

@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 
 /**
  * Intercepta e trata uma exceção.
- *  
+ * 
  * <pre>
  * Ex1:
  * &#064;ThrowSafe(target=NullPointerException.class)

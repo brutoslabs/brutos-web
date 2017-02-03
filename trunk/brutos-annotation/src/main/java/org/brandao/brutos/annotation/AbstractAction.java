@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.annotation;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -45,21 +44,21 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Deprecated
 public @interface AbstractAction {
-    
-    /**
-     * Identificação da ação. 
-     */
-    String[] id();
-    
-    /**
-     * Identificação da visão.
-     */
-    String view();
-    
-    /**
-     * Define como o fluxo de execução será direcionado para a visão.
-     * Os valores estão descritos em {@link DispatcherType}.
-     */
-    String dispatcher() default "forward";
-    
+
+	/**
+	 * Identificação da ação.
+	 */
+	String[] id();
+
+	/**
+	 * Identificação da visão.
+	 */
+	String view();
+
+	/**
+	 * Define como o fluxo de execução será direcionado para a visão. Os valores
+	 * estão descritos em {@link DispatcherType}.
+	 */
+	String dispatcher() default "forward";
+
 }

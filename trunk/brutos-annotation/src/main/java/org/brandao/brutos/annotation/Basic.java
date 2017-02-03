@@ -23,8 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Pode ser usada para especificar o parâmetro de uma ação, 
- * propriedade de uma entidade ou um controlador e o argumento de um construtor.
+ * Pode ser usada para especificar o parâmetro de uma ação, propriedade de uma
+ * entidade ou um controlador e o argumento de um construtor.
  * 
  * <pre>
  * Ex1:
@@ -64,7 +64,7 @@ import java.lang.annotation.Target;
  *    ...
  * }
  * </pre>
-
+ * 
  * <pre>
  * Ex4:
  * &#064;Bean
@@ -85,27 +85,26 @@ import java.lang.annotation.Target;
  * @author Brandao
  */
 
-@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
+@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Basic {
-    
-    /**
-     * Nome da entidade.
-     * 
-     */
-    String bean() default "";
-    
-    /**
-     * Escopo da entidade. Os escopos estão 
-     * descritos em {@link ScopeType}
-     * 
-     */
-    String scope() default ScopeType.PARAM;
 
-    /**
-     * Tipo do mapeamento da entidade. Os tipos estão 
-     * descritos em {@link MappingTypes}
-     */
-    MappingTypes mappingType() default MappingTypes.AUTO;
-    
+	/**
+	 * Nome da entidade.
+	 * 
+	 */
+	String bean() default "";
+
+	/**
+	 * Escopo da entidade. Os escopos estão descritos em {@link ScopeType}
+	 * 
+	 */
+	String scope() default ScopeType.PARAM;
+
+	/**
+	 * Tipo do mapeamento da entidade. Os tipos estão descritos em
+	 * {@link MappingTypes}
+	 */
+	MappingTypes mappingType() default MappingTypes.AUTO;
+
 }

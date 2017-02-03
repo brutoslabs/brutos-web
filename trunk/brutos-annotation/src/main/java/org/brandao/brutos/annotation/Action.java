@@ -17,20 +17,24 @@
 
 package org.brandao.brutos.annotation;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define uma ação de um controlador. Pode ser representada por um método 
- * com ou sem parâmetros. Um parâmetro pode ser um objeto ou um tipo primitivo.
- * Se for um objeto, pode ser criado um mapeamentos para definir como os dados 
- * de uma solicitação serão injetados em suas propriedades.
- * <p>Se o método produzir um resultado, este será processado e incluído na requisição 
- * para posteriormente ser usada na visão.</p> 
- * <p>As exceções lançadas dentro do método podem alterar o fluxo lógico da aplicação.</p>
+ * Define uma ação de um controlador. Pode ser representada por um método com ou
+ * sem parâmetros. Um parâmetro pode ser um objeto ou um tipo primitivo. Se for
+ * um objeto, pode ser criado um mapeamentos para definir como os dados de uma
+ * solicitação serão injetados em suas propriedades.
+ * <p>
+ * Se o método produzir um resultado, este será processado e incluído na
+ * requisição para posteriormente ser usada na visão.
+ * </p>
+ * <p>
+ * As exceções lançadas dentro do método podem alterar o fluxo lógico da
+ * aplicação.
+ * </p>
  * 
  * <pre>
  * Ex1:
@@ -47,18 +51,18 @@ import java.lang.annotation.Target;
  * @author Afonso Brandao
  */
 
-@Target({ElementType.METHOD,ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Action {
-    
-    /**
-     * Identificação da ação.
-     */
-    String[] value() default {};
-    
-    /**
-     * Define a vista da ação.
-     */
-    View view() default @View;
-    
+
+	/**
+	 * Identificação da ação.
+	 */
+	String[] value() default {};
+
+	/**
+	 * Define a vista da ação.
+	 */
+	View view() default @View;
+
 }

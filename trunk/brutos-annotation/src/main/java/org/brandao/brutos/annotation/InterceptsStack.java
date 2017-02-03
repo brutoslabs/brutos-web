@@ -24,8 +24,8 @@ import java.lang.annotation.Target;
 import org.brandao.brutos.interceptor.InterceptorController;
 
 /**
- * Indica que um interceptor em particular pertence a uma 
- * determinada pilha de interceptadores.
+ * Indica que um interceptor em particular pertence a uma determinada pilha de
+ * interceptadores.
  * 
  * <pre>
  * Ex:
@@ -68,26 +68,26 @@ import org.brandao.brutos.interceptor.InterceptorController;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InterceptsStack {
-    
-    /**
-     * Nome da pilha de interceptadores.
-     */
-    String name();
-    
-    /**
-     * Indica que o interceptador será executado depois de um determinado 
-     * interceptador.
-     */
-    Class<? extends InterceptorController> executeAfter() default InterceptorController.class;
-    
-    /**
-     * Parâmetros de configuração da pilha de interceptadores.
-     */
-    Param[] params() default {};
 
-    /**
-     * indica que o inteceptador é global.
-     */
-    boolean isdefault() default false;
-    
+	/**
+	 * Nome da pilha de interceptadores.
+	 */
+	String name();
+
+	/**
+	 * Indica que o interceptador será executado depois de um determinado
+	 * interceptador.
+	 */
+	Class<? extends InterceptorController> executeAfter() default InterceptorController.class;
+
+	/**
+	 * Parâmetros de configuração da pilha de interceptadores.
+	 */
+	Param[] params() default {};
+
+	/**
+	 * indica que o inteceptador é global.
+	 */
+	boolean isdefault() default false;
+
 }

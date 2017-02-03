@@ -25,34 +25,34 @@ import org.brandao.brutos.annotation.configuration.converters.InterceptorStackCo
  * @author Brandao
  */
 public class InterceptorStackEntry {
-    
-    private String name;
-    
-    private List<InterceptorStackItem> interceptors;
 
-    private boolean isDefault;
-    
-    public String getName() {
-        return name;
-    }
+	private String name;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private List<InterceptorStackItem> interceptors;
 
-    public List<InterceptorStackItem> getInterceptors() {
-        return interceptors;
-    }
+	private boolean isDefault;
 
-    public void setInterceptors(List<InterceptorStackItem> interceptors) {
-        this.interceptors = interceptors;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setDefault(boolean value){
-        this.isDefault = value;
-    }
-    
-    public boolean isDefault(){
-        return this.isDefault;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<InterceptorStackItem> getInterceptors() {
+		return interceptors;
+	}
+
+	public void setInterceptors(List<InterceptorStackItem> interceptors) {
+		this.interceptors = interceptors;
+	}
+
+	public void setDefault(boolean value) {
+		this.isDefault = value;
+	}
+
+	public boolean isDefault() {
+		return this.isDefault;
+	}
 }

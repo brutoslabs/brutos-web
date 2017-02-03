@@ -26,35 +26,36 @@ import org.brandao.brutos.annotation.Stereotype;
  * @author Brandao
  */
 public class AnnotationConfigEntry {
-    
-    private Stereotype stereotype;
-    
-    private AnnotationConfig annotationConfig;
 
-    private List<AnnotationConfigEntry> nextAnnotationConfig;
-    
-    public AnnotationConfig getAnnotationConfig() {
-        return annotationConfig;
-    }
+	private Stereotype stereotype;
 
-    public void setAnnotationConfig(AnnotationConfig annotationConfig) {
-        this.annotationConfig = annotationConfig;
-    }
+	private AnnotationConfig annotationConfig;
 
-    public List<AnnotationConfigEntry> getNextAnnotationConfig() {
-        return nextAnnotationConfig;
-    }
+	private List<AnnotationConfigEntry> nextAnnotationConfig;
 
-    public void setNextAnnotationConfig(List<AnnotationConfigEntry> nextAnnotationConfig) {
-        this.nextAnnotationConfig = nextAnnotationConfig;
-    }
+	public AnnotationConfig getAnnotationConfig() {
+		return annotationConfig;
+	}
 
-    public Stereotype getStereotype() {
-        return stereotype;
-    }
+	public void setAnnotationConfig(AnnotationConfig annotationConfig) {
+		this.annotationConfig = annotationConfig;
+	}
 
-    public void setStereotype(Stereotype stereotype) {
-        this.stereotype = stereotype;
-    }
-    
+	public List<AnnotationConfigEntry> getNextAnnotationConfig() {
+		return nextAnnotationConfig;
+	}
+
+	public void setNextAnnotationConfig(
+			List<AnnotationConfigEntry> nextAnnotationConfig) {
+		this.nextAnnotationConfig = nextAnnotationConfig;
+	}
+
+	public Stereotype getStereotype() {
+		return stereotype;
+	}
+
+	public void setStereotype(Stereotype stereotype) {
+		this.stereotype = stereotype;
+	}
+
 }

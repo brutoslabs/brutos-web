@@ -28,48 +28,44 @@ import org.brandao.brutos.type.TypeFactory;
  *
  * @author Brandao
  */
-@Stereotype(target=TypeDef.class)
-public class TypeDefAnnotationConfig extends AbstractAnnotationConfig{
+@Stereotype(target = TypeDef.class)
+public class TypeDefAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return source instanceof Class && 
-               (((Class<?>)source).isAnnotationPresent( TypeDef.class ) ||
-               ((Class<?>)source).getSimpleName().endsWith("TypeFactory"));
-    }
+	public boolean isApplicable(Object source) {
+		return source instanceof Class
+				&& (((Class<?>) source).isAnnotationPresent(TypeDef.class) || ((Class<?>) source)
+						.getSimpleName().endsWith("TypeFactory"));
+	}
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-    
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            throw 
-                new MappingException(
-                        "can't create new type",
-                        e );
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-        
-    	Object factory = null;
-    	Class<?> classType = (Class<?>)source;
-        try{
-            factory = ClassUtil.getInstance(classType);
-        }
-        catch(Exception e){
-            throw new MappingException(e);
-        }
-        
-        if(!(factory instanceof TypeFactory))
-        	throw new MappingException("must implement TypeFactory: " + classType.getSimpleName());
-        
-        componentRegistry.registerType((TypeFactory)factory);
-        return factory;
-        
-    }
-    
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new MappingException("can't create new type", e);
+		}
+
+	}
+
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		Object factory = null;
+		Class<?> classType = (Class<?>) source;
+		try {
+			factory = ClassUtil.getInstance(classType);
+		} catch (Exception e) {
+			throw new MappingException(e);
+		}
+
+		if (!(factory instanceof TypeFactory))
+			throw new MappingException("must implement TypeFactory: "
+					+ classType.getSimpleName());
+
+		componentRegistry.registerType((TypeFactory) factory);
+		return factory;
+
+	}
+
 }

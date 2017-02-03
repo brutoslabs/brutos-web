@@ -25,18 +25,18 @@ import java.util.List;
  */
 public interface Scanner {
 
-    void scan();
+	void scan();
 
-    List<Class> getClassList();
-    
-    void addIncludeFilter(TypeFilter filter);
-    
-    void addExcludeFilter(TypeFilter filter);
-    
-    void removeIncludeFilter(TypeFilter filter);
-    
-    void removeExcludeFilter(TypeFilter filter);
-    
-    void setBasePackage(String[] basePackage);
-    
+	List<Class> getClassList();
+
+	void addIncludeFilter(TypeFilter filter);
+
+	void addExcludeFilter(TypeFilter filter);
+
+	void removeIncludeFilter(TypeFilter filter);
+
+	void removeExcludeFilter(TypeFilter filter);
+
+	void setBasePackage(String[] basePackage);
+
 }

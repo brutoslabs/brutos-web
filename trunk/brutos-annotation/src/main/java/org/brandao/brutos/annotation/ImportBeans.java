@@ -29,10 +29,10 @@ import java.lang.annotation.RetentionPolicy;
 @java.lang.annotation.Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ImportBeans {
-    
-    /**
-     * Coleção de entidades.
-     */
-    Class<?>[] value();
-    
+
+	/**
+	 * Coleção de entidades.
+	 */
+	Class<?>[] value();
+
 }

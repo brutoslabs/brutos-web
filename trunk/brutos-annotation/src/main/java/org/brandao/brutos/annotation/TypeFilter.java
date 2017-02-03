@@ -28,11 +28,11 @@ import java.lang.annotation.RetentionPolicy;
 @java.lang.annotation.Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TypeFilter {
-    
-    FilterType type();
-    
-    String[] pattern() default {};
-    
-    Class[] value() default {};
-    
+
+	FilterType type();
+
+	String[] pattern() default {};
+
+	Class[] value() default {};
+
 }

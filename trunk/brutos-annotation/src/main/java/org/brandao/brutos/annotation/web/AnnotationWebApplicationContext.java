@@ -24,25 +24,24 @@ import org.brandao.brutos.web.AbstractWebApplicationContext;
  *
  * @author Brandão
  */
-public class AnnotationWebApplicationContext 
-    extends AbstractWebApplicationContext{
-    
-    public AnnotationWebApplicationContext(){
-    }
+public class AnnotationWebApplicationContext extends
+		AbstractWebApplicationContext {
 
-    @Override
-    protected void loadDefinitions(ComponentRegistry registry) {
-        AnnotationDefinitionReader definitionReader =
-                new AnnotationDefinitionReader(this, registry);
-        
-        if(this.getLocations() != null)
-            definitionReader.loadDefinitions(locations);
-        
-        if(this.getResources() != null)
-            definitionReader.loadDefinitions(resources);
-        
-        definitionReader.loadDefinitions();
-    }
+	public AnnotationWebApplicationContext() {
+	}
 
-    
+	@Override
+	protected void loadDefinitions(ComponentRegistry registry) {
+		AnnotationDefinitionReader definitionReader = new AnnotationDefinitionReader(
+				this, registry);
+
+		if (this.getLocations() != null)
+			definitionReader.loadDefinitions(locations);
+
+		if (this.getResources() != null)
+			definitionReader.loadDefinitions(resources);
+
+		definitionReader.loadDefinitions();
+	}
+
 }

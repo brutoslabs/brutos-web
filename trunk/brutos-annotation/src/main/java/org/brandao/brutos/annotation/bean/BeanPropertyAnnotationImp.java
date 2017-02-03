@@ -27,69 +27,73 @@ import org.brandao.brutos.bean.BeanPropertyWrapper;
  *
  * @author Brandao
  */
-public class BeanPropertyAnnotationImp 
-    extends BeanPropertyWrapper implements BeanPropertyAnnotation{
-    
-    public BeanPropertyAnnotationImp(BeanProperty beanProperty){
-        super(beanProperty);
-    }
+public class BeanPropertyAnnotationImp extends BeanPropertyWrapper implements
+		BeanPropertyAnnotation {
 
-    public Object getGenericType(){
-    	Target target = this.getAnnotation(Target.class);
-        return target == null? super.getGenericType() : target.value();
-    }
-    
-    public Class getType(){
-    	Target target = this.getAnnotation(Target.class);
-        return target == null? super.getType() : target.value();
-    }
-    
-    public <T extends Annotation> T getAnnotation(Class<T> annotation) {
-        
-        if(this.beanProperty.getSet() != null){
-            T value = (T)this.beanProperty.getSet().getAnnotation(annotation);
-            
-            if(value != null)
-                return value;
-        }
-        
-        if(this.beanProperty.getGet() != null){
-            T value = (T)this.beanProperty.getGet().getAnnotation(annotation);
-            
-            if(value != null)
-                return value;
-        }
-        
-        if(this.beanProperty.getField() != null){
-            T value = (T)this.beanProperty.getField().getAnnotation(annotation);
-            
-            if(value != null)
-                return value;
-        }
-        
-        return null;
-    }
+	public BeanPropertyAnnotationImp(BeanProperty beanProperty) {
+		super(beanProperty);
+	}
 
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
-        
-        if(this.beanProperty.getSet() != null){
-            boolean value = this.beanProperty.getSet().isAnnotationPresent(annotation);
-            if(value)
-                return true;
-        }
-        if(this.beanProperty.getGet() != null){
-            boolean value = this.beanProperty.getGet().isAnnotationPresent(annotation);
-            
-            if(value)
-                return true;
-        }
-        
-        if(this.beanProperty.getField() != null){
-            boolean value = this.beanProperty.getField().isAnnotationPresent(annotation);
-            if(value)
-                return true;
-        }
-        
-        return false;
-    }
+	public Object getGenericType() {
+		Target target = this.getAnnotation(Target.class);
+		return target == null ? super.getGenericType() : target.value();
+	}
+
+	public Class getType() {
+		Target target = this.getAnnotation(Target.class);
+		return target == null ? super.getType() : target.value();
+	}
+
+	public <T extends Annotation> T getAnnotation(Class<T> annotation) {
+
+		if (this.beanProperty.getSet() != null) {
+			T value = (T) this.beanProperty.getSet().getAnnotation(annotation);
+
+			if (value != null)
+				return value;
+		}
+
+		if (this.beanProperty.getGet() != null) {
+			T value = (T) this.beanProperty.getGet().getAnnotation(annotation);
+
+			if (value != null)
+				return value;
+		}
+
+		if (this.beanProperty.getField() != null) {
+			T value = (T) this.beanProperty.getField()
+					.getAnnotation(annotation);
+
+			if (value != null)
+				return value;
+		}
+
+		return null;
+	}
+
+	public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
+
+		if (this.beanProperty.getSet() != null) {
+			boolean value = this.beanProperty.getSet().isAnnotationPresent(
+					annotation);
+			if (value)
+				return true;
+		}
+		if (this.beanProperty.getGet() != null) {
+			boolean value = this.beanProperty.getGet().isAnnotationPresent(
+					annotation);
+
+			if (value)
+				return true;
+		}
+
+		if (this.beanProperty.getField() != null) {
+			boolean value = this.beanProperty.getField().isAnnotationPresent(
+					annotation);
+			if (value)
+				return true;
+		}
+
+		return false;
+	}
 }

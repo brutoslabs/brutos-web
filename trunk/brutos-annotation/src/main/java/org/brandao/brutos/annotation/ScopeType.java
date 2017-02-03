@@ -23,40 +23,40 @@ package org.brandao.brutos.annotation;
  * @author Brandao
  */
 public interface ScopeType {
-    
-    /**
-     * O contexto é a requisição.
-     */
-    public static final String REQUEST     = "request";
-    
-    /**
-     * O contexto são os parâmetros da requisição.
-     */
-    public static final String PARAM       = "param";
-    
-    /**
-     * O contexto é uma <code>Thread</code>.
-     */
-    public static final String THREAD      = "thread";
-    
-    /**
-     * O contexto é definido pelo container IoC.
-     */
-    public static final String IOC         = "ioc";
-    
-    /**
-     * O contexto é um controlador.
-     */
-    public static final String CONTROLLER  = "controller";
 
-    /**
-     * O contexto é uma sessão.
-     */
-    public static final String SESSION = "session";
-    
-    /**
-     * O contexto é a aplicação.
-     */
-    public static final String APPLICATION = "application";
-    
+	/**
+	 * O contexto é a requisição.
+	 */
+	public static final String REQUEST = "request";
+
+	/**
+	 * O contexto são os parâmetros da requisição.
+	 */
+	public static final String PARAM = "param";
+
+	/**
+	 * O contexto é uma <code>Thread</code>.
+	 */
+	public static final String THREAD = "thread";
+
+	/**
+	 * O contexto é definido pelo container IoC.
+	 */
+	public static final String IOC = "ioc";
+
+	/**
+	 * O contexto é um controlador.
+	 */
+	public static final String CONTROLLER = "controller";
+
+	/**
+	 * O contexto é uma sessão.
+	 */
+	public static final String SESSION = "session";
+
+	/**
+	 * O contexto é a aplicação.
+	 */
+	public static final String APPLICATION = "application";
+
 }

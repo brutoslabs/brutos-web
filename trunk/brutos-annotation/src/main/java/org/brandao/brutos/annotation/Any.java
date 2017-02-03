@@ -33,7 +33,7 @@ import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
  * 
  * &#064;Controller("/controller")
  * public class PropertyController{
- *
+ * 
  *    public void saveProperty(
  *        &#064;Basic(bean="property")
  *        &#064;Any(
@@ -47,31 +47,31 @@ import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
  *        ...
  *    }
  * }
- *
+ * 
  * public interface Property{
- *
+ * 
  *     Object getName();
- *
+ * 
  * }
- *
+ * 
  * public abstract class AbstractProperty{
  *    
  *     private String name;
- *
+ * 
  *     public Stirng getName(){
  *         return this.name;
  *     }
- *
+ * 
  * }
- *
+ * 
  * public class DecimalProperty extends AbstractProperty{
  *     
  *     private int length;
- *
+ * 
  *     private int decimals;
  *     ...
  * }
- *
+ * 
  * public class SetProperty extends AbstractProperty {
  *     
  *     private List &#60;String&#62; values;
@@ -83,7 +83,7 @@ import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
  * @author Brandao
  * 
  */
-@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
+@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Any {
 
@@ -97,18 +97,19 @@ public @interface Any {
 	 */
 	Class<?> metaType() default void.class;
 
-    /**
-     * Usado se os metadados forem do tipo enum. Os valores estão 
-     * descritos em {@link EnumerationType}.
-     */
-    EnumerationType metaEnumerated() default EnumerationType.ORDINAL;
-    
-    /**
-     * Usado se os metadados forem do tipo {@link java.util.Date} ou {@link java.util.Calendar}.
-     * Deve seguir o padrão definido em {@link java.text.SimpleDateFormat}.
-     */
-    String metaTemporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
-	
+	/**
+	 * Usado se os metadados forem do tipo enum. Os valores estão descritos em
+	 * {@link EnumerationType}.
+	 */
+	EnumerationType metaEnumerated() default EnumerationType.ORDINAL;
+
+	/**
+	 * Usado se os metadados forem do tipo {@link java.util.Date} ou
+	 * {@link java.util.Calendar}. Deve seguir o padrão definido em
+	 * {@link java.text.SimpleDateFormat}.
+	 */
+	String metaTemporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
+
 	/**
 	 * Especificação dos tipos de mapeamentos.
 	 */
@@ -118,10 +119,10 @@ public @interface Any {
 	 * Permite, em tempo de execução, definir os tipos de mapeamento.
 	 */
 	Class<? extends MetaValuesDefinition> metaValuesDefinition() default MetaValuesDefinition.class;
-	
-    /**
-     * Define o uso de um tipo específico.
-     */
-    Class<? extends org.brandao.brutos.type.Type> metaTypeDef() default org.brandao.brutos.type.Type.class;
-	
+
+	/**
+	 * Define o uso de um tipo específico.
+	 */
+	Class<? extends org.brandao.brutos.type.Type> metaTypeDef() default org.brandao.brutos.type.Type.class;
+
 }

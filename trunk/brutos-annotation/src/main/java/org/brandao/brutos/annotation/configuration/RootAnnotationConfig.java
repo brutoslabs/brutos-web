@@ -30,64 +30,58 @@ import org.brandao.brutos.annotation.configuration.converters.InterceptorStackCo
  *
  * @author Brandao
  */
-@Stereotype(target=Configuration.class, 
-        sourceConverter=InterceptorStackConverter.class)
-public class RootAnnotationConfig extends AbstractAnnotationConfig{
+@Stereotype(target = Configuration.class, sourceConverter = InterceptorStackConverter.class)
+public class RootAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return true;
-    }
+	public boolean isApplicable(Object source) {
+		return true;
+	}
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-        
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Throwable e){
-            throw new BrutosException("failed to load configuration", e);
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) 
-            throws InstantiationException, IllegalAccessException {
-        
-        List<Object> entityList = (List<Object>)source;
-        
-        Map<Class,AnnotationConfigEntry> map = new HashMap<Class,AnnotationConfigEntry>();
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
 
-        for(AnnotationConfigEntry ace: super.annotation.getNextAnnotationConfig())
-            map.put(ace.getStereotype().target(), ace);
-        
-        for(Class target: getExecutionOrder()){
-            
-            AnnotationConfigEntry ace = map.get(target);
-            
-            if(ace == null)
-                throw new BrutosException("configuration not found: " + target);
-            
-            AnnotationConfig ac = ace.getAnnotationConfig();
-            
-            for(Object item: entityList){
-                if(ac.isApplicable(item))
-                    ac.applyConfiguration(item, null, componentRegistry);
-            }
-        }
-        
-        return source;
-    }
-    
-    @Override
-    public Class<? extends Annotation>[] getExecutionOrder(){
-        return new Class[]{
-            TypeDef.class,
-            ExtendedScope.class,
-            Intercepts.class,
-            InterceptsStack.class,
-            Controller.class};
-    }
-   
-    
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Throwable e) {
+			throw new BrutosException("failed to load configuration", e);
+		}
+
+	}
+
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) throws InstantiationException,
+			IllegalAccessException {
+
+		List<Object> entityList = (List<Object>) source;
+
+		Map<Class, AnnotationConfigEntry> map = new HashMap<Class, AnnotationConfigEntry>();
+
+		for (AnnotationConfigEntry ace : super.annotation
+				.getNextAnnotationConfig())
+			map.put(ace.getStereotype().target(), ace);
+
+		for (Class target : getExecutionOrder()) {
+
+			AnnotationConfigEntry ace = map.get(target);
+
+			if (ace == null)
+				throw new BrutosException("configuration not found: " + target);
+
+			AnnotationConfig ac = ace.getAnnotationConfig();
+
+			for (Object item : entityList) {
+				if (ac.isApplicable(item))
+					ac.applyConfiguration(item, null, componentRegistry);
+			}
+		}
+
+		return source;
+	}
+
+	@Override
+	public Class<? extends Annotation>[] getExecutionOrder() {
+		return new Class[] { TypeDef.class, ExtendedScope.class,
+				Intercepts.class, InterceptsStack.class, Controller.class };
+	}
+
 }

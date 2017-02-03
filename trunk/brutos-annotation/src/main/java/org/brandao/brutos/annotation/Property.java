@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.annotation;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -32,10 +31,10 @@ import java.lang.annotation.Target;
 @Deprecated
 public @interface Property {
 
-    String bean() default "";
-    
-    String scope() default "param";
+	String bean() default "";
 
-    boolean useMapping() default false;
-    
+	String scope() default "param";
+
+	boolean useMapping() default false;
+
 }

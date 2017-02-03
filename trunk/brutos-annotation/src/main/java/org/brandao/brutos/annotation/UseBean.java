@@ -23,24 +23,23 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.brandao.brutos.type.Type;
 
-@Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD})
+@Target({ ElementType.ANNOTATION_TYPE, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Deprecated
 public @interface UseBean {
-    
 
-    String name() default "";
+	String name() default "";
 
-    String propertyName();
+	String propertyName();
 
-    String scope() default "request";
+	String scope() default "request";
 
-    String enumProperty() default "ordinal";
+	String enumProperty() default "ordinal";
 
-    String temporalProperty() default "dd/MM/yyyy";
+	String temporalProperty() default "dd/MM/yyyy";
 
-    String mappingName() default "";
+	String mappingName() default "";
 
-    Class<? extends Type> factory() default Type.class;
- 
+	Class<? extends Type> factory() default Type.class;
+
 }

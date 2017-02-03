@@ -24,26 +24,26 @@ import java.lang.annotation.Target;
 
 /**
  *
- *  @author Afonso Brandao
+ * @author Afonso Brandao
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Deprecated
-public @interface Frame{
-    
-    String defaultMethodName() default "";
-    
-    String page() default "";
-    
-    String name() default "";
-    
-    @Deprecated
-    String path() default "";
-    
-    String uri();
-    
-    String methodParameterName() default "invoke";
-    
-    //ScopeType scope() default ScopeType.REQUEST;
-    
+public @interface Frame {
+
+	String defaultMethodName() default "";
+
+	String page() default "";
+
+	String name() default "";
+
+	@Deprecated
+	String path() default "";
+
+	String uri();
+
+	String methodParameterName() default "invoke";
+
+	// ScopeType scope() default ScopeType.REQUEST;
+
 }

@@ -24,10 +24,11 @@ import org.brandao.brutos.annotation.Configuration;
  *
  * @author Brandao
  */
-public class ConfigurationTypeFilter extends AnnotationTypeFilter{
-    
-    public ConfigurationTypeFilter(){
-        super.setExpression(Arrays.asList(new String[]{Configuration.class.getName()}));
-    }
-    
+public class ConfigurationTypeFilter extends AnnotationTypeFilter {
+
+	public ConfigurationTypeFilter() {
+		super.setExpression(Arrays.asList(new String[] { Configuration.class
+				.getName() }));
+	}
+
 }

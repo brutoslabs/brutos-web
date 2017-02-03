@@ -32,47 +32,44 @@ import org.brandao.brutos.xml.XMLComponentDefinitionReader;
  *
  * @author Brandão
  */
-public class AnnotationDefinitionReader 
-    extends XMLComponentDefinitionReader {
+public class AnnotationDefinitionReader extends XMLComponentDefinitionReader {
 
-    private ConfigurableApplicationContext applicationContext;
-    
-    public AnnotationDefinitionReader(ConfigurableApplicationContext applicationContext, 
-            ComponentRegistry componentRegistry) {
-        super(componentRegistry);
-        this.applicationContext = applicationContext;
-    }
+	private ConfigurableApplicationContext applicationContext;
 
-    public void loadDefinitions(){
-        ComponentConfigurer componentConfigurer = 
-                new ComponentConfigurer(applicationContext);
-        
-        ConfigurationEntry config = new ConfigurationEntry();
-        
-        if(this.getScannerEntity() != null){
-            ScannerEntity scannerEntity = super.getScannerEntity();
-            config.setBasePackage(Arrays.asList(scannerEntity.getBasePackage()));
-            config.setExcludeFilters(scannerEntity.getExcludeFilters());
-            config.setIncludeFilters(scannerEntity.getIncludeFilters());
-            config.setScannerClassName(scannerEntity.getScannerClassName());
-            config.setUseDefaultfilter(scannerEntity.isUseDefaultfilter());
-        }
-        else{
-            config.setBasePackage(Arrays.asList(new String[]{""}));
-            config.setExcludeFilters(null);
-            config.setIncludeFilters(
-                Arrays.asList(
-                    new FilterEntity[]{
-                        new FilterEntity(
-                            FilterType.ANNOTATION.getName(), 
-                            Arrays.asList( new String[]{Configuration.class.getName()}))}));
-            config.setScannerClassName(null);
-            config.setUseDefaultfilter(true);
-        }
+	public AnnotationDefinitionReader(
+			ConfigurableApplicationContext applicationContext,
+			ComponentRegistry componentRegistry) {
+		super(componentRegistry);
+		this.applicationContext = applicationContext;
+	}
 
-        componentConfigurer.setConfiguration(config);
-        componentConfigurer.init(this.componentRegistry);
-    }
-    
+	public void loadDefinitions() {
+		ComponentConfigurer componentConfigurer = new ComponentConfigurer(
+				applicationContext);
+
+		ConfigurationEntry config = new ConfigurationEntry();
+
+		if (this.getScannerEntity() != null) {
+			ScannerEntity scannerEntity = super.getScannerEntity();
+			config.setBasePackage(Arrays.asList(scannerEntity.getBasePackage()));
+			config.setExcludeFilters(scannerEntity.getExcludeFilters());
+			config.setIncludeFilters(scannerEntity.getIncludeFilters());
+			config.setScannerClassName(scannerEntity.getScannerClassName());
+			config.setUseDefaultfilter(scannerEntity.isUseDefaultfilter());
+		} else {
+			config.setBasePackage(Arrays.asList(new String[] { "" }));
+			config.setExcludeFilters(null);
+			config.setIncludeFilters(Arrays
+					.asList(new FilterEntity[] { new FilterEntity(
+							FilterType.ANNOTATION.getName(), Arrays
+									.asList(new String[] { Configuration.class
+											.getName() })) }));
+			config.setScannerClassName(null);
+			config.setUseDefaultfilter(true);
+		}
+
+		componentConfigurer.setConfiguration(config);
+		componentConfigurer.init(this.componentRegistry);
+	}
 
 }

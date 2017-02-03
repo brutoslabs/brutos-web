@@ -23,8 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * O controlador, ação ou propriedade que possuir essa anotação 
- * será ignorada.
+ * O controlador, ação ou propriedade que possuir essa anotação será ignorada.
  * 
  * <pre>
  * Ex:
@@ -50,8 +49,8 @@ import java.lang.annotation.Target;
  * 
  * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.FIELD,ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Transient {
-    
+
 }

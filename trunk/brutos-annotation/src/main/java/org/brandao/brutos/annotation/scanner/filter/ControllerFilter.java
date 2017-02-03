@@ -28,23 +28,20 @@ import org.brandao.brutos.scanner.vfs.Vfs;
  *
  * @author Brandao
  */
-public class ControllerFilter implements TypeFilter{
+public class ControllerFilter implements TypeFilter {
 
-    public boolean accepts(String resource) {
-        try{
-            resource = Vfs.toClass(resource);
-            Class clazz = ClassUtil.get(resource);
-            return 
-                resource.matches("(.*\\.)*\\w+Controller") || 
-                clazz.isAnnotationPresent(Controller.class);
-        }
-        catch(ClassNotFoundException e){
-            throw new BrutosException(e);
-        }
-    }
+	public boolean accepts(String resource) {
+		try {
+			resource = Vfs.toClass(resource);
+			Class clazz = ClassUtil.get(resource);
+			return resource.matches("(.*\\.)*\\w+Controller")
+					|| clazz.isAnnotationPresent(Controller.class);
+		} catch (ClassNotFoundException e) {
+			throw new BrutosException(e);
+		}
+	}
 
-    public void setExpression(List<String> value) {
-    }
+	public void setExpression(List<String> value) {
+	}
 
-    
 }

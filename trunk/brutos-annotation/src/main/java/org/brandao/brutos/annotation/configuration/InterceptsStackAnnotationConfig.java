@@ -32,49 +32,49 @@ import org.brandao.brutos.mapping.StringUtil;
  *
  * @author Brandao
  */
-@Stereotype(target=InterceptsStack.class)
-public class InterceptsStackAnnotationConfig extends AbstractAnnotationConfig{
+@Stereotype(target = InterceptsStack.class)
+public class InterceptsStackAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return source instanceof InterceptorStackEntry;
-    }
+	public boolean isApplicable(Object source) {
+		return source instanceof InterceptorStackEntry;
+	}
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-    
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            throw 
-                new BrutosException(
-                        "can't create interceptor stack: " + ((InterceptorStackEntry)source).getName(),
-                        e );
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-        
-        InterceptorStackEntry stack = (InterceptorStackEntry)source;
-        
-        String name = StringUtil.adjust(stack.getName());
-        List<InterceptorStackItem> interceptors = stack.getInterceptors();
-        
-        InterceptorStackBuilder newBuilder = 
-                componentRegistry.registerInterceptorStack(name, stack.isDefault());
-        
-        for(InterceptorStackItem i: interceptors){
-            Interceptor in = componentRegistry.getRegisteredInterceptor(i.getType());
-            newBuilder.addInterceptor(in.getName());
-            Param[] params = i.getInfo().params();
-            for(Param p: params){
-                newBuilder.addParameter(in.getName() + "." + StringUtil.adjust(p.name()), StringUtil.adjust(p.value()));
-            }
-        }
-        super.applyInternalConfiguration(source, newBuilder, componentRegistry);
-        return builder;
-    }
-    
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new BrutosException("can't create interceptor stack: "
+					+ ((InterceptorStackEntry) source).getName(), e);
+		}
+
+	}
+
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		InterceptorStackEntry stack = (InterceptorStackEntry) source;
+
+		String name = StringUtil.adjust(stack.getName());
+		List<InterceptorStackItem> interceptors = stack.getInterceptors();
+
+		InterceptorStackBuilder newBuilder = componentRegistry
+				.registerInterceptorStack(name, stack.isDefault());
+
+		for (InterceptorStackItem i : interceptors) {
+			Interceptor in = componentRegistry.getRegisteredInterceptor(i
+					.getType());
+			newBuilder.addInterceptor(in.getName());
+			Param[] params = i.getInfo().params();
+			for (Param p : params) {
+				newBuilder.addParameter(
+						in.getName() + "." + StringUtil.adjust(p.name()),
+						StringUtil.adjust(p.value()));
+			}
+		}
+		super.applyInternalConfiguration(source, newBuilder, componentRegistry);
+		return builder;
+	}
+
 }

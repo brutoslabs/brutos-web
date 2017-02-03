@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.annotation;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -32,11 +31,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ActionStrategy {
-    
-    /**
-     * Estratégia de mapeamento da ação. Os valores estão 
-     * descritos em {@link ActionStrategyType}.
-     */
-    ActionStrategyType value();
-    
+
+	/**
+	 * Estratégia de mapeamento da ação. Os valores estão descritos em
+	 * {@link ActionStrategyType}.
+	 */
+	ActionStrategyType value();
+
 }

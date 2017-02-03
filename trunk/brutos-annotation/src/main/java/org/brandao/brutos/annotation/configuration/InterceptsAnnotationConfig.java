@@ -20,7 +20,6 @@ package org.brandao.brutos.annotation.configuration;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.InterceptorBuilder;
-import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.annotation.Intercepts;
 import org.brandao.brutos.annotation.Param;
 import org.brandao.brutos.annotation.Stereotype;
@@ -30,51 +29,51 @@ import org.brandao.brutos.mapping.StringUtil;
  *
  * @author Brandao
  */
-@Stereotype(target=Intercepts.class)
-public class InterceptsAnnotationConfig extends AbstractAnnotationConfig{
+@Stereotype(target = Intercepts.class)
+public class InterceptsAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return source instanceof Class && AnnotationUtil.isInterceptor((Class)source);
-    }
+	public boolean isApplicable(Object source) {
+		return source instanceof Class
+				&& AnnotationUtil.isInterceptor((Class) source);
+	}
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-    
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            throw 
-                new BrutosException(
-                        "can't create interceptor: " + ((Class)source).getName(),
-                        e );
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-        
-        Class clazz = (Class)source;
-        Intercepts intercepts = (Intercepts) clazz.getAnnotation(Intercepts.class);
-        
-        String name = intercepts == null || StringUtil.adjust(intercepts.name()) == null?
-                clazz.getSimpleName().replaceAll("InterceptorController$", "") :
-                StringUtil.adjust(intercepts.name());
-        
-        name = StringUtil.toVariableFormat(name);
-        
-        boolean isDefault = intercepts == null || intercepts.isDefault();
-        InterceptorBuilder newBuilder = 
-                componentRegistry.registerInterceptor(name, clazz, isDefault);
-        
-        if(intercepts != null){
-            for(Param p: intercepts.params())
-                newBuilder.addParameter(p.name(), p.value());
-        }
-        
-        super.applyInternalConfiguration(source,newBuilder, componentRegistry);
-        return builder;
-    }
-    
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new BrutosException("can't create interceptor: "
+					+ ((Class) source).getName(), e);
+		}
+
+	}
+
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		Class clazz = (Class) source;
+		Intercepts intercepts = (Intercepts) clazz
+				.getAnnotation(Intercepts.class);
+
+		String name = intercepts == null
+				|| StringUtil.adjust(intercepts.name()) == null ? clazz
+				.getSimpleName().replaceAll("InterceptorController$", "")
+				: StringUtil.adjust(intercepts.name());
+
+		name = StringUtil.toVariableFormat(name);
+
+		boolean isDefault = intercepts == null || intercepts.isDefault();
+		InterceptorBuilder newBuilder = componentRegistry.registerInterceptor(
+				name, clazz, isDefault);
+
+		if (intercepts != null) {
+			for (Param p : intercepts.params())
+				newBuilder.addParameter(p.name(), p.value());
+		}
+
+		super.applyInternalConfiguration(source, newBuilder, componentRegistry);
+		return builder;
+	}
+
 }

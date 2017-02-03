@@ -28,119 +28,115 @@ import org.brandao.brutos.mapping.StringUtil;
  * @author Brandao
  */
 public class ThrowableEntry {
-    
-    private String view;
-    
-    private DispatcherType dispatcher;
-    
-    private Class<? extends Throwable> target;
-    
-    private String name;
-    
-    private boolean rendered;
-    
-    private boolean enabled;
-    
-    private boolean resolved;
 
+	private String view;
 
-    public ThrowableEntry(){
-    }
+	private DispatcherType dispatcher;
 
-    public ThrowableEntry(Class<? extends Throwable> target){
-        this.target   = target;
-        this.enabled  = true;
-        this.rendered = true;
-        this.resolved = false;
-    }
-    
-    public ThrowableEntry(ThrowSafe value){
-        this.dispatcher = StringUtil.isEmpty(value.dispatcher())?
-                null :
-                DispatcherType.valueOf(StringUtil.adjust(value.dispatcher()));
-        
-        this.enabled    = value.enabled();
-        this.name       = StringUtil.isEmpty(value.name())?
-                BrutosConstants.DEFAULT_EXCEPTION_NAME : 
-                StringUtil.adjust(value.name());
-        
-        this.rendered   = value.rendered();
-        this.target     = value.target();
-        this.view       = StringUtil.adjust(value.view());
-        this.resolved   = value.resolved();
-    }
+	private Class<? extends Throwable> target;
 
-    public ThrowableEntry(DefaultThrowSafe value, Class<? extends Throwable> target){
-        this.dispatcher = StringUtil.isEmpty(value.dispatcher())?
-                null :
-                DispatcherType.valueOf(StringUtil.adjust(value.dispatcher()));
-        
-        this.enabled    = value.enabled();
-        this.name       = StringUtil.isEmpty(value.name())?
-                BrutosConstants.DEFAULT_EXCEPTION_NAME : 
-                StringUtil.adjust(value.name());
-        
-        this.rendered   = value.rendered();
-        this.target     = target;
-        this.view       = StringUtil.adjust(value.view());
-        this.resolved   = value.resolved();
-    }
-    
-    public String getView() {
-        return view;
-    }
+	private String name;
 
-    public void setView(String view) {
-        this.view = view;
-    }
+	private boolean rendered;
 
-    public DispatcherType getDispatcher() {
-        return dispatcher;
-    }
+	private boolean enabled;
 
-    public void setDispatcher(DispatcherType dispatcher) {
-        this.dispatcher = dispatcher;
-    }
+	private boolean resolved;
 
-    public Class<? extends Throwable> getTarget() {
-        return target;
-    }
+	public ThrowableEntry() {
+	}
 
-    public void setTarget(Class<? extends Throwable> target) {
-        this.target = target;
-    }
+	public ThrowableEntry(Class<? extends Throwable> target) {
+		this.target = target;
+		this.enabled = true;
+		this.rendered = true;
+		this.resolved = false;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public ThrowableEntry(ThrowSafe value) {
+		this.dispatcher = StringUtil.isEmpty(value.dispatcher()) ? null
+				: DispatcherType.valueOf(StringUtil.adjust(value.dispatcher()));
 
-    public void setName(String name) {
-        this.name = name;
-    }
+		this.enabled = value.enabled();
+		this.name = StringUtil.isEmpty(value.name()) ? BrutosConstants.DEFAULT_EXCEPTION_NAME
+				: StringUtil.adjust(value.name());
 
-    public boolean isRendered() {
-        return rendered;
-    }
+		this.rendered = value.rendered();
+		this.target = value.target();
+		this.view = StringUtil.adjust(value.view());
+		this.resolved = value.resolved();
+	}
 
-    public void setRendered(boolean rendered) {
-        this.rendered = rendered;
-    }
+	public ThrowableEntry(DefaultThrowSafe value,
+			Class<? extends Throwable> target) {
+		this.dispatcher = StringUtil.isEmpty(value.dispatcher()) ? null
+				: DispatcherType.valueOf(StringUtil.adjust(value.dispatcher()));
 
-    public boolean isEnabled() {
-        return enabled;
-    }
+		this.enabled = value.enabled();
+		this.name = StringUtil.isEmpty(value.name()) ? BrutosConstants.DEFAULT_EXCEPTION_NAME
+				: StringUtil.adjust(value.name());
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+		this.rendered = value.rendered();
+		this.target = target;
+		this.view = StringUtil.adjust(value.view());
+		this.resolved = value.resolved();
+	}
 
-    public boolean isResolved() {
-        return resolved;
-    }
+	public String getView() {
+		return view;
+	}
 
-    public void setResolved(boolean resolved) {
-        this.resolved = resolved;
-    }
+	public void setView(String view) {
+		this.view = view;
+	}
+
+	public DispatcherType getDispatcher() {
+		return dispatcher;
+	}
+
+	public void setDispatcher(DispatcherType dispatcher) {
+		this.dispatcher = dispatcher;
+	}
+
+	public Class<? extends Throwable> getTarget() {
+		return target;
+	}
+
+	public void setTarget(Class<? extends Throwable> target) {
+		this.target = target;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isRendered() {
+		return rendered;
+	}
+
+	public void setRendered(boolean rendered) {
+		this.rendered = rendered;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public boolean isResolved() {
+		return resolved;
+	}
+
+	public void setResolved(boolean resolved) {
+		this.resolved = resolved;
+	}
 
 	@Override
 	public int hashCode() {
@@ -166,6 +162,5 @@ public class ThrowableEntry {
 			return false;
 		return true;
 	}
-    
-    
+
 }

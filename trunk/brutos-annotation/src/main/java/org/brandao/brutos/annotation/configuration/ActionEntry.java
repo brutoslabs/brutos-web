@@ -26,171 +26,165 @@ import java.lang.reflect.Type;
  * @author Brandao
  */
 public class ActionEntry {
-    
-    private String name;
-    
-    private Annotation[] annotation;
 
-    private Class<?>[] exceptionTypes;
-            
-    private Class<?> controllerClass;
-    
-    private Type[] genericParameterTypes;
-    
-    private Class<?>[] parameterTypes;
-    
-    private Annotation[][] parameterAnnotations;
-            
-    private Class<?> returnType;
-    
-    @Deprecated
-    private String view;
-    
-    @Deprecated
-    private String dispatcher;
-    
-    private boolean abstractAction;
-    
-    public ActionEntry(Method method){
-        this(
-            method.getName(),
-            method.getAnnotations(),
-            method.getDeclaringClass(),
-            method.getExceptionTypes(),
-            method.getGenericParameterTypes(),
-            method.getParameterTypes(),
-            method.getReturnType(),
-            method.getParameterAnnotations(),
-            null,
-            null,
-            false);
-    }
-    
-    public ActionEntry(String name, Annotation[] annotation, Class<?> controllerClass, 
-            Class<?>[] exceptionTypes, Type[] genericParameterTypes, Class<?>[] parameterTypes,
-            Class<?> returnType,
-            Annotation[][] parameterAnnotations, String view, String dispatcher, boolean abstractAction){
-        this.name = name;
-        this.annotation = annotation;
-        this.exceptionTypes = exceptionTypes;
-        this.controllerClass = controllerClass;
-        this.genericParameterTypes = genericParameterTypes;
-        this.parameterTypes = parameterTypes;
-        this.parameterAnnotations = parameterAnnotations;
-        this.abstractAction = abstractAction;
-        this.dispatcher = dispatcher;
-        this.view = view;
-        this.returnType = returnType;
-    }
-    
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
-        if(this.annotation == null)
-            return false;
-        
-        for( Annotation a: this.annotation ){
-            if( a.annotationType().isAssignableFrom(annotation) )
-                return true;
-        }
-        
-        return false;
-    }
-    
-    @SuppressWarnings("unchecked")
-	public <T> T getAnnotation(Class<T> annotation){
-        if(this.annotation == null)
-            return null;
-        
-        for( Annotation a: this.annotation ){
-            if( a.annotationType().isAssignableFrom(annotation) )
-                return (T) a;
-        }
-        
-        return null;
-    }
-    
-    public String getName() {
-        return this.name;
-    }
+	private String name;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private Annotation[] annotation;
 
-    public Annotation[] getAnnotation() {
-        return annotation;
-    }
+	private Class<?>[] exceptionTypes;
 
-    public void setAnnotation(Annotation[] annotation) {
-        this.annotation = annotation;
-    }
+	private Class<?> controllerClass;
 
-    public void setExceptionTypes(Class<?>[] exceptionTypes) {
-        this.exceptionTypes = exceptionTypes;
-    }
-    
-    public Class<?>[] getExceptionTypes() {
-        return this.exceptionTypes;
-    }
+	private Type[] genericParameterTypes;
 
-    public Class<?> getControllerClass() {
-        return controllerClass;
-    }
+	private Class<?>[] parameterTypes;
 
-    public void setControllerClass(Class<?> controllerClass) {
-        this.controllerClass = controllerClass;
-    }
+	private Annotation[][] parameterAnnotations;
 
-    public Type[] getGenericParameterTypes() {
-        return genericParameterTypes;
-    }
+	private Class<?> returnType;
 
-    public void setGenericParameterTypes(Type[] genericTypes) {
-        this.genericParameterTypes = genericTypes;
-    }
+	@Deprecated
+	private String view;
 
-    public Class<?>[] getParameterTypes() {
-        return parameterTypes;
-    }
+	@Deprecated
+	private String dispatcher;
 
-    public void setParameterTypes(Class<?>[] parameterTypes) {
-        this.parameterTypes = parameterTypes;
-    }
+	private boolean abstractAction;
 
-    public Annotation[][] getParameterAnnotations() {
-        return parameterAnnotations;
-    }
+	public ActionEntry(Method method) {
+		this(method.getName(), method.getAnnotations(), method
+				.getDeclaringClass(), method.getExceptionTypes(), method
+				.getGenericParameterTypes(), method.getParameterTypes(), method
+				.getReturnType(), method.getParameterAnnotations(), null, null,
+				false);
+	}
 
-    public void setParameterAnnotations(Annotation[][] parameterAnnotations) {
-        this.parameterAnnotations = parameterAnnotations;
-    }
+	public ActionEntry(String name, Annotation[] annotation,
+			Class<?> controllerClass, Class<?>[] exceptionTypes,
+			Type[] genericParameterTypes, Class<?>[] parameterTypes,
+			Class<?> returnType, Annotation[][] parameterAnnotations,
+			String view, String dispatcher, boolean abstractAction) {
+		this.name = name;
+		this.annotation = annotation;
+		this.exceptionTypes = exceptionTypes;
+		this.controllerClass = controllerClass;
+		this.genericParameterTypes = genericParameterTypes;
+		this.parameterTypes = parameterTypes;
+		this.parameterAnnotations = parameterAnnotations;
+		this.abstractAction = abstractAction;
+		this.dispatcher = dispatcher;
+		this.view = view;
+		this.returnType = returnType;
+	}
 
-    @Deprecated
-    public String getView() {
-        return view;
-    }
+	public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
+		if (this.annotation == null)
+			return false;
 
-    @Deprecated
-    public void setView(String view) {
-        this.view = view;
-    }
+		for (Annotation a : this.annotation) {
+			if (a.annotationType().isAssignableFrom(annotation))
+				return true;
+		}
 
-    @Deprecated
-    public String getDispatcher() {
-        return dispatcher;
-    }
+		return false;
+	}
 
-    @Deprecated
-    public void setDispatcher(String dispatcher) {
-        this.dispatcher = dispatcher;
-    }
+	@SuppressWarnings("unchecked")
+	public <T> T getAnnotation(Class<T> annotation) {
+		if (this.annotation == null)
+			return null;
 
-    public boolean isAbstractAction() {
-        return abstractAction;
-    }
+		for (Annotation a : this.annotation) {
+			if (a.annotationType().isAssignableFrom(annotation))
+				return (T) a;
+		}
 
-    public void setAbstractAction(boolean abstractAction) {
-        this.abstractAction = abstractAction;
-    }
+		return null;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Annotation[] getAnnotation() {
+		return annotation;
+	}
+
+	public void setAnnotation(Annotation[] annotation) {
+		this.annotation = annotation;
+	}
+
+	public void setExceptionTypes(Class<?>[] exceptionTypes) {
+		this.exceptionTypes = exceptionTypes;
+	}
+
+	public Class<?>[] getExceptionTypes() {
+		return this.exceptionTypes;
+	}
+
+	public Class<?> getControllerClass() {
+		return controllerClass;
+	}
+
+	public void setControllerClass(Class<?> controllerClass) {
+		this.controllerClass = controllerClass;
+	}
+
+	public Type[] getGenericParameterTypes() {
+		return genericParameterTypes;
+	}
+
+	public void setGenericParameterTypes(Type[] genericTypes) {
+		this.genericParameterTypes = genericTypes;
+	}
+
+	public Class<?>[] getParameterTypes() {
+		return parameterTypes;
+	}
+
+	public void setParameterTypes(Class<?>[] parameterTypes) {
+		this.parameterTypes = parameterTypes;
+	}
+
+	public Annotation[][] getParameterAnnotations() {
+		return parameterAnnotations;
+	}
+
+	public void setParameterAnnotations(Annotation[][] parameterAnnotations) {
+		this.parameterAnnotations = parameterAnnotations;
+	}
+
+	@Deprecated
+	public String getView() {
+		return view;
+	}
+
+	@Deprecated
+	public void setView(String view) {
+		this.view = view;
+	}
+
+	@Deprecated
+	public String getDispatcher() {
+		return dispatcher;
+	}
+
+	@Deprecated
+	public void setDispatcher(String dispatcher) {
+		this.dispatcher = dispatcher;
+	}
+
+	public boolean isAbstractAction() {
+		return abstractAction;
+	}
+
+	public void setAbstractAction(boolean abstractAction) {
+		this.abstractAction = abstractAction;
+	}
 
 	public Class<?> getReturnType() {
 		return returnType;

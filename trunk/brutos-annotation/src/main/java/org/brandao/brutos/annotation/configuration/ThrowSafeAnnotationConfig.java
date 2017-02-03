@@ -30,94 +30,75 @@ import org.brandao.brutos.annotation.ThrowSafe;
  *
  * @author Brandao
  */
-@Stereotype(target=ThrowSafe.class,executeAfter={Action.class,Controller.class})
-public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig{
+@Stereotype(target = ThrowSafe.class, executeAfter = { Action.class,
+		Controller.class })
+public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return source instanceof ThrowableEntry;
-    }
+	public boolean isApplicable(Object source) {
+		return source instanceof ThrowableEntry;
+	}
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-    
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            throw 
-                new BrutosException(
-                        "can't create mapping exception",
-                        e );
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
 
-        if(builder instanceof ActionBuilder)
-            addThrowSafe((ActionBuilder)builder, componentRegistry, (ThrowableEntry)source);
-        else
-            addThrowSafe((ControllerBuilder)builder, componentRegistry, (ThrowableEntry)source);
-        
-        return builder;
-    }
-    
-    protected void addThrowSafe(ActionBuilder actionBuilder, 
-            ComponentRegistry componentRegistry, ThrowableEntry throwSafe){
-        
-        if(throwSafe.isEnabled()){
-            actionBuilder
-                    .addThrowable(
-                        throwSafe.getTarget(), 
-                        throwSafe.isRendered()? throwSafe.getView() : null,
-                        throwSafe.isRendered()? throwSafe.isResolved() : true,
-                        throwSafe.getName(), 
-                        throwSafe.getDispatcher());
-        }
-    }
-    
-    protected void addThrowSafe(ControllerBuilder controllerBuilder, 
-            ComponentRegistry componentRegistry, ThrowableEntry throwSafe){
-        
-        if(throwSafe.isEnabled()){
-            controllerBuilder
-                    .addThrowable(
-                        throwSafe.getTarget(),
-                        throwSafe.isRendered()? throwSafe.getView() : null,
-                        throwSafe.isRendered()? throwSafe.isResolved() : true,
-                        throwSafe.getName(), 
-                        throwSafe.getDispatcher());
-        }
-        
-    }
-    
-    protected String getView(ControllerBuilder controllerBuilder, 
-            ComponentRegistry componentRegistry, ThrowableEntry throwSafe){
-        return 
-            throwSafe.isResolved()? 
-                throwSafe.getView() : 
-                applicationContext.
-                        getViewResolver()
-                        .getView(
-                                controllerBuilder, 
-                                null, 
-                                throwSafe.getTarget(), 
-                                throwSafe.getView());
-    }
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new BrutosException("can't create mapping exception", e);
+		}
 
-    protected String getView(ActionBuilder actionBuilder, 
-            ComponentRegistry componentRegistry, ThrowableEntry throwSafe){
-        return
-            throwSafe.isResolved()?
-                throwSafe.getView() : 
-                applicationContext.
-                        getViewResolver()
-                        .getView(
-                                actionBuilder.getControllerBuilder(), 
-                                actionBuilder, 
-                                throwSafe.getTarget(), 
-                                throwSafe.getView());
-    }
-    
+	}
+
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		if (builder instanceof ActionBuilder)
+			addThrowSafe((ActionBuilder) builder, componentRegistry,
+					(ThrowableEntry) source);
+		else
+			addThrowSafe((ControllerBuilder) builder, componentRegistry,
+					(ThrowableEntry) source);
+
+		return builder;
+	}
+
+	protected void addThrowSafe(ActionBuilder actionBuilder,
+			ComponentRegistry componentRegistry, ThrowableEntry throwSafe) {
+
+		if (throwSafe.isEnabled()) {
+			actionBuilder.addThrowable(throwSafe.getTarget(),
+					throwSafe.isRendered() ? throwSafe.getView() : null,
+					throwSafe.isRendered() ? throwSafe.isResolved() : true,
+					throwSafe.getName(), throwSafe.getDispatcher());
+		}
+	}
+
+	protected void addThrowSafe(ControllerBuilder controllerBuilder,
+			ComponentRegistry componentRegistry, ThrowableEntry throwSafe) {
+
+		if (throwSafe.isEnabled()) {
+			controllerBuilder.addThrowable(throwSafe.getTarget(),
+					throwSafe.isRendered() ? throwSafe.getView() : null,
+					throwSafe.isRendered() ? throwSafe.isResolved() : true,
+					throwSafe.getName(), throwSafe.getDispatcher());
+		}
+
+	}
+
+	protected String getView(ControllerBuilder controllerBuilder,
+			ComponentRegistry componentRegistry, ThrowableEntry throwSafe) {
+		return throwSafe.isResolved() ? throwSafe.getView()
+				: applicationContext.getViewResolver().getView(
+						controllerBuilder, null, throwSafe.getTarget(),
+						throwSafe.getView());
+	}
+
+	protected String getView(ActionBuilder actionBuilder,
+			ComponentRegistry componentRegistry, ThrowableEntry throwSafe) {
+		return throwSafe.isResolved() ? throwSafe.getView()
+				: applicationContext.getViewResolver().getView(
+						actionBuilder.getControllerBuilder(), actionBuilder,
+						throwSafe.getTarget(), throwSafe.getView());
+	}
+
 }

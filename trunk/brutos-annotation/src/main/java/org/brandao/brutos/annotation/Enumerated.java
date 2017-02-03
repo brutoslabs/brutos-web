@@ -39,13 +39,13 @@ import java.lang.annotation.Target;
  * 
  * @author Afonso Brandao
  */
-@Target({ElementType.METHOD,ElementType.FIELD, ElementType.PARAMETER})
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Enumerated {
 
-    /**
-     * Estratégia de mapeamento do {@link java.lang.Enum}.
-     */
-    EnumerationType value() default EnumerationType.AUTO;
-   
+	/**
+	 * Estratégia de mapeamento do {@link java.lang.Enum}.
+	 */
+	EnumerationType value() default EnumerationType.AUTO;
+
 }

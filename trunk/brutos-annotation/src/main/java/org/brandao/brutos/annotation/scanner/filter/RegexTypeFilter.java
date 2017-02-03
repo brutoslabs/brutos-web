@@ -25,20 +25,20 @@ import org.brandao.brutos.scanner.vfs.Vfs;
  *
  * @author Brandao
  */
-public class RegexTypeFilter implements TypeFilter{
+public class RegexTypeFilter implements TypeFilter {
 
-    protected List<String> regex;
-    
-    public boolean accepts(String resource) {
-        String className = Vfs.toClass(resource);
-        for(String s: regex){
-            return className.matches(s);
-        }
-        return false;
-    }
+	protected List<String> regex;
 
-    public void setExpression(List<String> value) {
-        this.regex = value;
-    }
-    
+	public boolean accepts(String resource) {
+		String className = Vfs.toClass(resource);
+		for (String s : regex) {
+			return className.matches(s);
+		}
+		return false;
+	}
+
+	public void setExpression(List<String> value) {
+		this.regex = value;
+	}
+
 }

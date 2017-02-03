@@ -26,10 +26,12 @@ import org.brandao.brutos.annotation.configuration.MetaValuesDefinition;
 
 /**
  * Permite criar mais de um mapeamento para os elementos de uma coleção.
+ * 
  * @author Brandao
  *
  */
-@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD,ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD,
+		ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AnyElementCollection {
 
@@ -37,7 +39,7 @@ public @interface AnyElementCollection {
 	 * Mapeamento dos metadados.
 	 */
 	Basic metaBean();
-	
+
 	/**
 	 * Tipo dos metadados.
 	 */
@@ -52,5 +54,5 @@ public @interface AnyElementCollection {
 	 * Permite, em tempo de execução, definir os tipos de mapeamento.
 	 */
 	Class<? extends MetaValuesDefinition> metaValuesDefinition() default MetaValuesDefinition.class;
-	
+
 }

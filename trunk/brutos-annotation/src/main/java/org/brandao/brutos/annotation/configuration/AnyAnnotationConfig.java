@@ -42,254 +42,258 @@ import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
-@Stereotype(target=Any.class,executeAfter={Basic.class, KeyCollection.class, ElementCollection.class})
-public class AnyAnnotationConfig extends AbstractAnnotationConfig{
+@Stereotype(target = Any.class, executeAfter = { Basic.class,
+		KeyCollection.class, ElementCollection.class })
+public class AnyAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-    	
-        boolean applicable = source instanceof ActionParamEntry && 
-        		((ActionParamEntry)source).isAnnotationPresent(Any.class);
-        
-        applicable = applicable || 
-                (source instanceof BeanPropertyAnnotation && 
-                !((BeanPropertyAnnotation)source).isAnnotationPresent(Transient.class) &&
-                ((BeanPropertyAnnotation)source).isAnnotationPresent(Any.class));
-        
-        applicable = applicable || (source instanceof ConstructorArgEntry && 
-        		((ConstructorArgEntry)source).isAnnotationPresent(Any.class));
+	public boolean isApplicable(Object source) {
 
-        applicable = applicable || (source instanceof KeyEntry && 
-        		((KeyEntry)source).isAnnotationPresent(Any.class));
+		boolean applicable = source instanceof ActionParamEntry
+				&& ((ActionParamEntry) source).isAnnotationPresent(Any.class);
 
-        applicable = applicable || (source instanceof ElementEntry && 
-        		((ElementEntry)source).isAnnotationPresent(Any.class));
-        
-        return applicable;
-    }
+		applicable = applicable
+				|| (source instanceof BeanPropertyAnnotation
+						&& !((BeanPropertyAnnotation) source)
+								.isAnnotationPresent(Transient.class) && ((BeanPropertyAnnotation) source)
+							.isAnnotationPresent(Any.class));
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-    
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            
-            String type = "source";
-            String name = "it is a bug";
-            
-            if(source instanceof ActionParamEntry){
-                type = "parameter";
-                name = ((ActionParamEntry)source).getName();
-            }
-            else
-            if(source instanceof BeanPropertyAnnotation){
-                type = "property";
-                name = ((BeanPropertyAnnotation)source).getName();
-            }
-            else
-            if(source instanceof ConstructorArgEntry){
-                type = "constructor arg";
-                name = ((ConstructorArgEntry)source).getName();
-            }
-            else
-            if(source instanceof KeyEntry){
-                type = "key";
-                name = ((KeyEntry)source).getName();
-            }
-            else
-            if(source instanceof ElementEntry){
-                type = "element";
-                name = ((ElementEntry)source).getName();
-            }
-            
-            throw 
-                new BrutosException(
-                        "can't identify " + type + ": " + name,
-                        e );
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) throws InstantiationException, IllegalAccessException {
-        
-        if(source instanceof ActionParamEntry)
-            addIdentify((ActionParamEntry)source, (ParameterBuilder)builder, componentRegistry);
-        else
-        if(source instanceof BeanPropertyAnnotation)
-            addIdentify((BeanPropertyAnnotation)source, (PropertyBuilder)builder, componentRegistry);
-        else
-        if(source instanceof ConstructorArgEntry)
-            addIdentify((ConstructorArgEntry)source, (ConstructorArgBuilder)builder, componentRegistry);
-        else
-        if(source instanceof KeyEntry)
-            addIdentify((KeyEntry)source, (KeyBuilder)builder, componentRegistry);
-        else
-        if(source instanceof ElementEntry)
-            addIdentify((ElementEntry)source, (ElementBuilder)builder, componentRegistry);
-            
-        return source;
-    }
-    
-    protected void addIdentify(ActionParamEntry source, ParameterBuilder paramBuilder,
-            ComponentRegistry componentRegistry) throws InstantiationException, IllegalAccessException{
+		applicable = applicable
+				|| (source instanceof ConstructorArgEntry && ((ConstructorArgEntry) source)
+						.isAnnotationPresent(Any.class));
 
-        Any any = source.getAnnotation(Any.class);
-        Basic basic = any.metaBean();
-        Class<?> classType = any.metaType();
-        
-        String name = StringUtil.adjust(basic.bean());
-        ScopeType scope = AnnotationUtil.getScope(basic);
-        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
-        String temporalProperty = AnnotationUtil.getTemporalProperty(any);
-        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
-        
-        MetaBeanBuilder builder = 
-        		paramBuilder.buildMetaBean(name, scope, enumProperty, temporalProperty, classType, type);
-        
-        this.buildMetaValues(any, builder, 
-        		paramBuilder.getParametersBuilder().getControllerBuilder(), componentRegistry);
-        
-        super.applyInternalConfiguration(source, paramBuilder, componentRegistry);
-        
-    }
-    
-    protected void addIdentify(BeanPropertyAnnotation source, PropertyBuilder propertyBuilder,
-            ComponentRegistry componentRegistry) throws InstantiationException, IllegalAccessException{
-        
-        Any any = source.getAnnotation(Any.class);
-        Basic basic = any.metaBean();
-        Class<?> classType = any.metaType();
-    	
-        String name = StringUtil.adjust(basic.bean());
-        ScopeType scope = AnnotationUtil.getScope(basic);
-        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
-        String temporalProperty = AnnotationUtil.getTemporalProperty(any);
-        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
-        
-        MetaBeanBuilder builder = 
-        		propertyBuilder.buildMetaBean(name, scope, enumProperty, temporalProperty, classType, type);
-        
-        this.buildMetaValues(any, builder, 
-        		propertyBuilder.getControllerBuilder(), componentRegistry);
-        
-        super.applyInternalConfiguration(
-                source, propertyBuilder, componentRegistry);
-        
-    }
+		applicable = applicable
+				|| (source instanceof KeyEntry && ((KeyEntry) source)
+						.isAnnotationPresent(Any.class));
 
-    protected void addIdentify(ConstructorArgEntry source, ConstructorArgBuilder constructorArgBuilder,
-            ComponentRegistry componentRegistry) throws InstantiationException, IllegalAccessException{
+		applicable = applicable
+				|| (source instanceof ElementEntry && ((ElementEntry) source)
+						.isAnnotationPresent(Any.class));
 
-        Any any = source.getAnnotation(Any.class);
-        Basic basic = any.metaBean();
-        Class<?> classType = any.metaType();
+		return applicable;
+	}
 
-        String name = StringUtil.adjust(basic.bean());
-        ScopeType scope = AnnotationUtil.getScope(basic);
-        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
-        String temporalProperty = AnnotationUtil.getTemporalProperty(any);
-        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
-        
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
 
-        MetaBeanBuilder builder = 
-        		constructorArgBuilder.buildMetaBean(name, scope, enumProperty, temporalProperty, classType, type);
-        
-        this.buildMetaValues(any, builder, 
-        		constructorArgBuilder.getConstructorBuilder().getBeanBuilder().getControllerBuilder(), componentRegistry);
-        
-        super.applyInternalConfiguration(source, constructorArgBuilder, componentRegistry);
-        
-    }
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
 
-    protected void addIdentify(KeyEntry source, KeyBuilder sourceBuilder,
-            ComponentRegistry componentRegistry) throws InstantiationException, IllegalAccessException{
+			String type = "source";
+			String name = "it is a bug";
 
-        Any any = source.getAnnotation(Any.class);
-        Basic basic = any.metaBean();
-        Class<?> classType = any.metaType();
+			if (source instanceof ActionParamEntry) {
+				type = "parameter";
+				name = ((ActionParamEntry) source).getName();
+			} else if (source instanceof BeanPropertyAnnotation) {
+				type = "property";
+				name = ((BeanPropertyAnnotation) source).getName();
+			} else if (source instanceof ConstructorArgEntry) {
+				type = "constructor arg";
+				name = ((ConstructorArgEntry) source).getName();
+			} else if (source instanceof KeyEntry) {
+				type = "key";
+				name = ((KeyEntry) source).getName();
+			} else if (source instanceof ElementEntry) {
+				type = "element";
+				name = ((ElementEntry) source).getName();
+			}
 
-        String name = StringUtil.adjust(basic.bean());
-        ScopeType scope = AnnotationUtil.getScope(basic);
-        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
-        String temporalProperty = AnnotationUtil.getTemporalProperty(any);
-        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
-        
+			throw new BrutosException("can't identify " + type + ": " + name, e);
+		}
 
-        MetaBeanBuilder builder = 
-        		sourceBuilder.buildMetaBean(name, scope, enumProperty, temporalProperty, classType, type);
-        
-        this.buildMetaValues(any, builder, 
-        		sourceBuilder.getBeanBuilder().getControllerBuilder(), componentRegistry);
-        
-        super.applyInternalConfiguration(source, builder, componentRegistry);
-        
-    }
+	}
 
-    protected void addIdentify(ElementEntry source, ElementBuilder sourceBuilder,
-            ComponentRegistry componentRegistry) throws InstantiationException, IllegalAccessException{
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) throws InstantiationException,
+			IllegalAccessException {
 
-        Any any = source.getAnnotation(Any.class);
-        Basic basic = any.metaBean();
-        Class<?> classType = any.metaType();
+		if (source instanceof ActionParamEntry)
+			addIdentify((ActionParamEntry) source, (ParameterBuilder) builder,
+					componentRegistry);
+		else if (source instanceof BeanPropertyAnnotation)
+			addIdentify((BeanPropertyAnnotation) source,
+					(PropertyBuilder) builder, componentRegistry);
+		else if (source instanceof ConstructorArgEntry)
+			addIdentify((ConstructorArgEntry) source,
+					(ConstructorArgBuilder) builder, componentRegistry);
+		else if (source instanceof KeyEntry)
+			addIdentify((KeyEntry) source, (KeyBuilder) builder,
+					componentRegistry);
+		else if (source instanceof ElementEntry)
+			addIdentify((ElementEntry) source, (ElementBuilder) builder,
+					componentRegistry);
 
-        String name = StringUtil.adjust(basic.bean());
-        ScopeType scope = AnnotationUtil.getScope(basic);
-        EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
-        String temporalProperty = AnnotationUtil.getTemporalProperty(any);
-        org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
-        
+		return source;
+	}
 
-        MetaBeanBuilder builder = 
-        		sourceBuilder.buildMetaBean(name, scope, enumProperty, temporalProperty, classType, type);
-        
-        this.buildMetaValues(any, builder, 
-        		sourceBuilder.getBeanBuilder().getControllerBuilder(), componentRegistry);
-        
-        super.applyInternalConfiguration(source, builder, componentRegistry);
-        
-    }
-    
-    private void buildMetaValues(Any any, MetaBeanBuilder metaBeanBuilder, 
-    		ControllerBuilder controllerBuilder, ComponentRegistry componentRegistry) 
-    				throws InstantiationException, IllegalAccessException{
-    	
-        if(any.metaValuesDefinition() == MetaValuesDefinition.class){
-        	
-        	if(any.metaValues().length == 0)
-        		throw new MappingException("meta values is required");
-        	
-        	
-	        for(MetaValue value: any.metaValues()){
-	        	if(controllerBuilder.getBean(AnnotationUtil.getBeanName(value.target())) == null){
-		        	super.applyInternalConfiguration(
-		    			new ImportBeanEntry(value.target()), 
-		    			controllerBuilder, 
-						componentRegistry);
-	        	}
-	        	metaBeanBuilder.addMetaValue(value.name(), AnnotationUtil.getBeanName(value.target()));
-	        }
-        }
-        else{
-        	Class<? extends MetaValuesDefinition> metaClassDefinition = any.metaValuesDefinition();
-        	MetaValuesDefinition metaValuesDefinition = 
-        			(MetaValuesDefinition) ClassUtil.getInstance(metaClassDefinition);
+	protected void addIdentify(ActionParamEntry source,
+			ParameterBuilder paramBuilder, ComponentRegistry componentRegistry)
+			throws InstantiationException, IllegalAccessException {
 
-        	List<MetaValueDefinition> list = metaValuesDefinition.getMetaValues();
-        	
-        	if(list == null || list.isEmpty())
-        		throw new MappingException("meta values cannot be empty");
-        	
-	        for(MetaValueDefinition value: list){
-	        	if(controllerBuilder.getBean(AnnotationUtil.getBeanName(value.getTarget())) == null){
-		        	super.applyInternalConfiguration(
-		    			new ImportBeanEntry(value.getTarget()), 
-		    			controllerBuilder, 
-						componentRegistry);
-	        	}
-	        	metaBeanBuilder.addMetaValue(value.getName(), AnnotationUtil.getBeanName(value.getTarget()));
-	        }
-        }
-    }
+		Any any = source.getAnnotation(Any.class);
+		Basic basic = any.metaBean();
+		Class<?> classType = any.metaType();
+
+		String name = StringUtil.adjust(basic.bean());
+		ScopeType scope = AnnotationUtil.getScope(basic);
+		EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
+		String temporalProperty = AnnotationUtil.getTemporalProperty(any);
+		org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
+
+		MetaBeanBuilder builder = paramBuilder.buildMetaBean(name, scope,
+				enumProperty, temporalProperty, classType, type);
+
+		this.buildMetaValues(any, builder, paramBuilder.getParametersBuilder()
+				.getControllerBuilder(), componentRegistry);
+
+		super.applyInternalConfiguration(source, paramBuilder,
+				componentRegistry);
+
+	}
+
+	protected void addIdentify(BeanPropertyAnnotation source,
+			PropertyBuilder propertyBuilder, ComponentRegistry componentRegistry)
+			throws InstantiationException, IllegalAccessException {
+
+		Any any = source.getAnnotation(Any.class);
+		Basic basic = any.metaBean();
+		Class<?> classType = any.metaType();
+
+		String name = StringUtil.adjust(basic.bean());
+		ScopeType scope = AnnotationUtil.getScope(basic);
+		EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
+		String temporalProperty = AnnotationUtil.getTemporalProperty(any);
+		org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
+
+		MetaBeanBuilder builder = propertyBuilder.buildMetaBean(name, scope,
+				enumProperty, temporalProperty, classType, type);
+
+		this.buildMetaValues(any, builder,
+				propertyBuilder.getControllerBuilder(), componentRegistry);
+
+		super.applyInternalConfiguration(source, propertyBuilder,
+				componentRegistry);
+
+	}
+
+	protected void addIdentify(ConstructorArgEntry source,
+			ConstructorArgBuilder constructorArgBuilder,
+			ComponentRegistry componentRegistry) throws InstantiationException,
+			IllegalAccessException {
+
+		Any any = source.getAnnotation(Any.class);
+		Basic basic = any.metaBean();
+		Class<?> classType = any.metaType();
+
+		String name = StringUtil.adjust(basic.bean());
+		ScopeType scope = AnnotationUtil.getScope(basic);
+		EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
+		String temporalProperty = AnnotationUtil.getTemporalProperty(any);
+		org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
+
+		MetaBeanBuilder builder = constructorArgBuilder.buildMetaBean(name,
+				scope, enumProperty, temporalProperty, classType, type);
+
+		this.buildMetaValues(any, builder, constructorArgBuilder
+				.getConstructorBuilder().getBeanBuilder()
+				.getControllerBuilder(), componentRegistry);
+
+		super.applyInternalConfiguration(source, constructorArgBuilder,
+				componentRegistry);
+
+	}
+
+	protected void addIdentify(KeyEntry source, KeyBuilder sourceBuilder,
+			ComponentRegistry componentRegistry) throws InstantiationException,
+			IllegalAccessException {
+
+		Any any = source.getAnnotation(Any.class);
+		Basic basic = any.metaBean();
+		Class<?> classType = any.metaType();
+
+		String name = StringUtil.adjust(basic.bean());
+		ScopeType scope = AnnotationUtil.getScope(basic);
+		EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
+		String temporalProperty = AnnotationUtil.getTemporalProperty(any);
+		org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
+
+		MetaBeanBuilder builder = sourceBuilder.buildMetaBean(name, scope,
+				enumProperty, temporalProperty, classType, type);
+
+		this.buildMetaValues(any, builder, sourceBuilder.getBeanBuilder()
+				.getControllerBuilder(), componentRegistry);
+
+		super.applyInternalConfiguration(source, builder, componentRegistry);
+
+	}
+
+	protected void addIdentify(ElementEntry source,
+			ElementBuilder sourceBuilder, ComponentRegistry componentRegistry)
+			throws InstantiationException, IllegalAccessException {
+
+		Any any = source.getAnnotation(Any.class);
+		Basic basic = any.metaBean();
+		Class<?> classType = any.metaType();
+
+		String name = StringUtil.adjust(basic.bean());
+		ScopeType scope = AnnotationUtil.getScope(basic);
+		EnumerationType enumProperty = AnnotationUtil.getEnumerationType(any);
+		String temporalProperty = AnnotationUtil.getTemporalProperty(any);
+		org.brandao.brutos.type.Type type = AnnotationUtil.getTypeInstance(any);
+
+		MetaBeanBuilder builder = sourceBuilder.buildMetaBean(name, scope,
+				enumProperty, temporalProperty, classType, type);
+
+		this.buildMetaValues(any, builder, sourceBuilder.getBeanBuilder()
+				.getControllerBuilder(), componentRegistry);
+
+		super.applyInternalConfiguration(source, builder, componentRegistry);
+
+	}
+
+	private void buildMetaValues(Any any, MetaBeanBuilder metaBeanBuilder,
+			ControllerBuilder controllerBuilder,
+			ComponentRegistry componentRegistry) throws InstantiationException,
+			IllegalAccessException {
+
+		if (any.metaValuesDefinition() == MetaValuesDefinition.class) {
+
+			if (any.metaValues().length == 0)
+				throw new MappingException("meta values is required");
+
+			for (MetaValue value : any.metaValues()) {
+				if (controllerBuilder.getBean(AnnotationUtil.getBeanName(value
+						.target())) == null) {
+					super.applyInternalConfiguration(
+							new ImportBeanEntry(value.target()),
+							controllerBuilder, componentRegistry);
+				}
+				metaBeanBuilder.addMetaValue(value.name(),
+						AnnotationUtil.getBeanName(value.target()));
+			}
+		} else {
+			Class<? extends MetaValuesDefinition> metaClassDefinition = any
+					.metaValuesDefinition();
+			MetaValuesDefinition metaValuesDefinition = (MetaValuesDefinition) ClassUtil
+					.getInstance(metaClassDefinition);
+
+			List<MetaValueDefinition> list = metaValuesDefinition
+					.getMetaValues();
+
+			if (list == null || list.isEmpty())
+				throw new MappingException("meta values cannot be empty");
+
+			for (MetaValueDefinition value : list) {
+				if (controllerBuilder.getBean(AnnotationUtil.getBeanName(value
+						.getTarget())) == null) {
+					super.applyInternalConfiguration(
+							new ImportBeanEntry(value.getTarget()),
+							controllerBuilder, componentRegistry);
+				}
+				metaBeanBuilder.addMetaValue(value.getName(),
+						AnnotationUtil.getBeanName(value.getTarget()));
+			}
+		}
+	}
 }

@@ -24,14 +24,14 @@ package org.brandao.brutos.annotation;
  */
 public @interface Param {
 
-    /**
-     * Nome do parâmetro
-     */
-    String name();
-    
-    /**
-     * Valor do parâmetro.
-     */
-    String value();
-    
+	/**
+	 * Nome do parâmetro
+	 */
+	String name();
+
+	/**
+	 * Valor do parâmetro.
+	 */
+	String value();
+
 }

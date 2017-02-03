@@ -29,23 +29,21 @@ import org.brandao.brutos.type.TypeFactory;
  *
  * @author Brandao
  */
-public class TypeTypeFilter implements TypeFilter{
+public class TypeTypeFilter implements TypeFilter {
 
-    public boolean accepts(String resource) {
-        try{
-            resource = Vfs.toClass(resource);
-            Class clazz = ClassUtil.get(resource);
-            return 
-                resource.matches("(.*\\.)*\\w+TypeFactory") ||
-                (clazz.isAnnotationPresent(TypeDef.class) 
-                && TypeFactory.class.isAssignableFrom(clazz));
-        }
-        catch(ClassNotFoundException e){
-            throw new BrutosException(e);
-        }
-    }
+	public boolean accepts(String resource) {
+		try {
+			resource = Vfs.toClass(resource);
+			Class clazz = ClassUtil.get(resource);
+			return resource.matches("(.*\\.)*\\w+TypeFactory")
+					|| (clazz.isAnnotationPresent(TypeDef.class) && TypeFactory.class
+							.isAssignableFrom(clazz));
+		} catch (ClassNotFoundException e) {
+			throw new BrutosException(e);
+		}
+	}
 
-    public void setExpression(List<String> value) {
-    }
+	public void setExpression(List<String> value) {
+	}
 
 }

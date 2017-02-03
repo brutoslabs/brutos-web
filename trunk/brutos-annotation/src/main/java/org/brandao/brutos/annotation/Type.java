@@ -27,13 +27,13 @@ import java.lang.annotation.Target;
  * 
  * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD})
+@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Type {
 
 	/**
 	 * Tipo.
 	 */
-    Class<? extends org.brandao.brutos.type.Type> value();
-   
+	Class<? extends org.brandao.brutos.type.Type> value();
+
 }

@@ -24,15 +24,15 @@ package org.brandao.brutos.annotation;
  *
  */
 public @interface MetaValue {
-	
+
 	/**
 	 * Nome do mapeamento.
 	 */
 	String name();
 
 	/**
-	 * Classe alvo do mapeamento. 
+	 * Classe alvo do mapeamento.
 	 */
 	Class<?> target();
-	
+
 }

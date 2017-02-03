@@ -24,6 +24,7 @@ import java.lang.annotation.Target;
 
 /**
  * Define os interceptadores de um controlador.
+ * 
  * <pre>
  * Ex:
  * &#064;InterceptedBy(
@@ -41,15 +42,16 @@ import java.lang.annotation.Target;
  * 
  * }
  * </pre>
+ * 
  * @author Afonso Brandao
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InterceptedBy {
 
-    /**
-     * Coleção de interceptadores.
-     */
-    Intercept[] value();
-    
+	/**
+	 * Coleção de interceptadores.
+	 */
+	Intercept[] value();
+
 }

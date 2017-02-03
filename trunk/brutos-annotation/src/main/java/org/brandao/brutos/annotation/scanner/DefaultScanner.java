@@ -30,152 +30,146 @@ import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.scanner.vfs.Dir;
 import org.brandao.brutos.scanner.vfs.File;
 import org.brandao.brutos.scanner.vfs.Vfs;
+
 /**
  *
  * @author Afonso Brandao
  */
-public class DefaultScanner extends AbstractScanner{
+public class DefaultScanner extends AbstractScanner {
 
-    public DefaultScanner(){
-    }
+	public DefaultScanner() {
+	}
 
-    public void scan(){
-        try{
-            ClassLoader classLoader = getClassLoader();
-            for(String basePackage: super.getBasePackage())
-                scan( classLoader, basePackage );
-        }
-        catch(BrutosException e){
-            throw e;
-        }
-        catch(Exception e){
-            throw new BrutosException(e);
-        }
-    }
-    
-    public void scan( ClassLoader classLoader, String basePackage ) throws IOException{
-        
-        URLClassLoader urls = (URLClassLoader)classLoader;
-        
-        Enumeration e = urls.getResources(Vfs.toResource(basePackage));
+	public void scan() {
+		try {
+			ClassLoader classLoader = getClassLoader();
+			for (String basePackage : super.getBasePackage())
+				scan(classLoader, basePackage);
+		} catch (BrutosException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new BrutosException(e);
+		}
+	}
 
-        while(e.hasMoreElements()){
-            URL url = (URL) e.nextElement();
-            scan(url, classLoader, basePackage);
-        }
-    }
+	public void scan(ClassLoader classLoader, String basePackage)
+			throws IOException {
 
-    private void scan(URL url, ClassLoader classLoader, String basePackage){
-        Dir dir = Vfs.getDir(url);
-        File[] files = dir.getFiles();
+		URLClassLoader urls = (URLClassLoader) classLoader;
 
-        for(int i=0;i<files.length;i++){
-            File file = files[i];
-            String path = file.getRelativePath();
+		Enumeration e = urls.getResources(Vfs.toResource(basePackage));
 
-            if( path.endsWith( ".class" ) ){
-                String tmp = 
-                    (StringUtil.isEmpty(basePackage)? 
-                        "" : 
-                        basePackage + "/") + 
-                    path;
-                
-                checkClass( tmp );
-                
-            }
-        }
-    }
-    
-    public ClassLoader getClassLoader() throws IOException{
-        
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        
-        Enumeration urls = classLoader.getResources( "META-INF/MANIFEST.MF" );
-        
-        Map urlMap = new HashMap();
+		while (e.hasMoreElements()) {
+			URL url = (URL) e.nextElement();
+			scan(url, classLoader, basePackage);
+		}
+	}
 
-        while( urls.hasMoreElements() ){
-            URL url = (URL) urls.nextElement();
-            InputStream in = url.openConnection().getInputStream();
-            List listURL = manifest(in);
+	private void scan(URL url, ClassLoader classLoader, String basePackage) {
+		Dir dir = Vfs.getDir(url);
+		File[] files = dir.getFiles();
 
-            for(int i=0;i<listURL.size();i++){
-                URL u = (URL)listURL.get(i);
-                urlMap.put(u.toExternalForm(), u);
-            }
-        }
+		for (int i = 0; i < files.length; i++) {
+			File file = files[i];
+			String path = file.getRelativePath();
 
-        Collection collectionUrls = urlMap.values();
-        Iterator iterator = collectionUrls.iterator();
+			if (path.endsWith(".class")) {
+				String tmp = (StringUtil.isEmpty(basePackage) ? ""
+						: basePackage + "/") + path;
 
-        URL[] arrayUrls = new URL[collectionUrls.size()];
+				checkClass(tmp);
 
-        int index = 0;
-        while(iterator.hasNext()){
-            arrayUrls[index++] = (URL)iterator.next();
-        }
+			}
+		}
+	}
 
-        return 
-            new URLClassLoader(
-                arrayUrls,
-                Thread.currentThread().getContextClassLoader());
-            
-    }
+	public ClassLoader getClassLoader() throws IOException {
 
-    public List manifest(InputStream in){
-        try{
-            java.io.BufferedReader reader = 
-                    new BufferedReader( new InputStreamReader( in ) );
-            String txt = "";
-            String line;
+		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
 
-            while( (line = reader.readLine() ) != null ){
-                if( line.startsWith( "Class-Path: " ) ){
-                    txt = line.substring( "Class-Path: ".length(), line.length() );
-                    while( (line = reader.readLine() ) != null && line.startsWith( " " ) ){
-                        txt += line.substring( 1, line.length() );
-                    }
-                }
-            }
+		Enumeration urls = classLoader.getResources("META-INF/MANIFEST.MF");
 
-            StringTokenizer stok = new StringTokenizer( txt, " ", false );
-            List urlList = new ArrayList();
-            
-            while( stok.hasMoreTokens() ){
-                String dirName  = System.getProperty( "user.dir" );
-                String fileName = stok.nextToken();
-                
-                URL url;
-                
-                if (".".equals(fileName)) 
-                    url = new URL("file:/" + dirName);
-                else
-                if( fileName.matches("^[a-z]*\\:/.*") )
-                    url = new URL(fileName);
-                else{
-                    fileName = dirName + "/" + fileName;
-                    url = new URL("file:/"+fileName);
-                }
-                
-                urlList.add(url);
-            }
-            
-            return urlList;
-        }
-        catch( Throwable e ){
-            throw new BrutosException( e );
-        }
+		Map urlMap = new HashMap();
 
-    }
-    
-    private void checkClass( String resource ){
-        try{
-            if(accepts(resource))
-                listClass.add(ClassUtil.get(Vfs.toClass(resource)));
-        }
-        catch(Exception e){
-            throw new BrutosException(e);
-        }
-    }
+		while (urls.hasMoreElements()) {
+			URL url = (URL) urls.nextElement();
+			InputStream in = url.openConnection().getInputStream();
+			List listURL = manifest(in);
+
+			for (int i = 0; i < listURL.size(); i++) {
+				URL u = (URL) listURL.get(i);
+				urlMap.put(u.toExternalForm(), u);
+			}
+		}
+
+		Collection collectionUrls = urlMap.values();
+		Iterator iterator = collectionUrls.iterator();
+
+		URL[] arrayUrls = new URL[collectionUrls.size()];
+
+		int index = 0;
+		while (iterator.hasNext()) {
+			arrayUrls[index++] = (URL) iterator.next();
+		}
+
+		return new URLClassLoader(arrayUrls, Thread.currentThread()
+				.getContextClassLoader());
+
+	}
+
+	public List manifest(InputStream in) {
+		try {
+			java.io.BufferedReader reader = new BufferedReader(
+					new InputStreamReader(in));
+			String txt = "";
+			String line;
+
+			while ((line = reader.readLine()) != null) {
+				if (line.startsWith("Class-Path: ")) {
+					txt = line
+							.substring("Class-Path: ".length(), line.length());
+					while ((line = reader.readLine()) != null
+							&& line.startsWith(" ")) {
+						txt += line.substring(1, line.length());
+					}
+				}
+			}
+
+			StringTokenizer stok = new StringTokenizer(txt, " ", false);
+			List urlList = new ArrayList();
+
+			while (stok.hasMoreTokens()) {
+				String dirName = System.getProperty("user.dir");
+				String fileName = stok.nextToken();
+
+				URL url;
+
+				if (".".equals(fileName))
+					url = new URL("file:/" + dirName);
+				else if (fileName.matches("^[a-z]*\\:/.*"))
+					url = new URL(fileName);
+				else {
+					fileName = dirName + "/" + fileName;
+					url = new URL("file:/" + fileName);
+				}
+
+				urlList.add(url);
+			}
+
+			return urlList;
+		} catch (Throwable e) {
+			throw new BrutosException(e);
+		}
+
+	}
+
+	private void checkClass(String resource) {
+		try {
+			if (accepts(resource))
+				listClass.add(ClassUtil.get(Vfs.toClass(resource)));
+		} catch (Exception e) {
+			throw new BrutosException(e);
+		}
+	}
 
 }

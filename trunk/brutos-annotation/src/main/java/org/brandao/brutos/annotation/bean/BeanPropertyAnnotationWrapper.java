@@ -24,19 +24,21 @@ import org.brandao.brutos.bean.BeanPropertyWrapper;
  *
  * @author Brandao
  */
-public class BeanPropertyAnnotationWrapper 
-    extends BeanPropertyWrapper implements BeanPropertyAnnotation{
+public class BeanPropertyAnnotationWrapper extends BeanPropertyWrapper
+		implements BeanPropertyAnnotation {
 
-    public BeanPropertyAnnotationWrapper(BeanPropertyAnnotation beanProperty){
-        super(beanProperty);
-    }
-    
-    public <T extends Annotation> T getAnnotation(Class<T> annotation) {
-        return ((BeanPropertyAnnotation)super.beanProperty).getAnnotation(annotation);
-    }
+	public BeanPropertyAnnotationWrapper(BeanPropertyAnnotation beanProperty) {
+		super(beanProperty);
+	}
 
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
-        return ((BeanPropertyAnnotation)super.beanProperty).isAnnotationPresent(annotation);
-    }
-    
+	public <T extends Annotation> T getAnnotation(Class<T> annotation) {
+		return ((BeanPropertyAnnotation) super.beanProperty)
+				.getAnnotation(annotation);
+	}
+
+	public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
+		return ((BeanPropertyAnnotation) super.beanProperty)
+				.isAnnotationPresent(annotation);
+	}
+
 }
