@@ -1,8 +1,7 @@
 package org.brandao.brutos.interceptor;
 
-
 public interface InterceptorStack {
-    
-    public void next( InterceptorHandler handler ) throws InterceptedException;
-    
+
+	public void next(InterceptorHandler handler) throws InterceptedException;
+
 }

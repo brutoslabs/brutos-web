@@ -4,66 +4,63 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+public class BeanPropertyWrapper implements BeanProperty {
 
-public class BeanPropertyWrapper implements BeanProperty{
-    
-    protected BeanProperty beanProperty;
-    
-    public BeanPropertyWrapper(BeanProperty beanProperty){
-        this.beanProperty = beanProperty;
-    }
+	protected BeanProperty beanProperty;
 
-    public void set(Object o, Object value) 
-            throws IllegalAccessException, IllegalArgumentException, 
-            InvocationTargetException {
-        this.beanProperty.set(o, value);
-    }
+	public BeanPropertyWrapper(BeanProperty beanProperty) {
+		this.beanProperty = beanProperty;
+	}
 
-    public Object get(Object o) 
-            throws IllegalAccessException, IllegalArgumentException, 
-            InvocationTargetException {
-        return this.beanProperty.get(o);
-    }
+	public void set(Object o, Object value) throws IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException {
+		this.beanProperty.set(o, value);
+	}
 
-    public Object getGenericType(){
-        return this.beanProperty.getGenericType();
-    }
+	public Object get(Object o) throws IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException {
+		return this.beanProperty.get(o);
+	}
 
-    public Class getType() {
-        return this.beanProperty.getType();
-    }
+	public Object getGenericType() {
+		return this.beanProperty.getGenericType();
+	}
 
-    public Field getField() {
-        return this.beanProperty.getField();
-    }
+	public Class getType() {
+		return this.beanProperty.getType();
+	}
 
-    public void setField(Field field) {
-        this.beanProperty.setField(field);
-    }
+	public Field getField() {
+		return this.beanProperty.getField();
+	}
 
-    public Method getSet() {
-        return this.beanProperty.getSet();
-    }
+	public void setField(Field field) {
+		this.beanProperty.setField(field);
+	}
 
-    public void setSet(Method set) {
-        this.beanProperty.setSet(set);
-    }
+	public Method getSet() {
+		return this.beanProperty.getSet();
+	}
 
-    public Method getGet() {
-        return this.beanProperty.getGet();
-    }
+	public void setSet(Method set) {
+		this.beanProperty.setSet(set);
+	}
 
-    public void setGet(Method get) {
-        this.beanProperty.setGet(get);
-    }
+	public Method getGet() {
+		return this.beanProperty.getGet();
+	}
 
-    public String getName() {
-        return this.beanProperty.getName();
-    }
+	public void setGet(Method get) {
+		this.beanProperty.setGet(get);
+	}
 
-    public void setName(String name) {
-        this.beanProperty.setName(name);
-    }
+	public String getName() {
+		return this.beanProperty.getName();
+	}
+
+	public void setName(String name) {
+		this.beanProperty.setName(name);
+	}
 
 	public Object getDeclaredGenericType() {
 		return this.beanProperty.getGenericType();

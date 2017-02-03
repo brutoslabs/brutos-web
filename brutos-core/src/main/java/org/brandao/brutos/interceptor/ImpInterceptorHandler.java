@@ -6,124 +6,116 @@ import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.StackRequestElement;
-import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.mapping.ParameterAction;
-import org.brandao.brutos.mapping.UseBeanData;
 
+public class ImpInterceptorHandler implements ConfigurableInterceptorHandler {
 
-public class ImpInterceptorHandler implements ConfigurableInterceptorHandler{
-    
-    private String URI;
+	private String URI;
 
-    private String requestId;
+	private String requestId;
 
-    private ResourceAction resourceAction;
+	private ResourceAction resourceAction;
 
-    private ApplicationContext context;
-    
-    private Object resource;
+	private ApplicationContext context;
 
-    private Object[] parameters;
-    
-    private Object result;
-    
-    private RequestInstrument requestInstrument;
-    
-    private StackRequestElement stackRequestElement;
-    
-    public ImpInterceptorHandler() {
-    }
+	private Object resource;
 
-    public String getURI() {
-        return URI;
-    }
+	private Object[] parameters;
 
-    public void setURI(String URI) {
-        this.URI = URI;
-        this.setRequestId(URI);
-    }
+	private Object result;
 
-    public ResourceAction getResourceAction() {
-        return resourceAction;
-    }
+	private RequestInstrument requestInstrument;
 
-    public void setResourceAction(ResourceAction resourceAction) {
-        this.resourceAction = resourceAction;
-    }
+	private StackRequestElement stackRequestElement;
 
-    public Object getResource() {
-        return resource;
-    }
+	public ImpInterceptorHandler() {
+	}
 
-    public void setResource(Object resource) {
-        this.resource = resource;
-    }
+	public String getURI() {
+		return URI;
+	}
 
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
+	public void setURI(String URI) {
+		this.URI = URI;
+		this.setRequestId(URI);
+	}
 
-    public String requestId() {
-        return this.requestId;
-    }
+	public ResourceAction getResourceAction() {
+		return resourceAction;
+	}
 
-    public ApplicationContext getContext(){
-        return context;
-    }
+	public void setResourceAction(ResourceAction resourceAction) {
+		this.resourceAction = resourceAction;
+	}
 
-    public void setContext(ApplicationContext context) {
-        this.context = context;
-    }
+	public Object getResource() {
+		return resource;
+	}
 
-    public void setParameters(Object[] value){
-        this.parameters = value;
-    }
-    
-    public Object[] getParameters() throws InstantiationException, 
-        IllegalAccessException, ParseException{
-        
-        if(this.parameters == null){
-            if(stackRequestElement.getParameters() == null){
-                this.parameters = 
-                        stackRequestElement
-                                .getAction().getMethodForm()
-                                .getParameterValues(this.resource);
-            }
-            else{
-                this.parameters = 
-                        stackRequestElement
-                                .getAction().getMethodForm()
-                                .getParameterValues(
-                                        this.resource, 
-                                        stackRequestElement.getParameters());
-            }
-        }
-        
-        return this.parameters;
-    }
+	public void setResource(Object resource) {
+		this.resource = resource;
+	}
 
-    public void setResult(Object value){
-        this.result = value;
-    }
-    
-    public Object getResult() {
-        return this.result;
-    }
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
+	}
 
-    public void setRequestInstrument(RequestInstrument requestInstrument) {
-        this.requestInstrument = requestInstrument;
-    }
+	public String requestId() {
+		return this.requestId;
+	}
 
-    public RequestInstrument getRequestInstrument() {
-        return this.requestInstrument;
-    }
+	public ApplicationContext getContext() {
+		return context;
+	}
 
-    public void setStackRequestElement(StackRequestElement stackRequestElement) {
-        this.stackRequestElement = stackRequestElement;
-    }
+	public void setContext(ApplicationContext context) {
+		this.context = context;
+	}
 
-    public StackRequestElement getStackRequestElement() {
-        return this.stackRequestElement;
-    }
+	public void setParameters(Object[] value) {
+		this.parameters = value;
+	}
+
+	public Object[] getParameters() throws InstantiationException,
+			IllegalAccessException, ParseException {
+
+		if (this.parameters == null) {
+			if (stackRequestElement.getParameters() == null) {
+				this.parameters = stackRequestElement.getAction()
+						.getMethodForm().getParameterValues(this.resource);
+			} else {
+				this.parameters = stackRequestElement
+						.getAction()
+						.getMethodForm()
+						.getParameterValues(this.resource,
+								stackRequestElement.getParameters());
+			}
+		}
+
+		return this.parameters;
+	}
+
+	public void setResult(Object value) {
+		this.result = value;
+	}
+
+	public Object getResult() {
+		return this.result;
+	}
+
+	public void setRequestInstrument(RequestInstrument requestInstrument) {
+		this.requestInstrument = requestInstrument;
+	}
+
+	public RequestInstrument getRequestInstrument() {
+		return this.requestInstrument;
+	}
+
+	public void setStackRequestElement(StackRequestElement stackRequestElement) {
+		this.stackRequestElement = stackRequestElement;
+	}
+
+	public StackRequestElement getStackRequestElement() {
+		return this.stackRequestElement;
+	}
 
 }
