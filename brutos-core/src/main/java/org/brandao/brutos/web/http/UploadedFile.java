@@ -2,25 +2,18 @@ package org.brandao.brutos.web.http;
 
 import java.io.File;
 
-
 public interface UploadedFile {
 
-    
-    File getFile();
+	File getFile();
 
-    
-    void setFile(File file);
+	void setFile(File file);
 
-    
-    String getContentType();
+	String getContentType();
 
-    
-    void setContentType(String contentType);
+	void setContentType(String contentType);
 
-    
-    String getFileName();
+	String getFileName();
 
-    
-    void setFileName(String fileName);
-    
+	void setFileName(String fileName);
+
 }

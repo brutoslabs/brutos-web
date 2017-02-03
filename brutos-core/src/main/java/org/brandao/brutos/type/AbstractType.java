@@ -1,20 +1,19 @@
 package org.brandao.brutos.type;
 
+public abstract class AbstractType implements Type {
 
-public abstract class AbstractType implements Type{
-    
-    protected Class classType;
-    
-    public Class getClassType(){
-        return this.classType;
-    }
+	protected Class classType;
 
-    public void setClassType(Class value){
-        this.classType = value;
-    }
+	public Class getClassType() {
+		return this.classType;
+	}
 
-    public boolean isAlwaysRender(){
-        return false;
-    }
-    
+	public void setClassType(Class value) {
+		this.classType = value;
+	}
+
+	public boolean isAlwaysRender() {
+		return false;
+	}
+
 }

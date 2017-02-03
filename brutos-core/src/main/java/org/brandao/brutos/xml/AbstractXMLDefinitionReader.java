@@ -15,96 +15,83 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+public abstract class AbstractXMLDefinitionReader extends
+		AbstractDefinitionReader {
 
-public abstract class AbstractXMLDefinitionReader 
-    extends AbstractDefinitionReader{
+	public AbstractXMLDefinitionReader(ComponentRegistry componenetRegistry) {
+		super(componenetRegistry);
+	}
 
-    public AbstractXMLDefinitionReader(ComponentRegistry componenetRegistry) {
-        super(componenetRegistry);
-    }
+	protected Element buildDocument(Resource resource, String[] schemaLocation) {
+		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
+				.newInstance();
+		DocumentBuilder documentBuilder;
 
-    protected Element buildDocument( Resource resource, String[] schemaLocation ){
-        DocumentBuilderFactory documentBuilderFactory =
-                DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder;
+		try {
+			String[] sourceSchema = new String[schemaLocation.length];
+			ResourceLoader resourceLoader = getResourceLoader();
 
-        try{
-            String[] sourceSchema = new String[schemaLocation.length];
-            ResourceLoader resourceLoader = getResourceLoader();
-            
-            for(int i=0;i<schemaLocation.length;i++){
-                sourceSchema[i] = 
-                            resourceLoader
-                                .getResource(
-                                    schemaLocation[i]).getURL().toString();
-            }
-            
-            documentBuilderFactory.setNamespaceAware(true);
-            documentBuilderFactory.setValidating(true);
-            
-            documentBuilderFactory.setAttribute(
-                    XMLBrutosConstants.JAXP_SCHEMA_LANGUAGE,
-                    XMLBrutosConstants.W3C_XML_SCHEMA
-            );
+			for (int i = 0; i < schemaLocation.length; i++) {
+				sourceSchema[i] = resourceLoader.getResource(schemaLocation[i])
+						.getURL().toString();
+			}
 
-            documentBuilderFactory.setAttribute(
-                    XMLBrutosConstants.JAXP_SCHEMA_SOURCE,
-                    sourceSchema
-            );
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            documentBuilder.setErrorHandler(new ParserErrorHandler());
+			documentBuilderFactory.setNamespaceAware(true);
+			documentBuilderFactory.setValidating(true);
 
-            InputStream in = resource.getInputStream();
-            Document xmlDocument =
-                documentBuilder
-                    .parse(new InputSource(in));
-            
-            xmlDocument.normalize();
-            return xmlDocument.getDocumentElement();
-        }
-        catch (BrutosException ex) {
-            throw ex;
-        }
-        catch (SAXParseException ex) {
-            throw new BrutosException(
-                     "Line " + ex.getLineNumber() + " Column " + ex.getColumnNumber() +
-                     " in XML document from " + resource + " is invalid", ex);
-        }
-        catch (SAXException ex) {
-             throw new BrutosException("XML document from " + resource +
-                     " is invalid", ex);
-        }
-        catch (ParserConfigurationException   ex) {
-             throw new BrutosException("Parser configuration exception parsing "
-                     + "XML from " + resource, ex);
-        }
-        catch (IOException ex) {
-             throw new BrutosException("IOException parsing XML document from "
-                     + resource, ex);
-        }
-        catch (Throwable ex) {
-             throw new BrutosException("Unexpected exception parsing XML document "
-                     + "from " + resource, ex);
-        }
-    }
-    
-    public void loadDefinitions(Resource[] resource) {
-        if( resource != null )
-            for( int i=0;i<resource.length;i++ )
-                this.loadDefinitions(resource[i]);
-    }
+			documentBuilderFactory.setAttribute(
+					XMLBrutosConstants.JAXP_SCHEMA_LANGUAGE,
+					XMLBrutosConstants.W3C_XML_SCHEMA);
 
-    public void loadDefinitions(String[] locations) {
-        if( locations != null )
-            for( int i=0;i<locations.length;i++ )
-                this.loadDefinitions(locations[i]);
-    }
+			documentBuilderFactory.setAttribute(
+					XMLBrutosConstants.JAXP_SCHEMA_SOURCE, sourceSchema);
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			documentBuilder.setErrorHandler(new ParserErrorHandler());
 
-    public void loadDefinitions(String location) {
-        Resource resource = this.componentRegistry.getResource(location);
-        this.loadDefinitions(resource);
-    }
+			InputStream in = resource.getInputStream();
+			Document xmlDocument = documentBuilder.parse(new InputSource(in));
 
-    public abstract void loadDefinitions(Resource resource);
-    
+			xmlDocument.normalize();
+			return xmlDocument.getDocumentElement();
+		} catch (BrutosException ex) {
+			throw ex;
+		} catch (SAXParseException ex) {
+			throw new BrutosException("Line " + ex.getLineNumber() + " Column "
+					+ ex.getColumnNumber() + " in XML document from "
+					+ resource + " is invalid", ex);
+		} catch (SAXException ex) {
+			throw new BrutosException("XML document from " + resource
+					+ " is invalid", ex);
+		} catch (ParserConfigurationException ex) {
+			throw new BrutosException("Parser configuration exception parsing "
+					+ "XML from " + resource, ex);
+		} catch (IOException ex) {
+			throw new BrutosException("IOException parsing XML document from "
+					+ resource, ex);
+		} catch (Throwable ex) {
+			throw new BrutosException(
+					"Unexpected exception parsing XML document " + "from "
+							+ resource, ex);
+		}
+	}
+
+	public void loadDefinitions(Resource[] resource) {
+		if (resource != null)
+			for (int i = 0; i < resource.length; i++)
+				this.loadDefinitions(resource[i]);
+	}
+
+	public void loadDefinitions(String[] locations) {
+		if (locations != null)
+			for (int i = 0; i < locations.length; i++)
+				this.loadDefinitions(locations[i]);
+	}
+
+	public void loadDefinitions(String location) {
+		Resource resource = this.componentRegistry.getResource(location);
+		this.loadDefinitions(resource);
+	}
+
+	public abstract void loadDefinitions(Resource resource);
+
 }
