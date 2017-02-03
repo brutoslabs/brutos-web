@@ -21,7 +21,7 @@ public class FloatType
             return value;
         else
         if( value instanceof String )
-            return Float.valueOf( (String)value );
+            return ((String) value).isEmpty()? 0F : Float.valueOf( (String)value );
         else
         if( value == null )
             return null;

@@ -25,7 +25,7 @@ public class DoubleType
             return value;
         else
         if( value instanceof String )
-            return Double.valueOf( (String)value );
+            return ((String) value).isEmpty()? 0.0 : Double.valueOf( (String)value );
         else
         if( value == null )
             return null;

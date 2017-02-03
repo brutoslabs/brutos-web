@@ -43,7 +43,7 @@ public class DefaultDateType
             return value;
         else
         if( value instanceof String )
-            return toValue( (String)value );
+            return ((String) value).isEmpty()? null : toValue( (String)value );
         else
         if( value == null )
             return null;

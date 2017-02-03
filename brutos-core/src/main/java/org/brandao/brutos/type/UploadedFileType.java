@@ -23,6 +23,7 @@ public class UploadedFileType
     public Object convert(Object value) {
         if( value instanceof UploadedFile )
             return value;
+        else
         if( value == null )
             return null;
         else

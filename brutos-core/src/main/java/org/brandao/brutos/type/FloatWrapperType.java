@@ -21,7 +21,7 @@ public class FloatWrapperType
             return value;
         else
         if( value instanceof String )
-            return Float.valueOf( (String)value );
+            return ((String) value).isEmpty()? null : Float.valueOf( (String)value );
         else
         if( value == null )
             return null;

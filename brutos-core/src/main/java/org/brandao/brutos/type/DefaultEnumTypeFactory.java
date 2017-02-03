@@ -2,9 +2,6 @@
 
 package org.brandao.brutos.type;
 
-import org.brandao.brutos.BrutosException;
-
-
 public class DefaultEnumTypeFactory implements TypeFactory{
 
     public DefaultEnumTypeFactory(){
