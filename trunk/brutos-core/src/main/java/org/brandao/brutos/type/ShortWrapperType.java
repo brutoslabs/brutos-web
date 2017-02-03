@@ -21,7 +21,7 @@ public class ShortWrapperType
             return value;
         else
         if( value instanceof String )
-            return Short.valueOf((String)value);
+            return ((String) value).isEmpty()? null : Short.valueOf((String)value);
         else
         if( value == null )
             return null;

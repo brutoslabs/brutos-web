@@ -40,7 +40,7 @@ public class DefaultEnumType
             if(value instanceof String){
             	String tmp = (String)value;
             	
-            	if(StringUtil.isEmpty(tmp)){
+            	if(tmp.isEmpty()){
             		return null;
             	}
             	

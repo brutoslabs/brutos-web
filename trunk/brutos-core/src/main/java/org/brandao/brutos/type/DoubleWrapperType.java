@@ -22,7 +22,7 @@ public class DoubleWrapperType
             return value;
         else
         if( value instanceof String )
-            return Double.valueOf( (String)value );
+            return ((String) value).isEmpty()? null : Double.valueOf( (String)value );
         else
         if( value == null )
             return null;

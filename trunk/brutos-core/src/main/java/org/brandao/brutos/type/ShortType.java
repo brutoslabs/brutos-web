@@ -22,7 +22,7 @@ public class ShortType
             return value;
         else
         if( value instanceof String )
-            return Short.valueOf((String)value);
+            return ((String) value).isEmpty()? (short)0 : Short.valueOf((String)value);
         else
         if( value == null )
             return null;
