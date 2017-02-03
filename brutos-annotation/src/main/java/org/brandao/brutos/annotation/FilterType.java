@@ -22,24 +22,23 @@ package org.brandao.brutos.annotation;
  * @author Brandao
  */
 public enum FilterType {
-    
-    ANNOTATION("annotation"),
-    
-    ASSIGNABLE_TYPE("assignable"),
 
-    REGEX("regex"),
-    
-    CUSTOM("custom");
-    
-    private String name;
+	ANNOTATION("annotation"),
 
-    FilterType(String name) {
-        this.name = name;
-    }
+	ASSIGNABLE_TYPE("assignable"),
 
-    public String getName() {
-        return name;
-    }
-    
-    
+	REGEX("regex"),
+
+	CUSTOM("custom");
+
+	private String name;
+
+	FilterType(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 }

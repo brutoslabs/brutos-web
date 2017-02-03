@@ -30,64 +30,65 @@ import org.brandao.brutos.mapping.StringUtil;
  *
  * @author Brandao
  */
-@Stereotype(target=InterceptedBy.class, executeAfter=Controller.class)
-public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig{
+@Stereotype(target = InterceptedBy.class, executeAfter = Controller.class)
+public class InterceptedByAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return source instanceof Class && 
-               ((Class<?>)source).isAnnotationPresent( InterceptedBy.class );
-    }
+	public boolean isApplicable(Object source) {
+		return source instanceof Class
+				&& ((Class<?>) source).isAnnotationPresent(InterceptedBy.class);
+	}
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-    
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            throw 
-                new MappingException(
-                        "can't create interception on controller " + ((Class<?>)source).getName(),
-                        e );
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-        
-        ControllerBuilder controllerBuilder = (ControllerBuilder)builder;
-        Class<?> clazz = (Class<?>)source;
-        InterceptedBy interceptedBy = (InterceptedBy)clazz.getAnnotation(InterceptedBy.class);
-        
-        for(Intercept i: interceptedBy.value()){
-            String name;
-            
-            InterceptorBuilder ib;
-            
-            if(i.interceptor() != InterceptorController.class){
-                Class<? extends InterceptorController> iClass = i.interceptor();
-                Interceptor interceptor = componentRegistry.getRegisteredInterceptor(iClass);
-                
-                if(interceptor == null)
-                	throw new MappingException("interceptor not found: " + iClass.getName());
-                
-                name = interceptor.getName();
-            }
-            else
-                name = StringUtil.isEmpty(i.name()) ? null : StringUtil.adjust(i.name());
-            
-            if(StringUtil.isEmpty(name))
-            	throw new MappingException("invalid interceptor name");
-            
-            ib = controllerBuilder.addInterceptor(name);
-            
-            for(Param p: i.params())
-                ib.addParameter(p.name(), p.value());
-            
-        }
-        return builder;
-        
-    }
-    
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new MappingException(
+					"can't create interception on controller "
+							+ ((Class<?>) source).getName(), e);
+		}
+
+	}
+
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		ControllerBuilder controllerBuilder = (ControllerBuilder) builder;
+		Class<?> clazz = (Class<?>) source;
+		InterceptedBy interceptedBy = (InterceptedBy) clazz
+				.getAnnotation(InterceptedBy.class);
+
+		for (Intercept i : interceptedBy.value()) {
+			String name;
+
+			InterceptorBuilder ib;
+
+			if (i.interceptor() != InterceptorController.class) {
+				Class<? extends InterceptorController> iClass = i.interceptor();
+				Interceptor interceptor = componentRegistry
+						.getRegisteredInterceptor(iClass);
+
+				if (interceptor == null)
+					throw new MappingException("interceptor not found: "
+							+ iClass.getName());
+
+				name = interceptor.getName();
+			} else
+				name = StringUtil.isEmpty(i.name()) ? null : StringUtil
+						.adjust(i.name());
+
+			if (StringUtil.isEmpty(name))
+				throw new MappingException("invalid interceptor name");
+
+			ib = controllerBuilder.addInterceptor(name);
+
+			for (Param p : i.params())
+				ib.addParameter(p.name(), p.value());
+
+		}
+		return builder;
+
+	}
+
 }

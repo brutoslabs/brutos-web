@@ -30,10 +30,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface InterceptsStackList {
-    
-    /**
-     * Coleção de pilhas de interceptadores.
-     */
-    InterceptsStack[] value();
-    
+
+	/**
+	 * Coleção de pilhas de interceptadores.
+	 */
+	InterceptsStack[] value();
+
 }

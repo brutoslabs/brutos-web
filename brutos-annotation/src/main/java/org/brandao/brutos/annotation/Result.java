@@ -23,8 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Nomeia o resultado de uma ação. Se omitido,
- * será usado <code>result</code>.
+ * Nomeia o resultado de uma ação. Se omitido, será usado <code>result</code>.
  * 
  * <pre>
  * Ex:
@@ -40,15 +39,16 @@ import java.lang.annotation.Target;
  *    ...
  * }
  * </pre>
+ * 
  * @author Brandao
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Result {
- 
-    /**
-     * Nome.
-     */
-    String value();
-    
+
+	/**
+	 * Nome.
+	 */
+	String value();
+
 }

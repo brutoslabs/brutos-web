@@ -26,73 +26,70 @@ import org.brandao.brutos.annotation.ThrowSafeList;
  *
  * @author Brandao
  */
-public class ThrowSafeListAnnotationConfig extends AbstractAnnotationConfig{
+public class ThrowSafeListAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return (source instanceof Method && 
-               ((Method)source).isAnnotationPresent( ThrowSafeList.class )) ||
-               (source instanceof Class && 
-               ((Class)source).isAnnotationPresent( ThrowSafeList.class ));
-    }
+	public boolean isApplicable(Object source) {
+		return (source instanceof Method && ((Method) source)
+				.isAnnotationPresent(ThrowSafeList.class))
+				|| (source instanceof Class && ((Class) source)
+						.isAnnotationPresent(ThrowSafeList.class));
+	}
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-    
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            throw 
-                new BrutosException(
-                        "can't create mapping exception",
-                        e );
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
 
-        if(builder instanceof ActionBuilder)
-            addThrowSafeList((ActionBuilder)builder, (Method)source);
-        else
-            addThrowSafeList((ControllerBuilder)builder, (Class)source);
-        
-        return builder;
-    }
-    
-    protected void addThrowSafeList(ActionBuilder actionBuilder, Method method){
-        ThrowSafeList throwSafeList = method.getAnnotation(ThrowSafeList.class);
-        for(ThrowSafe throwSafe: throwSafeList.value())
-            addThrowSafe(actionBuilder, throwSafe);
-    }
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new BrutosException("can't create mapping exception", e);
+		}
 
-    protected void addThrowSafeList(ControllerBuilder controllerBuilder, Class clazz){
-        ThrowSafeList throwSafeList = (ThrowSafeList)clazz.getAnnotation(ThrowSafeList.class);
-        for(ThrowSafe throwSafe: throwSafeList.value())
-            addThrowSafe(controllerBuilder, throwSafe);
-    }
-    
-    protected void addThrowSafe(ActionBuilder actionBuilder, ThrowSafe throwSafe){
-        DispatcherType dispatcher = "".equals(throwSafe.dispatcher())?
-                null :
-                DispatcherType.valueOf(throwSafe.dispatcher());
-        
-        String name = throwSafe.name();
-        Class<? extends Throwable> target = throwSafe.target();
-        String view = throwSafe.view();
-        //actionBuilder.addThrowable(target, view, name, dispatcher);
-    }
-    
-    protected void addThrowSafe(ControllerBuilder controllerBuilder, ThrowSafe throwSafe){
-        DispatcherType dispatcher = "".equals(throwSafe.dispatcher())?
-                null :
-                DispatcherType.valueOf(throwSafe.dispatcher());
-        
-        String name = throwSafe.name();
-        Class<? extends Throwable> target = throwSafe.target();
-        String view = throwSafe.view();
-        //controllerBuilder.addThrowable(target, view, name, dispatcher);
-    }
-    
+	}
+
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		if (builder instanceof ActionBuilder)
+			addThrowSafeList((ActionBuilder) builder, (Method) source);
+		else
+			addThrowSafeList((ControllerBuilder) builder, (Class) source);
+
+		return builder;
+	}
+
+	protected void addThrowSafeList(ActionBuilder actionBuilder, Method method) {
+		ThrowSafeList throwSafeList = method.getAnnotation(ThrowSafeList.class);
+		for (ThrowSafe throwSafe : throwSafeList.value())
+			addThrowSafe(actionBuilder, throwSafe);
+	}
+
+	protected void addThrowSafeList(ControllerBuilder controllerBuilder,
+			Class clazz) {
+		ThrowSafeList throwSafeList = (ThrowSafeList) clazz
+				.getAnnotation(ThrowSafeList.class);
+		for (ThrowSafe throwSafe : throwSafeList.value())
+			addThrowSafe(controllerBuilder, throwSafe);
+	}
+
+	protected void addThrowSafe(ActionBuilder actionBuilder, ThrowSafe throwSafe) {
+		DispatcherType dispatcher = "".equals(throwSafe.dispatcher()) ? null
+				: DispatcherType.valueOf(throwSafe.dispatcher());
+
+		String name = throwSafe.name();
+		Class<? extends Throwable> target = throwSafe.target();
+		String view = throwSafe.view();
+		// actionBuilder.addThrowable(target, view, name, dispatcher);
+	}
+
+	protected void addThrowSafe(ControllerBuilder controllerBuilder,
+			ThrowSafe throwSafe) {
+		DispatcherType dispatcher = "".equals(throwSafe.dispatcher()) ? null
+				: DispatcherType.valueOf(throwSafe.dispatcher());
+
+		String name = throwSafe.name();
+		Class<? extends Throwable> target = throwSafe.target();
+		String view = throwSafe.view();
+		// controllerBuilder.addThrowable(target, view, name, dispatcher);
+	}
+
 }

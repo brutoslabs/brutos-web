@@ -30,11 +30,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Deprecated
 public @interface WebActionListener {
-    
-    Class<?> target() default void.class;
-    
-    String preAction() default "";
-    
-    String postAction() default "";
-    
+
+	Class<?> target() default void.class;
+
+	String preAction() default "";
+
+	String postAction() default "";
+
 }

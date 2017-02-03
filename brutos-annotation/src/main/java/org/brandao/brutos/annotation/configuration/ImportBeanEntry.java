@@ -21,16 +21,16 @@ package org.brandao.brutos.annotation.configuration;
  *
  * @author Brandao
  */
-public class ImportBeanEntry implements BeanEntry{
-    
-    private Class clazz;
-    
-    public ImportBeanEntry(Class clazz){
-        this.clazz = clazz;
-    }
+public class ImportBeanEntry implements BeanEntry {
 
-    public Class getBeanType() {
-        return clazz;
-    }
-    
+	private Class clazz;
+
+	public ImportBeanEntry(Class clazz) {
+		this.clazz = clazz;
+	}
+
+	public Class getBeanType() {
+		return clazz;
+	}
+
 }

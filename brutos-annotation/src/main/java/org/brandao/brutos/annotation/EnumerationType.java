@@ -23,20 +23,20 @@ package org.brandao.brutos.annotation;
  * @author Brandao
  */
 public enum EnumerationType {
-    
-    /**
-     * O mapeamento depende do valor.
-     */
-    AUTO,
-    
-    /**
-     * O {@link Enum} é um inteiro.
-     */
-    ORDINAL,
-    
-    /**
-     * O {@link Enum} é uma {@link String}.
-     */
-    STRING;
-    
+
+	/**
+	 * O mapeamento depende do valor.
+	 */
+	AUTO,
+
+	/**
+	 * O {@link Enum} é um inteiro.
+	 */
+	ORDINAL,
+
+	/**
+	 * O {@link Enum} é uma {@link String}.
+	 */
+	STRING;
+
 }

@@ -29,51 +29,56 @@ import org.brandao.brutos.annotation.configuration.Converter;
  * @author Brandao
  */
 public interface AnnotationConfig {
-    
-    void setApplicationContext(ConfigurableApplicationContext applicationContext);
-    
-    /**
-     * Define o conversor dos dados de entrada.
-     */
-    void setSourceConverter(Converter value);
-    
-    /**
-     * Obtém o conversor dos dados de entrada.
-     */
-    Converter getSourceConverter();
-    
-    /**
-     * Define a configuração.
-     */
-    void setConfiguration(AnnotationConfigEntry annotation);
 
-    /**
-     * Obtém a configuração.
-     */
-    AnnotationConfigEntry getConfiguration();
-    
-    /**
-     * Verifica se o recurso vai ser aplicado à entidade.
-     * @param source Entidade.
-     * @return Verdadeiro se o recurso for aplicado a entidade, caso
-     * contrário falso.
-     */
-    boolean isApplicable(Object source);
+	void setApplicationContext(ConfigurableApplicationContext applicationContext);
 
-    /**
-     * Aplica o recurso na entidade.
-     * 
-     * @param source Entidade.
-     * @param builder Construtor da entidade.
-     * @param componentRegistry Regsitro dos componentes da aplicação.
-     * @return Construtor da entidade.
-     */
-    Object applyConfiguration(Object source, Object builder,
-            ComponentRegistry componentRegistry);
-    
-    /**
-     * Obtém a ordem de execução dos recursos do próximo nível.
-     */
-    Class<? extends Annotation>[] getExecutionOrder();
-    
+	/**
+	 * Define o conversor dos dados de entrada.
+	 */
+	void setSourceConverter(Converter value);
+
+	/**
+	 * Obtém o conversor dos dados de entrada.
+	 */
+	Converter getSourceConverter();
+
+	/**
+	 * Define a configuração.
+	 */
+	void setConfiguration(AnnotationConfigEntry annotation);
+
+	/**
+	 * Obtém a configuração.
+	 */
+	AnnotationConfigEntry getConfiguration();
+
+	/**
+	 * Verifica se o recurso vai ser aplicado à entidade.
+	 * 
+	 * @param source
+	 *            Entidade.
+	 * @return Verdadeiro se o recurso for aplicado a entidade, caso contrário
+	 *         falso.
+	 */
+	boolean isApplicable(Object source);
+
+	/**
+	 * Aplica o recurso na entidade.
+	 * 
+	 * @param source
+	 *            Entidade.
+	 * @param builder
+	 *            Construtor da entidade.
+	 * @param componentRegistry
+	 *            Regsitro dos componentes da aplicação.
+	 * @return Construtor da entidade.
+	 */
+	Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry);
+
+	/**
+	 * Obtém a ordem de execução dos recursos do próximo nível.
+	 */
+	Class<? extends Annotation>[] getExecutionOrder();
+
 }

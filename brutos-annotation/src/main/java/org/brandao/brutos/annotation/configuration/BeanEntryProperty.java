@@ -24,15 +24,15 @@ import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationWrapper;
  *
  * @author Brandao
  */
-public class BeanEntryProperty 
-    extends BeanPropertyAnnotationWrapper implements BeanEntry{
+public class BeanEntryProperty extends BeanPropertyAnnotationWrapper implements
+		BeanEntry {
 
-    public BeanEntryProperty(BeanPropertyAnnotation value){
-        super(value);
-    }
-            
-    public Class getBeanType() {
-        return super.getType();
-    }
+	public BeanEntryProperty(BeanPropertyAnnotation value) {
+		super(value);
+	}
+
+	public Class getBeanType() {
+		return super.getType();
+	}
 
 }

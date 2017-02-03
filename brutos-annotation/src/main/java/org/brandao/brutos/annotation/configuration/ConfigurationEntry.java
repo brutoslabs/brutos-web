@@ -25,75 +25,75 @@ import org.brandao.brutos.xml.FilterEntity;
  * @author Brandao
  */
 public class ConfigurationEntry {
-    
-    private List<String> basePackage;
-    
-    private String scannerClassName;
-    
-    private List<FilterEntity> excludeFilters;
-    
-    private List<FilterEntity> includeFilters;
-    
-    private List<Class<?>> allClazz;
-    
-    private List<Class<?>> configClass;
 
-    private boolean useDefaultfilter;
-    
-    public List<String> getBasePackage() {
-        return basePackage;
-    }
+	private List<String> basePackage;
 
-    public void setBasePackage(List<String> basePackage) {
-        this.basePackage = basePackage;
-    }
+	private String scannerClassName;
 
-    public String getScannerClassName() {
-        return scannerClassName;
-    }
+	private List<FilterEntity> excludeFilters;
 
-    public void setScannerClassName(String scannerClassName) {
-        this.scannerClassName = scannerClassName;
-    }
+	private List<FilterEntity> includeFilters;
 
-    public List<FilterEntity> getExcludeFilters() {
-        return excludeFilters;
-    }
+	private List<Class<?>> allClazz;
 
-    public void setExcludeFilters(List<FilterEntity> excludeFilters) {
-        this.excludeFilters = excludeFilters;
-    }
+	private List<Class<?>> configClass;
 
-    public List<FilterEntity> getIncludeFilters() {
-        return includeFilters;
-    }
+	private boolean useDefaultfilter;
 
-    public void setIncludeFilters(List<FilterEntity> includeFilters) {
-        this.includeFilters = includeFilters;
-    }
+	public List<String> getBasePackage() {
+		return basePackage;
+	}
 
-    public List<Class<?>> getAllClazz() {
-        return allClazz;
-    }
+	public void setBasePackage(List<String> basePackage) {
+		this.basePackage = basePackage;
+	}
 
-    public void setAllClazz(List<Class<?>> allClazz) {
-        this.allClazz = allClazz;
-    }
+	public String getScannerClassName() {
+		return scannerClassName;
+	}
 
-    public List<Class<?>> getConfigClass() {
-        return configClass;
-    }
+	public void setScannerClassName(String scannerClassName) {
+		this.scannerClassName = scannerClassName;
+	}
 
-    public void setConfigClass(List<Class<?>> configClass) {
-        this.configClass = configClass;
-    }
+	public List<FilterEntity> getExcludeFilters() {
+		return excludeFilters;
+	}
 
-    public boolean isUseDefaultfilter() {
-        return useDefaultfilter;
-    }
+	public void setExcludeFilters(List<FilterEntity> excludeFilters) {
+		this.excludeFilters = excludeFilters;
+	}
 
-    public void setUseDefaultfilter(boolean useDefaultfilter) {
-        this.useDefaultfilter = useDefaultfilter;
-    }
+	public List<FilterEntity> getIncludeFilters() {
+		return includeFilters;
+	}
+
+	public void setIncludeFilters(List<FilterEntity> includeFilters) {
+		this.includeFilters = includeFilters;
+	}
+
+	public List<Class<?>> getAllClazz() {
+		return allClazz;
+	}
+
+	public void setAllClazz(List<Class<?>> allClazz) {
+		this.allClazz = allClazz;
+	}
+
+	public List<Class<?>> getConfigClass() {
+		return configClass;
+	}
+
+	public void setConfigClass(List<Class<?>> configClass) {
+		this.configClass = configClass;
+	}
+
+	public boolean isUseDefaultfilter() {
+		return useDefaultfilter;
+	}
+
+	public void setUseDefaultfilter(boolean useDefaultfilter) {
+		this.useDefaultfilter = useDefaultfilter;
+	}
 
 }

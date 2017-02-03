@@ -23,8 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define o construtor de uma entidade. 
- * Normalmente usado quando possuir mais de um construtor.
+ * Define o construtor de uma entidade. Normalmente usado quando possuir mais de
+ * um construtor.
  * 
  * @author Brandao
  */

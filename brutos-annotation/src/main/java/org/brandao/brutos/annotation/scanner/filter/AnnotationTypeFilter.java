@@ -19,8 +19,6 @@ package org.brandao.brutos.annotation.scanner.filter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.annotation.scanner.TypeFilter;
@@ -30,35 +28,33 @@ import org.brandao.brutos.scanner.vfs.Vfs;
  *
  * @author Brandao
  */
-public class AnnotationTypeFilter implements TypeFilter{
+public class AnnotationTypeFilter implements TypeFilter {
 
-    private List<Class> annotation;
-    
-    public boolean accepts(String resource) {
-        try{
-            resource = Vfs.toClass(resource);
-            Class clazz = ClassUtil.get(resource);
-            for(Class an: annotation){
-                return clazz.isAnnotationPresent(an);
-            }
-            return false;
-        }
-        catch(ClassNotFoundException e){
-            throw new BrutosException(e);
-        }
-    }
+	private List<Class> annotation;
 
-    public void setExpression(List<String> value) {
-        try{
-            this.annotation = new ArrayList<Class>();
-            
-            for(String name: value)
-                this.annotation.add(ClassUtil.get(name));
-            
-        }
-        catch(ClassNotFoundException e){
-            throw new BrutosException(e);
-        }
-    }
+	public boolean accepts(String resource) {
+		try {
+			resource = Vfs.toClass(resource);
+			Class clazz = ClassUtil.get(resource);
+			for (Class an : annotation) {
+				return clazz.isAnnotationPresent(an);
+			}
+			return false;
+		} catch (ClassNotFoundException e) {
+			throw new BrutosException(e);
+		}
+	}
+
+	public void setExpression(List<String> value) {
+		try {
+			this.annotation = new ArrayList<Class>();
+
+			for (String name : value)
+				this.annotation.add(ClassUtil.get(name));
+
+		} catch (ClassNotFoundException e) {
+			throw new BrutosException(e);
+		}
+	}
 
 }

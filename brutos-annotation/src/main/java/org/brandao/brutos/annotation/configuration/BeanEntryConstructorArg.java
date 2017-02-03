@@ -21,14 +21,14 @@ package org.brandao.brutos.annotation.configuration;
  *
  * @author Brandao
  */
-public class BeanEntryConstructorArg 
-    extends ConstructorArgEntryWrapper implements BeanEntry{
-    
-    public BeanEntryConstructorArg(ConstructorArgEntry constructorArgEntry){
-        super(constructorArgEntry);
-    }
+public class BeanEntryConstructorArg extends ConstructorArgEntryWrapper
+		implements BeanEntry {
 
-    public Class getBeanType() {
-        return super.getType();
-    }
+	public BeanEntryConstructorArg(ConstructorArgEntry constructorArgEntry) {
+		super(constructorArgEntry);
+	}
+
+	public Class getBeanType() {
+		return super.getType();
+	}
 }

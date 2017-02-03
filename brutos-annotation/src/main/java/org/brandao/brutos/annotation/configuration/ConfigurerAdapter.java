@@ -27,7 +27,7 @@ import org.brandao.brutos.TypeRegistry;
  *
  * @author Brandao
  */
-public abstract class ConfigurerAdapter implements Configurer{
+public abstract class ConfigurerAdapter implements Configurer {
 
 	public void beforeComponenetDiscovery(ComponentRegistry registry) {
 	}
@@ -47,5 +47,4 @@ public abstract class ConfigurerAdapter implements Configurer{
 	public void afterComponenetDiscovery(ComponentRegistry registry) {
 	}
 
-    
 }

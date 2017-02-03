@@ -24,12 +24,12 @@ import org.brandao.brutos.ComponentRegistry;
  * @author Brandao
  */
 public interface ApplyAnnotationConfig {
-    
-    void setConfiguration(AnnotationConfigEntry annotation);
-    
-    AnnotationConfigEntry getConfiguration();
-    
-    Object applyInternalConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry);
-    
+
+	void setConfiguration(AnnotationConfigEntry annotation);
+
+	AnnotationConfigEntry getConfiguration();
+
+	Object applyInternalConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry);
+
 }

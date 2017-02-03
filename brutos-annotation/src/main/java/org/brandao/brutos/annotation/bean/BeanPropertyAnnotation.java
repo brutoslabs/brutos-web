@@ -24,10 +24,10 @@ import org.brandao.brutos.bean.BeanProperty;
  *
  * @author Brandao
  */
-public interface BeanPropertyAnnotation extends BeanProperty{
-    
-    <T extends Annotation> T getAnnotation(Class<T> annotation);
-    
-    boolean isAnnotationPresent(Class<? extends Annotation> annotation);
-    
+public interface BeanPropertyAnnotation extends BeanProperty {
+
+	<T extends Annotation> T getAnnotation(Class<T> annotation);
+
+	boolean isAnnotationPresent(Class<? extends Annotation> annotation);
+
 }

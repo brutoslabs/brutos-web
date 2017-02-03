@@ -17,27 +17,26 @@
 
 package org.brandao.brutos.annotation;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indica que uma classe em particular pode ter os dados de uma 
- * solicitação disponibilizados em suas propriedades. Se 
- * não estiver associada ao controlador, ele deve ser importado 
- * usando a anotação {@link org.brandao.brutos.annotation.ImportBeans}
+ * Indica que uma classe em particular pode ter os dados de uma solicitação
+ * disponibilizados em suas propriedades. Se não estiver associada ao
+ * controlador, ele deve ser importado usando a anotação
+ * {@link org.brandao.brutos.annotation.ImportBeans}
  * 
  * @author Brandao
  */
-@Target({ElementType.TYPE,ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Bean {
 
-    /**
-     * Identificação da entidade. Se omitida, será usado o nome da classe.
-     */
-    String value() default "";
-    
+	/**
+	 * Identificação da entidade. Se omitida, será usado o nome da classe.
+	 */
+	String value() default "";
+
 }

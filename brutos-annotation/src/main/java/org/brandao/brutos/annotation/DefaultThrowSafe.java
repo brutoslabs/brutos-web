@@ -29,38 +29,38 @@ import java.lang.annotation.Target;
  * @see {@link ThrowSafe}
  * @version 2.0
  */
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DefaultThrowSafe {
 
-    /**
-     * @see {@link ThrowSafe#view()}
-     */
-    String view() default "";
-    
-    /**
-     * @see {@link ThrowSafe#name()}
-     */
-    String name() default "exception";
+	/**
+	 * @see {@link ThrowSafe#view()}
+	 */
+	String view() default "";
 
-    /**
-     * @see {@link ThrowSafe#dispatcher()}
-     */
-    String dispatcher() default "forward";
-    
-    /**
-     * @see {@link ThrowSafe#rendered()}
-     */
-    boolean rendered() default true;
-    
-    /**
-     * @see {@link ThrowSafe#enabled()}
-     */
-    boolean enabled() default true;
-    
-    /**
-     * @see {@link ThrowSafe#resolved()}
-     */
-    boolean resolved() default false;
-	
+	/**
+	 * @see {@link ThrowSafe#name()}
+	 */
+	String name() default "exception";
+
+	/**
+	 * @see {@link ThrowSafe#dispatcher()}
+	 */
+	String dispatcher() default "forward";
+
+	/**
+	 * @see {@link ThrowSafe#rendered()}
+	 */
+	boolean rendered() default true;
+
+	/**
+	 * @see {@link ThrowSafe#enabled()}
+	 */
+	boolean enabled() default true;
+
+	/**
+	 * @see {@link ThrowSafe#resolved()}
+	 */
+	boolean resolved() default false;
+
 }

@@ -27,19 +27,19 @@ import java.lang.annotation.Target;
  * 
  * @author Brandao
  */
-@Target({ElementType.PARAMETER,ElementType.FIELD,ElementType.METHOD})
+@Target({ ElementType.PARAMETER, ElementType.FIELD, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Restrictions {
-   
-    /**
-     * Coleção de regra de validação.
-     */
-    Restriction[] rules();
-    
-    /**
-     * Mensagem exibida, caso o valor não esteja de acordo com a 
-     * regra de validação.
-     */
-    String message() default "";
-    
+
+	/**
+	 * Coleção de regra de validação.
+	 */
+	Restriction[] rules();
+
+	/**
+	 * Mensagem exibida, caso o valor não esteja de acordo com a regra de
+	 * validação.
+	 */
+	String message() default "";
+
 }

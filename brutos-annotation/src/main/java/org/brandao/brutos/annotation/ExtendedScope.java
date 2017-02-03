@@ -30,10 +30,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExtendedScope {
-    
-    /**
-     * Nome do escopo.
-     */
-    String value() default "";
-    
+
+	/**
+	 * Nome do escopo.
+	 */
+	String value() default "";
+
 }

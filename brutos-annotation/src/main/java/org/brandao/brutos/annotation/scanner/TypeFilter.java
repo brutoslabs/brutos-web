@@ -25,8 +25,8 @@ import java.util.List;
  */
 public interface TypeFilter {
 
-    void setExpression(List<String> value);
-    
-    boolean accepts(String resource);
-    
+	void setExpression(List<String> value);
+
+	boolean accepts(String resource);
+
 }

@@ -30,9 +30,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Deprecated
 public @interface ParameterMethod {
-    
-    int id();
-    
-    UseBean useBean();
-    
+
+	int id();
+
+	UseBean useBean();
+
 }

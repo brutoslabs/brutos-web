@@ -40,54 +40,54 @@ import org.brandao.brutos.BrutosConstants;
  * 
  * @author Brandao
  */
-@Target({ElementType.METHOD,ElementType.PARAMETER,ElementType.FIELD,ElementType.TYPE})
+@Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD,
+		ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface KeyCollection {
-    
-    /**
-     * Nome da entidade. Se omitido, será <code>element</code>.
-     * 
-     */
-    String bean() default "key";
-    
-    /**
-     * Escopo da entidade. Os escopos estão 
-     * descritos em {@link ScopeType}
-     * 
-     */
-    String scope() default "param";
 
-    /**
-     * Tipo do mapeamento da entidade. Os tipos estão 
-     * descritos em {@link MappingTypes}
-     */
-    MappingTypes mappingType() default MappingTypes.AUTO;
-    
-    /**
-     * Classe alvo do mapeamento.
-     */
-    Class<?> target() default void.class;
-    
-    /**
-     * Usado em tipos {@link java.lang.Enum}. Os valores estão 
-     * descritos em {@link EnumerationType}.
-     */
-    EnumerationType enumerated() default EnumerationType.ORDINAL;
-    
-    /**
-     * Usado em tipos {@link java.util.Date} e {@link java.util.Calendar}.
-     * Deve seguir o padrão definido em {@link java.text.SimpleDateFormat}.
-     */
-    String temporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
-    
-    /**
-     * Permite definir múltiplos tipos de elementos.
-     */
-    Any any() default @Any(metaBean = @Basic);
-    
-    /**
-     * Define o uso de um tipo específico.
-     */
-    Class<? extends org.brandao.brutos.type.Type> type() default org.brandao.brutos.type.Type.class;
-    
+	/**
+	 * Nome da entidade. Se omitido, será <code>element</code>.
+	 * 
+	 */
+	String bean() default "key";
+
+	/**
+	 * Escopo da entidade. Os escopos estão descritos em {@link ScopeType}
+	 * 
+	 */
+	String scope() default "param";
+
+	/**
+	 * Tipo do mapeamento da entidade. Os tipos estão descritos em
+	 * {@link MappingTypes}
+	 */
+	MappingTypes mappingType() default MappingTypes.AUTO;
+
+	/**
+	 * Classe alvo do mapeamento.
+	 */
+	Class<?> target() default void.class;
+
+	/**
+	 * Usado em tipos {@link java.lang.Enum}. Os valores estão descritos em
+	 * {@link EnumerationType}.
+	 */
+	EnumerationType enumerated() default EnumerationType.ORDINAL;
+
+	/**
+	 * Usado em tipos {@link java.util.Date} e {@link java.util.Calendar}. Deve
+	 * seguir o padrão definido em {@link java.text.SimpleDateFormat}.
+	 */
+	String temporal() default BrutosConstants.DEFAULT_TEMPORALPROPERTY;
+
+	/**
+	 * Permite definir múltiplos tipos de elementos.
+	 */
+	Any any() default @Any(metaBean = @Basic);
+
+	/**
+	 * Define o uso de um tipo específico.
+	 */
+	Class<? extends org.brandao.brutos.type.Type> type() default org.brandao.brutos.type.Type.class;
+
 }

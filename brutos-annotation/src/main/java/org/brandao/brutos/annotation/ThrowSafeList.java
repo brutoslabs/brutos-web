@@ -27,13 +27,13 @@ import java.lang.annotation.Target;
  * 
  * @author Afonso Brandao
  */
-@Target({ElementType.TYPE, ElementType.METHOD})
+@Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ThrowSafeList {
-    
-    /**
-     * Coleção de interceptadores.
-     */
-    ThrowSafe[] value();
-    
+
+	/**
+	 * Coleção de interceptadores.
+	 */
+	ThrowSafe[] value();
+
 }

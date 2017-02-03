@@ -30,176 +30,169 @@ import org.brandao.brutos.mapping.StringUtil;
  *
  * @author Brandao
  */
-public class KeyEntry implements BeanEntry{
-    
-    private String name;
-    
-    private ScopeType scopeType;
-    
-    private MappingTypes mappingType;
-    
-    private Class<?> classType;
-    
-    private Type genericType;
-    
-    private Class<?> target;
-    
-    private EnumerationType enumerated;
-    
-    private String temporal;
-    
-    private Class<? extends org.brandao.brutos.type.Type> type;
-    
-    private Annotation[] annotation;
-    
-    public KeyEntry(){
-        this(null, null, null, null);
-    }
+public class KeyEntry implements BeanEntry {
 
-    public KeyEntry(Class<?> classType, Type genericType, KeyCollection definition, Annotation[] annotation){
-    	this.annotation = annotation;
-        this.classType = classType;
-        this.genericType = genericType;
-        if(definition != null){
-            this.name = StringUtil.adjust(definition.bean());
-            this.scopeType = 
-                StringUtil.isEmpty(definition.scope())? 
-                    BrutosConstants.DEFAULT_SCOPETYPE : 
-                    ScopeType.valueOf(definition.scope());
+	private String name;
 
-            this.mappingType = definition.mappingType();
-            this.target = 
-                    definition.target() == void.class?
-                        null :
-                        definition.target();
+	private ScopeType scopeType;
 
-            this.enumerated = 
-                    EnumerationType.valueOf(definition.enumerated().name().toLowerCase());
+	private MappingTypes mappingType;
 
-            this.temporal = 
-                    StringUtil.isEmpty(definition.temporal())?
-                    null :
-                    StringUtil.adjust(definition.temporal());
+	private Class<?> classType;
 
-            this.type = definition.type() == org.brandao.brutos.type.Type.class?
-                    null :
-                    definition.type();
-        }
-        else{
-            this.name = null;
-            this.scopeType = BrutosConstants.DEFAULT_SCOPETYPE;
-            this.mappingType = null;
-            this.target = null;
-            this.enumerated = 
-                    EnumerationType.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE);
+	private Type genericType;
 
-            this.temporal = BrutosConstants.DEFAULT_TEMPORALPROPERTY;
-            this.type = null;
-        }
-        
-    }
+	private Class<?> target;
 
-    public String getName() {
-        return this.name == null? BrutosConstants.DEFAULT_KEY_NAME : name;
-    }
+	private EnumerationType enumerated;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private String temporal;
 
-    public ScopeType getScopeType() {
-        return scopeType;
-    }
+	private Class<? extends org.brandao.brutos.type.Type> type;
 
-    public void setScopeType(ScopeType scopeType) {
-        this.scopeType = scopeType;
-    }
+	private Annotation[] annotation;
 
-    public Class<?> getDeclaredClassType() {
-        return this.classType;
-    }
-    
-    public Class<?> getClassType() {
-        return this.target == null? this.classType : this.target;
-    }
+	public KeyEntry() {
+		this(null, null, null, null);
+	}
 
-    public void setClassType(Class<?> classType) {
-        this.classType = classType;
-    }
+	public KeyEntry(Class<?> classType, Type genericType,
+			KeyCollection definition, Annotation[] annotation) {
+		this.annotation = annotation;
+		this.classType = classType;
+		this.genericType = genericType;
+		if (definition != null) {
+			this.name = StringUtil.adjust(definition.bean());
+			this.scopeType = StringUtil.isEmpty(definition.scope()) ? BrutosConstants.DEFAULT_SCOPETYPE
+					: ScopeType.valueOf(definition.scope());
 
-    public Class<?> getTarget() {
-        return target;
-    }
+			this.mappingType = definition.mappingType();
+			this.target = definition.target() == void.class ? null : definition
+					.target();
 
-    public void setTarget(Class<?> target) {
-        this.target = target;
-    }
+			this.enumerated = EnumerationType.valueOf(definition.enumerated()
+					.name().toLowerCase());
 
-    public EnumerationType getEnumerated() {
-        return enumerated;
-    }
+			this.temporal = StringUtil.isEmpty(definition.temporal()) ? null
+					: StringUtil.adjust(definition.temporal());
 
-    public void setEnumerated(EnumerationType enumerated) {
-        this.enumerated = enumerated;
-    }
+			this.type = definition.type() == org.brandao.brutos.type.Type.class ? null
+					: definition.type();
+		} else {
+			this.name = null;
+			this.scopeType = BrutosConstants.DEFAULT_SCOPETYPE;
+			this.mappingType = null;
+			this.target = null;
+			this.enumerated = EnumerationType
+					.valueOf(BrutosConstants.DEFAULT_ENUMERATION_TYPE);
 
-    public String getTemporal() {
-        return temporal;
-    }
+			this.temporal = BrutosConstants.DEFAULT_TEMPORALPROPERTY;
+			this.type = null;
+		}
 
-    public void setTemporal(String temporal) {
-        this.temporal = temporal;
-    }
+	}
 
-    public Class<? extends org.brandao.brutos.type.Type> getType() {
-        return type;
-    }
+	public String getName() {
+		return this.name == null ? BrutosConstants.DEFAULT_KEY_NAME : name;
+	}
 
-    public void setType(Class<? extends org.brandao.brutos.type.Type> type) {
-        this.type = type;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Class<?> getBeanType() {
-        return this.getClassType();
-    }
+	public ScopeType getScopeType() {
+		return scopeType;
+	}
 
-    public Type getDeclaredGenericType() {
-    	return this.genericType;
-    }
-    
-    public Type getGenericType() {
-        return this.target == null? this.genericType : this.target;
-    }
+	public void setScopeType(ScopeType scopeType) {
+		this.scopeType = scopeType;
+	}
 
-    public void setGenericType(Type genericType) {
-        this.genericType = genericType;
-    }
-    
-    public MappingTypes getMappingType() {
-        return mappingType;
-    }
+	public Class<?> getDeclaredClassType() {
+		return this.classType;
+	}
 
-    public void setMappingType(MappingTypes mappingType) {
-        this.mappingType = mappingType;
-    }
-    
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
-        for( Annotation a: this.annotation ){
-            if( a.annotationType().isAssignableFrom(annotation) )
-                return true;
-        }
-        
-        return false;
-    }
-    
-    @SuppressWarnings("unchecked")
-	public <T> T getAnnotation(Class<T> annotation){
-        for( Annotation a: this.annotation ){
-            if( a.annotationType().isAssignableFrom(annotation) )
-                return (T) a;
-        }
-        
-        return null;
-    }
-    
+	public Class<?> getClassType() {
+		return this.target == null ? this.classType : this.target;
+	}
+
+	public void setClassType(Class<?> classType) {
+		this.classType = classType;
+	}
+
+	public Class<?> getTarget() {
+		return target;
+	}
+
+	public void setTarget(Class<?> target) {
+		this.target = target;
+	}
+
+	public EnumerationType getEnumerated() {
+		return enumerated;
+	}
+
+	public void setEnumerated(EnumerationType enumerated) {
+		this.enumerated = enumerated;
+	}
+
+	public String getTemporal() {
+		return temporal;
+	}
+
+	public void setTemporal(String temporal) {
+		this.temporal = temporal;
+	}
+
+	public Class<? extends org.brandao.brutos.type.Type> getType() {
+		return type;
+	}
+
+	public void setType(Class<? extends org.brandao.brutos.type.Type> type) {
+		this.type = type;
+	}
+
+	public Class<?> getBeanType() {
+		return this.getClassType();
+	}
+
+	public Type getDeclaredGenericType() {
+		return this.genericType;
+	}
+
+	public Type getGenericType() {
+		return this.target == null ? this.genericType : this.target;
+	}
+
+	public void setGenericType(Type genericType) {
+		this.genericType = genericType;
+	}
+
+	public MappingTypes getMappingType() {
+		return mappingType;
+	}
+
+	public void setMappingType(MappingTypes mappingType) {
+		this.mappingType = mappingType;
+	}
+
+	public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
+		for (Annotation a : this.annotation) {
+			if (a.annotationType().isAssignableFrom(annotation))
+				return true;
+		}
+
+		return false;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T getAnnotation(Class<T> annotation) {
+		for (Annotation a : this.annotation) {
+			if (a.annotationType().isAssignableFrom(annotation))
+				return (T) a;
+		}
+
+		return null;
+	}
+
 }

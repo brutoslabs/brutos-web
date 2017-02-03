@@ -54,23 +54,21 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Intercepts {
 
-    /**
-     * Nome do interceptador. Se omitido, será usado o nome da 
-     * classe.
-     */
-    String name() default "";
+	/**
+	 * Nome do interceptador. Se omitido, será usado o nome da classe.
+	 */
+	String name() default "";
 
-    /**
-     * Indica que é um interceptador global. Se verdadeiro,
-     * todos os controladores serão interceptados, senão 
-     * terá que ser definido quais controladores deverão ser 
-     * interceptados.
-     */
-    boolean isDefault() default true;
+	/**
+	 * Indica que é um interceptador global. Se verdadeiro, todos os
+	 * controladores serão interceptados, senão terá que ser definido quais
+	 * controladores deverão ser interceptados.
+	 */
+	boolean isDefault() default true;
 
-    /**
-     * Parâmetros de configuração do interceptador.
-     */
-    Param[] params() default{};
-    
+	/**
+	 * Parâmetros de configuração do interceptador.
+	 */
+	Param[] params() default {};
+
 }

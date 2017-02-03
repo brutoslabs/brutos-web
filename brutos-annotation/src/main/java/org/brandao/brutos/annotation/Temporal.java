@@ -26,17 +26,18 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Define o mapeamento de um {@link Date}, {@link Calendar}. 
+ * Define o mapeamento de um {@link Date}, {@link Calendar}.
  * 
  * @author Afonso Brandao
  */
-@Target({ElementType.METHOD,ElementType.FIELD, ElementType.PARAMETER})
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Temporal {
-    
-    /**
-     * Formato da data. Deve seguir o padrão definido em {@link SimpleDateFormat}.
-     */
-    String value();
-    
+
+	/**
+	 * Formato da data. Deve seguir o padrão definido em
+	 * {@link SimpleDateFormat}.
+	 */
+	String value();
+
 }

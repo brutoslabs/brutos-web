@@ -24,19 +24,19 @@ package org.brandao.brutos.annotation;
  */
 public enum MappingTypes {
 
-    /**
-     * É detectado automaticamente o tipo de mapeamento.
-     */
-    AUTO,
-    
-    /**
-     * É um valor primitivo ou equivalente.
-     */
-    SIMPLE,
-    
-    /**
-     * É um objeto.
-     */
-    COMPLEX;
-    
+	/**
+	 * É detectado automaticamente o tipo de mapeamento.
+	 */
+	AUTO,
+
+	/**
+	 * É um valor primitivo ou equivalente.
+	 */
+	SIMPLE,
+
+	/**
+	 * É um objeto.
+	 */
+	COMPLEX;
+
 }

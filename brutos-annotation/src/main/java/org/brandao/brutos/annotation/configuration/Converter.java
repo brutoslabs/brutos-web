@@ -24,7 +24,7 @@ import org.brandao.brutos.ComponentRegistry;
  * @author Brandao
  */
 public interface Converter {
-    
-    Object converter(Object value, ComponentRegistry componentRegistry);
-    
+
+	Object converter(Object value, ComponentRegistry componentRegistry);
+
 }

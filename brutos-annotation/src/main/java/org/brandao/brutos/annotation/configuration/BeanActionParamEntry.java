@@ -21,15 +21,15 @@ package org.brandao.brutos.annotation.configuration;
  *
  * @author Brandao
  */
-public class BeanActionParamEntry 
-    extends ActionParamEntryWrapper implements BeanEntry{
+public class BeanActionParamEntry extends ActionParamEntryWrapper implements
+		BeanEntry {
 
-    public BeanActionParamEntry(ActionParamEntry value){
-        super(value);
-    }
-    
-    public Class getBeanType() {
-        return super.getType();
-    }
-    
+	public BeanActionParamEntry(ActionParamEntry value) {
+		super(value);
+	}
+
+	public Class getBeanType() {
+		return super.getType();
+	}
+
 }

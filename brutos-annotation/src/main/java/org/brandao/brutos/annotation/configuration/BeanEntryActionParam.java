@@ -24,77 +24,76 @@ import java.lang.reflect.Type;
  *
  * @author Brandao
  */
-public class BeanEntryActionParam 
-    extends ActionParamEntry implements BeanEntry{
-    
-    private ActionParamEntry value;
-    
-    public BeanEntryActionParam(ActionParamEntry value){
-        this.value = value;
-    }
-    
-    @Override
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
-        return value.isAnnotationPresent(annotation);
-    }
-    
-    @Override
-    public <T> T getAnnotation(Class<T> annotation){
-        return value.getAnnotation(annotation);
-    }
-    
-    @Override
-    public Type getGenericType() {
-        return value.getGenericType();
-    }
+public class BeanEntryActionParam extends ActionParamEntry implements BeanEntry {
 
-    @Override
-    public void setGenericType(Type genericType) {
-        value.setGenericType(genericType);
-    }
+	private ActionParamEntry value;
 
-    @Override
-    public Class getType() {
-        return value.getType();
-    }
+	public BeanEntryActionParam(ActionParamEntry value) {
+		this.value = value;
+	}
 
-    @Override
-    public void setType(Class type) {
-        value.setType(type);
-    }
+	@Override
+	public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
+		return value.isAnnotationPresent(annotation);
+	}
 
-    @Override
-    public String getName() {
-        return value.getName();
-    }
+	@Override
+	public <T> T getAnnotation(Class<T> annotation) {
+		return value.getAnnotation(annotation);
+	}
 
-    @Override
-    public void setName(String name) {
-        value.setName(name);
-    }
+	@Override
+	public Type getGenericType() {
+		return value.getGenericType();
+	}
 
-    @Override
-    public Annotation[] getAnnotation() {
-        return value.getAnnotation();
-    }
+	@Override
+	public void setGenericType(Type genericType) {
+		value.setGenericType(genericType);
+	}
 
-    @Override
-    public void setAnnotation(Annotation[] annotation) {
-        value.setAnnotation(annotation);
-    }
+	@Override
+	public Class getType() {
+		return value.getType();
+	}
 
-    @Override
-    public int getIndex() {
-        return value.getIndex();
-    }
+	@Override
+	public void setType(Class type) {
+		value.setType(type);
+	}
 
-    @Override
-    public void setIndex(int index) {
-        value.setIndex(index);
-    }
+	@Override
+	public String getName() {
+		return value.getName();
+	}
 
-    public Class getBeanType() {
-        return value.getType();
-    }
-    
+	@Override
+	public void setName(String name) {
+		value.setName(name);
+	}
+
+	@Override
+	public Annotation[] getAnnotation() {
+		return value.getAnnotation();
+	}
+
+	@Override
+	public void setAnnotation(Annotation[] annotation) {
+		value.setAnnotation(annotation);
+	}
+
+	@Override
+	public int getIndex() {
+		return value.getIndex();
+	}
+
+	@Override
+	public void setIndex(int index) {
+		value.setIndex(index);
+	}
+
+	public Class getBeanType() {
+		return value.getType();
+	}
+
 }

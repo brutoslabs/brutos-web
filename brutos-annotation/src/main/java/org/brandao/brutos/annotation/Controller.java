@@ -23,16 +23,19 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indica que uma classe é um controlador. Um controlador pode ter ações, com
- * ou sem métodos, várias identificações e uma
- * ação padrão.
- * <p>Uma ação pode ser representada por um método que pode ter ou não 
- * parâmetros que podem ser objetos ou tipos primitivos. 
- * Se forem objetos, podem ser criados mapeamentos para se definir como os 
- * valores de uma solicitação serão injetados em suas propriedades. 
- * Se o método produzir um resultado, este será processado e incluído na 
- * solicitação para posteriormente ser usada na visão.</p>
- * <p>As exceções lançadas dentro do método podem alterar o fluxo lógico da aplicação.</p>
+ * Indica que uma classe é um controlador. Um controlador pode ter ações, com ou
+ * sem métodos, várias identificações e uma ação padrão.
+ * <p>
+ * Uma ação pode ser representada por um método que pode ter ou não parâmetros
+ * que podem ser objetos ou tipos primitivos. Se forem objetos, podem ser
+ * criados mapeamentos para se definir como os valores de uma solicitação serão
+ * injetados em suas propriedades. Se o método produzir um resultado, este será
+ * processado e incluído na solicitação para posteriormente ser usada na visão.
+ * </p>
+ * <p>
+ * As exceções lançadas dentro do método podem alterar o fluxo lógico da
+ * aplicação.
+ * </p>
  * 
  * <pre>
  * Ex1:
@@ -57,20 +60,20 @@ import java.lang.annotation.Target;
  * 
  * <table border="1">
  * <tr>
- *    <td><b>Ação</b></td>
- *    <td><b>Método</b></td>
+ * <td><b>Ação</b></td>
+ * <td><b>Método</b></td>
  * </tr>
  * <tr>
- *    <td>/index</td>
- *    <td>Index.action1()</td>
+ * <td>/index</td>
+ * <td>Index.action1()</td>
  * </tr>
  * <tr>
- *    <td>/index?invoke=action1</td>
- *    <td>Index.action1()</td>
+ * <td>/index?invoke=action1</td>
+ * <td>Index.action1()</td>
  * </tr>
  * <tr>
- *    <td>/index?invoke=action2</td>
- *    <td>Index.action2()</td>
+ * <td>/index?invoke=action2</td>
+ * <td>Index.action2()</td>
  * </tr>
  * </table>
  * 
@@ -97,16 +100,16 @@ import java.lang.annotation.Target;
  * 
  * <table border="1">
  * <tr>
- *    <td><b>Ação</b></td>
- *    <td><b>Método</b></td>
+ * <td><b>Ação</b></td>
+ * <td><b>Método</b></td>
  * </tr>
  * <tr>
- *    <td>/index/action1</td>
- *    <td>Index.action1()</td>
+ * <td>/index/action1</td>
+ * <td>Index.action1()</td>
  * </tr>
  * <tr>
- *    <td>/index/action2</td>
- *    <td>Index.action2()</td>
+ * <td>/index/action2</td>
+ * <td>Index.action2()</td>
  * </tr>
  * </table>
  * 
@@ -133,16 +136,16 @@ import java.lang.annotation.Target;
  * 
  * <table border="1">
  * <tr>
- *    <td><b>Ação</b></td>
- *    <td><b>Método</b></td>
+ * <td><b>Ação</b></td>
+ * <td><b>Método</b></td>
  * </tr>
  * <tr>
- *    <td>/index/action1</td>
- *    <td>Index.action1()</td>
+ * <td>/index/action1</td>
+ * <td>Index.action1()</td>
  * </tr>
  * <tr>
- *    <td>/index/action2</td>
- *    <td>Index.action2()</td>
+ * <td>/index/action2</td>
+ * <td>Index.action2()</td>
  * </tr>
  * </table>
  * 
@@ -169,16 +172,16 @@ import java.lang.annotation.Target;
  * 
  * <table border="1">
  * <tr>
- *    <td><b>Ação</b></td>
- *    <td><b>Método</b></td>
+ * <td><b>Ação</b></td>
+ * <td><b>Método</b></td>
  * </tr>
  * <tr>
- *    <td>/index/action1</td>
- *    <td>Index.action1()</td>
+ * <td>/index/action1</td>
+ * <td>Index.action1()</td>
  * </tr>
  * <tr>
- *    <td>/index/action2</td>
- *    <td>Index.action2()</td>
+ * <td>/index/action2</td>
+ * <td>Index.action2()</td>
  * </tr>
  * </table>
  * 
@@ -187,27 +190,27 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Controller{
+public @interface Controller {
 
-    /**
-     * Ação que será executada por padrão.
-     */
-    String defaultActionName() default "";
+	/**
+	 * Ação que será executada por padrão.
+	 */
+	String defaultActionName() default "";
 
-    /**
-     * Nome do controlador.
-     * O nome do controlador é o mesmo da instância no container IoC.
-     */
-    String name() default "";
+	/**
+	 * Nome do controlador. O nome do controlador é o mesmo da instância no
+	 * container IoC.
+	 */
+	String name() default "";
 
-    /**
-     * Identificação do controlador.
-     */
-    String[] value() default {};
+	/**
+	 * Identificação do controlador.
+	 */
+	String[] value() default {};
 
-    /**
-     * Parâmetro que indica qual acção será executada.
-     */
-    String actionId() default "invoke";
+	/**
+	 * Parâmetro que indica qual acção será executada.
+	 */
+	String actionId() default "invoke";
 
 }

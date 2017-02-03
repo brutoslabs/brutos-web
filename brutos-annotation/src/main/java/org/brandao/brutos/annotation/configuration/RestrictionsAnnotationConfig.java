@@ -30,87 +30,78 @@ import org.brandao.brutos.validator.RestrictionRules;
  *
  * @author Brandao
  */
-@Stereotype(target=Restrictions.class,executeAfter=Basic.class)
-public class RestrictionsAnnotationConfig extends AbstractAnnotationConfig{
+@Stereotype(target = Restrictions.class, executeAfter = Basic.class)
+public class RestrictionsAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return (source instanceof ActionParamEntry &&
-                ((ActionParamEntry)source).isAnnotationPresent(Restrictions.class)) ||
-               (source instanceof BeanPropertyAnnotation &&
-                ((BeanPropertyAnnotation)source).isAnnotationPresent(Restrictions.class));
-    }
+	public boolean isApplicable(Object source) {
+		return (source instanceof ActionParamEntry && ((ActionParamEntry) source)
+				.isAnnotationPresent(Restrictions.class))
+				|| (source instanceof BeanPropertyAnnotation && ((BeanPropertyAnnotation) source)
+						.isAnnotationPresent(Restrictions.class));
+	}
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-    
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            throw 
-                new BrutosException(
-                        "can't create validation rules",
-                        e );
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-        
-        ParameterBuilder parameterBuilder = 
-            builder instanceof ParameterBuilder? 
-                (ParameterBuilder)builder : 
-                null;
-        
-        PropertyBuilder propertyBuilder = 
-            builder instanceof PropertyBuilder? 
-                (PropertyBuilder)builder : 
-                null;
-        
-        if(parameterBuilder == null && propertyBuilder == null)
-            return builder;
-        
-        Restrictions restrictions = this.getAnnotation(source);
-        String message = StringUtil.adjust(restrictions.message());
-        RestrictionBuilder restrictionBuilder = null;
-        Restriction[] rules = restrictions.rules();
-        
-        if(rules.length > 0){
-            Restriction r = rules[0];
-            String rule = r.rule();
-            String value = r.value();
-            
-            if(parameterBuilder != null){
-                restrictionBuilder = 
-                    parameterBuilder
-                        .addRestriction(RestrictionRules.valueOf(rule), value);
-            }
-            else{
-                restrictionBuilder =
-                    propertyBuilder
-                        .addRestriction(RestrictionRules.valueOf(rule), value);
-            }
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
 
-            for(int i=1;i<rules.length;i++){
-                r = rules[i];
-                rule = r.rule();
-                value = r.value();
-                restrictionBuilder
-                    .addRestriction(RestrictionRules.valueOf(rule), value);
-            }
-            restrictionBuilder.setMessage(message == null? r.message() : message);
-        }
-        
-        
-        return restrictionBuilder;
-    }
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new BrutosException("can't create validation rules", e);
+		}
 
-    private Restrictions getAnnotation(Object source){
-        if(source instanceof ActionParamEntry)
-            return ((ActionParamEntry)source).getAnnotation(Restrictions.class);
-        else
-            return ((BeanPropertyAnnotation)source).getAnnotation(Restrictions.class);
-    }
-    
+	}
+
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		ParameterBuilder parameterBuilder = builder instanceof ParameterBuilder ? (ParameterBuilder) builder
+				: null;
+
+		PropertyBuilder propertyBuilder = builder instanceof PropertyBuilder ? (PropertyBuilder) builder
+				: null;
+
+		if (parameterBuilder == null && propertyBuilder == null)
+			return builder;
+
+		Restrictions restrictions = this.getAnnotation(source);
+		String message = StringUtil.adjust(restrictions.message());
+		RestrictionBuilder restrictionBuilder = null;
+		Restriction[] rules = restrictions.rules();
+
+		if (rules.length > 0) {
+			Restriction r = rules[0];
+			String rule = r.rule();
+			String value = r.value();
+
+			if (parameterBuilder != null) {
+				restrictionBuilder = parameterBuilder.addRestriction(
+						RestrictionRules.valueOf(rule), value);
+			} else {
+				restrictionBuilder = propertyBuilder.addRestriction(
+						RestrictionRules.valueOf(rule), value);
+			}
+
+			for (int i = 1; i < rules.length; i++) {
+				r = rules[i];
+				rule = r.rule();
+				value = r.value();
+				restrictionBuilder.addRestriction(
+						RestrictionRules.valueOf(rule), value);
+			}
+			restrictionBuilder.setMessage(message == null ? r.message()
+					: message);
+		}
+
+		return restrictionBuilder;
+	}
+
+	private Restrictions getAnnotation(Object source) {
+		if (source instanceof ActionParamEntry)
+			return ((ActionParamEntry) source)
+					.getAnnotation(Restrictions.class);
+		else
+			return ((BeanPropertyAnnotation) source)
+					.getAnnotation(Restrictions.class);
+	}
+
 }

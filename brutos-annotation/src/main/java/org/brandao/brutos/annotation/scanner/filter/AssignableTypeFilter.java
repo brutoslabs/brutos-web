@@ -28,36 +28,34 @@ import org.brandao.brutos.scanner.vfs.Vfs;
  *
  * @author Brandao
  */
-public class AssignableTypeFilter implements TypeFilter{
+public class AssignableTypeFilter implements TypeFilter {
 
-    private List<Class> expected;
-    
-    public boolean accepts(String resource) {
-        try{
-            resource = Vfs.toClass(resource);
-            Class clazz = ClassUtil.get(resource);
-            for(Class c: expected){
-                return c.isAssignableFrom(clazz);
-            }
-            
-            return false;
-        }
-        catch(ClassNotFoundException e){
-            throw new BrutosException(e);
-        }
-    }
+	private List<Class> expected;
 
-    public void setExpression(List<String> value) {
-        try{
-            this.expected = new ArrayList<Class>();
-            
-            for(String name: value)
-                this.expected.add(ClassUtil.get(name));
-            
-        }
-        catch(ClassNotFoundException e){
-            throw new BrutosException(e);
-        }
-    }
+	public boolean accepts(String resource) {
+		try {
+			resource = Vfs.toClass(resource);
+			Class clazz = ClassUtil.get(resource);
+			for (Class c : expected) {
+				return c.isAssignableFrom(clazz);
+			}
+
+			return false;
+		} catch (ClassNotFoundException e) {
+			throw new BrutosException(e);
+		}
+	}
+
+	public void setExpression(List<String> value) {
+		try {
+			this.expected = new ArrayList<Class>();
+
+			for (String name : value)
+				this.expected.add(ClassUtil.get(name));
+
+		} catch (ClassNotFoundException e) {
+			throw new BrutosException(e);
+		}
+	}
 
 }

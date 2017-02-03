@@ -31,44 +31,50 @@ import org.brandao.brutos.web.test.MockWebInvoker;
  *
  * @author Brandao
  */
-public class MockAnnotationWebApplicationContext 
-    extends AnnotationWebApplicationContext{
+public class MockAnnotationWebApplicationContext extends
+		AnnotationWebApplicationContext {
 
-    public static final String IGNORE_RESOURCES = "org.brandao.brutos.mock.ignore_resources";
+	public static final String IGNORE_RESOURCES = "org.brandao.brutos.mock.ignore_resources";
 
-    public static final String XML_CONTENT = "org.brandao.brutos.mock.xml_content";
-    
-    private boolean ignoreResources;
-    
-    private String resource;
-    
-    @Override
-    protected void overrideConfig(){
-        Properties config = this.getConfiguration();
+	public static final String XML_CONTENT = "org.brandao.brutos.mock.xml_content";
 
-        if(config.get(BrutosConstants.RENDER_VIEW_CLASS) == null)
-        	config.put(BrutosConstants.RENDER_VIEW_CLASS, MockRenderView.class.getName());
-        
-        if(config.get(BrutosConstants.INVOKER_CLASS) == null)
-        	config.put(BrutosConstants.INVOKER_CLASS, MockWebInvoker.class.getName());
-        
-        if(config.get(BrutosConstants.OBJECT_FACTORY_CLASS) == null)
-        	config.put(BrutosConstants.OBJECT_FACTORY_CLASS, MockObjectFactory.class.getName());
-        
-        if(config.get(BrutosConstants.VALIDATOR_FACTORY_CLASS) == null)
-        	config.put(BrutosConstants.VALIDATOR_FACTORY_CLASS, JSR303ValidatorFactory.class.getName());
-        
-        super.overrideConfig();
-        
-        this.ignoreResources = "true".equals(config.getProperty(IGNORE_RESOURCES, "false"));
-        this.resource = config.getProperty(XML_CONTENT);
-        
-        if(this.resource != null)
-            super.setResources(new Resource[]{new ByteArrayResource(this.resource.getBytes())});
-        
-        if(this.ignoreResources)
-            super.setLocations(new String[]{});
-        
-    }
-    
+	private boolean ignoreResources;
+
+	private String resource;
+
+	@Override
+	protected void overrideConfig() {
+		Properties config = this.getConfiguration();
+
+		if (config.get(BrutosConstants.RENDER_VIEW_CLASS) == null)
+			config.put(BrutosConstants.RENDER_VIEW_CLASS,
+					MockRenderView.class.getName());
+
+		if (config.get(BrutosConstants.INVOKER_CLASS) == null)
+			config.put(BrutosConstants.INVOKER_CLASS,
+					MockWebInvoker.class.getName());
+
+		if (config.get(BrutosConstants.OBJECT_FACTORY_CLASS) == null)
+			config.put(BrutosConstants.OBJECT_FACTORY_CLASS,
+					MockObjectFactory.class.getName());
+
+		if (config.get(BrutosConstants.VALIDATOR_FACTORY_CLASS) == null)
+			config.put(BrutosConstants.VALIDATOR_FACTORY_CLASS,
+					JSR303ValidatorFactory.class.getName());
+
+		super.overrideConfig();
+
+		this.ignoreResources = "true".equals(config.getProperty(
+				IGNORE_RESOURCES, "false"));
+		this.resource = config.getProperty(XML_CONTENT);
+
+		if (this.resource != null)
+			super.setResources(new Resource[] { new ByteArrayResource(
+					this.resource.getBytes()) });
+
+		if (this.ignoreResources)
+			super.setLocations(new String[] {});
+
+	}
+
 }

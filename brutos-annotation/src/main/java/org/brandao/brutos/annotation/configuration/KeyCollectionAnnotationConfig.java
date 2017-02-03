@@ -28,77 +28,67 @@ import org.brandao.brutos.type.TypeUtil;
  *
  * @author Brandao
  */
-@Stereotype(target=KeyCollection.class, executeAfter=Bean.class)
-public class KeyCollectionAnnotationConfig 
-    extends AbstractAnnotationConfig{
+@Stereotype(target = KeyCollection.class, executeAfter = Bean.class)
+public class KeyCollectionAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return source instanceof KeyEntry;
-    }
+	public boolean isApplicable(Object source) {
+		return source instanceof KeyEntry;
+	}
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-    
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            throw 
-                new BrutosException(
-                        "can't create key of collection: " + ((KeyEntry)source).getName(),
-                        e );
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-        
-        KeyEntry key = (KeyEntry)source;
-        
-        if(!key.isAnnotationPresent(Any.class) && AnnotationUtil.isBuildEntity(componentRegistry, key.getMappingType(), key.getClassType()))
-            buildKey(key, builder, componentRegistry);
-        else
-            addKey(key, (BeanBuilder)builder, componentRegistry);
-        
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
 
-        return builder;
-    }
-    
-    protected void addKey(KeyEntry keyEntry, BeanBuilder builder, 
-            ComponentRegistry componentRegistry){
-        
-        String key = keyEntry.getName();
-        EnumerationType enumType = keyEntry.getEnumerated();
-        String tempType = keyEntry.getTemporal();
-        ScopeType scope = keyEntry.getScopeType();
-        org.brandao.brutos.type.Type type = 
-                keyEntry.getType() == null? null : AnnotationUtil.getTypeInstance(keyEntry.getType());
-        
-        KeyBuilder keyBuilder;
-        
-        if(keyEntry.isAnnotationPresent(Any.class)){
-            keyBuilder = builder.setGenericKey(
-                    key, TypeUtil.getRawType(keyEntry.getGenericType()));
-        }
-        else{
-            keyBuilder = builder.setKey(
-                    key, enumType, tempType, null, scope, null, type, keyEntry.getGenericType());
-        }
-        
-        super.applyInternalConfiguration(
-        		keyEntry, 
-                keyBuilder, 
-                componentRegistry);
-    }
-    
-    protected void buildKey(KeyEntry key, Object builder, 
-            ComponentRegistry componentRegistry){
-        super.applyInternalConfiguration(
-                key, 
-                builder, 
-                componentRegistry);
-    }
-    
-    
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new BrutosException("can't create key of collection: "
+					+ ((KeyEntry) source).getName(), e);
+		}
+
+	}
+
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		KeyEntry key = (KeyEntry) source;
+
+		if (!key.isAnnotationPresent(Any.class)
+				&& AnnotationUtil.isBuildEntity(componentRegistry,
+						key.getMappingType(), key.getClassType()))
+			buildKey(key, builder, componentRegistry);
+		else
+			addKey(key, (BeanBuilder) builder, componentRegistry);
+
+		return builder;
+	}
+
+	protected void addKey(KeyEntry keyEntry, BeanBuilder builder,
+			ComponentRegistry componentRegistry) {
+
+		String key = keyEntry.getName();
+		EnumerationType enumType = keyEntry.getEnumerated();
+		String tempType = keyEntry.getTemporal();
+		ScopeType scope = keyEntry.getScopeType();
+		org.brandao.brutos.type.Type type = keyEntry.getType() == null ? null
+				: AnnotationUtil.getTypeInstance(keyEntry.getType());
+
+		KeyBuilder keyBuilder;
+
+		if (keyEntry.isAnnotationPresent(Any.class)) {
+			keyBuilder = builder.setGenericKey(key,
+					TypeUtil.getRawType(keyEntry.getGenericType()));
+		} else {
+			keyBuilder = builder.setKey(key, enumType, tempType, null, scope,
+					null, type, keyEntry.getGenericType());
+		}
+
+		super.applyInternalConfiguration(keyEntry, keyBuilder,
+				componentRegistry);
+	}
+
+	protected void buildKey(KeyEntry key, Object builder,
+			ComponentRegistry componentRegistry) {
+		super.applyInternalConfiguration(key, builder, componentRegistry);
+	}
+
 }

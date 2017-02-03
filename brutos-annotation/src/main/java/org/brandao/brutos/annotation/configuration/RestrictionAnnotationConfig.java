@@ -31,66 +31,58 @@ import org.brandao.brutos.validator.RestrictionRules;
  *
  * @author Brandao
  */
-@Stereotype(target=Restriction.class,executeAfter={Basic.class})
-public class RestrictionAnnotationConfig extends AbstractAnnotationConfig{
+@Stereotype(target = Restriction.class, executeAfter = { Basic.class })
+public class RestrictionAnnotationConfig extends AbstractAnnotationConfig {
 
-    public boolean isApplicable(Object source) {
-        return (source instanceof ActionParamEntry &&
-                ((ActionParamEntry)source).isAnnotationPresent(Restriction.class)) ||
-               (source instanceof BeanPropertyAnnotation &&
-                ((BeanPropertyAnnotation)source).isAnnotationPresent(Restriction.class));
-    }
+	public boolean isApplicable(Object source) {
+		return (source instanceof ActionParamEntry && ((ActionParamEntry) source)
+				.isAnnotationPresent(Restriction.class))
+				|| (source instanceof BeanPropertyAnnotation && ((BeanPropertyAnnotation) source)
+						.isAnnotationPresent(Restriction.class));
+	}
 
-    public Object applyConfiguration(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-    
-        try{
-            return applyConfiguration0(source, builder, componentRegistry);
-        }
-        catch(Exception e){
-            throw 
-                new BrutosException(
-                        "can't create validation rule",
-                        e );
-        }
-        
-    }
-    
-    public Object applyConfiguration0(Object source, Object builder, 
-            ComponentRegistry componentRegistry) {
-        
-        ParameterBuilder parameterBuilder = 
-            builder instanceof ParameterBuilder? 
-                (ParameterBuilder)builder : 
-                null;
-        
-        PropertyBuilder propertyBuilder = 
-            builder instanceof PropertyBuilder? 
-                (PropertyBuilder)builder : 
-                null;
-        
-        Restriction restriction = getAnnotation(source);
-        
-        String rule = restriction.rule();
-        String value = restriction.value();
-        String message = restriction.message();
-        
-        if(parameterBuilder != null){
-            parameterBuilder.addRestriction(RestrictionRules.valueOf(rule), value)
-                .setMessage(message);
-        }
-        else{
-            propertyBuilder.addRestriction(RestrictionRules.valueOf(rule), value)
-                .setMessage(message);
-        }
-        
-        return builder;
-    }
-    
-    private Restriction getAnnotation(Object source){
-        if(source instanceof ActionParamEntry)
-            return ((ActionParamEntry)source).getAnnotation(Restriction.class);
-        else
-            return ((BeanPropertyAnnotation)source).getAnnotation(Restriction.class);
-    }
+	public Object applyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		try {
+			return applyConfiguration0(source, builder, componentRegistry);
+		} catch (Exception e) {
+			throw new BrutosException("can't create validation rule", e);
+		}
+
+	}
+
+	public Object applyConfiguration0(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
+
+		ParameterBuilder parameterBuilder = builder instanceof ParameterBuilder ? (ParameterBuilder) builder
+				: null;
+
+		PropertyBuilder propertyBuilder = builder instanceof PropertyBuilder ? (PropertyBuilder) builder
+				: null;
+
+		Restriction restriction = getAnnotation(source);
+
+		String rule = restriction.rule();
+		String value = restriction.value();
+		String message = restriction.message();
+
+		if (parameterBuilder != null) {
+			parameterBuilder.addRestriction(RestrictionRules.valueOf(rule),
+					value).setMessage(message);
+		} else {
+			propertyBuilder.addRestriction(RestrictionRules.valueOf(rule),
+					value).setMessage(message);
+		}
+
+		return builder;
+	}
+
+	private Restriction getAnnotation(Object source) {
+		if (source instanceof ActionParamEntry)
+			return ((ActionParamEntry) source).getAnnotation(Restriction.class);
+		else
+			return ((BeanPropertyAnnotation) source)
+					.getAnnotation(Restriction.class);
+	}
 }

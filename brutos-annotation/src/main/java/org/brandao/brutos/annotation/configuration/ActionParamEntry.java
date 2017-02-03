@@ -30,122 +30,121 @@ import org.brandao.brutos.mapping.StringUtil;
  * @author Brandao
  */
 public class ActionParamEntry {
-    
-    private int index;
-    
-    private Type genericType;
-    
-    private Class type;
-    
-    private String name;
-    
-    private Annotation[] annotation;
 
-    public ActionParamEntry(){
-    }
-    
-    public ActionParamEntry(String name,Class type,Type genericType,Annotation[] annotation, int index){
-        this.name = name;
-        this.type = type;
-        this.genericType = genericType;
-        this.annotation = annotation;
-        this.index = index;
-    }
-    
-    public boolean isAnnotationPresent(Class<? extends Annotation> annotation){
-        for( Annotation a: this.annotation ){
-            if( a.annotationType().isAssignableFrom(annotation) )
-                return true;
-        }
-        
-        return false;
-    }
-    
-    public <T> T getAnnotation(Class<T> annotation){
-        for( Annotation a: this.annotation ){
-            if( a.annotationType().isAssignableFrom(annotation) )
-                return (T) a;
-        }
-        
-        return null;
-    }
+	private int index;
 
-    public Type getDeclaredGenericType() {
-        return this.genericType;
-    }
-    
-    public Type getGenericType() {
-       	Target target = this.getAnnotation(Target.class);
-        return target == null? this.genericType : target.value();
-    }
+	private Type genericType;
 
-    public void setGenericType(Type genericType) {
-        this.genericType = genericType;
-    }
+	private Class type;
 
-    public Class getDeclaredType() {
-        return this.type;
-    }
-    
-    public Class getType() {
-    	Target target = this.getAnnotation(Target.class);
-        return target == null? this.type : target.value();
-    }
+	private String name;
 
-    public void setType(Class type) {
-        this.type = type;
-    }
+	private Annotation[] annotation;
 
-    public String getName() {
+	public ActionParamEntry() {
+	}
 
-        NotNamed notNamed = 
-                (NotNamed)this.getAnnotation(NotNamed.class);
-    	
-        if(notNamed != null)
-        	return null;
-        
-        Basic basic = 
-                (Basic)this.getAnnotation(Basic.class);
-        
-        if(basic != null){
-            String actionName = StringUtil.adjust(basic.bean());
-            if(!StringUtil.isEmpty(actionName))
-                return actionName;
-        }
-        
-        if( this.name != null ){
-             String actionName = StringUtil.adjust(this.name);
-             if(!StringUtil.isEmpty(actionName))
-                 return actionName;
-            
-        }
-        
-        return "arg"+index;
-        //return null;
-    }
+	public ActionParamEntry(String name, Class type, Type genericType,
+			Annotation[] annotation, int index) {
+		this.name = name;
+		this.type = type;
+		this.genericType = genericType;
+		this.annotation = annotation;
+		this.index = index;
+	}
 
-    public String getDefaultName(){
-    	return "arg"+index;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
+	public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
+		for (Annotation a : this.annotation) {
+			if (a.annotationType().isAssignableFrom(annotation))
+				return true;
+		}
 
-    public Annotation[] getAnnotation() {
-        return annotation;
-    }
+		return false;
+	}
 
-    public void setAnnotation(Annotation[] annotation) {
-        this.annotation = annotation;
-    }
+	public <T> T getAnnotation(Class<T> annotation) {
+		for (Annotation a : this.annotation) {
+			if (a.annotationType().isAssignableFrom(annotation))
+				return (T) a;
+		}
 
-    public int getIndex() {
-        return index;
-    }
+		return null;
+	}
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
+	public Type getDeclaredGenericType() {
+		return this.genericType;
+	}
+
+	public Type getGenericType() {
+		Target target = this.getAnnotation(Target.class);
+		return target == null ? this.genericType : target.value();
+	}
+
+	public void setGenericType(Type genericType) {
+		this.genericType = genericType;
+	}
+
+	public Class getDeclaredType() {
+		return this.type;
+	}
+
+	public Class getType() {
+		Target target = this.getAnnotation(Target.class);
+		return target == null ? this.type : target.value();
+	}
+
+	public void setType(Class type) {
+		this.type = type;
+	}
+
+	public String getName() {
+
+		NotNamed notNamed = (NotNamed) this.getAnnotation(NotNamed.class);
+
+		if (notNamed != null)
+			return null;
+
+		Basic basic = (Basic) this.getAnnotation(Basic.class);
+
+		if (basic != null) {
+			String actionName = StringUtil.adjust(basic.bean());
+			if (!StringUtil.isEmpty(actionName))
+				return actionName;
+		}
+
+		if (this.name != null) {
+			String actionName = StringUtil.adjust(this.name);
+			if (!StringUtil.isEmpty(actionName))
+				return actionName;
+
+		}
+
+		return "arg" + index;
+		// return null;
+	}
+
+	public String getDefaultName() {
+		return "arg" + index;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Annotation[] getAnnotation() {
+		return annotation;
+	}
+
+	public void setAnnotation(Annotation[] annotation) {
+		this.annotation = annotation;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
 
 }

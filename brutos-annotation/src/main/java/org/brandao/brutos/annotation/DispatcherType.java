@@ -23,20 +23,20 @@ package org.brandao.brutos.annotation;
  * @author Brandao
  */
 public interface DispatcherType {
-    
-    /**
-     * Inclui a visão no resultado.
-     */
-    public final String INCLUDE  = "include";
 
-    /**
-     *  A solicitação é encaminhada para a visão.
-     */
-    public static final String FORWARD  = "forward";
+	/**
+	 * Inclui a visão no resultado.
+	 */
+	public final String INCLUDE = "include";
 
-    /**
-     *  A solicitação é redirecionada para a visão.
-     */
-    public static final String REDIRECT = "redirect";
-    
+	/**
+	 * A solicitação é encaminhada para a visão.
+	 */
+	public static final String FORWARD = "forward";
+
+	/**
+	 * A solicitação é redirecionada para a visão.
+	 */
+	public static final String REDIRECT = "redirect";
+
 }

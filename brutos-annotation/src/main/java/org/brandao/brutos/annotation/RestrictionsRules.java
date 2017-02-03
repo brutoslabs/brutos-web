@@ -23,45 +23,45 @@ package org.brandao.brutos.annotation;
  * @author Brandao
  */
 public interface RestrictionsRules {
-    
-    /**
-     * Somente são considerados válidos os valores maiores do que o definido. Somente permitido
-     * para valores numéricos.
-     */
-    public static final String MIN       = "min";
-    
-    /**
-     * Somente são considerados válidos os textos com tamanho maior que o definido.
-     * Somente permitido para tipos texto.
-     */
-    public static final String MINLENGTH = "minlength";
-    
-    /**
-     * Somente são considerados válidos os valores menores que o definido. Somente permitido
-     * para valores numéricos.
-     */
-    public static final String MAX       = "max";
-    
-    /**
-     * Somente são considerados válidos os textos com tamanho menor que o definido.
-     * Somente permitido para tipos texto.
-     */
-    public static final String MAXLENGTH = "maxlength";
-    
-    /**
-     * Somente são considerados válidos os valores que correspondem à expressão regular definida.
-     * Somente permitido para tipos texto.
-     */
-    public static final String MATCHES   = "matches";
-    
-    /**
-     * Indica que o valor é obrigatório.
-     */
-    public static final String REQUIRED  = "required";
-    
-    /**
-     * Somente são considerados válidos os valores iguais ao definido.
-     */
-    public static final String EQUAL     = "equal";
-    
+
+	/**
+	 * Somente são considerados válidos os valores maiores do que o definido.
+	 * Somente permitido para valores numéricos.
+	 */
+	public static final String MIN = "min";
+
+	/**
+	 * Somente são considerados válidos os textos com tamanho maior que o
+	 * definido. Somente permitido para tipos texto.
+	 */
+	public static final String MINLENGTH = "minlength";
+
+	/**
+	 * Somente são considerados válidos os valores menores que o definido.
+	 * Somente permitido para valores numéricos.
+	 */
+	public static final String MAX = "max";
+
+	/**
+	 * Somente são considerados válidos os textos com tamanho menor que o
+	 * definido. Somente permitido para tipos texto.
+	 */
+	public static final String MAXLENGTH = "maxlength";
+
+	/**
+	 * Somente são considerados válidos os valores que correspondem à expressão
+	 * regular definida. Somente permitido para tipos texto.
+	 */
+	public static final String MATCHES = "matches";
+
+	/**
+	 * Indica que o valor é obrigatório.
+	 */
+	public static final String REQUIRED = "required";
+
+	/**
+	 * Somente são considerados válidos os valores iguais ao definido.
+	 */
+	public static final String EQUAL = "equal";
+
 }

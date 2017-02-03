@@ -24,10 +24,11 @@ import org.brandao.brutos.annotation.Stereotype;
  *
  * @author Brandao
  */
-public class StereotypeTypeFilter extends AnnotationTypeFilter{
-    
-    public StereotypeTypeFilter(){
-        super.setExpression(Arrays.asList(new String[]{Stereotype.class.getName()}));
-    }
-    
+public class StereotypeTypeFilter extends AnnotationTypeFilter {
+
+	public StereotypeTypeFilter() {
+		super.setExpression(Arrays.asList(new String[] { Stereotype.class
+				.getName() }));
+	}
+
 }

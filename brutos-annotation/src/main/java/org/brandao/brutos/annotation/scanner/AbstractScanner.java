@@ -21,74 +21,75 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 /**
  *
  * @author Afonso Brandao
  */
-public abstract class AbstractScanner implements Scanner{
+public abstract class AbstractScanner implements Scanner {
 
-    protected Set<Class> listClass;
-    protected Set<TypeFilter> includeFilters;
-    protected Set<TypeFilter> excludeFilters;
-    private String[] basePackage;
-    
-    public AbstractScanner(){
-        this.listClass      = new HashSet<Class>();
-        this.includeFilters = new HashSet<TypeFilter>();
-        this.excludeFilters = new HashSet<TypeFilter>();
-    }
+	protected Set<Class> listClass;
+	protected Set<TypeFilter> includeFilters;
+	protected Set<TypeFilter> excludeFilters;
+	private String[] basePackage;
 
-    protected boolean accepts(String resource){
-        if(!listClass.contains(resource)){
-            
-            boolean include = false;
-            
-            for(TypeFilter filter: this.includeFilters){
-                if(filter.accepts(resource)){
-                    include = true;
-                    break;
-                }
-            }
-            
-            if(include){
-                for(TypeFilter filter: this.excludeFilters){
-                    if(filter.accepts(resource)){
-                        return false;
-                    }
-                }
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
-    public List getClassList() {
-        return new ArrayList(this.listClass);
-    }
+	public AbstractScanner() {
+		this.listClass = new HashSet<Class>();
+		this.includeFilters = new HashSet<TypeFilter>();
+		this.excludeFilters = new HashSet<TypeFilter>();
+	}
 
-    public String[] getBasePackage() {
-        return basePackage;
-    }
+	protected boolean accepts(String resource) {
+		if (!listClass.contains(resource)) {
 
-    public void setBasePackage(String[] basePackage) {
-        this.basePackage = basePackage;
-    }
+			boolean include = false;
 
-   public void addIncludeFilter(TypeFilter filter) {
-        this.includeFilters.add(filter);
-    }
+			for (TypeFilter filter : this.includeFilters) {
+				if (filter.accepts(resource)) {
+					include = true;
+					break;
+				}
+			}
 
-    public void addExcludeFilter(TypeFilter filter) {
-        this.excludeFilters.add(filter);
-    }
+			if (include) {
+				for (TypeFilter filter : this.excludeFilters) {
+					if (filter.accepts(resource)) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
 
-    public void removeIncludeFilter(TypeFilter filter) {
-        this.includeFilters.remove(filter);
-    }
+		return false;
+	}
 
-    public void removeExcludeFilter(TypeFilter filter) {
-        this.excludeFilters.remove(filter);
-    }
-    
+	public List getClassList() {
+		return new ArrayList(this.listClass);
+	}
+
+	public String[] getBasePackage() {
+		return basePackage;
+	}
+
+	public void setBasePackage(String[] basePackage) {
+		this.basePackage = basePackage;
+	}
+
+	public void addIncludeFilter(TypeFilter filter) {
+		this.includeFilters.add(filter);
+	}
+
+	public void addExcludeFilter(TypeFilter filter) {
+		this.excludeFilters.add(filter);
+	}
+
+	public void removeIncludeFilter(TypeFilter filter) {
+		this.includeFilters.remove(filter);
+	}
+
+	public void removeExcludeFilter(TypeFilter filter) {
+		this.excludeFilters.remove(filter);
+	}
+
 }

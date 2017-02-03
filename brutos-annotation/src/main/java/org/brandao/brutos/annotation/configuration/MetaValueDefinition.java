@@ -20,7 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 public class MetaValueDefinition {
 
 	private String name;
-	
+
 	private Class<?> target;
 
 	public MetaValueDefinition() {

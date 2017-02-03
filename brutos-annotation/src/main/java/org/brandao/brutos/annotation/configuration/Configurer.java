@@ -26,13 +26,13 @@ import org.brandao.brutos.TypeRegistry;
  * @author Brandao
  */
 public interface Configurer {
-    
-    void addInterceptors(InterceptorRegistry interceptorRegistry);
-    
-    void addControllers(ControllerRegistry controllerRegistry);
-    
-    void addScopes(ScopeRegistry scopeRegistry);
-            
-    void addTypes(TypeRegistry typeRegistry);
-    
+
+	void addInterceptors(InterceptorRegistry interceptorRegistry);
+
+	void addControllers(ControllerRegistry controllerRegistry);
+
+	void addScopes(ScopeRegistry scopeRegistry);
+
+	void addTypes(TypeRegistry typeRegistry);
+
 }

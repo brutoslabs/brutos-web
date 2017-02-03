@@ -30,9 +30,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Deprecated
 public @interface MethodMapping {
-    
-    String name();
-    
-    ParameterMethod[] parameters() default {};
-    
+
+	String name();
+
+	ParameterMethod[] parameters() default {};
+
 }
