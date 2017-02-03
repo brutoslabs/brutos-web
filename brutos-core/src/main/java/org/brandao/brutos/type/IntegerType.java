@@ -10,6 +10,8 @@ import org.brandao.brutos.MvcResponse;
 public class IntegerType 
     extends AbstractType implements Type{
 
+	private static final int DEFAULT_VALUE = 0;
+	
     public IntegerType() {
     }
 
@@ -22,7 +24,7 @@ public class IntegerType
             return value;
         else
         if( value instanceof String )
-            return ((String) value).isEmpty()? 0 : Integer.valueOf( (String)value );
+            return ((String) value).isEmpty()? DEFAULT_VALUE : Integer.valueOf( (String)value );
         else
         if( value == null )
             return null;

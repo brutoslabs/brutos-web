@@ -7,6 +7,8 @@ import org.brandao.brutos.MvcResponse;
 
 public class BooleanType extends AbstractType{
 
+	private static final boolean DEFAULT_VALUE = false;
+	
     public BooleanType() {
     }
 
@@ -19,7 +21,7 @@ public class BooleanType extends AbstractType{
             return value;
         else
         if(value instanceof String)
-            return ((String) value).isEmpty()? false : Boolean.valueOf((String)value);
+            return ((String) value).isEmpty()? DEFAULT_VALUE : Boolean.valueOf((String)value);
         else
         if( value == null )
             return null;

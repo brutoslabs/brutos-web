@@ -10,6 +10,8 @@ import org.brandao.brutos.MvcResponse;
 public class ShortType 
     extends AbstractType implements Type{
 
+	private static final short DEFAULT_VALUE = 0;
+	
     public ShortType() {
     }
 
@@ -22,7 +24,7 @@ public class ShortType
             return value;
         else
         if( value instanceof String )
-            return ((String) value).isEmpty()? (short)0 : Short.valueOf((String)value);
+            return ((String) value).isEmpty()? DEFAULT_VALUE : Short.valueOf((String)value);
         else
         if( value == null )
             return null;

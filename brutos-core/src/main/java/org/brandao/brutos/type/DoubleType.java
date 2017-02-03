@@ -9,6 +9,8 @@ import org.brandao.brutos.MvcResponse;
 public class DoubleType 
     extends AbstractType implements Type{
 
+	private static final double DEFAULT_VALUE = 0.0;
+	
     public DoubleType() {
     }
     
@@ -25,7 +27,7 @@ public class DoubleType
             return value;
         else
         if( value instanceof String )
-            return ((String) value).isEmpty()? 0.0 : Double.valueOf( (String)value );
+            return ((String) value).isEmpty()? DEFAULT_VALUE : Double.valueOf( (String)value );
         else
         if( value == null )
             return null;

@@ -10,6 +10,8 @@ import org.brandao.brutos.MvcResponse;
 public class LongType 
  extends AbstractType implements Type{
 
+	private static final long DEFAULT_VALUE = 0L;
+	
     public LongType() {
     }
 
@@ -22,7 +24,7 @@ public class LongType
             return value;
         else
         if( value instanceof String )
-            return ((String) value).isEmpty()? 0L : Long.valueOf( (String)value );
+            return ((String) value).isEmpty()? DEFAULT_VALUE : Long.valueOf( (String)value );
         else
         if( value == null )
             return null;
