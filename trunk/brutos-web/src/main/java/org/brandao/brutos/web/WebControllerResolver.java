@@ -15,17 +15,17 @@ import org.brandao.brutos.scope.Scope;
 
 public class WebControllerResolver implements ControllerResolver{
 
-    private static Map<String,URIMapping> uris = new HashMap<String, URIMapping>();
+    private static Map<String,StringPattern> uris = new HashMap<String, StringPattern>();
 
     public WebControllerResolver() {
     }
 
-    public static URIMapping getURIMapping( String uri ){
+    public static StringPattern getURIMapping( String uri ){
         try{
             if( uris.containsKey( uri ) )
                 return uris.get( uri );
             else{
-                URIMapping map = new URIMapping( uri );
+                StringPattern map = new StringPattern( uri );
                 uris.put( uri , map);
                 return map;
             }
@@ -74,7 +74,7 @@ public class WebControllerResolver implements ControllerResolver{
         	if(controllerId == null)
         		throw new BrutosException("invalid controller id: " + controllerId);
         	
-            URIMapping uriMap = getURIMapping( controllerId );
+            StringPattern uriMap = getURIMapping( controllerId );
 
             if(uriMap.matches(uri)){
                 updateRequest(uri, scope, uriMap);
@@ -87,7 +87,7 @@ public class WebControllerResolver implements ControllerResolver{
             	if(controllerId == null)
             		throw new BrutosException("invalid controller id: " + controllerId);
             	
-                URIMapping uriMap = getURIMapping( controllerId );
+                StringPattern uriMap = getURIMapping( controllerId );
                 
                 if(uriMap.matches(uri)){
 	                updateRequest(uri, scope, uriMap);
@@ -117,7 +117,7 @@ public class WebControllerResolver implements ControllerResolver{
                         controller.getId() + actionId :
                         actionId;
 
-            URIMapping uriMap = getURIMapping( fullActionId );
+            StringPattern uriMap = getURIMapping( fullActionId );
 
             if(uriMap.matches(uri)){
                 updateRequest(uri, paramScope, uriMap);
@@ -142,7 +142,7 @@ public class WebControllerResolver implements ControllerResolver{
         handler.setResourceAction(resourceAction);
     }
     
-    private void updateRequest(String uri, Scope paramScope, URIMapping uriMap){
+    private void updateRequest(String uri, Scope paramScope, StringPattern uriMap){
         Map<String,List<String>> params = uriMap.getParameters(uri);
         for(String key: params.keySet() ){
         	for(String value: params.get(key)){

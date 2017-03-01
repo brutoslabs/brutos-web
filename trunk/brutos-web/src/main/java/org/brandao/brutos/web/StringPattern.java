@@ -9,25 +9,31 @@ import java.util.regex.Pattern;
 
 import org.brandao.brutos.mapping.StringUtil;
 
-public class URIMapping {
+public class StringPattern {
 
-    private String originalURI;
+    private String original;
     
-    private Pattern uriPattern;
+    private Pattern pattern;
 
-    private Pattern uriPrePattern;
+    private Pattern prePattern;
     
-    private List<URIParameter> parameters;
+    private String stringPattern;
+    
+    private List<StringPatternVar> vars;
 
-    public URIMapping( String uri ) throws MalformedURLException{
-        this.parse(uri);
-        this.originalURI   = uri;
-        this.uriPattern    = 
-    		Pattern.compile(this.getURIPattern(), Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
-        this.uriPrePattern =
-			Pattern.compile(this.getURIPrePattern(), Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+    public StringPattern( String value ) throws MalformedURLException{
+        this.parse(value);
+        this.original   = value;
+        this.pattern    = 
+    		Pattern.compile(this.createRegex(), Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+        this.prePattern =
+			Pattern.compile(this.createPreRegex(), Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+        this.stringPattern = 
+    		this.createPattern();
     }
 
+    /* -- private methods -- */
+    
     private void parse(String uri) throws MalformedURLException{
     	
         List<String> frags  = new ArrayList<String>();
@@ -102,7 +108,7 @@ public class URIMapping {
         }
         
 
-        parameters = new ArrayList<URIParameter>();
+        vars = new ArrayList<StringPatternVar>();
 
         for( int i=0;i<ids.size();i++ ){
         	
@@ -128,8 +134,8 @@ public class URIMapping {
             
             regexSuffix.append("$");
             
-            parameters.add(
-                    new URIParameter(
+            vars.add(
+                    new StringPatternVar(
                         i,
                         ids.get(i),
                         Pattern.compile(regexs.get(i), Pattern.DOTALL | Pattern.CASE_INSENSITIVE),
@@ -141,15 +147,15 @@ public class URIMapping {
         
     }
 
-    private String getURIPrePattern(){
+    private String createPreRegex(){
         StringBuilder result = new StringBuilder();
         
-        if(parameters.isEmpty())
+        if(vars.isEmpty())
             return result.toString();
         
         
-        for( int i=0;i<parameters.size();i++ ){
-        	URIParameter p = (URIParameter)parameters.get(i);
+        for( int i=0;i<vars.size();i++ ){
+        	StringPatternVar p = (StringPatternVar)vars.get(i);
 
             if(i == 0){
             	
@@ -187,39 +193,14 @@ public class URIMapping {
         
     }
     
-    private String toURI(Object[] params){
+    private String createPattern(){
         String value = null;
         
-        if(parameters.isEmpty())
-            return this.originalURI;
+        if(vars.isEmpty())
+            return this.original;
         
-        for(int i=0;i<parameters.size();i++ ){
-            URIParameter p = parameters.get(i);
-            
-            if(i == 0 && p.getStart() != null){
-                value = p.getStart();
-            }
-
-            value += String.valueOf(params[p.getIndex()]);
-            
-            if(p.getEnd() != null){
-                value += p.getEnd();
-            }
-            
-        }
-        
-        return value;
-        
-    }
-    
-    private String getURIWithVars(){
-        String value = null;
-        
-        if(parameters.isEmpty())
-            return this.originalURI;
-        
-        for(int i=0;i<parameters.size();i++ ){
-            URIParameter p = parameters.get(i);
+        for(int i=0;i<vars.size();i++ ){
+            StringPatternVar p = vars.get(i);
             
             if(i == 0 && p.getStart() != null){
                 value = p.getStart();
@@ -237,14 +218,14 @@ public class URIMapping {
         
     }
     
-    private String getURIPattern(){
+    private String createRegex(){
         String value = null;
         
-        if(parameters.isEmpty())
-            return this.originalURI;
+        if(vars.isEmpty())
+            return this.original;
         
-        for(int i=0;i<parameters.size();i++ ){
-            URIParameter p = parameters.get(i);
+        for(int i=0;i<vars.size();i++ ){
+            StringPatternVar p = vars.get(i);
             
             if(i == 0 && p.getStart() != null){
             	value = Pattern.quote(p.getStart());
@@ -261,11 +242,41 @@ public class URIMapping {
         
     }
     
+    /* -- public methods -- */
+    
+    public String getPattern(){
+    	return this.stringPattern;
+    }
+    
+    public String toString(Object[] params){
+        String value = null;
+        
+        if(vars.isEmpty())
+            return this.original;
+        
+        for(int i=0;i<vars.size();i++ ){
+            StringPatternVar p = vars.get(i);
+            
+            if(i == 0 && p.getStart() != null){
+                value = p.getStart();
+            }
+
+            value += String.valueOf(params[p.getIndex()]);
+            
+            if(p.getEnd() != null){
+                value += p.getEnd();
+            }
+            
+        }
+        
+        return value;
+    }
+    
     public Map<String,List<String>> getParameters( String value ){
         Map<String,List<String>> params = new HashMap<String,List<String>>();
 
-        for( int i=0;i<parameters.size();i++ ){
-        	URIParameter p = parameters.get(i);
+        for( int i=0;i<vars.size();i++ ){
+        	StringPatternVar p = vars.get(i);
             String tmp     = value;
             tmp            = p.getRegexPrefix().matcher(tmp).replaceAll("");
             tmp            = p.getRegexSuffix().matcher(tmp).replaceAll("");
@@ -283,12 +294,8 @@ public class URIMapping {
         return params;
     }
     
-    public String getURI(Object[] params){
-        return this.toURI(params);
-    }
-    
     public boolean matches(String uri){
-    	return this.uriPrePattern.matcher(uri).matches() && this.uriPattern.matcher(uri).matches();
+    	return this.prePattern.matcher(uri).matches() && this.pattern.matcher(uri).matches();
     }
     
 }

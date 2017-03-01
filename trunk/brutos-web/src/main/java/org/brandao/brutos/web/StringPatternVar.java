@@ -2,7 +2,7 @@ package org.brandao.brutos.web;
 
 import java.util.regex.Pattern;
 
-public class URIParameter {
+public class StringPatternVar {
 
         private String start;
         
@@ -18,7 +18,7 @@ public class URIParameter {
         
         private int index;
         
-        public URIParameter( int index, String id, Pattern regex, 
+        public StringPatternVar( int index, String id, Pattern regex, 
         		String start, String end, Pattern regexPrefix, Pattern regexSuffix ){
             this.id          = id;
             this.start       = start;
