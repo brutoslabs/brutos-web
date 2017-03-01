@@ -1,62 +1,89 @@
-
-
 package org.brandao.brutos.web;
 
+import java.util.regex.Pattern;
 
 public class URIParameter {
 
         private String start;
+        
         private String end;
+        
         private String id;
-        private String regex;
+        
+        private Pattern regex;
+
+        private Pattern regexPrefix;
+        
+        private Pattern regexSuffix;
+        
         private int index;
         
-        public URIParameter( int index, String id, String regex, String start, String end ){
-            this.id    = id;
-            this.start = start;
-            this.end   = end;
-            this.regex = regex;
-            this.index = index;
+        public URIParameter( int index, String id, Pattern regex, 
+        		String start, String end, Pattern regexPrefix, Pattern regexSuffix ){
+            this.id          = id;
+            this.start       = start;
+            this.end         = end;
+            this.regex       = regex;
+            this.index       = index;
+            this.regexPrefix = regexPrefix;
+            this.regexSuffix = regexSuffix;
         }
 
-        public String getStart() {
-            return start;
-        }
+		public String getStart() {
+			return start;
+		}
 
-        public void setStart(String start) {
-            this.start = start;
-        }
+		public void setStart(String start) {
+			this.start = start;
+		}
 
-        public String getEnd() {
-            return end;
-        }
+		public String getEnd() {
+			return end;
+		}
 
-        public void setEnd(String end) {
-            this.end = end;
-        }
+		public void setEnd(String end) {
+			this.end = end;
+		}
 
-        public String getId() {
-            return id;
-        }
+		public String getId() {
+			return id;
+		}
 
-        public void setId(String id) {
-            this.id = id;
-        }
+		public void setId(String id) {
+			this.id = id;
+		}
 
-    public String getRegex() {
-        return regex;
-    }
+		public Pattern getRegex() {
+			return regex;
+		}
 
-    public void setRegex(String regex) {
-        this.regex = regex;
-    }
+		public void setRegex(Pattern regex) {
+			this.regex = regex;
+		}
 
-    public int getIndex() {
-        return index;
-    }
+		public Pattern getRegexPrefix() {
+			return regexPrefix;
+		}
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
+		public void setRegexPrefix(Pattern regexPrefix) {
+			this.regexPrefix = regexPrefix;
+		}
+
+		public Pattern getRegexSuffix() {
+			return regexSuffix;
+		}
+
+		public void setRegexSuffix(Pattern regexSuffix) {
+			this.regexSuffix = regexSuffix;
+		}
+
+		public int getIndex() {
+			return index;
+		}
+
+		public void setIndex(int index) {
+			this.index = index;
+		}
+
 
 }

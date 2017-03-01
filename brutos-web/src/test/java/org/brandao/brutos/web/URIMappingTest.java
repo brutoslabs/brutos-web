@@ -33,7 +33,7 @@ public class URIMappingTest extends TestCase{
         URIMapping urim = new URIMapping("/{id:\\d+}-{name}.htm");
 
         TestCase.assertTrue(urim.matches("/10-teste.htm"));
-        Map<String,List<String>> params = urim.getParameters("10-teste.htm");
+        Map<String,List<String>> params = urim.getParameters("/10-teste.htm");
         TestCase.assertEquals("10", params.get("id").get(0));
         TestCase.assertEquals("teste", params.get("name").get(0));
     }
