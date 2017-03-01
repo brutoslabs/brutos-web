@@ -103,12 +103,15 @@ public class URIMapping {
             throw new MalformedURLException("expected: }");
         }
         
-        if(startFrag >= 0 && startFrag < uri.length()){
-        	frags.add(uri.substring(startFrag, uri.length()));
+        if(startFrag >= 0 && startFrag <= uri.length()){
+        	if(startFrag == uri.length())
+                frags.add(null);
+        	else
+        		frags.add(uri.substring(startFrag, uri.length()));
         }
         
-        if( frags.size() % 2 == 1 )
-            frags.add(null);
+        //if( frags.size() % 2 == 1 )
+        //    frags.add(null);
 
         parameters = new ArrayList<URIParameter>();
 

@@ -78,10 +78,19 @@ public class URIMappingTest extends TestCase{
     		
     	}
     }
-    
+        
     public void test10() throws MalformedURLException{
         URIMapping urim = new URIMapping("/domain/{domain}");
         TestCase.assertEquals("/domain/aaaaa.ods.net.br", urim.getURI(new Object[]{"aaaaa.ods.net.br"}));
+    }
+
+    public void test11() throws MalformedURLException{
+        URIMapping urim = new URIMapping("/edit-record/{domainId:[a-z0-9\\-]+}/{recordId:[a-z0-9\\-]+}");
+
+        TestCase.assertTrue(urim.matches("/edit-record/bbb-aa1/aaa-aa1"));
+        Map<String,List<String>> params = urim.getParameters("/edit-record/bbb-aa1/aaa-aa1");
+        TestCase.assertEquals("bbb-aa1", params.get("domainId").get(0));
+        TestCase.assertEquals("aaa-aa1", params.get("recordId").get(0));
     }
     
 }
