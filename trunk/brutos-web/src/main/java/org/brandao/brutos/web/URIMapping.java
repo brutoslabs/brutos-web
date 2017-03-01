@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.mapping.StringUtil;
 
-
 public class URIMapping {
 
     private String originalURI;
@@ -19,11 +18,12 @@ public class URIMapping {
     private List<URIParameter> parameters;
 
     public URIMapping( String uri ) throws MalformedURLException{
-        createMap( uri );
+        this.parse(uri);
         this.originalURI = uri;
-        this.uriPattern   = getURIPattern(null);
+        this.uriPattern  = getURIPattern(null);
     }
 
+    /*
     private void createMap( String uri ) throws MalformedURLException{
         try{
             createMap0(uri);
@@ -32,6 +32,98 @@ public class URIMapping {
             throw new MalformedURLException(e.getMessage() + ": " + uri);
         }
     }
+    */
+    
+    private void parse(String uri) throws MalformedURLException{
+        //fragmentos da uri
+        List<String> frags  = new ArrayList<String>();
+        // identificados detectados
+        List<String> ids    = new ArrayList<String>();
+        // regex detectados
+        List<String> regexs = new ArrayList<String>();
+    
+        int startFrag      = 0;
+        char[] chars       = uri.toCharArray();
+        int openKeysCount  = 0;
+        int closeKeysCount = 0;
+        int firstOpenKeys  = -1;
+        int lastCloseKeys  = -1;
+
+        for(int i=0;i<chars.length;i++){
+        	
+        	if(chars[i] == '{'){
+        		
+        		if(firstOpenKeys == -1){
+        			frags.add(uri.substring(startFrag, i));
+        			firstOpenKeys = i;
+        		}
+        		
+        		openKeysCount++;
+        	}
+        	
+        	if(chars[i] == '}'){
+        		lastCloseKeys = i;
+        		closeKeysCount++;
+        	}
+        	
+        	if(openKeysCount > 0 && openKeysCount == closeKeysCount){
+        		
+        		
+        		String var = uri.substring(firstOpenKeys + 1, lastCloseKeys);
+
+        		int separatorIndex = var.indexOf(":");
+        		
+        		String id = 
+    				var.indexOf(":") == -1?
+    					var :
+    					var.substring(0, separatorIndex);
+    					
+		        if(StringUtil.isEmpty(id))
+		            throw new MalformedURLException("invalid parameter id " + var);
+    					
+    			String regex = 
+					separatorIndex != -1?
+						var.substring(separatorIndex + 1, var.length()) :
+							null;
+						
+				regex = StringUtil.isEmpty(regex)? "\\w{1,}" : regex;
+				
+				ids.add(id);
+				regexs.add(regex);
+				
+				startFrag      = i + 1;
+				firstOpenKeys  = -1;
+				lastCloseKeys  = -1;
+		        openKeysCount  = 0;
+		        closeKeysCount = 0;
+        	}
+        }
+        
+        if(openKeysCount > 0 && openKeysCount != closeKeysCount){
+            throw new MalformedURLException("expected: }");
+        }
+        
+        if(startFrag >= 0 && startFrag < uri.length()){
+        	frags.add(uri.substring(startFrag, uri.length()));
+        }
+        
+        if( frags.size() % 2 == 1 )
+            frags.add(null);
+
+        parameters = new ArrayList<URIParameter>();
+
+        for( int i=0;i<ids.size();i++ ){
+            parameters.add(
+                    new URIParameter(
+                        i,
+                        (String)ids.get(i),
+                        (String)regexs.get(i),
+                        (String)frags.get(i),
+                        (String)frags.get(i+1) ) );
+        }        
+    }
+    
+    /*
     private void createMap0( String uri ) throws MalformedURLException{
         //fragmentos da uri
         List<String> frags = new ArrayList<String>();
@@ -101,7 +193,7 @@ public class URIMapping {
                         (String)frags.get(i+1) ) );
         }
     }
-
+    
     private String getId(String value) throws MalformedURLException{
         int index = value.indexOf(":");
         String result= index == -1? value : value.substring(0,index);
@@ -111,6 +203,16 @@ public class URIMapping {
         else
             return result;
     }
+
+    private String getRegex(String value){
+        int index = value.indexOf(":");
+        String regex = 
+            index == -1? null : value.substring(index+1,value.length());
+        
+        return StringUtil.isEmpty(regex)? "\\w{1,}" : regex;
+    }
+
+    */
 
     private String getURIPattern(Object[] params){
         String value = null;
@@ -141,13 +243,6 @@ public class URIMapping {
         
     }
     
-    private String getRegex(String value){
-        int index = value.indexOf(":");
-        String regex = 
-            index == -1? null : value.substring(index+1,value.length());
-        
-        return StringUtil.isEmpty(regex)? "\\w{1,}" : regex;
-    }
     
     public Map<String,List<String>> getParameters(String uri){
         int start = 0;
