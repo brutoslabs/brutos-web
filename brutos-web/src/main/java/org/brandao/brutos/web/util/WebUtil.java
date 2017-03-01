@@ -6,7 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.web.URIMapping;
+import org.brandao.brutos.web.StringPattern;
 
 
 public class WebUtil {
@@ -35,7 +35,7 @@ public class WebUtil {
             if(!value.startsWith("/"))
                 throw new MalformedURLException("expected starts with \"/\": " + value);
 
-            URIMapping map = new URIMapping( value );
+            StringPattern map = new StringPattern( value );
             
             String uri = map.getURI(new Object[]{});
             URI prefix = new URI("http://serverName");
