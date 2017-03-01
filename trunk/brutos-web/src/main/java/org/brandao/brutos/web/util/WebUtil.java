@@ -34,7 +34,7 @@ public class WebUtil {
 
             StringPattern map = new StringPattern( value );
             
-            String uri = map.toString(new Object[]{});
+            String uri = map.getPattern();//map.toString(new Object[]{});
             URI prefix = new URI("http://serverName");
             prefix.resolve(uri);
         }
