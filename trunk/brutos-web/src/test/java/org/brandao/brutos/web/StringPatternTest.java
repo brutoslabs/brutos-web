@@ -89,5 +89,10 @@ public class StringPatternTest extends TestCase{
         TestCase.assertEquals("bbb-aa1", params.get("domainId").get(0));
         TestCase.assertEquals("aaa-aa1", params.get("recordId").get(0));
     }
+
+    public void test12() throws MalformedURLException{
+        StringPattern urim = new StringPattern("/domain/");
+        TestCase.assertTrue(urim.matches("/domain/"));
+    }
     
 }
