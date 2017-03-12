@@ -151,7 +151,7 @@ public class StringPattern {
         StringBuilder result = new StringBuilder();
         
         if(vars.isEmpty())
-            return result.toString();
+            return this.original;
         
         
         for( int i=0;i<vars.size();i++ ){
@@ -294,8 +294,15 @@ public class StringPattern {
         return params;
     }
     
-    public boolean matches(String uri){
-    	return this.prePattern.matcher(uri).matches() && this.pattern.matcher(uri).matches();
+    public boolean matches(String value){
+    	if(this.vars.isEmpty()){
+    		return this.original.equalsIgnoreCase(value);
+    	}
+    	else{
+    		return 
+				this.prePattern.matcher(value).matches() && 
+				this.pattern.matcher(value).matches();
+    	}
     }
     
 }
