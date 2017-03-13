@@ -33,18 +33,27 @@ public class DefaultViewResolver extends AbstractViewResolver {
 
 	private String getPrefix(Class controllerType, String actionExecutor) {
 		String resolvedView = this.getPrefix(controllerType);
+		
 		if (!StringUtil.isEmpty(actionExecutor)) {
 			resolvedView += this.getSeparator();
 			resolvedView += actionExecutor.toLowerCase();
 		}
+		
 		return resolvedView;
 	}
 
 	public String getControllerView(Class controllerType, String view) {
 		String resolvedView = this.getPrefix();
-		resolvedView += this.getPrefix(controllerType);
-		resolvedView += this.getSeparator();
-		resolvedView += view == null ? this.getIndexName() : view;
+		
+		if(StringUtil.isEmpty(view)){
+			resolvedView += this.getPrefix(controllerType);
+			resolvedView += this.getSeparator();
+			resolvedView += this.getIndexName();
+		}
+		else{
+			resolvedView += view;
+		}
+		
 		resolvedView += this.getSuffix();
 		return resolvedView;
 	}
@@ -52,9 +61,16 @@ public class DefaultViewResolver extends AbstractViewResolver {
 	public String getActionView(Class controllerType, String actionExecutor,
 			String view) {
 		String resolvedView = this.getPrefix();
-		resolvedView += this.getPrefix(controllerType, actionExecutor);
-		resolvedView += this.getSeparator();
-		resolvedView += view == null ? this.getIndexName() : view;
+
+		if(StringUtil.isEmpty(view)){
+			resolvedView += this.getPrefix(controllerType, actionExecutor);
+			resolvedView += this.getSeparator();
+			resolvedView += this.getIndexName();
+		}
+		else{
+			resolvedView += view;
+		}
+		
 		resolvedView += this.getSuffix();
 		return resolvedView;
 	}
@@ -62,10 +78,16 @@ public class DefaultViewResolver extends AbstractViewResolver {
 	public String getExceptionView(Class controllerType, String actionExecutor,
 			Class exceptionType, String view) {
 		String resolvedView = this.getPrefix();
-		resolvedView += this.getPrefix(controllerType, actionExecutor);
-		resolvedView += this.getSeparator();
-		resolvedView += view == null ? exceptionType.getSimpleName()
-				.toLowerCase() : view;
+		
+		if(StringUtil.isEmpty(view)){
+			resolvedView += this.getPrefix(controllerType, actionExecutor);
+			resolvedView += this.getSeparator();
+			resolvedView += exceptionType.getSimpleName().toLowerCase();
+		}
+		else{
+			resolvedView += view;
+		}
+		
 		resolvedView += this.getSuffix();
 		return resolvedView;
 	}
@@ -73,10 +95,16 @@ public class DefaultViewResolver extends AbstractViewResolver {
 	public String getExceptionView(Class controllerType, Class exceptionType,
 			String view) {
 		String resolvedView = this.getPrefix();
-		resolvedView += this.getPrefix(controllerType);
-		resolvedView += this.getSeparator();
-		resolvedView += view == null ? exceptionType.getSimpleName()
-				.toLowerCase() : view;
+		
+		if(StringUtil.isEmpty(view)){
+			resolvedView += this.getPrefix(controllerType);
+			resolvedView += this.getSeparator();
+			resolvedView += exceptionType.getSimpleName().toLowerCase();
+		}
+		else{
+			resolvedView += view;
+		}
+		
 		resolvedView += this.getSuffix();
 		return resolvedView;
 	}
