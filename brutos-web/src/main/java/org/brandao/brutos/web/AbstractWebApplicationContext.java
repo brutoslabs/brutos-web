@@ -175,7 +175,7 @@ public abstract class AbstractWebApplicationContext
 
         tmp = config
                 .getProperty(BrutosConstants.VIEW_RESOLVER_PREFIX,
-                              "/WEB-INF" );
+                              "/WEB-INF/views" );
         
         config.put(BrutosConstants.VIEW_RESOLVER_PREFIX,
                     tmp );
