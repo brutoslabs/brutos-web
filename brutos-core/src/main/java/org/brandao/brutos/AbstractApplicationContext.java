@@ -19,6 +19,7 @@ package org.brandao.brutos;
 
 import java.util.List;
 import java.util.Properties;
+
 import org.brandao.brutos.io.DefaultResourceLoader;
 import org.brandao.brutos.javassist.JavassistCodeGenerator;
 import org.brandao.brutos.logger.Logger;
@@ -27,7 +28,7 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.ControllerScope;
 import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
-import org.brandao.brutos.validator.DefaultValidatorFactory;
+import org.brandao.brutos.validator.JSR303ValidatorFactory;
 
 public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		implements ConfigurableApplicationContext {
@@ -257,7 +258,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		try {
 			String className = configuration.getProperty(
 					BrutosConstants.VALIDATOR_FACTORY_CLASS,
-					DefaultValidatorFactory.class.getName());
+					JSR303ValidatorFactory.class.getName());
 
 			Class<?> clazz = ClassUtil.get(className);
 
