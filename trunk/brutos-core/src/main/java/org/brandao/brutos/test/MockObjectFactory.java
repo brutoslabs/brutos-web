@@ -22,6 +22,10 @@ import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MockObjectFactory implements ObjectFactory {
 
 	public Object getBean(String name) {

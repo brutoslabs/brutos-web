@@ -20,6 +20,10 @@ package org.brandao.brutos.scanner.vfs;
 import java.net.URL;
 import java.util.jar.JarFile;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JarFileURLType implements URLType {
 
 	public Dir toDir(URL url) throws Exception {

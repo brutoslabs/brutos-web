@@ -19,6 +19,10 @@ package org.brandao.brutos.mapping;
 
 import java.lang.reflect.Method;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ActionListener {
 
 	private Class classType;

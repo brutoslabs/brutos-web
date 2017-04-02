@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.rmi;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface Remote {
 
 }

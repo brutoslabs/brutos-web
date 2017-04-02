@@ -19,6 +19,10 @@ package org.brandao.brutos.scanner.vfs;
 
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class VfsException extends BrutosException {
 
 	public VfsException() {

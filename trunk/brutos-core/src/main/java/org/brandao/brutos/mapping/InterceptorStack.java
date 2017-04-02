@@ -22,6 +22,10 @@ import java.util.Arrays;
 import java.util.List;
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class InterceptorStack extends Interceptor {
 
 	private List<Interceptor> interceptors;

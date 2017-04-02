@@ -29,6 +29,10 @@ import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.proxy.AbstractProxyFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JavassistProxyFactory extends AbstractProxyFactory {
 
 	private ClassPool pool = null;

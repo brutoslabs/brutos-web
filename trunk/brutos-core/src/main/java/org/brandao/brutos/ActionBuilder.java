@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.*;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ActionBuilder extends RestrictionBuilder {
 
 	protected Controller controller;

@@ -19,6 +19,10 @@ package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MappingException extends BrutosException {
 
 	public MappingException() {

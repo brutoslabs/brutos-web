@@ -31,6 +31,10 @@ import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.validator.Validator;
 import org.brandao.brutos.validator.ValidatorException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ConstructorBean {
 
 	private static final Logger logger = LoggerProvider

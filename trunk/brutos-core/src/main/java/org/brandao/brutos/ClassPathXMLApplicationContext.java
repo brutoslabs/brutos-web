@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import org.brandao.brutos.io.ClassPathResource;
 import org.brandao.brutos.io.Resource;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ClassPathXMLApplicationContext extends
 		AbstractXMLApplicationContext {
 

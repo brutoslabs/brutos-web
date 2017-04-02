@@ -18,12 +18,16 @@
 package org.brandao.brutos.interceptor;
 
 import java.text.ParseException;
-import java.util.List;
+
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.StackRequestElement;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ImpInterceptorHandler implements ConfigurableInterceptorHandler {
 
 	private String URI;

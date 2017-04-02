@@ -25,6 +25,10 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.CodeGenerator;
 import org.brandao.brutos.ProxyFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JavassistCodeGenerator implements CodeGenerator {
 
 	private Map proxyFactory = new HashMap();

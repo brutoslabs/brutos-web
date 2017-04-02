@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.logger;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface Logger {
 
 	public boolean isDebugEnabled();

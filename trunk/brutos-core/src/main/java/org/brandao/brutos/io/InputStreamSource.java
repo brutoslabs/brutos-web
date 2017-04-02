@@ -20,6 +20,10 @@ package org.brandao.brutos.io;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface InputStreamSource {
 
 	InputStream getInputStream() throws IOException;

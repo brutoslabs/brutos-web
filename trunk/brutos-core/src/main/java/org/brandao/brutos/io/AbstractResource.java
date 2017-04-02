@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.io;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractResource implements Resource {
 
 	protected String createRelativePath(String path, String relativePath) {

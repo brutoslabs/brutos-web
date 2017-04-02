@@ -34,6 +34,10 @@ import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.web.http.Download;
 import org.brandao.brutos.web.http.UploadedFile;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class TypeManagerImp implements TypeManager {
 
 	private final List<TypeFactory> defaultTypes;

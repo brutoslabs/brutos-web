@@ -22,6 +22,10 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ProxyFactory {
 
 	Object getNewProxy(Object resource, Controller form,

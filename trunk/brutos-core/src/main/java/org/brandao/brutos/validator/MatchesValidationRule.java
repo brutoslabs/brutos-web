@@ -19,6 +19,10 @@ package org.brandao.brutos.validator;
 
 import java.util.Properties;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MatchesValidationRule implements ValidationRule {
 
 	private String regex;

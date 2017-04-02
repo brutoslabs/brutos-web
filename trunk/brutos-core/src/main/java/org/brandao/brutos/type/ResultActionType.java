@@ -33,6 +33,10 @@ import org.brandao.brutos.TypeManager;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.scope.Scope;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ResultActionType extends AbstractType {
 
 	private final ConcurrentMap cache;

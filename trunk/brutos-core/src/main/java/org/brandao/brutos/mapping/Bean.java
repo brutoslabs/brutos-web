@@ -25,6 +25,10 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.validator.ValidatorException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class Bean {
 
 	protected Bean parent;

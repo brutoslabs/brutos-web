@@ -24,6 +24,10 @@ import java.util.List;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ZipDir implements CloseableDir {
 
 	private java.util.zip.ZipFile file;

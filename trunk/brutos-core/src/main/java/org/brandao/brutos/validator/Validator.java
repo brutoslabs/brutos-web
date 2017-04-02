@@ -25,6 +25,10 @@ import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.mapping.PropertyController;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface Validator {
 
 	void configure(Properties config);

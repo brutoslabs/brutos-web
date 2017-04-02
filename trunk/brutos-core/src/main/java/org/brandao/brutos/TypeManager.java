@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import org.brandao.brutos.type.*;
 import java.util.*;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface TypeManager {
 
 	void register(TypeFactory factory);

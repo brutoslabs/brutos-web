@@ -25,6 +25,10 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.ThreadScope;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class Invoker {
 
 	private static final ThreadLocal currentApp;

@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.interceptor;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface Interceptors {
 
 	public Class[] getInterceptors();

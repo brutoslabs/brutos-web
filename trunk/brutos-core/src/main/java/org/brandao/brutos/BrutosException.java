@@ -17,6 +17,10 @@
 
 package org.brandao.brutos;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BrutosException extends RuntimeException {
 
 	public BrutosException() {

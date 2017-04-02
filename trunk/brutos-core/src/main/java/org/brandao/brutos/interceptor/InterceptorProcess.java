@@ -37,6 +37,10 @@ import org.brandao.brutos.Scopes;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.validator.ValidatorException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class InterceptorProcess implements InterceptorStack {
 
 	private Logger logger = LoggerProvider.getCurrentLoggerProvider()

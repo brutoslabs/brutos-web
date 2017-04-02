@@ -20,6 +20,10 @@ package org.brandao.brutos.type;
 import java.io.IOException;
 import org.brandao.brutos.MvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DoubleType extends AbstractType implements Type {
 
 	private static final double DEFAULT_VALUE = 0.0;

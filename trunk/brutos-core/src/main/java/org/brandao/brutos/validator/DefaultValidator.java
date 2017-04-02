@@ -31,6 +31,10 @@ import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.mapping.PropertyController;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultValidator implements Validator {
 
 	private Properties config;

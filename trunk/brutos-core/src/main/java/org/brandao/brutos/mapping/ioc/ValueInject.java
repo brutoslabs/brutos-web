@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.mapping.ioc;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ValueInject extends Injectable {
 
 	private Object value;

@@ -22,6 +22,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.brandao.brutos.MvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultDateType extends AbstractType implements DateTimeType {
 
 	private SimpleDateFormat sdf;

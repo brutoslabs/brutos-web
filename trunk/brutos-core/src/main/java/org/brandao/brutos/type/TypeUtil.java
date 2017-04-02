@@ -26,6 +26,10 @@ import java.util.HashSet;
 import java.util.Map;
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public final class TypeUtil {
 
 	private static Class defaultListType;

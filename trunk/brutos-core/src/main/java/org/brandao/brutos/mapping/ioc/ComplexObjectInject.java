@@ -24,6 +24,10 @@ import java.util.List;
 import java.util.Map;
 import org.brandao.brutos.ScopeType;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ComplexObjectInject extends Injectable {
 
 	private List props;

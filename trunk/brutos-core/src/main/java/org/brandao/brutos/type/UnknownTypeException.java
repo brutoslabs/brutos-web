@@ -19,6 +19,10 @@ package org.brandao.brutos.type;
 
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class UnknownTypeException extends BrutosException {
 
 	private String page;

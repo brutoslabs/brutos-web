@@ -20,6 +20,10 @@ package org.brandao.brutos.scanner.vfs;
 import java.io.InputStream;
 import java.util.zip.ZipEntry;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ZipFile implements File {
 
 	private final ZipDir root;

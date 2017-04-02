@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.scope.Scope;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ScopeRegistry {
 
 	void registerScope(String name, Scope scope);

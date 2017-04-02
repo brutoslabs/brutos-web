@@ -19,6 +19,10 @@ package org.brandao.brutos.scanner.vfs;
 
 import java.net.URL;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class SystemURLType implements URLType {
 
 	public Dir toDir(URL url) throws Exception {

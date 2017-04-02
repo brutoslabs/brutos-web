@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import java.util.*;
 import org.brandao.brutos.mapping.Interceptor;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface InterceptorManager {
 
 	InterceptorStackBuilder addInterceptorStack(String name, boolean isDefault);

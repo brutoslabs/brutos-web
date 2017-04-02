@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class FileSystemResource extends AbstractResource {
 
 	private String path;

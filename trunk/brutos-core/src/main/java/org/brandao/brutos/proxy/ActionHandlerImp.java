@@ -23,6 +23,10 @@ import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Action;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class ActionHandlerImp implements ActionHandler {
 
 	private Object resource;

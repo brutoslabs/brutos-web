@@ -26,6 +26,10 @@ import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.ValidatorException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MetaBean extends Bean {
 
 	private Map<Object, DependencyBean> metaValues;

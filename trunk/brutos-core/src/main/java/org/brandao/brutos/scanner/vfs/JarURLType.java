@@ -21,6 +21,10 @@ import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JarURLType implements URLType {
 
 	public Dir toDir(URL url) throws Exception {

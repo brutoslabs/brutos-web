@@ -22,6 +22,10 @@ import java.util.List;
 
 import org.jboss.vfs.VirtualFile;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JbossVFSURLType implements URLType {
 
 	public Dir toDir(URL url) throws Exception {

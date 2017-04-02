@@ -20,6 +20,10 @@ package org.brandao.brutos.scope;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ApplicationScope implements Scope {
 
 	private Map values = new HashMap();

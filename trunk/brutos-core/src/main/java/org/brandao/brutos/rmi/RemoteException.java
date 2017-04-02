@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.rmi;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class RemoteException extends Exception {
 
 	public RemoteException() {

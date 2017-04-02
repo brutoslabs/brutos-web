@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.mapping;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ParameterAction extends UseBeanData {
 
 	private Action action;

@@ -21,6 +21,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultResourceLoader implements ResourceLoader {
 
 	private ClassLoader classLoader;

@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.scanner.vfs;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface Dir {
 
 	File[] getFiles();

@@ -20,6 +20,10 @@ package org.brandao.brutos.web.http;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ParameterList extends ArrayList {
 
 	public ParameterList() {

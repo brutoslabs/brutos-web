@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ByteArrayResource extends AbstractResource {
 
 	private byte[] byteArray;

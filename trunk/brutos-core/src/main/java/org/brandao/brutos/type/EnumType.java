@@ -19,6 +19,10 @@ package org.brandao.brutos.type;
 
 import org.brandao.brutos.EnumerationType;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface EnumType extends Type {
 
 	EnumerationType getEnumerationType();

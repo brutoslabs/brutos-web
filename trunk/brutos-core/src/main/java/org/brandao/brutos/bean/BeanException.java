@@ -19,6 +19,10 @@ package org.brandao.brutos.bean;
 
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BeanException extends BrutosException {
 
 	public BeanException() {

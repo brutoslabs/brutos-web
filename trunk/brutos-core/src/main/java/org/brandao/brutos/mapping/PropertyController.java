@@ -20,6 +20,10 @@ package org.brandao.brutos.mapping;
 import java.lang.reflect.InvocationTargetException;
 import org.brandao.brutos.bean.BeanProperty;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class PropertyController extends UseBeanData {
 
 	private boolean request;

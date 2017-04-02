@@ -25,6 +25,10 @@ import java.io.OutputStream;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.UploadedFile;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class FileType extends AbstractType implements Type {
 
 	public FileType() {

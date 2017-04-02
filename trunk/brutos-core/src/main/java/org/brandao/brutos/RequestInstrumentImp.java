@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class RequestInstrumentImp implements RequestInstrument, StackRequest {
 
 	private ApplicationContext context;

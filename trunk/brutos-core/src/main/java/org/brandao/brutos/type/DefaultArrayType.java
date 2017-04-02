@@ -23,6 +23,10 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultArrayType extends AbstractType implements ArrayType {
 
 	private Type componentType;

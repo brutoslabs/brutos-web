@@ -20,6 +20,10 @@ package org.brandao.brutos.mapping;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class StringUtil {
 
 	public static String toVariableFormat(String value) {

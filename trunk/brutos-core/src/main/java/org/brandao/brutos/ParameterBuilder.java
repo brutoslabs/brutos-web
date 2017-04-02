@@ -23,6 +23,10 @@ import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.RestrictionRules;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ParameterBuilder extends RestrictionBuilder implements
 		GenericBuilder {
 

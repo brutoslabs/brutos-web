@@ -23,6 +23,10 @@ import java.util.Map;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.Download;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DownloadType extends AbstractType implements Type {
 
 	public DownloadType() {

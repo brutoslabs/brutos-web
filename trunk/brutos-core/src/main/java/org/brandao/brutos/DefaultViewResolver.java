@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.StringUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultViewResolver extends AbstractViewResolver {
 
 	private String getPrefix(Class controllerType) {

@@ -20,6 +20,10 @@ package org.brandao.brutos.test;
 import org.brandao.brutos.AbstractApplicationContext;
 import org.brandao.brutos.ApplicationContextWrapper;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MockApplicationContext extends ApplicationContextWrapper {
 
 	private static AbstractApplicationContext app;

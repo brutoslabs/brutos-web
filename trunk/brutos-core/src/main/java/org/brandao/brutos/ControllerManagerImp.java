@@ -25,6 +25,10 @@ import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.StringUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ControllerManagerImp implements ControllerManager {
 
 	protected Map<String, Controller> mappedControllers;

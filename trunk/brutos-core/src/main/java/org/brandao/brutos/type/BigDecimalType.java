@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import org.brandao.brutos.MvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BigDecimalType extends AbstractType implements Type {
 
 	public Object convert(Object value) {

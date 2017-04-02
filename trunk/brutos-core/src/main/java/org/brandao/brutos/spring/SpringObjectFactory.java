@@ -21,6 +21,10 @@ import org.brandao.brutos.ObjectFactory;
 import java.util.Properties;
 import org.springframework.context.ApplicationContext;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class SpringObjectFactory implements ObjectFactory {
 
 	private String name;

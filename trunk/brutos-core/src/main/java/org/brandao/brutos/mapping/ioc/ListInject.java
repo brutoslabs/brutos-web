@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.mapping.ioc;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ListInject extends ComplexObjectInject {
 
 	public ListInject(String name, Class valueType, Class type, String factory,

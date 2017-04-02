@@ -22,6 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class RestrictionRules {
 
 	public static final RestrictionRules MIN = new RestrictionRules("min");

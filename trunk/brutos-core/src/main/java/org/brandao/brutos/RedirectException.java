@@ -17,6 +17,10 @@
 
 package org.brandao.brutos;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class RedirectException extends BrutosException {
 
 	private String page;

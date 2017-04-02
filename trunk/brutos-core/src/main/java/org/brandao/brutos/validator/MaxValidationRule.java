@@ -23,6 +23,10 @@ import org.brandao.brutos.mapping.DependencyBean;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.Type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MaxValidationRule implements ValidationRule {
 
 	private String expected;

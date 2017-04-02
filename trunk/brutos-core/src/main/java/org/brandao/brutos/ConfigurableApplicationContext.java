@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import java.util.Properties;
 import org.brandao.brutos.TypeManager;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ConfigurableApplicationContext extends ApplicationContext {
 
 	MvcRequestFactory getRequestFactory();

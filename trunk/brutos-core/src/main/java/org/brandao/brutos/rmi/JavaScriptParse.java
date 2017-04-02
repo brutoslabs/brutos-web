@@ -19,6 +19,10 @@ package org.brandao.brutos.rmi;
 
 import org.brandao.brutos.mapping.Controller;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JavaScriptParse {
 
 	private Controller controller;

@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.Interceptor;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface InterceptorRegistry {
 
 	InterceptorStackBuilder registerInterceptorStack(String name,

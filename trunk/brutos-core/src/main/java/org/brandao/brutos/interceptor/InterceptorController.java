@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.interceptor;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface InterceptorController extends Interceptor {
 
 }

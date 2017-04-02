@@ -23,6 +23,10 @@ import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractRenderView implements RenderView {
 
 	protected abstract void show(RequestInstrument requestInstrument,

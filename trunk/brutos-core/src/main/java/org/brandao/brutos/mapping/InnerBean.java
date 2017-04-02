@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.mapping;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class InnerBean extends DependencyBean {
 
 	public InnerBean(Bean parent) {

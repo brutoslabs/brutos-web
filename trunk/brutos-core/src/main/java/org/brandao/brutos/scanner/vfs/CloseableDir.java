@@ -19,6 +19,10 @@ package org.brandao.brutos.scanner.vfs;
 
 import java.io.Closeable;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface CloseableDir extends Dir, Closeable {
 
 }

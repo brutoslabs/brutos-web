@@ -24,6 +24,10 @@ import java.util.Map;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class Scopes {
 
 	private Map<String, Scope> scopes;

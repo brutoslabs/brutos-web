@@ -30,6 +30,10 @@ import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeUtil;
 import org.brandao.brutos.type.UnknownTypeException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ControllerBuilder {
 
 	protected final Controller controller;

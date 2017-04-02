@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.type.TypeFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface TypeRegistry {
 
 	void registerType(TypeFactory factory);

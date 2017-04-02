@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.scope;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface Scope {
 
 	void put(String name, Object value);

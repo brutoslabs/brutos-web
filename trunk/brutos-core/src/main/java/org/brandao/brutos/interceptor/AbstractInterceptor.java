@@ -24,6 +24,10 @@ import java.util.Set;
 
 import org.brandao.brutos.ResourceAction;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractInterceptor implements InterceptorController {
 
 	protected Map<String, Object> props;

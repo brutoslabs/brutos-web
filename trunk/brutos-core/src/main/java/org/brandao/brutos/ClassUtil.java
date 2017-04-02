@@ -22,6 +22,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import org.brandao.brutos.type.TypeUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public final class ClassUtil {
 
 	private final static Map primitiveType;

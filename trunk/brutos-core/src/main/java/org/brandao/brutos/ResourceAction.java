@@ -21,6 +21,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import org.brandao.brutos.mapping.Action;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ResourceAction {
 
 	public Object invoke(Object source, Object[] args)

@@ -21,6 +21,10 @@ import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.DefinitionReader;
 import org.brandao.brutos.io.ResourceLoader;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractDefinitionReader implements DefinitionReader {
 
 	protected ComponentRegistry componentRegistry;

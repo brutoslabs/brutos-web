@@ -22,6 +22,10 @@ import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.*;
 import org.brandao.brutos.type.Type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BeanBuilder {
 
 	private Controller controller;

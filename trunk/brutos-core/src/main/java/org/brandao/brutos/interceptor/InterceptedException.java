@@ -19,6 +19,10 @@ package org.brandao.brutos.interceptor;
 
 import org.brandao.brutos.*;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class InterceptedException extends BrutosException {
 
 	public InterceptedException() {

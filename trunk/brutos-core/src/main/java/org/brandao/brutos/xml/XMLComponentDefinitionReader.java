@@ -27,6 +27,10 @@ import org.brandao.brutos.validator.RestrictionRules;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	private final List<Resource> blackList;

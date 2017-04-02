@@ -17,6 +17,10 @@
 
 package org.brandao.brutos;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class RequestProvider {
 
 	private static final ThreadLocal requests;

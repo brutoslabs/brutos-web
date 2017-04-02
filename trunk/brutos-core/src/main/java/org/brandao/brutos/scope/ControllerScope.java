@@ -21,6 +21,10 @@ import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ControllerScope implements Scope {
 
 	public void put(String name, Object value) {

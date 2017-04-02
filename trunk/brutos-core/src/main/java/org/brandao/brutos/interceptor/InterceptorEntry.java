@@ -19,6 +19,10 @@ package org.brandao.brutos.interceptor;
 
 import org.brandao.brutos.mapping.Interceptor;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class InterceptorEntry {
 
 	private org.brandao.brutos.mapping.Interceptor interceptor;

@@ -20,6 +20,10 @@ package org.brandao.brutos.test;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.MvcResponseFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MockMvcResponseFactory implements MvcResponseFactory {
 
 	public MvcResponse getResponse() {
