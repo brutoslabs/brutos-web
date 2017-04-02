@@ -20,6 +20,10 @@ package org.brandao.brutos.validator;
 import java.util.Properties;
 import org.brandao.brutos.ValidatorFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JSR303ValidatorFactory implements ValidatorFactory {
 
 	public void configure(Properties config) {

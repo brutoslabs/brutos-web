@@ -19,6 +19,10 @@ package org.brandao.brutos.interceptor;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ImpInterceptorStack implements InterceptorStack {
 
 	private List stack;

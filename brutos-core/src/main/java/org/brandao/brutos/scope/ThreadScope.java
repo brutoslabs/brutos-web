@@ -19,6 +19,10 @@ package org.brandao.brutos.scope;
 
 import java.util.HashMap;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ThreadScope implements Scope {
 
 	private static final ThreadLocal threadLocal;

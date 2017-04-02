@@ -21,6 +21,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BeanPropertyWrapper implements BeanProperty {
 
 	protected BeanProperty beanProperty;

@@ -21,6 +21,10 @@ import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ActionResolver {
 
 	ResourceAction getResourceAction(Controller controller,

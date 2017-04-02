@@ -31,6 +31,10 @@ import javax.naming.NamingException;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JSR299ObjectFactory implements ObjectFactory {
 
 	private BeanManager beanManager;

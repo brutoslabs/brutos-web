@@ -26,6 +26,10 @@ import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
 import org.brandao.brutos.validator.ValidatorException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class DependencyBean {
 
 	protected String parameterName;

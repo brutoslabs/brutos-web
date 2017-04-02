@@ -24,6 +24,10 @@ import java.util.Map;
 
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class EnumUtil {
 
 	private Class enumClass;

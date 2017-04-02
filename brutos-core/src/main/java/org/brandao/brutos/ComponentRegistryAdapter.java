@@ -26,6 +26,10 @@ import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.DefaultTypeFactory;
 import org.brandao.brutos.type.TypeFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ComponentRegistryAdapter implements ComponentRegistry {
 
 	private final ConfigurableApplicationContext configurableApplicationContext;

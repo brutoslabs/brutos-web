@@ -24,6 +24,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class SpringContext implements ApplicationContextAware {
 
 	public static final String DEFAULT_SPRING_CONTEXT = "DEFAULT_SPRING_CONTEXT";

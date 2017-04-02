@@ -32,6 +32,10 @@ import org.brandao.brutos.type.TypeFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ContextDefinitionReader extends AbstractXMLDefinitionReader {
 
 	private final XMLParseUtil parseUtil;

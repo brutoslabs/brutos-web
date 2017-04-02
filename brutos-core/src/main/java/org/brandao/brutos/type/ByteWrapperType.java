@@ -20,6 +20,10 @@ package org.brandao.brutos.type;
 import java.io.IOException;
 import org.brandao.brutos.MvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ByteWrapperType extends AbstractType {
 
 	public ByteWrapperType() {

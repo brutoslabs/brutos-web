@@ -20,6 +20,10 @@ package org.brandao.brutos.type;
 import java.io.IOException;
 import org.brandao.brutos.MvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class FloatType extends AbstractType implements Type {
 
 	private static final float DEFAULT_VALUE = 0f;

@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.mapping.ioc;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class SetInject extends ComplexObjectInject {
 
 	public SetInject(String name, Class valueType, Class type, String factory,

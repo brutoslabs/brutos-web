@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import java.util.Properties;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class Configuration extends Properties {
 
 	public Configuration() {

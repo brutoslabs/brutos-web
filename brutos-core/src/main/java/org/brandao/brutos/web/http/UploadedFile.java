@@ -19,6 +19,10 @@ package org.brandao.brutos.web.http;
 
 import java.io.File;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface UploadedFile {
 
 	File getFile();

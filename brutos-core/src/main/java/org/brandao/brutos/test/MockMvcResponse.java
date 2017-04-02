@@ -23,6 +23,10 @@ import java.util.Locale;
 import java.util.Map;
 import org.brandao.brutos.MvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MockMvcResponse implements MvcResponse {
 
 	private Map values;

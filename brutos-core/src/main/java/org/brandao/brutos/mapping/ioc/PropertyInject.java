@@ -19,6 +19,10 @@ package org.brandao.brutos.mapping.ioc;
 
 import java.lang.reflect.Method;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class PropertyInject {
 
 	private Injectable property;

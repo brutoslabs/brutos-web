@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractXMLApplicationContext extends
 		AbstractApplicationContext {
 

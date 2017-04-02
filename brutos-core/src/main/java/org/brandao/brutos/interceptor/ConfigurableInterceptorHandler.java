@@ -22,6 +22,10 @@ import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.StackRequestElement;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ConfigurableInterceptorHandler extends InterceptorHandler {
 
 	void setURI(String URI);

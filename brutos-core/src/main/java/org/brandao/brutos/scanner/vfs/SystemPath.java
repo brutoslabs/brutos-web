@@ -20,6 +20,10 @@ package org.brandao.brutos.scanner.vfs;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class SystemPath implements Dir {
 
 	private java.io.File root;

@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.mapping;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ConstructorArgBean extends DependencyBean {
 
 	public ConstructorArgBean(Bean mappingBean) {

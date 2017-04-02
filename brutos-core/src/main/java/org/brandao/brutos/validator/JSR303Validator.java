@@ -32,6 +32,10 @@ import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.mapping.PropertyController;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JSR303Validator implements Validator {
 
 	private javax.validation.Validator objectValidator;

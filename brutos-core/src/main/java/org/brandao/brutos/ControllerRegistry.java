@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.Controller;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ControllerRegistry {
 
 	ControllerBuilder registerController(Class<?> classtype);

@@ -21,6 +21,10 @@ import java.util.Map;
 import org.brandao.brutos.*;
 import org.brandao.brutos.validator.ValidatorException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MapBean extends CollectionBean {
 
 	private DependencyBean key;

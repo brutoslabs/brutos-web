@@ -20,6 +20,10 @@ package org.brandao.brutos.scope;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.Invoker;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class IOCScope implements Scope {
 
 	public IOCScope() {

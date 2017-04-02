@@ -21,6 +21,10 @@ import java.awt.Component;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultRenderView extends AbstractRenderView {
 
 	public void configure(Properties properties) {

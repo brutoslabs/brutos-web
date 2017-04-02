@@ -19,6 +19,10 @@ package org.brandao.brutos.logger;
 
 import java.util.logging.Level;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JavaLogger implements Logger {
 
 	private java.util.logging.Logger logger;

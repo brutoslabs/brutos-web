@@ -20,6 +20,10 @@ package org.brandao.brutos.io;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface Resource extends InputStreamSource {
 
 	URL getURL() throws IOException;

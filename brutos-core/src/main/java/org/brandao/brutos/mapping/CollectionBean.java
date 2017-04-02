@@ -21,6 +21,10 @@ import java.util.Collection;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.validator.ValidatorException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class CollectionBean extends Bean {
 
 	private DependencyBean collection;

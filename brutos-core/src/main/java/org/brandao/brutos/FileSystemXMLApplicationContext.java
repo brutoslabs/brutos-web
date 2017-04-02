@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import org.brandao.brutos.io.FileSystemResource;
 import org.brandao.brutos.io.Resource;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class FileSystemXMLApplicationContext extends
 		AbstractXMLApplicationContext {
 

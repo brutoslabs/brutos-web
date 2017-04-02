@@ -19,6 +19,10 @@ package org.brandao.brutos.scanner.vfs;
 
 import java.util.jar.JarFile;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JbossVFSDir implements Dir {
 
 	private Dir path;

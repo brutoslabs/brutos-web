@@ -21,6 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.brandao.brutos.ScopeType;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class Injectable {
 
 	private Class target;

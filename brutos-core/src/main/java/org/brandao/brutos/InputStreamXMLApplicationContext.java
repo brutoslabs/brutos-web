@@ -21,6 +21,10 @@ import java.io.InputStream;
 import org.brandao.brutos.io.InputStreamResource;
 import org.brandao.brutos.io.Resource;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class InputStreamXMLApplicationContext extends
 		AbstractXMLApplicationContext {
 

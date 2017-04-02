@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface CollectionType extends GenericType {
 
 	void setCollectionType(Type type);

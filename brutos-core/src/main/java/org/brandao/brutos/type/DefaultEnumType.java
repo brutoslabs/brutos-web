@@ -24,6 +24,10 @@ import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.bean.EnumUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultEnumType extends AbstractType implements EnumType {
 
 	private EnumerationType type;

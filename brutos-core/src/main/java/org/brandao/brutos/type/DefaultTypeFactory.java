@@ -19,6 +19,10 @@ package org.brandao.brutos.type;
 
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultTypeFactory implements TypeFactory {
 
 	private Class type;

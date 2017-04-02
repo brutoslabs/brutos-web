@@ -20,6 +20,10 @@ package org.brandao.brutos.test;
 import org.brandao.brutos.MvcRequest;
 import org.brandao.brutos.MvcRequestFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MockMvcRequestFactory implements MvcRequestFactory {
 
 	public MvcRequest getRequest() {

@@ -24,6 +24,10 @@ import org.brandao.brutos.mapping.PropertyController;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.Scope;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DataOutput {
 
 	private Scope scope;

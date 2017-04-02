@@ -21,6 +21,10 @@ import java.io.IOException;
 
 import org.brandao.brutos.MvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class AnyType implements Type {
 
 	private Class<?> type;

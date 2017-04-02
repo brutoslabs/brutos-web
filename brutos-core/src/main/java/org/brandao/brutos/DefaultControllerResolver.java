@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultControllerResolver implements ControllerResolver {
 
 	public Controller getController(ControllerManager controllerManager,

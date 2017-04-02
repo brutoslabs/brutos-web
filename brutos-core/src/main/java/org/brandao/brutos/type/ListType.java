@@ -19,6 +19,10 @@ package org.brandao.brutos.type;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ListType extends AbstractCollectionType {
 
 	protected Class getCollectionClass() {

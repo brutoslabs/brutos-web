@@ -21,6 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JavaLoggerProvider extends LoggerProvider {
 
 	private Map cacheLoggers;

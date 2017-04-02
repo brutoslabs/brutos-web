@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.math.BigInteger;
 import org.brandao.brutos.MvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BigIntegerType extends AbstractType implements Type {
 
 	public Object convert(Object value) {

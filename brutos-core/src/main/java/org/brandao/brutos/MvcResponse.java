@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import java.io.OutputStream;
 import java.util.Locale;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface MvcResponse {
 
 	public void process(Object object);

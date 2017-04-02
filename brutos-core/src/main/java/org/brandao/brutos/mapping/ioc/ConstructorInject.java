@@ -25,6 +25,10 @@ import java.util.List;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ConstructorInject {
 
 	private List args;

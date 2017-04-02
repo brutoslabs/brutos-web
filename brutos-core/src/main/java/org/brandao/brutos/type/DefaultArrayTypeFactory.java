@@ -19,6 +19,10 @@ package org.brandao.brutos.type;
 
 import java.lang.reflect.Array;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultArrayTypeFactory implements TypeFactory {
 
 	public DefaultArrayTypeFactory() {

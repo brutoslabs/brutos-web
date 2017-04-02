@@ -17,6 +17,10 @@
 
 package org.brandao.brutos;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultMvcResponseFactory implements MvcResponseFactory {
 
 	public MvcResponse getResponse() {

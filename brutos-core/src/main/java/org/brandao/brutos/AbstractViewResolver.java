@@ -17,6 +17,10 @@
 
 package org.brandao.brutos;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractViewResolver implements ViewResolver {
 
 	private ApplicationContext context;

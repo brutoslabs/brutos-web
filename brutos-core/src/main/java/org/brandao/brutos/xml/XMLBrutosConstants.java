@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.xml;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface XMLBrutosConstants {
 
 	public static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";

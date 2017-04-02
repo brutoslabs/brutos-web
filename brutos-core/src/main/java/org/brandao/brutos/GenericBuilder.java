@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import org.brandao.brutos.type.Type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface GenericBuilder {
 
 	MetaBeanBuilder buildMetaBean(String name, Class<?> classType);

@@ -24,6 +24,10 @@ import java.util.Locale;
 import java.util.Map;
 import org.brandao.brutos.MvcRequest;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MockMvcRequest implements MvcRequest {
 
 	private Map values;

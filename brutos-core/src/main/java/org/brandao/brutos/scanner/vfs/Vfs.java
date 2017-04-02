@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.brandao.brutos.mapping.StringUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public final class Vfs {
 
 	public static Dir getDir(URL url) {

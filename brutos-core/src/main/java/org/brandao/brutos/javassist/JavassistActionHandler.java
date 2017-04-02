@@ -23,6 +23,10 @@ import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.proxy.ActionHandlerImp;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JavassistActionHandler extends ActionHandlerImp implements
 		MethodHandler {
 

@@ -19,6 +19,10 @@ package org.brandao.brutos.scope;
 
 import java.util.Map;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class CustomScopeConfigurer {
 
 	private Map customEditors;

@@ -19,6 +19,10 @@ package org.brandao.brutos.scanner.vfs;
 
 import java.io.InputStream;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface File {
 
 	String getRelativePath();

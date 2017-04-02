@@ -24,6 +24,10 @@ import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractCollectionType extends AbstractType implements
 		CollectionType {
 

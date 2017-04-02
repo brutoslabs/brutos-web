@@ -20,6 +20,10 @@ package org.brandao.brutos.bean;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class GetterProperty {
 
 	private Field field;

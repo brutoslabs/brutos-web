@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface GenericType extends Type {
 
 	void setRawClass(Class value);

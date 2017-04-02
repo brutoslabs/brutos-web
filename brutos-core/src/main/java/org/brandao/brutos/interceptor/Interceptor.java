@@ -19,6 +19,10 @@ package org.brandao.brutos.interceptor;
 
 import java.util.Map;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface Interceptor {
 
 	public void setProperties(Map<String, Object> props);

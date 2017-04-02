@@ -21,6 +21,10 @@ import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface StackRequestElement {
 
 	Throwable getObjectThrow();

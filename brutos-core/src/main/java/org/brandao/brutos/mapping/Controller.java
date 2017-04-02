@@ -34,6 +34,10 @@ import org.brandao.brutos.Scopes;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.scope.Scope;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class Controller {
 
 	private String name;

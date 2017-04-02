@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.io;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ResourceLoader {
 
 	String FILE_URL_PREFIX = "file:/";

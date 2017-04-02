@@ -28,6 +28,10 @@ import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 import org.brandao.brutos.mapping.StringUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class InterceptorManagerImp implements InterceptorManager {
 
 	private Map<String, Interceptor> interceptors;

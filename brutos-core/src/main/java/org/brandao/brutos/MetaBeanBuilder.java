@@ -26,6 +26,10 @@ import org.brandao.brutos.type.DateTimeType;
 import org.brandao.brutos.type.EnumType;
 import org.brandao.brutos.type.Type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MetaBeanBuilder {
 
 	private MetaBean metaBean;

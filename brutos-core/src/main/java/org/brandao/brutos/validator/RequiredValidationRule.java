@@ -19,6 +19,10 @@ package org.brandao.brutos.validator;
 
 import java.util.Properties;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class RequiredValidationRule implements ValidationRule {
 
 	public void validate(Object source, Object value) {

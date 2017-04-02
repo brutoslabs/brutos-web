@@ -26,6 +26,10 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ValidatorFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultValidatorFactory implements ValidatorFactory {
 
 	public static final String PREFIX_NAME = "org.brandao.brutos.validator.rules.";

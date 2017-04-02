@@ -21,6 +21,10 @@ import java.util.Properties;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class LoggerProvider {
 
 	private static LoggerProvider currentLoggerProvider;

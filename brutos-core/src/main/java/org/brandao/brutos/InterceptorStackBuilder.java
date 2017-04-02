@@ -24,6 +24,10 @@ import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 import org.brandao.brutos.mapping.MappingException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class InterceptorStackBuilder {
 
 	private Interceptor interceptor;

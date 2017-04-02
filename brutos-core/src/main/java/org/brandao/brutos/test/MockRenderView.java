@@ -24,6 +24,10 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.type.Type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MockRenderView extends AbstractRenderView {
 
 	private DispatcherType dispatcherType;

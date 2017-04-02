@@ -30,6 +30,10 @@ import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class Action {
 
 	private long code;

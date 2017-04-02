@@ -20,6 +20,10 @@ package org.brandao.brutos.test;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.StackRequestElement;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MockInvoker extends Invoker {
 
 	private StackRequestElement element;

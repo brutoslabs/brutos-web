@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface Download {
 
 	String getContentType();

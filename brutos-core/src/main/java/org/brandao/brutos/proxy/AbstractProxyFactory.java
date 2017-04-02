@@ -19,6 +19,10 @@ package org.brandao.brutos.proxy;
 
 import org.brandao.brutos.ProxyFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractProxyFactory implements ProxyFactory {
 
 	protected Class superClass = null;

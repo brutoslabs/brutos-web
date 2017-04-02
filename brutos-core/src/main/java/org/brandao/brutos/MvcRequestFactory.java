@@ -17,6 +17,10 @@
 
 package org.brandao.brutos;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface MvcRequestFactory {
 
 	MvcRequest getRequest();

@@ -21,6 +21,10 @@ import java.text.ParseException;
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.ResourceAction;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface InterceptorHandler {
 
 	ResourceAction getResourceAction();

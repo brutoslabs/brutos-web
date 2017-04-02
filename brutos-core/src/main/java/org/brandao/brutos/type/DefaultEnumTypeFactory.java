@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultEnumTypeFactory implements TypeFactory {
 
 	public DefaultEnumTypeFactory() {

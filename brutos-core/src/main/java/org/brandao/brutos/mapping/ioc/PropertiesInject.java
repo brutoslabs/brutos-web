@@ -19,6 +19,10 @@ package org.brandao.brutos.mapping.ioc;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class PropertiesInject extends ComplexObjectInject {
 
 	private List props;

@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface DefinitionReader {
 
 	void loadDefinitions(Resource resource);

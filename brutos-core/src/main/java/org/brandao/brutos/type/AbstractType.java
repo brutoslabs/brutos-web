@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractType implements Type {
 
 	protected Class classType;

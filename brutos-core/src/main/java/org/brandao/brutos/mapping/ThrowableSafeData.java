@@ -19,6 +19,10 @@ package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.DispatcherType;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ThrowableSafeData {
 
 	private Class target;

@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultMvcRequest implements MvcRequest {
 
 	public Object getValue(String name) {

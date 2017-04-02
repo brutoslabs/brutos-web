@@ -22,6 +22,10 @@ import java.util.Locale;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultMvcResponse implements MvcResponse {
 
 	public void process(Object object) {

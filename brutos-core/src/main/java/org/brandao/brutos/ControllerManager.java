@@ -22,6 +22,10 @@ import java.util.List;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.mapping.Controller;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ControllerManager {
 
 	ControllerBuilder addController(Class<?> classtype);

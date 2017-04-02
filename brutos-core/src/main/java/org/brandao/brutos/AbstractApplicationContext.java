@@ -30,6 +30,10 @@ import org.brandao.brutos.scope.SingletonScope;
 import org.brandao.brutos.scope.ThreadScope;
 import org.brandao.brutos.validator.JSR303ValidatorFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		implements ConfigurableApplicationContext {
 

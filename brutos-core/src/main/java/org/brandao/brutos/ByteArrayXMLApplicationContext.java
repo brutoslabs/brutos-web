@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import org.brandao.brutos.io.ByteArrayResource;
 import org.brandao.brutos.io.Resource;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ByteArrayXMLApplicationContext extends
 		AbstractXMLApplicationContext {
 

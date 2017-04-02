@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ArrayType extends Type {
 
 	void setComponentType(Type type);

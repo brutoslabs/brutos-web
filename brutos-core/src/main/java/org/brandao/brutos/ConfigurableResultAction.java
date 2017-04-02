@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import java.util.Map;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ConfigurableResultAction extends ResultAction {
 
 	String getView();

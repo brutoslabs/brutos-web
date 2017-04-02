@@ -21,6 +21,10 @@ import java.util.Properties;
 import org.brandao.brutos.type.IntegerType;
 import org.brandao.brutos.type.Type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MinlengthValidationRule implements ValidationRule {
 
 	private Integer expected;

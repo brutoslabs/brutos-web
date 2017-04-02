@@ -25,6 +25,10 @@ import org.brandao.brutos.type.CollectionType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class UseBeanData {
 
 	protected String name;

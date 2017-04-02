@@ -21,6 +21,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class SystemFile implements File {
 
 	private Dir path;

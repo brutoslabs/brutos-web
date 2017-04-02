@@ -20,6 +20,10 @@ package org.brandao.brutos.scope;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class SingletonScope implements Scope {
 
 	private static final Map values;

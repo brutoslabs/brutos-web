@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import java.util.Properties;
 import org.brandao.brutos.validator.RestrictionRules;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class RestrictionBuilder {
 
 	private Properties config;

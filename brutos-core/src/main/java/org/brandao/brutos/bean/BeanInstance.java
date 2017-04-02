@@ -27,6 +27,10 @@ import java.util.Map;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BeanInstance {
 
 	private static Map cache;

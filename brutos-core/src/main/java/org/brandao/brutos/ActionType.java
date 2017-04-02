@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class ActionType {
 
 	private final static Map defaultTypes = new HashMap();

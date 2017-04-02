@@ -20,6 +20,10 @@ package org.brandao.brutos;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DispatcherType {
 
 	public static final DispatcherType INCLUDE = new DispatcherType("include");

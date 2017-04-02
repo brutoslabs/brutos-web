@@ -21,6 +21,10 @@ import java.util.Map;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ObjectFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class Interceptor {
 
 	private String name;

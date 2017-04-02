@@ -19,6 +19,10 @@ package org.brandao.brutos.xml;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ScannerEntity {
 
 	private String scannerClassName;

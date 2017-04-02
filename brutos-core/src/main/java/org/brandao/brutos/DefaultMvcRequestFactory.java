@@ -17,6 +17,10 @@
 
 package org.brandao.brutos;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultMvcRequestFactory implements MvcRequestFactory {
 
 	public MvcRequest getRequest() {

@@ -19,6 +19,10 @@ package org.brandao.brutos.type;
 
 import org.brandao.brutos.MvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BooleanType extends AbstractType {
 
 	private static final boolean DEFAULT_VALUE = false;

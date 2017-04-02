@@ -19,6 +19,10 @@ package org.brandao.brutos;
 
 import java.util.Properties;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ObjectFactoryWrapper implements ObjectFactory {
 
 	private ObjectFactory objectFactory;

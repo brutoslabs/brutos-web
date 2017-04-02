@@ -19,6 +19,10 @@ package org.brandao.brutos.util.captcha;
 
 import javax.swing.ImageIcon;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class Imagem {
 
 	public Imagem() {

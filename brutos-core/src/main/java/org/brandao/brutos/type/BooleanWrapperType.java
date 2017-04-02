@@ -19,6 +19,10 @@ package org.brandao.brutos.type;
 
 import org.brandao.brutos.MvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BooleanWrapperType extends AbstractType {
 
 	public BooleanWrapperType() {

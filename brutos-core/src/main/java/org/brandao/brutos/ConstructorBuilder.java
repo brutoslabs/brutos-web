@@ -27,6 +27,10 @@ import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.Type;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ConstructorBuilder extends RestrictionBuilder {
 
 	private Bean mappingBean;

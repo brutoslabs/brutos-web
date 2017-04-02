@@ -25,6 +25,10 @@ import org.brandao.brutos.mapping.PropertyController;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.RestrictionRules;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class PropertyBuilder extends RestrictionBuilder implements
 		GenericBuilder {
 

@@ -19,6 +19,10 @@ package org.brandao.brutos.validator;
 
 import java.util.Properties;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ValidationRule {
 
 	void setConfiguration(Properties config);

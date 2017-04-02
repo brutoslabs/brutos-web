@@ -25,6 +25,10 @@ import java.util.Map;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class InterceptorProcessConfigurationBuilder {
 
 	private Controller controller;
