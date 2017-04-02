@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * Define os valores padrões dos mapeamentos de uma ação ou controlador.
  * 
  * @author Brandão
- * @see {@link ThrowSafe}
+ * @see ThrowSafe
  * @version 2.0
  */
 @Target({ ElementType.TYPE, ElementType.METHOD })
@@ -34,32 +34,32 @@ import java.lang.annotation.Target;
 public @interface DefaultThrowSafe {
 
 	/**
-	 * @see {@link ThrowSafe#view()}
+	 * @see ThrowSafe#view()
 	 */
 	String view() default "";
 
 	/**
-	 * @see {@link ThrowSafe#name()}
+	 * @see ThrowSafe#name()
 	 */
 	String name() default "exception";
 
 	/**
-	 * @see {@link ThrowSafe#dispatcher()}
+	 * @see ThrowSafe#dispatcher()
 	 */
 	String dispatcher() default "forward";
 
 	/**
-	 * @see {@link ThrowSafe#rendered()}
+	 * @see ThrowSafe#rendered()
 	 */
 	boolean rendered() default true;
 
 	/**
-	 * @see {@link ThrowSafe#enabled()}
+	 * @see ThrowSafe#enabled()
 	 */
 	boolean enabled() default true;
 
 	/**
-	 * @see {@link ThrowSafe#resolved()}
+	 * @see ThrowSafe#resolved()
 	 */
 	boolean resolved() default false;
 
