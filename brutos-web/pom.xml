@@ -148,7 +148,11 @@
 			<groupId>org.brandao</groupId>
 			<artifactId>brutos-core</artifactId>
 			<version>2.0-rc2</version>
-			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.brandao</groupId>
+			<artifactId>brutos-annotation</artifactId>
+			<version>2.0-rc2</version>
 		</dependency>
 		<!-- JBRGates -->
 		<dependency>
