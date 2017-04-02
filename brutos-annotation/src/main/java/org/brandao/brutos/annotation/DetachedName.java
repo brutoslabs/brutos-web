@@ -23,13 +23,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Ignora a nomeação de um mapeamento.
+ * Ignora a nomeação de uma entidade.
  * 
  * @author Brandao.
  *
  */
 @Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NotNamed {
+public @interface DetachedName {
 
 }

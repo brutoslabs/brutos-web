@@ -21,7 +21,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 import org.brandao.brutos.annotation.Basic;
-import org.brandao.brutos.annotation.NotNamed;
+import org.brandao.brutos.annotation.DetachedName;
 import org.brandao.brutos.annotation.Target;
 import org.brandao.brutos.mapping.StringUtil;
 
@@ -99,7 +99,7 @@ public class ActionParamEntry {
 
 	public String getName() {
 
-		NotNamed notNamed = (NotNamed) this.getAnnotation(NotNamed.class);
+		DetachedName notNamed = (DetachedName) this.getAnnotation(DetachedName.class);
 
 		if (notNamed != null)
 			return null;
