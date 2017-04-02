@@ -19,6 +19,10 @@ package org.brandao.brutos.web;
 
 import org.brandao.brutos.ScopeType;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebScopeType extends ScopeType{
 
     public static final WebScopeType APPLICATION = new WebScopeType( "application" );

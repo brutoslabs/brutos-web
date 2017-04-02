@@ -22,6 +22,10 @@ import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.io.Resource;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface ConfigurableWebApplicationContext 
         extends 
         WebApplicationContext, 

@@ -23,6 +23,10 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.scope.Scope;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebActionResolver implements ActionResolver{
     
     public ResourceAction getResourceAction(Controller controller,

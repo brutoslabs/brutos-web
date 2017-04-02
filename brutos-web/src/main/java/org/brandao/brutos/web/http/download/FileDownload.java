@@ -25,6 +25,10 @@ import org.brandao.brutos.web.http.Download;
 import java.io.FileInputStream;
 import java.util.HashMap;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class FileDownload implements Download{
 
     private File file;

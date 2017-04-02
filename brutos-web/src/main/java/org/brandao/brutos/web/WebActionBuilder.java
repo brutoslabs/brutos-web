@@ -28,6 +28,10 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebActionBuilder extends ActionBuilder{
     
     public WebActionBuilder(ActionBuilder builder){

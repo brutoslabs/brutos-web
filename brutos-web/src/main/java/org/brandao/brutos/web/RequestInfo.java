@@ -20,6 +20,10 @@ package org.brandao.brutos.web;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class RequestInfo {
 
     private static final ThreadLocal currentRequestInfo = new ThreadLocal();

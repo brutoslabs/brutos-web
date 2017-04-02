@@ -19,6 +19,10 @@ package org.brandao.brutos.web;
 
 import org.brandao.brutos.BrutosException;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class FileUploadException extends BrutosException{
 
     public FileUploadException() {

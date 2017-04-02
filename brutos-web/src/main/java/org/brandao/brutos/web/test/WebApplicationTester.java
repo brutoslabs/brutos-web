@@ -23,6 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface WebApplicationTester {
     
     void prepareContext(Map<String,String> parameters);

@@ -32,6 +32,10 @@ import javax.servlet.ServletRequestWrapper;
 import org.brandao.brutos.BrutosException;
 import org.brandao.jbrgates.JSONDecoder;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultBrutosRequest extends ServletRequestWrapper implements BrutosRequest{
 
     private Map parameters;

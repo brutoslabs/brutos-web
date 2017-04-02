@@ -24,6 +24,10 @@ import javax.servlet.http.HttpSession;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.RequestInfo;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class SessionScope implements Scope{
     
     public SessionScope() {

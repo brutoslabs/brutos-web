@@ -27,6 +27,10 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import org.brandao.brutos.BrutosConstants;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ContextLoaderListener implements ServletContextListener,
         HttpSessionListener, ServletRequestListener{
     

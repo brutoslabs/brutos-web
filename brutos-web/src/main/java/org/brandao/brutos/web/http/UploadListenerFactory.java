@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.web.http;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface UploadListenerFactory {
 
     UploadListener getNewUploadListener( UploadEvent event );

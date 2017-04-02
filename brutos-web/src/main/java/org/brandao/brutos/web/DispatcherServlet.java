@@ -27,6 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DispatcherServlet extends HttpServlet {
     
     private WebApplicationContext webApplicationContext;

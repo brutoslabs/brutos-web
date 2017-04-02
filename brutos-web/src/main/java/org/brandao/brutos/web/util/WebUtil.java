@@ -23,6 +23,10 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.StringPattern;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebUtil {
     
     public static String fixURI(String uri){

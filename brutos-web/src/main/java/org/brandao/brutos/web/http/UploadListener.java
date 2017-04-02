@@ -20,6 +20,10 @@ package org.brandao.brutos.web.http;
 import java.io.Serializable;
 import java.util.EventListener;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface UploadListener extends EventListener,Serializable{
 
     UploadEvent getUploadEvent();

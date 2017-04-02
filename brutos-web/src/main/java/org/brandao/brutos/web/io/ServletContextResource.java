@@ -26,6 +26,10 @@ import javax.servlet.ServletContext;
 import org.brandao.brutos.io.AbstractResource;
 import org.brandao.brutos.io.Resource;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ServletContextResource extends AbstractResource{
 
     private ServletContext servletContext;

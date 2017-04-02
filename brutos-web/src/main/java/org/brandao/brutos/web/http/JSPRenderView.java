@@ -27,6 +27,10 @@ import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.web.RequestInfo;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JSPRenderView extends AbstractRenderView{
     
     public JSPRenderView() {

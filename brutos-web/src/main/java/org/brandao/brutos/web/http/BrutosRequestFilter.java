@@ -32,6 +32,10 @@ import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebInvoker;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BrutosRequestFilter implements Filter{
 
     private FilterConfig filterConfig = null;

@@ -29,6 +29,10 @@ import javax.servlet.ServletRequest;
 import org.brandao.brutos.BrutosException;
 import org.brandao.jbrgates.JSONDecoder;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class HttpRequestParserImp implements HttpRequestParser{
 
     public boolean isMultipart(BrutosRequest request, 

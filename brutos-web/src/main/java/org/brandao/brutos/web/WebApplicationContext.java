@@ -20,6 +20,10 @@ package org.brandao.brutos.web;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.ApplicationContext;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface WebApplicationContext extends ApplicationContext{
 
     ServletContext getContext();

@@ -26,6 +26,10 @@ import javax.imageio.ImageIO;
 import org.brandao.brutos.web.http.Download;
 import org.brandao.brutos.util.captcha.Imagem;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class CaptchaController {
 
     private char[] chars;

@@ -25,6 +25,10 @@ import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebScopeType;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class FlashScope implements Scope{
     
     public FlashScope() {

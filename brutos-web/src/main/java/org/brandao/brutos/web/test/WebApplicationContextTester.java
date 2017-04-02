@@ -36,6 +36,10 @@ import com.mockrunner.mock.web.MockHttpSession;
 import com.mockrunner.mock.web.MockServletConfig;
 import com.mockrunner.mock.web.MockServletContext;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebApplicationContextTester {
     
     public static void run(

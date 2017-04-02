@@ -23,6 +23,10 @@ import org.brandao.brutos.ControllerManagerImp;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.web.util.WebUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebControllerManager extends ControllerManagerImp{
  
     public WebControllerManager(){

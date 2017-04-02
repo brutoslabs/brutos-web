@@ -23,6 +23,10 @@ import java.io.OutputStream;
 import java.util.Map;
 import org.brandao.brutos.web.http.Download;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class StreamDownload implements Download{
 
     public InputStream input;

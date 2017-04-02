@@ -23,6 +23,10 @@ import java.util.Locale;
 import javax.servlet.ServletRequest;
 import org.brandao.brutos.web.http.BrutosRequest;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebMvcRequestImp implements WebMvcRequest{
 
     private ServletRequest request;

@@ -30,6 +30,10 @@ import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
 import org.brandao.brutos.web.http.UploadListener;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebInvoker extends Invoker{
     
     public WebInvoker(){

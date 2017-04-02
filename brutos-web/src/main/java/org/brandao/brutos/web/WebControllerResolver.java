@@ -27,6 +27,10 @@ import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.Scope;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebControllerResolver implements ControllerResolver{
 
     private static Map<String,StringPattern> uris = new HashMap<String, StringPattern>();
