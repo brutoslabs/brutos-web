@@ -26,6 +26,10 @@ import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.validator.JSR303ValidatorFactory;
 import org.brandao.brutos.web.XMLWebApplicationContext;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MockXMLWebApplicationContext 
     extends XMLWebApplicationContext{
 

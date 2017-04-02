@@ -35,6 +35,10 @@ import org.brandao.brutos.RenderView;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.ValidatorFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebApplicationContextWrapper 
         extends AbstractWebApplicationContext{
 

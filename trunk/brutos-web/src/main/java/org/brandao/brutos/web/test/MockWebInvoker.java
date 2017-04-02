@@ -26,6 +26,10 @@ import org.brandao.brutos.RenderView;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.web.WebInvoker;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class MockWebInvoker extends WebInvoker{
 
     private StackRequestElement element;

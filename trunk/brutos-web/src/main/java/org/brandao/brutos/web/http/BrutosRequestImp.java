@@ -31,6 +31,10 @@ import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebScopeType;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BrutosRequestImp extends ServletRequestWrapper
         implements BrutosRequest{
 

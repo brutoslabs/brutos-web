@@ -22,6 +22,10 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class StaticBrutosRequest extends BrutosRequestWrapper{
 
     public StaticBrutosRequest(ServletRequest request){

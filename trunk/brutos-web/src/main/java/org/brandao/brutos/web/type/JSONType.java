@@ -26,6 +26,10 @@ import org.brandao.brutos.type.SerializableType;
 import org.brandao.jbrgates.DefaultJSONContext;
 import org.brandao.jbrgates.JSONContext;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class JSONType extends SerializableType {
 
 	private static JSONContext jsonContext = new DefaultJSONContext();

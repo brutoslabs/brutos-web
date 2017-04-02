@@ -28,6 +28,10 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.StringUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ContextLoader {
 
     public static final String CONTEXT_CLASS = "context_class";

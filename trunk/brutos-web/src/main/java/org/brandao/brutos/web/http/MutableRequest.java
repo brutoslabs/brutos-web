@@ -17,14 +17,18 @@
 
 package org.brandao.brutos.web.http;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface MutableRequest {
     
-    public void setParameter( String name, String value );
+    void setParameter( String name, String value );
     
-    public void setParameters( String name, String[] values );
+    void setParameters( String name, String[] values );
 
-    public void setObject( String name, Object value );
+    void setObject( String name, Object value );
     
-    public void setObjects( String name, Object[] value );
+    void setObjects( String name, Object[] value );
 
 }

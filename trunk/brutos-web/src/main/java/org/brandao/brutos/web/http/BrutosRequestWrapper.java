@@ -23,6 +23,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class BrutosRequestWrapper extends HttpServletRequestWrapper implements BrutosRequest{
 
     private BrutosRequest request;

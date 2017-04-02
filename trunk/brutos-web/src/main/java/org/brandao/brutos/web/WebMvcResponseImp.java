@@ -24,6 +24,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.*;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebMvcResponseImp implements WebMvcResponse{
 
     private ServletResponse response;

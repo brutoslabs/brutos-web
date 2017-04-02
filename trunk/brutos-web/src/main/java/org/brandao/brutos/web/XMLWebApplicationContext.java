@@ -20,6 +20,10 @@ package org.brandao.brutos.web;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class XMLWebApplicationContext
         extends AbstractWebApplicationContext{
 

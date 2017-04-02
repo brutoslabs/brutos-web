@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.web.http;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class DefaultUploadStats implements UploadStats{
 
     private UploadEvent event;

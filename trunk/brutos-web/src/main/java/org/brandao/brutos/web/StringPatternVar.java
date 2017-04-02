@@ -19,6 +19,10 @@ package org.brandao.brutos.web;
 
 import java.util.regex.Pattern;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class StringPatternVar {
 
         private String start;

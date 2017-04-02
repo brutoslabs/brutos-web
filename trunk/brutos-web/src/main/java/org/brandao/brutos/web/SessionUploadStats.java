@@ -22,6 +22,10 @@ import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.http.UploadStats;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class SessionUploadStats {
 
     public UploadStats getUploadStats( String requestId ){

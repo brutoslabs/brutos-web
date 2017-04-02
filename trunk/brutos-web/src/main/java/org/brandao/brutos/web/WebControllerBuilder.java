@@ -22,6 +22,10 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebControllerBuilder extends ControllerBuilder{
     
     public WebControllerBuilder(ControllerBuilder builder, ControllerManager.InternalUpdate internalUpdate){

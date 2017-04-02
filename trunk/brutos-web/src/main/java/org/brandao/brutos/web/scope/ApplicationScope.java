@@ -20,6 +20,10 @@ package org.brandao.brutos.web.scope;
 import javax.servlet.ServletContext;
 import org.brandao.brutos.scope.Scope;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ApplicationScope implements Scope{
     
     private ServletContext context;

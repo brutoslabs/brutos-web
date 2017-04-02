@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletRequest;
 
+/**
+ * 
+ * @author Brandao
+ */
 public interface BrutosRequest 
     extends MutableRequest,ServletRequest{
 

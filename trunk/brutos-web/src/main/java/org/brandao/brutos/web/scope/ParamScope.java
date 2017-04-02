@@ -23,6 +23,10 @@ import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.RequestInfo;
 import org.brandao.brutos.web.http.BrutosRequest;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ParamScope implements Scope{
     
     public ParamScope() {

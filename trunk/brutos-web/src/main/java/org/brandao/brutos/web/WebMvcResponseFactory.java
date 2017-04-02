@@ -20,6 +20,10 @@ package org.brandao.brutos.web;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.MvcResponseFactory;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class WebMvcResponseFactory implements MvcResponseFactory{
 
     public MvcResponse getResponse() {

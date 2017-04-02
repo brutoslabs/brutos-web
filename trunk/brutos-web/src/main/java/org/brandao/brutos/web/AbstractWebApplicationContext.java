@@ -39,6 +39,10 @@ import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
 import org.brandao.brutos.web.type.JSONType;
 
+/**
+ * 
+ * @author Brandao
+ */
 public abstract class AbstractWebApplicationContext
         extends AbstractApplicationContext
         implements ConfigurableWebApplicationContext {

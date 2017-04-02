@@ -28,6 +28,10 @@ import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebMvcRequest;
 import org.brandao.brutos.web.http.BrutosRequest;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class OldRequestScope implements Scope{
     
     public OldRequestScope() {

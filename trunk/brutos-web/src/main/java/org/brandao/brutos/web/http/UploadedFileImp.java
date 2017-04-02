@@ -19,6 +19,10 @@ package org.brandao.brutos.web.http;
 
 import java.io.File;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class UploadedFileImp implements UploadedFile{
     
     private File file = null;

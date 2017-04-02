@@ -23,6 +23,10 @@ import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.web.io.ServletContextResource;
 import org.brandao.brutos.AbstractXMLApplicationContext;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class ServletContextXMLApplicationContext
         extends AbstractXMLApplicationContext{
 

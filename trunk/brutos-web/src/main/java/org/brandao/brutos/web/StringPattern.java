@@ -26,6 +26,10 @@ import java.util.regex.Pattern;
 
 import org.brandao.brutos.mapping.StringUtil;
 
+/**
+ * 
+ * @author Brandao
+ */
 public class StringPattern {
 
     private String original;
