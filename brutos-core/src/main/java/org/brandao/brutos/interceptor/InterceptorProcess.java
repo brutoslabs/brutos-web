@@ -224,7 +224,7 @@ public class InterceptorProcess implements InterceptorStack {
 			DataOutput dataOutput = new DataOutput(
 					scopes.get(ScopeType.REQUEST));
 			dataOutput.write(form, stackRequestElement.getResource());
-			dataOutput.writeFields(form, stackRequestElement.getResource());
+			//dataOutput.writeFields(form, stackRequestElement.getResource());
 		}
 
 	}
