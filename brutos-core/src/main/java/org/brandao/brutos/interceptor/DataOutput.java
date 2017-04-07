@@ -38,22 +38,35 @@ public class DataOutput {
 
 	public void write(Controller form, Object object) {
 		try {
-			List fields = form.getProperties();
-			for (int i = 0; i < fields.size(); i++) {
-				PropertyController ff = (PropertyController) fields.get(i);
+			List<PropertyController> fields = form.getProperties();
+			
+			for (PropertyController ff: fields) {
+				
+				if(!ff.canGet()){
+					continue;
+				}
+				
 				Object value = ff.getValueFromSource(object);
-				if (value == null)
+				this.scope.put(ff.getName(), value);
+				/*
+				if (value == null){
 					ff.getScope().remove(ff.getName());
-				else
+				}
+				else{
 					ff.getScope().put(ff.getName(), value);
+				}
+				*/
 			}
-		} catch (BrutosException e) {
+		}
+		catch (BrutosException e) {
 			throw e;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new BrutosException(e);
 		}
 	}
 
+	@Deprecated
 	public void writeFields(Controller form, Object object) {
 		try {
 			Field[] fields = form.getClassType().getDeclaredFields();
@@ -66,4 +79,5 @@ public class DataOutput {
 			throw new BrutosException(e);
 		}
 	}
+	
 }
