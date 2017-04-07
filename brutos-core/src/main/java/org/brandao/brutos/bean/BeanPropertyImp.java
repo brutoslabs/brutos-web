@@ -39,6 +39,10 @@ public class BeanPropertyImp implements BeanProperty {
 		this.name = name;
 	}
 
+	public boolean canSet(){
+		return this.set != null || this.field != null;
+	}
+	
 	public void set(Object o, Object value) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
 
@@ -50,6 +54,10 @@ public class BeanPropertyImp implements BeanProperty {
 		}
 	}
 
+	public boolean canGet(){
+		return this.get != null || this.field != null;
+	}
+	
 	public Object get(Object o) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
 

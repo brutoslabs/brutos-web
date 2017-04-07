@@ -38,16 +38,21 @@ public class DataInput {
 
 	public void read(Controller controller, Object object) {
 		try {
-			List fields = controller.getProperties();
-			for (int i = 0; i < fields.size(); i++) {
-				PropertyController ff = (PropertyController) fields.get(i);
-				ff.setValue(object);
+			List<PropertyController> fields = controller.getProperties();
+			
+			for (PropertyController ff : fields) {
+				if(ff.canSet()){
+					ff.setValue(object);
+				}
 			}
+			
 			scope.put(BrutosConstants.WEBFRAME, object);
 			scope.put(BrutosConstants.CONTROLLER, object);
-		} catch (BrutosException e) {
+		}
+		catch (BrutosException e) {
 			throw e;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new BrutosException(e);
 		}
 	}

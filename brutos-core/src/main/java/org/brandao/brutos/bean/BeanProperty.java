@@ -27,9 +27,13 @@ import java.lang.reflect.Method;
  */
 public interface BeanProperty {
 
+	boolean canSet();
+	
 	void set(Object o, Object value) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException;
 
+	boolean canGet();
+	
 	Object get(Object o) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException;
 

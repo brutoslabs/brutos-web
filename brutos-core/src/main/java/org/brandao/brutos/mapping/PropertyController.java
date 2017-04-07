@@ -82,6 +82,10 @@ public class PropertyController extends UseBeanData {
 		this.beanProperty = beanProperty;
 	}
 
+	public boolean canGet(){
+		return this.beanProperty.canGet();
+	}
+	
 	public Object getValueFromSource(Object source)
 			throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException {
@@ -94,6 +98,10 @@ public class PropertyController extends UseBeanData {
 		this.beanProperty.set(source, value);
 	}
 
+	public boolean canSet(){
+		return this.beanProperty.canSet();
+	}
+	
 	public void setValue(Object source) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
 		Object value = super.getValue(source);
