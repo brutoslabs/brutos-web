@@ -59,12 +59,20 @@ public class PropertyBean extends DependencyBean {
 		this.beanProperty = beanProperty;
 	}
 
+	public boolean canGet(){
+		return this.beanProperty.canGet();
+	}
+	
 	public Object getValueFromSource(Object source)
 			throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException {
 		return this.beanProperty.get(source);
 	}
 
+	public boolean canSet(){
+		return this.beanProperty.canSet();
+	}
+	
 	public void setValueInSource(Object source, Object value)
 			throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException {

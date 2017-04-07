@@ -33,11 +33,19 @@ public class BeanPropertyWrapper implements BeanProperty {
 		this.beanProperty = beanProperty;
 	}
 
+	public boolean canSet() {
+		return this.beanProperty.canSet();
+	}
+	
 	public void set(Object o, Object value) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
 		this.beanProperty.set(o, value);
 	}
 
+	public boolean canGet() {
+		return this.beanProperty.canGet();
+	}
+	
 	public Object get(Object o) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
 		return this.beanProperty.get(o);
@@ -90,4 +98,5 @@ public class BeanPropertyWrapper implements BeanProperty {
 	public Class getDeclaredType() {
 		return this.beanProperty.getType();
 	}
+
 }

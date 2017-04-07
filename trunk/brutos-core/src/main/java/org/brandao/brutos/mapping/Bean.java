@@ -179,7 +179,12 @@ public class Bean {
 	private boolean resolveAndSetProperty(PropertyBean fb, Object instance,
 			String prefix, long index, ValidatorException vex) {
 
-		try {
+		try{
+			
+			if(!fb.canSet()){
+				return false;
+			}
+			
 			Object property = fb.getValueFromSource(instance);
 			Object value = fb.getValue(prefix, index, vex, instance, property);
 
@@ -190,9 +195,11 @@ public class Bean {
 
 			fb.setValueInSource(instance, value);
 			return value != null;
-		} catch (DependencyException e) {
+		}
+		catch (DependencyException e) {
 			throw e;
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			throw new DependencyException(String.format(
 					"problem to resolve dependency: %s",
 					new Object[] { fb.getParameterName() }), e);
