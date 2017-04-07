@@ -113,7 +113,7 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 
 		Basic basic = source.getAnnotation(Basic.class);
 
-		if (!source.isAnnotationPresent(Any.class)
+		if (source.canSet() && !source.isAnnotationPresent(Any.class)
 				&& AnnotationUtil.isBuildEntity(componentRegistry, basic,
 						source.getType()))
 			propertyBuilder = buildProperty(builder, source, componentRegistry);
