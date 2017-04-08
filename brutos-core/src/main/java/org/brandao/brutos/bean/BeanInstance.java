@@ -190,7 +190,7 @@ public class BeanInstance {
 		
 		Class<?> tmp = clazz;
 		
-		while(tmp != Object.class){
+		while(tmp != null && tmp != Object.class){
 			this.loadFields(data, tmp);
 			this.loadMethods(data, tmp);
 			tmp = tmp.getSuperclass();
