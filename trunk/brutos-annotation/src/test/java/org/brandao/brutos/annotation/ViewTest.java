@@ -87,7 +87,7 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1viewcontroller/view02.jsp", renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/view02.jsp", renderView.getView());
                 	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
@@ -126,7 +126,7 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1viewcontroller/view03.jsp", renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/view03.jsp", renderView.getView());
                 	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
@@ -165,7 +165,7 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1viewcontroller/action4action/view04.jsp", renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/view04.jsp", renderView.getView());
                 	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
@@ -243,7 +243,7 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1viewcontroller/action6action/view06.jsp", renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/view06.jsp", renderView.getView());
                 	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE, renderView.getDispatcherType());
                 }
 
@@ -282,7 +282,7 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1viewcontroller/controller.jsp", renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/controller.jsp", renderView.getView());
                 	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE, renderView.getDispatcherType());
                 }
 

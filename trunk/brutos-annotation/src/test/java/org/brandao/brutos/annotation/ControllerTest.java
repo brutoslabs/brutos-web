@@ -80,7 +80,7 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/controller1testcontroller/index.jsp", render.getView());
+                    Assert.assertEquals("/WEB-INF/views/controller1testcontroller/index.jsp", render.getView());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -117,7 +117,7 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/controller2testcontroller/index.jsp", render.getView());
+                    Assert.assertEquals("/WEB-INF/views/controller2testcontroller/index.jsp", render.getView());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -192,7 +192,7 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/controller4test/index.jsp", render.getView());
+                    Assert.assertEquals("/WEB-INF/views/controller4test/index.jsp", render.getView());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -229,7 +229,7 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/controller5test/index.jsp", render.getView());
+                    Assert.assertEquals("/WEB-INF/views/controller5test/index.jsp", render.getView());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -266,7 +266,7 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/controller6test/index.jsp", render.getView());
+                    Assert.assertEquals("/WEB-INF/views/controller6test/index.jsp", render.getView());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -303,7 +303,7 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/controller6test/index.jsp", render.getView());
+                    Assert.assertEquals("/WEB-INF/views/controller6test/index.jsp", render.getView());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -343,7 +343,7 @@ public class ControllerTest  extends TestCase{
                     
                     Assert.assertEquals("action", result);
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/controller7test/teste1action/index.jsp", render.getView());
+                    Assert.assertEquals("/WEB-INF/views/controller7test/teste1action/index.jsp", render.getView());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -383,7 +383,7 @@ public class ControllerTest  extends TestCase{
                     
                     Assert.assertEquals("action", controller.getProperty());
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/controller8test/index.jsp", render.getView());
+                    Assert.assertEquals("/WEB-INF/views/controller8test/index.jsp", render.getView());
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -420,7 +420,7 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/controller9test/teste1action/index.jsp", render.getView());
+                    Assert.assertEquals("/WEB-INF/views/controller9test/teste1action/index.jsp", render.getView());
                 }
 
                 public void checkException(Throwable e) throws Throwable {

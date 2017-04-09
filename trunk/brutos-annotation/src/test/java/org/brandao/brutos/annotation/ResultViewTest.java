@@ -6,10 +6,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.annotation.helper.resultview.app1.Test1ResultViewController;
 import org.brandao.brutos.annotation.helper.resultview.fail.Test1FailResultViewController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
@@ -51,9 +49,9 @@ public class ResultViewTest extends TestCase{
                 	Test1ResultViewController controller = (Test1ResultViewController)request.getAttribute("Controller");
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1resultviewcontroller/testaction/index.jsp", renderView.getView());
-                	Assert.assertNull(request.getAttribute("result"));
-                	Assert.assertEquals("v1", controller.value);
+                	assertEquals("/WEB-INF/views/test1resultviewcontroller/testaction/index.jsp", renderView.getView());
+                	assertNull(request.getAttribute("result"));
+                	assertEquals("v1", controller.value);
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -93,9 +91,9 @@ public class ResultViewTest extends TestCase{
                 	Test1ResultViewController controller = (Test1ResultViewController)request.getAttribute("Controller");
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1resultviewcontroller/test1action/index.jsp", renderView.getView());
-                	Assert.assertEquals(true, request.getAttribute("result"));
-                	Assert.assertEquals("v1", controller.value);
+                	assertEquals("/WEB-INF/views/test1resultviewcontroller/test1action/index.jsp", renderView.getView());
+                	assertEquals(true, request.getAttribute("result"));
+                	assertEquals("v1", controller.value);
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -135,9 +133,9 @@ public class ResultViewTest extends TestCase{
                 	Test1ResultViewController controller = (Test1ResultViewController)request.getAttribute("Controller");
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertNull(renderView.getView());
-                	Assert.assertEquals(true, renderView.getActionResult());
-                	Assert.assertEquals("v1", controller.value);
+                	assertNull(renderView.getView());
+                	assertEquals(true, renderView.getActionResult());
+                	assertEquals("v1", controller.value);
                 }
 
                 public void checkException(Throwable e) throws Throwable {
@@ -146,7 +144,6 @@ public class ResultViewTest extends TestCase{
             },
             new Class[]{Test1ResultViewController.class});
     }    
-    
     
     public void testTest1FailRestrictionController() throws Throwable{
         WebApplicationContextTester.run(
@@ -174,18 +171,18 @@ public class ResultViewTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: the action not return any value: test1Action}");
+                    fail("expected: the action not return any value: test1Action}");
                 }
 
                 public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("the action not return any value: test1Action"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {the action not return any value: test1Action}");
+                    fail("expected: {the action not return any value: test1Action}");
                 }
             },
             new Class[]{Test1FailResultViewController.class});

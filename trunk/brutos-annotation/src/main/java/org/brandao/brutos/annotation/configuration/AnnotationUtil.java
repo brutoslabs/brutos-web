@@ -186,7 +186,7 @@ public class AnnotationUtil {
 	}
 
 	public static boolean isUseDefaultMapping(Class<?> type) {
-		return type == Map.class || type == List.class || type == Set.class;
+		return type == Map.class || type == List.class || type == Set.class || type == Collection.class;
 	}
 
 	public static boolean isBuildEntity(TypeRegistry typeRegistry,
