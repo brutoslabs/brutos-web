@@ -50,17 +50,17 @@ public class ImportBeansTest extends TestCase{
                 	org.brandao.brutos.mapping.Controller controller = 
                 			applicationContext.getControllerManager().getController(ControllerBeanTest.class);
                 	
-                	Assert.assertNotNull(controller);
-                	Assert.assertNotNull(controller.getBean("beanTest"));
-                	Assert.assertEquals(org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest.class,controller.getBean("beanTest").getClassType());
-                	Assert.assertNotNull(controller.getBean("beanTest2"));
-                	Assert.assertEquals(org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest2.class,controller.getBean("beanTest2").getClassType());
-                	Assert.assertNotNull(controller.getBean("beanName"));
-                	Assert.assertEquals(org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest3.class,controller.getBean("beanName").getClassType());
+                	assertNotNull(controller);
+                	assertNotNull(controller.getBean("beanTest"));
+                	assertEquals(org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest.class,controller.getBean("beanTest").getClassType());
+                	assertNotNull(controller.getBean("beanTest2"));
+                	assertEquals(org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest2.class,controller.getBean("beanTest2").getClassType());
+                	assertNotNull(controller.getBean("beanName"));
+                	assertEquals(org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest3.class,controller.getBean("beanName").getClassType());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ControllerBeanTest.class});

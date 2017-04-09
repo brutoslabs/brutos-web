@@ -68,21 +68,21 @@ public class TemporalTest extends TestCase{
                 	
                 	try{
 	                	Calendar cal = GregorianCalendar.getInstance();
-	                	Assert.assertEquals(sdf.parse("2015_10_01"), controller.property1);
+	                	assertEquals(sdf.parse("2015_10_01"), controller.property1);
 	                	
 	                	cal.setTime(sdf2.parse("2015-10-02"));
-	                	Assert.assertEquals(cal, controller.getProperty2());
+	                	assertEquals(cal, controller.getProperty2());
 	                	
-	                	Assert.assertEquals(sdf3.parse("03/10/2015"), controller.property3);
+	                	assertEquals(sdf3.parse("03/10/2015"), controller.property3);
 	                	
 	                	Test1TemporalBean bean = controller.property4;
-	                	Assert.assertNotNull(bean);
+	                	assertNotNull(bean);
 	                	
 	                	cal.setTime(sdf.parse("2015_10_04"));
-	                	Assert.assertEquals(cal, bean.property1);
+	                	assertEquals(cal, bean.property1);
 	                	
-	                	Assert.assertEquals(sdf2.parse("2015-10-05"), bean.getProperty2());
-	                	Assert.assertEquals(sdf3.parse("06/10/2015"), bean.property3);
+	                	assertEquals(sdf2.parse("2015-10-05"), bean.getProperty2());
+	                	assertEquals(sdf3.parse("06/10/2015"), bean.property3);
                 	}
                 	catch(ParseException e){
                 		throw new RuntimeException(e);
@@ -90,8 +90,8 @@ public class TemporalTest extends TestCase{
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1TemporalController.class});
@@ -126,18 +126,18 @@ public class TemporalTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {not a temporal type: property1}");
+                    fail("expected: {not a temporal type: property1}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("not a temporal type: property1"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {not a temporal type: property1}");
+                    fail("expected: {not a temporal type: property1}");
                 }
             },
             new Class[]{Test1FaiTemporalController.class});
@@ -169,18 +169,18 @@ public class TemporalTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {not a temporal type: property1}");
+                    fail("expected: {not a temporal type: property1}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("not a temporal type: property1"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {not a temporal type: property1}");
+                    fail("expected: {not a temporal type: property1}");
                 }
             },
             new Class[]{Test2FaiTemporalController.class});
@@ -212,18 +212,18 @@ public class TemporalTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {not a temporal type: property1}");
+                    fail("expected: {not a temporal type: property1}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("not a temporal type: property1"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {not a temporal type: property1}");
+                    fail("expected: {not a temporal type: property1}");
                 }
             },
             new Class[]{Test3FaiTemporalController.class});
@@ -255,18 +255,18 @@ public class TemporalTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {not a temporal type: property1}");
+                    fail("expected: {not a temporal type: property1}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("not a temporal type: property1"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {not a temporal type: property1}");
+                    fail("expected: {not a temporal type: property1}");
                 }
             },
             new Class[]{Test4FaiTemporalController.class});

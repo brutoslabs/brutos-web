@@ -67,11 +67,11 @@ public class BeanTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Bean1TestController.class});
@@ -103,11 +103,11 @@ public class BeanTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Bean2TestController.class});
@@ -139,11 +139,11 @@ public class BeanTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Bean2TestController.class});
@@ -174,18 +174,18 @@ public class BeanTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail();
+                    fail();
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("invalid bean name: \"bean.\""))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {invalid bean name: \"bean.\"}");
+                    fail("expected: {invalid bean name: \"bean.\"}");
                 }
             },
             new Class[]{FailBean1TestController.class});
@@ -216,18 +216,18 @@ public class BeanTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail();
+                    fail();
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("duplicate bean name: \"failBean2\""))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {duplicate bean name: \"failBean2\"}");
+                    fail("expected: {duplicate bean name: \"failBean2\"}");
                 }
             },
             new Class[]{FailBean2TestController.class});
@@ -258,11 +258,11 @@ public class BeanTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Bean1TestController.class});
@@ -294,11 +294,11 @@ public class BeanTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Bean3TestController.class});

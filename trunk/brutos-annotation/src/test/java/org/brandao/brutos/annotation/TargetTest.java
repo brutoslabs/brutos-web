@@ -56,21 +56,21 @@ public class TargetTest extends TestCase{
                 	
                 	Test1TargetController controller = (Test1TargetController)request.getAttribute("Controller");
                 	
-                	Assert.assertEquals(new Integer(1), controller.property1);
-                	Assert.assertEquals(new Long(2), controller.getProperty2());
-                	Assert.assertEquals(new BigDecimal(3), controller.property3);
+                	assertEquals(new Integer(1), controller.property1);
+                	assertEquals(new Long(2), controller.getProperty2());
+                	assertEquals(new BigDecimal(3), controller.property3);
                 	
                 	Test1TargetBean bean = (Test1TargetBean) controller.property4;
-                	Assert.assertNotNull(bean);
+                	assertNotNull(bean);
                 	
-                	Assert.assertEquals(new Integer(4), bean.property1);
-                	Assert.assertEquals(new Long(5), bean.getProperty2());
-                	Assert.assertEquals(new BigDecimal(6), bean.property3);
+                	assertEquals(new Integer(4), bean.property1);
+                	assertEquals(new Long(5), bean.getProperty2());
+                	assertEquals(new BigDecimal(6), bean.property3);
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1TargetController.class});
@@ -103,18 +103,18 @@ public class TargetTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    //Assert.fail("expected: {unknown type: Test1TargetBean}");
+                    //fail("expected: {unknown type: Test1TargetBean}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("unknown type: Test1TargetBean"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {unknown type: Test1TargetBean}");
+                    fail("expected: {unknown type: Test1TargetBean}");
                 }
             },
             new Class[]{Test1FailTargetController.class});

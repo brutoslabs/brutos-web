@@ -48,12 +48,12 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/view01.jsp", renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
+                	assertEquals("/view01.jsp", renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ViewController.class});
@@ -87,12 +87,12 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/view02.jsp", renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
+                	assertEquals("/WEB-INF/views/view02.jsp", renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ViewController.class});
@@ -126,12 +126,12 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/view03.jsp", renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
+                	assertEquals("/WEB-INF/views/view03.jsp", renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ViewController.class});
@@ -165,12 +165,12 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/view04.jsp", renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
+                	assertEquals("/WEB-INF/views/view04.jsp", renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ViewController.class});
@@ -204,12 +204,12 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/view05.jsp", renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
+                	assertEquals("/view05.jsp", renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ViewController.class});
@@ -243,12 +243,12 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/view06.jsp", renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE, renderView.getDispatcherType());
+                	assertEquals("/WEB-INF/views/view06.jsp", renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.INCLUDE, renderView.getDispatcherType());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ViewController.class});
@@ -282,12 +282,12 @@ public class ViewTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/controller.jsp", renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE, renderView.getDispatcherType());
+                	assertEquals("/WEB-INF/views/controller.jsp", renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.INCLUDE, renderView.getDispatcherType());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ViewController.class});

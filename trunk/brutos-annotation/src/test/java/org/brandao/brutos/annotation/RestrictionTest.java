@@ -56,8 +56,8 @@ public class RestrictionTest extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1RestrictionController.class});
@@ -95,18 +95,18 @@ public class RestrictionTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {property1 > 10}");
+                    fail("expected: {property1 > 10}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("property1 > 10"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {property1 > 10}");
+                    fail("expected: {property1 > 10}");
                 }
             },
             new Class[]{Test1RestrictionController.class});
@@ -145,8 +145,8 @@ public class RestrictionTest extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1RestrictionController.class});
@@ -184,18 +184,18 @@ public class RestrictionTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: property2 < 2}");
+                    fail("expected: property2 < 2}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("property2 < 2"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {property2 < 2}");
+                    fail("expected: {property2 < 2}");
                 }
             },
             new Class[]{Test1RestrictionController.class});
@@ -234,8 +234,8 @@ public class RestrictionTest extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1RestrictionController.class});
@@ -273,18 +273,18 @@ public class RestrictionTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {arg0 > 10}");
+                    fail("expected: {arg0 > 10}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("arg0 > 10"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {arg0 > 10}");
+                    fail("expected: {arg0 > 10}");
                 }
             },
             new Class[]{Test1RestrictionController.class});
@@ -323,8 +323,8 @@ public class RestrictionTest extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1RestrictionController.class});
@@ -362,18 +362,18 @@ public class RestrictionTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: arg1 < 2}");
+                    fail("expected: arg1 < 2}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("arg1 < 2"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {arg1 < 2}");
+                    fail("expected: {arg1 < 2}");
                 }
             },
             new Class[]{Test1RestrictionController.class});
@@ -411,18 +411,18 @@ public class RestrictionTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {java.lang.String cannot be cast to java.lang.Number}");
+                    fail("expected: {java.lang.String cannot be cast to java.lang.Number}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("java.lang.String cannot be cast to java.lang.Number"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {java.lang.String cannot be cast to java.lang.Number}");
+                    fail("expected: {java.lang.String cannot be cast to java.lang.Number}");
                 }
             },
             new Class[]{Test1FailRestrictionController.class});

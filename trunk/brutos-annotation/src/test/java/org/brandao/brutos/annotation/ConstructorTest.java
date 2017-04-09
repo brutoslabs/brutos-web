@@ -66,15 +66,15 @@ public class ConstructorTest  extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
-                    Assert.assertNotNull(applicationContext.getControllerManager().getController("/Contructor1Test"));
+                    assertNotNull(applicationContext.getControllerManager().getController("/Contructor1Test"));
                     ConstructorBean1 bean = 
                             (ConstructorBean1)request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME);
                     
-                    Assert.assertNotNull(bean);
+                    assertNotNull(bean);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Contructor1TestController.class});
@@ -110,12 +110,12 @@ public class ConstructorTest  extends TestCase{
                     ConstructorBean2 bean = 
                             (ConstructorBean2)request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME);
                     
-                    Assert.assertNotNull(bean);
-                    Assert.assertEquals("action", bean.getProperty());
+                    assertNotNull(bean);
+                    assertEquals("action", bean.getProperty());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Contructor1TestController.class});
@@ -152,13 +152,13 @@ public class ConstructorTest  extends TestCase{
                     ConstructorBean3 bean = 
                             (ConstructorBean3)request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME);
                     
-                    Assert.assertNotNull(bean);
-                    Assert.assertEquals("action", bean.getProperty());
-                    Assert.assertEquals("action2", bean.getProperty2());
+                    assertNotNull(bean);
+                    assertEquals("action", bean.getProperty());
+                    assertEquals("action2", bean.getProperty2());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Contructor1TestController.class});

@@ -54,29 +54,29 @@ public class InterceptsStackTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals(true,request.getAttribute("result"));                	
+                	assertEquals(true,request.getAttribute("result"));                	
                 	
-                	Assert.assertEquals("value1_1_ax",request.getAttribute("i1.param1_1_a"));
-                	Assert.assertEquals("value1_2_ax",request.getAttribute("i1.param1_2_a"));
+                	assertEquals("value1_1_ax",request.getAttribute("i1.param1_1_a"));
+                	assertEquals("value1_2_ax",request.getAttribute("i1.param1_2_a"));
 
-                	Assert.assertEquals("value3_1_ax",request.getAttribute("i3.param3_1_a"));
-                	Assert.assertEquals("value3_2_ax",request.getAttribute("i3.param3_2_a"));
+                	assertEquals("value3_1_ax",request.getAttribute("i3.param3_1_a"));
+                	assertEquals("value3_2_ax",request.getAttribute("i3.param3_2_a"));
 
-                	Assert.assertNull(request.getAttribute("i4.param4_1_a"));
-                	Assert.assertNull(request.getAttribute("i4.param4_2_a"));
+                	assertNull(request.getAttribute("i4.param4_1_a"));
+                	assertNull(request.getAttribute("i4.param4_2_a"));
 
-                	Assert.assertNull(request.getAttribute("i2.param2_1_a"));
-                	Assert.assertNull(request.getAttribute("i2.param2_2_a"));
+                	assertNull(request.getAttribute("i2.param2_1_a"));
+                	assertNull(request.getAttribute("i2.param2_2_a"));
                 	
-                	Assert.assertEquals(1,request.getAttribute("intercepted.interceptor1"));
-                	Assert.assertEquals(2,request.getAttribute("intercepted.interceptor3"));
-                	Assert.assertEquals(3,request.getAttribute("intercepted.interceptor4"));
+                	assertEquals(1,request.getAttribute("intercepted.interceptor1"));
+                	assertEquals(2,request.getAttribute("intercepted.interceptor3"));
+                	assertEquals(3,request.getAttribute("intercepted.interceptor4"));
                 	
-                	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
+                	assertNull(request.getAttribute("intercepted.interceptor2"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{
@@ -114,29 +114,29 @@ public class InterceptsStackTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value1_1_bx",request.getAttribute("i1.param1_1_b"));
-                	Assert.assertEquals("value1_2_bx",request.getAttribute("i1.param1_2_b"));
+                	assertEquals("value1_1_bx",request.getAttribute("i1.param1_1_b"));
+                	assertEquals("value1_2_bx",request.getAttribute("i1.param1_2_b"));
 
-                	Assert.assertEquals("value3_1_bx",request.getAttribute("i3.param3_1_b"));
-                	Assert.assertEquals("value3_2_bx",request.getAttribute("i3.param3_2_b"));
+                	assertEquals("value3_1_bx",request.getAttribute("i3.param3_1_b"));
+                	assertEquals("value3_2_bx",request.getAttribute("i3.param3_2_b"));
 
-                	Assert.assertEquals("value4_1_b",request.getAttribute("i4.param4_1_b"));
-                	Assert.assertEquals("value4_2_b",request.getAttribute("i4.param4_2_b"));
+                	assertEquals("value4_1_b",request.getAttribute("i4.param4_1_b"));
+                	assertEquals("value4_2_b",request.getAttribute("i4.param4_2_b"));
 
-                	Assert.assertNull(request.getAttribute("i2.param2_1_b"));
-                	Assert.assertNull(request.getAttribute("i2.param2_2_b"));
+                	assertNull(request.getAttribute("i2.param2_1_b"));
+                	assertNull(request.getAttribute("i2.param2_2_b"));
                 	
-                	Assert.assertEquals(1,request.getAttribute("intercepted.interceptor1"));
-                	Assert.assertEquals(2,request.getAttribute("intercepted.interceptor3"));
-                	Assert.assertEquals(3,request.getAttribute("intercepted.interceptor4"));
+                	assertEquals(1,request.getAttribute("intercepted.interceptor1"));
+                	assertEquals(2,request.getAttribute("intercepted.interceptor3"));
+                	assertEquals(3,request.getAttribute("intercepted.interceptor4"));
                 	
-                	Assert.assertNull(request.getAttribute("intercepted.interceptor2"));
-                	Assert.assertEquals(true,request.getAttribute("result"));
+                	assertNull(request.getAttribute("intercepted.interceptor2"));
+                	assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{
@@ -174,29 +174,29 @@ public class InterceptsStackTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value1_1_c",request.getAttribute("i1.param1_1_c"));
-                	Assert.assertEquals("value1_2_c",request.getAttribute("i1.param1_2_c"));
+                	assertEquals("value1_1_c",request.getAttribute("i1.param1_1_c"));
+                	assertEquals("value1_2_c",request.getAttribute("i1.param1_2_c"));
 
-                	Assert.assertEquals("value2_1_c",request.getAttribute("i2.param2_1_c"));
-                	Assert.assertEquals("value2_2_c",request.getAttribute("i2.param2_2_c"));
+                	assertEquals("value2_1_c",request.getAttribute("i2.param2_1_c"));
+                	assertEquals("value2_2_c",request.getAttribute("i2.param2_2_c"));
                 	
-                	Assert.assertNull(request.getAttribute("i3.param3_1_c"));
-                	Assert.assertNull(request.getAttribute("i3.param3_2_c"));
+                	assertNull(request.getAttribute("i3.param3_1_c"));
+                	assertNull(request.getAttribute("i3.param3_2_c"));
 
-                	Assert.assertNull(request.getAttribute("i4.param4_1_c"));
-                	Assert.assertNull(request.getAttribute("i4.param4_2_c"));
+                	assertNull(request.getAttribute("i4.param4_1_c"));
+                	assertNull(request.getAttribute("i4.param4_2_c"));
                 	
-                	Assert.assertEquals(1,request.getAttribute("intercepted.interceptor1"));
-                	Assert.assertEquals(2,request.getAttribute("intercepted.interceptor2"));
-                	Assert.assertEquals(3,request.getAttribute("intercepted.interceptor4"));
+                	assertEquals(1,request.getAttribute("intercepted.interceptor1"));
+                	assertEquals(2,request.getAttribute("intercepted.interceptor2"));
+                	assertEquals(3,request.getAttribute("intercepted.interceptor4"));
                 	
-                	Assert.assertNull(request.getAttribute("intercepted.interceptor3"));
-                	Assert.assertEquals(true,request.getAttribute("result"));
+                	assertNull(request.getAttribute("intercepted.interceptor3"));
+                	assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{
@@ -234,18 +234,18 @@ public class InterceptsStackTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {interceptor must be informed on parameter: param1_1}");
+                    fail("expected: {interceptor must be informed on parameter: param1_1}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("interceptor must be informed on parameter: param1_1"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {interceptor must be informed on parameter: param1_1}");
+                    fail("expected: {interceptor must be informed on parameter: param1_1}");
                 }
             },
             new Class[]{Test1FailinterceptsStack.class, Interceptor1Fail.class});
@@ -277,18 +277,18 @@ public class InterceptsStackTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {interceptor not found: interceptorX}");
+                    fail("expected: {interceptor not found: interceptorX}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("interceptor not found: interceptorX"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {interceptor not found: interceptorX}");
+                    fail("expected: {interceptor not found: interceptorX}");
                 }
             },
             new Class[]{Test2FailinterceptsStack.class, Interceptor1Fail.class});
@@ -320,18 +320,18 @@ public class InterceptsStackTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {does not compose the interceptor stack stackB: Interceptor1Fail}");
+                    fail("expected: {does not compose the interceptor stack stackB: Interceptor1Fail}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("does not compose the interceptor stack stackB: Interceptor1Fail"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("does not compose the interceptor stack stackB: Interceptor1Fail}");
+                    fail("does not compose the interceptor stack stackB: Interceptor1Fail}");
                 }
             },
             new Class[]{Interceptor2Fail.class});

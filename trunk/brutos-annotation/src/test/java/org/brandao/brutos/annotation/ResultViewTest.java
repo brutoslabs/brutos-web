@@ -54,8 +54,8 @@ public class ResultViewTest extends TestCase{
                 	assertEquals("v1", controller.value);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ResultViewController.class});
@@ -96,8 +96,8 @@ public class ResultViewTest extends TestCase{
                 	assertEquals("v1", controller.value);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ResultViewController.class});
@@ -138,8 +138,8 @@ public class ResultViewTest extends TestCase{
                 	assertEquals("v1", controller.value);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ResultViewController.class});
@@ -174,7 +174,7 @@ public class ResultViewTest extends TestCase{
                     fail("expected: the action not return any value: test1Action}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
+                public void checkException(Throwable e) {
                     assertNotNull(e);
                     Throwable ex = e;
                     do{

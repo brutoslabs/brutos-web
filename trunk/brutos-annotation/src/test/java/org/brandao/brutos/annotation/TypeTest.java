@@ -58,21 +58,21 @@ public class TypeTest extends TestCase{
                 	
                 	Test1TypeController controller = (Test1TypeController)request.getAttribute("Controller");
                 	
-                	Assert.assertEquals("xx-1", controller.property1);
-                	Assert.assertEquals("xx-2", controller.getProperty2());
-                	Assert.assertEquals("xx-3", controller.property3);
+                	assertEquals("xx-1", controller.property1);
+                	assertEquals("xx-2", controller.getProperty2());
+                	assertEquals("xx-3", controller.property3);
                 	
                 	Test1TypeBean bean = controller.property4;
-                	Assert.assertNotNull(bean);
+                	assertNotNull(bean);
                 	
-                	Assert.assertEquals("xx-4", bean.property1);
-                	Assert.assertEquals("xx-5", bean.getProperty2());
-                	Assert.assertEquals("xx-6", bean.property3);
+                	assertEquals("xx-4", bean.property1);
+                	assertEquals("xx-5", bean.getProperty2());
+                	assertEquals("xx-6", bean.property3);
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1TypeController.class});

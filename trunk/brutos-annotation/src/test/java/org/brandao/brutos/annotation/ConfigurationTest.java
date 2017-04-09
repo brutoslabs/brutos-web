@@ -64,13 +64,13 @@ public class ConfigurationTest  extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
-                    Assert.assertNotNull(applicationContext.getControllerManager().getController("/controller"));
+                    assertNotNull(applicationContext.getControllerManager().getController("/controller"));
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/myView.jsp", render.getView());
+                    assertEquals("/myView.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{App1Configuration.class});
@@ -102,11 +102,11 @@ public class ConfigurationTest  extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                    Assert.assertNull(applicationContext.getControllerManager().getController("/controller"));
+                    assertNull(applicationContext.getControllerManager().getController("/controller"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Fail1Configuration.class});
