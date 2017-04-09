@@ -49,8 +49,8 @@ public class CalendarType extends DefaultDateType {
 		if (value instanceof Calendar)
 			return value;
 		else if (value instanceof String) {
-			value = super.convert(value);
-			return ((String) value).isEmpty() ? null : toValue(value);
+			Object o = super.convert(value);
+			return ((String) value).isEmpty() ? null : toValue(o);
 		} else if (value == null)
 			return null;
 		else
