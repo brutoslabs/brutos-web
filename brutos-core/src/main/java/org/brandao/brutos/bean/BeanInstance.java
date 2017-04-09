@@ -188,92 +188,11 @@ public class BeanInstance {
 		BeanData data = new BeanData();
 		data.setClassType(clazz);
 		
-		Class<?> tmp = clazz;
-		
-		while(tmp != null && tmp != Object.class){
-			this.loadFields(data, tmp);
-			this.loadMethods(data, tmp);
-			tmp = tmp.getSuperclass();
-		}
+		this.loadFields(data, clazz);
+		this.loadMethods(data, clazz);
 		
 		cache.put(clazz, data);
 		return data;
-		/*
-		if (cache.containsKey(clazz))
-			return (BeanData) cache.get(clazz);
-		else {
-			BeanData data = new BeanData();
-			data.setClassType(clazz);
-
-			Field[] fields = clazz.getDeclaredFields();
-
-			for (int i = 0; i < fields.length; i++) {
-				Field f = fields[i];
-				data.addProperty(f.getName(), new BeanPropertyImp(f, null,
-						null, f.getName()));
-				data.getSetter().put(f.getName(), f);
-				data.getGetter().put(f.getName(), f);
-			}
-
-			Method[] methods = clazz.getMethods();
-
-			for (int i = 0; i < methods.length; i++) {
-				Method method = methods[i];
-				String methodName = method.getName();
-
-				if (methodName.equals("getClass"))
-					continue;
-
-				if (methodName.startsWith("set")
-						&& method.getParameterTypes().length == 1) {
-					String id = methodName.substring(3, methodName.length());
-
-					id = Character.toLowerCase(id.charAt(0))
-							+ id.substring(1, id.length());
-
-					if (data.getProperty(id) != null)
-						data.getProperty(id).setSet(method);
-					else
-						data.addProperty(id, new BeanPropertyImp(null, method,
-								null, id));
-
-					data.getSetter().put(id, method);
-				} else if (methodName.startsWith("get")
-						&& method.getParameterTypes().length == 0
-						&& method.getReturnType() != void.class) {
-					String id = methodName.substring(3, methodName.length());
-
-					id = Character.toLowerCase(id.charAt(0))
-							+ id.substring(1, id.length());
-
-					if (data.getProperty(id) != null)
-						data.getProperty(id).setGet(method);
-					else
-						data.addProperty(id, new BeanPropertyImp(null, null,
-								method, id));
-
-					data.getGetter().put(id, method);
-				} else if (methodName.startsWith("is")
-						&& method.getParameterTypes().length == 0
-						&& ClassUtil.getWrapper(method.getReturnType()) == Boolean.class) {
-					String id = methodName.substring(2, methodName.length());
-
-					id = Character.toLowerCase(id.charAt(0))
-							+ id.substring(1, id.length());
-
-					if (data.getProperty(id) != null)
-						data.getProperty(id).setGet(method);
-					else
-						data.addProperty(id, new BeanPropertyImp(null, null,
-								method, id));
-
-					data.getGetter().put(id, method);
-				}
-			}
-			cache.put(clazz, data);
-			return data;
-		}
-		*/
 	}
 
 	public boolean containProperty(String property) {

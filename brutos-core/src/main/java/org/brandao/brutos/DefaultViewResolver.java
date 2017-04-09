@@ -30,9 +30,12 @@ public class DefaultViewResolver extends AbstractViewResolver {
 		// controllerName = controllerName.replaceAll("Controller$", "");
 		controllerName = controllerName.toLowerCase();
 
+		/*
 		String resolvedView = this.getSeparator();
 		resolvedView += controllerName;
 		return resolvedView;
+		*/
+		return controllerName;
 	}
 
 	private String getPrefix(Class controllerType, String actionExecutor) {
