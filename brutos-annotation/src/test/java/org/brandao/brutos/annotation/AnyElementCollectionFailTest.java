@@ -578,6 +578,7 @@ public class AnyElementCollectionFailTest extends TestCase{
 
                 public void checkException(Throwable e) throws Throwable {
                     Assert.assertNotNull(e);
+                    e.printStackTrace();
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("meta values cannot be empty"))

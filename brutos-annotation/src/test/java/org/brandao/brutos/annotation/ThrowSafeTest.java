@@ -52,7 +52,7 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/test1action/exception4.jsp", renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/test1action/exception4.jsp", renderView.getView());
                 	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
@@ -92,7 +92,7 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/exception1.jsp",renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/exception1.jsp",renderView.getView());
                 	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD,renderView.getDispatcherType());
                 	Assert.assertNotNull(request.getAttribute("exception"));
                 }
@@ -134,7 +134,7 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/exception2.jsp",renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/exception2.jsp",renderView.getView());
                 	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE,renderView.getDispatcherType());
                 	Assert.assertNotNull(request.getAttribute("ex"));
                 }
@@ -175,7 +175,7 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/test2action/index.jsp",renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/test2action/index.jsp",renderView.getView());
                 	Assert.assertNotNull(request.getAttribute("exception"));
                 }
 
@@ -259,7 +259,7 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/test3action/index.jsp",renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/test3action/index.jsp",renderView.getView());
                 	Assert.assertNotNull(request.getAttribute("exception"));
                 }
 
@@ -300,7 +300,7 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/exception2.jsp",renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/exception2.jsp",renderView.getView());
                 	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE,renderView.getDispatcherType());
                 	Assert.assertNotNull(request.getAttribute("ex"));
                 }
@@ -425,7 +425,7 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/test1throwsafecontroller/index.jsp",renderView.getView());
+                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/index.jsp",renderView.getView());
                 	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD,renderView.getDispatcherType());
                 	Assert.assertNotNull(request.getAttribute("exception"));
                 }

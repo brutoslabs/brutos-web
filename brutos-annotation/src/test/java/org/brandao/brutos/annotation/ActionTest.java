@@ -77,7 +77,7 @@ public class ActionTest extends TestCase {
                     MockRenderView renderView = (MockRenderView) applicationContext.getRenderView();
 
                     Assert.assertEquals("result", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
-                    Assert.assertEquals("/WEB-INF/app1testcontroller/test1action/index.jsp", renderView.getView());
+                    Assert.assertEquals("/WEB-INF/views/app1testcontroller/test1action/index.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
 
@@ -118,7 +118,7 @@ public class ActionTest extends TestCase {
                     MockRenderView renderView = (MockRenderView) applicationContext.getRenderView();
 
                     Assert.assertEquals("result2", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
-                    Assert.assertEquals("/WEB-INF/app1testcontroller/test2/index.jsp", renderView.getView());
+                    Assert.assertEquals("/WEB-INF/views/app1testcontroller/test2/index.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
                 
@@ -163,7 +163,7 @@ public class ActionTest extends TestCase {
                     MockRenderView renderView = (MockRenderView) applicationContext.getRenderView();
 
                     Assert.assertEquals("result3", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
-                    Assert.assertEquals("/WEB-INF/app1testcontroller/test3/index.jsp", renderView.getView());
+                    Assert.assertEquals("/WEB-INF/views/app1testcontroller/test3/index.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
             },
@@ -204,7 +204,7 @@ public class ActionTest extends TestCase {
                     MockRenderView renderView = (MockRenderView) applicationContext.getRenderView();
 
                     Assert.assertEquals("result4", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
-                    Assert.assertEquals("/WEB-INF/app1testcontroller/test4/index.jsp", renderView.getView());
+                    Assert.assertEquals("/WEB-INF/views/app1testcontroller/test4/index.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
             },
@@ -245,7 +245,7 @@ public class ActionTest extends TestCase {
                     MockRenderView renderView = (MockRenderView) applicationContext.getRenderView();
 
                     Assert.assertEquals("result4", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
-                    Assert.assertEquals("/WEB-INF/app1testcontroller/test4/index.jsp", renderView.getView());
+                    Assert.assertEquals("/WEB-INF/views/app1testcontroller/test4/index.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
             },
@@ -286,7 +286,7 @@ public class ActionTest extends TestCase {
                     MockRenderView renderView = (MockRenderView) applicationContext.getRenderView();
 
                     Assert.assertNull(request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
-                    Assert.assertEquals("/WEB-INF/app1testcontroller/test04.jsp", renderView.getView());
+                    Assert.assertEquals("/WEB-INF/views/test04.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
             },
@@ -409,7 +409,7 @@ public class ActionTest extends TestCase {
                     MockRenderView renderView = (MockRenderView) applicationContext.getRenderView();
 
                     Assert.assertNull(request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
-                    Assert.assertEquals("/WEB-INF/app1testcontroller/test03.jsp", renderView.getView());
+                    Assert.assertEquals("/WEB-INF/views/test03.jsp", renderView.getView());
                     Assert.assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE, renderView.getDispatcherType());
                 }
             },
