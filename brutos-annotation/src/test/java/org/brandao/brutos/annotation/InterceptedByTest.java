@@ -55,14 +55,14 @@ public class InterceptedByTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.assertEquals("true",request.getAttribute("intercepted.testName"));
-                	Assert.assertNull(request.getAttribute("intercepted.testName2"));
-                	Assert.assertEquals(true,request.getAttribute("result"));
+                	assertEquals("true",request.getAttribute("intercepted.testName"));
+                	assertNull(request.getAttribute("intercepted.testName2"));
+                	assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{
@@ -97,17 +97,17 @@ public class InterceptedByTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value1",request.getAttribute("param1"));
+                	assertEquals("value1",request.getAttribute("param1"));
                 	
-                	Assert.assertEquals("true",request.getAttribute("intercepted.testName"));
-                	Assert.assertNull(request.getAttribute("intercepted.testName2"));
+                	assertEquals("true",request.getAttribute("intercepted.testName"));
+                	assertNull(request.getAttribute("intercepted.testName2"));
                 	
-                	Assert.assertEquals(true,request.getAttribute("result"));
+                	assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{
@@ -142,17 +142,17 @@ public class InterceptedByTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value1",request.getAttribute("param1"));
+                	assertEquals("value1",request.getAttribute("param1"));
                 	
-                	Assert.assertEquals("true",request.getAttribute("intercepted.testName"));
-                	Assert.assertNull(request.getAttribute("intercepted.testName2"));
+                	assertEquals("true",request.getAttribute("intercepted.testName"));
+                	assertNull(request.getAttribute("intercepted.testName2"));
                 	
-                	Assert.assertEquals(true,request.getAttribute("result"));
+                	assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{
@@ -187,18 +187,18 @@ public class InterceptedByTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value1",request.getAttribute("param1"));
-                	Assert.assertEquals("value2",request.getAttribute("param2"));
+                	assertEquals("value1",request.getAttribute("param1"));
+                	assertEquals("value2",request.getAttribute("param2"));
                 	
-                	Assert.assertEquals("true",request.getAttribute("intercepted.testName"));
-                	Assert.assertNull(request.getAttribute("intercepted.testName2"));
+                	assertEquals("true",request.getAttribute("intercepted.testName"));
+                	assertNull(request.getAttribute("intercepted.testName2"));
                 	
-                	Assert.assertEquals(true,request.getAttribute("result"));
+                	assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{
@@ -233,20 +233,20 @@ public class InterceptedByTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
-                	Assert.assertEquals("value1",request.getAttribute("param1"));
-                	Assert.assertEquals("value2",request.getAttribute("param2"));
-                	Assert.assertEquals("value3",request.getAttribute("param3"));
-                	Assert.assertEquals("value4",request.getAttribute("param4"));
+                	assertEquals("value1",request.getAttribute("param1"));
+                	assertEquals("value2",request.getAttribute("param2"));
+                	assertEquals("value3",request.getAttribute("param3"));
+                	assertEquals("value4",request.getAttribute("param4"));
                 	
-                	Assert.assertEquals("true",request.getAttribute("intercepted.testName"));
-                	Assert.assertEquals("true",request.getAttribute("intercepted.testName2"));
+                	assertEquals("true",request.getAttribute("intercepted.testName"));
+                	assertEquals("true",request.getAttribute("intercepted.testName2"));
                 	
-                	Assert.assertEquals(true,request.getAttribute("result"));
+                	assertEquals(true,request.getAttribute("result"));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{
@@ -281,18 +281,18 @@ public class InterceptedByTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {interceptor already intercept this controller: testName}");
+                    fail("expected: {interceptor already intercept this controller: testName}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("interceptor already intercept this controller: testName"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {interceptor already intercept this controller: testName}");
+                    fail("expected: {interceptor already intercept this controller: testName}");
                 }
             },
             new Class[]{Test1InterceptedByFailController.class, TestNameInterceptorController.class});
@@ -324,18 +324,18 @@ public class InterceptedByTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {invalid interceptor name}");
+                    fail("expected: {invalid interceptor name}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("invalid interceptor name"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {invalid interceptor name}");
+                    fail("expected: {invalid interceptor name}");
                 }
             },
             new Class[]{Test2InterceptedByFailController.class});
@@ -367,18 +367,18 @@ public class InterceptedByTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {interceptor not found: interceptorNotExist}");
+                    fail("expected: {interceptor not found: interceptorNotExist}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("interceptor not found: interceptorNotExist"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {interceptor not found: interceptorNotExist}");
+                    fail("expected: {interceptor not found: interceptorNotExist}");
                 }
             },
             new Class[]{Test3InterceptedByFailController.class});
@@ -410,18 +410,18 @@ public class InterceptedByTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {interceptor not found: org.brandao.brutos.annotation.helper.interceptedby.fail.NotInterceptor}");
+                    fail("expected: {interceptor not found: org.brandao.brutos.annotation.helper.interceptedby.fail.NotInterceptor}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("interceptor not found: org.brandao.brutos.annotation.helper.interceptedby.fail.NotInterceptor"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {interceptor not found: org.brandao.brutos.annotation.helper.interceptedby.fail.NotInterceptor}");
+                    fail("expected: {interceptor not found: org.brandao.brutos.annotation.helper.interceptedby.fail.NotInterceptor}");
                 }
             },
             new Class[]{Test4InterceptedByFailController.class, NotInterceptor.class});

@@ -50,11 +50,11 @@ public class TypeDefTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.assertTrue(applicationContext.getTypeManager().isStandardType(Test.class));
+                	assertTrue(applicationContext.getTypeManager().isStandardType(Test.class));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1TypeFactory.class});
@@ -86,11 +86,11 @@ public class TypeDefTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.assertTrue(applicationContext.getTypeManager().isStandardType(Test.class));
+                	assertTrue(applicationContext.getTypeManager().isStandardType(Test.class));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test2TypeFactory.class});
@@ -122,11 +122,11 @@ public class TypeDefTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.assertTrue(applicationContext.getTypeManager().isStandardType(Test.class));
+                	assertTrue(applicationContext.getTypeManager().isStandardType(Test.class));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test3Type.class});
@@ -158,18 +158,18 @@ public class TypeDefTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {must implement TypeFactory: Test1FailTypeFactory}");
+                    fail("expected: {must implement TypeFactory: Test1FailTypeFactory}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("must implement TypeFactory: Test1FailTypeFactory"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {must implement TypeFactory: Test1FailTypeFactory}");
+                    fail("expected: {must implement TypeFactory: Test1FailTypeFactory}");
                 }
             },
             new Class[]{Test1FailTypeFactory.class});
@@ -201,18 +201,18 @@ public class TypeDefTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {must implement TypeFactory: Test2FailTypeFactory}");
+                    fail("expected: {must implement TypeFactory: Test2FailTypeFactory}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("must implement TypeFactory: Test2FailTypeFactory"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {must implement TypeFactory: Test2FailTypeFactory}");
+                    fail("expected: {must implement TypeFactory: Test2FailTypeFactory}");
                 }
             },
             new Class[]{Test2FailTypeFactory.class});
@@ -244,18 +244,18 @@ public class TypeDefTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {must implement TypeFactory: Test3FailType}");
+                    fail("expected: {must implement TypeFactory: Test3FailType}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("must implement TypeFactory: Test3FailType"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {must implement TypeFactory: Test3FailType}");
+                    fail("expected: {must implement TypeFactory: Test3FailType}");
                 }
             },
             new Class[]{Test3FailType.class});

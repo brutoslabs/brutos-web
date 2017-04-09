@@ -53,12 +53,12 @@ public class ScopeTest extends TestCase{
                 	
                 	Scopes scopes = applicationContext.getScopes();
                 	Scope scope = scopes.get("scopeA");
-                	Assert.assertNotNull(scope);
-                	Assert.assertTrue(scope instanceof ScopeA);
+                	assertNotNull(scope);
+                	assertTrue(scope instanceof ScopeA);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ScopeA.class});
@@ -92,12 +92,12 @@ public class ScopeTest extends TestCase{
                 	
                 	Scopes scopes = applicationContext.getScopes();
                 	Scope scope = scopes.get("scopeBeta");
-                	Assert.assertNotNull(scope);
-                	Assert.assertTrue(scope instanceof ScopeB);
+                	assertNotNull(scope);
+                	assertTrue(scope instanceof ScopeB);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ScopeB.class});
@@ -131,12 +131,12 @@ public class ScopeTest extends TestCase{
                 	
                 	Scopes scopes = applicationContext.getScopes();
                 	Scope scope = scopes.get("c");
-                	Assert.assertNotNull(scope);
-                	Assert.assertTrue(scope instanceof CScope);
+                	assertNotNull(scope);
+                	assertTrue(scope instanceof CScope);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{CScope.class});
@@ -170,12 +170,12 @@ public class ScopeTest extends TestCase{
                 	
                 	Scopes scopes = applicationContext.getScopes();
                 	Scope scope = scopes.get("myScope");
-                	Assert.assertNotNull(scope);
-                	Assert.assertTrue(scope instanceof DScope);
+                	assertNotNull(scope);
+                	assertTrue(scope instanceof DScope);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{DScope.class});
@@ -207,18 +207,18 @@ public class ScopeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {org.brandao.brutos.annotation.helper.extendedscope.fail.FScope must implement Scope}");
+                    fail("expected: {org.brandao.brutos.annotation.helper.extendedscope.fail.FScope must implement Scope}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("org.brandao.brutos.annotation.helper.extendedscope.fail.FScope must implement Scope"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {org.brandao.brutos.annotation.helper.extendedscope.fail.FScope must implement Scope}");
+                    fail("expected: {org.brandao.brutos.annotation.helper.extendedscope.fail.FScope must implement Scope}");
                 }
             },
             new Class[]{FScope.class});
@@ -250,18 +250,18 @@ public class ScopeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: {org.brandao.brutos.annotation.helper.extendedscope.fail.ScopeE must implement Scope}");
+                    fail("expected: {org.brandao.brutos.annotation.helper.extendedscope.fail.ScopeE must implement Scope}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("org.brandao.brutos.annotation.helper.extendedscope.fail.ScopeE must implement Scope"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {org.brandao.brutos.annotation.helper.extendedscope.fail.ScopeE must implement Scope}");
+                    fail("expected: {org.brandao.brutos.annotation.helper.extendedscope.fail.ScopeE must implement Scope}");
                 }
             },
             new Class[]{ScopeE.class});

@@ -52,12 +52,12 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/test1action/exception4.jsp", renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
+                	assertEquals("/WEB-INF/views/test1throwsafecontroller/test1action/exception4.jsp", renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.FORWARD, renderView.getDispatcherType());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ThrowSafeController.class});
@@ -92,13 +92,13 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/exception1.jsp",renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD,renderView.getDispatcherType());
-                	Assert.assertNotNull(request.getAttribute("exception"));
+                	assertEquals("/WEB-INF/views/test1throwsafecontroller/exception1.jsp",renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.FORWARD,renderView.getDispatcherType());
+                	assertNotNull(request.getAttribute("exception"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                	throw e;
+                public void checkException(Throwable e) {
+                	fail(e.toString());
                 }
             },
             new Class[]{Test1ThrowSafeController.class});
@@ -134,13 +134,13 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/exception2.jsp",renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE,renderView.getDispatcherType());
-                	Assert.assertNotNull(request.getAttribute("ex"));
+                	assertEquals("/WEB-INF/views/test1throwsafecontroller/exception2.jsp",renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.INCLUDE,renderView.getDispatcherType());
+                	assertNotNull(request.getAttribute("ex"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                	throw e;
+                public void checkException(Throwable e) {
+                	fail(e.toString());
                 }
             },
             new Class[]{Test1ThrowSafeController.class});
@@ -175,12 +175,12 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/test2action/index.jsp",renderView.getView());
-                	Assert.assertNotNull(request.getAttribute("exception"));
+                	assertEquals("/WEB-INF/views/test1throwsafecontroller/test2action/index.jsp",renderView.getView());
+                	assertNotNull(request.getAttribute("exception"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                	throw e;
+                public void checkException(Throwable e) {
+                	fail(e.toString());
                 }
             },
             new Class[]{Test1ThrowSafeController.class});
@@ -213,18 +213,18 @@ public class ThrowSafeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.fail("expected {Exception4}");
+                	fail("expected {Exception4}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex instanceof Exception4)
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {Exception4}");
+                    fail("expected: {Exception4}");
                 }
             },
             new Class[]{Test1ThrowSafeController.class});
@@ -259,12 +259,12 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/test3action/index.jsp",renderView.getView());
-                	Assert.assertNotNull(request.getAttribute("exception"));
+                	assertEquals("/WEB-INF/views/test1throwsafecontroller/test3action/index.jsp",renderView.getView());
+                	assertNotNull(request.getAttribute("exception"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                	throw e;
+                public void checkException(Throwable e) {
+                	fail(e.toString());
                 }
             },
             new Class[]{Test1ThrowSafeController.class});
@@ -300,13 +300,13 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/exception2.jsp",renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.INCLUDE,renderView.getDispatcherType());
-                	Assert.assertNotNull(request.getAttribute("ex"));
+                	assertEquals("/WEB-INF/views/test1throwsafecontroller/exception2.jsp",renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.INCLUDE,renderView.getDispatcherType());
+                	assertNotNull(request.getAttribute("ex"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                	throw e;
+                public void checkException(Throwable e) {
+                	fail(e.toString());
                 }
             },
             new Class[]{Test1ThrowSafeController.class});
@@ -341,13 +341,13 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/test.jsp",renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD,renderView.getDispatcherType());
-                	Assert.assertNotNull(request.getAttribute("exception"));
+                	assertEquals("/test.jsp",renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.FORWARD,renderView.getDispatcherType());
+                	assertNotNull(request.getAttribute("exception"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                	throw e;
+                public void checkException(Throwable e) {
+                	fail(e.toString());
                 }
             },
             new Class[]{Test1ThrowSafeController.class});
@@ -380,18 +380,18 @@ public class ThrowSafeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.fail("expected {Exception4}");
+                	fail("expected {Exception4}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex instanceof Exception4)
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {Exception4}");
+                    fail("expected: {Exception4}");
                 }
             },
             new Class[]{Test1ThrowSafeController.class});
@@ -425,13 +425,13 @@ public class ThrowSafeTest extends TestCase{
                 	
                 	MockRenderView renderView = (MockRenderView)applicationContext.getRenderView();
                 	
-                	Assert.assertEquals("/WEB-INF/views/test1throwsafecontroller/index.jsp",renderView.getView());
-                	Assert.assertEquals(org.brandao.brutos.DispatcherType.FORWARD,renderView.getDispatcherType());
-                	Assert.assertNotNull(request.getAttribute("exception"));
+                	assertEquals("/WEB-INF/views/test1throwsafecontroller/index.jsp",renderView.getView());
+                	assertEquals(org.brandao.brutos.DispatcherType.FORWARD,renderView.getDispatcherType());
+                	assertNotNull(request.getAttribute("exception"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                	throw e;
+                public void checkException(Throwable e) {
+                	fail(e.toString());
                 }
             },
             new Class[]{Test1ThrowSafeController.class});
@@ -463,18 +463,18 @@ public class ThrowSafeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.fail("expected {the exception has been added on controller: Exception1}");
+                	fail("expected {the exception has been added on controller: Exception1}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("the exception has been added on controller: Exception1"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {the exception has been added on controller: Exception1}");
+                    fail("expected: {the exception has been added on controller: Exception1}");
                 }
             },
             new Class[]{Test1FailThrowSafeController.class});
@@ -506,18 +506,18 @@ public class ThrowSafeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.fail("expected {the exception has been added on action: Exception2}");
+                	fail("expected {the exception has been added on action: Exception2}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("the exception has been added on action: Exception2"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {the exception has been added on action: Exception2}");
+                    fail("expected: {the exception has been added on action: Exception2}");
                 }
             },
             new Class[]{Test2FailThrowSafeController.class});
@@ -549,18 +549,18 @@ public class ThrowSafeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.fail("expected {exception not informed}");
+                	fail("expected {exception not informed}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("exception not informed"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {exception not informed}");
+                    fail("expected: {exception not informed}");
                 }
             },
             new Class[]{Test3FailThrowSafeController.class});
@@ -592,18 +592,18 @@ public class ThrowSafeTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.fail("expected {exception not informed}");
+                	fail("expected {exception not informed}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("exception not informed"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {exception not informed}");
+                    fail("expected: {exception not informed}");
                 }
             },
             new Class[]{Test4FailThrowSafeController.class});

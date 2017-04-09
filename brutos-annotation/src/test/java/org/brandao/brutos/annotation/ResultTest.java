@@ -45,12 +45,12 @@ public class ResultTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.assertEquals(true,request.getAttribute("result"));
-                	Assert.assertNull(request.getAttribute("resultAction"));
+                	assertEquals(true,request.getAttribute("result"));
+                	assertNull(request.getAttribute("resultAction"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ResultController.class});
@@ -82,12 +82,12 @@ public class ResultTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                	Assert.assertEquals(true,request.getAttribute("resultAction"));
-                	Assert.assertNull(request.getAttribute("result"));
+                	assertEquals(true,request.getAttribute("resultAction"));
+                	assertNull(request.getAttribute("result"));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1ResultController.class});
@@ -119,18 +119,18 @@ public class ResultTest extends TestCase{
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                 	
-                    Assert.fail("expected: the action not return any value: test1Action}");
+                    fail("expected: the action not return any value: test1Action}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("the action not return any value: test1Action"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {the action not return any value: test1Action}");
+                    fail("expected: {the action not return any value: test1Action}");
                 }
             },
             new Class[]{Test1FailResultController.class});

@@ -63,32 +63,32 @@ public class EnumeratedTest extends TestCase{
                 	
                 	BeanConstructorEnumTest property = controller.property;
                 	
-                	Assert.assertNotNull(property);
-                	Assert.assertEquals(EnumTest.VALUE1, property.getProperty());
+                	assertNotNull(property);
+                	assertEquals(EnumTest.VALUE1, property.getProperty());
                 	
                 	BeanConstructorEnumTestEnumerated property2 = controller.property2;
                 	
-                	Assert.assertNotNull(property2);
-                	Assert.assertEquals(EnumTest.VALUE2, property2.getProperty());
+                	assertNotNull(property2);
+                	assertEquals(EnumTest.VALUE2, property2.getProperty());
 
                 	BeanConstructorEnumTestEnumeratedAuto property3 = controller.property3;
                 	
-                	Assert.assertNotNull(property3);
-                	Assert.assertEquals(EnumTest.VALUE3, property3.getProperty());
+                	assertNotNull(property3);
+                	assertEquals(EnumTest.VALUE3, property3.getProperty());
 
                 	BeanContructorEnumTestEnumeratedOrdinal property4 = controller.property4;
                 	
-                	Assert.assertNotNull(property4);
-                	Assert.assertEquals(EnumTest.VALUE4, property4.getProperty());
+                	assertNotNull(property4);
+                	assertEquals(EnumTest.VALUE4, property4.getProperty());
 
                 	BeanContructorEnumTestEnumeratedString property5 = controller.property5;
                 	
-                	Assert.assertNotNull(property5);
-                	Assert.assertEquals(EnumTest.VALUE5, property5.getProperty());
+                	assertNotNull(property5);
+                	assertEquals(EnumTest.VALUE5, property5.getProperty());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ControllerEnumeratedBeanConstructorTest.class});
@@ -137,21 +137,21 @@ public class EnumeratedTest extends TestCase{
                 	
                 	BeanEnumeratedTest property = controller.property;
                 	
-                	Assert.assertNotNull(property);
-                	Assert.assertEquals(EnumTest.VALUE1, property.property);
-                	Assert.assertEquals(EnumTest.VALUE2, property.property2);
-                	Assert.assertEquals(EnumTest.VALUE3, property.property3);
-                	Assert.assertEquals(EnumTest.VALUE4, property.property4);
-                	Assert.assertEquals(EnumTest.VALUE5, property.property5);
-                	Assert.assertEquals(EnumTest.VALUE6, property.getProperty6());
-                	Assert.assertEquals(EnumTest.VALUE7, property.getProperty7());
-                	Assert.assertEquals(EnumTest.VALUE8, property.getProperty8());
-                	Assert.assertEquals(EnumTest.VALUE9, property.getProperty9());
-                	Assert.assertEquals(EnumTest.VALUE10, property.getProperty10());
+                	assertNotNull(property);
+                	assertEquals(EnumTest.VALUE1, property.property);
+                	assertEquals(EnumTest.VALUE2, property.property2);
+                	assertEquals(EnumTest.VALUE3, property.property3);
+                	assertEquals(EnumTest.VALUE4, property.property4);
+                	assertEquals(EnumTest.VALUE5, property.property5);
+                	assertEquals(EnumTest.VALUE6, property.getProperty6());
+                	assertEquals(EnumTest.VALUE7, property.getProperty7());
+                	assertEquals(EnumTest.VALUE8, property.getProperty8());
+                	assertEquals(EnumTest.VALUE9, property.getProperty9());
+                	assertEquals(EnumTest.VALUE10, property.getProperty10());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ControllerEnumeratedBeanTest.class});
@@ -198,20 +198,20 @@ public class EnumeratedTest extends TestCase{
                 	ControllerEnumeratedTest controller = 
                 			(ControllerEnumeratedTest)request.getAttribute("Controller");
                 	
-                	Assert.assertEquals(EnumTest.VALUE1, controller.property);
-                	Assert.assertEquals(EnumTest.VALUE2, controller.property2);
-                	Assert.assertEquals(EnumTest.VALUE3, controller.property3);
-                	Assert.assertEquals(EnumTest.VALUE4, controller.property4);
-                	Assert.assertEquals(EnumTest.VALUE5, controller.property5);
-                	Assert.assertEquals(EnumTest.VALUE6, controller.getProperty6());
-                	Assert.assertEquals(EnumTest.VALUE7, controller.getProperty7());
-                	Assert.assertEquals(EnumTest.VALUE8, controller.getProperty8());
-                	Assert.assertEquals(EnumTest.VALUE9, controller.getProperty9());
-                	Assert.assertEquals(EnumTest.VALUE10, controller.getProperty10());
+                	assertEquals(EnumTest.VALUE1, controller.property);
+                	assertEquals(EnumTest.VALUE2, controller.property2);
+                	assertEquals(EnumTest.VALUE3, controller.property3);
+                	assertEquals(EnumTest.VALUE4, controller.property4);
+                	assertEquals(EnumTest.VALUE5, controller.property5);
+                	assertEquals(EnumTest.VALUE6, controller.getProperty6());
+                	assertEquals(EnumTest.VALUE7, controller.getProperty7());
+                	assertEquals(EnumTest.VALUE8, controller.getProperty8());
+                	assertEquals(EnumTest.VALUE9, controller.getProperty9());
+                	assertEquals(EnumTest.VALUE10, controller.getProperty10());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ControllerEnumeratedTest.class});
@@ -248,11 +248,11 @@ public class EnumeratedTest extends TestCase{
                 			(ControllerEnumeratedTest)request.getAttribute("Controller");
                 	
                 	EnumTest value = controller.property11;
-                	Assert.assertEquals(EnumTest.VALUE11, value);
+                	assertEquals(EnumTest.VALUE11, value);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ControllerEnumeratedTest.class});
@@ -289,11 +289,11 @@ public class EnumeratedTest extends TestCase{
                 			(ControllerEnumeratedTest)request.getAttribute("Controller");
                 	
                 	EnumTest value = controller.property12;
-                	Assert.assertEquals(EnumTest.VALUE12, value);
+                	assertEquals(EnumTest.VALUE12, value);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ControllerEnumeratedTest.class});
@@ -330,11 +330,11 @@ public class EnumeratedTest extends TestCase{
                 			(ControllerEnumeratedTest)request.getAttribute("Controller");
                 	
                 	EnumTest value = controller.property13;
-                	Assert.assertEquals(EnumTest.VALUE13, value);
+                	assertEquals(EnumTest.VALUE13, value);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ControllerEnumeratedTest.class});
@@ -371,11 +371,11 @@ public class EnumeratedTest extends TestCase{
                 			(ControllerEnumeratedTest)request.getAttribute("Controller");
                 	
                 	EnumTest value = controller.property14;
-                	Assert.assertEquals(EnumTest.VALUE14, value);
+                	assertEquals(EnumTest.VALUE14, value);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ControllerEnumeratedTest.class});
@@ -412,11 +412,11 @@ public class EnumeratedTest extends TestCase{
                 			(ControllerEnumeratedTest)request.getAttribute("Controller");
                 	
                 	EnumTest value = controller.property15;
-                	Assert.assertEquals(EnumTest.VALUE15, value);
+                	assertEquals(EnumTest.VALUE15, value);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{ControllerEnumeratedTest.class});

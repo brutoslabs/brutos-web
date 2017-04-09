@@ -80,11 +80,11 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/views/controller1testcontroller/index.jsp", render.getView());
+                    assertEquals("/WEB-INF/views/controller1testcontroller/index.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller1TestController.class});
@@ -117,11 +117,11 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/views/controller2testcontroller/index.jsp", render.getView());
+                    assertEquals("/WEB-INF/views/controller2testcontroller/index.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller2TestController.class});
@@ -154,12 +154,12 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     String[] result = (String[])request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME);
-                    Assert.assertEquals("a", result[0]);
-                    Assert.assertEquals("b", result[1]);
+                    assertEquals("a", result[0]);
+                    assertEquals("b", result[1]);
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller3TestController.class});
@@ -192,11 +192,11 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/views/controller4test/index.jsp", render.getView());
+                    assertEquals("/WEB-INF/views/controller4test/index.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller4Test.class});
@@ -229,11 +229,11 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/views/controller5test/index.jsp", render.getView());
+                    assertEquals("/WEB-INF/views/controller5test/index.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller5Test.class});
@@ -266,11 +266,11 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/views/controller6test/index.jsp", render.getView());
+                    assertEquals("/WEB-INF/views/controller6test/index.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller6Test.class});
@@ -303,11 +303,11 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/views/controller6test/index.jsp", render.getView());
+                    assertEquals("/WEB-INF/views/controller6test/index.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller6Test.class});
@@ -341,13 +341,13 @@ public class ControllerTest  extends TestCase{
                     
                     String result = (String)request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME);
                     
-                    Assert.assertEquals("action", result);
+                    assertEquals("action", result);
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/views/controller7test/teste1action/index.jsp", render.getView());
+                    assertEquals("/WEB-INF/views/controller7test/teste1action/index.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller7Test.class});
@@ -381,13 +381,13 @@ public class ControllerTest  extends TestCase{
                     
                     Controller8Test controller = (Controller8Test)request.getAttribute("Controller");
                     
-                    Assert.assertEquals("action", controller.getProperty());
+                    assertEquals("action", controller.getProperty());
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/views/controller8test/index.jsp", render.getView());
+                    assertEquals("/WEB-INF/views/controller8test/index.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller8Test.class});
@@ -420,11 +420,11 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/WEB-INF/views/controller9test/teste1action/index.jsp", render.getView());
+                    assertEquals("/WEB-INF/views/controller9test/teste1action/index.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller9Test.class});
@@ -457,11 +457,11 @@ public class ControllerTest  extends TestCase{
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
                     
                     MockRenderView render = (MockRenderView) applicationContext.getRenderView();
-                    Assert.assertEquals("/page.jsp", render.getView());
+                    assertEquals("/page.jsp", render.getView());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller10Test.class});
@@ -496,11 +496,11 @@ public class ControllerTest  extends TestCase{
                     org.brandao.brutos.mapping.Controller controller = 
                             applicationContext.getControllerManager().getController(Controller11Test.class);
                     
-                    Assert.assertEquals("controllerName", controller.getName());
+                    assertEquals("controllerName", controller.getName());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e) {
+                    fail(e.toString());
                 }
             },
             new Class[]{Controller11Test.class});
@@ -531,18 +531,18 @@ public class ControllerTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {expected starts with \"/\": controller}");
+                    fail("expected: {expected starts with \"/\": controller}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("expected starts with \"/\": controller"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {expected starts with \"/\": controller}");
+                    fail("expected: {expected starts with \"/\": controller}");
                 }
             },
             new Class[]{Fail1TestController.class});
@@ -573,18 +573,18 @@ public class ControllerTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail();
+                    fail();
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("expected starts with \"/\": controller"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {expected starts with \"/\": controller}");
+                    fail("expected: {expected starts with \"/\": controller}");
                 }
             },
             new Class[]{Fail2Test.class});
@@ -615,18 +615,18 @@ public class ControllerTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail();
+                    fail();
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("duplicate controller: /controller"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {duplicate controller: /controller}");
+                    fail("expected: {duplicate controller: /controller}");
                 }
             },
             new Class[]{Fail3Test.class});
@@ -657,18 +657,18 @@ public class ControllerTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {invalid action id: a.ction}");
+                    fail("expected: {invalid action id: a.ction}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("invalid action id: a.ction"))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {invalid action id: a.ction}");
+                    fail("expected: {invalid action id: a.ction}");
                 }
             },
             new Class[]{Fail4Test.class});
@@ -699,18 +699,18 @@ public class ControllerTest  extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail();
+                    fail();
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e) {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("action not found: \"/teste1\""))
                             return;
                     }while((ex = ex.getCause()) != null);
                     
-                    Assert.fail("expected: {action not found: \"/teste1\"}");
+                    fail("expected: {action not found: \"/teste1\"}");
                 }
             },
             new Class[]{Fail5Test.class});
