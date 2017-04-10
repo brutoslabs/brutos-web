@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,18 +20,12 @@ import org.brandao.brutos.helper.controller.BeanTestConstructor9;
 import org.brandao.brutos.helper.controller.EnumTest;
 import org.brandao.brutos.helper.controller.SimpleBean;
 import org.brandao.brutos.helper.controller.SimpleController;
-import org.brandao.brutos.io.ResourceLoader;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.validator.ValidatorException;
-import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebScopeType;
 import org.brandao.brutos.web.XMLWebApplicationContext;
-import org.brandao.brutos.web.test.BasicWebApplicationTester;
-import org.brandao.brutos.web.test.MockWebApplicationContext;
-import org.brandao.brutos.web.test.WebApplicationContextTester;
 
 
 public class WebApplicationMappingBeanTest extends AbstractTester implements Test{
@@ -47,26 +40,17 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
  
 
     public void testCollection8() throws Throwable{
-    	WebApplicationContextTester.run(
-    			"/",
-    			new BasicWebApplicationTester(){
-    				
-    				public void prepareContext(Map<String, String> parameters) {
-                        parameters.put(
-                                ContextLoader.CONTEXT_CLASS,
-                                MockWebApplicationContext.class.getName()
-                        );
-    				}
-    				
-    				public void checkException(Throwable e){
-    					e.printStackTrace();
-    					fail(e.toString());
-    				}
-    				
-    				public void checkResult(HttpServletRequest request,
-    						HttpServletResponse response, ServletContext context,
-    						ConfigurableWebApplicationContext app) {
-    					
+        super.execTest(
+                new HandlerTest(){
+
+                    public String getResourceName() {
+                        return
+                            "org/brandao/brutos/xml/helper/bean/bean-test-collection8.xml";
+                    }
+
+                    public void run(ConfigurableApplicationContext app,
+                            HttpServletRequest request, HttpServletResponse response) {
+
                         Controller controller =
                                 app.getControllerManager()
                                     .getController(SimpleController.class);
@@ -79,15 +63,10 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
                         TestCase.assertEquals(3,instance.size());
                         TestCase.assertEquals(1,instance.get(0).getArg2());
                         TestCase.assertEquals(2,instance.get(1).getArg2());
-                        TestCase.assertEquals(3,instance.get(2).getArg2());    					
-                        
-    				}
-    				
-    			},
-    			new String[]{
-    					ResourceLoader.CLASSPATH_URL_PREFIX + "org/brandao/brutos/xml/helper/bean/bean-test-collection8.xml"
-    			});
-    	
+                        TestCase.assertEquals(3,instance.get(2).getArg2());
+                    }
+
+            });
     }
 
     public void testCollection9(){
