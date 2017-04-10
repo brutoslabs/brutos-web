@@ -6,7 +6,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.brandao.brutos.helper.any.app1.fail.Test10FailAnyController;
@@ -52,11 +51,11 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
+                    fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e)  {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected."))
@@ -64,7 +63,7 @@ public class AnyFailTest extends TestCase{
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
+                    fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
                 }
             },
             new Class[]{Test1FailAnyController.class});
@@ -95,11 +94,11 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
+                    fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e)  {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected."))
@@ -107,7 +106,7 @@ public class AnyFailTest extends TestCase{
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
+                    fail("expected: {cvc-complex-type.2.4.b: The content of element 'any' is not complete. One of '{\"http://www.brutosframework.com.br/schema/controllers\":meta-value}' is expected.}");
                 }
             },
             new Class[]{Test2FailAnyController.class});
@@ -138,11 +137,11 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e)  {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
@@ -150,7 +149,7 @@ public class AnyFailTest extends TestCase{
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test3FailAnyController.class});
@@ -181,11 +180,11 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e)  {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
@@ -193,7 +192,7 @@ public class AnyFailTest extends TestCase{
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test4FailAnyController.class});
@@ -224,11 +223,11 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e)  {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
@@ -236,7 +235,7 @@ public class AnyFailTest extends TestCase{
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test5FailAnyController.class});
@@ -267,11 +266,11 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e)  {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
@@ -279,7 +278,7 @@ public class AnyFailTest extends TestCase{
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test6FailAnyController.class});
@@ -310,11 +309,11 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e)  {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
@@ -322,7 +321,7 @@ public class AnyFailTest extends TestCase{
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test7FailAnyController.class});
@@ -353,11 +352,11 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e)  {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
@@ -365,7 +364,7 @@ public class AnyFailTest extends TestCase{
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test8FailAnyController.class});
@@ -396,11 +395,11 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e)  {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
@@ -408,7 +407,7 @@ public class AnyFailTest extends TestCase{
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test9FailAnyController.class});
@@ -439,11 +438,11 @@ public class AnyFailTest extends TestCase{
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    Assert.assertNotNull(e);
+                public void checkException(Throwable e)  {
+                    assertNotNull(e);
                     Throwable ex = e;
                     do{
                         if(ex.getMessage().equals("cvc-complex-type.4: Attribute 'bean' must appear on element 'any'."))
@@ -451,7 +450,7 @@ public class AnyFailTest extends TestCase{
                     }while((ex = ex.getCause()) != null);
                     e.printStackTrace();
                     
-                    Assert.fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
+                    fail("expected: {cvc-complex-type.4: Attribute 'bean' must appear on element 'any'.}");
                 }
             },
             new Class[]{Test10FailAnyController.class});

@@ -71,15 +71,15 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals("propName", property.getName());
+                	assertEquals("propName", property.getName());
                 	
-                	Assert.assertTrue(property instanceof DecimalProperty);
-                	Assert.assertEquals(10, ((DecimalProperty)property).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property).getDecimals());
+                	assertTrue(property instanceof DecimalProperty);
+                	assertEquals(10, ((DecimalProperty)property).getLength());
+                	assertEquals(2, ((DecimalProperty)property).getDecimals());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1AnyController.class});
@@ -120,19 +120,19 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property = 
                 			controller.getProperty();
                 	
-                	Assert.assertTrue(property instanceof SetProperty);
-                	Assert.assertEquals("propName", property.getName());
+                	assertTrue(property instanceof SetProperty);
+                	assertEquals("propName", property.getName());
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNotNull(props);
-                	Assert.assertEquals(2, props.size());
-                	Assert.assertEquals("VALUE1", props.get(0));
-                	Assert.assertEquals("VALUE2", props.get(1));
+                	assertNotNull(props);
+                	assertEquals(2, props.size());
+                	assertEquals("VALUE1", props.get(0));
+                	assertEquals("VALUE2", props.get(1));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1AnyController.class});
@@ -173,15 +173,15 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals("propName", property.getName());
+                	assertEquals("propName", property.getName());
                 	
-                	Assert.assertTrue(property instanceof DecimalProperty);
-                	Assert.assertEquals(10, ((DecimalProperty)property).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property).getDecimals());
+                	assertTrue(property instanceof DecimalProperty);
+                	assertEquals(10, ((DecimalProperty)property).getLength());
+                	assertEquals(2, ((DecimalProperty)property).getDecimals());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1AnyController.class});
@@ -222,19 +222,19 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property = 
                 			controller.getProperty();
                 	
-                	Assert.assertTrue(property instanceof SetProperty);
-                	Assert.assertEquals("propName", property.getName());
+                	assertTrue(property instanceof SetProperty);
+                	assertEquals("propName", property.getName());
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNotNull(props);
-                	Assert.assertEquals(2, props.size());
-                	Assert.assertEquals("VALUE1", props.get(0));
-                	Assert.assertEquals("VALUE2", props.get(1));
+                	assertNotNull(props);
+                	assertEquals(2, props.size());
+                	assertEquals("VALUE1", props.get(0));
+                	assertEquals("VALUE2", props.get(1));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1AnyController.class});
@@ -275,15 +275,15 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals("propName", property.getName());
+                	assertEquals("propName", property.getName());
                 	
-                	Assert.assertTrue(property instanceof DecimalProperty);
-                	Assert.assertEquals(10, ((DecimalProperty)property).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property).getDecimals());
+                	assertTrue(property instanceof DecimalProperty);
+                	assertEquals(10, ((DecimalProperty)property).getLength());
+                	assertEquals(2, ((DecimalProperty)property).getDecimals());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1AnyController.class});
@@ -324,19 +324,19 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property = 
                 			controller.getProperty();
                 	
-                	Assert.assertTrue(property instanceof SetProperty);
-                	Assert.assertEquals("propName", property.getName());
+                	assertTrue(property instanceof SetProperty);
+                	assertEquals("propName", property.getName());
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNotNull(props);
-                	Assert.assertEquals(2, props.size());
-                	Assert.assertEquals("VALUE1", props.get(0));
-                	Assert.assertEquals("VALUE2", props.get(1));
+                	assertNotNull(props);
+                	assertEquals(2, props.size());
+                	assertEquals("VALUE1", props.get(0));
+                	assertEquals("VALUE2", props.get(1));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1AnyController.class});
@@ -377,15 +377,15 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property = 
                 			controller.getProperty();
                 	
-                	Assert.assertEquals("propName", property.getName());
+                	assertEquals("propName", property.getName());
                 	
-                	Assert.assertTrue(property instanceof DecimalProperty);
-                	Assert.assertEquals(10, ((DecimalProperty)property).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property).getDecimals());
+                	assertTrue(property instanceof DecimalProperty);
+                	assertEquals(10, ((DecimalProperty)property).getLength());
+                	assertEquals(2, ((DecimalProperty)property).getDecimals());
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1AnyController.class});
@@ -426,19 +426,19 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property = 
                 			controller.getProperty();
                 	
-                	Assert.assertTrue(property instanceof SetProperty);
-                	Assert.assertEquals("propName", property.getName());
+                	assertTrue(property instanceof SetProperty);
+                	assertEquals("propName", property.getName());
                 	
                 	List<String> props = ((SetProperty)property).getValues();
                 	
-                	Assert.assertNotNull(props);
-                	Assert.assertEquals(2, props.size());
-                	Assert.assertEquals("VALUE1", props.get(0));
-                	Assert.assertEquals("VALUE2", props.get(1));
+                	assertNotNull(props);
+                	assertEquals(2, props.size());
+                	assertEquals("VALUE1", props.get(0));
+                	assertEquals("VALUE2", props.get(1));
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test1AnyController.class});
@@ -485,25 +485,25 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			controller.property1;
 
-                	Assert.assertEquals("propName", property1.getName());
+                	assertEquals("propName", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof DecimalProperty);
-                	Assert.assertEquals(1, ((DecimalProperty)property1).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property1).getDecimals());
+                	assertTrue(property1 instanceof DecimalProperty);
+                	assertEquals(1, ((DecimalProperty)property1).getLength());
+                	assertEquals(2, ((DecimalProperty)property1).getDecimals());
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			controller.getProperty2();
 
-                	Assert.assertEquals("propName", property2.getName());
+                	assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
-                	Assert.assertEquals(3, ((DecimalProperty)property2).getLength());
-                	Assert.assertEquals(4, ((DecimalProperty)property2).getDecimals());
+                	assertTrue(property2 instanceof DecimalProperty);
+                	assertEquals(3, ((DecimalProperty)property2).getLength());
+                	assertEquals(4, ((DecimalProperty)property2).getDecimals());
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test2AnyController.class});
@@ -552,35 +552,35 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			controller.property1;
 
-                	Assert.assertEquals("propName", property1.getName());
+                	assertEquals("propName", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof SetProperty);
+                	assertTrue(property1 instanceof SetProperty);
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNotNull(props1);
-                	Assert.assertEquals(2, props1.size());
-                	Assert.assertEquals("VALUE1", props1.get(0));
-                	Assert.assertEquals("VALUE2", props1.get(1));
+                	assertNotNull(props1);
+                	assertEquals(2, props1.size());
+                	assertEquals("VALUE1", props1.get(0));
+                	assertEquals("VALUE2", props1.get(1));
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			controller.getProperty2();
 
-                	Assert.assertEquals("propName", property2.getName());
+                	assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof SetProperty);
+                	assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNotNull(props2);
-                	Assert.assertEquals(2, props2.size());
-                	Assert.assertEquals("VALUE3", props2.get(0));
-                	Assert.assertEquals("VALUE4", props2.get(1));
+                	assertNotNull(props2);
+                	assertEquals(2, props2.size());
+                	assertEquals("VALUE3", props2.get(0));
+                	assertEquals("VALUE4", props2.get(1));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test2AnyController.class});
@@ -627,25 +627,25 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			controller.property1;
 
-                	Assert.assertEquals("propName", property1.getName());
+                	assertEquals("propName", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof DecimalProperty);
-                	Assert.assertEquals(1, ((DecimalProperty)property1).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property1).getDecimals());
+                	assertTrue(property1 instanceof DecimalProperty);
+                	assertEquals(1, ((DecimalProperty)property1).getLength());
+                	assertEquals(2, ((DecimalProperty)property1).getDecimals());
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			controller.getProperty2();
 
-                	Assert.assertEquals("propName", property2.getName());
+                	assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
-                	Assert.assertEquals(3, ((DecimalProperty)property2).getLength());
-                	Assert.assertEquals(4, ((DecimalProperty)property2).getDecimals());
+                	assertTrue(property2 instanceof DecimalProperty);
+                	assertEquals(3, ((DecimalProperty)property2).getLength());
+                	assertEquals(4, ((DecimalProperty)property2).getDecimals());
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test3AnyController.class});
@@ -694,35 +694,35 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			controller.property1;
 
-                	Assert.assertEquals("propName", property1.getName());
+                	assertEquals("propName", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof SetProperty);
+                	assertTrue(property1 instanceof SetProperty);
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNotNull(props1);
-                	Assert.assertEquals(2, props1.size());
-                	Assert.assertEquals("VALUE1", props1.get(0));
-                	Assert.assertEquals("VALUE2", props1.get(1));
+                	assertNotNull(props1);
+                	assertEquals(2, props1.size());
+                	assertEquals("VALUE1", props1.get(0));
+                	assertEquals("VALUE2", props1.get(1));
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			controller.getProperty2();
 
-                	Assert.assertEquals("propName", property2.getName());
+                	assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof SetProperty);
+                	assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNotNull(props2);
-                	Assert.assertEquals(2, props2.size());
-                	Assert.assertEquals("VALUE3", props2.get(0));
-                	Assert.assertEquals("VALUE4", props2.get(1));
+                	assertNotNull(props2);
+                	assertEquals(2, props2.size());
+                	assertEquals("VALUE3", props2.get(0));
+                	assertEquals("VALUE4", props2.get(1));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test3AnyController.class});
@@ -769,25 +769,25 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			controller.property1;
 
-                	Assert.assertEquals("propName", property1.getName());
+                	assertEquals("propName", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof DecimalProperty);
-                	Assert.assertEquals(1, ((DecimalProperty)property1).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property1).getDecimals());
+                	assertTrue(property1 instanceof DecimalProperty);
+                	assertEquals(1, ((DecimalProperty)property1).getLength());
+                	assertEquals(2, ((DecimalProperty)property1).getDecimals());
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			controller.getProperty2();
 
-                	Assert.assertEquals("propName", property2.getName());
+                	assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
-                	Assert.assertEquals(3, ((DecimalProperty)property2).getLength());
-                	Assert.assertEquals(4, ((DecimalProperty)property2).getDecimals());
+                	assertTrue(property2 instanceof DecimalProperty);
+                	assertEquals(3, ((DecimalProperty)property2).getLength());
+                	assertEquals(4, ((DecimalProperty)property2).getDecimals());
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test4AnyController.class});
@@ -836,35 +836,35 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			controller.property1;
 
-                	Assert.assertEquals("propName", property1.getName());
+                	assertEquals("propName", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof SetProperty);
+                	assertTrue(property1 instanceof SetProperty);
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNotNull(props1);
-                	Assert.assertEquals(2, props1.size());
-                	Assert.assertEquals("VALUE1", props1.get(0));
-                	Assert.assertEquals("VALUE2", props1.get(1));
+                	assertNotNull(props1);
+                	assertEquals(2, props1.size());
+                	assertEquals("VALUE1", props1.get(0));
+                	assertEquals("VALUE2", props1.get(1));
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			controller.getProperty2();
 
-                	Assert.assertEquals("propName", property2.getName());
+                	assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof SetProperty);
+                	assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNotNull(props2);
-                	Assert.assertEquals(2, props2.size());
-                	Assert.assertEquals("VALUE3", props2.get(0));
-                	Assert.assertEquals("VALUE4", props2.get(1));
+                	assertNotNull(props2);
+                	assertEquals(2, props2.size());
+                	assertEquals("VALUE3", props2.get(0));
+                	assertEquals("VALUE4", props2.get(1));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test4AnyController.class});
@@ -911,25 +911,25 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			controller.property1;
 
-                	Assert.assertEquals("propName", property1.getName());
+                	assertEquals("propName", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof DecimalProperty);
-                	Assert.assertEquals(1, ((DecimalProperty)property1).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property1).getDecimals());
+                	assertTrue(property1 instanceof DecimalProperty);
+                	assertEquals(1, ((DecimalProperty)property1).getLength());
+                	assertEquals(2, ((DecimalProperty)property1).getDecimals());
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			controller.getProperty2();
 
-                	Assert.assertEquals("propName", property2.getName());
+                	assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
-                	Assert.assertEquals(3, ((DecimalProperty)property2).getLength());
-                	Assert.assertEquals(4, ((DecimalProperty)property2).getDecimals());
+                	assertTrue(property2 instanceof DecimalProperty);
+                	assertEquals(3, ((DecimalProperty)property2).getLength());
+                	assertEquals(4, ((DecimalProperty)property2).getDecimals());
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test5AnyController.class});
@@ -978,35 +978,35 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			controller.property1;
 
-                	Assert.assertEquals("propName", property1.getName());
+                	assertEquals("propName", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof SetProperty);
+                	assertTrue(property1 instanceof SetProperty);
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNotNull(props1);
-                	Assert.assertEquals(2, props1.size());
-                	Assert.assertEquals("VALUE1", props1.get(0));
-                	Assert.assertEquals("VALUE2", props1.get(1));
+                	assertNotNull(props1);
+                	assertEquals(2, props1.size());
+                	assertEquals("VALUE1", props1.get(0));
+                	assertEquals("VALUE2", props1.get(1));
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			controller.getProperty2();
 
-                	Assert.assertEquals("propName", property2.getName());
+                	assertEquals("propName", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof SetProperty);
+                	assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNotNull(props2);
-                	Assert.assertEquals(2, props2.size());
-                	Assert.assertEquals("VALUE3", props2.get(0));
-                	Assert.assertEquals("VALUE4", props2.get(1));
+                	assertNotNull(props2);
+                	assertEquals(2, props2.size());
+                	assertEquals("VALUE3", props2.get(0));
+                	assertEquals("VALUE4", props2.get(1));
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test5AnyController.class});
@@ -1060,34 +1060,34 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			bean.property1;
 
-                	Assert.assertEquals("propName1", property1.getName());
+                	assertEquals("propName1", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof DecimalProperty);
-                	Assert.assertEquals(1, ((DecimalProperty)property1).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property1).getDecimals());
+                	assertTrue(property1 instanceof DecimalProperty);
+                	assertEquals(1, ((DecimalProperty)property1).getLength());
+                	assertEquals(2, ((DecimalProperty)property1).getDecimals());
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			bean.getProperty2();
 
-                	Assert.assertEquals("propName2", property2.getName());
+                	assertEquals("propName2", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
-                	Assert.assertEquals(3, ((DecimalProperty)property2).getLength());
-                	Assert.assertEquals(4, ((DecimalProperty)property2).getDecimals());
+                	assertTrue(property2 instanceof DecimalProperty);
+                	assertEquals(3, ((DecimalProperty)property2).getLength());
+                	assertEquals(4, ((DecimalProperty)property2).getDecimals());
 
                 	org.brandao.brutos.helper.any.app1.Property property3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals("propName3", property3.getName());
+                	assertEquals("propName3", property3.getName());
                 	
-                	Assert.assertTrue(property3 instanceof DecimalProperty);
-                	Assert.assertEquals(5, ((DecimalProperty)property3).getLength());
-                	Assert.assertEquals(6, ((DecimalProperty)property3).getDecimals());
+                	assertTrue(property3 instanceof DecimalProperty);
+                	assertEquals(5, ((DecimalProperty)property3).getLength());
+                	assertEquals(6, ((DecimalProperty)property3).getDecimals());
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test6AnyController.class});
@@ -1144,49 +1144,49 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			bean.property1;
 
-                	Assert.assertEquals("propName1", property1.getName());
+                	assertEquals("propName1", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof SetProperty);
+                	assertTrue(property1 instanceof SetProperty);
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNotNull(props1);
-                	Assert.assertEquals(2, props1.size());
-                	Assert.assertEquals("VALUE1", props1.get(0));
-                	Assert.assertEquals("VALUE2", props1.get(1));
+                	assertNotNull(props1);
+                	assertEquals(2, props1.size());
+                	assertEquals("VALUE1", props1.get(0));
+                	assertEquals("VALUE2", props1.get(1));
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			bean.getProperty2();
 
-                	Assert.assertEquals("propName2", property2.getName());
+                	assertEquals("propName2", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof SetProperty);
+                	assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNotNull(props2);
-                	Assert.assertEquals(2, props2.size());
-                	Assert.assertEquals("VALUE3", props2.get(0));
-                	Assert.assertEquals("VALUE4", props2.get(1));                	
+                	assertNotNull(props2);
+                	assertEquals(2, props2.size());
+                	assertEquals("VALUE3", props2.get(0));
+                	assertEquals("VALUE4", props2.get(1));                	
 
                 	org.brandao.brutos.helper.any.app1.Property property3 = 
                 			bean.getProperty3();
 
-                	Assert.assertEquals("propName3", property3.getName());
+                	assertEquals("propName3", property3.getName());
                 	
-                	Assert.assertTrue(property3 instanceof SetProperty);
+                	assertTrue(property3 instanceof SetProperty);
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNotNull(props3);
-                	Assert.assertEquals(2, props3.size());
-                	Assert.assertEquals("VALUE5", props3.get(0));
-                	Assert.assertEquals("VALUE6", props3.get(1));                	
+                	assertNotNull(props3);
+                	assertEquals(2, props3.size());
+                	assertEquals("VALUE5", props3.get(0));
+                	assertEquals("VALUE6", props3.get(1));                	
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test6AnyController.class});
@@ -1240,34 +1240,34 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			bean.property1;
 
-                	Assert.assertEquals("propName1", property1.getName());
+                	assertEquals("propName1", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof DecimalProperty);
-                	Assert.assertEquals(1, ((DecimalProperty)property1).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property1).getDecimals());
+                	assertTrue(property1 instanceof DecimalProperty);
+                	assertEquals(1, ((DecimalProperty)property1).getLength());
+                	assertEquals(2, ((DecimalProperty)property1).getDecimals());
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			bean.getProperty2();
 
-                	Assert.assertEquals("propName2", property2.getName());
+                	assertEquals("propName2", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
-                	Assert.assertEquals(3, ((DecimalProperty)property2).getLength());
-                	Assert.assertEquals(4, ((DecimalProperty)property2).getDecimals());
+                	assertTrue(property2 instanceof DecimalProperty);
+                	assertEquals(3, ((DecimalProperty)property2).getLength());
+                	assertEquals(4, ((DecimalProperty)property2).getDecimals());
 
                 	org.brandao.brutos.helper.any.app1.Property property3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals("propName3", property3.getName());
+                	assertEquals("propName3", property3.getName());
                 	
-                	Assert.assertTrue(property3 instanceof DecimalProperty);
-                	Assert.assertEquals(5, ((DecimalProperty)property3).getLength());
-                	Assert.assertEquals(6, ((DecimalProperty)property3).getDecimals());
+                	assertTrue(property3 instanceof DecimalProperty);
+                	assertEquals(5, ((DecimalProperty)property3).getLength());
+                	assertEquals(6, ((DecimalProperty)property3).getDecimals());
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test7AnyController.class});
@@ -1324,49 +1324,49 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			bean.property1;
 
-                	Assert.assertEquals("propName1", property1.getName());
+                	assertEquals("propName1", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof SetProperty);
+                	assertTrue(property1 instanceof SetProperty);
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNotNull(props1);
-                	Assert.assertEquals(2, props1.size());
-                	Assert.assertEquals("VALUE1", props1.get(0));
-                	Assert.assertEquals("VALUE2", props1.get(1));
+                	assertNotNull(props1);
+                	assertEquals(2, props1.size());
+                	assertEquals("VALUE1", props1.get(0));
+                	assertEquals("VALUE2", props1.get(1));
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			bean.getProperty2();
 
-                	Assert.assertEquals("propName2", property2.getName());
+                	assertEquals("propName2", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof SetProperty);
+                	assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNotNull(props2);
-                	Assert.assertEquals(2, props2.size());
-                	Assert.assertEquals("VALUE3", props2.get(0));
-                	Assert.assertEquals("VALUE4", props2.get(1));                	
+                	assertNotNull(props2);
+                	assertEquals(2, props2.size());
+                	assertEquals("VALUE3", props2.get(0));
+                	assertEquals("VALUE4", props2.get(1));                	
 
                 	org.brandao.brutos.helper.any.app1.Property property3 = 
                 			bean.getProperty3();
 
-                	Assert.assertEquals("propName3", property3.getName());
+                	assertEquals("propName3", property3.getName());
                 	
-                	Assert.assertTrue(property3 instanceof SetProperty);
+                	assertTrue(property3 instanceof SetProperty);
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNotNull(props3);
-                	Assert.assertEquals(2, props3.size());
-                	Assert.assertEquals("VALUE5", props3.get(0));
-                	Assert.assertEquals("VALUE6", props3.get(1));                	
+                	assertNotNull(props3);
+                	assertEquals(2, props3.size());
+                	assertEquals("VALUE5", props3.get(0));
+                	assertEquals("VALUE6", props3.get(1));                	
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test7AnyController.class});
@@ -1420,34 +1420,34 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			bean.property1;
 
-                	Assert.assertEquals("propName1", property1.getName());
+                	assertEquals("propName1", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof DecimalProperty);
-                	Assert.assertEquals(1, ((DecimalProperty)property1).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property1).getDecimals());
+                	assertTrue(property1 instanceof DecimalProperty);
+                	assertEquals(1, ((DecimalProperty)property1).getLength());
+                	assertEquals(2, ((DecimalProperty)property1).getDecimals());
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			bean.getProperty2();
 
-                	Assert.assertEquals("propName2", property2.getName());
+                	assertEquals("propName2", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
-                	Assert.assertEquals(3, ((DecimalProperty)property2).getLength());
-                	Assert.assertEquals(4, ((DecimalProperty)property2).getDecimals());
+                	assertTrue(property2 instanceof DecimalProperty);
+                	assertEquals(3, ((DecimalProperty)property2).getLength());
+                	assertEquals(4, ((DecimalProperty)property2).getDecimals());
 
                 	org.brandao.brutos.helper.any.app1.Property property3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals("propName3", property3.getName());
+                	assertEquals("propName3", property3.getName());
                 	
-                	Assert.assertTrue(property3 instanceof DecimalProperty);
-                	Assert.assertEquals(5, ((DecimalProperty)property3).getLength());
-                	Assert.assertEquals(6, ((DecimalProperty)property3).getDecimals());
+                	assertTrue(property3 instanceof DecimalProperty);
+                	assertEquals(5, ((DecimalProperty)property3).getLength());
+                	assertEquals(6, ((DecimalProperty)property3).getDecimals());
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test8AnyController.class});
@@ -1504,49 +1504,49 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			bean.property1;
 
-                	Assert.assertEquals("propName1", property1.getName());
+                	assertEquals("propName1", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof SetProperty);
+                	assertTrue(property1 instanceof SetProperty);
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNotNull(props1);
-                	Assert.assertEquals(2, props1.size());
-                	Assert.assertEquals("VALUE1", props1.get(0));
-                	Assert.assertEquals("VALUE2", props1.get(1));
+                	assertNotNull(props1);
+                	assertEquals(2, props1.size());
+                	assertEquals("VALUE1", props1.get(0));
+                	assertEquals("VALUE2", props1.get(1));
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			bean.getProperty2();
 
-                	Assert.assertEquals("propName2", property2.getName());
+                	assertEquals("propName2", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof SetProperty);
+                	assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNotNull(props2);
-                	Assert.assertEquals(2, props2.size());
-                	Assert.assertEquals("VALUE3", props2.get(0));
-                	Assert.assertEquals("VALUE4", props2.get(1));                	
+                	assertNotNull(props2);
+                	assertEquals(2, props2.size());
+                	assertEquals("VALUE3", props2.get(0));
+                	assertEquals("VALUE4", props2.get(1));                	
 
                 	org.brandao.brutos.helper.any.app1.Property property3 = 
                 			bean.getProperty3();
 
-                	Assert.assertEquals("propName3", property3.getName());
+                	assertEquals("propName3", property3.getName());
                 	
-                	Assert.assertTrue(property3 instanceof SetProperty);
+                	assertTrue(property3 instanceof SetProperty);
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNotNull(props3);
-                	Assert.assertEquals(2, props3.size());
-                	Assert.assertEquals("VALUE5", props3.get(0));
-                	Assert.assertEquals("VALUE6", props3.get(1));                	
+                	assertNotNull(props3);
+                	assertEquals(2, props3.size());
+                	assertEquals("VALUE5", props3.get(0));
+                	assertEquals("VALUE6", props3.get(1));                	
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test8AnyController.class});
@@ -1600,34 +1600,34 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			bean.property1;
 
-                	Assert.assertEquals("propName1", property1.getName());
+                	assertEquals("propName1", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof DecimalProperty);
-                	Assert.assertEquals(1, ((DecimalProperty)property1).getLength());
-                	Assert.assertEquals(2, ((DecimalProperty)property1).getDecimals());
+                	assertTrue(property1 instanceof DecimalProperty);
+                	assertEquals(1, ((DecimalProperty)property1).getLength());
+                	assertEquals(2, ((DecimalProperty)property1).getDecimals());
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			bean.getProperty2();
 
-                	Assert.assertEquals("propName2", property2.getName());
+                	assertEquals("propName2", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof DecimalProperty);
-                	Assert.assertEquals(3, ((DecimalProperty)property2).getLength());
-                	Assert.assertEquals(4, ((DecimalProperty)property2).getDecimals());
+                	assertTrue(property2 instanceof DecimalProperty);
+                	assertEquals(3, ((DecimalProperty)property2).getLength());
+                	assertEquals(4, ((DecimalProperty)property2).getDecimals());
 
                 	org.brandao.brutos.helper.any.app1.Property property3 = 
                 			bean.getProperty3();
                 	
-                	Assert.assertEquals("propName3", property3.getName());
+                	assertEquals("propName3", property3.getName());
                 	
-                	Assert.assertTrue(property3 instanceof DecimalProperty);
-                	Assert.assertEquals(5, ((DecimalProperty)property3).getLength());
-                	Assert.assertEquals(6, ((DecimalProperty)property3).getDecimals());
+                	assertTrue(property3 instanceof DecimalProperty);
+                	assertEquals(5, ((DecimalProperty)property3).getLength());
+                	assertEquals(6, ((DecimalProperty)property3).getDecimals());
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test9AnyController.class});
@@ -1684,49 +1684,49 @@ public class AnyTest extends TestCase{
                 	org.brandao.brutos.helper.any.app1.Property property1 = 
                 			bean.property1;
 
-                	Assert.assertEquals("propName1", property1.getName());
+                	assertEquals("propName1", property1.getName());
                 	
-                	Assert.assertTrue(property1 instanceof SetProperty);
+                	assertTrue(property1 instanceof SetProperty);
                 	
                 	List<String> props1 = ((SetProperty)property1).getValues();
                 	
-                	Assert.assertNotNull(props1);
-                	Assert.assertEquals(2, props1.size());
-                	Assert.assertEquals("VALUE1", props1.get(0));
-                	Assert.assertEquals("VALUE2", props1.get(1));
+                	assertNotNull(props1);
+                	assertEquals(2, props1.size());
+                	assertEquals("VALUE1", props1.get(0));
+                	assertEquals("VALUE2", props1.get(1));
                 	
                 	org.brandao.brutos.helper.any.app1.Property property2 = 
                 			bean.getProperty2();
 
-                	Assert.assertEquals("propName2", property2.getName());
+                	assertEquals("propName2", property2.getName());
                 	
-                	Assert.assertTrue(property2 instanceof SetProperty);
+                	assertTrue(property2 instanceof SetProperty);
 
                 	List<String> props2 = ((SetProperty)property2).getValues();
                 	
-                	Assert.assertNotNull(props2);
-                	Assert.assertEquals(2, props2.size());
-                	Assert.assertEquals("VALUE3", props2.get(0));
-                	Assert.assertEquals("VALUE4", props2.get(1));                	
+                	assertNotNull(props2);
+                	assertEquals(2, props2.size());
+                	assertEquals("VALUE3", props2.get(0));
+                	assertEquals("VALUE4", props2.get(1));                	
 
                 	org.brandao.brutos.helper.any.app1.Property property3 = 
                 			bean.getProperty3();
 
-                	Assert.assertEquals("propName3", property3.getName());
+                	assertEquals("propName3", property3.getName());
                 	
-                	Assert.assertTrue(property3 instanceof SetProperty);
+                	assertTrue(property3 instanceof SetProperty);
 
                 	List<String> props3 = ((SetProperty)property3).getValues();
                 	
-                	Assert.assertNotNull(props3);
-                	Assert.assertEquals(2, props3.size());
-                	Assert.assertEquals("VALUE5", props3.get(0));
-                	Assert.assertEquals("VALUE6", props3.get(1));                	
+                	assertNotNull(props3);
+                	assertEquals(2, props3.size());
+                	assertEquals("VALUE5", props3.get(0));
+                	assertEquals("VALUE6", props3.get(1));                	
                 	
                 }
 
-                public void checkException(Throwable e) throws Throwable {
-                    throw e;
+                public void checkException(Throwable e)  {
+                    fail(e.toString());
                 }
             },
             new Class[]{Test9AnyController.class});
@@ -1794,77 +1794,77 @@ public class AnyTest extends TestCase{
 	            	org.brandao.brutos.helper.any.app1.Property property1 = 
 	            			bean.property1;
 	
-	            	Assert.assertEquals("propName1", property1.getName());
+	            	assertEquals("propName1", property1.getName());
 	            	
-	            	Assert.assertTrue(property1 instanceof SetProperty);
+	            	assertTrue(property1 instanceof SetProperty);
 	            	
 	            	List<String> props1 = ((SetProperty)property1).getValues();
 	            	
-	            	Assert.assertNotNull(props1);
-	            	Assert.assertEquals(2, props1.size());
-	            	Assert.assertEquals("VALUE1", props1.get(0));
-	            	Assert.assertEquals("VALUE2", props1.get(1));
+	            	assertNotNull(props1);
+	            	assertEquals(2, props1.size());
+	            	assertEquals("VALUE1", props1.get(0));
+	            	assertEquals("VALUE2", props1.get(1));
 	            	
 	            	org.brandao.brutos.helper.any.app1.Property property2 = 
 	            			bean.getProperty2();
 	
-	            	Assert.assertEquals("propName2", property2.getName());
+	            	assertEquals("propName2", property2.getName());
 	            	
-	            	Assert.assertTrue(property2 instanceof SetProperty);
+	            	assertTrue(property2 instanceof SetProperty);
 	
 	            	List<String> props2 = ((SetProperty)property2).getValues();
 	            	
-	            	Assert.assertNotNull(props2);
-	            	Assert.assertEquals(2, props2.size());
-	            	Assert.assertEquals("VALUE3", props2.get(0));
-	            	Assert.assertEquals("VALUE4", props2.get(1));                	
+	            	assertNotNull(props2);
+	            	assertEquals(2, props2.size());
+	            	assertEquals("VALUE3", props2.get(0));
+	            	assertEquals("VALUE4", props2.get(1));                	
 	
 	            	org.brandao.brutos.helper.any.app1.Property property3 = 
 	            			bean.getProperty3();
 	
-	            	Assert.assertEquals("propName3", property3.getName());
+	            	assertEquals("propName3", property3.getName());
 	            	
-	            	Assert.assertTrue(property3 instanceof SetProperty);
+	            	assertTrue(property3 instanceof SetProperty);
 	
 	            	List<String> props3 = ((SetProperty)property3).getValues();
 	            	
-	            	Assert.assertNotNull(props3);
-	            	Assert.assertEquals(2, props3.size());
-	            	Assert.assertEquals("VALUE5", props3.get(0));
-	            	Assert.assertEquals("VALUE6", props3.get(1));                	
+	            	assertNotNull(props3);
+	            	assertEquals(2, props3.size());
+	            	assertEquals("VALUE5", props3.get(0));
+	            	assertEquals("VALUE6", props3.get(1));                	
 
 	            	org.brandao.brutos.helper.any.app1.Property property4 = 
 	            			controller.property2;
 	
-	            	Assert.assertEquals("propName4", property4.getName());
+	            	assertEquals("propName4", property4.getName());
 	            	
-	            	Assert.assertTrue(property4 instanceof SetProperty);
+	            	assertTrue(property4 instanceof SetProperty);
 	
 	            	List<String> props4 = ((SetProperty)property4).getValues();
 	            	
-	            	Assert.assertNotNull(props4);
-	            	Assert.assertEquals(2, props4.size());
-	            	Assert.assertEquals("VALUE7", props4.get(0));
-	            	Assert.assertEquals("VALUE8", props4.get(1));                	
+	            	assertNotNull(props4);
+	            	assertEquals(2, props4.size());
+	            	assertEquals("VALUE7", props4.get(0));
+	            	assertEquals("VALUE8", props4.get(1));                	
 
 	            	org.brandao.brutos.helper.any.app1.Property property5 = 
 	            			controller.property3;
 	
-	            	Assert.assertEquals("propName5", property5.getName());
+	            	assertEquals("propName5", property5.getName());
 	            	
-	            	Assert.assertTrue(property5 instanceof SetProperty);
+	            	assertTrue(property5 instanceof SetProperty);
 	
 	            	List<String> props5 = ((SetProperty)property5).getValues();
 	            	
-	            	Assert.assertNotNull(props5);
-	            	Assert.assertEquals(2, props5.size());
-	            	Assert.assertEquals("VALUE9", props5.get(0));
-	            	Assert.assertEquals("VALUE10", props5.get(1));                	
+	            	assertNotNull(props5);
+	            	assertEquals(2, props5.size());
+	            	assertEquals("VALUE9", props5.get(0));
+	            	assertEquals("VALUE10", props5.get(1));                	
 	            	
 	            }
 	
-	            public void checkException(Throwable e) throws Throwable {
-	                throw e;
+	            public void checkException(Throwable e)  {
+	                fail(e.toString());
 	            }
 	        },
 	        new Class[]{Test10AnyController.class});
