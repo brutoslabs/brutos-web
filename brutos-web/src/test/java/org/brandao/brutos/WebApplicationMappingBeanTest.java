@@ -9,12 +9,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 
+import org.brandao.brutos.helper.any.app1.DecimalProperty;
+import org.brandao.brutos.helper.any.app1.Test1AnyController;
 import org.brandao.brutos.helper.controller.AbstractTester;
 import org.brandao.brutos.helper.controller.BeanTestConstructor9;
 import org.brandao.brutos.helper.controller.EnumTest;
@@ -24,8 +27,14 @@ import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.validator.ValidatorException;
+import org.brandao.brutos.web.ConfigurableWebApplicationContext;
+import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebScopeType;
 import org.brandao.brutos.web.XMLWebApplicationContext;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
+import org.brandao.brutos.web.test.MockXMLWebApplicationContext;
+import org.brandao.brutos.web.test.WebApplicationContextTester;
+import org.brandao.brutos.web.test.WebApplicationTester;
 
 
 public class WebApplicationMappingBeanTest extends AbstractTester implements Test{
@@ -40,6 +49,51 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
  
 
     public void testCollection8() throws Throwable{
+    	/*
+        WebApplicationContextTester.run(
+                "/", 
+                new BasicWebApplicationTester() {
+
+                    public void prepareContext(Map<String, String> parameters) {
+                        parameters.put(
+                                ContextLoader.CONTEXT_CLASS,
+                                MockXMLWebApplicationContext.class.getName()
+                        );
+
+                        parameters.put(
+                                MockXMLWebApplicationContext.contextConfigName,
+                                "classpath:org/brandao/brutos/xml/helper/bean/bean-test-collection8.xml"
+                        );
+                    }
+
+                    public void prepareSession(Map<String, String> parameters) {
+                    }
+                    
+                    public void prepareRequest(Map<String, String> parameters) {
+                    	parameters.put("element(0).arg", "1");
+                    	parameters.put("element(1).arg", "2");
+                    	parameters.put("element(2).arg", "3");
+                    }
+
+                    public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+                            ServletContext context, ConfigurableWebApplicationContext applicationContext) {
+                    	
+                    	SimpleController controller = (SimpleController)request.getAttribute("Controller");
+                    	
+                        List<SimpleBean> instance = (List<SimpleBean>) controller.getProperty();
+                        TestCase.assertEquals(3,instance.size());
+                        TestCase.assertEquals(1,instance.get(0).getArg2());
+                        TestCase.assertEquals(2,instance.get(1).getArg2());
+                        TestCase.assertEquals(3,instance.get(2).getArg2());
+                        
+                    }
+
+                    public void checkException(Throwable e)  {
+                        fail(e.toString());
+                    }
+                });
+                */
+    	
         super.execTest(
                 new HandlerTest(){
 

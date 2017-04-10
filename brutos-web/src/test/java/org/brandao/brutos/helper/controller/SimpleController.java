@@ -1,8 +1,5 @@
-
-
 package org.brandao.brutos.helper.controller;
 
-import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +10,8 @@ import org.brandao.brutos.ResultAction;
 
 public class SimpleController {
 
+	private Object property;
+	
     private String property1;
 
     private Integer property2;
@@ -20,7 +19,15 @@ public class SimpleController {
     public void simpleAction(){
     }
 
-    public void testProperty1(){
+    public Object getProperty() {
+		return property;
+	}
+
+	public void setProperty(Object property) {
+		this.property = property;
+	}
+
+	public void testProperty1(){
         TestCase.assertEquals("teste",this.property1);
     }
 
