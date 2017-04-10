@@ -24,7 +24,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpSessionEvent;
 
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
@@ -44,37 +43,51 @@ public class WebApplicationContextTester {
     
     public static void run(
             String uri, 
-            WebApplicationTester tester, String complement) throws Throwable{
+            WebApplicationTester tester, String complement){
         run(uri, tester, null, complement);
     }
     
     public static void run(
             String uri, 
-            WebApplicationTester tester,Class[] clazz) throws Throwable{
+            WebApplicationTester tester,Class<?>[] clazz){
         run(uri, tester, clazz, null);
     }
 
     public static void run(
             String uri, 
-            WebApplicationTester tester, String[] resources) throws Throwable{
-    	run(
+            WebApplicationTester tester, String[] resources){
+    	
+    	StringBuilder contextConfig = new StringBuilder();
+    	
+    	for(String r: resources){
+    		if(contextConfig.length() > 0){
+    			contextConfig.append(", ");
+    		}
+    		contextConfig.append(r);
+    	}
+    	
+    	Map<String,String> requestParams = new HashMap<String,String>();
+        Map<String,String> contextParams = new HashMap<String,String>();
+        Map<String,String> sessionParams = new HashMap<String,String>();
+        contextParams.put(MockXMLWebApplicationContext.contextConfigName, contextConfig.toString());
+        run(
             uri, 
             tester,
-            new HashMap<String,String>(),
-            new HashMap<String,String>(),
-            new HashMap<String,String>());    
+            contextParams,
+            sessionParams,
+            requestParams);    	
 	}
     
     public static void run(
             String uri, 
-            WebApplicationTester tester, Class[] clazz, String complement) throws Throwable{
+            WebApplicationTester tester, Class<?>[] clazz, String complement){
         run(uri, tester, clazz, complement, null, null);
     }
 
     public static void run(
             String uri, 
             WebApplicationTester tester,
-            Class basePackage) throws Throwable{
+            Class<?> basePackage){
         
             run(
                 uri, 
@@ -85,7 +98,7 @@ public class WebApplicationContextTester {
     public static void run(
             String uri, 
             WebApplicationTester tester,
-            Class[] clazz, String complement, Class[] types, Class basePackage) throws Throwable{
+            Class<?>[] clazz, String complement, Class<?>[] types, Class<?> basePackage){
         
         String xml = "";
         xml +="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
@@ -104,7 +117,7 @@ public class WebApplicationContextTester {
         if(clazz != null){
             xml +="<ns1:component-scan use-default-filters=\"false\">";
 
-            for(Class c: clazz){
+            for(Class<?> c: clazz){
                 xml +="        <ns1:include-filter type=\"regex\" expression=\""+c.getName().replace(".","\\.")+"\"/>";
             }
 
@@ -113,7 +126,7 @@ public class WebApplicationContextTester {
         
         if(types != null){
             xml += "<ns1:types>";
-            for(Class type: types){
+            for(Class<?> type: types){
                 xml += "<ns1:type factory=\"" + type.getName() + "\"/>";
             }
             xml += "</ns1:types>";
@@ -138,7 +151,7 @@ public class WebApplicationContextTester {
 
     public static void run(
             String uri, 
-            WebApplicationTester tester) throws Throwable{
+            WebApplicationTester tester){
         run(
             uri, 
             tester,
@@ -152,7 +165,7 @@ public class WebApplicationContextTester {
             WebApplicationTester tester,
             Map<String,String> contextParams,
             Map<String,String> sessionParams,
-            Map<String,String> requestParams) throws Throwable{
+            Map<String,String> requestParams){
         
         MockServletContext servletContext = new MockServletContext();
         ServletContextEvent sce = new ServletContextEvent( servletContext );
@@ -209,7 +222,7 @@ public class WebApplicationContextTester {
                 listener.sessionDestroyed(hse);
             }
         }
-        catch(BrutosException e){
+        catch(Throwable e){
             tester.checkException(e);
         }
         finally{

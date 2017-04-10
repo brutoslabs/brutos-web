@@ -309,7 +309,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
         catch(BrutosException e){
             if(!e.getMessage().matches(".*org\\.brandao\\.brutos\\.helper\\.controller\\.SimpleController\\.actionWithParam\\(\\s+java\\.lang\\.String\\s+\\).*")){
             	e.printStackTrace();
-                Assert.fail("expected BrutosException!");
+                fail("expected BrutosException!");
             }
         }
     }
@@ -356,7 +356,7 @@ public class WebApplicationControllerTest extends AbstractTester implements Test
         catch(BrutosException e){
             if(!e.getMessage().matches(".*org\\.brandao\\.brutos\\.helper\\.controller\\.SimpleController\\.actionWithParam\\(\\s+java\\.lang\\.String\\s+\\).*")){
             	e.printStackTrace();
-                Assert.fail("expected BrutosException!");
+                fail("expected BrutosException!");
             }
         }
         

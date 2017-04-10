@@ -35,7 +35,7 @@ public interface WebApplicationTester {
     
     void prepareSession(Map<String,String> parameters);
     
-    void checkException(Throwable e) throws Throwable;
+    void checkException(Throwable e);
     
     void checkResult(HttpServletRequest request, 
                 HttpServletResponse response, 

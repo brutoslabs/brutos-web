@@ -8,21 +8,31 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
+
 import org.brandao.brutos.helper.controller.AbstractTester;
 import org.brandao.brutos.helper.controller.BeanTestConstructor9;
 import org.brandao.brutos.helper.controller.EnumTest;
 import org.brandao.brutos.helper.controller.SimpleBean;
 import org.brandao.brutos.helper.controller.SimpleController;
+import org.brandao.brutos.io.ResourceLoader;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.validator.ValidatorException;
+import org.brandao.brutos.web.ConfigurableWebApplicationContext;
+import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebScopeType;
 import org.brandao.brutos.web.XMLWebApplicationContext;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
+import org.brandao.brutos.web.test.MockWebApplicationContext;
+import org.brandao.brutos.web.test.WebApplicationContextTester;
 
 
 public class WebApplicationMappingBeanTest extends AbstractTester implements Test{
@@ -36,34 +46,48 @@ public class WebApplicationMappingBeanTest extends AbstractTester implements Tes
     }
  
 
-    public void testCollection8(){
-        super.execTest(
-            new HandlerTest(){
+    public void testCollection8() throws Throwable{
+    	WebApplicationContextTester.run(
+    			"/",
+    			new BasicWebApplicationTester(){
+    				
+    				public void prepareContext(Map<String, String> parameters) {
+                        parameters.put(
+                                ContextLoader.CONTEXT_CLASS,
+                                MockWebApplicationContext.class.getName()
+                        );
+    				}
+    				
+    				public void checkException(Throwable e){
+    					e.printStackTrace();
+    					fail(e.toString());
+    				}
+    				
+    				public void checkResult(HttpServletRequest request,
+    						HttpServletResponse response, ServletContext context,
+    						ConfigurableWebApplicationContext app) {
+    					
+                        Controller controller =
+                                app.getControllerManager()
+                                    .getController(SimpleController.class);
 
-                public String getResourceName() {
-                    return
-                        "org/brandao/brutos/xml/helper/bean/bean-test-collection8.xml";
-                }
-
-                public void run(ConfigurableApplicationContext app,
-                        HttpServletRequest request, HttpServletResponse response) {
-
-                    Controller controller =
-                            app.getControllerManager()
-                                .getController(SimpleController.class);
-
-                    app.getScopes().get(WebScopeType.PARAM).put("element(0).arg", "1");
-                    app.getScopes().get(WebScopeType.PARAM).put("element(1).arg", "2");
-                    app.getScopes().get(WebScopeType.PARAM).put("element(2).arg", "3");
-                    Bean bean = controller.getBean("bean");
-                    List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
-                    TestCase.assertEquals(3,instance.size());
-                    TestCase.assertEquals(1,instance.get(0).getArg2());
-                    TestCase.assertEquals(2,instance.get(1).getArg2());
-                    TestCase.assertEquals(3,instance.get(2).getArg2());
-                }
-
-        });
+                        app.getScopes().get(WebScopeType.PARAM).put("element(0).arg", "1");
+                        app.getScopes().get(WebScopeType.PARAM).put("element(1).arg", "2");
+                        app.getScopes().get(WebScopeType.PARAM).put("element(2).arg", "3");
+                        Bean bean = controller.getBean("bean");
+                        List<SimpleBean> instance = (List<SimpleBean>) bean.getValue();
+                        TestCase.assertEquals(3,instance.size());
+                        TestCase.assertEquals(1,instance.get(0).getArg2());
+                        TestCase.assertEquals(2,instance.get(1).getArg2());
+                        TestCase.assertEquals(3,instance.get(2).getArg2());    					
+                        
+    				}
+    				
+    			},
+    			new String[]{
+    					ResourceLoader.CLASSPATH_URL_PREFIX + "org/brandao/brutos/xml/helper/bean/bean-test-collection8.xml"
+    			});
+    	
     }
 
     public void testCollection9(){

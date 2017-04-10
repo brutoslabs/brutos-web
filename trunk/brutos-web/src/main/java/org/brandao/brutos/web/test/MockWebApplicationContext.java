@@ -17,23 +17,44 @@
 
 package org.brandao.brutos.web.test;
 
-import org.brandao.brutos.web.ConfigurableWebApplicationContext;
-import org.brandao.brutos.web.WebApplicationContextWrapper;
+import java.util.Properties;
+
+import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.io.ByteArrayResource;
+import org.brandao.brutos.io.Resource;
+import org.brandao.brutos.test.MockObjectFactory;
+import org.brandao.brutos.test.MockRenderView;
+import org.brandao.brutos.validator.JSR303ValidatorFactory;
+import org.brandao.brutos.web.XMLWebApplicationContext;
 
 /**
  * 
  * @author Brandao
  */
-public class MockWebApplicationContext extends WebApplicationContextWrapper{
+public class MockWebApplicationContext 
+	extends XMLWebApplicationContext{
 
-    private static ConfigurableWebApplicationContext app;
+	@Override
+	protected void overrideConfig() {
+		Properties config = this.getConfiguration();
 
-    public MockWebApplicationContext(){
-        super( app );
-    }
+		if (config.get(BrutosConstants.RENDER_VIEW_CLASS) == null)
+			config.put(BrutosConstants.RENDER_VIEW_CLASS,
+					MockRenderView.class.getName());
 
-    public static void setCurrentApplicationContext( ConfigurableWebApplicationContext apps ){
-        app = apps;
-    }
+		if (config.get(BrutosConstants.INVOKER_CLASS) == null)
+			config.put(BrutosConstants.INVOKER_CLASS,
+					MockWebInvoker.class.getName());
 
+		if (config.get(BrutosConstants.OBJECT_FACTORY_CLASS) == null)
+			config.put(BrutosConstants.OBJECT_FACTORY_CLASS,
+					MockObjectFactory.class.getName());
+
+		if (config.get(BrutosConstants.VALIDATOR_FACTORY_CLASS) == null)
+			config.put(BrutosConstants.VALIDATOR_FACTORY_CLASS,
+					JSR303ValidatorFactory.class.getName());
+
+		super.overrideConfig();
+	}
+	
 }
