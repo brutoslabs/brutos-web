@@ -104,6 +104,7 @@
 					<source>1.5</source>
 					<target>1.5</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
+					<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -141,6 +142,7 @@
 			<groupId>org.brandao</groupId>
 			<artifactId>brutos-core</artifactId>
 			<version>2.0-rc2</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- JBRGates -->
 		<dependency>
@@ -159,6 +161,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- <additionalparam>-Xdoclint:none</additionalparam> -->
 	</properties>
 </project>
