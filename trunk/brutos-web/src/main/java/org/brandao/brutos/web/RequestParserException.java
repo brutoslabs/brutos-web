@@ -15,24 +15,38 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.web.http;
+package org.brandao.brutos.web;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.brandao.brutos.BrutosException;
 
 /**
  * 
- * @author Brandao
+ * @author Bradnao
+ *
  */
-public class ParameterList extends ArrayList<Object> {
+public class RequestParserException 
+	extends BrutosException{
 
-	private static final long serialVersionUID = 5007226933740473974L;
+	private static final long serialVersionUID = 1054696552486976300L;
 
-	public ParameterList() {
+	public RequestParserException() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public ParameterList(Collection<?> c) {
-		super(c);
+	public RequestParserException(String message, Throwable cause) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
 	}
+
+	public RequestParserException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+
+	public RequestParserException(Throwable cause) {
+		super(cause);
+		// TODO Auto-generated constructor stub
+	}
+
 }

@@ -17,32 +17,45 @@
 
 package org.brandao.brutos.web.http;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URLDecoder;
 import java.util.Map;
 import java.util.Properties;
-import javax.servlet.ServletInputStream;
+
 import javax.servlet.ServletRequest;
-import org.brandao.brutos.BrutosException;
-import org.brandao.jbrgates.JSONDecoder;
+
+import org.brandao.brutos.web.AbstractRequestParser;
+import org.brandao.brutos.web.ParserContentType;
+import org.brandao.brutos.web.RequestParserException;
+import org.brandao.brutos.web.parser.JsonParserContentType;
+import org.brandao.brutos.web.parser.MultipartFormDataParserContentType;
 
 /**
  * 
  * @author Brandao
  */
-public class HttpRequestParserImp implements HttpRequestParser{
+public class HttpRequestParserImp 
+	extends AbstractRequestParser
+	implements HttpRequestParser {
 
+	private ContentTypeParser contentTypeParser;
+	
+	public HttpRequestParserImp(){
+		this.contentTypeParser = new ContentTypeParser();
+		super.registryParser("application/json", 	new JsonParserContentType());
+		super.registryParser("multipart/form-data", new MultipartFormDataParserContentType());
+	}
+	
+    @Deprecated
     public boolean isMultipart(BrutosRequest request, 
             UploadListener uploadListener) throws IOException {
         return uploadListener.getUploadEvent().isMultipart();
     }
 
+    
+    @Deprecated
     public void parserMultipart(BrutosRequest request, Properties config,
             UploadListener uploadListener) throws IOException{
-
+    	/*
         Long maxLength =
             Long.parseLong(
                 config
@@ -67,36 +80,28 @@ public class HttpRequestParserImp implements HttpRequestParser{
         finally{
             uploadListener.uploadFinished();
         }
+        */
     }
-
-    public void parserContentType(BrutosRequest request, String contentType) 
-            throws IOException {
-        ServletRequest httpRequest = request.getServletRequest();
-        if( "application/json".equals( httpRequest.getContentType() ) ){
-            BufferedReader reader = httpRequest.getReader();
-            String line = null;
-            StringBuilder result = new StringBuilder();
-            while( (line = reader.readLine()) != null ){
-                result.append( line );
-            }
-            String json = URLDecoder.decode(result.toString(), "UTF-8");
-            JSONDecoder decoder = new JSONDecoder( json );
-            Map data = (Map) decoder.decode(Map.class);
-            if( data != null ){
-                for( Object o: data.keySet() ){
-                    request.setParameter(
-                        String.valueOf(o),
-                        String.valueOf(data.get(o)));
-                }
-            }
+    
+    
+    public void parserContentType(BrutosRequest request, 
+    		String contentType, Properties config,
+            UploadEvent uploadEvent) throws RequestParserException {
+        ServletRequest httpRequest           = request.getServletRequest();
+        ParserContentType parser             = super.parsers.get(httpRequest);
+        Map<String,String> contentTypeParams = this.contentTypeParser.parse(contentType);
+        
+        if(parser != null){
+        	parser.parserContentType(request, (MutableUploadEvent)uploadEvent, config, contentTypeParams);
         }
+        
     }
 
     public UploadEvent getUploadEvent(BrutosRequest request) {
-        return new DefaultUploadEvent( request );
+        return new MutableUploadEventImp();
     }
-
-    private class DefaultUploadEvent implements java.util.Enumeration, UploadEvent{
+/*
+    private class DefaultUploadEvent implements Enumeration<Input>, UploadEvent{
 
         private ServletRequest request;
         private byte[] buffer;
@@ -359,5 +364,6 @@ public class HttpRequestParserImp implements HttpRequestParser{
         }
 
     }
-
+*/
+    
 }

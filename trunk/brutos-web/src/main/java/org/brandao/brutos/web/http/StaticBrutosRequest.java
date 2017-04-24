@@ -48,7 +48,7 @@ public class StaticBrutosRequest extends BrutosRequestWrapper{
     private static BrutosRequest createBrutosRequest(WebApplicationContext app,
             ServletRequest servletRequest){
 
-        Class clazz = getBrutosRequestClass(app);
+        Class<?> clazz = getBrutosRequestClass(app);
 
         if(BrutosRequest.class.isAssignableFrom(clazz)){
             try{
@@ -68,7 +68,7 @@ public class StaticBrutosRequest extends BrutosRequestWrapper{
                     clazz.getName());
     }
 
-    private static Class getBrutosRequestClass(WebApplicationContext app){
+    private static Class<?> getBrutosRequestClass(WebApplicationContext app){
         String brutosRequestClassName =
                 app.getConfiguration().getProperty(
                     "org.brandao.brutos.web.request",
@@ -78,7 +78,7 @@ public class StaticBrutosRequest extends BrutosRequestWrapper{
         return getBrutosRequestClass(brutosRequestClassName);
     }
 
-    private static Class getBrutosRequestClass( String contextClassName ){
+    private static Class<?> getBrutosRequestClass( String contextClassName ){
         try {
             return Thread.currentThread().getContextClassLoader()
                     .loadClass(contextClassName);

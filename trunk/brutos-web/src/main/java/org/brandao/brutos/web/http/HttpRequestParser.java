@@ -20,20 +20,21 @@ package org.brandao.brutos.web.http;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.brandao.brutos.web.RequestParser;
+
 /**
  * 
  * @author Brandao
  */
-public interface HttpRequestParser {
+public interface HttpRequestParser extends RequestParser{
     
+	@Deprecated
     boolean isMultipart( BrutosRequest request, 
             UploadListener uploadListener ) throws IOException;
     
+	@Deprecated
     void parserMultipart( BrutosRequest request, Properties config,
             UploadListener uploadListener ) throws IOException;
-    
-    void parserContentType( BrutosRequest request, 
-            String contentType ) throws IOException;
     
     UploadEvent getUploadEvent( BrutosRequest request );
     

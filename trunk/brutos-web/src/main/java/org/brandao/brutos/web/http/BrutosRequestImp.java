@@ -38,14 +38,14 @@ import org.brandao.brutos.web.WebScopeType;
 public class BrutosRequestImp extends ServletRequestWrapper
         implements BrutosRequest{
 
-    private Map parameters;
+    private Map<String, List<Object>> parameters;
     private UploadListener uploadListener;
     private HttpRequestParser httpRequestParser;
     private WebApplicationContext context;
 
     public BrutosRequestImp( ServletRequest request ){
         super( request );
-        this.parameters = new HashMap();
+        this.parameters = new HashMap<String, List<Object>>();
         initialize();
     }
 
@@ -91,6 +91,11 @@ public class BrutosRequestImp extends ServletRequestWrapper
 
         UploadListener uploadListener = getUploadListener();
 
+        httpRequestParser.parserContentType(this, 
+        		this.getContentType(), context.getConfiguration(), 
+        		uploadListener.getUploadEvent());
+        
+        /*
         boolean isMultPart = httpRequestParser.isMultipart(this,uploadListener);
 
         if( isMultPart )
@@ -98,7 +103,7 @@ public class BrutosRequestImp extends ServletRequestWrapper
                     context.getConfiguration(), uploadListener);
         else
             httpRequestParser.parserContentType(this, this.getContentType());
-
+         */
     }
 
     public Object getObject(String name) {
@@ -109,7 +114,7 @@ public class BrutosRequestImp extends ServletRequestWrapper
     }
 
     private Object getParameter0( String value ){
-        List<Object> values = (List)parameters.get( value );
+        List<Object> values = parameters.get( value );
         return values.get( 0 );
     }
 
@@ -140,7 +145,7 @@ public class BrutosRequestImp extends ServletRequestWrapper
 
     public void setObject(String name, Object value) {
         if( value != null ){
-            List<Object> values = (List)parameters.get( name );
+            List<Object> values = parameters.get( name );
             if( values == null ){
                 values = new ParameterList();
                 parameters.put( name, values );

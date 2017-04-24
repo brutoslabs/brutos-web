@@ -19,13 +19,16 @@ package org.brandao.brutos.web;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.web.http.UploadStats;
 
 /**
  * 
@@ -50,7 +53,8 @@ public class ContextLoaderListener implements ServletContextListener,
 
     public void sessionCreated(HttpSessionEvent se) {
 
-        Map mappedUploadStats = new HashMap();
+        Map<String,UploadStats> mappedUploadStats = 
+        		new HashMap<String, UploadStats>();
 
         se.getSession()
             .setAttribute(

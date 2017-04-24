@@ -19,16 +19,19 @@ package org.brandao.brutos.web;
 
 import java.io.IOException;
 import java.util.Map;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+
 import org.brandao.brutos.*;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.web.http.StaticBrutosRequest;
 import org.brandao.brutos.web.http.UploadListener;
+import org.brandao.brutos.web.http.UploadStats;
 
 /**
  * 
@@ -84,17 +87,21 @@ public class WebInvoker extends Invoker{
        
     }
 
-    protected void invoke0(BrutosRequest brutosRequest, ServletRequest request,
+    @SuppressWarnings("unchecked")
+	protected void invoke0(BrutosRequest brutosRequest, ServletRequest request,
             ServletResponse response, FilterChain chain) 
                 throws IOException, ServletException{
         
-        Map mappedUploadStats = null;
-        String requestId      = brutosRequest.getRequestId();
+    	Map<String,UploadStats> mappedUploadStats = null;
+        String requestId                          = brutosRequest.getRequestId();
         
         try{
-            Scope scope             = this.applicationContext.getScopes().get(WebScopeType.SESSION);
-            mappedUploadStats       = (Map) scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
-            UploadListener listener = brutosRequest.getUploadListener();
+            Scope scope             = 
+            		this.applicationContext.getScopes().get(WebScopeType.SESSION);
+            mappedUploadStats       = 
+            		(Map<String,UploadStats>)scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
+            UploadListener listener = 
+            		brutosRequest.getUploadListener();
 
             if(mappedUploadStats != null)
                 mappedUploadStats.put( requestId, listener.getUploadStats() );
