@@ -17,22 +17,42 @@
 
 package org.brandao.brutos.web.http;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 /**
  * 
  * @author Brandao
+ *
  */
-public class ParameterList extends ArrayList<Object> {
+public class MutableUploadEventImp 
+	implements MutableUploadEvent{
 
-	private static final long serialVersionUID = 5007226933740473974L;
-
-	public ParameterList() {
-		super();
+	private long contentLength;
+	
+	private long bytesRead;
+	
+	private boolean multipart;
+	
+	public boolean isMultipart() {
+		return this.multipart;
 	}
 
-	public ParameterList(Collection<?> c) {
-		super(c);
+	public long getContentLength() {
+		return this.contentLength;
 	}
+
+	public long getBytesRead() {
+		return this.bytesRead;
+	}
+
+	public void setContentLength(long value) {
+		this.contentLength = value;
+	}
+
+	public void setBytesRead(long value) {
+		this.bytesRead = value;
+	}
+
+	public void addBytesRead(long value) {
+		this.bytesRead += value;
+	}
+
 }

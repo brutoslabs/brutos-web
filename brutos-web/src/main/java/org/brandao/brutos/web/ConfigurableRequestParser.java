@@ -15,24 +15,19 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.web.http;
-
-import java.util.ArrayList;
-import java.util.Collection;
+package org.brandao.brutos.web;
 
 /**
  * 
  * @author Brandao
+ *
  */
-public class ParameterList extends ArrayList<Object> {
+public interface ConfigurableRequestParser 
+	extends RequestParser{
 
-	private static final long serialVersionUID = 5007226933740473974L;
-
-	public ParameterList() {
-		super();
-	}
-
-	public ParameterList(Collection<?> c) {
-		super(c);
-	}
+	void registryParser(String contentType, 
+			ParserContentType parser) throws RequestParserException;
+	
+	void removeParser(String contentType) throws RequestParserException;
+	
 }

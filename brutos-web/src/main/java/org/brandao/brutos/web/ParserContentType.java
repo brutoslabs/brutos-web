@@ -15,24 +15,23 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.web.http;
+package org.brandao.brutos.web;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Map;
+import java.util.Properties;
+
+import org.brandao.brutos.web.http.BrutosRequest;
+import org.brandao.brutos.web.http.MutableUploadEvent;
 
 /**
  * 
  * @author Brandao
+ *
  */
-public class ParameterList extends ArrayList<Object> {
+public interface ParserContentType {
 
-	private static final long serialVersionUID = 5007226933740473974L;
-
-	public ParameterList() {
-		super();
-	}
-
-	public ParameterList(Collection<?> c) {
-		super(c);
-	}
+    void parserContentType(BrutosRequest request, 
+    		MutableUploadEvent uploadEvent, Properties config, 
+    		Map<String, String> params) throws RequestParserException;
+	
 }
