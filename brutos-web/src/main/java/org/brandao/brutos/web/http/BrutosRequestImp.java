@@ -91,9 +91,15 @@ public class BrutosRequestImp extends ServletRequestWrapper
 
         UploadListener uploadListener = getUploadListener();
 
-        httpRequestParser.parserContentType(this, 
-        		this.getContentType(), context.getConfiguration(), 
-        		uploadListener.getUploadEvent());
+        try{
+        	uploadListener.uploadStarted();
+	        httpRequestParser.parserContentType(this, 
+	        		this.getContentType(), context.getConfiguration(), 
+	        		uploadListener.getUploadEvent());
+        }
+        finally{
+        	uploadListener.uploadFinished();
+        }
         
         /*
         boolean isMultPart = httpRequestParser.isMultipart(this,uploadListener);
