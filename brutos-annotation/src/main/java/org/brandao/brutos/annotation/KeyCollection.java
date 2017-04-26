@@ -46,10 +46,10 @@ import org.brandao.brutos.BrutosConstants;
 public @interface KeyCollection {
 
 	/**
-	 * Nome da entidade. Se omitido, será <code>element</code>.
+	 * Nome da entidade.
 	 * 
 	 */
-	String bean() default "key";
+	String bean() default "";
 
 	/**
 	 * Escopo da entidade. Os escopos estão descritos em {@link ScopeType}

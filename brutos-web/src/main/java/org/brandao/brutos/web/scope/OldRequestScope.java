@@ -17,6 +17,8 @@
 
 package org.brandao.brutos.web.scope;
 
+import java.util.List;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
@@ -70,5 +72,10 @@ public class OldRequestScope implements Scope{
 
         return ((WebMvcRequest)request).getServletRequest();
     }
+
+	public List<String> getNamesStartsWith(String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

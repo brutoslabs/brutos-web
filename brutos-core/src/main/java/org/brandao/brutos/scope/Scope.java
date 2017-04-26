@@ -17,6 +17,8 @@
 
 package org.brandao.brutos.scope;
 
+import java.util.List;
+
 /**
  * 
  * @author Brandao
@@ -29,6 +31,8 @@ public interface Scope {
 
 	Object getCollection(String name);
 
+	List<String> getNamesStartsWith(String value);
+	
 	void remove(String name);
 
 }

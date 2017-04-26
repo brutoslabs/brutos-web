@@ -17,7 +17,12 @@
 
 package org.brandao.brutos.web.scope;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
 import javax.servlet.ServletContext;
+
 import org.brandao.brutos.scope.Scope;
 
 /**
@@ -47,5 +52,22 @@ public class ApplicationScope implements Scope{
     public void remove( String name ){
         context.removeAttribute(name);
     }
+
+	@SuppressWarnings("unchecked")
+	public List<String> getNamesStartsWith(String value) {
+		List<String> result = new ArrayList<String>();
+		
+		Enumeration<String> names = 
+				this.context.getAttributeNames();
+		
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			if(name.startsWith(value)){
+				result.add(name);
+			}
+		}
+		
+		return result;
+	}
 
 }

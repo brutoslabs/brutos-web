@@ -29,7 +29,7 @@ import org.brandao.brutos.web.RequestParserException;
  */
 public class ContentTypeParser {
 
-	private static final String TYPE_FIELD = "type";
+	public static final String TYPE_FIELD = "type";
 	
 	public Map<String,String> parse(String value) throws RequestParserException{
 	

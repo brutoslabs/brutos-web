@@ -1,5 +1,7 @@
 package org.brandao.brutos.annotation.helper.extendedscope.app1;
 
+import java.util.List;
+
 import org.brandao.brutos.scope.Scope;
 
 public class CScope 
@@ -23,6 +25,11 @@ public class CScope
 	public void remove(String name) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public List<String> getNamesStartsWith(String value) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

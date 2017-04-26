@@ -144,7 +144,7 @@ public abstract class DependencyBean {
 		return getValue(prefix, index, exceptionHandler, source, null);
 	}
 
-	public Object getValue(String prefix, long index,
+	public Object getValue(String prefix, long index, 
 			ValidatorException exceptionHandler, Object source, Object value) {
 
 		try {
@@ -159,7 +159,7 @@ public abstract class DependencyBean {
 
 	}
 
-	private Object getValue0(String prefix, long index,
+	private Object getValue0(String prefix, long index, 
 			ValidatorException exceptionHandler, Object source, Object value) {
 
 		Object result;
@@ -171,15 +171,20 @@ public abstract class DependencyBean {
 				throw new BrutosException("mapping not found: " + mapping);
 
 			String newPrefix = null;
+			
 			if (parent.isHierarchy()) {
 				String parameter = getParameterName();
-				if (parameter != null)
+				
+				if (parameter != null){
 					newPrefix = parameter == null ? "" : parameter;
+				}
 			}
 
 			if (newPrefix != null) {
-				newPrefix += index < 0 ? "" : parent.getIndexFormat().replace(
-						"$index", String.valueOf(index));
+				newPrefix += 
+						index < 0 ? "" : 
+						parent.getIndexFormat().replace("$index", String.valueOf(index));
+				
 				newPrefix += parent.getSeparator();
 			}
 
@@ -192,27 +197,37 @@ public abstract class DependencyBean {
 
 			result = dependencyBean.getValue(value, newPrefix, -1,
 					exceptionHandler, false);
-		} else if (this.metaBean == null) {
-			if (isStatic())
+		}
+		else
+		if (this.metaBean == null) {
+			if (isStatic()){
 				result = getValue();
+			}
+			else
+			if(this.isNullable()){
+				result = null;
+			}
 			else {
 				String pre = prefix != null ? prefix : "";
-				String param = getParameterName();
-				String idx = index < 0 ? "" : parent.getIndexFormat().replace(
-						"$index", String.valueOf(index));
+				String param = this.getParameterName() == null? "" : this.getParameterName();
+				String idx = 
+						index < 0 ? "" : 
+						parent.getIndexFormat().replace("$index", String.valueOf(index));
 				String key = pre + param + idx;
 
 				result = getScope().get(key);
-
+				result = type.convert(result);
 			}
 
-			result = isNullable() ? null : type.convert(result);
-		} else {
-			String pre = prefix != null ? prefix : "";
-			String param = getParameterName();
-			String idx = index < 0 ? "" : parent.getIndexFormat().replace(
-					"$index", String.valueOf(index));
-			String key = pre + param + idx + parent.getSeparator();
+			//result = isNullable() ? null : type.convert(result);
+		}
+		else {
+			String pre   = prefix != null ? prefix : "";
+			String param = this.getParameterName() == null? "" : this.getParameterName();
+			String idx   = 
+					index < 0 ? "" : 
+					parent.getIndexFormat().replace("$index", String.valueOf(index));
+			String key   = pre + param + idx + parent.getSeparator();
 
 			result = this.metaBean.getValue(key);
 			result = type.convert(result);
@@ -233,6 +248,10 @@ public abstract class DependencyBean {
 		return result;
 	}
 
+	public Object convert(Object value){
+		return this.type.convert(value);
+	}
+	
 	protected abstract void validate(Object source, Object value);
 
 	public boolean isNullable() {

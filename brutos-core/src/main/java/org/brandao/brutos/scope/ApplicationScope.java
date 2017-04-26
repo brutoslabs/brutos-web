@@ -17,8 +17,10 @@
 
 package org.brandao.brutos.scope;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 
@@ -26,7 +28,8 @@ import java.util.Map;
  */
 public class ApplicationScope implements Scope {
 
-	private Map values = new HashMap();
+	private ConcurrentMap<String, Object> values = 
+			new ConcurrentHashMap<String, Object>();
 
 	public void put(String name, Object value) {
 		values.put(name, value);
@@ -42,6 +45,16 @@ public class ApplicationScope implements Scope {
 
 	public void remove(String name) {
 		values.remove(name);
+	}
+
+	public List<String> getNamesStartsWith(String value) {
+		List<String> result = new ArrayList<String>();
+		for(String k: this.values.keySet()){
+			if(k.startsWith(value)){
+				result.add(k);
+			}
+		}
+		return result;
 	}
 
 }

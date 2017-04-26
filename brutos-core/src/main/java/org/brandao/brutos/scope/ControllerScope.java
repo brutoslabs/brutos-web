@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.scope;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.Controller;
@@ -46,4 +50,19 @@ public class ControllerScope implements Scope {
 	public void remove(String name) {
 	}
 
+	public List<String> getNamesStartsWith(String value) {
+		Controller controller = Invoker.getInstance().getStackRequestElement()
+				.getController();
+
+		Map<String, Bean> values = controller.getBeans();
+		
+		List<String> result = new ArrayList<String>();
+		for(String k: values.keySet()){
+			if(k.startsWith(value)){
+				result.add(k);
+			}
+		}
+		return result;
+	}
+	
 }

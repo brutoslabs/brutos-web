@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.web.scope;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
 import javax.servlet.ServletRequest;
 
 import org.brandao.brutos.scope.Scope;
@@ -63,4 +67,24 @@ public class ParamScope implements Scope{
         //ServletRequest request = ContextLoaderListener.currentRequest.get();
         //request.removeAttribute(name);
     }
+
+	@SuppressWarnings("unchecked")
+	public List<String> getNamesStartsWith(String value) {
+		BrutosRequest request =
+                (BrutosRequest)getServletRequest();
+		
+		List<String> result = new ArrayList<String>();
+		
+		Enumeration<String> names = 
+				request.getParameterNames();
+		
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			if(name.startsWith(value)){
+				result.add(name);
+			}
+		}
+		
+		return result;
+	}
 }

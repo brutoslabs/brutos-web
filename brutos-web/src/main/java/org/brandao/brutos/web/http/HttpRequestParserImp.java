@@ -87,9 +87,12 @@ public class HttpRequestParserImp
     public void parserContentType(BrutosRequest request, 
     		String contentType, Properties config,
             UploadEvent uploadEvent) throws RequestParserException {
-        ServletRequest httpRequest           = request.getServletRequest();
-        ParserContentType parser             = super.parsers.get(httpRequest);
         Map<String,String> contentTypeParams = this.contentTypeParser.parse(contentType);
+        String type                          = 
+        		contentTypeParams == null? 
+        				null : 
+    					contentTypeParams.get(ContentTypeParser.TYPE_FIELD);
+        ParserContentType parser             = super.parsers.get(type);
         
         if(parser != null){
         	parser.parserContentType(request, (MutableUploadEvent)uploadEvent, config, contentTypeParams);

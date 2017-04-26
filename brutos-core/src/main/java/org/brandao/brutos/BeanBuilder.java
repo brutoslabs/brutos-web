@@ -183,7 +183,7 @@ public class BeanBuilder {
 			Object value, boolean generic, Type typeDef, Object type) {
 
 		name = StringUtil.adjust(name);
-		name = StringUtil.isEmpty(name) ? "key" : name;
+		//name = StringUtil.isEmpty(name) ? "key" : name;
 
 		if (type == null && mapping == null)
 			throw new MappingException("unknown key type");
@@ -308,7 +308,7 @@ public class BeanBuilder {
 			Object type) {
 
 		name = StringUtil.adjust(name);
-		name = StringUtil.isEmpty(name) ? "element" : name;
+		//name = StringUtil.isEmpty(name) ? "element" : name;
 
 		if (type == null && mapping == null)
 			throw new MappingException("unknown element type");

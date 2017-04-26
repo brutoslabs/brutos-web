@@ -17,6 +17,9 @@
 
 package org.brandao.brutos.scope;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.Invoker;
 
@@ -26,6 +29,9 @@ import org.brandao.brutos.Invoker;
  */
 public class IOCScope implements Scope {
 
+	private static final List<String> emptyList = 
+			Collections.emptyList();
+	
 	public IOCScope() {
 	}
 
@@ -44,4 +50,8 @@ public class IOCScope implements Scope {
 	public void remove(String name) {
 	}
 
+	public List<String> getNamesStartsWith(String value) {
+		return emptyList;
+	}
+	
 }
