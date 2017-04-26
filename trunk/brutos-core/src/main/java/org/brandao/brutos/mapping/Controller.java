@@ -88,18 +88,18 @@ public class Controller {
 	private BeanInstance beanInstance;
 
 	public Controller(ConfigurableApplicationContext context) {
-		this.fields = new ArrayList<PropertyController>();
-		this.mappingBeans = new LinkedHashMap<String, Bean>();
-		this.actions = new LinkedHashMap<String, Action>();
-		this.interceptorStack = new ArrayList<Interceptor>();
-		this.alias = new ArrayList<String>();
-		this.reverseMethods = new LinkedHashMap<ReverseActionKey, List<Action>>();
-		this.throwsSafe = new LinkedHashMap<Class<?>, ThrowableSafeData>();
+		this.fields 			= new ArrayList<PropertyController>();
+		this.mappingBeans 		= new LinkedHashMap<String, Bean>();
+		this.actions 			= new LinkedHashMap<String, Action>();
+		this.interceptorStack 	= new ArrayList<Interceptor>();
+		this.alias 				= new ArrayList<String>();
+		this.reverseMethods 	= new LinkedHashMap<ReverseActionKey, List<Action>>();
+		this.throwsSafe 		= new LinkedHashMap<Class<?>, ThrowableSafeData>();
 		this.interceptorProcess = new InterceptorProcess();
-		this.scope = ScopeType.PARAM;
-		this.redirect = false;
-		this.actionType = ActionType.PARAMETER;
-		this.context = context;
+		this.scope 				= ScopeType.PARAM;
+		this.redirect 			= false;
+		this.actionType 		= ActionType.PARAMETER;
+		this.context 			= context;
 		this.interceptorProcess.setForm(this);
 	}
 

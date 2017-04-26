@@ -71,12 +71,16 @@ public class CollectionBean extends Bean {
 			ValidatorException vex = new ValidatorException();
 
 			instance = getInstance(instance, prefix, otherIndex, vex, force);
-			Collection collectionBean = (Collection) instance;
+			Collection<Object> collectionBean = (Collection<Object>) instance;
 
 			long index = 0;
 			Object beanInstance;
 
-			while ((beanInstance = get(prefix, index, vex)) != null) {
+			if(this.collection.getParameterName() == null){
+				prefix = prefix.substring(0, prefix.length() - 1);
+			}
+					
+			while ((beanInstance = this.collection.getValue(prefix, index, vex, null, null)) != null) {
 				collectionBean.add(beanInstance);
 				index++;
 			}
