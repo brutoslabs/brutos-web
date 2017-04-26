@@ -30,6 +30,11 @@ public interface ScopeType {
 	public static final String REQUEST = "request";
 
 	/**
+	 * O contexto é o caebçalho de uma solicitação.
+	 */
+	public static final String HEADER = "header";
+	
+	/**
 	 * O contexto são os parâmetros da requisição.
 	 */
 	public static final String PARAM = "param";
