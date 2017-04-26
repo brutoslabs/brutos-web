@@ -19,7 +19,9 @@ package org.brandao.brutos.web;
 
 import java.io.Serializable;
 import java.util.Properties;
+
 import javax.servlet.ServletContext;
+
 import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.web.io.ServletContextResource;
@@ -34,6 +36,7 @@ import org.brandao.brutos.web.http.JSPRenderView;
 import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
+import org.brandao.brutos.web.scope.HeaderScope;
 import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
@@ -149,6 +152,8 @@ public abstract class AbstractWebApplicationContext
                 new SessionScope() );
         getScopes().register( WebScopeType.PARAM.toString(),
                 new ParamScope() );
+        getScopes().register( WebScopeType.HEADER.toString(),
+                new HeaderScope());
     }
     
     protected void overrideConfig(){
