@@ -206,9 +206,6 @@ public class WebApplicationContextTester {
                 for(String key: requestParams.keySet())
                     request.setupAddParameter(key, requestParams.get(key));
                 
-                request.setBodyContent(requestParams.get("body"));
-                request.setContentType(requestParams.get("content-type"));
-                
                 MockServletConfig config = new MockServletConfig();
                 config.setServletContext(servletContext);
                 servlet.init(config);
