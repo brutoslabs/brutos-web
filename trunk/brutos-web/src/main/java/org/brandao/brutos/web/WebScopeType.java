@@ -26,11 +26,13 @@ import org.brandao.brutos.ScopeType;
 public class WebScopeType extends ScopeType{
 
     public static final WebScopeType APPLICATION = new WebScopeType( "application" );
+    public static final WebScopeType HEADER      = new WebScopeType( "header" );
     public static final WebScopeType SESSION     = new WebScopeType( "session" );
     public static final WebScopeType FLASH       = new WebScopeType( "flash" );
 
     static{
         defaultScopes.put( APPLICATION.toString(),  APPLICATION );
+        defaultScopes.put( HEADER.toString(),       HEADER );
         defaultScopes.put( SESSION.toString(),      SESSION );
         defaultScopes.put( FLASH.toString(),        FLASH );
     }

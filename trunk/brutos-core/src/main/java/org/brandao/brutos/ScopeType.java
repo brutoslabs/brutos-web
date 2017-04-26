@@ -33,14 +33,14 @@ public class ScopeType {
 	public static final ScopeType IOC = new ScopeType("ioc");
 	public static final ScopeType CONTROLLER = new ScopeType("controller");
 
-	protected final static Map defaultScopes = new HashMap();
+	protected final static Map<String,ScopeType> defaultScopes = new HashMap<String,ScopeType>();
 
 	static {
-		defaultScopes.put(REQUEST.toString(), REQUEST);
-		defaultScopes.put(THREAD.toString(), THREAD);
-		defaultScopes.put(PARAM.toString(), PARAM);
-		defaultScopes.put(SINGLETON.toString(), SINGLETON);
-		defaultScopes.put(IOC.toString(), IOC);
+		defaultScopes.put(REQUEST.toString(),    REQUEST);
+		defaultScopes.put(THREAD.toString(),     THREAD);
+		defaultScopes.put(PARAM.toString(),      PARAM);
+		defaultScopes.put(SINGLETON.toString(),  SINGLETON);
+		defaultScopes.put(IOC.toString(),        IOC);
 		defaultScopes.put(CONTROLLER.toString(), CONTROLLER);
 	}
 
