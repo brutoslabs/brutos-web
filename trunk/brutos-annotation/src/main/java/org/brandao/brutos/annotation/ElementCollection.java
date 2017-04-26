@@ -57,10 +57,10 @@ import org.brandao.brutos.BrutosConstants;
 public @interface ElementCollection {
 
 	/**
-	 * Nome da entidade. Se omitido, será <code>element</code>.
+	 * Nome da entidade.
 	 * 
 	 */
-	String bean() default "element";
+	String bean() default "";
 
 	/**
 	 * Escopo da entidade. Os escopos estão descritos em {@link ScopeType}

@@ -17,8 +17,10 @@
 
 package org.brandao.brutos.scope;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 
@@ -26,14 +28,11 @@ import java.util.Map;
  */
 public class SingletonScope implements Scope {
 
-	private static final Map values;
-
-	static {
-		values = new HashMap();
-	}
+	private static final ConcurrentMap<String, Object> values =
+			new ConcurrentHashMap<String, Object>();
 
 	public void put(String name, Object value) {
-		values.put(name, value);
+		values.putIfAbsent(name, value);
 	}
 
 	public Object get(String name) {
@@ -46,6 +45,16 @@ public class SingletonScope implements Scope {
 
 	public void remove(String name) {
 		values.remove(name);
+	}
+
+	public List<String> getNamesStartsWith(String value) {
+		List<String> result = new ArrayList<String>();
+		for(String k: values.keySet()){
+			if(k.startsWith(value)){
+				result.add(k);
+			}
+		}
+		return result;
 	}
 
 }

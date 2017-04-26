@@ -17,6 +17,10 @@
 
 package org.brandao.brutos.web.scope;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -60,5 +64,25 @@ public class SessionScope implements Scope{
         return requestInfo.getRequest();
         
     }
+
+	@SuppressWarnings("unchecked")
+	public List<String> getNamesStartsWith(String value) {
+        ServletRequest request = getServletRequest();
+        HttpSession session = ((HttpServletRequest)request).getSession();
+        
+		List<String> result = new ArrayList<String>();
+		
+		Enumeration<String> names = 
+				session.getAttributeNames();
+		
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			if(name.startsWith(value)){
+				result.add(name);
+			}
+		}
+		
+		return result;
+	}
 
 }

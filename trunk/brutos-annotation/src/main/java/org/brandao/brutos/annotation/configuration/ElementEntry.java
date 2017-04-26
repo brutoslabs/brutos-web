@@ -93,7 +93,7 @@ public class ElementEntry implements BeanEntry {
 	}
 
 	public String getName() {
-		return this.name == null ? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
+		return /*this.name == null ? BrutosConstants.DEFAULT_ELEMENT_NAME :*/ name;
 	}
 
 	public void setName(String name) {

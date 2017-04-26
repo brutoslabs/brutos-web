@@ -17,8 +17,10 @@
 
 package org.brandao.brutos.test;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
 import org.brandao.brutos.scope.Scope;
 
 /**
@@ -47,6 +49,10 @@ public class MockScope implements Scope {
 
 	public void remove(String name) {
 		this.values.remove(name);
+	}
+
+	public List<String> getNamesStartsWith(String value) {
+		return null;
 	}
 
 }

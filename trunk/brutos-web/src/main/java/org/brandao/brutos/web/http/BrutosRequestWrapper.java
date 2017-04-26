@@ -18,7 +18,9 @@
 package org.brandao.brutos.web.http;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -88,4 +90,9 @@ public class BrutosRequestWrapper extends HttpServletRequestWrapper implements B
         return request.getRequestId();
     }
 
+    @SuppressWarnings("rawtypes")
+	public Enumeration getParameterNames(){
+    	return this.request.getParameterNames();
+    }
+    
 }

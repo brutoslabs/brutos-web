@@ -127,6 +127,10 @@ public class Controller {
 		return (Bean) mappingBeans.get(name);
 	}
 
+	public Map<String, Bean> getBeans() {
+		return this.mappingBeans;
+	}
+	
 	public void addBean(String name, Bean bean) {
 		mappingBeans.put(name, bean);
 	}

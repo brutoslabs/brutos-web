@@ -17,8 +17,11 @@
 
 package org.brandao.brutos.web.scope;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ContextLoader;
@@ -78,6 +81,19 @@ public class FlashScope implements Scope{
         instrument.remove( name );
     }
 
+	public List<String> getNamesStartsWith(String value) {
+        WebApplicationContext context =
+                ContextLoader.getCurrentWebApplicationContext();
+        //ServletRequest request = ContextLoaderListener.currentRequest.get();
+
+        Scope session = context.getScopes().get(WebScopeType.SESSION);
+
+        FlashInstrument instrument =
+                getInstrument( session );
+        
+        return instrument.getNamesStartsWith(value);
+	}
+    
     private FlashInstrument getInstrument( Scope session){
         if( session.get( BrutosConstants.FLASH_INSTRUMENT ) == null ){
             FlashInstrument instrument = create();
@@ -95,10 +111,10 @@ public class FlashScope implements Scope{
 
     class FlashInstrument implements Scope{
 
-        private final Map<String,Object> data;
+        private final ConcurrentMap<String,Object> data;
 
         public FlashInstrument() {
-            this.data = new HashMap<String,Object>();
+            this.data = new ConcurrentHashMap<String, Object>();
         }
 
         public void put(String name, Object value) {
@@ -121,6 +137,18 @@ public class FlashScope implements Scope{
         public void remove( String name ){
             data.remove(name);
         }
+
+    	public List<String> getNamesStartsWith(String value) {
+    		List<String> result = new ArrayList<String>();
+    		for(String k: data.keySet()){
+    			if(k.startsWith(value)){
+    				result.add(k);
+    			}
+    		}
+    		return result;
+    	}
+        
     }
+
 }
 

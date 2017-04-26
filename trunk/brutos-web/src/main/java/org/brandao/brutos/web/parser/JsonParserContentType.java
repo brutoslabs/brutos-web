@@ -46,9 +46,10 @@ public class JsonParserContentType implements ParserContentType{
 			
 	        JSONDecoder decoder = new JSONDecoder(stream);
 	        
-	        Map<String, Object> data = (Map<String, Object>) decoder.decode(Map.class);
+	        Map<String, Object> data = (Map<String, Object>)decoder.decode();
+	        
 	        if( data != null ){
-	        	addData(request, null, data);
+	        	addValues(request, null, data);
 	        }
 		}
 		catch(Throwable e){
@@ -57,7 +58,7 @@ public class JsonParserContentType implements ParserContentType{
 		
 	}
 	
-	private void addData(BrutosRequest request, String prefix, Map<String, Object> data){
+	private void addValues(BrutosRequest request, String prefix, Map<String, Object> data){
 		for(String fieldName: data.keySet()){
 			
 			String fullFieldName = 
@@ -66,22 +67,25 @@ public class JsonParserContentType implements ParserContentType{
 							prefix + "." + fieldName;
 			
 			Object value = data.get(fieldName);
-			if(value instanceof Map){
-				addData(request, fullFieldName, (Map<String, Object>)value);
-			}
-			else
-			if(value instanceof List){
-				List<Map<String, Object>> list = (List<Map<String, Object>>)value;
-				int index = 0;
-				for(Map<String, Object> i: list){
-					addData(request, fullFieldName + "[" + index++ + "]", i);
-				}
-			}
-			else
-			if(value != null){
-				request.setParameter(fullFieldName, String.valueOf(value));
-			}
+			this.addValue(request, fullFieldName, value);
 		}
 	}
 
+	private void addValue(BrutosRequest request, String fullFieldName, Object value){
+		if(value instanceof Map){
+			addValues(request, fullFieldName, (Map<String, Object>)value);
+		}
+		else
+		if(value instanceof List){
+			List<Object> list = (List<Object>)value;
+			int index = 0;
+			for(Object i: list){
+				addValue(request, fullFieldName + ".element" + "[" + index++ + "]", i);
+			}
+		}
+		else
+		if(value != null){
+			request.setParameter(fullFieldName, String.valueOf(value));
+		}
+	}
 }

@@ -19,12 +19,18 @@ package org.brandao.brutos.web.http;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
+
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ContextLoader;
@@ -39,13 +45,19 @@ public class BrutosRequestImp extends ServletRequestWrapper
         implements BrutosRequest{
 
     private Map<String, List<Object>> parameters;
+    
     private UploadListener uploadListener;
+    
     private HttpRequestParser httpRequestParser;
+    
     private WebApplicationContext context;
 
+    private Set<String> parameterNames;
+    
     public BrutosRequestImp( ServletRequest request ){
         super( request );
-        this.parameters = new HashMap<String, List<Object>>();
+        this.parameters     = new HashMap<String, List<Object>>();
+        this.parameterNames = new HashSet<String>();
         initialize();
     }
 
@@ -92,6 +104,13 @@ public class BrutosRequestImp extends ServletRequestWrapper
         UploadListener uploadListener = getUploadListener();
 
         try{
+        	Enumeration paramNames = super.getParameterNames();
+        
+        	while(paramNames.hasMoreElements()){
+        		String paramName = (String)paramNames.nextElement();
+        		this.parameterNames.add(paramName);
+        	}
+        
         	uploadListener.uploadStarted();
 	        httpRequestParser.parserContentType(this, 
 	        		this.getContentType(), context.getConfiguration(), 
@@ -112,6 +131,10 @@ public class BrutosRequestImp extends ServletRequestWrapper
          */
     }
 
+    public Enumeration getParameterNames(){
+    	return Collections.enumeration(this.parameterNames);
+    }
+    
     public Object getObject(String name) {
         if( parameters.containsKey( name ) )
             return getParameter0( name );
@@ -153,6 +176,7 @@ public class BrutosRequestImp extends ServletRequestWrapper
         if( value != null ){
             List<Object> values = parameters.get( name );
             if( values == null ){
+            	this.parameterNames.add(name);
                 values = new ParameterList();
                 parameters.put( name, values );
             }

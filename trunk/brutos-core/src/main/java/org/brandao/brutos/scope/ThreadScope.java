@@ -17,7 +17,10 @@
 
 package org.brandao.brutos.scope;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 
@@ -25,10 +28,10 @@ import java.util.HashMap;
  */
 public class ThreadScope implements Scope {
 
-	private static final ThreadLocal threadLocal;
+	private static final ThreadLocal<ConcurrentMap<String, Object>> threadLocal;
 
 	static {
-		threadLocal = new ThreadLocal();
+		threadLocal = new ThreadLocal<ConcurrentMap<String, Object>>();
 	}
 
 	public ThreadScope() {
@@ -37,7 +40,7 @@ public class ThreadScope implements Scope {
 	public static boolean create() {
 
 		if (threadLocal.get() == null) {
-			threadLocal.set(new HashMap());
+			threadLocal.set(new ConcurrentHashMap<String, Object>());
 			return true;
 		} else
 			return false;
@@ -49,12 +52,14 @@ public class ThreadScope implements Scope {
 	}
 
 	public void put(String name, Object value) {
-		HashMap map = (HashMap) threadLocal.get();
+		ConcurrentMap<String, Object> map = 
+				threadLocal.get();
 		map.put(name, value);
 	}
 
 	public Object get(String name) {
-		HashMap map = (HashMap) threadLocal.get();
+		ConcurrentMap<String, Object> map = 
+				threadLocal.get();
 		return map.get(name);
 	}
 
@@ -63,8 +68,22 @@ public class ThreadScope implements Scope {
 	}
 
 	public void remove(String name) {
-		HashMap map = (HashMap) threadLocal.get();
+		ConcurrentMap<String, Object> map = 
+				threadLocal.get();
 		map.remove(name);
+	}
+
+	public List<String> getNamesStartsWith(String value) {
+		ConcurrentMap<String, Object> map = 
+				threadLocal.get();
+		
+		List<String> result = new ArrayList<String>();
+		for(String k: map.keySet()){
+			if(k.startsWith(value)){
+				result.add(k);
+			}
+		}
+		return result;
 	}
 
 }

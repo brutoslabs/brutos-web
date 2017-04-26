@@ -17,12 +17,16 @@
 
 package org.brandao.brutos.web.scope;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
 
 import javax.servlet.ServletRequest;
 
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.RequestInfo;
+import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.web.http.ParameterList;
 
 /**
@@ -60,5 +64,24 @@ public class RequestScope implements Scope{
         return requestInfo.getRequest();
         
     }
+
+	@SuppressWarnings("unchecked")
+	public List<String> getNamesStartsWith(String value) {
+		ServletRequest request = getServletRequest();
+		
+		List<String> result = new ArrayList<String>();
+		
+		Enumeration<String> names = 
+				request.getAttributeNames();
+		
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			if(name.startsWith(value)){
+				result.add(name);
+			}
+		}
+		
+		return result;
+	}
 
 }
