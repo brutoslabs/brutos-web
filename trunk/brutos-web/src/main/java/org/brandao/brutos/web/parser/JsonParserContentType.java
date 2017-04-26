@@ -80,7 +80,7 @@ public class JsonParserContentType implements ParserContentType{
 			List<Object> list = (List<Object>)value;
 			int index = 0;
 			for(Object i: list){
-				addValue(request, fullFieldName + ".element" + "[" + index++ + "]", i);
+				addValue(request, fullFieldName + "[" + index++ + "]", i);
 			}
 		}
 		else
