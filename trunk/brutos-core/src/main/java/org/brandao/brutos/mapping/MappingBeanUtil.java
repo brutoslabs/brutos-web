@@ -120,6 +120,32 @@ public final class MappingBeanUtil {
 				dependencyBean, mappingBean, validatorFactory, controller);
 	}
 
+	public static DependencyBean createElementBean(String name,
+			EnumerationType enumProperty, String temporalProperty,
+			String mapping, ScopeType scope, Object value, boolean nullable,
+			boolean generic, Type typeDef, Object classType, Bean mappingBean,
+			ValidatorFactory validatorFactory, Controller controller) {
+
+		Element dependencyBean = new Element(mappingBean);
+
+		return createDependencyBean(name, enumProperty, temporalProperty,
+				mapping, scope, value, nullable, generic, typeDef, classType,
+				dependencyBean, mappingBean, validatorFactory, controller);
+	}
+
+	public static DependencyBean createKeyBean(String name,
+			EnumerationType enumProperty, String temporalProperty,
+			String mapping, ScopeType scope, Object value, boolean nullable,
+			boolean generic, Type typeDef, Object classType, Bean mappingBean,
+			ValidatorFactory validatorFactory, Controller controller) {
+
+		Key dependencyBean = new Key(mappingBean);
+
+		return createDependencyBean(name, enumProperty, temporalProperty,
+				mapping, scope, value, nullable, generic, typeDef, classType,
+				dependencyBean, mappingBean, validatorFactory, controller);
+	}
+	
 	@SuppressWarnings("unchecked")
 	private static DependencyBean createDependencyBean(String name,
 			EnumerationType enumProperty, String temporalProperty,

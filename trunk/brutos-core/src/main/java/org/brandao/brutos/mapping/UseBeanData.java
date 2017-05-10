@@ -71,23 +71,38 @@ public abstract class UseBeanData {
 		Object value = null;
 
 		if (!isNullable()) {
-			if (this.metaBean != null) {
-				value = this.metaBean.getValue(this.name == null ? null
-						: this.name + metaBean.getSeparator());
+			if(this.metaBean != null){
+				value = this.metaBean
+							.getValue(
+									this.name == null ? 
+										null : 
+										this.name + metaBean.getSeparator());
 				value = this.type.convert(value);
-			} else if (this.mapping != null) {
-				value = this.mapping.getValue(this.name == null ? null
-						: this.name + mapping.getSeparator());
+			}
+			else
+			if(this.mapping != null) {
+				value = this.mapping
+							.getValue(
+									this.name == null ? 
+										null : 
+										this.name + mapping.getSeparator());
 				value = this.type.convert(value);
-			} else if (this.staticValue != null)
+			}
+			else
+			if(this.staticValue != null){
 				value = this.type.convert(this.staticValue);
-			else if (this.type instanceof CollectionType
-					|| this.type instanceof ArrayType) {
-				value = this.name == null ? null : getScope().getCollection(
-						this.name);
+			}
+			else
+			if(this.type instanceof CollectionType || this.type instanceof ArrayType) {
+				value = this.name == null ? 
+						null : 
+						getScope().getCollection(this.name);
 				value = this.type.convert(value);
-			} else {
-				value = this.name == null ? null : getScope().get(this.name);
+			}
+			else{
+				value = this.name == null ? 
+						null : 
+						getScope().get(this.name);
 				value = this.type.convert(value);
 			}
 		}
@@ -97,9 +112,13 @@ public abstract class UseBeanData {
 		return value;
 	}
 
+	public void encode(BeanEncoder encoder, Object value) throws BeanEncoderException{
+		encoder.encode(this, value);
+	}
+	
 	protected abstract void validate(Object source, Object value);
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		if (type != null)
 			return type.getClassType();
 		else if (this.mapping != null)

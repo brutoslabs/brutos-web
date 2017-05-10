@@ -66,6 +66,10 @@ public class MetaBean extends Bean {
 		this.metaValues.remove(metaValue);
 	}
 
+	public Map<Object, DependencyBean> getMetaValues() {
+		return metaValues;
+	}
+
 	@Override
 	public Object getValue(Object instance, String prefix, long index,
 			ValidatorException exceptionHandler, boolean force) {

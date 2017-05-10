@@ -123,6 +123,7 @@ public class MapBean extends CollectionBean {
 		*/
 	}
 
+	@SuppressWarnings("unchecked")
 	public Object getObjectValue(Object instance, String prefix, long otherIndex,
 			ValidatorException exceptionHandler, boolean force) {
 		
@@ -204,6 +205,7 @@ public class MapBean extends CollectionBean {
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private Object getValueBySimpleMap(Object instance, String prefix, long otherIndex,
 			ValidatorException exceptionHandler, boolean force) {
 		try {

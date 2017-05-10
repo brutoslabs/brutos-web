@@ -18,6 +18,7 @@
 package org.brandao.brutos.mapping;
 
 import java.util.Collection;
+
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.validator.ValidatorException;
 
@@ -27,7 +28,7 @@ import org.brandao.brutos.validator.ValidatorException;
  */
 public class CollectionBean extends Bean {
 
-	private DependencyBean collection;
+	protected DependencyBean collection;
 
 	public CollectionBean(Controller controller, Bean parent) {
 		super(controller, parent);
@@ -64,6 +65,7 @@ public class CollectionBean extends Bean {
 		return getValue(null);
 	}
 
+	@SuppressWarnings("unchecked")
 	public Object getValue(Object instance, String prefix, long otherIndex,
 			ValidatorException exceptionHandler, boolean force) {
 		try {
@@ -118,7 +120,7 @@ public class CollectionBean extends Bean {
 
 		return instance;
 	}
-
+	
 	public boolean isBean() {
 		return false;
 	}
