@@ -33,4 +33,9 @@ public class KeyCollectionBeanTest0Type implements Type{
 		return false;
 	}
 
+	public String toString(Object value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
