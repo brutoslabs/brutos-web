@@ -36,6 +36,7 @@ public class BeanBuilder {
 
 	private ValidatorFactory validatorFactory;
 
+	@SuppressWarnings("unused")
 	private ApplicationContext applicationContext;
 
 	private ConstructorBuilder constructorBuilder;
@@ -115,6 +116,10 @@ public class BeanBuilder {
 	}
 
 	public KeyBuilder setMappedKey(String name, String ref) {
+		
+		name = StringUtil.adjust(name);
+		name = name == null? BrutosConstants.DEFAULT_KEY_NAME : name;
+		
 		return setKey(name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
 				ScopeType.PARAM, null, null, null);
 	}
@@ -128,37 +133,37 @@ public class BeanBuilder {
 	}
 
 	public KeyBuilder setKey(String name, EnumerationType enumProperty,
-			Class classType) {
+			Class<?> classType) {
 		return setKey(name, enumProperty, "dd/MM/yyyy", null, ScopeType.PARAM,
 				null, null, classType);
 	}
 
 	public KeyBuilder setKey(String name, String temporalProperty,
-			Class classType) {
+			Class<?> classType) {
 		return setKey(name, EnumerationType.ORDINAL, temporalProperty, null,
 				ScopeType.PARAM, null, null, classType);
 	}
 
 	public KeyBuilder setKey(String name, EnumerationType enumProperty,
-			ScopeType scope, Class classType) {
+			ScopeType scope, Class<?> classType) {
 		return setKey(name, enumProperty, "dd/MM/yyyy", null, scope, null,
 				null, classType);
 	}
 
 	public KeyBuilder setKey(String name, String temporalProperty,
-			ScopeType scope, Class classType) {
+			ScopeType scope, Class<?> classType) {
 		return setKey(name, EnumerationType.ORDINAL, temporalProperty, null,
 				scope, null, null, classType);
 	}
 
-	public KeyBuilder setKey(String name, ScopeType scope, Class classType) {
+	public KeyBuilder setKey(String name, ScopeType scope, Class<?> classType) {
 		return setKey(name, EnumerationType.ORDINAL, "dd/MM/yyyy", null, scope,
 				null, null, classType);
 	}
 
 	public KeyBuilder setKey(String name, EnumerationType enumProperty,
 			String temporalProperty, String mapping, ScopeType scope,
-			Object value, Type typeDef, Class type) {
+			Object value, Type typeDef, Class<?> type) {
 		return setKey(name, enumProperty, temporalProperty, mapping, scope,
 				value, typeDef, (Object) type);
 	}
@@ -182,18 +187,35 @@ public class BeanBuilder {
 			String temporalProperty, String mapping, ScopeType scope,
 			Object value, boolean generic, Type typeDef, Object type) {
 
+		if (!mappingBean.isMap()){
+			throw new BrutosException(String.format(
+					"is not allowed for this type: %s",
+					new Object[] { this.mappingBean.getClassType() }));
+		}
+
 		name = StringUtil.adjust(name);
 		//name = StringUtil.isEmpty(name) ? "key" : name;
 
 		if (type == null && mapping == null)
 			throw new MappingException("unknown key type");
 
-		if (!mappingBean.isMap())
-			throw new BrutosException(String.format(
-					"is not allowed for this type: %s",
-					new Object[] { this.mappingBean.getClassType() }));
-
-		DependencyBean key = MappingBeanUtil.createDependencyBean(name,
+		//Se a chave não for simples, ela terá que possuir um nome
+		if (name == null && mapping != null)
+			throw new MappingException("key must have a name");
+		
+		Element e = (Element)((MapBean)mappingBean).getCollection();
+		
+		//Verifica se o elemento já foi mapeado.
+		if(e != null){
+			//Se o elemento foi mapeado e possui nome, a chave obrigatoriamente 
+			//tem que possuir nome.
+			if(e.getParameterName() != null && name == null){
+				//throw new MappingException("key must have a name");
+				name = BrutosConstants.DEFAULT_ELEMENT_NAME;
+			}
+		}
+		
+		DependencyBean key = MappingBeanUtil.createKeyBean(name,
 				enumProperty, temporalProperty, mapping, scope, value, false,
 				generic, typeDef, type, this.mappingBean,
 				this.validatorFactory, this.controller);
@@ -202,11 +224,11 @@ public class BeanBuilder {
 		return new KeyBuilder(key, this, this.validatorFactory);
 	}
 
-	public BeanBuilder buildKey(Class type) {
+	public BeanBuilder buildKey(Class<?> type) {
 		return buildKey(null, type);
 	}
 
-	public BeanBuilder buildKey(String name, Class type) {
+	public BeanBuilder buildKey(String name, Class<?> type) {
 
 		if (!this.mappingBean.isMap())
 			throw new BrutosException(String.format(
@@ -217,20 +239,31 @@ public class BeanBuilder {
 		BeanBuilder bb = controllerBuilder.buildMappingBean(beanName,
 				this.mappingBean.getName(), type);
 
+		name = StringUtil.adjust(name);
+		name = name == null? BrutosConstants.DEFAULT_KEY_NAME : name;
+		
 		setMappedKey(name, beanName);
 		return bb;
 	}
 
-	public BeanBuilder buildElement(Class type) {
+	public BeanBuilder buildElement(Class<?> type) {
 		return buildElement(null, type);
 	}
 
-	public BeanBuilder buildElement(String name, Class type) {
+	public BeanBuilder buildElement(String name, Class<?> type) {
 
+		if (!this.mappingBean.isMap() && !this.mappingBean.isCollection())
+			throw new BrutosException(String.format(
+					"is not allowed for this type: %s",
+					new Object[] { this.mappingBean.getClassType() }));
+		
 		String beanName = mappingBean.getName() + "#bean";
 		BeanBuilder bb = controllerBuilder.buildMappingBean(beanName,
 				this.mappingBean.getName(), type);
 
+		name = StringUtil.adjust(name);
+		name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
+		
 		setMappedElement(name, beanName);
 
 		return bb;
@@ -241,49 +274,57 @@ public class BeanBuilder {
 	}
 
 	public ElementBuilder setMappedElement(String name, String ref) {
+		
+		name = StringUtil.adjust(name);
+		name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
+		
 		return setElement(name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
 				ScopeType.PARAM, null, false, null, null);
 	}
 
 	public ElementBuilder setMappedElement(String name, String ref,
-			Class classType) {
+			Class<?> classType) {
+		
+		name = StringUtil.adjust(name);
+		name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
+		
 		return setElement(name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
 				ScopeType.PARAM, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, EnumerationType enumProperty,
-			Class classType) {
+			Class<?> classType) {
 		return setElement(name, enumProperty, "dd/MM/yyyy", null,
 				ScopeType.PARAM, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, String temporalProperty,
-			Class classType) {
+			Class<?> classType) {
 		return setElement(name, EnumerationType.ORDINAL, temporalProperty,
 				null, ScopeType.PARAM, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, EnumerationType enumProperty,
-			ScopeType scope, Class classType) {
+			ScopeType scope, Class<?> classType) {
 		return setElement(name, enumProperty, "dd/MM/yyyy", null, scope, null,
 				false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, String temporalProperty,
-			ScopeType scope, Class classType) {
+			ScopeType scope, Class<?> classType) {
 		return setElement(name, EnumerationType.ORDINAL, temporalProperty,
 				null, scope, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, ScopeType scope,
-			Class classType) {
+			Class<?> classType) {
 		return setElement(name, EnumerationType.ORDINAL, "dd/MM/yyyy", null,
 				scope, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, EnumerationType enumProperty,
 			String temporalProperty, String mapping, ScopeType scope,
-			Object value, boolean nullable, Type typeDef, Class type) {
+			Object value, boolean nullable, Type typeDef, Class<?> type) {
 		return setElement(name, enumProperty, temporalProperty, mapping, scope,
 				value, nullable, typeDef, (Object) type);
 	}
@@ -307,18 +348,36 @@ public class BeanBuilder {
 			Object value, boolean nullable, boolean generic, Type typeDef,
 			Object type) {
 
+		if (!mappingBean.isCollection() && !mappingBean.isMap())
+			throw new MappingException(String.format(
+					"is not allowed for this type: %s",
+					new Object[] { this.mappingBean.getClassType() }));
+		
 		name = StringUtil.adjust(name);
 		//name = StringUtil.isEmpty(name) ? "element" : name;
 
 		if (type == null && mapping == null)
 			throw new MappingException("unknown element type");
 
-		if (!mappingBean.isCollection() && !mappingBean.isMap())
-			throw new MappingException(String.format(
-					"is not allowed for this type: %s",
-					new Object[] { this.mappingBean.getClassType() }));
-
-		DependencyBean collection = MappingBeanUtil.createDependencyBean(name,
+		if(mappingBean.isMap()){
+			Key key = (Key)((MapBean)this.mappingBean).getKey();
+			
+			if(key != null){
+				
+				if(key.getParameterName() != null && name == null){
+					//throw new MappingException("element must have a name");
+					name = BrutosConstants.DEFAULT_ELEMENT_NAME;
+				}
+				else
+				if(key.getParameterName() == null && name != null){
+					//throw new MappingException("element must not have a name");
+					key.setParameterName(BrutosConstants.DEFAULT_KEY_NAME);
+				}
+				
+			}
+		}
+		
+		DependencyBean collection = MappingBeanUtil.createElementBean(name,
 				enumProperty, temporalProperty, mapping, scope, value,
 				nullable, generic, typeDef, type, this.mappingBean,
 				this.validatorFactory, this.controller);
@@ -345,12 +404,12 @@ public class BeanBuilder {
 
 	}
 
-	public BeanBuilder buildProperty(String propertyName, Class target) {
+	public BeanBuilder buildProperty(String propertyName, Class<?> target) {
 		return buildProperty(null, propertyName, target);
 	}
 
 	public BeanBuilder buildProperty(String name, String propertyName,
-			Class target) {
+			Class<?> target) {
 
 		name = StringUtil.adjust(name);
 
@@ -475,7 +534,7 @@ public class BeanBuilder {
 		return mappingBean.getConstructor().size();
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return mappingBean.getClassType();
 	}
 
