@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.mapping.AbstractBeanEncoder;
 import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.BeanEncoderException;
@@ -39,6 +40,7 @@ import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.DateTimeType;
+import org.brandao.brutos.type.EnumType;
 import org.brandao.brutos.type.Type;
 
 /**
@@ -497,7 +499,11 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 	private String getValue(Type type, Object value){
 		if(type.getClassType() == String.class || 
 			type instanceof DateTimeType || 
-			type.getClass() == AnyType.class){
+			type.getClass() == AnyType.class ){
+			return "\"" + type.toString(value) + "\"";
+		}
+		else
+		if(type instanceof EnumType && ((EnumType)type).getEnumerationType() == EnumerationType.STRING){
 			return "\"" + type.toString(value) + "\"";
 		}
 		else{
