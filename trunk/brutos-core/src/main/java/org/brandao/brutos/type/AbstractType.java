@@ -37,4 +37,8 @@ public abstract class AbstractType implements Type {
 		return false;
 	}
 
+	public String toString(Object value) {
+		return value == null? null : value.toString();
+	}
+	
 }

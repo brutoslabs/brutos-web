@@ -30,9 +30,11 @@ public interface Type {
 
 	void show(MvcResponse response, Object value) throws IOException;
 
-	Class getClassType();
+	String toString(Object value);
+	
+	Class<?> getClassType();
 
-	void setClassType(Class value);
+	void setClassType(Class<?> value);
 
 	boolean isAlwaysRender();
 
