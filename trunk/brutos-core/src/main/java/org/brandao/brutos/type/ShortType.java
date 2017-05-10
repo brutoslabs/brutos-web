@@ -31,7 +31,7 @@ public class ShortType extends AbstractType implements Type {
 	public ShortType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Short.TYPE;
 	}
 

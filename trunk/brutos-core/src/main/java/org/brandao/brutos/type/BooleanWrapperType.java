@@ -28,7 +28,7 @@ public class BooleanWrapperType extends AbstractType {
 	public BooleanWrapperType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Boolean.class;
 	}
 

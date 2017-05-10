@@ -29,7 +29,7 @@ public class FloatWrapperType extends AbstractType implements Type {
 	public FloatWrapperType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Float.class;
 	}
 

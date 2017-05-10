@@ -23,12 +23,14 @@ import org.brandao.brutos.BrutosException;
  * 
  * @author Brandao
  */
-public class DefaultTypeFactory implements TypeFactory {
+public class DefaultTypeFactory 
+	implements TypeFactory {
 
-	private Class type;
-	private Class classType;
+	private Class<?> type;
+	
+	private Class<?> classType;
 
-	public DefaultTypeFactory(Class type, Class classType) {
+	public DefaultTypeFactory(Class<?> type, Class<?> classType) {
 
 		if (!Type.class.isAssignableFrom(type))
 			throw new BrutosException("invalid class type: " + type.getName());
@@ -45,11 +47,11 @@ public class DefaultTypeFactory implements TypeFactory {
 		}
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return this.classType;
 	}
 
-	public boolean matches(Class type) {
+	public boolean matches(Class<?> type) {
 		return type == this.classType;
 	}
 

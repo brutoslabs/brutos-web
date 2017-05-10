@@ -31,7 +31,7 @@ public class CharType extends AbstractType {
 	public CharType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Character.TYPE;
 	}
 

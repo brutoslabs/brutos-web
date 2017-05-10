@@ -31,7 +31,7 @@ public class IntegerType extends AbstractType implements Type {
 	public IntegerType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Integer.TYPE;
 	}
 

@@ -34,7 +34,7 @@ public class FileType extends AbstractType implements Type {
 	public FileType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return File.class;
 	}
 

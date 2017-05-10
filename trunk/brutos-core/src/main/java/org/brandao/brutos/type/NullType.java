@@ -26,13 +26,13 @@ import org.brandao.brutos.MvcResponse;
  */
 public class NullType extends AbstractType implements Type {
 
-	private Class type;
+	private Class<?> type;
 
-	public NullType(Class type) {
+	public NullType(Class<?> type) {
 		this.type = type;
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return type;
 	}
 

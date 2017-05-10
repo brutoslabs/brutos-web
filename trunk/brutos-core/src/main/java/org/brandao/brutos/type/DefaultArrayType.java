@@ -19,6 +19,7 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
+
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.web.http.ParameterList;
@@ -27,10 +28,13 @@ import org.brandao.brutos.web.http.ParameterList;
  * 
  * @author Brandao
  */
-public class DefaultArrayType extends AbstractType implements ArrayType {
+public class DefaultArrayType 
+	extends AbstractType 
+	implements ArrayType {
 
 	private Type componentType;
-	private Class rawClass;
+	
+	private Class<?> rawClass;
 
 	public DefaultArrayType() {
 	}
@@ -69,12 +73,46 @@ public class DefaultArrayType extends AbstractType implements ArrayType {
 		return this.componentType;
 	}
 
-	public void setRawClass(Class value) {
+	public void setRawClass(Class<?> value) {
 		this.rawClass = value;
 	}
 
-	public Class getRawClass() {
+	public Class<?> getRawClass() {
 		return this.rawClass;
 	}
 
+	public String toString(Object value) {
+
+		try {
+			ParameterList list = (ParameterList) value;
+			int i = 0;
+			StringBuilder r = new StringBuilder("[ ");
+			for (Object o: list) {
+				
+				if(i++ > 0){
+					r.append(", ");
+				}
+				
+				String str = this.componentType.toString(o);
+				
+				if(this.componentType.getClassType() == String.class || 
+					this.componentType.getClass() == AnyType.class){
+				
+					r.append("\"").append(str).append("\"");
+				}
+				else{
+					r.append(str);
+				}
+				
+			}
+			r.append(" ]");
+			return r.toString();
+			
+		}
+		catch (Throwable e) {
+			throw new BrutosException(e);
+		}
+		
+	}
+	
 }

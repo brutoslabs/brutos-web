@@ -29,7 +29,7 @@ public class LongWrapperType extends AbstractType implements Type {
 	public LongWrapperType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Long.class;
 	}
 

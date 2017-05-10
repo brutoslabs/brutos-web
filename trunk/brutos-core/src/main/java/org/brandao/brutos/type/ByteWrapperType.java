@@ -37,7 +37,7 @@ public class ByteWrapperType extends AbstractType {
 		}
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Byte.class;
 	}
 

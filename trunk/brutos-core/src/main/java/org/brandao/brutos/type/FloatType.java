@@ -31,7 +31,7 @@ public class FloatType extends AbstractType implements Type {
 	public FloatType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Float.TYPE;
 	}
 

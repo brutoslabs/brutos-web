@@ -29,7 +29,7 @@ public class IntegerWrapperType extends AbstractType implements Type {
 	public IntegerWrapperType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Integer.class;
 	}
 

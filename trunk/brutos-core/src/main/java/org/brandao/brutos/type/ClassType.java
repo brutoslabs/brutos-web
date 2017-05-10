@@ -38,7 +38,7 @@ public class ClassType extends AbstractType {
 		}
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Class.class;
 	}
 

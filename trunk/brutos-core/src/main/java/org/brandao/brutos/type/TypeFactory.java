@@ -25,8 +25,8 @@ public interface TypeFactory {
 
 	Type getInstance();
 
-	boolean matches(Class type);
+	boolean matches(Class<?> type);
 
-	Class getClassType();
+	Class<?> getClassType();
 
 }

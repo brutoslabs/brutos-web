@@ -29,7 +29,7 @@ public class ShortWrapperType extends AbstractType implements Type {
 	public ShortWrapperType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Short.class;
 	}
 

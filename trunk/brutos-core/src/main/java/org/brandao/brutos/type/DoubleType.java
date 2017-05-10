@@ -31,7 +31,7 @@ public class DoubleType extends AbstractType implements Type {
 	public DoubleType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Double.TYPE;
 	}
 

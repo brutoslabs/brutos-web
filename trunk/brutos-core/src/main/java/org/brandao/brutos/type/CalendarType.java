@@ -41,20 +41,37 @@ public class CalendarType extends DefaultDateType {
 		return cal;
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Calendar.class;
 	}
 
 	public Object convert(Object value) {
 		if (value instanceof Calendar)
 			return value;
-		else if (value instanceof String) {
+		else 
+		if (value instanceof String) {
 			Object o = super.convert(value);
 			return ((String) value).isEmpty() ? null : toValue(o);
-		} else if (value == null)
+		}
+		else if (value == null)
 			return null;
 		else
 			throw new UnknownTypeException();
 	}
 
+	public String toString(Object value) {
+		if (value instanceof Calendar)
+			return this.sdf.format(((Calendar)value).getTime());
+		else 
+		if (value instanceof String) {
+			Object o = super.convert(value);
+			return ((String) value).isEmpty() ? null : this.sdf.format((Date)o);
+		}
+		else 
+		if (value == null)
+			return null;
+		else
+			throw new UnknownTypeException();
+	}
+	
 }

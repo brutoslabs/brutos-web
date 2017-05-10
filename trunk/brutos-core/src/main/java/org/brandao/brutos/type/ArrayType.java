@@ -27,8 +27,8 @@ public interface ArrayType extends Type {
 
 	Type getComponentType();
 
-	void setRawClass(Class value);
+	void setRawClass(Class<?> value);
 
-	Class getRawClass();
+	Class<?> getRawClass();
 
 }
