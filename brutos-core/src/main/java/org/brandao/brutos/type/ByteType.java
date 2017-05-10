@@ -31,7 +31,7 @@ public class ByteType extends AbstractType {
 	public ByteType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Byte.TYPE;
 	}
 

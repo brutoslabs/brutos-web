@@ -30,11 +30,11 @@ public class DefaultEnumTypeFactory implements TypeFactory {
 		return new DefaultEnumType();
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Enum.class;
 	}
 
-	public boolean matches(Class type) {
+	public boolean matches(Class<?> type) {
 		return type.isEnum();
 	}
 

@@ -31,7 +31,7 @@ public class LongType extends AbstractType implements Type {
 	public LongType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Long.TYPE;
 	}
 

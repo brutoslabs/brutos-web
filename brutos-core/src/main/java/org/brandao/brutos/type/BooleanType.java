@@ -30,7 +30,7 @@ public class BooleanType extends AbstractType {
 	public BooleanType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Boolean.TYPE;
 	}
 

@@ -19,6 +19,7 @@ package org.brandao.brutos.type;
 
 import java.io.IOException;
 import java.util.Collection;
+
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.MvcResponse;
@@ -28,12 +29,13 @@ import org.brandao.brutos.web.http.ParameterList;
  * 
  * @author Brandao
  */
-public abstract class AbstractCollectionType extends AbstractType implements
-		CollectionType {
+public abstract class AbstractCollectionType 
+	extends AbstractType 
+	implements CollectionType {
 
 	private Type collectionType;
 
-	private Class rawClass;
+	private Class<?> rawClass;
 
 	private Object[] parameters;
 
@@ -45,11 +47,11 @@ public abstract class AbstractCollectionType extends AbstractType implements
 		return this.collectionType;
 	}
 
-	public void setRawClass(Class value) {
+	public void setRawClass(Class<?> value) {
 		this.rawClass = value;
 	}
 
-	public Class getRawClass() {
+	public Class<?> getRawClass() {
 		return this.rawClass;
 	}
 
@@ -72,12 +74,13 @@ public abstract class AbstractCollectionType extends AbstractType implements
 		response.process(value);
 	}
 
-	protected abstract Class getCollectionClass();
+	protected abstract Class<?> getCollectionClass();
 
-	protected Collection getCollection(Object value) {
+	@SuppressWarnings("unchecked")
+	protected Collection<?> getCollection(Object value) {
 
 		try {
-			Collection collection = (Collection) ClassUtil
+			Collection<Object> collection = (Collection<Object>) ClassUtil
 					.getInstance(getCollectionClass());
 
 			ParameterList list = (ParameterList) value;
@@ -92,4 +95,37 @@ public abstract class AbstractCollectionType extends AbstractType implements
 		}
 	}
 
+	public String toString(Object value) {
+
+		try {
+			ParameterList list = (ParameterList) value;
+			int i = 0;
+			StringBuilder r = new StringBuilder("[ ");
+			for (Object o: list) {
+				
+				if(i++ > 0){
+					r.append(", ");
+				}
+				
+				String str = this.collectionType.toString(o);
+				
+				if(this.collectionType.getClassType() == String.class || 
+					this.collectionType.getClass() == AnyType.class){
+				
+					r.append("\"").append(str).append("\"");
+				}
+				else{
+					r.append(str);
+				}
+			}
+			r.append(" ]");
+			return r.toString();
+			
+		}
+		catch (Throwable e) {
+			throw new BrutosException(e);
+		}
+		
+	}
+	
 }

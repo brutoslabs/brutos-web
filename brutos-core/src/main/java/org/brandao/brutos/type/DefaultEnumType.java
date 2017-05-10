@@ -18,7 +18,6 @@
 package org.brandao.brutos.type;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.MvcResponse;
@@ -31,16 +30,19 @@ import org.brandao.brutos.bean.EnumUtil;
 public class DefaultEnumType extends AbstractType implements EnumType {
 
 	private EnumerationType type;
-	private Type intType;
-	private Type stringType;
+	
+	//private Type intType;
+	
+	//private Type stringType;
+	
 	private EnumUtil enumUtil;
 
 	public DefaultEnumType() {
-		intType = new IntegerType();
-		stringType = new StringType();
+		//intType    = new IntegerType();
+		//stringType = new StringType();
 	}
 
-	public void setClassType(Class classType) {
+	public void setClassType(Class<?> classType) {
 		super.setClassType(classType);
 		this.enumUtil = new EnumUtil(classType);
 	}
@@ -96,4 +98,34 @@ public class DefaultEnumType extends AbstractType implements EnumType {
 		this.type = type;
 	}
 
+	public String toString(Object value) {
+		try {
+			if(value == null){
+				return null;
+			}
+			else
+			if (this.classType.isAssignableFrom(value.getClass())){
+				if(type == EnumerationType.AUTO || type == EnumerationType.STRING){
+					return ((Enum<?>)value).name();
+				}
+				else{
+					return String.valueOf(((Enum<?>)value).ordinal());
+				}
+			}
+			else 
+			if (value instanceof String) {
+				value = this.convert(value);
+				return this.toString(value);
+			}
+			else
+				throw new UnknownTypeException(value.getClass().getName());
+		}
+		catch (UnknownTypeException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			throw new UnknownTypeException(e);
+		}
+	}
+	
 }

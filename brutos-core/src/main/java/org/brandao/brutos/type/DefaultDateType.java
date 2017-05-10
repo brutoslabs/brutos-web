@@ -20,15 +20,18 @@ package org.brandao.brutos.type;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.brandao.brutos.MvcResponse;
 
 /**
  * 
  * @author Brandao
  */
-public class DefaultDateType extends AbstractType implements DateTimeType {
+public class DefaultDateType 
+	extends AbstractType 
+	implements DateTimeType {
 
-	private SimpleDateFormat sdf;
+	protected SimpleDateFormat sdf;
 
 	public DefaultDateType(String pattern) {
 		this.setPattern(pattern);
@@ -50,7 +53,7 @@ public class DefaultDateType extends AbstractType implements DateTimeType {
 		}
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Date.class;
 	}
 
@@ -73,4 +76,19 @@ public class DefaultDateType extends AbstractType implements DateTimeType {
 		return this.sdf.toPattern();
 	}
 
+	public String toString(Object value){
+		if (value instanceof Date)
+			return this.sdf.format((Date)value);
+		else 
+		if (value instanceof String){
+			Object o = this.convert(value);			
+			return ((String) value).isEmpty() ? null : this.sdf.format((Date)o);
+		}
+		else
+		if (value == null)
+			return null;
+		else
+			throw new UnknownTypeException(value.getClass().getName());
+		
+	}
 }

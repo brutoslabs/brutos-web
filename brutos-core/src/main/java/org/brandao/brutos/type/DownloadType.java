@@ -32,7 +32,7 @@ public class DownloadType extends AbstractType implements Type {
 	public DownloadType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Download.class;
 	}
 

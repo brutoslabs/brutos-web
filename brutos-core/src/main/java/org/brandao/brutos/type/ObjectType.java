@@ -32,7 +32,7 @@ public class ObjectType extends AbstractType {
 		this(null);
 	}
 
-	public ObjectType(Class classType) {
+	public ObjectType(Class<?> classType) {
 		this.classType = classType;
 	}
 

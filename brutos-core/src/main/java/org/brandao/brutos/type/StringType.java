@@ -29,7 +29,7 @@ public class StringType extends AbstractType implements Type {
 	public StringType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return String.class;
 	}
 

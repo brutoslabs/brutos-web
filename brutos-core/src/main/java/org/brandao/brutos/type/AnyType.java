@@ -46,11 +46,11 @@ public class AnyType implements Type {
 		response.process(value);
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return this.type;
 	}
 
-	public void setClassType(Class value) {
+	public void setClassType(Class<?> value) {
 		this.type = value;
 	}
 

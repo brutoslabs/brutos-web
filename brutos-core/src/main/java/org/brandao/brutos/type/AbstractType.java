@@ -23,13 +23,13 @@ package org.brandao.brutos.type;
  */
 public abstract class AbstractType implements Type {
 
-	protected Class classType;
+	protected Class<?> classType;
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return this.classType;
 	}
 
-	public void setClassType(Class value) {
+	public void setClassType(Class<?> value) {
 		this.classType = value;
 	}
 

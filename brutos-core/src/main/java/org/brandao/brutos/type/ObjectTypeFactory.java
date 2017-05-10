@@ -30,11 +30,11 @@ public class ObjectTypeFactory implements TypeFactory {
 		return new ObjectType();
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Object.class;
 	}
 
-	public boolean matches(Class type) {
+	public boolean matches(Class<?> type) {
 		return true;
 	}
 

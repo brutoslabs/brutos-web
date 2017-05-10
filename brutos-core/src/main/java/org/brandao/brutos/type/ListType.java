@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class ListType extends AbstractCollectionType {
 
-	protected Class getCollectionClass() {
+	protected Class<?> getCollectionClass() {
 		return this.getClassType() == List.class ? TypeUtil
 				.getDefaultListType() : this.getClassType();
 	}

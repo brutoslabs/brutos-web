@@ -29,7 +29,7 @@ public class DoubleWrapperType extends AbstractType implements Type {
 	public DoubleWrapperType() {
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return Double.class;
 	}
 
