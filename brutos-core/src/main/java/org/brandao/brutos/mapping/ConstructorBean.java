@@ -40,9 +40,9 @@ public class ConstructorBean {
 	private static final Logger logger = LoggerProvider
 			.getCurrentLoggerProvider().getLogger(Bean.class);
 
-	private List args;
+	private List<ConstructorArgBean> args;
 
-	private Constructor contructor;
+	private Constructor<?> contructor;
 
 	private Method method;
 
@@ -55,7 +55,7 @@ public class ConstructorBean {
 	private boolean collection;
 
 	public ConstructorBean(Bean bean) {
-		this.args = new ArrayList();
+		this.args = new ArrayList<ConstructorArgBean>();
 		this.bean = bean;
 		this.collection = bean.getParent() != null
 				&& bean.getParent().isCollection();
@@ -69,7 +69,7 @@ public class ConstructorBean {
 		return getMethodFactory() != null;
 	}
 
-	public Constructor getContructor() {
+	public Constructor<?> getContructor() {
 		initIfNecessary();
 		return contructor;
 	}
@@ -81,7 +81,7 @@ public class ConstructorBean {
 
 	public Method getMethod(Object factory) {
 		if (getMethod() == null) {
-			Class clazz = factory == null ? getBean().getClassType() : factory
+			Class<?> clazz = factory == null ? getBean().getClassType() : factory
 					.getClass();
 
 			setMethod(getMethod(getMethodFactory(), clazz));
@@ -97,25 +97,29 @@ public class ConstructorBean {
 	}
 
 	public ConstructorArgBean getConstructorArg(int index) {
-		return (ConstructorArgBean) args.get(index);
+		return args.get(index);
 	}
 
+	public List<ConstructorArgBean> getConstructorArgs() {
+		return args;
+	}
+	
 	public int size() {
 		return this.args.size();
 	}
 
-	private Constructor getContructor(Class clazz) {
+	private Constructor<?> getContructor(Class<?> clazz) {
 		int size = size();
-		Class[] classArgs = new Class[size];
+		Class<?>[] classArgs = new Class[size];
 		for (int i = 0; i < size; i++) {
 			ConstructorArgBean arg = getConstructorArg(i);
 			classArgs[i] = arg.getClassType();
 		}
-		Constructor[] cons = clazz.getConstructors();
+		Constructor<?>[] cons = clazz.getConstructors();
 		for (int i = 0; i < cons.length; i++) {
-			Constructor con = cons[i];
+			Constructor<?> con = cons[i];
 			if (isCompatible(con, classArgs)) {
-				Class[] params = con.getParameterTypes();
+				Class<?>[] params = con.getParameterTypes();
 				for (int k = 0; k < params.length; k++) {
 					if (getConstructorArg(k).getType() == null) {
 						ConstructorArgBean argBean = getConstructorArg(k);
@@ -138,7 +142,7 @@ public class ConstructorBean {
 		String msg = "not found: " + clazz.getName() + "( ";
 
 		for (int i = 0; i < classArgs.length; i++) {
-			Class arg = classArgs[i];
+			Class<?> arg = classArgs[i];
 			msg += i != 0 ? ", " : "";
 			msg += arg == null ? "?" : arg.getName();
 		}
@@ -147,21 +151,21 @@ public class ConstructorBean {
 		throw new BrutosException(msg);
 	}
 
-	private Method getMethod(String name, Class clazz) {
+	private Method getMethod(String name, Class<?> clazz) {
 		int size = size();
-		Class[] classArgs = new Class[size];
+		Class<?>[] classArgs = new Class[size];
 		for (int i = 0; i < size; i++) {
 			ConstructorArgBean arg = getConstructorArg(i);
 			classArgs[i] = arg.getClassType();
 		}
 
-		Class tmpClazz = clazz;
+		Class<?> tmpClazz = clazz;
 		while (tmpClazz != Object.class) {
 			Method[] methods = tmpClazz.getDeclaredMethods();
 			for (int i = 0; i < methods.length; i++) {
 				Method m = methods[i];
 				if (m.getName().equals(name) && isCompatible(m, classArgs)) {
-					Class[] params = m.getParameterTypes();
+					Class<?>[] params = m.getParameterTypes();
 					for (int k = 0; k < params.length; k++) {
 						if (getConstructorArg(k).getType() == null) {
 							getConstructorArg(k).setType(
@@ -180,7 +184,7 @@ public class ConstructorBean {
 		String msg = "not found: " + clazz.getName() + "." + name + "( ";
 
 		for (int i = 0; i < classArgs.length; i++) {
-			Class arg = classArgs[i];
+			Class<?> arg = classArgs[i];
 			msg += i != 0 ? ", " : "";
 			msg += arg == null ? "?" : arg.getName();
 		}
@@ -189,8 +193,8 @@ public class ConstructorBean {
 		throw new BrutosException(msg);
 	}
 
-	private boolean isCompatible(Constructor m, Class[] classArgs) {
-		Class[] params = m.getParameterTypes();
+	private boolean isCompatible(Constructor<?> m, Class<?>[] classArgs) {
+		Class<?>[] params = m.getParameterTypes();
 		if (params.length == classArgs.length) {
 			for (int i = 0; i < params.length; i++) {
 				if (classArgs[i] != null
@@ -203,8 +207,8 @@ public class ConstructorBean {
 
 	}
 
-	private boolean isCompatible(Method m, Class[] classArgs) {
-		Class[] params = m.getParameterTypes();
+	private boolean isCompatible(Method m, Class<?>[] classArgs) {
+		Class<?>[] params = m.getParameterTypes();
 		if (params.length == classArgs.length) {
 			for (int i = 0; i < params.length; i++) {
 				if (classArgs[i] != null
@@ -226,7 +230,7 @@ public class ConstructorBean {
 		Object instance;
 
 		if (this.isConstructor()) {
-			Constructor insCons = this.getContructor();
+			Constructor<?> insCons = this.getContructor();
 			Object[] args = this.getValues(prefix, index, exceptionHandler,
 					force);
 
@@ -302,7 +306,7 @@ public class ConstructorBean {
 		return exist || size == 0 ? values : null;
 	}
 
-	public void setContructor(Constructor contructor) {
+	public void setContructor(Constructor<?> contructor) {
 		this.contructor = contructor;
 	}
 

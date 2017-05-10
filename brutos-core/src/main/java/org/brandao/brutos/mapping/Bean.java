@@ -20,6 +20,7 @@ package org.brandao.brutos.mapping;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -37,9 +38,9 @@ public class Bean {
 
 	protected String name;
 
-	protected Class classType;
+	protected Class<?> classType;
 
-	protected Map fields;
+	protected Map<String, PropertyBean> fields;
 
 	protected boolean hierarchy;
 
@@ -53,18 +54,21 @@ public class Bean {
 
 	protected BeanInstance beanInstance;
 
+	protected boolean isAbstract;
+	
 	public Bean(Controller controller) {
 		this(controller, null);
 	}
 
 	public Bean(Controller controller, Bean parent) {
-		this.fields = new HashMap();
-		this.controller = controller;
-		this.hierarchy = true;
-		this.separator = ".";
-		this.indexFormat = "[$index]";
-		this.parent = parent;
-		this.constructor = new ConstructorBean(this);
+		this.fields 		= new HashMap<String, PropertyBean>();
+		this.controller 	= controller;
+		this.hierarchy 		= true;
+		this.separator 		= ".";
+		this.indexFormat 	= "[$index]";
+		this.parent 		= parent;
+		this.constructor 	= new ConstructorBean(this);
+		this.isAbstract 	= false;
 	}
 
 	public String getName() {
@@ -75,11 +79,11 @@ public class Bean {
 		this.name = name;
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return classType;
 	}
 
-	public void setClassType(Class classType) {
+	public void setClassType(Class<?> classType) {
 		this.classType = classType;
 		if (classType != null)
 			this.beanInstance = new BeanInstance(null, classType);
@@ -87,11 +91,11 @@ public class Bean {
 			this.beanInstance = null;
 	}
 
-	public Map getFields() {
+	public Map<String, PropertyBean> getFields() {
 		return fields;
 	}
 
-	public void setFields(Map fields) {
+	public void setFields(Map<String, PropertyBean> fields) {
 		this.fields = fields;
 	}
 
@@ -141,10 +145,10 @@ public class Bean {
 					|| (this.getConstructor().size() == 0 && fields.isEmpty())
 					|| this.getConstructor().isMethodFactory();
 
-			Iterator fds = fields.values().iterator();
+			Iterator<PropertyBean> fds = fields.values().iterator();
 
 			while (fds.hasNext()) {
-				PropertyBean fb = (PropertyBean) fds.next();
+				PropertyBean fb = fds.next();
 
 				boolean existProperty = resolveAndSetProperty(fb, obj, prefix,
 						index, vex);
@@ -205,7 +209,7 @@ public class Bean {
 					new Object[] { fb.getParameterName() }), e);
 		}
 	}
-
+	
 	public boolean isBean() {
 		return true;
 	}
@@ -226,6 +230,14 @@ public class Bean {
 		this.controller = controller;
 	}
 
+	public void setAbstract(boolean value){
+		this.isAbstract = value;
+	}
+
+	public boolean isAbstract(){
+		return this.isAbstract;
+	}
+	
 	public boolean isHierarchy() {
 		return hierarchy;
 	}

@@ -133,7 +133,7 @@ public abstract class DependencyBean {
 		return Scopes.getCurrentScope(scopeType);
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return this.mapping != null ? controller.getBean(mapping)
 				.getClassType() : this.type == null ? null : this.type
 				.getClassType();
