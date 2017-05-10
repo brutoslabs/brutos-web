@@ -58,4 +58,8 @@ public class AnyType implements Type {
 		return false;
 	}
 
+	public String toString(Object value) {
+		return value == null? "null" : value.toString();
+	}
+
 }
