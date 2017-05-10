@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import junit.framework.TestCase;
 
-import org.brandao.brutos.annotation.helper.any.app2.Test10AnyController;
-import org.brandao.brutos.annotation.helper.any.app2.Test5AnyBean;
 import org.brandao.brutos.annotation.helper.any.app2.DecimalProperty;
 import org.brandao.brutos.annotation.helper.any.app2.SetProperty;
+import org.brandao.brutos.annotation.helper.any.app2.Test10AnyController;
 import org.brandao.brutos.annotation.helper.any.app2.Test1AnyBean;
 import org.brandao.brutos.annotation.helper.any.app2.Test1AnyController;
 import org.brandao.brutos.annotation.helper.any.app2.Test2AnyBean;
@@ -21,6 +20,7 @@ import org.brandao.brutos.annotation.helper.any.app2.Test3AnyBean;
 import org.brandao.brutos.annotation.helper.any.app2.Test3AnyController;
 import org.brandao.brutos.annotation.helper.any.app2.Test4AnyBean;
 import org.brandao.brutos.annotation.helper.any.app2.Test4AnyController;
+import org.brandao.brutos.annotation.helper.any.app2.Test5AnyBean;
 import org.brandao.brutos.annotation.helper.any.app2.Test5AnyController;
 import org.brandao.brutos.annotation.helper.any.app2.Test6AnyController;
 import org.brandao.brutos.annotation.helper.any.app2.Test7AnyController;
