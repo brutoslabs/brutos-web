@@ -51,7 +51,7 @@ public class ApplicationContextWrapper extends AbstractApplicationContext {
 		return this.applicationContext.getScopes();
 	}
 
-	public Object getController(Class clazz) {
+	public Object getController(Class<?> clazz) {
 		return this.applicationContext.getController(clazz);
 	}
 

@@ -27,7 +27,7 @@ public interface ResultAction {
 
 	ResultAction setView(String view, boolean resolved);
 
-	ResultAction setContentType(Class type);
+	ResultAction setContentType(Class<?> type);
 
 	ResultAction addInfo(String name, String o);
 

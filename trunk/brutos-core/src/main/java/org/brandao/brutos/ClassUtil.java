@@ -19,7 +19,9 @@ package org.brandao.brutos;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
 import java.util.*;
+
 import org.brandao.brutos.type.TypeUtil;
 
 /**
@@ -28,10 +30,10 @@ import org.brandao.brutos.type.TypeUtil;
  */
 public final class ClassUtil {
 
-	private final static Map primitiveType;
+	private final static Map<Object, Type> primitiveType;
 
 	static {
-		primitiveType = new HashMap();
+		primitiveType = new HashMap<Object, Type>();
 		primitiveType.put("boolean", java.lang.Boolean.TYPE);
 		primitiveType.put("byte", java.lang.Byte.TYPE);
 		primitiveType.put("char", java.lang.Character.TYPE);
@@ -53,38 +55,38 @@ public final class ClassUtil {
 		primitiveType.put(void.class, java.lang.Void.class);
 	}
 
-	public static Class getWrapper(Class clazz) {
-		Class classe = (Class) primitiveType.get(clazz);
+	public static Class<?> getWrapper(Class<?> clazz) {
+		Class<?> classe = (Class<?>) primitiveType.get(clazz);
 
 		return classe == null ? clazz : classe;
 
 	}
 
-	public static Class get(String name) throws ClassNotFoundException {
-		Class classe = (Class) primitiveType.get(name);
+	public static Class<?> get(String name) throws ClassNotFoundException {
+		Class<?> classe = (Class<?>) primitiveType.get(name);
 
 		return classe == null ? getClasse(name) : classe;
 	}
 
-	private static Class getClasse(String name) throws ClassNotFoundException {
+	private static Class<?> getClasse(String name) throws ClassNotFoundException {
 		return getClasse(name, true);
 	}
 
-	private static Class getClasse(String name, boolean initialize)
+	private static Class<?> getClasse(String name, boolean initialize)
 			throws ClassNotFoundException {
 		return Class.forName(name, initialize, Thread.currentThread()
 				.getContextClassLoader());
 	}
 
-	public static Object getInstance(Class clazz, Class[] params,
+	public static Object getInstance(Class<?> clazz, Class<?>[] params,
 			Object[] values) throws NoSuchMethodException,
 			InstantiationException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
-		Constructor cons = clazz.getConstructor(params);
+		Constructor<?> cons = clazz.getConstructor(params);
 		return cons.newInstance(values);
 	}
 
-	public static Object getInstance(Class clazz)
+	public static Object getInstance(Class<?> clazz)
 			throws InstantiationException, IllegalAccessException {
 		return clazz.newInstance();
 	}
@@ -95,22 +97,22 @@ public final class ClassUtil {
 		return getClasse(name).newInstance();
 	}
 
-	public static List getListInstance() throws ClassNotFoundException,
+	public static List<?> getListInstance() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException {
-		return (List) getInstance(TypeUtil.getDefaultListType());
+		return (List<?>) getInstance(TypeUtil.getDefaultListType());
 	}
 
-	public static Map getMapInstance() throws ClassNotFoundException,
+	public static Map<?,?> getMapInstance() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException {
-		return (Map) getInstance(TypeUtil.getDefaultMapType());
+		return (Map<?,?>) getInstance(TypeUtil.getDefaultMapType());
 	}
 
-	public static Set getSetInstance() throws ClassNotFoundException,
+	public static Set<?> getSetInstance() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException {
-		return (Set) getInstance(TypeUtil.getDefaultSetType());
+		return (Set<?>) getInstance(TypeUtil.getDefaultSetType());
 	}
 
-	public static Class getInstantiableClass(Class clazz) {
+	public static Class<?> getInstantiableClass(Class<?> clazz) {
 
 		if (clazz == Map.class)
 			return TypeUtil.getDefaultMapType();

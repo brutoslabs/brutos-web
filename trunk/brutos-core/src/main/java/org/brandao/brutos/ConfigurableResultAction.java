@@ -29,16 +29,16 @@ public interface ConfigurableResultAction extends ResultAction {
 
 	boolean isResolvedView();
 
-	Class getContentType();
+	Class<?> getContentType();
 
 	Object getContent();
 
-	Map getValues();
+	Map<String, Object> getValues();
 
-	void setValues(Map values);
+	void setValues(Map<String, Object> values);
 
-	Map getInfos();
+	Map<String, Object> getInfos();
 
-	void setInfos(Map infos);
+	void setInfos(Map<String, Object> infos);
 
 }
