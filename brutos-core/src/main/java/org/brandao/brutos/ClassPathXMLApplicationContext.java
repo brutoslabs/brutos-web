@@ -45,7 +45,7 @@ public class ClassPathXMLApplicationContext extends
 				.getContextClassLoader(), null);
 	}
 
-	public ClassPathXMLApplicationContext(String[] locations, Class clazz) {
+	public ClassPathXMLApplicationContext(String[] locations, Class<?> clazz) {
 		this(locations, null, null, clazz);
 	}
 
@@ -60,7 +60,7 @@ public class ClassPathXMLApplicationContext extends
 
 	public ClassPathXMLApplicationContext(String[] locations,
 			AbstractApplicationContext parent, ClassLoader classLoader,
-			Class clazz) {
+			Class<?> clazz) {
 		super(parent);
 
 		resources = new Resource[locations.length];

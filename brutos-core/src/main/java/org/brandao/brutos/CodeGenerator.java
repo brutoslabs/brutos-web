@@ -29,6 +29,6 @@ public interface CodeGenerator {
 
 	void destroy();
 
-	ProxyFactory getProxyFactory(Class componentClass) throws BrutosException;
+	ProxyFactory getProxyFactory(Class<?> componentClass) throws BrutosException;
 
 }

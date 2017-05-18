@@ -39,24 +39,24 @@ public class ComponentRegistryAdapter implements ComponentRegistry {
 		this.configurableApplicationContext = configurableApplicationContext;
 	}
 
-	public ControllerBuilder registerController(Class classtype) {
+	public ControllerBuilder registerController(Class<?> classtype) {
 		return this.configurableApplicationContext.getControllerManager()
 				.addController(classtype);
 	}
 
-	public ControllerBuilder registerController(String id, Class classType) {
+	public ControllerBuilder registerController(String id, Class<?> classType) {
 		return this.configurableApplicationContext.getControllerManager()
 				.addController(id, classType);
 	}
 
 	public ControllerBuilder registerController(String id, String view,
-			boolean resolvedView, Class classType) {
+			boolean resolvedView, Class<?> classType) {
 		return this.configurableApplicationContext.getControllerManager()
 				.addController(id, view, resolvedView, classType);
 	}
 
 	public ControllerBuilder registerController(String id, String view,
-			boolean resolvedView, String name, Class classType, String actionId) {
+			boolean resolvedView, String name, Class<?> classType, String actionId) {
 		return this.configurableApplicationContext.getControllerManager()
 				.addController(id, view, resolvedView, name, classType,
 						actionId);
@@ -64,7 +64,7 @@ public class ComponentRegistryAdapter implements ComponentRegistry {
 
 	public ControllerBuilder registerController(String id, String view,
 			boolean resolvedView, DispatcherType dispatcherType, String name,
-			Class classType, String actionId) {
+			Class<?> classType, String actionId) {
 		return this.configurableApplicationContext.getControllerManager()
 				.addController(id, view, resolvedView, dispatcherType, name,
 						classType, actionId);
@@ -72,7 +72,7 @@ public class ComponentRegistryAdapter implements ComponentRegistry {
 
 	public ControllerBuilder registerController(String id, String view,
 			boolean resolvedView, DispatcherType dispatcherType, String name,
-			Class classType, String actionId, ActionType actionType) {
+			Class<?> classType, String actionId, ActionType actionType) {
 		return this.configurableApplicationContext.getControllerManager()
 				.addController(id, view, resolvedView, dispatcherType, name,
 						classType, actionId, actionType);
@@ -80,13 +80,13 @@ public class ComponentRegistryAdapter implements ComponentRegistry {
 
 	public ControllerBuilder registerController(String id, String view,
 			DispatcherType dispatcherType, boolean resolvedView, String name,
-			Class classType, String actionId, ActionType actionType) {
+			Class<?> classType, String actionId, ActionType actionType) {
 		return this.configurableApplicationContext.getControllerManager()
 				.addController(id, view, dispatcherType, resolvedView, name,
 						classType, actionId, actionType);
 	}
 
-	public Controller getRegisteredController(Class clazz) {
+	public Controller getRegisteredController(Class<?> clazz) {
 		return this.configurableApplicationContext.getControllerManager()
 				.getController(clazz);
 	}
@@ -103,12 +103,12 @@ public class ComponentRegistryAdapter implements ComponentRegistry {
 	}
 
 	public InterceptorBuilder registerInterceptor(String name,
-			Class interceptor, boolean isDefault) {
+			Class<?> interceptor, boolean isDefault) {
 		return this.configurableApplicationContext.getInterceptorManager()
 				.addInterceptor(name, interceptor, isDefault);
 	}
 
-	public Interceptor getRegisteredInterceptor(Class clazz) {
+	public Interceptor getRegisteredInterceptor(Class<?> clazz) {
 		return this.configurableApplicationContext.getInterceptorManager()
 				.getInterceptor(clazz);
 	}
@@ -144,12 +144,12 @@ public class ComponentRegistryAdapter implements ComponentRegistry {
 		this.configurableApplicationContext.getTypeManager().register(factory);
 	}
 
-	public void registerType(Class classType, Class type) {
+	public void registerType(Class<?> classType, Class<?> type) {
 		this.configurableApplicationContext.getTypeManager().register(
 				new DefaultTypeFactory(type, classType));
 	}
 
-	public TypeFactory getRegistredType(Class classType) {
+	public TypeFactory getRegistredType(Class<?> classType) {
 		return this.configurableApplicationContext.getTypeManager()
 				.getTypeFactory(classType);
 	}
@@ -168,7 +168,7 @@ public class ComponentRegistryAdapter implements ComponentRegistry {
 		return this.configurableApplicationContext.getConfiguration();
 	}
 
-	public boolean isStandardType(Class clazz) {
+	public boolean isStandardType(Class<?> clazz) {
 		return this.configurableApplicationContext.getTypeManager()
 				.isStandardType(clazz);
 	}

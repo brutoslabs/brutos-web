@@ -23,6 +23,8 @@ package org.brandao.brutos;
  */
 public class BrutosException extends RuntimeException {
 
+	private static final long serialVersionUID = -6690183851276751663L;
+
 	public BrutosException() {
 		super();
 	}

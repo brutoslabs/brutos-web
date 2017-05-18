@@ -26,7 +26,8 @@ import java.util.Map;
  */
 public abstract class ActionType {
 
-	private final static Map defaultTypes = new HashMap();
+	private final static Map<String, ActionType> defaultTypes = 
+			new HashMap<String, ActionType>();
 
 	public static final ActionType PARAMETER = new ActionType() {
 
