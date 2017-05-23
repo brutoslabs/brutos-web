@@ -30,10 +30,10 @@ import org.brandao.brutos.web.http.Download;
 public class StreamDownload implements Download{
 
     public InputStream input;
-    public Map<String,String> header;
+    public Map<String,Object> header;
     public long contentLength;
 
-    public StreamDownload( InputStream input, Map<String,String> header, long contentLength ){
+    public StreamDownload( InputStream input, Map<String,Object> header, long contentLength ){
         this.input = input;
         this.header = header;
         this.contentLength = contentLength;
@@ -43,7 +43,7 @@ public class StreamDownload implements Download{
         return null;
     }
 
-    public Map<String, String> getHeader() {
+    public Map<String, Object> getHeader() {
         return header;
     }
 

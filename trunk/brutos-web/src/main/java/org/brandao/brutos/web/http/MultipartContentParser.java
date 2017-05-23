@@ -20,12 +20,13 @@ package org.brandao.brutos.web.http;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Map;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 
 import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.MutableRequestParserEvent;
+import org.brandao.brutos.web.WebMvcRequest;
 
 /**
  * 
@@ -62,17 +63,15 @@ public class MultipartContentParser {
     
     private String path;
     
-    private MutableUploadEvent event;
+    private MutableRequestParserEvent event;
     
-    private Map<String,String> params;
-    
-    public MultipartContentParser(BrutosRequest request, 
-    		Map<String,String> params, MutableUploadEvent event){
+    public MultipartContentParser(WebMvcRequest request, 
+    		MutableRequestParserEvent event){
         this.request         = request.getServletRequest();
         this.buffer          = new byte[ 8192 ];
         this.noFields        = false;
         this.event           = event;
-        this.params          = params;
+        this.boundary        = "--" + request.getHeader(BOUNDARY);
     }
 
     private int readData( byte[] buf, ServletInputStream in ) throws IOException{
@@ -89,7 +88,7 @@ public class MultipartContentParser {
     	
     	this.in       = this.request.getInputStream();
     	this.len      = -1;
-    	this.boundary = "--" + this.params.get(BOUNDARY);
+    	//this.boundary = "--" + this.params.get(BOUNDARY);
 
         if( ( this.len = readData( this.buffer, this.in ) ) > 0 ){
             String s = new String( this.buffer, 0, this.len-2 );

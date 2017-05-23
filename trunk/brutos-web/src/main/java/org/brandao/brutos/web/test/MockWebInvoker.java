@@ -20,9 +20,9 @@ package org.brandao.brutos.web.test;
 import org.brandao.brutos.ActionResolver;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerManager;
-import org.brandao.brutos.ControllerResolver;
 import org.brandao.brutos.ObjectFactory;
 import org.brandao.brutos.RenderView;
+import org.brandao.brutos.RequestParserListenerFactory;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.web.WebInvoker;
 
@@ -40,22 +40,23 @@ public class MockWebInvoker extends WebInvoker{
     
     private Object response;
 
-    public MockWebInvoker( ControllerResolver controllerResolver, ObjectFactory objectFactory, 
-            ControllerManager controllerManager, ActionResolver actionResolver, 
-            ConfigurableApplicationContext applicationContext, RenderView renderView){
-        super(controllerResolver, objectFactory, 
-                controllerManager, actionResolver, applicationContext, 
-                renderView);
-    }
     
-    public boolean invoke( StackRequestElement element ){
+    public MockWebInvoker() {
+		super();
+	}
+
+	public MockWebInvoker(ObjectFactory objectFactory,
+			ControllerManager controllerManager, ActionResolver actionResolver,
+			ConfigurableApplicationContext applicationContext,
+			RenderView renderView,
+			RequestParserListenerFactory requestParserListenerFactory) {
+		super(objectFactory, controllerManager, actionResolver, applicationContext,
+				renderView, requestParserListenerFactory);
+	}
+
+	public boolean invoke( StackRequestElement element ){
         this.element = element;
         return super.invoke(element);
-    }
-
-    public boolean invoke( String requestId ){
-        this.requestId = requestId;
-        return super.invoke(requestId);
     }
 
     public StackRequestElement getElement() {
@@ -64,7 +65,7 @@ public class MockWebInvoker extends WebInvoker{
 
     public String getRequestId() {
         return this.requestId == null? 
-                this.element.getHandler().requestId() : 
+                this.element.getRequest().getRequestId() : 
                 this.requestId;
     }
 

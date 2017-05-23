@@ -22,10 +22,12 @@ import org.brandao.brutos.ActionType;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.DataType;
 import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ThrowableSafeData;
+import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -58,26 +60,48 @@ public class WebActionBuilder extends ActionBuilder{
 
     public ActionBuilder addThrowable( Class<?> target, String view, 
             String id, DispatcherType dispatcher, boolean resolvedView ){
-
-    	
     	
         ActionBuilder builder = super.addThrowable(target, view, id, dispatcher, resolvedView);
-        
         ThrowableSafeData thr = this.action.getThrowsSafeOnAction(target);
-		
         WebUtil.checkURI(thr.getView(), resolvedView && view != null);
-
         return builder;
-        
+    }
+    
+    public void setRequestMethod(RequestMethodType value){
+    	((WebAction)this.action).setRequestMethod(value);
+    }
+
+    public RequestMethodType getRequestMethod(){
+    	return ((WebAction)this.action).getRequestMethod();
     }
     
     public ActionBuilder setView(String value, boolean viewResolved){
-
-    	
-    	
         WebUtil.checkURI(value, viewResolved && value != null);
-        
         return super.setView(value, viewResolved);
     }
     
+	public ActionBuilder addRequestType(DataType value){
+		MediaType mediaType = MediaType.valueOf(value.getName());
+		((WebAction)this.action).getRequestTypeMap().add(mediaType);
+		return this;
+	}
+	
+	public ActionBuilder removeRequestType(DataType value){
+		MediaType mediaType = MediaType.valueOf(value.getName());
+		((WebAction)this.action).getRequestTypeMap().remove(mediaType);
+		return this;
+	}
+
+	public ActionBuilder addResponseType(DataType value){
+		MediaType mediaType = MediaType.valueOf(value.getName());
+		((WebAction)this.action).getResponseTypeMap().add(mediaType);
+		return this;
+	}
+	
+	public ActionBuilder removeResponseType(DataType value){
+		MediaType mediaType = MediaType.valueOf(value.getName());
+		((WebAction)this.action).getResponseTypeMap().remove(mediaType);
+		return this;
+	}
+	
 }

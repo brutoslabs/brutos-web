@@ -18,20 +18,23 @@
 package org.brandao.brutos.web;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.brandao.brutos.*;
-import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.web.http.BrutosRequest;
-import org.brandao.brutos.web.http.StaticBrutosRequest;
-import org.brandao.brutos.web.http.UploadListener;
-import org.brandao.brutos.web.http.UploadStats;
+import org.brandao.brutos.ActionResolver;
+import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.ControllerManager;
+import org.brandao.brutos.Invoker;
+import org.brandao.brutos.ObjectFactory;
+import org.brandao.brutos.RenderView;
+import org.brandao.brutos.RequestParserListenerFactory;
+import org.brandao.brutos.web.parser.JsonParserContentType;
+import org.brandao.brutos.web.parser.MultipartFormDataParserContentType;
 
 /**
  * 
@@ -43,88 +46,27 @@ public class WebInvoker extends Invoker{
         super();
     }
     
-    public WebInvoker(ControllerResolver controllerResolver, ObjectFactory objectFactory, 
+    public WebInvoker(ObjectFactory objectFactory, 
             ControllerManager controllerManager, ActionResolver actionResolver, 
-            ConfigurableApplicationContext applicationContext, RenderView renderView){
-        super(controllerResolver, objectFactory, controllerManager, actionResolver, 
-            applicationContext, renderView);
+            ConfigurableApplicationContext applicationContext, 
+            RenderView renderView, RequestParserListenerFactory requestParserListenerFactory){
+        super(objectFactory, controllerManager, actionResolver, 
+            applicationContext, renderView, requestParserListenerFactory);
+        
+		this.requestParser.registryParser(MediaType.valueOf("application/json"), 
+				new JsonParserContentType());
+		this.requestParser.registryParser(MediaType.valueOf("multipart/form-data"), 
+				new MultipartFormDataParserContentType());
+        
     }
-    
+
     public void invoker(ServletRequest request, 
             ServletResponse response, FilterChain chain) throws IOException, ServletException{
-        
-        RequestInfo requestInfo           = RequestInfo.getCurrentRequestInfo();
-        boolean isFirstCall               = requestInfo == null;
-        ServletRequest oldRequest         = null;
-        ServletResponse oldResponse       = null;
-        StaticBrutosRequest staticRequest = null;
-        
-        try{
-            staticRequest = new StaticBrutosRequest(request);
-            if(isFirstCall){
-                requestInfo   = new RequestInfo();
-                requestInfo.setRequest(staticRequest);
-                requestInfo.setResponse(response);
-                RequestInfo.setCurrent(requestInfo);
-            }
-            else{
-                oldRequest  = requestInfo.getRequest();
-                oldResponse = requestInfo.getResponse();
-                requestInfo.setResponse(response);
-                requestInfo.setRequest(staticRequest);
-            }
-            this.invoke0(staticRequest, request, response, chain);
-        }
-        finally{
-            if(isFirstCall){
-                RequestInfo.removeCurrent();
-            }
-            else{
-                requestInfo.setResponse(oldResponse);
-                requestInfo.setRequest(oldRequest);
-            }
-        }
-       
+    	
+    	WebMvcRequestImp webRequest   = new WebMvcRequestImp((HttpServletRequest)request);
+    	WebMvcResponseImp webResponse = new WebMvcResponseImp((HttpServletResponse)response, webRequest);
+    
+		super.invoke(webRequest, webResponse);
     }
 
-    @SuppressWarnings("unchecked")
-	protected void invoke0(BrutosRequest brutosRequest, ServletRequest request,
-            ServletResponse response, FilterChain chain) 
-                throws IOException, ServletException{
-        
-    	Map<String,UploadStats> mappedUploadStats = null;
-        String requestId                          = brutosRequest.getRequestId();
-        
-        try{
-            Scope scope             = 
-            		this.applicationContext.getScopes().get(WebScopeType.SESSION);
-            mappedUploadStats       = 
-            		(Map<String,UploadStats>)scope.get( BrutosConstants.SESSION_UPLOAD_STATS );
-            UploadListener listener = 
-            		brutosRequest.getUploadListener();
-
-            if(mappedUploadStats != null)
-                mappedUploadStats.put( requestId, listener.getUploadStats() );
-            
-            FileUploadException fue = null;
-            
-            try{
-                brutosRequest.parseRequest();
-            }
-            catch( FileUploadException e ){
-                fue = e;
-            }
-            
-            if(!invoke(requestId, fue)){
-                if(chain == null)
-                    ((HttpServletResponse)response).setStatus(HttpServletResponse.SC_NOT_FOUND);
-                else
-                    chain.doFilter(request, response);
-            }
-        }
-        finally{
-            if(mappedUploadStats != null)
-                mappedUploadStats.remove(requestId);
-        }
-    }
 }

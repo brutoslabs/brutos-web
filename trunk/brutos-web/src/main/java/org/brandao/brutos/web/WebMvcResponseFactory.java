@@ -24,11 +24,13 @@ import org.brandao.brutos.MvcResponseFactory;
  * 
  * @author Brandao
  */
+@Deprecated
 public class WebMvcResponseFactory implements MvcResponseFactory{
 
     public MvcResponse getResponse() {
         RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-        return new WebMvcResponseImp( requestInfo.getResponse() );
+        return null;
+        //return new WebMvcResponseImp( requestInfo.getResponse() );
     }
 
 }

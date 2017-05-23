@@ -22,6 +22,7 @@ package org.brandao.brutos.web;
  * @author Brandao
  *
  */
+@Deprecated
 public interface ConfigurableRequestParser 
 	extends RequestParser{
 

@@ -26,6 +26,7 @@ import org.brandao.brutos.web.WebApplicationContext;
  * 
  * @author Brandao
  */
+@Deprecated
 public class StaticBrutosRequest extends BrutosRequestWrapper{
 
     public StaticBrutosRequest(ServletRequest request){

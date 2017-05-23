@@ -26,6 +26,7 @@ import org.brandao.brutos.web.RequestParser;
  * 
  * @author Brandao
  */
+@Deprecated
 public interface HttpRequestParser extends RequestParser{
     
 	@Deprecated

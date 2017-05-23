@@ -28,6 +28,7 @@ import org.brandao.brutos.web.http.MutableUploadEvent;
  * @author Brandao
  *
  */
+@Deprecated
 public interface ParserContentType {
 
     void parserContentType(BrutosRequest request, 

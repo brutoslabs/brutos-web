@@ -41,6 +41,7 @@ import org.brandao.brutos.web.WebScopeType;
  * 
  * @author Brandao
  */
+@Deprecated
 public class BrutosRequestImp extends ServletRequestWrapper
         implements BrutosRequest{
 

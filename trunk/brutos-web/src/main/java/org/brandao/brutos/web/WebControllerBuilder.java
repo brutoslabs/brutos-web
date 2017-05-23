@@ -17,9 +17,18 @@
 
 package org.brandao.brutos.web;
 
-import org.brandao.brutos.*;
+import org.brandao.brutos.ActionBuilder;
+import org.brandao.brutos.ActionType;
+import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.ControllerBuilder;
+import org.brandao.brutos.ControllerManager;
+import org.brandao.brutos.DataType;
+import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.InterceptorManager;
+import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ThrowableSafeData;
+import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -52,8 +61,6 @@ public class WebControllerBuilder extends ControllerBuilder{
         
         if(!ActionType.PARAMETER.equals(type)){
             WebUtil.checkURI(id, true);
-            
-            
         }
         
         ActionBuilder builder =
@@ -90,13 +97,41 @@ public class WebControllerBuilder extends ControllerBuilder{
     }
     
     public ControllerBuilder setView(String value, boolean resolvedView){
-        
-        //if(this.controller.isResolvedView())
-        //    WebUtil.checkURI(value,true);
-     
     	WebUtil.checkURI(value, resolvedView && value != null);
-    	
         return super.setView(value, resolvedView);
     }
+    
+    public ControllerBuilder setRequestMethod(RequestMethodType value){
+    	((WebController)this.controller).setRequestMethod(value);
+    	return this;
+    }
+
+    public RequestMethodType getRequestMethod(){
+    	return ((WebController)this.controller).getRequestMethod();
+    }
+    
+	public ControllerBuilder addRequestType(DataType value){
+		MediaType mediaType = MediaType.valueOf(value.getName());
+		((WebController)this.controller).getRequestTypeMap().add(mediaType);
+		return this;
+	}
+	
+	public ControllerBuilder removeRequestType(DataType value){
+		MediaType mediaType = MediaType.valueOf(value.getName());
+		((WebController)this.controller).getRequestTypeMap().remove(mediaType);
+		return this;
+	}
+
+	public ControllerBuilder addResponseType(DataType value){
+		MediaType mediaType = MediaType.valueOf(value.getName());
+		((WebController)this.controller).getResponseTypeMap().add(mediaType);
+		return this;
+	}
+	
+	public ControllerBuilder removeResponseType(DataType value){
+		MediaType mediaType = MediaType.valueOf(value.getName());
+		((WebController)this.controller).getResponseTypeMap().remove(mediaType);
+		return this;
+	}
     
 }

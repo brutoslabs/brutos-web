@@ -17,85 +17,39 @@
 
 package org.brandao.brutos.web;
 
+import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.Locale;
+
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+
 import org.brandao.brutos.*;
 
 /**
  * 
  * @author Brandao
  */
-public class WebMvcResponseImp implements WebMvcResponse{
+public class WebMvcResponseImp
+	extends DefaultMvcResponse
+	implements WebMvcResponse {
 
-    private ServletResponse response;
+    private HttpServletResponse response;
 
-    public WebMvcResponseImp( ServletResponse response ){
+    public WebMvcResponseImp(HttpServletResponse response, MvcRequest request){
         this.response = response;
+        this.request  = request;
     }
 
-    public void process( Object object ){
-        try{
-            if( object == null )
-                return;
-            
-            PrintWriter out = response.getWriter();
-            out.print( String.valueOf( object ) );
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
+	public ServletResponse getServletResponse() {
+		return this.response;
+	}
 
-    public OutputStream processStream(){
-        try{
-            return response.getOutputStream();
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
-
-    public void setInfo(String name, String value) {
-        if( response instanceof HttpServletResponse )
-            ((HttpServletResponse)response).addHeader(name, value);
-    }
-
-    public String getType() {
-        return response.getContentType();
-    }
-
-    public int getLength() {
-        return -1;
-    }
-
-    public String getCharacterEncoding() {
-        return response.getCharacterEncoding();
-    }
-
-    public Locale getLocale() {
-        return response.getLocale();
-    }
-
-    public void setLocale(Locale value) {
-        response.setLocale(value);
-    }
-
-    public void setType(String value) {
-        response.setContentType(value);
-    }
-
-    public void setLength(int value) {
-        response.setContentLength(value);
-    }
-
-    public void setCharacterEncoding(String value) {
-        response.setCharacterEncoding(value);
-    }
-
-    public ServletResponse getServletResponse() {
-        return response;
-    }
+	public OutputStream processStream() throws IOException {
+		return this.response.getOutputStream();
+	}
+	
+	public void setHeader(String name, Object value){
+		this.response.addHeader(name, String.valueOf(value));
+	}
+	
 }

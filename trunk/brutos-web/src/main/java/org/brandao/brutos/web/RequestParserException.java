@@ -24,6 +24,7 @@ import org.brandao.brutos.BrutosException;
  * @author Bradnao
  *
  */
+@Deprecated
 public class RequestParserException 
 	extends BrutosException{
 

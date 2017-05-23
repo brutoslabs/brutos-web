@@ -24,6 +24,7 @@ import java.util.Map;
  * 
  * @author Brandao
  */
+@Deprecated
 public abstract class AbstractRequestParser 
 	implements ConfigurableRequestParser{
 

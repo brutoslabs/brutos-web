@@ -31,6 +31,7 @@ import org.brandao.brutos.scope.Scope;
  * 
  * @author Brandao
  */
+@Deprecated
 public class WebControllerResolver implements ControllerResolver{
 
     private static Map<String,StringPattern> uris = new HashMap<String, StringPattern>();
@@ -56,12 +57,12 @@ public class WebControllerResolver implements ControllerResolver{
     public Controller getController(ControllerManager controllerManager, 
             ConfigurableInterceptorHandler handler) {
         String uri = handler.requestId();
-        Iterator controllers = controllerManager.getAllControllers();
+        Iterator<Controller> controllers = controllerManager.getAllControllers();
         Scope paramScope =
                 handler.getContext().getScopes().get(WebScopeType.PARAM);
         
         while(controllers.hasNext()){
-            Controller controller = (Controller)controllers.next();
+            Controller controller = controllers.next();
             ActionType actionType = controller.getActionType();
             String controllerId = controller.getId();
             
@@ -157,7 +158,7 @@ public class WebControllerResolver implements ControllerResolver{
         ResourceAction resourceAction = 
                 actionResolver.getResourceAction(action);
 
-        handler.setResourceAction(resourceAction);
+        //handler.setResourceAction(resourceAction);
     }
     
     private void updateRequest(String uri, Scope paramScope, StringPattern uriMap){
@@ -169,7 +170,7 @@ public class WebControllerResolver implements ControllerResolver{
         }
     }
     
-    public Controller getController(ControllerManager controllerManager, Class controllerClass) {
+    public Controller getController(ControllerManager controllerManager, Class<?> controllerClass) {
         Controller controller =
                 controllerManager.getController(controllerClass);
 

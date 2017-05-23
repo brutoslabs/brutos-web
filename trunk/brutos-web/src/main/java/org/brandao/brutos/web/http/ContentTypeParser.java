@@ -27,6 +27,7 @@ import org.brandao.brutos.web.RequestParserException;
  * @author Brandao
  *
  */
+@Deprecated
 public class ContentTypeParser {
 
 	public static final String TYPE_FIELD = "type";

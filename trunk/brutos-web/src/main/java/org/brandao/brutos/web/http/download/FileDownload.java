@@ -33,16 +33,16 @@ public class FileDownload implements Download{
 
     private File file;
     private String contentType;
-    private Map<String,String> header;
+    private Map<String,Object> header;
     
     public FileDownload( File file ){
         this( file, null, null );
-        this.header = new HashMap<String,String>();
+        this.header = new HashMap<String,Object>();
         this.header.put( "Content-Disposition" ,
                     "attachment;filename=" + file.getName() + ";" );
     }
 
-    public FileDownload( File file, String contentType, Map<String,String> header ){
+    public FileDownload( File file, String contentType, Map<String,Object> header ){
         this.file        = file;
         this.contentType = contentType;
         this.header      = header;
@@ -52,7 +52,7 @@ public class FileDownload implements Download{
         return this.contentType;
     }
 
-    public Map<String, String> getHeader() {
+    public Map<String, Object> getHeader() {
         return this.header;
     }
 

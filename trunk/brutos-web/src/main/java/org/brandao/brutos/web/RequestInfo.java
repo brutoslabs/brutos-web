@@ -24,6 +24,7 @@ import javax.servlet.ServletResponse;
  * 
  * @author Brandao
  */
+@Deprecated
 public class RequestInfo {
 
     private static final ThreadLocal currentRequestInfo = new ThreadLocal();

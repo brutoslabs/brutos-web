@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.web;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Properties;
 
@@ -32,15 +33,19 @@ import org.brandao.brutos.scope.IOCScope;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.DefaultTypeFactory;
 import org.brandao.brutos.type.TypeFactory;
+import org.brandao.brutos.web.http.Download;
 import org.brandao.brutos.web.http.JSPRenderView;
-import org.brandao.brutos.web.http.DefaultUploadListenerFactory;
+import org.brandao.brutos.web.http.UploadedFile;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.HeaderScope;
 import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
+import org.brandao.brutos.web.type.DownloadType;
+import org.brandao.brutos.web.type.FileType;
 import org.brandao.brutos.web.type.JSONType;
+import org.brandao.brutos.web.type.UploadedFileType;
 
 /**
  * 
@@ -83,59 +88,13 @@ public abstract class AbstractWebApplicationContext
         return this.resources;
     }
 
-    protected void initUploadListener(){
-        try{
-            Properties config = this.getConfiguration();
-            String uploadListenerFactoryName =
-                config.getProperty( BrutosConstants.UPLOAD_LISTENER_CLASS,
-                    DefaultUploadListenerFactory.class.getName() );
-
-            Class<?> ulfClass = Class.forName(
-                uploadListenerFactoryName,
-                true,
-                Thread.currentThread().getContextClassLoader() );
-
-            Scope contextScope = getScopes()
-                    .get( WebScopeType.APPLICATION );
-
-            contextScope.put(
-                BrutosConstants.UPLOAD_LISTENER_FACTORY,
-                ClassUtil.getInstance(ulfClass) );
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
-
-    protected void initRequestParser(){
-        try{
-            Properties config = this.getConfiguration();
-            
-            String requestParserName =
-                config.getProperty( BrutosConstants.REQUEST_PARSER_CLASS,
-                    BrutosConstants.DEFAULT_REQUEST_PARSER );
-
-            Class<?> rpClass = Class.forName(
-                requestParserName,
-                true,
-                Thread.currentThread().getContextClassLoader() );
-
-            Scope contextScope = getScopes()
-                    .get( WebScopeType.APPLICATION );
-
-            contextScope.put(
-                BrutosConstants.HTTP_REQUEST_PARSER,
-                ClassUtil.getInstance(rpClass) );
-        }
-        catch( Exception e ){
-            throw new BrutosException( e );
-        }
-    }
-
     protected void initTypes(){
         super.initTypes();
         this.typeManager.remove(Serializable.class);
         this.typeManager.register(new DefaultTypeFactory(JSONType.class, Serializable.class));
+        this.typeManager.register(new DefaultTypeFactory(DownloadType.class, Download.class));
+        this.typeManager.register(new DefaultTypeFactory(UploadedFileType.class, UploadedFile.class));
+        this.typeManager.register(new DefaultTypeFactory(FileType.class, File.class));
     }
     
     protected void initScopes(){
@@ -160,14 +119,16 @@ public abstract class AbstractWebApplicationContext
         
         String tmp;
         Properties config = this.getConfiguration();
-        
+
         tmp = config
-                .getProperty(BrutosConstants.CONTROLLER_RESOLVER_CLASS, 
-                              WebControllerResolver.class.getName() );
+                .getProperty(BrutosConstants.REQUEST_PARSER_LISTENER,
+                              WebRequestParserListener.class.getName() );
 
-        config.put(BrutosConstants.CONTROLLER_RESOLVER_CLASS,
-                    tmp );
-
+        config
+                .put(BrutosConstants.REQUEST_PARSER_LISTENER,
+                              tmp);
+        
+        /*
         tmp = config
                 .getProperty(BrutosConstants.RESPONSE_FACTORY,
                               WebMvcResponseFactory.class.getName() );
@@ -181,7 +142,8 @@ public abstract class AbstractWebApplicationContext
 
         config.put(BrutosConstants.REQUEST_FACTORY,
                     tmp );
-
+         */
+        
         tmp = config
                 .getProperty(BrutosConstants.ACTION_RESOLVER,
                               WebActionResolver.class.getName() );
@@ -372,26 +334,14 @@ public abstract class AbstractWebApplicationContext
     }
     
     public void flush(){
-
         this.initLogger();
-        
         this.overrideConfig();
-        
         this.initInstances();
-        
         this.initScopes();
-        
         this.initTypes();
-        
         this.invoker.flush();
-        
         this.loadDefinitions(this);
-
         this.initComponents();
-
-        this.initUploadListener();
-        
-        this.initRequestParser();
     }
     
 }
