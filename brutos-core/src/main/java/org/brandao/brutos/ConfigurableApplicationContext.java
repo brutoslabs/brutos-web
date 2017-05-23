@@ -26,8 +26,10 @@ import org.brandao.brutos.TypeManager;
  */
 public interface ConfigurableApplicationContext extends ApplicationContext {
 
+	@Deprecated
 	MvcRequestFactory getRequestFactory();
 
+	@Deprecated
 	MvcResponseFactory getResponseFactory();
 
 	void setInterceptorManager(InterceptorManager interceptorManager);
@@ -54,6 +56,7 @@ public interface ConfigurableApplicationContext extends ApplicationContext {
 
 	ObjectFactory getObjectFactory();
 
+	@Deprecated
 	ControllerResolver getControllerResolver();
 
 	ActionResolver getActionResolver();

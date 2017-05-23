@@ -154,7 +154,7 @@ public class ControllerBuilder {
 						new Object[] { target.getSimpleName(),
 								controller.getClassType().getSimpleName() }));
 
-		ThrowableSafeData thr = new ThrowableSafeData();
+		ThrowableSafeData thr = this.createThrowableSafeData();
 		thr.setParameterName(id);
 		thr.setTarget(target);
 		thr.setView(view);
@@ -164,6 +164,10 @@ public class ControllerBuilder {
 		return this;
 	}
 
+	protected ThrowableSafeData createThrowableSafeData(){
+		return new ThrowableSafeData();
+	}
+	
 	public ControllerBuilder setDefaultAction(String id) {
 
 		id = StringUtil.adjust(id);
@@ -293,7 +297,7 @@ public class ControllerBuilder {
 		if (controller.getAction(id) != null)
 			throw new MappingException("duplicate action: " + id);
 
-		Action action = new Action();
+		Action action = this.createAction();
 		action.setCode(Action.getNextId());
 		action.setController(controller);
 		action.setResolvedView(resolvedView);
@@ -321,6 +325,10 @@ public class ControllerBuilder {
 		return actionBuilder;
 	}
 
+	protected Action createAction(){
+		return new Action();
+	}
+	
 	public ControllerBuilder addActionAlias(String id, ActionBuilder parent) {
 
 		id = StringUtil.adjust(id);

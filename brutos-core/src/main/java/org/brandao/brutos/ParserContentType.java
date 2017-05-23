@@ -17,13 +17,16 @@
 
 package org.brandao.brutos;
 
+import java.util.Properties;
+
 /**
  * 
  * @author Brandao
+ *
  */
-@Deprecated
-public interface MvcRequestFactory {
+public interface ParserContentType {
 
-	MvcRequest getRequest();
-
+    void parserContentType(MvcRequest request, 
+    		MutableRequestParserEvent requestParserInfo, Properties config) throws RequestParserException;
+	
 }

@@ -23,23 +23,20 @@ package org.brandao.brutos;
  */
 public class RequestProvider {
 
-	private static final ThreadLocal requests;
+	private static final ThreadLocal<MvcRequest> requests;
 
 	static {
-		requests = new ThreadLocal();
+		requests = new ThreadLocal<MvcRequest>();
 	}
 
-	private MvcRequestFactory factory;
-
-	public MvcRequest start() {
-		MvcRequest current = (MvcRequest) requests.get();
-		MvcRequest request = this.factory.getRequest();
+	public MvcRequest init(MvcRequest request) {
+		MvcRequest current = requests.get();
 		requests.set(request);
 		return current;
 	}
 
 	public static MvcRequest getRequest() {
-		return (MvcRequest) requests.get();
+		return requests.get();
 	}
 
 	public void destroy(MvcRequest old) {
@@ -47,14 +44,6 @@ public class RequestProvider {
 			requests.remove();
 		else
 			requests.set(old);
-	}
-
-	public MvcRequestFactory getFactory() {
-		return factory;
-	}
-
-	public void setFactory(MvcRequestFactory factory) {
-		this.factory = factory;
 	}
 
 }

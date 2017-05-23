@@ -19,7 +19,9 @@ package org.brandao.brutos;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.Controller;
 
 /**
  * 
@@ -27,19 +29,21 @@ import org.brandao.brutos.mapping.Action;
  */
 public interface ResourceAction {
 
-	public Object invoke(Object source, Object[] args)
+	Object invoke(Object source, Object[] args)
 			throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException;
 
-	public Action getMethodForm();
+	Controller getController();
+	
+	Action getMethodForm();
 
-	public Method getMethod();
+	Method getMethod();
 
-	public Class returnType();
+	Class<?> returnType();
 
-	public Class[] getParametersType();
+	Class<?>[] getParametersType();
 
-	public Class getResourceClass();
+	Class<?> getResourceClass();
 
-	public boolean isAbstract();
+	boolean isAbstract();
 }

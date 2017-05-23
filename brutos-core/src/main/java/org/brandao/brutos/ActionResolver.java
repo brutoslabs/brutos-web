@@ -17,7 +17,6 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.interceptor.InterceptorHandler;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 
@@ -27,11 +26,17 @@ import org.brandao.brutos.mapping.Controller;
  */
 public interface ActionResolver {
 
-	ResourceAction getResourceAction(Controller controller,
-			InterceptorHandler handler);
+	ResourceAction getResourceAction(ControllerManager controllerManager,
+			MutableMvcRequest request);
 
-	ResourceAction getResourceAction(Controller controller, String actionId,
-			InterceptorHandler handler);
+	void addActionTypeResolver(ActionType key, ActionTypeResolver value);
+
+	void removeActionTypeResolver(ActionType key);
+	
+	ResourceAction getResourceAction(Controller controller,
+			MutableMvcRequest request);
+
+	ResourceAction getResourceAction(Controller controller, String actionId, MutableMvcRequest request);
 
 	ResourceAction getResourceAction(Action action);
 

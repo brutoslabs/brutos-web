@@ -17,13 +17,36 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.BrutosException;
+
 /**
  * 
- * @author Brandao
+ * @author Bradnao
+ *
  */
-@Deprecated
-public interface MvcRequestFactory {
+public class RequestParserException 
+	extends BrutosException{
 
-	MvcRequest getRequest();
+	private static final long serialVersionUID = 1054696552486976300L;
+
+	public RequestParserException() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public RequestParserException(String message, Throwable cause) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
+	}
+
+	public RequestParserException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
+
+	public RequestParserException(Throwable cause) {
+		super(cause);
+		// TODO Auto-generated constructor stub
+	}
 
 }

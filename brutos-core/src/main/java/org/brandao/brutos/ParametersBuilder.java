@@ -202,7 +202,6 @@ public class ParametersBuilder extends RestrictionBuilder {
 				mapping, typeDef, value, nullable, false, classType);
 	}
 
-	@SuppressWarnings("unchecked")
 	public ParameterBuilder addParameter(String name, ScopeType scope,
 			EnumerationType enumProperty, String temporalProperty,
 			String mapping, Type typeDef, Object value, boolean nullable,

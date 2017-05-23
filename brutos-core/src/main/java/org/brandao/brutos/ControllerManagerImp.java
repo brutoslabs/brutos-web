@@ -123,7 +123,7 @@ public class ControllerManagerImp implements ControllerManager {
 			throw new IllegalArgumentException("invalid class type: "
 					+ classType);
 
-		Controller controller = new Controller(this.applicationContext);
+		Controller controller = this.creatControllerInstance();
 
 		controller.setClassType(classType);
 
@@ -150,6 +150,10 @@ public class ControllerManagerImp implements ControllerManager {
 		return this.getCurrent();
 	}
 
+	protected Controller creatControllerInstance(){
+		return new Controller(this.applicationContext);
+	}
+	
 	private Method getMethodAction(String methodName, Class<?> classe) {
 		try {
 			Method method = classe

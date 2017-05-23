@@ -73,6 +73,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 	protected TypeManager typeManager;
 
+	protected RequestParserListenerFactory requestParserListenerFactory;
+	
 	public AbstractApplicationContext() {
 		this(null);
 	}
@@ -102,9 +104,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		this.renderView = getNewRenderView(configuration);
 		this.codeGenerator = getNewCodeGenerator(configuration);
 		this.typeManager = getNewTypeManager();
+		this.requestParserListenerFactory = getRequestParserListenerFactory();
 		this.invoker = createInvoker(this.controllerResolver,
 				this.objectFactory, this.controllerManager,
-				this.actionResolver, this, this.renderView);
+				this.actionResolver, this, this.renderView,
+				this.requestParserListenerFactory);
 	}
 
 	protected void initTypes() {
@@ -324,7 +328,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			ObjectFactory objectFactory, ControllerManager controllerManager,
 			ActionResolver actionResolver,
 			ConfigurableApplicationContext applicationContext,
-			RenderView renderView) {
+			RenderView renderView,
+			RequestParserListenerFactory requestParserListenerFactory) {
 		try {
 			String className = configuration.getProperty(
 					BrutosConstants.INVOKER_CLASS,
@@ -333,17 +338,20 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			Class<?> clazz = ClassUtil.get(className);
 
 			Invoker instance = (Invoker) ClassUtil.getInstance(clazz,
-					new Class[] { ControllerResolver.class,
+					new Class[] {
 							ObjectFactory.class, ControllerManager.class,
 							ActionResolver.class,
 							ConfigurableApplicationContext.class,
-							RenderView.class }, new Object[] {
-							controllerResolver, objectFactory,
+							RenderView.class,
+							RequestParserListenerFactory.class}, new Object[] {
+							objectFactory,
 							controllerManager, actionResolver,
-							applicationContext, renderView });
+							applicationContext, renderView,
+							requestParserListenerFactory});
 
 			return instance;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new BrutosException(e);
 		}
 	}
@@ -377,6 +385,25 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 	}
 
+    protected RequestParserListenerFactory getRequestParserListenerFactory(){
+        try{
+            Properties config = this.getConfiguration();
+            String uploadListenerFactoryName =
+                config.getProperty( BrutosConstants.REQUEST_PARSER_LISTENER,
+                    RequestParserListenerFactoryImp.class.getName() );
+
+            Class<?> ulfClass = Class.forName(
+                uploadListenerFactoryName,
+                true,
+                Thread.currentThread().getContextClassLoader() );
+
+            return (RequestParserListenerFactory)ClassUtil.getInstance(ulfClass);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+	
 	public void destroy() {
 		this.objectFactory.destroy();
 		this.renderView.destroy();
@@ -496,9 +523,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 	public Object getController(Class<?> clazz) {
 
+		/*
 		Controller controller = controllerResolver.getController(
 				controllerManager, clazz);
-
+		*/
+		
+		Controller controller = controllerManager.getController(clazz);
+		
 		if (controller == null)
 			throw new BrutosException(String.format(
 					"controller not configured: %s",
@@ -554,21 +585,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	public void flush() {
-
 		this.initLogger();
-
 		this.initInstances();
-
 		this.initScopes();
-
 		this.initTypes();
-
 		this.invoker.flush();
-
 		this.loadDefinitions(new ComponentRegistryAdapter(this));
-
 		this.initComponents();
-
 	}
 
 }

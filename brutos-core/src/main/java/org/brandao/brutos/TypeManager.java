@@ -28,13 +28,13 @@ public interface TypeManager {
 
 	void register(TypeFactory factory);
 
-	void remove(Class type);
+	void remove(Class<?> type);
 
 	void remove(TypeFactory factory);
 
-	List getAllTypes();
+	List<TypeFactory> getAllTypes();
 
-	boolean isStandardType(Class clazz);
+	boolean isStandardType(Class<?> clazz);
 
 	Type getType(Object classType);
 

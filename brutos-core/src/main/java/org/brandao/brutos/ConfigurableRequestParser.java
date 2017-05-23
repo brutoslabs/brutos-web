@@ -20,10 +20,14 @@ package org.brandao.brutos;
 /**
  * 
  * @author Brandao
+ *
  */
-@Deprecated
-public interface MvcRequestFactory {
+public interface ConfigurableRequestParser 
+	extends RequestParser{
 
-	MvcRequest getRequest();
-
+	void registryParser(DataType dataType, 
+			ParserContentType parser) throws RequestParserException;
+	
+	void removeParser(DataType dataType) throws RequestParserException;
+	
 }
