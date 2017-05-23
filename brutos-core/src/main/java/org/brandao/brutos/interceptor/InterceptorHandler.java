@@ -18,7 +18,11 @@
 package org.brandao.brutos.interceptor;
 
 import java.text.ParseException;
+
 import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.DataType;
+import org.brandao.brutos.MvcRequest;
+import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.ResourceAction;
 
 /**
@@ -29,6 +33,8 @@ public interface InterceptorHandler {
 
 	ResourceAction getResourceAction();
 
+	DataType getRequestType();
+	
 	Object getResource();
 
 	String requestId();
@@ -40,4 +46,8 @@ public interface InterceptorHandler {
 
 	Object getResult();
 
+	MvcRequest getRequest();
+	
+	MvcResponse getResponse();
+	
 }

@@ -29,7 +29,7 @@ public interface Download {
 
 	String getContentType();
 
-	Map getHeader();
+	Map<String, Object> getHeader();
 
 	long getContentLength();
 

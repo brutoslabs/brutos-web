@@ -26,6 +26,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.DataType;
 import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
@@ -78,14 +79,36 @@ public class Action {
 
 	private Validator resultValidator;
 
+	private Set<DataType> requestTypes;
+
+	private Set<DataType> responseTypes;
+	
 	public Action() {
 		this.parameters = new ArrayList<ParameterAction>();
-		this.parametersType = new ArrayList<Class<?>>();
-		this.throwsSafe = new HashMap<Class<?>, ThrowableSafeData>();
-		this.dispatcherType = DispatcherType.INCLUDE;
-		this.returnClass = void.class;
-		this.redirect = false;
-		this.alias = new ArrayList<String>();
+		this.parametersType 	= new ArrayList<Class<?>>();
+		this.throwsSafe 		= new HashMap<Class<?>, ThrowableSafeData>();
+		this.dispatcherType 	= DispatcherType.INCLUDE;
+		this.returnClass 		= void.class;
+		this.redirect 			= false;
+		this.alias 				= new ArrayList<String>();
+		this.requestTypes 	    = new HashSet<DataType>();
+		this.responseTypes      = new HashSet<DataType>();
+	}
+
+	public Set<DataType> getRequestTypes() {
+		return requestTypes;
+	}
+
+	public void setRequestTypes(Set<DataType> requestTypes) {
+		this.requestTypes = requestTypes;
+	}
+
+	public Set<DataType> getResponseTypes() {
+		return responseTypes;
+	}
+
+	public void setResponseTypes(Set<DataType> responseTypes) {
+		this.responseTypes = responseTypes;
 	}
 
 	public String getName() {
@@ -291,7 +314,6 @@ public class Action {
 		throw new BrutosException(msg);
 	}
 
-	@SuppressWarnings("unchecked")
 	private boolean isCompatible(Method m, Class<?>[] classArgs) {
 		Class<?>[] params = m.getParameterTypes();
 		if (params.length == classArgs.length) {

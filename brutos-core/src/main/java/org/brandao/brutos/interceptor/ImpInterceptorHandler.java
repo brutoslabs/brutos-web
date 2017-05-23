@@ -20,6 +20,9 @@ package org.brandao.brutos.interceptor;
 import java.text.ParseException;
 
 import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.DataType;
+import org.brandao.brutos.MvcRequest;
+import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.StackRequestElement;
@@ -28,6 +31,7 @@ import org.brandao.brutos.StackRequestElement;
  * 
  * @author Brandao
  */
+@Deprecated
 public class ImpInterceptorHandler implements ConfigurableInterceptorHandler {
 
 	private String URI;
@@ -137,6 +141,21 @@ public class ImpInterceptorHandler implements ConfigurableInterceptorHandler {
 
 	public StackRequestElement getStackRequestElement() {
 		return this.stackRequestElement;
+	}
+
+	public DataType getRequestType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public MvcRequest getRequest() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public MvcResponse getResponse() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
