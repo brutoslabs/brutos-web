@@ -17,15 +17,14 @@
 
 package org.brandao.brutos.web.parser;
 
-import java.util.Map;
 import java.util.Properties;
 
-import org.brandao.brutos.web.ParserContentType;
-import org.brandao.brutos.web.RequestParserException;
-import org.brandao.brutos.web.http.BrutosRequest;
+import org.brandao.brutos.MutableMvcRequest;
+import org.brandao.brutos.MutableRequestParserEvent;
+import org.brandao.brutos.MvcRequest;
+import org.brandao.brutos.web.WebMvcRequest;
 import org.brandao.brutos.web.http.MultipartContentParser;
 import org.brandao.brutos.web.http.MultipartContentParser.Input;
-import org.brandao.brutos.web.http.MutableUploadEvent;
 
 /**
  * 
@@ -33,7 +32,7 @@ import org.brandao.brutos.web.http.MutableUploadEvent;
  *
  */
 public class MultipartFormDataParserContentType 
-	implements ParserContentType{
+	implements org.brandao.brutos.ParserContentType{
 
 	private static final String MAX_LENGTH_PROPERTY	= "org.brandao.brutos.request.max_length";
 
@@ -43,9 +42,9 @@ public class MultipartFormDataParserContentType
 
 	private static final String DEFAULT_PATH		= null;
 	
-	public void parserContentType(BrutosRequest request, 
-			MutableUploadEvent uploadEvent, Properties config, 
-			Map<String, String> params)	throws RequestParserException {
+	public void parserContentType(MvcRequest request, 
+    		MutableRequestParserEvent requestParserInfo, 
+    		Properties config)	throws org.brandao.brutos.RequestParserException {
 		
         try{
             Long maxLength =
@@ -54,20 +53,22 @@ public class MultipartFormDataParserContentType
             String path = 
         		config.getProperty(PATH_PROPERTY, DEFAULT_PATH);
                 
+            
         	MultipartContentParser mpcp = 
-        			new MultipartContentParser(request, params, uploadEvent);
+        			new MultipartContentParser((WebMvcRequest)request, requestParserInfo);
         	mpcp.setMaxLength(maxLength);
         	mpcp.setPath(path);
         	mpcp.start();
         	
+        	MutableMvcRequest r = (MutableMvcRequest)request;
             while(mpcp.hasMoreElements()){
                 Input input = mpcp.nextElement();
-                request.setObject(input.getName(), input.getValue() );
+                r.setParameter(input.getName(), input.getValue() );
             }
             
         }
         catch(Throwable e){
-        	throw new RequestParserException(e);
+        	throw new org.brandao.brutos.RequestParserException(e);
         }
 		
 	}

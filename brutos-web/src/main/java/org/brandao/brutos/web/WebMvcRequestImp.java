@@ -17,54 +17,48 @@
 
 package org.brandao.brutos.web;
 
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Locale;
-import javax.servlet.ServletRequest;
-import org.brandao.brutos.web.http.BrutosRequest;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.brandao.brutos.DefaultMvcRequest;
 
 /**
  * 
  * @author Brandao
  */
-public class WebMvcRequestImp implements WebMvcRequest{
+public class WebMvcRequestImp extends DefaultMvcRequest{
 
-    private ServletRequest request;
+    private HttpServletRequest request;
 
-    public WebMvcRequestImp( ServletRequest request ){
+    public WebMvcRequestImp(HttpServletRequest request){
         this.request = request;
+        super.setType(MediaType.valueOf(request.getContentType()));
     }
+
+	public InputStream getStream() throws IOException {
+		return request.getInputStream();
+	}
     
-    public Object getValue(String name) {
-        return ((BrutosRequest)request).getObject(name);
-    }
+	public Object getHeader(String value) {
+		Object r = super.getHeader(value);
+		return r == null? request.getHeader(value) : r;
+	}
 
-    public Object getProperty(String name) {
-        return request.getAttribute(name);
-    }
+	public Object getParameter(String name) {
+		Object r = super.getParameter(name);
+		return r == null? request.getParameter(name) : r;
+	}
 
-    public InputStream getStream() throws IOException{
-        return request.getInputStream();
-    }
-
-    public String getType() {
-        return request.getContentType();
-    }
-
-    public int getLength() {
-        return request.getContentLength();
-    }
-
-    public String getCharacterEncoding() {
-        return request.getCharacterEncoding();
-    }
-
-    public Locale getLocale() {
-        return request.getLocale();
-    }
-
-    public ServletRequest getServletRequest() {
-        return request;
-    }
-
+	public Object getProperty(String name) {
+		Object r = super.getProperty(name);
+		return r == null? request.getAttribute(name) : r;
+	}
+    
+	public void setProperty(String name, Object value) {
+		request.setAttribute(name, String.valueOf(value));
+	}
+    
 }

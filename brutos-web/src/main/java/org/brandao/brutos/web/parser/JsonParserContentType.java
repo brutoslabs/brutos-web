@@ -17,16 +17,14 @@
 
 package org.brandao.brutos.web.parser;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.servlet.ServletInputStream;
-
-import org.brandao.brutos.web.ParserContentType;
-import org.brandao.brutos.web.RequestParserException;
-import org.brandao.brutos.web.http.BrutosRequest;
-import org.brandao.brutos.web.http.MutableUploadEvent;
+import org.brandao.brutos.MutableMvcRequest;
+import org.brandao.brutos.MutableRequestParserEvent;
+import org.brandao.brutos.MvcRequest;
 import org.brandao.jbrgates.JSONDecoder;
 
 /**
@@ -35,13 +33,13 @@ import org.brandao.jbrgates.JSONDecoder;
  *
  */
 @SuppressWarnings("unchecked")
-public class JsonParserContentType implements ParserContentType{
+public class JsonParserContentType implements org.brandao.brutos.ParserContentType{
 
-	public void parserContentType(BrutosRequest request, 
-    		MutableUploadEvent uploadEvent, Properties config, 
-    		Map<String, String> params) throws RequestParserException {
+	public void parserContentType(MvcRequest request, 
+    		MutableRequestParserEvent requestParserInfo, 
+    		Properties config) throws org.brandao.brutos.RequestParserException {
 		try{
-			ServletInputStream stream = request.getInputStream();
+			InputStream stream = request.getStream();
 			//String charset = params.get("charset");
 			
 	        JSONDecoder decoder = new JSONDecoder(stream);
@@ -49,16 +47,16 @@ public class JsonParserContentType implements ParserContentType{
 	        Map<String, Object> data = (Map<String, Object>)decoder.decode();
 	        
 	        if( data != null ){
-	        	addValues(request, null, data);
+	        	addValues((MutableMvcRequest)request, null, data);
 	        }
 		}
 		catch(Throwable e){
-			throw new RequestParserException(e);
+			throw new org.brandao.brutos.RequestParserException(e);
 		}
 		
 	}
 	
-	private void addValues(BrutosRequest request, String prefix, Map<String, Object> data){
+	private void addValues(MutableMvcRequest request, String prefix, Map<String, Object> data){
 		for(String fieldName: data.keySet()){
 			
 			String fullFieldName = 
@@ -71,7 +69,7 @@ public class JsonParserContentType implements ParserContentType{
 		}
 	}
 
-	private void addValue(BrutosRequest request, String fullFieldName, Object value){
+	private void addValue(MutableMvcRequest request, String fullFieldName, Object value){
 		if(value instanceof Map){
 			addValues(request, fullFieldName, (Map<String, Object>)value);
 		}

@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.type.SerializableType;
+import org.brandao.brutos.web.MediaType;
 import org.brandao.jbrgates.DefaultJSONContext;
 import org.brandao.jbrgates.JSONContext;
 
@@ -50,8 +51,8 @@ public class JSONType extends SerializableType {
    }
 
     public void show(MvcResponse response, Object value) throws IOException {
-        response.setType( "application/json" );
-        response.setCharacterEncoding( "UTF-8" );
+        response.setType(MediaType.valueOf("application/json") );
+        //response.setCharacterEncoding( "UTF-8" );
         //JSONEncoder encoder = new JSONEncoder( response.processStream() );
         //encoder.encode( value );
         String str = jsonContext.encode(value);
