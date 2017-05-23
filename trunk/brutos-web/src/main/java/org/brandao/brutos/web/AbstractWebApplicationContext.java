@@ -122,7 +122,7 @@ public abstract class AbstractWebApplicationContext
 
         tmp = config
                 .getProperty(BrutosConstants.REQUEST_PARSER_LISTENER,
-                              WebRequestParserListener.class.getName() );
+                              WebRequestParserListenerFactory.class.getName() );
 
         config
                 .put(BrutosConstants.REQUEST_PARSER_LISTENER,
