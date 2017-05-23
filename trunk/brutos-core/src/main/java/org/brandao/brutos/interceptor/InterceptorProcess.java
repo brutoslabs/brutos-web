@@ -19,8 +19,10 @@ package org.brandao.brutos.interceptor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
+
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.MutableMvcResponse;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.RedirectException;
 import org.brandao.brutos.ResourceAction;
@@ -129,9 +131,11 @@ public class InterceptorProcess implements InterceptorStack {
 
 	private void invoke(ConfigurableInterceptorHandler handler) {
 
-		RequestInstrument requestInstrument = handler.getRequestInstrument();
-		StackRequestElement stackRequestElement = handler
-				.getStackRequestElement();
+		RequestInstrument requestInstrument = 
+				handler.getRequest().getRequestInstrument();
+		StackRequestElement stackRequestElement = 
+				handler.getRequest().getStackRequestElement();
+				
 		Throwable objectThrow = stackRequestElement.getObjectThrow();
 
 		if (objectThrow == null)
@@ -168,9 +172,11 @@ public class InterceptorProcess implements InterceptorStack {
 
 		try {
 			Object result = action.invoke(source, args);
-			handler.setResult(result);
-			handler.getStackRequestElement().setResultAction(result);
-		} catch (IllegalArgumentException ex) {
+			MutableMvcResponse response = (MutableMvcResponse)handler.getResponse();
+			response.setResult(result);
+			handler.getRequest().getStackRequestElement().setResultAction(result);
+		}
+		catch (IllegalArgumentException ex) {
 
 			StringBuilder argsText = new StringBuilder();
 			for (int i = 0; i < args.length; i++) {
@@ -203,7 +209,7 @@ public class InterceptorProcess implements InterceptorStack {
 
 			executeAction(handler);
 		} catch (ValidatorException e) {
-			processException(handler.getStackRequestElement(), e,
+			processException(handler.getRequest().getStackRequestElement(), e,
 					handler.getResourceAction());
 		} catch (InvocationTargetException e) {
 			if (e.getTargetException() instanceof RedirectException) {

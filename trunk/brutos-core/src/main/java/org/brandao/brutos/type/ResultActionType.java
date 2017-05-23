@@ -39,10 +39,10 @@ import org.brandao.brutos.scope.Scope;
  */
 public class ResultActionType extends AbstractType {
 
-	private final ConcurrentMap cache;
+	private final ConcurrentMap<Class<?>, Type> cache;
 
 	public ResultActionType() {
-		this.cache = new ConcurrentHashMap();
+		this.cache = new ConcurrentHashMap<Class<?>, Type>();
 	}
 
 	public Object convert(Object value) {
@@ -55,13 +55,14 @@ public class ResultActionType extends AbstractType {
 		ConfigurableApplicationContext context = (ConfigurableApplicationContext) Invoker
 				.getCurrentApplicationContext();
 
-		Map infos = resultAction.getInfos();
-		Map values = resultAction.getValues();
+		Map<String, Object> infos = resultAction.getInfos();
+		Map<String, Object> values = resultAction.getValues();
+		
 		Scope requestScope = context.getScopes().get(
 				ScopeType.REQUEST.toString());
 
 		for (Object key : infos.keySet()) {
-			response.setInfo((String) key, (String) infos.get(key));
+			response.setHeader((String) key, (String) infos.get(key));
 		}
 
 		for (Object key : values.keySet()) {
@@ -96,7 +97,7 @@ public class ResultActionType extends AbstractType {
 		}
 	}
 
-	private Type getContentType(Class contentType,
+	private Type getContentType(Class<?> contentType,
 			ConfigurableApplicationContext context) {
 		Type type = (Type) this.cache.get(contentType);
 
@@ -112,8 +113,9 @@ public class ResultActionType extends AbstractType {
 
 				type = typeManager.getType(contentType);
 
-				if (contentType == null)
-					throw new UnknownTypeException(contentType.getName());
+				if (contentType == null){
+					throw new UnknownTypeException();
+				}
 
 				this.cache.put(contentType, type);
 				return type;

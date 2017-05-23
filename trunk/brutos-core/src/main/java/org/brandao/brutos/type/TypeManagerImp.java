@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.type;
 
-import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -31,8 +30,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.TypeManager;
-import org.brandao.brutos.web.http.Download;
-import org.brandao.brutos.web.http.UploadedFile;
 
 /**
  * 
@@ -44,12 +41,12 @@ public class TypeManagerImp implements TypeManager {
 
 	private final List<TypeFactory> customTypes;
 
-	private final ConcurrentMap cache;
+	private final ConcurrentMap<Class<?>, TypeFactory> cache;
 
 	public TypeManagerImp() {
 		this.customTypes = new LinkedList<TypeFactory>();
-		this.cache = new ConcurrentHashMap();
-		defaultTypes = new LinkedList();
+		this.cache = new ConcurrentHashMap<Class<?>, TypeFactory>();
+		defaultTypes = new LinkedList<TypeFactory>();
 		defaultTypes
 				.add(new DefaultTypeFactory(BooleanType.class, Boolean.TYPE));
 		defaultTypes.add(new DefaultTypeFactory(ByteType.class, Byte.TYPE));
@@ -63,9 +60,6 @@ public class TypeManagerImp implements TypeManager {
 		defaultTypes.add(new DefaultTypeFactory(ShortType.class, Short.TYPE));
 		defaultTypes
 				.add(new DefaultTypeFactory(StringType.class, String.class));
-		defaultTypes.add(new DefaultTypeFactory(UploadedFileType.class,
-				UploadedFile.class));
-		defaultTypes.add(new DefaultTypeFactory(FileType.class, File.class));
 		defaultTypes.add(new DefaultTypeFactory(BooleanWrapperType.class,
 				Boolean.class));
 		defaultTypes.add(new DefaultTypeFactory(ByteWrapperType.class,
@@ -82,8 +76,6 @@ public class TypeManagerImp implements TypeManager {
 				Long.class));
 		defaultTypes.add(new DefaultTypeFactory(ShortWrapperType.class,
 				Short.class));
-		defaultTypes.add(new DefaultTypeFactory(DownloadType.class,
-				Download.class));
 		// defaultTypes.add(new DefaultTypeFactory(ListType.class, List.class));
 		// defaultTypes.add(new DefaultTypeFactory(SetType.class, Set.class));
 		defaultTypes.add(new DefaultTypeFactory(SerializableType.class,
@@ -107,10 +99,11 @@ public class TypeManagerImp implements TypeManager {
 		this.cache.clear();
 	}
 
-	public void remove(Class type) {
-		List factoryToRemove = new ArrayList();
+	public void remove(Class<?> type) {
+		List<TypeFactory> factoryToRemove = new ArrayList<TypeFactory>();
 
-		Iterator i = customTypes.iterator();
+		Iterator<TypeFactory> i = customTypes.iterator();
+		
 		while (i.hasNext()) {
 			TypeFactory factory = (TypeFactory) i.next();
 			if (factory.getClassType() == type) {
@@ -146,11 +139,11 @@ public class TypeManagerImp implements TypeManager {
 		this.cache.clear();
 	}
 
-	public List getAllTypes() {
+	public List<TypeFactory> getAllTypes() {
 		return customTypes;
 	}
 
-	public boolean isStandardType(Class clazz) {
+	public boolean isStandardType(Class<?> clazz) {
 		TypeFactory typeFactory = getTypeFactory(clazz);
 
 		return (clazz == Object.class && typeFactory != null)
@@ -163,7 +156,7 @@ public class TypeManagerImp implements TypeManager {
 
 	public TypeFactory getTypeFactory(Object classType) {
 
-		TypeFactory factory = (TypeFactory) this.cache.get(classType);
+		TypeFactory factory = this.cache.get(classType);
 
 		if (factory != null)
 			return factory;
@@ -174,16 +167,16 @@ public class TypeManagerImp implements TypeManager {
 					return factory;
 
 				factory = getInternalTypeFactory(classType);
-				this.cache.put(classType, factory);
+				this.cache.put((Class<?>)classType, factory);
 				return factory;
 			}
 		}
 	}
 
 	private TypeFactory getInternalTypeFactory(Object classType) {
-		Class rawType = TypeUtil.getRawType(classType);
-
-		Iterator i = customTypes.iterator();
+		Class<?> rawType        = TypeUtil.getRawType(classType);
+		Iterator<TypeFactory> i = customTypes.iterator();
+		
 		while (i.hasNext()) {
 			TypeFactory factory = (TypeFactory) i.next();
 			if (factory.matches(rawType)) {
@@ -205,12 +198,14 @@ public class TypeManagerImp implements TypeManager {
 	public Type getType(Object classType, EnumerationType enumType,
 			String pattern) {
 
-		Class rawType = TypeUtil.getRawType(classType);
+		Class<?> rawType    = TypeUtil.getRawType(classType);
 		TypeFactory factory = getTypeFactory(rawType);
-		Type type = factory.getInstance();
+		Type type           = factory.getInstance();
 
-		type.setClassType(classType instanceof Class ? (Class) classType
-				: rawType);
+		type.setClassType(
+				classType instanceof Class ? 
+					(Class<?>) classType :
+					rawType);
 
 		if (type instanceof EnumType) {
 			EnumType tmp = (EnumType) type;
@@ -236,7 +231,7 @@ public class TypeManagerImp implements TypeManager {
 			if (collectionGenericType == null)
 				collectionGenericType = Object.class;
 
-			Class collectionType = TypeUtil.getRawType(collectionGenericType);
+			Class<?> collectionType = TypeUtil.getRawType(collectionGenericType);
 
 			CollectionType tmp = (CollectionType) type;
 			tmp.setCollectionType(this.getType(collectionType));
