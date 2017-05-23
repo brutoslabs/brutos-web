@@ -20,10 +20,16 @@ package org.brandao.brutos;
 /**
  * 
  * @author Brandao
+ *
  */
-@Deprecated
-public interface MvcRequestFactory {
+public interface MutableRequestParserEvent extends RequestParserEvent{
 
-	MvcRequest getRequest();
+	void setStart(long value);
+	
+    void setContentLength(long value);
 
+    void setBytesRead(long value);
+	
+    void addBytesRead(long value);
+    
 }

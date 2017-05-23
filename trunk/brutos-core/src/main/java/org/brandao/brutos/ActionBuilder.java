@@ -17,7 +17,12 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.mapping.*;
+import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MappingException;
+import org.brandao.brutos.mapping.ParameterAction;
+import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.mapping.ThrowableSafeData;
 
 /**
  * 
@@ -111,7 +116,7 @@ public class ActionBuilder extends RestrictionBuilder {
 		if (dispatcher == null)
 			dispatcher = BrutosConstants.DEFAULT_DISPATCHERTYPE;
 
-		ThrowableSafeData thr = new ThrowableSafeData();
+		ThrowableSafeData thr = this.createThrowableSafeData();
 		thr.setParameterName(id);
 		thr.setTarget(target);
 		thr.setView(view);
@@ -123,6 +128,10 @@ public class ActionBuilder extends RestrictionBuilder {
 		return this;
 	}
 
+	protected ThrowableSafeData createThrowableSafeData(){
+		return new ThrowableSafeData();
+	}
+	
 	public ControllerBuilder getControllerBuilder() {
 		return this.controllerBuilder;
 	}
@@ -218,4 +227,24 @@ public class ActionBuilder extends RestrictionBuilder {
 				this.validatorFactory);
 	}
 
+	public ActionBuilder addRequestType(DataType value){
+		this.action.getRequestTypes().add(value);
+		return this;
+	}
+	
+	public ActionBuilder removeRequestType(DataType value){
+		this.action.getRequestTypes().remove(value);
+		return this;
+	}
+
+	public ActionBuilder addResponseType(DataType value){
+		this.action.getResponseTypes().add(value);
+		return this;
+	}
+	
+	public ActionBuilder removeResponseType(DataType value){
+		this.action.getResponseTypes().remove(value);
+		return this;
+	}
+	
 }

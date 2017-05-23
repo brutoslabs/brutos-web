@@ -24,12 +24,15 @@ import org.brandao.brutos.mapping.Controller;
  * 
  * @author Brandao
  */
+@Deprecated
 public interface ControllerResolver {
 
+	/*
 	Controller getController(ControllerManager controllerManager,
 			ConfigurableInterceptorHandler handler);
 
 	Controller getController(ControllerManager controllerManager,
-			Class controllerClass);
-
+			Class<?> controllerClass);
+*/
+	
 }

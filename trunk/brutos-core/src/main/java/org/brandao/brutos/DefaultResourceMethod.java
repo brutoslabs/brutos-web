@@ -19,7 +19,9 @@ package org.brandao.brutos;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.Controller;
 
 /**
  * 
@@ -27,12 +29,16 @@ import org.brandao.brutos.mapping.Action;
  */
 public class DefaultResourceMethod implements ResourceMethod {
 
-	Action method;
+	private Action method;
 
 	public DefaultResourceMethod(Action method) {
 		this.method = method;
 	}
 
+	public Controller getController() {
+		return method.getController();
+	}
+	
 	public Object invoke(Object source, Object[] args)
 			throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException {
@@ -40,7 +46,7 @@ public class DefaultResourceMethod implements ResourceMethod {
 		return method.invoke(source, args);
 	}
 
-	public Class getResourceClass() {
+	public Class<?> getResourceClass() {
 		return method.getMethod() == null ? null : method.getMethod()
 				.getDeclaringClass();
 	}
@@ -49,11 +55,11 @@ public class DefaultResourceMethod implements ResourceMethod {
 		return method.getMethod();
 	}
 
-	public Class returnType() {
+	public Class<?> returnType() {
 		return method.getMethod().getReturnType();
 	}
 
-	public Class[] getParametersType() {
+	public Class<?>[] getParametersType() {
 		return method.getMethod().getParameterTypes();
 	}
 

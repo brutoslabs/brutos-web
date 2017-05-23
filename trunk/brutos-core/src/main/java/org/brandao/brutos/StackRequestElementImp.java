@@ -37,7 +37,9 @@ public class StackRequestElementImp implements StackRequestElement {
 	private Object resource;
 	private String view;
 	private DispatcherType dispatcherType;
-
+	private MutableMvcRequest request;
+	private MutableMvcResponse response;
+	
 	public Throwable getObjectThrow() {
 		return objectThrow;
 	}
@@ -116,6 +118,22 @@ public class StackRequestElementImp implements StackRequestElement {
 
 	public void setDispatcherType(DispatcherType dispatcherType) {
 		this.dispatcherType = dispatcherType;
+	}
+
+	public MutableMvcRequest getRequest() {
+		return this.request;
+	}
+
+	public MutableMvcResponse getResponse() {
+		return this.response;
+	}
+
+	public void setRequest(MutableMvcRequest value) {
+		this.request = value;
+	}
+
+	public void setResponse(MutableMvcResponse value) {
+		this.response = value;
 	}
 
 }

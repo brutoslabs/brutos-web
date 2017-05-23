@@ -17,8 +17,7 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
-import org.brandao.brutos.interceptor.ImpInterceptorHandler;
+import org.brandao.brutos.interceptor.InterceptorHandlerImp;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
@@ -31,34 +30,46 @@ import org.brandao.brutos.scope.ThreadScope;
  */
 public class Invoker {
 
-	private static final ThreadLocal currentApp;
+	private static final ThreadLocal<ConfigurableApplicationContext> currentApp;
 
 	static {
-		currentApp = new ThreadLocal();
+		currentApp = new ThreadLocal<ConfigurableApplicationContext>();
 	}
 
 	protected Logger logger = LoggerProvider.getCurrentLoggerProvider()
 			.getLogger(Invoker.class);
 
-	protected ControllerResolver controllerResolver;
 	protected ObjectFactory objectFactory;
+	
 	protected ControllerManager controllerManager;
+	
 	protected ActionResolver actionResolver;
+	
 	protected ConfigurableApplicationContext applicationContext;
+	
 	protected RenderView renderView;
+	
 	protected RequestProvider requestProvider;
+	
 	protected ResponseProvider responseProvider;
 
+	protected ConfigurableRequestParser requestParser;
+	
+	protected RequestParserListenerFactory requestParserListenerFactory;
+	
+	protected RequestParserListener requestParserListener;
+	
 	public Invoker() {
 	}
 
-	public Invoker(ControllerResolver controllerResolver,
-			ObjectFactory objectFactory, ControllerManager controllerManager,
+	public Invoker(
+			ObjectFactory objectFactory, 
+			ControllerManager controllerManager,
 			ActionResolver actionResolver,
 			ConfigurableApplicationContext applicationContext,
-			RenderView renderView) {
+			RenderView renderView,
+			RequestParserListenerFactory requestParserListenerFactory) {
 
-		this.controllerResolver = controllerResolver;
 		this.objectFactory = objectFactory;
 		this.controllerManager = controllerManager;
 		this.actionResolver = actionResolver;
@@ -66,42 +77,46 @@ public class Invoker {
 		this.renderView = renderView;
 		this.requestProvider = new RequestProvider();
 		this.responseProvider = new ResponseProvider();
+		this.requestParser = new RequestParserImp();
+		this.requestParserListenerFactory = requestParserListenerFactory;
+		this.requestParserListener = requestParserListenerFactory.getNewListener();
 	}
 
-	public boolean invoke(String requestId) {
-		return invoke(requestId, null);
-	}
+	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response) {
 
-	public boolean invoke(String requestId, Throwable externalThrow) {
-
-		ImpInterceptorHandler ih = new ImpInterceptorHandler();
-		ih.setRequestId(requestId);
-		ih.setContext(applicationContext);
-
-		Controller form = controllerResolver.getController(controllerManager,
-				ih);
-
-		if (form == null)
+		MutableRequestParserEvent event = new MutableRequestParserEventImp();
+		
+		try{
+			this.requestParserListener.started(event);
+			this.requestParser.parserContentType(request, 
+					request.getType(), 
+					this.applicationContext.getConfiguration(), event);
+		}
+		finally{
+			this.requestParserListener.finished(event);
+		}
+		
+		request.setApplicationContext(this.applicationContext);
+		
+		ResourceAction resourceAction = 
+				actionResolver.getResourceAction(controllerManager, request);
+		
+		if(resourceAction == null){
 			return false;
-
-		ih.setResource(form.getInstance(objectFactory));
-
-		if (ih.getResourceAction() == null)
-			ih.setResourceAction(actionResolver.getResourceAction(form, ih));
+		}
+		
+		request.setResource(resourceAction.getController().getInstance(objectFactory));
+		request.setResourceAction(resourceAction);
 
 		StackRequestElement element = createStackRequestElement();
 
-		element.setAction(ih.getResourceAction());
-		element.setController(form);
-		element.setHandler(ih);
-		element.setResource(ih.getResource());
-		element.setObjectThrow(externalThrow);
-		return invoke(element);
-	}
-
-	public Object invoke(Controller controller, ResourceAction action,
-			Object[] parameters) {
-		return invoke(controller, action, null, parameters);
+		element.setAction(request.getResourceAction());
+		element.setController(resourceAction.getController());
+		element.setRequest(request);
+		element.setResponse(response);
+		element.setResource(request.getResource());
+		element.setObjectThrow(request.getThrowable());
+		return this.invoke(element);
 	}
 
 	public Object invoke(Controller controller, ResourceAction action,
@@ -113,39 +128,45 @@ public class Invoker {
 		if (action == null)
 			throw new IllegalArgumentException("action not found");
 
-		// create factory or other solution
-		ImpInterceptorHandler handler = new ImpInterceptorHandler();
+		MutableMvcRequest request   = new DefaultMvcRequest();
+		MutableMvcResponse response = new DefaultMvcResponse();
+		
+		request.setResource(resource);
+		request.setResourceAction(action);
+		request.setParameters(parameters);
+		
+		StackRequestElement element = createStackRequestElement();
 
-		handler.setContext(applicationContext);
-		handler.setResourceAction(action);
-		handler.setResource(resource == null ? controller
-				.getInstance(applicationContext.getObjectFactory()) : resource);
-
-		StackRequestElement stackRequestElement = createStackRequestElement();
-
-		stackRequestElement.setAction(action);
-		stackRequestElement.setController(controller);
-		stackRequestElement.setHandler(handler);
-		stackRequestElement.setParameters(parameters);
-		stackRequestElement.setResource(handler.getResource());
-
-		invoke(stackRequestElement);
-		return stackRequestElement.getResultAction();
+		element.setAction(request.getResourceAction());
+		element.setController(controller);
+		element.setRequest(request);
+		element.setResponse(response);
+		element.setResource(request.getResource());
+		element.setObjectThrow(request.getThrowable());
+		this.invoke(element);
+		return response.getResult();
+	}
+	
+	public Object invoke(Controller controller, ResourceAction action,
+			Object[] parameters) {
+		return invoke(controller, action, null, parameters);
 	}
 
-	public Object invoke(Class controllerClass, String actionId) {
-		Controller controller = applicationContext.getControllerResolver()
-				.getController(controllerManager, controllerClass);
+	public Object invoke(Class<?> controllerClass, String actionId) {
+		Controller controller = 
+				applicationContext
+				.getControllerManager()
+				.getController(controllerClass);
 
-		// create factory or other solution
-		ImpInterceptorHandler ih = new ImpInterceptorHandler();
-		ih.setRequestId(controller.getId());
-		ih.setContext(applicationContext);
-
-		ResourceAction action = applicationContext.getActionResolver()
-				.getResourceAction(controller, actionId, ih);
-
-		return this.invoke(controller, action, null);
+		ResourceAction resourceAction = 
+				actionResolver.getResourceAction(controller, actionId, null);
+		
+		if(resourceAction == null){
+			return false;
+		}
+		else{
+			return this.invoke(controller, resourceAction, null);
+		}
 	}
 
 	public RequestInstrument getRequestInstrument() {
@@ -172,39 +193,45 @@ public class Invoker {
 
 	public boolean invoke(StackRequestElement element) {
 
-		long time = -1;
+		long time                  = -1;
 		boolean createdThreadScope = false;
-		StackRequest stackRequest = null;
-		boolean isFirstCall = false;
+		StackRequest stackRequest  = null;
+		boolean isFirstCall        = false;
+		MvcRequest oldRequest      = null;
+		MvcResponse oldresponse    = null;
+		
 		RequestInstrument requestInstrument;
-		ConfigurableInterceptorHandler configurableInterceptorHandler;
-		MvcRequest oldRequest = null;
-		MvcResponse oldresponse = null;
 
-		try {
-			oldRequest = this.requestProvider.start();
-			oldresponse = this.responseProvider.start();
+		try{
+			MutableMvcRequest request   = element.getRequest();
+			MutableMvcResponse response = element.getResponse();
+			oldRequest                  = this.requestProvider.init(request);
+			oldresponse                 = this.responseProvider.init(response);
+			
 			time = System.currentTimeMillis();
 			createdThreadScope = ThreadScope.create();
 			requestInstrument = getRequestInstrument();
 			stackRequest = getStackRequest(requestInstrument);
 			isFirstCall = stackRequest.isEmpty();
-			configurableInterceptorHandler = element.getHandler();
-
-			configurableInterceptorHandler
-					.setRequestInstrument(requestInstrument);
-			configurableInterceptorHandler.setStackRequestElement(element);
+			
+			
+			request.setRequestInstrument(requestInstrument);
+			request.setStackRequestElement(element);
 
 			if (isFirstCall)
 				currentApp.set(this.applicationContext);
 
 			stackRequest.push(element);
-			element.getController().proccessBrutosAction(element.getHandler());
+			
+			InterceptorHandlerImp ih = new InterceptorHandlerImp(request, response);
+			element.getController().proccessBrutosAction(ih);
 			return true;
-		} finally {
+		}
+		finally {
+
 			this.requestProvider.destroy(oldRequest);
 			this.responseProvider.destroy(oldresponse);
-
+			
 			if (createdThreadScope)
 				ThreadScope.destroy();
 
@@ -253,9 +280,6 @@ public class Invoker {
 	}
 
 	public void flush() {
-		this.requestProvider.setFactory(this.applicationContext
-				.getRequestFactory());
-		this.responseProvider.setFactory(this.applicationContext
-				.getResponseFactory());
 	}
+	
 }

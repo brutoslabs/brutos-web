@@ -24,6 +24,7 @@ import org.brandao.brutos.mapping.Controller;
  * 
  * @author Brandao
  */
+@Deprecated
 public class DefaultControllerResolver implements ControllerResolver {
 
 	public Controller getController(ControllerManager controllerManager,

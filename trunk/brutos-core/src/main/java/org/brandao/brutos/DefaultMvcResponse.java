@@ -17,61 +17,82 @@
 
 package org.brandao.brutos;
 
+import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import javax.swing.JOptionPane;
+import java.util.Set;
 
 /**
  * 
  * @author Brandao
  */
-public class DefaultMvcResponse implements MvcResponse {
+public class DefaultMvcResponse implements MutableMvcResponse {
+
+    protected Set<String> headerNames;
+    
+    protected Map<String, List<Object>> header;
+	
+    protected MvcRequest request;
+    
+    protected DataType dataType;
+    
+    protected Object result;
+    
+	public DefaultMvcResponse(){
+		this.header = new HashMap<String, List<Object>>();
+		this.headerNames = new HashSet<String>();
+	}
+	
+	public MvcRequest getRequest() {
+		return this.request;
+	}
 
 	public void process(Object object) {
-		JOptionPane.showMessageDialog(null, String.valueOf(object));
 	}
 
-	public OutputStream processStream() {
+	public OutputStream processStream() throws IOException{
 		return null;
 	}
 
-	public void process(Object object, Map config, Map info) {
+	public void setHeader(String name, Object value) {
+		this.setValue(name, value, this.headerNames, this.header);
 	}
 
-	public OutputStream processStream(Map config, Map info) {
-		return null;
+	public DataType getType() {
+		return this.dataType;
 	}
 
-	public void setInfo(String name, String value) {
+	public Object getResult() {
+		return this.result;
 	}
 
-	public String getType() {
-		return null;
+	public void setResult(Object value) {
+		this.result = value;
 	}
 
-	public int getLength() {
-		return -1;
+	public void setRequest(MvcRequest value) {
+		this.request = value;
 	}
 
-	public String getCharacterEncoding() {
-		return null;
+	public void setType(DataType value) {
+		this.dataType = value;
 	}
 
-	public Locale getLocale() {
-		return null;
-	}
+    private void setValue(String name, Object value, Set<String> names, Map<String, List<Object>> map) {
+        if( value != null ){
+            List<Object> values = map.get( name );
+            if( values == null ){
+            	names.add(name);
+                values = new ArrayList<Object>();
+                map.put( name, values );
+            }
 
-	public void setLocale(Locale value) {
-	}
-
-	public void setType(String value) {
-	}
-
-	public void setLength(int value) {
-	}
-
-	public void setCharacterEncoding(String value) {
-	}
-
+            values.add( value );
+        }
+    }
+	
 }

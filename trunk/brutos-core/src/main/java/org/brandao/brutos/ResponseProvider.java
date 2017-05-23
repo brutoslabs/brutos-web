@@ -23,23 +23,20 @@ package org.brandao.brutos;
  */
 public class ResponseProvider {
 
-	private static final ThreadLocal responses;
+	private static final ThreadLocal<MvcResponse> responses;
 
 	static {
-		responses = new ThreadLocal();
+		responses = new ThreadLocal<MvcResponse>();
 	}
 
-	private MvcResponseFactory factory;
-
-	public MvcResponse start() {
-		MvcResponse current = (MvcResponse) responses.get();
-		MvcResponse response = this.factory.getResponse();
+	public MvcResponse init(MvcResponse response) {
+		MvcResponse current  = responses.get();
 		responses.set(response);
 		return current;
 	}
 
 	public static MvcResponse getResponse() {
-		return (MvcResponse) responses.get();
+		return responses.get();
 	}
 
 	public void destroy(MvcResponse old) {
@@ -47,14 +44,6 @@ public class ResponseProvider {
 			responses.remove();
 		else
 			responses.set(old);
-	}
-
-	public MvcResponseFactory getFactory() {
-		return factory;
-	}
-
-	public void setFactory(MvcResponseFactory factory) {
-		this.factory = factory;
 	}
 
 }

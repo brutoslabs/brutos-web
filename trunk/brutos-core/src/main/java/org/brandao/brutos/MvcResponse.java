@@ -17,8 +17,8 @@
 
 package org.brandao.brutos;
 
+import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Locale;
 
 /**
  * 
@@ -26,26 +26,18 @@ import java.util.Locale;
  */
 public interface MvcResponse {
 
-	public void process(Object object);
+	MvcRequest getRequest();
+	
+	void process(Object object);
 
-	public OutputStream processStream();
+	OutputStream processStream() throws IOException;
 
-	public void setInfo(String name, String value);
+	void setHeader(String name, Object value);
 
-	public String getType();
+	void setType(DataType value);
+	
+	DataType getType();
 
-	public int getLength();
-
-	public String getCharacterEncoding();
-
-	public Locale getLocale();
-
-	public void setLocale(Locale value);
-
-	public void setType(String value);
-
-	public void setLength(int value);
-
-	public void setCharacterEncoding(String value);
-
+	Object getResult();
+	
 }

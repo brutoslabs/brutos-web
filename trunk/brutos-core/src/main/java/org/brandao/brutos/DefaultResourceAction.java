@@ -19,7 +19,9 @@ package org.brandao.brutos;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.Controller;
 
 /**
  * 
@@ -29,7 +31,10 @@ public class DefaultResourceAction implements ResourceAction {
 
 	protected Action action;
 
-	public DefaultResourceAction(Action action) {
+	protected Controller controller;
+	
+	public DefaultResourceAction(Controller controller, Action action) {
+		this.controller = controller;
 		this.action = action;
 	}
 
@@ -40,7 +45,11 @@ public class DefaultResourceAction implements ResourceAction {
 		return action.invoke(source, args);
 	}
 
-	public Class getResourceClass() {
+	public Controller getController(){
+		return this.controller;
+	}
+	
+	public Class<?> getResourceClass() {
 		return action.getMethod() == null ? null : action.getMethod()
 				.getDeclaringClass();
 	}
@@ -49,11 +58,11 @@ public class DefaultResourceAction implements ResourceAction {
 		return action.getMethod();
 	}
 
-	public Class returnType() {
+	public Class<?> returnType() {
 		return action.getMethod().getReturnType();
 	}
 
-	public Class[] getParametersType() {
+	public Class<?>[] getParametersType() {
 		return action.getMethod().getParameterTypes();
 	}
 

@@ -32,7 +32,7 @@ public class DispatcherType {
 
 	public static final DispatcherType REDIRECT = new DispatcherType("redirect");
 
-	private static final Map defaultDispatcher = new HashMap();
+	private static final Map<String, DispatcherType> defaultDispatcher = new HashMap<String, DispatcherType>();
 
 	static {
 		defaultDispatcher.put(INCLUDE.toString(), INCLUDE);

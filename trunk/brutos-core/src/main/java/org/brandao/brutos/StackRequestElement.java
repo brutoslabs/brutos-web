@@ -17,7 +17,6 @@
 
 package org.brandao.brutos;
 
-import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 
@@ -41,7 +40,9 @@ public interface StackRequestElement {
 
 	Object getResource();
 
-	ConfigurableInterceptorHandler getHandler();
+	MutableMvcRequest getRequest();
+
+	MutableMvcResponse getResponse();
 
 	String getView();
 
@@ -59,8 +60,10 @@ public interface StackRequestElement {
 
 	void setResultAction(Object resultAction);
 
-	void setHandler(ConfigurableInterceptorHandler handler);
+	void setRequest(MutableMvcRequest value);
 
+	void setResponse(MutableMvcResponse value);
+	
 	void setResource(Object resource);
 
 	void setView(String view);

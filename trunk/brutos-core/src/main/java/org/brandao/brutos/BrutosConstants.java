@@ -52,12 +52,14 @@ public interface BrutosConstants {
 	public final String REDIRECT = ApplicationContext.class.getName()
 			+ ".REDIRECT";
 
+	@Deprecated
 	public final String UPLOAD_LISTENER_FACTORY = ApplicationContext.class
 			.getName() + ".UPLOAD_LISTENER_FACTORY";
 
 	public final String REQUEST_INSTRUMENT = ApplicationContext.class.getName()
 			+ ".REQUEST_INSTRUMENT";
 
+	@Deprecated
 	public final String HTTP_REQUEST_PARSER_FACTORY = ApplicationContext.class
 			.getName() + ".HTTP_REQUEST_PARSER_FACTORY";
 
@@ -132,8 +134,10 @@ public interface BrutosConstants {
 
 	public final String ACTION_RESOLVER = "org.brandao.brutos.controller.action_resolver";
 
+	@Deprecated
 	public final String REQUEST_FACTORY = "org.brandao.brutos.controller.request_factory";
 
+	@Deprecated
 	public final String RESPONSE_FACTORY = "org.brandao.brutos.controller.response_factory";
 
 	public final String CONTROLLER_RESOLVER_CLASS = "org.brandao.brutos.controller.class";
@@ -144,8 +148,12 @@ public interface BrutosConstants {
 
 	public final String RENDER_VIEW_CLASS = "org.brandao.brutos.render_view";
 
-	public final String UPLOAD_LISTENER_CLASS = "org.brandao.brutos.web.upload_listener_factory";
+	public final String REQUEST_PARSER_LISTENER = "org.brandao.brutos.upload_listener_factory";
+	
+	@Deprecated
+	public final String UPLOAD_LISTENER_CLASS = "org.brandao.brutos.upload_listener_factory";
 
+	@Deprecated
 	public final String REQUEST_PARSER_CLASS = "org.brandao.brutos.web.request_parser";
 
 	public final String CODE_GENERATOR_CLASS = "org.brandao.brutos.code_generator";
@@ -164,6 +172,7 @@ public interface BrutosConstants {
 
 	public final String DEFAULT_PROXY_PROVIDER_CLASS = "org.brandao.brutos.codegenerator.JavassistCodeGeneratorProvider";
 
+	@Deprecated
 	public final String DEFAULT_REQUEST_PARSER = "org.brandao.brutos.web.http.HttpRequestParserImp";
 
 	public final String DEFAULT_VIEW_PROVIDER_CLASS = "org.brandao.brutos.view.DefaultViewProvider";

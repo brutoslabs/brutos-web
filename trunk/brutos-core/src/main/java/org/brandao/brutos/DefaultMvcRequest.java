@@ -19,40 +19,213 @@ package org.brandao.brutos;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 
  * @author Brandao
  */
-public class DefaultMvcRequest implements MvcRequest {
+public class DefaultMvcRequest implements MutableMvcRequest {
 
-	public Object getValue(String name) {
-		return null;
+    private Set<String> propertyNames;
+    
+	private Map<String, List<Object>> properties;
+	
+    private Set<String> headerNames;
+    
+	private Map<String, List<Object>> header;
+	
+    private Set<String> parameterNames;
+    
+	private Map<String, List<Object>> parameters;
+    
+    private RequestParserEvent requestParserInfo;
+    
+    private RequestParser requestParser;
+    
+    private String requestId;
+    
+    private Throwable throwable;
+    
+    private DataType dataType;
+    
+    private ResourceAction resourceAction;
+    
+    private ApplicationContext applicationContext;
+    
+    private Object resource;
+    
+    private Object[] actionParameters;
+    
+    private RequestInstrument requestInstrument;
+    
+    private StackRequestElement stackRequestElement;
+    
+    public DefaultMvcRequest(){
+		this.header = new HashMap<String, List<Object>>();
+		this.headerNames = new HashSet<String>();
+		this.properties = new HashMap<String, List<Object>>();
+		this.propertyNames = new HashSet<String>();
+		this.parameters = new HashMap<String, List<Object>>();
+		this.parameterNames = new HashSet<String>();
+    }
+    
+	public String getRequestId() {
+		return this.requestId;
+	}
+
+	public Throwable getThrowable() {
+		return this.throwable;
+	}
+
+	public Object getHeader(String value) {
+		return this.getValue(value, this.header);
+	}
+
+	public Object getParameter(String name) {
+		return this.getValue(name, this.parameters);
 	}
 
 	public Object getProperty(String name) {
-		return null;
+		return this.getValue(name, this.properties);
 	}
 
 	public InputStream getStream() throws IOException {
 		return null;
 	}
 
-	public String getType() {
-		return null;
+	public DataType getType() {
+		return this.dataType;
 	}
 
-	public int getLength() {
-		return -1;
+	public ResourceAction getResourceAction() {
+		return this.resourceAction;
 	}
 
-	public String getCharacterEncoding() {
-		return null;
+	public ApplicationContext getApplicationContext() {
+		return this.applicationContext;
 	}
 
-	public Locale getLocale() {
-		return null;
+	public Object getResource() {
+		return this.resource;
 	}
 
+	public Object[] getParameters() {
+		return this.actionParameters;
+	}
+
+	public RequestInstrument getRequestInstrument() {
+		return this.requestInstrument;
+	}
+
+	public StackRequestElement getStackRequestElement() {
+		return this.stackRequestElement;
+	}
+
+	public void setThrowable(Throwable value) {
+		this.throwable = value;
+	}
+
+	public void setHeader(String name, Object value) {
+		this.setValue(name, value, this.headerNames, this.header);
+	}
+
+	public void setParameter(String name, String value) {
+		this.setValue(name, value, this.parameterNames, this.parameters);
+	}
+
+	public void setParameters(String name, String[] values) {
+		for(String s: values){
+			this.setValue(name, s, this.parameterNames, this.parameters);
+		}
+	}
+
+	public void setParameter(String name, Object value) {
+		this.setValue(name, value, this.parameterNames, this.parameters);
+	}
+
+	public void setParameters(String name, Object[] value) {
+		for(Object s: value){
+			this.setValue(name, s, this.parameterNames, this.parameters);
+		}
+	}
+
+	public void setParameters(Object[] value) {
+		this.actionParameters = value;
+	}
+
+	public void setProperty(String name, Object value) {
+		this.setValue(name, value, this.propertyNames, this.properties);
+	}
+
+	public void setType(DataType value) {
+		this.dataType = value;
+	}
+
+	public void setResourceAction(ResourceAction value) {
+		this.resourceAction = value;
+	}
+
+	public void setApplicationContext(ApplicationContext value) {
+		this.applicationContext = value;
+	}
+
+	public void setResource(Object value) {
+		this.resource = value;
+	}
+
+	public void setRequestInstrument(RequestInstrument value) {
+		this.requestInstrument = value;
+	}
+
+	public void setStackRequestElement(StackRequestElement value) {
+		this.stackRequestElement = value;
+	}
+
+	public void setRequestParserInfo(RequestParserEvent value) {
+		this.requestParserInfo = value;
+	}
+
+	public void setRequestParser(RequestParser value) {
+		this.requestParser = value;
+	}
+	
+	public RequestParserEvent getRequestParserInfo() {
+		return this.requestParserInfo;
+	}
+
+	public RequestParser getRequestParser() {
+		return this.requestParser;
+	}
+	
+    private void setValue(String name, Object value, Set<String> names, Map<String, List<Object>> map) {
+        if( value != null ){
+            List<Object> values = map.get( name );
+            if( values == null ){
+            	names.add(name);
+                values = new ArrayList<Object>();
+                map.put( name, values );
+            }
+
+            values.add( value );
+        }
+    }
+	
+    private Object getValue(String value, Map<String, List<Object>> map){
+        List<Object> values = map.get( value );
+        return values == null || values.isEmpty()? null : values.get( 0 );
+    }
+	
+    @SuppressWarnings("unused")
+	private Object[] getValues(String name, Map<String, List<Object>> map){
+        List<Object> values = (List<Object>) map.get( name );
+        
+        return values == null || values.isEmpty()? null : values.toArray();
+    }
+    
 }

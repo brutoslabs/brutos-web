@@ -42,8 +42,7 @@ public abstract class AbstractRenderView implements RenderView {
 			StackRequestElement stackRequestElement, Type type)
 			throws IOException {
 		requestInstrument.setHasViewProcessed(true);
-		type.show(stackRequestElement.getHandler().getContext()
-				.getMvcResponse(), stackRequestElement.getResultAction());
+		type.show(stackRequestElement.getResponse(), stackRequestElement.getResultAction());
 	}
 
 	public void show(RequestInstrument requestInstrument,
