@@ -36,6 +36,12 @@ public class WebMvcRequestImp extends DefaultMvcRequest{
     public WebMvcRequestImp(HttpServletRequest request){
         this.request = request;
         super.setType(MediaType.valueOf(request.getContentType()));
+        
+        String path         = request.getRequestURI();
+        String contextPath  = request.getContextPath();
+        path = path.substring( contextPath.length(), path.length() );
+        
+        super.setRequestId(path);
     }
 
 	public InputStream getStream() throws IOException {

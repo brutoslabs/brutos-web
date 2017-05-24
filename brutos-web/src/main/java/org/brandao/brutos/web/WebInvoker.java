@@ -21,8 +21,6 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,6 +33,8 @@ import org.brandao.brutos.RenderView;
 import org.brandao.brutos.RequestParserListenerFactory;
 import org.brandao.brutos.web.parser.JsonParserContentType;
 import org.brandao.brutos.web.parser.MultipartFormDataParserContentType;
+import org.brandao.brutos.web.scope.RequestScope;
+import org.brandao.brutos.web.scope.SessionScope;
 
 /**
  * 
@@ -60,13 +60,27 @@ public class WebInvoker extends Invoker{
         
     }
 
-    public void invoker(ServletRequest request, 
-            ServletResponse response, FilterChain chain) throws IOException, ServletException{
+    public void invoker(HttpServletRequest request, 
+            HttpServletResponse response, FilterChain chain) throws IOException, ServletException{
     	
     	WebMvcRequestImp webRequest   = new WebMvcRequestImp((HttpServletRequest)request);
     	WebMvcResponseImp webResponse = new WebMvcResponseImp((HttpServletResponse)response, webRequest);
     
-		super.invoke(webRequest, webResponse);
+    	try{
+    		SessionScope.setServletRequest(request);
+    		RequestScope.setServletRequest(request);
+            if(!super.invoke(webRequest, webResponse)){
+                if(chain == null)
+                    ((HttpServletResponse)response).setStatus(HttpServletResponse.SC_NOT_FOUND);
+                else
+                    chain.doFilter(request, response);
+            }
+    		
+    	}
+    	finally{
+    		SessionScope.removeServletRequest(request);
+    		RequestScope.removeServletRequest(request);
+    	}
     }
 
 }

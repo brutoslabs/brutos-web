@@ -2,6 +2,8 @@ package org.brandao.brutos;
 
 public interface MutableMvcRequest extends MvcRequest{
 
+	void setRequestId(String requestId);
+	
     void setRequestParserInfo(RequestParserEvent value);
     
     void setRequestParser(RequestParser value);

@@ -8,6 +8,10 @@ public class MutableRequestParserEventImp implements MutableRequestParserEvent{
 	
     private long statedTimeMilliseconds;
 
+    private MvcRequest request;
+    
+    private MvcResponse response;
+    
 	public long getContentLength() {
 		return this.contentLength;
 	}
@@ -55,6 +59,22 @@ public class MutableRequestParserEventImp implements MutableRequestParserEvent{
 
 	public void setStart(long value) {
 		this.statedTimeMilliseconds = value;
+	}
+
+	public MvcRequest getRequest() {
+		return this.request;
+	}
+
+	public MvcResponse getResponse() {
+		return this.response;
+	}
+
+	public void setRequest(MvcRequest value) {
+		this.request = value;
+	}
+
+	public void setResponse(MvcResponse value) {
+		this.response = value;
 	}
 
 }

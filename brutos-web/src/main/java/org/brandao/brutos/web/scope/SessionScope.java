@@ -21,12 +21,10 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.web.RequestInfo;
 
 /**
  * 
@@ -34,18 +32,29 @@ import org.brandao.brutos.web.RequestInfo;
  */
 public class SessionScope implements Scope{
     
+	private static final ThreadLocal<HttpServletRequest> currentRequest =
+		new ThreadLocal<HttpServletRequest>();
+	
     public SessionScope() {
     }
 
+    public static void setServletRequest(HttpServletRequest value){
+    	currentRequest.set(value);
+    }
+
+    public static void removeServletRequest(HttpServletRequest value){
+    	currentRequest.remove();
+    }
+    
     public void put(String name, Object value) {
-        ServletRequest request = getServletRequest();
-        HttpSession session = ((HttpServletRequest)request).getSession();
+    	HttpServletRequest request = currentRequest.get();
+        HttpSession session = request.getSession();
         session.setAttribute( name, value );
     }
 
     public Object get(String name) {
-        ServletRequest request = getServletRequest();
-        HttpSession session = ((HttpServletRequest)request).getSession();
+    	HttpServletRequest request = currentRequest.get();
+        HttpSession session = request.getSession();
         return session.getAttribute( name );
     }
 
@@ -54,21 +63,15 @@ public class SessionScope implements Scope{
     }
 
     public void remove( String name ){
-        ServletRequest request = getServletRequest();
-        HttpSession session = ((HttpServletRequest)request).getSession();
+    	HttpServletRequest request = currentRequest.get();
+        HttpSession session = request.getSession();
         session.removeAttribute( name );
-    }
-
-    private ServletRequest getServletRequest(){
-        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-        return requestInfo.getRequest();
-        
     }
 
 	@SuppressWarnings("unchecked")
 	public List<String> getNamesStartsWith(String value) {
-        ServletRequest request = getServletRequest();
-        HttpSession session = ((HttpServletRequest)request).getSession();
+    	HttpServletRequest request = currentRequest.get();
+        HttpSession session = request.getSession();
         
 		List<String> result = new ArrayList<String>();
 		

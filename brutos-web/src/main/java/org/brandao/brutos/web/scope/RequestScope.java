@@ -22,11 +22,9 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.web.RequestInfo;
-import org.brandao.brutos.web.http.BrutosRequest;
 import org.brandao.brutos.web.http.ParameterList;
 
 /**
@@ -35,39 +33,44 @@ import org.brandao.brutos.web.http.ParameterList;
  */
 public class RequestScope implements Scope{
     
+	private static final ThreadLocal<HttpServletRequest> currentRequest =
+			new ThreadLocal<HttpServletRequest>();
+	
     public RequestScope() {
     }
 
+    public static void setServletRequest(HttpServletRequest value){
+    	currentRequest.set(value);
+    }
+
+    public static void removeServletRequest(HttpServletRequest value){
+    	currentRequest.remove();
+    }
+    
     public void put(String name, Object value) {
-        ServletRequest request = getServletRequest();
+    	HttpServletRequest request = currentRequest.get();
         request.setAttribute(name, value);
     }
 
     public Object get(String name) {
-        ServletRequest request = getServletRequest();
+    	HttpServletRequest request = currentRequest.get();
         return request.getAttribute(name);
     }
 
     public Object getCollection( String name ){
-        ServletRequest request = getServletRequest();
+    	HttpServletRequest request = currentRequest.get();
         return new ParameterList(
                 Arrays.asList(request.getParameterValues(name)));
     }
 
     public void remove( String name ){
-        ServletRequest request = getServletRequest();
+    	HttpServletRequest request = currentRequest.get();
         request.removeAttribute(name);
-    }
-
-    private ServletRequest getServletRequest(){
-        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-        return requestInfo.getRequest();
-        
     }
 
 	@SuppressWarnings("unchecked")
 	public List<String> getNamesStartsWith(String value) {
-		ServletRequest request = getServletRequest();
+    	HttpServletRequest request = currentRequest.get();
 		
 		List<String> result = new ArrayList<String>();
 		

@@ -27,4 +27,8 @@ public interface RequestParserEvent extends RequestParserStats{
 
     long getBytesRead();
 
+    MvcRequest getRequest();
+
+    MvcResponse getResponse();
+    
 }

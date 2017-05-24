@@ -30,7 +30,7 @@ public class WebRequestParserListener extends RequestParserListenerImp{
         
         if(mappedUploadStats != null){
             mappedUploadStats.put(
-            		applicationContext.getMvcRequest().getRequestId(), 
+            		value.getRequest().getRequestId(), 
             		value);
         }
         
@@ -49,7 +49,7 @@ public class WebRequestParserListener extends RequestParserListenerImp{
         
         if(mappedUploadStats != null){
             mappedUploadStats.remove(
-            		applicationContext.getMvcRequest().getRequestId());
+            		value.getRequest().getRequestId());
         }
 		
 	}
