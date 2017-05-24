@@ -25,6 +25,8 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
@@ -74,7 +76,8 @@ public class BrutosRequestFilter implements Filter{
             if( filterConfig == null )
                 return;
             currentFilter.set(chain);
-            invoker.invoker(request, response, chain);
+            invoker.invoker((HttpServletRequest)request, 
+            		(HttpServletResponse)response, chain);
         }
         finally{
             currentFilter.remove();
