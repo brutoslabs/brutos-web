@@ -27,17 +27,19 @@ import org.brandao.brutos.mapping.Controller;
 public interface ActionResolver {
 
 	ResourceAction getResourceAction(ControllerManager controllerManager,
-			MutableMvcRequest request);
+			MutableMvcRequest request) throws ActionResolverException;
 
-	void addActionTypeResolver(ActionType key, ActionTypeResolver value);
+	void addActionTypeResolver(ActionType key, 
+			ActionTypeResolver value) throws ActionResolverException;
 
-	void removeActionTypeResolver(ActionType key);
+	void removeActionTypeResolver(ActionType key) throws ActionResolverException;
 	
 	ResourceAction getResourceAction(Controller controller,
-			MutableMvcRequest request);
+			MutableMvcRequest request) throws ActionResolverException;
 
-	ResourceAction getResourceAction(Controller controller, String actionId, MutableMvcRequest request);
+	ResourceAction getResourceAction(Controller controller, 
+			String actionId, MutableMvcRequest request) throws ActionResolverException;
 
-	ResourceAction getResourceAction(Action action);
+	ResourceAction getResourceAction(Action action) throws ActionResolverException;
 
 }

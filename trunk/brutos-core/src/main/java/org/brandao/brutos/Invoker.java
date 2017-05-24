@@ -108,7 +108,7 @@ public class Invoker {
 		
 	}
 	
-	private boolean innerInvoke(MutableMvcRequest request, MutableMvcResponse response) {
+	protected boolean innerInvoke(MutableMvcRequest request, MutableMvcResponse response) {
 
 		request.setApplicationContext(this.applicationContext);
 		

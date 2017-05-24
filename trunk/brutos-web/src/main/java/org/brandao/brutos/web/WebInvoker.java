@@ -25,12 +25,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.ActionResolver;
+import org.brandao.brutos.ActionResolverException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ObjectFactory;
 import org.brandao.brutos.RenderView;
 import org.brandao.brutos.RequestParserListenerFactory;
+import org.brandao.brutos.ResourceAction;
+import org.brandao.brutos.StackRequestElement;
+import org.brandao.brutos.web.mapping.WebAction;
+import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.parser.JsonParserContentType;
 import org.brandao.brutos.web.parser.MultipartFormDataParserContentType;
 import org.brandao.brutos.web.scope.RequestScope;
@@ -71,11 +76,17 @@ public class WebInvoker extends Invoker{
     		RequestScope.setServletRequest(request);
             if(!super.invoke(webRequest, webResponse)){
                 if(chain == null)
-                    ((HttpServletResponse)response).setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 else
                     chain.doFilter(request, response);
             }
     		
+    	}
+    	catch(ActionResolverException e){
+    		response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+    	}
+    	catch(RequestMethodException e){
+    		response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
     	}
     	finally{
     		SessionScope.removeServletRequest(request);
@@ -83,4 +94,23 @@ public class WebInvoker extends Invoker{
     	}
     }
 
+    public boolean invoke(StackRequestElement element){
+    	
+    	WebMvcRequest request           = (WebMvcRequest) element.getRequest();
+		ResourceAction resourceAction   = element.getAction();
+		WebAction action                = (WebAction)resourceAction.getMethodForm();
+		RequestMethodType requestMethod = action.getRequestMethod();
+		
+		if(requestMethod == null){
+			WebController controller = (WebController)resourceAction.getController();
+			requestMethod = controller.getRequestMethod();
+		}
+		
+		if(requestMethod != null && !request.getRequestMethodType().equals(requestMethod)){
+			throw new RequestMethodException(request.getRequestMethodType().getId());
+		}
+		
+		return super.invoke(element);
+	}
+    
 }
