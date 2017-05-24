@@ -25,12 +25,14 @@ import org.brandao.brutos.BrutosException;
  */
 public class FileUploadException extends BrutosException{
 
-    public FileUploadException() {
-	super();
+	private static final long serialVersionUID = -4326379898161799931L;
+
+	public FileUploadException() {
+		super();
     }
 
     public FileUploadException(String message) {
-	super(message);
+    	super(message);
     }
 
     public FileUploadException(String message, Throwable cause) {

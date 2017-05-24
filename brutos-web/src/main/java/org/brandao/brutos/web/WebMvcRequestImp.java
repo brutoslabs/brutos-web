@@ -21,6 +21,7 @@ package org.brandao.brutos.web;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.brandao.brutos.DefaultMvcRequest;
@@ -29,20 +30,32 @@ import org.brandao.brutos.DefaultMvcRequest;
  * 
  * @author Brandao
  */
-public class WebMvcRequestImp extends DefaultMvcRequest{
+public class WebMvcRequestImp 
+	extends DefaultMvcRequest
+	implements WebMvcRequest{
 
     private HttpServletRequest request;
 
+    private RequestMethodType requestMethodType;
+    
     public WebMvcRequestImp(HttpServletRequest request){
-        this.request = request;
-        super.setType(MediaType.valueOf(request.getContentType()));
-        
         String path         = request.getRequestURI();
         String contextPath  = request.getContextPath();
         path = path.substring( contextPath.length(), path.length() );
         
+        this.request           = request;
+        this.requestMethodType = RequestMethodType.valueOf(request.getMethod().toUpperCase());
+        super.setType(MediaType.valueOf(request.getContentType()));
         super.setRequestId(path);
     }
+
+    public ServletRequest getServletRequest(){
+    	return this.request;
+    }
+    
+	public RequestMethodType getRequestMethodType() {
+		return requestMethodType;
+	}
 
 	public InputStream getStream() throws IOException {
 		return request.getInputStream();

@@ -1,6 +1,7 @@
 package org.brandao.brutos;
 
 import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -24,7 +25,7 @@ public abstract class AbstractActionResolver
 	}
 	
 	public ResourceAction getResourceAction(ControllerManager controllerManager,
-			MutableMvcRequest request){
+			MutableMvcRequest request) throws ActionResolverException{
 		
         Iterator<Controller> controllers = controllerManager.getAllControllers();
         Scope paramScope =
@@ -39,6 +40,16 @@ public abstract class AbstractActionResolver
             		actionTyperesolver.getResourceAction(controller, paramScope, request);
             
             if(action != null){
+            	Set<DataType> requestTypes = action.getMethodForm().getRequestTypes();
+            	
+            	if(requestTypes.isEmpty()){
+            		requestTypes = action.getController().getRequestTypes();
+            	}
+            	
+            	if(!requestTypes.isEmpty() && requestTypes.contains(request.getType())){
+            		throw new ActionResolverException("request type not supported");
+            	}
+            	
             	return action;
             }
             
@@ -48,7 +59,7 @@ public abstract class AbstractActionResolver
 	}
 	
     public ResourceAction getResourceAction(Controller controller,
-    		MutableMvcRequest request) {
+    		MutableMvcRequest request) throws ActionResolverException {
 
         if( controller.getId() != null ){
             Scope scope = request.getApplicationContext().getScopes()
@@ -66,7 +77,7 @@ public abstract class AbstractActionResolver
     }
 	
     public ResourceAction getResourceAction(Controller controller, String actionId, 
-    		MutableMvcRequest request) {
+    		MutableMvcRequest request) throws ActionResolverException {
 
         Action method = controller
                 .getActionByName( actionId );
@@ -87,7 +98,7 @@ public abstract class AbstractActionResolver
 		this.actionTypeResolver.remove(key);
 	}
 
-	public ResourceAction getResourceAction(Action action) {
+	public ResourceAction getResourceAction(Action action) throws ActionResolverException {
 		return new DefaultResourceAction( action.getController(), action );
 	}
 
