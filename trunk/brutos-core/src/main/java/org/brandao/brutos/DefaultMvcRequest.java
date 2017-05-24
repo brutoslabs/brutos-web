@@ -79,6 +79,10 @@ public class DefaultMvcRequest implements MutableMvcRequest {
 		return this.requestId;
 	}
 
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
+	}
+
 	public Throwable getThrowable() {
 		return this.throwable;
 	}

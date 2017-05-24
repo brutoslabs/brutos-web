@@ -32,4 +32,8 @@ public interface MutableRequestParserEvent extends RequestParserEvent{
 	
     void addBytesRead(long value);
     
+    void setRequest(MvcRequest value);
+
+    void setResponse(MvcResponse value);
+    
 }

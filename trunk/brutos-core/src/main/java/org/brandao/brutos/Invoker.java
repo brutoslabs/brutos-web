@@ -82,20 +82,34 @@ public class Invoker {
 		this.requestParserListener = requestParserListenerFactory.getNewListener();
 	}
 
-	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response) {
-
-		MutableRequestParserEvent event = new MutableRequestParserEventImp();
-		
+	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response){
 		try{
-			this.requestParserListener.started(event);
-			this.requestParser.parserContentType(request, 
-					request.getType(), 
-					this.applicationContext.getConfiguration(), event);
+			currentApp.set(this.applicationContext);
+			
+			MutableRequestParserEvent event = new MutableRequestParserEventImp();
+			event.setRequest(request);
+			event.setResponse(response);
+			
+			try{
+				this.requestParserListener.started(event);
+				this.requestParser.parserContentType(request, 
+						request.getType(), 
+						this.applicationContext.getConfiguration(), event);
+			}
+			finally{
+				this.requestParserListener.finished(event);
+			}
+			
+			return this.innerInvoke(request, response);
 		}
 		finally{
-			this.requestParserListener.finished(event);
+			currentApp.remove();
 		}
 		
+	}
+	
+	private boolean innerInvoke(MutableMvcRequest request, MutableMvcResponse response) {
+
 		request.setApplicationContext(this.applicationContext);
 		
 		ResourceAction resourceAction = 
@@ -196,7 +210,6 @@ public class Invoker {
 		long time                  = -1;
 		boolean createdThreadScope = false;
 		StackRequest stackRequest  = null;
-		boolean isFirstCall        = false;
 		MvcRequest oldRequest      = null;
 		MvcResponse oldresponse    = null;
 		
@@ -212,14 +225,9 @@ public class Invoker {
 			createdThreadScope = ThreadScope.create();
 			requestInstrument = getRequestInstrument();
 			stackRequest = getStackRequest(requestInstrument);
-			isFirstCall = stackRequest.isEmpty();
-			
 			
 			request.setRequestInstrument(requestInstrument);
 			request.setStackRequestElement(element);
-
-			if (isFirstCall)
-				currentApp.set(this.applicationContext);
 
 			stackRequest.push(element);
 			
@@ -236,9 +244,6 @@ public class Invoker {
 				ThreadScope.destroy();
 
 			stackRequest.pop();
-
-			if (isFirstCall)
-				currentApp.remove();
 
 			if (logger.isDebugEnabled())
 				logger.debug(String.format("Request processed in %d ms",
