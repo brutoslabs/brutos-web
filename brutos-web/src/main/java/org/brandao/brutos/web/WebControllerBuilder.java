@@ -19,6 +19,7 @@ package org.brandao.brutos.web;
 
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ActionType;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManager;
@@ -26,8 +27,10 @@ import org.brandao.brutos.DataType;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.ValidatorFactory;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ThrowableSafeData;
+import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.util.WebUtil;
 
@@ -48,14 +51,26 @@ public class WebControllerBuilder extends ControllerBuilder{
                 validatorFactory, applicationContext, internalUpdate );
     }
     
-    public ControllerBuilder addAlias( String id ){
+    @Override
+    protected Action createAction(){
+    	return new WebAction();
+    }
+    
+    public ControllerBuilder addAlias(String id){
         WebUtil.checkURI(id, true);
         return super.addAlias(id);
     }
-    
-    public ActionBuilder addAction( String id, String resultId, boolean resultRendered, String view, 
+
+    public ActionBuilder addAction(String id, 
+    		String resultId, boolean resultRendered, String view, 
             DispatcherType dispatcher, boolean resolvedView, String executor ){
-        
+    	return this.addAction(id, BrutosWebConstants.DEFAULT_REQUEST_METHOD_TYPE, 
+    			resultId, resultRendered, view, dispatcher, resolvedView, executor);
+    }
+    
+    public ActionBuilder addAction(String id, RequestMethodType requestMethodType, 
+    		String resultId, boolean resultRendered, String view, 
+            DispatcherType dispatcher, boolean resolvedView, String executor ){
     	
         ActionType type = this.controller.getActionType();
         
@@ -69,20 +84,22 @@ public class WebControllerBuilder extends ControllerBuilder{
         
         WebUtil.checkURI(builder.getView(), resolvedView && view != null);
         
-        return new WebActionBuilder(builder);
+        WebActionBuilder webBuilder = new WebActionBuilder(builder);
+        
+        webBuilder.setRequestMethod(
+    		requestMethodType == null? 
+				BrutosWebConstants.DEFAULT_REQUEST_METHOD_TYPE :
+				requestMethodType
+			);
+        
+        return webBuilder;
     }
     
     public ControllerBuilder addThrowable( Class<?> target, String view, String id, 
             DispatcherType dispatcher, boolean resolvedView ){
-        
-        
-        
 		ControllerBuilder builder = super.addThrowable(target, view, id, dispatcher, resolvedView);
-
         ThrowableSafeData thr = this.controller.getThrowsSafe(target);
-		
         WebUtil.checkURI(thr.getView(), resolvedView && view != null);
-
         return builder;
     }
     

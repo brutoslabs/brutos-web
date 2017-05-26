@@ -172,7 +172,9 @@ public class ControllerBuilder {
 
 		id = StringUtil.adjust(id);
 
-		if (this.controller.getAction(id) == null)
+		ActionID actionID = new ActionID(id);
+		
+		if (this.controller.getActionById(actionID) == null)
 			throw new MappingException("action not found: \"" + id + "\"");
 
 		if (id != null) {
@@ -184,7 +186,7 @@ public class ControllerBuilder {
 											controller.getClassType()
 													.getSimpleName() }));
 
-			controller.setDefaultAction(id);
+			controller.setDefaultAction(actionID);
 		}
 		return this;
 	}
@@ -290,11 +292,13 @@ public class ControllerBuilder {
 
 		executor = StringUtil.adjust(executor);
 
+		ActionID actionId = new ActionID(id);
+		
 		if (StringUtil.isEmpty(view) && StringUtil.isEmpty(executor))
 			throw new MappingException(
 					"view must be informed in abstract actions: " + id);
 
-		if (controller.getAction(id) != null)
+		if (controller.getAction(actionId) != null)
 			throw new MappingException("duplicate action: " + id);
 
 		Action action = this.createAction();
@@ -305,7 +309,8 @@ public class ControllerBuilder {
 				.getValidator(new Configuration()));
 		action.setParametersValidator(validatorFactory
 				.getValidator(new Configuration()));
-		controller.addAction(id, action);
+		
+		controller.addAction(actionId, action);
 
 		ActionBuilder actionBuilder = new ActionBuilder(action, controller,
 				validatorFactory, this, this.applicationContext);
@@ -336,12 +341,14 @@ public class ControllerBuilder {
 		if (StringUtil.isEmpty(id))
 			throw new MappingException("action id cannot be empty");
 
-		if (controller.getAction(id) != null)
+		ActionID actionId = new ActionID(id);
+		
+		if (controller.getAction(actionId) != null)
 			throw new MappingException("duplicate action: " + id);
 
 		Action action = parent.action;
 		action.addAlias(id);
-		controller.addAction(id, parent.action);
+		controller.addAction(actionId, parent.action);
 
 		return this;
 	}
@@ -353,12 +360,15 @@ public class ControllerBuilder {
 		if (StringUtil.isEmpty(id))
 			throw new MappingException("invalid alias");
 
-		if (controller.getAction(id) == null
-				|| !controller.getAction(id).equals(parent.action))
+		ActionID actionId = new ActionID(id);
+		
+		if (controller.getAction(actionId) == null
+				|| !controller.getAction(actionId).equals(parent.action))
 			throw new MappingException("invalid action " + id + ": "
 					+ controller.getClassType().getName());
 
-		controller.removeAction(id);
+		controller.removeAction(actionId);
+		
 		return this;
 	}
 

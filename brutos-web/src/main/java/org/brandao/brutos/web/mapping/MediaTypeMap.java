@@ -34,6 +34,15 @@ public class MediaTypeMap {
 		
 	}
 	
+	public boolean isEmpty(){
+		return set.isEmpty();
+	}
+	
+	public void clear(){
+		set.clear();
+		map.clear();
+	}
+	
 	public void add(MediaType value){
 		String type    = value.getType();
 		String subtype = value.getSubType();

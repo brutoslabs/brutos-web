@@ -41,7 +41,7 @@ public class Action {
 
 	private Controller controller;
 
-	private String id;
+	private ActionID id;
 
 	private String name;
 
@@ -117,7 +117,6 @@ public class Action {
 
 	public void setName(String name) {
 		this.name = name;
-		this.id = name;
 	}
 
 	public void addParameter(ParameterAction value) {
@@ -413,10 +412,14 @@ public class Action {
 		this.simpleName = simpleName;
 	}
 
-	public String getId() {
+	public ActionID getId() {
 		return id;
 	}
 
+	public void setId(ActionID value){
+		this.id = value;
+	}
+	
 	public boolean isReturnRendered() {
 		return returnRendered;
 	}

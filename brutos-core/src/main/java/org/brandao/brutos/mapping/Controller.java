@@ -53,7 +53,7 @@ public class Controller {
 
 	private List<PropertyController> fields;
 
-	private Map<String, Action> actions;
+	private Map<ActionID, Action> actions;
 
 	// TODO: update to Map<ReverseActionKey,Action>
 	private Map<ReverseActionKey, List<Action>> reverseMethods;
@@ -70,7 +70,7 @@ public class Controller {
 
 	private boolean redirect;
 
-	private String defaultAction;
+	private ActionID defaultAction;
 
 	private List<Interceptor> interceptorStack;
 
@@ -95,7 +95,7 @@ public class Controller {
 	public Controller(ConfigurableApplicationContext context) {
 		this.fields 			= new ArrayList<PropertyController>();
 		this.mappingBeans 		= new LinkedHashMap<String, Bean>();
-		this.actions 			= new LinkedHashMap<String, Action>();
+		this.actions 			= new LinkedHashMap<ActionID, Action>();
 		this.interceptorStack 	= new ArrayList<Interceptor>();
 		this.alias 				= new ArrayList<String>();
 		this.reverseMethods 	= new LinkedHashMap<ReverseActionKey, List<Action>>();
@@ -199,19 +199,20 @@ public class Controller {
 		this.beanInstance = new BeanInstance(null, classType);
 	}
 
-	public Action getAction(String id) {
+	public Action getActionById(ActionID id) {
 		return (Action) actions.get(id);
 	}
 
-	public Map<String, Action> getActions() {
+	public Map<ActionID, Action> getActions() {
 		return actions;
 	}
 
-	public void addAction(String id, Action method) {
+	public void addAction(ActionID id, Action method) {
+		method.setId(id);
 		this.actions.put(id, method);
 	}
 
-	public void removeAction(String id) {
+	public void removeAction(ActionID id) {
 		this.actions.remove(id);
 	}
 
@@ -250,7 +251,7 @@ public class Controller {
 		return (Action) list.get(0);
 	}
 
-	public void setMethods(Map<String, Action> methods) {
+	public void setMethods(Map<ActionID, Action> methods) {
 		this.actions = methods;
 	}
 
@@ -296,9 +297,9 @@ public class Controller {
 		}
 	}
 
-	public Action getActionByName(String name) {
+	public Action getAction(ActionID value) {
 		Action mf;
-		mf = (Action) (name == null ? null : actions.get(name));
+		mf = (Action) (name == null ? null : actions.get(value));
 		mf = (Action) (mf == null ? actions.get(getDefaultAction()) : mf);
 		return mf;
 	}
@@ -308,17 +309,10 @@ public class Controller {
 	}
 
 	public synchronized void flush() {
-
 		this.interceptorProcess.flush();
-
-		Iterator<String> keys = actions.keySet().iterator();
-
-		while (keys.hasNext()) {
-			String key = keys.next();
-			Action ac = actions.get(key);
+		for(Action ac: actions.values()){
 			ac.flush();
 		}
-
 	}
 
 	public void fieldsToRequest(Object webFrame) {
@@ -380,11 +374,11 @@ public class Controller {
 		this.view = view;
 	}
 
-	public String getDefaultAction() {
+	public ActionID getDefaultAction() {
 		return defaultAction;
 	}
 
-	public void setDefaultAction(String defaultAction) {
+	public void setDefaultAction(ActionID defaultAction) {
 		this.defaultAction = defaultAction;
 	}
 

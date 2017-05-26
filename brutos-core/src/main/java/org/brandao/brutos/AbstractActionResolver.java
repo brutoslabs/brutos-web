@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.Scope;
 
@@ -79,8 +80,7 @@ public abstract class AbstractActionResolver
     public ResourceAction getResourceAction(Controller controller, String actionId, 
     		MutableMvcRequest request) throws ActionResolverException {
 
-        Action method = controller
-                .getActionByName( actionId );
+        Action method = controller.getAction(new ActionID(actionId));
         return method == null? null : getResourceAction( method );
     }
     

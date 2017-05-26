@@ -27,7 +27,6 @@ import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.web.http.UploadStats;
 
 /**
@@ -58,14 +57,14 @@ public class ContextLoaderListener implements ServletContextListener,
 
         se.getSession()
             .setAttribute(
-                BrutosConstants.SESSION_UPLOAD_STATS,
+                BrutosWebConstants.SESSION_UPLOAD_STATS,
                 mappedUploadStats );
     }
 
     public void sessionDestroyed(HttpSessionEvent se) {
         se.getSession()
             .removeAttribute(
-                BrutosConstants.SESSION_UPLOAD_STATS );
+        		BrutosWebConstants.SESSION_UPLOAD_STATS );
     }
 
     public void requestDestroyed(ServletRequestEvent sre) {

@@ -19,6 +19,7 @@ package org.brandao.brutos.annotation.configuration;
 
 import java.lang.annotation.Annotation;
 import java.util.*;
+
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.EnumerationType;
@@ -27,6 +28,7 @@ import org.brandao.brutos.annotation.scanner.DefaultScanner;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.TypeUtil;
+import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.xml.FilterEntity;
@@ -261,7 +263,7 @@ public class AnnotationUtil {
 
 	public static boolean isWebApplication(ApplicationContext applicationContext) {
 		Properties config = applicationContext.getConfiguration();
-		return config.getProperty(BrutosConstants.WEB_APPLICATION_CLASS) != null;
+		return config.getProperty(BrutosWebConstants.WEB_APPLICATION_CLASS) != null;
 	}
 
 	public static boolean isWebApplication(ComponentRegistry componentRegistry) {
