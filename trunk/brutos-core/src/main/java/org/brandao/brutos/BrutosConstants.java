@@ -23,198 +23,159 @@ package org.brandao.brutos;
  */
 public interface BrutosConstants {
 
-	public final String WEBFRAME = "Controller";
+	final String WEBFRAME = "Controller";
 
-	public final String COMMA = ",";
+	final String COMMA = ",";
 
-	public final String APPLICATION_CONTEXT = "application-context";
+	final String APPLICATION_CONTEXT = "application-context";
 
-	public final String CUSTOM_TYPES = "customTypes";
+	final String CUSTOM_TYPES = "customTypes";
 
-	public final String EXCEPTION = "brutos_exception";
+	final String EXCEPTION = "brutos_exception";
 
-	public final String BUNDLE_NAME = "default_bundle";
+	final String BUNDLE_NAME = "default_bundle";
 
-	public final String USER = "brutos_user";
+	final String USER = "brutos_user";
 
-	public final String IOC_MANAGER = "ioc-manager";
+	final String IOC_MANAGER = "ioc-manager";
 
-	public final String IOC_PROVIDER = "ioc-provider";
+	final String IOC_PROVIDER = "ioc-provider";
 
-	public final String WEBFRAME_MANAGER = "webframe-manager";
+	final String WEBFRAME_MANAGER = "webframe-manager";
 
-	public final String INTERCEPTOR_MANAGER = "interceptor-manager";
+	final String INTERCEPTOR_MANAGER = "interceptor-manager";
 
-	public final String VIEW_PROVIDER = "view-provider";
+	final String VIEW_PROVIDER = "view-provider";
 
-	public final String VALIDATOR_PROVIDER = "validator-provider";
+	final String VALIDATOR_PROVIDER = "validator-provider";
 
-	public final String REDIRECT = ApplicationContext.class.getName()
+	final String REDIRECT = ApplicationContext.class.getName()
 			+ ".REDIRECT";
 
-	@Deprecated
-	public final String UPLOAD_LISTENER_FACTORY = ApplicationContext.class
-			.getName() + ".UPLOAD_LISTENER_FACTORY";
-
-	public final String REQUEST_INSTRUMENT = ApplicationContext.class.getName()
-			+ ".REQUEST_INSTRUMENT";
-
-	@Deprecated
-	public final String HTTP_REQUEST_PARSER_FACTORY = ApplicationContext.class
-			.getName() + ".HTTP_REQUEST_PARSER_FACTORY";
-
-	public final String HTTP_REQUEST_PARSER = ApplicationContext.class
-			.getName() + ".HTTP_REQUEST_PARSER";
-
-	public final String SESSION_UPLOAD_STATS = ApplicationContext.class
-			.getName() + ".SESSION_UPLOAD_STATS";
-
-	public final String EXCEPTION_DATA = ApplicationContext.class.getName()
+	final String EXCEPTION_DATA = ApplicationContext.class.getName()
 			+ ".EXCEPTION_DATA";
 
-	public final String ROOT_APPLICATION_CONTEXT_ATTRIBUTE = ApplicationContext.class
+	final String REQUEST_INSTRUMENT = ApplicationContext.class.getName()
+			+ ".REQUEST_INSTRUMENT";
+	
+	final String ROOT_APPLICATION_CONTEXT_ATTRIBUTE = ApplicationContext.class
 			.getName() + ".ROOT";
 
-	public final String FLASH_INSTRUMENT = ApplicationContext.class.getName()
-			+ ".FLASH_INSTRUMENT";
+	final String LOGGER = ApplicationContext.class.getName() + ".LOGGER";
 
-	public final String LOGGER = ApplicationContext.class.getName() + ".LOGGER";
+	final String DEFAULT_RETURN_NAME = "result";
 
-	public final String DEFAULT_RETURN_NAME = "result";
-
-	public final String METHOD_RESOLVER = ApplicationContext.class.getName()
+	final String METHOD_RESOLVER = ApplicationContext.class.getName()
 			+ ".METHOD_RESOLVER";
 
-	public final String CONTROLLER_RESOLVER = ApplicationContext.class
+	final String CONTROLLER_RESOLVER = ApplicationContext.class
 			.getName() + ".CONTROLLER_RESOLVER";
 
-	public final String CONTROLLER = ApplicationContext.class.getName()
+	final String CONTROLLER = ApplicationContext.class.getName()
 			+ ".CONTROLLER";
 
-	public final String INVOKER = ApplicationContext.class.getName()
+	final String INVOKER = ApplicationContext.class.getName()
 			+ ".INVOKER";
 
-	public final String JSF_HANDLER = ApplicationContext.class.getName()
-			+ ".JSF_Handler";
+	final DispatcherType DEFAULT_DISPATCHERTYPE = DispatcherType.FORWARD;
 
-	public final String JSF_CONTEXT = ApplicationContext.class.getName()
-			+ ".JSF_Context";
+	final String DEFAULT_DISPATCHERTYPE_NAME = "forward";
 
-	public final String JSF_UI_VIEW_ROOT = ApplicationContext.class.getName()
-			+ ".JSF_viewRoot";
+	final ScopeType DEFAULT_SCOPETYPE = ScopeType.PARAM;
 
-	public final String JSF_ACTION_LISTENER = ApplicationContext.class
-			.getName() + ".JSF_Action_Listener";
+	final String DEFAULT_EXCEPTION_NAME = "exception";
 
-	public final DispatcherType DEFAULT_DISPATCHERTYPE = DispatcherType.FORWARD;
+	final EnumerationType DEFAULT_ENUMERATIONTYPE = EnumerationType.ORDINAL;
 
-	public final String DEFAULT_DISPATCHERTYPE_NAME = "forward";
+	final String ACTION_TYPE = "org.brandao.brutos.action_strategy";
 
-	public final ScopeType DEFAULT_SCOPETYPE = ScopeType.PARAM;
+	final String CONTROLLER_MANAGER_CLASS = "org.brandao.brutos.manager.controller";
 
-	public final String DEFAULT_EXCEPTION_NAME = "exception";
+	final String INTERCEPTOR_MANAGER_CLASS = "org.brandao.brutos.manager.interceptor";
 
-	public final EnumerationType DEFAULT_ENUMERATIONTYPE = EnumerationType.ORDINAL;
+	final String INVOKER_CLASS = "org.brandao.brutos.invoker";
 
-	public final String ACTION_TYPE = "org.brandao.brutos.action_strategy";
+	final String TYPE_MANAGER_CLASS = "org.brandao.brutos.type.manager";
 
-	public final String CONTROLLER_MANAGER_CLASS = "org.brandao.brutos.manager.controller";
+	final String CDI_BEAN_MANAGER = "org.brandao.brutos.cdi.bean_manager";
 
-	public final String INTERCEPTOR_MANAGER_CLASS = "org.brandao.brutos.manager.interceptor";
+	final String JNDI_CLASS = "org.brandao.brutos.jndi.class";
 
-	public final String INVOKER_CLASS = "org.brandao.brutos.invoker";
+	final String JNDI_URL = "org.brandao.brutos.jndi.url";
 
-	public final String TYPE_MANAGER_CLASS = "org.brandao.brutos.type.manager";
-
-	public final String CDI_BEAN_MANAGER = "org.brandao.brutos.cdi.bean_manager";
-
-	public final String JNDI_CLASS = "org.brandao.brutos.jndi.class";
-
-	public final String JNDI_URL = "org.brandao.brutos.jndi.url";
-
-	public final String ACTION_RESOLVER = "org.brandao.brutos.controller.action_resolver";
+	final String ACTION_RESOLVER = "org.brandao.brutos.controller.action_resolver";
 
 	@Deprecated
-	public final String REQUEST_FACTORY = "org.brandao.brutos.controller.request_factory";
+	final String REQUEST_FACTORY = "org.brandao.brutos.controller.request_factory";
 
 	@Deprecated
-	public final String RESPONSE_FACTORY = "org.brandao.brutos.controller.response_factory";
+	final String RESPONSE_FACTORY = "org.brandao.brutos.controller.response_factory";
 
-	public final String CONTROLLER_RESOLVER_CLASS = "org.brandao.brutos.controller.class";
+	final String CONTROLLER_RESOLVER_CLASS = "org.brandao.brutos.controller.class";
 
-	public final String OBJECT_FACTORY_CLASS = "org.brandao.brutos.object_factory";
+	final String OBJECT_FACTORY_CLASS = "org.brandao.brutos.object_factory";
 
-	public final String VALIDATOR_FACTORY_CLASS = "org.brandao.brutos.validator_factory";
+	final String VALIDATOR_FACTORY_CLASS = "org.brandao.brutos.validator_factory";
 
-	public final String RENDER_VIEW_CLASS = "org.brandao.brutos.render_view";
+	final String RENDER_VIEW_CLASS = "org.brandao.brutos.render_view";
 
-	public final String REQUEST_PARSER_LISTENER = "org.brandao.brutos.upload_listener_factory";
+	final String REQUEST_PARSER_LISTENER = "org.brandao.brutos.upload_listener_factory";
 	
 	@Deprecated
-	public final String UPLOAD_LISTENER_CLASS = "org.brandao.brutos.upload_listener_factory";
+	final String UPLOAD_LISTENER_CLASS = "org.brandao.brutos.upload_listener_factory";
 
-	@Deprecated
-	public final String REQUEST_PARSER_CLASS = "org.brandao.brutos.web.request_parser";
+	final String CODE_GENERATOR_CLASS = "org.brandao.brutos.code_generator";
 
-	public final String CODE_GENERATOR_CLASS = "org.brandao.brutos.code_generator";
+	final String VIEW_RESOLVER_AUTO = "org.brandao.brutos.view.auto";
 
-	public final String VIEW_RESOLVER_AUTO = "org.brandao.brutos.view.auto";
+	final String VIEW_RESOLVER_PREFIX = "org.brandao.brutos.view.prefix";
 
-	public final String VIEW_RESOLVER_PREFIX = "org.brandao.brutos.view.prefix";
+	final String VIEW_RESOLVER_SUFFIX = "org.brandao.brutos.view.suffix";
 
-	public final String VIEW_RESOLVER_SUFFIX = "org.brandao.brutos.view.suffix";
+	final String VIEW_RESOLVER_INDEX = "org.brandao.brutos.view.index";
 
-	public final String VIEW_RESOLVER_INDEX = "org.brandao.brutos.view.index";
+	final String VIEW_RESOLVER_SEPARATOR = "org.brandao.brutos.view.separator";
 
-	public final String VIEW_RESOLVER_SEPARATOR = "org.brandao.brutos.view.separator";
+	final String DEFAULT_OBJECT_FACTORY_CLASS = "org.brandao.brutos.cdi.JSR299ObjectFactory";
 
-	public final String DEFAULT_OBJECT_FACTORY_CLASS = "org.brandao.brutos.cdi.JSR299ObjectFactory";
+	final String DEFAULT_PROXY_PROVIDER_CLASS = "org.brandao.brutos.codegenerator.JavassistCodeGeneratorProvider";
 
-	public final String DEFAULT_PROXY_PROVIDER_CLASS = "org.brandao.brutos.codegenerator.JavassistCodeGeneratorProvider";
+	final String DEFAULT_VIEW_PROVIDER_CLASS = "org.brandao.brutos.view.DefaultViewProvider";
 
-	@Deprecated
-	public final String DEFAULT_REQUEST_PARSER = "org.brandao.brutos.web.http.HttpRequestParserImp";
+	final String DEFAULT_INVOKER_CLASS = "org.brandao.brutos.Invoker";
 
-	public final String DEFAULT_VIEW_PROVIDER_CLASS = "org.brandao.brutos.view.DefaultViewProvider";
+	final String DEFAULT_TYPE_MANAGER_CLASS = "org.brandao.brutos.type.TypeManagerImp";
 
-	public final String DEFAULT_INVOKER_CLASS = "org.brandao.brutos.Invoker";
+	final String DEFAULT_CDI_BEAN_MANAGER = "java:comp/BeanManager";
 
-	public final String DEFAULT_TYPE_MANAGER_CLASS = "org.brandao.brutos.type.TypeManagerImp";
+	final String DEFAULT_ACTION_TYPE_NAME = "parameter";
 
-	public final String DEFAULT_CDI_BEAN_MANAGER = "java:comp/BeanManager";
+	final String DEFAULT_SEPARATOR = "-";
 
-	public final String DEFAULT_ACTION_TYPE_NAME = "parameter";
+	final String DEFAULT_ENUMERATION_TYPE = "ordinal";
 
-	public final String DEFAULT_SEPARATOR = "-";
+	final String DEFAULT_KEY_NAME = "key";
 
-	public final String DEFAULT_ENUMERATION_TYPE = "ordinal";
+	final String DEFAULT_ELEMENT_NAME = "element";
 
-	public final String DEFAULT_KEY_NAME = "key";
+	final String DEFAULT_TEMPORALPROPERTY = "dd/MM/yyyy";
 
-	public final String DEFAULT_ELEMENT_NAME = "element";
+	final String DEFAULT_SUFFIX_VIEW = "";
 
-	public final String DEFAULT_TEMPORALPROPERTY = "dd/MM/yyyy";
+	final String DEFAULT_PREFIX_VIEW = "views.";
 
-	public final String DEFAULT_SUFFIX_VIEW = "";
+	final String DEFAULT_INDEX_VIEW = "index";
 
-	public final String DEFAULT_PREFIX_VIEW = "views.";
+	final String DEFAULT_SEPARATOR_VIEW = ".";
 
-	public final String DEFAULT_INDEX_VIEW = "index";
+	final String DEFAULT_ACTION_ID = "invoke";
 
-	public final String DEFAULT_SEPARATOR_VIEW = ".";
+	final String DEFAULT_VIEW_RESOLVER = "true";
 
-	public final String DEFAULT_ACTION_ID = "invoke";
+	final String INCLUDE = "include";
 
-	public final String DEFAULT_VIEW_RESOLVER = "true";
+	final String EXCLUDE = "exclude";
 
-	public final String WEB_SEPARATOR = "/";
-
-	public final String WEB_APPLICATION_CLASS = ApplicationContext.class
-			.getName() + ".web.application";
-
-	public final String INCLUDE = "include";
-
-	public final String EXCLUDE = "exclude";
-
-	public final String EXPRESSION = "expression";
+	final String EXPRESSION = "expression";
+	
 }

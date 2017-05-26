@@ -93,4 +93,8 @@ public class RequestMethodType {
 		return true;
 	}
 	
+	public String toString(){
+		return this.id;
+	}
+	
 }

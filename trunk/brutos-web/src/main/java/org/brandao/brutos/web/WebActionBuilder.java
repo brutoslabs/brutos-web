@@ -26,8 +26,10 @@ import org.brandao.brutos.DataType;
 import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.mapping.WebAction;
+import org.brandao.brutos.web.mapping.WebActionID;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -68,7 +70,18 @@ public class WebActionBuilder extends ActionBuilder{
     }
     
     public void setRequestMethod(RequestMethodType value){
-    	((WebAction)this.action).setRequestMethod(value);
+    	
+    	WebAction webAction = (WebAction)this.action;
+    	WebActionID oldId = (WebActionID)webAction.getId();
+    	WebActionID newId = new WebActionID(webAction.getId().getName(), value);
+    	
+    	if(this.action.getController().getAction(newId) != null){
+    		throw new MappingException("duplicate action: " + newId);
+    	}
+    	
+    	webAction.setRequestMethod(value);
+    	this.controller.removeAction(oldId);
+    	this.controller.addAction(newId, this.action);
     }
 
     public RequestMethodType getRequestMethod(){

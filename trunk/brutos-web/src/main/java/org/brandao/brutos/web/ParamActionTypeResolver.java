@@ -6,6 +6,7 @@ import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.web.mapping.WebActionID;
 
 public class ParamActionTypeResolver 
 	extends AbstractWebActionTypeResolver{
@@ -36,10 +37,11 @@ public class ParamActionTypeResolver
 	public ResourceAction getResourceAction(Controller controller, Scope scope,
 			MutableMvcRequest request, StringPattern uriMap) {
 
-    	String actionId = String.valueOf(
-                scope.get( controller.getActionId() ) );
-                
-        Action method = controller.getActionByName( actionId );
+    	String actionId                     = String.valueOf(scope.get( controller.getActionId()));
+    	WebMvcRequest webRequest            = (WebMvcRequest)request;
+    	RequestMethodType requestMethodType = webRequest.getRequestMethodType();
+    	WebActionID id                      = new WebActionID(actionId, requestMethodType);
+        Action method                       = controller.getAction(id);
         
         if(method != null){
         	super.updateRequest(request.getRequestId(), scope, uriMap);
