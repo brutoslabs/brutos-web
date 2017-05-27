@@ -15,8 +15,33 @@ public class HierarchyActionTypeResolver
 
 		String requestID     = request.getRequestId();
 		String controllerId  = controller.getId();
-        StringPattern uriMap = getURIMapping( controllerId );
+
+        ResourceAction resourceAction = 
+    		this.getResourceAction(requestID, controllerId, controller, scope);
         
+        if(resourceAction != null){
+        	return resourceAction;
+        }
+        
+        for(String alias: controller.getAlias()){
+        	
+            resourceAction = 
+            		this.getResourceAction(requestID, alias, controller, scope);
+        	
+            if(resourceAction != null){
+            	return resourceAction;
+            }
+        	
+        }
+		
+		return null;
+	}
+
+	private ResourceAction getResourceAction(String requestID, String controllerID, 
+			Controller controller, Scope scope){
+		
+		StringPattern uriMap = getURIMapping(controllerID);
+		
         if(uriMap.matches(requestID)){
         	if(controller.getDefaultAction() != null){
         		return new DefaultResourceAction(
@@ -29,58 +54,61 @@ public class HierarchyActionTypeResolver
         }
         else{
         	ResourceAction resourceAction = this.getResourceAction(controller, 
-        			controllerId, requestID, scope);
+        			controllerID, requestID, scope);
         	
         	if(resourceAction != null){
         		return resourceAction;
         	}
         	
         }
-        
-        for(String alias: controller.getAlias()){
-            uriMap = getURIMapping( alias );
-            
-            if(uriMap.matches(requestID)){
-            	if(controller.getDefaultAction() != null){
-            		return new DefaultResourceAction(
-            				controller, 
-            				controller.getAction(controller.getDefaultAction()) );
-            	}
-            	else{
-            		return new DefaultResourceAction( controller, null );
-            	}
-            }
-            else{
-            	ResourceAction resourceAction = this.getResourceAction(controller, 
-            			alias, requestID, scope);
-            	
-            	if(resourceAction != null){
-            		return resourceAction;
-            	}
-            	
-            }
-        	
-        }
 		
-		return null;
+        return null;
 	}
-
+	
     private ResourceAction getResourceAction(Controller controller, 
     		String controllerId, String uri, Scope paramScope){
     	
         for(Action action: controller.getActions().values()){
-            String fullActionId = controllerId + controller.getName();
         	
-            StringPattern uriMap = getURIMapping( fullActionId );
+        	ResourceAction resourceAction =
+        			this.getResourceAction(controller, action, controllerId, 
+        					action.getName(), uri, paramScope);
 
-            if(uriMap.matches(uri)){
-                updateRequest(uri, paramScope, uriMap);
-                return new DefaultResourceAction(controller, action);
-            }
-            
+        	if(resourceAction != null){
+        		return resourceAction;
+        	}
+
+        	for(String alias: action.getAlias()){
+
+            	resourceAction =
+            			this.getResourceAction(controller, action, controllerId, 
+            					alias, uri, paramScope);
+
+            	if(resourceAction != null){
+            		return resourceAction;
+            	}
+        		
+        	}
+        	
         }
         
         return null;
     }
-	
+
+    private ResourceAction getResourceAction(
+    		Controller controller, Action action, 
+    		String controllerId, String actionId, String uri, Scope paramScope){
+    	
+        String fullActionId = controllerId + actionId;
+    	
+        StringPattern uriMap = getURIMapping( fullActionId );
+
+        if(uriMap.matches(uri)){
+            updateRequest(uri, paramScope, uriMap);
+            return new DefaultResourceAction(controller, action);
+        }
+        
+        return null;
+    }
+    
 }

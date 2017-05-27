@@ -36,7 +36,18 @@ public class DetachedActionTypeResolver
                 updateRequest(uri, paramScope, uriMap);
                 return new DefaultResourceAction(controller, action);
             }
-        	
+
+            for(String name: action.getAlias()){
+            	
+            	uriMap = getURIMapping(name);
+            	
+                if(uriMap.matches(uri)){
+                    updateRequest(uri, paramScope, uriMap);
+                    return new DefaultResourceAction(controller, action);
+                }
+            	
+            }
+            
         }
         
         return null;
