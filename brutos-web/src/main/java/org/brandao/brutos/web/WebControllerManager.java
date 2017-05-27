@@ -22,6 +22,7 @@ import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManagerImp;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.util.WebUtil;
 
@@ -44,17 +45,17 @@ public class WebControllerManager extends ControllerManagerImp{
             String name, Class<?> classType, String actionId ){
             return addController( id, view, resolvedView,
                     dispatcherType, name, classType, actionId, 
-                    ActionType.HIERARCHY);
+                    WebActionType.HIERARCHY);
     }
     
     public ControllerBuilder addController( String id, String view, 
             boolean resolvedView, DispatcherType dispatcherType, String name, 
             Class<?> classType, 
             String actionId, ActionType actionType ){
-        
-        if(!ActionType.DETACHED.equals(actionType))
-            WebUtil.checkURI(id, true);
-        
+
+    	if(!actionType.isValidControllerId(id))
+    		throw new MappingException("invalid controller id: " + id);
+    	
         if(resolvedView && view != null)
             WebUtil.checkURI(view, true);
         

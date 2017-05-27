@@ -71,11 +71,9 @@ public class ControllerBuilder {
 
 	public ControllerBuilder addAlias(String id) {
 
-		if (ActionType.DETACHED.equals(controller.getActionType())) {
-			throw new MappingException("alias not allowed: "
-					+ controller.getClassType().getName());
-		}
-
+    	if(!this.controller.getActionType().isValidControllerId(id))
+    		throw new MappingException("invalid controller alias: " + id);
+		
 		id = StringUtil.adjust(id);
 
 		if (StringUtil.isEmpty(id))
@@ -91,11 +89,6 @@ public class ControllerBuilder {
 	}
 
 	public ControllerBuilder removeAlias(String id) {
-
-		if (ActionType.DETACHED.equals(controller.getActionType())) {
-			throw new MappingException("alias not allowed: "
-					+ controller.getClassType().getName());
-		}
 
 		id = StringUtil.adjust(id);
 

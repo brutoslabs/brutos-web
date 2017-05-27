@@ -195,7 +195,7 @@ public abstract class AbstractWebApplicationContext
         
         tmp = config
                 .getProperty( BrutosConstants.ACTION_TYPE,
-                              ActionType.HIERARCHY.name() );
+                              WebActionType.HIERARCHY.id() );
         
         config.put( BrutosConstants.ACTION_TYPE,
                     tmp );

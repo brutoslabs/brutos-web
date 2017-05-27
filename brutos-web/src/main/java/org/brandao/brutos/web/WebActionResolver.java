@@ -19,7 +19,6 @@ package org.brandao.brutos.web;
 
 
 import org.brandao.brutos.AbstractActionResolver;
-import org.brandao.brutos.ActionType;
 
 /**
  * 
@@ -29,9 +28,9 @@ public class WebActionResolver extends AbstractActionResolver{
     
     public WebActionResolver(){
     	super();
-    	this.addActionTypeResolver(ActionType.PARAMETER,  new ParamActionTypeResolver());
-    	this.addActionTypeResolver(ActionType.HIERARCHY,  new HierarchyActionTypeResolver());
-    	this.addActionTypeResolver(ActionType.DETACHED,   new DetachedActionTypeResolver());
+    	this.addActionTypeResolver(WebActionType.PARAMETER,  new ParamActionTypeResolver());
+    	this.addActionTypeResolver(WebActionType.HIERARCHY,  new HierarchyActionTypeResolver());
+    	this.addActionTypeResolver(WebActionType.DETACHED,   new DetachedActionTypeResolver());
     }
     
 }
