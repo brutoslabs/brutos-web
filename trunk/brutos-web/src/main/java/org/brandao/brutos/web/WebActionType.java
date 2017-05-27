@@ -125,7 +125,7 @@ public class WebActionType extends ActionType{
 		if (value == null)
 			return null;
 		else
-			return defaultTypes.get(value.toUpperCase());
+			return defaultTypes.get(value);
 	}
 	
 }

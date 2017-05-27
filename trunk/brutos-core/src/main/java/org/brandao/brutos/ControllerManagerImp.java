@@ -106,12 +106,18 @@ public class ControllerManagerImp implements ControllerManager {
 		name = StringUtil.adjust(name);
 
 		if (actionType == null) {
+			throw new MappingException("action type is required");
+		}
+		
+		/*
+		if (actionType == null) {
 			Properties config = applicationContext.getConfiguration();
 			String strategyName = config.getProperty(
 					BrutosConstants.ACTION_TYPE,
 					BrutosConstants.DEFAULT_ACTION_TYPE_NAME);
 			actionType = ActionType.valueOf(strategyName.toUpperCase());
 		}
+		*/
 		
 		if (StringUtil.isEmpty(actionId))
 			actionId = BrutosConstants.DEFAULT_ACTION_ID;
