@@ -1,8 +1,5 @@
 package org.brandao.brutos.web;
 
-import java.util.Iterator;
-import java.util.Map;
-
 import org.brandao.brutos.DefaultResourceAction;
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.ResourceAction;
@@ -57,20 +54,14 @@ public class HierarchyActionTypeResolver
     private ResourceAction getResourceAction(Controller controller, 
     		String controllerId, String uri, Scope paramScope){
     	
-        Map<String,Action> actions = controller.getActions();
-        Iterator<String> actionsId = actions.keySet().iterator();
-        
-        while(actionsId.hasNext()){
-            String actionId = (String) actionsId.next();
-            String fullActionId =
-            		controllerId + actionId;
-
+        for(Action action: controller.getActions().values()){
+            String fullActionId = controllerId + controller.getName();
+        	
             StringPattern uriMap = getURIMapping( fullActionId );
 
             if(uriMap.matches(uri)){
                 updateRequest(uri, paramScope, uriMap);
-                Action a = actions.get(actionId);
-                return a == null? null : new DefaultResourceAction(controller, a);
+                return new DefaultResourceAction(controller, action);
             }
             
         }

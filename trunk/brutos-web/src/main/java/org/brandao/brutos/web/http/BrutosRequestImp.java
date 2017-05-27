@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebScopeType;
@@ -71,7 +72,7 @@ public class BrutosRequestImp extends ServletRequestWrapper
 
             UploadListenerFactory uploadListenerFactory =
                     (UploadListenerFactory) contextScope
-                        .get( BrutosConstants.UPLOAD_LISTENER_FACTORY );
+                        .get( BrutosWebConstants.UPLOAD_LISTENER_FACTORY );
 
             UploadEvent uploadEvent = this.httpRequestParser
                     .getUploadEvent(this);
@@ -94,7 +95,7 @@ public class BrutosRequestImp extends ServletRequestWrapper
 
             httpRequestParser =
                     (HttpRequestParser) contextScope
-                        .get( BrutosConstants.HTTP_REQUEST_PARSER );
+                        .get( BrutosWebConstants.HTTP_REQUEST_PARSER );
         }
 
 
