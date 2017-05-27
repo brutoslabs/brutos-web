@@ -53,6 +53,13 @@ public class WebControllerManager extends ControllerManagerImp{
             Class<?> classType, 
             String actionId, ActionType actionType ){
 
+    	if(actionType == null){
+    		actionType = WebActionType.HIERARCHY;
+    	}
+    	else{
+    		actionType = WebActionType.valueOf(actionType.id());
+    	}
+    	
     	if(!actionType.isValidControllerId(id))
     		throw new MappingException("invalid controller id: " + id);
     	
