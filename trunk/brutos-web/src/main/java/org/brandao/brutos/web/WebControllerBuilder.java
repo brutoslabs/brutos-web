@@ -29,8 +29,10 @@ import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.mapping.WebAction;
+import org.brandao.brutos.web.mapping.WebActionID;
 import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.util.WebUtil;
 
@@ -102,10 +104,39 @@ public class WebControllerBuilder extends ControllerBuilder{
         return builder;
     }
     
-    public ControllerBuilder setDefaultAction( String id ){
-        WebUtil.checkURI(id,true);
-        return super.setDefaultAction(id);
+    public ControllerBuilder setDefaultAction(String id){
+        return this.setDefaultAction(id, null);
     }
+    
+	public ControllerBuilder setDefaultAction(String id, RequestMethodType requestMethodType) {
+
+		id = StringUtil.adjust(id);
+
+        WebUtil.checkURI(id,true);
+        
+        requestMethodType = requestMethodType == null? 
+        		BrutosWebConstants.DEFAULT_REQUEST_METHOD_TYPE :
+        		requestMethodType;
+        
+		WebActionID actionID = new WebActionID(id, requestMethodType);
+		
+		if (this.controller.getActionById(actionID) == null)
+			throw new MappingException("action not found: \"" + id + "\"");
+
+		if (id != null) {
+			getLogger()
+					.info(String
+							.format("adding default action %s on controller %s",
+									new Object[] {
+											id,
+											controller.getClassType()
+													.getSimpleName() }));
+
+			controller.setDefaultAction(actionID);
+		}
+		
+		return this;
+	}
     
     public ControllerBuilder setId(String value){
     	

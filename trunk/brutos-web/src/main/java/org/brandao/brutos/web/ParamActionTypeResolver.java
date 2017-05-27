@@ -43,12 +43,17 @@ public class ParamActionTypeResolver
     	WebActionID id                      = new WebActionID(actionId, requestMethodType);
         Action method                       = controller.getAction(id);
         
+        if(method == null && controller.getDefaultAction() != null){
+    		method = controller.getAction(controller.getDefaultAction());
+        }
+        
         if(method != null){
         	super.updateRequest(request.getRequestId(), scope, uriMap);
         	return new DefaultResourceAction( method.getController(), method );
         }
-        else
+        else{
         	return null;
+        }
 	}
 	
 }

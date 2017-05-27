@@ -289,13 +289,8 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 
 	protected String getControllerName(ComponentRegistry componentRegistry,
 			Class<?> controllerClass) {
-		String id = controllerClass.getSimpleName().replaceAll("Controller$",
+		return controllerClass.getSimpleName().replaceAll("Controller$",
 				"");
-
-		id = (AnnotationUtil.isWebApplication(componentRegistry) ? "/" : "")
-				+ id;
-
-		return id;
 	}
 
 	protected String getControllerId(ComponentRegistry componentRegistry,
