@@ -87,6 +87,7 @@ public interface BrutosConstants {
 
 	final EnumerationType DEFAULT_ENUMERATIONTYPE = EnumerationType.ORDINAL;
 
+	@Deprecated
 	final String ACTION_TYPE = "org.brandao.brutos.action_strategy";
 
 	final String CONTROLLER_MANAGER_CLASS = "org.brandao.brutos.manager.controller";
@@ -148,6 +149,7 @@ public interface BrutosConstants {
 
 	final String DEFAULT_CDI_BEAN_MANAGER = "java:comp/BeanManager";
 
+	@Deprecated
 	final String DEFAULT_ACTION_TYPE_NAME = "parameter";
 
 	final String DEFAULT_SEPARATOR = "-";

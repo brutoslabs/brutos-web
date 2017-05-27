@@ -18,7 +18,14 @@ public class HierarchyActionTypeResolver
         StringPattern uriMap = getURIMapping( controllerId );
         
         if(uriMap.matches(requestID)){
-        	return new DefaultResourceAction( controller, null );
+        	if(controller.getDefaultAction() != null){
+        		return new DefaultResourceAction(
+        				controller, 
+        				controller.getAction(controller.getDefaultAction()) );
+        	}
+        	else{
+        		return new DefaultResourceAction( controller, null );
+        	}
         }
         else{
         	ResourceAction resourceAction = this.getResourceAction(controller, 
@@ -34,7 +41,14 @@ public class HierarchyActionTypeResolver
             uriMap = getURIMapping( alias );
             
             if(uriMap.matches(requestID)){
-            	return new DefaultResourceAction( controller, null );
+            	if(controller.getDefaultAction() != null){
+            		return new DefaultResourceAction(
+            				controller, 
+            				controller.getAction(controller.getDefaultAction()) );
+            	}
+            	else{
+            		return new DefaultResourceAction( controller, null );
+            	}
             }
             else{
             	ResourceAction resourceAction = this.getResourceAction(controller, 

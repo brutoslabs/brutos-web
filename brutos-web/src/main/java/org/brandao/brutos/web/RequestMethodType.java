@@ -43,9 +43,9 @@ public class RequestMethodType {
 		return r == null? new RequestMethodType(value, value.toLowerCase()) : r;
 	}
 	
-	private String id;
+	private final String id;
 	
-	private String name;
+	private final String name;
 
 	public RequestMethodType(String id, String name) {
 		this.id = id;
@@ -56,16 +56,8 @@ public class RequestMethodType {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Override
