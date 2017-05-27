@@ -23,7 +23,7 @@ public class ParamActionTypeResolver
         }
 		
         for(String alias: controller.getAlias()){
-            uriMap = getURIMapping( alias );
+            uriMap = getURIMapping(alias);
             
             if(uriMap.matches(requestID)){
             	return this.getResourceAction(controller, scope, request, uriMap);
@@ -49,7 +49,7 @@ public class ParamActionTypeResolver
         
         if(method != null){
         	super.updateRequest(request.getRequestId(), scope, uriMap);
-        	return new DefaultResourceAction( method.getController(), method );
+        	return new DefaultResourceAction(method.getController(), method);
         }
         else{
         	return null;
