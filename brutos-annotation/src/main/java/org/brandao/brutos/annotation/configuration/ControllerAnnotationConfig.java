@@ -22,7 +22,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.brandao.brutos.*;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
 import org.brandao.brutos.bean.BeanInstance;
@@ -44,7 +46,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 			return applyConfiguration0(source, builder, componentRegistry);
 		} catch (Exception e) {
 			throw new BrutosException("can't create controller: "
-					+ ((Class) source).getName(), e);
+					+ ((Class<?>) source).getName(), e);
 		}
 
 	}
@@ -52,8 +54,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 	public Object applyConfiguration0(Object arg0, Object arg1,
 			ComponentRegistry componentRegistry) {
 
-		Class source = (Class) arg0;
-		ControllerBuilder builder;
+		Class<?> source = (Class<?>) arg0;
 
 		Controller annotationController = (Controller) source
 				.getAnnotation(Controller.class);
@@ -61,9 +62,6 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 		ActionStrategy strategy = (ActionStrategy) source
 				.getAnnotation(ActionStrategy.class);
 
-		String controllerID;
-		String view;
-		org.brandao.brutos.DispatcherType dispatcher;
 
 		String name = null;
 		String actionID = null;
@@ -77,10 +75,10 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 			defaultActionName = annotationController.defaultActionName();
 		}
 
-		controllerID = this.getControllerId(componentRegistry,
+		String controllerID = this.getControllerId(componentRegistry,
 				annotationController, source);
 
-		dispatcher = viewAnnotation == null
+		org.brandao.brutos.DispatcherType dispatcher = viewAnnotation == null
 				|| "".equals(viewAnnotation.dispatcher()) ? BrutosConstants.DEFAULT_DISPATCHERTYPE
 				: org.brandao.brutos.DispatcherType.valueOf(viewAnnotation
 						.dispatcher());
@@ -90,21 +88,17 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 		boolean rendered = viewAnnotation == null ? true : viewAnnotation
 				.rendered();
 
-		builder = componentRegistry.registerController(
-				controllerID,
-				rendered ? getView((View) source.getAnnotation(View.class),
+		ControllerBuilder builder = this.registerController(
+				componentRegistry, controllerID, rendered ? getView((View) source.getAnnotation(View.class),
 						componentRegistry) : null, rendered ? resolved : true,
 				dispatcher, name, source, actionID, actionType);
-
-		// view = getView((View) source.getAnnotation(View.class), builder,
-		// componentRegistry);
 
 		if (annotationController != null
 				&& annotationController.value().length > 1) {
 			String[] ids = annotationController.value();
 			for (int i = 1; i < ids.length; i++) {
 				if (!StringUtil.isEmpty(ids[i]))
-					builder.addAlias(StringUtil.adjust(ids[i]));
+					this.addAlias(builder, StringUtil.adjust(ids[i]));
 				else
 					throw new BrutosException("invalid controller id: "
 							+ source.getName());
@@ -124,7 +118,21 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 		return builder;
 	}
 
-	protected void throwsSafe(ControllerBuilder builder, Class clazz,
+	protected ControllerBuilder registerController(
+			ComponentRegistry componentRegistry, String id, String view,
+			boolean resolvedView, DispatcherType dispatcherType, String name,
+			Class<?> classType, String actionId, ActionType actionType){
+		
+		return componentRegistry.registerController(
+				id, view, resolvedView,
+				dispatcherType, name, classType, actionId, actionType);		
+	}
+	
+	protected ControllerBuilder addAlias(ControllerBuilder builder, String id) {
+		return builder.addAlias(id);
+	}
+	
+	protected void throwsSafe(ControllerBuilder builder, Class<?> clazz,
 			ComponentRegistry componentRegistry) {
 
 		List<ThrowableEntry> list = new ArrayList<ThrowableEntry>();
@@ -176,23 +184,21 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 	}
 
 	protected void addProperties(ControllerBuilder controllerBuilder,
-			ComponentRegistry componentRegistry, Class clazz) {
+			ComponentRegistry componentRegistry, Class<?> clazz) {
 
 		BeanInstance instance = new BeanInstance(null, clazz);
-		List props = instance.getProperties();
-		for (int i = 0; i < props.size(); i++) {
-			BeanProperty prop = (BeanProperty) props.get(i);
+		List<BeanProperty> props = instance.getProperties();
+		for(BeanProperty prop: props){
 			BeanPropertyAnnotationImp annotationProp = new BeanPropertyAnnotationImp(
 					prop);
-			// BeanEntryProperty beanEntry = new
-			// BeanEntryProperty(annotationProp);
 			super.applyInternalConfiguration(annotationProp, controllerBuilder,
 					componentRegistry);
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private void addOldAbstractActions(ControllerBuilder controllerBuilder,
-			ComponentRegistry componentRegistry, Class clazz,
+			ComponentRegistry componentRegistry, Class<?> clazz,
 			List<ActionEntry> actionList) {
 
 		AbstractActions abstractActions = (AbstractActions) clazz
@@ -212,7 +218,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 	}
 
 	private void addActions(ControllerBuilder controllerBuilder,
-			ComponentRegistry componentRegistry, Class clazz,
+			ComponentRegistry componentRegistry, Class<?> clazz,
 			List<ActionEntry> actionList) {
 
 		Actions actions = (Actions) clazz.getAnnotation(Actions.class);
@@ -244,7 +250,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 	}
 
 	protected void addActions(ControllerBuilder controllerBuilder,
-			ComponentRegistry componentRegistry, Class clazz) {
+			ComponentRegistry componentRegistry, Class<?> clazz) {
 
 		List<ActionEntry> actionList = new ArrayList<ActionEntry>();
 
@@ -267,13 +273,13 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 	}
 
 	protected void importBeans(ControllerBuilder controllerBuilder,
-			ComponentRegistry componentRegistry, Class clazz) {
+			ComponentRegistry componentRegistry, Class<?> clazz) {
 
 		ImportBeans beans = (ImportBeans) clazz
 				.getAnnotation(ImportBeans.class);
 
 		if (beans != null) {
-			for (Class bean : beans.value()) {
+			for (Class<?> bean : beans.value()) {
 				ImportBeanEntry beanEntry = new ImportBeanEntry(bean);
 				super.applyInternalConfiguration(beanEntry, controllerBuilder,
 						componentRegistry);
@@ -282,7 +288,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 	}
 
 	protected String getControllerName(ComponentRegistry componentRegistry,
-			Class controllerClass) {
+			Class<?> controllerClass) {
 		String id = controllerClass.getSimpleName().replaceAll("Controller$",
 				"");
 
@@ -293,7 +299,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 	}
 
 	protected String getControllerId(ComponentRegistry componentRegistry,
-			Controller annotation, Class controllerClass) {
+			Controller annotation, Class<?> controllerClass) {
 		boolean hasControllerId = annotation != null
 				&& annotation.value().length > 0
 				&& !StringUtil.isEmpty(annotation.value()[0]);
@@ -304,7 +310,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 
 	public boolean isApplicable(Object source) {
 		return source instanceof Class
-				&& AnnotationUtil.isController((Class) source);
+				&& AnnotationUtil.isController((Class<?>) source);
 	}
 
 }
