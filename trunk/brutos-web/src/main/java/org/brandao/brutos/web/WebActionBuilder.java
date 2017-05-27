@@ -54,8 +54,9 @@ public class WebActionBuilder extends ActionBuilder{
         
         ActionType type = this.controller.getActionType();
         
-        if(!ActionType.PARAMETER.equals(type))
-            WebUtil.checkURI(value, true);
+        if(type.isValidActionId(value)){
+        	throw new MappingException("invalid action alias: " + value);
+        }
         
         return super.addAlias(value);
     }

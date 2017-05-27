@@ -19,10 +19,12 @@ package org.brandao.brutos;
 
 import java.lang.reflect.Method;
 import java.util.*;
+
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -110,10 +112,14 @@ public class ControllerManagerImp implements ControllerManager {
 					BrutosConstants.DEFAULT_ACTION_TYPE_NAME);
 			actionType = ActionType.valueOf(strategyName.toUpperCase());
 		}
-
+		
 		if (StringUtil.isEmpty(actionId))
 			actionId = BrutosConstants.DEFAULT_ACTION_ID;
 
+    	if(!actionType.isValidControllerId(id))
+    		throw new MappingException("invalid controller id: " + id);
+
+    	/*
 		if (ActionType.PARAMETER.equals(actionType)
 				|| ActionType.HIERARCHY.equals(actionType)) {
 			if (StringUtil.isEmpty(id))
@@ -122,7 +128,8 @@ public class ControllerManagerImp implements ControllerManager {
 		} else if (!ActionType.DETACHED.equals(actionType))
 			throw new IllegalArgumentException("invalid class type: "
 					+ classType);
-
+    	 */
+    	
 		Controller controller = this.creatControllerInstance();
 
 		controller.setClassType(classType);

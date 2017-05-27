@@ -19,7 +19,6 @@ package org.brandao.brutos.web;
 
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ActionType;
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManager;
@@ -29,6 +28,7 @@ import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebController;
@@ -74,9 +74,8 @@ public class WebControllerBuilder extends ControllerBuilder{
     	
         ActionType type = this.controller.getActionType();
         
-        if(!ActionType.PARAMETER.equals(type)){
-            WebUtil.checkURI(id, true);
-        }
+    	if(!type.isValidActionId(id))
+    		throw new MappingException("invalid action id: " + id);
         
         ActionBuilder builder =
             super.addAction(id, resultId, resultRendered, view, 
@@ -109,7 +108,10 @@ public class WebControllerBuilder extends ControllerBuilder{
     }
     
     public ControllerBuilder setId(String value){
-        WebUtil.checkURI(value,true);
+    	
+    	if(!this.controller.getActionType().isValidControllerId(value))
+    		throw new MappingException("invalid controller id: " + value);
+    	
         return super.setId(value);
     }
     

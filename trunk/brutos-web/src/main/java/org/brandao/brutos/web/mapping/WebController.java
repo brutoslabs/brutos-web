@@ -8,7 +8,6 @@ import org.brandao.brutos.DataType;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.MediaType;
 import org.brandao.brutos.web.RequestMethodType;
 

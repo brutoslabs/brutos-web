@@ -101,7 +101,7 @@ public class WebControllerResolver implements ControllerResolver{
             }
         }
         else{
-            if(actionType == ActionType.HIERARCHY){
+            if(actionType == WebActionType.HIERARCHY){
             	
             	if(controllerId == null)
             		throw new BrutosException("invalid controller id: " + controllerId);
