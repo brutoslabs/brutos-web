@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.scope.Scope;
+import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebScopeType;
@@ -95,14 +95,14 @@ public class FlashScope implements Scope{
 	}
     
     private FlashInstrument getInstrument( Scope session){
-        if( session.get( BrutosConstants.FLASH_INSTRUMENT ) == null ){
+        if( session.get( BrutosWebConstants.FLASH_INSTRUMENT ) == null ){
             FlashInstrument instrument = create();
-            session.put( BrutosConstants.FLASH_INSTRUMENT , instrument);
+            session.put( BrutosWebConstants.FLASH_INSTRUMENT , instrument);
             return instrument;
         }
         else
             return (FlashInstrument)
-                    session.get( BrutosConstants.FLASH_INSTRUMENT );
+                    session.get( BrutosWebConstants.FLASH_INSTRUMENT );
     }
 
     private FlashInstrument create(){

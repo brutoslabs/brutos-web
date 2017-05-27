@@ -3,7 +3,6 @@ package org.brandao.brutos.web;
 import java.util.Map;
 
 import org.brandao.brutos.ApplicationContext;
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.RequestParserEvent;
 import org.brandao.brutos.RequestParserListenerImp;
@@ -26,7 +25,7 @@ public class WebRequestParserListener extends RequestParserListenerImp{
         
         Scope scope = applicationContext.getScopes().get(WebScopeType.SESSION);
         Map<String,RequestParserStats> mappedUploadStats = 
-        		(Map<String,RequestParserStats>)scope.get(BrutosConstants.SESSION_UPLOAD_STATS);
+        		(Map<String,RequestParserStats>)scope.get(BrutosWebConstants.SESSION_UPLOAD_STATS);
         
         if(mappedUploadStats != null){
             mappedUploadStats.put(
@@ -45,7 +44,7 @@ public class WebRequestParserListener extends RequestParserListenerImp{
         
         Scope scope = applicationContext.getScopes().get(WebScopeType.SESSION);
         Map<String,RequestParserStats> mappedUploadStats = 
-        		(Map<String,RequestParserStats>)scope.get(BrutosConstants.SESSION_UPLOAD_STATS);
+        		(Map<String,RequestParserStats>)scope.get(BrutosWebConstants.SESSION_UPLOAD_STATS);
         
         if(mappedUploadStats != null){
             mappedUploadStats.remove(

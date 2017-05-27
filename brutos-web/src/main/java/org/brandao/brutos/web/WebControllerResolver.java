@@ -126,6 +126,7 @@ public class WebControllerResolver implements ControllerResolver{
     }
     
     private Action getAction(Controller controller, ActionType actionType, String uri, Scope paramScope){
+    	/*
         Map<String,Action> actions = controller.getActions();
         Iterator<String> actionsId = actions.keySet().iterator();
         
@@ -144,7 +145,7 @@ public class WebControllerResolver implements ControllerResolver{
             }
             
         }
-        
+        */
         return null;
     }
     
