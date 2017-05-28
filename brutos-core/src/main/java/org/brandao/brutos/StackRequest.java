@@ -27,6 +27,8 @@ public interface StackRequest {
 
 	StackRequestElement getCurrent();
 
+	StackRequestElement getFirst();
+	
 	StackRequestElement getNext(StackRequestElement stackrequestElement);
 
 	boolean isEmpty();

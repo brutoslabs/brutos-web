@@ -29,4 +29,6 @@ public interface RequestInstrument extends ViewCheck {
 
 	RenderView getRenderView();
 
+	StackRequest getStackRequest();
+	
 }

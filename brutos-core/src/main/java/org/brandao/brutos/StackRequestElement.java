@@ -48,6 +48,10 @@ public interface StackRequestElement {
 
 	DispatcherType getDispatcherType();
 
+	StackRequestElement getNextStackRequestElement();
+	
+	StackRequestElement getPreviousStackRequestElement();
+	
 	void setObjectThrow(Throwable objectThrow);
 
 	void setThrowableSafeData(ThrowableSafeData throwableSafeData);
@@ -70,4 +74,8 @@ public interface StackRequestElement {
 
 	void setDispatcherType(DispatcherType dispatcherType);
 
+	void setNextStackRequestElement(StackRequestElement value);
+	
+	void setPreviousStackRequestElement(StackRequestElement value);
+	
 }

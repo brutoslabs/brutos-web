@@ -19,13 +19,18 @@ package org.brandao.brutos.web.http;
 
 import java.io.IOException;
 import java.util.Properties;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
+
 import org.brandao.brutos.AbstractRenderView;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.RequestInstrument;
-import org.brandao.brutos.web.RequestInfo;
+import org.brandao.brutos.StackRequest;
+import org.brandao.brutos.StackRequestElement;
+import org.brandao.brutos.web.WebMvcRequest;
+import org.brandao.brutos.web.WebMvcResponse;
 
 /**
  * 
@@ -40,37 +45,46 @@ public class JSPRenderView extends AbstractRenderView{
     }
 
     protected void show(RequestInstrument requestInstrument,
-            String view, DispatcherType dispatcherType) throws IOException {
+            String view, DispatcherType dispatcherType){
         try{
-            show0(view, dispatcherType);
+        	innerShow(requestInstrument, view, dispatcherType);
         }
         catch( BrutosException e ){
             throw e;
         }
-        catch( ServletException e ){
+        catch( Throwable e ){
             throw new BrutosException(e);
         }
 
     }
-    public void show0(String view, DispatcherType dispatcherType) throws IOException, ServletException {
+    public void innerShow(RequestInstrument requestInstrument, 
+    		String view, DispatcherType dispatcherType) throws IOException, ServletException {
 
         if( view == null )
             return;
         
-        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-
+        StackRequest stackRequest = requestInstrument.getStackRequest();
+        StackRequestElement first = stackRequest.getFirst();
+        WebMvcRequest request     = (WebMvcRequest)first.getRequest();
+        WebMvcResponse response   = (WebMvcResponse)first.getResponse();
+        
         if( dispatcherType == DispatcherType.FORWARD ){
-            requestInfo.getRequest().getRequestDispatcher( view )
-                        .forward( requestInfo.getRequest(), requestInfo.getResponse() );
+        	request.getServletRequest().getRequestDispatcher(view)
+                        .forward(
+                        		request.getServletRequest(), 
+                        		response.getServletResponse());
         }
         else
         if( dispatcherType == DispatcherType.INCLUDE ){
-            requestInfo.getRequest().getRequestDispatcher( view )
-                        .include( requestInfo.getRequest(), requestInfo.getResponse() );
+        	request.getServletRequest().getRequestDispatcher(view)
+            .include(
+            		request.getServletRequest(), 
+            		response.getServletResponse());
         }
         else
-        if( dispatcherType == DispatcherType.REDIRECT )
-            ((HttpServletResponse)requestInfo.getResponse()).sendRedirect(view);
+        if( dispatcherType == DispatcherType.REDIRECT ){
+        	((HttpServletResponse)response.getServletResponse()).sendRedirect(view);
+        }
         else
             throw new BrutosException( "invalid dispatcher type: " + dispatcherType );
     }

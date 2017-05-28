@@ -28,17 +28,32 @@ import org.brandao.brutos.mapping.ThrowableSafeData;
 public class StackRequestElementImp implements StackRequestElement {
 
 	private Throwable objectThrow;
+	
 	private ThrowableSafeData throwableSafeData;
+	
 	private Object[] parameters;
+	
 	private Controller controller;
+	
 	private ResourceAction action;
+	
 	private Object resultAction;
+	
 	private ConfigurableInterceptorHandler handler;
+	
 	private Object resource;
+	
 	private String view;
+	
 	private DispatcherType dispatcherType;
+	
 	private MutableMvcRequest request;
+	
 	private MutableMvcResponse response;
+		
+	private StackRequestElement nextStackRequestElement;
+	
+	private StackRequestElement previousStackRequestElement;
 	
 	public Throwable getObjectThrow() {
 		return objectThrow;
@@ -134,6 +149,22 @@ public class StackRequestElementImp implements StackRequestElement {
 
 	public void setResponse(MutableMvcResponse value) {
 		this.response = value;
+	}
+
+	public StackRequestElement getNextStackRequestElement() {
+		return this.nextStackRequestElement;
+	}
+
+	public StackRequestElement getPreviousStackRequestElement() {
+		return this.previousStackRequestElement;
+	}
+
+	public void setNextStackRequestElement(StackRequestElement value) {
+		this.nextStackRequestElement = value;
+	}
+
+	public void setPreviousStackRequestElement(StackRequestElement value) {
+		this.previousStackRequestElement = value;
 	}
 
 }
