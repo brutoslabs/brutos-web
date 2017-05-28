@@ -17,9 +17,6 @@
 
 package org.brandao.brutos;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * 
  * @author Brandao
@@ -27,44 +24,78 @@ import java.util.List;
 public class RequestInstrumentImp implements RequestInstrument, StackRequest {
 
 	private ApplicationContext context;
+	
 	private boolean hasViewProcessed;
+	
 	private ObjectFactory objectFactory;
+	
 	private RenderView renderView;
-	private List stackRequest;
-
+	
+	private StackRequestElement firstStackRequestElement;
+	
+	private StackRequestElement currentStackRequestElement;
+	
 	public RequestInstrumentImp(ApplicationContext context,
 			ObjectFactory objectFactory, RenderView renderView) {
-
-		this.context = context;
-		this.hasViewProcessed = false;
-		this.objectFactory = objectFactory;
-		this.stackRequest = new LinkedList();
-		this.renderView = renderView;
+		this.context                    = context;
+		this.hasViewProcessed           = false;
+		this.objectFactory              = objectFactory;
+		this.renderView                 = renderView;
+		this.firstStackRequestElement   = null;
+		this.currentStackRequestElement = null;
 	}
 
-	public void push(StackRequestElement stackrequestElement) {
-		stackRequest.add(stackrequestElement);
+	public void push(StackRequestElement value) {
+		if(this.firstStackRequestElement == null){
+			value.setNextStackRequestElement(null);
+			value.setPreviousStackRequestElement(null);
+			this.firstStackRequestElement   = value;
+			this.currentStackRequestElement = value;
+		}
+		else{
+			this.currentStackRequestElement.setNextStackRequestElement(value);
+			value.setPreviousStackRequestElement(this.currentStackRequestElement);
+			value.setNextStackRequestElement(null);
+			this.currentStackRequestElement = value;
+		}
 	}
 
 	public StackRequestElement getCurrent() {
-		return (StackRequestElement) (stackRequest.size() > 0 ? stackRequest
-				.get(stackRequest.size() - 1) : null);
+		return this.currentStackRequestElement;
 	}
 
+	public StackRequestElement getFirst() {
+		return this.currentStackRequestElement;
+	}
+	
 	public StackRequestElement getNext(StackRequestElement stackrequestElement) {
-		int indexOf = stackRequest.indexOf(stackrequestElement);
-		return (StackRequestElement) (indexOf != -1
-				&& indexOf + 1 < stackRequest.size() ? stackRequest
-				.get(indexOf + 1) : null);
+		return stackrequestElement.getNextStackRequestElement();
 	}
 
+	public StackRequest getStackRequest(){
+		return this;
+	}
+	
 	public boolean isEmpty() {
-		return stackRequest.isEmpty();
+		return this.firstStackRequestElement == null;
 	}
 
 	public void pop() {
-		if (stackRequest.size() > 0)
-			stackRequest.remove(stackRequest.size() - 1);
+		
+		if(this.currentStackRequestElement == null){
+			return;
+		}
+		
+		this.currentStackRequestElement = 
+				this.currentStackRequestElement.getPreviousStackRequestElement();
+		
+		if(this.currentStackRequestElement != null){
+			this.currentStackRequestElement.setNextStackRequestElement(null);
+		}
+		else{
+			this.firstStackRequestElement = null;
+		}
+		
 	}
 
 	public ApplicationContext getContext() {

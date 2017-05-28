@@ -17,7 +17,6 @@
 
 package org.brandao.brutos;
 
-import java.io.IOException;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
@@ -30,23 +29,22 @@ import org.brandao.brutos.type.Type;
 public abstract class AbstractRenderView implements RenderView {
 
 	protected abstract void show(RequestInstrument requestInstrument,
-			String view, DispatcherType dispatcherType) throws IOException;
+			String view, DispatcherType dispatcherType);
 
 	private void showView(RequestInstrument requestInstrument, String view,
-			DispatcherType dispatcherType) throws IOException {
+			DispatcherType dispatcherType){
 		requestInstrument.setHasViewProcessed(true);
 		show(requestInstrument, view, dispatcherType);
 	}
 
 	private void showView(RequestInstrument requestInstrument,
-			StackRequestElement stackRequestElement, Type type)
-			throws IOException {
+			StackRequestElement stackRequestElement, Type type){
 		requestInstrument.setHasViewProcessed(true);
 		type.show(stackRequestElement.getResponse(), stackRequestElement.getResultAction());
 	}
 
 	public void show(RequestInstrument requestInstrument,
-			StackRequestElement stackRequestElement) throws IOException {
+			StackRequestElement stackRequestElement){
 
 		if (requestInstrument.isHasViewProcessed())
 			return;
