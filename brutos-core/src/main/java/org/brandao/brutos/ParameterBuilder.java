@@ -102,9 +102,7 @@ public class ParameterBuilder extends RestrictionBuilder implements
 
 		if (metaBean == null)
 			throw new MappingException("can't add meta bean");
-
-		this.parameter.setMetaBean(metaBean);
-
+		
 		MetaBeanBuilder builder = new MetaBeanBuilder(metaBean, name, scope,
 				enumProperty, temporalProperty, classType, type,
 				this.validatorFactory,

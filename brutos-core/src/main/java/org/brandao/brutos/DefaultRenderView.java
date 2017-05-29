@@ -18,7 +18,6 @@
 package org.brandao.brutos;
 
 import java.awt.Component;
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -31,7 +30,7 @@ public class DefaultRenderView extends AbstractRenderView {
 	}
 
 	protected void show(RequestInstrument requestInstrument, String view,
-			DispatcherType dispatcherType) throws IOException {
+			DispatcherType dispatcherType){
 
 		ObjectFactory objectFactory = requestInstrument.getObjectFactory();
 

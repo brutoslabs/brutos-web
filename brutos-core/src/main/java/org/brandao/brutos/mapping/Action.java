@@ -19,17 +19,22 @@ package org.brandao.brutos.mapping;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.DataType;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
+
 
 /**
  * 
@@ -59,26 +64,30 @@ public class Action {
 
 	private List<Class<?>> parametersType;
 
-	private String returnIn;
-
 	private boolean returnRendered;
 
 	private String view;
 
 	private boolean resolvedView;
 
+	private ResultAction resultAction;
+	
+	/*
+	private String returnIn;
+	
 	private Type returnType;
 
 	private Class<?> returnClass;
-
+	*/
+	
 	private boolean redirect;
 
 	private DispatcherType dispatcherType;
 
 	private Validator parametersValidator;
-
+	
 	private Validator resultValidator;
-
+	
 	private Set<DataType> requestTypes;
 
 	private Set<DataType> responseTypes;
@@ -88,7 +97,8 @@ public class Action {
 		this.parametersType 	= new ArrayList<Class<?>>();
 		this.throwsSafe 		= new HashMap<Class<?>, ThrowableSafeData>();
 		this.dispatcherType 	= DispatcherType.INCLUDE;
-		this.returnClass 		= void.class;
+		this.resultAction       = new ResultAction(this);
+		//this.returnClass 		= void.class;
 		this.redirect 			= false;
 		this.alias 				= new ArrayList<String>();
 		this.requestTypes 	    = new HashSet<DataType>();
@@ -180,6 +190,7 @@ public class Action {
 		this.parametersType = parametersType;
 	}
 
+	/*
 	public String getReturnIn() {
 		return returnIn == null ? BrutosConstants.DEFAULT_RETURN_NAME
 				: returnIn;
@@ -188,7 +199,8 @@ public class Action {
 	public void setReturnIn(String returnIn) {
 		this.returnIn = returnIn;
 	}
-
+    */
+	
 	public String getView() {
 		return view;
 	}
@@ -205,6 +217,7 @@ public class Action {
 		this.controller = controller;
 	}
 
+	/*
 	public Type getReturnType() {
 		return returnType;
 	}
@@ -220,7 +233,7 @@ public class Action {
 	public void setReturnClass(Class<?> returnClass) {
 		this.returnClass = returnClass;
 	}
-
+    */
 	public boolean isRedirect() {
 		return redirect;
 	}
@@ -250,13 +263,28 @@ public class Action {
 			Class<?> returnClassType = method.getReturnType();
 
 			if (returnClassType != void.class) {
-				setReturnType(((ConfigurableApplicationContext) this.controller
-						.getContext()).getTypeManager()
-						.getType(returnClassType));
+				Type resultType =
+					this.controller.getContext()
+					.getTypeManager().getType(returnClassType);
+				
+				if(this.resultAction.getType() != null){
+					Type expectedType = this.resultAction.getType();
+					
+					if(!resultType.getClassType().isAssignableFrom(expectedType.getClassType())){
+						throw new MappingException(
+								"Invalid result type: " +
+								"expected " + expectedType.getClassType() +
+								"found " + resultType
+						);
+					}
+					
+				}
+				else{
+					this.resultAction.setType(resultType);
+				}
 			}
 
 			setMethod(method);
-			setReturnClass(returnClassType);
 		} catch (BrutosException e) {
 			throw e;
 		} catch (Exception e) {
@@ -289,8 +317,8 @@ public class Action {
 							if (arg.getMetaBean() != null)
 								arg.setType(new AnyType(params[k]));
 							else {
-								arg.setType(((ConfigurableApplicationContext) this.controller
-										.getContext()).getTypeManager()
+								arg.setType(this.controller
+										.getContext().getTypeManager()
 										.getType(params[k]));
 							}
 						}
@@ -382,7 +410,7 @@ public class Action {
 			result = method.invoke(source, args);
 
 			if (this.resultValidator != null)
-				this.resultValidator.validate(this, source, result);
+				this.resultValidator.validate(this.resultAction, source, result);
 		}
 
 		return result;
@@ -450,6 +478,14 @@ public class Action {
 
 	public void setResultValidator(Validator resultValidator) {
 		this.resultValidator = resultValidator;
+	}
+
+	public ResultAction getResultAction() {
+		return resultAction;
+	}
+
+	public void setResultAction(ResultAction resultAction) {
+		this.resultAction = resultAction;
 	}
 
 	public long getCode() {
