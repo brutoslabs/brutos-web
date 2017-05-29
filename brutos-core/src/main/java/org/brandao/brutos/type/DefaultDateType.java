@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.type;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -68,7 +67,7 @@ public class DefaultDateType
 			throw new UnknownTypeException(value.getClass().getName());
 	}
 
-	public void show(MvcResponse response, Object value) throws IOException {
+	public void show(MvcResponse response, Object value){
 		response.process(value);
 	}
 

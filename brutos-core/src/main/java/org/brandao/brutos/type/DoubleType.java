@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.type;
 
-import java.io.IOException;
 import org.brandao.brutos.MvcResponse;
 
 /**
@@ -51,10 +50,10 @@ public class DoubleType extends AbstractType implements Type {
 			throw new UnknownTypeException();
 	}
 
-	public void setValue(Object value) throws IOException {
+	public void setValue(Object value){
 	}
 
-	public void show(MvcResponse response, Object value) throws IOException {
+	public void show(MvcResponse response, Object value){
 		response.process(value);
 	}
 

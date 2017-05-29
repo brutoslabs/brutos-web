@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.mapping.Action;
@@ -30,6 +31,7 @@ import org.brandao.brutos.mapping.ConstructorBean;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.mapping.PropertyController;
+import org.brandao.brutos.mapping.ResultAction;
 
 /**
  * 
@@ -167,6 +169,11 @@ public class DefaultValidator implements Validator {
 	}
 
 	public void validate(Method source, Object instance, Object value)
+			throws ValidatorException {
+		this.innerValidate(source, value);
+	}
+
+	public void validate(ResultAction source, Object controller, Object value)
 			throws ValidatorException {
 		this.innerValidate(source, value);
 	}

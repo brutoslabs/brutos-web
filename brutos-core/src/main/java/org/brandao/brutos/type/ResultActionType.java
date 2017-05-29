@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.type;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -49,7 +48,7 @@ public class ResultActionType extends AbstractType {
 		return value;
 	}
 
-	public void show(MvcResponse response, Object value) throws IOException {
+	public void show(MvcResponse response, Object value){
 
 		ConfigurableResultAction resultAction = (ConfigurableResultAction) value;
 		ConfigurableApplicationContext context = (ConfigurableApplicationContext) Invoker

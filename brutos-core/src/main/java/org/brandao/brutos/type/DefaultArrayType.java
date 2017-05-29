@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.type;
 
-import java.io.IOException;
 import java.lang.reflect.Array;
 
 import org.brandao.brutos.BrutosException;
@@ -61,7 +60,7 @@ public class DefaultArrayType
 			return value;
 	}
 
-	public void show(MvcResponse response, Object value) throws IOException {
+	public void show(MvcResponse response, Object value){
 		response.process(value);
 	}
 

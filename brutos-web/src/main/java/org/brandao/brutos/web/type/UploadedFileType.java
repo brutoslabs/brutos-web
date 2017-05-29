@@ -24,6 +24,7 @@ import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.type.AbstractType;
 import org.brandao.brutos.type.Type;
@@ -54,7 +55,16 @@ public class UploadedFileType
 			throw new UnknownTypeException(value.getClass().getName());
 	}
 
-	public void show(MvcResponse response, Object value) throws IOException {
+	public void show(MvcResponse response, Object value){
+		try{
+			this.innerShow(response, value);
+		}
+		catch(Throwable e){
+			throw new BrutosException(e);
+		}
+	}
+	
+	private void innerShow(MvcResponse response, Object value) throws IOException{
 		if (value instanceof UploadedFile) {
 			WebMvcResponse wResponse    = (WebMvcResponse)response;
 			HttpServletResponse servlet = (HttpServletResponse)wResponse.getServletResponse();

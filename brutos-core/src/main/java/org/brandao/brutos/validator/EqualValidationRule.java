@@ -34,9 +34,10 @@ public class EqualValidationRule implements ValidationRule {
 	public void validate(Object source, Object value) {
 		Type valueType = null;
 
-		if (source instanceof DependencyBean)
+		if(source instanceof DependencyBean)
 			valueType = ((DependencyBean) source).getType();
-		else if (source instanceof UseBeanData)
+		else
+		if (source instanceof UseBeanData)
 			valueType = ((UseBeanData) source).getType();
 		else
 			throw new BrutosException("invalid source: " + source);

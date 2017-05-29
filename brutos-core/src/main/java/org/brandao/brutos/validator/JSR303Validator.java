@@ -21,16 +21,19 @@ import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ValidatorFactory;
 import javax.validation.Validation;
 import javax.validation.executable.ExecutableValidator;
+
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ConstructorArgBean;
 import org.brandao.brutos.mapping.ConstructorBean;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.mapping.PropertyController;
+import org.brandao.brutos.mapping.ResultAction;
 
 /**
  * 
@@ -120,6 +123,7 @@ public class JSR303Validator implements Validator {
 		}
 	}
 
+	@Deprecated
 	public void validate(Action source, Object controller, Object value)
 			throws ValidatorException {
 		Method method = source.getMethod();
@@ -131,6 +135,17 @@ public class JSR303Validator implements Validator {
 		}
 	}
 
+	public void validate(ResultAction source, Object controller, Object value)
+			throws ValidatorException {
+		Method method = source.getAction().getMethod();
+
+		if (method != null) {
+			Set constraintViolations = executableValidator.validateReturnValue(
+					controller, method, value, this.groups);
+			throwException(constraintViolations);
+		}
+	}
+	
 	protected void throwException(Set constraintViolations)
 			throws ValidatorException {
 

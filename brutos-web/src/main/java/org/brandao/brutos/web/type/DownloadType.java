@@ -17,11 +17,11 @@
 
 package org.brandao.brutos.web.type;
 
-import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.type.AbstractType;
 import org.brandao.brutos.type.Type;
@@ -49,7 +49,7 @@ public class DownloadType
 			return null;
 	}
 
-	public void show(MvcResponse response, Object value) throws IOException {
+	public void show(MvcResponse response, Object value){
 		
 		if (value instanceof Download) {
 			WebMvcResponse wResponse    = (WebMvcResponse)response;
@@ -68,7 +68,12 @@ public class DownloadType
 				servlet.setContentLength((int)download.getContentLength());
 			}
 
-			download.write(response.processStream());
+			try{
+				download.write(response.processStream());
+			}
+			catch(Throwable e){
+				throw new BrutosException(e);
+			}
 		}
 	}
 }
