@@ -28,7 +28,7 @@ public class BeanActionParamEntry extends ActionParamEntryWrapper implements
 		super(value);
 	}
 
-	public Class getBeanType() {
+	public Class<?> getBeanType() {
 		return super.getType();
 	}
 

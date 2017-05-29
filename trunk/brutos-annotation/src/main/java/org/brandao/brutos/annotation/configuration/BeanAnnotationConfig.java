@@ -24,6 +24,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 import org.brandao.brutos.*;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
@@ -37,8 +38,17 @@ import org.brandao.brutos.type.TypeUtil;
  *
  * @author Brandao
  */
-@Stereotype(target = Bean.class, executeAfter = { Controller.class,
-		Basic.class, Any.class, KeyCollection.class, ElementCollection.class })
+@Stereotype(
+		target=Bean.class, 
+		executeAfter={
+			Controller.class,
+			Action.class,
+			Basic.class, 
+			Any.class, 
+			KeyCollection.class, 
+			ElementCollection.class 
+		}
+)
 public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 
 	private String path;
@@ -134,35 +144,63 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 	protected void createBean(Object builder, Object source,
 			ComponentRegistry componentRegistry) {
 
-		if (builder instanceof ParametersBuilder
-				&& source instanceof BeanActionParamEntry)
-			createBean((ParametersBuilder) builder,
-					(BeanActionParamEntry) source, componentRegistry);
-		else if (builder instanceof ControllerBuilder) {
+		if(builder instanceof ParametersBuilder && source instanceof BeanActionParamEntry){
+			this.createBean(
+					(ParametersBuilder) builder,
+					(BeanActionParamEntry) source, 
+					componentRegistry);
+		}
+		else
+		if (builder instanceof ControllerBuilder){
 			if (source instanceof BeanPropertyAnnotation) {
-				createBean((ControllerBuilder) builder,
-						(BeanEntryProperty) source, componentRegistry);
-			} else if (source instanceof ImportBeanEntry) {
-				this.createBean((ControllerBuilder) builder,
-						(ImportBeanEntry) source, componentRegistry);
+				this.createBean(
+						(ControllerBuilder) builder,
+						(BeanEntryProperty) source, 
+						componentRegistry);
 			}
-		} else {
+			else
+			if(source instanceof ImportBeanEntry) {
+				this.createBean(
+						(ControllerBuilder) builder,
+						(ImportBeanEntry)source, 
+						componentRegistry);
+			}
+		}
+		if(builder instanceof ActionBuilder){
+			if(source instanceof ResultActionEntry){
+				this.createBean(
+						(ActionBuilder) builder,
+						(ResultActionEntry)source, 
+						componentRegistry);
+			}
+		}
+		else {
 			// checkCircularReference(builder,source);
-			if (source instanceof BeanPropertyAnnotation
-					&& builder instanceof BeanBuilder) {
-				createBean((BeanBuilder) builder, (BeanEntryProperty) source,
+			if (source instanceof BeanPropertyAnnotation && builder instanceof BeanBuilder) {
+				this.createBean(
+						(BeanBuilder) builder, 
+						(BeanEntryProperty) source,
 						componentRegistry);
-			} else if (source instanceof BeanEntryConstructorArg
-					&& builder instanceof ConstructorBuilder) {
-				createBean((ConstructorBuilder) builder,
-						(BeanEntryConstructorArg) source, componentRegistry);
-			} else if (source instanceof KeyEntry
-					&& builder instanceof BeanBuilder) {
-				createBean((BeanBuilder) builder, (KeyEntry) source,
+			}
+			else
+			if(source instanceof BeanEntryConstructorArg && builder instanceof ConstructorBuilder) {
+				this.createBean(
+						(ConstructorBuilder) builder,
+						(BeanEntryConstructorArg) source, 
 						componentRegistry);
-			} else if (source instanceof ElementEntry
-					&& builder instanceof BeanBuilder) {
-				createBean((BeanBuilder) builder, (ElementEntry) source,
+			}
+			else
+			if(source instanceof KeyEntry && builder instanceof BeanBuilder) {
+				this.createBean(
+						(BeanBuilder) builder, 
+						(KeyEntry) source,
+						componentRegistry);
+			}
+			else
+			if(source instanceof ElementEntry && builder instanceof BeanBuilder) {
+				this.createBean(
+						(BeanBuilder) builder, 
+						(ElementEntry) source,
 						componentRegistry);
 			}
 		}
@@ -255,6 +293,33 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 		}
 	}
 
+	protected void createBean(ActionBuilder builder,
+			ResultActionEntry source,
+			ComponentRegistry componentRegistry) {
+
+		Target target = source.getAnnotation(Target.class);
+		
+		Class<?> classType = target == null ? ClassUtil
+				.getInstantiableClass(source.getType()) : target.value();
+
+		BeanBuilder beanBuilder = this.createBean(
+				builder.getControllerBuilder(), classType);
+		
+		builder.setResultActionMapping(
+				source.getName(),
+				beanBuilder != null? 
+					beanBuilder.getName() : 
+					AnnotationUtil.getBeanName(classType), 
+				classType);
+
+		if (beanBuilder != null) {
+			createBean(beanBuilder, componentRegistry,
+					source.getGenericType(),
+					source.getAnnotation(KeyCollection.class),
+					source.getAnnotation(ElementCollection.class));
+		}
+	}
+	
 	protected void createBean(ControllerBuilder builder,
 			BeanEntryProperty source, ComponentRegistry componentRegistry) {
 
@@ -491,6 +556,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void addProperties(BeanBuilder beanBuilder,
 			ComponentRegistry componentRegistry, Class<?> clazz) {
 

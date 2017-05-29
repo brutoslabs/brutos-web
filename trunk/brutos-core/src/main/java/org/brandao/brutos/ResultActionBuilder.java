@@ -74,4 +74,7 @@ public class ResultActionBuilder
 		return builder;
 	}
 
+	public ActionBuilder getActionBuilder(){
+		return this.actionBuilder;
+	}
 }

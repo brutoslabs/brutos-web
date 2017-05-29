@@ -53,12 +53,12 @@ public class ActionParamEntryWrapper extends ActionParamEntry {
 	}
 
 	@Override
-	public Class getType() {
+	public Class<?> getType() {
 		return value.getType();
 	}
 
 	@Override
-	public void setType(Class type) {
+	public void setType(Class<?> type) {
 		value.setType(type);
 	}
 

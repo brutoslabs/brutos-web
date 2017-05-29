@@ -449,5 +449,9 @@ public class ActionBuilder extends RestrictionBuilder {
 		return new ResultActionBuilder(this, resultAction, this.validatorFactory);
 	}
 	
+	public ResultActionBuilder getResultAction(){
+		return new ResultActionBuilder(this, this.action.getResultAction(), this.validatorFactory);		
+	}
+	
 	/* setResultAction */
 }
