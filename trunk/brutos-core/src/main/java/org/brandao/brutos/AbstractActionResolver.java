@@ -1,13 +1,13 @@
 package org.brandao.brutos;
 
 import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.DataTypeMap;
 import org.brandao.brutos.scope.Scope;
 
 public abstract class AbstractActionResolver 
@@ -41,13 +41,13 @@ public abstract class AbstractActionResolver
             		actionTyperesolver.getResourceAction(controller, paramScope, request);
             
             if(action != null){
-            	Set<DataType> requestTypes = action.getMethodForm().getRequestTypes();
+            	DataTypeMap requestTypes = action.getMethodForm().getRequestTypes();
             	
             	if(requestTypes.isEmpty()){
             		requestTypes = action.getController().getRequestTypes();
             	}
             	
-            	if(!requestTypes.isEmpty() && requestTypes.contains(request.getType())){
+            	if(!requestTypes.isEmpty() && requestTypes.accept(request.getType())){
             		throw new ActionResolverException("request type not supported");
             	}
             	

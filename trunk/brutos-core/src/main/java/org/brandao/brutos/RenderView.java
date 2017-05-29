@@ -17,19 +17,12 @@
 
 package org.brandao.brutos;
 
-import java.util.Properties;
-
 /**
  * 
  * @author Brandao
  */
 public interface RenderView {
 
-	void configure(Properties properties);
-
-	void show(RequestInstrument requestInstrument,
-			StackRequestElement stackRequestElement);
-
-	void destroy();
+	void show(MvcRequest request, MvcResponse response) throws RenderViewException;
 
 }

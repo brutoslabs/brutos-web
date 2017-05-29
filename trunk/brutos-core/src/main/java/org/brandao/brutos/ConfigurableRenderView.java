@@ -15,27 +15,13 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.web.mapping;
+package org.brandao.brutos;
 
-import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.web.RequestMethodType;
+public interface ConfigurableRenderView extends RenderView{
 
-public class WebAction extends Action{
-
-	private RequestMethodType requestMethod;
-
-	public WebAction(){
-		super();
-		super.setRequestTypes(new MediaTypeMap());
-		super.setResponseTypes(new MediaTypeMap());
-	}
+	void registryRenderView(DataType dataType, 
+			RenderViewType render) throws RenderViewException;
 	
-	public RequestMethodType getRequestMethod() {
-		return requestMethod;
-	}
-
-	public void setRequestMethod(RequestMethodType requestMethod) {
-		this.requestMethod = requestMethod;
-	}
+	void removeRenderView(DataType dataType) throws RenderViewException;
 	
 }

@@ -26,7 +26,6 @@ import org.brandao.brutos.interceptor.InterceptorProcess;
 import org.brandao.brutos.ActionType;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.DataType;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ObjectFactory;
@@ -88,9 +87,9 @@ public class Controller {
 
 	private BeanInstance beanInstance;
 
-	private Set<DataType> requestTypes;
+	private DataTypeMap requestTypes;
 
-	private Set<DataType> responseTypes;
+	private DataTypeMap responseTypes;
 	
 	public Controller(ConfigurableApplicationContext context) {
 		this.fields 			= new ArrayList<PropertyController>();
@@ -105,24 +104,24 @@ public class Controller {
 		this.redirect 			= false;
 		this.actionType 		= ActionType.PARAMETER;
 		this.context 			= context;
-		this.requestTypes 	    = new HashSet<DataType>();
-		this.responseTypes      = new HashSet<DataType>();
+		this.requestTypes 	    = new DataTypeMap();
+		this.responseTypes      = new DataTypeMap();
 		this.interceptorProcess.setForm(this);
 	}
 
-	public Set<DataType> getRequestTypes() {
+	public DataTypeMap getRequestTypes() {
 		return requestTypes;
 	}
 
-	public void setRequestTypes(Set<DataType> requestTypes) {
+	public void setRequestTypes(DataTypeMap requestTypes) {
 		this.requestTypes = requestTypes;
 	}
 
-	public Set<DataType> getResponseTypes() {
+	public DataTypeMap getResponseTypes() {
 		return responseTypes;
 	}
 
-	public void setResponseTypes(Set<DataType> responseTypes) {
+	public void setResponseTypes(DataTypeMap responseTypes) {
 		this.responseTypes = responseTypes;
 	}
 	
