@@ -162,25 +162,25 @@ public class WebControllerBuilder extends ControllerBuilder{
     
 	public ControllerBuilder addRequestType(DataType value){
 		MediaType mediaType = MediaType.valueOf(value.getName());
-		((WebController)this.controller).getRequestTypeMap().add(mediaType);
+		super.addRequestType(mediaType);
 		return this;
 	}
 	
 	public ControllerBuilder removeRequestType(DataType value){
 		MediaType mediaType = MediaType.valueOf(value.getName());
-		((WebController)this.controller).getRequestTypeMap().remove(mediaType);
+		super.removeRequestType(mediaType);
 		return this;
 	}
 
 	public ControllerBuilder addResponseType(DataType value){
 		MediaType mediaType = MediaType.valueOf(value.getName());
-		((WebController)this.controller).getResponseTypeMap().add(mediaType);
+		super.addResponseType(mediaType);
 		return this;
 	}
 	
 	public ControllerBuilder removeResponseType(DataType value){
 		MediaType mediaType = MediaType.valueOf(value.getName());
-		((WebController)this.controller).getResponseTypeMap().remove(mediaType);
+		super.removeResponseType(mediaType);
 		return this;
 	}
     

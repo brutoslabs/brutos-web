@@ -741,4 +741,24 @@ public class ControllerBuilder {
 		return this.controller.isResolvedView();
 	}
 
+	public ControllerBuilder addRequestType(DataType value){
+		this.controller.getRequestTypes().add(value);
+		return this;
+	}
+	
+	public ControllerBuilder removeRequestType(DataType value){
+		this.controller.getRequestTypes().remove(value);
+		return this;
+	}
+
+	public ControllerBuilder addResponseType(DataType value){
+		this.controller.getResponseTypes().add(value);
+		return this;
+	}
+	
+	public ControllerBuilder removeResponseType(DataType value){
+		this.controller.getResponseTypes().remove(value);
+		return this;
+	}
+	
 }

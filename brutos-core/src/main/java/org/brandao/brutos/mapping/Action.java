@@ -22,14 +22,11 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
-import org.brandao.brutos.DataType;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.type.Type;
@@ -88,9 +85,9 @@ public class Action {
 	
 	private Validator resultValidator;
 	
-	private Set<DataType> requestTypes;
+	private DataTypeMap requestTypes;
 
-	private Set<DataType> responseTypes;
+	private DataTypeMap responseTypes;
 	
 	public Action() {
 		this.parameters = new ArrayList<ParameterAction>();
@@ -101,23 +98,23 @@ public class Action {
 		//this.returnClass 		= void.class;
 		this.redirect 			= false;
 		this.alias 				= new ArrayList<String>();
-		this.requestTypes 	    = new HashSet<DataType>();
-		this.responseTypes      = new HashSet<DataType>();
+		this.requestTypes 	    = new DataTypeMap();
+		this.responseTypes      = new DataTypeMap();
 	}
 
-	public Set<DataType> getRequestTypes() {
+	public DataTypeMap getRequestTypes() {
 		return requestTypes;
 	}
 
-	public void setRequestTypes(Set<DataType> requestTypes) {
+	public void setRequestTypes(DataTypeMap requestTypes) {
 		this.requestTypes = requestTypes;
 	}
 
-	public Set<DataType> getResponseTypes() {
+	public DataTypeMap getResponseTypes() {
 		return responseTypes;
 	}
 
-	public void setResponseTypes(Set<DataType> responseTypes) {
+	public void setResponseTypes(DataTypeMap responseTypes) {
 		this.responseTypes = responseTypes;
 	}
 

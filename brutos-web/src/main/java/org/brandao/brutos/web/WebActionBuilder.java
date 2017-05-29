@@ -96,25 +96,25 @@ public class WebActionBuilder extends ActionBuilder{
     
 	public ActionBuilder addRequestType(DataType value){
 		MediaType mediaType = MediaType.valueOf(value.getName());
-		((WebAction)this.action).getRequestTypeMap().add(mediaType);
+		super.addRequestType(mediaType);
 		return this;
 	}
 	
 	public ActionBuilder removeRequestType(DataType value){
 		MediaType mediaType = MediaType.valueOf(value.getName());
-		((WebAction)this.action).getRequestTypeMap().remove(mediaType);
+		super.removeRequestType(mediaType);
 		return this;
 	}
 
 	public ActionBuilder addResponseType(DataType value){
 		MediaType mediaType = MediaType.valueOf(value.getName());
-		((WebAction)this.action).getResponseTypeMap().add(mediaType);
+		super.addResponseType(mediaType);
 		return this;
 	}
 	
 	public ActionBuilder removeResponseType(DataType value){
 		MediaType mediaType = MediaType.valueOf(value.getName());
-		((WebAction)this.action).getResponseTypeMap().remove(mediaType);
+		super.removeResponseType(mediaType);
 		return this;
 	}
 	
