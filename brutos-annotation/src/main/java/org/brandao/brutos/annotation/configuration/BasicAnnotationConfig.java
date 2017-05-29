@@ -34,10 +34,12 @@ import org.brandao.brutos.type.TypeUtil;
 public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 
 	public boolean isApplicable(Object source) {
-		boolean applicable = source instanceof ActionParamEntry;
+		boolean applicable = 
+			source instanceof ActionParamEntry;
 
-		applicable = applicable
-				|| (source instanceof BeanPropertyAnnotation && !((BeanPropertyAnnotation) source)
+		applicable = 
+				applicable || 
+				(source instanceof BeanPropertyAnnotation && !((BeanPropertyAnnotation) source)
 						.isAnnotationPresent(Transient.class));
 
 		applicable = applicable || source instanceof ConstructorArgEntry;
@@ -50,7 +52,7 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 
 		try {
 			return applyConfiguration0(source, builder, componentRegistry);
-		} catch (Exception e) {
+		}catch (Exception e) {
 
 			String type = "source";
 			String name = "it is a bug";
@@ -74,15 +76,30 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 	public Object applyConfiguration0(Object source, Object builder,
 			ComponentRegistry componentRegistry) {
 
-		if (source instanceof ActionParamEntry)
-			addIdentify((ActionParamEntry) source, (ParametersBuilder) builder,
+		if (source instanceof ActionParamEntry){
+			this.addIdentify(
+					(ActionParamEntry) source, 
+					(ParametersBuilder) builder,
 					componentRegistry);
-		else if (source instanceof BeanPropertyAnnotation)
-			addIdentify((BeanPropertyAnnotation) source, builder,
+		}
+		else if (source instanceof BeanPropertyAnnotation){
+			this.addIdentify(
+					(BeanPropertyAnnotation) source, 
+					builder,
 					componentRegistry);
-		else if (source instanceof ConstructorArgEntry)
-			addIdentify((ConstructorArgEntry) source,
-					(ConstructorBuilder) builder, componentRegistry);
+		}
+		else if (source instanceof ConstructorArgEntry){
+			this.addIdentify(
+					(ConstructorArgEntry) source,
+					(ConstructorBuilder) builder, 
+					componentRegistry);
+		}
+		else if (source instanceof ResultActionEntry){
+			this.addIdentify(
+					(ResultActionEntry) source, 
+					(ActionBuilder) builder,
+					componentRegistry);
+		}
 
 		return source;
 	}
@@ -106,6 +123,25 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 
 	}
 
+	protected void addIdentify(ResultActionEntry source,
+			ActionBuilder builder, ComponentRegistry componentRegistry) {
+
+		ResultActionBuilder newBuilder;
+
+		Basic basic = source.getAnnotation(Basic.class);
+
+		if (!source.isAnnotationPresent(Any.class)
+				&& AnnotationUtil.isBuildEntity(componentRegistry, basic,
+						source.getType()))
+			newBuilder = buildResultAction(builder, source, componentRegistry);
+		else
+			newBuilder = setResultAction(source, builder, componentRegistry);
+
+		super.applyInternalConfiguration(source, newBuilder,
+				componentRegistry);
+
+	}
+	
 	protected void addIdentify(BeanPropertyAnnotation source, Object builder,
 			ComponentRegistry componentRegistry) {
 
@@ -267,6 +303,45 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 		}
 	}
 
+	/* ResultAction */
+	
+	protected ResultActionBuilder buildResultAction(ActionBuilder builder,
+			ResultActionEntry source, ComponentRegistry componentRegistry) {
+
+		super.applyInternalConfiguration(source,
+				builder, componentRegistry);
+
+		return builder.getResultAction();
+	}
+
+	protected ResultActionBuilder setResultAction(ResultActionEntry source,
+			ActionBuilder builder, ComponentRegistry componentRegistry) {
+
+		String name = 
+				source.getName() == null ? 
+						source.getDefaultName() : source.getName();
+						
+		EnumerationType enumProperty = 
+				AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
+		
+		String temporalProperty = 
+				AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
+		
+		org.brandao.brutos.type.Type type = 
+				AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
+
+		if (source.isAnnotationPresent(Any.class)) {
+			return builder.setGenericResultAction(name,
+					TypeUtil.getRawType(source.getGenericType()));
+		} else {
+			return builder.setResultAction(name, enumProperty,
+					temporalProperty, null, type, null, false,
+					source.getGenericType());
+		}
+	}
+	
+	/* /ResultAction */
+	
 	private String getPropertyName(BeanPropertyAnnotation param) {
 		return param.getName();
 	}

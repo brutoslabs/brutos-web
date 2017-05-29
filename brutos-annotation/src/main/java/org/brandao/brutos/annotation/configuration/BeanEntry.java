@@ -23,6 +23,6 @@ package org.brandao.brutos.annotation.configuration;
  */
 public interface BeanEntry {
 
-	Class getBeanType();
+	Class<?> getBeanType();
 
 }

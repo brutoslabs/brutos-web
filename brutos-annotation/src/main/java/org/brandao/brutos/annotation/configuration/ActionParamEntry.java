@@ -35,7 +35,7 @@ public class ActionParamEntry {
 
 	private Type genericType;
 
-	private Class type;
+	private Class<?> type;
 
 	private String name;
 
@@ -44,7 +44,7 @@ public class ActionParamEntry {
 	public ActionParamEntry() {
 	}
 
-	public ActionParamEntry(String name, Class type, Type genericType,
+	public ActionParamEntry(String name, Class<?> type, Type genericType,
 			Annotation[] annotation, int index) {
 		this.name = name;
 		this.type = type;
@@ -62,6 +62,7 @@ public class ActionParamEntry {
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T getAnnotation(Class<T> annotation) {
 		for (Annotation a : this.annotation) {
 			if (a.annotationType().isAssignableFrom(annotation))
@@ -84,16 +85,16 @@ public class ActionParamEntry {
 		this.genericType = genericType;
 	}
 
-	public Class getDeclaredType() {
+	public Class<?> getDeclaredType() {
 		return this.type;
 	}
 
-	public Class getType() {
+	public Class<?> getType() {
 		Target target = this.getAnnotation(Target.class);
 		return target == null ? this.type : target.value();
 	}
 
-	public void setType(Class type) {
+	public void setType(Class<?> type) {
 		this.type = type;
 	}
 
