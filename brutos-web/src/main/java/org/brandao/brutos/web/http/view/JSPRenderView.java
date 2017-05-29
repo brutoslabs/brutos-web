@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.web.http;
+package org.brandao.brutos.web.http.view;
 
 import java.io.IOException;
 import java.util.Properties;
