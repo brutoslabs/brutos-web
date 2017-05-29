@@ -79,16 +79,21 @@ public abstract class AbstractRenderView implements RenderView {
 		}
 
 		if (method != null) {
-
-			if (method.getReturnClass() != void.class) {
-				String var = method.getReturnIn() == null ? BrutosConstants.DEFAULT_RETURN_NAME
-						: method.getReturnIn();
+			org.brandao.brutos.mapping.ResultAction resultAction =
+					method.getResultAction();
+			if (resultAction.getType() != null) {
+			//if (method.getReturnClass() != void.class) {
+				String var = 
+						resultAction.getName() == null? 
+							BrutosConstants.DEFAULT_RETURN_NAME : 
+								resultAction.getName();
 				requestScope.put(var, stackRequestElement.getResultAction());
 
-				if (method.isReturnRendered()
-						|| method.getReturnType().isAlwaysRender()) {
-					this.showView(requestInstrument, stackRequestElement,
-							method.getReturnType());
+				if (method.isReturnRendered() || resultAction.getType().isAlwaysRender()) {
+					this.showView(
+							requestInstrument, 
+							stackRequestElement,
+							resultAction.getType());
 					return;
 				}
 			}
@@ -101,12 +106,20 @@ public abstract class AbstractRenderView implements RenderView {
 		}
 
 		if (stackRequestElement.getController().getView() != null) {
-			this.showView(requestInstrument, stackRequestElement
-					.getController().getView(), stackRequestElement
-					.getController().getDispatcherType());
-		} else if (method != null && method.getReturnType() != null)
-			this.showView(requestInstrument, stackRequestElement,
-					method.getReturnType());
+			this.showView(
+					requestInstrument, 
+					stackRequestElement
+					.getController().getView(), 
+					stackRequestElement.getController().getDispatcherType()
+			);
+		}
+		else
+		if(method != null && method.getResultAction().getType() != null){
+			this.showView(
+					requestInstrument, 
+					stackRequestElement,
+					method.getResultAction().getType());
+		}
 
 	}
 

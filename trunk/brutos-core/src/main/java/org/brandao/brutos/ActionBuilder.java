@@ -20,9 +20,14 @@ package org.brandao.brutos;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
+import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.mapping.ThrowableSafeData;
+import org.brandao.brutos.type.ObjectType;
+import org.brandao.brutos.type.Type;
+import org.brandao.brutos.type.TypeUtil;
+import org.brandao.brutos.type.UnknownTypeException;
 
 /**
  * 
@@ -197,15 +202,18 @@ public class ActionBuilder extends RestrictionBuilder {
 
 	public ActionBuilder setResult(String value) {
 		value = StringUtil.adjust(value);
+		this.action.getResultAction().setName(value);
+		/*
 		this.action
 				.setReturnIn(StringUtil.isEmpty(value) ? BrutosConstants.DEFAULT_RETURN_NAME
 						: value);
-
+		 */
 		return this;
 	}
 
 	public String getResult() {
-		return this.action.getReturnIn();
+		return this.action.getResultAction().getName();
+		//return this.action.getReturnIn();
 	}
 
 	public ActionBuilder setResultRendered(boolean value) {
@@ -246,5 +254,200 @@ public class ActionBuilder extends RestrictionBuilder {
 		this.action.getResponseTypes().remove(value);
 		return this;
 	}
+
+	/* setResultAction */
 	
+	public ResultActionBuilder setResultAction(String name,
+			EnumerationType enumProperty, Class<?> classType) {
+		return setResultAction(name, enumProperty, null, null, null, null,
+				false, classType);
+	}
+
+	public ResultActionBuilder setNullresultAction() {
+		return setResultAction(null, null, null, null, null, null, false,
+				null);
+	}
+
+	public ResultActionBuilder setResultAction(String name,
+			String temporalProperty, Class<?> classType) {
+		return setResultAction(name, EnumerationType.ORDINAL,
+				temporalProperty, null, null, null, false, classType);
+	}
+
+	public ResultActionBuilder setResultAction(String name, Type typeDef) {
+		return setResultAction(name, EnumerationType.ORDINAL, "dd/MM/yyyy",
+				null, typeDef, null, false, typeDef.getClassType());
+	}
+
+	public ResultActionBuilder setResultAction(String name,
+			Class<?> classType) {
+		return setResultAction(name, EnumerationType.ORDINAL, "dd/MM/yyyy",
+				null, null, null, false, classType);
+	}
+
+	public ResultActionBuilder setResultActionMapping(String mapping,
+			Class<?> classType) {
+		return setResultAction(null, EnumerationType.ORDINAL,
+				"dd/MM/yyyy", mapping, null, null, false, classType);
+	}
+
+	public ResultActionBuilder setResultActionMapping(String name, String mapping,
+			Class<?> classType) {
+		return setResultAction(name, EnumerationType.ORDINAL,
+				"dd/MM/yyyy", mapping, null, null, false, classType);
+	}
+
+	public ResultActionBuilder setResultActionMapping(String name, String mapping,
+			ScopeType scope, Class<?> classType) {
+		return setResultAction(name, EnumerationType.ORDINAL, "dd/MM/yyyy",
+				mapping, null, null, false, classType);
+	}
+
+	public BeanBuilder buildParameter(Class<?> classType) {
+		String beanName = this.action.getCode() + "#"
+				+ this.action.getParamterSize();
+		BeanBuilder bb = this.controllerBuilder.buildMappingBean(beanName,
+				null, classType);
+
+		this.setResultActionMapping(beanName, classType);
+		return bb;
+	}
+
+	public BeanBuilder buildParameter(String name, Class<?> classType) {
+		String beanName = this.action.getCode() + "#"
+				+ this.action.getParamterSize();
+		BeanBuilder bb = this.controllerBuilder.buildMappingBean(beanName,
+				null, classType);
+
+		this.setResultActionMapping(name, beanName, classType);
+		return bb;
+	}
+
+	public BeanBuilder buildResultAction(Class<?> classType, Class<?> beanType) {
+		String beanName = this.action.getCode() + "#Result";
+		BeanBuilder bb = this.controllerBuilder.buildMappingBean(beanName,
+				null, beanType);
+
+		this.setResultActionMapping(beanName, classType);
+		return bb;
+	}
+
+	public BeanBuilder buildResultAction(String name, Class<?> classType,
+			Class<?> beanType) {
+		String beanName = this.action.getCode() + "#Result";
+		BeanBuilder bb = this.controllerBuilder.buildMappingBean(beanName,
+				null, beanType);
+
+		this.setResultAction(name, beanName, classType);
+		return bb;
+	}
+
+	public ResultActionBuilder setStaticResultAction(Class<?> classType, Object value) {
+		return setResultAction(null, EnumerationType.ORDINAL,
+				"dd/MM/yyyy", null, null, value, false, classType);
+	}
+
+	public ResultActionBuilder setResultAction(String name,
+			EnumerationType enumProperty, String temporalProperty,
+			String mapping, Type typeDef, Object value, boolean nullable,
+			Class<?> classType) {
+		return setResultAction(name, enumProperty, temporalProperty,
+				mapping, typeDef, value, nullable, (Object) classType);
+	}
+
+	public ResultActionBuilder setGenericResultAction(String name, Class<?> classType) {
+		return this.setResultAction(name,
+				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
+				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, null, null,
+				false, true, classType);
+	}
+
+	public ResultActionBuilder setGenericResultAction(String name) {
+		return this.setResultAction(name,
+				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
+				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, null, null,
+				false, true, null);
+	}
+
+	public ResultActionBuilder setResultAction(String name,
+			EnumerationType enumProperty, String temporalProperty,
+			String mapping, Type typeDef, Object value, boolean nullable,
+			Object classType) {
+		return this.setResultAction(name, enumProperty, temporalProperty,
+				mapping, typeDef, value, nullable, false, classType);
+	}
+
+	public ResultActionBuilder setResultAction(String name,
+			EnumerationType enumProperty, String temporalProperty,
+			String mapping, Type typeDef, Object value, boolean nullable,
+			boolean generic, Object classType) {
+
+		name = StringUtil.adjust(name);
+		temporalProperty = StringUtil.adjust(temporalProperty);
+		mapping = StringUtil.adjust(mapping);
+		Class<?> rawType = TypeUtil.getRawType(classType);
+
+		name = name == null? BrutosConstants.DEFAULT_RETURN_NAME : name;
+
+		Configuration validatorConfig = new Configuration();
+
+		org.brandao.brutos.mapping.ResultAction resultAction = 
+				new org.brandao.brutos.mapping.ResultAction(this.action);
+
+		resultAction.setName(name);
+		resultAction.setScopeType(ScopeType.PARAM);
+		resultAction.setValidate(this.validatorFactory.getValidator(validatorConfig));
+		resultAction.setStaticValue(value);
+		resultAction.setNullable(nullable);
+
+		if (typeDef == null) {
+			if (classType != null) {
+				try {
+					typeDef = this.applicationContext.getTypeManager().getType(
+							classType, enumProperty, temporalProperty);
+
+				} catch (UnknownTypeException e) {
+					throw new MappingException(String.format(
+							"<invalid> %s.%s(...): %s",
+							new Object[] {
+									this.controller.getClassType().getName(),
+									action.getExecutor(),
+									e.getMessage() }), e);
+				}
+			}
+
+			if(typeDef == null){
+				typeDef = new ObjectType(rawType);
+			}
+		}
+		else
+		if(classType != null){
+			if (!typeDef.getClassType().isAssignableFrom(rawType)) {
+				throw new MappingException(String.format(
+						"expected %s found %s",
+						new Object[] { rawType.getName(),
+								typeDef.getClassType().getName() }));
+			}
+		}
+
+		resultAction.setType(typeDef);
+
+		if(generic){
+			MetaBean metaBean = new MetaBean(controller);
+			metaBean.setClassType(rawType);
+			resultAction.setMetaBean(metaBean);
+		}
+		else
+		if(!StringUtil.isEmpty(mapping)) {
+			if (controller.getBean(mapping) != null)
+				resultAction.setMapping(controller.getBean(mapping));
+			else
+				throw new MappingException("mapping not found: " + mapping);
+		}
+
+		action.setResultAction(resultAction);
+		return new ResultActionBuilder(this, resultAction, this.validatorFactory);
+	}
+	
+	/* setResultAction */
 }
