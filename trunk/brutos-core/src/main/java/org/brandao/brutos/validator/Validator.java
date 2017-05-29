@@ -25,6 +25,7 @@ import org.brandao.brutos.mapping.ConstructorBean;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.PropertyBean;
 import org.brandao.brutos.mapping.PropertyController;
+import org.brandao.brutos.mapping.ResultAction;
 
 /**
  * 
@@ -57,7 +58,11 @@ public interface Validator {
 	void validate(Action source, Object controller, Object[] value)
 			throws ValidatorException;
 
+	@Deprecated
 	void validate(Action source, Object controller, Object value)
 			throws ValidatorException;
 
+	void validate(ResultAction source, Object controller, Object value)
+			throws ValidatorException;
+	
 }

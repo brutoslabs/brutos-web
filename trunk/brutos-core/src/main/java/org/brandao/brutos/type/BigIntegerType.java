@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.type;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import org.brandao.brutos.MvcResponse;
 
@@ -39,7 +38,7 @@ public class BigIntegerType extends AbstractType implements Type {
 			throw new UnknownTypeException(value.getClass().toString());
 	}
 
-	public void show(MvcResponse response, Object value) throws IOException {
+	public void show(MvcResponse response, Object value){
 		response.process(value);
 	}
 

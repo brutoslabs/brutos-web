@@ -50,7 +50,16 @@ public class JSONType extends SerializableType {
         }
    }
 
-    public void show(MvcResponse response, Object value) throws IOException {
+	public void show(MvcResponse response, Object value){
+		try{
+			this.innerShow(response, value);
+		}
+		catch(Throwable e){
+			throw new BrutosException(e);
+		}
+	}
+	
+	private void innerShow(MvcResponse response, Object value) throws IOException{
         response.setType(MediaType.valueOf("application/json") );
         //response.setCharacterEncoding( "UTF-8" );
         //JSONEncoder encoder = new JSONEncoder( response.processStream() );

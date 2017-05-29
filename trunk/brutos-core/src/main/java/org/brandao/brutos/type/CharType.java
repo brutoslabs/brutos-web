@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.type;
 
-import java.io.IOException;
 import org.brandao.brutos.MvcResponse;
 
 /**
@@ -47,7 +46,7 @@ public class CharType extends AbstractType {
 			throw new UnknownTypeException(value.getClass().getName());
 	}
 
-	public void show(MvcResponse response, Object value) throws IOException {
+	public void show(MvcResponse response, Object value){
 		response.process(value);
 	}
 

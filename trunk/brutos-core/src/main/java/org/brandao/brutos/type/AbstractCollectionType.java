@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.type;
 
-import java.io.IOException;
 import java.util.Collection;
 
 import org.brandao.brutos.BrutosException;
@@ -70,7 +69,7 @@ public abstract class AbstractCollectionType
 			return value;
 	}
 
-	public void show(MvcResponse response, Object value) throws IOException {
+	public void show(MvcResponse response, Object value){
 		response.process(value);
 	}
 
