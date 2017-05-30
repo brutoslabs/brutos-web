@@ -75,7 +75,7 @@ public class DataTypeMap {
 		return this.map.containsKey(value.getName());
 	}
 
-	public DataType getFirstAccept(DataTypeMap map){
+	public DataType accept(DataTypeMap map){
 		
 		Set<DataType> types = map.set;
 		

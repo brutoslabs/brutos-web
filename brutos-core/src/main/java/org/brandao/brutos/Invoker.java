@@ -21,6 +21,7 @@ import org.brandao.brutos.interceptor.InterceptorHandlerImp;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.DataTypeMap;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.ThreadScope;
 
@@ -108,7 +109,8 @@ public class Invoker {
 		
 	}
 	
-	protected boolean innerInvoke(MutableMvcRequest request, MutableMvcResponse response) {
+	protected boolean innerInvoke(MutableMvcRequest request, 
+			MutableMvcResponse response) throws RequestTypeException{
 
 		request.setApplicationContext(this.applicationContext);
 		
@@ -134,7 +136,7 @@ public class Invoker {
 	}
 
 	public Object invoke(Controller controller, ResourceAction action,
-			Object resource, Object[] parameters) {
+			Object resource, Object[] parameters) throws RequestTypeException{
 
 		if (controller == null)
 			throw new IllegalArgumentException("controller not found");
@@ -205,7 +207,7 @@ public class Invoker {
 		return getStackRequest().getCurrent();
 	}
 
-	public boolean invoke(StackRequestElement element) {
+	public boolean invoke(StackRequestElement element) throws RequestTypeException{
 
 		long time                  = -1;
 		boolean createdThreadScope = false;
@@ -213,18 +215,29 @@ public class Invoker {
 		MvcRequest oldRequest      = null;
 		MvcResponse oldresponse    = null;
 		
-		RequestInstrument requestInstrument;
-
+		MutableMvcRequest request     = element.getRequest();
+		MutableMvcResponse response   = element.getResponse();
+		ResourceAction resourceAction = request.getResourceAction();
+		DataType responseDataType     = this.getAcceptResponseType(resourceAction, request);
+		
+		response.setType(responseDataType);
+		
+		if(!this.acceptRequestType(resourceAction, request)){
+			throw new RequestTypeException("request type not supported");
+		}
+		
+		if(responseDataType == null){
+			throw new ResponseTypeException("response type not supported");
+		}
+		
 		try{
-			MutableMvcRequest request   = element.getRequest();
-			MutableMvcResponse response = element.getResponse();
-			oldRequest                  = this.requestProvider.init(request);
-			oldresponse                 = this.responseProvider.init(response);
+			oldRequest  = this.requestProvider.init(request);
+			oldresponse = this.responseProvider.init(response);
 			
 			time = System.currentTimeMillis();
 			createdThreadScope = ThreadScope.create();
-			requestInstrument = getRequestInstrument();
-			stackRequest = getStackRequest(requestInstrument);
+			RequestInstrument requestInstrument = getRequestInstrument();
+			stackRequest = this.getStackRequest(requestInstrument);
 			
 			request.setRequestInstrument(requestInstrument);
 			request.setStackRequestElement(element);
@@ -233,6 +246,11 @@ public class Invoker {
 			
 			InterceptorHandlerImp ih = new InterceptorHandlerImp(request, response);
 			element.getController().proccessBrutosAction(ih);
+			
+			if(!requestInstrument.isHasViewProcessed()){
+				renderView.show(request, response);
+			}
+			
 			return true;
 		}
 		finally {
@@ -252,6 +270,29 @@ public class Invoker {
 		}
 	}
 
+	private boolean acceptRequestType(ResourceAction action, MutableMvcRequest request){
+		
+    	DataTypeMap supportedRequestTypes = action.getMethodForm().getRequestTypes();
+    	
+    	if(supportedRequestTypes.isEmpty()){
+    		supportedRequestTypes = action.getController().getRequestTypes();
+    	}
+    	
+    	return !supportedRequestTypes.isEmpty() && supportedRequestTypes.accept(request.getType());
+	}
+
+	private DataType getAcceptResponseType(ResourceAction action, MutableMvcRequest request){
+		
+    	DataTypeMap supportedResponseTypes = action.getMethodForm().getResponseTypes();
+    	DataTypeMap responseTypes = request.getAcceptResponse();
+    	if(supportedResponseTypes.isEmpty()){
+    		supportedResponseTypes = action.getController().getRequestTypes();
+    	}
+    	
+    	DataType responseDataType = supportedResponseTypes.accept(responseTypes);
+    	return responseDataType;
+	}
+	
 	private RequestInstrument getRequestInstrument(Scope scope) {
 		RequestInstrument requestInstrument = (RequestInstrument) scope
 				.get(BrutosConstants.REQUEST_INSTRUMENT);

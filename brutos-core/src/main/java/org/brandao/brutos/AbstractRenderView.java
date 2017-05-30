@@ -26,7 +26,7 @@ import org.brandao.brutos.type.Type;
  * 
  * @author Brandao
  */
-public abstract class AbstractRenderView implements RenderView {
+public abstract class AbstractRenderView implements RenderViewType {
 
 	protected abstract void show(RequestInstrument requestInstrument,
 			String view, DispatcherType dispatcherType);
@@ -43,8 +43,9 @@ public abstract class AbstractRenderView implements RenderView {
 		type.show(stackRequestElement.getResponse(), stackRequestElement.getResultAction());
 	}
 
-	public void show(RequestInstrument requestInstrument,
-			StackRequestElement stackRequestElement){
+	public void show(MvcRequest request, MvcResponse response){
+		RequestInstrument requestInstrument = request.getRequestInstrument();
+		StackRequestElement stackRequestElement = request.getStackRequestElement();
 
 		if (requestInstrument.isHasViewProcessed())
 			return;
