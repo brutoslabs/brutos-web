@@ -314,10 +314,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 			RenderView instance = (RenderView) ClassUtil.getInstance(clazz);
 
-			instance.configure(config);
-
 			return instance;
-		} catch (BrutosException e) {
+		}
+		catch (BrutosException e) {
 			throw e;
 		} catch (Throwable e) {
 			throw new BrutosException(e);
@@ -406,7 +405,6 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	
 	public void destroy() {
 		this.objectFactory.destroy();
-		this.renderView.destroy();
 		this.codeGenerator.destroy();
 		this.validatorFactory.destroy();
 		this.actionResolver = null;

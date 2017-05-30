@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.brandao.brutos.mapping.DataTypeMap;
+
 /**
  * 
  * @author Brandao
@@ -66,6 +68,8 @@ public class DefaultMvcRequest implements MutableMvcRequest {
     
     private StackRequestElement stackRequestElement;
     
+    private DataTypeMap acceptResponse;
+    
     public DefaultMvcRequest(){
 		this.header = new HashMap<String, List<Object>>();
 		this.headerNames = new HashSet<String>();
@@ -73,6 +77,7 @@ public class DefaultMvcRequest implements MutableMvcRequest {
 		this.propertyNames = new HashSet<String>();
 		this.parameters = new HashMap<String, List<Object>>();
 		this.parameterNames = new HashSet<String>();
+		this.acceptResponse = new DataTypeMap();
     }
     
 	public String getRequestId() {
@@ -231,5 +236,9 @@ public class DefaultMvcRequest implements MutableMvcRequest {
         
         return values == null || values.isEmpty()? null : values.toArray();
     }
+
+	public DataTypeMap getAcceptResponse() {
+		return this.acceptResponse;
+	}
     
 }

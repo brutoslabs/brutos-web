@@ -25,14 +25,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.ActionResolver;
-import org.brandao.brutos.ActionResolverException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.ObjectFactory;
 import org.brandao.brutos.RenderView;
 import org.brandao.brutos.RequestParserListenerFactory;
+import org.brandao.brutos.RequestTypeException;
 import org.brandao.brutos.ResourceAction;
+import org.brandao.brutos.ResponseTypeException;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebController;
@@ -82,11 +83,14 @@ public class WebInvoker extends Invoker{
             }
     		
     	}
-    	catch(ActionResolverException e){
+    	catch(RequestTypeException e){
     		response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
     	}
     	catch(RequestMethodException e){
     		response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+    	}
+    	catch(ResponseTypeException e){
+    		response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
     	}
     	finally{
     		SessionScope.removeServletRequest(request);

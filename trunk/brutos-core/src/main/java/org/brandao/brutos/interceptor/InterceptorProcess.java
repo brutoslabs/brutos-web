@@ -23,7 +23,6 @@ import java.text.ParseException;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.MutableMvcResponse;
-import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.RedirectException;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.ScopeType;
@@ -131,8 +130,8 @@ public class InterceptorProcess implements InterceptorStack {
 
 	private void invoke(ConfigurableInterceptorHandler handler) {
 
-		RequestInstrument requestInstrument = 
-				handler.getRequest().getRequestInstrument();
+		//RequestInstrument requestInstrument = 
+		//		handler.getRequest().getRequestInstrument();
 		StackRequestElement stackRequestElement = 
 				handler.getRequest().getStackRequestElement();
 				
@@ -144,9 +143,10 @@ public class InterceptorProcess implements InterceptorStack {
 			processException(stackRequestElement, objectThrow,
 					stackRequestElement.getAction());
 
-		show(requestInstrument, stackRequestElement);
+		//show(requestInstrument, stackRequestElement);
 	}
 
+	/*
 	private void show(RequestInstrument requestInstrument,
 			StackRequestElement stackRequestElement) {
 		try {
@@ -158,7 +158,8 @@ public class InterceptorProcess implements InterceptorStack {
 			throw new BrutosException(e);
 		}
 	}
-
+    */
+	
 	private void executeAction(ConfigurableInterceptorHandler handler)
 			throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, InstantiationException, ParseException {
