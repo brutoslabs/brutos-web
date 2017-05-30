@@ -34,8 +34,10 @@ import org.brandao.brutos.validator.JSR303ValidatorFactory;
  * 
  * @author Brandao
  */
-public abstract class AbstractApplicationContext extends DefaultResourceLoader
-		implements ConfigurableApplicationContext {
+@SuppressWarnings("deprecation")
+public abstract class AbstractApplicationContext 
+	extends DefaultResourceLoader
+	implements ConfigurableApplicationContext {
 
 	protected Logger logger;
 

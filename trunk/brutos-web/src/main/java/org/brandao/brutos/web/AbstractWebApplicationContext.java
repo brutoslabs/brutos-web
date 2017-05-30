@@ -35,7 +35,6 @@ import org.brandao.brutos.type.DefaultTypeFactory;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.web.http.Download;
 import org.brandao.brutos.web.http.UploadedFile;
-import org.brandao.brutos.web.http.view.JSPRenderView;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.HeaderScope;
@@ -153,7 +152,7 @@ public abstract class AbstractWebApplicationContext
 
         tmp = config
                 .getProperty(BrutosConstants.RENDER_VIEW_CLASS,
-                              JSPRenderView.class.getName() );
+                		WebConfigurableRenderViewImp.class.getName() );
 
         config.put(BrutosConstants.RENDER_VIEW_CLASS,
                     tmp );

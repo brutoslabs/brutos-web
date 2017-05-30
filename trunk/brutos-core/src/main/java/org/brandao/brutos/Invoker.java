@@ -313,7 +313,7 @@ public class Invoker {
 	}
 
 	public static ApplicationContext getCurrentApplicationContext() {
-		return (ApplicationContext) currentApp.get();
+		return currentApp.get();
 	}
 
 	public static Invoker getInstance() {

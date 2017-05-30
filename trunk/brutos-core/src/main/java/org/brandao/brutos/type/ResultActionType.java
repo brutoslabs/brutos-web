@@ -50,15 +50,20 @@ public class ResultActionType extends AbstractType {
 
 	public void show(MvcResponse response, Object value){
 
-		ConfigurableResultAction resultAction = (ConfigurableResultAction) value;
-		ConfigurableApplicationContext context = (ConfigurableApplicationContext) Invoker
-				.getCurrentApplicationContext();
-
-		Map<String, Object> infos = resultAction.getInfos();
-		Map<String, Object> values = resultAction.getValues();
+		ConfigurableResultAction resultAction = 
+				(ConfigurableResultAction)value;
 		
-		Scope requestScope = context.getScopes().get(
-				ScopeType.REQUEST.toString());
+		ConfigurableApplicationContext context = 
+			(ConfigurableApplicationContext)Invoker.getCurrentApplicationContext();
+
+		Map<String, Object> infos  = 
+				resultAction.getInfos();
+		
+		Map<String, Object> values = 
+				resultAction.getValues();
+		
+		Scope requestScope         = 
+				context.getScopes().get(ScopeType.REQUEST.toString());
 
 		for (Object key : infos.keySet()) {
 			response.setHeader((String) key, (String) infos.get(key));
@@ -71,29 +76,43 @@ public class ResultActionType extends AbstractType {
 		Object content = resultAction.getContent();
 
 		if (content != null) {
-			Type contentType = this.getContentType(
-					resultAction.getContentType(), context);
+			Type contentType = 
+				this.getContentType(resultAction.getContentType(), context);
 			contentType.show(response, content);
-		} else {
-			RenderView renderView = context.getRenderView();
-			Invoker invoker = context.getInvoker();
-			RequestInstrument requestinstrument = invoker
-					.getRequestInstrument();
-			StackRequestElement stackRequestElement = invoker.getStackRequest(
-					requestinstrument).getCurrent();
-
-			String view = resultAction.getView();
-			boolean resolved = resultAction.isResolvedView();
-
-			Action action = stackRequestElement.getAction().getMethodForm();
-
-			view = resolved ? view : context.getViewResolver().getActionView(
-					action.getController().getClassType(),
-					action.getExecutor(), view);
-
-			stackRequestElement.setView(view);
-			renderView.show(requestinstrument, stackRequestElement);
+			return;
 		}
+		
+		RenderView renderView = 
+				context.getRenderView();
+		Invoker invoker       = 
+				context.getInvoker();
+		
+		RequestInstrument requestinstrument = 
+				invoker.getRequestInstrument();
+		
+		StackRequestElement stackRequestElement = 
+				invoker.getStackRequest(requestinstrument).getCurrent();
+
+		String view = 
+				resultAction.getView();
+		boolean resolved = 
+				resultAction.isResolvedView();
+
+		Action action = 
+				stackRequestElement.getAction().getMethodForm();
+
+		view = 
+			resolved ? 
+				view : 
+				context.getViewResolver().getActionView(
+						action.getController().getClassType(),
+						action.getExecutor(), 
+						view);
+
+		stackRequestElement.setView(view);
+		
+		renderView.show(response.getRequest(), response);
+		
 	}
 
 	private Type getContentType(Class<?> contentType,
