@@ -15,16 +15,17 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos;
+package org.brandao.brutos.test;
 
-/**
- * 
- * @author Brandao
- */
-public class DefaultRenderView extends AbstractConfigurableRenderView{
+import org.brandao.brutos.AbstractRenderView;
+import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.RequestInstrument;
 
-	public void show(MvcRequest request, MvcResponse response)
-			throws RenderViewException {
+public class MockRenderViewType extends AbstractRenderView{
+
+	@Override
+	protected void show(RequestInstrument requestInstrument, String view,
+			DispatcherType dispatcherType) {
 		
 	}
 

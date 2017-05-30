@@ -44,7 +44,7 @@ public abstract class AbstractRenderView implements RenderViewType {
 	}
 
 	public void show(MvcRequest request, MvcResponse response){
-		RequestInstrument requestInstrument = request.getRequestInstrument();
+		RequestInstrument requestInstrument     = request.getRequestInstrument();
 		StackRequestElement stackRequestElement = request.getStackRequestElement();
 
 		if (requestInstrument.isHasViewProcessed())

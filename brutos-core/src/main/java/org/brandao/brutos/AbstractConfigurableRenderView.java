@@ -11,6 +11,15 @@ public abstract class AbstractConfigurableRenderView implements ConfigurableRend
 		this.renderViewTypeMap = new HashMap<DataType, RenderViewType>();
 	}
 	
+	public void show(MvcRequest request, MvcResponse response) throws RenderViewException{
+		RenderViewType renderViewType = this.getRenderViewByType(response.getType());
+		renderViewType.show(request, response);
+	}
+	
+	protected RenderViewType getRenderViewByType(DataType type){
+		return this.renderViewTypeMap.get(type);
+	}
+	
 	public synchronized void registryRenderView(DataType dataType, 
 			RenderViewType value) throws RenderViewException{
 		
