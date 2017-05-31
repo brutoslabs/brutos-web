@@ -11,8 +11,11 @@ import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.configuration.ActionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ActionEntry;
 import org.brandao.brutos.annotation.web.RequestMethod;
+import org.brandao.brutos.annotation.web.ResponseStatus;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.web.HttpStatus;
 import org.brandao.brutos.web.RequestMethodType;
+import org.brandao.brutos.web.WebActionBuilder;
 import org.brandao.brutos.web.WebControllerBuilder;
 
 @Stereotype(
@@ -36,9 +39,24 @@ public class WebActionAnnotationConfig
 		WebControllerBuilder webControllerBuilder = 
 				(WebControllerBuilder)controllerBuilder;
 		
-		return webControllerBuilder.addAction(id, 
+		WebActionBuilder builder = 
+			(WebActionBuilder)webControllerBuilder.addAction(id, 
 				RequestMethodType.valueOf(value), result, resultRendered, view, 
 				dispatcher, resolved, executor);
+
+		ResponseStatus responseStatus = 
+				actionEntry.getAnnotation(ResponseStatus.class);
+		
+		if(responseStatus != null){
+			int code = responseStatus.code();
+			code = code == HttpStatus.INTERNAL_SERVER_ERROR? 
+					responseStatus.value() :
+					code;
+					
+			builder.setResponseStatus(code);
+		}
+		
+		return builder;
 	}
 	
 	protected String getId(Action action, ActionEntry method,

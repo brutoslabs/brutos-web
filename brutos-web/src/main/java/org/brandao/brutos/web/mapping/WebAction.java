@@ -17,6 +17,9 @@
 
 package org.brandao.brutos.web.mapping;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.web.RequestMethodType;
 
@@ -24,10 +27,15 @@ public class WebAction extends Action{
 
 	private RequestMethodType requestMethod;
 
+	private int responseStatus;
+	
+	private Map<Class<?>, Integer> responseErrors;
+	
 	public WebAction(){
 		super();
 		super.setRequestTypes(new MediaTypeMap());
 		super.setResponseTypes(new MediaTypeMap());
+		this.responseErrors = new HashMap<Class<?>, Integer>();
 	}
 	
 	public RequestMethodType getRequestMethod() {
@@ -36,6 +44,22 @@ public class WebAction extends Action{
 
 	public void setRequestMethod(RequestMethodType requestMethod) {
 		this.requestMethod = requestMethod;
+	}
+
+	public int getResponseStatus() {
+		return responseStatus;
+	}
+
+	public void setResponseStatus(int responseStatus) {
+		this.responseStatus = responseStatus;
+	}
+
+	public Map<Class<?>, Integer> getResponseErrors() {
+		return responseErrors;
+	}
+
+	public void setResponseErrors(Map<Class<?>, Integer> responseErrors) {
+		this.responseErrors = responseErrors;
 	}
 	
 }
