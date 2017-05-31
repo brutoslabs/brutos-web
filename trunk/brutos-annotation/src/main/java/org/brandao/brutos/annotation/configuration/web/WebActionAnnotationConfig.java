@@ -100,11 +100,22 @@ public class WebActionAnnotationConfig
 			}
 		}
 
+		if(throwSafeList != null){
+			ThrowableEntry entry = 
+					new WebThrowableEntry(
+						throwSafeList, 
+						Throwable.class);
+			
+			if (!list.contains(entry)) {
+				list.add(entry);
+			}
+			
+		}
+		
 		for (ThrowableEntry entry : list){
 			this.addThrowSafe(method, entry, builder, componentRegistry);
 		}
-			
-
+		
 	}
 	
 	protected String getId(Action action, ActionEntry method,

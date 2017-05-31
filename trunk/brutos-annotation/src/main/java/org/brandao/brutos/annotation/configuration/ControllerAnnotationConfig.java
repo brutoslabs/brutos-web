@@ -152,10 +152,15 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 			list.add(AnnotationUtil.toEntry(throwSafe));
 
 		for (ThrowableEntry entry : list)
-			super.applyInternalConfiguration(entry, builder, componentRegistry);
+			this.addThrowSafe(clazz, entry, builder, componentRegistry);
 
 	}
 
+	protected void addThrowSafe(Class<?> clazz, ThrowableEntry entry, ControllerBuilder builder,
+			ComponentRegistry componentRegistry){
+		super.applyInternalConfiguration(clazz, builder, componentRegistry);
+	}
+	
 	protected String getView(View viewAnnotation, /* ControllerBuilder controller, */
 			ComponentRegistry componentRegistry) {
 
