@@ -237,13 +237,13 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 		}
 
 		for (ThrowableEntry entry : list){
-			this.addThrowSafe(entry, builder, componentRegistry);
+			this.addThrowSafe(method, entry, builder, componentRegistry);
 		}
 			
 
 	}
 
-	protected void addThrowSafe(ThrowableEntry entry, ActionBuilder builder,
+	protected void addThrowSafe(ActionEntry method, ThrowableEntry entry, ActionBuilder builder,
 			ComponentRegistry componentRegistry){
 		super.applyInternalConfiguration(entry, builder, componentRegistry);
 	}

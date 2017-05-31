@@ -1,5 +1,8 @@
 package org.brandao.brutos.annotation.configuration.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ActionType;
 import org.brandao.brutos.ComponentRegistry;
@@ -10,7 +13,10 @@ import org.brandao.brutos.annotation.Controller;
 import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.configuration.ActionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ActionEntry;
+import org.brandao.brutos.annotation.configuration.ThrowableEntry;
 import org.brandao.brutos.annotation.web.RequestMethod;
+import org.brandao.brutos.annotation.web.ResponseError;
+import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.annotation.web.ResponseStatus;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.HttpStatus;
@@ -49,7 +55,7 @@ public class WebActionAnnotationConfig
 		
 		if(responseStatus != null){
 			int code = responseStatus.code();
-			code = code == HttpStatus.INTERNAL_SERVER_ERROR? 
+			code = code == HttpStatus.OK? 
 					responseStatus.value() :
 					code;
 					
@@ -57,6 +63,48 @@ public class WebActionAnnotationConfig
 		}
 		
 		return builder;
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void throwsSafe(ActionBuilder builder, ActionEntry method,
+			ComponentRegistry componentRegistry) {
+
+		List<ThrowableEntry> list = new ArrayList<ThrowableEntry>();
+		
+		ResponseErrors throwSafeList = 
+				method.getAnnotation(ResponseErrors.class);
+		
+		ResponseError throwSafe = method.getAnnotation(ResponseError.class);
+		
+		if (throwSafeList != null && throwSafeList.exceptions().length != 0) {
+			list.addAll(
+				WebAnnotationUtil.toList(
+					WebAnnotationUtil.toList(throwSafeList)));
+		}
+
+		if (throwSafe != null)
+			list.add(WebAnnotationUtil.toEntry(throwSafe));
+
+		Class<?>[] exs = method.getExceptionTypes();
+
+		if (exs != null) {
+			for (Class<?> ex : exs) {
+				ThrowableEntry entry = 
+					new WebThrowableEntry(
+						throwSafeList, 
+						(Class<? extends Throwable>) ex);
+
+				if (!list.contains(entry)) {
+					list.add(entry);
+				}
+			}
+		}
+
+		for (ThrowableEntry entry : list){
+			this.addThrowSafe(method, entry, builder, componentRegistry);
+		}
+			
+
 	}
 	
 	protected String getId(Action action, ActionEntry method,

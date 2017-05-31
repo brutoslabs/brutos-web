@@ -49,4 +49,8 @@ public interface BrutosWebConstants extends BrutosConstants{
 	
 	final MediaType DEFAULT_REQUEST_TYPE = MediaType.APPLICATION_X_WWW_FORM_URLENCODED;
 	
+	final int DEFAULT_RESPONSE_ERROR  = HttpStatus.INTERNAL_SERVER_ERROR;
+
+	final int DEFAULT_RESPONSE_STATUS = HttpStatus.OK;
+	
 }
