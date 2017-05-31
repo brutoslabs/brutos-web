@@ -30,6 +30,7 @@ import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
+import org.brandao.brutos.web.mapping.WebThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -61,14 +62,37 @@ public class WebActionBuilder extends ActionBuilder{
         return super.addAlias(value);
     }
 
-    public ActionBuilder addThrowable( Class<?> target, String view, 
+    public ActionBuilder addThrowable(Class<?> target, String view, 
             String id, DispatcherType dispatcher, boolean resolvedView ){
+    	return this.addThrowable(0, null, target, 
+    			view, id, dispatcher, resolvedView);
+    }
+    
+    public ActionBuilder addThrowable(int responseError, String reason,
+    		Class<?> target, String view, String id, DispatcherType dispatcher, 
+    		boolean resolvedView ){
     	
-        ActionBuilder builder = super.addThrowable(target, view, id, dispatcher, resolvedView);
-        ThrowableSafeData thr = this.action.getThrowsSafeOnAction(target);
+        ActionBuilder builder = 
+        		super.addThrowable(target, view, id, dispatcher, resolvedView);
+        
+        WebThrowableSafeData thr = 
+        		(WebThrowableSafeData)this.action.getThrowsSafeOnAction(target);
+        
+        thr.setReason(reason);
+        
+        thr.setResponseError(
+        		responseError == 0? 
+    				BrutosWebConstants.DEFAULT_RESPONSE_ERROR :
+    				responseError);
+        
         WebUtil.checkURI(thr.getView(), resolvedView && view != null);
+        
         return builder;
     }
+    
+	protected ThrowableSafeData createThrowableSafeData(){
+		return new WebThrowableSafeData();
+	}
     
     public void setRequestMethod(RequestMethodType value){
     	

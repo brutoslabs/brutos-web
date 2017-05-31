@@ -34,6 +34,7 @@ import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
 import org.brandao.brutos.web.mapping.WebController;
+import org.brandao.brutos.web.mapping.WebThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -98,11 +99,32 @@ public class WebControllerBuilder extends ControllerBuilder{
     
     public ControllerBuilder addThrowable( Class<?> target, String view, String id, 
             DispatcherType dispatcher, boolean resolvedView ){
+    	return this.addThrowable(0, null, 
+    			target, view, id, dispatcher, resolvedView);
+    }
+
+    public ControllerBuilder addThrowable(int responseError, String reason,
+    		Class<?> target, String view, String id, 
+            DispatcherType dispatcher, boolean resolvedView ){
+    	
 		ControllerBuilder builder = super.addThrowable(target, view, id, dispatcher, resolvedView);
-        ThrowableSafeData thr = this.controller.getThrowsSafe(target);
+		
+        WebThrowableSafeData thr = (WebThrowableSafeData)this.controller.getThrowsSafe(target);
+        
+        thr.setReason(reason);
+        
+        thr.setResponseError(
+        		responseError == 0? 
+    				BrutosWebConstants.DEFAULT_RESPONSE_ERROR :
+    				responseError);
+        
         WebUtil.checkURI(thr.getView(), resolvedView && view != null);
         return builder;
     }
+    
+	protected ThrowableSafeData createThrowableSafeData(){
+		return new WebThrowableSafeData();
+	}
     
     public ControllerBuilder setDefaultAction(String id){
         return this.setDefaultAction(id, null);
