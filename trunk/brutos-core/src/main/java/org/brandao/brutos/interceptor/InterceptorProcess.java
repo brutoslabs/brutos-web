@@ -203,30 +203,39 @@ public class InterceptorProcess implements InterceptorStack {
 		Scope requestScope = scopes.get(ScopeType.REQUEST.toString());
 		Object resource = handler.getResource();
 
-		try {
+		try{
 			DataInput input = new DataInput(requestScope);
 			input.read(form, resource);
 			preAction(resource);
-
 			executeAction(handler);
-		} catch (ValidatorException e) {
-			processException(handler.getRequest().getStackRequestElement(), e,
+		}
+		catch(ValidatorException e) {
+			this.processException(
+					handler.getRequest().getStackRequestElement(), 
+					e,
 					handler.getResourceAction());
-		} catch (InvocationTargetException e) {
+		}
+		catch(InvocationTargetException e){
 			if (e.getTargetException() instanceof RedirectException) {
-				RedirectException re = (RedirectException) e
-						.getTargetException();
+				RedirectException re = 
+					(RedirectException)e.getTargetException();
 				stackRequestElement.setView(re.getView());
 				stackRequestElement.setDispatcherType(re.getDispatcher());
-			} else {
-				processException(stackRequestElement, e.getTargetException(),
-						stackRequestElement.getAction());
 			}
-		} catch (BrutosException e) {
+			else{
+				processException(
+					stackRequestElement, 
+					e.getTargetException(),
+					stackRequestElement.getAction());
+			}
+		}
+		catch (BrutosException e) {
 			throw e;
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			throw new BrutosException(e);
-		} finally {
+		}
+		finally {
 			postAction(resource);
 			DataOutput dataOutput = new DataOutput(
 					scopes.get(ScopeType.REQUEST));

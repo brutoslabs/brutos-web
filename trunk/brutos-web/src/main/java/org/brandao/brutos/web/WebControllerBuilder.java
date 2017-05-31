@@ -184,4 +184,22 @@ public class WebControllerBuilder extends ControllerBuilder{
 		return this;
 	}
     
+	public ControllerBuilder setResponseStatus(int value){
+		((WebController)this.controller).setResponseStatus(value);
+		return this;
+	}
+	
+	public ControllerBuilder setResponseError(Class<? extends Throwable> type, int value){
+		((WebController)this.controller).getResponseErrors().put(type, value);
+		return this;
+	}
+
+	public int getResponseStatus(){
+		return ((WebController)this.controller).getResponseStatus();
+	}
+	
+	public int getResponseError(Class<? extends Throwable> type){
+		return ((WebController)this.controller).getResponseErrors().get(type);
+	}
+	
 }

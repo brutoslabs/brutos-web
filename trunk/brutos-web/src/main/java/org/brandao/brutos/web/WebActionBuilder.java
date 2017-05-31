@@ -118,4 +118,22 @@ public class WebActionBuilder extends ActionBuilder{
 		return this;
 	}
 	
+	public ActionBuilder setResponseStatus(int value){
+		((WebAction)this.action).setResponseStatus(value);
+		return this;
+	}
+	
+	public ActionBuilder setResponseError(Class<? extends Throwable> type, int value){
+		((WebAction)this.action).getResponseErrors().put(type, value);
+		return this;
+	}
+
+	public int getResponseStatus(){
+		return ((WebAction)this.action).getResponseStatus();
+	}
+	
+	public int getResponseError(Class<? extends Throwable> type){
+		return ((WebAction)this.action).getResponseErrors().get(type);
+	}
+	
 }

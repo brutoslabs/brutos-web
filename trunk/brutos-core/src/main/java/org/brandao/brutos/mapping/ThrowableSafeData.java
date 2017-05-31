@@ -25,7 +25,7 @@ import org.brandao.brutos.DispatcherType;
  */
 public class ThrowableSafeData {
 
-	private Class target;
+	private Class<?> target;
 
 	private String view;
 
@@ -42,11 +42,11 @@ public class ThrowableSafeData {
 	public ThrowableSafeData() {
 	}
 
-	public Class getTarget() {
+	public Class<?> getTarget() {
 		return target;
 	}
 
-	public void setTarget(Class target) {
+	public void setTarget(Class<?> target) {
 		this.target = target;
 	}
 
