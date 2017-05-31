@@ -332,7 +332,14 @@ public class Controller {
 	}
 
 	public ThrowableSafeData getThrowsSafe(Class<?> thr) {
-		return (ThrowableSafeData) throwsSafe.get(thr);
+		
+		ThrowableSafeData e = this.throwsSafe.get(thr);
+		
+		if(e == null){
+			e = this.throwsSafe.get(Throwable.class);
+		}
+		
+		return e;
 	}
 
 	public void removeThrowsSafe(Class<?> thr) {

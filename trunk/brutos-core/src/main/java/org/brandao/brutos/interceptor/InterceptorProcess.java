@@ -248,19 +248,31 @@ public class InterceptorProcess implements InterceptorStack {
 	private void processException(StackRequestElement stackRequestElement,
 			Throwable e, ResourceAction resourceAction) {
 
-		Action method = resourceAction == null ? null : resourceAction
-				.getMethodForm();
+		Action method = 
+				resourceAction == null ? 
+					null : 
+					resourceAction.getMethodForm();
 
-		ThrowableSafeData tdata = method == null ? form.getThrowsSafe(e
-				.getClass()) : method.getThrowsSafe(e.getClass());
+		ThrowableSafeData tdata = null;
+		
+		if(method != null){
+			tdata = method.getThrowsSafe(e.getClass());
+		}
+		else{
+			tdata = form.getThrowsSafe(e.getClass());
+		}
 
-		if (tdata != null) {
+		if(tdata != null) {
 			stackRequestElement.setObjectThrow(e);
 			stackRequestElement.setThrowableSafeData(tdata);
-		} else if (e instanceof BrutosException)
-			throw (BrutosException) e;
+		}
 		else
+		if (e instanceof BrutosException){
+			throw (BrutosException) e;
+		}
+		else{
 			throw new InterceptedException(e);
+		}
 	}
 
 	private void preAction(Object source) {

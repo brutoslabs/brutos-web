@@ -151,8 +151,18 @@ public class Action {
 	}
 
 	public ThrowableSafeData getThrowsSafe(Class<?> thr) {
-		return (ThrowableSafeData) (throwsSafe.containsKey(thr) ? throwsSafe
-				.get(thr) : controller.getThrowsSafe(thr));
+		
+		ThrowableSafeData e = this.throwsSafe.get(thr);
+		
+		if(e == null){
+			e = this.throwsSafe.get(Throwable.class);
+		}
+		
+		if(e == null){
+			e = this.controller.getThrowsSafe(thr);
+		}
+		
+		return e;
 	}
 
 	public void setThrowsSafe(ThrowableSafeData thr) {
