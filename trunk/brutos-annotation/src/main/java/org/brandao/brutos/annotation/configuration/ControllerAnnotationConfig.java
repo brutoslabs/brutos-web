@@ -140,6 +140,9 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 				.getAnnotation(ThrowSafeList.class);
 		ThrowSafe throwSafe = (ThrowSafe) clazz.getAnnotation(ThrowSafe.class);
 
+		DefaultThrowSafe defualtThrowSafe = 
+				clazz.getAnnotation(DefaultThrowSafe.class);
+		
 		if (throwSafeList != null) {
 			if (throwSafeList.value().length == 0)
 				throw new MappingException("exception not informed");
@@ -148,6 +151,15 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 					.toList(throwSafeList)));
 		}
 
+		if(defualtThrowSafe != null){
+			ThrowableEntry entry = 
+					new ThrowableEntry(defualtThrowSafe, Throwable.class);
+
+			if (!list.contains(entry)) {
+				list.add(entry);
+			}
+		}
+		
 		if (throwSafe != null)
 			list.add(AnnotationUtil.toEntry(throwSafe));
 
