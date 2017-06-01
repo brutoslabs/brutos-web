@@ -19,6 +19,7 @@ package org.brandao.brutos.web;
 
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ActionType;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.ControllerBuilder;
@@ -33,6 +34,7 @@ import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
+import org.brandao.brutos.web.mapping.WebThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -134,6 +136,68 @@ public class WebControllerBuilder extends ControllerBuilder{
 												.getSimpleName() }));
 
 		return actionBuilder;    	
+    }
+    
+    public ControllerBuilder addThrowable( Class<?> target, String view, String id, 
+            DispatcherType dispatcher, boolean resolvedView ){
+    	return this.addThrowable(0, null, 
+    			target, view, id, dispatcher, resolvedView);
+    }
+
+    public ControllerBuilder addThrowable(int responseError, String reason,
+    		Class<?> target, String view, String id, 
+            DispatcherType dispatcher, boolean resolvedView ){
+    	
+		view = StringUtil.adjust(view);
+
+		view = resolvedView? 
+			view : 
+			applicationContext.getViewResolver().getView(this, null, target, view);
+		
+		responseError = responseError <= 0? 
+			BrutosWebConstants.DEFAULT_RESPONSE_ERROR :
+			responseError;
+		
+		dispatcher = dispatcher == null? 
+				BrutosConstants.DEFAULT_DISPATCHERTYPE :
+				dispatcher;
+
+		id = StringUtil.adjust(id);
+
+		if (target == null){
+			throw new MappingException("target is required: "
+					+ controller.getClassType().getSimpleName());
+		}
+
+		if (!Throwable.class.isAssignableFrom(target)){
+			throw new MappingException("target is not allowed: "
+					+ target.getSimpleName());
+		}
+
+		if (this.controller.getThrowsSafe(target) != null){
+			throw new MappingException(
+					"the exception has been added on controller: "
+							+ target.getSimpleName());
+		}
+
+        WebUtil.checkURI(view, resolvedView && view != null);
+
+		WebThrowableSafeData thr = new WebThrowableSafeData();
+		thr.setParameterName(id);
+		thr.setTarget(target);
+		thr.setView(view);
+		thr.setRedirect(false);
+		thr.setDispatcher(dispatcher);
+		thr.setReason(reason);
+		thr.setResponseError(responseError);
+		this.controller.setThrowsSafe(thr);
+		
+		getLogger().info(
+				String.format("added exception %s on controller %s",
+						new Object[] { target.getSimpleName(),
+								controller.getClassType().getSimpleName() }));
+		
+		return this;    	
     }
     
     public ControllerBuilder setDefaultAction(String id){

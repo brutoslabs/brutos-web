@@ -121,6 +121,7 @@ public class ActionBuilder extends RestrictionBuilder {
 
 	public ActionBuilder addThrowable(Class<?> target, String view, String id,
 			DispatcherType dispatcher, boolean resolvedView) {
+		
 		view = StringUtil.adjust(view);
 
 		id = StringUtil.adjust(id);

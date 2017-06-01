@@ -111,6 +111,64 @@ public class ControllerBuilder {
 		return this;
 	}
 	
+	public ControllerBuilder addThrowable(Class<?> target, String id) {
+		return addThrowable(target, null, !"true".equals(applicationContext
+				.getConfiguration().getProperty(
+						BrutosConstants.VIEW_RESOLVER_AUTO)), id,
+				DispatcherType.FORWARD);
+	}
+
+	public ControllerBuilder addThrowable(Class<?> target, String view,
+			boolean resolvedView, String id, DispatcherType dispatcher) {
+		return this.addThrowable(target, view, id, dispatcher, resolvedView);
+	}
+
+	public ControllerBuilder addThrowable(Class<?> target, String view,
+			String id, DispatcherType dispatcher, boolean resolvedView) {
+
+		view = StringUtil.adjust(view);
+
+		view = resolvedView ? view : applicationContext.getViewResolver()
+				.getView(this, null, target, view);
+
+		id = StringUtil.adjust(id);
+		
+		dispatcher = dispatcher == null? 
+				BrutosConstants.DEFAULT_DISPATCHERTYPE :
+				dispatcher;
+
+		if (target == null){
+			throw new MappingException("target is required: "
+					+ controller.getClassType().getSimpleName());
+		}
+
+		if (!Throwable.class.isAssignableFrom(target)){
+			throw new MappingException("target is not allowed: "
+					+ target.getSimpleName());
+		}
+
+		if (this.controller.getThrowsSafe(target) != null){
+			throw new MappingException(
+					"the exception has been added on controller: "
+							+ target.getSimpleName());
+		}
+
+		ThrowableSafeData thr = new ThrowableSafeData();
+		thr.setParameterName(id);
+		thr.setTarget(target);
+		thr.setView(view);
+		thr.setRedirect(false);
+		thr.setDispatcher(dispatcher);
+		this.controller.setThrowsSafe(thr);
+		
+		getLogger().info(
+				String.format("added exception %s on controller %s",
+						new Object[] { target.getSimpleName(),
+								controller.getClassType().getSimpleName() }));
+		
+		return this;
+	}
+	
 	public ControllerBuilder setDefaultAction(String id) {
 
 		id                = StringUtil.adjust(id);

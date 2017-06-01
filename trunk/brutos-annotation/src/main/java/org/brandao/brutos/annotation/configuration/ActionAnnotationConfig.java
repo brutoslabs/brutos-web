@@ -243,17 +243,12 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 		}
 		
 		for (ThrowableEntry entry : list){
-			this.addThrowSafe(method, entry, builder, componentRegistry);
+			super.applyInternalConfiguration(entry, builder, componentRegistry);
 		}
 			
 
 	}
 
-	protected void addThrowSafe(ActionEntry method, ThrowableEntry entry, ActionBuilder builder,
-			ComponentRegistry componentRegistry){
-		super.applyInternalConfiguration(entry, builder, componentRegistry);
-	}
-	
 	public boolean isApplicable(Object source) {
 		return source instanceof ActionEntry
 				&& (((ActionEntry) source).isAnnotationPresent(Action.class)
