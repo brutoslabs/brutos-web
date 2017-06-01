@@ -85,23 +85,10 @@ public class WebActionAnnotationConfig
 
 		Set<ThrowableEntry> list = new HashSet<ThrowableEntry>();
 
-		ResponseErrors controllerThrowSafeList = 
-				method.getControllerClass().getAnnotation(ResponseErrors.class);
-		
 		ResponseErrors throwSafeList = 
 				method.getAnnotation(ResponseErrors.class);
 		
-		ResponseError controllerThrowSafe = method.getControllerClass().getAnnotation(ResponseError.class);
 		ResponseError throwSafe = method.getAnnotation(ResponseError.class);
-		
-		if (controllerThrowSafeList != null && controllerThrowSafeList.exceptions().length != 0) {
-			list.addAll(
-				WebAnnotationUtil.toList(
-					WebAnnotationUtil.toList(controllerThrowSafeList)));
-		}
-		
-		if (controllerThrowSafe != null)
-			list.add(WebAnnotationUtil.toEntry(controllerThrowSafe));
 		
 		if (throwSafeList != null && throwSafeList.exceptions().length != 0) {
 			list.addAll(
@@ -118,7 +105,7 @@ public class WebActionAnnotationConfig
 			for (Class<?> ex : exs) {
 				ThrowableEntry entry = 
 					new WebThrowableEntry(
-						throwSafeList == null? controllerThrowSafeList : throwSafeList, 
+						throwSafeList, 
 						(Class<? extends Throwable>) ex);
 
 				if (!list.contains(entry)) {
@@ -127,10 +114,10 @@ public class WebActionAnnotationConfig
 			}
 		}
 
-		if(throwSafeList != null || controllerThrowSafeList != null){
+		if(throwSafeList != null){
 			ThrowableEntry entry = 
 					new WebThrowableEntry(
-						throwSafeList == null? controllerThrowSafeList : throwSafeList, 
+						throwSafeList, 
 						Throwable.class);
 			
 			if (!list.contains(entry)) {
@@ -140,7 +127,7 @@ public class WebActionAnnotationConfig
 		}
 		
 		for (ThrowableEntry entry : list){
-			this.addThrowSafe(method, entry, builder, componentRegistry);
+			super.applyInternalConfiguration(entry, builder, componentRegistry);
 		}
 		
 	}

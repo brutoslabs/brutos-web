@@ -59,6 +59,8 @@ public class Controller {
 
 	private ActionListener actionListener;
 
+	private Map<Class<?>, ThrowableSafeData> throwsSafe;
+	
 	private List<String> alias;
 
 	private ScopeType scope;
@@ -328,6 +330,25 @@ public class Controller {
 		}
 	}
 
+	public ThrowableSafeData getThrowsSafe(Class<?> thr) {
+		
+		ThrowableSafeData e = this.throwsSafe.get(thr);
+		
+		if(e == null){
+			e = this.throwsSafe.get(Throwable.class);
+		}
+		
+		return e;
+	}
+
+	public void removeThrowsSafe(Class<?> thr) {
+		this.throwsSafe.remove(thr);
+	}
+
+	public void setThrowsSafe(ThrowableSafeData thr) {
+		this.throwsSafe.put(thr.getTarget(), thr);
+	}
+	
 	public void addAlias(String alias) {
 		this.alias.add(alias);
 	}
