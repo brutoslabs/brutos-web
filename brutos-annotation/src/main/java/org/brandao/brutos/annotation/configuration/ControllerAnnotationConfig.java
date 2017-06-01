@@ -29,7 +29,6 @@ import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotationImp;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.bean.BeanProperty;
-import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -54,47 +53,42 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 	public Object applyConfiguration0(Object arg0, Object arg1,
 			ComponentRegistry componentRegistry) {
 
-		Class<?> source = (Class<?>) arg0;
+		Class<?> source                 = (Class<?>) arg0;
+		Controller annotationController = (Controller) source.getAnnotation(Controller.class);
+		View viewAnnotation             = (View) source.getAnnotation(View.class);
+		ActionStrategy strategy         = (ActionStrategy)source.getAnnotation(ActionStrategy.class);
+		String name                     = null;
+		String actionID                 = null;
+		String defaultActionName        = null;
+		ActionType actionType           = strategy == null ? null : ActionType.valueOf(strategy.value().name());
+		String controllerID             = this.getControllerId(componentRegistry, annotationController, source);
+		boolean resolved                = viewAnnotation == null ? false : viewAnnotation.resolved();
+		boolean rendered                = viewAnnotation == null ? true : viewAnnotation.rendered();
 
-		Controller annotationController = (Controller) source
-				.getAnnotation(Controller.class);
-		View viewAnnotation = (View) source.getAnnotation(View.class);
-		ActionStrategy strategy = (ActionStrategy) source
-				.getAnnotation(ActionStrategy.class);
-
-
-		String name = null;
-		String actionID = null;
-		String defaultActionName = null;
-		ActionType actionType = strategy == null ? null : ActionType
-				.valueOf(strategy.value().name());
-
+		org.brandao.brutos.DispatcherType dispatcher = 
+			viewAnnotation == null || "".equals(viewAnnotation.dispatcher())? 
+				BrutosConstants.DEFAULT_DISPATCHERTYPE : 
+				org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
+		
 		if (annotationController != null) {
 			name = annotationController.name();
 			actionID = annotationController.actionId();
 			defaultActionName = annotationController.defaultActionName();
 		}
 
-		String controllerID = this.getControllerId(componentRegistry,
-				annotationController, source);
+		ControllerBuilder builder = 
+			this.registerController(
+					componentRegistry, 
+					controllerID, 
+					rendered ? getView((View) source.getAnnotation(View.class), componentRegistry) : null, 
+					rendered ? resolved : true,	
+					dispatcher, 
+					name, 
+					source, 
+					actionID, 
+					actionType);
 
-		org.brandao.brutos.DispatcherType dispatcher = viewAnnotation == null
-				|| "".equals(viewAnnotation.dispatcher()) ? BrutosConstants.DEFAULT_DISPATCHERTYPE
-				: org.brandao.brutos.DispatcherType.valueOf(viewAnnotation
-						.dispatcher());
-
-		boolean resolved = viewAnnotation == null ? false : viewAnnotation
-				.resolved();
-		boolean rendered = viewAnnotation == null ? true : viewAnnotation
-				.rendered();
-
-		ControllerBuilder builder = this.registerController(
-				componentRegistry, controllerID, rendered ? getView((View) source.getAnnotation(View.class),
-						componentRegistry) : null, rendered ? resolved : true,
-				dispatcher, name, source, actionID, actionType);
-
-		if (annotationController != null
-				&& annotationController.value().length > 1) {
+		if (annotationController != null && annotationController.value().length > 1) {
 			String[] ids = annotationController.value();
 			for (int i = 1; i < ids.length; i++) {
 				if (!StringUtil.isEmpty(ids[i]))
@@ -108,13 +102,17 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 		super.applyInternalConfiguration(source, builder, componentRegistry);
 
 		importBeans(builder, componentRegistry, builder.getClassType());
-		throwsSafe(builder, source, componentRegistry);
+		
+		//throwsSafe(builder, source, componentRegistry);
+		
 		addProperties(builder, componentRegistry, source);
+		
 		addActions(builder, componentRegistry, source);
 
-		if (!StringUtil.isEmpty(defaultActionName))
+		if (!StringUtil.isEmpty(defaultActionName)){
 			builder.setDefaultAction(defaultActionName);
-
+		}
+		
 		return builder;
 	}
 
@@ -132,6 +130,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 		return builder.addAlias(id);
 	}
 	
+	/*
 	protected void throwsSafe(ControllerBuilder builder, Class<?> clazz,
 			ComponentRegistry componentRegistry) {
 
@@ -172,6 +171,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 			ComponentRegistry componentRegistry){
 		super.applyInternalConfiguration(clazz, builder, componentRegistry);
 	}
+	*/
 	
 	protected String getView(View viewAnnotation, /* ControllerBuilder controller, */
 			ComponentRegistry componentRegistry) {

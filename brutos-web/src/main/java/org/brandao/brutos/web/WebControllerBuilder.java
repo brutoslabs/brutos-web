@@ -20,6 +20,7 @@ package org.brandao.brutos.web;
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ActionType;
 import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.Configuration;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.DataType;
@@ -30,11 +31,8 @@ import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
-import org.brandao.brutos.web.mapping.WebController;
-import org.brandao.brutos.web.mapping.WebThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -43,6 +41,11 @@ import org.brandao.brutos.web.util.WebUtil;
  */
 public class WebControllerBuilder extends ControllerBuilder{
     
+	/*
+	 * O construtor somente pode possuir métodos que alteram 
+	 * características mutáveis.
+	 */
+	
     public WebControllerBuilder(ControllerBuilder builder, ControllerManager.InternalUpdate internalUpdate){
         super( builder, internalUpdate );
     }
@@ -52,11 +55,6 @@ public class WebControllerBuilder extends ControllerBuilder{
             ConfigurableApplicationContext applicationContext, ControllerManager.InternalUpdate internalUpdate ){
         super( controller, controllerManager, interceptorManager, 
                 validatorFactory, applicationContext, internalUpdate );
-    }
-    
-    @Override
-    protected Action createAction(){
-    	return new WebAction();
     }
     
     public ControllerBuilder addAlias(String id){
@@ -75,111 +73,107 @@ public class WebControllerBuilder extends ControllerBuilder{
     		String resultId, boolean resultRendered, String view, 
             DispatcherType dispatcher, boolean resolvedView, String executor ){
     	
-        ActionType type = this.controller.getActionType();
-        
+    	//tratamento de variáveis
+        ActionType type      = this.controller.getActionType();
+        id                   = StringUtil.adjust(id);
+		resultId             = StringUtil.adjust(resultId);
+		view                 = StringUtil.adjust(view);
+		executor             = StringUtil.adjust(executor);
+		WebActionID actionId = new WebActionID(id, requestMethodType);
+
+		//verificação das variáveis
+		if (StringUtil.isEmpty(id)){
+			throw new MappingException("action id cannot be empty");
+		}
+		
     	if(!type.isValidActionId(id))
     		throw new MappingException("invalid action id: " + id);
-        
-        ActionBuilder builder =
-            super.addAction(id, resultId, resultRendered, view, 
-            dispatcher, resolvedView, executor);
-        
-        WebUtil.checkURI(builder.getView(), resolvedView && view != null);
-        
-        WebActionBuilder webBuilder = new WebActionBuilder(builder);
-        
-        webBuilder.setRequestMethod(
-    		requestMethodType == null? 
-				BrutosWebConstants.DEFAULT_REQUEST_METHOD_TYPE :
-				requestMethodType
-			);
-        
-        return webBuilder;
-    }
-    
-    public ControllerBuilder addThrowable( Class<?> target, String view, String id, 
-            DispatcherType dispatcher, boolean resolvedView ){
-    	return this.addThrowable(0, null, 
-    			target, view, id, dispatcher, resolvedView);
-    }
 
-    public ControllerBuilder addThrowable(int responseError, String reason,
-    		Class<?> target, String view, String id, 
-            DispatcherType dispatcher, boolean resolvedView ){
-    	
-		ControllerBuilder builder = super.addThrowable(target, view, id, dispatcher, resolvedView);
+        if(requestMethodType == null){
+        	throw new MappingException("request method type is required");
+        }
 		
-        WebThrowableSafeData thr = (WebThrowableSafeData)this.controller.getThrowsSafe(target);
-        
-        thr.setReason(reason);
-        
-        thr.setResponseError(
-        		responseError == 0? 
-    				BrutosWebConstants.DEFAULT_RESPONSE_ERROR :
-    				responseError);
-        
-        WebUtil.checkURI(thr.getView(), resolvedView && view != null);
-        return builder;
+		if (StringUtil.isEmpty(view) && StringUtil.isEmpty(executor))
+			throw new MappingException(
+					"view must be informed in abstract actions: " + id);
+
+		if (controller.getActionById(actionId) != null)
+			throw new MappingException("duplicate action: " + id);
+
+		//criar base da entidade
+		WebAction action = new WebAction();
+		action.setCode(Action.getNextId());
+		action.setName(id);
+		action.setController(controller);
+		action.setResultValidator(validatorFactory.getValidator(new Configuration()));
+		action.setParametersValidator(validatorFactory.getValidator(new Configuration()));
+		action.setRequestMethod(requestMethodType);
+		
+		//registrar entidade
+		controller.addAction(actionId, action);
+
+		//criar construtor
+		WebActionBuilder actionBuilder = 
+			new WebActionBuilder(action, controller, validatorFactory, 
+					this, this.applicationContext);
+
+		//definir características opcionais com o construtor 
+		actionBuilder
+			.setDispatcherType(dispatcher)
+			.setExecutor(executor)
+			.setResult(resultId)
+			.setResultRendered(resultRendered)
+			.setView(view, resolvedView);
+
+		getLogger()
+				.info(String
+						.format("adding action %s on controller %s",
+								new Object[] {
+										action.getId(),
+										this.controller.getClassType()
+												.getSimpleName() }));
+
+		return actionBuilder;    	
     }
-    
-	protected ThrowableSafeData createThrowableSafeData(){
-		return new WebThrowableSafeData();
-	}
     
     public ControllerBuilder setDefaultAction(String id){
-        return this.setDefaultAction(id, null);
+        return this.setDefaultAction(id, BrutosWebConstants.DEFAULT_REQUEST_METHOD_TYPE);
     }
     
 	public ControllerBuilder setDefaultAction(String id, RequestMethodType requestMethodType) {
 
-		id = StringUtil.adjust(id);
+		id                   = StringUtil.adjust(id);
+		WebActionID actionID = new WebActionID(id, requestMethodType);
+
+        if(StringUtil.isEmpty(id)){
+        	throw new MappingException("invalid id");
+        }
 
         WebUtil.checkURI(id,true);
         
-        requestMethodType = requestMethodType == null? 
-        		BrutosWebConstants.DEFAULT_REQUEST_METHOD_TYPE :
-        		requestMethodType;
-        
-		WebActionID actionID = new WebActionID(id, requestMethodType);
+        if(requestMethodType == null){
+        	throw new MappingException("invalid request method type");
+        }
 		
 		if (this.controller.getActionById(actionID) == null)
 			throw new MappingException("action not found: \"" + id + "\"");
 
-		if (id != null) {
-			getLogger()
-					.info(String
-							.format("adding default action %s on controller %s",
-									new Object[] {
-											id,
-											controller.getClassType()
-													.getSimpleName() }));
+		controller.setDefaultAction(actionID);
+		getLogger()
+				.info(String
+						.format("adding default action %s on controller %s",
+								new Object[] {
+										id,
+										controller.getClassType()
+												.getSimpleName() }));
 
-			controller.setDefaultAction(actionID);
-		}
 		
 		return this;
 	}
     
-    public ControllerBuilder setId(String value){
-    	
-    	if(!this.controller.getActionType().isValidControllerId(value))
-    		throw new MappingException("invalid controller id: " + value);
-    	
-        return super.setId(value);
-    }
-    
     public ControllerBuilder setView(String value, boolean resolvedView){
     	WebUtil.checkURI(value, resolvedView && value != null);
         return super.setView(value, resolvedView);
-    }
-    
-    public ControllerBuilder setRequestMethod(RequestMethodType value){
-    	((WebController)this.controller).setRequestMethod(value);
-    	return this;
-    }
-
-    public RequestMethodType getRequestMethod(){
-    	return ((WebController)this.controller).getRequestMethod();
     }
     
 	public ControllerBuilder addRequestType(DataType value){
@@ -206,22 +200,4 @@ public class WebControllerBuilder extends ControllerBuilder{
 		return this;
 	}
     
-	public ControllerBuilder setResponseStatus(int value){
-		((WebController)this.controller).setResponseStatus(value);
-		return this;
-	}
-	
-	public ControllerBuilder setResponseError(Class<? extends Throwable> type, int value){
-		((WebController)this.controller).getResponseErrors().put(type, value);
-		return this;
-	}
-
-	public int getResponseStatus(){
-		return ((WebController)this.controller).getResponseStatus();
-	}
-	
-	public int getResponseError(Class<? extends Throwable> type){
-		return ((WebController)this.controller).getResponseErrors().get(type);
-	}
-	
 }

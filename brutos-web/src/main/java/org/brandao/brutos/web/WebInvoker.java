@@ -36,7 +36,6 @@ import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.ResponseTypeException;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.web.mapping.WebAction;
-import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.parser.JsonParserContentType;
 import org.brandao.brutos.web.parser.MultipartFormDataParserContentType;
 import org.brandao.brutos.web.scope.RequestScope;
@@ -105,12 +104,7 @@ public class WebInvoker extends Invoker{
 		WebAction action                = (WebAction)resourceAction.getMethodForm();
 		RequestMethodType requestMethod = action.getRequestMethod();
 		
-		if(requestMethod == null){
-			WebController controller = (WebController)resourceAction.getController();
-			requestMethod = controller.getRequestMethod();
-		}
-		
-		if(requestMethod != null && !request.getRequestMethodType().equals(requestMethod)){
+		if(!request.getRequestMethodType().equals(requestMethod)){
 			throw new RequestMethodException(request.getRequestMethodType().getId());
 		}
 		

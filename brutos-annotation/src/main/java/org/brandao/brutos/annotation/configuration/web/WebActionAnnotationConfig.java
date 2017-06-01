@@ -19,7 +19,7 @@ import org.brandao.brutos.annotation.web.ResponseError;
 import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.annotation.web.ResponseStatus;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.web.HttpStatus;
+import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.RequestMethodType;
 import org.brandao.brutos.web.WebActionBuilder;
 import org.brandao.brutos.web.WebControllerBuilder;
@@ -40,14 +40,15 @@ public class WebActionAnnotationConfig
 		RequestMethod requestMethod = 
 				actionEntry.getAnnotation(RequestMethod.class);
 		
-		String value = requestMethod.value();
+		String requestMethodValue = StringUtil.adjust(requestMethod.value());
+		
 		
 		WebControllerBuilder webControllerBuilder = 
 				(WebControllerBuilder)controllerBuilder;
 		
 		WebActionBuilder builder = 
 			(WebActionBuilder)webControllerBuilder.addAction(id, 
-				RequestMethodType.valueOf(value), result, resultRendered, view, 
+				RequestMethodType.valueOf(requestMethodValue), result, resultRendered, view, 
 				dispatcher, resolved, executor);
 
 		ResponseStatus responseStatus = 
@@ -55,9 +56,9 @@ public class WebActionAnnotationConfig
 		
 		if(responseStatus != null){
 			int code = responseStatus.code();
-			code = code == HttpStatus.OK? 
-					responseStatus.value() :
-					code;
+			if(code == BrutosWebConstants.DEFAULT_RESPONSE_STATUS){
+				code = responseStatus.value();
+			}
 					
 			builder.setResponseStatus(code);
 		}

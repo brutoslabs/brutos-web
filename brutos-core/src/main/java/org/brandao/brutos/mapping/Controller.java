@@ -59,8 +59,6 @@ public class Controller {
 
 	private ActionListener actionListener;
 
-	private Map<Class<?>, ThrowableSafeData> throwsSafe;
-
 	private List<String> alias;
 
 	private ScopeType scope;
@@ -98,7 +96,6 @@ public class Controller {
 		this.interceptorStack 	= new ArrayList<Interceptor>();
 		this.alias 				= new ArrayList<String>();
 		this.reverseMethods 	= new LinkedHashMap<ReverseActionKey, List<Action>>();
-		this.throwsSafe 		= new LinkedHashMap<Class<?>, ThrowableSafeData>();
 		this.interceptorProcess = new InterceptorProcess();
 		this.scope 				= ScopeType.PARAM;
 		this.redirect 			= false;
@@ -329,25 +326,6 @@ public class Controller {
 		} catch (Exception e) {
 
 		}
-	}
-
-	public ThrowableSafeData getThrowsSafe(Class<?> thr) {
-		
-		ThrowableSafeData e = this.throwsSafe.get(thr);
-		
-		if(e == null){
-			e = this.throwsSafe.get(Throwable.class);
-		}
-		
-		return e;
-	}
-
-	public void removeThrowsSafe(Class<?> thr) {
-		this.throwsSafe.remove(thr);
-	}
-
-	public void setThrowsSafe(ThrowableSafeData thr) {
-		this.throwsSafe.put(thr.getTarget(), thr);
 	}
 
 	public void addAlias(String alias) {
