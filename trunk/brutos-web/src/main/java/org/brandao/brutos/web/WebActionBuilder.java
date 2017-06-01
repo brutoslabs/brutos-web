@@ -27,6 +27,7 @@ import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
@@ -43,25 +44,57 @@ public class WebActionBuilder extends ActionBuilder{
         super(builder);
     }
     
-    public WebActionBuilder( Action methodForm, 
-            Controller controller, ValidatorFactory validatorFactory,
+    public WebActionBuilder(
+    		Action methodForm, 
+            Controller controller, 
+            ValidatorFactory validatorFactory,
             ControllerBuilder controllerBuilder,
             ConfigurableApplicationContext applicationContext) {
         super(methodForm, controller, validatorFactory, 
                 controllerBuilder, applicationContext);
     }
     
-    public ActionBuilder addAlias(String value){
-        
+	public ActionBuilder addAlias(String id) {
+
+		id = StringUtil.adjust(id);
+
         ActionType type = this.controller.getActionType();
         
-        if(type.isValidActionId(value)){
-        	throw new MappingException("invalid action alias: " + value);
+        if(type.isValidActionId(id)){
+        	throw new MappingException("invalid action alias: " + id);
         }
         
-        return super.addAlias(value);
-    }
+		if (StringUtil.isEmpty(id)){
+			throw new MappingException("action id cannot be empty");
+		}
 
+		WebActionID actionId = new WebActionID(id, ((WebAction)action).getRequestMethod());
+		
+		if (controller.getAction(actionId) != null)
+			throw new MappingException("duplicate action: " + id);
+
+		action.addAlias(id);
+		controller.addAction(actionId, this.action);
+
+		return this;
+	}
+
+	public ActionBuilder removeAlias(String id) {
+		id = StringUtil.adjust(id);
+
+		if (StringUtil.isEmpty(id))
+			throw new MappingException("action id cannot be empty");
+
+		WebActionID actionId = new WebActionID(id, ((WebAction)action).getRequestMethod());
+		
+		if (controller.getAction(actionId) != null)
+			throw new MappingException("duplicate action: " + id);
+		
+		controller.removeAction(actionId);
+		
+		return this;
+	}
+	
     public ActionBuilder addThrowable(Class<?> target, String view, 
             String id, DispatcherType dispatcher, boolean resolvedView ){
     	return this.addThrowable(0, null, target, 

@@ -18,6 +18,7 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
@@ -68,13 +69,37 @@ public class ActionBuilder extends RestrictionBuilder {
 				validatorFactory, controllerBuilder, applicationContext);
 	}
 
-	public ActionBuilder addAlias(String value) {
-		this.controllerBuilder.addActionAlias(value, this);
+	public ActionBuilder addAlias(String id) {
+
+		id = StringUtil.adjust(id);
+
+		if (StringUtil.isEmpty(id))
+			throw new MappingException("action id cannot be empty");
+
+		ActionID actionId = new ActionID(id);
+		
+		if (controller.getAction(actionId) != null)
+			throw new MappingException("duplicate action: " + id);
+
+		action.addAlias(id);
+		controller.addAction(actionId, this.action);
+
 		return this;
 	}
 
-	public ActionBuilder removeAlias(String value) {
-		this.controllerBuilder.removeActionAlias(value, this);
+	public ActionBuilder removeAlias(String id) {
+		id = StringUtil.adjust(id);
+
+		if (StringUtil.isEmpty(id))
+			throw new MappingException("action id cannot be empty");
+
+		ActionID actionId = new ActionID(id);
+		
+		if (controller.getAction(actionId) != null)
+			throw new MappingException("duplicate action: " + id);
+		
+		controller.removeAction(actionId);
+		
 		return this;
 	}
 
@@ -98,30 +123,35 @@ public class ActionBuilder extends RestrictionBuilder {
 			DispatcherType dispatcher, boolean resolvedView) {
 		view = StringUtil.adjust(view);
 
+		id = StringUtil.adjust(id);
+		
 		String originalView = view;
 
-		view = resolvedView ? view : applicationContext.getViewResolver()
-				.getView(this.controllerBuilder, this, target, view);
+		view = resolvedView ? 
+				view : 
+				applicationContext.getViewResolver().getView(this.controllerBuilder, this, target, view);
 
-		id = StringUtil.adjust(id);
 
-		if (target == null)
-			throw new BrutosException("target is required: "
+		if (target == null){
+			throw new MappingException("target is required: "
 					+ controller.getClassType().getName());
+		}
 
-		if (!Throwable.class.isAssignableFrom(target))
-			throw new BrutosException("target is not allowed: "
+		if (!Throwable.class.isAssignableFrom(target)){
+			throw new MappingException("target is not allowed: "
 					+ target.getName());
+		}
 
-		if (this.action.getThrowsSafeOnAction(target) != null)
+		if (this.action.getThrowsSafeOnAction(target) != null){
 			throw new MappingException(
 					"the exception has been added on action: "
 							+ target.getSimpleName());
+		}
 
 		if (dispatcher == null)
 			dispatcher = BrutosConstants.DEFAULT_DISPATCHERTYPE;
 
-		ThrowableSafeData thr = this.createThrowableSafeData();
+		ThrowableSafeData thr = new ThrowableSafeData();
 		thr.setParameterName(id);
 		thr.setTarget(target);
 		thr.setView(view);
@@ -133,10 +163,6 @@ public class ActionBuilder extends RestrictionBuilder {
 		return this;
 	}
 
-	protected ThrowableSafeData createThrowableSafeData(){
-		return new ThrowableSafeData();
-	}
-	
 	public ControllerBuilder getControllerBuilder() {
 		return this.controllerBuilder;
 	}
@@ -147,27 +173,19 @@ public class ActionBuilder extends RestrictionBuilder {
 
 	public ActionBuilder setView(String view, boolean resolvedView) {
 
-		view = resolvedView ? view : applicationContext.getViewResolver()
-				.getView(this.controllerBuilder, this, null, view);
+		view = 
+			resolvedView ? 
+				view : 
+				applicationContext.getViewResolver().getView(this.controllerBuilder, this, null, view);
 
 		this.action.setView(view);
 		this.action.setResolvedView(resolvedView);
+		
 		return this;
 	}
 
 	public String getView() {
 		return this.action.getView();
-	}
-
-	public ActionBuilder setName(String value) {
-
-		value = StringUtil.adjust(value);
-
-		if (StringUtil.isEmpty(value))
-			throw new BrutosException("invalid action name");
-
-		this.action.setName(value);
-		return this;
 	}
 
 	public ActionBuilder setDispatcherType(String value) {

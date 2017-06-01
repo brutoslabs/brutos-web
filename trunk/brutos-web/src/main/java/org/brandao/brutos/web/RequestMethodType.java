@@ -2,8 +2,6 @@ package org.brandao.brutos.web;
 
 import java.util.HashMap;
 
-import org.brandao.brutos.mapping.StringUtil;
-
 public class RequestMethodType {
 
 	public static final RequestMethodType DELETE	= new RequestMethodType("DELETE",	"delete"); 
@@ -35,8 +33,8 @@ public class RequestMethodType {
 	
 	public static RequestMethodType valueOf(String value){
 		
-		if(StringUtil.isEmpty(value)){
-			throw new NullPointerException();
+		if(value == null){
+			return null;
 		}
 		
 		RequestMethodType r = defaultTypes.get(value);

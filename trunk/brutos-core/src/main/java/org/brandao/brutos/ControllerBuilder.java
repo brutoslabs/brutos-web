@@ -36,6 +36,11 @@ import org.brandao.brutos.type.UnknownTypeException;
  */
 public class ControllerBuilder {
 
+	/*
+	 * O construtor somente pode possuir métodos que alteram 
+	 * características mutáveis.
+	 */
+	
 	protected final Controller controller;
 
 	protected ControllerManager controllerManager;
@@ -71,20 +76,22 @@ public class ControllerBuilder {
 
 	public ControllerBuilder addAlias(String id) {
 
-    	if(!this.controller.getActionType().isValidControllerId(id))
-    		throw new MappingException("invalid controller alias: " + id);
-		
 		id = StringUtil.adjust(id);
 
+    	if(!this.controller.getActionType().isValidControllerId(id))
+    		throw new MappingException("invalid controller alias: " + id);
+    	
 		if (StringUtil.isEmpty(id))
 			throw new MappingException("invalid alias");
 
-		getLogger().info(
-				String.format("adding alias %s on controller %s", new Object[] {
-						id, controller.getClassType().getSimpleName() }));
 
 		controller.addAlias(id);
 		internalUpdate.addControllerAlias(controller, id);
+		
+		getLogger().info(
+				String.format("add alias %s on controller %s", new Object[] {
+						id, controller.getClassType().getSimpleName() }));
+		
 		return this;
 	}
 
@@ -95,92 +102,37 @@ public class ControllerBuilder {
 		if (StringUtil.isEmpty(id))
 			throw new MappingException("invalid alias");
 
+		internalUpdate.removeControllerAlias(controller, id);
+		
 		getLogger().info(
-				String.format("removing alias %s on controller %s",
+				String.format("removed alias %s on controller %s",
 						new Object[] { id,
 								controller.getClassType().getSimpleName() }));
-
-		internalUpdate.removeControllerAlias(controller, id);
 		return this;
-	}
-
-	public ControllerBuilder addThrowable(Class<?> target, String id) {
-		return addThrowable(target, null, !"true".equals(applicationContext
-				.getConfiguration().getProperty(
-						BrutosConstants.VIEW_RESOLVER_AUTO)), id,
-				DispatcherType.FORWARD);
-	}
-
-	public ControllerBuilder addThrowable(Class<?> target, String view,
-			boolean resolvedView, String id, DispatcherType dispatcher) {
-		return this.addThrowable(target, view, id, dispatcher, resolvedView);
-	}
-
-	public ControllerBuilder addThrowable(Class<?> target, String view,
-			String id, DispatcherType dispatcher, boolean resolvedView) {
-
-		view = StringUtil.adjust(view);
-
-		view = resolvedView ? view : applicationContext.getViewResolver()
-				.getView(this, null, target, view);
-
-		id = StringUtil.adjust(id);
-
-		if (target == null)
-			throw new MappingException("target is required: "
-					+ controller.getClassType().getSimpleName());
-
-		if (!Throwable.class.isAssignableFrom(target))
-			throw new MappingException("target is not allowed: "
-					+ target.getSimpleName());
-
-		if (this.controller.getThrowsSafe(target) != null)
-			throw new MappingException(
-					"the exception has been added on controller: "
-							+ target.getSimpleName());
-
-		if (dispatcher == null)
-			dispatcher = BrutosConstants.DEFAULT_DISPATCHERTYPE;
-
-		getLogger().info(
-				String.format("adding exception %s on controller %s",
-						new Object[] { target.getSimpleName(),
-								controller.getClassType().getSimpleName() }));
-
-		ThrowableSafeData thr = this.createThrowableSafeData();
-		thr.setParameterName(id);
-		thr.setTarget(target);
-		thr.setView(view);
-		thr.setRedirect(false);
-		thr.setDispatcher(dispatcher);
-		this.controller.setThrowsSafe(thr);
-		return this;
-	}
-
-	protected ThrowableSafeData createThrowableSafeData(){
-		return new ThrowableSafeData();
 	}
 	
 	public ControllerBuilder setDefaultAction(String id) {
 
-		id = StringUtil.adjust(id);
-
+		id                = StringUtil.adjust(id);
 		ActionID actionID = new ActionID(id);
-		
+
+        if(StringUtil.isEmpty(id)){
+        	throw new MappingException("invalid id");
+        }
+
 		if (this.controller.getActionById(actionID) == null)
 			throw new MappingException("action not found: \"" + id + "\"");
 
-		if (id != null) {
-			getLogger()
-					.info(String
-							.format("adding default action %s on controller %s",
-									new Object[] {
-											id,
-											controller.getClassType()
-													.getSimpleName() }));
+		controller.setDefaultAction(actionID);
+		getLogger()
+				.info(String
+						.format("adding default action %s on controller %s",
+								new Object[] {
+										id,
+										controller.getClassType()
+												.getSimpleName() }));
 
-			controller.setDefaultAction(actionID);
-		}
+		
 		return this;
 	}
 
@@ -191,10 +143,10 @@ public class ControllerBuilder {
 	public BeanBuilder buildMappingBean(String name, String parentBeanName,
 			Class<?> target) {
 
+		name = StringUtil.adjust(name);
+		
 		if (target == null)
 			throw new MappingException("invalid target class");
-
-		name = StringUtil.adjust(name);
 
 		if (name == null || !name.matches("[a-zA-Z0-9_#]+"))
 			throw new MappingException("invalid bean name: \"" + name + "\"");
@@ -202,21 +154,23 @@ public class ControllerBuilder {
 		if (controller.getBean(name) != null)
 			throw new MappingException("duplicate bean name: \"" + name + "\"");
 
-		getLogger().info(
-				String.format("adding bean %s[%s]",
-						new Object[] { name, target.getSimpleName() }));
-
-		Bean parentBean = parentBeanName == null ? null : this.controller
-				.getBean(parentBeanName);
+		Bean parentBean = 
+				parentBeanName == null ? 
+					null : 
+					this.controller.getBean(parentBeanName);
 
 		Bean mappingBean;
 
-		if (Map.class.isAssignableFrom(target))
+		if (Map.class.isAssignableFrom(target)){
 			mappingBean = new MapBean(controller, parentBean);
-		else if (Collection.class.isAssignableFrom(target))
-			mappingBean = new CollectionBean(controller, parentBean);
+		}
 		else
+		if (Collection.class.isAssignableFrom(target)){
+			mappingBean = new CollectionBean(controller, parentBean);
+		}
+		else{
 			mappingBean = new Bean(controller, parentBean);
+		}
 
 		ConstructorBean constructor = mappingBean.getConstructor();
 
@@ -228,6 +182,11 @@ public class ControllerBuilder {
 		controller.addBean(name, mappingBean);
 		BeanBuilder mb = new BeanBuilder(mappingBean, controller, this,
 				validatorFactory, applicationContext);
+
+		getLogger().info(
+				String.format("added bean %s[%s]",
+						new Object[] { name, target.getSimpleName() }));
+		
 		return mb;
 	}
 
@@ -274,43 +233,43 @@ public class ControllerBuilder {
 			boolean resultRendered, String view, DispatcherType dispatcher,
 			boolean resolvedView, String executor) {
 
-		id = StringUtil.adjust(id);
-
-		if (StringUtil.isEmpty(id))
-			throw new MappingException("action id cannot be empty");
-
-		resultId = StringUtil.adjust(resultId);
-
-		view = StringUtil.adjust(view);
-
-		executor = StringUtil.adjust(executor);
-
+		id                = StringUtil.adjust(id);
+		resultId          = StringUtil.adjust(resultId);
+		view              = StringUtil.adjust(view);
+		executor          = StringUtil.adjust(executor);
 		ActionID actionId = new ActionID(id);
+
+		if (StringUtil.isEmpty(id)){
+			throw new MappingException("action id cannot be empty");
+		}
 		
-		if (StringUtil.isEmpty(view) && StringUtil.isEmpty(executor))
+		if (StringUtil.isEmpty(view) && StringUtil.isEmpty(executor)){
 			throw new MappingException(
 					"view must be informed in abstract actions: " + id);
+		}
 
-		if (controller.getAction(actionId) != null)
+		if (controller.getActionById(actionId) != null){
 			throw new MappingException("duplicate action: " + id);
+		}
 
-		Action action = this.createAction();
+		Action action = new Action();
 		action.setCode(Action.getNextId());
+		action.setName(id);
 		action.setController(controller);
-		action.setResolvedView(resolvedView);
-		action.setResultValidator(validatorFactory
-				.getValidator(new Configuration()));
-		action.setParametersValidator(validatorFactory
-				.getValidator(new Configuration()));
+		action.setResultValidator(validatorFactory.getValidator(new Configuration()));
+		action.setParametersValidator(validatorFactory.getValidator(new Configuration()));
 		
 		controller.addAction(actionId, action);
 
-		ActionBuilder actionBuilder = new ActionBuilder(action, controller,
-				validatorFactory, this, this.applicationContext);
+		ActionBuilder actionBuilder = 
+			new ActionBuilder(action, controller, validatorFactory, this, this.applicationContext);
 
-		actionBuilder.setName(id).setDispatcherType(dispatcher)
-				.setExecutor(executor).setResult(resultId)
-				.setResultRendered(resultRendered).setView(view, resolvedView);
+		actionBuilder
+			.setDispatcherType(dispatcher)
+			.setExecutor(executor)
+			.setResult(resultId)
+			.setResultRendered(resultRendered)
+			.setView(view, resolvedView);
 
 		getLogger()
 				.info(String
@@ -321,48 +280,6 @@ public class ControllerBuilder {
 												.getSimpleName() }));
 
 		return actionBuilder;
-	}
-
-	protected Action createAction(){
-		return new Action();
-	}
-	
-	public ControllerBuilder addActionAlias(String id, ActionBuilder parent) {
-
-		id = StringUtil.adjust(id);
-
-		if (StringUtil.isEmpty(id))
-			throw new MappingException("action id cannot be empty");
-
-		ActionID actionId = new ActionID(id);
-		
-		if (controller.getAction(actionId) != null)
-			throw new MappingException("duplicate action: " + id);
-
-		Action action = parent.action;
-		action.addAlias(id);
-		controller.addAction(actionId, parent.action);
-
-		return this;
-	}
-
-	public ControllerBuilder removeActionAlias(String id, ActionBuilder parent) {
-
-		id = StringUtil.adjust(id);
-
-		if (StringUtil.isEmpty(id))
-			throw new MappingException("invalid alias");
-
-		ActionID actionId = new ActionID(id);
-		
-		if (controller.getAction(actionId) == null
-				|| !controller.getAction(actionId).equals(parent.action))
-			throw new MappingException("invalid action " + id + ": "
-					+ controller.getClassType().getName());
-
-		controller.removeAction(actionId);
-		
-		return this;
 	}
 
 	public InterceptorBuilder addInterceptor(String name) {
@@ -628,14 +545,6 @@ public class ControllerBuilder {
 
 	public Bean getBean(String name) {
 		return controller.getBean(name);
-	}
-
-	public ControllerBuilder setId(String value) {
-
-		value = StringUtil.adjust(value);
-
-		this.controller.setId(value);
-		return this;
 	}
 
 	public String getId() {
