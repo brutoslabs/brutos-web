@@ -1,7 +1,7 @@
 package org.brandao.brutos.annotation.configuration.web;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ActionType;
@@ -38,30 +38,43 @@ public class WebActionAnnotationConfig
 			DispatcherType dispatcher, String executor){
 		
 		RequestMethod requestMethod = 
-				actionEntry.getAnnotation(RequestMethod.class);
+			actionEntry.isAnnotationPresent(RequestMethod.class)?
+				actionEntry.getAnnotation(RequestMethod.class) :
+				actionEntry.getControllerClass().getAnnotation(RequestMethod.class);
 		
-		String requestMethodValue = StringUtil.adjust(requestMethod.value());
-		
+		RequestMethodType requestMethodType = 
+				requestMethod == null?
+					BrutosWebConstants.DEFAULT_REQUEST_METHOD_TYPE :
+					RequestMethodType.valueOf(StringUtil.adjust(requestMethod.value()));
 		
 		WebControllerBuilder webControllerBuilder = 
 				(WebControllerBuilder)controllerBuilder;
 		
 		WebActionBuilder builder = 
 			(WebActionBuilder)webControllerBuilder.addAction(id, 
-				RequestMethodType.valueOf(requestMethodValue), result, resultRendered, view, 
+				requestMethodType, result, resultRendered, view, 
 				dispatcher, resolved, executor);
 
 		ResponseStatus responseStatus = 
-				actionEntry.getAnnotation(ResponseStatus.class);
+				actionEntry.isAnnotationPresent(ResponseStatus.class)?
+					actionEntry.getAnnotation(ResponseStatus.class) :
+					actionEntry.getControllerClass().getAnnotation(ResponseStatus.class);
+		
+		int responseStatusCode = 0;
 		
 		if(responseStatus != null){
 			int code = responseStatus.code();
+			
 			if(code == BrutosWebConstants.DEFAULT_RESPONSE_STATUS){
 				code = responseStatus.value();
 			}
 					
-			builder.setResponseStatus(code);
 		}
+		else{
+			responseStatusCode = BrutosWebConstants.DEFAULT_RESPONSE_STATUS;
+		}
+		
+		builder.setResponseStatus(responseStatusCode);
 		
 		return builder;
 	}
@@ -70,12 +83,25 @@ public class WebActionAnnotationConfig
 	protected void throwsSafe(ActionBuilder builder, ActionEntry method,
 			ComponentRegistry componentRegistry) {
 
-		List<ThrowableEntry> list = new ArrayList<ThrowableEntry>();
+		Set<ThrowableEntry> list = new HashSet<ThrowableEntry>();
+
+		ResponseErrors controllerThrowSafeList = 
+				method.getControllerClass().getAnnotation(ResponseErrors.class);
 		
 		ResponseErrors throwSafeList = 
 				method.getAnnotation(ResponseErrors.class);
 		
+		ResponseError controllerThrowSafe = method.getControllerClass().getAnnotation(ResponseError.class);
 		ResponseError throwSafe = method.getAnnotation(ResponseError.class);
+		
+		if (controllerThrowSafeList != null && controllerThrowSafeList.exceptions().length != 0) {
+			list.addAll(
+				WebAnnotationUtil.toList(
+					WebAnnotationUtil.toList(controllerThrowSafeList)));
+		}
+		
+		if (controllerThrowSafe != null)
+			list.add(WebAnnotationUtil.toEntry(controllerThrowSafe));
 		
 		if (throwSafeList != null && throwSafeList.exceptions().length != 0) {
 			list.addAll(
@@ -92,7 +118,7 @@ public class WebActionAnnotationConfig
 			for (Class<?> ex : exs) {
 				ThrowableEntry entry = 
 					new WebThrowableEntry(
-						throwSafeList, 
+						throwSafeList == null? controllerThrowSafeList : throwSafeList, 
 						(Class<? extends Throwable>) ex);
 
 				if (!list.contains(entry)) {
@@ -101,10 +127,10 @@ public class WebActionAnnotationConfig
 			}
 		}
 
-		if(throwSafeList != null){
+		if(throwSafeList != null || controllerThrowSafeList != null){
 			ThrowableEntry entry = 
 					new WebThrowableEntry(
-						throwSafeList, 
+						throwSafeList == null? controllerThrowSafeList : throwSafeList, 
 						Throwable.class);
 			
 			if (!list.contains(entry)) {

@@ -92,32 +92,19 @@ public class ControllerManagerImp implements ControllerManager {
 			DispatcherType dispatcherType, boolean resolvedView, String name,
 			Class<?> classType, String actionId, ActionType actionType) {
 
-		if (classType == null)
-			throw new IllegalArgumentException("invalid class type: "
-					+ classType);
-
-		this.getLogger().info(
-				String.format("adding controller %s",
-						new Object[] { classType.getSimpleName() }));
-
-		id = StringUtil.adjust(id);
-		view = StringUtil.adjust(view);
+		id       = StringUtil.adjust(id);
+		view     = StringUtil.adjust(view);
 		actionId = StringUtil.adjust(actionId);
-		name = StringUtil.adjust(name);
+		name     = StringUtil.adjust(name);
+
+		if (classType == null){
+			throw new MappingException("invalid class type: "
+					+ classType);
+		}
 
 		if (actionType == null) {
 			throw new MappingException("action type is required");
 		}
-		
-		/*
-		if (actionType == null) {
-			Properties config = applicationContext.getConfiguration();
-			String strategyName = config.getProperty(
-					BrutosConstants.ACTION_TYPE,
-					BrutosConstants.DEFAULT_ACTION_TYPE_NAME);
-			actionType = ActionType.valueOf(strategyName.toUpperCase());
-		}
-		*/
 		
 		if (StringUtil.isEmpty(actionId))
 			actionId = BrutosConstants.DEFAULT_ACTION_ID;
@@ -125,26 +112,14 @@ public class ControllerManagerImp implements ControllerManager {
     	if(!actionType.isValidControllerId(id))
     		throw new MappingException("invalid controller id: " + id);
 
-    	/*
-		if (ActionType.PARAMETER.equals(actionType)
-				|| ActionType.HIERARCHY.equals(actionType)) {
-			if (StringUtil.isEmpty(id))
-				throw new IllegalArgumentException(
-						"controller id is required: " + classType.getName());
-		} else if (!ActionType.DETACHED.equals(actionType))
-			throw new IllegalArgumentException("invalid class type: "
-					+ classType);
-    	 */
-    	
-		Controller controller = this.creatControllerInstance();
-
+		Controller controller = new Controller(this.applicationContext);
 		controller.setClassType(classType);
-
+		controller.setId(id);
+		
 		// Action
 		ActionListener ac = new ActionListener();
 		ac.setPreAction(getMethodAction("preAction", controller.getClassType()));
-		ac.setPostAction(getMethodAction("postAction",
-				controller.getClassType()));
+		ac.setPostAction(getMethodAction("postAction", controller.getClassType()));
 		controller.setActionListener(ac);
 
 		controller.setDefaultInterceptorList(interceptorManager
@@ -154,20 +129,23 @@ public class ControllerManagerImp implements ControllerManager {
 				interceptorManager, validatorFactory, applicationContext,
 				internalUpdate);
 
-		this.current.setId(id).setName(name).setView(view, resolvedView)
-				.setActionId(actionId).setDispatcherType(dispatcherType)
+		this.current
+			.setName(name)
+			.setView(view, resolvedView)
+			.setActionId(actionId)
+			.setDispatcherType(dispatcherType)
 				.setActionType(actionType);
 
 		addController(controller.getId(), controller);
 
+		this.getLogger().info(
+				String.format("added controller %s",
+						new Object[] { classType.getSimpleName() }));
+		
 		return this.getCurrent();
 	}
 
-	protected Controller creatControllerInstance(){
-		return new Controller(this.applicationContext);
-	}
-	
-	private Method getMethodAction(String methodName, Class<?> classe) {
+	protected Method getMethodAction(String methodName, Class<?> classe) {
 		try {
 			Method method = classe
 					.getDeclaredMethod(methodName, new Class[] {});
@@ -261,7 +239,7 @@ public class ControllerManagerImp implements ControllerManager {
 		};
 	}
 
-	private synchronized void addController(String id, Controller controller) {
+	protected synchronized void addController(String id, Controller controller) {
 
 		if (id != null) {
 			if (contains(id))
@@ -274,7 +252,7 @@ public class ControllerManagerImp implements ControllerManager {
 		classMappedControllers.put(controller.getClassType(), controller);
 	}
 
-	private synchronized void removeController(String id, Controller controller) {
+	protected synchronized void removeController(String id, Controller controller) {
 
 		if (id != null) {
 			if (!contains(id))
