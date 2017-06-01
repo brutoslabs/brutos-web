@@ -13,6 +13,8 @@ import org.brandao.brutos.annotation.configuration.ControllerAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ThrowableEntry;
 import org.brandao.brutos.annotation.web.ResponseError;
 import org.brandao.brutos.annotation.web.ResponseErrors;
+import org.brandao.brutos.annotation.web.ResponseStatus;
+import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.WebActionType;
 import org.brandao.brutos.web.WebControllerBuilder;
 
@@ -37,6 +39,25 @@ public class WebControllerAnnotationConfig
 			(WebControllerBuilder)componentRegistry
 			.registerController(id, view, resolvedView,
 				dispatcherType, name, classType, actionId, webActionType);
+		
+		ResponseStatus responseStatus = 
+				classType.getAnnotation(ResponseStatus.class);
+		
+		int responseStatusCode = 0;
+		
+		if(responseStatus != null){
+			int code = responseStatus.code();
+			
+			if(code == BrutosWebConstants.DEFAULT_RESPONSE_STATUS){
+				code = responseStatus.value();
+			}
+					
+		}
+		else{
+			responseStatusCode = BrutosWebConstants.DEFAULT_RESPONSE_STATUS;
+		}
+		
+		builder.setResponseStatus(responseStatusCode);
 		
 		return builder;
 	}

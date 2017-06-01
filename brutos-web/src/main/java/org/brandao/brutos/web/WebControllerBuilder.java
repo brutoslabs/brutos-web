@@ -34,6 +34,7 @@ import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
+import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
 
@@ -263,5 +264,14 @@ public class WebControllerBuilder extends ControllerBuilder{
 		super.removeResponseType(mediaType);
 		return this;
 	}
-    
+
+	public ControllerBuilder setResponseStatus(int value){
+		((WebController)this.controller).setResponseStatus(value);
+		return this;
+	}
+	
+	public int getResponseStatus(){
+		return ((WebController)this.controller).getResponseStatus();
+	}
+	
 }
