@@ -26,7 +26,8 @@ import org.brandao.brutos.type.Type;
  * 
  * @author Brandao
  */
-public abstract class AbstractRenderView implements RenderViewType {
+public abstract class AbstractRenderView 
+	implements RenderViewType {
 
 	protected abstract void show(RequestInstrument requestInstrument,
 			String view, DispatcherType dispatcherType);
