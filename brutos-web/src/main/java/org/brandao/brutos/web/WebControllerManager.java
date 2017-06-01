@@ -18,11 +18,14 @@
 package org.brandao.brutos.web;
 
 import org.brandao.brutos.ActionType;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManagerImp;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.util.WebUtil;
 
@@ -40,7 +43,7 @@ public class WebControllerManager extends ControllerManagerImp{
 		return new WebController(this.applicationContext);
 	}
     
-    public ControllerBuilder addController( String id, String view, 
+    public ControllerBuilder addController(String id, String view, 
             boolean resolvedView, DispatcherType dispatcherType,
             String name, Class<?> classType, String actionId ){
             return addController( id, view, resolvedView,
@@ -48,30 +51,64 @@ public class WebControllerManager extends ControllerManagerImp{
                     WebActionType.HIERARCHY);
     }
     
-    public ControllerBuilder addController( String id, String view, 
-            boolean resolvedView, DispatcherType dispatcherType, String name, 
-            Class<?> classType, 
-            String actionId, ActionType actionType ){
+	public ControllerBuilder addController(String id, String view,
+			DispatcherType dispatcherType, boolean resolvedView, String name,
+			Class<?> classType, String actionId, ActionType actionType) {
 
-    	if(actionType == null){
-    		actionType = WebActionType.HIERARCHY;
-    	}
-    	else{
-    		actionType = WebActionType.valueOf(actionType.id());
-    	}
-    	
-    	if(!actionType.isValidControllerId(id))
-    		throw new MappingException("invalid controller id: " + id);
-    	
+		id       = StringUtil.adjust(id);
+		view     = StringUtil.adjust(view);
+		actionId = StringUtil.adjust(actionId);
+		name     = StringUtil.adjust(name);
+		actionType = actionType == null? WebActionType.HIERARCHY : WebActionType.valueOf(actionType.id());
+		
+		if (classType == null){
+			throw new MappingException("invalid class type: "
+					+ classType);
+		}
+
+		if (actionType == null) {
+			throw new MappingException("action type is required");
+		}
+		
+		if (StringUtil.isEmpty(actionId))
+			actionId = BrutosConstants.DEFAULT_ACTION_ID;
+
         if(resolvedView && view != null)
             WebUtil.checkURI(view, true);
-        
-        ControllerBuilder builder =  
-            super.addController( id, view,
-                resolvedView,
-                dispatcherType, name, classType, actionId, actionType );
-        
-        return new WebControllerBuilder(builder, this.internalUpdate);
-    }
-    
+		
+    	if(!actionType.isValidControllerId(id))
+    		throw new MappingException("invalid controller id: " + id);
+
+		Controller controller = new WebController(this.applicationContext);
+		controller.setClassType(classType);
+		controller.setId(id);
+		
+		// Action
+		ActionListener ac = new ActionListener();
+		ac.setPreAction(this.getMethodAction("preAction", controller.getClassType()));
+		ac.setPostAction(this.getMethodAction("postAction", controller.getClassType()));
+		controller.setActionListener(ac);
+
+		controller.setDefaultInterceptorList(interceptorManager
+				.getDefaultInterceptors());
+
+		this.current = new WebControllerBuilder(controller, this,
+				interceptorManager, validatorFactory, applicationContext,
+				internalUpdate);
+
+		this.current
+			.setName(name)
+			.setView(view, resolvedView)
+			.setActionId(actionId)
+			.setDispatcherType(dispatcherType)
+				.setActionType(actionType);
+
+		addController(controller.getId(), controller);
+
+		this.getLogger().info(
+				String.format("added controller %s",
+						new Object[] { classType.getSimpleName() }));
+		
+		return this.getCurrent();
+	}    
 }
