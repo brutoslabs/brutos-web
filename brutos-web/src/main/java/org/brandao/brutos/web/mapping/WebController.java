@@ -27,10 +27,20 @@ import org.brandao.brutos.mapping.Controller;
  */
 public class WebController extends Controller{
 
+	private int responseStatus;
+	
 	public WebController(ConfigurableApplicationContext context) {
 		super(context);
 		super.setRequestTypes(new MediaTypeMap());
 		super.setResponseTypes(new MediaTypeMap());
+	}
+
+	public int getResponseStatus() {
+		return responseStatus;
+	}
+
+	public void setResponseStatus(int responseStatus) {
+		this.responseStatus = responseStatus;
 	}
 	
 }
