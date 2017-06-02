@@ -35,11 +35,14 @@ public class MediaTypeMap extends DataTypeMap{
 	private boolean hasAll;
 	
 	private Set<DataType> set;
+
+	private Set<DataType> publicSet;
 	
 	public MediaTypeMap(){
-		this.map    = new HashMap<String, Map<String, MediaType>>();
-		this.hasAll = false;
-		this.set    = new HashSet<DataType>();
+		this.map       = new HashMap<String, Map<String, MediaType>>();
+		this.hasAll    = false;
+		this.set       = new HashSet<DataType>();
+		this.publicSet = Collections.unmodifiableSet(this.set);
 	}
 
 	public MediaTypeMap(Set<DataType> value){
@@ -153,7 +156,7 @@ public class MediaTypeMap extends DataTypeMap{
 	}
 	
 	public Set<DataType> getSet(){
-		return Collections.unmodifiableSet(this.set);
+		return this.publicSet;
 	}
 	
 }
