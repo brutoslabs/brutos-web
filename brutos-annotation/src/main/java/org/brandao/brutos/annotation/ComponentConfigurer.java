@@ -19,9 +19,11 @@ package org.brandao.brutos.annotation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ComponentRegistry;
@@ -31,8 +33,6 @@ import org.brandao.brutos.annotation.configuration.ActionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.AnnotationConfigEntry;
 import org.brandao.brutos.annotation.configuration.AnnotationUtil;
 import org.brandao.brutos.annotation.configuration.AnyAnnotationConfig;
-import org.brandao.brutos.annotation.configuration.AnyElementCollectionAnnotationConfig;
-import org.brandao.brutos.annotation.configuration.AnyKeyCollectionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ApplyAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.BeanAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
@@ -74,26 +74,29 @@ public class ComponentConfigurer {
 				new InterceptorFilter(),
 				new TypeTypeFilter() };
 
-	private static final List<Class> defaultAnnotationConfig = new ArrayList<Class>();
+	public static final List<Class<?>> defaultAnnotationConfig;
 
 	static {
-		defaultAnnotationConfig.add(RootAnnotationConfig.class);
-		defaultAnnotationConfig.add(ActionAnnotationConfig.class);
-		defaultAnnotationConfig.add(InterceptsStackAnnotationConfig.class);
-		defaultAnnotationConfig.add(BeanAnnotationConfig.class);
-		defaultAnnotationConfig.add(KeyCollectionAnnotationConfig.class);
-		defaultAnnotationConfig.add(ElementCollectionAnnotationConfig.class);
-		defaultAnnotationConfig.add(ControllerAnnotationConfig.class);
-		defaultAnnotationConfig.add(InterceptedByAnnotationConfig.class);
-		defaultAnnotationConfig.add(InterceptsAnnotationConfig.class);
-		defaultAnnotationConfig.add(RestrictionAnnotationConfig.class);
-		defaultAnnotationConfig.add(RestrictionsAnnotationConfig.class);
-		defaultAnnotationConfig.add(ThrowSafeAnnotationConfig.class);
-		defaultAnnotationConfig.add(ThrowSafeListAnnotationConfig.class);
-		defaultAnnotationConfig.add(TypeDefAnnotationConfig.class);
-		defaultAnnotationConfig.add(BasicAnnotationConfig.class);
-		defaultAnnotationConfig.add(ExtendedScopeAnnotationConfig.class);
-		defaultAnnotationConfig.add(AnyAnnotationConfig.class);
+		List<Class<?>> defaultList = new ArrayList<Class<?>>();
+		defaultAnnotationConfig = Collections.unmodifiableList(defaultList);
+		
+		defaultList.add(RootAnnotationConfig.class);
+		defaultList.add(ActionAnnotationConfig.class);
+		defaultList.add(InterceptsStackAnnotationConfig.class);
+		defaultList.add(BeanAnnotationConfig.class);
+		defaultList.add(KeyCollectionAnnotationConfig.class);
+		defaultList.add(ElementCollectionAnnotationConfig.class);
+		defaultList.add(ControllerAnnotationConfig.class);
+		defaultList.add(InterceptedByAnnotationConfig.class);
+		defaultList.add(InterceptsAnnotationConfig.class);
+		defaultList.add(RestrictionAnnotationConfig.class);
+		defaultList.add(RestrictionsAnnotationConfig.class);
+		defaultList.add(ThrowSafeAnnotationConfig.class);
+		defaultList.add(ThrowSafeListAnnotationConfig.class);
+		defaultList.add(TypeDefAnnotationConfig.class);
+		defaultList.add(BasicAnnotationConfig.class);
+		defaultList.add(ExtendedScopeAnnotationConfig.class);
+		defaultList.add(AnyAnnotationConfig.class);
 		// defaultAnnotationConfig.add(AnyElementCollectionAnnotationConfig.class);
 		// defaultAnnotationConfig.add(AnyKeyCollectionAnnotationConfig.class);
 	}
@@ -102,12 +105,21 @@ public class ComponentConfigurer {
 
 	private ConfigurableApplicationContext applicationContext;
 
+	private List<Class<?>> baseAnnotation;
+	
+	@SuppressWarnings("unused")
 	private Logger logger;
 
 	public ComponentConfigurer(ConfigurableApplicationContext applicationContext) {
+		this(applicationContext, defaultAnnotationConfig);
+	}
+	
+	public ComponentConfigurer(ConfigurableApplicationContext applicationContext,
+			List<Class<?>> baseAnnotation) {
+		this.baseAnnotation     = baseAnnotation;
 		this.applicationContext = applicationContext;
-		this.logger = LoggerProvider.getCurrentLoggerProvider().getLogger(
-				AnnotationApplicationContext.class);
+		this.logger             = 
+			LoggerProvider.getCurrentLoggerProvider().getLogger(AnnotationApplicationContext.class);
 	}
 
 	public void init(ComponentRegistry componentRegistry) {
@@ -115,19 +127,19 @@ public class ComponentConfigurer {
 		Set<Class<?>> resultClassList = new HashSet<Class<?>>();
 		Set<Class<?>> firstClassList = new HashSet<Class<?>>();
 
-		for (Class<?> clazz : defaultAnnotationConfig)
+		for (Class<?> clazz : this.baseAnnotation)
 			resultClassList.add(clazz);
 
 		if (this.configuration.getConfigClass() == null)
 			this.loadClassList(this.configuration, firstClassList);
 		else {
-			for (Class clazz : this.configuration.getConfigClass())
+			for (Class<?> clazz : this.configuration.getConfigClass())
 				firstClassList.add(clazz);
 		}
 
 		resultClassList.addAll(firstClassList);
 
-		for (Class clazz : firstClassList) {
+		for (Class<?> clazz : firstClassList) {
 
 			if (!clazz.isAnnotationPresent(Configuration.class))
 				continue;
@@ -155,7 +167,7 @@ public class ComponentConfigurer {
 
 		init.applyConfiguration(objectList, null, componentRegistry);
 
-		for (Class clazz : firstClassList) {
+		for (Class<?> clazz : firstClassList) {
 
 			if (!clazz.isAnnotationPresent(Configuration.class))
 				continue;
@@ -193,14 +205,15 @@ public class ComponentConfigurer {
 				DEFAULT_FILTERS);
 		scanner.scan();
 
-		List<Class> tmplist = scanner.getClassList();
+		List<Class<?>> tmplist = scanner.getClassList();
 
-		for (Class clazz : tmplist)
+		for (Class<?> clazz : tmplist)
 			classList.add(clazz);
 	}
 
 	private class StartConfiguration extends AbstractAnnotationConfig {
 
+		@SuppressWarnings("unused")
 		private ApplyAnnotationConfig root;
 
 		public StartConfiguration(ApplyAnnotationConfig root) {

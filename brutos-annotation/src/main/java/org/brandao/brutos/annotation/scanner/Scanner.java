@@ -27,7 +27,7 @@ public interface Scanner {
 
 	void scan();
 
-	List<Class> getClassList();
+	List<Class<?>> getClassList();
 
 	void addIncludeFilter(TypeFilter filter);
 
