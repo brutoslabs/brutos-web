@@ -14,7 +14,6 @@ import org.brandao.brutos.annotation.configuration.ThrowableEntry;
 import org.brandao.brutos.annotation.web.ResponseError;
 import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.annotation.web.ResponseStatus;
-import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.WebActionType;
 import org.brandao.brutos.web.WebControllerBuilder;
 
@@ -43,19 +42,10 @@ public class WebControllerAnnotationConfig
 		ResponseStatus responseStatus = 
 				classType.getAnnotation(ResponseStatus.class);
 		
-		int responseStatusCode = 0;
-		
-		if(responseStatus != null){
-			int code = responseStatus.code();
-			
-			if(code == BrutosWebConstants.DEFAULT_RESPONSE_STATUS){
-				code = responseStatus.value();
-			}
-					
-		}
-		else{
-			responseStatusCode = BrutosWebConstants.DEFAULT_RESPONSE_STATUS;
-		}
+		int responseStatusCode = 
+				responseStatus == null?
+					0 :
+					responseStatus.value();
 		
 		builder.setResponseStatus(responseStatusCode);
 		

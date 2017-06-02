@@ -266,6 +266,11 @@ public class WebControllerBuilder extends ControllerBuilder{
 	}
 
 	public ControllerBuilder setResponseStatus(int value){
+		
+		if(value <=0){
+			throw new MappingException("invalid response status");
+		}
+		
 		((WebController)this.controller).setResponseStatus(value);
 		return this;
 	}

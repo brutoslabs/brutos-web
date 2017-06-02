@@ -19,8 +19,7 @@ package org.brandao.brutos;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.brandao.brutos.mapping.DataTypeMap;
+import java.util.List;
 
 /**
  * 
@@ -46,7 +45,7 @@ public interface MvcRequest {
 
 	DataType getType();
 
-	DataTypeMap getAcceptResponse();
+	List<DataType> getAcceptResponse();
 	
 	ResourceAction getResourceAction();
 	

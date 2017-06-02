@@ -31,10 +31,13 @@ public class DataTypeMap {
 	private Map<String, DataType> map;
 	
 	private Set<DataType> set;
+
+	private Set<DataType> publicSet;
 	
 	public DataTypeMap(){
-		this.map    = new HashMap<String, DataType>();
-		this.set    = new HashSet<DataType>();
+		this.map       = new HashMap<String, DataType>();
+		this.set       = new HashSet<DataType>();
+		this.publicSet = Collections.unmodifiableSet(this.set);
 	}
 
 	public DataTypeMap(Set<DataType> value){
@@ -58,8 +61,9 @@ public class DataTypeMap {
 	public void add(DataType value){
 		
 		if(this.map.containsKey(value.getName())){
-			throw new BrutosException("media type has been added: " + value.getName());
+			throw new BrutosException("type has been added: " + value.getName());
 		}
+		
 		this.map.put(value.getName(), value);
 	}
 	
@@ -69,6 +73,7 @@ public class DataTypeMap {
 			throw new BrutosException("subtype not found: " + value.getName());
 		}
 
+		this.map.remove(value);
 	}
 	
 	public boolean accept(DataType value){
@@ -93,7 +98,7 @@ public class DataTypeMap {
 	}
 	
 	public Set<DataType> getSet(){
-		return Collections.unmodifiableSet(this.set);
+		return this.publicSet;
 	}
 	
 }

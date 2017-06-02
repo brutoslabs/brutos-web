@@ -17,6 +17,8 @@
 
 package org.brandao.brutos;
 
+import java.util.List;
+
 import org.brandao.brutos.interceptor.InterceptorHandlerImp;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -48,7 +50,7 @@ public class Invoker {
 	
 	protected ConfigurableApplicationContext applicationContext;
 	
-	protected RenderView renderView;
+	protected ConfigurableRenderView renderView;
 	
 	protected RequestProvider requestProvider;
 	
@@ -68,7 +70,7 @@ public class Invoker {
 			ControllerManager controllerManager,
 			ActionResolver actionResolver,
 			ConfigurableApplicationContext applicationContext,
-			RenderView renderView,
+			ConfigurableRenderView renderView,
 			RequestParserListenerFactory requestParserListenerFactory) {
 
 		this.objectFactory = objectFactory;
@@ -270,7 +272,7 @@ public class Invoker {
 		}
 	}
 
-	private boolean acceptRequestType(ResourceAction action, MutableMvcRequest request){
+	protected boolean acceptRequestType(ResourceAction action, MutableMvcRequest request){
 		
     	DataTypeMap supportedRequestTypes = action.getMethodForm().getRequestTypes();
     	
@@ -278,19 +280,33 @@ public class Invoker {
     		supportedRequestTypes = action.getController().getRequestTypes();
     	}
     	
-    	return !supportedRequestTypes.isEmpty() && supportedRequestTypes.accept(request.getType());
+    	if(!supportedRequestTypes.accept(request.getType())){
+    		return this.requestParser.contains(request.getType());
+    	}
+    	else
+    		return true;
 	}
 
-	private DataType getAcceptResponseType(ResourceAction action, MutableMvcRequest request){
+	protected DataType getAcceptResponseType(ResourceAction action, MutableMvcRequest request){
 		
     	DataTypeMap supportedResponseTypes = action.getMethodForm().getResponseTypes();
-    	DataTypeMap responseTypes = request.getAcceptResponse();
+    	List<DataType> responseTypes       = request.getAcceptResponse();
+    	
     	if(supportedResponseTypes.isEmpty()){
     		supportedResponseTypes = action.getController().getRequestTypes();
     	}
     	
-    	DataType responseDataType = supportedResponseTypes.accept(responseTypes);
-    	return responseDataType;
+    	for(DataType dataType: responseTypes){
+    		if(supportedResponseTypes.accept(dataType)){
+    			return dataType;
+    		}
+    		else
+    		if(dataType.getName().equals("*/*")){
+    			
+    		}
+    	}
+    	
+    	return null;
 	}
 	
 	private RequestInstrument getRequestInstrument(Scope scope) {

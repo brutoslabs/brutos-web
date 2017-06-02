@@ -20,10 +20,15 @@ package org.brandao.brutos.web;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
+import org.brandao.brutos.DataType;
 import org.brandao.brutos.DefaultMvcRequest;
 
 /**
@@ -39,16 +44,43 @@ public class WebMvcRequestImp
     private RequestMethodType requestMethodType;
     
     public WebMvcRequestImp(HttpServletRequest request){
-        String path         = request.getRequestURI();
-        String contextPath  = request.getContextPath();
-        path = path.substring( contextPath.length(), path.length() );
-        
         this.request           = request;
         this.requestMethodType = RequestMethodType.valueOf(request.getMethod().toUpperCase());
         super.setType(MediaType.valueOf(request.getContentType()));
-        super.setRequestId(path);
+        super.setRequestId(this.parseRequestId(request.getRequestURI(), request.getContextPath()));
+        super.setAcceptResponse(this.parseAcceptResponse(request.getHeader("Accept")));
     }
 
+    private String parseRequestId(String path, String contextPath){
+        return path.substring( contextPath.length(), path.length() );
+    }
+    
+    private List<DataType> parseAcceptResponse(String accept){
+    	
+    	List<DataType> result = new ArrayList<DataType>();
+    	String[] split = accept.split("\\,");
+    	
+    	for(String mt: split){
+    		MediaType mediaType = MediaType.valueOf(mt);
+    		result.add(mediaType);
+    	}
+    	
+    	Collections.sort(result, new Comparator<DataType>(){
+
+			public int compare(DataType o1, DataType o2) {
+				String q1 = ((MediaType)o1).getParams().get("q");
+				String q2 = ((MediaType)o2).getParams().get("q");
+				
+				double v1 = q1 == null? 1.0 : Double.parseDouble(q1);
+				double v2 = q2 == null? 1.0 : Double.parseDouble(q2);
+				return (int)(v1 - v2);
+			}
+    		
+    	});
+    	
+    	return result;
+    }
+    
     public ServletRequest getServletRequest(){
     	return this.request;
     }

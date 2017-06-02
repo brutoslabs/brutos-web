@@ -176,6 +176,11 @@ public class WebActionBuilder extends ActionBuilder{
 	}
 	
 	public ActionBuilder setResponseStatus(int value){
+
+		if(value <=0){
+			throw new MappingException("invalid response status");
+		}
+		
 		((WebAction)this.action).setResponseStatus(value);
 		return this;
 	}
