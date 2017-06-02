@@ -66,10 +66,13 @@ import org.brandao.brutos.logger.LoggerProvider;
  */
 public class ComponentConfigurer {
 
-	public static final org.brandao.brutos.annotation.scanner.TypeFilter[] DEFAULT_FILTERS = new org.brandao.brutos.annotation.scanner.TypeFilter[] {
-			new StereotypeTypeFilter(), new ConfigurationTypeFilter(),
-			new ControllerFilter(), new InterceptorFilter(),
-			new TypeTypeFilter() };
+	public static final org.brandao.brutos.annotation.scanner.TypeFilter[] DEFAULT_FILTERS = 
+			new org.brandao.brutos.annotation.scanner.TypeFilter[] {
+				new StereotypeTypeFilter(), 
+				new ConfigurationTypeFilter(),
+				new ControllerFilter(), 
+				new InterceptorFilter(),
+				new TypeTypeFilter() };
 
 	private static final List<Class> defaultAnnotationConfig = new ArrayList<Class>();
 
