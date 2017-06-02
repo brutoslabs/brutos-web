@@ -31,9 +31,9 @@ public class ScannerEntity {
 
 	private boolean useDefaultfilter;
 
-	private List excludeFilters;
+	private List<FilterEntity> excludeFilters;
 
-	private List includeFilters;
+	private List<FilterEntity> includeFilters;
 
 	public String getScannerClassName() {
 		return scannerClassName;
@@ -59,19 +59,19 @@ public class ScannerEntity {
 		this.useDefaultfilter = useDefaultfilter;
 	}
 
-	public List getExcludeFilters() {
+	public List<FilterEntity> getExcludeFilters() {
 		return excludeFilters;
 	}
 
-	public void setExcludeFilters(List excludeFilters) {
+	public void setExcludeFilters(List<FilterEntity> excludeFilters) {
 		this.excludeFilters = excludeFilters;
 	}
 
-	public List getIncludeFilters() {
+	public List<FilterEntity> getIncludeFilters() {
 		return includeFilters;
 	}
 
-	public void setIncludeFilters(List includeFilters) {
+	public void setIncludeFilters(List<FilterEntity> includeFilters) {
 		this.includeFilters = includeFilters;
 	}
 

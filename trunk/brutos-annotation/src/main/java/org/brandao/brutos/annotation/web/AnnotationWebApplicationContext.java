@@ -32,8 +32,8 @@ public class AnnotationWebApplicationContext extends
 
 	@Override
 	protected void loadDefinitions(ComponentRegistry registry) {
-		AnnotationDefinitionReader definitionReader = new AnnotationDefinitionReader(
-				this, registry);
+		AnnotationDefinitionReader definitionReader = 
+			new AnnotationDefinitionReader(this, registry);
 
 		if (this.getLocations() != null)
 			definitionReader.loadDefinitions(locations);

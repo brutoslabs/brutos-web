@@ -17,13 +17,18 @@
 
 package org.brandao.brutos.annotation.web;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.annotation.ComponentConfigurer;
 import org.brandao.brutos.annotation.Configuration;
 import org.brandao.brutos.annotation.FilterType;
 import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
+import org.brandao.brutos.annotation.configuration.web.WebActionAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.web.WebControllerAnnotationConfig;
 import org.brandao.brutos.xml.FilterEntity;
 import org.brandao.brutos.xml.ScannerEntity;
 import org.brandao.brutos.xml.XMLComponentDefinitionReader;
@@ -44,8 +49,18 @@ public class AnnotationDefinitionReader extends XMLComponentDefinitionReader {
 	}
 
 	public void loadDefinitions() {
-		ComponentConfigurer componentConfigurer = new ComponentConfigurer(
-				applicationContext);
+		//contém as classes de configuração da aplicação.
+		List<Class<?>> baseAnnotation = new ArrayList<Class<?>>();
+		
+		//adiciona as classes base de uma aplicação com anotação.
+		baseAnnotation.addAll(ComponentConfigurer.defaultAnnotationConfig);
+		
+		//adiciona as classes base de uma aplicação web.
+		baseAnnotation.add(WebControllerAnnotationConfig.class);
+		baseAnnotation.add(WebActionAnnotationConfig.class);
+		
+		ComponentConfigurer componentConfigurer = 
+			new ComponentConfigurer(applicationContext, baseAnnotation);
 
 		ConfigurationEntry config = new ConfigurationEntry();
 
