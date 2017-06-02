@@ -30,4 +30,6 @@ public interface ConfigurableRequestParser
 	
 	void removeParser(DataType dataType) throws RequestParserException;
 	
+	boolean contains(DataType dataType);
+	
 }

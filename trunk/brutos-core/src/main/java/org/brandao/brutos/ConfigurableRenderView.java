@@ -24,4 +24,6 @@ public interface ConfigurableRenderView extends RenderView{
 	
 	void removeRenderView(DataType dataType) throws RenderViewException;
 	
+	boolean contains(DataType dataType);
+	
 }

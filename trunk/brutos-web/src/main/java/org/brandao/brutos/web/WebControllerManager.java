@@ -79,7 +79,7 @@ public class WebControllerManager extends ControllerManagerImp{
     	if(!actionType.isValidControllerId(id))
     		throw new MappingException("invalid controller id: " + id);
 
-		Controller controller = new WebController(this.applicationContext);
+    	WebController controller = new WebController(this.applicationContext);
 		controller.setClassType(classType);
 		controller.setId(id);
 		

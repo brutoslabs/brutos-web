@@ -1,5 +1,7 @@
 package org.brandao.brutos;
 
+import java.util.List;
+
 public interface MutableMvcRequest extends MvcRequest{
 
 	void setRequestId(String requestId);
@@ -24,6 +26,8 @@ public interface MutableMvcRequest extends MvcRequest{
     
 	void setProperty(String name, Object value);
 
+	void setAcceptResponse(List<DataType> value);
+	
 	void setType(DataType value);
 
 	void setResourceAction(ResourceAction value);

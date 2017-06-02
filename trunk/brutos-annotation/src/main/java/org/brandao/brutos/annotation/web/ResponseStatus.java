@@ -28,8 +28,6 @@ import org.brandao.brutos.web.BrutosWebConstants;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ResponseStatus {
 
-	int	code() default BrutosWebConstants.DEFAULT_RESPONSE_STATUS;
-
 	int	value() default BrutosWebConstants.DEFAULT_RESPONSE_STATUS;
 	
 }
