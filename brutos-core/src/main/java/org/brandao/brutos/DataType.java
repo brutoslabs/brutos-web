@@ -41,7 +41,7 @@ public class DataType {
 			return true;
 		if (obj == null)
 			return false;
-		if (!obj.getClass().isAssignableFrom(getClass()))
+		if (getClass() != obj.getClass())
 			return false;
 		DataType other = (DataType) obj;
 		if (name == null) {
@@ -51,5 +51,6 @@ public class DataType {
 			return false;
 		return true;
 	}
+	
 
 }

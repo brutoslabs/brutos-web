@@ -26,6 +26,7 @@ public class WebConfigurableRenderViewImp extends ConfigurableRenderViewImp{
 	public WebConfigurableRenderViewImp(){
 		super.registryRenderView(MediaType.TEXT_HTML,        new JSPRenderView());
 		super.registryRenderView(MediaType.APPLICATION_JSON, new JsonRenderView());
+		super.setDefaultRenderViewType(MediaType.TEXT_HTML);
 	}
 	
 }

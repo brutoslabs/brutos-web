@@ -34,10 +34,20 @@ public class DataTypeMap {
 
 	private Set<DataType> publicSet;
 	
+	private DataType defaultDataType;
+	
 	public DataTypeMap(){
 		this.map       = new HashMap<String, DataType>();
 		this.set       = new HashSet<DataType>();
 		this.publicSet = Collections.unmodifiableSet(this.set);
+	}
+
+	public DataType getDefaultDataType() {
+		return defaultDataType;
+	}
+
+	public void setDefaultDataType(DataType defaultDataType) {
+		this.defaultDataType = defaultDataType;
 	}
 
 	public DataTypeMap(Set<DataType> value){

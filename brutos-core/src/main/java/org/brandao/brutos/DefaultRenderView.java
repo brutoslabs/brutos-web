@@ -25,7 +25,6 @@ public class DefaultRenderView extends AbstractConfigurableRenderView{
 
 	public void show(MvcRequest request, MvcResponse response)
 			throws RenderViewException {
-		
 	}
 
 }

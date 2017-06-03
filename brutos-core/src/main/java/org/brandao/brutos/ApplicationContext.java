@@ -19,13 +19,13 @@ package org.brandao.brutos;
 
 import java.util.Properties;
 
+import org.brandao.brutos.logger.LoggerProvider;
+
 /**
  * 
  * @author Brandao
  */
 public interface ApplicationContext {
-
-	void destroy();
 
 	Properties getConfiguration();
 
@@ -33,6 +33,8 @@ public interface ApplicationContext {
 
 	MvcResponse getMvcResponse();
 
+	LoggerProvider getLoggerProvider();
+	
 	Scopes getScopes();
 
 	Object getController(Class<?> clazz);
@@ -41,4 +43,31 @@ public interface ApplicationContext {
 
 	Object getBean(String name);
 
+	RenderView getRenderView();
+	
+	RequestParser getRequestParser();
+	
+	Invoker getInvoker();
+
+	ValidatorFactory getValidatorFactory();
+
+	InterceptorManager getInterceptorManager();
+
+	ControllerManager getControllerManager();
+
+	ObjectFactory getObjectFactory();
+
+	@Deprecated
+	ControllerResolver getControllerResolver();
+
+	ActionResolver getActionResolver();
+
+	CodeGenerator getCodeGenerator();
+
+	ViewResolver getViewResolver();
+
+	TypeManager getTypeManager();
+
+	ApplicationContext getParent();
+	
 }

@@ -58,33 +58,65 @@ public class Invoker {
 
 	protected ConfigurableRequestParser requestParser;
 	
-	protected RequestParserListenerFactory requestParserListenerFactory;
-	
 	protected RequestParserListener requestParserListener;
 	
-	public Invoker() {
+	public ObjectFactory getObjectFactory() {
+		return objectFactory;
 	}
 
-	public Invoker(
-			ObjectFactory objectFactory, 
-			ControllerManager controllerManager,
-			ActionResolver actionResolver,
-			ConfigurableApplicationContext applicationContext,
-			ConfigurableRenderView renderView,
-			RequestParserListenerFactory requestParserListenerFactory) {
-
+	public void setObjectFactory(ObjectFactory objectFactory) {
 		this.objectFactory = objectFactory;
-		this.controllerManager = controllerManager;
-		this.actionResolver = actionResolver;
-		this.applicationContext = applicationContext;
-		this.renderView = renderView;
-		this.requestProvider = new RequestProvider();
-		this.responseProvider = new ResponseProvider();
-		this.requestParser = new RequestParserImp();
-		this.requestParserListenerFactory = requestParserListenerFactory;
-		this.requestParserListener = requestParserListenerFactory.getNewListener();
 	}
 
+	public ControllerManager getControllerManager() {
+		return controllerManager;
+	}
+
+	public void setControllerManager(ControllerManager controllerManager) {
+		this.controllerManager = controllerManager;
+	}
+
+	public ActionResolver getActionResolver() {
+		return actionResolver;
+	}
+
+	public void setActionResolver(ActionResolver actionResolver) {
+		this.actionResolver = actionResolver;
+	}
+
+	public ConfigurableApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+
+	public void setApplicationContext(
+			ConfigurableApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
+
+	public ConfigurableRenderView getRenderView() {
+		return renderView;
+	}
+
+	public void setRenderView(ConfigurableRenderView renderView) {
+		this.renderView = renderView;
+	}
+
+	public ConfigurableRequestParser getRequestParser() {
+		return requestParser;
+	}
+
+	public void setRequestParser(ConfigurableRequestParser requestParser) {
+		this.requestParser = requestParser;
+	}
+
+	public RequestParserListener getRequestParserListener() {
+		return requestParserListener;
+	}
+
+	public void setRequestParserListener(RequestParserListener requestParserListener) {
+		this.requestParserListener = requestParserListener;
+	}
+	
 	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response){
 		try{
 			currentApp.set(this.applicationContext);
@@ -111,6 +143,7 @@ public class Invoker {
 		
 	}
 	
+
 	protected boolean innerInvoke(MutableMvcRequest request, 
 			MutableMvcResponse response) throws RequestTypeException{
 
@@ -211,26 +244,25 @@ public class Invoker {
 
 	public boolean invoke(StackRequestElement element) throws RequestTypeException{
 
-		long time                  = -1;
-		boolean createdThreadScope = false;
-		StackRequest stackRequest  = null;
-		MvcRequest oldRequest      = null;
-		MvcResponse oldresponse    = null;
-		
+		long time                     = -1;
+		boolean createdThreadScope    = false;
+		StackRequest stackRequest     = null;
+		MvcRequest oldRequest         = null;
+		MvcResponse oldresponse       = null;
 		MutableMvcRequest request     = element.getRequest();
 		MutableMvcResponse response   = element.getResponse();
 		ResourceAction resourceAction = request.getResourceAction();
-		DataType responseDataType     = this.getAcceptResponseType(resourceAction, request);
-		
-		response.setType(responseDataType);
-		
-		if(!this.acceptRequestType(resourceAction, request)){
-			throw new RequestTypeException("request type not supported");
-		}
+		DataType responseDataType     = this.selectResponseType(resourceAction, request);
 		
 		if(responseDataType == null){
 			throw new ResponseTypeException("response type not supported");
 		}
+
+		if(!this.isSupportedRequestType(resourceAction, request)){
+			throw new RequestTypeException("request type not supported");
+		}
+
+		response.setType(responseDataType);
 		
 		try{
 			oldRequest  = this.requestProvider.init(request);
@@ -272,7 +304,7 @@ public class Invoker {
 		}
 	}
 
-	protected boolean acceptRequestType(ResourceAction action, MutableMvcRequest request){
+	protected boolean isSupportedRequestType(ResourceAction action, MutableMvcRequest request){
 		
     	DataTypeMap supportedRequestTypes = action.getMethodForm().getRequestTypes();
     	
@@ -287,7 +319,7 @@ public class Invoker {
     		return true;
 	}
 
-	protected RenderView getRenderView(ResourceAction action, MutableMvcRequest request){
+	protected DataType selectResponseType(ResourceAction action, MutableMvcRequest request){
 		
     	DataTypeMap supportedResponseTypes = action.getMethodForm().getResponseTypes();
     	List<DataType> responseTypes       = request.getAcceptResponse();
@@ -296,34 +328,29 @@ public class Invoker {
     		supportedResponseTypes = action.getController().getRequestTypes();
     	}
     	
-    	for(DataType dataType: responseTypes){
-    		if(supportedResponseTypes.accept(dataType)){
-    			return dataType;
-    		}
-    	}
-    	
-    	return null;
-	}
-	
-	/*
-	protected DataType getAcceptResponseType(ResourceAction action, MutableMvcRequest request){
-		
-    	DataTypeMap supportedResponseTypes = action.getMethodForm().getResponseTypes();
-    	List<DataType> responseTypes       = request.getAcceptResponse();
-    	
     	if(supportedResponseTypes.isEmpty()){
-    		supportedResponseTypes = action.getController().getRequestTypes();
+    		
+    		DataType defaultDataType = this.renderView.getDefaultRenderViewType();
+    		
+	    	for(DataType dataType: responseTypes){
+	    		if(defaultDataType.equals(dataType)){
+	    			return dataType;
+	    		}
+	    	}
+	    	
     	}
-    	
-    	for(DataType dataType: responseTypes){
-    		if(supportedResponseTypes.accept(dataType)){
-    			return dataType;
-    		}
+    	else{
+    		
+	    	for(DataType dataType: responseTypes){
+	    		if(supportedResponseTypes.accept(dataType)){
+	    			return dataType;
+	    		}
+	    	}
+	    	
     	}
     	
     	return null;
 	}
-	*/
 	
 	private RequestInstrument getRequestInstrument(Scope scope) {
 		RequestInstrument requestInstrument = (RequestInstrument) scope

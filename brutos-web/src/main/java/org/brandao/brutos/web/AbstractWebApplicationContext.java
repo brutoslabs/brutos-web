@@ -206,17 +206,17 @@ public abstract class AbstractWebApplicationContext
         config.put( BrutosConstants.CONTROLLER_MANAGER_CLASS,
                     tmp );
 
+        tmp = config
+                .getProperty(BrutosConstants.REQUEST_PARSER,
+                              WebRequestParserImp.class.getName() );
+        
+        config.put(BrutosConstants.REQUEST_PARSER,
+                    tmp);
+        
     }
 
     public ServletContext getContext(){
         return this.servletContext;
-    }
-
-    public Controller getController(){
-        
-        return (Controller) getScopes()
-                .get(WebScopeType.REQUEST)
-                    .get( BrutosConstants.CONTROLLER );
     }
 
     protected Resource getContextResource( String path ){

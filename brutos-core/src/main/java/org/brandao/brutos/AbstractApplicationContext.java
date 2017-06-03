@@ -47,7 +47,7 @@ public abstract class AbstractApplicationContext
 
 	protected ControllerManager controllerManager;
 
-	protected RenderView renderView;
+	protected ConfigurableRenderView renderView;
 
 	protected Invoker invoker;
 
@@ -77,6 +77,8 @@ public abstract class AbstractApplicationContext
 
 	protected RequestParserListenerFactory requestParserListenerFactory;
 	
+	protected ConfigurableRequestParser requestParser;
+	
 	public AbstractApplicationContext() {
 		this(null);
 	}
@@ -94,25 +96,27 @@ public abstract class AbstractApplicationContext
 	}
 
 	protected void initInstances() {
-		this.objectFactory = getNewObjectFactory(configuration);
-		this.interceptorManager = getNewInterceptorManager();
-		this.controllerResolver = getNewControllerResolver();
-		this.actionResolver = getNewMethodResolver();
-		this.requestFactory = getMvcRequestFactory();
-		this.responseFactory = getMvcResponseFactory();
-		this.validatorFactory = getNewValidatorFactory(configuration);
-		this.viewResolver = getNewViewResolver();
-		this.controllerManager = getNewControllerManager();
-		this.renderView = getNewRenderView(configuration);
-		this.codeGenerator = getNewCodeGenerator(configuration);
-		this.typeManager = getNewTypeManager();
-		this.requestParserListenerFactory = getRequestParserListenerFactory();
-		this.invoker = createInvoker(this.controllerResolver,
-				this.objectFactory, this.controllerManager,
-				this.actionResolver, this, this.renderView,
-				this.requestParserListenerFactory);
+		this.objectFactory 					= this.getNewObjectFactory();
+		this.interceptorManager				= this.getNewInterceptorManager();
+		this.controllerResolver				= this.getNewControllerResolver();
+		this.actionResolver					= this.getNewMethodResolver();
+		this.requestFactory					= this.getMvcRequestFactory();
+		this.responseFactory				= this.getMvcResponseFactory();
+		this.validatorFactory 				= this.getNewValidatorFactory();
+		this.viewResolver 					= this.getNewViewResolver();
+		this.controllerManager 				= this.getNewControllerManager();
+		this.renderView 					= this.getNewRenderView();
+		this.requestParser                  = this.getConfigurableRequestParser();
+		this.codeGenerator 					= this.getNewCodeGenerator();
+		this.typeManager 					= this.getNewTypeManager();
+		this.requestParserListenerFactory	= this.getRequestParserListenerFactory();
+		this.invoker						= this.getNewInvoker();
 	}
 
+	protected void initInvoker(){
+		this.invoker.flush();
+	}
+	
 	protected void initTypes() {
 	}
 
@@ -145,10 +149,6 @@ public abstract class AbstractApplicationContext
 	}
 
 	protected abstract void loadDefinitions(ComponentRegistry registry);
-
-	protected void setControllerResolver(ControllerResolver controllerResolver) {
-		this.controllerResolver = controllerResolver;
-	}
 
 	protected ControllerResolver getNewControllerResolver() {
 		try {
@@ -243,7 +243,7 @@ public abstract class AbstractApplicationContext
 		}
 	}
 
-	protected ObjectFactory getNewObjectFactory(Properties config) {
+	protected ObjectFactory getNewObjectFactory() {
 		try {
 			String className = configuration.getProperty(
 					BrutosConstants.OBJECT_FACTORY_CLASS,
@@ -254,7 +254,7 @@ public abstract class AbstractApplicationContext
 			ObjectFactory instance = (ObjectFactory) ClassUtil
 					.getInstance(clazz);
 
-			instance.configure(config);
+			instance.configure(configuration);
 
 			return instance;
 		} catch (BrutosException e) {
@@ -264,7 +264,7 @@ public abstract class AbstractApplicationContext
 		}
 	}
 
-	protected ValidatorFactory getNewValidatorFactory(Properties config) {
+	protected ValidatorFactory getNewValidatorFactory() {
 		try {
 			String className = configuration.getProperty(
 					BrutosConstants.VALIDATOR_FACTORY_CLASS,
@@ -275,7 +275,7 @@ public abstract class AbstractApplicationContext
 			ValidatorFactory instance = (ValidatorFactory) ClassUtil
 					.getInstance(clazz);
 
-			instance.configure(config);
+			instance.configure(configuration);
 
 			return instance;
 		} catch (BrutosException e) {
@@ -285,7 +285,7 @@ public abstract class AbstractApplicationContext
 		}
 	}
 
-	protected CodeGenerator getNewCodeGenerator(Properties config) {
+	protected CodeGenerator getNewCodeGenerator() {
 		try {
 			String className = configuration.getProperty(
 					BrutosConstants.CODE_GENERATOR_CLASS,
@@ -296,7 +296,7 @@ public abstract class AbstractApplicationContext
 			CodeGenerator instance = (CodeGenerator) ClassUtil
 					.getInstance(clazz);
 
-			instance.configure(config);
+			instance.configure(configuration);
 
 			return instance;
 		} catch (BrutosException e) {
@@ -306,7 +306,7 @@ public abstract class AbstractApplicationContext
 		}
 	}
 
-	protected RenderView getNewRenderView(Properties config) {
+	protected ConfigurableRenderView getNewRenderView() {
 		try {
 			String className = configuration.getProperty(
 					BrutosConstants.RENDER_VIEW_CLASS,
@@ -314,7 +314,8 @@ public abstract class AbstractApplicationContext
 
 			Class<?> clazz = ClassUtil.get(className);
 
-			RenderView instance = (RenderView) ClassUtil.getInstance(clazz);
+			ConfigurableRenderView instance = 
+				(ConfigurableRenderView) ClassUtil.getInstance(clazz);
 
 			return instance;
 		}
@@ -325,31 +326,24 @@ public abstract class AbstractApplicationContext
 		}
 	}
 
-	protected Invoker createInvoker(ControllerResolver controllerResolver,
-			ObjectFactory objectFactory, ControllerManager controllerManager,
-			ActionResolver actionResolver,
-			ConfigurableApplicationContext applicationContext,
-			RenderView renderView,
-			RequestParserListenerFactory requestParserListenerFactory) {
-		try {
+	protected Invoker getNewInvoker() {
+		
+		try{
 			String className = configuration.getProperty(
 					BrutosConstants.INVOKER_CLASS,
 					BrutosConstants.DEFAULT_INVOKER_CLASS);
 
 			Class<?> clazz = ClassUtil.get(className);
 
-			Invoker instance = (Invoker) ClassUtil.getInstance(clazz,
-					new Class[] {
-							ObjectFactory.class, ControllerManager.class,
-							ActionResolver.class,
-							ConfigurableApplicationContext.class,
-							RenderView.class,
-							RequestParserListenerFactory.class}, new Object[] {
-							objectFactory,
-							controllerManager, actionResolver,
-							applicationContext, renderView,
-							requestParserListenerFactory});
+			Invoker instance = (Invoker) ClassUtil.getInstance(clazz);
 
+			instance.setObjectFactory(objectFactory);
+			instance.setActionResolver(actionResolver);
+			instance.setControllerManager(controllerManager);
+			instance.setApplicationContext(this);
+			instance.setRenderView(renderView);
+			instance.setRequestParser(requestParser);
+			instance.setRequestParserListener(requestParserListenerFactory.getNewListener());
 			return instance;
 		}
 		catch (Exception e) {
@@ -404,25 +398,45 @@ public abstract class AbstractApplicationContext
             throw new BrutosException( e );
         }
     }
-	
+
+    protected ConfigurableRequestParser getConfigurableRequestParser(){
+        try{
+            Properties config = this.getConfiguration();
+            String clazz =
+                config.getProperty(
+            		BrutosConstants.REQUEST_PARSER,
+            		RequestParserImp.class.getName() );
+
+            Class<?> ulfClass = Class.forName(
+        		clazz,
+                true,
+                Thread.currentThread().getContextClassLoader() );
+
+            return (ConfigurableRequestParser)ClassUtil.getInstance(ulfClass);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+    
 	public void destroy() {
 		this.objectFactory.destroy();
 		this.codeGenerator.destroy();
 		this.validatorFactory.destroy();
-		this.actionResolver = null;
-		this.codeGenerator = null;
-		this.configuration = null;
-		this.controllerManager = null;
+		this.scopes.clear();
+		this.actionResolver     = null;
+		this.codeGenerator      = null;
+		this.configuration      = null;
+		this.controllerManager  = null;
 		this.controllerResolver = null;
 		this.interceptorManager = null;
-		this.invoker = null;
-		this.objectFactory = null;
-		this.loggerProvider = null;
-		this.requestFactory = null;
-		this.responseFactory = null;
-		this.scopes.clear();
-		this.validatorFactory = null;
-		this.viewResolver = null;
+		this.invoker            = null;
+		this.objectFactory      = null;
+		this.loggerProvider     = null;
+		this.requestFactory     = null;
+		this.responseFactory    = null;
+		this.validatorFactory   = null;
+		this.viewResolver       = null;
 	}
 
 	public Properties getConfiguration() {
@@ -453,11 +467,15 @@ public abstract class AbstractApplicationContext
 		return this.responseFactory;
 	}
 
+	protected void setControllerResolver(ControllerResolver controllerResolver) {
+		this.controllerResolver = controllerResolver;
+	}
+	
 	public void setInterceptorManager(InterceptorManager interceptorManager) {
 		this.interceptorManager = interceptorManager;
 	}
 
-	public void setRenderView(RenderView renderView) {
+	public void setRenderView(ConfigurableRenderView renderView) {
 		this.renderView = renderView;
 	}
 
@@ -521,13 +539,16 @@ public abstract class AbstractApplicationContext
 		this.viewResolver = viewResolver;
 	}
 
+	public void setRequestParser(ConfigurableRequestParser value){
+		this.requestParser = value;
+	}
+	
+	public RequestParser getRequestParser(){
+		return this.requestParser;
+	}
+	
 	public Object getController(Class<?> clazz) {
 
-		/*
-		Controller controller = controllerResolver.getController(
-				controllerManager, clazz);
-		*/
-		
 		Controller controller = controllerManager.getController(clazz);
 		
 		if (controller == null)
@@ -589,7 +610,7 @@ public abstract class AbstractApplicationContext
 		this.initInstances();
 		this.initScopes();
 		this.initTypes();
-		this.invoker.flush();
+		this.initInvoker();
 		this.loadDefinitions(new ComponentRegistryAdapter(this));
 		this.initComponents();
 	}
