@@ -17,12 +17,6 @@
 
 package org.brandao.brutos.web.test;
 
-import org.brandao.brutos.ActionResolver;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.ControllerManager;
-import org.brandao.brutos.ObjectFactory;
-import org.brandao.brutos.RenderView;
-import org.brandao.brutos.RequestParserListenerFactory;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.web.WebInvoker;
 
@@ -39,21 +33,7 @@ public class MockWebInvoker extends WebInvoker{
     private Object request;
     
     private Object response;
-
     
-    public MockWebInvoker() {
-		super();
-	}
-
-	public MockWebInvoker(ObjectFactory objectFactory,
-			ControllerManager controllerManager, ActionResolver actionResolver,
-			ConfigurableApplicationContext applicationContext,
-			RenderView renderView,
-			RequestParserListenerFactory requestParserListenerFactory) {
-		super(objectFactory, controllerManager, actionResolver, applicationContext,
-				renderView, requestParserListenerFactory);
-	}
-
 	public boolean invoke( StackRequestElement element ){
         this.element = element;
         return super.invoke(element);
