@@ -119,6 +119,17 @@ public class MediaTypeMap extends DataTypeMap{
 		
 	}
 	
+	public MediaType get(MediaType value){
+		
+		String type    = value.getType();
+		String subtype = value.getSubType();
+		
+		if(type.equals("*") && !this.map.isEmpty()){
+			return this.set.iterator().;
+		}
+		
+	}
+	
 	public boolean accept(MediaType value){
 		
 		if(this.hasAll){
@@ -128,13 +139,17 @@ public class MediaTypeMap extends DataTypeMap{
 		String type    = value.getType();
 		String subtype = value.getSubType();
 		
+		if(type.equals("*") && !this.map.isEmpty()){
+			return true;
+		}
+		
 		Map<String, MediaType> subtypes = this.map.get(type);
 		
 		if(subtypes == null){
 			return false;
 		}
 		else{
-			return subtypes.containsKey(subtype);
+			return subtype.equals("*") || subtypes.containsKey(subtype);
 		}
 		
 	}

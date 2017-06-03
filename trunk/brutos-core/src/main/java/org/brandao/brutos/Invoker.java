@@ -287,6 +287,25 @@ public class Invoker {
     		return true;
 	}
 
+	protected RenderView getRenderView(ResourceAction action, MutableMvcRequest request){
+		
+    	DataTypeMap supportedResponseTypes = action.getMethodForm().getResponseTypes();
+    	List<DataType> responseTypes       = request.getAcceptResponse();
+    	
+    	if(supportedResponseTypes.isEmpty()){
+    		supportedResponseTypes = action.getController().getRequestTypes();
+    	}
+    	
+    	for(DataType dataType: responseTypes){
+    		if(supportedResponseTypes.accept(dataType)){
+    			return dataType;
+    		}
+    	}
+    	
+    	return null;
+	}
+	
+	/*
 	protected DataType getAcceptResponseType(ResourceAction action, MutableMvcRequest request){
 		
     	DataTypeMap supportedResponseTypes = action.getMethodForm().getResponseTypes();
@@ -300,14 +319,11 @@ public class Invoker {
     		if(supportedResponseTypes.accept(dataType)){
     			return dataType;
     		}
-    		else
-    		if(dataType.getName().equals("*/*")){
-    			
-    		}
     	}
     	
     	return null;
 	}
+	*/
 	
 	private RequestInstrument getRequestInstrument(Scope scope) {
 		RequestInstrument requestInstrument = (RequestInstrument) scope

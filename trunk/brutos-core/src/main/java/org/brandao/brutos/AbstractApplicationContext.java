@@ -360,7 +360,7 @@ public abstract class AbstractApplicationContext
 	protected ViewResolver getNewViewResolver() {
 		try {
 			String className = configuration.getProperty(
-					"org.brandao.brutos.view.resolver",
+					BrutosConstants.VIEW_RESOLVER,
 					DefaultViewResolver.class.getName());
 
 			ViewResolver tmp = (ViewResolver) ClassUtil.getInstance(ClassUtil
