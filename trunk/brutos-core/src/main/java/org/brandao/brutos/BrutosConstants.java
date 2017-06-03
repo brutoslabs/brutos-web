@@ -120,9 +120,12 @@ public interface BrutosConstants {
 
 	final String RENDER_VIEW_CLASS = "org.brandao.brutos.render_view";
 
-	final String REQUEST_PARSER_LISTENER = "org.brandao.brutos.upload_listener_factory";
+	final String REQUEST_PARSER_LISTENER = "org.brandao.brutos.request.listener_factory";
+
+	final String REQUEST_PARSER = "org.brandao.brutos.request.parser";
 	
 	final String VIEW_RESOLVER = "org.brandao.brutos.view.resolver";
+	
 	@Deprecated
 	final String UPLOAD_LISTENER_CLASS = "org.brandao.brutos.upload_listener_factory";
 

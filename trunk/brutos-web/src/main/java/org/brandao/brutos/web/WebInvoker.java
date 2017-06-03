@@ -18,23 +18,22 @@
 package org.brandao.brutos.web;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.brandao.brutos.ActionResolver;
-import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.ConfigurableRenderView;
-import org.brandao.brutos.ControllerManager;
+import org.brandao.brutos.DataType;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.ObjectFactory;
-import org.brandao.brutos.RequestParserListenerFactory;
+import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.RequestTypeException;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.ResponseTypeException;
 import org.brandao.brutos.StackRequestElement;
+import org.brandao.brutos.mapping.DataTypeMap;
+import org.brandao.brutos.web.mapping.MediaTypeMap;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.parser.JsonParserContentType;
 import org.brandao.brutos.web.parser.MultipartFormDataParserContentType;
@@ -48,21 +47,10 @@ import org.brandao.brutos.web.scope.SessionScope;
 public class WebInvoker extends Invoker{
     
     public WebInvoker(){
-        super();
-    }
-    
-    public WebInvoker(ObjectFactory objectFactory, 
-            ControllerManager controllerManager, ActionResolver actionResolver, 
-            ConfigurableApplicationContext applicationContext, 
-            ConfigurableRenderView renderView, RequestParserListenerFactory requestParserListenerFactory){
-        super(objectFactory, controllerManager, actionResolver, 
-            applicationContext, renderView, requestParserListenerFactory);
-        
 		this.requestParser.registryParser(MediaType.valueOf("application/json"), 
 				new JsonParserContentType());
 		this.requestParser.registryParser(MediaType.valueOf("multipart/form-data"), 
 				new MultipartFormDataParserContentType());
-        
     }
 
     public void invoker(HttpServletRequest request, 
@@ -111,4 +99,41 @@ public class WebInvoker extends Invoker{
 		return super.invoke(element);
 	}
     
+	protected DataType selectResponseType(ResourceAction action, MutableMvcRequest request){
+		
+    	DataTypeMap supportedResponseTypes = action.getMethodForm().getResponseTypes();
+    	List<DataType> responseTypes       = request.getAcceptResponse();
+    	
+    	if(supportedResponseTypes.isEmpty()){
+    		supportedResponseTypes = action.getController().getRequestTypes();
+    	}
+    	
+    	if(supportedResponseTypes.isEmpty()){
+    		
+    		MediaType defaultDataType = (MediaType)this.renderView.getDefaultRenderViewType();
+    		
+	    	for(DataType dataType: responseTypes){
+	    		if(defaultDataType.match((MediaType)dataType)){
+	    			return dataType;
+	    		}
+	    	}
+	    	
+    	}
+    	else{
+    		MediaTypeMap supportedMediaType = (MediaTypeMap)supportedResponseTypes;
+    		
+	    	for(DataType dataType: responseTypes){
+	    		MediaType selected = 
+    				supportedMediaType.getMatch((MediaType)dataType);
+	    			
+	    		if(selected != null){
+	    			return selected;
+	    		}
+	    	}
+	    	
+    	}
+    	
+    	return null;
+	}
+        
 }

@@ -18,7 +18,6 @@
 package org.brandao.brutos;
 
 import java.util.Properties;
-import org.brandao.brutos.TypeManager;
 
 /**
  * 
@@ -34,47 +33,24 @@ public interface ConfigurableApplicationContext extends ApplicationContext {
 
 	void setInterceptorManager(InterceptorManager interceptorManager);
 
-	void setRenderView(RenderView renderView);
+	void setRenderView(ConfigurableRenderView renderView);
 
-	RenderView getRenderView();
-
-	ValidatorFactory getValidatorFactory();
-
-	Invoker getInvoker();
+	void setRequestParser(ConfigurableRequestParser value);
 
 	void setInvoker(Invoker value);
 
 	void setConfiguration(Properties config);
 
-	Properties getConfiguration();
-
 	void setObjectFactory(ObjectFactory objectFactory);
-
-	InterceptorManager getInterceptorManager();
-
-	ControllerManager getControllerManager();
-
-	ObjectFactory getObjectFactory();
-
-	@Deprecated
-	ControllerResolver getControllerResolver();
-
-	ActionResolver getActionResolver();
-
-	CodeGenerator getCodeGenerator();
 
 	void setCodeGenerator(CodeGenerator codeGenerator);
 
 	void setViewResolver(ViewResolver viewResolver);
 
-	ViewResolver getViewResolver();
-
-	TypeManager getTypeManager();
-
 	void setParent(ApplicationContext applicationContext);
 
-	ApplicationContext getParent();
-
+	void destroy();
+	
 	void flush();
 
 }

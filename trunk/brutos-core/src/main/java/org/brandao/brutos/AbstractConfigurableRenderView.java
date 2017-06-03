@@ -3,21 +3,25 @@ package org.brandao.brutos;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractConfigurableRenderView implements ConfigurableRenderView{
+public abstract class AbstractConfigurableRenderView 
+	implements ConfigurableRenderView{
 
 	protected Map<DataType, RenderViewType> renderViewTypeMap;
+	
+	protected DataType defaultRenderViewType;
 	
 	public AbstractConfigurableRenderView(){
 		this.renderViewTypeMap = new HashMap<DataType, RenderViewType>();
 	}
 	
 	public void show(MvcRequest request, MvcResponse response) throws RenderViewException{
-		RenderViewType renderViewType = this.getRenderViewByType(response.getType());
+		RenderViewType renderViewType = this.renderViewTypeMap.get(response.getType());
+		
+		if(renderViewType == null){
+			throw new RenderViewException("not found: " + renderViewType);
+		}
+		
 		renderViewType.show(request, response);
-	}
-	
-	protected RenderViewType getRenderViewByType(DataType type){
-		return this.renderViewTypeMap.get(type);
 	}
 	
 	public synchronized void registryRenderView(DataType dataType, 
@@ -41,6 +45,15 @@ public abstract class AbstractConfigurableRenderView implements ConfigurableRend
 	
 	public boolean contains(DataType dataType) {
 		return this.renderViewTypeMap.containsKey(dataType);
+	}
+	
+	public void setDefaultRenderViewType(DataType dataType)
+			throws RenderViewException {
+		this.defaultRenderViewType = dataType;
+	}
+
+	public DataType getDefaultRenderViewType() throws RenderViewException {
+		return this.defaultRenderViewType;
 	}
 	
 }

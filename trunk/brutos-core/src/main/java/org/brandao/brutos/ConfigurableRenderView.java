@@ -24,6 +24,10 @@ public interface ConfigurableRenderView extends RenderView{
 	
 	void removeRenderView(DataType dataType) throws RenderViewException;
 	
+	void setDefaultRenderViewType(DataType dataType) throws RenderViewException;
+	
+	DataType getDefaultRenderViewType() throws RenderViewException;
+	
 	boolean contains(DataType dataType);
 	
 }

@@ -19,6 +19,7 @@ package org.brandao.brutos;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * 
@@ -31,6 +32,20 @@ public abstract class AbstractRequestParser
 	
 	public AbstractRequestParser(){
 		this.parsers = new HashMap<DataType, ParserContentType>();
+	}
+	
+	public void parserContentType(MvcRequest request, DataType dataType,
+			Properties config, MutableRequestParserEvent requestParserInfo)
+			throws RequestParserException {
+		
+		ParserContentType parser = this.parsers.get(dataType);
+		
+		if(parser == null){
+			throw new RequestParserException("not found: " + dataType.getName());
+		}
+		
+		parser.parserContentType(request, requestParserInfo, config);
+		
 	}
 	
 	public synchronized void registryParser(DataType dataType, 
@@ -50,6 +65,10 @@ public abstract class AbstractRequestParser
 		}
 		
 		this.parsers.remove(value);
+	}
+	
+	public boolean contains(DataType dataType) {
+		return this.parsers.containsKey(dataType);
 	}
 	
 }
