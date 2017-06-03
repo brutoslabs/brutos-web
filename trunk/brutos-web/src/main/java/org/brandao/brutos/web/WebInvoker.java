@@ -35,8 +35,6 @@ import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.mapping.DataTypeMap;
 import org.brandao.brutos.web.mapping.MediaTypeMap;
 import org.brandao.brutos.web.mapping.WebAction;
-import org.brandao.brutos.web.parser.JsonParserContentType;
-import org.brandao.brutos.web.parser.MultipartFormDataParserContentType;
 import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
 
@@ -46,13 +44,6 @@ import org.brandao.brutos.web.scope.SessionScope;
  */
 public class WebInvoker extends Invoker{
     
-    public WebInvoker(){
-		this.requestParser.registryParser(MediaType.valueOf("application/json"), 
-				new JsonParserContentType());
-		this.requestParser.registryParser(MediaType.valueOf("multipart/form-data"), 
-				new MultipartFormDataParserContentType());
-    }
-
     public void invoker(HttpServletRequest request, 
             HttpServletResponse response, FilterChain chain) throws IOException, ServletException{
     	
