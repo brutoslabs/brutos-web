@@ -119,14 +119,34 @@ public class MediaTypeMap extends DataTypeMap{
 		
 	}
 	
-	public MediaType get(MediaType value){
+	public MediaType getMatch(MediaType value){
 		
 		String type    = value.getType();
 		String subtype = value.getSubType();
 		
-		if(type.equals("*") && !this.map.isEmpty()){
-			return this.set.iterator().;
+		if(type.equals("*")){
+			
+			if(!subtype.equals("*")){
+				throw new IllegalStateException("invalid subtype: " + subtype);
+			}
+			
+			return (MediaType)this.set.iterator().next();
 		}
+		
+		Map<String, MediaType> subtypes = this.map.get(type);
+		
+		if(subtypes != null){
+			
+			if(!subtype.equals("*")){
+				return subtypes.values().iterator().next();
+			}
+			else{
+				return subtypes.get(subtype);
+			}
+			
+		}
+		
+		return null;
 		
 	}
 	
