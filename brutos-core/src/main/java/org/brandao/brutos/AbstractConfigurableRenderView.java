@@ -39,4 +39,8 @@ public abstract class AbstractConfigurableRenderView implements ConfigurableRend
 		this.renderViewTypeMap.remove(value);
 	}
 	
+	public boolean contains(DataType dataType) {
+		return this.renderViewTypeMap.containsKey(dataType);
+	}
+	
 }

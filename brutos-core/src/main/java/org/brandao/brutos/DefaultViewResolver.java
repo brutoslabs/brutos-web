@@ -25,7 +25,7 @@ import org.brandao.brutos.mapping.StringUtil;
  */
 public class DefaultViewResolver extends AbstractViewResolver {
 
-	private String getPrefix(Class controllerType) {
+	private String getPrefix(Class<?> controllerType) {
 		String controllerName = controllerType.getSimpleName();
 		// controllerName = controllerName.replaceAll("Controller$", "");
 		controllerName = controllerName.toLowerCase();
@@ -38,7 +38,7 @@ public class DefaultViewResolver extends AbstractViewResolver {
 		return controllerName;
 	}
 
-	private String getPrefix(Class controllerType, String actionExecutor) {
+	private String getPrefix(Class<?> controllerType, String actionExecutor) {
 		String resolvedView = this.getPrefix(controllerType);
 		
 		if (!StringUtil.isEmpty(actionExecutor)) {
@@ -49,7 +49,7 @@ public class DefaultViewResolver extends AbstractViewResolver {
 		return resolvedView;
 	}
 
-	public String getControllerView(Class controllerType, String view) {
+	public String getControllerView(Class<?> controllerType, String view) {
 		String resolvedView = this.getPrefix();
 		
 		if(StringUtil.isEmpty(view)){
@@ -65,7 +65,7 @@ public class DefaultViewResolver extends AbstractViewResolver {
 		return resolvedView;
 	}
 
-	public String getActionView(Class controllerType, String actionExecutor,
+	public String getActionView(Class<?> controllerType, String actionExecutor,
 			String view) {
 		String resolvedView = this.getPrefix();
 
@@ -82,8 +82,8 @@ public class DefaultViewResolver extends AbstractViewResolver {
 		return resolvedView;
 	}
 
-	public String getExceptionView(Class controllerType, String actionExecutor,
-			Class exceptionType, String view) {
+	public String getExceptionView(Class<?> controllerType, String actionExecutor,
+			Class<?> exceptionType, String view) {
 		String resolvedView = this.getPrefix();
 		
 		if(StringUtil.isEmpty(view)){
@@ -99,7 +99,7 @@ public class DefaultViewResolver extends AbstractViewResolver {
 		return resolvedView;
 	}
 
-	public String getExceptionView(Class controllerType, Class exceptionType,
+	public String getExceptionView(Class<?> controllerType, Class<?> exceptionType,
 			String view) {
 		String resolvedView = this.getPrefix();
 		

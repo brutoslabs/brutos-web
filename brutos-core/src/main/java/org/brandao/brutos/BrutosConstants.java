@@ -122,6 +122,7 @@ public interface BrutosConstants {
 
 	final String REQUEST_PARSER_LISTENER = "org.brandao.brutos.upload_listener_factory";
 	
+	final String VIEW_RESOLVER = "org.brandao.brutos.view.resolver";
 	@Deprecated
 	final String UPLOAD_LISTENER_CLASS = "org.brandao.brutos.upload_listener_factory";
 

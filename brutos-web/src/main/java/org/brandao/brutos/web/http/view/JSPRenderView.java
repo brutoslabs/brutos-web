@@ -50,16 +50,27 @@ public class JSPRenderView implements RenderViewType{
 			WebMvcResponse webResponse,
 			String view, DispatcherType dispatcherType){
 
-		HttpServletRequest request = (HttpServletRequest)webRequest.getServletRequest();
+		HttpServletRequest request   = (HttpServletRequest)webRequest.getServletRequest();
 		HttpServletResponse response = (HttpServletResponse)webResponse.getServletResponse();
 		
 		try{
 			if(reason != null){
+				if(responseStatus <= 0){
+					responseStatus = BrutosWebConstants.DEFAULT_RESPONSE_ERROR;
+				}
 				response.sendError(responseStatus, reason);
 				return;
 			}
 			
+			if(responseStatus <= 0){
+				responseStatus = BrutosWebConstants.DEFAULT_RESPONSE_STATUS;
+			}
+			
 			response.setStatus(responseStatus);
+			
+			if(dispatcherType == null){
+				dispatcherType = DispatcherType.FORWARD;
+			}
 			
 	        if( dispatcherType == DispatcherType.FORWARD ){
 	        	request.getRequestDispatcher(view)
