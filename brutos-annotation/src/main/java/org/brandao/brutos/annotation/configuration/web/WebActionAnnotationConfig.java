@@ -60,20 +60,7 @@ public class WebActionAnnotationConfig
 					actionEntry.getAnnotation(ResponseStatus.class) :
 					actionEntry.getControllerClass().getAnnotation(ResponseStatus.class);
 		
-		int responseStatusCode = 0;
-		
-		if(responseStatus != null){
-			int code = responseStatus.code();
-			
-			if(code == BrutosWebConstants.DEFAULT_RESPONSE_STATUS){
-				code = responseStatus.value();
-			}
-					
-		}
-		else{
-			responseStatusCode = BrutosWebConstants.DEFAULT_RESPONSE_STATUS;
-		}
-		
+		int responseStatusCode = responseStatus.value();
 		builder.setResponseStatus(responseStatusCode);
 		
 		return builder;
