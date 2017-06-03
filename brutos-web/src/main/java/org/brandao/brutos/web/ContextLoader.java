@@ -43,12 +43,12 @@ public class ContextLoader {
     
     private Logger logger;
 
-    private static final ConcurrentHashMap<ClassLoader,WebApplicationContext>
+    private static final ConcurrentHashMap<ClassLoader,ConfigurableWebApplicationContext>
             currentWebApplicationContext;
 
     static{
         currentWebApplicationContext =
-                new ConcurrentHashMap<ClassLoader,WebApplicationContext>();
+                new ConcurrentHashMap<ClassLoader,ConfigurableWebApplicationContext>();
     }
 
     public void init( ServletContext servletContext ){
