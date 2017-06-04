@@ -17,13 +17,11 @@
 
 package org.brandao.brutos.annotation.configuration.web;
 
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.configuration.ThrowableEntry;
 import org.brandao.brutos.annotation.web.ResponseError;
 import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.web.BrutosWebConstants;
 
 public class WebThrowableEntry extends ThrowableEntry{
 
@@ -35,10 +33,10 @@ public class WebThrowableEntry extends ThrowableEntry{
 		
 		this.responseError = 
 			defaultValue != null?
-				defaultValue.code() == BrutosWebConstants.DEFAULT_RESPONSE_ERROR? 
+				defaultValue.code() == 0? 
 						defaultValue.value() : 
 						defaultValue.code() :
-				BrutosWebConstants.DEFAULT_RESPONSE_ERROR;
+				0;
 						
 		this.reason = 
 				defaultValue != null?
@@ -48,10 +46,10 @@ public class WebThrowableEntry extends ThrowableEntry{
 		super.setDispatcher( 
 				defaultValue != null?
 					(StringUtil.isEmpty(defaultValue.dispatcher())?
-						BrutosConstants.DEFAULT_DISPATCHERTYPE :
+						null :
 						DispatcherType.valueOf(StringUtil.adjust(defaultValue.dispatcher()))) :
 							
-					BrutosConstants.DEFAULT_DISPATCHERTYPE
+					null
 		);
 
 		super.setEnabled(
@@ -63,10 +61,10 @@ public class WebThrowableEntry extends ThrowableEntry{
 		super.setName(
 				defaultValue != null?
 					StringUtil.isEmpty(defaultValue.name())? 
-						BrutosConstants.DEFAULT_EXCEPTION_NAME :
+						null :
 						StringUtil.adjust(defaultValue.name()) :
 						
-					BrutosConstants.DEFAULT_EXCEPTION_NAME							
+					null							
 		);
 
 		super.setRendered(
@@ -101,7 +99,7 @@ public class WebThrowableEntry extends ThrowableEntry{
 		
 		super.setDispatcher( 
 			(StringUtil.isEmpty(value.dispatcher())? 
-				BrutosConstants.DEFAULT_DISPATCHERTYPE :
+				null :
 				DispatcherType.valueOf(StringUtil.adjust(value.dispatcher())))
 		);
 
@@ -111,7 +109,7 @@ public class WebThrowableEntry extends ThrowableEntry{
 		
 		super.setName(
 			StringUtil.isEmpty(value.name())? 
-				BrutosConstants.DEFAULT_EXCEPTION_NAME :
+				null :
 				StringUtil.adjust(value.name())
 		);
 

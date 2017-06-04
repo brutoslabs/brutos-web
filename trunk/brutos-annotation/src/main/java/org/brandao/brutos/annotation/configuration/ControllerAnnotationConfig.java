@@ -65,11 +65,11 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 		String controllerID             = this.getControllerId(componentRegistry, annotationController, source);
 		boolean resolved                = viewAnnotation == null ? false : viewAnnotation.resolved();
 		boolean rendered                = viewAnnotation == null ? true : viewAnnotation.rendered();
-
+		
 		org.brandao.brutos.DispatcherType dispatcher = 
-			viewAnnotation == null || "".equals(viewAnnotation.dispatcher())? 
-				BrutosConstants.DEFAULT_DISPATCHERTYPE : 
-				org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
+			viewAnnotation == null? 
+				null : 
+				org.brandao.brutos.DispatcherType.valueOf(StringUtil.adjust(viewAnnotation.dispatcher()));
 		
 		if (annotationController != null) {
 			name = annotationController.name();

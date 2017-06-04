@@ -63,9 +63,9 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 		String result           = resultAnnotation == null ? null : resultAnnotation.value();
 
 		org.brandao.brutos.DispatcherType dispatcher = 
-				viewAnnotation == null || "".equals(viewAnnotation.dispatcher())? 
-					BrutosConstants.DEFAULT_DISPATCHERTYPE : 
-					org.brandao.brutos.DispatcherType.valueOf(viewAnnotation.dispatcher());
+				viewAnnotation == null? 
+					null : 
+					org.brandao.brutos.DispatcherType.valueOf(StringUtil.adjust(viewAnnotation.dispatcher()));
 
 		boolean resultRendered = resultView == null ? false : resultView.rendered();
 		boolean rendered = viewAnnotation == null ? true : viewAnnotation.rendered();
@@ -123,6 +123,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 		return actionBuilder.addAlias(id);
 	}
 	
+	/*
 	protected org.brandao.brutos.DispatcherType getDispatcherType(
 			ActionEntry actionEntry, View viewAnnotation) {
 
@@ -137,7 +138,8 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 			return BrutosConstants.DEFAULT_DISPATCHERTYPE;
 
 	}
-
+    */
+	
 	protected String getId(Action action, ActionEntry method,
 			ControllerBuilder controllerBuilder,
 			ComponentRegistry componentRegistry) {

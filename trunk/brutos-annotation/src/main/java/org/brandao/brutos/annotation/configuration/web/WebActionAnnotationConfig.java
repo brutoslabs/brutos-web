@@ -19,7 +19,6 @@ import org.brandao.brutos.annotation.web.ResponseError;
 import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.annotation.web.ResponseStatus;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.RequestMethodType;
 import org.brandao.brutos.web.WebActionBuilder;
 import org.brandao.brutos.web.WebControllerBuilder;
@@ -44,7 +43,7 @@ public class WebActionAnnotationConfig
 		
 		RequestMethodType requestMethodType = 
 				requestMethod == null?
-					BrutosWebConstants.DEFAULT_REQUEST_METHOD_TYPE :
+					null :
 					RequestMethodType.valueOf(StringUtil.adjust(requestMethod.value()));
 		
 		WebControllerBuilder webControllerBuilder = 
@@ -60,8 +59,10 @@ public class WebActionAnnotationConfig
 					actionEntry.getAnnotation(ResponseStatus.class) :
 					actionEntry.getControllerClass().getAnnotation(ResponseStatus.class);
 		
-		int responseStatusCode = responseStatus.value();
-		builder.setResponseStatus(responseStatusCode);
+		if(responseStatus != null){
+			builder.setResponseStatus(responseStatus.value());
+			
+		}
 		
 		return builder;
 	}
