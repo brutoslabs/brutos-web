@@ -312,11 +312,13 @@ public class Invoker {
     		supportedRequestTypes = action.getController().getRequestTypes();
     	}
     	
-    	if(!supportedRequestTypes.accept(request.getType())){
-    		return this.requestParser.contains(request.getType());
+    	if(supportedRequestTypes.isEmpty()){
+    		return this.applicationContext.getRequestType().equals(request.getType());
     	}
-    	else
-    		return true;
+    	else{
+    		return supportedRequestTypes.accept(request.getType());
+    	}
+    	
 	}
 
 	protected DataType selectResponseType(ResourceAction action, MutableMvcRequest request){
