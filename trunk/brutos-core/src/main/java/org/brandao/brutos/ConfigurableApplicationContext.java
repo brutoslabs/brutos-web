@@ -71,7 +71,7 @@ public interface ConfigurableApplicationContext extends ApplicationContext {
 
 	void setCodeGenerator(CodeGenerator codeGenerator);
 
-	void setViewResolver(ViewResolver viewResolver);
+	void setViewResolver(ConfigurableViewResolver viewResolver);
 
 	void setParent(ApplicationContext applicationContext);
 

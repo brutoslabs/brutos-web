@@ -29,6 +29,8 @@ public abstract class AbstractRequestParser
 	implements ConfigurableRequestParser{
 
 	protected Map<DataType, ParserContentType> parsers;
+
+	protected DataType defaultDataType;
 	
 	public AbstractRequestParser(){
 		this.parsers = new HashMap<DataType, ParserContentType>();
@@ -70,5 +72,14 @@ public abstract class AbstractRequestParser
 	public boolean contains(DataType dataType) {
 		return this.parsers.containsKey(dataType);
 	}
-	
+
+	public void setDefaultRenderViewType(DataType dataType)
+			throws RequestParserException{
+		this.defaultDataType = dataType;
+	}
+
+	public DataType getDefaultRenderViewType() throws RequestParserException{
+		return this.defaultDataType;
+	}
+		
 }
