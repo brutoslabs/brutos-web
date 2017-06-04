@@ -18,7 +18,6 @@
 package org.brandao.brutos.web;
 
 import org.brandao.brutos.ActionType;
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManagerImp;
 import org.brandao.brutos.DispatcherType;
@@ -48,7 +47,7 @@ public class WebControllerManager extends ControllerManagerImp{
             String name, Class<?> classType, String actionId ){
             return addController( id, view, resolvedView,
                     dispatcherType, name, classType, actionId, 
-                    WebActionType.HIERARCHY);
+                    null);
     }
     
 	public ControllerBuilder addController(String id, String view,
@@ -59,7 +58,18 @@ public class WebControllerManager extends ControllerManagerImp{
 		view     = StringUtil.adjust(view);
 		actionId = StringUtil.adjust(actionId);
 		name     = StringUtil.adjust(name);
-		actionType = actionType == null? WebActionType.HIERARCHY : WebActionType.valueOf(actionType.id());
+		
+		actionId = actionId == null?
+				this.applicationContext.getActionParameterName() :
+				actionId;
+				
+		dispatcherType = dispatcherType == null? 
+				this.applicationContext.getDispatcherType() :
+					dispatcherType;
+
+		actionType = actionType == null? 
+				this.applicationContext.getActionType() :
+					actionType;
 		
 		if (classType == null){
 			throw new MappingException("invalid class type: "
@@ -70,9 +80,6 @@ public class WebControllerManager extends ControllerManagerImp{
 			throw new MappingException("action type is required");
 		}
 		
-		if (StringUtil.isEmpty(actionId))
-			actionId = BrutosConstants.DEFAULT_ACTION_ID;
-
         if(resolvedView && view != null)
             WebUtil.checkURI(view, true);
 		

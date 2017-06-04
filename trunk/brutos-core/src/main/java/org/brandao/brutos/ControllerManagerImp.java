@@ -34,12 +34,19 @@ import org.brandao.brutos.mapping.StringUtil;
 public class ControllerManagerImp implements ControllerManager {
 
 	protected Map<String, Controller> mappedControllers;
+	
 	protected Map<Class<?>, Controller> classMappedControllers;
+	
 	protected ValidatorFactory validatorFactory;
+	
 	protected ControllerBuilder current;
+	
 	protected ConfigurableApplicationContext applicationContext;
+	
 	protected InterceptorManager interceptorManager;
+	
 	protected ControllerManager parent;
+	
 	protected InternalUpdate internalUpdate;
 
 	public ControllerManagerImp() {
@@ -50,23 +57,23 @@ public class ControllerManagerImp implements ControllerManager {
 
 	public ControllerBuilder addController(Class<?> classtype) {
 		return addController(null, null, false, null, classtype,
-				"invoke");
+				null);
 	}
 
 	public ControllerBuilder addController(String id, Class<?> classType) {
 		return addController(id, null, false, null, classType,
-				"invoke");
+				null);
 	}
 
 	public ControllerBuilder addController(String id, String view,
 			boolean resolvedView, Class<?> classType) {
-		return addController(id, view, resolvedView, null, classType, "invoke");
+		return addController(id, view, resolvedView, null, classType, null);
 	}
 
 	public ControllerBuilder addController(String id, String view,
 			boolean resolvedView, String name, Class<?> classType,
 			String actionId) {
-		return addController(id, view, resolvedView, DispatcherType.FORWARD,
+		return addController(id, view, resolvedView, null,
 				name, classType, actionId);
 	}
 
@@ -74,7 +81,7 @@ public class ControllerManagerImp implements ControllerManager {
 			boolean resolvedView, DispatcherType dispatcherType, String name,
 			Class<?> classType, String actionId) {
 		return addController(id, view, resolvedView, dispatcherType, name,
-				classType, actionId, ActionType.PARAMETER);
+				classType, actionId, null);
 	}
 
 	public ControllerBuilder addController(String id, String view,
@@ -93,6 +100,18 @@ public class ControllerManagerImp implements ControllerManager {
 		actionId = StringUtil.adjust(actionId);
 		name     = StringUtil.adjust(name);
 
+		actionId = actionId == null?
+				this.applicationContext.getActionParameterName() :
+				actionId;
+				
+		dispatcherType = dispatcherType == null? 
+				this.applicationContext.getDispatcherType() :
+					dispatcherType;
+
+		actionType = actionType == null? 
+				this.applicationContext.getActionType() :
+					actionType;
+				
 		if (classType == null){
 			throw new MappingException("invalid class type: "
 					+ classType);
@@ -102,9 +121,6 @@ public class ControllerManagerImp implements ControllerManager {
 			throw new MappingException("action type is required");
 		}
 		
-		if (StringUtil.isEmpty(actionId))
-			actionId = BrutosConstants.DEFAULT_ACTION_ID;
-
     	if(!actionType.isValidControllerId(id))
     		throw new MappingException("invalid controller id: " + id);
 
