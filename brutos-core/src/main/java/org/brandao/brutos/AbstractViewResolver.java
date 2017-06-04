@@ -28,11 +28,7 @@ public abstract class AbstractViewResolver implements ViewResolver {
 	public String getView(ControllerBuilder controllerBuilder,
 			ActionBuilder actionBuilder, Class<?> exception, String view) {
 
-		String autoResolver = this.context.getConfiguration().getProperty(
-				BrutosConstants.VIEW_RESOLVER_AUTO,
-				BrutosConstants.DEFAULT_VIEW_RESOLVER);
-
-		if (!autoResolver.toLowerCase().equals("true"))
+		if (!this.context.isAutomaticViewResolver())
 			return view;
 
 		if (exception != null) {
@@ -57,27 +53,19 @@ public abstract class AbstractViewResolver implements ViewResolver {
 	}
 
 	public String getPrefix() {
-		return this.context.getConfiguration().getProperty(
-				BrutosConstants.VIEW_RESOLVER_PREFIX,
-				BrutosConstants.DEFAULT_PREFIX_VIEW);
+		return this.context.getViewPrefix();
 	}
 
 	public String getSuffix() {
-		return this.context.getConfiguration().getProperty(
-				BrutosConstants.VIEW_RESOLVER_SUFFIX,
-				BrutosConstants.DEFAULT_SUFFIX_VIEW);
+		return this.context.getViewSuffix();
 	}
 
 	public String getIndexName() {
-		return this.context.getConfiguration().getProperty(
-				BrutosConstants.VIEW_RESOLVER_INDEX,
-				BrutosConstants.DEFAULT_INDEX_VIEW);
+		return this.context.getViewIndex();
 	}
 
 	public String getSeparator() {
-		return this.context.getConfiguration().getProperty(
-				BrutosConstants.VIEW_RESOLVER_SEPARATOR,
-				BrutosConstants.DEFAULT_SEPARATOR_VIEW);
+		return this.context.getSeparator();
 	}
 
 }

@@ -85,6 +85,22 @@ public abstract class AbstractApplicationContext
 	
 	protected DispatcherType dispatcherType;
 	
+	protected boolean automaticViewResolver;
+	
+	protected EnumerationType enumerationType;
+	
+	protected ScopeType scopeType;
+	
+	protected String temporalProperty;
+	
+	protected String viewPrefix;
+	
+	protected String viewSuffix;
+	
+	protected String viewIndex;
+	
+	protected String separator;
+	
 	public AbstractApplicationContext() {
 		this(null);
 	}
@@ -119,6 +135,15 @@ public abstract class AbstractApplicationContext
 		this.requestType                    = this.getInitRequestType();
 		this.responseType                   = this.getInitResponseType();
 		this.dispatcherType                 = this.getInitDispatcherType();
+		this.automaticViewResolver          = this.getInitAutomaticViewResolver();
+		this.enumerationType                = this.getInitEnumerationType();
+		this.scopeType                      = this.getInitScopeType();
+		this.temporalProperty               = this.getInitTemporalProperty();
+		this.automaticViewResolver          = this.getInitAutomaticViewResolver();
+		this.viewPrefix                     = this.getInitViewPrefix();
+		this.viewSuffix                     = this.getInitViewSuffix();
+		this.separator                      = this.getInitSeparator();
+		this.viewIndex                      = this.getInitViewIndex();
 		this.invoker						= this.getNewInvoker();
 	}
 
@@ -470,6 +495,126 @@ public abstract class AbstractApplicationContext
             throw new BrutosException( e );
         }
     }
+
+    protected boolean getInitAutomaticViewResolver(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.AUTO_VIEW_RESOLVER,
+            		Boolean.TRUE.toString());
+
+            return Boolean.valueOf(value);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected EnumerationType getInitEnumerationType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.ENUMERATION_TYPE,
+            		EnumerationType.AUTO.toString());
+
+            return EnumerationType.valueOf(value);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected ScopeType getInitScopeType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.SCOPE_TYPE,
+            		ScopeType.PARAM.toString());
+
+            return ScopeType.valueOf(value);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected String getInitTemporalProperty(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.TEMPORAL_PROPERTY,
+            		BrutosConstants.DEFAULT_TEMPORALPROPERTY);
+
+            return value;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected String getInitViewPrefix(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.VIEW_RESOLVER_PREFIX,
+            		BrutosConstants.DEFAULT_PREFIX_VIEW);
+
+            return value;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected String getInitViewSuffix(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.VIEW_RESOLVER_SUFFIX,
+            		BrutosConstants.DEFAULT_SUFFIX_VIEW);
+
+            return value;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected String getInitViewIndex(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.VIEW_RESOLVER_INDEX,
+            		BrutosConstants.DEFAULT_INDEX_VIEW);
+
+            return value;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected String getInitSeparator(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.VIEW_RESOLVER_SEPARATOR,
+            		BrutosConstants.DEFAULT_SEPARATOR_VIEW);
+
+            return value;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
     
 	public void destroy() {
 		this.objectFactory.destroy();
@@ -491,6 +636,70 @@ public abstract class AbstractApplicationContext
 		this.viewResolver       = null;
 	}
 
+	public String getViewPrefix() {
+		return this.viewPrefix;
+	}
+
+	public void setViewPrefix(String value) {
+		this.viewPrefix = value;
+	}
+	
+	public String getViewSuffix() {
+		return this.viewSuffix;
+	}
+
+	public void setViewSuffix(String value) {
+		this.viewSuffix = value;
+	}
+	
+	public String getViewIndex() {
+		return this.viewIndex;
+	}
+
+	public void setViewIndex(String value) {
+		this.viewIndex = value;
+	}
+	
+	public String getSeparator() {
+		return this.separator;
+	}
+
+	public void setSeparator(String value) {
+		this.separator = value;
+	}
+	
+	public void setAutomaticViewResolver(boolean value) {
+		this.automaticViewResolver = value;
+	}
+
+	public void setTemporalProperty(String value) {
+		this.temporalProperty = value;
+	}
+
+	public boolean isAutomaticViewResolver() {
+		return this.automaticViewResolver;
+	}
+
+	public String getTemporalProperty() {
+		return this.temporalProperty;
+	}
+	
+    public void setScopeType(ScopeType value){
+    	this.scopeType = value;
+    }
+
+    public ScopeType getScopeType(){
+    	return this.scopeType;
+    }
+    
+	public void setEnumerationType(EnumerationType value){
+		this.enumerationType = value;
+	}
+	
+	public EnumerationType getEnumerationType(){
+		return this.enumerationType;
+	}
+	
 	public void setDispatcherType(DispatcherType value){
 		this.dispatcherType = value;
 	}

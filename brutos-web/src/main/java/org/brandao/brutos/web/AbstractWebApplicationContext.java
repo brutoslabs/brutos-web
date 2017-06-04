@@ -325,6 +325,21 @@ public abstract class AbstractWebApplicationContext
         }
     }
     
+    protected ScopeType getInitScopeType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.SCOPE_TYPE,
+            		WebScopeType.PARAM.toString());
+
+            return WebScopeType.valueOf(value);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+    
     public ServletContext getContext(){
         return this.servletContext;
     }

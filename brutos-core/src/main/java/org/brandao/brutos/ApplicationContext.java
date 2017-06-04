@@ -41,6 +41,22 @@ public interface ApplicationContext {
 	
 	LoggerProvider getLoggerProvider();
 	
+	boolean isAutomaticViewResolver();
+	
+    ScopeType getScopeType();
+	
+	String getViewPrefix();
+
+	String getViewSuffix();
+
+	String getViewIndex();
+
+	String getSeparator();
+
+	EnumerationType getEnumerationType();
+	
+    String getTemporalProperty();
+	
 	Scopes getScopes();
 
 	Object getController(Class<?> clazz);
