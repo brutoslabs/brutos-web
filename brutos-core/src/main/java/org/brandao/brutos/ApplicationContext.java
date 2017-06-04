@@ -37,6 +37,10 @@ public interface ApplicationContext {
 	
 	DataType getResponseType();
 	
+    String getActionParameterName();
+
+    ActionType getActionType();
+    
 	DispatcherType getDispatcherType();
 	
 	LoggerProvider getLoggerProvider();

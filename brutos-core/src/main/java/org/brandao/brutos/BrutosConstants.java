@@ -87,7 +87,6 @@ public interface BrutosConstants {
 
 	final EnumerationType DEFAULT_ENUMERATIONTYPE = EnumerationType.ORDINAL;
 
-	@Deprecated
 	final String ACTION_TYPE = "org.brandao.brutos.action_strategy";
 
 	final String CONTROLLER_MANAGER_CLASS = "org.brandao.brutos.manager.controller";
@@ -130,6 +129,8 @@ public interface BrutosConstants {
 
 	final String SCOPE_TYPE = "org.brandao.brutos.scope_type";
 
+	final String ACTION_PARAMETER_NAME = "org.brandao.brutos.action.parameter_name";
+	
 	final String TEMPORAL_PROPERTY = "org.brandao.brutos.temporal_property";
 	
 	final String DISPATCHER_TYPE = "org.brandao.brutos.view.dispatcher_type";
@@ -165,9 +166,10 @@ public interface BrutosConstants {
 
 	final String DEFAULT_CDI_BEAN_MANAGER = "java:comp/BeanManager";
 
-	@Deprecated
 	final String DEFAULT_ACTION_TYPE_NAME = "parameter";
 
+	final String DEFAULT_ACTION_PARAMETER_NAME = "invoke";
+	
 	final String DEFAULT_SEPARATOR = "-";
 
 	final String DEFAULT_ENUMERATION_TYPE = "ordinal";
@@ -185,8 +187,6 @@ public interface BrutosConstants {
 	final String DEFAULT_INDEX_VIEW = "index";
 
 	final String DEFAULT_SEPARATOR_VIEW = ".";
-
-	final String DEFAULT_ACTION_ID = "invoke";
 
 	final String DEFAULT_VIEW_RESOLVER = "true";
 

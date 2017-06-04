@@ -35,6 +35,10 @@ public interface ConfigurableApplicationContext extends ApplicationContext {
 
 	void setRenderView(ConfigurableRenderView renderView);
 
+    void setActionParameterName(String name);
+
+    void setActionType(ActionType value);
+    
 	void setAutomaticViewResolver(boolean value);
 	
 	void setRequestParser(ConfigurableRequestParser value);

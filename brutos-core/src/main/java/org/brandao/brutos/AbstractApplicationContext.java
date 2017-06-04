@@ -101,6 +101,10 @@ public abstract class AbstractApplicationContext
 	
 	protected String separator;
 	
+    protected String actionParameterName;
+	
+    protected ActionType actionType;
+    
 	public AbstractApplicationContext() {
 		this(null);
 	}
@@ -144,6 +148,8 @@ public abstract class AbstractApplicationContext
 		this.viewSuffix                     = this.getInitViewSuffix();
 		this.separator                      = this.getInitSeparator();
 		this.viewIndex                      = this.getInitViewIndex();
+		this.actionParameterName            = this.getInitActionParameterName();
+		this.actionType                     = this.getInitActionType();
 		this.invoker						= this.getNewInvoker();
 	}
 
@@ -616,6 +622,36 @@ public abstract class AbstractApplicationContext
         }
     }
     
+    protected String getInitActionParameterName(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.ACTION_PARAMETER_NAME,
+            		BrutosConstants.DEFAULT_ACTION_PARAMETER_NAME);
+
+            return value;
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected ActionType getInitActionType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.ACTION_TYPE,
+            		BrutosConstants.DEFAULT_ACTION_TYPE_NAME);
+
+            return ActionType.valueOf(value);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+    
 	public void destroy() {
 		this.objectFactory.destroy();
 		this.codeGenerator.destroy();
@@ -636,6 +672,22 @@ public abstract class AbstractApplicationContext
 		this.viewResolver       = null;
 	}
 
+	public void setActionParameterName(String name) {
+		this.actionParameterName = name;
+	}
+
+	public String getActionParameterName() {
+		return this.actionParameterName;
+	}
+	
+    public void setActionType(ActionType value){
+    	this.actionType = value;
+    }
+	
+    public ActionType getActionType(){
+    	return this.actionType;
+    }
+    
 	public String getViewPrefix() {
 		return this.viewPrefix;
 	}

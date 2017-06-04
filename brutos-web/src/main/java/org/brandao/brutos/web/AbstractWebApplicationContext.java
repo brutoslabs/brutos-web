@@ -23,9 +23,18 @@ import java.util.Properties;
 
 import javax.servlet.ServletContext;
 
-import org.brandao.brutos.*;
+import org.brandao.brutos.AbstractApplicationContext;
+import org.brandao.brutos.ActionType;
+import org.brandao.brutos.ApplicationContext;
+import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ControllerBuilder;
+import org.brandao.brutos.DataType;
+import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.InterceptorBuilder;
+import org.brandao.brutos.InterceptorStackBuilder;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.io.Resource;
-import org.brandao.brutos.web.io.ServletContextResource;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.StringUtil;
@@ -35,6 +44,7 @@ import org.brandao.brutos.type.DefaultTypeFactory;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.web.http.Download;
 import org.brandao.brutos.web.http.UploadedFile;
+import org.brandao.brutos.web.io.ServletContextResource;
 import org.brandao.brutos.web.scope.ApplicationScope;
 import org.brandao.brutos.web.scope.FlashScope;
 import org.brandao.brutos.web.scope.HeaderScope;
@@ -119,9 +129,9 @@ public abstract class AbstractWebApplicationContext
     
 	protected void initInstances() {
     	super.initInstances();
-		this.requestMethodType = this.getInitRequestMethodType();
-		this.responseStatus    = this.getInitResponseStatus();
-		this.responseError     = this.getInitResponseError();
+		this.requestMethodType   = this.getInitRequestMethodType();
+		this.responseStatus      = this.getInitResponseStatus();
+		this.responseError       = this.getInitResponseError();
     }
     
     protected void initTypes(){
@@ -338,6 +348,28 @@ public abstract class AbstractWebApplicationContext
         catch( Exception e ){
             throw new BrutosException( e );
         }
+    }
+
+    protected ActionType getInitActionType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.ACTION_TYPE,
+            		WebActionType.HIERARCHY.id());
+
+            return WebActionType.valueOf(value);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }    
+    public void setActionParameterName(String name){
+    	this.actionParameterName = name;
+    }
+    
+    public String getActionParameterName(){
+    	return this.actionParameterName;
     }
     
     public ServletContext getContext(){
