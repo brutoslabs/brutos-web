@@ -42,12 +42,20 @@ public interface BrutosWebConstants extends BrutosConstants{
 	@Deprecated
 	final String REQUEST_PARSER_CLASS = "org.brandao.brutos.web.request_parser";
 
+	final String REQUEST_METHOD_TYPE = "org.brandao.brutos.web.request.method_type";
+
+	final String RESPONSE_STATUS = "org.brandao.brutos.web.response.status";
+
+	final String RESPONSE_ERROR = "org.brandao.brutos.web.response.error";
+
 	@Deprecated
 	final String DEFAULT_REQUEST_PARSER = "org.brandao.brutos.web.http.HttpRequestParserImp";
 	
 	final RequestMethodType DEFAULT_REQUEST_METHOD_TYPE = RequestMethodType.GET;
 	
 	final MediaType DEFAULT_REQUEST_TYPE = MediaType.APPLICATION_X_WWW_FORM_URLENCODED;
+
+	final MediaType DEFAULT_RESPONSE_TYPE = MediaType.TEXT_HTML;
 	
 	final int DEFAULT_RESPONSE_ERROR  = HttpStatus.INTERNAL_SERVER_ERROR;
 

@@ -36,7 +36,13 @@ public interface ConfigurableWebApplicationContext
 
     public static final String  contextConfigName   = "contextConfig";
     
-    void setServletContext( ServletContext servletContext );
+    void setRequestMethod(RequestMethodType value);
+
+    void setResponseStatus(int value);
+
+    void setResponseError(int value);
+    
+    void setServletContext(ServletContext servletContext);
     
     void setLocations(String[] locations);
     

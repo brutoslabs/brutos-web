@@ -56,6 +56,12 @@ public abstract class AbstractWebApplicationContext
 
     protected ServletContext servletContext;
     
+    protected RequestMethodType requestMethodType;
+    
+    protected int responseStatus;
+    
+    protected int responseError;
+    
     protected String[] locations;
     
     protected Resource[] resources;
@@ -63,7 +69,7 @@ public abstract class AbstractWebApplicationContext
     public AbstractWebApplicationContext(){
     }
 
-    public AbstractWebApplicationContext( ApplicationContext parent ) {
+    public AbstractWebApplicationContext(ApplicationContext parent) {
         super(parent);
     }
     
@@ -87,6 +93,37 @@ public abstract class AbstractWebApplicationContext
         return this.resources;
     }
 
+    public RequestMethodType getRequestMethod(){
+    	return this.requestMethodType;
+    }
+    
+    public void setRequestMethod(RequestMethodType value){
+    	this.requestMethodType = value;
+    }
+    
+    public void setResponseStatus(int value){
+    	this.responseStatus = value;
+    }
+
+    public int getResponseStatus(){
+    	return this.responseStatus;
+    }
+    
+    public void setResponseError(int value){
+    	this.responseError = value;
+    }
+    
+    public int getResponseError(){
+    	return this.responseError;
+    }
+    
+	protected void initInstances() {
+    	super.initInstances();
+		this.requestMethodType = this.getInitRequestMethodType();
+		this.responseStatus    = this.getInitResponseStatus();
+		this.responseError     = this.getInitResponseError();
+    }
+    
     protected void initTypes(){
         super.initTypes();
         this.typeManager.remove(Serializable.class);
@@ -215,6 +252,79 @@ public abstract class AbstractWebApplicationContext
         
     }
 
+    protected RequestMethodType getInitRequestMethodType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosWebConstants.REQUEST_METHOD_TYPE,
+            		RequestMethodType.GET.getName() );
+
+            return RequestMethodType.valueOf(value.toUpperCase());
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected int getInitResponseStatus(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosWebConstants.RESPONSE_STATUS,
+            		String.valueOf(BrutosWebConstants.DEFAULT_RESPONSE_STATUS) );
+
+            return Integer.parseInt(value);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected int getInitResponseError(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosWebConstants.RESPONSE_ERROR,
+            		String.valueOf(BrutosWebConstants.DEFAULT_RESPONSE_ERROR) );
+
+            return Integer.parseInt(value);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+    
+    protected DataType getInitRequestType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosWebConstants.DEFAULT_REQUEST_TYPE.getName());
+
+            return MediaType.valueOf(value.toUpperCase());
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected DataType getInitResponseType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosWebConstants.DEFAULT_RESPONSE_TYPE.getName());
+
+            return MediaType.valueOf(value.toUpperCase());
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+    
     public ServletContext getContext(){
         return this.servletContext;
     }

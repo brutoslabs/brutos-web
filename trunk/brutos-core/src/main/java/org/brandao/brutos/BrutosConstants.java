@@ -122,7 +122,13 @@ public interface BrutosConstants {
 
 	final String REQUEST_PARSER_LISTENER = "org.brandao.brutos.request.listener_factory";
 
+	final String REQUEST_TYPE = "org.brandao.brutos.request.default_type";
+	
 	final String REQUEST_PARSER = "org.brandao.brutos.request.parser";
+
+	final String RESPONSE_TYPE = "org.brandao.brutos.response.default_type";
+
+	final String DISPATCHER_TYPE = "org.brandao.brutos.view.dispatcher_type";
 	
 	final String VIEW_RESOLVER = "org.brandao.brutos.view.resolver";
 	
