@@ -108,10 +108,8 @@ public class ActionBuilder extends RestrictionBuilder {
 	}
 
 	public ActionBuilder addThrowable(Class<?> target, String id) {
-		return addThrowable(target, null, !"true".equals(applicationContext
-				.getConfiguration().getProperty(
-						BrutosConstants.VIEW_RESOLVER_AUTO)), id,
-				DispatcherType.FORWARD);
+		return addThrowable(target, null, false, id,
+				null);
 	}
 
 	public ActionBuilder addThrowable(Class<?> target, String view,
@@ -132,6 +130,9 @@ public class ActionBuilder extends RestrictionBuilder {
 				view : 
 				applicationContext.getViewResolver().getView(this.controllerBuilder, this, target, view);
 
+		dispatcher = dispatcher == null? 
+				this.applicationContext.getDispatcherType() :
+				dispatcher;
 
 		if (target == null){
 			throw new MappingException("target is required: "
@@ -289,36 +290,34 @@ public class ActionBuilder extends RestrictionBuilder {
 
 	public ResultActionBuilder setResultAction(String name,
 			String temporalProperty, Class<?> classType) {
-		return setResultAction(name, EnumerationType.ORDINAL,
+		return setResultAction(name, null,
 				temporalProperty, null, null, null, false, classType);
 	}
 
 	public ResultActionBuilder setResultAction(String name, Type typeDef) {
-		return setResultAction(name, EnumerationType.ORDINAL, "dd/MM/yyyy",
+		return setResultAction(name, null, null,
 				null, typeDef, null, false, typeDef.getClassType());
 	}
 
 	public ResultActionBuilder setResultAction(String name,
 			Class<?> classType) {
-		return setResultAction(name, EnumerationType.ORDINAL, "dd/MM/yyyy",
+		return setResultAction(name, null, null,
 				null, null, null, false, classType);
 	}
 
 	public ResultActionBuilder setResultActionMapping(String mapping,
 			Class<?> classType) {
-		return setResultAction(null, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", mapping, null, null, false, classType);
+		return setResultAction(null, null, null, mapping, null, null, false, classType);
 	}
 
 	public ResultActionBuilder setResultActionMapping(String name, String mapping,
 			Class<?> classType) {
-		return setResultAction(name, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", mapping, null, null, false, classType);
+		return setResultAction(name, null, null, mapping, null, null, false, classType);
 	}
 
 	public ResultActionBuilder setResultActionMapping(String name, String mapping,
 			ScopeType scope, Class<?> classType) {
-		return setResultAction(name, EnumerationType.ORDINAL, "dd/MM/yyyy",
+		return setResultAction(name, null, null,
 				mapping, null, null, false, classType);
 	}
 
@@ -362,8 +361,7 @@ public class ActionBuilder extends RestrictionBuilder {
 	}
 
 	public ResultActionBuilder setStaticResultAction(Class<?> classType, Object value) {
-		return setResultAction(null, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", null, null, value, false, classType);
+		return setResultAction(null, null, null, null, null, value, false, classType);
 	}
 
 	public ResultActionBuilder setResultAction(String name,
@@ -376,15 +374,13 @@ public class ActionBuilder extends RestrictionBuilder {
 
 	public ResultActionBuilder setGenericResultAction(String name, Class<?> classType) {
 		return this.setResultAction(name,
-				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, null, null,
+				null, null, null, null, null,
 				false, true, classType);
 	}
 
 	public ResultActionBuilder setGenericResultAction(String name) {
 		return this.setResultAction(name,
-				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, null, null,
+				null, null, null, null, null,
 				false, true, null);
 	}
 
@@ -402,12 +398,25 @@ public class ActionBuilder extends RestrictionBuilder {
 			boolean generic, Object classType) {
 
 		name = StringUtil.adjust(name);
+		
 		temporalProperty = StringUtil.adjust(temporalProperty);
+		
 		mapping = StringUtil.adjust(mapping);
+		
 		Class<?> rawType = TypeUtil.getRawType(classType);
 
-		name = name == null? BrutosConstants.DEFAULT_RETURN_NAME : name;
+		name = name == null? 
+			BrutosConstants.DEFAULT_RETURN_NAME : 
+			name;
 
+		temporalProperty = StringUtil.isEmpty(temporalProperty)?
+				this.applicationContext.getTemporalProperty() :
+				StringUtil.adjust(temporalProperty);
+		
+		enumProperty = enumProperty == null?
+				this.applicationContext.getEnumerationType() :
+				enumProperty;
+		
 		Configuration validatorConfig = new Configuration();
 
 		org.brandao.brutos.mapping.ResultAction resultAction = 

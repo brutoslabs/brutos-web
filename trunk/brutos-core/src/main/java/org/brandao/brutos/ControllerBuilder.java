@@ -17,13 +17,30 @@
 
 package org.brandao.brutos;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import org.brandao.brutos.ControllerManager.InternalUpdate;
 import org.brandao.brutos.bean.BeanInstance;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
-import org.brandao.brutos.mapping.*;
+import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ActionID;
+import org.brandao.brutos.mapping.Bean;
+import org.brandao.brutos.mapping.CollectionBean;
+import org.brandao.brutos.mapping.ConstructorBean;
+import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.Interceptor;
+import org.brandao.brutos.mapping.InterceptorStack;
+import org.brandao.brutos.mapping.MapBean;
+import org.brandao.brutos.mapping.MappingException;
+import org.brandao.brutos.mapping.MetaBean;
+import org.brandao.brutos.mapping.PropertyController;
+import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.type.NullType;
 import org.brandao.brutos.type.ObjectType;
 import org.brandao.brutos.type.Type;
@@ -112,10 +129,8 @@ public class ControllerBuilder {
 	}
 	
 	public ControllerBuilder addThrowable(Class<?> target, String id) {
-		return addThrowable(target, null, !"true".equals(applicationContext
-				.getConfiguration().getProperty(
-						BrutosConstants.VIEW_RESOLVER_AUTO)), id,
-				DispatcherType.FORWARD);
+		return addThrowable(target, null, false, id,
+				null);
 	}
 
 	public ControllerBuilder addThrowable(Class<?> target, String view,
@@ -127,14 +142,15 @@ public class ControllerBuilder {
 			String id, DispatcherType dispatcher, boolean resolvedView) {
 
 		view = StringUtil.adjust(view);
-
-		view = resolvedView ? view : applicationContext.getViewResolver()
-				.getView(this, null, target, view);
+		
+		view = resolvedView ? 
+				view : 
+				applicationContext.getViewResolver().getView(this, null, target, view);
 
 		id = StringUtil.adjust(id);
 		
 		dispatcher = dispatcher == null? 
-				BrutosConstants.DEFAULT_DISPATCHERTYPE :
+				this.applicationContext.getDispatcherType() :
 				dispatcher;
 
 		if (target == null){
@@ -249,29 +265,25 @@ public class ControllerBuilder {
 	}
 
 	public ActionBuilder addAction(String id) {
-		return addAction(id, null, null, !"true".equals(applicationContext
-				.getConfiguration().getProperty(
-						BrutosConstants.VIEW_RESOLVER_AUTO)),
-				DispatcherType.FORWARD, null);
+		return addAction(id, null, null, false,
+				null, null);
 	}
 
 	public ActionBuilder addAction(String id, String executor) {
-		return addAction(id, null, null, !"true".equals(applicationContext
-				.getConfiguration().getProperty(
-						BrutosConstants.VIEW_RESOLVER_AUTO)),
-				DispatcherType.FORWARD, executor);
+		return addAction(id, null, null, false,
+				null, executor);
 	}
 
 	public ActionBuilder addAction(String id, String executor, String view,
 			boolean resolvedView) {
-		return addAction(id, null, view, resolvedView, DispatcherType.FORWARD,
+		return addAction(id, null, view, resolvedView, null,
 				executor);
 	}
 
 	public ActionBuilder addAction(String id, String resultId, String view,
 			boolean resolvedView, String executor) {
 		return addAction(id, resultId, view, resolvedView,
-				DispatcherType.FORWARD, executor);
+				null, executor);
 	}
 
 	public ActionBuilder addAction(String id, String resultId, String view,
@@ -404,62 +416,62 @@ public class ControllerBuilder {
 
 	public PropertyBuilder addProperty(String propertyName, String id,
 			ScopeType scope, String temporalProperty) {
-		return addProperty(propertyName, id, scope, EnumerationType.ORDINAL,
-				temporalProperty, null, null, false, null);
+		return addProperty(propertyName, id, scope, null,
+				null, null, null, false, null);
 	}
 
 	public PropertyBuilder addProperty(String propertyName, String id,
 			ScopeType scope, Type type) {
-		return addProperty(propertyName, id, scope, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", null, null, false, type);
+		return addProperty(propertyName, id, scope, null,
+				null, null, null, false, type);
 	}
 
 	public PropertyBuilder addProperty(String propertyName, String id,
 			EnumerationType enumProperty) {
-		return addProperty(propertyName, id, ScopeType.PARAM, enumProperty,
+		return addProperty(propertyName, id, null, enumProperty,
 				null, null, null, false, null);
 	}
 
 	public PropertyBuilder addProperty(String propertyName, String id,
 			ScopeType scope) {
-		return addProperty(propertyName, id, scope, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", null, null, false, null);
+		return addProperty(propertyName, id, scope, null,
+				null, null, null, false, null);
 	}
 
 	public PropertyBuilder addProperty(String propertyName, String id,
 			String temporalProperty) {
-		return addProperty(propertyName, id, ScopeType.PARAM,
-				EnumerationType.ORDINAL, temporalProperty, null, null, false,
+		return addProperty(propertyName, id, null,
+				null, temporalProperty, null, null, false,
 				null);
 	}
 
 	public PropertyBuilder addProperty(String propertyName, String id, Type type) {
-		return addProperty(propertyName, id, ScopeType.PARAM,
-				EnumerationType.ORDINAL, "dd/MM/yyyy", null, null, false, type);
+		return addProperty(propertyName, id, null,
+				null, null, null, null, false, type);
 	}
 
 	public PropertyBuilder addPropertyMapping(String propertyName,
 			String mapping) {
-		return addProperty(propertyName, null, ScopeType.PARAM,
-				EnumerationType.ORDINAL, "dd/MM/yyyy", mapping, null, false,
+		return addProperty(propertyName, null, null,
+				null, null, mapping, null, false,
 				null);
 	}
 
 	public PropertyBuilder addPropertyMapping(String propertyName, String id,
 			String mapping) {
-		return addProperty(propertyName, id, ScopeType.PARAM,
-				EnumerationType.ORDINAL, "dd/MM/yyyy", mapping, null, false,
+		return addProperty(propertyName, id, null,
+				null, null, mapping, null, false,
 				null);
 	}
 
 	public PropertyBuilder addProperty(String propertyName, String id) {
-		return addProperty(propertyName, id, ScopeType.PARAM,
-				EnumerationType.ORDINAL, "dd/MM/yyyy", null, null, false, null);
+		return addProperty(propertyName, id, null,
+				null, null, null, null, false, null);
 	}
 
 	public PropertyBuilder addStaticProperty(String propertyName, Object value) {
-		return addProperty(propertyName, null, ScopeType.PARAM,
-				EnumerationType.ORDINAL, "dd/MM/yyyy", null, value, false, null);
+		return addProperty(propertyName, null, null,
+				null, null, null, value, false, null);
 	}
 
 	public PropertyBuilder addProperty(String propertyName, String id,
@@ -473,17 +485,12 @@ public class ControllerBuilder {
 	public PropertyBuilder addGenericProperty(String propertyName, String id,
 			Class<?> classType) {
 		return this.addProperty(propertyName, id,
-				BrutosConstants.DEFAULT_SCOPETYPE,
-				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, null, false,
-				true, classType, null);
+				null, null, null, null, null, false, true, classType, null);
 	}
 
 	public PropertyBuilder addGenericProperty(String propertyName, String id) {
 		return this.addProperty(propertyName, id,
-				BrutosConstants.DEFAULT_SCOPETYPE,
-				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, null, false,
+				null, null, null, null, null, false,
 				true, null, null);
 	}
 
@@ -502,12 +509,32 @@ public class ControllerBuilder {
 			boolean nullable, boolean generic, Object classType, Type type) {
 
 		propertyName = StringUtil.adjust(propertyName);
-		id = StringUtil.isEmpty(id) ? propertyName : StringUtil.adjust(id);
-		temporalProperty = StringUtil.adjust(temporalProperty);
+		
+		id = StringUtil.isEmpty(id)? 
+			propertyName : 
+			StringUtil.adjust(id);
+		
+		temporalProperty = StringUtil.isEmpty(temporalProperty)?
+				this.applicationContext.getTemporalProperty() :
+				StringUtil.adjust(temporalProperty);
+		
+		scope = scope == null?
+				this.applicationContext.getScopeType() :
+				scope;
+		
+		enumProperty = enumProperty == null?
+				this.applicationContext.getEnumerationType() :
+				enumProperty;
+				
 		mapping = StringUtil.adjust(mapping);
+		
 		BeanInstance bean = this.controller.getBeanInstance();
-		Object genericType = classType == null ? bean
-				.getGenericType(propertyName) : classType;
+		
+		Object genericType = 
+			classType == null ? 
+				bean.getGenericType(propertyName) : 
+				classType;
+				
 		Class<?> rawType = TypeUtil.getRawType(genericType);
 
 		if (propertyName == null)

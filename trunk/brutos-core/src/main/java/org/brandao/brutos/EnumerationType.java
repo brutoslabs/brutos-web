@@ -26,18 +26,18 @@ import java.util.Map;
  */
 public class EnumerationType {
 
-	public static final EnumerationType AUTO = new EnumerationType("auto");
+	public static final EnumerationType AUTO    = new EnumerationType("auto");
 
 	public static final EnumerationType ORDINAL = new EnumerationType("ordinal");
 
-	public static final EnumerationType STRING = new EnumerationType("string");
+	public static final EnumerationType STRING  = new EnumerationType("string");
 
-	private final static Map defaultTypes = new HashMap();
+	private final static Map<String, EnumerationType> defaultTypes = new HashMap<String, EnumerationType>();
 
 	static {
-		defaultTypes.put(AUTO.toString(), AUTO);
+		defaultTypes.put(AUTO.toString(),    AUTO);
 		defaultTypes.put(ORDINAL.toString(), ORDINAL);
-		defaultTypes.put(STRING.toString(), STRING);
+		defaultTypes.put(STRING.toString(),  STRING);
 	}
 
 	private String name;

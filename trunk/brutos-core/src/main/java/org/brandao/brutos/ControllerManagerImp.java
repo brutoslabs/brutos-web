@@ -49,16 +49,12 @@ public class ControllerManagerImp implements ControllerManager {
 	}
 
 	public ControllerBuilder addController(Class<?> classtype) {
-		return addController(null, null, !"true".equals(applicationContext
-				.getConfiguration().getProperty(
-						BrutosConstants.VIEW_RESOLVER_AUTO)), null, classtype,
+		return addController(null, null, false, null, classtype,
 				"invoke");
 	}
 
 	public ControllerBuilder addController(String id, Class<?> classType) {
-		return addController(id, null, !"true".equals(applicationContext
-				.getConfiguration().getProperty(
-						BrutosConstants.VIEW_RESOLVER_AUTO)), null, classType,
+		return addController(id, null, false, null, classType,
 				"invoke");
 	}
 

@@ -128,6 +128,10 @@ public interface BrutosConstants {
 
 	final String RESPONSE_TYPE = "org.brandao.brutos.response.default_type";
 
+	final String SCOPE_TYPE = "org.brandao.brutos.scope_type";
+
+	final String TEMPORAL_PROPERTY = "org.brandao.brutos.temporal_property";
+	
 	final String DISPATCHER_TYPE = "org.brandao.brutos.view.dispatcher_type";
 	
 	final String VIEW_RESOLVER = "org.brandao.brutos.view.resolver";
@@ -137,7 +141,9 @@ public interface BrutosConstants {
 
 	final String CODE_GENERATOR_CLASS = "org.brandao.brutos.code_generator";
 
-	final String VIEW_RESOLVER_AUTO = "org.brandao.brutos.view.auto";
+	final String ENUMERATION_TYPE = "org.brandao.brutos.enumeration_type";
+	
+	final String AUTO_VIEW_RESOLVER = "org.brandao.brutos.view.auto";
 
 	final String VIEW_RESOLVER_PREFIX = "org.brandao.brutos.view.prefix";
 
@@ -170,7 +176,7 @@ public interface BrutosConstants {
 
 	final String DEFAULT_ELEMENT_NAME = "element";
 
-	final String DEFAULT_TEMPORALPROPERTY = "dd/MM/yyyy";
+	final String DEFAULT_TEMPORALPROPERTY = "yyyy-MM-dd";
 
 	final String DEFAULT_SUFFIX_VIEW = "";
 
