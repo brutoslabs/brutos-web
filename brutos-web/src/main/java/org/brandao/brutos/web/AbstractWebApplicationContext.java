@@ -259,6 +259,20 @@ public abstract class AbstractWebApplicationContext
         
         config.put(BrutosConstants.REQUEST_PARSER,
                     tmp);
+
+        tmp = config
+                .getProperty(BrutosConstants.REQUEST_TYPE,
+                              MediaType.APPLICATION_X_WWW_FORM_URLENCODED.toString() );
+        
+        config.put(BrutosConstants.REQUEST_TYPE,
+                    tmp);
+
+        tmp = config
+                .getProperty(BrutosConstants.RESPONSE_TYPE,
+                              MediaType.TEXT_HTML.toString() );
+        
+        config.put(BrutosConstants.RESPONSE_TYPE,
+                    tmp);
         
     }
 

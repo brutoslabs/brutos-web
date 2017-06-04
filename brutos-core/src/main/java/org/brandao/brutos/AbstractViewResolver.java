@@ -21,10 +21,18 @@ package org.brandao.brutos;
  * 
  * @author Brandao
  */
-public abstract class AbstractViewResolver implements ViewResolver {
+public abstract class AbstractViewResolver implements ConfigurableViewResolver {
 
 	private ApplicationContext context;
 
+	private String prefix;
+
+	private String suffix;
+
+	private String indexName;
+
+	private String separator;
+	
 	public String getView(ControllerBuilder controllerBuilder,
 			ActionBuilder actionBuilder, Class<?> exception, String view) {
 
@@ -53,19 +61,35 @@ public abstract class AbstractViewResolver implements ViewResolver {
 	}
 
 	public String getPrefix() {
-		return this.context.getViewPrefix();
+		return this.prefix;
 	}
 
 	public String getSuffix() {
-		return this.context.getViewSuffix();
+		return this.suffix;
 	}
 
 	public String getIndexName() {
-		return this.context.getViewIndex();
+		return this.indexName;
 	}
 
 	public String getSeparator() {
-		return this.context.getSeparator();
+		return this.separator;
+	}
+	
+	public void setPrefix(String value) {
+		this.prefix = value;
 	}
 
+	public void setSuffix(String value) {
+		this.suffix = value;
+	}
+
+	public void setIndexName(String value) {
+		this.indexName = value;
+	}
+
+	public void setSeparator(String value) {
+		this.separator = value;
+	}
+	
 }

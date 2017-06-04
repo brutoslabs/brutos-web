@@ -28,6 +28,7 @@ import org.brandao.brutos.CodeGenerator;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ConfigurableRenderView;
 import org.brandao.brutos.ConfigurableRequestParser;
+import org.brandao.brutos.ConfigurableViewResolver;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.ControllerResolver;
@@ -356,7 +357,7 @@ public class WebApplicationContextWrapper
 	}
 
 	@Override
-	public void setViewResolver(ViewResolver viewResolver) {
+	public void setViewResolver(ConfigurableViewResolver viewResolver) {
 		applicationContext.setViewResolver(viewResolver);
 	}
 

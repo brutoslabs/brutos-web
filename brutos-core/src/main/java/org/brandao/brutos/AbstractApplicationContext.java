@@ -65,7 +65,7 @@ public abstract class AbstractApplicationContext
 
 	protected Scopes scopes;
 
-	private ViewResolver viewResolver;
+	private ConfigurableViewResolver viewResolver;
 
 	private ValidatorFactory validatorFactory;
 
@@ -79,10 +79,6 @@ public abstract class AbstractApplicationContext
 	
 	protected ConfigurableRequestParser requestParser;
 	
-	protected DataType requestType;
-	
-	protected DataType responseType;
-	
 	protected DispatcherType dispatcherType;
 	
 	protected boolean automaticViewResolver;
@@ -92,14 +88,6 @@ public abstract class AbstractApplicationContext
 	protected ScopeType scopeType;
 	
 	protected String temporalProperty;
-	
-	protected String viewPrefix;
-	
-	protected String viewSuffix;
-	
-	protected String viewIndex;
-	
-	protected String separator;
 	
     protected String actionParameterName;
 	
@@ -136,18 +124,12 @@ public abstract class AbstractApplicationContext
 		this.codeGenerator 					= this.getNewCodeGenerator();
 		this.typeManager 					= this.getNewTypeManager();
 		this.requestParserListenerFactory	= this.getRequestParserListenerFactory();
-		this.requestType                    = this.getInitRequestType();
-		this.responseType                   = this.getInitResponseType();
 		this.dispatcherType                 = this.getInitDispatcherType();
 		this.automaticViewResolver          = this.getInitAutomaticViewResolver();
 		this.enumerationType                = this.getInitEnumerationType();
 		this.scopeType                      = this.getInitScopeType();
 		this.temporalProperty               = this.getInitTemporalProperty();
 		this.automaticViewResolver          = this.getInitAutomaticViewResolver();
-		this.viewPrefix                     = this.getInitViewPrefix();
-		this.viewSuffix                     = this.getInitViewSuffix();
-		this.separator                      = this.getInitSeparator();
-		this.viewIndex                      = this.getInitViewIndex();
 		this.actionParameterName            = this.getInitActionParameterName();
 		this.actionType                     = this.getInitActionType();
 		this.invoker						= this.getNewInvoker();
@@ -357,6 +339,7 @@ public abstract class AbstractApplicationContext
 			ConfigurableRenderView instance = 
 				(ConfigurableRenderView) ClassUtil.getInstance(clazz);
 
+			instance.setDefaultRenderViewType(this.getInitResponseType());
 			return instance;
 		}
 		catch (BrutosException e) {
@@ -391,16 +374,23 @@ public abstract class AbstractApplicationContext
 		}
 	}
 
-	protected ViewResolver getNewViewResolver() {
+	protected ConfigurableViewResolver getNewViewResolver() {
 		try {
 			String className = configuration.getProperty(
 					BrutosConstants.VIEW_RESOLVER,
 					DefaultViewResolver.class.getName());
 
-			ViewResolver tmp = (ViewResolver) ClassUtil.getInstance(ClassUtil
+			ConfigurableViewResolver instance = 
+					(ConfigurableViewResolver) ClassUtil.getInstance(ClassUtil
 					.get(className));
-			tmp.setApplicationContext(this);
-			return tmp;
+
+			instance.setApplicationContext(this);
+			instance.setIndexName(this.getInitViewIndex());
+			instance.setPrefix(this.getInitViewPrefix());
+			instance.setSeparator(this.getInitSeparator());
+			instance.setSuffix(this.getInitViewSuffix());
+			
+			return instance;
 		} catch (Exception e) {
 			throw new BrutosException(e);
 		}
@@ -452,7 +442,10 @@ public abstract class AbstractApplicationContext
                 true,
                 Thread.currentThread().getContextClassLoader() );
 
-            return (ConfigurableRequestParser)ClassUtil.getInstance(ulfClass);
+            ConfigurableRequestParser instance =
+            		(ConfigurableRequestParser)ClassUtil.getInstance(ulfClass);
+            instance.setDefaultRenderViewType(this.getInitRequestType());
+            return instance;
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -689,35 +682,35 @@ public abstract class AbstractApplicationContext
     }
     
 	public String getViewPrefix() {
-		return this.viewPrefix;
+		return this.viewResolver.getPrefix();
 	}
 
 	public void setViewPrefix(String value) {
-		this.viewPrefix = value;
+		this.viewResolver.setPrefix(value);
 	}
 	
 	public String getViewSuffix() {
-		return this.viewSuffix;
+		return this.viewResolver.getSuffix();
 	}
 
 	public void setViewSuffix(String value) {
-		this.viewSuffix = value;
+		this.viewResolver.setSuffix(value);
 	}
 	
 	public String getViewIndex() {
-		return this.viewIndex;
+		return this.viewResolver.getIndexName();
 	}
 
 	public void setViewIndex(String value) {
-		this.viewIndex = value;
+		this.viewResolver.setIndexName(value);
 	}
 	
 	public String getSeparator() {
-		return this.separator;
+		return this.viewResolver.getSeparator();
 	}
 
 	public void setSeparator(String value) {
-		this.separator = value;
+		this.viewResolver.setSeparator(value);
 	}
 	
 	public void setAutomaticViewResolver(boolean value) {
@@ -761,19 +754,19 @@ public abstract class AbstractApplicationContext
 	}
 	
     public void setRequestType(DataType value){
-    	this.requestType = value;
+    	this.requestParser.setDefaultRenderViewType(value);
     }
 
 	public DataType getRequestType(){
-		return this.requestType;
+		return this.requestParser.getDefaultRenderViewType();
 	}
 	
     public void setResponseType(DataType value){
-    	this.responseType = value;
+    	this.renderView.setDefaultRenderViewType(value);
     }
     
 	public DataType getResponseType(){
-		return this.responseType;
+		return this.renderView.getDefaultRenderViewType();
 	}
 	
 	public Properties getConfiguration() {
@@ -872,7 +865,7 @@ public abstract class AbstractApplicationContext
 		return viewResolver;
 	}
 
-	public void setViewResolver(ViewResolver viewResolver) {
+	public void setViewResolver(ConfigurableViewResolver viewResolver) {
 		this.viewResolver = viewResolver;
 	}
 

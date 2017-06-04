@@ -32,4 +32,9 @@ public interface ConfigurableRequestParser
 	
 	boolean contains(DataType dataType);
 	
+	void setDefaultRenderViewType(DataType dataType)
+			throws RequestParserException;
+
+	DataType getDefaultRenderViewType() throws RequestParserException;
+	
 }

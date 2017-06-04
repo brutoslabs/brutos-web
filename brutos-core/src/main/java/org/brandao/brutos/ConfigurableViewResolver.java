@@ -15,17 +15,24 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.web;
+package org.brandao.brutos;
 
-import org.brandao.brutos.ConfigurableRenderViewImp;
-import org.brandao.brutos.web.http.view.JSPRenderView;
-import org.brandao.brutos.web.http.view.JsonRenderView;
+/**
+ * 
+ * @author Brandao
+ *
+ */
+public interface ConfigurableViewResolver 
+	extends ViewResolver{
 
-public class WebConfigurableRenderViewImp extends ConfigurableRenderViewImp{
+	void setApplicationContext(ApplicationContext context);
+	
+	void setPrefix(String value);
 
-	public WebConfigurableRenderViewImp(){
-		super.registryRenderView(MediaType.TEXT_HTML,        new JSPRenderView());
-		super.registryRenderView(MediaType.APPLICATION_JSON, new JsonRenderView());
-	}
+	void setSuffix(String value);
+
+	void setIndexName(String value);
+
+	void setSeparator(String value);
 	
 }
