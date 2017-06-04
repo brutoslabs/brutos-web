@@ -85,6 +85,7 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig {
 
 	}
 
+	/*
 	protected String getView(ControllerBuilder controllerBuilder,
 			ComponentRegistry componentRegistry, ThrowableEntry throwSafe) {
 		return throwSafe.isResolved() ? throwSafe.getView()
@@ -100,5 +101,5 @@ public class ThrowSafeAnnotationConfig extends AbstractAnnotationConfig {
 						actionBuilder.getControllerBuilder(), actionBuilder,
 						throwSafe.getTarget(), throwSafe.getView());
 	}
-
+	*/
 }

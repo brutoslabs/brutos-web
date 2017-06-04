@@ -42,12 +42,9 @@ public class WebControllerAnnotationConfig
 		ResponseStatus responseStatus = 
 				classType.getAnnotation(ResponseStatus.class);
 		
-		int responseStatusCode = 
-				responseStatus == null?
-					0 :
-					responseStatus.value();
-		
-		builder.setResponseStatus(responseStatusCode);
+		if(responseStatus != null){
+			builder.setResponseStatus(responseStatus.value());
+		}
 		
 		return builder;
 	}

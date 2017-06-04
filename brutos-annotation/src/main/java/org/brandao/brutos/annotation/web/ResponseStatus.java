@@ -22,12 +22,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.brandao.brutos.web.BrutosWebConstants;
-
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ResponseStatus {
 
-	int	value() default BrutosWebConstants.DEFAULT_RESPONSE_STATUS;
+	int	value();
 	
 }

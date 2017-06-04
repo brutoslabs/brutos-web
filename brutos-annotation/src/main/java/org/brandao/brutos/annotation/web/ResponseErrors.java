@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.annotation.DispatcherType;
-import org.brandao.brutos.web.BrutosWebConstants;
 
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
@@ -18,13 +17,13 @@ public @interface ResponseErrors {
 	 * Código de resposta da solicitação.
 	 * @see HttpServletResponse#sendError(int, String)
 	 */
-	int	code() default BrutosWebConstants.DEFAULT_RESPONSE_ERROR;
+	int	code() default 0;
 
 	/**
 	 * Alias do {@link #code()}
 	 * @see HttpServletResponse#sendError(int, String)
 	 */
-	int	value() default BrutosWebConstants.DEFAULT_RESPONSE_ERROR;
+	int	value() default 0;
 	
 	/**
 	 * Descrição do erro.
@@ -51,7 +50,7 @@ public @interface ResponseErrors {
      * Define como o fluxo de execução será direcionado para a visão.
      * Os valores estão descritos em {@link DispatcherType}.
      */
-    String dispatcher() default "forward";
+    String dispatcher() default "";
     
     /**
      * Determina a renderização, ou não, da vista. 
