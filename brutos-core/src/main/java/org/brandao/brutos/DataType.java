@@ -10,7 +10,7 @@ public class DataType {
 	public static DataType valueOf(String value){
 		
 		if(value == null){
-			throw new NullPointerException();
+			return null;
 		}
 		
 		DataType r = defaultTypes.get(value);

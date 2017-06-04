@@ -33,6 +33,12 @@ public interface ApplicationContext {
 
 	MvcResponse getMvcResponse();
 
+	DataType getRequestType();
+	
+	DataType getResponseType();
+	
+	DispatcherType getDispatcherType();
+	
 	LoggerProvider getLoggerProvider();
 	
 	Scopes getScopes();

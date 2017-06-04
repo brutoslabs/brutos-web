@@ -37,6 +37,12 @@ public interface ConfigurableApplicationContext extends ApplicationContext {
 
 	void setRequestParser(ConfigurableRequestParser value);
 
+    void setRequestType(DataType value);
+
+    void setResponseType(DataType value);
+    
+    void setDispatcherType(DispatcherType value);
+    
 	void setInvoker(Invoker value);
 
 	void setConfiguration(Properties config);

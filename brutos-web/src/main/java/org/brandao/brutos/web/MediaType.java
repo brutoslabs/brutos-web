@@ -89,7 +89,7 @@ public class MediaType extends DataType{
 	public static MediaType valueOf(String value){
 		
 		if(value == null){
-			throw new NullPointerException();
+			return null;
 		}
 		
 		MediaType r = defaultTypes.get(value);

@@ -79,6 +79,12 @@ public abstract class AbstractApplicationContext
 	
 	protected ConfigurableRequestParser requestParser;
 	
+	protected DataType requestType;
+	
+	protected DataType responseType;
+	
+	protected DispatcherType dispatcherType;
+	
 	public AbstractApplicationContext() {
 		this(null);
 	}
@@ -106,10 +112,13 @@ public abstract class AbstractApplicationContext
 		this.viewResolver 					= this.getNewViewResolver();
 		this.controllerManager 				= this.getNewControllerManager();
 		this.renderView 					= this.getNewRenderView();
-		this.requestParser                  = this.getConfigurableRequestParser();
+		this.requestParser                  = this.getInitRequestParser();
 		this.codeGenerator 					= this.getNewCodeGenerator();
 		this.typeManager 					= this.getNewTypeManager();
 		this.requestParserListenerFactory	= this.getRequestParserListenerFactory();
+		this.requestType                    = this.getInitRequestType();
+		this.responseType                   = this.getInitResponseType();
+		this.dispatcherType                 = this.getInitDispatcherType();
 		this.invoker						= this.getNewInvoker();
 	}
 
@@ -399,7 +408,7 @@ public abstract class AbstractApplicationContext
         }
     }
 
-    protected ConfigurableRequestParser getConfigurableRequestParser(){
+    protected ConfigurableRequestParser getInitRequestParser(){
         try{
             Properties config = this.getConfiguration();
             String clazz =
@@ -413,6 +422,49 @@ public abstract class AbstractApplicationContext
                 Thread.currentThread().getContextClassLoader() );
 
             return (ConfigurableRequestParser)ClassUtil.getInstance(ulfClass);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+    
+    protected DataType getInitRequestType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.REQUEST_TYPE);
+
+            return DataType.valueOf(value.toUpperCase());
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected DataType getInitResponseType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.RESPONSE_TYPE);
+
+            return DataType.valueOf(value.toUpperCase());
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+
+    protected DispatcherType getInitDispatcherType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.DISPATCHER_TYPE,
+            		DispatcherType.FORWARD.toString());
+
+            return DispatcherType.valueOf(value.toUpperCase());
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -439,6 +491,30 @@ public abstract class AbstractApplicationContext
 		this.viewResolver       = null;
 	}
 
+	public void setDispatcherType(DispatcherType value){
+		this.dispatcherType = value;
+	}
+	
+	public DispatcherType getDispatcherType(){
+		return this.dispatcherType;
+	}
+	
+    public void setRequestType(DataType value){
+    	this.requestType = value;
+    }
+
+	public DataType getRequestType(){
+		return this.requestType;
+	}
+	
+    public void setResponseType(DataType value){
+    	this.responseType = value;
+    }
+    
+	public DataType getResponseType(){
+		return this.responseType;
+	}
+	
 	public Properties getConfiguration() {
 		return configuration;
 	}
