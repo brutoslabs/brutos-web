@@ -39,7 +39,7 @@ public class StringPatternVar {
         
         private int index;
         
-        public StringPatternVar( int index, String id, Pattern regex, 
+        public StringPatternVar(int index, String id, Pattern regex, 
         		String start, String end, Pattern regexPrefix, Pattern regexSuffix ){
             this.id          = id;
             this.start       = start;

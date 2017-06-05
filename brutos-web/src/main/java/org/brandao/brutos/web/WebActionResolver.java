@@ -18,6 +18,7 @@
 package org.brandao.brutos.web;
 
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,6 +29,7 @@ import java.util.Set;
 import org.brandao.brutos.AbstractActionResolver;
 import org.brandao.brutos.ActionResolverException;
 import org.brandao.brutos.ControllerManager;
+import org.brandao.brutos.DefaultMvcRequest;
 import org.brandao.brutos.DefaultResourceAction;
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.ResourceAction;
@@ -41,64 +43,53 @@ import org.brandao.brutos.web.mapping.WebController;
  * 
  * @author Brandao
  */
+@SuppressWarnings("unused")
 public class WebActionResolver extends AbstractActionResolver{
     
-	private RequestNode root;
-	
-	public static void main(String[] s){
-		WebActionResolver r = new WebActionResolver();
-		WebController c = new WebController(null);
-		c.setId(null);
-		c.setActionType(WebActionType.DETACHED);
-		
-		WebAction action = new WebAction();
-		action.setController(c);
-		action.setName("/value/value2/value3");
-		action.setId(c.getActionType().getActionID(c, action));
-		r.registry(c, action);
-		
-		RequestEntry e = r.get("/value");
-	}
+	private RequestMappingNode root;
 	
     public WebActionResolver(){
     	super();
+    	this.root = new RequestMappingNode();
     	this.addActionTypeResolver(WebActionType.PARAMETER,  new ParamActionTypeResolver());
     	this.addActionTypeResolver(WebActionType.HIERARCHY,  new HierarchyActionTypeResolver());
     	this.addActionTypeResolver(WebActionType.DETACHED,   new DetachedActionTypeResolver());
     }
     
-    /*
-     * /                      []
-     * /value/value2/value3   [value,  value2, value3]
-     * /{regex}/value2/value3 [regex,  value2, value3]
-     * /value2/{regex}/value3 [value2, regex,  value3]
-     * /value2/value3/{regex} [valu2,  value3, regex]
-     * 
-     */
-    
 	public ResourceAction getResourceAction(ControllerManager controllerManager,
 			MutableMvcRequest request) throws ActionResolverException{
-		String id = request.getRequestId();
-		RequestEntry entry = this.get(id);
-		
-		if(id != null){
-			return new DefaultResourceAction( entry.getController(), entry.getAction() );
+		try{
+			String id = request.getRequestId();
+			RequestMappingEntry entry = this.get(id, request);
+			
+			if(id != null){
+				return new DefaultResourceAction( entry.getController(), entry.getAction() );
+			}
+			
+			return null;
 		}
-		
-		return null;
+		catch(Throwable e){
+			throw new ActionResolverException(e);			
+		}
 	}
     
-    public void registry(Controller controller, Action action){
+    public void registry(Controller controller, Action action) throws MalformedURLException{
     	WebActionID actionID = (WebActionID)action.getId();
     	String id            = actionID.getId();
     	String[] parts       = this.parser(id).toArray(new String[0]);
     	
-    	this.addNode(this.root, new RequestEntry(controller, action), parts, 0);
+    	this.addNode(this.root, new RequestMappingEntry(controller, action), parts, 0);
     }
 
-    public RequestEntry get(String value){
-    	String[] parts       = value.split("/");
-    	return this.getNode(this.root, parts, 0);
+    public RequestMappingEntry get(String value, MutableMvcRequest request) throws MalformedURLException{
+    	String[] parts = value.split("/");
+    	
+    	if(parts.length == 0){
+        	return this.root.getRequestEntry();
+    	}
+    	else{
+    		return this.getNode(this.root, request, parts, 1);
+    	}
     }
     
     public void remove(Controller controller, Action action){
@@ -106,67 +97,77 @@ public class WebActionResolver extends AbstractActionResolver{
     	String id            = actionID.getId();
     	String[] parts       = this.parser(id).toArray(new String[0]);
     	
-    	this.removeNode(this.root, new RequestEntry(controller, action), parts, 0);
+    	this.removeNode(this.root, new RequestMappingEntry(controller, action), parts, 0);
     }
     
-    private void addNode(RequestNode node, RequestEntry value, String[] parts, int index){
+    private void addNode(RequestMappingNode node, RequestMappingEntry value, String[] parts, int index) throws MalformedURLException{
     	
     	if(index == 0 && parts.length == 0){
     		node.setRequestEntry(value);
     	}
     	else
-    	if(index == parts.length - 1){
+    	if(index == parts.length){
     		node.setRequestEntry(value);
     	}
     	else{
-    		RequestNode next = node.getNext(parts[index]);
+    		RequestMappingNode next = node.getNext(parts[index]);
     		if(next == null){
     			next = node.add(parts[index], null);
     		}
-    		this.addNode(next, value, parts, index++);
+    		this.addNode(next, value, parts, index + 1);
     	}
     	
     }
 
-    private RequestEntry getNode(RequestNode node, String[] parts, int index){
+    private RequestMappingEntry getNode(RequestMappingNode node, MutableMvcRequest request, 
+    		String[] parts, int index) throws MalformedURLException{
     	
     	if(index == 0 && parts.length == 0){
     		return node.getRequestEntry();
     	}
     	else
-    	if(index == parts.length - 1){
+    	if(index == parts.length){
     		return node.getRequestEntry();
     	}
     	else{
-    		RequestNode next = node.getNext(parts[index]);
+    		RequestMappingNode next = node.getNext(parts[index]);
+    		
     		if(next == null){
-    			next = node.add(parts[index], null);
+    			return null;//next = node.add(parts[index], null);
     		}
-    		return this.getNode(next, parts, index++);
+    		
+    		RequestMappingEntry e = this.getNode(next, request, parts, index + 1);
+    		
+    		if(e != null && !next.isStaticValue()){
+    			next.updateRequest(request, parts[index]);
+    		}
+    		
+    		return e;
     	}
     	
     }
     
-    private void removeNode(RequestNode node, RequestEntry value, String[] parts, int index){
+    private void removeNode(RequestMappingNode node, RequestMappingEntry value, String[] parts, int index){
     	
     	if(index == 0 && parts.length == 0){
     		node.remove(null);
     	}
     	else
-    	if(index == parts.length - 1){
+    	if(index == parts.length){
     		node.setRequestEntry(null);
     	}
     	else{
-    		RequestNode next = node.getNext(parts[index]);
+    		RequestMappingNode next = node.getNext(parts[index]);
     		if(next != null){
-    			this.removeNode(next, value, parts, index++);
+    			this.removeNode(next, value, parts, index + 1);
     			if(next.isEmpty()){
     				node.remove(parts[index]);
     			}
     		}
     	}
     	
-    }    
+    }
+    
     private List<String> parser(String value){
     	List<String> result = new ArrayList<String>();
     	
@@ -211,195 +212,209 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     }
     
-}
+    private static class RequestMappingNode{
+    	
+    	private String value;
 
-class RequestEntry{
-	
-	private Controller controller;
-	
-	private Action action;
-	
-	public RequestEntry(Controller controller, Action action) {
-		this.controller = controller;
-		this.action = action;
-	}
+    	private StringPattern pattern;
+    	
+    	private boolean staticValue;
+    	
+    	private Map<String, RequestMappingNode> staticNext;
+    	
+    	private Set<RequestMappingNode> dynamicNext;
+    	
+    	private RequestMappingEntry requestEntry;
+    	
+    	public RequestMappingNode(){
+    		this.dynamicNext = new HashSet<RequestMappingNode>();
+    		this.staticNext  = new HashMap<String, RequestMappingNode>();
+    		this.pattern     = null;
+    	}
+    	
+    	public void updateRequest(MutableMvcRequest request, String value){
+    		Map<String,List<String>> params = this.pattern.getParameters(value);
 
-	public Controller getController() {
-		return controller;
-	}
+            for(String key: params.keySet() ){
+            	for(String v: params.get(key)){
+            		request.setParameter(key, v);
+            	}
+            }
+    		
+    	}
+    	
+    	public RequestMappingNode add(String value, RequestMappingEntry requestEntry) throws MalformedURLException{
+    		
+    		RequestMappingNode node = new RequestMappingNode();
+    		node.setValue(value);
+    		node.setRequestEntry(requestEntry);
+    		node.setStaticValue(value == null || value.indexOf("{") == -1);
+    		
+    		if(node.isStaticValue()){
+    			this.staticNext.put(value, node);
+    		}
+    		else{
+    			node.setPattern(new StringPattern(value));
+    			this.dynamicNext.add(node);
+    		}
+    		
+    		return node;
+    	}
 
-	public void setController(Controller controller) {
-		this.controller = controller;
-	}
+    	public void remove(String value){
+    		
+    		RequestMappingNode node = new RequestMappingNode();
+    		node.setValue(value);
+    		
+    		if(value == null || value.startsWith("{")){
+    			this.staticNext.remove(value);
+    		}
+    		else{
+    			this.dynamicNext.remove(node);
+    		}
+    		
+    	}
 
-	public Action getAction() {
-		return action;
-	}
+    	public RequestMappingNode getNextNode(String value){
+    		
+    		RequestMappingNode next = this.staticNext.get(value);
+    		
+    		if(next != null){
+    			return next;
+    		}
+    		
+    		for(RequestMappingNode dynamicNode: this.dynamicNext){
+    			if(dynamicNode.value.equals(value)){
+    				return dynamicNode;
+    			}
+    		}
+    		
+    		return null;
+    	}
+    	
+    	public RequestMappingNode getNext(String value){
+    		
+    		if(!this.staticNext.isEmpty()){
+    			RequestMappingNode next = this.staticNext.get(value);
+    			if(next != null){
+    				return next;
+    			}
+    		}
+    		
+    		for(RequestMappingNode dynamicNode: this.dynamicNext){
+    			if(dynamicNode.pattern.matches(value)){
+    				return dynamicNode;
+    			}
+    		}
+    		
+    		return null;
+    	}
 
-	public void setAction(Action action) {
-		this.action = action;
-	}
-	
-}
+    	public boolean isEmpty(){
+    		return this.dynamicNext.isEmpty() && this.staticNext.isEmpty();
+    	}
+    	
+    	public StringPattern getPattern() {
+    		return pattern;
+    	}
 
-/*
- * /value/value2/value3
- * /{regex}/value2/value2
- * /value2/{regex}/value2
- * /value2/value2/{regex}
- * 
- */
- 
-class RequestNode{
-	
-	private String value;
+    	public void setPattern(StringPattern pattern) {
+    		this.pattern = pattern;
+    	}
 
-	private boolean staticValue;
-	
-	private Map<String, RequestNode> staticNext;
-	
-	private Set<RequestNode> dynamicNext;
-	
-	private RequestEntry requestEntry;
-	
-	public RequestNode(){
-		this.dynamicNext = new HashSet<RequestNode>();
-		this.staticNext  = new HashMap<String, RequestNode>();
-	}
-	
-	public RequestNode add(String value, RequestEntry requestEntry){
-		
-		RequestNode node = new RequestNode();
-		node.setValue(value);
-		node.setRequestEntry(requestEntry);
-		node.setStaticValue(value == null || !value.startsWith("{"));
-		
-		if(node.isStaticValue()){
-			this.staticNext.put(value, node);
-		}
-		else{
-			this.dynamicNext.add(node);
-		}
-		
-		return node;
-	}
+    	public RequestMappingEntry getRequestEntry() {
+    		return requestEntry;
+    	}
 
-	public void remove(String value){
-		
-		RequestNode node = new RequestNode();
-		node.setValue(value);
-		
-		if(value == null || value.startsWith("{")){
-			this.staticNext.remove(value);
-		}
-		else{
-			this.dynamicNext.remove(node);
-		}
-		
-	}
+    	public void setRequestEntry(RequestMappingEntry requestEntry) {
+    		this.requestEntry = requestEntry;
+    	}
 
-	public RequestNode getNextNode(String value){
-		
-		RequestNode next = this.staticNext.get(value);
-		
-		if(next != null){
-			return next;
-		}
-		
-		for(RequestNode dynamicNode: this.dynamicNext){
-			if(dynamicNode.value.equals(value)){
-				return dynamicNode;
-			}
-		}
-		
-		return null;
-	}
-	
-	public RequestNode getNext(String value){
-		
-		if(!this.staticNext.isEmpty()){
-			RequestNode next = this.staticNext.get(value);
-			if(next != null){
-				return next;
-			}
-		}
-		
-		for(RequestNode dynamicNode: this.dynamicNext){
-			if(value.matches(dynamicNode.value)){
-				return dynamicNode;
-			}
-		}
-		
-		return null;
-	}
+    	public String getValue() {
+    		return value;
+    	}
 
-	public boolean isEmpty(){
-		return this.dynamicNext.isEmpty() && this.staticNext.isEmpty();
-	}
-	
-	public RequestEntry getRequestEntry() {
-		return requestEntry;
-	}
+    	public void setValue(String value) {
+    		this.value = value;
+    	}
 
-	public void setRequestEntry(RequestEntry requestEntry) {
-		this.requestEntry = requestEntry;
-	}
+    	public boolean isStaticValue() {
+    		return staticValue;
+    	}
 
-	public String getValue() {
-		return value;
-	}
+    	public void setStaticValue(boolean staticValue) {
+    		this.staticValue = staticValue;
+    	}
 
-	public void setValue(String value) {
-		this.value = value;
-	}
+    	public Map<String, RequestMappingNode> getStaticNext() {
+    		return staticNext;
+    	}
 
-	public boolean isStaticValue() {
-		return staticValue;
-	}
+    	public void setStaticNext(Map<String, RequestMappingNode> staticNext) {
+    		this.staticNext = staticNext;
+    	}
 
-	public void setStaticValue(boolean staticValue) {
-		this.staticValue = staticValue;
-	}
+    	public Set<RequestMappingNode> getDynamicNext() {
+    		return dynamicNext;
+    	}
 
-	public Map<String, RequestNode> getStaticNext() {
-		return staticNext;
-	}
+    	public void setDynamicNext(Set<RequestMappingNode> dynamicNext) {
+    		this.dynamicNext = dynamicNext;
+    	}
 
-	public void setStaticNext(Map<String, RequestNode> staticNext) {
-		this.staticNext = staticNext;
-	}
+    	@Override
+    	public int hashCode() {
+    		final int prime = 31;
+    		int result = 1;
+    		result = prime * result + ((value == null) ? 0 : value.hashCode());
+    		return result;
+    	}
 
-	public Set<RequestNode> getDynamicNext() {
-		return dynamicNext;
-	}
+    	@Override
+    	public boolean equals(Object obj) {
+    		if (this == obj)
+    			return true;
+    		if (obj == null)
+    			return false;
+    		if (getClass() != obj.getClass())
+    			return false;
+    		RequestMappingNode other = (RequestMappingNode) obj;
+    		if (value == null) {
+    			if (other.value != null)
+    				return false;
+    		} else if (!value.equals(other.value))
+    			return false;
+    		return true;
+    	}
+    	
+    }
+    
+    private static class RequestMappingEntry{
+    	
+    	private Controller controller;
+    	
+    	private Action action;
+    	
+    	public RequestMappingEntry(Controller controller, Action action) {
+    		this.controller = controller;
+    		this.action = action;
+    	}
 
-	public void setDynamicNext(Set<RequestNode> dynamicNext) {
-		this.dynamicNext = dynamicNext;
-	}
+    	public Controller getController() {
+    		return controller;
+    	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		return result;
-	}
+		public void setController(Controller controller) {
+    		this.controller = controller;
+    	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		RequestNode other = (RequestNode) obj;
-		if (value == null) {
-			if (other.value != null)
-				return false;
-		} else if (!value.equals(other.value))
-			return false;
-		return true;
-	}
-	
+    	public Action getAction() {
+    		return action;
+    	}
+
+    	public void setAction(Action action) {
+    		this.action = action;
+    	}
+    	
+    }    
 }
