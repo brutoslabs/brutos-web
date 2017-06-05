@@ -325,5 +325,9 @@ public class StringPattern {
 				this.pattern.matcher(value).matches();
     	}
     }
+
+	public List<StringPatternVar> getVars() {
+		return vars;
+	}
     
 }
