@@ -39,7 +39,9 @@ public abstract class AbstractActionResolver
             ResourceAction action = 
             		actionTyperesolver.getResourceAction(controller, paramScope, request);
             
-        	return action;
+            if(action != null){
+            	return action;
+            }
         }
         
         return null;
