@@ -273,7 +273,7 @@ public abstract class AbstractWebApplicationContext
         
         config.put(BrutosConstants.RESPONSE_TYPE,
                     tmp);
-        
+
     }
 
     protected RequestMethodType getInitRequestMethodType(){
@@ -326,6 +326,7 @@ public abstract class AbstractWebApplicationContext
             Properties config = this.getConfiguration();
             String value =
                 config.getProperty(
+            		BrutosWebConstants.REQUEST_TYPE,
             		BrutosWebConstants.DEFAULT_REQUEST_TYPE.getName());
 
             return MediaType.valueOf(value.toUpperCase());
@@ -340,9 +341,10 @@ public abstract class AbstractWebApplicationContext
             Properties config = this.getConfiguration();
             String value =
                 config.getProperty(
+            		BrutosWebConstants.RESPONSE_TYPE,
             		BrutosWebConstants.DEFAULT_RESPONSE_TYPE.getName());
 
-            return MediaType.valueOf(value.toUpperCase());
+            return MediaType.valueOf(value);
         }
         catch( Exception e ){
             throw new BrutosException( e );

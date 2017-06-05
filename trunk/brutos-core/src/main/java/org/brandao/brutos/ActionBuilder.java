@@ -122,7 +122,7 @@ public class ActionBuilder extends RestrictionBuilder {
 		
 		view = StringUtil.adjust(view);
 
-		id = StringUtil.adjust(id);
+		id = StringUtil.isEmpty(id)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(id);
 		
 		String originalView = view;
 
@@ -149,9 +149,6 @@ public class ActionBuilder extends RestrictionBuilder {
 					"the exception has been added on action: "
 							+ target.getSimpleName());
 		}
-
-		if (dispatcher == null)
-			dispatcher = BrutosConstants.DEFAULT_DISPATCHERTYPE;
 
 		ThrowableSafeData thr = new ThrowableSafeData();
 		thr.setParameterName(id);

@@ -105,6 +105,7 @@ public class Controller {
 		this.context 			= context;
 		this.requestTypes 	    = new DataTypeMap();
 		this.responseTypes      = new DataTypeMap();
+		this.throwsSafe         = new HashMap<Class<?>, ThrowableSafeData>();
 		this.interceptorProcess.setForm(this);
 	}
 

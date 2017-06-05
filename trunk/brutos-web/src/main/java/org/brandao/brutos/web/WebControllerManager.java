@@ -22,7 +22,6 @@ import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManagerImp;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.mapping.ActionListener;
-import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.mapping.WebController;
@@ -37,10 +36,6 @@ public class WebControllerManager extends ControllerManagerImp{
     public WebControllerManager(){
         super();
     }
-    
-	protected Controller creatControllerInstance(){
-		return new WebController(this.applicationContext);
-	}
     
     public ControllerBuilder addController(String id, String view, 
             boolean resolvedView, DispatcherType dispatcherType,
@@ -108,7 +103,7 @@ public class WebControllerManager extends ControllerManagerImp{
 			.setView(view, resolvedView)
 			.setActionId(actionId)
 			.setDispatcherType(dispatcherType)
-				.setActionType(actionType);
+			.setActionType(actionType);
 
 		addController(controller.getId(), controller);
 

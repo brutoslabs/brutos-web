@@ -48,6 +48,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 	 * O construtor somente pode possuir métodos que alteram 
 	 * características mutáveis.
 	 */
+	private ConfigurableWebApplicationContext applicationContext;
 	
     public WebControllerBuilder(ControllerBuilder builder, ControllerManager.InternalUpdate internalUpdate){
         super( builder, internalUpdate );
@@ -58,6 +59,7 @@ public class WebControllerBuilder extends ControllerBuilder{
             ConfigurableApplicationContext applicationContext, ControllerManager.InternalUpdate internalUpdate ){
         super( controller, controllerManager, interceptorManager, 
                 validatorFactory, applicationContext, internalUpdate );
+        this.applicationContext = (ConfigurableWebApplicationContext)applicationContext;
     }
     
     public ControllerBuilder addAlias(String id){
@@ -68,7 +70,7 @@ public class WebControllerBuilder extends ControllerBuilder{
     public ActionBuilder addAction(String id, 
     		String resultId, boolean resultRendered, String view, 
             DispatcherType dispatcher, boolean resolvedView, String executor ){
-    	return this.addAction(id, BrutosWebConstants.DEFAULT_REQUEST_METHOD_TYPE, 
+    	return this.addAction(id, null, 
     			resultId, resultRendered, view, dispatcher, resolvedView, executor);
     }
     
@@ -78,12 +80,22 @@ public class WebControllerBuilder extends ControllerBuilder{
     	
     	//tratamento de variáveis
         ActionType type      = this.controller.getActionType();
+        
         id                   = StringUtil.adjust(id);
-		resultId             = StringUtil.adjust(resultId);
+		
+        resultId             = StringUtil.adjust(resultId);
+		
 		view                 = StringUtil.adjust(view);
+		
 		executor             = StringUtil.adjust(executor);
-		WebActionID actionId = new WebActionID(id, requestMethodType);
+		
+		requestMethodType    = 
+			requestMethodType == null? 
+				this.applicationContext.getRequestMethod() : 
+				requestMethodType;
 
+		WebActionID actionId = new WebActionID(id, requestMethodType);
+				
 		//verificação das variáveis
 		if (StringUtil.isEmpty(id)){
 			throw new MappingException("action id cannot be empty");
@@ -106,6 +118,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 		//criar base da entidade
 		WebAction action = new WebAction();
 		action.setCode(Action.getNextId());
+		action.setResponseStatus(this.applicationContext.getResponseStatus());
 		action.setName(id);
 		action.setController(controller);
 		action.setResultValidator(validatorFactory.getValidator(new Configuration()));
@@ -156,14 +169,14 @@ public class WebControllerBuilder extends ControllerBuilder{
 			applicationContext.getViewResolver().getView(this, null, target, view);
 		
 		responseError = responseError <= 0? 
-			BrutosWebConstants.DEFAULT_RESPONSE_ERROR :
+			this.applicationContext.getResponseError() :
 			responseError;
 		
 		dispatcher = dispatcher == null? 
-				BrutosConstants.DEFAULT_DISPATCHERTYPE :
+				this.applicationContext.getDispatcherType() :
 				dispatcher;
 
-		id = StringUtil.adjust(id);
+		id = StringUtil.isEmpty(id)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(id);
 
 		if (target == null){
 			throw new MappingException("target is required: "
@@ -202,14 +215,20 @@ public class WebControllerBuilder extends ControllerBuilder{
     }
     
     public ControllerBuilder setDefaultAction(String id){
-        return this.setDefaultAction(id, BrutosWebConstants.DEFAULT_REQUEST_METHOD_TYPE);
+        return this.setDefaultAction(id, null);
     }
     
 	public ControllerBuilder setDefaultAction(String id, RequestMethodType requestMethodType) {
 
 		id                   = StringUtil.adjust(id);
-		WebActionID actionID = new WebActionID(id, requestMethodType);
+		
+		requestMethodType    = 
+				requestMethodType == null? 
+					this.applicationContext.getRequestMethod() : 
+					requestMethodType;
 
+		WebActionID actionID = new WebActionID(id, requestMethodType);
+					
         if(StringUtil.isEmpty(id)){
         	throw new MappingException("invalid id");
         }

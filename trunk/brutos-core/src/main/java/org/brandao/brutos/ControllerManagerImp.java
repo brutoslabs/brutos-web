@@ -50,9 +50,9 @@ public class ControllerManagerImp implements ControllerManager {
 	protected InternalUpdate internalUpdate;
 
 	public ControllerManagerImp() {
-		this.mappedControllers = new HashMap<String, Controller>();
+		this.mappedControllers      = new HashMap<String, Controller>();
 		this.classMappedControllers = new HashMap<Class<?>, Controller>();
-		this.internalUpdate = new InternalUpdateImp(this);
+		this.internalUpdate         = new InternalUpdateImp(this);
 	}
 
 	public ControllerBuilder addController(Class<?> classtype) {

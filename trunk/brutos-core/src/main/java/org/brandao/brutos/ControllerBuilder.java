@@ -147,7 +147,7 @@ public class ControllerBuilder {
 				view : 
 				applicationContext.getViewResolver().getView(this, null, target, view);
 
-		id = StringUtil.adjust(id);
+		id = StringUtil.isEmpty(id)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(id);
 		
 		dispatcher = dispatcher == null? 
 				this.applicationContext.getDispatcherType() :
