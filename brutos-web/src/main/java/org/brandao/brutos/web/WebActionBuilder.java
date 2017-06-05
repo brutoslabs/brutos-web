@@ -19,6 +19,7 @@ package org.brandao.brutos.web;
 
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ActionType;
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
@@ -28,7 +29,6 @@ import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
@@ -40,6 +40,8 @@ import org.brandao.brutos.web.util.WebUtil;
  */
 public class WebActionBuilder extends ActionBuilder{
     
+	private ConfigurableWebApplicationContext applicationContext;
+	
     public WebActionBuilder(ActionBuilder builder){
         super(builder);
     }
@@ -52,6 +54,7 @@ public class WebActionBuilder extends ActionBuilder{
             ConfigurableApplicationContext applicationContext) {
         super(methodForm, controller, validatorFactory, 
                 controllerBuilder, applicationContext);
+        this.applicationContext = (ConfigurableWebApplicationContext)applicationContext;
     }
     
 	public ActionBuilder addAlias(String id) {
@@ -105,27 +108,58 @@ public class WebActionBuilder extends ActionBuilder{
     		Class<?> target, String view, String id, DispatcherType dispatcher, 
     		boolean resolvedView ){
     	
-        ActionBuilder builder = 
-        		super.addThrowable(target, view, id, dispatcher, resolvedView);
-        
-        WebThrowableSafeData thr = 
-        		(WebThrowableSafeData)this.action.getThrowsSafeOnAction(target);
-        
+		view   = StringUtil.adjust(view);
+
+		id = StringUtil.isEmpty(id)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(id);
+
+		reason = StringUtil.adjust(reason);
+		
+		String originalView = view;
+
+		view = resolvedView ? 
+				view : 
+				applicationContext.getViewResolver().getView(this.controllerBuilder, this, target, view);
+
+		responseError = responseError <= 0? 
+				this.applicationContext.getResponseError() :
+				responseError;
+			
+		dispatcher = dispatcher == null? 
+				this.applicationContext.getDispatcherType() :
+				dispatcher;
+
+        WebUtil.checkURI(view, resolvedView && view != null);
+				
+		if (target == null){
+			throw new MappingException("target is required: "
+					+ controller.getClassType().getName());
+		}
+
+		if (!Throwable.class.isAssignableFrom(target)){
+			throw new MappingException("target is not allowed: "
+					+ target.getName());
+		}
+
+		if (this.action.getThrowsSafeOnAction(target) != null){
+			throw new MappingException(
+					"the exception has been added on action: "
+							+ target.getSimpleName());
+		}
+
+		WebThrowableSafeData thr = new WebThrowableSafeData();
+		thr.setParameterName(id);
+		thr.setTarget(target);
+		thr.setView(view);
+		thr.setOriginalView(originalView);
+		thr.setResolvedView(resolvedView);
+		thr.setRedirect(false);
+		thr.setDispatcher(dispatcher);
         thr.setReason(reason);
-        
-        thr.setResponseError(
-        		responseError == 0? 
-    				BrutosWebConstants.DEFAULT_RESPONSE_ERROR :
-    				responseError);
-        
-        WebUtil.checkURI(thr.getView(), resolvedView && view != null);
-        
-        return builder;
+        thr.setResponseError(responseError);
+		
+		this.action.setThrowsSafe(thr);
+		return this;    	
     }
-    
-	protected ThrowableSafeData createThrowableSafeData(){
-		return new WebThrowableSafeData();
-	}
     
     public void setRequestMethod(RequestMethodType value){
     	
@@ -147,7 +181,9 @@ public class WebActionBuilder extends ActionBuilder{
     }
     
     public ActionBuilder setView(String value, boolean viewResolved){
-        WebUtil.checkURI(value, viewResolved && value != null);
+        if(viewResolved){
+        	WebUtil.checkURI(value, viewResolved && value != null);
+        }
         return super.setView(value, viewResolved);
     }
     

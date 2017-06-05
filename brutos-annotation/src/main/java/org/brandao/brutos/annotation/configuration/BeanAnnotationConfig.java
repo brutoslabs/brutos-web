@@ -474,27 +474,38 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 	protected void addConstructor(BeanBuilder beanBuilder,
 			ComponentRegistry componentRegistry, Class<?> clazz) {
 
-		Constructor<?>[] constructors = clazz.getDeclaredConstructors();
-
-		Constructor<?> constructor = null;
+		Constructor<?>[] constructors     = clazz.getDeclaredConstructors();
+		Constructor<?> constructor        = null;
+		Constructor<?> defaultConstructor = null;
 
 		if (constructors.length == 1)
 			constructor = constructors[0];
 		else {
+			
 			for (Constructor<?> c : constructors) {
+				if(c.getParameterAnnotations().length == 0){
+					defaultConstructor = c;
+				}
+				else
 				if (c.isAnnotationPresent(org.brandao.brutos.annotation.Constructor.class)) {
 					if (constructor != null)
-						throw new BrutosException("expected @Constructor");
+						throw new BrutosException("multiple @Constructor");
 					else
 						constructor = c;
 				}
 			}
 		}
 
-		if (constructor == null)
-			throw new BrutosException(
-					"can't determine the constructor of the bean: "
-							+ clazz.getName());
+		if (constructor == null){
+			if(defaultConstructor != null){
+				constructor = defaultConstructor;
+			}
+			else{
+				throw new BrutosException(
+						"can't determine the constructor of the bean: "
+								+ clazz.getName());
+			}
+		}
 
 		Type[] genericTypes = (Type[]) constructor.getGenericParameterTypes();
 		Class<?>[] types = constructor.getParameterTypes();
