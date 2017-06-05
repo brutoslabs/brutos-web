@@ -329,7 +329,7 @@ public abstract class AbstractWebApplicationContext
             		BrutosWebConstants.REQUEST_TYPE,
             		BrutosWebConstants.DEFAULT_REQUEST_TYPE.getName());
 
-            return MediaType.valueOf(value.toUpperCase());
+            return MediaType.valueOf(value);
         }
         catch( Exception e ){
             throw new BrutosException( e );
