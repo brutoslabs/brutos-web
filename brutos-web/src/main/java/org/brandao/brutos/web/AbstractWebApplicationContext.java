@@ -453,6 +453,14 @@ public abstract class AbstractWebApplicationContext
         return super.controllerManager.getController(name);
     }
 
+	public ControllerBuilder registerController(String id, RequestMethodType requestType, 
+			String view, boolean resolvedView, DispatcherType dispatcherType, 
+			String name, Class<?> classType, String actionId, ActionType actionType){
+		return ((WebControllerManager)super.controllerManager)
+				.addController(id, requestType, view, dispatcherType, 
+						resolvedView, name, classType, actionId, actionType);
+	}
+    
     public InterceptorStackBuilder registerInterceptorStack( String name, boolean isDefault ){
         return this.interceptorManager.addInterceptorStack(name, isDefault);
     }

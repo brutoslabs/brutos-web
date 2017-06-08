@@ -18,6 +18,7 @@
 package org.brandao.brutos.web;
 
 import org.brandao.brutos.ActionType;
+import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.ControllerManagerImp;
 import org.brandao.brutos.DispatcherType;
@@ -33,9 +34,17 @@ import org.brandao.brutos.web.util.WebUtil;
  */
 public class WebControllerManager extends ControllerManagerImp{
  
+	private ConfigurableWebApplicationContext webApplicationContext;
+	
     public WebControllerManager(){
         super();
     }
+    
+	public void setApplicationContext(
+			ConfigurableApplicationContext applicationContext) {
+		super.setApplicationContext(applicationContext);
+		this.webApplicationContext = (ConfigurableWebApplicationContext) applicationContext;
+	}
     
     public ControllerBuilder addController(String id, String view, 
             boolean resolvedView, DispatcherType dispatcherType,
@@ -44,8 +53,16 @@ public class WebControllerManager extends ControllerManagerImp{
                     dispatcherType, name, classType, actionId, 
                     null);
     }
-    
+
 	public ControllerBuilder addController(String id, String view,
+			DispatcherType dispatcherType, boolean resolvedView, String name,
+			Class<?> classType, String actionId, ActionType actionType) {
+		return this.addController(id, null, view, dispatcherType, 
+				resolvedView, name, classType, actionId, actionType);
+	}
+    
+	public ControllerBuilder addController(String id, 
+			RequestMethodType requestMethodType, String view, 
 			DispatcherType dispatcherType, boolean resolvedView, String name,
 			Class<?> classType, String actionId, ActionType actionType) {
 
@@ -55,15 +72,19 @@ public class WebControllerManager extends ControllerManagerImp{
 		name     = StringUtil.adjust(name);
 		
 		actionId = actionId == null?
-				this.applicationContext.getActionParameterName() :
+				this.webApplicationContext.getActionParameterName() :
 				actionId;
+
+		requestMethodType = requestMethodType == null?
+				this.webApplicationContext.getRequestMethod() :
+				requestMethodType;
 				
 		dispatcherType = dispatcherType == null? 
-				this.applicationContext.getDispatcherType() :
+				this.webApplicationContext.getDispatcherType() :
 					dispatcherType;
 
 		actionType = actionType == null? 
-				this.applicationContext.getActionType() :
+				this.webApplicationContext.getActionType() :
 					actionType;
 		
 		if (classType == null){
@@ -81,7 +102,7 @@ public class WebControllerManager extends ControllerManagerImp{
     	if(!actionType.isValidControllerId(id))
     		throw new MappingException("invalid controller id: " + id);
 
-    	WebController controller = new WebController(this.applicationContext);
+    	WebController controller = new WebController(this.webApplicationContext);
 		controller.setClassType(classType);
 		controller.setId(id);
 		
@@ -90,7 +111,7 @@ public class WebControllerManager extends ControllerManagerImp{
 		ac.setPreAction(this.getMethodAction("preAction", controller.getClassType()));
 		ac.setPostAction(this.getMethodAction("postAction", controller.getClassType()));
 		controller.setActionListener(ac);
-
+		controller.setRequestMethod(requestMethodType);
 		controller.setDefaultInterceptorList(interceptorManager
 				.getDefaultInterceptors());
 

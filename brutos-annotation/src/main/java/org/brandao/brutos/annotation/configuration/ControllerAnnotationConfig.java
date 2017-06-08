@@ -78,8 +78,8 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 		}
 
 		ControllerBuilder builder = 
-			this.registerController(
-					componentRegistry, 
+			componentRegistry
+			.registerController(
 					controllerID, 
 					rendered ? getView((View) source.getAnnotation(View.class), componentRegistry) : null, 
 					rendered ? resolved : true,	
@@ -88,7 +88,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 					source, 
 					actionID, 
 					actionType);
-
+		
 		if (annotationController != null && annotationController.value().length > 1) {
 			String[] ids = annotationController.value();
 			for (int i = 1; i < ids.length; i++) {
