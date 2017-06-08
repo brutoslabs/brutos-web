@@ -40,6 +40,10 @@ public abstract class AbstractRequestParser
 			Properties config, MutableRequestParserEvent requestParserInfo)
 			throws RequestParserException {
 		
+		if(dataType == null){
+			dataType = this.defaultDataType;
+		}
+		
 		ParserContentType parser = this.parsers.get(dataType);
 		
 		if(parser == null){

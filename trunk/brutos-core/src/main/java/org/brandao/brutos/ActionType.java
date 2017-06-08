@@ -17,7 +17,9 @@
 
 package org.brandao.brutos;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.brandao.brutos.mapping.Action;
@@ -51,8 +53,14 @@ public class ActionType {
 			return value != null;
 		}
 		
-		public ActionID getActionID(Controller controller, Action action){
-			return new ActionID(controller.getId() + "-" + action.getId());
+		public List<ActionID> getActionID(String controllerID, Controller controller, 
+				String actionID, Action action){
+			//ações não possuem ids
+			if(action != null){
+				return null;
+			}
+			
+			return Arrays.asList(new ActionID(controllerID));
 		}
 		
 	};
@@ -64,23 +72,43 @@ public class ActionType {
 			return (ActionType) defaultTypes.get(value.toUpperCase());
 	}
 
+	/**
+	 * Obtém a identificação do tipo de mapeamento de ação. 
+	 * Ela é única em toda aplicação.
+	 * @return Identificação.
+	 */
 	public String id(){
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Obtém o nome do tipo de mapeamento de ação. 
+	 * @return Nome.
+	 */
 	public String name(){
 		throw new UnsupportedOperationException();
 	}
 	
+	/**
+	 * Verifica se a identificação do controlador é válida.
+	 * @param value Identificação.
+	 * @return Verdadeiro se for válida. Caso contrário, falso.
+	 */
 	public boolean isValidControllerId(String value){
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Verifica se a identificação da ação é válida.
+	 * @param value Identificação.
+	 * @return Verdadeiro se for válida. Caso contrário, falso.
+	 */
 	public boolean isValidActionId(String value){
 		throw new UnsupportedOperationException();
 	}
 	
-	public ActionID getActionID(Controller controller, Action action){
+	public List<ActionID> getActionID(String controllerID, Controller controller, 
+			String actionID, Action action){
 		throw new UnsupportedOperationException();
 	}
 	

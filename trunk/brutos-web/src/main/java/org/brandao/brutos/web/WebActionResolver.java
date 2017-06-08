@@ -28,12 +28,14 @@ import java.util.Set;
 
 import org.brandao.brutos.AbstractActionResolver;
 import org.brandao.brutos.ActionResolverException;
+import org.brandao.brutos.ActionTypeResolver;
 import org.brandao.brutos.ControllerManager;
 import org.brandao.brutos.DefaultMvcRequest;
 import org.brandao.brutos.DefaultResourceAction;
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
@@ -47,6 +49,32 @@ import org.brandao.brutos.web.mapping.WebController;
 public class WebActionResolver extends AbstractActionResolver{
     
 	private RequestMappingNode root;
+	/*
+	public static void main(String[] s) throws MalformedURLException{
+		WebActionResolver r = new WebActionResolver();
+
+		registry(r, null,"/");
+		registry(r, null,"/value/value2/value3");
+		registry(r, null,"/{regex}/value2/value3");
+		registry(r, null,"/value/{regex}/value3");
+		registry(r, null,"/value/value2/{regex}");
+		
+		DefaultMvcRequest request = new DefaultMvcRequest();
+		RequestMappingEntry e = r.get("/val/value2/value3", request);
+	}
+	
+	private static void registry(WebActionResolver r, String controllerID, String actionID) throws MalformedURLException{
+		WebController c = new WebController(null);
+		c.setId(controllerID);
+		c.setActionType(WebActionType.DETACHED);
+		
+		WebAction action = new WebAction();
+		action.setController(c);
+		action.setName(actionID);
+		action.setId(c.getActionType().getActionID(c, action));
+		r.registry(c, action);
+	}
+	*/
 	
     public WebActionResolver(){
     	super();
@@ -58,12 +86,20 @@ public class WebActionResolver extends AbstractActionResolver{
     
 	public ResourceAction getResourceAction(ControllerManager controllerManager,
 			MutableMvcRequest request) throws ActionResolverException{
+		
 		try{
+			WebMvcRequest webRequest = (WebMvcRequest)request; 
 			String id = request.getRequestId();
-			RequestMappingEntry entry = this.get(id, request);
+			RequestMappingEntry entry = this.get(request.getRequestId(), webRequest.getRequestMethodType(), request);
 			
-			if(id != null){
-				return new DefaultResourceAction( entry.getController(), entry.getAction() );
+			if(entry != null){
+				if(entry.getAction() == null){
+					ActionTypeResolver resolver = 
+							this.actionTypeResolver.get(entry.getController().getActionType());
+					return resolver.getResourceAction(entry.getController(), request);
+				}
+				else
+					return new DefaultResourceAction( entry.getController(), entry.getAction() );
 			}
 			
 			return null;
@@ -72,32 +108,57 @@ public class WebActionResolver extends AbstractActionResolver{
 			throw new ActionResolverException(e);			
 		}
 	}
-    
-    public void registry(Controller controller, Action action) throws MalformedURLException{
-    	WebActionID actionID = (WebActionID)action.getId();
-    	String id            = actionID.getId();
-    	String[] parts       = this.parser(id).toArray(new String[0]);
+
+    public void registry(String controllerID, Controller controller, 
+    		String actionID, Action action) throws ActionResolverException{
     	
-    	this.addNode(this.root, new RequestMappingEntry(controller, action), parts, 0);
+    	try{
+	    	List<ActionID> list = 
+				controller.getActionType()
+				.getActionID(controllerID, controller, actionID, action);
+	
+	    	for(ActionID aID: list){
+	    		WebActionID aWID = (WebActionID)aID;
+		    	String[] parts   = this.parser(aWID.getId()).toArray(new String[0]);
+		    	this.addNode(this.root, new RequestMappingEntry(controller, action), parts, 0);
+	    	}
+    	}
+    	catch(Throwable e){
+    		throw new ActionResolverException(e);    		
+    	}
+    	
     }
 
-    public RequestMappingEntry get(String value, MutableMvcRequest request) throws MalformedURLException{
+    public RequestMappingEntry get(String value, RequestMethodType methodType, 
+    		MutableMvcRequest request) throws MalformedURLException{
     	String[] parts = value.split("/");
     	
     	if(parts.length == 0){
         	return this.root.getRequestEntry();
     	}
     	else{
-    		return this.getNode(this.root, request, parts, 1);
+    		return this.getNode(this.root, methodType, request, parts, 1);
     	}
     }
     
-    public void remove(Controller controller, Action action){
-    	WebActionID actionID = (WebActionID)action.getId();
-    	String id            = actionID.getId();
-    	String[] parts       = this.parser(id).toArray(new String[0]);
+    public void remove(String controllerID, Controller controller, 
+    		String actionID, Action action) throws ActionResolverException{
     	
-    	this.removeNode(this.root, new RequestMappingEntry(controller, action), parts, 0);
+    	try{
+	    	List<ActionID> list = 
+				controller.getActionType()
+				.getActionID(controllerID, controller, actionID, action);
+	
+	    	for(ActionID aID: list){
+	    		WebActionID aWID = (WebActionID)aID;
+		    	String[] parts       = this.parser(aWID.getId()).toArray(new String[0]);
+		    	this.removeNode(this.root, new RequestMappingEntry(controller, action), parts, 0);
+	    	}
+    	}
+    	catch(Throwable e){
+    		throw new ActionResolverException(e);    		
+    	}
+    	
     }
     
     private void addNode(RequestMappingNode node, RequestMappingEntry value, String[] parts, int index) throws MalformedURLException{
@@ -119,8 +180,8 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     }
 
-    private RequestMappingEntry getNode(RequestMappingNode node, MutableMvcRequest request, 
-    		String[] parts, int index) throws MalformedURLException{
+    private RequestMappingEntry getNode(RequestMappingNode node, 
+    		 RequestMethodType methodType, MutableMvcRequest request, String[] parts, int index) throws MalformedURLException{
     	
     	if(index == 0 && parts.length == 0){
     		return node.getRequestEntry();
@@ -136,7 +197,7 @@ public class WebActionResolver extends AbstractActionResolver{
     			return null;//next = node.add(parts[index], null);
     		}
     		
-    		RequestMappingEntry e = this.getNode(next, request, parts, index + 1);
+    		RequestMappingEntry e = this.getNode(next, methodType, request, parts, index + 1);
     		
     		if(e != null && !next.isStaticValue()){
     			next.updateRequest(request, parts[index]);
@@ -224,7 +285,7 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     	private Set<RequestMappingNode> dynamicNext;
     	
-    	private RequestMappingEntry requestEntry;
+    	private Map<RequestMethodType, RequestMappingEntry> requestEntry;
     	
     	public RequestMappingNode(){
     		this.dynamicNext = new HashSet<RequestMappingNode>();
@@ -247,7 +308,7 @@ public class WebActionResolver extends AbstractActionResolver{
     		
     		RequestMappingNode node = new RequestMappingNode();
     		node.setValue(value);
-    		node.setRequestEntry(requestEntry);
+    		node.setRequestEntry(null);
     		node.setStaticValue(value == null || value.indexOf("{") == -1);
     		
     		if(node.isStaticValue()){
@@ -322,12 +383,16 @@ public class WebActionResolver extends AbstractActionResolver{
     		this.pattern = pattern;
     	}
 
-    	public RequestMappingEntry getRequestEntry() {
-    		return requestEntry;
+    	public RequestMappingEntry getRequestEntry(RequestMethodType value) {
+    		return requestEntry.get(value);
     	}
 
-    	public void setRequestEntry(RequestMappingEntry requestEntry) {
-    		this.requestEntry = requestEntry;
+    	public void setRequestEntry(RequestMethodType value, RequestMappingEntry requestEntry) {
+    		if(requestEntry == null){
+    			this.requestEntry = new HashMap<RequestMethodType, RequestMappingEntry>();
+    		}
+    		
+    		this.requestEntry.put(value, value);
     	}
 
     	public String getValue() {
@@ -404,17 +469,9 @@ public class WebActionResolver extends AbstractActionResolver{
     		return controller;
     	}
 
-		public void setController(Controller controller) {
-    		this.controller = controller;
-    	}
-
     	public Action getAction() {
     		return action;
     	}
 
-    	public void setAction(Action action) {
-    		this.action = action;
-    	}
-    	
     }    
 }

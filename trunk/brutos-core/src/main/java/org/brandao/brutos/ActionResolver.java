@@ -26,6 +26,12 @@ import org.brandao.brutos.mapping.Controller;
  */
 public interface ActionResolver {
 
+    void registry(String controllerID, Controller controller, 
+    		String actionID, Action action) throws ActionResolverException;
+
+    void remove(String controllerID, Controller controller, 
+    		String actionID, Action action) throws ActionResolverException;
+    
 	ResourceAction getResourceAction(ControllerManager controllerManager,
 			MutableMvcRequest request) throws ActionResolverException;
 

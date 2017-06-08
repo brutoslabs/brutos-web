@@ -18,7 +18,10 @@
 package org.brandao.brutos.web.mapping;
 
 import org.brandao.brutos.ConfigurableApplicationContext;
+import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.web.RequestMethodType;
 
 /**
  * 
@@ -29,18 +32,48 @@ public class WebController extends Controller{
 
 	private int responseStatus;
 	
+	private RequestMethodType requestMethod;
+	
 	public WebController(ConfigurableApplicationContext context) {
 		super(context);
 		super.setRequestTypes(new MediaTypeMap());
 		super.setResponseTypes(new MediaTypeMap());
 	}
 
+	public void addAction(ActionID id, Action method) {
+		WebActionID wid = (WebActionID)id;
+		method.setId(wid);
+		super.getActions().put(wid, method);
+		super.getContext().getActionResolver()
+			.registry(method.getController().getId(), method.getController(), wid.getId(), method);
+	}
+
+	public void removeAction(ActionID id) {
+		WebActionID wid = (WebActionID)id;
+		Action method   = this.getActions().get(id);
+		
+		this.getActions().remove(id);
+		
+		if(method != null){
+			this.getContext().getActionResolver()
+			.remove(method.getController().getId(), method.getController(), wid.getId(), method);
+		}
+	}
+	
 	public int getResponseStatus() {
 		return responseStatus;
 	}
 
 	public void setResponseStatus(int responseStatus) {
 		this.responseStatus = responseStatus;
+	}
+
+	public RequestMethodType getRequestMethod() {
+		return requestMethod;
+	}
+
+	public void setRequestMethod(RequestMethodType requestMethod) {
+		this.requestMethod = requestMethod;
 	}
 	
 }
