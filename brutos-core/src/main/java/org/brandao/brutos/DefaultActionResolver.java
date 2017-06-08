@@ -17,10 +17,40 @@
 
 package org.brandao.brutos;
 
+import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.Controller;
+
+
 /**
  * 
  * @author Brandao
  */
-public class DefaultActionResolver extends AbstractActionResolver {
+public class DefaultActionResolver 
+	extends AbstractActionResolver {
+
+	public void registry(String controllerID, Controller controller,
+			String actionID, Action action) throws ActionResolverException {
+	}
+
+	public void remove(String controllerID, Controller controller,
+			String actionID, Action action) throws ActionResolverException {
+	}
+
+	public ResourceAction getResourceAction(
+			ControllerManager controllerManager, MutableMvcRequest request)
+			throws ActionResolverException {
+		return null;
+	}
+
+	public ResourceAction getResourceAction(Controller controller,
+			MutableMvcRequest request) throws ActionResolverException {
+		return null;
+	}
+
+	public ResourceAction getResourceAction(Controller controller,
+			String actionId, MutableMvcRequest request)
+			throws ActionResolverException {
+		return null;
+	}
 
 }

@@ -1,13 +1,9 @@
 package org.brandao.brutos;
 
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.mapping.ActionID;
-import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.scope.Scope;
 
 public abstract class AbstractActionResolver 
 	implements ActionResolver{
@@ -20,58 +16,6 @@ public abstract class AbstractActionResolver
 				new ConcurrentHashMap<ActionType, ActionTypeResolver>();
 	}
 	
-	protected ScopeType getScope() {
-		return ScopeType.PARAM;
-	}
-	
-	public ResourceAction getResourceAction(ControllerManager controllerManager,
-			MutableMvcRequest request) throws ActionResolverException{
-		
-        Iterator<Controller> controllers = controllerManager.getAllControllers();
-        Scope paramScope =
-                request.getApplicationContext().getScopes().get(this.getScope());
-        
-        while(controllers.hasNext()){
-            Controller controller = controllers.next();
-            ActionType actionType = controller.getActionType();
-            
-            ActionTypeResolver actionTyperesolver = this.actionTypeResolver.get(actionType);
-            ResourceAction action = 
-            		actionTyperesolver.getResourceAction(controller, paramScope, request);
-            
-            if(action != null){
-            	return action;
-            }
-        }
-        
-        return null;
-	}
-	
-    public ResourceAction getResourceAction(Controller controller,
-    		MutableMvcRequest request) throws ActionResolverException {
-
-        if( controller.getId() != null ){
-            Scope scope = request.getApplicationContext().getScopes()
-                    .get(this.getScope());
-
-            return getResourceAction( 
-                    controller,
-                    String.valueOf(
-                            scope.get( controller.getActionId() ) ),
-                    request);
-        }
-        else
-            return getResourceAction( controller, request.getRequestId(), request );
-        
-    }
-	
-    public ResourceAction getResourceAction(Controller controller, String actionId, 
-    		MutableMvcRequest request) throws ActionResolverException {
-
-        Action method = controller.getAction(new ActionID(actionId));
-        return method == null? null : getResourceAction( method );
-    }
-    
 	public void addActionTypeResolver(ActionType key, ActionTypeResolver value) {
 		if(this.actionTypeResolver.containsKey(key)){
 			throw new IllegalStateException("action type has been registered!");
