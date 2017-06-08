@@ -32,20 +32,25 @@ public interface ActionResolver {
     void remove(String controllerID, Controller controller, 
     		String actionID, Action action) throws ActionResolverException;
     
+    
 	ResourceAction getResourceAction(ControllerManager controllerManager,
 			MutableMvcRequest request) throws ActionResolverException;
-
+    
 	void addActionTypeResolver(ActionType key, 
 			ActionTypeResolver value) throws ActionResolverException;
 
 	void removeActionTypeResolver(ActionType key) throws ActionResolverException;
 	
+	/*
 	ResourceAction getResourceAction(Controller controller,
 			MutableMvcRequest request) throws ActionResolverException;
-
+    */
+	
+	
 	ResourceAction getResourceAction(Controller controller, 
 			String actionId, MutableMvcRequest request) throws ActionResolverException;
-
+    
+	
 	ResourceAction getResourceAction(Action action) throws ActionResolverException;
 
 }

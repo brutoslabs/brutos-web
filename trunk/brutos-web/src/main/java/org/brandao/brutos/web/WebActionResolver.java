@@ -49,32 +49,6 @@ import org.brandao.brutos.web.mapping.WebController;
 public class WebActionResolver extends AbstractActionResolver{
     
 	private RequestMappingNode root;
-	/*
-	public static void main(String[] s) throws MalformedURLException{
-		WebActionResolver r = new WebActionResolver();
-
-		registry(r, null,"/");
-		registry(r, null,"/value/value2/value3");
-		registry(r, null,"/{regex}/value2/value3");
-		registry(r, null,"/value/{regex}/value3");
-		registry(r, null,"/value/value2/{regex}");
-		
-		DefaultMvcRequest request = new DefaultMvcRequest();
-		RequestMappingEntry e = r.get("/val/value2/value3", request);
-	}
-	
-	private static void registry(WebActionResolver r, String controllerID, String actionID) throws MalformedURLException{
-		WebController c = new WebController(null);
-		c.setId(controllerID);
-		c.setActionType(WebActionType.DETACHED);
-		
-		WebAction action = new WebAction();
-		action.setController(c);
-		action.setName(actionID);
-		action.setId(c.getActionType().getActionID(c, action));
-		r.registry(c, action);
-	}
-	*/
 	
     public WebActionResolver(){
     	super();
@@ -109,6 +83,18 @@ public class WebActionResolver extends AbstractActionResolver{
 		}
 	}
 
+	public ResourceAction getResourceAction(Controller controller,
+			String actionId, MutableMvcRequest request)
+			throws ActionResolverException {
+		
+		WebApplicationContext context = 
+				(WebApplicationContext)request.getApplicationContext();
+		
+		WebActionID wID = new WebActionID(actionId, context.getRequestMethod());
+		Action action = controller.getAction(wID);
+		return action == null? null : new DefaultResourceAction(controller, action);
+	}
+	
     public void registry(String controllerID, Controller controller, 
     		String actionID, Action action) throws ActionResolverException{
     	
@@ -120,7 +106,8 @@ public class WebActionResolver extends AbstractActionResolver{
 	    	for(ActionID aID: list){
 	    		WebActionID aWID = (WebActionID)aID;
 		    	String[] parts   = this.parser(aWID.getId()).toArray(new String[0]);
-		    	this.addNode(this.root, new RequestMappingEntry(controller, action), parts, 0);
+		    	this.addNode(this.root, aWID.getRequestMethodType(),
+		    			new RequestMappingEntry(controller, action), parts, 0);
 	    	}
     	}
     	catch(Throwable e){
@@ -134,7 +121,7 @@ public class WebActionResolver extends AbstractActionResolver{
     	String[] parts = value.split("/");
     	
     	if(parts.length == 0){
-        	return this.root.getRequestEntry();
+        	return this.root.getRequestEntry(methodType);
     	}
     	else{
     		return this.getNode(this.root, methodType, request, parts, 1);
@@ -152,7 +139,8 @@ public class WebActionResolver extends AbstractActionResolver{
 	    	for(ActionID aID: list){
 	    		WebActionID aWID = (WebActionID)aID;
 		    	String[] parts       = this.parser(aWID.getId()).toArray(new String[0]);
-		    	this.removeNode(this.root, new RequestMappingEntry(controller, action), parts, 0);
+		    	this.removeNode(this.root, aWID.getRequestMethodType(), 
+		    			new RequestMappingEntry(controller, action), parts, 0);
 	    	}
     	}
     	catch(Throwable e){
@@ -161,21 +149,22 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     }
     
-    private void addNode(RequestMappingNode node, RequestMappingEntry value, String[] parts, int index) throws MalformedURLException{
+    private void addNode(RequestMappingNode node, RequestMethodType methodType,
+    		RequestMappingEntry value, String[] parts, int index) throws MalformedURLException{
     	
     	if(index == 0 && parts.length == 0){
-    		node.setRequestEntry(value);
+    		node.putRequestEntry(methodType, value);
     	}
     	else
     	if(index == parts.length){
-    		node.setRequestEntry(value);
+    		node.putRequestEntry(methodType, value);
     	}
     	else{
     		RequestMappingNode next = node.getNext(parts[index]);
     		if(next == null){
     			next = node.add(parts[index], null);
     		}
-    		this.addNode(next, value, parts, index + 1);
+    		this.addNode(next, methodType, value, parts, index + 1);
     	}
     	
     }
@@ -184,17 +173,17 @@ public class WebActionResolver extends AbstractActionResolver{
     		 RequestMethodType methodType, MutableMvcRequest request, String[] parts, int index) throws MalformedURLException{
     	
     	if(index == 0 && parts.length == 0){
-    		return node.getRequestEntry();
+    		return node.getRequestEntry(methodType);
     	}
     	else
     	if(index == parts.length){
-    		return node.getRequestEntry();
+    		return node.getRequestEntry(methodType);
     	}
     	else{
     		RequestMappingNode next = node.getNext(parts[index]);
     		
     		if(next == null){
-    			return null;//next = node.add(parts[index], null);
+    			return null;
     		}
     		
     		RequestMappingEntry e = this.getNode(next, methodType, request, parts, index + 1);
@@ -208,19 +197,20 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     }
     
-    private void removeNode(RequestMappingNode node, RequestMappingEntry value, String[] parts, int index){
+    private void removeNode(RequestMappingNode node, RequestMethodType methodType, 
+    		RequestMappingEntry value, String[] parts, int index){
     	
     	if(index == 0 && parts.length == 0){
     		node.remove(null);
     	}
     	else
     	if(index == parts.length){
-    		node.setRequestEntry(null);
+    		node.removeRequestEntry(methodType);
     	}
     	else{
     		RequestMappingNode next = node.getNext(parts[index]);
     		if(next != null){
-    			this.removeNode(next, value, parts, index + 1);
+    			this.removeNode(next, methodType, value, parts, index + 1);
     			if(next.isEmpty()){
     				node.remove(parts[index]);
     			}
@@ -304,11 +294,11 @@ public class WebActionResolver extends AbstractActionResolver{
     		
     	}
     	
-    	public RequestMappingNode add(String value, RequestMappingEntry requestEntry) throws MalformedURLException{
+    	public RequestMappingNode add(String value, 
+    			RequestMappingEntry requestEntry) throws MalformedURLException{
     		
     		RequestMappingNode node = new RequestMappingNode();
     		node.setValue(value);
-    		node.setRequestEntry(null);
     		node.setStaticValue(value == null || value.indexOf("{") == -1);
     		
     		if(node.isStaticValue()){
@@ -387,14 +377,25 @@ public class WebActionResolver extends AbstractActionResolver{
     		return requestEntry.get(value);
     	}
 
-    	public void setRequestEntry(RequestMethodType value, RequestMappingEntry requestEntry) {
+    	public void putRequestEntry(RequestMethodType value, 
+    			RequestMappingEntry requestEntry) {
     		if(requestEntry == null){
-    			this.requestEntry = new HashMap<RequestMethodType, RequestMappingEntry>();
+    			this.requestEntry = 
+    					new HashMap<RequestMethodType, RequestMappingEntry>();
     		}
     		
-    		this.requestEntry.put(value, value);
+    		this.requestEntry.put(value, requestEntry);
     	}
 
+    	public void removeRequestEntry(RequestMethodType value) {
+    		
+    		if(requestEntry == null){
+    			return;
+    		}
+    		
+    		this.requestEntry.remove(value);
+    	}
+    	
     	public String getValue() {
     		return value;
     	}
@@ -473,5 +474,6 @@ public class WebActionResolver extends AbstractActionResolver{
     		return action;
     	}
 
-    }    
+    }
+    
 }
