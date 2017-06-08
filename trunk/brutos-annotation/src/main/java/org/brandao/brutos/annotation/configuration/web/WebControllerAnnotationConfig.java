@@ -13,11 +13,14 @@ import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.View;
 import org.brandao.brutos.annotation.configuration.ControllerAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ThrowableEntry;
+import org.brandao.brutos.annotation.web.RequestMethod;
 import org.brandao.brutos.annotation.web.ResponseError;
 import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.annotation.web.ResponseStatus;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.web.RequestMethodType;
 import org.brandao.brutos.web.WebActionType;
+import org.brandao.brutos.web.WebComponentRegistry;
 import org.brandao.brutos.web.WebControllerBuilder;
 
 @Stereotype(
@@ -30,18 +33,25 @@ public class WebControllerAnnotationConfig
 	public Object applyConfiguration0(Object arg0, Object arg1,
 			ComponentRegistry componentRegistry) {
 
-		Class<?> source                 = (Class<?>) arg0;
-		Controller annotationController = (Controller) source.getAnnotation(Controller.class);
-		View viewAnnotation             = (View) source.getAnnotation(View.class);
-		ActionStrategy strategy         = (ActionStrategy)source.getAnnotation(ActionStrategy.class);
-		String name                     = null;
-		String actionID                 = null;
-		String defaultActionName        = null;
-		ActionType actionType           = strategy == null ? null : WebActionType.valueOf(strategy.value().name());
-		String controllerID             = this.getControllerId(componentRegistry, annotationController, source);
-		ResponseStatus responseStatus   = source.getAnnotation(ResponseStatus.class);
-		boolean resolved                = viewAnnotation == null ? false : viewAnnotation.resolved();
-		boolean rendered                = viewAnnotation == null ? true : viewAnnotation.rendered();
+		WebComponentRegistry webComponentRegistry = (WebComponentRegistry)componentRegistry; 
+		Class<?> source                     = (Class<?>) arg0;
+		Controller annotationController     = (Controller) source.getAnnotation(Controller.class);
+		View viewAnnotation                 = (View) source.getAnnotation(View.class);
+		ActionStrategy strategy             = (ActionStrategy)source.getAnnotation(ActionStrategy.class);
+		RequestMethod requestMethod         = source.getAnnotation(RequestMethod.class);
+		String name                         = null;
+		String actionID                     = null;
+		String defaultActionName            = null;
+		ActionType actionType               = strategy == null ? null : WebActionType.valueOf(strategy.value().name());
+		String controllerID                 = this.getControllerId(webComponentRegistry, annotationController, source);
+		ResponseStatus responseStatus       = source.getAnnotation(ResponseStatus.class);
+		boolean resolved                    = viewAnnotation == null ? false : viewAnnotation.resolved();
+		boolean rendered                    = viewAnnotation == null ? true : viewAnnotation.rendered();
+
+		RequestMethodType requestMethodType = 
+				requestMethod == null? 
+					null : 
+					RequestMethodType.valueOf(StringUtil.adjust(requestMethod.value()));
 		
 		org.brandao.brutos.DispatcherType dispatcher = 
 			viewAnnotation == null? 
@@ -55,17 +65,18 @@ public class WebControllerAnnotationConfig
 		}
 
 		WebControllerBuilder builder = 
-			(WebControllerBuilder)this.registerController(
-					componentRegistry, 
-					controllerID, 
-					rendered ? getView((View) source.getAnnotation(View.class), componentRegistry) : null, 
-					rendered ? resolved : true,	
-					dispatcher, 
-					name, 
-					source, 
-					actionID, 
-					actionType);
-
+			(WebControllerBuilder)webComponentRegistry
+				.registerController(
+						controllerID, 
+						requestMethodType,
+						rendered ? getView((View) source.getAnnotation(View.class), webComponentRegistry) : null, 
+						rendered ? resolved : true,	
+						dispatcher, 
+						name, 
+						source, 
+						actionID, 
+						actionType);
+				
 		if(responseStatus != null){
 			builder.setResponseStatus(responseStatus.value());
 		}
@@ -81,15 +92,15 @@ public class WebControllerAnnotationConfig
 			}
 		}
 
-		super.applyInternalConfiguration(source, builder, componentRegistry);
+		super.applyInternalConfiguration(source, builder, webComponentRegistry);
 
-		importBeans(builder, componentRegistry, builder.getClassType());
+		importBeans(builder, webComponentRegistry, builder.getClassType());
 		
-		throwsSafe(builder, source, componentRegistry);
+		throwsSafe(builder, source, webComponentRegistry);
 		
-		addProperties(builder, componentRegistry, source);
+		addProperties(builder, webComponentRegistry, source);
 		
-		addActions(builder, componentRegistry, source);
+		addActions(builder, webComponentRegistry, source);
 
 		if (!StringUtil.isEmpty(defaultActionName)){
 			builder.setDefaultAction(defaultActionName);
