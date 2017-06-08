@@ -254,28 +254,45 @@ public class ControllerManagerImp implements ControllerManager {
 	protected synchronized void addController(String id, Controller controller) {
 
 		if (id != null) {
-			if (contains(id))
+			if (mappedControllers.containsKey(id)){
 				throw new BrutosException(String.format(
 						"duplicate controller: %s", new Object[] { id }));
-			else
-				mappedControllers.put(id, controller);
+			}
+			
+			mappedControllers.put(id, controller);
 		}
 
-		classMappedControllers.put(controller.getClassType(), controller);
+		if(id == null || id.equals(controller.getId())){
+			this.classMappedControllers.put(controller.getClassType(), controller);
+		}
+		
+		this.applicationContext.getActionResolver().registry(id, controller, null, null);
 	}
 
 	protected synchronized void removeController(String id, Controller controller) {
 
 		if (id != null) {
-			if (!contains(id))
+			if (!mappedControllers.containsKey(id))
 				throw new BrutosException(String.format(
 						"controller not found: %s", new Object[] { id }));
 			else
 				mappedControllers.remove(id);
 		}
 
-		if (id == null || id.equals(controller.getId()))
-			classMappedControllers.remove(controller.getClassType());
+		if (id == null || id.equals(controller.getId())){
+			
+			if(controller.getId() != null){
+				mappedControllers.remove(controller.getId());
+			}
+			
+			for(String alias: controller.getAlias()){
+				this.removeController(alias, controller);
+			}
+			
+			this.classMappedControllers.remove(controller.getClassType());
+		}
+		
+		this.applicationContext.getActionResolver().registry(id, controller, null, null);
 	}
 
 	public ControllerBuilder getCurrent() {
@@ -324,19 +341,16 @@ public class ControllerManagerImp implements ControllerManager {
 		Controller controller = (Controller) classMappedControllers.get(clazz);
 
 		if (controller != null) {
-			classMappedControllers.remove(clazz);
-
-			if (!StringUtil.isEmpty(controller.getId()))
-				mappedControllers.remove(controller.getId());
+			this.removeController(null, controller);
 		}
+		
 	}
 
 	public synchronized void removeController(String name) {
 		Controller controller = (Controller) mappedControllers.get(name);
 
 		if (controller != null) {
-			mappedControllers.remove(name);
-			classMappedControllers.remove(controller.getClassType());
+			this.removeController(name, controller);
 		}
 
 	}

@@ -209,10 +209,19 @@ public class Controller {
 	public void addAction(ActionID id, Action method) {
 		method.setId(id);
 		this.actions.put(id, method);
+		this.context.getActionResolver()
+			.registry(method.getController().getId(), method.getController(), id.getName(), method);
 	}
 
 	public void removeAction(ActionID id) {
+		Action method = this.actions.get(id);
+		
 		this.actions.remove(id);
+		
+		if(method != null){
+			this.context.getActionResolver()
+			.remove(method.getController().getId(), method.getController(), id.getName(), method);
+		}
 	}
 
 	Map<ReverseActionKey, List<Action>> getReverseMethods() {

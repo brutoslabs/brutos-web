@@ -1,6 +1,9 @@
 package org.brandao.brutos.web;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.brandao.brutos.ActionType;
@@ -9,6 +12,7 @@ import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
+import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.util.WebUtil;
 
 public class WebActionType extends ActionType{
@@ -37,13 +41,50 @@ public class WebActionType extends ActionType{
 			return true;
 		}
 
-		public ActionID getActionID(Controller controller, Action action){
-			WebAction webAction = (WebAction)action;
-			return new WebActionID(webAction.getName(), webAction.getRequestMethod());
+		public List<ActionID> getActionID(String controllerID, Controller controller, 
+				String actionID, Action action){
+			//ações não possuem ids
+			if(action != null){
+				return null;
+			}
+			
+			return Arrays.asList(new ActionID(controllerID));
+		}
+		
+	};	
+	
+	public static final WebActionType HEADER = new WebActionType() {
+		
+		public String id(){
+			return "HEADER";
+		}
+
+		public String name(){
+			return "Header";
+		}
+		
+		public boolean isValidControllerId(String value){
+			try{
+				WebUtil.checkURI(value, true);
+				return true;
+			}
+			catch(Throwable e){
+				return false;
+			}
+		}
+
+		public boolean isValidActionId(String value){
+			return true;
+		}
+
+		public List<ActionID> getActionID(String controllerID, Controller controller, 
+				String actionID, Action action){
+			return PARAMETER.getActionID(controllerID, controller, 
+					actionID, action);
 		}
 		
 	};
-
+	
 	public static final WebActionType HIERARCHY = new WebActionType() {
 		
 		public String id(){
@@ -74,9 +115,46 @@ public class WebActionType extends ActionType{
 			}
 		}
 
-		public ActionID getActionID(Controller controller, Action action){
-			WebAction webAction = (WebAction)action;
-			return new WebActionID(controller.getId() + webAction.getName(), webAction.getRequestMethod());
+		public List<ActionID> getActionID(String controllerID, Controller controller, 
+				String actionID, Action action){
+			
+			List<ActionID> result       = new ArrayList<ActionID>();
+			WebController webController = (WebController)controller;
+			WebAction webAction         = (WebAction)action;
+
+			List<String> controllerIds = new ArrayList<String>();
+			List<String> actionIds     = new ArrayList<String>();
+			
+			if(controllerID.equals(controller.getId())){
+				controllerIds.add(controller.getId());
+				controllerIds.addAll(controller.getAlias());
+			}
+			else{
+				controllerIds.add(controllerID);
+			}
+			
+			for(String cID: controllerIds){
+				
+				result.add(new WebActionID(cID, webController.getRequestMethod()));
+
+				if(action == null)
+					continue;
+				
+				if(actionID.equals(webAction.getName())){
+					actionIds.add(action.getName());
+					actionIds.addAll(action.getAlias());
+				}
+				else{
+					actionIds.add(actionID);
+				}
+				
+				for(String aID: actionIds){
+					result.add(new WebActionID(cID + aID, webAction.getRequestMethod()));
+				}
+				
+			}
+			
+			return result;
 		}
 		
 	};
@@ -105,9 +183,31 @@ public class WebActionType extends ActionType{
 			}
 		}
 
-		public ActionID getActionID(Controller controller, Action action){
-			WebAction webAction = (WebAction)action;
-			return new WebActionID(webAction.getName(), webAction.getRequestMethod());
+		public List<ActionID> getActionID(String controllerID, Controller controller, 
+				String actionID, Action action){
+			
+			List<ActionID> result       = new ArrayList<ActionID>();
+			WebAction webAction         = (WebAction)action;
+
+			List<String> actionIds     = new ArrayList<String>();
+			
+			if(action == null){
+				return result;
+			}
+				
+			if(actionID.equals(webAction.getName())){
+				actionIds.add(action.getName());
+				actionIds.addAll(action.getAlias());
+			}
+			else{
+				actionIds.add(actionID);
+			}
+			
+			for(String aID: actionIds){
+				result.add(new WebActionID(aID, webAction.getRequestMethod()));
+			}
+				
+			return result;
 		}
 		
 	};
