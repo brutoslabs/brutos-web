@@ -20,6 +20,7 @@ package org.brandao.brutos;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -27,6 +28,12 @@ import java.util.List;
  */
 public interface MvcRequest {
 
+	Set<String> getHeaderNames();
+	
+	Set<String> getParameterNames();
+
+	Set<String> getPropertyNames();
+	
 	RequestParserEvent getRequestParserInfo();
     
 	RequestParser getRequestParser();

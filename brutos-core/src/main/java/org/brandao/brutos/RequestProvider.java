@@ -29,7 +29,7 @@ public class RequestProvider {
 		requests = new ThreadLocal<MvcRequest>();
 	}
 
-	public MvcRequest init(MvcRequest request) {
+	public static MvcRequest init(MvcRequest request) {
 		MvcRequest current = requests.get();
 		requests.set(request);
 		return current;
@@ -39,7 +39,7 @@ public class RequestProvider {
 		return requests.get();
 	}
 
-	public void destroy(MvcRequest old) {
+	public static void destroy(MvcRequest old) {
 		if (old == null)
 			requests.remove();
 		else

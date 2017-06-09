@@ -23,7 +23,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -43,14 +45,37 @@ public class WebMvcRequestImp
 
     private RequestMethodType requestMethodType;
     
-    public WebMvcRequestImp(HttpServletRequest request){
+    @SuppressWarnings("unchecked")
+	public WebMvcRequestImp(HttpServletRequest request){
+    	super();
         this.request           = request;
-        this.requestMethodType = RequestMethodType.valueOf(request.getMethod().toUpperCase());
-        super.setType(MediaType.valueOf(request.getContentType()));
-        super.setRequestId(this.parseRequestId(request.getRequestURI(), request.getContextPath()));
-        super.setAcceptResponse(this.parseAcceptResponse(request.getHeader("Accept")));
+        this.requestMethodType = 
+        			RequestMethodType.valueOf(request.getMethod().toUpperCase());
+        
+        super.setType(
+        			MediaType.valueOf(request.getContentType()));
+        
+        super.setRequestId(
+    		this.parseRequestId(
+    				request.getRequestURI(), 
+    				request.getContextPath()));
+        
+        super.setAcceptResponse(
+    		this.parseAcceptResponse(
+    				request.getHeader("Accept")));
+        
+        this.loadNames(request.getParameterNames(), super.parameterNames);
+        this.loadNames(request.getHeaderNames(), super.headerNames);
+        this.loadNames(request.getAttributeNames(), super.parameterNames);
     }
 
+    private void loadNames(Enumeration<String> paramNames, Set<String> set){
+        while(paramNames.hasMoreElements()){
+        	String name = paramNames.nextElement();
+        	set.add(name);
+        }
+    }
+    
     private String parseRequestId(String path, String contextPath){
         return path.substring( contextPath.length(), path.length() );
     }

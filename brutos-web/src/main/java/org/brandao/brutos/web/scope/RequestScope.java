@@ -19,11 +19,10 @@ package org.brandao.brutos.web.scope;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.http.ParameterList;
 
@@ -32,53 +31,46 @@ import org.brandao.brutos.web.http.ParameterList;
  * @author Brandao
  */
 public class RequestScope implements Scope{
-    
-	private static final ThreadLocal<HttpServletRequest> currentRequest =
-			new ThreadLocal<HttpServletRequest>();
-	
-    public RequestScope() {
-    }
 
-    public static void setServletRequest(HttpServletRequest value){
+	private static final ThreadLocal<MutableMvcRequest> currentRequest =
+			new ThreadLocal<MutableMvcRequest>();
+	
+    public static void setRequest(MutableMvcRequest value){
     	currentRequest.set(value);
     }
 
-    public static void removeServletRequest(HttpServletRequest value){
+    public static void removeRequest(MutableMvcRequest value){
     	currentRequest.remove();
     }
-    
+
     public void put(String name, Object value) {
-    	HttpServletRequest request = currentRequest.get();
-        request.setAttribute(name, value);
+    	MutableMvcRequest request = currentRequest.get();
+        request.setProperty(name, value);
     }
 
     public Object get(String name) {
-    	HttpServletRequest request = currentRequest.get();
-        return request.getAttribute(name);
+    	MutableMvcRequest request = currentRequest.get();
+        return request.getProperty(name);
     }
 
     public Object getCollection( String name ){
-    	HttpServletRequest request = currentRequest.get();
+    	MutableMvcRequest request = currentRequest.get();
         return new ParameterList(
-                Arrays.asList(request.getParameterValues(name)));
+                Arrays.asList(request.getProperty(name)));
     }
 
     public void remove( String name ){
-    	HttpServletRequest request = currentRequest.get();
-        request.removeAttribute(name);
     }
 
-	@SuppressWarnings("unchecked")
 	public List<String> getNamesStartsWith(String value) {
-    	HttpServletRequest request = currentRequest.get();
+    	MutableMvcRequest request = currentRequest.get();
 		
 		List<String> result = new ArrayList<String>();
 		
-		Enumeration<String> names = 
-				request.getAttributeNames();
+		Set<String> names = 
+				request.getPropertyNames();
 		
-		while(names.hasMoreElements()){
-			String name = names.nextElement();
+		for(String name: names){
 			if(name.startsWith(value)){
 				result.add(name);
 			}
@@ -86,5 +78,5 @@ public class RequestScope implements Scope{
 		
 		return result;
 	}
-
+	
 }

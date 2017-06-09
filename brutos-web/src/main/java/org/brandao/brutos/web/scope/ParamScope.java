@@ -18,14 +18,13 @@
 package org.brandao.brutos.web.scope;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
-import javax.servlet.ServletRequest;
-
+import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.web.RequestInfo;
-import org.brandao.brutos.web.http.BrutosRequest;
+import org.brandao.brutos.web.http.ParameterList;
 
 /**
  * 
@@ -33,53 +32,48 @@ import org.brandao.brutos.web.http.BrutosRequest;
  */
 public class ParamScope implements Scope{
     
+	private static final ThreadLocal<MutableMvcRequest> currentRequest =
+			new ThreadLocal<MutableMvcRequest>();
+	
     public ParamScope() {
     }
 
-    private ServletRequest getServletRequest(){
-        RequestInfo requestInfo = RequestInfo.getCurrentRequestInfo();
-        return requestInfo.getRequest();
-        
+    public static void setRequest(MutableMvcRequest value){
+    	currentRequest.set(value);
+    }
+
+    public static void removeRequest(MutableMvcRequest value){
+    	currentRequest.remove();
     }
 
     public void put(String name, Object value) {
-        BrutosRequest request = 
-                (BrutosRequest)getServletRequest();
-        request.setObject(name, value);
-
-        //ServletRequest request = ContextLoaderListener.currentRequest.get();
-        //request.setAttribute(name, value);
+    	MutableMvcRequest request = currentRequest.get();
+        request.setParameter(name, value);
     }
 
     public Object get(String name) {
-        BrutosRequest request =
-                (BrutosRequest)getServletRequest();
-        return request.getObject(name);
+    	MutableMvcRequest request = currentRequest.get();
+        return request.getParameter(name);
     }
 
     public Object getCollection( String name ){
-        BrutosRequest request =
-                (BrutosRequest)getServletRequest();
-        return request.getObjects(name);
+    	MutableMvcRequest request = currentRequest.get();
+        return new ParameterList(
+                Arrays.asList(request.getParameters()));
     }
 
     public void remove( String name ){
-        //ServletRequest request = ContextLoaderListener.currentRequest.get();
-        //request.removeAttribute(name);
     }
 
-	@SuppressWarnings("unchecked")
 	public List<String> getNamesStartsWith(String value) {
-		BrutosRequest request =
-                (BrutosRequest)getServletRequest();
+    	MutableMvcRequest request = currentRequest.get();
 		
 		List<String> result = new ArrayList<String>();
 		
-		Enumeration<String> names = 
+		Set<String> names = 
 				request.getParameterNames();
 		
-		while(names.hasMoreElements()){
-			String name = names.nextElement();
+		for(String name: names){
 			if(name.startsWith(value)){
 				result.add(name);
 			}
@@ -87,4 +81,5 @@ public class ParamScope implements Scope{
 		
 		return result;
 	}
+    
 }

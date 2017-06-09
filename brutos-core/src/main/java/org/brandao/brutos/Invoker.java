@@ -52,10 +52,6 @@ public class Invoker {
 	
 	protected ConfigurableRenderView renderView;
 	
-	protected RequestProvider requestProvider;
-	
-	protected ResponseProvider responseProvider;
-
 	protected ConfigurableRequestParser requestParser;
 	
 	protected RequestParserListener requestParserListener;
@@ -265,8 +261,8 @@ public class Invoker {
 		response.setType(responseDataType);
 		
 		try{
-			oldRequest  = this.requestProvider.init(request);
-			oldresponse = this.responseProvider.init(response);
+			oldRequest  = RequestProvider.init(request);
+			oldresponse = ResponseProvider.init(response);
 			
 			time = System.currentTimeMillis();
 			createdThreadScope = ThreadScope.create();
@@ -289,8 +285,8 @@ public class Invoker {
 		}
 		finally {
 
-			this.requestProvider.destroy(oldRequest);
-			this.responseProvider.destroy(oldresponse);
+			RequestProvider.destroy(oldRequest);
+			ResponseProvider.destroy(oldresponse);
 			
 			if (createdThreadScope)
 				ThreadScope.destroy();
@@ -306,6 +302,12 @@ public class Invoker {
 
 	protected boolean isSupportedRequestType(ResourceAction action, MutableMvcRequest request){
 		
+		DataType requestType = request.getType();
+		
+		if(requestType == null){
+			return true;
+		}
+		
     	DataTypeMap supportedRequestTypes = action.getMethodForm().getRequestTypes();
     	
     	if(supportedRequestTypes.isEmpty()){
@@ -313,7 +315,9 @@ public class Invoker {
     	}
     	
     	if(supportedRequestTypes.isEmpty()){
-    		return this.applicationContext.getRequestType().equals(request.getType());
+    		return 
+				request.getType() == null ||
+				this.requestParser.getDefaultParserType().equals(request.getType());
     	}
     	else{
     		return supportedRequestTypes.accept(request.getType());
