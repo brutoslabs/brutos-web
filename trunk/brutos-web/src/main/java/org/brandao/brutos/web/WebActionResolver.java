@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.web;
 
-
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -444,7 +444,7 @@ public abstract class AbstractApplicationContext
 
             ConfigurableRequestParser instance =
             		(ConfigurableRequestParser)ClassUtil.getInstance(ulfClass);
-            instance.setDefaultRenderViewType(this.getInitRequestType());
+            instance.setDefaultParserType(this.getInitRequestType());
             return instance;
         }
         catch( Exception e ){
@@ -459,7 +459,7 @@ public abstract class AbstractApplicationContext
                 config.getProperty(
             		BrutosConstants.REQUEST_TYPE);
 
-            return DataType.valueOf(value.toUpperCase());
+            return DataType.valueOf(value);
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -473,7 +473,7 @@ public abstract class AbstractApplicationContext
                 config.getProperty(
             		BrutosConstants.RESPONSE_TYPE);
 
-            return DataType.valueOf(value.toUpperCase());
+            return DataType.valueOf(value);
         }
         catch( Exception e ){
             throw new BrutosException( e );
@@ -754,11 +754,11 @@ public abstract class AbstractApplicationContext
 	}
 	
     public void setRequestType(DataType value){
-    	this.requestParser.setDefaultRenderViewType(value);
+    	this.requestParser.setDefaultParserType(value);
     }
 
 	public DataType getRequestType(){
-		return this.requestParser.getDefaultRenderViewType();
+		return this.requestParser.getDefaultParserType();
 	}
 	
     public void setResponseType(DataType value){

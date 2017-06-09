@@ -77,12 +77,12 @@ public abstract class AbstractRequestParser
 		return this.parsers.containsKey(dataType);
 	}
 
-	public void setDefaultRenderViewType(DataType dataType)
+	public void setDefaultParserType(DataType dataType)
 			throws RequestParserException{
 		this.defaultDataType = dataType;
 	}
 
-	public DataType getDefaultRenderViewType() throws RequestParserException{
+	public DataType getDefaultParserType() throws RequestParserException{
 		return this.defaultDataType;
 	}
 		
