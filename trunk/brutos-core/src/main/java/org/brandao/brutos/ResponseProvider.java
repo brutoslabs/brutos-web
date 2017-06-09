@@ -29,7 +29,7 @@ public class ResponseProvider {
 		responses = new ThreadLocal<MvcResponse>();
 	}
 
-	public MvcResponse init(MvcResponse response) {
+	public static MvcResponse init(MvcResponse response) {
 		MvcResponse current  = responses.get();
 		responses.set(response);
 		return current;
@@ -39,7 +39,7 @@ public class ResponseProvider {
 		return responses.get();
 	}
 
-	public void destroy(MvcResponse old) {
+	public static void destroy(MvcResponse old) {
 		if (old == null)
 			responses.remove();
 		else

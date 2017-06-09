@@ -35,6 +35,8 @@ import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.mapping.DataTypeMap;
 import org.brandao.brutos.web.mapping.MediaTypeMap;
 import org.brandao.brutos.web.mapping.WebAction;
+import org.brandao.brutos.web.scope.HeaderScope;
+import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
 import org.brandao.brutos.web.scope.SessionScope;
 
@@ -52,7 +54,10 @@ public class WebInvoker extends Invoker{
     
     	try{
     		SessionScope.setServletRequest(request);
-    		RequestScope.setServletRequest(request);
+    		ParamScope.setRequest(webRequest);
+    		RequestScope.setRequest(webRequest);
+    		HeaderScope.setRequest(webRequest);
+    		
             if(!super.invoke(webRequest, webResponse)){
                 if(chain == null)
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -72,7 +77,9 @@ public class WebInvoker extends Invoker{
     	}
     	finally{
     		SessionScope.removeServletRequest(request);
-    		RequestScope.removeServletRequest(request);
+    		ParamScope.removeRequest(webRequest);
+    		RequestScope.removeRequest(webRequest);
+    		HeaderScope.removeRequest(webRequest);
     	}
     }
 

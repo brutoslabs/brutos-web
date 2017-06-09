@@ -32,41 +32,41 @@ import java.util.Set;
  */
 public class DefaultMvcRequest implements MutableMvcRequest {
 
-    private Set<String> propertyNames;
+    protected Set<String> propertyNames;
     
-	private Map<String, List<Object>> properties;
+    protected Map<String, List<Object>> properties;
 	
-    private Set<String> headerNames;
+    protected Set<String> headerNames;
     
-	private Map<String, List<Object>> header;
+    protected Map<String, List<Object>> header;
 	
-    private Set<String> parameterNames;
+    protected Set<String> parameterNames;
     
-	private Map<String, List<Object>> parameters;
+    protected Map<String, List<Object>> parameters;
     
-    private RequestParserEvent requestParserInfo;
+    protected RequestParserEvent requestParserInfo;
     
-    private RequestParser requestParser;
+    protected RequestParser requestParser;
     
-    private String requestId;
+    protected String requestId;
     
-    private Throwable throwable;
+    protected Throwable throwable;
     
-    private DataType dataType;
+    protected DataType dataType;
     
-    private ResourceAction resourceAction;
+    protected ResourceAction resourceAction;
     
-    private ApplicationContext applicationContext;
+    protected ApplicationContext applicationContext;
     
-    private Object resource;
+    protected Object resource;
     
-    private Object[] actionParameters;
+    protected Object[] actionParameters;
     
-    private RequestInstrument requestInstrument;
+    protected RequestInstrument requestInstrument;
     
-    private StackRequestElement stackRequestElement;
+    protected StackRequestElement stackRequestElement;
     
-    private List<DataType> acceptResponse;
+    protected List<DataType> acceptResponse;
     
     public DefaultMvcRequest(){
 		this.header = new HashMap<String, List<Object>>();
@@ -106,6 +106,18 @@ public class DefaultMvcRequest implements MutableMvcRequest {
 		return null;
 	}
 
+	public Set<String> getPropertyNames(){
+		return this.propertyNames;
+	}
+
+	public Set<String> getHeaderNames(){
+		return this.headerNames;
+	}
+	
+	public Set<String> getParameterNames(){
+		return this.parameterNames;
+	}
+	
 	public DataType getType() {
 		return this.dataType;
 	}

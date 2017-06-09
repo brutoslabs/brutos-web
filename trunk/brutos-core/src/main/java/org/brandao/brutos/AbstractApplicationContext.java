@@ -488,7 +488,7 @@ public abstract class AbstractApplicationContext
             		BrutosConstants.DISPATCHER_TYPE,
             		DispatcherType.FORWARD.toString());
 
-            return DispatcherType.valueOf(value.toUpperCase());
+            return DispatcherType.valueOf(value);
         }
         catch( Exception e ){
             throw new BrutosException( e );

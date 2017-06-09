@@ -309,6 +309,12 @@ public class ControllerBuilder {
 		executor          = StringUtil.adjust(executor);
 		ActionID actionId = new ActionID(id);
 
+		//foi removido o actionid (invoker) e o actionType
+		
+		dispatcher = dispatcher == null? 
+				this.applicationContext.getDispatcherType() :
+					dispatcher;
+
 		if (StringUtil.isEmpty(id)){
 			throw new MappingException("action id cannot be empty");
 		}

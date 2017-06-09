@@ -48,7 +48,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 	 * O construtor somente pode possuir métodos que alteram 
 	 * características mutáveis.
 	 */
-	private ConfigurableWebApplicationContext applicationContext;
+	private ConfigurableWebApplicationContext webApplicationContext;
 	
     public WebControllerBuilder(ControllerBuilder builder, ControllerManager.InternalUpdate internalUpdate){
         super( builder, internalUpdate );
@@ -59,7 +59,7 @@ public class WebControllerBuilder extends ControllerBuilder{
             ConfigurableApplicationContext applicationContext, ControllerManager.InternalUpdate internalUpdate ){
         super( controller, controllerManager, interceptorManager, 
                 validatorFactory, applicationContext, internalUpdate );
-        this.applicationContext = (ConfigurableWebApplicationContext)applicationContext;
+        this.webApplicationContext = (ConfigurableWebApplicationContext)applicationContext;
     }
     
     public ControllerBuilder addAlias(String id){
@@ -97,9 +97,13 @@ public class WebControllerBuilder extends ControllerBuilder{
 		
 		requestMethodType    = 
 			requestMethodType == null? 
-				this.applicationContext.getRequestMethod() : 
+				this.webApplicationContext.getRequestMethod() : 
 				requestMethodType;
 
+		dispatcher = dispatcher == null? 
+				this.webApplicationContext.getDispatcherType() :
+					dispatcher;
+				
 		WebActionID actionId = new WebActionID(id, requestMethodType);
 				
 		//verificação das variáveis
@@ -130,7 +134,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 		//criar base da entidade
 		WebAction action = new WebAction();
 		action.setCode(Action.getNextId());
-		action.setResponseStatus(this.applicationContext.getResponseStatus());
+		action.setResponseStatus(this.webApplicationContext.getResponseStatus());
 		action.setName(id);
 		action.setController(controller);
 		action.setResultValidator(validatorFactory.getValidator(new Configuration()));
@@ -143,7 +147,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 		//criar construtor
 		WebActionBuilder actionBuilder = 
 			new WebActionBuilder(action, controller, validatorFactory, 
-					this, this.applicationContext);
+					this, this.webApplicationContext);
 
 		//definir características opcionais com o construtor 
 		actionBuilder
@@ -178,14 +182,14 @@ public class WebControllerBuilder extends ControllerBuilder{
 
 		view = resolvedView? 
 			view : 
-			applicationContext.getViewResolver().getView(this, null, target, view);
+			webApplicationContext.getViewResolver().getView(this, null, target, view);
 		
 		responseError = responseError <= 0? 
-			this.applicationContext.getResponseError() :
+			this.webApplicationContext.getResponseError() :
 			responseError;
 		
 		dispatcher = dispatcher == null? 
-				this.applicationContext.getDispatcherType() :
+				this.webApplicationContext.getDispatcherType() :
 				dispatcher;
 
 		id = StringUtil.isEmpty(id)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(id);
@@ -236,7 +240,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 		
 		requestMethodType    = 
 				requestMethodType == null? 
-					this.applicationContext.getRequestMethod() : 
+					this.webApplicationContext.getRequestMethod() : 
 					requestMethodType;
 
 		WebActionID actionID = new WebActionID(id, requestMethodType);
