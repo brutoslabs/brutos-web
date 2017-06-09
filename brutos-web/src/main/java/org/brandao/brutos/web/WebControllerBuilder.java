@@ -88,6 +88,12 @@ public class WebControllerBuilder extends ControllerBuilder{
 		view                 = StringUtil.adjust(view);
 		
 		executor             = StringUtil.adjust(executor);
+
+		if(StringUtil.isEmpty(id) && !StringUtil.isEmpty(executor)){
+			if(type.isDelegate() || type.isComposite()){
+	    		id = type.getActionID(executor);
+			}
+		}
 		
 		requestMethodType    = 
 			requestMethodType == null? 
@@ -97,9 +103,15 @@ public class WebControllerBuilder extends ControllerBuilder{
 		WebActionID actionId = new WebActionID(id, requestMethodType);
 				
 		//verificação das variáveis
+		if (StringUtil.isEmpty(executor) && StringUtil.isEmpty(id)){
+			throw new MappingException("executor cannot be empty");
+		}
+		
+		/*
 		if (StringUtil.isEmpty(id)){
 			throw new MappingException("action id cannot be empty");
 		}
+		*/
 		
     	if(!type.isValidActionId(id))
     		throw new MappingException("invalid action id: " + id);

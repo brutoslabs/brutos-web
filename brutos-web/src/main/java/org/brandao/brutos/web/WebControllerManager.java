@@ -66,7 +66,12 @@ public class WebControllerManager extends ControllerManagerImp{
 			DispatcherType dispatcherType, boolean resolvedView, String name,
 			Class<?> classType, String actionId, ActionType actionType) {
 
-		id       = StringUtil.adjust(id);
+		id = StringUtil.adjust(id);
+		
+        id = StringUtil.isEmpty(id) && (actionType.isDelegate() || actionType.isComposite())?
+    		actionType.getControllerID(classType.getSimpleName().toLowerCase()) :
+    		id;
+		
 		view     = StringUtil.adjust(view);
 		actionId = StringUtil.adjust(actionId);
 		name     = StringUtil.adjust(name);
@@ -99,9 +104,10 @@ public class WebControllerManager extends ControllerManagerImp{
         if(resolvedView && view != null)
             WebUtil.checkURI(view, true);
 		
-    	if(!actionType.isValidControllerId(id))
+    	if(!actionType.isValidControllerId(id)){
     		throw new MappingException("invalid controller id: " + id);
-
+    	}
+        
     	WebController controller = new WebController(this.webApplicationContext);
 		controller.setClassType(classType);
 		controller.setId(id);

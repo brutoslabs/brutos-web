@@ -118,7 +118,7 @@ public class MediaType extends DataType{
 			params.put(key, val);
 		}
 		
-		return new MediaType(value, types[0], types[1], params);
+		return new MediaType(value, prepareValue(types[0]), prepareValue(types[1]), params);
 	}
 	
 	private static String prepareValue(String value){
