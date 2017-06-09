@@ -35,6 +35,7 @@ import org.brandao.brutos.type.Type;
 import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.WebMvcRequest;
 import org.brandao.brutos.web.WebMvcResponse;
+import org.brandao.brutos.web.http.ServletRequestWrapper;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
@@ -50,7 +51,8 @@ public class JSPRenderView implements RenderViewType{
 			WebMvcResponse webResponse,
 			String view, DispatcherType dispatcherType){
 
-		HttpServletRequest request   = (HttpServletRequest)webRequest.getServletRequest();
+		HttpServletRequest request   = new ServletRequestWrapper(webRequest);
+		//HttpServletRequest request   = (HttpServletRequest)webRequest.getServletRequest();
 		HttpServletResponse response = (HttpServletResponse)webResponse.getServletResponse();
 		
 		try{

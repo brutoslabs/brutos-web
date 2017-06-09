@@ -51,7 +51,8 @@ public class WebInvoker extends Invoker{
     	
     	WebMvcRequestImp webRequest   = new WebMvcRequestImp((HttpServletRequest)request);
     	WebMvcResponseImp webResponse = new WebMvcResponseImp((HttpServletResponse)response, webRequest);
-    
+    	System.out.println(request.getRequestURI());
+    	
     	try{
     		SessionScope.setServletRequest(request);
     		ParamScope.setRequest(webRequest);

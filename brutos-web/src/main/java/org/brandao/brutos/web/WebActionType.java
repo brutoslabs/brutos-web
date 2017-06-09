@@ -183,21 +183,21 @@ public class WebActionType extends ActionType{
 			
 			for(String cID: controllerIds){
 				
-				result.add(new WebActionID(cID, webController.getRequestMethod()));
-
-				if(action == null)
-					continue;
-				
-				if(actionID.equals(webAction.getName())){
-					actionIds.add(action.getName());
-					actionIds.addAll(action.getAlias());
+				if(action == null){
+					result.add(new WebActionID(cID, webController.getRequestMethod()));
 				}
 				else{
-					actionIds.add(actionID);
-				}
-				
-				for(String aID: actionIds){
-					result.add(new WebActionID(cID + aID, webAction.getRequestMethod()));
+					if(actionID.equals(webAction.getName())){
+						actionIds.add(action.getName());
+						actionIds.addAll(action.getAlias());
+					}
+					else{
+						actionIds.add(actionID);
+					}
+					
+					for(String aID: actionIds){
+						result.add(new WebActionID(cID + aID, webAction.getRequestMethod()));
+					}
 				}
 				
 			}
