@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.brandao.brutos.ActionBuilder;
-import org.brandao.brutos.ActionType;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;

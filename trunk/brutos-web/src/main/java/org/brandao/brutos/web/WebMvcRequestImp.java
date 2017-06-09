@@ -134,7 +134,7 @@ public class WebMvcRequestImp
 	}
     
 	public void setProperty(String name, Object value) {
-		request.setAttribute(name, String.valueOf(value));
+		super.setProperty(name, value);
 	}
     
 }
