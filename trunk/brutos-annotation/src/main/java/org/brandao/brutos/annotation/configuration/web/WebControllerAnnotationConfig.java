@@ -43,11 +43,16 @@ public class WebControllerAnnotationConfig
 		String actionID                     = null;
 		String defaultActionName            = null;
 		ActionType actionType               = strategy == null ? null : WebActionType.valueOf(strategy.value().name());
-		String controllerID                 = this.getControllerId(webComponentRegistry, annotationController, source);
+		
 		ResponseStatus responseStatus       = source.getAnnotation(ResponseStatus.class);
 		boolean resolved                    = viewAnnotation == null ? false : viewAnnotation.resolved();
 		boolean rendered                    = viewAnnotation == null ? true : viewAnnotation.rendered();
 
+		String controllerID                 = 
+				annotationController == null || annotationController.value().length == 0? 
+					null : 
+					annotationController.value()[0];
+		
 		RequestMethodType requestMethodType = 
 				requestMethod == null? 
 					null : 
@@ -147,11 +152,6 @@ public class WebControllerAnnotationConfig
 	
 	protected ControllerBuilder addAlias(ControllerBuilder builder, String id) {
 		return builder.addAlias(id);
-	}
-	
-	protected String getControllerName(ComponentRegistry componentRegistry,
-			Class<?> controllerClass) {
-		return "/" + super.getControllerName(componentRegistry, controllerClass);
 	}
 	
 }

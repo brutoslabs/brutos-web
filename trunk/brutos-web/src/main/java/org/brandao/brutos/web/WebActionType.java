@@ -27,6 +27,22 @@ public class WebActionType extends ActionType{
 			return "Parameter";
 		}
 		
+		public String getControllerID(String className){
+			return "/" + className;
+		}
+
+		public String getActionID(String actionName){
+			return "/" + actionName;
+		}
+		
+		public boolean isComposite(){
+			return false;
+		}
+
+		public boolean isDelegate(){
+			return true;
+		}
+		
 		public boolean isValidControllerId(String value){
 			try{
 				WebUtil.checkURI(value, true);
@@ -41,7 +57,7 @@ public class WebActionType extends ActionType{
 			return true;
 		}
 
-		public List<ActionID> getActionID(String controllerID, Controller controller, 
+		public List<ActionID> getIDs(String controllerID, Controller controller, 
 				String actionID, Action action){
 			//ações não possuem ids
 			if(action != null){
@@ -63,6 +79,22 @@ public class WebActionType extends ActionType{
 			return "Header";
 		}
 		
+		public String getControllerID(String className){
+			return "/" + className;
+		}
+
+		public String getActionID(String actionName){
+			return "/" + actionName;
+		}
+		
+		public boolean isComposite(){
+			return false;
+		}
+
+		public boolean isDelegate(){
+			return true;
+		}
+		
 		public boolean isValidControllerId(String value){
 			try{
 				WebUtil.checkURI(value, true);
@@ -77,9 +109,9 @@ public class WebActionType extends ActionType{
 			return true;
 		}
 
-		public List<ActionID> getActionID(String controllerID, Controller controller, 
+		public List<ActionID> getIDs(String controllerID, Controller controller, 
 				String actionID, Action action){
-			return PARAMETER.getActionID(controllerID, controller, 
+			return PARAMETER.getIDs(controllerID, controller, 
 					actionID, action);
 		}
 		
@@ -95,6 +127,22 @@ public class WebActionType extends ActionType{
 			return "Hierarchy";
 		}
 
+		public String getControllerID(String className){
+			return "/" + className;
+		}
+
+		public String getActionID(String actionName){
+			return "/" + actionName;
+		}
+		
+		public boolean isComposite(){
+			return true;
+		}
+
+		public boolean isDelegate(){
+			return false;
+		}
+		
 		public boolean isValidControllerId(String value){
 			try{
 				WebUtil.checkURI(value, true);
@@ -115,7 +163,7 @@ public class WebActionType extends ActionType{
 			}
 		}
 
-		public List<ActionID> getActionID(String controllerID, Controller controller, 
+		public List<ActionID> getIDs(String controllerID, Controller controller, 
 				String actionID, Action action){
 			
 			List<ActionID> result       = new ArrayList<ActionID>();
@@ -169,8 +217,24 @@ public class WebActionType extends ActionType{
 			return "Detached";
 		}
 
-		public boolean isValidControllerId(String value){
+		public String getControllerID(String className){
+			throw new UnsupportedOperationException();
+		}
+
+		public String getActionID(String actionName){
+			return "/" + actionName;
+		}
+		
+		public boolean isComposite(){
 			return false;
+		}
+
+		public boolean isDelegate(){
+			return false;
+		}
+		
+		public boolean isValidControllerId(String value){
+			return value == null;
 		}
 		
 		public boolean isValidActionId(String value){
@@ -183,7 +247,7 @@ public class WebActionType extends ActionType{
 			}
 		}
 
-		public List<ActionID> getActionID(String controllerID, Controller controller, 
+		public List<ActionID> getIDs(String controllerID, Controller controller, 
 				String actionID, Action action){
 			
 			List<ActionID> result       = new ArrayList<ActionID>();

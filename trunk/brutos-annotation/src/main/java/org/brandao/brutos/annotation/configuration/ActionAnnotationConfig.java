@@ -58,7 +58,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 		ResultView resultView = method.getAnnotation(ResultView.class);
 
 		
-		String id               = this.getId(action, method, controllerBuilder, componentRegistry);
+		String id               = action == null? null : action.value()[0];
 		Result resultAnnotation = method.getAnnotation(Result.class);
 		String result           = resultAnnotation == null ? null : resultAnnotation.value();
 
@@ -140,27 +140,6 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 	}
     */
 	
-	protected String getId(Action action, ActionEntry method,
-			ControllerBuilder controllerBuilder,
-			ComponentRegistry componentRegistry) {
-
-		boolean hasActionId = action != null && action.value().length > 0
-				&& !StringUtil.isEmpty(action.value()[0]);
-
-		if (hasActionId)
-			return StringUtil.adjust(action.value()[0]);
-		else {
-			String id = method.getName();
-			id = id.replaceAll("Action$", "");
-
-			if (StringUtil.isEmpty(id))
-				throw new BrutosException("invalid action name: "
-						+ method.getName());
-
-			return id;
-		}
-	}
-
 	protected String getView(ActionEntry actionEntry, View viewAnnotation,
 			ComponentRegistry componentRegistry) {
 		String view = viewAnnotation == null

@@ -101,7 +101,7 @@ public class WebActionResolver extends AbstractActionResolver{
     	try{
 	    	List<ActionID> list = 
 				controller.getActionType()
-				.getActionID(controllerID, controller, actionID, action);
+				.getIDs(controllerID, controller, actionID, action);
 	
 	    	for(ActionID aID: list){
 	    		WebActionID aWID = (WebActionID)aID;
@@ -134,7 +134,7 @@ public class WebActionResolver extends AbstractActionResolver{
     	try{
 	    	List<ActionID> list = 
 				controller.getActionType()
-				.getActionID(controllerID, controller, actionID, action);
+				.getIDs(controllerID, controller, actionID, action);
 	
 	    	for(ActionID aID: list){
 	    		WebActionID aWID = (WebActionID)aID;
@@ -249,9 +249,10 @@ public class WebActionResolver extends AbstractActionResolver{
     			}
     			
     			if(end == -1){
-    				result.add(value.substring(start, value.length()));
+    				//result.add(value.substring(start, value.length()));
+    				end = value.length();
     			}
-    			else
+    			
     			if(end > start){
     				result.add(value.substring(start, end));
     			}
@@ -275,7 +276,7 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     	private Set<RequestMappingNode> dynamicNext;
     	
-    	private Map<RequestMethodType, RequestMappingEntry> requestEntry;
+    	private Map<RequestMethodType, RequestMappingEntry> requestMethodTypes;
     	
     	public RequestMappingNode(){
     		this.dynamicNext = new HashSet<RequestMappingNode>();
@@ -374,26 +375,26 @@ public class WebActionResolver extends AbstractActionResolver{
     	}
 
     	public RequestMappingEntry getRequestEntry(RequestMethodType value) {
-    		return requestEntry.get(value);
+    		return requestMethodTypes.get(value);
     	}
 
-    	public void putRequestEntry(RequestMethodType value, 
-    			RequestMappingEntry requestEntry) {
-    		if(requestEntry == null){
-    			this.requestEntry = 
+    	public void putRequestEntry(RequestMethodType requestMethodType, 
+    			RequestMappingEntry value) {
+    		if(this.requestMethodTypes == null){
+    			this.requestMethodTypes = 
     					new HashMap<RequestMethodType, RequestMappingEntry>();
     		}
     		
-    		this.requestEntry.put(value, requestEntry);
+    		this.requestMethodTypes.put(requestMethodType, value);
     	}
 
     	public void removeRequestEntry(RequestMethodType value) {
     		
-    		if(requestEntry == null){
+    		if(requestMethodTypes == null){
     			return;
     		}
     		
-    		this.requestEntry.remove(value);
+    		this.requestMethodTypes.remove(value);
     	}
     	
     	public String getValue() {

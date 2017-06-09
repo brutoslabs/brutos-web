@@ -120,23 +120,4 @@ public class WebActionAnnotationConfig
 		
 	}
 	
-	protected String getId(Action action, ActionEntry method,
-			ControllerBuilder controllerBuilder,
-			ComponentRegistry componentRegistry) {
-		
-		String id = super.getId(action, method, controllerBuilder, componentRegistry);
-		
-		boolean hasActionId = action != null && action.value().length > 0
-				&& !StringUtil.isEmpty(action.value()[0]);
-		
-		if(!hasActionId && controllerBuilder.getActionType() != ActionType.PARAMETER){
-			id = 
-				id.startsWith("/") || id.startsWith("\\") ? 
-					id : 
-					"/" + id;
-		}
-		
-		return id;
-	}
-	
 }

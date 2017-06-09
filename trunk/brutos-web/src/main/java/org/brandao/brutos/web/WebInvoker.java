@@ -55,20 +55,20 @@ public class WebInvoker extends Invoker{
     		RequestScope.setServletRequest(request);
             if(!super.invoke(webRequest, webResponse)){
                 if(chain == null)
-                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 else
                     chain.doFilter(request, response);
             }
     		
     	}
     	catch(RequestTypeException e){
-    		response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+    		response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
     	}
     	catch(RequestMethodException e){
-    		response.setStatus(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+    		response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
     	}
     	catch(ResponseTypeException e){
-    		response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+    		response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
     	}
     	finally{
     		SessionScope.removeServletRequest(request);
@@ -105,7 +105,7 @@ public class WebInvoker extends Invoker{
     		
 	    	for(DataType dataType: responseTypes){
 	    		if(defaultDataType.match((MediaType)dataType)){
-	    			return dataType;
+	    			return defaultDataType;
 	    		}
 	    	}
 	    	

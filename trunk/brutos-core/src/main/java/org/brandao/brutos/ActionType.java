@@ -27,6 +27,8 @@ import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
 
 /**
+ * Descreve as estratégias de mapeamento de ação. Esta classe é usada em conjunto com
+ * a classe {@link ActionTypeResolver}.
  * 
  * @author Brandao
  */
@@ -45,6 +47,22 @@ public class ActionType {
 			return "Parameter";
 		}
 		
+		public String getControllerID(String className){
+			return className;
+		}
+
+		public String getActionID(String actionName){
+			return actionName;
+		}
+		
+		public boolean isComposite(){
+			return true;
+		}
+
+		public boolean isDelegate(){
+			return false;
+		}
+		
 		public boolean isValidControllerId(String value){
 			return value != null;
 		}
@@ -53,7 +71,7 @@ public class ActionType {
 			return value != null;
 		}
 		
-		public List<ActionID> getActionID(String controllerID, Controller controller, 
+		public List<ActionID> getIDs(String controllerID, Controller controller, 
 				String actionID, Action action){
 			//ações não possuem ids
 			if(action != null){
@@ -90,6 +108,30 @@ public class ActionType {
 	}
 	
 	/**
+	 * Verifica se a identificação é composta pelo controlador e a ação.
+	 * @return Verdadeiro se a identificação é composta. Caso contrário, falso.
+	 */
+	public boolean isComposite(){
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Verifica se a resolução da ação é delegada ao controlador.
+	 * @return Verdadeiro se a resolução da ação é delagada ao controladora. Caso contrário, falso.
+	 */
+	public boolean isDelegate(){
+		throw new UnsupportedOperationException();
+	}
+	
+	/**
+	 * Obtém a identificação do controlador em um formato válido.
+	 * @param classType Nome da classe do controlador.
+	 */
+	public String getControllerID(String className){
+		throw new UnsupportedOperationException();
+	}
+	
+	/**
 	 * Verifica se a identificação do controlador é válida.
 	 * @param value Identificação.
 	 * @return Verdadeiro se for válida. Caso contrário, falso.
@@ -99,6 +141,14 @@ public class ActionType {
 	}
 
 	/**
+	 * Obtém a identificação da ação em um formato válido.
+	 * @param actionName Nome do método da ação.
+	 */
+	public String getActionID(String actionName){
+		throw new UnsupportedOperationException();
+	}
+	
+	/**
 	 * Verifica se a identificação da ação é válida.
 	 * @param value Identificação.
 	 * @return Verdadeiro se for válida. Caso contrário, falso.
@@ -107,9 +157,20 @@ public class ActionType {
 		throw new UnsupportedOperationException();
 	}
 	
-	public List<ActionID> getActionID(String controllerID, Controller controller, 
+	/**
+	 * Obtém as identificações públicas das ações.
+	 * @param controllerID Identificação do controlador. 
+	 * @param controller Controlador.
+	 * @param actionID Identificação da ação.
+	 * @param action Ação.
+	 * @return Identificações públicas.
+	 */
+	public List<ActionID> getIDs(String controllerID, Controller controller, 
 			String actionID, Action action){
 		throw new UnsupportedOperationException();
 	}
 	
+	public String toString(){
+		return this.id();
+	}
 }

@@ -62,10 +62,14 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 		String actionID                 = null;
 		String defaultActionName        = null;
 		ActionType actionType           = strategy == null ? null : ActionType.valueOf(strategy.value().name());
-		String controllerID             = this.getControllerId(componentRegistry, annotationController, source);
 		boolean resolved                = viewAnnotation == null ? false : viewAnnotation.resolved();
 		boolean rendered                = viewAnnotation == null ? true : viewAnnotation.rendered();
 		
+		String controllerID                 = 
+				annotationController == null || annotationController.value().length == 0? 
+					null : 
+					annotationController.value()[0];
+
 		org.brandao.brutos.DispatcherType dispatcher = 
 			viewAnnotation == null? 
 				null : 
@@ -250,14 +254,12 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 			if (act.value().length == 0)
 				throw new BrutosException("action id cannot be empty");
 
-			for (String id : act.value()) {
-				ActionEntry entry = new ActionEntry(id,
-						new Annotation[] { act.view() },
-						controllerBuilder.getClassType(), null, null, null,
-						null, null, null, null, true);
-
-				actionList.add(entry);
-			}
+			ActionEntry entry = new ActionEntry(null,
+					new Annotation[] { act, act.view() },
+					controllerBuilder.getClassType(), null, null, null,
+					null, null, null, null, true);
+			
+			actionList.add(entry);
 		}
 
 	}
@@ -298,22 +300,6 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 						componentRegistry);
 			}
 		}
-	}
-
-	protected String getControllerName(ComponentRegistry componentRegistry,
-			Class<?> controllerClass) {
-		return controllerClass.getSimpleName().replaceAll("Controller$",
-				"");
-	}
-
-	protected String getControllerId(ComponentRegistry componentRegistry,
-			Controller annotation, Class<?> controllerClass) {
-		boolean hasControllerId = annotation != null
-				&& annotation.value().length > 0
-				&& !StringUtil.isEmpty(annotation.value()[0]);
-
-		return hasControllerId ? annotation.value()[0] : getControllerName(
-				componentRegistry, controllerClass);
 	}
 
 	public boolean isApplicable(Object source) {
