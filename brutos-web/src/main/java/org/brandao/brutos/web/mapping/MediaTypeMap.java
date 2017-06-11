@@ -74,6 +74,7 @@ public class MediaTypeMap extends DataTypeMap{
 		if(subtypes == null){
 			subtypes = new HashMap<String, MediaType>();
 			subtypes.put(subtype, mediaType);
+			this.map.put(type, subtypes);
 			this.set.add(mediaType);
 		}
 		else{
@@ -121,7 +122,7 @@ public class MediaTypeMap extends DataTypeMap{
 		
 	}
 	
-	public MediaType getMatch(MediaType value){
+	public MediaType getMatch(DataType value){
 		MediaType mediaType = (MediaType)value;
 		String type         = mediaType.getType();
 		String subtype      = mediaType.getSubType();
@@ -152,7 +153,7 @@ public class MediaTypeMap extends DataTypeMap{
 		
 	}
 	
-	public boolean accept(MediaType value){
+	public boolean accept(DataType value){
 		
 		if(value == null){
 			return false;
@@ -181,7 +182,7 @@ public class MediaTypeMap extends DataTypeMap{
 		
 	}
 	
-	public boolean contains(MediaType value){
+	public boolean contains(DataType value){
 		MediaType mediaType = (MediaType)value;
 		String type         = mediaType.getType();
 		String subtype      = mediaType.getSubType();

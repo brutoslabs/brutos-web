@@ -73,7 +73,13 @@ public class WebMvcRequestImp
     	
     	List<DataType> result = new ArrayList<DataType>();
     	
-    	Enumeration<String> values = WebUtil.toEnumeration(this._getRequest().getHeader("Accept"));
+    	String accept = this._getRequest().getHeader("Accept");
+    	
+    	if(accept == null){
+    		return result;
+    	}
+    	
+    	Enumeration<String> values = WebUtil.toEnumeration(accept);
     	
     	while(values.hasMoreElements()){
     		String value = values.nextElement();
