@@ -240,25 +240,28 @@ public class Invoker {
 
 	public boolean invoke(StackRequestElement element) throws RequestTypeException{
 
-		long time                     = -1;
-		boolean createdThreadScope    = false;
-		StackRequest stackRequest     = null;
-		MvcRequest oldRequest         = null;
-		MvcResponse oldresponse       = null;
 		MutableMvcRequest request     = element.getRequest();
 		MutableMvcResponse response   = element.getResponse();
 		ResourceAction resourceAction = request.getResourceAction();
-		DataType responseDataType     = this.selectResponseType(resourceAction, request);
+		
+		if(!this.isSupportedRequestType(resourceAction, request)){
+			throw new RequestTypeException("request type not supported");
+		}
+
+		DataType responseDataType = this.selectResponseType(resourceAction, request);
 		
 		if(responseDataType == null){
 			throw new ResponseTypeException("response type not supported");
 		}
 
-		if(!this.isSupportedRequestType(resourceAction, request)){
-			throw new RequestTypeException("request type not supported");
-		}
-
 		response.setType(responseDataType);
+		
+		long time                     = -1;
+		boolean createdThreadScope    = false;
+		StackRequest stackRequest     = null;
+		MvcRequest oldRequest         = null;
+		MvcResponse oldresponse       = null;
+		
 		
 		try{
 			oldRequest  = RequestProvider.init(request);
@@ -301,12 +304,6 @@ public class Invoker {
 	}
 
 	protected boolean isSupportedRequestType(ResourceAction action, MutableMvcRequest request){
-		
-		DataType requestType = request.getType();
-		
-		if(requestType == null){
-			return true;
-		}
 		
     	DataTypeMap supportedRequestTypes = action.getMethodForm().getRequestTypes();
     	

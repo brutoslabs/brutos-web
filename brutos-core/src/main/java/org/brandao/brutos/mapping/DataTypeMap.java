@@ -51,7 +51,7 @@ public class DataTypeMap {
 	}
 
 	public DataTypeMap(Set<DataType> value){
-		this.map    = new HashMap<String, DataType>();
+		this.map = new HashMap<String, DataType>();
 		
 		for(DataType v: value){
 			this.add(v);
@@ -70,24 +70,26 @@ public class DataTypeMap {
 	
 	public void add(DataType value){
 		
-		if(this.map.containsKey(value.getName())){
+		if(this.set.contains(value)){
 			throw new BrutosException("type has been added: " + value.getName());
 		}
 		
 		this.map.put(value.getName(), value);
+		this.set.add(value);
 	}
 	
 	public void remove(DataType value){
 		
-		if(!this.map.containsKey(value.getName())){
+		if(!this.set.contains(value.getName())){
 			throw new BrutosException("subtype not found: " + value.getName());
 		}
 
 		this.map.remove(value);
+		this.set.add(value);
 	}
 	
 	public boolean accept(DataType value){
-		return this.map.containsKey(value.getName());
+		return value != null && this.map.containsKey(value.getName());
 	}
 
 	public DataType accept(DataTypeMap map){

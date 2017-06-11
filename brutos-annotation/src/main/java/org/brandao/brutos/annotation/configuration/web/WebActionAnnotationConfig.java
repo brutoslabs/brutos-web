@@ -7,8 +7,10 @@ import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.annotation.AcceptRequestType;
 import org.brandao.brutos.annotation.Action;
 import org.brandao.brutos.annotation.Controller;
+import org.brandao.brutos.annotation.ResponseType;
 import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.configuration.ActionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ActionEntry;
@@ -18,6 +20,7 @@ import org.brandao.brutos.annotation.web.ResponseError;
 import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.annotation.web.ResponseStatus;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.web.MediaType;
 import org.brandao.brutos.web.RequestMethodType;
 import org.brandao.brutos.web.WebActionBuilder;
 import org.brandao.brutos.web.WebControllerBuilder;
@@ -30,10 +33,14 @@ import org.brandao.brutos.web.WebControllerBuilder;
 public class WebActionAnnotationConfig 
 	extends ActionAnnotationConfig{
 
-	protected ActionBuilder addAction(ActionEntry actionEntry, 
+	protected ActionBuilder addAction(ActionEntry actionEntry,
 			ControllerBuilder controllerBuilder, String id, String result,
 			boolean resultRendered, String view, boolean resolved,
 			DispatcherType dispatcher, String executor){
+		
+		AcceptRequestType acceptRequestType = actionEntry.getAnnotation(AcceptRequestType.class);
+		ResponseType responseType = actionEntry.getAnnotation(ResponseType.class);
+		
 		
 		RequestMethod requestMethod = 
 			actionEntry.isAnnotationPresent(RequestMethod.class)?
@@ -57,10 +64,23 @@ public class WebActionAnnotationConfig
 				actionEntry.isAnnotationPresent(ResponseStatus.class)?
 					actionEntry.getAnnotation(ResponseStatus.class) :
 					actionEntry.getControllerClass().getAnnotation(ResponseStatus.class);
-		
+
+		if(acceptRequestType != null){
+			String[] values = acceptRequestType.value();
+			for(String v: values){
+				builder.addRequestType(MediaType.valueOf(v));
+			}
+		}
+	
+		if(responseType != null){
+			String[] values = responseType.value();
+			for(String v: values){
+				builder.addResponseType(MediaType.valueOf(v));
+			}
+		}
+					
 		if(responseStatus != null){
 			builder.setResponseStatus(responseStatus.value());
-			
 		}
 		
 		return builder;

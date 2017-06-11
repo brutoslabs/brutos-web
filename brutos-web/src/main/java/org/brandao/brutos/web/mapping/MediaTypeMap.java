@@ -64,24 +64,25 @@ public class MediaTypeMap extends DataTypeMap{
 		map.clear();
 	}
 	
-	public void add(MediaType value){
-		String type    = value.getType();
-		String subtype = value.getSubType();
+	public void add(DataType value){
+		MediaType mediaType = (MediaType)value;
+		String type         = mediaType.getType();
+		String subtype      = mediaType.getSubType();
 		
 		Map<String, MediaType> subtypes = this.map.get(type);
 		
 		if(subtypes == null){
 			subtypes = new HashMap<String, MediaType>();
-			subtypes.put(subtype, value);
-			this.set.add(value);
+			subtypes.put(subtype, mediaType);
+			this.set.add(mediaType);
 		}
 		else{
 			if(subtypes.containsKey(subtype)){
 				throw new BrutosException("media type has been added");
 			}
 			else{
-				subtypes.put(subtype, value);
-				this.set.add(value);
+				subtypes.put(subtype, mediaType);
+				this.set.add(mediaType);
 			}
 		}
 
@@ -91,9 +92,10 @@ public class MediaTypeMap extends DataTypeMap{
 		
 	}
 	
-	public void remove(MediaType value){
-		String type    = value.getType();
-		String subtype = value.getSubType();
+	public void remove(DataType value){
+		MediaType mediaType = (MediaType)value;
+		String type         = mediaType.getType();
+		String subtype      = mediaType.getSubType();
 		
 		Map<String, MediaType> subtypes = this.map.get(type);
 		
@@ -108,7 +110,7 @@ public class MediaTypeMap extends DataTypeMap{
 				subtypes.remove(subtype);
 				if(subtypes.isEmpty()){
 					this.map.remove(type);
-					this.set.remove(value);
+					this.set.remove(mediaType);
 				}
 			}
 		}
@@ -120,9 +122,9 @@ public class MediaTypeMap extends DataTypeMap{
 	}
 	
 	public MediaType getMatch(MediaType value){
-		
-		String type    = value.getType();
-		String subtype = value.getSubType();
+		MediaType mediaType = (MediaType)value;
+		String type         = mediaType.getType();
+		String subtype      = mediaType.getSubType();
 		
 		if(type.equals("*")){
 			
@@ -152,12 +154,17 @@ public class MediaTypeMap extends DataTypeMap{
 	
 	public boolean accept(MediaType value){
 		
+		if(value == null){
+			return false;
+		}
+		
 		if(this.hasAll){
 			return true;
 		}
 
-		String type    = value.getType();
-		String subtype = value.getSubType();
+		MediaType mediaType = (MediaType)value;
+		String type         = mediaType.getType();
+		String subtype      = mediaType.getSubType();
 		
 		if(type.equals("*") && !this.map.isEmpty()){
 			return true;
@@ -175,9 +182,9 @@ public class MediaTypeMap extends DataTypeMap{
 	}
 	
 	public boolean contains(MediaType value){
-		
-		String type    = value.getType();
-		String subtype = value.getSubType();
+		MediaType mediaType = (MediaType)value;
+		String type         = mediaType.getType();
+		String subtype      = mediaType.getSubType();
 		
 		Map<String, MediaType> subtypes = this.map.get(type);
 		

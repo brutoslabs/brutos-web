@@ -7,8 +7,10 @@ import org.brandao.brutos.ActionType;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ControllerBuilder;
+import org.brandao.brutos.annotation.AcceptRequestType;
 import org.brandao.brutos.annotation.ActionStrategy;
 import org.brandao.brutos.annotation.Controller;
+import org.brandao.brutos.annotation.ResponseType;
 import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.View;
 import org.brandao.brutos.annotation.configuration.ControllerAnnotationConfig;
@@ -18,6 +20,7 @@ import org.brandao.brutos.annotation.web.ResponseError;
 import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.annotation.web.ResponseStatus;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.web.MediaType;
 import org.brandao.brutos.web.RequestMethodType;
 import org.brandao.brutos.web.WebActionType;
 import org.brandao.brutos.web.WebComponentRegistry;
@@ -35,9 +38,11 @@ public class WebControllerAnnotationConfig
 
 		WebComponentRegistry webComponentRegistry = (WebComponentRegistry)componentRegistry; 
 		Class<?> source                     = (Class<?>) arg0;
-		Controller annotationController     = (Controller) source.getAnnotation(Controller.class);
-		View viewAnnotation                 = (View) source.getAnnotation(View.class);
-		ActionStrategy strategy             = (ActionStrategy)source.getAnnotation(ActionStrategy.class);
+		Controller annotationController     = source.getAnnotation(Controller.class);
+		AcceptRequestType acceptRequestType = source.getAnnotation(AcceptRequestType.class);
+		ResponseType responseType           = source.getAnnotation(ResponseType.class);
+		View viewAnnotation                 = source.getAnnotation(View.class);
+		ActionStrategy strategy             = source.getAnnotation(ActionStrategy.class);
 		RequestMethod requestMethod         = source.getAnnotation(RequestMethod.class);
 		String name                         = null;
 		String actionID                     = null;
@@ -82,6 +87,20 @@ public class WebControllerAnnotationConfig
 						actionID, 
 						actionType);
 				
+		if(acceptRequestType != null){
+			String[] values = acceptRequestType.value();
+			for(String v: values){
+				builder.addRequestType(MediaType.valueOf(v));
+			}
+		}
+
+		if(responseType != null){
+			String[] values = responseType.value();
+			for(String v: values){
+				builder.addResponseType(MediaType.valueOf(v));
+			}
+		}
+		
 		if(responseStatus != null){
 			builder.setResponseStatus(responseStatus.value());
 		}
