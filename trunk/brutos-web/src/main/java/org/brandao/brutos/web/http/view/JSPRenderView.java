@@ -18,6 +18,7 @@
 package org.brandao.brutos.web.http.view;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.BrutosConstants;
@@ -51,8 +52,9 @@ public class JSPRenderView implements RenderViewType{
 			WebMvcResponse webResponse,
 			String view, DispatcherType dispatcherType){
 
-		HttpServletRequest request   = new ServletRequestWrapper(webRequest);
+		//HttpServletRequest request   = new HttpServletRequestWrapper(new ServletRequestWrapper(webRequest));
 		//HttpServletRequest request   = (HttpServletRequest)webRequest.getServletRequest();
+		HttpServletRequest request   = (HttpServletRequest) webRequest;
 		HttpServletResponse response = (HttpServletResponse)webResponse.getServletResponse();
 		
 		try{

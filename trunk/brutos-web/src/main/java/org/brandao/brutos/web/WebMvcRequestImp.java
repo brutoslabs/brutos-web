@@ -29,10 +29,17 @@ import java.util.Set;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
+import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.DataType;
 import org.brandao.brutos.DefaultMvcRequest;
-import org.brandao.brutos.web.http.ServletRequestWrapper;
+import org.brandao.brutos.MutableMvcRequest;
+import org.brandao.brutos.RequestInstrument;
+import org.brandao.brutos.RequestParser;
+import org.brandao.brutos.RequestParserEvent;
+import org.brandao.brutos.ResourceAction;
+import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -40,91 +47,24 @@ import org.brandao.brutos.web.util.WebUtil;
  * @author Brandao
  */
 public class WebMvcRequestImp 
-	extends DefaultMvcRequest
+	extends HttpServletRequestWrapper 
 	implements MutableWebMvcRequest{
 
-    private ServletRequestWrapper request;
-
-    private HttpServletRequest realRequest;
+    private HttpServletRequest servletRequest;
     
     private RequestMethodType requestMethodType;
     
+    private MutableMvcRequest request;
+    
 	public WebMvcRequestImp(HttpServletRequest request){
-    	super();
-	    this.realRequest = (HttpServletRequest) request;
-	    this.request     = new ServletRequestWrapper(this, this.realRequest);
-    	
-    	//this.setServletRequest(request);
-    	super.setAcceptResponse(null);
+    	super(request);
+	    this.servletRequest = (HttpServletRequest) request;
+	    this.request        = new DefaultMvcRequest();
+	    this.request.setAcceptResponse(null);
     }
 
 	public void setServletRequest(ServletRequest value){
-	    this.realRequest = (HttpServletRequest) value;
-	    this.request     = new ServletRequestWrapper(this, this.realRequest);
-		//this.request.setRequest(value);
-	}
-    
-	public List<DataType> getAcceptResponse() {
-		if(this.acceptResponse == null){
-			this.acceptResponse = 
-					this.parseAcceptResponse();
-		}
-		return this.acceptResponse;
-	}
-	
-	public String getRequestId(){
-		String id = super.getRequestId();
-		
-		if(id == null){
-			id = this.parseRequestId(
-					this.realRequest.getRequestURI(), 
-					this.realRequest.getContextPath());
-			super.setRequestId(id);
-		}
-		
-		return id;
-	}
-	
-	public DataType getType(){
-		DataType type = super.getType();
-		if(type == null){
-			type = MediaType.valueOf(this.realRequest.getContentType());
-			super.setType(type);
-		}
-		return type;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Set<String> getPropertyNames(){
-		Set<String> set = new HashSet<String>(super.getPropertyNames());
-		Enumeration<String> names = this.realRequest.getAttributeNames();
-		while(names.hasMoreElements()){
-			String name = names.nextElement();
-			set.add(name);
-		}
-		return set;
-	}
-
-	@SuppressWarnings("unchecked")
-	public Set<String> getHeaderNames(){
-		Set<String> set = new HashSet<String>(super.getHeaderNames());
-		Enumeration<String> names = this.realRequest.getHeaderNames();
-		while(names.hasMoreElements()){
-			String name = names.nextElement();
-			set.add(name);
-		}
-		return set;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Set<String> getParameterNames(){
-		Set<String> set = new HashSet<String>(super.getParameterNames());
-		Enumeration<String> names = this.realRequest.getParameterNames();
-		while(names.hasMoreElements()){
-			String name = names.nextElement();
-			set.add(name);
-		}
-		return set;
+	    this.servletRequest = (HttpServletRequest) value;
 	}
     
     private String parseRequestId(String path, String contextPath){
@@ -135,7 +75,7 @@ public class WebMvcRequestImp
     	
     	List<DataType> result = new ArrayList<DataType>();
     	
-    	Enumeration<String> values = WebUtil.toEnumeration(this.realRequest.getHeader("Accept"));
+    	Enumeration<String> values = WebUtil.toEnumeration(this.servletRequest.getHeader("Accept"));
     	
     	while(values.hasMoreElements()){
     		String value = values.nextElement();
@@ -160,38 +100,221 @@ public class WebMvcRequestImp
     }
     
     public ServletRequest getServletRequest(){
-    	return this.request;
+    	return this.servletRequest;
     }
     
 	public RequestMethodType getRequestMethodType() {
 		if(this.requestMethodType == null){
 			this.requestMethodType = 
-					RequestMethodType.valueOf(this.realRequest.getMethod().toUpperCase());
+					RequestMethodType.valueOf(this.servletRequest.getMethod().toUpperCase());
 		}
 		return this.requestMethodType;
 	}
 
-	public InputStream getStream() throws IOException {
-		return realRequest.getInputStream();
-	}
-    
-	public Object getHeader(String value) {
-		Object r = super.getHeader(value);
-		return r == null? realRequest.getHeader(value) : r;
+	public String getRequestId() {
+		String id = this.request.getRequestId();
+		
+		if(id == null){
+			id = this.parseRequestId(
+					this.servletRequest.getRequestURI(), 
+					this.servletRequest.getContextPath());
+			this.request.setRequestId(id);
+		}
+		
+		return id;
 	}
 
-	public Object getParameter(String name) {
-		Object r = super.getParameter(name);
-		return r == null? realRequest.getParameter(name) : r;
+	public void setRequestId(String requestId) {
+		this.request.setRequestId(requestId);
+	}
+
+	public Throwable getThrowable() {
+		return this.request.getThrowable();
+	}
+
+	public String getHeader(String value) {
+		Object r = this.request.getHeader(value);
+		r = r == null? servletRequest.getHeader(value) : r;
+		return r == null? null : String.valueOf(r);
+	}
+
+	public String getParameter(String name) {
+		Object r = this.request.getParameter(name);
+		r = r == null? servletRequest.getParameter(name) : r;
+		return r == null? null : String.valueOf(r);
 	}
 
 	public Object getProperty(String name) {
-		Object r = super.getProperty(name);
-		return r == null? realRequest.getAttribute(name) : r;
+		Object r = this.request.getProperty(name);
+		return r == null? servletRequest.getAttribute(name) : r;
 	}
-    
+
+	public InputStream getStream() throws IOException {
+		return servletRequest.getInputStream();
+	}
+
+	@SuppressWarnings("unchecked")
+	public Set<String> getPropertiesNames(){
+		Set<String> set = new HashSet<String>(this.request.getPropertiesNames());
+		Enumeration<String> names = this.servletRequest.getAttributeNames();
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			set.add(name);
+		}
+		return set;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Set<String> getHeadersNames(){
+		Set<String> set = new HashSet<String>(this.request.getHeadersNames());
+		Enumeration<String> names = this.servletRequest.getHeaderNames();
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			set.add(name);
+		}
+		return set;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Set<String> getParametersNames(){
+		Set<String> set = new HashSet<String>(this.request.getParametersNames());
+		Enumeration<String> names = this.servletRequest.getParameterNames();
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			set.add(name);
+		}
+		return set;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public Enumeration getPropertyNames(){
+		return Collections.enumeration(this.getPropertiesNames());
+	}
+
+	@SuppressWarnings("rawtypes")
+	public Enumeration getHeaderNames(){
+		return Collections.enumeration(this.getHeadersNames());
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public Enumeration getParameterNames(){
+		return Collections.enumeration(this.getParametersNames());
+	}
+	
+	public DataType getType() {
+		DataType type = this.request.getType();
+		if(type == null){
+			type = MediaType.valueOf(this.servletRequest.getContentType());
+			this.request.setType(type);
+		}
+		return type;
+	}
+
+	public ResourceAction getResourceAction() {
+		return this.request.getResourceAction();
+	}
+
+	public ApplicationContext getApplicationContext() {
+		return this.request.getApplicationContext();
+	}
+
+	public Object getResource() {
+		return this.request.getResource();
+	}
+
+	public Object[] getParameters() {
+		return this.request.getParameters();
+	}
+
+	public RequestInstrument getRequestInstrument() {
+		return this.request.getRequestInstrument();
+	}
+
+	public StackRequestElement getStackRequestElement() {
+		return this.request.getStackRequestElement();
+	}
+
+	public void setThrowable(Throwable value) {
+		this.request.setThrowable(value);
+	}
+
+	public void setHeader(String name, Object value) {
+		this.request.setHeader(name, value);
+	}
+
+	public void setParameter(String name, String value) {
+		this.request.setParameter(name, value);
+	}
+
+	public void setParameters(String name, String[] values) {
+		this.request.setParameters(name, values);
+	}
+
+	public void setParameter(String name, Object value) {
+		this.request.setParameter(name, value);
+	}
+
+	public void setParameters(String name, Object[] value) {
+		this.request.setParameters(name, value);
+	}
+
+	public void setParameters(Object[] value) {
+		this.request.setParameters(value);
+	}
+
 	public void setProperty(String name, Object value) {
-		super.setProperty(name, value);
+		this.request.setProperty(name, value);
+	}
+
+	public void setType(DataType value) {
+		this.request.setType(value);
+	}
+
+	public void setResourceAction(ResourceAction value) {
+		this.request.setResourceAction(value);
+	}
+
+	public void setApplicationContext(ApplicationContext value) {
+		this.request.setApplicationContext(value);
+	}
+
+	public void setResource(Object value) {
+		this.request.setResource(value);
+	}
+
+	public void setRequestInstrument(RequestInstrument value) {
+		this.request.setRequestInstrument(value);
+	}
+
+	public void setStackRequestElement(StackRequestElement value) {
+		this.request.setStackRequestElement(value);
+	}
+
+	public void setRequestParserInfo(RequestParserEvent value) {
+		this.request.setRequestParserInfo(value);
+	}
+
+	public void setRequestParser(RequestParser value) {
+		this.request.setRequestParser(value);
+	}
+	
+	public RequestParserEvent getRequestParserInfo() {
+		return this.request.getRequestParserInfo();
+	}
+
+	public RequestParser getRequestParser() {
+		return this.request.getRequestParser();
+	}
+	
+	public void setAcceptResponse(List<DataType> value){
+		this.request.setAcceptResponse(value);
 	}
     
+	public List<DataType> getAcceptResponse() {
+		if(this.request.getAcceptResponse() == null){
+			this.request.setAcceptResponse(this.parseAcceptResponse());
+		}
+		return this.request.getAcceptResponse();
+	}
+	
 }

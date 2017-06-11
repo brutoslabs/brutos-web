@@ -8,17 +8,16 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.brandao.brutos.MutableMvcRequest;
-import org.brandao.brutos.web.WebMvcRequest;
-import org.brandao.brutos.web.WebMvcRequestImp;
+import org.brandao.brutos.web.MutableWebMvcRequest;
 
 @SuppressWarnings("rawtypes")
 public class ServletRequestWrapper 
 	extends javax.servlet.http.HttpServletRequestWrapper{
 
-	private WebMvcRequest mvcRequest;
+	private MutableWebMvcRequest mvcRequest;
 	
-	public ServletRequestWrapper(WebMvcRequest mvcRequest) {
-		super((HttpServletRequest) mvcRequest.getServletRequest());
+	public ServletRequestWrapper(MutableWebMvcRequest mvcRequest, HttpServletRequest servlet) {
+		super(servlet);
 		this.mvcRequest = mvcRequest;
 	}
 
@@ -29,7 +28,7 @@ public class ServletRequestWrapper
 
 	@Override
 	public Enumeration getHeaderNames() {
-		return Collections.enumeration(mvcRequest.getHeaderNames());
+		return Collections.enumeration(mvcRequest.getHeadersNames());
 	}
 
 	@Override
@@ -39,7 +38,7 @@ public class ServletRequestWrapper
 
 	@Override
 	public Enumeration getAttributeNames() {
-		return Collections.enumeration(mvcRequest.getPropertyNames());
+		return Collections.enumeration(mvcRequest.getPropertiesNames());
 	}
 
 	@Override
@@ -54,7 +53,7 @@ public class ServletRequestWrapper
 
 	@Override
 	public Enumeration getParameterNames() {
-		return Collections.enumeration(mvcRequest.getParameterNames());
+		return Collections.enumeration(mvcRequest.getParametersNames());
 	}
 
 	@Override
@@ -85,7 +84,7 @@ public class ServletRequestWrapper
 	}
 
 	public void setRequest(ServletRequest request){
-		this.mvcRequest = new WebMvcRequestImp((HttpServletRequest) request);
+		this.mvcRequest.setServletRequest(request);
 		super.setRequest(request);
 	}
 }

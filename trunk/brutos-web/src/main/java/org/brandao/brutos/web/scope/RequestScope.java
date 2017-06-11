@@ -68,7 +68,7 @@ public class RequestScope implements Scope{
 		List<String> result = new ArrayList<String>();
 		
 		Set<String> names = 
-				request.getPropertyNames();
+				request.getPropertiesNames();
 		
 		for(String name: names){
 			if(name.startsWith(value)){

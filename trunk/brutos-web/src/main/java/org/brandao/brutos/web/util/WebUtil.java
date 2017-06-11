@@ -19,6 +19,8 @@ package org.brandao.brutos.web.util;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.Enumeration;
+
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.StringPattern;
@@ -63,5 +65,44 @@ public class WebUtil {
             throw new BrutosException(e);
         }
     }
+
+    public static Enumeration<String> toEnumeration(String value){
+    	return new EnumarationString(value);
+    }
+    
+	private static class EnumarationString implements Enumeration<String>{
+
+		private String value;
+		
+		private int nextComma;
+		
+		private int currentComma;
+		
+		public EnumarationString(String value){
+			this.currentComma = 0;
+			this.value        = value;
+			this.nextComma    = value.indexOf(",");
+			
+			if(nextComma == -1){
+				this.nextComma = value.length();
+			}
+		}
+		
+		public boolean hasMoreElements() {
+			return this.currentComma < value.length();
+		}
+
+		public String nextElement() {
+			String v          = value.substring(currentComma, nextComma);
+			this.currentComma = this.nextComma + 1;
+			this.nextComma    = value.indexOf(",", this.currentComma);
+			
+			if(this.nextComma == -1){
+				this.nextComma = value.length();
+			}
+			return v.trim();
+		}
+		
+	}
     
 }

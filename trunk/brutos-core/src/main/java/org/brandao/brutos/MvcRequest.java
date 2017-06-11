@@ -28,11 +28,11 @@ import java.util.Set;
  */
 public interface MvcRequest {
 
-	Set<String> getHeaderNames();
+	Set<String> getHeadersNames();
 	
-	Set<String> getParameterNames();
+	Set<String> getParametersNames();
 
-	Set<String> getPropertyNames();
+	Set<String> getPropertiesNames();
 	
 	RequestParserEvent getRequestParserInfo();
     

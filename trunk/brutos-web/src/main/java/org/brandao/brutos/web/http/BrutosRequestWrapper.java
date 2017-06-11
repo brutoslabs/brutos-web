@@ -91,7 +91,7 @@ public class BrutosRequestWrapper extends HttpServletRequestWrapper implements B
     }
 
     @SuppressWarnings("rawtypes")
-	public Enumeration getParameterNames(){
+	public Enumeration getParametersNames(){
     	return this.request.getParameterNames();
     }
     
