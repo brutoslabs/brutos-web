@@ -17,13 +17,13 @@
 
 package org.brandao.brutos.web;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.brandao.brutos.DataType;
 import org.brandao.brutos.DefaultMvcRequest;
+import org.brandao.brutos.web.http.ServletRequestWrapper;
+import org.brandao.brutos.web.util.WebUtil;
 
 /**
  * 
@@ -39,54 +41,105 @@ import org.brandao.brutos.DefaultMvcRequest;
  */
 public class WebMvcRequestImp 
 	extends DefaultMvcRequest
-	implements WebMvcRequest{
+	implements MutableWebMvcRequest{
 
-    private HttpServletRequest request;
+    private ServletRequestWrapper request;
 
+    private HttpServletRequest realRequest;
+    
     private RequestMethodType requestMethodType;
     
-    @SuppressWarnings("unchecked")
 	public WebMvcRequestImp(HttpServletRequest request){
     	super();
-        this.request           = request;
-        this.requestMethodType = 
-        			RequestMethodType.valueOf(request.getMethod().toUpperCase());
-        
-        super.setType(
-        			MediaType.valueOf(request.getContentType()));
-        
-        super.setRequestId(
-    		this.parseRequestId(
-    				request.getRequestURI(), 
-    				request.getContextPath()));
-        
-        super.setAcceptResponse(
-    		this.parseAcceptResponse(
-    				request.getHeader("Accept")));
-        
-        this.loadNames(request.getParameterNames(), super.parameterNames);
-        this.loadNames(request.getHeaderNames(), super.headerNames);
-        this.loadNames(request.getAttributeNames(), super.parameterNames);
+	    this.realRequest = (HttpServletRequest) request;
+	    this.request     = new ServletRequestWrapper(this, this.realRequest);
+    	
+    	//this.setServletRequest(request);
+    	super.setAcceptResponse(null);
     }
 
-    private void loadNames(Enumeration<String> paramNames, Set<String> set){
-        while(paramNames.hasMoreElements()){
-        	String name = paramNames.nextElement();
-        	set.add(name);
-        }
-    }
+	public void setServletRequest(ServletRequest value){
+	    this.realRequest = (HttpServletRequest) value;
+	    this.request     = new ServletRequestWrapper(this, this.realRequest);
+		//this.request.setRequest(value);
+	}
+    
+	public List<DataType> getAcceptResponse() {
+		if(this.acceptResponse == null){
+			this.acceptResponse = 
+					this.parseAcceptResponse();
+		}
+		return this.acceptResponse;
+	}
+	
+	public String getRequestId(){
+		String id = super.getRequestId();
+		
+		if(id == null){
+			id = this.parseRequestId(
+					this.realRequest.getRequestURI(), 
+					this.realRequest.getContextPath());
+			super.setRequestId(id);
+		}
+		
+		return id;
+	}
+	
+	public DataType getType(){
+		DataType type = super.getType();
+		if(type == null){
+			type = MediaType.valueOf(this.realRequest.getContentType());
+			super.setType(type);
+		}
+		return type;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Set<String> getPropertyNames(){
+		Set<String> set = new HashSet<String>(super.getPropertyNames());
+		Enumeration<String> names = this.realRequest.getAttributeNames();
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			set.add(name);
+		}
+		return set;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Set<String> getHeaderNames(){
+		Set<String> set = new HashSet<String>(super.getHeaderNames());
+		Enumeration<String> names = this.realRequest.getHeaderNames();
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			set.add(name);
+		}
+		return set;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Set<String> getParameterNames(){
+		Set<String> set = new HashSet<String>(super.getParameterNames());
+		Enumeration<String> names = this.realRequest.getParameterNames();
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			set.add(name);
+		}
+		return set;
+	}
     
     private String parseRequestId(String path, String contextPath){
         return path.substring( contextPath.length(), path.length() );
     }
     
-    private List<DataType> parseAcceptResponse(String accept){
+	private List<DataType> parseAcceptResponse(){
     	
     	List<DataType> result = new ArrayList<DataType>();
-    	String[] split = accept.split("\\,");
     	
-    	for(String mt: split){
-    		MediaType mediaType = MediaType.valueOf(mt);
+    	Enumeration<String> values = WebUtil.toEnumeration(this.realRequest.getHeader("Accept"));
+    	
+    	while(values.hasMoreElements()){
+    		String value = values.nextElement();
+    		MediaType mediaType = MediaType.valueOf(value);
     		result.add(mediaType);
     	}
     	
@@ -111,26 +164,30 @@ public class WebMvcRequestImp
     }
     
 	public RequestMethodType getRequestMethodType() {
-		return requestMethodType;
+		if(this.requestMethodType == null){
+			this.requestMethodType = 
+					RequestMethodType.valueOf(this.realRequest.getMethod().toUpperCase());
+		}
+		return this.requestMethodType;
 	}
 
 	public InputStream getStream() throws IOException {
-		return request.getInputStream();
+		return realRequest.getInputStream();
 	}
     
 	public Object getHeader(String value) {
 		Object r = super.getHeader(value);
-		return r == null? request.getHeader(value) : r;
+		return r == null? realRequest.getHeader(value) : r;
 	}
 
 	public Object getParameter(String name) {
 		Object r = super.getParameter(name);
-		return r == null? request.getParameter(name) : r;
+		return r == null? realRequest.getParameter(name) : r;
 	}
 
 	public Object getProperty(String name) {
 		Object r = super.getProperty(name);
-		return r == null? request.getAttribute(name) : r;
+		return r == null? realRequest.getAttribute(name) : r;
 	}
     
 	public void setProperty(String name, Object value) {
