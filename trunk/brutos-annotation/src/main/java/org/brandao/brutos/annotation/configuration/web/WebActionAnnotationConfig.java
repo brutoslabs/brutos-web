@@ -74,6 +74,11 @@ public class WebActionAnnotationConfig
 
 		ResponseErrors throwSafeList = 
 				method.getAnnotation(ResponseErrors.class);
+
+		throwSafeList =
+				throwSafeList == null?
+					method.getControllerClass().getAnnotation(ResponseErrors.class) :
+					method.getAnnotation(ResponseErrors.class);
 		
 		ResponseError throwSafe = method.getAnnotation(ResponseError.class);
 		

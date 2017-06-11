@@ -53,11 +53,10 @@ public class WebInvoker extends Invoker{
     	
     	WebMvcRequestImp webRequest   = new WebMvcRequestImp((HttpServletRequest)request);
     	WebMvcResponseImp webResponse = new WebMvcResponseImp((HttpServletResponse)response, webRequest);
-    	//request                       = (HttpServletRequest)webRequest.getServletRequest();
     	
-    	System.out.println(request.getRequestURI());
-    	System.out.println(request.getAttribute("javax.servlet.forward.request_uri"));    	
-    	System.out.println(request.getAttribute("javax.servlet.include.request_uri"));
+    	//System.out.println(request.getRequestURI());
+    	//System.out.println(request.getAttribute("javax.servlet.forward.request_uri"));    	
+    	//System.out.println(request.getAttribute("javax.servlet.include.request_uri"));
     	
     	try{
     		SessionScope.setServletRequest(request);
