@@ -18,7 +18,6 @@
 package org.brandao.brutos.web.http.view;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.BrutosConstants;
@@ -36,7 +35,6 @@ import org.brandao.brutos.type.Type;
 import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.WebMvcRequest;
 import org.brandao.brutos.web.WebMvcResponse;
-import org.brandao.brutos.web.http.ServletRequestWrapper;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
@@ -139,6 +137,7 @@ public class JSPRenderView implements RenderViewType{
 					(WebMvcResponse)stackRequestElement.getResponse(),
 					action.getView(),
 					action.getDispatcherType());
+			return;
 		}
 		
 		WebController controller = (WebController)action.getController();

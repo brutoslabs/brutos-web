@@ -58,6 +58,7 @@ public class AnnotationDefinitionReader extends XMLComponentDefinitionReader {
 		//adiciona as classes base de uma aplicação web.
 		baseAnnotation.add(WebControllerAnnotationConfig.class);
 		baseAnnotation.add(WebActionAnnotationConfig.class);
+		baseAnnotation.add(WebThrowSafeAnnotationConfig.class);
 		
 		ComponentConfigurer componentConfigurer = 
 			new ComponentConfigurer(applicationContext, baseAnnotation);
