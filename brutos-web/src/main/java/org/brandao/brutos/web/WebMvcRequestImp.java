@@ -25,6 +25,7 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletRequest;
@@ -50,21 +51,18 @@ public class WebMvcRequestImp
 	extends HttpServletRequestWrapper 
 	implements MutableWebMvcRequest{
 
-    private HttpServletRequest servletRequest;
-    
     private RequestMethodType requestMethodType;
     
     private MutableMvcRequest request;
     
 	public WebMvcRequestImp(HttpServletRequest request){
     	super(request);
-	    this.servletRequest = (HttpServletRequest) request;
 	    this.request        = new DefaultMvcRequest();
 	    this.request.setAcceptResponse(null);
     }
 
-	public void setServletRequest(ServletRequest value){
-	    this.servletRequest = (HttpServletRequest) value;
+	private HttpServletRequest _getRequest(){
+		return (HttpServletRequest) super.getRequest();
 	}
     
     private String parseRequestId(String path, String contextPath){
@@ -75,7 +73,7 @@ public class WebMvcRequestImp
     	
     	List<DataType> result = new ArrayList<DataType>();
     	
-    	Enumeration<String> values = WebUtil.toEnumeration(this.servletRequest.getHeader("Accept"));
+    	Enumeration<String> values = WebUtil.toEnumeration(this._getRequest().getHeader("Accept"));
     	
     	while(values.hasMoreElements()){
     		String value = values.nextElement();
@@ -99,14 +97,12 @@ public class WebMvcRequestImp
     	return result;
     }
     
-    public ServletRequest getServletRequest(){
-    	return this.servletRequest;
-    }
-    
+	/* MutableWebMvcRequest */
+	
 	public RequestMethodType getRequestMethodType() {
 		if(this.requestMethodType == null){
 			this.requestMethodType = 
-					RequestMethodType.valueOf(this.servletRequest.getMethod().toUpperCase());
+					RequestMethodType.valueOf(this._getRequest().getMethod().toUpperCase());
 		}
 		return this.requestMethodType;
 	}
@@ -116,8 +112,8 @@ public class WebMvcRequestImp
 		
 		if(id == null){
 			id = this.parseRequestId(
-					this.servletRequest.getRequestURI(), 
-					this.servletRequest.getContextPath());
+					this._getRequest().getRequestURI(), 
+					this._getRequest().getContextPath());
 			this.request.setRequestId(id);
 		}
 		
@@ -132,31 +128,19 @@ public class WebMvcRequestImp
 		return this.request.getThrowable();
 	}
 
-	public String getHeader(String value) {
-		Object r = this.request.getHeader(value);
-		r = r == null? servletRequest.getHeader(value) : r;
-		return r == null? null : String.valueOf(r);
-	}
-
-	public String getParameter(String name) {
-		Object r = this.request.getParameter(name);
-		r = r == null? servletRequest.getParameter(name) : r;
-		return r == null? null : String.valueOf(r);
-	}
-
 	public Object getProperty(String name) {
 		Object r = this.request.getProperty(name);
-		return r == null? servletRequest.getAttribute(name) : r;
+		return r == null? _getRequest().getAttribute(name) : r;
 	}
 
 	public InputStream getStream() throws IOException {
-		return servletRequest.getInputStream();
+		return _getRequest().getInputStream();
 	}
 
 	@SuppressWarnings("unchecked")
 	public Set<String> getPropertiesNames(){
 		Set<String> set = new HashSet<String>(this.request.getPropertiesNames());
-		Enumeration<String> names = this.servletRequest.getAttributeNames();
+		Enumeration<String> names = this._getRequest().getAttributeNames();
 		while(names.hasMoreElements()){
 			String name = names.nextElement();
 			set.add(name);
@@ -167,7 +151,7 @@ public class WebMvcRequestImp
 	@SuppressWarnings("unchecked")
 	public Set<String> getHeadersNames(){
 		Set<String> set = new HashSet<String>(this.request.getHeadersNames());
-		Enumeration<String> names = this.servletRequest.getHeaderNames();
+		Enumeration<String> names = this._getRequest().getHeaderNames();
 		while(names.hasMoreElements()){
 			String name = names.nextElement();
 			set.add(name);
@@ -178,7 +162,7 @@ public class WebMvcRequestImp
 	@SuppressWarnings("unchecked")
 	public Set<String> getParametersNames(){
 		Set<String> set = new HashSet<String>(this.request.getParametersNames());
-		Enumeration<String> names = this.servletRequest.getParameterNames();
+		Enumeration<String> names = this._getRequest().getParameterNames();
 		while(names.hasMoreElements()){
 			String name = names.nextElement();
 			set.add(name);
@@ -186,25 +170,10 @@ public class WebMvcRequestImp
 		return set;
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public Enumeration getPropertyNames(){
-		return Collections.enumeration(this.getPropertiesNames());
-	}
-
-	@SuppressWarnings("rawtypes")
-	public Enumeration getHeaderNames(){
-		return Collections.enumeration(this.getHeadersNames());
-	}
-	
-	@SuppressWarnings("rawtypes")
-	public Enumeration getParameterNames(){
-		return Collections.enumeration(this.getParametersNames());
-	}
-	
 	public DataType getType() {
 		DataType type = this.request.getType();
 		if(type == null){
-			type = MediaType.valueOf(this.servletRequest.getContentType());
+			type = MediaType.valueOf(this._getRequest().getContentType());
 			this.request.setType(type);
 		}
 		return type;
@@ -316,5 +285,87 @@ public class WebMvcRequestImp
 		}
 		return this.request.getAcceptResponse();
 	}
+
+	public ServletRequest getServletRequest() {
+		return super.getRequest();
+	}
+
+	public void setServletRequest(ServletRequest value) {
+		super.setRequest((HttpServletRequest)request);
+	}
+
+	/* HttpServletRequestWrapper */
 	
+	@SuppressWarnings("rawtypes")
+	public Enumeration getHeaderNames(){
+		return Collections.enumeration(this.getHeadersNames());
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public Enumeration getParameterNames(){
+		return Collections.enumeration(this.getParametersNames());
+	}
+	
+	public String getHeader(String value) {
+		Object r = this.request.getHeader(value);
+		r = r == null? _getRequest().getHeader(value) : r;
+		return r == null? null : String.valueOf(r);
+	}
+
+	public String getParameter(String name) {
+		Object r = this.request.getParameter(name);
+		r = r == null? _getRequest().getParameter(name) : r;
+		return r == null? null : String.valueOf(r);
+	}
+	
+	@Override
+	public Object getAttribute(String name) {
+		return this.getProperty(name);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Enumeration getAttributeNames() {
+		return Collections.enumeration(this.getPropertiesNames());
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Map getParameterMap() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String[] getParameterValues(String name) {
+		Object[] values = this.request.getParameters();
+		
+		if(values == null){
+			return null;
+		}
+		else{
+			String[] result = new String[values.length];
+			for(int i=0;i<values.length;i++){
+				result[i] = values[i] == null? null : String.valueOf(values[i]);
+			}
+			return result;
+		}
+		
+	}
+
+	@Override
+	public void removeAttribute(String name) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setAttribute(String name, Object o) {
+		this.request.setProperty(name, o);
+	}
+
+	/*
+	public void setRequest(ServletRequest request){
+		this.mvcRequest.setServletRequest(request);
+		super.setRequest(request);
+	}
+	*/	
 }

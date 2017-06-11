@@ -25,7 +25,8 @@ import org.brandao.brutos.*;
  * 
  * @author Brandao
  */
-public interface WebMvcRequest extends MvcRequest{
+public interface WebMvcRequest 
+	extends MvcRequest{
 
 	RequestMethodType getRequestMethodType();
 	
