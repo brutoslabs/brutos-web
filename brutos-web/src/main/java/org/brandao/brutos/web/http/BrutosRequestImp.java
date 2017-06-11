@@ -133,7 +133,7 @@ public class BrutosRequestImp extends ServletRequestWrapper
          */
     }
 
-    public Enumeration getParameterNames(){
+    public Enumeration getParametersNames(){
     	return Collections.enumeration(this.parameterNames);
     }
     

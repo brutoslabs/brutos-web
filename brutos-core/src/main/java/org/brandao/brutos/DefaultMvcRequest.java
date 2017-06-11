@@ -106,15 +106,15 @@ public class DefaultMvcRequest implements MutableMvcRequest {
 		return null;
 	}
 
-	public Set<String> getPropertyNames(){
+	public Set<String> getPropertiesNames(){
 		return this.propertyNames;
 	}
 
-	public Set<String> getHeaderNames(){
+	public Set<String> getHeadersNames(){
 		return this.headerNames;
 	}
 	
-	public Set<String> getParameterNames(){
+	public Set<String> getParametersNames(){
 		return this.parameterNames;
 	}
 	

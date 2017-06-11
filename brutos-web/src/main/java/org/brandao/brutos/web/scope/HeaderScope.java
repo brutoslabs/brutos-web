@@ -47,7 +47,7 @@ public class HeaderScope implements Scope{
 		List<String> result = new ArrayList<String>();
 		
 		Set<String> names = 
-				request.getHeaderNames();
+				request.getHeadersNames();
 		
 		for(String name: names){
 			if(name.startsWith(value)){
