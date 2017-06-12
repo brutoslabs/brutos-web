@@ -30,6 +30,7 @@ import org.brandao.brutos.mapping.StringUtil;
  */
 // @Stereotype(target=Property.class,executeAfter={Controller.class,
 // Bean.class})
+@Deprecated
 public class PropertyAnnotationConfig extends AbstractAnnotationConfig {
 
 	public boolean isApplicable(Object source) {

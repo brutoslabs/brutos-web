@@ -200,6 +200,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 				null, view);
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void addProperties(ControllerBuilder controllerBuilder,
 			ComponentRegistry componentRegistry, Class<?> clazz) {
 
@@ -208,6 +209,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 		for(BeanProperty prop: props){
 			BeanPropertyAnnotationImp annotationProp = new BeanPropertyAnnotationImp(
 					prop);
+			
 			super.applyInternalConfiguration(annotationProp, controllerBuilder,
 					componentRegistry);
 		}

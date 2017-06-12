@@ -34,7 +34,6 @@ import org.brandao.brutos.ResponseTypeException;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.mapping.DataTypeMap;
 import org.brandao.brutos.web.mapping.MediaTypeMap;
-import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.scope.HeaderScope;
 import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
@@ -85,10 +84,9 @@ public class WebInvoker extends Invoker{
 
     public boolean invoke(StackRequestElement element){
     	
-    	WebMvcRequest request           = (WebMvcRequest) element.getRequest();
-		ResourceAction resourceAction   = element.getAction();
-		WebAction action                = (WebAction)resourceAction.getMethodForm();
-		RequestMethodType requestMethod = action.getRequestMethod();
+    	WebMvcRequest request            = (WebMvcRequest) element.getRequest();
+		WebResourceAction resourceAction = (WebResourceAction)element.getAction();
+		RequestMethodType requestMethod  = resourceAction.getRequestMethod();
 		
 		if(!request.getRequestMethodType().equals(requestMethod)){
 			throw new RequestMethodException(request.getRequestMethodType().getId());

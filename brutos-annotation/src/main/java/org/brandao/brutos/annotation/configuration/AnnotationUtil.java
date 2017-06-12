@@ -124,7 +124,7 @@ public class AnnotationUtil {
 	}
 
 	public static String getTemporalProperty(Any value) {
-		return value == null ? BrutosConstants.DEFAULT_TEMPORALPROPERTY : value
+		return value == null ? null /*BrutosConstants.DEFAULT_TEMPORALPROPERTY*/ : value
 				.metaTemporal();
 	}
 
@@ -132,7 +132,7 @@ public class AnnotationUtil {
 		if (value != null)
 			return value.value();
 		else
-			return BrutosConstants.DEFAULT_TEMPORALPROPERTY;
+			return null;//BrutosConstants.DEFAULT_TEMPORALPROPERTY;
 	}
 
 	public static org.brandao.brutos.EnumerationType getEnumerationType(
@@ -151,7 +151,7 @@ public class AnnotationUtil {
 			return org.brandao.brutos.EnumerationType.valueOf(value.name()
 					.toLowerCase());
 		} else
-			return BrutosConstants.DEFAULT_ENUMERATIONTYPE;
+			return null;//BrutosConstants.DEFAULT_ENUMERATIONTYPE;
 	}
 
 	public static org.brandao.brutos.ScopeType getScope(Basic value) {
@@ -162,7 +162,7 @@ public class AnnotationUtil {
 				return org.brandao.brutos.ScopeType.valueOf(value.scope());
 		}
 
-		return BrutosConstants.DEFAULT_SCOPETYPE;
+		return null;//BrutosConstants.DEFAULT_SCOPETYPE;
 	}
 
 	public static boolean isBuildEntity(TypeRegistry typeRegistry,

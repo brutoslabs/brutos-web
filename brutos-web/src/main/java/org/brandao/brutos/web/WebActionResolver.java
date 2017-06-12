@@ -72,7 +72,7 @@ public class WebActionResolver extends AbstractActionResolver{
 					return resolver.getResourceAction(entry.getController(), request);
 				}
 				else
-					return new DefaultResourceAction( entry.getController(), entry.getAction() );
+					return new WebResourceAction( (WebController)entry.getController(), (WebAction)entry.getAction() );
 			}
 			
 			return null;
