@@ -305,11 +305,13 @@ public class Invoker {
 
 	protected boolean isSupportedRequestType(ResourceAction action, MutableMvcRequest request){
 		
-    	DataTypeMap supportedRequestTypes = action.getMethodForm().getRequestTypes();
+    	DataTypeMap supportedRequestTypes = action.getRequestTypes();
     	
+    	/*
     	if(supportedRequestTypes.isEmpty()){
     		supportedRequestTypes = action.getController().getRequestTypes();
     	}
+    	*/
     	
     	if(supportedRequestTypes.isEmpty()){
     		return 
@@ -324,12 +326,14 @@ public class Invoker {
 
 	protected DataType selectResponseType(ResourceAction action, MutableMvcRequest request){
 		
-    	DataTypeMap supportedResponseTypes = action.getMethodForm().getResponseTypes();
+    	DataTypeMap supportedResponseTypes = action.getResponseTypes();
     	List<DataType> responseTypes       = request.getAcceptResponse();
     	
+    	/*
     	if(supportedResponseTypes.isEmpty()){
     		supportedResponseTypes = action.getController().getRequestTypes();
     	}
+    	*/
     	
     	if(supportedResponseTypes.isEmpty()){
     		

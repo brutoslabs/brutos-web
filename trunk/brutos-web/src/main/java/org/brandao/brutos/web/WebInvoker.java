@@ -97,12 +97,14 @@ public class WebInvoker extends Invoker{
     
 	protected DataType selectResponseType(ResourceAction action, MutableMvcRequest request){
 		
-    	DataTypeMap supportedResponseTypes = action.getMethodForm().getResponseTypes();
+    	DataTypeMap supportedResponseTypes = action.getResponseTypes();
     	List<DataType> responseTypes       = request.getAcceptResponse();
     	
+    	/*
     	if(supportedResponseTypes.isEmpty()){
     		supportedResponseTypes = action.getController().getRequestTypes();
     	}
+    	*/
     	
     	if(supportedResponseTypes.isEmpty()){
     		
