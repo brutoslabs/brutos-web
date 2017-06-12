@@ -23,7 +23,6 @@ import java.util.List;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.DataType;
@@ -34,7 +33,6 @@ import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.ResponseTypeException;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.mapping.DataTypeMap;
-import org.brandao.brutos.web.http.ServletRequestWrapper;
 import org.brandao.brutos.web.mapping.MediaTypeMap;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.scope.HeaderScope;
@@ -53,10 +51,6 @@ public class WebInvoker extends Invoker{
     	
     	WebMvcRequestImp webRequest   = new WebMvcRequestImp((HttpServletRequest)request);
     	WebMvcResponseImp webResponse = new WebMvcResponseImp((HttpServletResponse)response, webRequest);
-    	
-    	//System.out.println(request.getRequestURI());
-    	//System.out.println(request.getAttribute("javax.servlet.forward.request_uri"));    	
-    	//System.out.println(request.getAttribute("javax.servlet.include.request_uri"));
     	
     	try{
     		SessionScope.setServletRequest(request);
