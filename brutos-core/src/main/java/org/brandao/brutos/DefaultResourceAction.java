@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.DataTypeMap;
 
 /**
  * 
@@ -74,4 +75,16 @@ public class DefaultResourceAction implements ResourceAction {
 		return action;
 	}
 
+	public DataTypeMap getRequestTypes(){
+		return this.action == null || this.action.getRequestTypes().isEmpty()? 
+				this.controller.getRequestTypes() : 
+				this.action.getRequestTypes();
+	}
+
+	public DataTypeMap getResponseTypes(){
+		return this.action == null || this.action.getRequestTypes().isEmpty()? 
+				this.controller.getResponseTypes() : 
+				this.action.getResponseTypes();
+	}
+	
 }

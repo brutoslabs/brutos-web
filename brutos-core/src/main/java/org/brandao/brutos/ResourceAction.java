@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.DataTypeMap;
 
 /**
  * 
@@ -33,6 +34,10 @@ public interface ResourceAction {
 			throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException;
 
+	DataTypeMap getRequestTypes();
+
+	DataTypeMap getResponseTypes();
+	
 	Controller getController();
 	
 	Action getMethodForm();

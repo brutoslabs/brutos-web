@@ -12,7 +12,8 @@ public class WebResourceAction extends DefaultResourceAction{
 	
 	public WebResourceAction(WebController controller, WebAction action) {
 		super(controller, action);
-		// TODO Auto-generated constructor stub
+		this.controller = controller;
+		this.action = action;
 	}
 
 	public RequestMethodType getRequestMethod(){
