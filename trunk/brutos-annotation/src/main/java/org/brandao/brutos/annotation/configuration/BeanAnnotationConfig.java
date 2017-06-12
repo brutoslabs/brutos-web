@@ -574,8 +574,9 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 		BeanInstance instance = new BeanInstance(null, clazz);
 		List<BeanProperty> props = instance.getProperties();
 		for (BeanProperty prop : props) {
-			BeanPropertyAnnotationImp annotationProp = new BeanPropertyAnnotationImp(
-					prop);
+			BeanPropertyAnnotationImp annotationProp = 
+				new BeanPropertyAnnotationImp(prop);
+			
 			super.applyInternalConfiguration(annotationProp, beanBuilder,
 					componentRegistry);
 		}

@@ -103,11 +103,11 @@ public class DefaultEnumType extends AbstractType implements EnumType {
 			}
 			else
 			if (this.classType.isAssignableFrom(value.getClass())){
-				if(type == EnumerationType.AUTO || type == EnumerationType.ORDINAL){
-					return String.valueOf(((Enum<?>)value).ordinal());
+				if(type == EnumerationType.AUTO || type == EnumerationType.STRING){
+					return ((Enum<?>)value).name();
 				}
 				else{
-					return ((Enum<?>)value).name();
+					return String.valueOf(((Enum<?>)value).ordinal());
 				}
 			}
 			else 

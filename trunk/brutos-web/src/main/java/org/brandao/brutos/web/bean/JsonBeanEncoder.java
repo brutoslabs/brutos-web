@@ -525,8 +525,14 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 			return "\"" + type.toString(value) + "\"";
 		}
 		else
-		if(type instanceof EnumType && ((EnumType)type).getEnumerationType() == EnumerationType.STRING){
-			return "\"" + type.toString(value) + "\"";
+		if(type instanceof EnumType){
+			EnumerationType enumType = ((EnumType)type).getEnumerationType();
+			if(enumType == EnumerationType.AUTO || enumType == EnumerationType.STRING){
+				return "\"" + type.toString(value) + "\"";
+			}
+			else{
+				return type.toString(value);
+			}
 		}
 		else{
 			return type.toString(value);
