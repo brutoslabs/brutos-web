@@ -107,9 +107,21 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 
 		addParameters(actionBuilder, method, componentRegistry);
 
+		addResultAction(actionBuilder, method.getResultAction(), componentRegistry);
+		
 		return actionBuilder;
 	}
 
+	protected void addResultAction(ActionBuilder builder, 
+			ResultActionEntry method, ComponentRegistry componentRegistry){
+		
+		if(method != null && method.getBeanType() != void.class){
+			super.applyInternalConfiguration(method,
+					builder, componentRegistry);
+		}
+		
+	}
+	
 	protected ActionBuilder addAction(ActionEntry actionEntry, 
 			ControllerBuilder controllerBuilder, String id, String result,
 			boolean resultRendered, String view, boolean resolved,

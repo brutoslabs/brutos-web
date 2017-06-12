@@ -72,7 +72,7 @@ public class ResultActionEntry implements BeanEntry{
 
 		}
 
-		return BrutosConstants.DEFAULT_RETURN_NAME;
+		return null;//BrutosConstants.DEFAULT_RETURN_NAME;
 	}
 
 	public String getDefaultName(){

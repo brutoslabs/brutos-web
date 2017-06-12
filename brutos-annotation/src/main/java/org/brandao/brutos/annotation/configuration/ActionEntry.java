@@ -51,11 +51,14 @@ public class ActionEntry {
 
 	private boolean abstractAction;
 
+	private ResultActionEntry resultAction;
+	
 	public ActionEntry(Method method) {
 		this(method.getName(), method.getAnnotations(), method
 				.getDeclaringClass(), method.getExceptionTypes(), method
 				.getGenericParameterTypes(), method.getParameterTypes(), method
 				.getReturnType(), method.getParameterAnnotations(), null, null,
+				new ResultActionEntry(null, method),
 				false);
 	}
 
@@ -63,7 +66,8 @@ public class ActionEntry {
 			Class<?> controllerClass, Class<?>[] exceptionTypes,
 			Type[] genericParameterTypes, Class<?>[] parameterTypes,
 			Class<?> returnType, Annotation[][] parameterAnnotations,
-			String view, String dispatcher, boolean abstractAction) {
+			String view, String dispatcher, ResultActionEntry resulrAction,
+			boolean abstractAction) {
 		this.name = name;
 		this.annotation = annotation;
 		this.exceptionTypes = exceptionTypes;
@@ -75,6 +79,7 @@ public class ActionEntry {
 		this.dispatcher = dispatcher;
 		this.view = view;
 		this.returnType = returnType;
+		this.resultAction = resulrAction;
 	}
 
 	public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
@@ -192,6 +197,14 @@ public class ActionEntry {
 
 	public void setReturnType(Class<?> returnType) {
 		this.returnType = returnType;
+	}
+
+	public ResultActionEntry getResultAction() {
+		return resultAction;
+	}
+
+	public void setResultAction(ResultActionEntry resultAction) {
+		this.resultAction = resultAction;
 	}
 
 }

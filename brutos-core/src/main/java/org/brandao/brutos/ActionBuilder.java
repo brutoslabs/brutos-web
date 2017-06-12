@@ -402,10 +402,12 @@ public class ActionBuilder extends RestrictionBuilder {
 		
 		Class<?> rawType = TypeUtil.getRawType(classType);
 
+		
 		name = name == null? 
 			BrutosConstants.DEFAULT_RETURN_NAME : 
 			name;
-
+        
+		
 		temporalProperty = StringUtil.isEmpty(temporalProperty)?
 				this.applicationContext.getTemporalProperty() :
 				StringUtil.adjust(temporalProperty);

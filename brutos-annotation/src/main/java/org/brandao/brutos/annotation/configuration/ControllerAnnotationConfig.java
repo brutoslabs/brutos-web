@@ -257,7 +257,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 			ActionEntry entry = new ActionEntry(null,
 					new Annotation[] { act, act.view() },
 					controllerBuilder.getClassType(), null, null, null,
-					null, null, null, null, true);
+					null, null, null, null, null, true);
 			
 			actionList.add(entry);
 		}
