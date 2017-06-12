@@ -36,7 +36,6 @@ public class BeanBuilder {
 
 	private ValidatorFactory validatorFactory;
 
-	@SuppressWarnings("unused")
 	private ApplicationContext applicationContext;
 
 	private ConstructorBuilder constructorBuilder;
@@ -84,35 +83,32 @@ public class BeanBuilder {
 	public PropertyBuilder addProperty(String name, String propertyName,
 			EnumerationType enumProperty) {
 		return addProperty(name, propertyName, enumProperty, null, null,
-				ScopeType.PARAM, null, false, null);
+				null, null, false, null);
 	}
 
 	public PropertyBuilder addNullProperty(String propertyName) {
 		return addProperty(null, propertyName, null, null, null,
-				ScopeType.PARAM, null, true, null);
+				null, null, true, null);
 	}
 
 	public PropertyBuilder addProperty(String name, String propertyName,
 			String temporalProperty) {
-		return addProperty(name, propertyName, EnumerationType.ORDINAL,
-				temporalProperty, null, ScopeType.PARAM, null, false, null);
+		return addProperty(name, propertyName, null, temporalProperty, null, 
+				null, null, false, null);
 	}
 
 	public PropertyBuilder addProperty(String name, String propertyName,
 			Type type) {
-		return addProperty(name, propertyName, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", null, ScopeType.PARAM, null, false, type);
+		return addProperty(name, propertyName, null, null, null, null, null, false, type);
 	}
 
 	public PropertyBuilder addMappedProperty(String name, String propertyName,
 			String mapping) {
-		return addProperty(name, propertyName, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", mapping, ScopeType.PARAM, null, false, null);
+		return addProperty(name, propertyName, null, null, mapping, null, null, false, null);
 	}
 
 	public PropertyBuilder addMappedProperty(String propertyName, String mapping) {
-		return addProperty(null, propertyName, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", mapping, ScopeType.PARAM, null, false, null);
+		return addProperty(null, propertyName, null, null, mapping, null, null, false, null);
 	}
 
 	public KeyBuilder setMappedKey(String name, String ref) {
@@ -120,8 +116,7 @@ public class BeanBuilder {
 		//name = StringUtil.adjust(name);
 		//name = name == null? BrutosConstants.DEFAULT_KEY_NAME : name;
 		
-		return setKey(name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
-				ScopeType.PARAM, null, null, null);
+		return setKey(name, null, null, ref, null, null, null, null);
 	}
 
 	public KeyBuilder setKey(String ref) {
@@ -134,31 +129,26 @@ public class BeanBuilder {
 
 	public KeyBuilder setKey(String name, EnumerationType enumProperty,
 			Class<?> classType) {
-		return setKey(name, enumProperty, "dd/MM/yyyy", null, ScopeType.PARAM,
-				null, null, classType);
+		return setKey(name, enumProperty, null, null, null, null, null, classType);
 	}
 
 	public KeyBuilder setKey(String name, String temporalProperty,
 			Class<?> classType) {
-		return setKey(name, EnumerationType.ORDINAL, temporalProperty, null,
-				ScopeType.PARAM, null, null, classType);
+		return setKey(name, null, temporalProperty, null, null, null, null, classType);
 	}
 
 	public KeyBuilder setKey(String name, EnumerationType enumProperty,
 			ScopeType scope, Class<?> classType) {
-		return setKey(name, enumProperty, "dd/MM/yyyy", null, scope, null,
-				null, classType);
+		return setKey(name, enumProperty, null, null, scope, null, null, classType);
 	}
 
 	public KeyBuilder setKey(String name, String temporalProperty,
 			ScopeType scope, Class<?> classType) {
-		return setKey(name, EnumerationType.ORDINAL, temporalProperty, null,
-				scope, null, null, classType);
+		return setKey(name, null, temporalProperty, null, scope, null, null, classType);
 	}
 
 	public KeyBuilder setKey(String name, ScopeType scope, Class<?> classType) {
-		return setKey(name, EnumerationType.ORDINAL, "dd/MM/yyyy", null, scope,
-				null, null, classType);
+		return setKey(name, null, null, null, scope, null, null, classType);
 	}
 
 	public KeyBuilder setKey(String name, EnumerationType enumProperty,
@@ -169,9 +159,7 @@ public class BeanBuilder {
 	}
 
 	public KeyBuilder setGenericKey(String name, Class<?> classType) {
-		return this.setKey(name, BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null,
-				BrutosConstants.DEFAULT_SCOPETYPE, null, true, null,
+		return this.setKey(name, null, null, null, null, null, true, null,
 				(Object) classType);
 	}
 
@@ -193,7 +181,10 @@ public class BeanBuilder {
 					new Object[] { this.mappingBean.getClassType() }));
 		}
 
-		name = StringUtil.adjust(name);
+		name             = StringUtil.adjust(name);
+		enumProperty     = enumProperty == null? this.applicationContext.getEnumerationType() : enumProperty;
+		temporalProperty = StringUtil.isEmpty(temporalProperty)? this.applicationContext.getTemporalProperty() : temporalProperty;
+		scope            = scope == null? this.applicationContext.getScopeType() : scope;
 		//name = StringUtil.isEmpty(name) ? "key" : name;
 
 		if (type == null && mapping == null)
@@ -240,7 +231,7 @@ public class BeanBuilder {
 				this.mappingBean.getName(), type);
 
 		name = StringUtil.adjust(name);
-		name = name == null? BrutosConstants.DEFAULT_KEY_NAME : name;
+		//name = name == null? BrutosConstants.DEFAULT_KEY_NAME : name;
 		
 		setMappedKey(name, beanName);
 		return bb;
@@ -262,7 +253,7 @@ public class BeanBuilder {
 				this.mappingBean.getName(), type);
 
 		name = StringUtil.adjust(name);
-		name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
+		//name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
 		
 		setMappedElement(name, beanName);
 
@@ -278,8 +269,7 @@ public class BeanBuilder {
 		//name = StringUtil.adjust(name);
 		//name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
 		
-		return setElement(name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
-				ScopeType.PARAM, null, false, null, null);
+		return setElement(name, null, null, ref, null, null, false, null, null);
 	}
 
 	public ElementBuilder setMappedElement(String name, String ref,
@@ -288,38 +278,32 @@ public class BeanBuilder {
 		//name = StringUtil.adjust(name);
 		//name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
 		
-		return setElement(name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
-				ScopeType.PARAM, null, false, null, classType);
+		return setElement(name, null, null, ref, null, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, EnumerationType enumProperty,
 			Class<?> classType) {
-		return setElement(name, enumProperty, "dd/MM/yyyy", null,
-				ScopeType.PARAM, null, false, null, classType);
+		return setElement(name, enumProperty, null, null, null, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, String temporalProperty,
 			Class<?> classType) {
-		return setElement(name, EnumerationType.ORDINAL, temporalProperty,
-				null, ScopeType.PARAM, null, false, null, classType);
+		return setElement(name, null, temporalProperty, null, null, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, EnumerationType enumProperty,
 			ScopeType scope, Class<?> classType) {
-		return setElement(name, enumProperty, "dd/MM/yyyy", null, scope, null,
-				false, null, classType);
+		return setElement(name, enumProperty, null, null, scope, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, String temporalProperty,
 			ScopeType scope, Class<?> classType) {
-		return setElement(name, EnumerationType.ORDINAL, temporalProperty,
-				null, scope, null, false, null, classType);
+		return setElement(name, null, temporalProperty, null, scope, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, ScopeType scope,
 			Class<?> classType) {
-		return setElement(name, EnumerationType.ORDINAL, "dd/MM/yyyy", null,
-				scope, null, false, null, classType);
+		return setElement(name, null, null, null, scope, null, false, null, classType);
 	}
 
 	public ElementBuilder setElement(String name, EnumerationType enumProperty,
@@ -330,9 +314,7 @@ public class BeanBuilder {
 	}
 
 	public ElementBuilder setGenericElement(String name, Class<?> classType) {
-		return this.setElement(name, BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null,
-				BrutosConstants.DEFAULT_SCOPETYPE, null, false, true, null,
+		return this.setElement(name, null, null, null, null, null, false, true, null,
 				(Object) classType);
 	}
 
@@ -353,7 +335,11 @@ public class BeanBuilder {
 					"is not allowed for this type: %s",
 					new Object[] { this.mappingBean.getClassType() }));
 		
-		name = StringUtil.adjust(name);
+		name             = StringUtil.adjust(name);
+		enumProperty     = enumProperty == null? this.applicationContext.getEnumerationType() : enumProperty;
+		temporalProperty = StringUtil.isEmpty(temporalProperty)? this.applicationContext.getTemporalProperty() : temporalProperty;
+		scope            = scope == null? this.applicationContext.getScopeType() : scope;
+		
 		//name = StringUtil.isEmpty(name) ? "element" : name;
 
 		if (type == null && mapping == null)
@@ -424,20 +410,17 @@ public class BeanBuilder {
 	}
 
 	public PropertyBuilder addProperty(String name, String propertyName) {
-		return addProperty(name, propertyName, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", null, ScopeType.PARAM, null, false, null);
+		return addProperty(name, propertyName, null, null, null, null, null, false, null);
 	}
 
 	public PropertyBuilder addProperty(String name, String propertyName,
 			ScopeType scope) {
-		return addProperty(name, propertyName, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", null, scope, null, false, null);
+		return addProperty(name, propertyName, null, null, null, scope, null, false, null);
 	}
 
 	public PropertyBuilder addStaticProperty(String name, String propertyName,
 			Object value) {
-		return addProperty(null, propertyName, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", null, ScopeType.PARAM, value, false, null);
+		return addProperty(null, propertyName, null, null, null, null, value, false, null);
 	}
 
 	public PropertyBuilder addProperty(String name, String propertyName,
@@ -450,19 +433,13 @@ public class BeanBuilder {
 
 	public PropertyBuilder addGenericProperty(String name, String propertyName,
 			Class<?> classType) {
-		return this.addProperty(name, propertyName,
-				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null,
-				BrutosConstants.DEFAULT_SCOPETYPE, null, false, true,
-				classType, null);
+		return this.addProperty(name, propertyName, null, null, null, null, 
+				null, false, true, classType, null);
 	}
 
 	public PropertyBuilder addGenericProperty(String name, String propertyName) {
-		return this.addProperty(name, propertyName,
-				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null,
-				BrutosConstants.DEFAULT_SCOPETYPE, null, false, true, null,
-				null);
+		return this.addProperty(name, propertyName, null, null, null, null, null, 
+				false, true, null, null);
 	}
 
 	public PropertyBuilder addProperty(String name, String propertyName,
@@ -479,9 +456,13 @@ public class BeanBuilder {
 			String mapping, ScopeType scope, Object value, boolean nullable,
 			boolean generic, Object classType, Type type) {
 
-		name = StringUtil.adjust(name);
-		name = StringUtil.isEmpty(name) ? propertyName : name;
-
+		name             = StringUtil.adjust(name);
+		name             = StringUtil.isEmpty(name) ? propertyName : name;
+		enumProperty     = enumProperty == null? this.applicationContext.getEnumerationType() : enumProperty;
+		temporalProperty = StringUtil.isEmpty(temporalProperty)? this.applicationContext.getTemporalProperty() : temporalProperty;
+		scope            = scope == null? this.applicationContext.getScopeType() : scope;
+		
+		
 		PropertyBean propertyBean = (PropertyBean) MappingBeanUtil
 				.createProperty(name, propertyName, enumProperty,
 						temporalProperty, mapping, scope, value, nullable,
