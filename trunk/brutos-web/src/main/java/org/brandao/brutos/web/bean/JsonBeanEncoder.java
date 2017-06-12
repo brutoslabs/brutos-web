@@ -79,34 +79,54 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 		
 		if(entity.getMetaBean() != null){
 			
-			if(entity.getName() != null){
-				writer.append("\"").append(entity.getName()).append("\": { ");
-			}
+			//if(entity.getName() != null){
+			//	writer.append("\"").append(entity.getName()).append("\": { ");
+			//}
+			
+			writer.append("{ ");
 			
 			this.encode(entity, 0, entity.getMetaBean(), value);
 			
-			if(entity.getName() != null){
-				writer.append(" }");
-			}
+			writer.append(" }");
+			
+			//if(entity.getName() != null){
+			//	writer.append(" }");
+			//}
 			
 		}
 		else
 		if(entity.getMapping() != null){
+			Bean bean = entity.getMapping();
+			
+			if(bean.isCollection() || bean.isMap()){
+				writer.append("[ ");
+			}
+			else{
+				writer.append("{ ");
+			}
+			
 			this.encode(entity, 0, entity.getMapping(), value);
+			
+			if(bean.isCollection() || bean.isMap()){
+				writer.append(" ]");
+			}
+			else{
+				writer.append("} ");
+			}
 		}
 		else
 		if(!entity.isNullable() && entity.getStaticValue() != null){
 			
-			if(entity.getName() != null){
-				writer.append("\"").append(entity.getName()).append("\": ");
-			}
+			//if(entity.getName() != null){
+			//	writer.append("\"").append(entity.getName()).append("\": ");
+			//}
 			
 			writer.append(this.getValue(entity.getType(), value));
 		}
 		else{
-			if(entity.getName() != null){
-				writer.append("\"").append(entity.getName()).append("\": ");
-			}
+			//if(entity.getName() != null){
+			//	writer.append("\"").append(entity.getName()).append("\": ");
+			//}
 			
 			writer.append(this.getValue(entity.getType(), value));
 		}
@@ -214,10 +234,10 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 			
 			String name = null;
 			
-			if(parent instanceof UseBeanData){
+			/*if(parent instanceof UseBeanData){
 				name = ((UseBeanData)parent).getName();
 			}
-			else
+			else*/
 			if(!(parent instanceof Element) && !(parent instanceof Key)){
 				name = ((DependencyBean)parent).getParameterName();
 			}
@@ -250,10 +270,11 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 		boolean isObject = e.getParameterName() != null;
 		String name      = null;
 		
-		if(parent instanceof UseBeanData){
+		/*if(parent instanceof UseBeanData){
 			name = ((UseBeanData)parent).getName();
 		}
-		else{
+		else{*/
+		if(parent instanceof DependencyBean){
 			name = ((DependencyBean)parent).getParameterName();
 		}
 		
@@ -387,10 +408,11 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 		boolean isObject = k.getParameterName() != null;
 		String name      = null;
 		
-		if(parent instanceof UseBeanData){
-			name = ((UseBeanData)parent).getName();
-		}
-		else{
+		//if(parent instanceof UseBeanData){
+		//	name = ((UseBeanData)parent).getName();
+		//}
+		//else{
+		if(parent instanceof DependencyBean){
 			name = ((DependencyBean)parent).getParameterName();
 		}
 		

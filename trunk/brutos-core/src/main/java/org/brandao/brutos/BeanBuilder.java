@@ -117,8 +117,8 @@ public class BeanBuilder {
 
 	public KeyBuilder setMappedKey(String name, String ref) {
 		
-		name = StringUtil.adjust(name);
-		name = name == null? BrutosConstants.DEFAULT_KEY_NAME : name;
+		//name = StringUtil.adjust(name);
+		//name = name == null? BrutosConstants.DEFAULT_KEY_NAME : name;
 		
 		return setKey(name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
 				ScopeType.PARAM, null, null, null);
@@ -275,8 +275,8 @@ public class BeanBuilder {
 
 	public ElementBuilder setMappedElement(String name, String ref) {
 		
-		name = StringUtil.adjust(name);
-		name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
+		//name = StringUtil.adjust(name);
+		//name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
 		
 		return setElement(name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
 				ScopeType.PARAM, null, false, null, null);
@@ -285,8 +285,8 @@ public class BeanBuilder {
 	public ElementBuilder setMappedElement(String name, String ref,
 			Class<?> classType) {
 		
-		name = StringUtil.adjust(name);
-		name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
+		//name = StringUtil.adjust(name);
+		//name = name == null? BrutosConstants.DEFAULT_ELEMENT_NAME : name;
 		
 		return setElement(name, EnumerationType.ORDINAL, "dd/MM/yyyy", ref,
 				ScopeType.PARAM, null, false, null, classType);
