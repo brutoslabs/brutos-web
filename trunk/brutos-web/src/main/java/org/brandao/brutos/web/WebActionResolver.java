@@ -374,7 +374,7 @@ public class WebActionResolver extends AbstractActionResolver{
     	}
 
     	public RequestMappingEntry getRequestEntry(RequestMethodType value) {
-    		return requestMethodTypes.get(value);
+    		return requestMethodTypes == null? null : requestMethodTypes.get(value);
     	}
 
     	public void putRequestEntry(RequestMethodType requestMethodType, 
