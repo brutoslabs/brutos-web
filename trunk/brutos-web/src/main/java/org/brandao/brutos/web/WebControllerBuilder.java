@@ -35,6 +35,7 @@ import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
 import org.brandao.brutos.web.mapping.WebController;
+import org.brandao.brutos.web.mapping.WebControllerID;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
 
@@ -62,10 +63,51 @@ public class WebControllerBuilder extends ControllerBuilder{
         this.webApplicationContext = (ConfigurableWebApplicationContext)applicationContext;
     }
     
-    public ControllerBuilder addAlias(String id){
+
+	public ControllerBuilder addAlias(String id) {
+		return this.addAlias(id, null);
+	}
+    
+	public ControllerBuilder addAlias(String id, RequestMethodType requestMethodType) {
+
+		id = StringUtil.adjust(id);
+		requestMethodType = 
+				requestMethodType == null? 
+						this.webApplicationContext.getRequestMethod() : 
+						requestMethodType;
+
         WebUtil.checkURI(id, true);
-        return super.addAlias(id);
-    }
+						
+    	if(!this.controller.getActionType().isValidControllerId(id))
+    		throw new MappingException("invalid controller alias: " + id);
+    	
+		if (StringUtil.isEmpty(id))
+			throw new MappingException("invalid alias");
+
+		WebControllerID controllerID = new WebControllerID(id, requestMethodType);
+		return this.addAlias(controllerID);
+	}
+
+	public ControllerBuilder removeAlias(String id) {
+		return this.removeAlias(id, null);
+	}
+	
+	public ControllerBuilder removeAlias(String id, RequestMethodType requestMethodType) {
+
+        WebUtil.checkURI(id, true);
+		
+		id = StringUtil.adjust(id);
+		requestMethodType = 
+				requestMethodType == null? 
+						this.webApplicationContext.getRequestMethod() : 
+						requestMethodType;
+
+		if (StringUtil.isEmpty(id))
+			throw new MappingException("invalid alias");
+
+		WebControllerID controllerID = new WebControllerID(id, requestMethodType);
+		return this.removeAlias(controllerID);
+	}
 
     public ActionBuilder addAction(String id, 
     		String resultId, boolean resultRendered, String view, 

@@ -78,31 +78,46 @@ public class ActionBuilder extends RestrictionBuilder {
 
 		ActionID actionId = new ActionID(id);
 		
-		if (controller.getAction(actionId) != null)
+		return this.addAlias(actionId);
+	}
+
+	protected ActionBuilder addAlias(ActionID id) {
+
+		if (controller.getAction(id) != null)
 			throw new MappingException("duplicate action: " + id);
 
-		action.getAlias().add(actionId);
-		controller.addAction(actionId, this.action);
+		action.getAlias().add(id);
+		controller.addAction(id, this.action);
 
 		return this;
 	}
-
+	
 	public ActionBuilder removeAlias(String id) {
 		id = StringUtil.adjust(id);
 
 		if (StringUtil.isEmpty(id))
 			throw new MappingException("action id cannot be empty");
 
+		
 		ActionID actionId = new ActionID(id);
 		
 		if (controller.getAction(actionId) != null)
 			throw new MappingException("duplicate action: " + id);
 		
-		controller.removeAction(actionId);
+		return this.removeAlias(actionId);
+	}
+
+	public ActionBuilder removeAlias(ActionID id) {
+		
+		if (controller.getAction(id) != null)
+			throw new MappingException("action alias not found: " + id);
+		
+		action.getAlias().remove(id);
+		controller.removeAction(id);
 		
 		return this;
 	}
-
+	
 	public ParametersBuilder buildParameters() {
 		return this.parametersBuilder;
 	}
