@@ -133,6 +133,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 
 		//criar base da entidade
 		WebAction action = new WebAction();
+		action.setId(actionId);
 		action.setCode(Action.getNextId());
 		action.setResponseStatus(this.webApplicationContext.getResponseStatus());
 		action.setName(id);

@@ -42,7 +42,7 @@ public class Controller {
 
 	private String name;
 
-	private String id;
+	private ControllerID id;
 
 	private Class<?> classType;
 
@@ -61,7 +61,7 @@ public class Controller {
 
 	private Map<Class<?>, ThrowableSafeData> throwsSafe;
 	
-	private List<String> alias;
+	private List<ControllerID> alias;
 
 	private ScopeType scope;
 
@@ -96,7 +96,7 @@ public class Controller {
 		this.mappingBeans 		= new LinkedHashMap<String, Bean>();
 		this.actions 			= new LinkedHashMap<ActionID, Action>();
 		this.interceptorStack 	= new ArrayList<Interceptor>();
-		this.alias 				= new ArrayList<String>();
+		this.alias 				= new ArrayList<ControllerID>();
 		this.reverseMethods 	= new LinkedHashMap<ReverseActionKey, List<Action>>();
 		this.interceptorProcess = new InterceptorProcess();
 		this.scope 				= ScopeType.PARAM;
@@ -207,21 +207,36 @@ public class Controller {
 	}
 
 	public void addAction(ActionID id, Action method) {
-		method.setId(id);
 		this.actions.put(id, method);
 		this.context.getActionResolver()
-			.registry(method.getController().getId(), method.getController(), id.getName(), method);
+			.registry(null, method.getController(), id.getName(), method);
 	}
 
 	public void removeAction(ActionID id) {
 		Action method = this.actions.get(id);
 		
-		this.actions.remove(id);
-		
-		if(method != null){
-			this.context.getActionResolver()
-			.remove(method.getController().getId(), method.getController(), id.getName(), method);
+		if(method == null){
+			return;
 		}
+		
+		if(id.equals(method.getId())){
+			this.actions.remove(id);
+			
+			for(ActionID alias: method.getAlias()){
+				this.actions.remove(alias);
+			}
+			
+			this.context.getActionResolver()
+				.remove(null, method.getController(), null, method);
+		}
+		else{
+			this.actions.remove(id);
+			
+			this.context.getActionResolver()
+				.remove(null, method.getController(), id.getName(), method);
+		}
+		
+		
 	}
 
 	Map<ReverseActionKey, List<Action>> getReverseMethods() {
@@ -359,16 +374,7 @@ public class Controller {
 		this.throwsSafe.put(thr.getTarget(), thr);
 	}
 	
-	public void addAlias(String alias) {
-		this.alias.add(alias);
-	}
-
-	public String removeAlias(String alias) {
-		int index = this.alias.indexOf(alias);
-		return index == -1 ? null : (String) this.alias.remove(index);
-	}
-
-	public List<String> getAlias() {
+	public List<ControllerID> getAlias() {
 		return this.alias;
 	}
 
@@ -405,11 +411,11 @@ public class Controller {
 		this.name = name;
 	}
 
-	public String getId() {
+	public ControllerID getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ControllerID id) {
 		this.id = id;
 	}
 

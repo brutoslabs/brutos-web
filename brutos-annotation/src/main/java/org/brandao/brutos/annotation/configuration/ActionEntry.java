@@ -58,7 +58,7 @@ public class ActionEntry {
 				.getDeclaringClass(), method.getExceptionTypes(), method
 				.getGenericParameterTypes(), method.getParameterTypes(), method
 				.getReturnType(), method.getParameterAnnotations(), null, null,
-				new ResultActionEntry(null, method),
+				new ResultActionEntry(method),
 				false);
 	}
 

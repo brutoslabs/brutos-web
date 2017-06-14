@@ -53,15 +53,27 @@ public class WebControllerAnnotationConfig
 		boolean resolved                    = viewAnnotation == null ? false : viewAnnotation.resolved();
 		boolean rendered                    = viewAnnotation == null ? true : viewAnnotation.rendered();
 
-		String controllerID                 = 
+		String[] controllerIDs = 
 				annotationController == null || annotationController.value().length == 0? 
 					null : 
-					annotationController.value()[0];
+						new String[annotationController.value().length];
 		
-		RequestMethodType requestMethodType = 
+		if(controllerIDs != null){
+			for(int i=0;i<controllerIDs.length;i++){
+				controllerIDs[i] = StringUtil.adjust(annotationController.value()[i]);
+			}
+		}
+		
+		RequestMethodType[] requestMethodType = 
 				requestMethod == null? 
 					null : 
-					RequestMethodType.valueOf(StringUtil.adjust(requestMethod.value()));
+					new RequestMethodType[requestMethod.value().length];
+		
+		if(requestMethodType != null){
+			for(int i=0;i<requestMethodType.length;i++){
+				requestMethodType[i] = RequestMethodType.valueOf(StringUtil.adjust(requestMethod.value()[i]));
+			}
+		}
 		
 		org.brandao.brutos.DispatcherType dispatcher = 
 			viewAnnotation == null? 
@@ -77,8 +89,8 @@ public class WebControllerAnnotationConfig
 		WebControllerBuilder builder = 
 			(WebControllerBuilder)webComponentRegistry
 				.registerController(
-						controllerID, 
-						requestMethodType,
+						controllerIDs == null? null : controllerIDs[0], 
+						requestMethodType == null? null : requestMethodType[0],
 						rendered ? getView((View) source.getAnnotation(View.class), webComponentRegistry) : null, 
 						rendered ? resolved : true,	
 						dispatcher, 
@@ -105,14 +117,32 @@ public class WebControllerAnnotationConfig
 			builder.setResponseStatus(responseStatus.value());
 		}
 		
-		if (annotationController != null && annotationController.value().length > 1) {
-			String[] ids = annotationController.value();
-			for (int i = 1; i < ids.length; i++) {
-				if (!StringUtil.isEmpty(ids[i]))
-					this.addAlias(builder, StringUtil.adjust(ids[i]));
-				else
-					throw new BrutosException("invalid controller id: "
-							+ source.getName());
+		if(controllerIDs != null){
+			for (int i = 1; i < controllerIDs.length; i++) {
+				
+				if(requestMethodType == null){
+					if (!StringUtil.isEmpty(controllerIDs[i]))
+						this.addAlias(builder, StringUtil.adjust(controllerIDs[i]));
+					else
+						throw new BrutosException("invalid controller id: "
+								+ source.getName());
+				}
+				else{
+					for(RequestMethodType rmt: requestMethodType){
+						if (StringUtil.isEmpty(controllerIDs[i])){
+							throw new BrutosException("invalid controller id: "
+									+ source.getName());
+						}
+
+						if (rmt == null){
+							throw new BrutosException("invalid request method type: "
+									+ source.getName());
+						}
+						
+						return builder.addAlias(StringUtil.adjust(controllerIDs[i]), rmt);
+						
+					}
+				}
 			}
 		}
 
@@ -167,10 +197,6 @@ public class WebControllerAnnotationConfig
 		for (ThrowableEntry entry : list){
 			super.applyInternalConfiguration(entry, builder, componentRegistry);
 		}		
-	}
-	
-	protected ControllerBuilder addAlias(ControllerBuilder builder, String id) {
-		return builder.addAlias(id);
 	}
 	
 }

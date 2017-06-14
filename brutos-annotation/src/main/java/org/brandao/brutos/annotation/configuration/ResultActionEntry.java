@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.DetachedName;
+import org.brandao.brutos.annotation.Result;
 import org.brandao.brutos.annotation.Target;
 import org.brandao.brutos.mapping.StringUtil;
 
@@ -19,8 +20,7 @@ public class ResultActionEntry implements BeanEntry{
 	public ResultActionEntry(){
 	}
 	
-	public ResultActionEntry(String name, Method method){
-		this.name   = name;
+	public ResultActionEntry(Method method){
 		this.method = method;
 	}
 	
@@ -57,14 +57,21 @@ public class ResultActionEntry implements BeanEntry{
 		if (notNamed != null)
 			return null;
 
-		Basic basic = (Basic) this.getAnnotation(Basic.class);
+		Basic basic   = this.getAnnotation(Basic.class);
+		Result result = this.getAnnotation(Result.class);
 
 		if (basic != null) {
-			String actionName = StringUtil.adjust(basic.bean());
-			if (!StringUtil.isEmpty(actionName))
-				return actionName;
+			String name = StringUtil.adjust(basic.bean());
+			if (!StringUtil.isEmpty(name))
+				return name;
 		}
 
+		if (result != null) {
+			String name = StringUtil.adjust(result.value());
+			if (!StringUtil.isEmpty(name))
+				return name;
+		}
+		
 		if (this.name != null) {
 			String actionName = StringUtil.adjust(this.name);
 			if (!StringUtil.isEmpty(actionName))
