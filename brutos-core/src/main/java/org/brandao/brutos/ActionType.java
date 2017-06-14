@@ -25,6 +25,7 @@ import java.util.Map;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.ControllerID;
 
 /**
  * Descreve as estratégias de mapeamento de ação. Esta classe é usada em conjunto com
@@ -71,14 +72,14 @@ public class ActionType {
 			return value != null;
 		}
 		
-		public List<ActionID> getIDs(String controllerID, Controller controller, 
-				String actionID, Action action){
+		public List<ActionID> getIDs(ControllerID controllerID, Controller controller, 
+				ActionID actionID, Action action){
 			//ações não possuem ids
 			if(action != null){
 				return null;
 			}
 			
-			return Arrays.asList(new ActionID(controllerID));
+			return Arrays.asList(new ActionID(controllerID.getName()));
 		}
 		
 	};
@@ -165,8 +166,8 @@ public class ActionType {
 	 * @param action Ação.
 	 * @return Identificações públicas.
 	 */
-	public List<ActionID> getIDs(String controllerID, Controller controller, 
-			String actionID, Action action){
+	public List<ActionID> getIDs(ControllerID controllerID, Controller controller, 
+			ActionID actionID, Action action){
 		throw new UnsupportedOperationException();
 	}
 	

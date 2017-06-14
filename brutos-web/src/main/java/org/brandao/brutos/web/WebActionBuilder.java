@@ -40,7 +40,7 @@ import org.brandao.brutos.web.util.WebUtil;
  */
 public class WebActionBuilder extends ActionBuilder{
     
-	private ConfigurableWebApplicationContext applicationContext;
+	private ConfigurableWebApplicationContext webApplicationContext;
 	
     public WebActionBuilder(ActionBuilder builder){
         super(builder);
@@ -54,12 +54,22 @@ public class WebActionBuilder extends ActionBuilder{
             ConfigurableApplicationContext applicationContext) {
         super(methodForm, controller, validatorFactory, 
                 controllerBuilder, applicationContext);
-        this.applicationContext = (ConfigurableWebApplicationContext)applicationContext;
+        this.webApplicationContext = (ConfigurableWebApplicationContext)applicationContext;
     }
     
 	public ActionBuilder addAlias(String id) {
+		return this.addAlias(id, null);
+	}
+
+	public ActionBuilder addAlias(String id, RequestMethodType requestMethodType) {
 
 		id = StringUtil.adjust(id);
+		requestMethodType = 
+				requestMethodType == null? 
+						this.webApplicationContext.getRequestMethod() : 
+						requestMethodType;
+
+        WebUtil.checkURI(id, true);
 
         ActionType type = this.controller.getActionType();
         
@@ -73,29 +83,29 @@ public class WebActionBuilder extends ActionBuilder{
 
 		WebActionID actionId = new WebActionID(id, ((WebAction)action).getRequestMethod());
 		
-		if (controller.getAction(actionId) != null)
-			throw new MappingException("duplicate action: " + id);
-
-		action.addAlias(id);
-		controller.addAction(actionId, this.action);
-
-		return this;
+		return super.addAlias(actionId);
+	}
+	
+	public ActionBuilder removeAlias(String id) {
+		return this.removeAlias(id, null);
 	}
 
-	public ActionBuilder removeAlias(String id) {
+	public ActionBuilder removeAlias(String id, RequestMethodType requestMethodType) {
+		
 		id = StringUtil.adjust(id);
+		requestMethodType = 
+				requestMethodType == null? 
+						this.webApplicationContext.getRequestMethod() : 
+						requestMethodType;
 
+        WebUtil.checkURI(id, true);
+		
 		if (StringUtil.isEmpty(id))
 			throw new MappingException("action id cannot be empty");
 
 		WebActionID actionId = new WebActionID(id, ((WebAction)action).getRequestMethod());
 		
-		if (controller.getAction(actionId) != null)
-			throw new MappingException("duplicate action: " + id);
-		
-		controller.removeAction(actionId);
-		
-		return this;
+		return super.removeAlias(actionId);
 	}
 	
     public ActionBuilder addThrowable(Class<?> target, String view, 
@@ -118,14 +128,14 @@ public class WebActionBuilder extends ActionBuilder{
 
 		view = resolvedView ? 
 				view : 
-				applicationContext.getViewResolver().getView(this.controllerBuilder, this, target, view);
+				webApplicationContext.getViewResolver().getView(this.controllerBuilder, this, target, view);
 
 		responseError = responseError <= 0? 
-				this.applicationContext.getResponseError() :
+				this.webApplicationContext.getResponseError() :
 				responseError;
 			
 		dispatcher = dispatcher == null? 
-				this.applicationContext.getDispatcherType() :
+				this.webApplicationContext.getDispatcherType() :
 				dispatcher;
 
         WebUtil.checkURI(view, resolvedView && view != null);

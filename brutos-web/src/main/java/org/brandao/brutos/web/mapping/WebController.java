@@ -41,11 +41,12 @@ public class WebController extends Controller{
 	}
 
 	public void addAction(ActionID id, Action method) {
+		WebControllerID wcid = (WebControllerID)method.getController().getId();
 		WebActionID wid = (WebActionID)id;
 		method.setId(wid);
 		super.getActions().put(wid, method);
 		super.getContext().getActionResolver()
-			.registry(method.getController().getId(), method.getController(), wid.getId(), method);
+			.registry(wcid, method.getController(), wid, method);
 	}
 
 	public void removeAction(ActionID id) {
@@ -56,7 +57,7 @@ public class WebController extends Controller{
 		
 		if(method != null){
 			this.getContext().getActionResolver()
-			.remove(method.getController().getId(), method.getController(), wid.getId(), method);
+			.remove(method.getController().getId(), method.getController(), wid, method);
 		}
 	}
 	

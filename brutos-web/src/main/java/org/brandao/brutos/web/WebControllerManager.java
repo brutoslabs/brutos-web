@@ -26,6 +26,7 @@ import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.mapping.WebController;
+import org.brandao.brutos.web.mapping.WebControllerID;
 import org.brandao.brutos.web.util.WebUtil;
 
 /**
@@ -108,9 +109,11 @@ public class WebControllerManager extends ControllerManagerImp{
     		throw new MappingException("invalid controller id: " + id);
     	}
         
+    	WebControllerID controllerId = new WebControllerID(id, requestMethodType);
+    	
     	WebController controller = new WebController(this.webApplicationContext);
 		controller.setClassType(classType);
-		controller.setId(id);
+		controller.setId(controllerId);
 		
 		// Action
 		ActionListener ac = new ActionListener();
@@ -123,7 +126,7 @@ public class WebControllerManager extends ControllerManagerImp{
 
 		this.current = new WebControllerBuilder(controller, this,
 				interceptorManager, validatorFactory, applicationContext,
-				internalUpdate);
+				this);
 
 		this.current
 			.setName(name)

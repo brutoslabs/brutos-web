@@ -209,7 +209,7 @@ public class Controller {
 	public void addAction(ActionID id, Action method) {
 		this.actions.put(id, method);
 		this.context.getActionResolver()
-			.registry(null, method.getController(), id.getName(), method);
+			.registry(null, method.getController(), id, method);
 	}
 
 	public void removeAction(ActionID id) {
@@ -233,7 +233,7 @@ public class Controller {
 			this.actions.remove(id);
 			
 			this.context.getActionResolver()
-				.remove(null, method.getController(), id.getName(), method);
+				.remove(null, method.getController(), id, method);
 		}
 		
 		

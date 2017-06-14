@@ -18,7 +18,9 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.ControllerID;
 
 /**
  * 
@@ -26,11 +28,11 @@ import org.brandao.brutos.mapping.Controller;
  */
 public interface ActionResolver {
 
-    void registry(String controllerID, Controller controller, 
-    		String actionID, Action action) throws ActionResolverException;
+    void registry(ControllerID controllerID, Controller controller, 
+    		ActionID actionID, Action action) throws ActionResolverException;
 
-    void remove(String controllerID, Controller controller, 
-    		String actionID, Action action) throws ActionResolverException;
+    void remove(ControllerID controllerID, Controller controller, 
+    		ActionID actionID, Action action) throws ActionResolverException;
     
     
 	ResourceAction getResourceAction(ControllerManager controllerManager,

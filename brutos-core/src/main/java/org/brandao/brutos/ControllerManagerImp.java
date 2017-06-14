@@ -264,7 +264,7 @@ public class ControllerManagerImp implements ControllerManager, InternalUpdate {
 			this.classMappedControllers.put(controller.getClassType(), controller);
 		}
 		
-		this.applicationContext.getActionResolver().registry(id.getName(), controller, null, null);
+		this.applicationContext.getActionResolver().registry(id, controller, null, null);
 	}
 
 	protected synchronized void removeController(ControllerID id, Controller controller) {
@@ -288,7 +288,7 @@ public class ControllerManagerImp implements ControllerManager, InternalUpdate {
 			this.classMappedControllers.remove(controller.getClassType());
 		}
 		
-		this.applicationContext.getActionResolver().registry(id.getName(), controller, null, null);
+		this.applicationContext.getActionResolver().registry(id, controller, null, null);
 	}
 
 	public ControllerBuilder getCurrent() {
