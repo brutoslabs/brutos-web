@@ -33,6 +33,7 @@ import org.brandao.brutos.mapping.Bean;
 import org.brandao.brutos.mapping.CollectionBean;
 import org.brandao.brutos.mapping.ConstructorBean;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.ControllerID;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.InterceptorStack;
 import org.brandao.brutos.mapping.MapBean;
@@ -101,9 +102,14 @@ public class ControllerBuilder {
 		if (StringUtil.isEmpty(id))
 			throw new MappingException("invalid alias");
 
+		ControllerID controllerID = new ControllerID(id);
+		return this.addAlias(controllerID);
+	}
 
-		controller.addAlias(id);
+	protected ControllerBuilder addAlias(ControllerID id) {
+
 		internalUpdate.addControllerAlias(controller, id);
+		controller.getAlias().add(id);
 		
 		getLogger().info(
 				String.format("add alias %s on controller %s", new Object[] {
@@ -111,7 +117,7 @@ public class ControllerBuilder {
 		
 		return this;
 	}
-
+	
 	public ControllerBuilder removeAlias(String id) {
 
 		id = StringUtil.adjust(id);
@@ -119,11 +125,18 @@ public class ControllerBuilder {
 		if (StringUtil.isEmpty(id))
 			throw new MappingException("invalid alias");
 
+		ControllerID controllerID = new ControllerID(id);
+		return this.removeAlias(controllerID);
+	}
+
+	protected ControllerBuilder removeAlias(ControllerID id) {
+
 		internalUpdate.removeControllerAlias(controller, id);
+		controller.getAlias().remove(id);
 		
 		getLogger().info(
 				String.format("removed alias %s on controller %s",
-						new Object[] { id,
+						new Object[] { id.getName(),
 								controller.getClassType().getSimpleName() }));
 		return this;
 	}
@@ -329,6 +342,7 @@ public class ControllerBuilder {
 		}
 
 		Action action = new Action();
+		action.setId(actionId);
 		action.setCode(Action.getNextId());
 		action.setName(id);
 		action.setController(controller);
@@ -639,7 +653,7 @@ public class ControllerBuilder {
 	}
 
 	public String getId() {
-		return controller.getId();
+		return controller.getId().getName();
 	}
 
 	public ControllerBuilder setName(String value) {

@@ -22,11 +22,13 @@ import java.lang.reflect.Method;
 
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.DataTypeMap;
 
 /**
  * 
  * @author Brandao
  */
+@Deprecated
 public class DefaultResourceMethod implements ResourceMethod {
 
 	private Action method;
@@ -69,6 +71,14 @@ public class DefaultResourceMethod implements ResourceMethod {
 
 	public Action getMethodForm() {
 		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	public DataTypeMap getRequestTypes() {
+		return null;
+	}
+
+	public DataTypeMap getResponseTypes() {
+		return null;
 	}
 
 }

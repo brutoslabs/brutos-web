@@ -48,9 +48,9 @@ public class WebActionAnnotationConfig
 				actionEntry.getControllerClass().getAnnotation(RequestMethod.class);
 		
 		RequestMethodType requestMethodType = 
-				requestMethod == null?
+				requestMethod == null || requestMethod.value().length == 0?
 					null :
-					RequestMethodType.valueOf(StringUtil.adjust(requestMethod.value()));
+					RequestMethodType.valueOf(StringUtil.adjust(requestMethod.value()[0]));
 		
 		WebControllerBuilder webControllerBuilder = 
 				(WebControllerBuilder)controllerBuilder;

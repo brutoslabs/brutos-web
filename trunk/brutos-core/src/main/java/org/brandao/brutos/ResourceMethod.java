@@ -21,6 +21,7 @@ package org.brandao.brutos;
  * 
  * @author Brandao
  */
+@Deprecated
 public interface ResourceMethod extends ResourceAction {
 
 }

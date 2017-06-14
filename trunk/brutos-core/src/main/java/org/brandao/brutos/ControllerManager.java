@@ -19,8 +19,10 @@ package org.brandao.brutos;
 
 import java.util.Iterator;
 import java.util.List;
+
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.ControllerID;
 
 /**
  * 
@@ -87,9 +89,9 @@ public interface ControllerManager {
 
 	public static interface InternalUpdate {
 
-		void addControllerAlias(Controller controller, String alias);
+		void addControllerAlias(Controller controller, ControllerID alias);
 
-		void removeControllerAlias(Controller controller, String alias);
+		void removeControllerAlias(Controller controller, ControllerID alias);
 
 	}
 

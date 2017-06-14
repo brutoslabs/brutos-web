@@ -49,7 +49,7 @@ public class Action {
 
 	private String simpleName;
 
-	private List<String> alias;
+	private List<ActionID> alias;
 
 	private String executor;
 
@@ -97,7 +97,7 @@ public class Action {
 		this.resultAction       = new ResultAction(this);
 		//this.returnClass 		= void.class;
 		this.redirect 			= false;
-		this.alias 				= new ArrayList<String>();
+		this.alias 				= new ArrayList<ActionID>();
 		this.requestTypes 	    = new DataTypeMap();
 		this.responseTypes      = new DataTypeMap();
 	}
@@ -427,15 +427,7 @@ public class Action {
 		return this.method == null;
 	}
 
-	public void addAlias(String value) {
-		this.alias.add(value);
-	}
-
-	public void removeAlias(String value) {
-		this.alias.remove(value);
-	}
-
-	public List<String> getAlias() {
+	public List<ActionID> getAlias() {
 		return this.alias;
 	}
 

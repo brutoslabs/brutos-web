@@ -24,16 +24,17 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.ActionListener;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.ControllerID;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
-
+import org.brandao.brutos.ControllerManager.InternalUpdate;
 /**
  * 
  * @author Brandao
  */
-public class ControllerManagerImp implements ControllerManager {
+public class ControllerManagerImp implements ControllerManager, InternalUpdate {
 
-	protected Map<String, Controller> mappedControllers;
+	protected Map<ControllerID, Controller> mappedControllers;
 	
 	protected Map<Class<?>, Controller> classMappedControllers;
 	
@@ -47,12 +48,9 @@ public class ControllerManagerImp implements ControllerManager {
 	
 	protected ControllerManager parent;
 	
-	protected InternalUpdate internalUpdate;
-
 	public ControllerManagerImp() {
-		this.mappedControllers      = new HashMap<String, Controller>();
+		this.mappedControllers      = new HashMap<ControllerID, Controller>();
 		this.classMappedControllers = new HashMap<Class<?>, Controller>();
-		this.internalUpdate         = new InternalUpdateImp(this);
 	}
 
 	public ControllerBuilder addController(Class<?> classtype) {
@@ -100,6 +98,8 @@ public class ControllerManagerImp implements ControllerManager {
 		actionId = StringUtil.adjust(actionId);
 		name     = StringUtil.adjust(name);
 
+		ControllerID controllerID = new ControllerID(id);
+		
 		actionId = actionId == null?
 				this.applicationContext.getActionParameterName() :
 				actionId;
@@ -126,7 +126,7 @@ public class ControllerManagerImp implements ControllerManager {
 
 		Controller controller = new Controller(this.applicationContext);
 		controller.setClassType(classType);
-		controller.setId(id);
+		controller.setId(controllerID);
 		
 		// Action
 		ActionListener ac = new ActionListener();
@@ -139,7 +139,7 @@ public class ControllerManagerImp implements ControllerManager {
 
 		this.current = new ControllerBuilder(controller, this,
 				interceptorManager, validatorFactory, applicationContext,
-				internalUpdate);
+				this);
 
 		this.current
 			.setName(name)
@@ -251,48 +251,44 @@ public class ControllerManagerImp implements ControllerManager {
 		};
 	}
 
-	protected synchronized void addController(String id, Controller controller) {
+	protected synchronized void addController(ControllerID id, Controller controller) {
 
-		if (id != null) {
-			if (mappedControllers.containsKey(id)){
-				throw new BrutosException(String.format(
-						"duplicate controller: %s", new Object[] { id }));
-			}
-			
-			mappedControllers.put(id, controller);
+		if (mappedControllers.containsKey(id)){
+			throw new BrutosException(String.format(
+					"duplicate controller: %s", new Object[] { id.getName() }));
 		}
+		
+		mappedControllers.put(id, controller);
 
-		if(id == null || id.equals(controller.getId())){
+		if(controller.getId().equals(id)){
 			this.classMappedControllers.put(controller.getClassType(), controller);
 		}
 		
-		this.applicationContext.getActionResolver().registry(id, controller, null, null);
+		this.applicationContext.getActionResolver().registry(id.getName(), controller, null, null);
 	}
 
-	protected synchronized void removeController(String id, Controller controller) {
+	protected synchronized void removeController(ControllerID id, Controller controller) {
 
-		if (id != null) {
-			if (!mappedControllers.containsKey(id))
-				throw new BrutosException(String.format(
-						"controller not found: %s", new Object[] { id }));
-			else
-				mappedControllers.remove(id);
-		}
+		if (!mappedControllers.containsKey(id))
+			throw new BrutosException(String.format(
+					"controller not found: %s", new Object[] { id.getName() }));
+		else
+			mappedControllers.remove(id);
 
-		if (id == null || id.equals(controller.getId())){
+		if (controller.getId().equals(id)){
 			
 			if(controller.getId() != null){
 				mappedControllers.remove(controller.getId());
 			}
 			
-			for(String alias: controller.getAlias()){
+			for(ControllerID alias: controller.getAlias()){
 				this.removeController(alias, controller);
 			}
 			
 			this.classMappedControllers.remove(controller.getClassType());
 		}
 		
-		this.applicationContext.getActionResolver().registry(id, controller, null, null);
+		this.applicationContext.getActionResolver().registry(id.getName(), controller, null, null);
 	}
 
 	public ControllerBuilder getCurrent() {
@@ -341,35 +337,28 @@ public class ControllerManagerImp implements ControllerManager {
 		Controller controller = (Controller) classMappedControllers.get(clazz);
 
 		if (controller != null) {
-			this.removeController(null, controller);
+			this.removeController(controller.getId(), controller);
 		}
 		
 	}
 
 	public synchronized void removeController(String name) {
-		Controller controller = (Controller) mappedControllers.get(name);
+		ControllerID id = new ControllerID(name);
+		
+		Controller controller = (Controller) mappedControllers.get(id);
 
 		if (controller != null) {
-			this.removeController(name, controller);
+			this.removeController(id, controller);
 		}
 
 	}
 
-	public static class InternalUpdateImp implements InternalUpdate {
-
-		private ControllerManagerImp manager;
-
-		public InternalUpdateImp(ControllerManagerImp manager) {
-			this.manager = manager;
-		}
-
-		public void addControllerAlias(Controller controller, String alias) {
-			manager.addController(alias, controller);
-		}
-
-		public void removeControllerAlias(Controller controller, String alias) {
-			manager.removeController(alias, controller);
-		}
-
+	public void addControllerAlias(Controller controller, ControllerID alias) {
+		this.addController(alias, controller);
 	}
+
+	public void removeControllerAlias(Controller controller, ControllerID alias) {
+		this.removeController(alias, controller);
+	}
+	
 }
