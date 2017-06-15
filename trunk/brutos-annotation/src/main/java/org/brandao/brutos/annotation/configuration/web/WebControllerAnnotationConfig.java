@@ -52,26 +52,30 @@ public class WebControllerAnnotationConfig
 		ResponseStatus responseStatus       = source.getAnnotation(ResponseStatus.class);
 		boolean resolved                    = viewAnnotation == null ? false : viewAnnotation.resolved();
 		boolean rendered                    = viewAnnotation == null ? true : viewAnnotation.rendered();
-
+		
 		String[] controllerIDs = 
 				annotationController == null || annotationController.value().length == 0? 
+						null : 
+						annotationController.value();
+		
+		String[] requestMethodTypes = 
+				requestMethod == null || requestMethod.value().length == 0? 
+						null : 
+						requestMethod.value();
+		
+		String controllerID = 
+				controllerIDs == null?
 					null : 
-						new String[annotationController.value().length];
+					StringUtil.adjust(controllerIDs[0]);
+
+		RequestMethodType requestMethodType = 
+				requestMethodTypes == null? 
+					null : 
+					RequestMethodType.valueOf(StringUtil.adjust(requestMethodTypes[0]));
 		
 		if(controllerIDs != null){
 			for(int i=0;i<controllerIDs.length;i++){
 				controllerIDs[i] = StringUtil.adjust(annotationController.value()[i]);
-			}
-		}
-		
-		RequestMethodType[] requestMethodType = 
-				requestMethod == null? 
-					null : 
-					new RequestMethodType[requestMethod.value().length];
-		
-		if(requestMethodType != null){
-			for(int i=0;i<requestMethodType.length;i++){
-				requestMethodType[i] = RequestMethodType.valueOf(StringUtil.adjust(requestMethod.value()[i]));
 			}
 		}
 		
@@ -89,8 +93,8 @@ public class WebControllerAnnotationConfig
 		WebControllerBuilder builder = 
 			(WebControllerBuilder)webComponentRegistry
 				.registerController(
-						controllerIDs == null? null : controllerIDs[0], 
-						requestMethodType == null? null : requestMethodType[0],
+						controllerID, 
+						requestMethodType,
 						rendered ? getView((View) source.getAnnotation(View.class), webComponentRegistry) : null, 
 						rendered ? resolved : true,	
 						dispatcher, 
@@ -120,6 +124,8 @@ public class WebControllerAnnotationConfig
 		if(controllerIDs != null){
 			for (int i = 1; i < controllerIDs.length; i++) {
 				
+				controllerIDs[i] = StringUtil.adjust(controllerIDs[i]);
+				
 				if(requestMethodType == null){
 					if (!StringUtil.isEmpty(controllerIDs[i]))
 						this.addAlias(builder, StringUtil.adjust(controllerIDs[i]));
@@ -128,12 +134,17 @@ public class WebControllerAnnotationConfig
 								+ source.getName());
 				}
 				else{
-					for(RequestMethodType rmt: requestMethodType){
+					for(int k = 1; k < requestMethodTypes.length; k++){
+						
 						if (StringUtil.isEmpty(controllerIDs[i])){
 							throw new BrutosException("invalid controller id: "
 									+ source.getName());
 						}
 
+						RequestMethodType rmt = 
+								RequestMethodType.valueOf(
+										StringUtil.adjust(requestMethodTypes[k]));
+						
 						if (rmt == null){
 							throw new BrutosException("invalid request method type: "
 									+ source.getName());

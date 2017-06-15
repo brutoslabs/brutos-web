@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.brandao.brutos.*;
-import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
@@ -87,14 +86,15 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 						+ method.getName());
 		}
 
-		ActionBuilder actionBuilder = this.addAction(method, controllerBuilder, 
-				id, result, resultRendered, view, resolved, dispatcher, executor);
-
+		ActionBuilder actionBuilder = 
+				controllerBuilder.addAction(id, result,
+						resultRendered, view, resolved, dispatcher, executor);
+				
 		if (action != null && action.value().length > 1) {
 			String[] ids = action.value();
 			for (int i = 1; i < ids.length; i++) {
 				if (!StringUtil.isEmpty(ids[i]))
-					this.addAlias(method, actionBuilder, StringUtil.adjust(ids[i]));
+					actionBuilder.addAlias(id);
 				else {
 					throw new BrutosException("invalid action id: "
 							+ method.getControllerClass().getName() + "."
@@ -122,36 +122,6 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 		
 	}
 	
-	protected ActionBuilder addAction(ActionEntry actionEntry, 
-			ControllerBuilder controllerBuilder, String id, String result,
-			boolean resultRendered, String view, boolean resolved,
-			DispatcherType dispatcher, String executor){
-		return controllerBuilder.addAction(id, result,
-				resultRendered, view, resolved, dispatcher, executor);
-	}
-
-	protected ActionBuilder addAlias(ActionEntry actionEntry, 
-			ActionBuilder actionBuilder, String id){
-		return actionBuilder.addAlias(id);
-	}
-	
-	/*
-	protected org.brandao.brutos.DispatcherType getDispatcherType(
-			ActionEntry actionEntry, View viewAnnotation) {
-
-		if (actionEntry.isAbstractAction()) {
-			return org.brandao.brutos.DispatcherType.valueOf(actionEntry
-					.getDispatcher());
-		} else if (viewAnnotation != null
-				&& !StringUtil.isEmpty(viewAnnotation.dispatcher())) {
-			return org.brandao.brutos.DispatcherType.valueOf(viewAnnotation
-					.dispatcher());
-		} else
-			return BrutosConstants.DEFAULT_DISPATCHERTYPE;
-
-	}
-    */
-	
 	protected String getView(ActionEntry actionEntry, View viewAnnotation,
 			ComponentRegistry componentRegistry) {
 		String view = viewAnnotation == null
@@ -168,7 +138,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 				action.getControllerBuilder(), action, null, view);
 	}
 
-	private void addParameters(ActionBuilder builder, ActionEntry method,
+	protected void addParameters(ActionBuilder builder, ActionEntry method,
 			ComponentRegistry componentRegistry) {
 
 		Type[] genericTypes = method.getGenericParameterTypes();

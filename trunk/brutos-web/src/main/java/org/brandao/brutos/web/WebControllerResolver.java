@@ -21,10 +21,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import org.brandao.brutos.*;
 import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.ControllerID;
 import org.brandao.brutos.scope.Scope;
 
 /**
@@ -64,16 +66,16 @@ public class WebControllerResolver implements ControllerResolver{
         while(controllers.hasNext()){
             Controller controller = controllers.next();
             ActionType actionType = controller.getActionType();
-            String controllerId = controller.getId();
+            String controllerId = controller.getId().getName();
             
             if(this.matches(uri, paramScope, controllerId, actionType, controller, handler))
             	return controller;
             
-            List<String> alias = controller.getAlias();
+            List<ControllerID> alias = controller.getAlias();
             
             if(!alias.isEmpty()){
-            	for(String aliasURI: alias){
-	                if(this.matches(uri, paramScope, aliasURI, actionType, controller, handler))
+            	for(ControllerID aliasURI: alias){
+	                if(this.matches(uri, paramScope, aliasURI.getName(), actionType, controller, handler))
 	                	return controller;
             	}
             	
