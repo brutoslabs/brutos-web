@@ -41,13 +41,13 @@ public class WebActionAnnotationConfig
 	protected Object innerApplyConfiguration(Object source, Object builder,
 			ComponentRegistry componentRegistry) {
 
-		ActionEntry method                  = (ActionEntry) source;
-		ControllerBuilder controllerBuilder = (ControllerBuilder) builder;
-		Action action                       = (Action) method.getAnnotation(Action.class);
-		View viewAnnotation                 = method.getAnnotation(View.class);
-		ResultView resultView               = method.getAnnotation(ResultView.class);
-		AcceptRequestType acceptRequestType = method.getAnnotation(AcceptRequestType.class);
-		ResponseType responseType           = method.getAnnotation(ResponseType.class);
+		ActionEntry method                     = (ActionEntry) source;
+		WebControllerBuilder controllerBuilder = (WebControllerBuilder) builder;
+		Action action                          = (Action) method.getAnnotation(Action.class);
+		View viewAnnotation                    = method.getAnnotation(View.class);
+		ResultView resultView                  = method.getAnnotation(ResultView.class);
+		AcceptRequestType acceptRequestType    = method.getAnnotation(AcceptRequestType.class);
+		ResponseType responseType              = method.getAnnotation(ResponseType.class);
 
 		RequestMethod requestMethod = 
 				method.isAnnotationPresent(RequestMethod.class)?
@@ -112,8 +112,8 @@ public class WebActionAnnotationConfig
 		}
 
 		WebActionBuilder actionBuilder = 
-				(WebActionBuilder) controllerBuilder.addAction(actionID, result,
-				resultRendered, view, resolved, dispatcher, executor);
+				(WebActionBuilder) controllerBuilder.addAction(actionID, requestMethodType, 
+					result, resultRendered, view, dispatcher, resolved, executor);
 
 		if(acceptRequestType != null){
 			String[] values = acceptRequestType.value();
