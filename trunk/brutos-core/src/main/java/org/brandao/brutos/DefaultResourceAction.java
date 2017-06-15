@@ -43,7 +43,7 @@ public class DefaultResourceAction implements ResourceAction {
 			throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException {
 
-		return action.invoke(source, args);
+		return action == null? null : action.invoke(source, args);
 	}
 
 	public Controller getController(){

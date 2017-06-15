@@ -19,7 +19,9 @@ package org.brandao.brutos.web.util;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.mapping.StringUtil;
@@ -30,7 +32,11 @@ import org.brandao.brutos.web.StringPattern;
  * @author Brandao
  */
 public class WebUtil {
-    
+
+	public static final char REQUEST_SEPARATOR = '/';
+
+	public static final String INDEX_REQUEST = "";
+	
     public static String fixURI(String uri){
         
         if(StringUtil.isEmpty(uri))
@@ -68,6 +74,56 @@ public class WebUtil {
 
     public static Enumeration<String> toEnumeration(String value){
     	return new EnumarationString(value);
+    }
+    
+    public static List<String> parserURI(String value, boolean hasVars){
+    	
+    	List<String> result = new ArrayList<String>();
+    	char[] chars = value.toCharArray();
+
+    	for(int i=0;i<chars.length;i++){
+    		char c = chars[i];
+    				
+    		if(c == '/'){
+    			int start = i + 1;
+    			int end   = -1;
+    			int region = 0;
+    			
+    			if(hasVars){
+	    			for(i = i+1;i<value.length();i++){
+	    				c = chars[i];
+	    				if(c == '{'){region++;}
+	    				if(c == '}'){region--;}
+	    	    		if(c == '/' && region == 0){end = i;i -= 1;break;}
+	    			}
+    			}
+    			else{
+    				while(++i < value.length() && chars[i] != '/');
+    				end = i;
+    				
+    				if(i < value.length() && chars[i] == REQUEST_SEPARATOR){
+    					i--;
+    				}
+    				
+    			}
+    			
+    			if(end == -1){
+    				end = value.length();
+    			}
+    			
+    			if(end > start){
+    				result.add(value.substring(start, end));
+    			}
+    		}
+    		
+    	}
+    	
+    	if(chars.length > 0 && chars[chars.length - 1] == REQUEST_SEPARATOR){
+    		result.add(INDEX_REQUEST);
+    	}
+    	
+    	return result;
+    	
     }
     
 	private static class EnumarationString implements Enumeration<String>{

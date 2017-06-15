@@ -92,20 +92,24 @@ public class WebActionAnnotationConfig
 			}
 		}
 		
-		actionBuilder.setResponseStatus(responseStatus);
+		if(responseStatus > 0){
+			actionBuilder.setResponseStatus(responseStatus);
+		}
 		
 		String[] actionAlias = actionConfig.getAliasName();
 		RequestMethodType[] requestMethodTypeAlias = actionConfig.getRequestMethodTypeAlias();
 		
-		for(String actionName: actionAlias){
-			
-			if(requestMethodTypeAlias.length == 0){
-				actionBuilder.addAlias(actionName);
-			}
-			else{
-				for(RequestMethodType requestMethod: requestMethodTypeAlias){
-					return actionBuilder.addAlias(StringUtil.adjust(actionName), requestMethod);
-					
+		if(actionAlias != null){
+			for(String actionName: actionAlias){
+				
+				if(requestMethodTypeAlias == null){
+					actionBuilder.addAlias(actionName);
+				}
+				else{
+					for(RequestMethodType requestMethod: requestMethodTypeAlias){
+						return actionBuilder.addAlias(StringUtil.adjust(actionName), requestMethod);
+						
+					}
 				}
 			}
 		}
