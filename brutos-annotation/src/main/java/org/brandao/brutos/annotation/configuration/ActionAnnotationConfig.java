@@ -22,8 +22,21 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.brandao.brutos.*;
-import org.brandao.brutos.annotation.*;
+import org.brandao.brutos.ActionBuilder;
+import org.brandao.brutos.BrutosException;
+import org.brandao.brutos.ComponentRegistry;
+import org.brandao.brutos.ControllerBuilder;
+import org.brandao.brutos.DataType;
+import org.brandao.brutos.DispatcherType;
+import org.brandao.brutos.ParametersBuilder;
+import org.brandao.brutos.annotation.Action;
+import org.brandao.brutos.annotation.Controller;
+import org.brandao.brutos.annotation.DefaultThrowSafe;
+import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.annotation.ThrowSafe;
+import org.brandao.brutos.annotation.ThrowSafeList;
+import org.brandao.brutos.annotation.Transient;
+import org.brandao.brutos.annotation.View;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 
@@ -49,65 +62,57 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 	protected Object innerApplyConfiguration(Object source, Object builder,
 			ComponentRegistry componentRegistry) {
 
-		ActionEntry method                  = (ActionEntry) source;
-		ControllerBuilder controllerBuilder = (ControllerBuilder) builder;
-		
-		Action action         = (Action) method.getAnnotation(Action.class);
-		View viewAnnotation   = method.getAnnotation(View.class);
-		ResultView resultView = method.getAnnotation(ResultView.class);
+		//vars
+		ActionEntry actionEntry                = (ActionEntry) source;
+		ActionConfig actionConfig              = new ActionConfig(actionEntry);
+		ControllerBuilder controllerBuilder    = (ControllerBuilder)builder;
+		String actionID                        = actionConfig.getActionId();
+		String result                          = actionConfig.getResultActionName();
+		String view                            = actionConfig.getActionView();
+		boolean resultRendered                 = actionConfig.isResultRenderable();
+		boolean rendered                       = actionConfig.isRenderable();
+		boolean resolved                       = actionConfig.isResolvedView();
+		String executor                        = actionConfig.getActionExecutor();
+		DataType[] requestTypes                = actionConfig.getRequestTypes();
+		DataType[] responseTypes               = actionConfig.getResponseTypes();
+		DispatcherType dispatcher              = actionConfig.getDispatcherType();
 
-		
-		String id               = action == null? null : action.value()[0];
-		Result resultAnnotation = method.getAnnotation(Result.class);
-		String result           = resultAnnotation == null ? null : resultAnnotation.value();
-
-		org.brandao.brutos.DispatcherType dispatcher = 
-				viewAnnotation == null? 
-					null : 
-					org.brandao.brutos.DispatcherType.valueOf(StringUtil.adjust(viewAnnotation.dispatcher()));
-
-		boolean resultRendered = resultView == null ? false : resultView.rendered();
-		boolean rendered = viewAnnotation == null ? true : viewAnnotation.rendered();
-		boolean resolved = viewAnnotation == null ? false : viewAnnotation.resolved();
-		resolved = rendered ? resolved : true;
-
-		String executor = method.isAbstractAction() ? null : method.getName();
-		String view = getView(method, viewAnnotation, componentRegistry);
-
+		//validtion
 		if (!StringUtil.isEmpty(view) && StringUtil.isEmpty(executor)
 				&& !rendered){
 			throw new MappingException(
-					"view must be rendered in abstract actions: " + id);
+					"view must be rendered in abstract actions: " + actionID);
 		}
 
-		if (method.getReturnType() == void.class) {
-			if (resultAnnotation != null || resultView != null)
-				throw new MappingException("the action not return any value: "
-						+ method.getName());
-		}
-
+		//registry
 		ActionBuilder actionBuilder = 
-				controllerBuilder.addAction(id, result,
-						resultRendered, view, resolved, dispatcher, executor);
-				
-		if (action != null && action.value().length > 1) {
-			String[] ids = action.value();
-			for (int i = 1; i < ids.length; i++) {
-				if (!StringUtil.isEmpty(ids[i]))
-					actionBuilder.addAlias(id);
-				else {
-					throw new BrutosException("invalid action id: "
-							+ method.getControllerClass().getName() + "."
-							+ method.getName());
-				}
+				controllerBuilder.addAction(
+						actionID, 
+					result, resultRendered, view, dispatcher, resolved, executor);
+
+		if(requestTypes != null){
+			for(DataType type: requestTypes){
+				actionBuilder.addRequestType(type);
 			}
 		}
 
-		throwsSafe(actionBuilder, method, componentRegistry);
+		if(responseTypes != null){
+			for(DataType type: responseTypes){
+				actionBuilder.addResponseType(type);
+			}
+		}
+		
+		String[] actionAlias = actionConfig.getAliasName();
+		
+		for(String actionName: actionAlias){
+			actionBuilder.addAlias(actionName);
+		}
 
-		addParameters(actionBuilder, method, componentRegistry);
+		throwsSafe(actionBuilder, actionEntry, componentRegistry);
 
-		addResultAction(actionBuilder, method.getResultAction(), componentRegistry);
+		addParameters(actionBuilder, actionEntry, componentRegistry);
+
+		addResultAction(actionBuilder, actionEntry.getResultAction(), componentRegistry);
 		
 		return actionBuilder;
 	}
