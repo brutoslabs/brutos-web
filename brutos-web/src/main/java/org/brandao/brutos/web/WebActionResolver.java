@@ -36,6 +36,7 @@ import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.ControllerID;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
 import org.brandao.brutos.web.mapping.WebController;
@@ -94,8 +95,8 @@ public class WebActionResolver extends AbstractActionResolver{
 		return action == null? null : new DefaultResourceAction(controller, action);
 	}
 	
-    public void registry(String controllerID, Controller controller, 
-    		String actionID, Action action) throws ActionResolverException{
+    public void registry(ControllerID controllerID, Controller controller, 
+    		ActionID actionID, Action action) throws ActionResolverException{
     	
     	try{
 	    	List<ActionID> list = 
@@ -103,6 +104,7 @@ public class WebActionResolver extends AbstractActionResolver{
 				.getIDs(controllerID, controller, actionID, action);
 	
 	    	for(ActionID aID: list){
+	    		System.out.println(aID.toString());
 	    		WebActionID aWID = (WebActionID)aID;
 		    	String[] parts   = this.parser(aWID.getId()).toArray(new String[0]);
 		    	this.addNode(this.root, aWID.getRequestMethodType(),
@@ -127,8 +129,8 @@ public class WebActionResolver extends AbstractActionResolver{
     	}
     }
     
-    public void remove(String controllerID, Controller controller, 
-    		String actionID, Action action) throws ActionResolverException{
+    public void remove(ControllerID controllerID, Controller controller, 
+    		ActionID actionID, Action action) throws ActionResolverException{
     	
     	try{
 	    	List<ActionID> list = 
@@ -384,6 +386,14 @@ public class WebActionResolver extends AbstractActionResolver{
     					new HashMap<RequestMethodType, RequestMappingEntry>();
     		}
     		
+    		if(this.requestMethodTypes.containsKey(requestMethodType)){
+    			throw new ActionResolverException(
+    					"action has been added: controller[" +
+    					(value.getController() == null? "" : value.getController().getId()) +
+						"] action[" +
+    					(value.getAction() == null? "" : value.getAction().getId()) + "]");
+    		}
+    		
     		this.requestMethodTypes.put(requestMethodType, value);
     	}
 
@@ -391,6 +401,10 @@ public class WebActionResolver extends AbstractActionResolver{
     		
     		if(requestMethodTypes == null){
     			return;
+    		}
+    		
+    		if(!this.requestMethodTypes.containsKey(value)){
+    			throw new ActionResolverException("action not found");
     		}
     		
     		this.requestMethodTypes.remove(value);

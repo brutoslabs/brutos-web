@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.brandao.brutos.ActionBuilder;
+import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ComponentRegistry;
 import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DispatcherType;
@@ -11,7 +12,10 @@ import org.brandao.brutos.annotation.AcceptRequestType;
 import org.brandao.brutos.annotation.Action;
 import org.brandao.brutos.annotation.Controller;
 import org.brandao.brutos.annotation.ResponseType;
+import org.brandao.brutos.annotation.Result;
+import org.brandao.brutos.annotation.ResultView;
 import org.brandao.brutos.annotation.Stereotype;
+import org.brandao.brutos.annotation.View;
 import org.brandao.brutos.annotation.configuration.ActionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.ActionEntry;
 import org.brandao.brutos.annotation.configuration.ThrowableEntry;
@@ -19,6 +23,7 @@ import org.brandao.brutos.annotation.web.RequestMethod;
 import org.brandao.brutos.annotation.web.ResponseError;
 import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.annotation.web.ResponseStatus;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.MediaType;
 import org.brandao.brutos.web.RequestMethodType;
@@ -32,58 +37,143 @@ import org.brandao.brutos.web.WebControllerBuilder;
 )
 public class WebActionAnnotationConfig 
 	extends ActionAnnotationConfig{
+	
+	protected Object innerApplyConfiguration(Object source, Object builder,
+			ComponentRegistry componentRegistry) {
 
-	protected ActionBuilder addAction(ActionEntry actionEntry,
-			ControllerBuilder controllerBuilder, String id, String result,
-			boolean resultRendered, String view, boolean resolved,
-			DispatcherType dispatcher, String executor){
-		
-		AcceptRequestType acceptRequestType = actionEntry.getAnnotation(AcceptRequestType.class);
-		ResponseType responseType = actionEntry.getAnnotation(ResponseType.class);
-		
-		
+		ActionEntry method                  = (ActionEntry) source;
+		ControllerBuilder controllerBuilder = (ControllerBuilder) builder;
+		Action action                       = (Action) method.getAnnotation(Action.class);
+		View viewAnnotation                 = method.getAnnotation(View.class);
+		ResultView resultView               = method.getAnnotation(ResultView.class);
+		AcceptRequestType acceptRequestType = method.getAnnotation(AcceptRequestType.class);
+		ResponseType responseType           = method.getAnnotation(ResponseType.class);
+
 		RequestMethod requestMethod = 
-			actionEntry.isAnnotationPresent(RequestMethod.class)?
-				actionEntry.getAnnotation(RequestMethod.class) :
-				actionEntry.getControllerClass().getAnnotation(RequestMethod.class);
+				method.isAnnotationPresent(RequestMethod.class)?
+					method.getAnnotation(RequestMethod.class) :
+					method.getControllerClass().getAnnotation(RequestMethod.class);
+					
+		String[] actionIDs = 
+				action == null? null : action.value();
+					
+		String[] requestMethodTypes = 
+				requestMethod == null || requestMethod.value().length == 0? 
+						null : 
+						requestMethod.value();
+
+		if(actionIDs != null){
+			for(int i=0;i<actionIDs.length;i++){
+				actionIDs[i] = StringUtil.adjust(action.value()[i]);
+			}
+		}
 		
+		String actionID = 
+				actionIDs == null?
+					null : 
+					StringUtil.adjust(actionIDs[0]);
+
 		RequestMethodType requestMethodType = 
-				requestMethod == null || requestMethod.value().length == 0?
-					null :
-					RequestMethodType.valueOf(StringUtil.adjust(requestMethod.value()[0]));
+				requestMethodTypes == null? 
+					null : 
+					RequestMethodType.valueOf(StringUtil.adjust(requestMethodTypes[0]));
 		
-		WebControllerBuilder webControllerBuilder = 
-				(WebControllerBuilder)controllerBuilder;
-		
-		WebActionBuilder builder = 
-			(WebActionBuilder)webControllerBuilder.addAction(id, 
-				requestMethodType, result, resultRendered, view, 
-				dispatcher, resolved, executor);
+		Result resultAnnotation = method.getAnnotation(Result.class);
+		String result           = resultAnnotation == null ? null : resultAnnotation.value();
+
+		org.brandao.brutos.DispatcherType dispatcher = 
+				viewAnnotation == null? 
+					null : 
+					org.brandao.brutos.DispatcherType.valueOf(StringUtil.adjust(viewAnnotation.dispatcher()));
 
 		ResponseStatus responseStatus = 
-				actionEntry.isAnnotationPresent(ResponseStatus.class)?
-					actionEntry.getAnnotation(ResponseStatus.class) :
-					actionEntry.getControllerClass().getAnnotation(ResponseStatus.class);
+				method.isAnnotationPresent(ResponseStatus.class)?
+					method.getAnnotation(ResponseStatus.class) :
+					method.getControllerClass().getAnnotation(ResponseStatus.class);
+		
+		boolean resultRendered = resultView == null ? false : resultView.rendered();
+		boolean rendered = viewAnnotation == null ? true : viewAnnotation.rendered();
+		boolean resolved = viewAnnotation == null ? false : viewAnnotation.resolved();
+		resolved = rendered ? resolved : true;
+
+		String executor = method.isAbstractAction() ? null : method.getName();
+		String view = getView(method, viewAnnotation, componentRegistry);
+
+		if (!StringUtil.isEmpty(view) && StringUtil.isEmpty(executor)
+				&& !rendered){
+			throw new MappingException(
+					"view must be rendered in abstract actions: " + actionID);
+		}
+
+		if (method.getReturnType() == void.class) {
+			if (resultAnnotation != null || resultView != null)
+				throw new MappingException("the action not return any value: "
+						+ method.getName());
+		}
+
+		WebActionBuilder actionBuilder = 
+				(WebActionBuilder) controllerBuilder.addAction(actionID, result,
+				resultRendered, view, resolved, dispatcher, executor);
 
 		if(acceptRequestType != null){
 			String[] values = acceptRequestType.value();
 			for(String v: values){
-				builder.addRequestType(MediaType.valueOf(v));
+				actionBuilder.addRequestType(MediaType.valueOf(v));
 			}
 		}
 	
 		if(responseType != null){
 			String[] values = responseType.value();
 			for(String v: values){
-				builder.addResponseType(MediaType.valueOf(v));
+				actionBuilder.addResponseType(MediaType.valueOf(v));
 			}
 		}
 					
 		if(responseStatus != null){
-			builder.setResponseStatus(responseStatus.value());
+			actionBuilder.setResponseStatus(responseStatus.value());
 		}
 		
-		return builder;
+		if(actionIDs != null){
+			for (int i = 1; i < actionIDs.length; i++) {
+				
+				actionIDs[i] = StringUtil.adjust(actionIDs[i]);
+				
+				if(requestMethodType == null){
+					actionBuilder.addAlias(StringUtil.adjust(actionIDs[i]));
+				}
+				else{
+					for(int k = 1; k < requestMethodTypes.length; k++){
+						
+						if (StringUtil.isEmpty(actionIDs[i])){
+							throw new BrutosException("invalid action id: "
+									+ method.getControllerClass().getName() + "."
+									+ method.getName());
+						}
+
+						RequestMethodType rmt = 
+								RequestMethodType.valueOf(
+										StringUtil.adjust(requestMethodTypes[k]));
+						
+						if (rmt == null){
+							throw new BrutosException("invalid request method type: "
+									+ method.getControllerClass().getName() + "."
+									+ method.getName());
+						}
+						
+						return actionBuilder.addAlias(StringUtil.adjust(actionIDs[i]), rmt);
+						
+					}
+				}
+			}
+		}
+		
+		throwsSafe(actionBuilder, method, componentRegistry);
+
+		addParameters(actionBuilder, method, componentRegistry);
+
+		addResultAction(actionBuilder, method.getResultAction(), componentRegistry);
+		
+		return actionBuilder;
 	}
 	
 	@SuppressWarnings("unchecked")
