@@ -10,6 +10,7 @@ import org.brandao.brutos.MvcRequest;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.StackRequestElement;
+import org.brandao.brutos.mapping.Action;
 
 public class InterceptorHandlerImp 
 	implements ConfigurableInterceptorHandler {
@@ -55,8 +56,8 @@ public class InterceptorHandlerImp
 		if (params == null) {
 			StackRequestElement stackRequestElement = request.getStackRequestElement();
 			if (stackRequestElement.getParameters() == null) {
-				this.params = request.getResourceAction().getMethodForm()
-						.getParameterValues(request.getResource());
+				Action action = request.getResourceAction().getMethodForm();
+				this.params = action == null? null : action.getParameterValues(request.getResource());
 			}
 			else{
 				this.params = request.getResourceAction().getMethodForm()
