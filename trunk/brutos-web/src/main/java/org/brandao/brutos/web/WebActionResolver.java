@@ -221,6 +221,7 @@ public class WebActionResolver extends AbstractActionResolver{
     }
     
     private List<String> parser(String value){
+    	
     	List<String> result = new ArrayList<String>();
     	
     	for(int i=0;i<value.length();i++){
@@ -260,6 +261,11 @@ public class WebActionResolver extends AbstractActionResolver{
     		}
     		
     	}
+    	
+    	//index 
+    	//if(value.endsWith("/")){
+    	//	result.add("");
+    	//}
     	
     	return result;
     	
@@ -386,6 +392,7 @@ public class WebActionResolver extends AbstractActionResolver{
     					new HashMap<RequestMethodType, RequestMappingEntry>();
     		}
     		
+    		/*
     		if(this.requestMethodTypes.containsKey(requestMethodType)){
     			throw new ActionResolverException(
     					"action has been added: controller[" +
@@ -393,6 +400,7 @@ public class WebActionResolver extends AbstractActionResolver{
 						"] action[" +
     					(value.getAction() == null? "" : value.getAction().getId()) + "]");
     		}
+    		*/
     		
     		this.requestMethodTypes.put(requestMethodType, value);
     	}
@@ -402,10 +410,11 @@ public class WebActionResolver extends AbstractActionResolver{
     		if(requestMethodTypes == null){
     			return;
     		}
-    		
+    		/*
     		if(!this.requestMethodTypes.containsKey(value)){
     			throw new ActionResolverException("action not found");
     		}
+    		*/
     		
     		this.requestMethodTypes.remove(value);
     	}
