@@ -83,7 +83,7 @@ public class ActionBuilder extends RestrictionBuilder {
 
 	protected ActionBuilder addAlias(ActionID id) {
 
-		if (controller.getAction(id) != null)
+		if (controller.getActionById(id) != null)
 			throw new MappingException("duplicate action: " + id);
 
 		action.getAlias().add(id);
@@ -101,7 +101,7 @@ public class ActionBuilder extends RestrictionBuilder {
 		
 		ActionID actionId = new ActionID(id);
 		
-		if (controller.getAction(actionId) != null)
+		if (controller.getActionById(actionId) != null)
 			throw new MappingException("duplicate action: " + id);
 		
 		return this.removeAlias(actionId);

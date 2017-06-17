@@ -43,7 +43,6 @@ public class WebController extends Controller{
 	public void addAction(ActionID id, Action method) {
 		WebControllerID wcid = (WebControllerID)method.getController().getId();
 		WebActionID wid = (WebActionID)id;
-		method.setId(wid);
 		super.getActions().put(wid, method);
 		super.getContext().getActionResolver()
 			.registry(wcid, method.getController(), wid, method);
