@@ -73,7 +73,7 @@ public class WebActionBuilder extends ActionBuilder{
 
         ActionType type = this.controller.getActionType();
         
-        if(type.isValidActionId(id)){
+        if(!type.isValidActionId(id)){
         	throw new MappingException("invalid action alias: " + id);
         }
         
@@ -81,7 +81,7 @@ public class WebActionBuilder extends ActionBuilder{
 			throw new MappingException("action id cannot be empty");
 		}
 
-		WebActionID actionId = new WebActionID(id, ((WebAction)action).getRequestMethod());
+		WebActionID actionId = new WebActionID(id, requestMethodType);
 		
 		return super.addAlias(actionId);
 	}

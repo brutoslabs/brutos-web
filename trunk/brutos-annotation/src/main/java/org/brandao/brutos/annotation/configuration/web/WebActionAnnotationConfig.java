@@ -99,6 +99,12 @@ public class WebActionAnnotationConfig
 		String[] actionAlias = actionConfig.getAliasName();
 		RequestMethodType[] requestMethodTypeAlias = actionConfig.getRequestMethodTypeAlias();
 		
+		if(requestMethodTypeAlias != null){
+			for(RequestMethodType requestMethod: requestMethodTypeAlias){
+				actionBuilder.addAlias(StringUtil.adjust(actionID), requestMethod);
+			}
+		}
+		
 		if(actionAlias != null){
 			for(String actionName: actionAlias){
 				
@@ -107,8 +113,7 @@ public class WebActionAnnotationConfig
 				}
 				else{
 					for(RequestMethodType requestMethod: requestMethodTypeAlias){
-						return actionBuilder.addAlias(StringUtil.adjust(actionName), requestMethod);
-						
+						actionBuilder.addAlias(StringUtil.adjust(actionName), requestMethod);
 					}
 				}
 			}

@@ -121,6 +121,21 @@ public class WebControllerAnnotationConfig
 			builder.setResponseStatus(responseStatus.value());
 		}
 		
+		if(builder.getId() != null && requestMethodTypes != null){
+			for(int k = 1; k < requestMethodTypes.length; k++){
+				RequestMethodType rmt = 
+						RequestMethodType.valueOf(
+								StringUtil.adjust(requestMethodTypes[k]));
+				
+				if (rmt == null){
+					throw new BrutosException("invalid request method type: "
+							+ source.getName());
+				}
+				
+				builder.addAlias(builder.getId(), rmt);
+			}
+		}
+		
 		if(controllerIDs != null){
 			for (int i = 1; i < controllerIDs.length; i++) {
 				
@@ -150,7 +165,7 @@ public class WebControllerAnnotationConfig
 									+ source.getName());
 						}
 						
-						return builder.addAlias(StringUtil.adjust(controllerIDs[i]), rmt);
+						builder.addAlias(StringUtil.adjust(controllerIDs[i]), rmt);
 						
 					}
 				}
