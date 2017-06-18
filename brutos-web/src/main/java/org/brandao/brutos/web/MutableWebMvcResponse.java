@@ -17,13 +17,13 @@
 
 package org.brandao.brutos.web;
 
-import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
-import org.brandao.brutos.MutableMvcRequest;
+import org.brandao.brutos.MutableMvcResponse;
 
-public interface MutableWebMvcRequest 
-	extends MutableMvcRequest, WebMvcRequest{
+public interface MutableWebMvcResponse 
+	extends MutableMvcResponse, WebMvcResponse{
 
-	void setServletRequest(ServletRequest value);
-	
+	void setServletresponse(ServletResponse value);
+
 }

@@ -31,7 +31,7 @@ import org.brandao.brutos.*;
  */
 public class WebMvcResponseImp
 	extends DefaultMvcResponse
-	implements WebMvcResponse {
+	implements MutableWebMvcResponse {
 
     private HttpServletResponse response;
 
@@ -50,6 +50,10 @@ public class WebMvcResponseImp
 	
 	public void setHeader(String name, Object value){
 		this.response.addHeader(name, String.valueOf(value));
+	}
+
+	public void setServletresponse(ServletResponse value) {
+		this.response = (HttpServletResponse) value;
 	}
 	
 }

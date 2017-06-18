@@ -28,10 +28,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.DataType;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.MutableMvcRequest;
+import org.brandao.brutos.RequestProvider;
 import org.brandao.brutos.RequestTypeException;
 import org.brandao.brutos.ResourceAction;
+import org.brandao.brutos.ResponseProvider;
 import org.brandao.brutos.ResponseTypeException;
 import org.brandao.brutos.StackRequestElement;
+import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.DataTypeMap;
 import org.brandao.brutos.web.mapping.MediaTypeMap;
 import org.brandao.brutos.web.scope.HeaderScope;
@@ -82,6 +85,37 @@ public class WebInvoker extends Invoker{
     	}
     }
 
+	public Object invoke(Controller controller, ResourceAction action,
+			Object resource, Object[] parameters) throws RequestTypeException{
+
+		if (controller == null)
+			throw new IllegalArgumentException("controller not found");
+
+		if (action == null)
+			throw new IllegalArgumentException("action not found");
+
+		MutableWebMvcRequest webRequest   = (MutableWebMvcRequest) RequestProvider.getRequest();
+		MutableWebMvcResponse webResponse = (MutableWebMvcResponse) ResponseProvider.getResponse();
+		
+    	webRequest   = new WebMvcRequestImp((HttpServletRequest)webRequest.getServletRequest());
+    	webResponse = new WebMvcResponseImp((HttpServletResponse)webResponse.getServletResponse(), webRequest);
+		
+    	webRequest.setResource(resource);
+    	webRequest.setResourceAction(action);
+    	webRequest.setParameters(parameters);
+		
+		StackRequestElement element = this.createStackRequestElement();
+
+		element.setAction(webRequest.getResourceAction());
+		element.setController(controller);
+		element.setRequest(webRequest);
+		element.setResponse(webResponse);
+		element.setResource(webRequest.getResource());
+		element.setObjectThrow(webRequest.getThrowable());
+		this.invoke(element);
+		return webResponse.getResult();
+	}
+    
     public boolean invoke(StackRequestElement element){
     	
     	WebMvcRequest request            = (WebMvcRequest) element.getRequest();

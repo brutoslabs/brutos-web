@@ -34,17 +34,18 @@ public class FlowController {
 		return dispatcher(DispatcherType.FORWARD);
 	}
 
-	public static Object getController(Class clazz) {
+	public static <T> T getController(Class<T> clazz) {
 		return getControllerInstance(clazz);
 	}
 
-	public static Object execute(Class clazz, String actionName) {
+	public static Object execute(Class<?> clazz, String actionName) {
 		return Invoker.getInstance().invoke(clazz, actionName);
 	}
 
-	private static Object getControllerInstance(Class controllerClass) {
+	@SuppressWarnings("unchecked")
+	private static <T> T getControllerInstance(Class<T> controllerClass) {
 		ApplicationContext context = Invoker.getCurrentApplicationContext();
-		return context.getController(controllerClass);
+		return (T)context.getController(controllerClass);
 	}
-
+	
 }
