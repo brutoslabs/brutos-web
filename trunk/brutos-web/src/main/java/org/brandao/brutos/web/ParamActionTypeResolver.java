@@ -2,7 +2,6 @@ package org.brandao.brutos.web;
 
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.ResourceAction;
-import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
@@ -18,14 +17,20 @@ public class ParamActionTypeResolver
     	WebMvcRequest webRequest            = (WebMvcRequest)request;
     	RequestMethodType requestMethodType = webRequest.getRequestMethodType();
     	WebActionID id                      = new WebActionID(actionId, requestMethodType);
-        Action method                       = controller.getAction(id);
+        WebAction method                    = (WebAction) controller.getAction(id);
         
         if(method != null){
-        	return new WebResourceAction((WebController)method.getController(), (WebAction)method);
+        	return new WebResourceAction(
+        			((WebController)method.getController()).getRequestMethod(),
+        			(WebController)method.getController(), (WebAction)method);
         }
         else
         if(controller.getDefaultAction() != null){
-    		return new WebResourceAction((WebController)controller, (WebAction)controller.getAction(controller.getDefaultAction()));
+        	method = (WebAction)controller.getAction(controller.getDefaultAction());
+    		return new WebResourceAction(
+    				method.getRequestMethod(),
+    				(WebController)controller, 
+    				(WebAction)controller.getAction(controller.getDefaultAction()));
         }
         else{
         	return null;

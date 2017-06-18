@@ -76,7 +76,10 @@ public class WebActionResolver extends AbstractActionResolver{
 					return resolver.getResourceAction(entry.getController(), request);
 				}
 				else
-					return new WebResourceAction( (WebController)entry.getController(), (WebAction)entry.getAction() );
+					return new WebResourceAction(
+							entry.getRequestMethodType(),
+							(WebController)entry.getController(), 
+							(WebAction)entry.getAction() );
 			}
 			
 			return null;
@@ -113,8 +116,10 @@ public class WebActionResolver extends AbstractActionResolver{
 		    	boolean added =
 		    			this.addNode(
 	    					this.root, 
-	    					aWID.getRequestMethodType(),
-	    					new RequestMappingEntry(controller, action), parts, 0);
+	    					new RequestMappingEntry(
+	    							aWID.getRequestMethodType(), 
+	    							controller, action),
+							parts, 0);
 		    	
 		    	if(!added){
 		    		throw new ActionResolverException("action has been added: " + aWID);
@@ -155,8 +160,13 @@ public class WebActionResolver extends AbstractActionResolver{
 	    		WebActionID aWID = (WebActionID)aID;
 		    	String[] parts   = WebUtil.parserURI(aWID.getId(), true).toArray(new String[0]);
 		    	boolean removed =
-	    			this.removeNode(this.root, aWID.getRequestMethodType(), 
-		    			new RequestMappingEntry(controller, action), parts, 0);
+	    			this.removeNode(
+	    					this.root, 
+	    					new RequestMappingEntry(
+	    							aWID.getRequestMethodType(), 
+	    							controller, 
+	    							action),
+							parts, 0);
 		    	
 		    	if(!removed){
 		    		throw new ActionResolverException("action not found: " + aWID);
@@ -169,22 +179,22 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     }
     
-    private boolean addNode(RequestMappingNode node, RequestMethodType methodType,
+    private boolean addNode(RequestMappingNode node,
     		RequestMappingEntry value, String[] parts, int index) throws MalformedURLException{
     	
     	if(index == 0 && parts.length == 0){
-    		return node.putRequestEntry(methodType, value);
+    		return node.putRequestEntry(value.getRequestMethodType(), value);
     	}
     	else
     	if(index == parts.length){
-    		return node.putRequestEntry(methodType, value);
+    		return node.putRequestEntry(value.getRequestMethodType(), value);
     	}
     	else{
     		RequestMappingNode next = node.getNext(parts[index]);
     		if(next == null){
     			next = node.add(parts[index], null);
     		}
-    		return this.addNode(next, methodType, value, parts, index + 1);
+    		return this.addNode(next, value, parts, index + 1);
     	}
     	
     }
@@ -217,15 +227,15 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     }
     
-    private boolean removeNode(RequestMappingNode node, RequestMethodType methodType, 
+    private boolean removeNode(RequestMappingNode node, 
     		RequestMappingEntry value, String[] parts, int index){
     	
     	if(index == 0 && parts.length == 0){
-    		return node.removeRequestEntry(methodType);
+    		return node.removeRequestEntry(value.getRequestMethodType());
     	}
     	else
     	if(index == parts.length){
-    		return node.removeRequestEntry(methodType);
+    		return node.removeRequestEntry(value.getRequestMethodType());
     	}
     	else{
     		RequestMappingNode next = node.getNext(parts[index]);
@@ -234,7 +244,7 @@ public class WebActionResolver extends AbstractActionResolver{
     		}
     		
 			boolean removed = 
-				this.removeNode(next, methodType, value, parts, index + 1);
+				this.removeNode(next, value, parts, index + 1);
 			
 			if(next.isEmpty()){
 				node.remove(parts[index]);

@@ -6,18 +6,23 @@ import org.brandao.brutos.web.mapping.WebController;
 
 public class WebResourceAction extends DefaultResourceAction{
 
+	protected RequestMethodType requestMethod;
+	
 	protected WebAction action;
 
 	protected WebController controller;
 	
-	public WebResourceAction(WebController controller, WebAction action) {
+	public WebResourceAction(RequestMethodType requestMethod, 
+			WebController controller, WebAction action) {
 		super(controller, action);
 		this.controller = controller;
 		this.action = action;
+		this.requestMethod = requestMethod;
 	}
 
 	public RequestMethodType getRequestMethod(){
-		return this.action == null? this.controller.getRequestMethod() : action.getRequestMethod();
+		return this.requestMethod;
+		//return this.action == null? this.controller.getRequestMethod() : action.getRequestMethod();
 	}
 	
 }
