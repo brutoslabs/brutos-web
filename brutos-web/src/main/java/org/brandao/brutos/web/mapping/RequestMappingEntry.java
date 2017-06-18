@@ -19,16 +19,21 @@ package org.brandao.brutos.web.mapping;
 
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.web.RequestMethodType;
 
 public class RequestMappingEntry{
+	
+	private RequestMethodType requestMethodType;
 	
 	private Controller controller;
 	
 	private Action action;
 	
-	public RequestMappingEntry(Controller controller, Action action) {
+	public RequestMappingEntry(RequestMethodType requestMethodType, 
+			Controller controller, Action action) {
 		this.controller = controller;
 		this.action = action;
+		this.requestMethodType = requestMethodType;
 	}
 
 	public Controller getController() {
@@ -37,6 +42,10 @@ public class RequestMappingEntry{
 
 	public Action getAction() {
 		return action;
+	}
+
+	public RequestMethodType getRequestMethodType() {
+		return requestMethodType;
 	}
 
 }

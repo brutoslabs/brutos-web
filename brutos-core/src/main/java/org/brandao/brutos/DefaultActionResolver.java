@@ -18,7 +18,9 @@
 package org.brandao.brutos;
 
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
+import org.brandao.brutos.mapping.ControllerID;
 
 
 /**
@@ -51,6 +53,18 @@ public class DefaultActionResolver
 			String actionId, MutableMvcRequest request)
 			throws ActionResolverException {
 		return null;
+	}
+
+	public void registry(ControllerID controllerID, Controller controller,
+			ActionID actionID, Action action) throws ActionResolverException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void remove(ControllerID controllerID, Controller controller,
+			ActionID actionID, Action action) throws ActionResolverException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
