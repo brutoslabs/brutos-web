@@ -282,6 +282,7 @@ public class Invoker {
 			
 			if(!requestInstrument.isHasViewProcessed()){
 				renderView.show(request, response);
+				requestInstrument.setHasViewProcessed(true);
 			}
 			
 			return true;
@@ -374,7 +375,7 @@ public class Invoker {
 		return requestInstrument;
 	}
 
-	StackRequestElement createStackRequestElement() {
+	protected StackRequestElement createStackRequestElement() {
 		return new StackRequestElementImp();
 	}
 
