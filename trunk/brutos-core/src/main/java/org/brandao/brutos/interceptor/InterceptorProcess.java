@@ -111,8 +111,9 @@ public class InterceptorProcess implements InterceptorStack {
 
 		Interceptor i = pos.getInterceptor();
 
-		org.brandao.brutos.interceptor.InterceptorController interceptor = (org.brandao.brutos.interceptor.InterceptorController) i
-				.getInstance(context.getObjectFactory());
+		org.brandao.brutos.interceptor.InterceptorController interceptor = 
+			(org.brandao.brutos.interceptor.InterceptorController)
+				i.getInstance(context.getObjectFactory());
 
 		if (!interceptor.isConfigured())
 			interceptor.setProperties(i.getProperties());
