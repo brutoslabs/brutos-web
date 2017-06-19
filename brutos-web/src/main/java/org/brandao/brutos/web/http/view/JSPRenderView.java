@@ -240,9 +240,6 @@ public class JSPRenderView implements RenderViewType{
 		Scopes scopes = requestInstrument.getContext().getScopes();
 		Scope requestScope = scopes.get(ScopeType.REQUEST.toString());
 
-		WebThrowableSafeData throwableSafeData = 
-				(WebThrowableSafeData)stackRequestElement.getThrowableSafeData();
-
 		if (stackRequestElement.getView() != null) {
 			this.show(
 					BrutosWebConstants.DEFAULT_RESPONSE_STATUS,
@@ -253,6 +250,9 @@ public class JSPRenderView implements RenderViewType{
 					stackRequestElement.getDispatcherType());
 			return;
 		}
+
+		WebThrowableSafeData throwableSafeData = 
+				(WebThrowableSafeData)stackRequestElement.getThrowableSafeData();
 		
 		if (throwableSafeData != null) {
 			this.show(throwableSafeData, stackRequestElement, requestScope);
