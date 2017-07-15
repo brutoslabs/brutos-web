@@ -120,7 +120,7 @@ public class ActionAnnotationConfig extends AbstractAnnotationConfig {
 	protected void addResultAction(ActionBuilder builder, 
 			ResultActionEntry method, ComponentRegistry componentRegistry){
 		
-		if(method != null && method.getBeanType() != void.class){
+		if(method != null && method.getType() != void.class){
 			super.applyInternalConfiguration(method,
 					builder, componentRegistry);
 		}

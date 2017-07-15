@@ -26,11 +26,11 @@ import java.util.Map;
  */
 public class ResultActionImp implements ConfigurableResultAction {
 
-	private Map infos;
+	private Map<String, Object> infos;
 
-	private Map values;
+	private Map<String, Object> values;
 
-	private Class contentType;
+	private Class<?> contentType;
 
 	private Object content;
 
@@ -39,8 +39,8 @@ public class ResultActionImp implements ConfigurableResultAction {
 	private boolean resolved;
 
 	public ResultActionImp() {
-		this.infos = new HashMap();
-		this.values = new HashMap();
+		this.infos = new HashMap<String, Object>();
+		this.values = new HashMap<String, Object>();
 	}
 
 	public String getView() {
@@ -51,7 +51,7 @@ public class ResultActionImp implements ConfigurableResultAction {
 		return this.resolved;
 	}
 
-	public Class getContentType() {
+	public Class<?> getContentType() {
 		return this.contentType;
 	}
 
@@ -59,19 +59,19 @@ public class ResultActionImp implements ConfigurableResultAction {
 		return this.content;
 	}
 
-	public Map getValues() {
+	public Map<String, Object> getVars() {
 		return this.values;
 	}
 
-	public void setValues(Map values) {
+	public void setVars(Map<String, Object> values) {
 		this.values = values;
 	}
 
-	public Map getInfos() {
+	public Map<String, Object> getHeader() {
 		return this.infos;
 	}
 
-	public void setInfos(Map infos) {
+	public void setHeader(Map<String, Object> infos) {
 		this.infos = infos;
 	}
 
@@ -83,12 +83,13 @@ public class ResultActionImp implements ConfigurableResultAction {
 		if (this.content != null || this.contentType != null)
 			throw new IllegalStateException();
 		else {
-			this.view = view;
+			this.view     = view;
+			this.resolved = resolved;
 			return this;
 		}
 	}
 
-	public ResultAction setContentType(Class type) {
+	public ResultAction setContentType(Class<?> type) {
 		if (this.view != null)
 			throw new IllegalStateException();
 		else {

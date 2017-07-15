@@ -20,17 +20,17 @@ package org.brandao.brutos.type;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.ConfigurableResultAction;
-import org.brandao.brutos.Invoker;
+import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.RenderView;
-import org.brandao.brutos.RequestInstrument;
-import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.TypeManager;
+import org.brandao.brutos.ViewResolver;
 import org.brandao.brutos.mapping.Action;
-import org.brandao.brutos.scope.Scope;
 
 /**
  * 
@@ -50,71 +50,56 @@ public class ResultActionType extends AbstractType {
 
 	public void show(MvcResponse response, Object value){
 
-		ConfigurableResultAction resultAction = 
-				(ConfigurableResultAction)value;
-		
+		MutableMvcRequest request              = (MutableMvcRequest)response.getRequest();
+		ConfigurableResultAction resultAction  = (ConfigurableResultAction)value;
+		Map<String, Object> header             = resultAction.getHeader();
+		Map<String, Object> vars               = resultAction.getVars();
+		Object content                         = resultAction.getContent();
 		ConfigurableApplicationContext context = 
-			(ConfigurableApplicationContext)Invoker.getCurrentApplicationContext();
-
-		Map<String, Object> infos  = 
-				resultAction.getInfos();
+				(ConfigurableApplicationContext) request.getRequestInstrument().getContext();
 		
-		Map<String, Object> values = 
-				resultAction.getValues();
-		
-		Scope requestScope         = 
-				context.getScopes().get(ScopeType.REQUEST.toString());
-
-		for (Object key : infos.keySet()) {
-			response.setHeader((String) key, (String) infos.get(key));
+		for (String key : header.keySet()) {
+			response.setHeader(key, header.get(key));
 		}
 
-		for (Object key : values.keySet()) {
-			requestScope.put((String) key, values.get(key));
+		for (String key : vars.keySet()) {
+			request.setProperty(key, vars.get(key));
 		}
-
-		Object content = resultAction.getContent();
-
+		
 		if (content != null) {
-			Type contentType = 
-				this.getContentType(resultAction.getContentType(), context);
+			Type contentType = this.getContentType(resultAction.getContentType(), context);
 			contentType.show(response, content);
 			return;
 		}
 		
-		RenderView renderView = 
-				context.getRenderView();
-		Invoker invoker       = 
-				context.getInvoker();
+		RenderView renderView                   = context.getRenderView();
+		StackRequestElement stackRequestElement = request.getStackRequestElement();
+		String view                             = 
+				this.getView(
+						resultAction, 
+						request.getResourceAction(), 
+						context.getViewResolver());
 		
-		RequestInstrument requestinstrument = 
-				invoker.getRequestInstrument();
-		
-		StackRequestElement stackRequestElement = 
-				invoker.getStackRequest(requestinstrument).getCurrent();
+		stackRequestElement.setView(view);
+		renderView.show(response.getRequest(), response);
+	}
 
-		String view = 
-				resultAction.getView();
-		boolean resolved = 
-				resultAction.isResolvedView();
-
-		Action action = 
-				stackRequestElement.getAction().getMethodForm();
+	private String getView(ConfigurableResultAction resultAction, 
+			ResourceAction resourceAction, ViewResolver viewResolver){
+		String view      = resultAction.getView();
+		boolean resolved = resultAction.isResolvedView();
+		Action action    = resourceAction.getMethodForm();
 
 		view = 
 			resolved ? 
 				view : 
-				context.getViewResolver().getActionView(
+				viewResolver.getActionView(
 						action.getController().getClassType(),
 						action.getExecutor(), 
 						view);
-
-		stackRequestElement.setView(view);
-		
-		renderView.show(response.getRequest(), response);
-		
+		return view;
 	}
-
+	
 	private Type getContentType(Class<?> contentType,
 			ConfigurableApplicationContext context) {
 		Type type = (Type) this.cache.get(contentType);
@@ -141,4 +126,8 @@ public class ResultActionType extends AbstractType {
 		}
 	}
 
+	public boolean isAlwaysRender() {
+		return true;
+	}
+	
 }

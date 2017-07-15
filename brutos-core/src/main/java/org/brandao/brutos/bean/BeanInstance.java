@@ -35,21 +35,21 @@ import org.brandao.brutos.ClassUtil;
  */
 public class BeanInstance {
 
-	private static Map cache;
+	private static Map<Class<?>, BeanData> cache;
 
 	static {
-		cache = new HashMap();
+		cache = new HashMap<Class<?>, BeanData>();
 	}
 
 	private Object object;
-	private Class clazz;
+	private Class<?> clazz;
 	private BeanData data;
 
 	public BeanInstance(Object object) {
 		this(object, object.getClass());
 	}
 
-	public BeanInstance(Object object, Class clazz) {
+	public BeanInstance(Object object, Class<?> clazz) {
 		this.object = object;
 		this.clazz = clazz;
 		this.data = getBeanData(this.clazz);
@@ -88,6 +88,7 @@ public class BeanInstance {
 			return prop;
 	}
 
+	/*
 	private void loadFields(BeanData data, Class<?> clazz){
 	
 		Field[] fields = clazz.getDeclaredFields();
@@ -107,7 +108,34 @@ public class BeanInstance {
 		}
 		
 	}
+	 */
+	
+	private void loadFields(BeanData data, Class<?> clazz){
+		
+		Class<?> superClass = clazz.getSuperclass();
+		
+		if(superClass != Object.class){
+			loadFields(data, superClass);
+		}
+		
+		Field[] fields = clazz.getDeclaredFields();
 
+		for (int i = 0; i < fields.length; i++) {
+			Field f = fields[i];
+			int mod = f.getModifiers();
+			
+			if(Modifier.isStatic(mod) || Modifier.isFinal(mod)){
+				continue;
+			}
+			
+			data.addProperty(f.getName(), new BeanPropertyImp(f, null,
+					null, f.getName()));
+			data.getSetter().put(f.getName(), f);
+			data.getGetter().put(f.getName(), f);
+		}
+		
+	}
+	
 	private void loadMethods(BeanData data, Class<?> clazz){
 		
 		Method[] methods = clazz.getMethods();
@@ -179,7 +207,7 @@ public class BeanInstance {
 		
 	}
 	
-	private BeanData getBeanData(Class clazz) {
+	private BeanData getBeanData(Class<?> clazz) {
 
 		if (cache.containsKey(clazz)){
 			return (BeanData) cache.get(clazz);
@@ -199,7 +227,7 @@ public class BeanInstance {
 		return data.getProperties().containsKey(property);
 	}
 
-	public Class getType(String property) {
+	public Class<?> getType(String property) {
 		// Method method = (Method) data.getGetter().get(property);
 
 		BeanProperty prop = data.getProperty(property);
@@ -226,27 +254,27 @@ public class BeanInstance {
 
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return this.clazz;
 	}
 
-	public List getProperties() {
-		return new LinkedList(this.data.getProperties().values());
+	public List<BeanProperty> getProperties() {
+		return new LinkedList<BeanProperty>(this.data.getProperties().values());
 	}
 
 }
 
 class BeanData {
 
-	private Class classType;
-	private Map setter;
-	private Map getter;
-	private Map properties;
+	private Class<?> classType;
+	private Map<String, Object> setter;
+	private Map<String, Object> getter;
+	private Map<String, BeanProperty> properties;
 
 	public BeanData() {
-		this.setter = new HashMap();
-		this.getter = new HashMap();
-		this.properties = new HashMap();
+		this.setter     = new HashMap<String, Object>();
+		this.getter     = new HashMap<String, Object>();
+		this.properties = new HashMap<String, BeanProperty>();
 	}
 
 	public void addProperty(String name, BeanProperty property) {
@@ -254,38 +282,38 @@ class BeanData {
 	}
 
 	public BeanProperty getProperty(String name) {
-		return (BeanProperty) this.properties.get(name);
+		return this.properties.get(name);
 	}
 
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return classType;
 	}
 
-	public void setClassType(Class classType) {
+	public void setClassType(Class<?> classType) {
 		this.classType = classType;
 	}
 
-	public Map getSetter() {
+	public Map<String, Object> getSetter() {
 		return setter;
 	}
 
-	public void setSetter(Map setter) {
+	public void setSetter(Map<String, Object> setter) {
 		this.setter = setter;
 	}
 
-	public Map getGetter() {
+	public Map<String, Object> getGetter() {
 		return getter;
 	}
 
-	public void setGetter(Map getter) {
+	public void setGetter(Map<String, Object> getter) {
 		this.getter = getter;
 	}
 
-	public Map getProperties() {
+	public Map<String, BeanProperty> getProperties() {
 		return properties;
 	}
 
-	public void setProperties(Map properties) {
+	public void setProperties(Map<String, BeanProperty> properties) {
 		this.properties = properties;
 	}
 }

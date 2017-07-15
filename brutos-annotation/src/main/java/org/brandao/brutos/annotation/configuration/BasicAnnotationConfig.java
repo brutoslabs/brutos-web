@@ -18,11 +18,13 @@
 package org.brandao.brutos.annotation.configuration;
 
 import java.lang.annotation.Annotation;
+
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.*;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
+import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.type.TypeUtil;
 
 /**
@@ -130,7 +132,13 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 
 		Basic basic = source.getAnnotation(Basic.class);
 
-		if (!source.isAnnotationPresent(Any.class)
+		TypeFactory typeFactory = 
+				componentRegistry.getRegistredType(source.getType());
+		
+		boolean isAlwaysRender = 
+				typeFactory != null && typeFactory.getInstance().isAlwaysRender();
+		
+		if (!isAlwaysRender && !source.isAnnotationPresent(Any.class)
 				&& AnnotationUtil.isBuildEntity(componentRegistry, basic,
 						source.getType()))
 			newBuilder = buildResultAction(builder, source, componentRegistry);
@@ -308,7 +316,7 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 	protected ResultActionBuilder buildResultAction(ActionBuilder builder,
 			ResultActionEntry source, ComponentRegistry componentRegistry) {
 
-		super.applyInternalConfiguration(source,
+		super.applyInternalConfiguration(new ResultActionBeanEntry(source),
 				builder, componentRegistry);
 
 		return builder.getResultAction();
