@@ -11,7 +11,7 @@ import org.brandao.brutos.annotation.Result;
 import org.brandao.brutos.annotation.Target;
 import org.brandao.brutos.mapping.StringUtil;
 
-public class ResultActionEntry implements BeanEntry{
+public class ResultActionEntry{
 
 	private String name;
 	
@@ -86,8 +86,4 @@ public class ResultActionEntry implements BeanEntry{
 		return BrutosConstants.DEFAULT_RETURN_NAME;
 	}
 	
-	public Class<?> getBeanType() {
-		return this.getType();
-	}
-
 }

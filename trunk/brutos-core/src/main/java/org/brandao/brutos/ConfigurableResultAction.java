@@ -33,12 +33,12 @@ public interface ConfigurableResultAction extends ResultAction {
 
 	Object getContent();
 
-	Map<String, Object> getValues();
+	Map<String, Object> getVars();
 
-	void setValues(Map<String, Object> values);
+	void setVars(Map<String, Object> values);
 
-	Map<String, Object> getInfos();
+	Map<String, Object> getHeader();
 
-	void setInfos(Map<String, Object> infos);
+	void setHeader(Map<String, Object> infos);
 
 }

@@ -28,7 +28,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.ResultAction;
 import org.brandao.brutos.TypeManager;
 
 /**
@@ -91,6 +93,7 @@ public class TypeManagerImp implements TypeManager {
 		defaultTypes.add(new DefaultArrayTypeFactory());
 		defaultTypes.add(new DefaultEnumTypeFactory());
 		defaultTypes.add(new DefaultTypeFactory(ClassType.class, Class.class));
+		defaultTypes.add(new DefaultTypeFactory(ResultActionType.class, ResultAction.class));
 		defaultTypes.add(new ObjectTypeFactory());
 	}
 
