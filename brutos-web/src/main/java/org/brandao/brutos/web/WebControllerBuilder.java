@@ -315,7 +315,9 @@ public class WebControllerBuilder extends ControllerBuilder{
 	}
     
     public ControllerBuilder setView(String value, boolean resolvedView){
-    	WebUtil.checkURI(value, resolvedView && value != null);
+        if(resolvedView){
+        	WebUtil.checkURI(value, resolvedView && value != null);
+        }
         return super.setView(value, resolvedView);
     }
     
