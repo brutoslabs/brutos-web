@@ -39,11 +39,11 @@ public interface BeanProperty {
 
 	Object getDeclaredGenericType();
 
-	Class getDeclaredType();
+	Class<?> getDeclaredType();
 
 	Object getGenericType();
 
-	Class getType();
+	Class<?> getType();
 
 	Field getField();
 
