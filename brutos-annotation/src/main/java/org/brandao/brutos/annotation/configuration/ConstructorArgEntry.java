@@ -20,9 +20,13 @@ package org.brandao.brutos.annotation.configuration;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.DetachedName;
+import org.brandao.brutos.annotation.Enumerated;
 import org.brandao.brutos.annotation.Target;
+import org.brandao.brutos.annotation.Temporal;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -35,7 +39,7 @@ public class ConstructorArgEntry {
 
 	private Type genericType;
 
-	private Class type;
+	private Class<?> type;
 
 	private String name;
 
@@ -44,7 +48,7 @@ public class ConstructorArgEntry {
 	public ConstructorArgEntry() {
 	}
 
-	public ConstructorArgEntry(String name, Class type, Type genericType,
+	public ConstructorArgEntry(String name, Class<?> type, Type genericType,
 			Annotation[] annotation, int index) {
 		this.name = name;
 		this.type = type;
@@ -62,6 +66,7 @@ public class ConstructorArgEntry {
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T getAnnotation(Class<T> annotation) {
 		for (Annotation a : this.annotation) {
 			if (a.annotationType().isAssignableFrom(annotation))
@@ -80,12 +85,12 @@ public class ConstructorArgEntry {
 		this.genericType = genericType;
 	}
 
-	public Class getType() {
+	public Class<?> getType() {
 		Target target = this.getAnnotation(Target.class);
 		return target == null ? this.type : target.value();
 	}
 
-	public void setType(Class type) {
+	public void setType(Class<?> type) {
 		this.type = type;
 	}
 
@@ -111,8 +116,7 @@ public class ConstructorArgEntry {
 
 		}
 
-		return "arg" + index;
-		// return null;
+		return this.getDefaultName();
 	}
 
 	public String getDefaultName() {
@@ -139,4 +143,20 @@ public class ConstructorArgEntry {
 		this.index = index;
 	}
 
+	public org.brandao.brutos.type.Type getTypeInstance(){
+		return AnnotationUtil.getTypeInstance(this.getAnnotation(org.brandao.brutos.annotation.Type.class));
+	}
+	
+	public String getTemporalProperty(){
+		return AnnotationUtil.getTemporalProperty(this.getAnnotation(Temporal.class));
+	}
+	
+	public EnumerationType getEnumProperty(){
+		return AnnotationUtil.getEnumerationType(this.getAnnotation(Enumerated.class));
+	}
+
+	public ScopeType getScope() {
+		return AnnotationUtil.getScope(this.getAnnotation(Basic.class));
+	}
+	
 }

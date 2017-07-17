@@ -5,10 +5,13 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 import org.brandao.brutos.BrutosConstants;
+import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.DetachedName;
+import org.brandao.brutos.annotation.Enumerated;
 import org.brandao.brutos.annotation.Result;
 import org.brandao.brutos.annotation.Target;
+import org.brandao.brutos.annotation.Temporal;
 import org.brandao.brutos.mapping.StringUtil;
 
 public class ResultActionEntry{
@@ -50,6 +53,18 @@ public class ResultActionEntry{
 		return target == null ? this.method.getReturnType() : target.value();
 	}
 
+	public org.brandao.brutos.type.Type getTypeInstance(){
+		return AnnotationUtil.getTypeInstance(this.getAnnotation(org.brandao.brutos.annotation.Type.class));
+	}
+	
+	public String getTemporalProperty(){
+		return AnnotationUtil.getTemporalProperty(this.getAnnotation(Temporal.class));
+	}
+	
+	public EnumerationType getEnumProperty(){
+		return AnnotationUtil.getEnumerationType(this.getAnnotation(Enumerated.class));
+	}
+	
 	public String getName() {
 
 		DetachedName notNamed = (DetachedName) this.getAnnotation(DetachedName.class);
@@ -79,7 +94,7 @@ public class ResultActionEntry{
 
 		}
 
-		return null;//BrutosConstants.DEFAULT_RETURN_NAME;
+		return this.getDefaultName();//BrutosConstants.DEFAULT_RETURN_NAME;
 	}
 
 	public String getDefaultName(){

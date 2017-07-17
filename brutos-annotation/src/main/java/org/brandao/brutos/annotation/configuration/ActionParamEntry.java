@@ -20,9 +20,13 @@ package org.brandao.brutos.annotation.configuration;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.DetachedName;
+import org.brandao.brutos.annotation.Enumerated;
 import org.brandao.brutos.annotation.Target;
+import org.brandao.brutos.annotation.Temporal;
 import org.brandao.brutos.mapping.StringUtil;
 
 /**
@@ -121,9 +125,25 @@ public class ActionParamEntry {
 		}
 
 		return "arg" + index;
-		// return null;
 	}
 
+	public org.brandao.brutos.type.Type getTypeInstance(){
+		return AnnotationUtil.getTypeInstance(this.getAnnotation(org.brandao.brutos.annotation.Type.class));
+	}
+	
+	public String getTemporalProperty(){
+		return AnnotationUtil.getTemporalProperty(this.getAnnotation(Temporal.class));
+	}
+	
+	public EnumerationType getEnumProperty(){
+		return AnnotationUtil.getEnumerationType(this.getAnnotation(Enumerated.class));
+	}
+	
+	public ScopeType getScope(){
+		Basic basic = this.getAnnotation(Basic.class);
+		return AnnotationUtil.getScope(basic);
+	}
+	
 	public String getDefaultName() {
 		return "arg" + index;
 	}

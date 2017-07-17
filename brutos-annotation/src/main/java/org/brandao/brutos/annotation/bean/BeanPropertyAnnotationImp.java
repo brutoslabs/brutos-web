@@ -19,7 +19,13 @@ package org.brandao.brutos.annotation.bean;
 
 import java.lang.annotation.Annotation;
 
+import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.ScopeType;
+import org.brandao.brutos.annotation.Basic;
+import org.brandao.brutos.annotation.Enumerated;
 import org.brandao.brutos.annotation.Target;
+import org.brandao.brutos.annotation.Temporal;
+import org.brandao.brutos.annotation.configuration.AnnotationUtil;
 import org.brandao.brutos.bean.BeanProperty;
 import org.brandao.brutos.bean.BeanPropertyWrapper;
 
@@ -39,7 +45,7 @@ public class BeanPropertyAnnotationImp extends BeanPropertyWrapper implements
 		return target == null ? super.getGenericType() : target.value();
 	}
 
-	public Class getType() {
+	public Class<?> getType() {
 		Target target = this.getAnnotation(Target.class);
 		return target == null ? super.getType() : target.value();
 	}
@@ -96,4 +102,25 @@ public class BeanPropertyAnnotationImp extends BeanPropertyWrapper implements
 
 		return false;
 	}
+	
+	public org.brandao.brutos.type.Type getTypeInstance(){
+		return AnnotationUtil.getTypeInstance(this.getAnnotation(org.brandao.brutos.annotation.Type.class));
+	}
+	
+	public String getTemporalProperty(){
+		return AnnotationUtil.getTemporalProperty(this.getAnnotation(Temporal.class));
+	}
+	
+	public EnumerationType getEnumProperty(){
+		return AnnotationUtil.getEnumerationType(this.getAnnotation(Enumerated.class));
+	}
+	
+	public String getBeanName(){
+		return AnnotationUtil.getBeanName(this);
+	}
+
+	public ScopeType getScope() {
+		return AnnotationUtil.getScope(this.getAnnotation(Basic.class));
+	}
+	
 }

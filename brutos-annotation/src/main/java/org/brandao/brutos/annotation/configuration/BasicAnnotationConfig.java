@@ -194,17 +194,11 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 			ConstructorArgEntry source, ConstructorBuilder builder,
 			ComponentRegistry componentRegistry) {
 
-		Basic basic = source.getAnnotation(Basic.class);
-
-		String name = source.getName() == null ? source.getDefaultName()
-				: source.getName();
-		ScopeType scope = AnnotationUtil.getScope(basic);
-		EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source
-				.getAnnotation(Enumerated.class));
-		String temporalProperty = AnnotationUtil.getTemporalProperty(source
-				.getAnnotation(Temporal.class));
-		org.brandao.brutos.type.Type type = AnnotationUtil
-				.getTypeInstance(source.getAnnotation(Type.class));
+		String name                       = source.getName();
+		ScopeType scope                   = source.getScope();
+		EnumerationType enumProperty      = source.getEnumProperty();
+		String temporalProperty           = source.getTemporalProperty();
+		org.brandao.brutos.type.Type type = source.getTypeInstance();
 
 		if (source.isAnnotationPresent(Any.class)) {
 			return builder.addGenericContructorArg(name,
@@ -230,16 +224,12 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 	protected PropertyBuilder addProperty(BeanPropertyAnnotation property,
 			Object builder, ComponentRegistry componentRegistry) {
 
-		String propertyName = getPropertyName(property);
-		String name = AnnotationUtil.getBeanName(property);
-		ScopeType scope = AnnotationUtil.getScope(property
-				.getAnnotation(Basic.class));
-		EnumerationType enumProperty = AnnotationUtil
-				.getEnumerationType(property.getAnnotation(Enumerated.class));
-		String temporalProperty = AnnotationUtil.getTemporalProperty(property
-				.getAnnotation(Temporal.class));
-		org.brandao.brutos.type.Type type = AnnotationUtil
-				.getTypeInstance(property.getAnnotation(Type.class));
+		String propertyName               = property.getName();
+		String name                       = property.getBeanName();
+		ScopeType scope                   = property.getScope();
+		EnumerationType enumProperty      = property.getEnumProperty();
+		String temporalProperty           = property.getTemporalProperty();
+		org.brandao.brutos.type.Type type = property.getTypeInstance();
 
 		if (property.isAnnotationPresent(Any.class)) {
 			if (builder instanceof BeanBuilder) {
@@ -289,26 +279,22 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 	protected ParameterBuilder addParameter(ActionParamEntry source,
 			ParametersBuilder builder, ComponentRegistry componentRegistry) {
 
-		Basic basic = source.getAnnotation(Basic.class);
-
-		String name = source.getName() == null ? source.getDefaultName()
-				: source.getName();
-		ScopeType scope = AnnotationUtil.getScope(basic);
-		EnumerationType enumProperty = AnnotationUtil.getEnumerationType(source
-				.getAnnotation(Enumerated.class));
-		String temporalProperty = AnnotationUtil.getTemporalProperty(source
-				.getAnnotation(Temporal.class));
-		org.brandao.brutos.type.Type type = AnnotationUtil
-				.getTypeInstance(source.getAnnotation(Type.class));
+		String name                       = source.getName();
+		ScopeType scope                   = source.getScope();
+		EnumerationType enumProperty      = source.getEnumProperty();
+		String temporalProperty           = source.getTemporalProperty();
+		org.brandao.brutos.type.Type type = source.getTypeInstance();
 
 		if (source.isAnnotationPresent(Any.class)) {
 			return builder.addGenericParameter(name,
 					TypeUtil.getRawType(source.getGenericType()));
-		} else {
+		}
+		else{
 			return builder.addParameter(name, scope, enumProperty,
 					temporalProperty, null, type, null, false,
 					source.getGenericType());
 		}
+		
 	}
 
 	/* ResultAction */
@@ -325,18 +311,10 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 	protected ResultActionBuilder setResultAction(ResultActionEntry source,
 			ActionBuilder builder, ComponentRegistry componentRegistry) {
 
-		String name = 
-				source.getName() == null ? 
-						source.getDefaultName() : source.getName();
-						
-		EnumerationType enumProperty = 
-				AnnotationUtil.getEnumerationType(source.getAnnotation(Enumerated.class));
-		
-		String temporalProperty = 
-				AnnotationUtil.getTemporalProperty(source.getAnnotation(Temporal.class));
-		
-		org.brandao.brutos.type.Type type = 
-				AnnotationUtil.getTypeInstance(source.getAnnotation(Type.class));
+		String name                       = source.getName();
+		EnumerationType enumProperty      = source.getEnumProperty();
+		String temporalProperty           = source.getTemporalProperty();
+		org.brandao.brutos.type.Type type = source.getTypeInstance();
 
 		if (source.isAnnotationPresent(Any.class)) {
 			return builder.setGenericResultAction(name,
@@ -350,10 +328,6 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 	
 	/* /ResultAction */
 	
-	private String getPropertyName(BeanPropertyAnnotation param) {
-		return param.getName();
-	}
-
 	@SuppressWarnings("unchecked")
 	public Class<? extends Annotation>[] getExecutionOrder() {
 		return new Class[] { Any.class, Bean.class, Restriction.class,

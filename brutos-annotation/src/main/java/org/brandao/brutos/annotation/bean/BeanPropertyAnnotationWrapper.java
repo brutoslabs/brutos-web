@@ -18,7 +18,11 @@
 package org.brandao.brutos.annotation.bean;
 
 import java.lang.annotation.Annotation;
+
+import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanPropertyWrapper;
+import org.brandao.brutos.type.Type;
 
 /**
  *
@@ -39,6 +43,26 @@ public class BeanPropertyAnnotationWrapper extends BeanPropertyWrapper
 	public boolean isAnnotationPresent(Class<? extends Annotation> annotation) {
 		return ((BeanPropertyAnnotation) super.beanProperty)
 				.isAnnotationPresent(annotation);
+	}
+
+	public Type getTypeInstance() {
+		return ((BeanPropertyAnnotation) super.beanProperty).getTypeInstance();
+	}
+
+	public String getTemporalProperty() {
+		return ((BeanPropertyAnnotation) super.beanProperty).getTemporalProperty();
+	}
+
+	public EnumerationType getEnumProperty() {
+		return ((BeanPropertyAnnotation) super.beanProperty).getEnumProperty();
+	}
+
+	public String getBeanName() {
+		return ((BeanPropertyAnnotation) super.beanProperty).getBeanName();
+	}
+
+	public ScopeType getScope() {
+		return ((BeanPropertyAnnotation) super.beanProperty).getScope();
 	}
 
 }
