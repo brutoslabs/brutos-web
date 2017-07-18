@@ -6,7 +6,7 @@ public interface MediaTypes {
 	
 	static final String APPLICATION_ATOM_XML		= "application/atom+xml";
 	
-	static final String APPLICATION_FORM_URLENCODED	= "APPLICATION-FORM-URLENCODED";
+	static final String APPLICATION_FORM_URLENCODED	= "application-form-urlencoded";
 	
 	static final String APPLICATION_JSON			= "application/json";
 	
