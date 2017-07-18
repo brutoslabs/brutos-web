@@ -136,6 +136,7 @@ public class BeanInstance {
 		
 	}
 	
+	/*
 	private void loadMethods(BeanData data, Class<?> clazz){
 		
 		Method[] methods = clazz.getMethods();
@@ -205,6 +206,112 @@ public class BeanInstance {
 			}
 		}
 		
+	}
+	*/
+	
+	private void loadMethods(BeanData data, Class<?> clazz){
+		
+		Method[] methods = clazz.getMethods();
+
+		for (int i = 0; i < methods.length; i++) {
+			
+			Method method = methods[i];
+			String methodName = method.getName();
+
+			if (methodName.equals("getClass")){
+				continue;
+			}
+
+			String propertyName = this.getPropertyName(method);
+			
+			if(propertyName  == null){
+				continue;
+			}
+			
+			if(this.isSet(method)){
+				BeanProperty prop = data.getProperty(propertyName);
+				Class<?> type     = method.getParameterTypes()[0]; 
+				if(prop != null){
+					if(prop.getField() != null && type.isAssignableFrom(prop.getField().getType())){
+						prop.setSet(method);
+					}
+					else
+					if(prop.getGet() != null && type.isAssignableFrom(prop.getGet().getReturnType())){
+						prop.setSet(method);
+					}
+				}
+				else{
+					data.addProperty(
+						propertyName, 
+						new BeanPropertyImp(null, method, null, propertyName));
+				}				
+			}
+			else
+			if(this.isGet(method)){
+				BeanProperty prop = data.getProperty(propertyName);
+				Class<?> type     = method.getReturnType(); 
+				if(prop != null){
+					if(prop.getField() != null && type.isAssignableFrom(prop.getField().getType())){
+						prop.setGet(method);
+					}
+					else
+					if(prop.getSet() != null && type.isAssignableFrom(prop.getSet().getParameterTypes()[0])){
+						prop.setGet(method);
+					}
+				}
+				else{
+					data.addProperty(
+						propertyName, 
+						new BeanPropertyImp(null, null, method, propertyName));
+				}				
+			}
+			
+
+		}
+		
+	}
+	
+	private boolean isGet(Method method){
+		String methodName = method.getName();
+		
+		return 
+			(
+			methodName.startsWith("get") && 
+			method.getParameterTypes().length == 0 && 
+			method.getReturnType() != void.class) || 
+			(
+			methodName.startsWith("is") && 
+			method.getParameterTypes().length == 0 && 
+			ClassUtil.getWrapper(method.getReturnType()) == Boolean.class
+					);
+	}
+	
+	private boolean isSet(Method method){
+		String methodName = method.getName();
+		
+		return 
+			methodName.startsWith("set") && 
+			method.getParameterTypes().length == 1;
+	}
+	
+	private String getPropertyName(Method method){
+		String methodName = method.getName();
+		if(methodName.startsWith("set")	&& method.getParameterTypes().length == 1){
+			String id = methodName.substring(3, methodName.length());
+			return Character.toLowerCase(id.charAt(0)) + id.substring(1, id.length());
+		}
+		else
+		if(methodName.startsWith("get") && method.getParameterTypes().length == 0 && method.getReturnType() != void.class){
+			String id = methodName.substring(3, methodName.length());
+			return Character.toLowerCase(id.charAt(0)) + id.substring(1, id.length());
+		}
+		else
+		if(methodName.startsWith("is") && method.getParameterTypes().length == 0 && ClassUtil.getWrapper(method.getReturnType()) == Boolean.class){
+			String id = methodName.substring(2, methodName.length());
+			return Character.toLowerCase(id.charAt(0)) + id.substring(1, id.length());
+		}
+		else
+			return null;
 	}
 	
 	private BeanData getBeanData(Class<?> clazz) {
