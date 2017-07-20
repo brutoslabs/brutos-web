@@ -54,12 +54,13 @@ public class WebInvoker extends Invoker{
     	WebMvcRequestImp webRequest   = new WebMvcRequestImp((HttpServletRequest)request);
     	WebMvcResponseImp webResponse = new WebMvcResponseImp((HttpServletResponse)response, webRequest);
     	
+    	logger.info("method: " + request.getMethod() + ", request: " + request.getRequestURI() + ", accept: " + request.getHeader("Accept"));
     	try{
     		SessionScope.setServletRequest(request);
     		ParamScope.setRequest(webRequest);
     		RequestScope.setRequest(webRequest);
     		HeaderScope.setRequest(webRequest);
-    		
+
             if(!super.invoke(webRequest, webResponse)){
                 if(chain == null)
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -143,6 +144,10 @@ public class WebInvoker extends Invoker{
     	if(supportedResponseTypes.isEmpty()){
     		
     		MediaType defaultDataType = (MediaType)this.renderView.getDefaultRenderViewType();
+    		
+    		if(responseTypes == null || responseTypes.isEmpty()){
+    			return defaultDataType;
+    		}
     		
 	    	for(DataType dataType: responseTypes){
 	    		if(defaultDataType.match((MediaType)dataType)){
