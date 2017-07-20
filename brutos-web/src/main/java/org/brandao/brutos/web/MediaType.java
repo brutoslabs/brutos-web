@@ -153,6 +153,8 @@ public class MediaType extends DataType{
 	
 	private final Map<String,String> params;
 	
+	private final boolean anyType;
+	
 	@SuppressWarnings("unchecked")
 	public MediaType(String name, String type, String subType) {
 		this(name, type, subType, Collections.EMPTY_MAP);
@@ -163,6 +165,7 @@ public class MediaType extends DataType{
 		this.type    = type;
 		this.subType = subType;
 		this.params  = params;
+		this.anyType = this.type.equals("*") && this.subType.equals("*");
 	}
 	
 	public String getType() {
@@ -178,6 +181,11 @@ public class MediaType extends DataType{
 	}
 
 	public boolean match(MediaType value){
+		
+		if(this.anyType){
+			return true;
+		}
+		
 		String type    = value.getType();
 		String subtype = value.getSubType();
 		
