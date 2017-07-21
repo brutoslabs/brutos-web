@@ -61,6 +61,10 @@ public class ConstructorBean {
 				&& bean.getParent().isCollection();
 	}
 
+	public boolean isCollection() {
+		return collection;
+	}
+
 	public boolean isConstructor() {
 		return getMethodFactory() == null;
 	}
@@ -81,6 +85,22 @@ public class ConstructorBean {
 
 	public Method getMethod(Object factory) {
 		if (getMethod() == null) {
+			Class<?> clazz = 
+				factory == null ? 
+					getBean().getClassType() : 
+					factory.getClass();
+
+			setMethod(getMethod(getMethodFactory(), clazz));
+			if (getMethod().getReturnType() == void.class)
+				throw new BrutosException("invalid return: "
+						+ getMethod().toString());
+		}
+		return getMethod();
+	}
+	
+	/*
+	public Method getMethod(Object factory) {
+		if (getMethod() == null) {
 			Class<?> clazz = factory == null ? getBean().getClassType() : factory
 					.getClass();
 
@@ -91,7 +111,8 @@ public class ConstructorBean {
 		}
 		return getMethod();
 	}
-
+*/
+	
 	public void addConstructorArg(ConstructorArgBean arg) {
 		this.args.add(arg);
 	}
