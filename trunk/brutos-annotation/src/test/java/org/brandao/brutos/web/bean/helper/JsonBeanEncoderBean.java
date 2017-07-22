@@ -1,5 +1,6 @@
 package org.brandao.brutos.web.bean.helper;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ import org.brandao.brutos.annotation.helper.bean.CustomArrayList;
 import org.brandao.brutos.annotation.helper.bean.NewArrayList;
 import org.brandao.brutos.annotation.helper.bean.NewHashMap;
 
-public class JsonBeanEncoderBean {
+public class JsonBeanEncoderBean implements Serializable{
 
     private int propertyA;
 

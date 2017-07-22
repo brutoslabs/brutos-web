@@ -1,6 +1,8 @@
 package org.brandao.brutos.web.bean.helper;
 
-public class JsonBeanEncoderInnerBean {
+import java.io.Serializable;
+
+public class JsonBeanEncoderInnerBean implements Serializable{
 
 	private String prop;
 
