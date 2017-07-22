@@ -29,24 +29,17 @@ import org.brandao.brutos.type.Type;
 
 public class JsonBeanDecoder implements BeanDecoder{
 
-	@SuppressWarnings("unchecked")
 	public Object decode(UseBeanData entity, Object data) throws BeanDecoderException {
 		try{
-			if(!(data instanceof Map)){
-				throw new BeanDecoderException("expected object");
-			}
-			
-			return this.getValue(entity, (Map<String, Object>)data);
-		}
-		catch(BeanDecoderException e){
-			throw e;
+			return this.getValue(entity, entity.getName(), data);
 		}
 		catch(Throwable e){
 			throw new BeanDecoderException(e);
 		}
 	}
 
-	public Object getValue(UseBeanData entity, Map<String, Object> data) 
+	@SuppressWarnings("unchecked")
+	public Object getValue(UseBeanData entity, String name, Object dta) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
 		if(entity.isNullable()){
@@ -54,10 +47,11 @@ public class JsonBeanDecoder implements BeanDecoder{
 		}
 		else
 		if(entity.getMetaBean() != null){
-			MetaBean metaBean = entity.getMetaBean();
-			String parameterName = metaBean.getName();
 			
-			ScopeType scopeType = entity.getScopeType();
+			Map<String, Object> data = (Map<String, Object>)dta;
+			MetaBean metaBean        = entity.getMetaBean();
+			String parameterName     = metaBean.getName();
+			ScopeType scopeType      = entity.getScopeType();
 			Object value;
 			
 			if(scopeType.equals(ScopeType.PARAM)){
@@ -78,20 +72,22 @@ public class JsonBeanDecoder implements BeanDecoder{
 			if (bean == null)
 				throw new MappingException("bean not found: " + value);
 
-			return entity.getType().convert(this.getValue(bean, data));			
+			return entity.getType().convert(this.getValue(bean, null, data));			
 		}
 		else
 		if(entity.getMapping() != null){
+			Map<String, Object> data = (Map<String, Object>)dta;
 			Bean bean = entity.getMapping();
 			
-			String parameter = entity.getName();
 			Object value;
 			
-			if(parameter != null){
-				value = data.get(parameter);
+			if(name != null){
+				value = data.get(name);
+				
 				if(value != null){
 					value = this.getValue(bean, value);
 				}
+				
 			}
 			else{
 				value = this.getValue(bean, data);
@@ -105,29 +101,29 @@ public class JsonBeanDecoder implements BeanDecoder{
 		}
 		else
 		if(entity.getType() instanceof CollectionType || entity.getType() instanceof ArrayType) {
-			String parameterName = entity.getName(); 
-			ScopeType scopeType  = entity.getScopeType();
+			Map<String, Object> data = (Map<String, Object>)dta;
+			ScopeType scopeType      = entity.getScopeType();
 			Object value;
 			
 			if(scopeType.equals(ScopeType.PARAM)){
-				value = data.get(parameterName);
+				value = data.get(name);
 			}
 			else{
-				value = entity.getScope().getCollection(parameterName);
+				value = entity.getScope().getCollection(name);
 			}
 			
 			return entity.getType().convert(value);
 		}
 		else{
-			String parameterName = entity.getName(); 
-			ScopeType scopeType  = entity.getScopeType();
+			Map<String, Object> data = (Map<String, Object>)dta;
+			ScopeType scopeType      = entity.getScopeType();
 			Object value;
 			
 			if(scopeType.equals(ScopeType.PARAM)){
-				value = data.get(parameterName);
+				value = data.get(name);
 			}
 			else{
-				value = entity.getScope().get(parameterName);
+				value = entity.getScope().get(name);
 			}
 			
 			return entity.getType().convert(value);
@@ -136,7 +132,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Object getValue(DependencyBean dependencyBean, String parentName, Object data) 
+	public Object getValue(DependencyBean dependencyBean, String name, Object data) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
 		if(dependencyBean.getMapping() != null){
@@ -149,10 +145,9 @@ public class JsonBeanDecoder implements BeanDecoder{
 			
 			Bean bean = dependencyBean.getBean().getController().getBean(dependencyBean.getMapping());
 			
-			String parameter = dependencyBean.getParameterName();
 			Object value;
-			if(dependencyBean.getParent().isHierarchy() && parameter != null){
-				value = dta.get(parameter);
+			if(dependencyBean.getParent().isHierarchy() && name != null){
+				value = dta.get(name);
 				if(value != null){
 					value = this.getValue(bean, value);
 				}
@@ -173,27 +168,21 @@ public class JsonBeanDecoder implements BeanDecoder{
 				return null;
 			}
 			else{
-				String parameter = dependencyBean.getParameterName();
 				Object value;
-				if(parameter == null){
-					value = data;
+				ScopeType scopeType = dependencyBean.getScopeType();
+				
+				if(scopeType.equals(ScopeType.PARAM)){
+					
+					if(!(data instanceof Map)){
+						throw new DependencyException("expected object");
+					}
+					
+					Map<String,Object> dta = (Map<String,Object>)data;
+					
+					value = dta.get(name);
 				}
 				else{
-					ScopeType scopeType = dependencyBean.getScopeType();
-					
-					if(scopeType.equals(ScopeType.PARAM)){
-						
-						if(!(data instanceof Map)){
-							throw new DependencyException("expected object");
-						}
-						
-						Map<String,Object> dta = (Map<String,Object>)data;
-						
-						value = dta.get(parameter);
-					}
-					else{
-						value = dependencyBean.getScope().get(parameter);
-					}
+					value = dependencyBean.getScope().get(name);
 				}
 				
 				Type type = dependencyBean.getType();
@@ -232,7 +221,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 			if (bean == null)
 				throw new MappingException("bean not found: " + value);
 
-			return this.getValue(bean, data);
+			return this.getValue(bean, null, data);
 			
 		}
 		
@@ -284,7 +273,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 					continue;
 				}
 				
-				Object p = this.getValue(prop, data);
+				Object p = this.getValue(prop, prop.getName(), data);
 				exist = exist || p != null;
 				prop.setValueInSource(value, p);
 			}
@@ -343,7 +332,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 			Collection<Object> destElements   = (Collection<Object>)destValue;
 			
 			for(Object o: originElements){
-				Object object = this.getValue(e, o);
+				Object object = this.getValue(e, null, o);
 				destElements.add(object);
 			}
 			
@@ -379,7 +368,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 			Collection<Object> destElements = (Collection<Object>)destValue;
 			
 			for(Object o: data){
-				Object object = this.getValue(e, o);
+				Object object = this.getValue(e, null, o);
 				destElements.add(object);
 			}
 			
@@ -444,8 +433,8 @@ public class JsonBeanDecoder implements BeanDecoder{
 				
 				Map<String, Object> object = (Map<String, Object>)o;
 				
-				Object key   = this.getValue(k, object);
-				Object value = this.getValue(e, object);
+				Object key   = this.getValue(k, k.getParameterName(), object);
+				Object value = this.getValue(e, e.getParameterName(), object);
 				
 				destElements.put(key, value);
 			}
@@ -480,14 +469,14 @@ public class JsonBeanDecoder implements BeanDecoder{
 			}
 			
 			Map<String, Object> data        = (Map<String, Object>)dta;
-			Object destValue                = this.getValueBean(entity, null);
+			Object destValue                = this.getValueBean(entity, data);
 			Map<Object,Object> destElements = (Map<Object, Object>)destValue;
 			Element e                       = (Element)entity.getCollection();
 			
 			for(String oKey: data.keySet()){
 				
-				Object key   = this.getValue(k, oKey);//k.getType().convert(oKey);
-				Object value = this.getValue(e, data.get(oKey));
+				Object key   = k.getType().convert(oKey);
+				Object value = this.getValue(e, null, data.get(oKey));
 				
 				destElements.put(key, value);
 			}
@@ -573,7 +562,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 		boolean exist = argsList.size() < 1;
 		
 		for(ConstructorArgBean arg: constructor.getConstructorArgs()){
-			args[i] = this.getValue(arg, data);
+			args[i] = this.getValue(arg, arg.getParameterName(), data);
 			
 			if(!exist){
 				exist = exist || args[i] != null || arg.isNullable();
