@@ -46,7 +46,6 @@ public class JsonBeanDecoder implements BeanDecoder{
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public Object getValue(UseBeanData entity, Map<String, Object> data) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
@@ -86,13 +85,18 @@ public class JsonBeanDecoder implements BeanDecoder{
 			Bean bean = entity.getMapping();
 			
 			String parameter = entity.getName();
+			Object value;
 			
 			if(parameter != null){
-				Object v = data.get(parameter);
-				return this.getValue(bean, (Map<String,Object>)v);
+				value = data.get(parameter);
+				if(value != null){
+					value = this.getValue(bean, value);
+				}
+			}
+			else{
+				value = this.getValue(bean, data);
 			}
 			
-			Object value = this.getValue(bean, data);
 			return entity.getType().convert(value);
 		}
 		else
@@ -145,15 +149,19 @@ public class JsonBeanDecoder implements BeanDecoder{
 			
 			Bean bean = dependencyBean.getBean().getController().getBean(dependencyBean.getMapping());
 			
-			if(dependencyBean.getParent().isHierarchy()){
-				String parameter = dependencyBean.getParameterName();
-				if(parameter != null){
-					Object v = dta.get(parameter);
-					return this.getValue(bean, (Map<String,Object>)v);
+			String parameter = dependencyBean.getParameterName();
+			Object value;
+			if(dependencyBean.getParent().isHierarchy() && parameter != null){
+				value = dta.get(parameter);
+				if(value != null){
+					value = this.getValue(bean, value);
 				}
 			}
+			else{
+				value = this.getValue(bean, dta);
+			}
 			
-			return this.getValue(bean, dta);
+			return dependencyBean.getType().convert(value);
 		}
 		else
 		if(dependencyBean.getMetaBean() == null){
@@ -166,12 +174,13 @@ public class JsonBeanDecoder implements BeanDecoder{
 			}
 			else{
 				String parameter = dependencyBean.getParameterName();
+				Object value;
 				if(parameter == null){
-					return dependencyBean.getScopeType().equals(ScopeType.PARAM)? data : null;
+					value = data;
 				}
 				else{
 					ScopeType scopeType = dependencyBean.getScopeType();
-					Object value;
+					
 					if(scopeType.equals(ScopeType.PARAM)){
 						
 						if(!(data instanceof Map)){
@@ -185,10 +194,11 @@ public class JsonBeanDecoder implements BeanDecoder{
 					else{
 						value = dependencyBean.getScope().get(parameter);
 					}
-					
-					Type type = dependencyBean.getType();
-					return type.convert(value);
 				}
+				
+				Type type = dependencyBean.getType();
+				return type.convert(value);
+				
 			}
 		}
 		else{
@@ -230,7 +240,6 @@ public class JsonBeanDecoder implements BeanDecoder{
 	
 	/* bean */
 	
-	@SuppressWarnings("unchecked")
 	public Object getValue(Bean bean, Object data) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
@@ -242,181 +251,258 @@ public class JsonBeanDecoder implements BeanDecoder{
 			return this.getValueMap((MapBean)bean, data);
 		}
 		else{
-			if(!(data instanceof Map)){
-				throw new DependencyException("expected a object");
-			}
-			return this.getValueBean(bean, (Map<String, Object>)data);
+			return this.getValueBean(bean, data);
 		}
 	}
 			
 	
-	public Object getValueBean(Bean bean, Map<String, Object> data) 
+	@SuppressWarnings("unchecked")
+	public Object getValueBean(Bean bean, Object dta) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
-		Object value = this.getInstance(bean.getConstructor(), data);
-		
-		if(value == null){
-			return null;
-		}
-		
-		ConstructorBean constructorBean = bean.getConstructor();
-		Map<String, PropertyBean> props = bean.getFields();
-		boolean exist =
-				constructorBean.size() > 0 ||
-				constructorBean.isMethodFactory() ||
-				!props.isEmpty();
-		
-		for(PropertyBean prop: props.values()){
-			if(!prop.canSet()){
-				continue;
+		try{
+			if(!(dta instanceof Map)){
+				throw new DependencyException("expected a object");
 			}
 			
-			Object p = this.getValue(prop, data);
-			exist = exist || p != null;
-			prop.setValueInSource(value, p);
+			Map<String, Object> data = (Map<String, Object>)dta;
+			Object value = this.getInstance(bean.getConstructor(), data);
+			
+			if(value == null){
+				return null;
+			}
+			
+			ConstructorBean constructorBean = bean.getConstructor();
+			Map<String, PropertyBean> props = bean.getFields();
+			boolean exist =
+					constructorBean.size() > 0 ||
+					constructorBean.isMethodFactory() ||
+					!props.isEmpty();
+			
+			for(PropertyBean prop: props.values()){
+				if(!prop.canSet()){
+					continue;
+				}
+				
+				Object p = this.getValue(prop, data);
+				exist = exist || p != null;
+				prop.setValueInSource(value, p);
+			}
+			
+			return value;
 		}
-		
-		return value;
+		catch(Throwable e){
+			String format = 
+					  "{ \r\n"
+					+ "    \"<property>\": <object | value>, \r\n"
+					+ "    ..., \r\n"
+					+ "}";
+			throw new DependencyException("expected: " + format, e);
+			
+		}
 	}
 
 	/* collection */
 	
-	@SuppressWarnings("unchecked")
 	public Object getValueCollection(CollectionBean entity, Object data) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
 		Element e = (Element)entity.getCollection();
 		
 		if(e.getParameterName() != null){
-			if(!(data instanceof Map)){
-				throw new DependencyException("expected a object");
-			}
-			return this.getValueCollection(entity, e, (Map<String,Object>)data);
+			return this.getValueCollectionObject(entity, e, data);
 		}
 		else{
-			if(!(data instanceof Collection)){
-				throw new DependencyException("expected a object");
-			}
-			return this.getValueCollection(entity, e, (Collection<Object>)data);
+			return this.getValueCollectionSimple(entity, e, data);
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Object getValueCollection(CollectionBean entity, Element e, Map<String,Object> data) 
+	public Object getValueCollectionObject(CollectionBean entity, Element e,  Object dta) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		Object destValue   = this.getValue(entity, data);
-		Object originValue = data.get(e.getParameterName());
-		
-		if(!(destValue instanceof Collection)){
-			throw new DependencyException("expected a collection type");
+		try{
+			
+			if(!(dta instanceof Map)){
+				throw new DependencyException("expected a object");
+			}
+			
+			Map<String,Object> data = (Map<String,Object>)dta;
+			Object destValue        = this.getValueBean(entity, data);
+			Object originValue      = data.get(e.getParameterName());
+			
+			if(!(destValue instanceof Collection)){
+				throw new DependencyException("expected a collection type");
+			}
+	
+			if(!(originValue instanceof Collection)){
+				throw new DependencyException("expected a collection");
+			}
+			
+			Collection<Object> originElements = (Collection<Object>)data.get(e.getParameterName());
+			Collection<Object> destElements   = (Collection<Object>)destValue;
+			
+			for(Object o: originElements){
+				Object object = this.getValue(e, o);
+				destElements.add(object);
+			}
+			
+			return destValue;
 		}
-
-		if(!(originValue instanceof Collection)){
-			throw new DependencyException("expected a collection");
+		catch(Throwable ex){
+			String format = 
+					  "{ \r\n"
+					+ "    \"<property>\": <object | value>, \r\n"
+					+ "    ..., \r\n"
+					+ "    \"<elementName>\": [\r\n"
+					+ "        <object | value>,\r\n"
+					+ "        ..."
+					+ "    ]\r\n"
+					+ "}";
+			throw new DependencyException("expected: " + format, ex);
 		}
 		
-		Collection<Object> originElements = (Collection<Object>)data.get(e.getParameterName());
-		Collection<Object> destElements   = (Collection<Object>)destValue;
-		
-		for(Object o: originElements){
-			Object object = this.getValue(e, o);
-			destElements.add(object);
-		}
-		
-		return destValue;
 	}
 
 	@SuppressWarnings("unchecked")
-	public Object getValueCollection(CollectionBean entity, Element e, Collection<Object> originElements) 
+	public Object getValueCollectionSimple(CollectionBean entity, Element e, Object dta) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		Object destValue                = this.getValue(entity, null);
-		Collection<Object> destElements = (Collection<Object>)destValue;
-		
-		for(Object o: originElements){
-			Object object = this.getValue(e, o);
-			destElements.add(object);
+		try{
+			
+			if(!(dta instanceof Collection)){
+				throw new DependencyException("expected a object");
+			}
+			
+			Collection<Object> data         = (Collection<Object>)dta;
+			Object destValue                = this.getValueBean(entity, null);
+			Collection<Object> destElements = (Collection<Object>)destValue;
+			
+			for(Object o: data){
+				Object object = this.getValue(e, o);
+				destElements.add(object);
+			}
+			
+			return destValue;
 		}
-		
-		return destValue;
+		catch(Throwable ex){
+			String format = 
+					" [\r\n"
+					+ "    <object | value>,\r\n"
+					+ "    ..."
+					+ "]";
+			throw new DependencyException("expected: " + format, ex);
+		}
 	}
 
 	/* map */
 	
-	@SuppressWarnings("unchecked")
 	public Object getValueMap(MapBean entity, Object data) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
 		Key k = (Key)entity.getKey();
 		
 		if(k.getParameterName() != null){
-			if(!(data instanceof Map)){
-				throw new DependencyException("expected a object");
-			}
-			return this.getValueMapObject(entity, k, (Map<String,Object>)data);
+			return this.getValueMapObject(entity, k, data);
 		}
 		else{
-			if(!(data instanceof Collection)){
-				throw new DependencyException("expected a object");
-			}
-			return this.getValueMapSimple(entity, k, (Map<String, Object>)data);
+			return this.getValueMapSimple(entity, k, data);
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Object getValueMapObject(MapBean entity, Key k, Map<String,Object> data) 
+	public Object getValueMapObject(MapBean entity, Key k, Object dta) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		Object destValue   = this.getValue(entity, data);
-		Object originValue = data.get(k.getParameterName());
-		
-		if(!(destValue instanceof Map)){
-			throw new DependencyException("expected a map type");
-		}
-
-		if(!(originValue instanceof Collection)){
-			throw new DependencyException("expected a collection");
-		}
-		
-		Collection<Object> originElements = (Collection<Object>)originValue;
-		Map<Object,Object> destElements   = (Map<Object,Object>)destValue;
-		Element e                         = (Element)entity.getCollection();
-		
-		for(Object o: originElements){
+		try{
 			
-			if(!(o instanceof Map)){
+			if(!(dta instanceof Map)){
 				throw new DependencyException("expected a object");
 			}
 			
-			Map<String, Object> object = (Map<String, Object>)o;
+			Map<String,Object> data = (Map<String,Object>)dta;
+			Element e               = (Element)entity.getCollection();
+			Object destValue        = this.getValueBean(entity, data);
+			Object originValue      = data.get(e.getParameterName());
 			
-			Object key   = this.getValue(k, object.get(k.getParameterName()));
-			Object value = this.getValue(e, object.get(e.getParameterName()));
+			if(!(destValue instanceof Map)){
+				throw new DependencyException("expected a map type");
+			}
+	
+			if(!(originValue instanceof Collection)){
+				throw new DependencyException("expected a collection");
+			}
 			
-			destElements.put(key, value);
+			Collection<Object> originElements = (Collection<Object>)originValue;
+			Map<Object,Object> destElements   = (Map<Object,Object>)destValue;
+			
+			for(Object o: originElements){
+				
+				if(!(o instanceof Map)){
+					throw new DependencyException("expected a object");
+				}
+				
+				Map<String, Object> object = (Map<String, Object>)o;
+				
+				Object key   = this.getValue(k, object);
+				Object value = this.getValue(e, object);
+				
+				destElements.put(key, value);
+			}
+			
+			return destValue;
 		}
-		
-		return destValue;
+		catch(Throwable e){
+			String format = 
+				  "{ \r\n"
+				+ "    \"<property>\": <object | value>, \r\n"
+				+ "    ..., \r\n"
+				+ "    \"<elementName>\": [\r\n"
+				+ "        { \r\n"
+				+ "            \"<keyName>\": <keyObject | keyValue>, \r\n"
+				+ "            \"<elementName>\": <elementObject | elementValue> \r\n"
+				+ "        }, \r\n"
+				+ "        ...\r\n"
+				+ "    ]\r\n"
+				+ "}";
+			throw new DependencyException("expected: " + format, e);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public Object getValueMapSimple(MapBean entity, Key k, Map<String, Object> originElements) 
+	public Object getValueMapSimple(MapBean entity, Key k, Object dta) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		Object destValue                = this.getValue(entity, null);
-		Map<Object,Object> destElements = (Map<Object, Object>)destValue;
-		Element e                       = (Element)entity.getCollection();
-		
-		for(String oKey: originElements.keySet()){
+		try{
 			
-			Object key   = this.getValue(k, oKey);
-			Object value = this.getValue(e, originElements.get(oKey));
+			if(!(dta instanceof Map)){
+				throw new DependencyException("expected a object");
+			}
 			
-			destElements.put(key, value);
+			Map<String, Object> data        = (Map<String, Object>)dta;
+			Object destValue                = this.getValueBean(entity, null);
+			Map<Object,Object> destElements = (Map<Object, Object>)destValue;
+			Element e                       = (Element)entity.getCollection();
+			
+			for(String oKey: data.keySet()){
+				
+				Object key   = this.getValue(k, oKey);//k.getType().convert(oKey);
+				Object value = this.getValue(e, data.get(oKey));
+				
+				destElements.put(key, value);
+			}
+			
+			return destValue;
+		}
+		catch(Throwable e){
+			String format = 
+				  "{ \r\n"
+				+ "    \"<key>\": <object | value>, \r\n"
+				+ "    ...\r\n"
+				+ "}";
+			throw new DependencyException("expected: " + format, e);
 		}
 		
-		return destValue;
 	}
 	
 	/* constructor */
@@ -484,7 +570,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 		
 		Object[] args = new Object[argsList.size()];
 		int i         = 0;
-		boolean exist = false;
+		boolean exist = argsList.size() < 1;
 		
 		for(ConstructorArgBean arg: constructor.getConstructorArgs()){
 			args[i] = this.getValue(arg, data);
