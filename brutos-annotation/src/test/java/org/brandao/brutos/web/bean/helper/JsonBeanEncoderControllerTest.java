@@ -6,12 +6,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.brandao.brutos.annotation.AcceptRequestType;
 import org.brandao.brutos.annotation.Controller;
+import org.brandao.brutos.annotation.ResponseType;
 import org.brandao.brutos.annotation.helper.EnumTest;
+import org.brandao.brutos.annotation.web.MediaTypes;
+import org.brandao.brutos.annotation.web.RequestMethod;
+import org.brandao.brutos.annotation.web.ResponseErrors;
+import org.brandao.brutos.annotation.web.ResponseStatus;
+import org.brandao.brutos.web.HttpStatus;
+import org.brandao.brutos.web.RequestMethodTypes;
 
 @Controller("/controller")
+@RequestMethod(RequestMethodTypes.POST)
+@AcceptRequestType(MediaTypes.APPLICATION_JSON)@ResponseType(MediaTypes.APPLICATION_JSON)
+@ResponseStatus(HttpStatus.ACCEPTED)@ResponseErrors(HttpStatus.BAD_REQUEST)
 public class JsonBeanEncoderControllerTest {
 
+	private JsonBeanEncoderBean prop;
+	
 	public JsonBeanEncoderBean myAction(){
     	JsonBeanEncoderBean o = new JsonBeanEncoderBean();
     	

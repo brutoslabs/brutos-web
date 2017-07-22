@@ -114,7 +114,7 @@ public class BeanInstance {
 		
 		Class<?> superClass = clazz.getSuperclass();
 		
-		if(superClass != Object.class){
+		if(superClass != null && superClass != Object.class){
 			loadFields(data, superClass);
 		}
 		

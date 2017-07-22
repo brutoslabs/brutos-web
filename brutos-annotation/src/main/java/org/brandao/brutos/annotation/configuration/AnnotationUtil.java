@@ -162,7 +162,7 @@ public class AnnotationUtil {
 				return org.brandao.brutos.ScopeType.valueOf(value.scope());
 		}
 
-		return null;//BrutosConstants.DEFAULT_SCOPETYPE;
+		return BrutosConstants.DEFAULT_SCOPETYPE;
 	}
 
 	public static boolean isBuildEntity(TypeRegistry typeRegistry,
