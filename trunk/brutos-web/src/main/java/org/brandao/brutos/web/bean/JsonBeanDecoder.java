@@ -136,7 +136,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Object getValue(DependencyBean dependencyBean, Object data) 
+	public Object getValue(DependencyBean dependencyBean, String parentName, Object data) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
 		if(dependencyBean.getMapping() != null){
