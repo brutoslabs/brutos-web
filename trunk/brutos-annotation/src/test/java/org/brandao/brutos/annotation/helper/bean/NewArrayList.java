@@ -9,8 +9,19 @@ public class NewArrayList
 	extends ArrayList<Object>{
 
 	@Transient
-	public boolean isEmpty(){
-		return super.isEmpty();
+	private Object[] elementData;
+	
+	@Transient
+	private boolean empty;
+	
+	@Transient
+	private int size;
+	
+	@Transient
+	private int modCount;
+	
+	public NewArrayList(){
+		super();
 	}
 	
 }

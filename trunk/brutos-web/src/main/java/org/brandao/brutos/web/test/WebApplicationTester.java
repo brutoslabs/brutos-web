@@ -18,17 +18,29 @@
 package org.brandao.brutos.web.test;
 
 import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
+
+import com.mockrunner.mock.web.MockHttpServletRequest;
+import com.mockrunner.mock.web.MockHttpSession;
+import com.mockrunner.mock.web.MockServletContext;
 
 /**
  * 
  * @author Brandao
  */
 public interface WebApplicationTester {
+
+    void prepareContext(MockServletContext servletContext);
+
+    void prepareRequest(MockHttpServletRequest request);
     
+    void prepareSession(MockHttpSession session);
+	
     void prepareContext(Map<String,String> parameters);
 
     void prepareRequest(Map<String,String> parameters);

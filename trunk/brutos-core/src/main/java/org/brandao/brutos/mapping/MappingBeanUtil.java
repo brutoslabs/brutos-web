@@ -146,7 +146,6 @@ public final class MappingBeanUtil {
 				dependencyBean, mappingBean, validatorFactory, controller);
 	}
 	
-	@SuppressWarnings("unchecked")
 	private static DependencyBean createDependencyBean(String name,
 			EnumerationType enumProperty, String temporalProperty,
 			String mapping, ScopeType scope, Object value, boolean nullable,
@@ -168,26 +167,33 @@ public final class MappingBeanUtil {
 		dependencyBean.setScopeType(scope);
 
 		if (typeDef == null) {
-			if (nullable) {
-				if (classType == null)
+			if(nullable){
+				if (classType == null){
 					throw new MappingException("type must be informed");
+				}
 
 				typeDef = new NullType((Class<?>) classType);
-			} else if (classType != null) {
-				try {
-					typeDef = ((ConfigurableApplicationContext) controller
+			}
+			else
+			if (classType != null){
+				try{
+					typeDef = 
+						((ConfigurableApplicationContext) controller
 							.getContext()).getTypeManager().getType(classType,
 							enumProperty, temporalProperty);
 
-				} catch (UnknownTypeException e) {
+				}
+				catch (UnknownTypeException e) {
 					throw new MappingException(e);
 				}
-
-				if (typeDef == null)
-					typeDef = new ObjectType(rawType);
-
 			}
-		} else if (classType != null) {
+			
+			if (typeDef == null){
+				typeDef = new ObjectType(rawType);
+			}
+		}
+		else 
+		if (classType != null) {
 			if (!typeDef.getClassType().isAssignableFrom(rawType)) {
 				throw new MappingException(String.format(
 						"expected %s found %s",
@@ -198,17 +204,21 @@ public final class MappingBeanUtil {
 
 		dependencyBean.setType(typeDef);
 
-		if (generic) {
+		if(generic){
 			MetaBean metaBean = new MetaBean(controller);
 			metaBean.setClassType(rawType);
 			// metaBean.setType(typeDef);
 			dependencyBean.setMetaBean(metaBean);
-		} else if (!StringUtil.isEmpty(mapping)) {
-			if (controller.getBean(mapping) != null)
+		}
+		else
+		if(!StringUtil.isEmpty(mapping)){
+			if (controller.getBean(mapping) != null){
 				dependencyBean.setMapping(mapping);
-			else
+			}
+			else{
 				throw new MappingException("mapping name " + mapping
 						+ " not found!");
+			}
 		}
 
 		Configuration validatorConfig = new Configuration();
