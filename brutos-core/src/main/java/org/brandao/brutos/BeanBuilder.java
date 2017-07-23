@@ -192,9 +192,8 @@ public class BeanBuilder {
 
 		//Se a chave não for simples, ela terá que possuir um nome
 		if (name == null && mapping != null)
-			name = BrutosConstants.DEFAULT_KEY_NAME;
-
-			//throw new MappingException("key must have a name");
+			//name = BrutosConstants.DEFAULT_KEY_NAME;
+			throw new MappingException("key must have a name");
 		
 		Element e = (Element)((MapBean)mappingBean).getCollection();
 		
@@ -347,10 +346,6 @@ public class BeanBuilder {
 		if (type == null && mapping == null)
 			throw new MappingException("unknown element type");
 
-		//Se a chave não for simples, ela terá que possuir um nome
-		if (name == null && mapping != null)
-			name = BrutosConstants.DEFAULT_ELEMENT_NAME;
-		
 		if(mappingBean.isMap()){
 			Key key = (Key)((MapBean)this.mappingBean).getKey();
 			

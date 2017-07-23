@@ -18,9 +18,11 @@
 package org.brandao.brutos.annotation.helper.bean;
 
 import java.util.ArrayList;
+
 import org.brandao.brutos.annotation.Bean;
 import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.MappingTypes;
+import org.brandao.brutos.annotation.Transient;
 
 /**
  *
@@ -29,5 +31,25 @@ import org.brandao.brutos.annotation.MappingTypes;
 @Bean
 @ElementCollection(bean="myElement",mappingType=MappingTypes.COMPLEX)
 public class CustomArrayList extends ArrayList<BeanConstructorTest>{
-    
+	
+	private static final long serialVersionUID = -7791722265888892457L;
+ 
+	/* overrride mappging of the ArrayList type */
+
+	@Transient
+	private Object[] elementData;
+	
+	@Transient
+	private boolean empty;
+	
+	@Transient
+	private int size;
+	
+	@Transient
+	private int modCount;
+	
+	public CustomArrayList(){
+		super();
+	}
+	
 }

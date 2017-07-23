@@ -180,18 +180,24 @@ public class WebApplicationContextTester {
         for(String key: contextParams.keySet())
             servletContext.setInitParameter(key, contextParams.get(key));
         
+        tester.prepareContext(servletContext);
+        
         try{
             listener.contextInitialized(sce);
             MockHttpServletRequest request = new MockHttpServletRequest();
             MockHttpServletResponse response = new MockHttpServletResponse();
             MockHttpSession session = new MockHttpSession();
             request.setSession(session);
+            tester.prepareRequest(request);
+            tester.prepareSession(session);
+            
             ServletRequestEvent sre = new ServletRequestEvent(servletContext, request);
             HttpSessionEvent hse = new HttpSessionEvent(session);
             DispatcherServlet servlet = new DispatcherServlet();
             try{
                 request.setRequestURI(uri);
                 request.setContextPath("");
+                //request.setContentType("application/json; charset=UTF-8");
                 listener.requestInitialized(sre);
                 
                 tester.prepareSession(sessionParams);
