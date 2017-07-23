@@ -22,8 +22,8 @@ import java.util.Properties;
 import org.brandao.brutos.AbstractParserContentType;
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.MutableRequestParserEvent;
-import org.brandao.brutos.MvcRequest;
 import org.brandao.brutos.web.WebMvcRequest;
+import org.brandao.brutos.web.bean.MultipartFormDataBeanDecoder;
 import org.brandao.brutos.web.http.MultipartContentParser;
 import org.brandao.brutos.web.http.MultipartContentParser.Input;
 
@@ -42,7 +42,11 @@ public class MultipartFormDataParserContentType extends AbstractParserContentTyp
 
 	private static final String DEFAULT_PATH		= null;
 	
-	public void parserContentType(MvcRequest request, 
+	public MultipartFormDataParserContentType(){
+		super.beanDecoder = new MultipartFormDataBeanDecoder();
+	}
+	
+	public void parserContentType(MutableMvcRequest request, 
     		MutableRequestParserEvent requestParserInfo, 
     		Properties config)	throws org.brandao.brutos.RequestParserException {
 		
@@ -60,12 +64,12 @@ public class MultipartFormDataParserContentType extends AbstractParserContentTyp
         	mpcp.setPath(path);
         	mpcp.start();
         	
-        	MutableMvcRequest r = (MutableMvcRequest)request;
             while(mpcp.hasMoreElements()){
                 Input input = mpcp.nextElement();
-                r.setParameter(input.getName(), input.getValue() );
+                request.setParameter(input.getName(), input.getValue() );
             }
-            
+         
+            super.parser(request, requestParserInfo, config, mpcp);
         }
         catch(Throwable e){
         	throw new org.brandao.brutos.RequestParserException(e);
