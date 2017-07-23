@@ -115,6 +115,10 @@ public abstract class UseBeanData {
 	public void encode(BeanEncoder encoder, Object value) throws BeanEncoderException{
 		encoder.encode(this, value);
 	}
+
+	public Object decode(BeanDecoder decoder, Object data) throws BeanDecoderException{
+		return decoder.decode(this, data);
+	}
 	
 	protected abstract void validate(Object source, Object value);
 

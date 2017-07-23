@@ -19,6 +19,7 @@ package org.brandao.brutos.web.parser;
 
 import java.util.Properties;
 
+import org.brandao.brutos.AbstractParserContentType;
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.MutableRequestParserEvent;
 import org.brandao.brutos.MvcRequest;
@@ -31,8 +32,7 @@ import org.brandao.brutos.web.http.MultipartContentParser.Input;
  * @author Brandao
  *
  */
-public class MultipartFormDataParserContentType 
-	implements org.brandao.brutos.ParserContentType{
+public class MultipartFormDataParserContentType extends AbstractParserContentType{
 
 	private static final String MAX_LENGTH_PROPERTY	= "org.brandao.brutos.request.max_length";
 

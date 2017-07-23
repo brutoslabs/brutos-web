@@ -18,13 +18,12 @@
 package org.brandao.brutos.web.parser;
 
 import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
+import org.brandao.brutos.AbstractParserContentType;
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.MutableRequestParserEvent;
-import org.brandao.brutos.MvcRequest;
+import org.brandao.brutos.web.bean.JsonBeanDecoder;
 import org.brandao.jbrgates.JSONDecoder;
 
 /**
@@ -32,10 +31,30 @@ import org.brandao.jbrgates.JSONDecoder;
  * @author Brandao
  *
  */
-@SuppressWarnings("unchecked")
-public class JsonParserContentType implements org.brandao.brutos.ParserContentType{
+public class JsonParserContentType extends AbstractParserContentType{
 
-	public void parserContentType(MvcRequest request, 
+	public JsonParserContentType(){
+		super.beanDecoder = new JsonBeanDecoder();
+	}
+	
+	public void parserContentType(MutableMvcRequest request, 
+    		MutableRequestParserEvent requestParserInfo, 
+    		Properties config) throws org.brandao.brutos.RequestParserException {
+		
+		try{
+			InputStream stream = request.getStream();
+			//String charset = params.get("charset");
+	        JSONDecoder decoder = new JSONDecoder(stream);
+	        Object data         = decoder.decode();
+	        super.parser(request, requestParserInfo, config, data);
+		}
+		catch(Throwable e){
+			throw new org.brandao.brutos.RequestParserException(e);
+		}
+		
+	}
+	/*
+	public void parserContentType(MutableMvcRequest request, 
     		MutableRequestParserEvent requestParserInfo, 
     		Properties config) throws org.brandao.brutos.RequestParserException {
 		try{
@@ -86,4 +105,5 @@ public class JsonParserContentType implements org.brandao.brutos.ParserContentTy
 			request.setParameter(fullFieldName, String.valueOf(value));
 		}
 	}
+	*/
 }
