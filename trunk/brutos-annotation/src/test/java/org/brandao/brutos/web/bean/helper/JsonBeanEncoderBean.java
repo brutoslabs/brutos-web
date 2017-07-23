@@ -20,7 +20,9 @@ import org.brandao.brutos.annotation.helper.bean.NewHashMap;
 
 public class JsonBeanEncoderBean implements Serializable{
 
-    private int propertyA;
+	private static final long serialVersionUID = 7605397500675532945L;
+
+	private int propertyA;
 
     @Basic(bean="prop")
     private String propertyB;
@@ -41,13 +43,13 @@ public class JsonBeanEncoderBean implements Serializable{
     @KeyCollection(
         bean="myKey",
         enumerated=EnumerationType.STRING,
-        target=Integer.class,
+        target=String.class,
         temporal="yyyy-MM-dd"
     )
     @ElementCollection(
         bean="myElement",
         enumerated=EnumerationType.STRING,
-        target=String.class,
+        target=Integer.class,
         temporal="yyyy-MM-dd",
         scope=ScopeType.REQUEST
     )
@@ -58,6 +60,7 @@ public class JsonBeanEncoderBean implements Serializable{
     @ElementCollection(target=Integer.class)
     private Map<String,Integer> propertyI;
     
+    @KeyCollection(bean="key")
     private Map<JsonBeanEncoderInnerBean,Integer> propertyJ;
 
     private Map<String,JsonBeanEncoderInnerBean> propertyK;
