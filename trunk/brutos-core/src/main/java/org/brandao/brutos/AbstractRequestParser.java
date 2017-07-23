@@ -36,7 +36,7 @@ public abstract class AbstractRequestParser
 		this.parsers = new HashMap<DataType, ParserContentType>();
 	}
 	
-	public void parserContentType(MvcRequest request, DataType dataType,
+	public void parserContentType(MutableMvcRequest request, DataType dataType,
 			Properties config, MutableRequestParserEvent requestParserInfo)
 			throws RequestParserException {
 		

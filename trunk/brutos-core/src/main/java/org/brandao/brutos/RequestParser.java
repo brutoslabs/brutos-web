@@ -26,7 +26,7 @@ import java.util.Properties;
  */
 public interface RequestParser {
 
-    void parserContentType(MvcRequest request, 
+    void parserContentType(MutableMvcRequest request, 
     		DataType dataType, Properties config,
     		MutableRequestParserEvent requestParserInfo) throws RequestParserException;
 	

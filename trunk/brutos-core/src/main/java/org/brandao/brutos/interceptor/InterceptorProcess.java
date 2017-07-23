@@ -25,7 +25,6 @@ import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.MutableMvcResponse;
 import org.brandao.brutos.RedirectException;
 import org.brandao.brutos.ResourceAction;
-import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.ActionListener;
@@ -33,8 +32,6 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.Interceptor;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ThrowableSafeData;
-import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.Scopes;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.validator.ValidatorException;
 
@@ -200,13 +197,15 @@ public class InterceptorProcess implements InterceptorStack {
 	public void invoke0(ConfigurableInterceptorHandler handler,
 			StackRequestElement stackRequestElement) {
 
-		Scopes scopes = handler.getContext().getScopes();
-		Scope requestScope = scopes.get(ScopeType.REQUEST.toString());
+		//Scopes scopes = handler.getContext().getScopes();
+		//Scope requestScope = scopes.get(ScopeType.REQUEST.toString());
 		Object resource = handler.getResource();
 
 		try{
+			/* feito agora pelo invoker
 			DataInput input = new DataInput(requestScope);
 			input.read(form, resource);
+			*/
 			preAction(resource);
 			executeAction(handler);
 		}
@@ -238,10 +237,11 @@ public class InterceptorProcess implements InterceptorStack {
 		}
 		finally {
 			postAction(resource);
+			/* feito pelo invoker
 			DataOutput dataOutput = new DataOutput(
 					scopes.get(ScopeType.REQUEST));
 			dataOutput.write(form, stackRequestElement.getResource());
-			//dataOutput.writeFields(form, stackRequestElement.getResource());
+			*/
 		}
 
 	}

@@ -113,6 +113,76 @@ public class Invoker {
 		this.requestParserListener = requestParserListener;
 	}
 	
+	/* new */
+	
+	protected boolean resolveAction(MutableMvcRequest request, 
+			MutableMvcResponse response){
+		
+		request.setApplicationContext(this.applicationContext);
+		
+		ResourceAction resourceAction = 
+				actionResolver.getResourceAction(controllerManager, request);
+		
+		if(resourceAction == null){
+			return false;
+		}
+		
+		request.setResource(resourceAction.getController().getInstance(objectFactory));
+		request.setResourceAction(resourceAction);
+		
+		return true;
+	}
+	
+	protected void parseRequest(MutableMvcRequest request, MutableMvcResponse response){
+		try{
+			currentApp.set(this.applicationContext);
+			
+			MutableRequestParserEvent event = new MutableRequestParserEventImp();
+			event.setRequest(request);
+			event.setResponse(response);
+			
+			try{
+				this.requestParserListener.started(event);
+				this.requestParser.parserContentType(request, 
+						request.getType(), 
+						this.applicationContext.getConfiguration(), event);
+			}
+			finally{
+				this.requestParserListener.finished(event);
+			}
+		}
+		finally{
+			currentApp.remove();
+		}		
+	}
+	
+	/* /new */
+
+	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response){
+		
+		if(!this.resolveAction(request, response)){
+			return false;
+		}
+			
+		StackRequestElement element = createStackRequestElement();
+		
+		try{
+			this.parseRequest(request, response);
+		}
+		catch(Throwable e){
+			element.setObjectThrow(e);
+		}
+
+		element.setAction(request.getResourceAction());
+		element.setController(request.getResourceAction().getController());
+		element.setRequest(request);
+		element.setResponse(response);
+		element.setResource(request.getResource());
+		element.setObjectThrow(request.getThrowable());
+		return this.invoke(element);
+	}
+	
+	/*
 	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response){
 		try{
 			currentApp.set(this.applicationContext);
@@ -138,7 +208,6 @@ public class Invoker {
 		}
 		
 	}
-	
 
 	protected boolean innerInvoke(MutableMvcRequest request, 
 			MutableMvcResponse response) throws RequestTypeException{
@@ -165,7 +234,8 @@ public class Invoker {
 		element.setObjectThrow(request.getThrowable());
 		return this.invoke(element);
 	}
-
+	*/
+	
 	public Object invoke(Controller controller, ResourceAction action,
 			Object resource, Object[] parameters) throws RequestTypeException{
 
