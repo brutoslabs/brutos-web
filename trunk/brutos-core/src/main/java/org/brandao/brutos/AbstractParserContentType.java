@@ -11,17 +11,10 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.PropertyController;
 
-public class AbstractParserContentType implements ParserContentType{
+public abstract class AbstractParserContentType implements ParserContentType{
 
 	protected BeanDecoder beanDecoder;
 	
-	public void parserContentType(MutableMvcRequest request,
-			MutableRequestParserEvent requestParserInfo, Properties config)
-			throws RequestParserException {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void parser(MutableMvcRequest request,
 			MutableRequestParserEvent requestParserInfo, 
 			Properties config, Object data) throws BeanDecoderException, 

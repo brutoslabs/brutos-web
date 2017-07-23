@@ -18,6 +18,7 @@
 package org.brandao.brutos.web.parser;
 
 import java.io.InputStream;
+import java.util.Map;
 import java.util.Properties;
 
 import org.brandao.brutos.AbstractParserContentType;
@@ -37,6 +38,7 @@ public class JsonParserContentType extends AbstractParserContentType{
 		super.beanDecoder = new JsonBeanDecoder();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void parserContentType(MutableMvcRequest request, 
     		MutableRequestParserEvent requestParserInfo, 
     		Properties config) throws org.brandao.brutos.RequestParserException {
@@ -44,8 +46,13 @@ public class JsonParserContentType extends AbstractParserContentType{
 		try{
 			InputStream stream = request.getStream();
 			//String charset = params.get("charset");
-	        JSONDecoder decoder = new JSONDecoder(stream);
-	        Object data         = decoder.decode();
+	        JSONDecoder decoder     = new JSONDecoder(stream);
+	        Map<String,Object> data = (Map<String,Object>)decoder.decode();
+	        
+            for(String p: data.keySet()){
+            	request.setParameter(p, data.get(p) );
+            }
+	        
 	        super.parser(request, requestParserInfo, config, data);
 		}
 		catch(Throwable e){
