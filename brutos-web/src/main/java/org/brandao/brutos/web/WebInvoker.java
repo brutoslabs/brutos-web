@@ -27,7 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.DataType;
 import org.brandao.brutos.Invoker;
+import org.brandao.brutos.InvokerException;
 import org.brandao.brutos.MutableMvcRequest;
+import org.brandao.brutos.MutableMvcResponse;
+import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.RequestProvider;
 import org.brandao.brutos.RequestTypeException;
 import org.brandao.brutos.ResourceAction;
@@ -54,14 +57,18 @@ public class WebInvoker extends Invoker{
     	WebMvcRequestImp webRequest   = new WebMvcRequestImp((HttpServletRequest)request);
     	WebMvcResponseImp webResponse = new WebMvcResponseImp((HttpServletResponse)response, webRequest);
     	
-    	logger.info("method: " + request.getMethod() + ", request: " + request.getRequestURI() + ", accept: " + request.getHeader("Accept"));
+    	logger.info(
+    			  "uri: " + request.getRequestURI() + ", "
+    			+ "method: " + request.getMethod() + ", "
+		); 
+    			
     	try{
     		SessionScope.setServletRequest(request);
     		ParamScope.setRequest(webRequest);
     		RequestScope.setRequest(webRequest);
     		HeaderScope.setRequest(webRequest);
 
-            if(!super.invoke(webRequest, webResponse)){
+            if(!this.invoke(webRequest, webResponse)){
                 if(chain == null)
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 else
@@ -69,14 +76,21 @@ public class WebInvoker extends Invoker{
             }
     		
     	}
-    	catch(RequestTypeException e){
-    		response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
-    	}
-    	catch(RequestMethodException e){
-    		response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
-    	}
-    	catch(ResponseTypeException e){
-    		response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+    	catch(InvokerException e){
+    		if(e.getCause() instanceof RequestTypeException){
+        		response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+    		}
+    		else
+    		if(e.getCause() instanceof RequestMethodException){
+        		response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+    		}
+    		else
+    		if(e.getCause() instanceof ResponseTypeException){
+        		response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+    		}
+    		else{
+    			throw e;
+    		}
     	}
     	finally{
     		SessionScope.removeServletRequest(request);
@@ -87,13 +101,13 @@ public class WebInvoker extends Invoker{
     }
 
 	public Object invoke(Controller controller, ResourceAction action,
-			Object resource, Object[] parameters) throws RequestTypeException{
+			Object resource, Object[] parameters) throws InvokerException{
 
 		if (controller == null)
-			throw new IllegalArgumentException("controller not found");
+			throw new InvokerException("controller not found");
 
 		if (action == null)
-			throw new IllegalArgumentException("action not found");
+			throw new InvokerException("action not found");
 
 		MutableWebMvcRequest webRequest   = (MutableWebMvcRequest) RequestProvider.getRequest();
 		MutableWebMvcResponse webResponse = (MutableWebMvcResponse) ResponseProvider.getResponse();
@@ -105,41 +119,41 @@ public class WebInvoker extends Invoker{
     	webRequest.setResourceAction(action);
     	webRequest.setParameters(parameters);
 		
-		StackRequestElement element = this.createStackRequestElement();
-
-		element.setAction(webRequest.getResourceAction());
-		element.setController(controller);
-		element.setRequest(webRequest);
-		element.setResponse(webResponse);
-		element.setResource(webRequest.getResource());
-		element.setObjectThrow(webRequest.getThrowable());
-		this.invoke(element);
+		this.invoke(webRequest, webResponse);
 		return webResponse.getResult();
 	}
     
-    public boolean invoke(StackRequestElement element){
-    	
-    	WebMvcRequest request            = (WebMvcRequest) element.getRequest();
-		WebResourceAction resourceAction = (WebResourceAction)element.getAction();
-		RequestMethodType requestMethod  = resourceAction.getRequestMethod();
+	protected boolean resolveAction(MutableMvcRequest request, 
+			MutableMvcResponse response){
 		
-		if(!request.getRequestMethodType().equals(requestMethod)){
-			throw new RequestMethodException(request.getRequestMethodType().getId());
+		if(!super.resolveAction(request, response)){
+			return false;
 		}
 		
-		return super.invoke(element);
+		try{
+	    	WebMvcRequest webRequest         = (WebMvcRequest)request;
+			WebResourceAction resourceAction = (WebResourceAction)request.getResourceAction();
+			RequestMethodType requestMethod  = resourceAction.getRequestMethod();
+			
+			if(!webRequest.getRequestMethodType().equals(requestMethod)){
+				throw new RequestMethodException(webRequest.getRequestMethodType().getId());
+			}
+			
+			return true;
+		}
+		catch(InvokerException e){
+			throw e;
+		}
+		catch(Throwable e){
+			throw new InvokerException(e);
+		}
+		
 	}
     
 	protected DataType selectResponseType(ResourceAction action, MutableMvcRequest request){
 		
     	DataTypeMap supportedResponseTypes = action.getResponseTypes();
     	List<DataType> responseTypes       = request.getAcceptResponse();
-    	
-    	/*
-    	if(supportedResponseTypes.isEmpty()){
-    		supportedResponseTypes = action.getController().getRequestTypes();
-    	}
-    	*/
     	
     	if(supportedResponseTypes.isEmpty()){
     		

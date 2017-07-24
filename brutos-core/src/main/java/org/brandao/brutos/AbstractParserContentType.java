@@ -27,6 +27,11 @@ public abstract class AbstractParserContentType implements ParserContentType{
         Object resource = request.getResource();
         
         for(PropertyController prop: controller.getProperties()){
+        	
+        	if(!prop.canSet()){
+        		continue;
+        	}
+        	
         	Object propValue = prop.decode(this.beanDecoder, data);
         	prop.setValueInSource(resource, propValue);
         }

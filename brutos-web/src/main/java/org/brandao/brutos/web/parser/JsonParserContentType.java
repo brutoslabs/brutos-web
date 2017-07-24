@@ -49,6 +49,10 @@ public class JsonParserContentType extends AbstractParserContentType{
 	        JSONDecoder decoder     = new JSONDecoder(stream);
 	        Map<String,Object> data = (Map<String,Object>)decoder.decode();
 	        
+	        if(data == null){
+	        	return;
+	        }
+	        
             for(String p: data.keySet()){
             	request.setParameter(p, data.get(p) );
             }
