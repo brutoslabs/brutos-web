@@ -17,6 +17,7 @@
 
 package org.brandao.brutos;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.brandao.brutos.interceptor.InterceptorHandlerImp;
@@ -24,6 +25,7 @@ import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.DataTypeMap;
+import org.brandao.brutos.mapping.PropertyController;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.scope.ThreadScope;
 
@@ -115,6 +117,25 @@ public class Invoker {
 	
 	/* new */
 	
+	protected void resolveTypes(MutableMvcRequest request, 
+			MutableMvcResponse response) throws RequestTypeException{
+		
+		ResourceAction resourceAction = request.getResourceAction();
+		
+		if(!this.isSupportedRequestType(resourceAction, request)){
+			throw new RequestTypeException("request type not supported");
+		}
+
+		DataType responseDataType = this.selectResponseType(resourceAction, request);
+		
+		if(responseDataType == null){
+			throw new ResponseTypeException("response type not supported");
+		}
+
+		response.setType(responseDataType);
+		
+	}
+	
 	protected boolean resolveAction(MutableMvcRequest request, 
 			MutableMvcResponse response){
 		
@@ -156,94 +177,31 @@ public class Invoker {
 		}		
 	}
 	
+	protected void updateRequest(MutableMvcRequest request, Controller controller, Object resource) 
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+		List<PropertyController> properties = controller.getProperties();
+		
+		for(PropertyController property: properties){
+			
+			if(!property.canGet()){
+				continue;
+			}
+			
+			Object value = property.getValueFromSource(resource);
+			request.setProperty(property.getName(), value);
+		}
+	}
+	
 	/* /new */
 
-	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response){
-		
-		if(!this.resolveAction(request, response)){
-			return false;
-		}
-			
-		StackRequestElement element = createStackRequestElement();
-		
-		try{
-			this.parseRequest(request, response);
-		}
-		catch(Throwable e){
-			element.setObjectThrow(e);
-		}
-
-		element.setAction(request.getResourceAction());
-		element.setController(request.getResourceAction().getController());
-		element.setRequest(request);
-		element.setResponse(response);
-		element.setResource(request.getResource());
-		element.setObjectThrow(request.getThrowable());
-		return this.invoke(element);
-	}
-	
-	/*
-	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response){
-		try{
-			currentApp.set(this.applicationContext);
-			
-			MutableRequestParserEvent event = new MutableRequestParserEventImp();
-			event.setRequest(request);
-			event.setResponse(response);
-			
-			try{
-				this.requestParserListener.started(event);
-				this.requestParser.parserContentType(request, 
-						request.getType(), 
-						this.applicationContext.getConfiguration(), event);
-			}
-			finally{
-				this.requestParserListener.finished(event);
-			}
-			
-			return this.innerInvoke(request, response);
-		}
-		finally{
-			currentApp.remove();
-		}
-		
-	}
-
-	protected boolean innerInvoke(MutableMvcRequest request, 
-			MutableMvcResponse response) throws RequestTypeException{
-
-		request.setApplicationContext(this.applicationContext);
-		
-		ResourceAction resourceAction = 
-				actionResolver.getResourceAction(controllerManager, request);
-		
-		if(resourceAction == null){
-			return false;
-		}
-		
-		request.setResource(resourceAction.getController().getInstance(objectFactory));
-		request.setResourceAction(resourceAction);
-
-		StackRequestElement element = createStackRequestElement();
-
-		element.setAction(request.getResourceAction());
-		element.setController(resourceAction.getController());
-		element.setRequest(request);
-		element.setResponse(response);
-		element.setResource(request.getResource());
-		element.setObjectThrow(request.getThrowable());
-		return this.invoke(element);
-	}
-	*/
-	
 	public Object invoke(Controller controller, ResourceAction action,
-			Object resource, Object[] parameters) throws RequestTypeException{
+			Object resource, Object[] parameters) throws InvokerException{
 
 		if (controller == null)
-			throw new IllegalArgumentException("controller not found");
+			throw new InvokerException("controller not found");
 
 		if (action == null)
-			throw new IllegalArgumentException("action not found");
+			throw new InvokerException("action not found");
 
 		MutableMvcRequest request   = new DefaultMvcRequest();
 		MutableMvcResponse response = new DefaultMvcResponse();
@@ -252,20 +210,12 @@ public class Invoker {
 		request.setResourceAction(action);
 		request.setParameters(parameters);
 		
-		StackRequestElement element = createStackRequestElement();
-
-		element.setAction(request.getResourceAction());
-		element.setController(controller);
-		element.setRequest(request);
-		element.setResponse(response);
-		element.setResource(request.getResource());
-		element.setObjectThrow(request.getThrowable());
-		this.invoke(element);
+		this.invoke(request, response);
 		return response.getResult();
 	}
 	
 	public Object invoke(Controller controller, ResourceAction action,
-			Object[] parameters) {
+			Object[] parameters) throws InvokerException{
 		return invoke(controller, action, null, parameters);
 	}
 
@@ -308,64 +258,50 @@ public class Invoker {
 		return getStackRequest().getCurrent();
 	}
 
-	public boolean invoke(StackRequestElement element) throws RequestTypeException{
+	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response) throws InvokerException{
 
-		MutableMvcRequest request     = element.getRequest();
-		MutableMvcResponse response   = element.getResponse();
-		ResourceAction resourceAction = request.getResourceAction();
-		
-		if(!this.isSupportedRequestType(resourceAction, request)){
-			throw new RequestTypeException("request type not supported");
-		}
-
-		DataType responseDataType = this.selectResponseType(resourceAction, request);
-		
-		if(responseDataType == null){
-			throw new ResponseTypeException("response type not supported");
-		}
-
-		response.setType(responseDataType);
-		
 		long time                     = -1;
 		boolean createdThreadScope    = false;
+		boolean pushStackRequest      = false;
 		StackRequest stackRequest     = null;
 		MvcRequest oldRequest         = null;
 		MvcResponse oldresponse       = null;
 		
-		
 		try{
-			oldRequest  = RequestProvider.init(request);
-			oldresponse = ResponseProvider.init(response);
+			time                        = System.currentTimeMillis();
+			createdThreadScope          = ThreadScope.create();
+			StackRequestElement element = createStackRequestElement();
+			oldRequest                  = RequestProvider.init(request);
+			oldresponse                 = ResponseProvider.init(response);
 			
-			time = System.currentTimeMillis();
-			createdThreadScope = ThreadScope.create();
 			RequestInstrument requestInstrument = getRequestInstrument();
 			stackRequest = this.getStackRequest(requestInstrument);
 			
 			request.setRequestInstrument(requestInstrument);
 			request.setStackRequestElement(element);
 
+			
 			stackRequest.push(element);
+			pushStackRequest = true;
 			
-			InterceptorHandlerImp ih = new InterceptorHandlerImp(request, response);
-			element.getController().proccessBrutosAction(ih);
-			
-			if(!requestInstrument.isHasViewProcessed()){
-				renderView.show(request, response);
-				requestInstrument.setHasViewProcessed(true);
-			}
-			
-			return true;
+			return this.invokeApplication(
+					request, response, element, requestInstrument);
+		}
+		catch(Throwable e){
+			throw new InvokerException(e);
 		}
 		finally {
 
 			RequestProvider.destroy(oldRequest);
 			ResponseProvider.destroy(oldresponse);
 			
-			if (createdThreadScope)
+			if (createdThreadScope){
 				ThreadScope.destroy();
+			}
 
-			stackRequest.pop();
+			if(pushStackRequest){
+				stackRequest.pop();
+			}
 
 			if (logger.isDebugEnabled())
 				logger.debug(String.format("Request processed in %d ms",
@@ -374,15 +310,50 @@ public class Invoker {
 		}
 	}
 
+	protected boolean invokeApplication(
+			MutableMvcRequest request,
+			MutableMvcResponse response,
+			StackRequestElement element,
+			RequestInstrument requestInstrument
+			) throws Throwable{
+
+		if(!this.resolveAction(request, response)){
+			return false;
+		}
+			
+		try{
+			this.parseRequest(request, response);
+		}
+		catch(Throwable e){
+			element.setObjectThrow(e);
+		}
+
+		this.resolveTypes(request, response);
+		
+		element.setAction(request.getResourceAction());
+		element.setController(request.getResourceAction().getController());
+		element.setRequest(request);
+		element.setResponse(response);
+		element.setResource(request.getResource());
+		element.setObjectThrow(request.getThrowable());
+		
+		InterceptorHandlerImp ih = new InterceptorHandlerImp(request, response);
+		Controller controller = element.getController();
+		
+		controller.proccessBrutosAction(ih);
+		
+		if(!requestInstrument.isHasViewProcessed()){
+			this.updateRequest(request, controller, element.getResource());
+			renderView.show(request, response);
+			requestInstrument.setHasViewProcessed(true);
+		}
+		
+		return true;
+	}
+	
 	protected boolean isSupportedRequestType(ResourceAction action, MutableMvcRequest request){
 		
     	DataTypeMap supportedRequestTypes = action.getRequestTypes();
-    	
-    	/*
-    	if(supportedRequestTypes.isEmpty()){
-    		supportedRequestTypes = action.getController().getRequestTypes();
-    	}
-    	*/
     	
     	if(supportedRequestTypes.isEmpty()){
     		return 
@@ -399,12 +370,6 @@ public class Invoker {
 		
     	DataTypeMap supportedResponseTypes = action.getResponseTypes();
     	List<DataType> responseTypes       = request.getAcceptResponse();
-    	
-    	/*
-    	if(supportedResponseTypes.isEmpty()){
-    		supportedResponseTypes = action.getController().getRequestTypes();
-    	}
-    	*/
     	
     	if(supportedResponseTypes.isEmpty()){
     		
@@ -454,10 +419,12 @@ public class Invoker {
 	}
 
 	public static Invoker getInstance() {
-		ConfigurableApplicationContext context = (ConfigurableApplicationContext) getCurrentApplicationContext();
+		ConfigurableApplicationContext context = 
+				(ConfigurableApplicationContext)getCurrentApplicationContext();
 
-		if (context == null)
-			throw new BrutosException("can not get invoker");
+		if (context == null){
+			throw new BrutosException("can't get invoker");
+		}
 
 		return context.getInvoker();
 	}

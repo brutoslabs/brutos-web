@@ -28,6 +28,7 @@ import org.brandao.brutos.scope.Scope;
  * 
  * @author Brandao
  */
+@Deprecated
 public class DataOutput {
 
 	private Scope scope;
