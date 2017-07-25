@@ -29,18 +29,22 @@ import org.brandao.brutos.ProxyFactory;
  * 
  * @author Brandao
  */
-public class JavassistCodeGenerator implements CodeGenerator {
+public class JavassistCodeGenerator 
+	implements CodeGenerator {
 
-	private Map proxyFactory = new HashMap();
-	private ClassPool pool = ClassPool.getDefault();
+	private Map<Class<?>, ProxyFactory> proxyFactory;
+	
+	private ClassPool pool;
 
 	public JavassistCodeGenerator() {
+		this.proxyFactory = new HashMap<Class<?>, ProxyFactory>();
+		this.pool         = ClassPool.getDefault();
 	}
 
-	public ProxyFactory getProxyFactory(Class clazz) throws BrutosException {
+	public ProxyFactory getProxyFactory(Class<?> clazz) throws BrutosException {
 		try {
 			if (proxyFactory.containsKey(clazz))
-				return (ProxyFactory) proxyFactory.get(clazz);
+				return proxyFactory.get(clazz);
 			else
 				return createProxyFactory(clazz);
 		} catch (Exception e) {
@@ -48,10 +52,10 @@ public class JavassistCodeGenerator implements CodeGenerator {
 		}
 	}
 
-	private synchronized ProxyFactory createProxyFactory(Class clazz)
+	private synchronized ProxyFactory createProxyFactory(Class<?> clazz)
 			throws Exception {
 		if (proxyFactory.containsKey(clazz))
-			return (ProxyFactory) proxyFactory.get(clazz);
+			return proxyFactory.get(clazz);
 		else {
 			ProxyFactory pxf = new JavassistProxyFactory(clazz, pool);
 			proxyFactory.put(clazz, pxf);
