@@ -25,11 +25,14 @@ import org.brandao.brutos.ProxyFactory;
  */
 public abstract class AbstractProxyFactory implements ProxyFactory {
 
-	protected Class superClass = null;
-	protected Class proxyClass = null;
+	protected Class<?> superClass;
+	
+	protected Class<?> proxyClass;
 
-	public AbstractProxyFactory(Class superClass) {
+	public AbstractProxyFactory(Class<?> superClass) {
 		this.superClass = superClass;
+		this.superClass = null;
+		this.proxyClass = null;
 	}
 
 }
