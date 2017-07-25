@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.mapping;
 
+import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
@@ -47,6 +48,8 @@ public abstract class UseBeanData {
 
 	protected boolean nullable;
 
+	protected FetchType fetchType;
+	
 	public UseBeanData() {
 	}
 
@@ -64,6 +67,14 @@ public abstract class UseBeanData {
 
 	public void setMapping(Bean mapping) {
 		this.mapping = mapping;
+	}
+
+	public FetchType getFetchType() {
+		return fetchType;
+	}
+
+	public void setFetchType(FetchType fetchType) {
+		this.fetchType = fetchType;
 	}
 
 	public Object getValue(Object source) {
@@ -117,7 +128,7 @@ public abstract class UseBeanData {
 	}
 
 	public Object decode(BeanDecoder decoder, Object data) throws BeanDecoderException{
-		return decoder.decode(this, data);
+		return decoder.decode(this, null, data);
 	}
 	
 	protected abstract void validate(Object source, Object value);

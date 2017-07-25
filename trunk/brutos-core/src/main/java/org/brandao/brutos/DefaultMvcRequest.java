@@ -69,11 +69,11 @@ public class DefaultMvcRequest implements MutableMvcRequest {
     protected List<DataType> acceptResponse;
     
     public DefaultMvcRequest(){
-		this.header = new HashMap<String, List<Object>>();
-		this.headerNames = new HashSet<String>();
-		this.properties = new HashMap<String, List<Object>>();
-		this.propertyNames = new HashSet<String>();
-		this.parameters = new HashMap<String, List<Object>>();
+		this.header         = new HashMap<String, List<Object>>();
+		this.headerNames    = new HashSet<String>();
+		this.properties     = new HashMap<String, List<Object>>();
+		this.propertyNames  = new HashSet<String>();
+		this.parameters     = new HashMap<String, List<Object>>();
 		this.parameterNames = new HashSet<String>();
 		this.acceptResponse = new ArrayList<DataType>();
     }

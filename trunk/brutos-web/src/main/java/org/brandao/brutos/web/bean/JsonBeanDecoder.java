@@ -7,6 +7,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.brandao.brutos.CodeGenerator;
+import org.brandao.brutos.FetchType;
+import org.brandao.brutos.ProxyFactory;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.mapping.Bean;
@@ -30,11 +33,17 @@ import org.brandao.brutos.type.CollectionType;
 import org.brandao.brutos.type.Type;
 
 public class JsonBeanDecoder implements BeanDecoder{
-
+	
+	private CodeGenerator codeGenerator;
+	
+	public void setCodeGenerator(CodeGenerator value){
+		this.codeGenerator = value;
+	}
+	
 	@SuppressWarnings("unchecked")
-	public Object decode(UseBeanData entity, Object data) throws BeanDecoderException {
+	public Object decode(UseBeanData entity, FetchType fetchType, Object data) throws BeanDecoderException {
 		try{
-			return this.getValue(entity, (Map<String,Object>)data);
+			return this.getValue(entity, fetchType, (Map<String,Object>)data);
 		}
 		catch(Throwable e){
 			throw new BeanDecoderException(e);
@@ -43,8 +52,18 @@ public class JsonBeanDecoder implements BeanDecoder{
 
 	/* UseBeanData */
 	
-	public Object getValue(UseBeanData entity, Map<String,Object> dta) 
+	public Object getValue(UseBeanData entity, FetchType fetchType, Map<String,Object> dta) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+
+		if(fetchType == null){
+			fetchType = entity.getFetchType();
+		}
+		
+		if(fetchType.equals(FetchType.LAZY)){
+			ProxyFactory proxyFactory = 
+					this.codeGenerator.getProxyFactory(entity.getClassType());
+			return proxyFactory.getNewProxy(entity, dta, this);
+		}
 		
 		if(entity.isNullable()){
 			return null;
@@ -99,13 +118,12 @@ public class JsonBeanDecoder implements BeanDecoder{
 			throw new MappingException("bean not found: " + value);
 		}
 
-		return entity.getType().convert(this.getValue(bean, data));			
+		return entity.getType().convert(this.getValue(bean, null, data));			
 	}
 
 	@SuppressWarnings("unchecked")
 	public Object getBean(UseBeanData entity, Object dta) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		
 		Map<String, Object> data = (Map<String, Object>)dta;
 		Bean bean                = entity.getMapping();
 		Object value             = this.getValue(bean, data);
@@ -129,9 +147,28 @@ public class JsonBeanDecoder implements BeanDecoder{
 	}
 	
 	/* DependencyBean */
+
+	public Object decode(DependencyBean dependencyBean, FetchType fetchType, Object data) throws BeanDecoderException{
+		try{
+			return this.getValue(dependencyBean, fetchType, data);
+		}
+		catch(Throwable e){
+			throw new BeanDecoderException(e);
+		}
+	}
 	
-	public Object getValue(DependencyBean dependencyBean, Object data) 
+	public Object getValue(DependencyBean dependencyBean, FetchType fetchType, Object data) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+
+		if(fetchType == null){
+			fetchType = dependencyBean.getFetchType();
+		}
+		
+		if(fetchType.equals(FetchType.LAZY)){
+			ProxyFactory proxyFactory = 
+					this.codeGenerator.getProxyFactory(dependencyBean.getClassType());
+			return proxyFactory.getNewProxy(dependencyBean, data, this);
+		}
 		
 		if(dependencyBean.getMapping() != null){
 			return this.getBeanValue(dependencyBean, data);
@@ -194,7 +231,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 			throw new MappingException("bean not found: " + value);
 		}
 		
-		return this.getValue(bean, data);		
+		return this.getValue(bean, null, data);		
 	}
 	
 	/* bean */
@@ -250,7 +287,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 				}
 				
 				Object fieldData = this.getScopedValue(prop.getName(), prop.getScopeType(), data);
-				Object p         = this.getValue(prop, fieldData);
+				Object p         = this.getValue(prop, null, fieldData);
 				exist = exist || p != null;
 				prop.setValueInSource(value, p);
 			}
@@ -319,7 +356,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 		Collection<Object> destElements   = (Collection<Object>)destValue;
 		
 		for(Object o: originElements){
-			Object object = this.getValue(e, o);
+			Object object = this.getValue(e, null, o);
 			destElements.add(object);
 		}
 		
@@ -345,7 +382,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 		Collection<Object> destElements = (Collection<Object>)destValue;
 		
 		for(Object o: data){
-			Object object = this.getValue(e, o);
+			Object object = this.getValue(e, null, o);
 			destElements.add(object);
 		}
 		
@@ -424,10 +461,10 @@ public class JsonBeanDecoder implements BeanDecoder{
 			Map<String, Object> object = (Map<String, Object>)o;
 			
 			Object keyData = this.getScopedValue(k.getParameterName(), k.getScopeType(), object);
-			Object key   = this.getValue(k, keyData);
+			Object key   = this.getValue(k, null, keyData);
 			
 			Object elementData = this.getScopedValue(e.getParameterName(), e.getScopeType(), object);
-			Object value       = this.getValue(e, elementData);
+			Object value       = this.getValue(e, null, elementData);
 			
 			destElements.put(key, value);
 		}
@@ -458,7 +495,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 			Object key   = k.getType().convert(oKey);
 			
 			Object v     = this.getScopedValue(oKey, e.getScopeType(), data);
-			Object value = this.getValue(e, v);
+			Object value = this.getValue(e, null, v);
 			
 			destElements.put(key, value);
 		}
@@ -535,7 +572,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 		
 		for(ConstructorArgBean arg: constructor.getConstructorArgs()){
 			Object argData = this.getScopedValue(arg.getParameterName(), arg.getScopeType(), data); 
-			args[i]        = this.getValue(arg, argData);
+			args[i]        = this.getValue(arg, null, argData);
 			
 			if(!exist){
 				exist = exist || args[i] != null || arg.isNullable();

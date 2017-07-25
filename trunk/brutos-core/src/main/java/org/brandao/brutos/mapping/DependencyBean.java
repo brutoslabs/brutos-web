@@ -19,6 +19,7 @@ package org.brandao.brutos.mapping;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.scope.Scope;
@@ -56,6 +57,8 @@ public abstract class DependencyBean {
 
 	protected Controller controller;
 
+	protected FetchType fetchType;
+	
 	public DependencyBean(Bean parent) {
 		this.parent = parent;
 		this.controller = parent.getController();
@@ -67,6 +70,22 @@ public abstract class DependencyBean {
 
 	public void setParameterName(String parameterName) {
 		this.parameterName = parameterName;
+	}
+
+	public Controller getController() {
+		return controller;
+	}
+
+	public void setController(Controller controller) {
+		this.controller = controller;
+	}
+
+	public FetchType getFetchType() {
+		return fetchType;
+	}
+
+	public void setFetchType(FetchType fetchType) {
+		this.fetchType = fetchType;
 	}
 
 	public Type getType() {

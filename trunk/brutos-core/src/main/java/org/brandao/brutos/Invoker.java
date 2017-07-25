@@ -20,6 +20,7 @@ package org.brandao.brutos;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import org.brandao.brutos.interceptor.ConfigurableInterceptorHandler;
 import org.brandao.brutos.interceptor.InterceptorHandlerImp;
 import org.brandao.brutos.logger.Logger;
 import org.brandao.brutos.logger.LoggerProvider;
@@ -260,16 +261,12 @@ public class Invoker {
 
 	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response) throws InvokerException{
 
-		long time                     = -1;
-		boolean createdThreadScope    = false;
 		boolean pushStackRequest      = false;
 		StackRequest stackRequest     = null;
 		MvcRequest oldRequest         = null;
 		MvcResponse oldresponse       = null;
 		
 		try{
-			time                        = System.currentTimeMillis();
-			createdThreadScope          = ThreadScope.create();
 			StackRequestElement element = createStackRequestElement();
 			oldRequest                  = RequestProvider.init(request);
 			oldresponse                 = ResponseProvider.init(response);
@@ -291,22 +288,12 @@ public class Invoker {
 			throw new InvokerException(e);
 		}
 		finally {
-
 			RequestProvider.destroy(oldRequest);
 			ResponseProvider.destroy(oldresponse);
 			
-			if (createdThreadScope){
-				ThreadScope.destroy();
-			}
-
 			if(pushStackRequest){
 				stackRequest.pop();
 			}
-
-			if (logger.isDebugEnabled())
-				logger.debug(String.format("Request processed in %d ms",
-						new Object[] { new Long(
-								(System.currentTimeMillis() - time)) }));
 		}
 	}
 
@@ -337,7 +324,7 @@ public class Invoker {
 		element.setResource(request.getResource());
 		element.setObjectThrow(request.getThrowable());
 		
-		InterceptorHandlerImp ih = new InterceptorHandlerImp(request, response);
+		ConfigurableInterceptorHandler ih = new InterceptorHandlerImp(request, response);
 		Controller controller = element.getController();
 		
 		controller.proccessBrutosAction(ih);
