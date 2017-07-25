@@ -20,6 +20,7 @@ package org.brandao.brutos;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.Invoker;
+import org.brandao.brutos.mapping.BeanDecoder;
 import org.brandao.brutos.mapping.Controller;
 
 /**
@@ -32,4 +33,6 @@ public interface ProxyFactory {
 			ConfigurableApplicationContext app, Invoker invoker)
 			throws BrutosException;
 
+	Object getNewProxy(Object metadata, Object data, BeanDecoder decoder) throws BrutosException;
+	
 }

@@ -28,6 +28,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.Invoker;
+import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.ObjectFactory;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;

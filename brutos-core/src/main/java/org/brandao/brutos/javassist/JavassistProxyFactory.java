@@ -27,6 +27,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
+import org.brandao.brutos.mapping.BeanDecoder;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.proxy.AbstractProxyFactory;
 
@@ -66,6 +67,22 @@ public class JavassistProxyFactory extends AbstractProxyFactory {
 		}
 	}
 
+	public Object getNewProxy(Object metadata, Object data, 
+			BeanDecoder decoder) throws BrutosException{
+	
+
+		try{
+			MethodHandler handler = 
+					new JavassistBeanHandler(metadata, data, decoder);
+			ProxyObject instance = (ProxyObject) ClassUtil.getInstance(proxyClass);
+			instance.setHandler(handler);
+			return instance;
+		}
+		catch (Exception e) {
+			throw new BrutosException(e);
+		}
+	}
+	
 	private Class<?> createProxyClass(Class<?> clazz) throws Exception {
 		factory = new ProxyFactory();
 		factory.setSuperclass(clazz);
