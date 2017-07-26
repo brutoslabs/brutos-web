@@ -164,6 +164,7 @@ public class BeanPropertyTest {
         this.propertyI = propertyI;
     }
 
+    @KeyCollection(bean="key")
     public Map<BeanConstructorTest,Integer> getPropertyJ() {
         return propertyJ;
     }

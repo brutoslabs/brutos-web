@@ -172,7 +172,7 @@ public interface BrutosConstants {
 	
 	final String DEFAULT_SEPARATOR = "-";
 
-	final String DEFAULT_ENUMERATION_TYPE = "ordinal";
+	final String DEFAULT_ENUMERATION_TYPE = "auto";
 
 	final String DEFAULT_KEY_NAME = "key";
 

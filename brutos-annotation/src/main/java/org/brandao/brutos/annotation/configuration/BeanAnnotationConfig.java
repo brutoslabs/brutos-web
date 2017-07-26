@@ -567,7 +567,6 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void addProperties(BeanBuilder beanBuilder,
 			ComponentRegistry componentRegistry, Class<?> clazz) {
 
