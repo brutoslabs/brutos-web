@@ -17,6 +17,9 @@
 
 package org.brandao.brutos.web.test;
 
+import org.brandao.brutos.MutableMvcRequest;
+import org.brandao.brutos.MutableMvcResponse;
+import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.web.WebInvoker;
 
@@ -33,11 +36,16 @@ public class MockWebInvoker extends WebInvoker{
     private Object request;
     
     private Object response;
-    
-	public boolean invoke( StackRequestElement element ){
-        this.element = element;
-        return super.invoke(element);
-    }
+
+	protected boolean invokeApplication(
+			MutableMvcRequest request,
+			MutableMvcResponse response,
+			StackRequestElement element,
+			RequestInstrument requestInstrument
+			) throws Throwable{
+		this.element = element;
+		return super.invokeApplication(request, response, element, requestInstrument);
+	}
 
     public StackRequestElement getElement() {
         return element;
