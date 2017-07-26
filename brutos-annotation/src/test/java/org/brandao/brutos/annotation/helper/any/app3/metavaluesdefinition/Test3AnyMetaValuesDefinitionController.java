@@ -15,6 +15,7 @@ public class Test3AnyMetaValuesDefinitionController {
 
 	@Basic(bean="propertyA")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
@@ -25,6 +26,7 @@ public class Test3AnyMetaValuesDefinitionController {
 		)
 	public Map<Property,String> property1;
 	
+	@KeyCollection(bean="key")
 	private Map<Property,String> property2;
 
 	public Map<Property,String> getProperty2() {
@@ -33,6 +35,7 @@ public class Test3AnyMetaValuesDefinitionController {
 
 	@Basic(bean="propertyB")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType2"),

@@ -16,6 +16,7 @@ public class Test10AnyController {
 
 	@Basic(bean="propertyD")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType4"),
@@ -35,8 +36,8 @@ public class Test10AnyController {
 	public void testAction(
 			@Basic(bean="propertyE")
 			@KeyCollection(
+				bean="key",
 				any=
-			
 					@Any(
 						metaBean=@Basic(bean="propertyType5"),
 						metaType=String.class,

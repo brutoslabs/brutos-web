@@ -12,6 +12,7 @@ public class Test5AnyBean {
 
 	@Basic(bean="propertyA")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
@@ -33,6 +34,7 @@ public class Test5AnyBean {
 	public Test5AnyBean(
 			@Basic(bean="propertyC")
 			@KeyCollection(
+				bean="key",
 				any=
 					@Any(
 						metaBean=@Basic(bean="propertyType3"),
@@ -54,6 +56,7 @@ public class Test5AnyBean {
 
 	@Basic(bean="propertyB")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType2"),
