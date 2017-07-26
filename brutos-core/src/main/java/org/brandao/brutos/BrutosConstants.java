@@ -25,6 +25,8 @@ public interface BrutosConstants {
 
 	final String WEBFRAME = "Controller";
 
+	final String CONTROLLER_PROPERTY = "Controller";
+	
 	final String COMMA = ",";
 
 	final String APPLICATION_CONTEXT = "application-context";
