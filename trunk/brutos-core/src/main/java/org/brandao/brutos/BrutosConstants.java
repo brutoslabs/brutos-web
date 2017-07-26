@@ -196,4 +196,6 @@ public interface BrutosConstants {
 
 	final String EXPRESSION = "expression";
 	
+	final int COLLECTION_MAX_ITENS = 100;
+	
 }
