@@ -207,6 +207,10 @@ public class BeanBuilder {
 			}
 		}
 		
+		if(name == null && (mapping != null || generic)){
+			throw new MappingException("key must have a name");
+		}
+		
 		DependencyBean key = MappingBeanUtil.createKeyBean(name,
 				enumProperty, temporalProperty, mapping, scope, value, false,
 				generic, typeDef, type, this.mappingBean,

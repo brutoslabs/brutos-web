@@ -417,34 +417,53 @@ public class WWWFormUrlEncodedBeanDecoder
 				(Map<Object,Object>)this.getValueBean(entity, prefix, index);
 
 		Element e         = (Element)entity.getCollection();
-		String newKPreifx = (prefix == null? "" : k.getParameterName());
-		String newEPreifx = (prefix == null? "" : e.getParameterName());
-		int max           = entity.getMaxItens() + 1;
+		
+		int max = entity.getMaxItens() + 1;
 		
 		for(int i=0;i<max;i++){
-			String kPreifx = 
-				newKPreifx + 
+			String newPrefix = 
+				prefix +
+				e.getParameterName() + 
 				entity.getIndexFormat().replace("$index", String.valueOf(i));
 			
+			String kPrefix;
+			
 			if(k.getMapping() != null || k.getMetaBean() != null){
-				kPreifx += entity.getSeparator();
+				kPrefix = 
+					newPrefix + 
+					entity.getSeparator() +
+					k.getParameterName() +
+					entity.getSeparator();
+			}
+			else{
+				kPrefix = 
+					newPrefix +
+					entity.getSeparator();
 			}
 			
-			Object key     = this.getValue(k, FetchType.EAGER, kPreifx, -1);
+			
+			Object key = this.getValue(k, FetchType.EAGER, kPrefix, -1);
 			
 			if(key == null){
 				break;
 			}
 			
-			String ePreifx = 
-				newEPreifx + 
-				entity.getIndexFormat().replace("$index", String.valueOf(i));
+			String ePrefix;
 			
 			if(e.getMapping() != null || e.getMetaBean() != null){
-				ePreifx += entity.getSeparator();
+				ePrefix = 
+					newPrefix + 
+					entity.getSeparator() +
+					e.getParameterName() +
+					entity.getSeparator();
+			}
+			else{
+				ePrefix = 
+					newPrefix +
+					entity.getSeparator();
 			}
 			
-			Object element = this.getValue(e, FetchType.EAGER, ePreifx, -1);
+			Object element = this.getValue(e, FetchType.EAGER, ePrefix, -1);
 			
 			destValue.put(key, element);
 		}

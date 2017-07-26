@@ -20,6 +20,7 @@ public class Test1AnyController {
 	public void test1Action(
 			@Basic(bean="property")
 			@KeyCollection(
+				bean="key",
 				any=
 				@Any(
 					metaBean=@Basic(bean="propertyType"),
@@ -37,6 +38,7 @@ public class Test1AnyController {
 	public void test2Action(
 			@Basic(bean="property")
 			@KeyCollection(
+				bean="key",
 				any=
 					@Any(
 						metaBean=@Basic(bean="propertyType"),
@@ -55,6 +57,7 @@ public class Test1AnyController {
 	public void test3Action(
 			@Basic(bean="property")
 			@KeyCollection(
+				bean="key",
 				any=
 				@Any(
 					metaBean=@Basic(bean="propertyType"),
@@ -72,6 +75,7 @@ public class Test1AnyController {
 	public void test4Action(
 			@Basic(bean="property")
 			@KeyCollection(
+				bean="key",
 				any=
 				@Any(
 					metaBean=@Basic(bean="propertyType"),

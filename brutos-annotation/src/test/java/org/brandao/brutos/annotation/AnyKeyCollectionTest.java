@@ -67,11 +67,11 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property.key[0].propertyType", "decimal");
-                	parameters.put("property.key[0].name", "propName");
-                	parameters.put("property.key[0].length", "10");
-                	parameters.put("property.key[0].decimals", "2");
-                	parameters.put("property.element[0]", "valuex");
+                	parameters.put("property.element[0].key.propertyType", "decimal");
+                	parameters.put("property.element[0].key.name", "propName");
+                	parameters.put("property.element[0].key.length", "10");
+                	parameters.put("property.element[0].key.decimals", "2");
+                	parameters.put("property.element[0].element", "valuex");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -87,6 +87,7 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
 
                 public void checkException(Throwable e) {
+                	e.printStackTrace();
                     fail(e.toString());
                 }
             },
