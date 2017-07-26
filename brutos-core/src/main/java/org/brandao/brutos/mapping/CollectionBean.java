@@ -19,6 +19,7 @@ package org.brandao.brutos.mapping;
 
 import java.util.Collection;
 
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.validator.ValidatorException;
 
@@ -30,8 +31,19 @@ public class CollectionBean extends Bean {
 
 	protected DependencyBean collection;
 
+	protected int maxItens;
+	
 	public CollectionBean(Controller controller, Bean parent) {
 		super(controller, parent);
+		this.maxItens = BrutosConstants.COLLECTION_MAX_ITENS;
+	}
+
+	public int getMaxItens() {
+		return maxItens;
+	}
+
+	public void setMaxItens(int maxItens) {
+		this.maxItens = maxItens;
 	}
 
 	public void setCollection(DependencyBean collection) {

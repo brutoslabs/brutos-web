@@ -3,6 +3,7 @@ package org.brandao.brutos.web.bean;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.brandao.brutos.mapping.ConstructorArgBean;
 import org.brandao.brutos.mapping.ConstructorBean;
 import org.brandao.brutos.mapping.DependencyBean;
 import org.brandao.brutos.mapping.DependencyException;
+import org.brandao.brutos.mapping.Element;
+import org.brandao.brutos.mapping.Key;
 import org.brandao.brutos.mapping.MapBean;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
@@ -264,7 +267,7 @@ public class WWWFormUrlEncodedBeanDecoder
 		boolean exist =
 				constructorBean.size() > 0 ||
 				constructorBean.isMethodFactory() ||
-				!props.isEmpty();
+				props.isEmpty();
 		
 		for(PropertyBean prop: props.values()){
 			try{
@@ -284,14 +287,178 @@ public class WWWFormUrlEncodedBeanDecoder
 		return value;
 	}
 	
+	/* collection */
+	
 	private Object getValueCollection(CollectionBean entity, String prefix, long index) {
-		return null;
+		Element e = (Element)entity.getCollection();
+		
+		if(e.getParameterName() != null){
+			return this.getValueCollectionObject(entity, e, prefix, index);
+		}
+		else{
+			return this.getValueCollectionSimple(entity, e, prefix, index);
+		}
 	}
 
+	/*
+	 * root.bean.element[0]           = <value>
+	 * root.bean.property             = <value>
+	 * root.bean.property2            = <value>
+	 * root.bean.element[0].property1 = <value>
+	 * root.bean.element[1].property1 = <value>
+	 * root.bean.element[2].property1 = <value>
+	 * 
+	 * */
+	@SuppressWarnings("unchecked")
+	public Object getValueCollectionObject(CollectionBean entity, Element e,
+			String prefix, long index) {
+		
+		Collection<Object> destValue = 
+				(Collection<Object>)this.getValueBean(entity, prefix, index);
+	
+		String newPrefix = 
+				prefix == null? 
+					"" : 
+					prefix + e.getParameterName();
+		
+		int max = entity.getMaxItens() + 1;
+		
+		for(int i=0;i<max;i++){
+			String ePreifx = 
+				newPrefix + 
+				entity.getIndexFormat().replace("$index", String.valueOf(i));
+			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
+			
+			if(element != null){
+				destValue.add(element);
+			}
+			else{
+				break;
+			}
+		}
+		
+		if(destValue.size() > max){
+			throw new DependencyException(destValue + " > " + max);
+		}
+		
+		return destValue;
+	}
+	
+	/*
+	 * root.bean[0]           = <value>
+	 * root.bean[0].property1 = <value>
+	 * root.bean[1].property1 = <value>
+	 * root.bean[2].property1 = <value>
+	 * 
+	 * */
+	@SuppressWarnings("unchecked")
+	public Object getValueCollectionSimple(CollectionBean entity, Element e,
+			String prefix, long index) {
+		
+		Collection<Object> destValue = 
+				(Collection<Object>)this.getValueBean(entity, prefix, index);
+	
+		String newPrefix = prefix.substring(0, prefix.length() - 1);
+		
+		int max = entity.getMaxItens() + 1;
+		
+		for(int i=0;i<max;i++){
+			String ePreifx = 
+				newPrefix + 
+				entity.getIndexFormat().replace("$index", String.valueOf(i));
+			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
+			
+			if(element != null){
+				destValue.add(element);
+			}
+			else{
+				break;
+			}
+		}
+		
+		if(destValue.size() > max){
+			throw new DependencyException(destValue + " > " + max);
+		}
+		
+		return destValue;
+	}	
+
+	/* map */
+	
 	private Object getValueMap(MapBean entity, String prefix, long index) {
-		return null;
+		
+		Key k = (Key)entity.getKey();
+		
+		if(k.getParameterName() != null){
+			return this.getValueMapObject(entity, k, prefix, index);
+		}
+		else{
+			return this.getValueMapSimple(entity, k, prefix, index);
+		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public Object getValueMapObject(MapBean entity, Key k, String prefix, long index){
+		
+		Map<Object,Object> destValue = 
+				(Map<Object,Object>)this.getValueBean(entity, prefix, index);
+
+		Element e         = (Element)entity.getCollection();
+		String newKPreifx = (prefix == null? "" : k.getParameterName());
+		String newEPreifx = (prefix == null? "" : e.getParameterName());
+		int max           = entity.getMaxItens() + 1;
+		
+		for(int i=0;i<max;i++){
+			String kPreifx = newKPreifx + entity.getIndexFormat().replace("$index", String.valueOf(i));
+			Object key     = this.getValue(k, FetchType.EAGER, kPreifx, i);
+			
+			if(key == null){
+				break;
+			}
+			
+			String ePreifx = newEPreifx + entity.getIndexFormat().replace("$index", String.valueOf(i));
+			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
+			
+			destValue.put(key, element);
+		}
+		
+		if(destValue.size() > max){
+			throw new DependencyException(destValue + " > " + max);
+		}
+		
+		return destValue;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Object getValueMapSimple(MapBean entity, Key k, String prefix, long index){
+		Map<Object,Object> destValue = 
+				(Map<Object,Object>)this.getValueBean(entity, prefix, index);
+
+		Element e         = (Element)entity.getCollection();
+		String newKPreifx = (prefix == null? "" : k.getParameterName());
+		String newEPreifx = (prefix == null? "" : e.getParameterName());
+		int max           = entity.getMaxItens() + 1;
+		
+		for(int i=0;i<max;i++){
+			String kPreifx = newKPreifx + entity.getIndexFormat().replace("$index", String.valueOf(i));
+			Object key     = this.getValue(k, FetchType.EAGER, kPreifx, i);
+			
+			if(key == null){
+				break;
+			}
+			
+			String ePreifx = newEPreifx + entity.getIndexFormat().replace("$index", String.valueOf(i));
+			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
+			
+			destValue.put(key, element);
+		}
+		
+		if(destValue.size() > max){
+			throw new DependencyException(destValue + " > " + max);
+		}
+		
+		return destValue;	}
+	
 	/* constructor */
 	
 	private Object getInstance(ConstructorBean constructor, String prefix, long index){
