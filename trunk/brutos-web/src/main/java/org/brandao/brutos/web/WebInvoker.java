@@ -18,6 +18,7 @@
 package org.brandao.brutos.web;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.servlet.FilterChain;
@@ -25,6 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.DataType;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.InvokerException;
@@ -98,6 +100,16 @@ public class WebInvoker extends Invoker{
     	}
     }
 
+	protected void updateRequest(MutableMvcRequest request, Controller controller, Object resource) 
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{	
+		
+		super.updateRequest(request, controller, resource);
+		
+		WebMvcRequestImp webRequest = (WebMvcRequestImp)request;
+		webRequest.getServletRequest()
+			.setAttribute(BrutosConstants.CONTROLLER_PROPERTY, request.getResource());
+	}
+	
 	public Object invoke(Controller controller, ResourceAction action,
 			Object resource, Object[] parameters) throws InvokerException{
 

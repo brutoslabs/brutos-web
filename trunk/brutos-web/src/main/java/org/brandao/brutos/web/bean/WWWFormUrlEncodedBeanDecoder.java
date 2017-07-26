@@ -329,7 +329,8 @@ public class WWWFormUrlEncodedBeanDecoder
 		for(int i=0;i<max;i++){
 			String ePreifx = 
 				newPrefix + 
-				entity.getIndexFormat().replace("$index", String.valueOf(i));
+				entity.getIndexFormat().replace("$index", String.valueOf(i)) +
+				entity.getSeparator();
 			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
 			
 			if(element != null){
@@ -368,7 +369,8 @@ public class WWWFormUrlEncodedBeanDecoder
 		for(int i=0;i<max;i++){
 			String ePreifx = 
 				newPrefix + 
-				entity.getIndexFormat().replace("$index", String.valueOf(i));
+				entity.getIndexFormat().replace("$index", String.valueOf(i)) +
+				entity.getSeparator();
 			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
 			
 			if(element != null){
@@ -412,14 +414,20 @@ public class WWWFormUrlEncodedBeanDecoder
 		int max           = entity.getMaxItens() + 1;
 		
 		for(int i=0;i<max;i++){
-			String kPreifx = newKPreifx + entity.getIndexFormat().replace("$index", String.valueOf(i));
+			String kPreifx = 
+				newKPreifx + 
+				entity.getIndexFormat().replace("$index", String.valueOf(i)) +
+				entity.getSeparator();
 			Object key     = this.getValue(k, FetchType.EAGER, kPreifx, i);
 			
 			if(key == null){
 				break;
 			}
 			
-			String ePreifx = newEPreifx + entity.getIndexFormat().replace("$index", String.valueOf(i));
+			String ePreifx = 
+				newEPreifx + 
+				entity.getIndexFormat().replace("$index", String.valueOf(i)) +
+				entity.getSeparator();
 			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
 			
 			destValue.put(key, element);
@@ -457,7 +465,7 @@ public class WWWFormUrlEncodedBeanDecoder
 		
 		for(SimpleKeyMap keyValue: keys){
 			Object keyObject = k.convert(keyValue.getName());
-			String ePreifx   = itemPrefix + keyValue.getPrefix();
+			String ePreifx   = itemPrefix + keyValue.getPrefix() + entity.getSeparator();
 			Object element   = this.getValue(e, FetchType.EAGER, ePreifx, -1);
 			
 			destValue.put(keyObject, element);
