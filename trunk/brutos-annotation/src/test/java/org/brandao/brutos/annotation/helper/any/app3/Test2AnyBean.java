@@ -1,11 +1,9 @@
 package org.brandao.brutos.annotation.helper.any.app3;
 
-import java.util.List;
 import java.util.Map;
 
 import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Basic;
-import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.EnumerationType;
 import org.brandao.brutos.annotation.KeyCollection;
 import org.brandao.brutos.annotation.MetaValue;
@@ -15,6 +13,7 @@ public class Test2AnyBean {
 
 	@Basic(bean="propertyA")
 	@KeyCollection(
+		bean="key",
 		any=
 		@Any(
 			metaBean=@Basic(bean="propertyType"),
@@ -28,6 +27,7 @@ public class Test2AnyBean {
 		)
 	public Map<Property,String> property1;
 	
+	@KeyCollection(bean="key")
 	private Map<Property,String> property2;
 
 	@Transient
@@ -36,6 +36,7 @@ public class Test2AnyBean {
 	public Test2AnyBean(
 			@Basic(bean="propertyC")
 			@KeyCollection(
+				bean="key",
 				any=
 					@Any(
 						metaBean=@Basic(bean="propertyType3"),
@@ -57,6 +58,7 @@ public class Test2AnyBean {
 
 	@Basic(bean="propertyB")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType2"),

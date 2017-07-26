@@ -416,9 +416,8 @@ public class WWWFormUrlEncodedBeanDecoder
 		Map<Object,Object> destValue = 
 				(Map<Object,Object>)this.getValueBean(entity, prefix, index);
 
-		Element e         = (Element)entity.getCollection();
-		
-		int max = entity.getMaxItens() + 1;
+		Element e = (Element)entity.getCollection();
+		int max   = entity.getMaxItens() + 1;
 		
 		for(int i=0;i<max;i++){
 			String newPrefix = 
