@@ -154,10 +154,25 @@ public final class MappingBeanUtil {
 			ValidatorFactory validatorFactory, Controller controller) {
 
 		name = StringUtil.adjust(name);
+		
 		temporalProperty = StringUtil.adjust(temporalProperty);
+		
 		mapping = StringUtil.adjust(mapping);
+		
 		Class<?> rawType = TypeUtil.getRawType(classType);
 
+		temporalProperty = temporalProperty == null?
+				dependencyBean.getParent().getController().getContext().getTemporalProperty() :
+				temporalProperty;
+
+		enumProperty = enumProperty == null?
+				dependencyBean.getParent().getController().getContext().getEnumerationType() :
+				enumProperty;
+
+		scope = scope == null?
+				dependencyBean.getParent().getController().getContext().getScopeType() :
+				scope;
+				
 		dependencyBean.setEnumProperty(enumProperty);
 		dependencyBean.setParameterName(name);
 		dependencyBean.setNullable(nullable);

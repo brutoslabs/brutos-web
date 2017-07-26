@@ -33,7 +33,4 @@ public class BeanConstructorTest8 {
             @Enumerated(value=EnumerationType.STRING) EnumTest propertyG){
     }
 
-    public BeanConstructorTest8(){
-    }
-    
 }

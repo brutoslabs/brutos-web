@@ -83,7 +83,7 @@ public @interface ElementCollection {
 	 * Usado em tipos {@link java.lang.Enum}. Os valores estão descritos em
 	 * {@link EnumerationType}.
 	 */
-	EnumerationType enumerated() default EnumerationType.ORDINAL;
+	EnumerationType enumerated() default EnumerationType.AUTO;
 
 	/**
 	 * Usado em tipos {@link java.util.Date} e {@link java.util.Calendar}. Deve
