@@ -31,8 +31,8 @@ import org.brandao.brutos.annotation.helper.elementcollection.fail.ControllerEle
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
 
 public class ElementCollectionTest extends TestCase{
     
@@ -41,7 +41,7 @@ public class ElementCollectionTest extends TestCase{
     public void testPropertyAction() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -88,7 +88,7 @@ public class ElementCollectionTest extends TestCase{
     public void testProperty2Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property2", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -135,7 +135,7 @@ public class ElementCollectionTest extends TestCase{
     public void testProperty3Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property3", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -182,7 +182,7 @@ public class ElementCollectionTest extends TestCase{
     public void testPropert4Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property4", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -229,7 +229,7 @@ public class ElementCollectionTest extends TestCase{
     public void testProperty5Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property5", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -276,7 +276,7 @@ public class ElementCollectionTest extends TestCase{
     public void testProperty6Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property6", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -328,7 +328,7 @@ public class ElementCollectionTest extends TestCase{
     public void testProperty7Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property7", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -375,7 +375,7 @@ public class ElementCollectionTest extends TestCase{
     public void testProperty8Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property8", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -422,7 +422,7 @@ public class ElementCollectionTest extends TestCase{
     public void testProperty9Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property9", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -469,7 +469,7 @@ public class ElementCollectionTest extends TestCase{
     public void testProperty10Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property10", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -516,7 +516,7 @@ public class ElementCollectionTest extends TestCase{
     public void testProperty11Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property11", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -563,7 +563,7 @@ public class ElementCollectionTest extends TestCase{
     public void testProperty12Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property12", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -610,7 +610,7 @@ public class ElementCollectionTest extends TestCase{
     public void testBeanTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -910,7 +910,7 @@ public class ElementCollectionTest extends TestCase{
     public void testConstructorTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1073,7 +1073,7 @@ public class ElementCollectionTest extends TestCase{
     public void testControllerElementCollectionCustomCollectionTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1174,7 +1174,7 @@ public class ElementCollectionTest extends TestCase{
     public void testFieldTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1337,7 +1337,7 @@ public class ElementCollectionTest extends TestCase{
     public void testPropertyTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1500,7 +1500,7 @@ public class ElementCollectionTest extends TestCase{
     public void testControllerElementCollectionBeanConstructorFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1544,7 +1544,7 @@ public class ElementCollectionTest extends TestCase{
     public void testControllerElementCollectionBeanFieldFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1587,7 +1587,7 @@ public class ElementCollectionTest extends TestCase{
     public void testControllerElementCollectionBeanPropertyFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1630,7 +1630,7 @@ public class ElementCollectionTest extends TestCase{
     public void testControllerElementCollectionFieldFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1673,7 +1673,7 @@ public class ElementCollectionTest extends TestCase{
     public void testControllerElementCollectionPropertyFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1717,7 +1717,7 @@ public class ElementCollectionTest extends TestCase{
     public void testControllerElementCollectionUnknownTypeTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(

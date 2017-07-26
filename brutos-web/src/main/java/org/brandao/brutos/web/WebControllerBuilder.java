@@ -133,7 +133,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 
 		if(StringUtil.isEmpty(id) && !StringUtil.isEmpty(executor)){
 			if(type.isDelegate() || type.isComposite()){
-	    		id = type.getActionID(executor);
+	    		id = type.getActionID(executor.replaceAll("Action$", ""));
 			}
 		}
 		

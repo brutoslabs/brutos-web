@@ -18,11 +18,14 @@
 package org.brandao.brutos.annotation;
 
 import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
+
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.helper.bean.app1.Bean1TestController;
 import org.brandao.brutos.annotation.helper.bean.app1.Bean2TestController;
@@ -32,8 +35,8 @@ import org.brandao.brutos.annotation.helper.bean.fail.FailBean2TestController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
 
 /**
  *
@@ -44,7 +47,7 @@ public class BeanTest  extends TestCase{
     public void test1() throws Throwable{
         WebApplicationContextTester.run(
             "/Bean1Test/teste", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -80,7 +83,7 @@ public class BeanTest  extends TestCase{
     public void test2() throws Throwable{
         WebApplicationContextTester.run(
             "/Bean2Test/teste", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -116,7 +119,7 @@ public class BeanTest  extends TestCase{
     public void test3() throws Throwable{
         WebApplicationContextTester.run(
             "/Bean2Test/teste2", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -152,7 +155,7 @@ public class BeanTest  extends TestCase{
     public void test4() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -194,7 +197,7 @@ public class BeanTest  extends TestCase{
     public void test5() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -236,7 +239,7 @@ public class BeanTest  extends TestCase{
     public void test6() throws Throwable{
         WebApplicationContextTester.run(
             "/Bean1Test/actionTeste/action", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -271,7 +274,7 @@ public class BeanTest  extends TestCase{
     public void test7() throws Throwable{
         WebApplicationContextTester.run(
             "/Bean3Test/teste", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(

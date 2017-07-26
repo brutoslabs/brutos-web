@@ -18,11 +18,14 @@
 package org.brandao.brutos.annotation;
 
 import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
+
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.helper.constructor.app1.ConstructorBean1;
 import org.brandao.brutos.annotation.helper.constructor.app1.ConstructorBean2;
@@ -31,8 +34,8 @@ import org.brandao.brutos.annotation.helper.constructor.app1.Contructor1TestCont
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
 
 /**
  *
@@ -43,7 +46,7 @@ public class ConstructorTest  extends TestCase{
     public void test1() throws Throwable{
         WebApplicationContextTester.run(
             "/Contructor1Test/test1", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -83,7 +86,7 @@ public class ConstructorTest  extends TestCase{
     public void test2() throws Throwable{
         WebApplicationContextTester.run(
             "/Contructor1Test/test2", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -124,7 +127,7 @@ public class ConstructorTest  extends TestCase{
     public void test3() throws Throwable{
         WebApplicationContextTester.run(
             "/Contructor1Test/test3", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(

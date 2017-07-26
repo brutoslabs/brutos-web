@@ -42,15 +42,15 @@ import org.brandao.brutos.annotation.helper.any.app2.metavaluesdefinition.Test9A
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
 
 public class AnyElementCollectionTest extends TestCase{
     
     public void testTest1ResultViewController_test1Action_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test1", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -103,7 +103,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest1ResultViewController_test1Action_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test1", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -160,7 +160,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest1ResultViewController_test2Action_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test2", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -213,7 +213,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest1ResultViewController_test2Action_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test2", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -270,7 +270,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest1ResultViewController_test3Action_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test3", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -323,7 +323,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest1ResultViewController_test3Action_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test3", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -380,7 +380,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest1ResultViewController_test4Action_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test4", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -433,7 +433,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest1ResultViewController_test4Action_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test4", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -490,7 +490,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest2AnyController_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -563,7 +563,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest2AnyController_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -648,7 +648,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest3AnyController_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -721,7 +721,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest3AnyController_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -806,7 +806,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest4AnyController_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -879,7 +879,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest4AnyController_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -964,7 +964,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest5AnyController_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1037,7 +1037,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest5AnyController_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1122,7 +1122,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest6AnyController_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1215,7 +1215,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest6AnyController_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1326,7 +1326,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest7AnyController_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1419,7 +1419,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest7AnyController_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1530,7 +1530,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest8AnyController_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1623,7 +1623,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest8AnyController_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1734,7 +1734,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest9AnyController_decimal() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1827,7 +1827,7 @@ public class AnyElementCollectionTest extends TestCase{
     public void testTest9AnyController_set() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1938,7 +1938,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest1AnyMetaValuesDefinitionController_test1Action_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test1", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -1991,7 +1991,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest1AnyMetaValuesDefinitionController_test1Action_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test1", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2048,7 +2048,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest1AnyMetaValuesDefinitionController_test2Action_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test2", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2101,7 +2101,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest1AnyMetaValuesDefinitionController_test2Action_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test2", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2158,7 +2158,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest1AnyMetaValuesDefinitionController_test3Action_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test3", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2211,7 +2211,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest1AnyMetaValuesDefinitionController_test3Action_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test3", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2268,7 +2268,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest1AnyMetaValuesDefinitionController_test4Action_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test4", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2321,7 +2321,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest1AnyMetaValuesDefinitionController_test4Action_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test4", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2378,7 +2378,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest2AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2451,7 +2451,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest2AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2536,7 +2536,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest3AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2609,7 +2609,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest3AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2694,7 +2694,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest4AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2767,7 +2767,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest4AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2852,7 +2852,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest5AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -2925,7 +2925,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest5AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -3010,7 +3010,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest6AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -3103,7 +3103,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest6AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -3214,7 +3214,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest7AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -3307,7 +3307,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest7AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -3418,7 +3418,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest8AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -3511,7 +3511,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest8AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -3622,7 +3622,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest9AnyMetaValuesDefinitionController_decimal() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -3715,7 +3715,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest9AnyMetaValuesDefinitionController_set() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(
@@ -3826,7 +3826,7 @@ public class AnyElementCollectionTest extends TestCase{
 	public void testTest10Controller() throws Throwable{
 	    WebApplicationContextTester.run(
 	        "/controller/test", 
-	        new WebApplicationTester() {
+	        new BasicWebApplicationTester() {
 	
 	            public void prepareContext(Map<String, String> parameters) {
 	                parameters.put(

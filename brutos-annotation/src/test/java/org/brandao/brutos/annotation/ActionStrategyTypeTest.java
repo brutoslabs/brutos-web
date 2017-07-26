@@ -21,7 +21,6 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.annotation.helper.actionstrategy.app1.ActionStrategyTest1Controller;
@@ -32,7 +31,7 @@ import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContex
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 
 /**
  *
@@ -43,7 +42,7 @@ public class ActionStrategyTypeTest extends TestCase {
     public void test1() throws Throwable{
         WebApplicationContextTester.run(
             "/ActionStrategyTest1/teste", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -65,11 +64,11 @@ public class ActionStrategyTypeTest extends TestCase {
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
                 public void checkException(Throwable e) {
-                    Assert.fail();
+                    fail();
                 }
             },
             new Class[]{ActionStrategyTest1Controller.class});
@@ -78,7 +77,7 @@ public class ActionStrategyTypeTest extends TestCase {
     public void test2() throws Throwable{
         WebApplicationContextTester.run(
             "/ActionStrategyTest2", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -101,11 +100,11 @@ public class ActionStrategyTypeTest extends TestCase {
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
                 public void checkException(Throwable e) {
-                    Assert.fail();
+                    fail();
                 }
             },
             new Class[]{ActionStrategyTest2Controller.class});
@@ -114,7 +113,7 @@ public class ActionStrategyTypeTest extends TestCase {
     public void test3() throws Throwable{
         WebApplicationContextTester.run(
             "/ActionStrategyTest3/teste", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -136,11 +135,11 @@ public class ActionStrategyTypeTest extends TestCase {
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
                 public void checkException(Throwable e) {
-                    Assert.fail();
+                    fail();
                 }
             },
             new Class[]{ActionStrategyTest3Controller.class});
@@ -149,7 +148,7 @@ public class ActionStrategyTypeTest extends TestCase {
     public void test4() throws Throwable{
         WebApplicationContextTester.run(
             "/teste", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -171,11 +170,11 @@ public class ActionStrategyTypeTest extends TestCase {
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
-                    Assert.assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
+                    assertEquals("action", request.getAttribute(BrutosConstants.DEFAULT_RETURN_NAME));
                 }
 
                 public void checkException(Throwable e) {
-                    Assert.fail();
+                    fail();
                 }
             },
             new Class[]{ActionStrategyTest4Controller.class});

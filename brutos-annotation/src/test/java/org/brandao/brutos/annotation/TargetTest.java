@@ -16,15 +16,15 @@ import org.brandao.brutos.annotation.helper.target.fail.Test1FailTargetControlle
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
 
 public class TargetTest extends TestCase{
     
     public void testTest1TargetController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -80,7 +80,7 @@ public class TargetTest extends TestCase{
     public void testTest1FailRestrictionController() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(

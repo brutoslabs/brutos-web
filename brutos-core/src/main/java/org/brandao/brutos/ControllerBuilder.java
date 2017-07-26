@@ -320,6 +320,11 @@ public class ControllerBuilder {
 		resultId          = StringUtil.adjust(resultId);
 		view              = StringUtil.adjust(view);
 		executor          = StringUtil.adjust(executor);
+		
+		if(StringUtil.isEmpty(id) && !StringUtil.isEmpty(executor)){
+    		id = executor.replaceAll("Action$", "");
+		}
+		
 		ActionID actionId = new ActionID(id);
 
 		//foi removido o actionid (invoker) e o actionType

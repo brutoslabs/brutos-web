@@ -30,8 +30,8 @@ import org.brandao.brutos.annotation.helper.keycollection.fail.ControllerKeyColl
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
 
 public class KeyCollectionTest extends TestCase{
     
@@ -40,7 +40,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_propertyAction() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -93,7 +93,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_property2Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property2", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -146,7 +146,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_property3Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property3", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -198,7 +198,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_propert4Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property4", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -250,7 +250,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_property5Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property5", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -301,7 +301,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_property6Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property6", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -358,7 +358,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_property7Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property7", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -410,7 +410,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_property8Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property8", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -462,7 +462,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_property9Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property9", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -514,7 +514,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_property10Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property10", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -566,7 +566,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_property11Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property11", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -618,7 +618,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionActionTest_property12Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property12", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -670,7 +670,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionBeanTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1024,7 +1024,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionConstructorTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1212,7 +1212,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionCustomCollectionTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1344,7 +1344,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionFieldTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1532,7 +1532,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionPropertyTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1719,7 +1719,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionBeanConstructorFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1762,7 +1762,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionBeanFieldFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1805,7 +1805,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionBeanPropertyFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1848,7 +1848,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionFieldFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1891,7 +1891,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionPropertyFailTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -1935,7 +1935,7 @@ public class KeyCollectionTest extends TestCase{
     public void testControllerKeyCollectionUnknownTypeTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
