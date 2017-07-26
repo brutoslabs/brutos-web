@@ -14,6 +14,7 @@ public class Test5AnyMetaValuesDefinitionController {
 
 	@Basic(bean="propertyA")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
@@ -32,6 +33,7 @@ public class Test5AnyMetaValuesDefinitionController {
 
 	@Basic(bean="propertyB")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType2"),

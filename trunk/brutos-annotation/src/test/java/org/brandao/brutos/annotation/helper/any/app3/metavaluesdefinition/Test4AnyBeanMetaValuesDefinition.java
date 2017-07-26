@@ -13,6 +13,7 @@ public class Test4AnyBeanMetaValuesDefinition {
 
 	@Basic(bean="propertyA")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
@@ -22,7 +23,8 @@ public class Test4AnyBeanMetaValuesDefinition {
 			)
 		)
 	public Map<Property,String> property1;
-	
+
+	@KeyCollection(bean="key")
 	private Map<Property,String> property2;
 
 	@Transient
@@ -31,6 +33,7 @@ public class Test4AnyBeanMetaValuesDefinition {
 	public Test4AnyBeanMetaValuesDefinition(
 			@Basic(bean="propertyC")
 			@KeyCollection(
+				bean="key",
 				any=
 					@Any(
 						metaBean=@Basic(bean="propertyType3"),
@@ -49,6 +52,7 @@ public class Test4AnyBeanMetaValuesDefinition {
 
 	@Basic(bean="propertyB")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType2"),

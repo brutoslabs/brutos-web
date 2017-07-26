@@ -1,12 +1,10 @@
 package org.brandao.brutos.annotation.helper.any.app3;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.brandao.brutos.annotation.Any;
 import org.brandao.brutos.annotation.Basic;
-import org.brandao.brutos.annotation.ElementCollection;
 import org.brandao.brutos.annotation.KeyCollection;
 import org.brandao.brutos.annotation.MetaValue;
 import org.brandao.brutos.annotation.Transient;
@@ -15,6 +13,7 @@ public class Test4AnyBean {
 
 	@Basic(bean="propertyA")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType"),
@@ -36,6 +35,7 @@ public class Test4AnyBean {
 	public Test4AnyBean(
 			@Basic(bean="propertyC")
 			@KeyCollection(
+				bean="key",
 				any=
 					@Any(
 						metaBean=@Basic(bean="propertyType3"),
@@ -57,6 +57,7 @@ public class Test4AnyBean {
 
 	@Basic(bean="propertyB")
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 				metaBean=@Basic(bean="propertyType2"),
