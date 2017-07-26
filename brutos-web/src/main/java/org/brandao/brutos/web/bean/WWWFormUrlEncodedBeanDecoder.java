@@ -121,9 +121,15 @@ public class WWWFormUrlEncodedBeanDecoder
 	}	
 
 	public Object getValue(MetaBean metaBean, String prefix, long index) {
-		String pre = prefix != null ? prefix : "";
-		String key = pre + metaBean.getName();
-
+		String key;
+		
+		if(prefix == null){
+			key = metaBean.getName();
+		}
+		else{
+			key = prefix + metaBean.getName();
+		}
+		
 		Object metaValue = metaBean.getScope().get(key);
 		metaValue = metaBean.getType().convert(metaValue);
 
@@ -183,32 +189,8 @@ public class WWWFormUrlEncodedBeanDecoder
 				throw new BrutosException("mapping not found: " + entity.getMapping());
 			}
 
-			String newPrefix = null;
-			
-			if (entity.getParent().isHierarchy()) {
-				String parameter = entity.getParameterName();
-				
-				if (parameter != null){
-					newPrefix = parameter == null ? "" : parameter;
-				}
-			}
-
-			if (newPrefix != null) {
-				newPrefix += 
-						index < 0 ? "" : 
-						entity.getParent().getIndexFormat().replace("$index", String.valueOf(index));
-				
-				newPrefix += entity.getParent().getSeparator();
-			}
-
-			if (prefix != null) {
-				if (newPrefix != null)
-					newPrefix = prefix + newPrefix;
-				else
-					newPrefix = prefix;
-			}
-
-			Object value = this.getValue(dependencyBean, newPrefix, -1);
+			prefix       = this.getNewPrefix(entity, prefix, true);
+			Object value = this.getValue(dependencyBean, prefix, -1);
 			return entity.getType().convert(value);
 		}
 		else
@@ -221,19 +203,14 @@ public class WWWFormUrlEncodedBeanDecoder
 				return null;
 			}
 			else{
-				String pre = prefix != null ? prefix : "";
-				String param = entity.getParameterName() == null? "" : entity.getParameterName();
-				String idx = 
-						index < 0 ? "" : 
-						entity.getParent().getIndexFormat().replace("$index", String.valueOf(index));
-				String key = pre + param + idx;
-
-				result = entity.getScope().get(key);
+				prefix = this.getNewPrefix(entity, prefix, false);
+				result = entity.getScope().get(prefix);
 				return entity.getType().convert(result);
 			}
 
 		}
 		else{
+			prefix = this.getNewPrefix(entity, prefix, true);
 			result = this.getValue(entity.getMetaBean(), prefix, -1);
 			return entity.getType().convert(result);
 		}
@@ -331,9 +308,11 @@ public class WWWFormUrlEncodedBeanDecoder
 				newPrefix + 
 				entity.getIndexFormat().replace("$index", String.valueOf(i));
 			
+			/*
 			if(e.getMapping() != null || e.getMetaBean() != null){
 				ePreifx += entity.getSeparator();
 			}
+			*/
 			
 			Object element = this.getValue(e, FetchType.EAGER, ePreifx, -1);
 			
@@ -375,9 +354,11 @@ public class WWWFormUrlEncodedBeanDecoder
 				newPrefix + 
 				entity.getIndexFormat().replace("$index", String.valueOf(i));
 				
+			/*
 			if(e.getMapping() != null || e.getMetaBean() != null){
 				ePreifx += entity.getSeparator();
 			}
+			*/
 			
 			Object element = this.getValue(e, FetchType.EAGER, ePreifx, -1);
 			
@@ -425,6 +406,7 @@ public class WWWFormUrlEncodedBeanDecoder
 				e.getParameterName() + 
 				entity.getIndexFormat().replace("$index", String.valueOf(i));
 			
+			/*
 			String kPrefix;
 			
 			if(k.getMapping() != null || k.getMetaBean() != null){
@@ -439,16 +421,16 @@ public class WWWFormUrlEncodedBeanDecoder
 					newPrefix +
 					entity.getSeparator();
 			}
+			*/
 			
-			
-			Object key = this.getValue(k, FetchType.EAGER, kPrefix, -1);
+			Object key = this.getValue(k, FetchType.EAGER, newPrefix, -1);
 			
 			if(key == null){
 				break;
 			}
 			
-			String ePrefix;
-			
+			//String ePrefix;
+			/*
 			if(e.getMapping() != null || e.getMetaBean() != null){
 				ePrefix = 
 					newPrefix + 
@@ -461,8 +443,9 @@ public class WWWFormUrlEncodedBeanDecoder
 					newPrefix +
 					entity.getSeparator();
 			}
+			*/
 			
-			Object element = this.getValue(e, FetchType.EAGER, ePrefix, -1);
+			Object element = this.getValue(e, FetchType.EAGER, newPrefix, -1);
 			
 			destValue.put(key, element);
 		}
@@ -612,7 +595,7 @@ public class WWWFormUrlEncodedBeanDecoder
 		boolean exist = argsList.size() < 1;
 		
 		for(ConstructorArgBean arg: constructor.getConstructorArgs()){
-			args[i]        = this.getValue(arg, null, prefix, index);
+			args[i] = this.getValue(arg, null, prefix, index);
 			if(!exist){
 				exist = exist || args[i] != null || arg.isNullable();
 			}
@@ -622,5 +605,27 @@ public class WWWFormUrlEncodedBeanDecoder
 		
 		return exist? args : null;
 	}
+
+	/* util */
 	
+	private String getNewPrefix(DependencyBean entity, String prefix, boolean hasNext){
+		
+		if(entity.getParent().isHierarchy()){
+			String parameterName = entity.getParameterName();
+			
+			if(parameterName != null){
+				prefix = 
+					prefix == null?
+						parameterName + entity.getParent().getSeparator() :
+						prefix + parameterName;
+						
+				if(hasNext){
+					prefix +=entity.getParent().getSeparator();
+				}
+			}
+		}
+		
+		return prefix;
+	}
+
 }
