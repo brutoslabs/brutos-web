@@ -48,7 +48,7 @@ public class WWWFormUrlEncodedBeanDecoder
 	public Object decode(UseBeanData entity, FetchType fetchType, Object data)
 			throws BeanDecoderException {
 		try{
-			return entity.getValue(null);
+			return this.getValue(entity, fetchType, data);
 		}
 		catch(Throwable e){
 			throw new BeanDecoderException(e);
