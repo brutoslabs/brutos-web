@@ -7,7 +7,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.brandao.brutos.annotation.helper.any.app1.DecimalProperty;
@@ -120,8 +119,8 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.propertyType", "set");
                 	parameters.put("property.name", "propName");
-                	parameters.put("property.values.element[0]", "VALUE1");
-                	parameters.put("property.values.element[1]", "VALUE2");
+                	parameters.put("property.values[0]", "VALUE1");
+                	parameters.put("property.values[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -222,8 +221,8 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.propertyType", "SET");
                 	parameters.put("property.name", "propName");
-                	parameters.put("property.values.element[0]", "VALUE1");
-                	parameters.put("property.values.element[1]", "VALUE2");
+                	parameters.put("property.values[0]", "VALUE1");
+                	parameters.put("property.values[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -324,8 +323,8 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.propertyType", "1");
                 	parameters.put("property.name", "propName");
-                	parameters.put("property.values.element[0]", "VALUE1");
-                	parameters.put("property.values.element[1]", "VALUE2");
+                	parameters.put("property.values[0]", "VALUE1");
+                	parameters.put("property.values[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -426,8 +425,8 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property.propertyType", "2015-01-02");
                 	parameters.put("property.name", "propName");
-                	parameters.put("property.values.element[0]", "VALUE1");
-                	parameters.put("property.values.element[1]", "VALUE2");
+                	parameters.put("property.values[0]", "VALUE1");
+                	parameters.put("property.values[1]", "VALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -544,15 +543,15 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.propertyType", "set");
                 	parameters.put("propertyA.name", "propName");
-                	parameters.put("propertyA.values.element[0]", "VALUE1");
-                	parameters.put("propertyA.values.element[1]", "VALUE2");
-                	parameters.put("propertyA.values.element[3]", "VALUEX");
+                	parameters.put("propertyA.values[0]", "VALUE1");
+                	parameters.put("propertyA.values[1]", "VALUE2");
+                	parameters.put("propertyA.values[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.propertyType2", "set");
                 	parameters.put("propertyB.name", "propName");
-                	parameters.put("propertyB.values.element[0]", "VALUE3");
-                	parameters.put("propertyB.values.element[1]", "VALUE4");
-                	parameters.put("propertyB.values.element[3]", "VALUEXX");
+                	parameters.put("propertyB.values[0]", "VALUE3");
+                	parameters.put("propertyB.values[1]", "VALUE4");
+                	parameters.put("propertyB.values[3]", "VALUEXX");
                 	
                 }
 
@@ -686,15 +685,15 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.propertyType", "SET");
                 	parameters.put("propertyA.name", "propName");
-                	parameters.put("propertyA.values.element[0]", "VALUE1");
-                	parameters.put("propertyA.values.element[1]", "VALUE2");
-                	parameters.put("propertyA.values.element[3]", "VALUEX");
+                	parameters.put("propertyA.values[0]", "VALUE1");
+                	parameters.put("propertyA.values[1]", "VALUE2");
+                	parameters.put("propertyA.values[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.propertyType2", "SET");
                 	parameters.put("propertyB.name", "propName");
-                	parameters.put("propertyB.values.element[0]", "VALUE3");
-                	parameters.put("propertyB.values.element[1]", "VALUE4");
-                	parameters.put("propertyB.values.element[3]", "VALUEXX");
+                	parameters.put("propertyB.values[0]", "VALUE3");
+                	parameters.put("propertyB.values[1]", "VALUE4");
+                	parameters.put("propertyB.values[3]", "VALUEXX");
                 	
                 }
 
@@ -828,15 +827,15 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.propertyType", "1");
                 	parameters.put("propertyA.name", "propName");
-                	parameters.put("propertyA.values.element[0]", "VALUE1");
-                	parameters.put("propertyA.values.element[1]", "VALUE2");
-                	parameters.put("propertyA.values.element[3]", "VALUEX");
+                	parameters.put("propertyA.values[0]", "VALUE1");
+                	parameters.put("propertyA.values[1]", "VALUE2");
+                	parameters.put("propertyA.values[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.propertyType2", "1");
                 	parameters.put("propertyB.name", "propName");
-                	parameters.put("propertyB.values.element[0]", "VALUE3");
-                	parameters.put("propertyB.values.element[1]", "VALUE4");
-                	parameters.put("propertyB.values.element[3]", "VALUEXX");
+                	parameters.put("propertyB.values[0]", "VALUE3");
+                	parameters.put("propertyB.values[1]", "VALUE4");
+                	parameters.put("propertyB.values[3]", "VALUEXX");
                 	
                 }
 
@@ -970,15 +969,15 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("propertyA.propertyType", "2015-01-02");
                 	parameters.put("propertyA.name", "propName");
-                	parameters.put("propertyA.values.element[0]", "VALUE1");
-                	parameters.put("propertyA.values.element[1]", "VALUE2");
-                	parameters.put("propertyA.values.element[3]", "VALUEX");
+                	parameters.put("propertyA.values[0]", "VALUE1");
+                	parameters.put("propertyA.values[1]", "VALUE2");
+                	parameters.put("propertyA.values[3]", "VALUEX");
                 	
                 	parameters.put("propertyB.propertyType2", "2015-01-02");
                 	parameters.put("propertyB.name", "propName");
-                	parameters.put("propertyB.values.element[0]", "VALUE3");
-                	parameters.put("propertyB.values.element[1]", "VALUE4");
-                	parameters.put("propertyB.values.element[3]", "VALUEXX");
+                	parameters.put("propertyB.values[0]", "VALUE3");
+                	parameters.put("propertyB.values[1]", "VALUE4");
+                	parameters.put("propertyB.values[3]", "VALUEXX");
                 	
                 }
 
@@ -1128,21 +1127,21 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.propertyType", "set");
                 	parameters.put("property1.propertyA.name", "propName1");
-                	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
-                	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyA.values[0]", "VALUE1");
+                	parameters.put("property1.propertyA.values[1]", "VALUE2");
+                	parameters.put("property1.propertyA.values[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "set");
                 	parameters.put("property1.propertyB.name", "propName2");
-                	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
-                	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyB.values[0]", "VALUE3");
+                	parameters.put("property1.propertyB.values[1]", "VALUE4");
+                	parameters.put("property1.propertyB.values[3]", "VALUEX");
 
                 	parameters.put("property1.propertyC.propertyType3", "set");
                 	parameters.put("property1.propertyC.name", "propName3");
-                	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
-                	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyC.values[0]", "VALUE5");
+                	parameters.put("property1.propertyC.values[1]", "VALUE6");
+                	parameters.put("property1.propertyC.values[3]", "VALUEX");
                 	
                 }
 
@@ -1308,21 +1307,21 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.propertyType", "SET");
                 	parameters.put("property1.propertyA.name", "propName1");
-                	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
-                	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyA.values[0]", "VALUE1");
+                	parameters.put("property1.propertyA.values[1]", "VALUE2");
+                	parameters.put("property1.propertyA.values[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "SET");
                 	parameters.put("property1.propertyB.name", "propName2");
-                	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
-                	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyB.values[0]", "VALUE3");
+                	parameters.put("property1.propertyB.values[1]", "VALUE4");
+                	parameters.put("property1.propertyB.values[3]", "VALUEX");
 
                 	parameters.put("property1.propertyC.propertyType3", "SET");
                 	parameters.put("property1.propertyC.name", "propName3");
-                	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
-                	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyC.values[0]", "VALUE5");
+                	parameters.put("property1.propertyC.values[1]", "VALUE6");
+                	parameters.put("property1.propertyC.values[3]", "VALUEX");
                 	
                 }
 
@@ -1378,6 +1377,7 @@ public class AnyTest extends TestCase{
                 }
 
                 public void checkException(Throwable e) {
+                	e.printStackTrace();
                     fail(e.toString());
                 }
             },
@@ -1488,21 +1488,21 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.propertyType", "1");
                 	parameters.put("property1.propertyA.name", "propName1");
-                	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
-                	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyA.values[0]", "VALUE1");
+                	parameters.put("property1.propertyA.values[1]", "VALUE2");
+                	parameters.put("property1.propertyA.values[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "1");
                 	parameters.put("property1.propertyB.name", "propName2");
-                	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
-                	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyB.values[0]", "VALUE3");
+                	parameters.put("property1.propertyB.values[1]", "VALUE4");
+                	parameters.put("property1.propertyB.values[3]", "VALUEX");
 
                 	parameters.put("property1.propertyC.propertyType3", "1");
                 	parameters.put("property1.propertyC.name", "propName3");
-                	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
-                	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyC.values[0]", "VALUE5");
+                	parameters.put("property1.propertyC.values[1]", "VALUE6");
+                	parameters.put("property1.propertyC.values[3]", "VALUEX");
                 	
                 }
 
@@ -1668,21 +1668,21 @@ public class AnyTest extends TestCase{
                 public void prepareRequest(Map<String, String> parameters) {
                 	parameters.put("property1.propertyA.propertyType", "2015-01-02");
                 	parameters.put("property1.propertyA.name", "propName1");
-                	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
-                	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyA.values[0]", "VALUE1");
+                	parameters.put("property1.propertyA.values[1]", "VALUE2");
+                	parameters.put("property1.propertyA.values[3]", "VALUEX");
                 	
                 	parameters.put("property1.propertyB.propertyType2", "2015-01-02");
                 	parameters.put("property1.propertyB.name", "propName2");
-                	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
-                	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyB.values[0]", "VALUE3");
+                	parameters.put("property1.propertyB.values[1]", "VALUE4");
+                	parameters.put("property1.propertyB.values[3]", "VALUEX");
 
                 	parameters.put("property1.propertyC.propertyType3", "2015-01-02");
                 	parameters.put("property1.propertyC.name", "propName3");
-                	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
-                	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyC.values[0]", "VALUE5");
+                	parameters.put("property1.propertyC.values[1]", "VALUE6");
+                	parameters.put("property1.propertyC.values[3]", "VALUEX");
                 	
                 }
 
@@ -1816,8 +1816,8 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property.propertyType", "set");
 	            	parameters.put("property.name", "propName");
-	            	parameters.put("property.values.element[0]", "VALUE1");
-	            	parameters.put("property.values.element[1]", "VALUE2");
+	            	parameters.put("property.values[0]", "VALUE1");
+	            	parameters.put("property.values[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1918,8 +1918,8 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property.propertyType", "SET");
 	            	parameters.put("property.name", "propName");
-	            	parameters.put("property.values.element[0]", "VALUE1");
-	            	parameters.put("property.values.element[1]", "VALUE2");
+	            	parameters.put("property.values[0]", "VALUE1");
+	            	parameters.put("property.values[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -2020,8 +2020,8 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property.propertyType", "1");
 	            	parameters.put("property.name", "propName");
-	            	parameters.put("property.values.element[0]", "VALUE1");
-	            	parameters.put("property.values.element[1]", "VALUE2");
+	            	parameters.put("property.values[0]", "VALUE1");
+	            	parameters.put("property.values[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -2122,8 +2122,8 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property.propertyType", "2015-01-02");
 	            	parameters.put("property.name", "propName");
-	            	parameters.put("property.values.element[0]", "VALUE1");
-	            	parameters.put("property.values.element[1]", "VALUE2");
+	            	parameters.put("property.values[0]", "VALUE1");
+	            	parameters.put("property.values[1]", "VALUE2");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -2240,15 +2240,15 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.propertyType", "set");
 	            	parameters.put("propertyA.name", "propName");
-	            	parameters.put("propertyA.values.element[0]", "VALUE1");
-	            	parameters.put("propertyA.values.element[1]", "VALUE2");
-	            	parameters.put("propertyA.values.element[3]", "VALUEX");
+	            	parameters.put("propertyA.values[0]", "VALUE1");
+	            	parameters.put("propertyA.values[1]", "VALUE2");
+	            	parameters.put("propertyA.values[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.propertyType2", "set");
 	            	parameters.put("propertyB.name", "propName");
-	            	parameters.put("propertyB.values.element[0]", "VALUE3");
-	            	parameters.put("propertyB.values.element[1]", "VALUE4");
-	            	parameters.put("propertyB.values.element[3]", "VALUEXX");
+	            	parameters.put("propertyB.values[0]", "VALUE3");
+	            	parameters.put("propertyB.values[1]", "VALUE4");
+	            	parameters.put("propertyB.values[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2382,15 +2382,15 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.propertyType", "SET");
 	            	parameters.put("propertyA.name", "propName");
-	            	parameters.put("propertyA.values.element[0]", "VALUE1");
-	            	parameters.put("propertyA.values.element[1]", "VALUE2");
-	            	parameters.put("propertyA.values.element[3]", "VALUEX");
+	            	parameters.put("propertyA.values[0]", "VALUE1");
+	            	parameters.put("propertyA.values[1]", "VALUE2");
+	            	parameters.put("propertyA.values[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.propertyType2", "SET");
 	            	parameters.put("propertyB.name", "propName");
-	            	parameters.put("propertyB.values.element[0]", "VALUE3");
-	            	parameters.put("propertyB.values.element[1]", "VALUE4");
-	            	parameters.put("propertyB.values.element[3]", "VALUEXX");
+	            	parameters.put("propertyB.values[0]", "VALUE3");
+	            	parameters.put("propertyB.values[1]", "VALUE4");
+	            	parameters.put("propertyB.values[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2524,15 +2524,15 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.propertyType", "1");
 	            	parameters.put("propertyA.name", "propName");
-	            	parameters.put("propertyA.values.element[0]", "VALUE1");
-	            	parameters.put("propertyA.values.element[1]", "VALUE2");
-	            	parameters.put("propertyA.values.element[3]", "VALUEX");
+	            	parameters.put("propertyA.values[0]", "VALUE1");
+	            	parameters.put("propertyA.values[1]", "VALUE2");
+	            	parameters.put("propertyA.values[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.propertyType2", "1");
 	            	parameters.put("propertyB.name", "propName");
-	            	parameters.put("propertyB.values.element[0]", "VALUE3");
-	            	parameters.put("propertyB.values.element[1]", "VALUE4");
-	            	parameters.put("propertyB.values.element[3]", "VALUEXX");
+	            	parameters.put("propertyB.values[0]", "VALUE3");
+	            	parameters.put("propertyB.values[1]", "VALUE4");
+	            	parameters.put("propertyB.values[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2666,15 +2666,15 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("propertyA.propertyType", "2015-01-02");
 	            	parameters.put("propertyA.name", "propName");
-	            	parameters.put("propertyA.values.element[0]", "VALUE1");
-	            	parameters.put("propertyA.values.element[1]", "VALUE2");
-	            	parameters.put("propertyA.values.element[3]", "VALUEX");
+	            	parameters.put("propertyA.values[0]", "VALUE1");
+	            	parameters.put("propertyA.values[1]", "VALUE2");
+	            	parameters.put("propertyA.values[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyB.propertyType2", "2015-01-02");
 	            	parameters.put("propertyB.name", "propName");
-	            	parameters.put("propertyB.values.element[0]", "VALUE3");
-	            	parameters.put("propertyB.values.element[1]", "VALUE4");
-	            	parameters.put("propertyB.values.element[3]", "VALUEXX");
+	            	parameters.put("propertyB.values[0]", "VALUE3");
+	            	parameters.put("propertyB.values[1]", "VALUE4");
+	            	parameters.put("propertyB.values[3]", "VALUEXX");
 	            	
 	            }
 	
@@ -2824,21 +2824,21 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.propertyType", "set");
 	            	parameters.put("property1.propertyA.name", "propName1");
-	            	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.values[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.values[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.values[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.propertyType2", "set");
 	            	parameters.put("property1.propertyB.name", "propName2");
-	            	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.values[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.values[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.values[3]", "VALUEX");
 	
 	            	parameters.put("property1.propertyC.propertyType3", "set");
 	            	parameters.put("property1.propertyC.name", "propName3");
-	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.values[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.values[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.values[3]", "VALUEX");
 	            	
 	            }
 	
@@ -3004,21 +3004,21 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.propertyType", "SET");
 	            	parameters.put("property1.propertyA.name", "propName1");
-	            	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.values[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.values[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.values[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.propertyType2", "SET");
 	            	parameters.put("property1.propertyB.name", "propName2");
-	            	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.values[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.values[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.values[3]", "VALUEX");
 	
 	            	parameters.put("property1.propertyC.propertyType3", "SET");
 	            	parameters.put("property1.propertyC.name", "propName3");
-	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.values[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.values[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.values[3]", "VALUEX");
 	            	
 	            }
 	
@@ -3184,21 +3184,21 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.propertyType", "1");
 	            	parameters.put("property1.propertyA.name", "propName1");
-	            	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.values[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.values[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.values[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.propertyType2", "1");
 	            	parameters.put("property1.propertyB.name", "propName2");
-	            	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.values[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.values[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.values[3]", "VALUEX");
 	
 	            	parameters.put("property1.propertyC.propertyType3", "1");
 	            	parameters.put("property1.propertyC.name", "propName3");
-	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.values[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.values[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.values[3]", "VALUEX");
 	            	
 	            }
 	
@@ -3364,21 +3364,21 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.propertyType", "2015-01-02");
 	            	parameters.put("property1.propertyA.name", "propName1");
-	            	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.values[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.values[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.values[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.propertyType2", "2015-01-02");
 	            	parameters.put("property1.propertyB.name", "propName2");
-	            	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.values[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.values[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.values[3]", "VALUEX");
 	
 	            	parameters.put("property1.propertyC.propertyType3", "2015-01-02");
 	            	parameters.put("property1.propertyC.name", "propName3");
-	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.values[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.values[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.values[3]", "VALUEX");
 	            	
 	            }
 	
@@ -3463,33 +3463,33 @@ public class AnyTest extends TestCase{
 	            public void prepareRequest(Map<String, String> parameters) {
 	            	parameters.put("property1.propertyA.propertyType", "set");
 	            	parameters.put("property1.propertyA.name", "propName1");
-	            	parameters.put("property1.propertyA.values.element[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.values[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.values[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.values[3]", "VALUEX");
 	            	
 	            	parameters.put("property1.propertyB.propertyType2", "set");
 	            	parameters.put("property1.propertyB.name", "propName2");
-	            	parameters.put("property1.propertyB.values.element[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.values[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.values[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.values[3]", "VALUEX");
 	
 	            	parameters.put("property1.propertyC.propertyType3", "set");
 	            	parameters.put("property1.propertyC.name", "propName3");
-	            	parameters.put("property1.propertyC.values.element[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.values[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.values[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.values[3]", "VALUEX");
 
 	            	parameters.put("propertyD.propertyType4", "set");
 	            	parameters.put("propertyD.name", "propName4");
-	            	parameters.put("propertyD.values.element[0]", "VALUE7");
-	            	parameters.put("propertyD.values.element[1]", "VALUE8");
-	            	parameters.put("propertyD.values.element[3]", "VALUEX");
+	            	parameters.put("propertyD.values[0]", "VALUE7");
+	            	parameters.put("propertyD.values[1]", "VALUE8");
+	            	parameters.put("propertyD.values[3]", "VALUEX");
 	            	
 	            	parameters.put("propertyE.propertyType5", "set");
 	            	parameters.put("propertyE.name", "propName5");
-	            	parameters.put("propertyE.values.element[0]", "VALUE9");
-	            	parameters.put("propertyE.values.element[1]", "VALUE10");
-	            	parameters.put("propertyE.values.element[3]", "VALUEX");
+	            	parameters.put("propertyE.values[0]", "VALUE9");
+	            	parameters.put("propertyE.values[1]", "VALUE10");
+	            	parameters.put("propertyE.values[3]", "VALUEX");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
