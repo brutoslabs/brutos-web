@@ -28,7 +28,6 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.Invoker;
-import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.ObjectFactory;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
@@ -203,6 +202,10 @@ public class Controller {
 		return (Action) actions.get(id);
 	}
 
+	public Action getActionByName(String name){
+		return (Action) actions.get(new ActionID(name));
+	}
+	
 	public Map<ActionID, Action> getActions() {
 		return actions;
 	}

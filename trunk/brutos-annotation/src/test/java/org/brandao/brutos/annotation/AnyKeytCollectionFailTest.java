@@ -27,15 +27,15 @@ import org.brandao.brutos.annotation.helper.any.app3.fail.metavaluesdefinition.T
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
 
 public class AnyKeytCollectionFailTest extends TestCase{
     
     public void testTest1FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -78,7 +78,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest2FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -121,7 +121,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest3FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -164,7 +164,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest4FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -207,7 +207,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest5FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -250,7 +250,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest6FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -293,7 +293,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest7FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -336,7 +336,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest8FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -379,7 +379,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest9FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -422,7 +422,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest10FailAnyController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -465,7 +465,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest1FailAnyMetaValuesDefinitionController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -508,7 +508,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest2FailAnyMetaValuesDefinitionController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -551,7 +551,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest3FailAnyMetaValuesDefinitionController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -594,7 +594,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest4FailAnyMetaValuesDefinitionController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -637,7 +637,7 @@ public class AnyKeytCollectionFailTest extends TestCase{
     public void testTest5FailAnyMetaValuesDefinitionController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(

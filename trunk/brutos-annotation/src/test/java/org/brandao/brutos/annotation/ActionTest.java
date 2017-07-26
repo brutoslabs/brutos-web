@@ -42,7 +42,7 @@ import org.brandao.brutos.test.MockRenderView;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 
 /**
  *
@@ -53,7 +53,7 @@ public class ActionTest extends TestCase {
     public void test1() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/test1", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -93,7 +93,7 @@ public class ActionTest extends TestCase {
     public void test2() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/test2", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -134,7 +134,7 @@ public class ActionTest extends TestCase {
     public void test3() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/test00", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -175,7 +175,7 @@ public class ActionTest extends TestCase {
     public void test4() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/test01", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -216,7 +216,7 @@ public class ActionTest extends TestCase {
     public void test5() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/test02", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -257,7 +257,7 @@ public class ActionTest extends TestCase {
     public void test6() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/test04", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -298,7 +298,7 @@ public class ActionTest extends TestCase {
     public void test7() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/test05", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -339,7 +339,7 @@ public class ActionTest extends TestCase {
     public void test8() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/test06", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -380,7 +380,7 @@ public class ActionTest extends TestCase {
     public void test9() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/test03", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -421,7 +421,7 @@ public class ActionTest extends TestCase {
     public void test() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/action", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -474,7 +474,7 @@ public class ActionTest extends TestCase {
     public void test10() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -517,7 +517,7 @@ public class ActionTest extends TestCase {
     public void test11() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -560,7 +560,7 @@ public class ActionTest extends TestCase {
     public void test12() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -603,7 +603,7 @@ public class ActionTest extends TestCase {
     public void test13() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -646,7 +646,7 @@ public class ActionTest extends TestCase {
     public void test14() throws Throwable{
         WebApplicationContextTester.run(
             "/App1Test/test0006", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -686,7 +686,7 @@ public class ActionTest extends TestCase {
     public void test15() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -729,7 +729,7 @@ public class ActionTest extends TestCase {
     public void test16() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -772,7 +772,7 @@ public class ActionTest extends TestCase {
     public void test17() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -815,7 +815,7 @@ public class ActionTest extends TestCase {
     public void test18() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -858,7 +858,7 @@ public class ActionTest extends TestCase {
     public void test19() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester(){
+            new BasicWebApplicationTester(){
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(

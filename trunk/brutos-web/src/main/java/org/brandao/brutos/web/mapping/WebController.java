@@ -48,6 +48,11 @@ public class WebController extends Controller{
 			.registry(wcid, method.getController(), wid, method);
 	}
 
+	public Action getActionByName(String name){
+		return (Action) super.getActions()
+				.get(new WebActionID(name, this.requestMethod));
+	}
+	
 	public void removeAction(ActionID id) {
 		WebActionID wid = (WebActionID)id;
 		Action method   = this.getActions().get(id);

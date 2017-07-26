@@ -22,15 +22,15 @@ import org.brandao.brutos.annotation.helper.enumerated.app1.ControllerEnumerated
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
 
 public class EnumeratedTest extends TestCase{
     
     public void testControllerEnumeratedBeanConstructorTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -97,7 +97,7 @@ public class EnumeratedTest extends TestCase{
     public void testControllerEnumeratedBeanTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -160,7 +160,7 @@ public class EnumeratedTest extends TestCase{
     public void testControllerEnumeratedTest() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -220,7 +220,7 @@ public class EnumeratedTest extends TestCase{
     public void testControllerEnumeratedTest_property11Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property11", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -261,7 +261,7 @@ public class EnumeratedTest extends TestCase{
     public void testControllerEnumeratedTest_property12Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property12", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -302,7 +302,7 @@ public class EnumeratedTest extends TestCase{
     public void testControllerEnumeratedTest_property13Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property13", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -343,7 +343,7 @@ public class EnumeratedTest extends TestCase{
     public void testControllerEnumeratedTest_property14Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property14", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -384,7 +384,7 @@ public class EnumeratedTest extends TestCase{
     public void testControllerEnumeratedTest_property15Action() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/property15", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(

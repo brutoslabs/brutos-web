@@ -9,22 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest2;
-import org.brandao.brutos.annotation.helper.importbeans.app1.BeanTest3;
 import org.brandao.brutos.annotation.helper.importbeans.app1.ControllerBeanTest;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
-import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
 
 public class ImportBeansTest extends TestCase{
     
     public void testControllerBeanTest() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(

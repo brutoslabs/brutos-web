@@ -121,8 +121,8 @@ public abstract class AbstractWebAnnotationApplicationContextTest
         config.setProperty(BrutosConstants.RENDER_VIEW_CLASS,
                 MockRenderView.class.getName());
 
-        config.setProperty(BrutosConstants.VIEW_RESOLVER_AUTO, 
-                "true");
+        //config.setProperty(BrutosConstants.VIEW_RESOLVER_AUTO, 
+        //        "true");
         
         context
             .setResources(

@@ -15,15 +15,11 @@ import junit.framework.TestCase;
 
 import org.brandao.brutos.annotation.helper.temporal.app1.Test1TemporalBean;
 import org.brandao.brutos.annotation.helper.temporal.app1.Test1TemporalController;
-import org.brandao.brutos.annotation.helper.temporal.fail.Test1FaiTemporalController;
-import org.brandao.brutos.annotation.helper.temporal.fail.Test2FaiTemporalController;
-import org.brandao.brutos.annotation.helper.temporal.fail.Test3FaiTemporalController;
-import org.brandao.brutos.annotation.helper.temporal.fail.Test4FaiTemporalController;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
+import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
-import org.brandao.brutos.web.test.WebApplicationTester;
 
 public class TemporalTest extends TestCase{
     
@@ -34,7 +30,7 @@ public class TemporalTest extends TestCase{
     public void testTest1TargetController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller/test", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -102,7 +98,7 @@ public class TemporalTest extends TestCase{
     public void testTest1FaiTemporalController() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -146,7 +142,7 @@ public class TemporalTest extends TestCase{
     public void testTest2FaiTemporalController() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -189,7 +185,7 @@ public class TemporalTest extends TestCase{
     public void testTest3FaiTemporalController() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(
@@ -232,7 +228,7 @@ public class TemporalTest extends TestCase{
     public void testTest4FaiTemporalController() throws Throwable{
         WebApplicationContextTester.run(
             "", 
-            new WebApplicationTester() {
+            new BasicWebApplicationTester() {
 
                 public void prepareContext(Map<String, String> parameters) {
                     parameters.put(

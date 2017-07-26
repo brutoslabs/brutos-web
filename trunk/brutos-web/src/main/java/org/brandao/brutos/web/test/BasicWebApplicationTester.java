@@ -33,18 +33,12 @@ public class BasicWebApplicationTester
 	}
 
 	public void prepareContext(MockServletContext servletContext) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void prepareRequest(MockHttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public void prepareSession(MockHttpSession session) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
