@@ -329,9 +329,13 @@ public class WWWFormUrlEncodedBeanDecoder
 		for(int i=0;i<max;i++){
 			String ePreifx = 
 				newPrefix + 
-				entity.getIndexFormat().replace("$index", String.valueOf(i)) +
-				entity.getSeparator();
-			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
+				entity.getIndexFormat().replace("$index", String.valueOf(i));
+			
+			if(e.getMapping() != null || e.getMetaBean() != null){
+				ePreifx += entity.getSeparator();
+			}
+			
+			Object element = this.getValue(e, FetchType.EAGER, ePreifx, -1);
 			
 			if(element != null){
 				destValue.add(element);
@@ -369,9 +373,13 @@ public class WWWFormUrlEncodedBeanDecoder
 		for(int i=0;i<max;i++){
 			String ePreifx = 
 				newPrefix + 
-				entity.getIndexFormat().replace("$index", String.valueOf(i)) +
-				entity.getSeparator();
-			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
+				entity.getIndexFormat().replace("$index", String.valueOf(i));
+				
+			if(e.getMapping() != null || e.getMetaBean() != null){
+				ePreifx += entity.getSeparator();
+			}
+			
+			Object element = this.getValue(e, FetchType.EAGER, ePreifx, -1);
 			
 			if(element != null){
 				destValue.add(element);
@@ -416,9 +424,13 @@ public class WWWFormUrlEncodedBeanDecoder
 		for(int i=0;i<max;i++){
 			String kPreifx = 
 				newKPreifx + 
-				entity.getIndexFormat().replace("$index", String.valueOf(i)) +
-				entity.getSeparator();
-			Object key     = this.getValue(k, FetchType.EAGER, kPreifx, i);
+				entity.getIndexFormat().replace("$index", String.valueOf(i));
+			
+			if(k.getMapping() != null || k.getMetaBean() != null){
+				kPreifx += entity.getSeparator();
+			}
+			
+			Object key     = this.getValue(k, FetchType.EAGER, kPreifx, -1);
 			
 			if(key == null){
 				break;
@@ -426,9 +438,13 @@ public class WWWFormUrlEncodedBeanDecoder
 			
 			String ePreifx = 
 				newEPreifx + 
-				entity.getIndexFormat().replace("$index", String.valueOf(i)) +
-				entity.getSeparator();
-			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
+				entity.getIndexFormat().replace("$index", String.valueOf(i));
+			
+			if(e.getMapping() != null || e.getMetaBean() != null){
+				ePreifx += entity.getSeparator();
+			}
+			
+			Object element = this.getValue(e, FetchType.EAGER, ePreifx, -1);
 			
 			destValue.put(key, element);
 		}
