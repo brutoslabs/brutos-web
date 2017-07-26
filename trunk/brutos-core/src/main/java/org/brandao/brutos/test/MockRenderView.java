@@ -38,7 +38,6 @@ public class MockRenderView extends ConfigurableRenderViewImp {
 	private Object actionResult;
 
 	public MockRenderView(){
-		
 	}
 	
 	public void show(MvcRequest request, MvcResponse response) throws RenderViewException{
