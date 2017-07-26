@@ -28,7 +28,6 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.DataTypeMap;
 import org.brandao.brutos.mapping.PropertyController;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.scope.ThreadScope;
 
 /**
  * 

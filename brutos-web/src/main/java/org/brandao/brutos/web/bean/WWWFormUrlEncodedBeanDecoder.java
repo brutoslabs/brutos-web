@@ -3,6 +3,7 @@ package org.brandao.brutos.web.bean;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,8 @@ import org.brandao.brutos.mapping.MapBean;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.PropertyBean;
+import org.brandao.brutos.mapping.SimpleKeyMap;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.ArrayType;
 import org.brandao.brutos.type.CollectionType;
@@ -435,29 +438,69 @@ public class WWWFormUrlEncodedBeanDecoder
 				(Map<Object,Object>)this.getValueBean(entity, prefix, index);
 
 		Element e         = (Element)entity.getCollection();
-		String newKPreifx = (prefix == null? "" : k.getParameterName());
-		String newEPreifx = (prefix == null? "" : e.getParameterName());
-		int max           = entity.getMaxItens() + 1;
 		
-		for(int i=0;i<max;i++){
-			String kPreifx = newKPreifx + entity.getIndexFormat().replace("$index", String.valueOf(i));
-			Object key     = this.getValue(k, FetchType.EAGER, kPreifx, i);
+		String itemPrefix = 
+				StringUtil.isEmpty(prefix)? 
+						prefix : 
+						prefix.substring(0, prefix.length() - 1);
+		
+		List<String> itens = 
+				k.getScope()
+					.getNamesStartsWith(itemPrefix);
+
+		if(itens.size() > entity.getMaxItens()){
+			throw new DependencyException(itens.size() + " > " + entity.getMaxItens());
+		}
+		
+		List<SimpleKeyMap> keys = 
+				this.prepareKeysToSimpleMap(itens, itemPrefix);
+		
+		for(SimpleKeyMap keyValue: keys){
+			Object keyObject = k.convert(keyValue.getName());
+			String ePreifx   = itemPrefix + keyValue.getPrefix();
+			Object element   = this.getValue(e, FetchType.EAGER, ePreifx, -1);
 			
-			if(key == null){
-				break;
+			destValue.put(keyObject, element);
+		}
+		
+		return destValue;	
+	}
+	
+	private List<SimpleKeyMap> prepareKeysToSimpleMap(List<String> itens, String prefix){
+		
+		List<SimpleKeyMap> result = new ArrayList<SimpleKeyMap>();
+		 
+		for(String item: itens){
+			String keyPrefix = item.substring(prefix.length());
+			String key = keyPrefix;
+			
+			if(key.startsWith(".")){
+				int endKeyName = key.indexOf(".", 1);
+				
+				if(endKeyName != -1){
+					key = key.substring(1, endKeyName - 1);
+				}
+				else{
+					key = key.substring(1);
+				}
+			}
+			else
+			if(key.startsWith("[")){
+				int endKeyName = key.indexOf("]");
+				
+				if(endKeyName != -1){
+					key = key.substring(1, endKeyName - 1);
+				}
+				else{
+					throw new MappingException("expected ']' in " + item);
+				}
 			}
 			
-			String ePreifx = newEPreifx + entity.getIndexFormat().replace("$index", String.valueOf(i));
-			Object element = this.getValue(e, FetchType.EAGER, ePreifx, i);
-			
-			destValue.put(key, element);
+			result.add(new SimpleKeyMap(key, keyPrefix));
 		}
 		
-		if(destValue.size() > max){
-			throw new DependencyException(destValue + " > " + max);
-		}
-		
-		return destValue;	}
+		return result;
+	}	
 	
 	/* constructor */
 	
