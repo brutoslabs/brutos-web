@@ -19,6 +19,7 @@ public class Test2FailAnyBean {
 	}
 
 	@KeyCollection(
+		bean="key",
 		any=
 			@Any(
 					metaBean=@Basic,
