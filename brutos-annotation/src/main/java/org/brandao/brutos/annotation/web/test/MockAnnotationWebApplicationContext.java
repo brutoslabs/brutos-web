@@ -45,7 +45,7 @@ public class MockAnnotationWebApplicationContext extends
 	@Override
 	protected void overrideConfig() {
 		Properties config = this.getConfiguration();
-
+/*
 		if (config.get(BrutosConstants.RENDER_VIEW_CLASS) == null)
 			config.put(BrutosConstants.RENDER_VIEW_CLASS,
 					MockRenderView.class.getName());
@@ -53,7 +53,7 @@ public class MockAnnotationWebApplicationContext extends
 		if (config.get(BrutosConstants.INVOKER_CLASS) == null)
 			config.put(BrutosConstants.INVOKER_CLASS,
 					MockWebInvoker.class.getName());
-
+*/
 		if (config.get(BrutosConstants.OBJECT_FACTORY_CLASS) == null)
 			config.put(BrutosConstants.OBJECT_FACTORY_CLASS,
 					MockObjectFactory.class.getName());
