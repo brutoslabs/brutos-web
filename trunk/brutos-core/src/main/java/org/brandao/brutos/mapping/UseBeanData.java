@@ -51,6 +51,7 @@ public abstract class UseBeanData {
 	protected FetchType fetchType;
 	
 	public UseBeanData() {
+		this.fetchType = FetchType.EAGER;
 	}
 
 	public String getName() {

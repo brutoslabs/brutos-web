@@ -62,6 +62,7 @@ public abstract class DependencyBean {
 	public DependencyBean(Bean parent) {
 		this.parent = parent;
 		this.controller = parent.getController();
+		this.fetchType = FetchType.EAGER;
 	}
 
 	public String getParameterName() {
