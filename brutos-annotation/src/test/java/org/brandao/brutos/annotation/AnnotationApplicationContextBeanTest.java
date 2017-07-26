@@ -127,7 +127,7 @@ public class AnnotationApplicationContextBeanTest
         assertEquals(Date.class, property.getClassType());
         assertEquals("propertyC", property.getName());
         assertEquals("propertyC", property.getParameterName());
-        assertEquals("dd/MM/yyyy", property.getTemporalType());
+        assertEquals(annotationApplicationContext.getTemporalProperty(), property.getTemporalType());
         assertNull(property.getMapping());
         
     }
@@ -183,7 +183,7 @@ public class AnnotationApplicationContextBeanTest
         assertEquals(EnumTest.class, property.getClassType());
         assertEquals("propertyE", property.getName());
         assertEquals("propertyE", property.getParameterName());
-        assertEquals(org.brandao.brutos.EnumerationType.ORDINAL, property.getEnumProperty());
+        assertEquals(annotationApplicationContext.getEnumerationType(), property.getEnumProperty());
         assertNull(property.getMapping());
         
     }
