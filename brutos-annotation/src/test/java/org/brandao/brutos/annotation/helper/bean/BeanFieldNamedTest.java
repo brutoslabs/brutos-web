@@ -66,6 +66,7 @@ public class BeanFieldNamedTest {
     @ElementCollection(target=Integer.class)
     private Map<String,Integer> propertyI;
     
+    @KeyCollection(bean="key")
     private Map<BeanConstructorTest,Integer> propertyJ;
 
     private Map<String,BeanConstructorTest> propertyK;
