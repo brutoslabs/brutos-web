@@ -68,10 +68,10 @@ public class AnyElementCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property.element[0].propertyType", "decimal");
-                	parameters.put("property.element[0].name", "propName");
-                	parameters.put("property.element[0].length", "10");
-                	parameters.put("property.element[0].decimals", "2");
+                	parameters.put("property[0].propertyType", "decimal");
+                	parameters.put("property[0].name", "propName");
+                	parameters.put("property[0].length", "10");
+                	parameters.put("property[0].decimals", "2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -94,6 +94,7 @@ public class AnyElementCollectionTest extends TestCase{
                 }
 
                 public void checkException(Throwable e) {
+                	e.printStackTrace();
                     fail(e.toString());
                 }
             },
