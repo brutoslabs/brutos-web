@@ -10,9 +10,22 @@ import org.brandao.brutos.annotation.Transient;
 public class CustomList 
 	extends ArrayList<Integer>{
 
+	/* overrride mappging of the ArrayList type */
+
 	@Transient
-	public boolean isEmpty(){
-		return super.isEmpty();
+	private Object[] elementData;
+	
+	@Transient
+	private boolean empty;
+	
+	@Transient
+	private int size;
+	
+	@Transient
+	private int modCount;
+	
+	public CustomList(){
+		super();
 	}
 	
 }

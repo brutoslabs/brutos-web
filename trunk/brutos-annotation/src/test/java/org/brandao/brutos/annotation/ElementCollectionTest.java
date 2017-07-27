@@ -1065,6 +1065,7 @@ public class ElementCollectionTest extends TestCase{
                 }
 
                 public void checkException(Throwable e) {
+                	e.printStackTrace();
                     fail(e.toString());
                 }
             },
@@ -1166,6 +1167,7 @@ public class ElementCollectionTest extends TestCase{
                 }
 
                 public void checkException(Throwable e) {
+                	e.printStackTrace();
                     fail(e.toString());
                 }
             },
