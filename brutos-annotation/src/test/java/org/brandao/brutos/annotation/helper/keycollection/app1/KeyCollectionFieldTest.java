@@ -62,9 +62,10 @@ public class KeyCollectionFieldTest {
     @KeyCollection(mappingType=MappingTypes.SIMPLE, type=KeyCollectionBeanTest0Type.class)
     public Map<KeyCollectionBeanTest0,String> property9;
 
-    @KeyCollection(mappingType=MappingTypes.COMPLEX)
+    @KeyCollection(bean="key", mappingType=MappingTypes.COMPLEX)
     public Map<KeyCollectionBeanTest0,String> property10;
     
+    @KeyCollection(bean="key")
     public Map<KeyCollectionBeanTest0,String> property11;
 
     public Map<EnumTest,String> property12;
