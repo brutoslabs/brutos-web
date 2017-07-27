@@ -305,13 +305,20 @@ public class WWWFormUrlEncodedBeanDecoder
 	public Object getValueCollectionObject(CollectionBean entity, Element e,
 			String prefix, long index) {
 		
-		Collection<Object> destValue = 
-				(Collection<Object>)this.getValueBean(entity, prefix, index);
+		Collection<Object> destValue = (Collection<Object>)this.getValueBean(entity, prefix, index);
 	
-		String newPrefix = 
-				prefix == null? 
-					"" : 
-					prefix + e.getParameterName();
+		String newPrefix = null;
+		
+		if(StringUtil.isEmpty(prefix)){
+			newPrefix = e.getParameterName();
+		}
+		else
+		if(!prefix.endsWith(entity.getSeparator())){
+			newPrefix = prefix + entity.getSeparator() + e.getParameterName();
+		}
+		else{
+			newPrefix = prefix + e.getParameterName();
+		}
 		
 		int max = entity.getMaxItens() + 1;
 		
@@ -340,7 +347,7 @@ public class WWWFormUrlEncodedBeanDecoder
 			throw new DependencyException(destValue + " > " + max);
 		}
 		
-		return destValue;
+		return destValue.isEmpty()? null : destValue;
 	}
 	
 	/*
@@ -357,7 +364,14 @@ public class WWWFormUrlEncodedBeanDecoder
 		Collection<Object> destValue = 
 				(Collection<Object>)this.getValueBean(entity, prefix, index);
 	
-		String newPrefix = prefix.substring(0, prefix.length() - 1);
+		String newPrefix;
+		
+		if(prefix.endsWith(entity.getSeparator())){
+			newPrefix = prefix.substring(0, prefix.length() - 1);
+ 		}
+		else{
+			newPrefix = prefix;
+		}
 		
 		int max = entity.getMaxItens() + 1;
 		
@@ -386,7 +400,7 @@ public class WWWFormUrlEncodedBeanDecoder
 			throw new DependencyException(destValue + " > " + max);
 		}
 		
-		return destValue;
+		return destValue.isEmpty()? null : destValue;
 	}	
 
 	/* map */
@@ -423,14 +437,26 @@ public class WWWFormUrlEncodedBeanDecoder
 		Element e = (Element)entity.getCollection();
 		int max   = entity.getMaxItens() + 1;
 		
+		String newPrefix = null;
+		
+		if(StringUtil.isEmpty(prefix)){
+			newPrefix = e.getParameterName();
+		}
+		else
+		if(!prefix.endsWith(entity.getSeparator())){
+			newPrefix = prefix + entity.getSeparator() + e.getParameterName();
+		}
+		else{
+			newPrefix = prefix + e.getParameterName();
+		}
+		
 		for(int i=0;i<max;i++){
-			String newPrefix = 
-				prefix +
-				e.getParameterName() + 
+			String indexPrefix = 
+				newPrefix +
 				entity.getIndexFormat().replace("$index", String.valueOf(i));
 			
 			String kPrefix = 
-					newPrefix + 
+					indexPrefix + 
 					entity.getSeparator() +
 					k.getParameterName();
 			
@@ -441,7 +467,7 @@ public class WWWFormUrlEncodedBeanDecoder
 			}
 			
 			String ePrefix =
-				newPrefix + 
+				indexPrefix + 
 				entity.getSeparator() +
 				e.getParameterName();
 			
@@ -454,7 +480,7 @@ public class WWWFormUrlEncodedBeanDecoder
 			throw new DependencyException(destValue + " > " + max);
 		}
 		
-		return destValue;
+		return destValue.isEmpty()? null : destValue;
 	}
 
 	/*
@@ -467,10 +493,14 @@ public class WWWFormUrlEncodedBeanDecoder
 
 		Element e         = (Element)entity.getCollection();
 		
-		String itemPrefix = 
-				StringUtil.isEmpty(prefix)? 
-						prefix : 
-						prefix.substring(0, prefix.length() - 1);
+		String itemPrefix;
+		
+		if(prefix.endsWith(entity.getSeparator())){
+			itemPrefix = prefix.substring(0, prefix.length() - 1);
+ 		}
+		else{
+			itemPrefix = prefix;
+		}
 		
 		List<String> itens = 
 				k.getScope()
@@ -491,7 +521,7 @@ public class WWWFormUrlEncodedBeanDecoder
 			destValue.put(keyObject, element);
 		}
 		
-		return destValue;	
+		return destValue.isEmpty()? null : destValue;	
 	}
 	
 	private List<SimpleKeyMap> prepareKeysToSimpleMap(List<String> itens, String prefix){
