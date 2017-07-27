@@ -12,6 +12,7 @@ import org.brandao.brutos.annotation.ScopeType;
 import org.brandao.brutos.annotation.helper.EnumTest;
 
 @Controller("/controller")
+@SuppressWarnings("rawtypes")
 public class ControllerKeyCollectionFieldTest {
 
     public Map<Integer,String> property;
@@ -31,7 +32,7 @@ public class ControllerKeyCollectionFieldTest {
     @KeyCollection(temporal="mm-dd-yyyy")
     public Map<Date,String> property6;
 
-    @KeyCollection(target=Integer.class)
+	@KeyCollection(target=Integer.class)
     @ElementCollection(target=String.class)
     public Map property7;
 
@@ -42,9 +43,10 @@ public class ControllerKeyCollectionFieldTest {
     @KeyCollection(mappingType=MappingTypes.SIMPLE, type=KeyCollectionBeanTest0Type.class)
     public Map<KeyCollectionBeanTest0,String> property9;
 
-    @KeyCollection(mappingType=MappingTypes.COMPLEX)
+    @KeyCollection(bean="key", mappingType=MappingTypes.COMPLEX)
     public Map<KeyCollectionBeanTest0,String> property10;
     
+    @KeyCollection(bean="key")
     public Map<KeyCollectionBeanTest0,String> property11;
 
     public Map<EnumTest,String> property12;

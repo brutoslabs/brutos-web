@@ -501,11 +501,24 @@ public class WWWFormUrlEncodedBeanDecoder
 		return destValue.isEmpty()? null : destValue;	
 	}
 	
+	private boolean checkPrefix(String prefix, String key){
+		int nextDot = key.indexOf(".", prefix.length());
+		
+		if(nextDot != -1){
+			key = key.substring(0, nextDot);
+		}
+		
+		return prefix.equals(key);
+	}
+	
 	private List<SimpleKeyMap> prepareKeysToSimpleMap(List<String> itens, String prefix){
 		
 		List<SimpleKeyMap> result = new ArrayList<SimpleKeyMap>();
 		 
 		for(String item: itens){
+			if(!this.checkPrefix(prefix, item)){
+				continue;
+			}
 			String keyPrefix = item.substring(prefix.length());
 			String key = keyPrefix;
 			

@@ -994,68 +994,52 @@ public class KeyCollectionTest extends TestCase{
 
                 public void prepareRequest(Map<String, String> parameters) {
                 	
-                	parameters.put("property1.arg0.key[0]", "0");
-                	parameters.put("property1.arg0.key[1]", "1");
-                	parameters.put("property1.arg0.element[0]", "x0");
-                	parameters.put("property1.arg0.element[1]", "x1");
+                	parameters.put("property.arg0.0", "x0");
+                	parameters.put("property.arg0.1", "x1");
                 	
-                	parameters.put("property2.arg0.key[0]", "0");
-                	parameters.put("property2.arg0.key[1]", "1");
-                	parameters.put("property2.arg0.element[0]", "x0");
-                	parameters.put("property2.arg0.element[1]", "x1");
+                	parameters.put("property2.arg0.0", "x0");
+                	parameters.put("property2.arg0.1", "x1");
 
-                	parameters.put("property3.arg0.elx[0]", "0");
-                	parameters.put("property3.arg0.elx[1]", "1");
-                	parameters.put("property3.arg0.element[0]", "x0");
-                	parameters.put("property3.arg0.element[1]", "x1");
+                	parameters.put("property3.arg0.elements[0].elx", "0");
+                	parameters.put("property3.arg0.elements[1].elx", "1");
+                	parameters.put("property3.arg0.elements[0].element", "x0");
+                	parameters.put("property3.arg0.elements[1].element", "x1");
 
-                	parameters.put("property4.arg0.key[0]", "VALUE1");
-                	parameters.put("property4.arg0.key[1]", "VALUE2");
-                	parameters.put("property4.arg0.element[0]", "xVALUE1");
-                	parameters.put("property4.arg0.element[1]", "xVALUE2");
+                	parameters.put("property4.arg0.VALUE1", "xVALUE1");
+                	parameters.put("property4.arg0.VALUE2", "xVALUE2");
 
-                	parameters.put("property5.arg0.element[0]", "x0");
-                	parameters.put("property5.arg0.element[1]", "x1");
+                	parameters.put("property5.arg0.0", "x0");
+                	parameters.put("property5.arg0.1", "x1");
                 	
-                	parameters.put("property6.arg0.key[0]", "01-01-2015");
-                	parameters.put("property6.arg0.key[1]", "02-01-2015");
-                	parameters.put("property6.arg0.element[0]", "x01-01-2015");
-                	parameters.put("property6.arg0.element[1]", "x02-01-2015");
+                	parameters.put("property6.arg0.01-01-2015", "x01-01-2015");
+                	parameters.put("property6.arg0.02-01-2015", "x02-01-2015");
 
-                	parameters.put("property7.arg0.key[0]", "0");
-                	parameters.put("property7.arg0.key[1]", "1");
-                	parameters.put("property7.arg0.element[0]", "x0");
-                	parameters.put("property7.arg0.element[1]", "x1");
+                	parameters.put("property7.arg0.0", "x0");
+                	parameters.put("property7.arg0.1", "x1");
 
-                	parameters.put("property8.arg0.key[0]", "0");
-                	parameters.put("property8.arg0.key[1]", "1");
-                	parameters.put("property8.arg0.element[0]", "x0");
-                	parameters.put("property8.arg0.element[1]", "x1");
+                	parameters.put("property8.arg0.0", "x0");
+                	parameters.put("property8.arg0.1", "x1");
 
-                	parameters.put("property9.arg0.key[0]", "0");
-                	parameters.put("property9.arg0.key[1]", "1");
-                	parameters.put("property9.arg0.element[0]", "x0");
-                	parameters.put("property9.arg0.element[1]", "x1");
+                	parameters.put("property9.arg0.0", "x0");
+                	parameters.put("property9.arg0.1", "x1");
 
-                	parameters.put("property10.arg0.key[0].property", "0");
-                	parameters.put("property10.arg0.key[1].property", "1");
-                	parameters.put("property10.arg0.element[0]", "x0");
-                	parameters.put("property10.arg0.element[1]", "x1");
+                	parameters.put("property10.arg0.elements[0].key.property", "0");
+                	parameters.put("property10.arg0.elements[1].key.property", "1");
+                	parameters.put("property10.arg0.elements[0].element", "x0");
+                	parameters.put("property10.arg0.elements[1].element", "x1");
 
-                	parameters.put("property11.arg0.key[0].property", "0");
-                	parameters.put("property11.arg0.key[1].property", "1");
-                	parameters.put("property11.arg0.element[0]", "x0");
-                	parameters.put("property11.arg0.element[1]", "x1");
+                	parameters.put("property11.arg0.elements[0].key.property", "0");
+                	parameters.put("property11.arg0.elements[1].key.property", "1");
+                	parameters.put("property11.arg0.elements[0].element", "x0");
+                	parameters.put("property11.arg0.elements[1].element", "x1");
 
-                	parameters.put("property12.arg0.key[0]", "0");
-                	parameters.put("property12.arg0.key[1]", "1");            	
-                	parameters.put("property12.arg0.element[0]", "x0");
-                	parameters.put("property12.arg0.element[1]", "x1");            	
+                	parameters.put("property12.arg0.0", "x0");
+                	parameters.put("property12.arg0.1", "x1");             	
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
-                	parameters.put("property5.arg0.key[0]", "0");
-                	parameters.put("property5.arg0.key[1]", "1");
+                	parameters.put("property5.arg0.0", "");
+                	parameters.put("property5.arg0.1", "");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1157,6 +1141,7 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void checkException(Throwable e) {
+                	e.printStackTrace();
                     fail(e.toString());
                 }
             },
@@ -1305,68 +1290,52 @@ public class KeyCollectionTest extends TestCase{
 
                 public void prepareRequest(Map<String, String> parameters) {
                 	
-                	parameters.put("property.key[0]", "0");
-                	parameters.put("property.key[1]", "1");
-                	parameters.put("property.element[0]", "x0");
-                	parameters.put("property.element[1]", "x1");
+                	parameters.put("property.0", "x0");
+                	parameters.put("property.1", "x1");
                 	
-                	parameters.put("property2.key[0]", "0");
-                	parameters.put("property2.key[1]", "1");
-                	parameters.put("property2.element[0]", "x0");
-                	parameters.put("property2.element[1]", "x1");
+                	parameters.put("property2.0", "x0");
+                	parameters.put("property2.1", "x1");
 
-                	parameters.put("property3.elx[0]", "0");
-                	parameters.put("property3.elx[1]", "1");
-                	parameters.put("property3.element[0]", "x0");
-                	parameters.put("property3.element[1]", "x1");
+                	parameters.put("property3.elements[0].elx", "0");
+                	parameters.put("property3.elements[1].elx", "1");
+                	parameters.put("property3.elements[0].element", "x0");
+                	parameters.put("property3.elements[1].element", "x1");
 
-                	parameters.put("property4.key[0]", "VALUE1");
-                	parameters.put("property4.key[1]", "VALUE2");
-                	parameters.put("property4.element[0]", "xVALUE1");
-                	parameters.put("property4.element[1]", "xVALUE2");
+                	parameters.put("property4.VALUE1", "xVALUE1");
+                	parameters.put("property4.VALUE2", "xVALUE2");
 
-                	parameters.put("property5.element[0]", "x0");
-                	parameters.put("property5.element[1]", "x1");
+                	parameters.put("property5.0", "x0");
+                	parameters.put("property5.1", "x1");
                 	
-                	parameters.put("property6.key[0]", "01-01-2015");
-                	parameters.put("property6.key[1]", "02-01-2015");
-                	parameters.put("property6.element[0]", "x01-01-2015");
-                	parameters.put("property6.element[1]", "x02-01-2015");
+                	parameters.put("property6.01-01-2015", "x01-01-2015");
+                	parameters.put("property6.02-01-2015", "x02-01-2015");
 
-                	parameters.put("property7.key[0]", "0");
-                	parameters.put("property7.key[1]", "1");
-                	parameters.put("property7.element[0]", "x0");
-                	parameters.put("property7.element[1]", "x1");
+                	parameters.put("property7.0", "x0");
+                	parameters.put("property7.1", "x1");
 
-                	parameters.put("property8.key[0]", "0");
-                	parameters.put("property8.key[1]", "1");
-                	parameters.put("property8.element[0]", "x0");
-                	parameters.put("property8.element[1]", "x1");
+                	parameters.put("property8.0", "x0");
+                	parameters.put("property8.1", "x1");
 
-                	parameters.put("property9.key[0]", "0");
-                	parameters.put("property9.key[1]", "1");
-                	parameters.put("property9.element[0]", "x0");
-                	parameters.put("property9.element[1]", "x1");
+                	parameters.put("property9.0", "x0");
+                	parameters.put("property9.1", "x1");
 
-                	parameters.put("property10.key[0].property", "0");
-                	parameters.put("property10.key[1].property", "1");
-                	parameters.put("property10.element[0]", "x0");
-                	parameters.put("property10.element[1]", "x1");
+                	parameters.put("property10.elements[0].key.property", "0");
+                	parameters.put("property10.elements[1].key.property", "1");
+                	parameters.put("property10.elements[0].element", "x0");
+                	parameters.put("property10.elements[1].element", "x1");
 
-                	parameters.put("property11.key[0].property", "0");
-                	parameters.put("property11.key[1].property", "1");
-                	parameters.put("property11.element[0]", "x0");
-                	parameters.put("property11.element[1]", "x1");
+                	parameters.put("property11.elements[0].key.property", "0");
+                	parameters.put("property11.elements[1].key.property", "1");
+                	parameters.put("property11.elements[0].element", "x0");
+                	parameters.put("property11.elements[1].element", "x1");
 
-                	parameters.put("property12.key[0]", "0");
-                	parameters.put("property12.key[1]", "1");            	
-                	parameters.put("property12.element[0]", "x0");
-                	parameters.put("property12.element[1]", "x1");            	
+                	parameters.put("property12.0", "x0");
+                	parameters.put("property12.1", "x1");            	
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
-                	parameters.put("property5.key[0]", "0");
-                	parameters.put("property5.key[1]", "1");
+                	parameters.put("property5.0", "");
+                	parameters.put("property5.1", "");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1468,6 +1437,7 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void checkException(Throwable e) {
+                	e.printStackTrace();
                     fail(e.toString());
                 }
             },
@@ -1493,68 +1463,53 @@ public class KeyCollectionTest extends TestCase{
 
                 public void prepareRequest(Map<String, String> parameters) {
                 	
-                	parameters.put("property.key[0]", "0");
-                	parameters.put("property.key[1]", "1");
-                	parameters.put("property.element[0]", "x0");
-                	parameters.put("property.element[1]", "x1");
+                	parameters.put("property.0", "x0");
+                	parameters.put("property.1", "x1");
                 	
-                	parameters.put("property2.key[0]", "0");
-                	parameters.put("property2.key[1]", "1");
-                	parameters.put("property2.element[0]", "x0");
-                	parameters.put("property2.element[1]", "x1");
+                	parameters.put("property2.0", "x0");
+                	parameters.put("property2.1", "x1");
 
-                	parameters.put("property3.elx[0]", "0");
-                	parameters.put("property3.elx[1]", "1");
-                	parameters.put("property3.element[0]", "x0");
-                	parameters.put("property3.element[1]", "x1");
+                	parameters.put("property3.elements[0].elx", "0");
+                	parameters.put("property3.elements[1].elx", "1");
+                	parameters.put("property3.elements[0].element", "x0");
+                	parameters.put("property3.elements[1].element", "x1");
 
-                	parameters.put("property4.key[0]", "VALUE1");
-                	parameters.put("property4.key[1]", "VALUE2");
-                	parameters.put("property4.element[0]", "xVALUE1");
-                	parameters.put("property4.element[1]", "xVALUE2");
+                	parameters.put("property4.VALUE1", "xVALUE1");
+                	parameters.put("property4.VALUE2", "xVALUE2");
 
-                	parameters.put("property5.element[0]", "x0");
-                	parameters.put("property5.element[1]", "x1");
+                	parameters.put("property5.0", "x0");
+                	parameters.put("property5.1", "x1");
                 	
-                	parameters.put("property6.key[0]", "01-01-2015");
-                	parameters.put("property6.key[1]", "02-01-2015");
-                	parameters.put("property6.element[0]", "x01-01-2015");
-                	parameters.put("property6.element[1]", "x02-01-2015");
+                	parameters.put("property6.01-01-2015", "x01-01-2015");
+                	parameters.put("property6.02-01-2015", "x02-01-2015");
 
-                	parameters.put("property7.key[0]", "0");
-                	parameters.put("property7.key[1]", "1");
-                	parameters.put("property7.element[0]", "x0");
-                	parameters.put("property7.element[1]", "x1");
+                	parameters.put("property7.0", "x0");
+                	parameters.put("property7.1", "x1");
 
-                	parameters.put("property8.key[0]", "0");
-                	parameters.put("property8.key[1]", "1");
-                	parameters.put("property8.element[0]", "x0");
-                	parameters.put("property8.element[1]", "x1");
+                	parameters.put("property8.0", "x0");
+                	parameters.put("property8.1", "x1");
 
-                	parameters.put("property9.key[0]", "0");
-                	parameters.put("property9.key[1]", "1");
-                	parameters.put("property9.element[0]", "x0");
-                	parameters.put("property9.element[1]", "x1");
+                	parameters.put("property9.0", "x0");
+                	parameters.put("property9.1", "x1");
 
-                	parameters.put("property10.key[0].property", "0");
-                	parameters.put("property10.key[1].property", "1");
-                	parameters.put("property10.element[0]", "x0");
-                	parameters.put("property10.element[1]", "x1");
+                	parameters.put("property10.elements[0].key.property", "0");
+                	parameters.put("property10.elements[1].key.property", "1");
+                	parameters.put("property10.elements[0].element", "x0");
+                	parameters.put("property10.elements[1].element", "x1");
 
-                	parameters.put("property11.key[0].property", "0");
-                	parameters.put("property11.key[1].property", "1");
-                	parameters.put("property11.element[0]", "x0");
-                	parameters.put("property11.element[1]", "x1");
+                	parameters.put("property11.elements[0].key.property", "0");
+                	parameters.put("property11.elements[1].key.property", "1");
+                	parameters.put("property11.elements[0].element", "x0");
+                	parameters.put("property11.elements[1].element", "x1");
 
-                	parameters.put("property12.key[0]", "0");
-                	parameters.put("property12.key[1]", "1");            	
-                	parameters.put("property12.element[0]", "x0");
-                	parameters.put("property12.element[1]", "x1");            	
+                	parameters.put("property12.0", "x0");
+                	parameters.put("property12.1", "x1");            	
+          	
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
-                	parameters.put("property5.key[0]", "0");
-                	parameters.put("property5.key[1]", "1");
+                	parameters.put("property5.0", "");
+                	parameters.put("property5.1", "");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1655,6 +1610,7 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void checkException(Throwable e) {
+                	e.printStackTrace();
                     fail(e.toString());
                 }
             },

@@ -12,6 +12,7 @@ import org.brandao.brutos.annotation.ScopeType;
 import org.brandao.brutos.annotation.helper.EnumTest;
 
 @Controller("/controller")
+@SuppressWarnings("rawtypes")
 public class ControllerKeyCollectionPropertyTest {
 
     private Map<Integer,String> property;
@@ -127,7 +128,7 @@ public class ControllerKeyCollectionPropertyTest {
 		return property10;
 	}
 
-	@KeyCollection(mappingType=MappingTypes.COMPLEX)
+	@KeyCollection(bean="key", mappingType=MappingTypes.COMPLEX)
 	public void setProperty10(Map<KeyCollectionBeanTest0,String> property10) {
 		this.property10 = property10;
 	}
@@ -136,6 +137,7 @@ public class ControllerKeyCollectionPropertyTest {
 		return property11;
 	}
 
+	@KeyCollection(bean="key")
 	public void setProperty11(Map<KeyCollectionBeanTest0,String> property11) {
 		this.property11 = property11;
 	}
