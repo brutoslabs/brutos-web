@@ -26,12 +26,12 @@ import org.brandao.brutos.annotation.EnumerationType;
 import org.brandao.brutos.annotation.MappingTypes;
 import org.brandao.brutos.annotation.ScopeType;
 import org.brandao.brutos.annotation.helper.EnumTest;
-import org.brandao.brutos.type.StringType;
 
 /**
  *
  * @author Brandao
  */
+@SuppressWarnings("rawtypes")
 public class ElementCollectionFieldTest {
     
     public List<Integer> property;
@@ -51,7 +51,7 @@ public class ElementCollectionFieldTest {
     @ElementCollection(temporal="mm-dd-yyyy")
     public List<Date> property6;
 
-    @ElementCollection(target=Integer.class)
+	@ElementCollection(target=Integer.class)
     public List property7;
 
     @ElementCollection(type=TestStringType.class, target=String.class)
