@@ -92,7 +92,10 @@ public class ControllerKeyCollectionActionTest {
 	}
 
     
-	public void property5Action(@KeyCollection(scope=ScopeType.SESSION) Map<Integer,String> property5) {
+	public void property5Action(
+			@KeyCollection(scope=ScopeType.SESSION)
+			@ElementCollection(scope=ScopeType.SESSION)
+			Map<Integer,String> property5) {
 		this.property5 = property5;
 	}
 
@@ -146,7 +149,9 @@ public class ControllerKeyCollectionActionTest {
 	}
 
     
-	public void property10Action(@KeyCollection(bean="key", mappingType=MappingTypes.COMPLEX) Map<KeyCollectionBeanTest0,String> property10) {
+	public void property10Action(
+			@KeyCollection(bean="key", mappingType=MappingTypes.COMPLEX)
+			Map<KeyCollectionBeanTest0,String> property10) {
 		this.property10 = property10;
 	}
 
@@ -154,7 +159,7 @@ public class ControllerKeyCollectionActionTest {
 		return property11;
 	}
 
-	public void property11Action(@KeyCollection(bean="key") Map<KeyCollectionBeanTest0,String> property11) {
+	public void property11Action(@KeyCollection(bean="type") Map<KeyCollectionBeanTest0,String> property11) {
 		this.property11 = property11;
 	}
 

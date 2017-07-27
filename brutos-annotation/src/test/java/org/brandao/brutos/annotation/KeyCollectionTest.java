@@ -58,13 +58,8 @@ public class KeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.element[0].key", "0");
-                	parameters.put("arg0.element[1].key", "1");
-                	parameters.put("arg0.element[3].key", "3");
-                	
-                	parameters.put("arg0.element[0].element", "x0");
-                	parameters.put("arg0.element[1].element", "x1");
-                	parameters.put("arg0.element[3].element", "x3");
+                	parameters.put("arg0.0", "x0");
+                	parameters.put("arg0.1", "x1");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -111,14 +106,8 @@ public class KeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0]", "0");
-                	parameters.put("arg0.key[1]", "1");
-                	parameters.put("arg0.key[3]", "3");
-                	
-                	parameters.put("arg0.element[0]", "x0");
-                	parameters.put("arg0.element[1]", "x1");
-                	parameters.put("arg0.element[3]", "x3");
-                	
+                	parameters.put("arg0.0", "x0");
+                	parameters.put("arg0.1", "x1");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -164,13 +153,13 @@ public class KeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.elx[0]", "0");
-                	parameters.put("arg0.elx[1]", "1");
-                	parameters.put("arg0.elx[3]", "3");
+                	parameters.put("arg0.elements[0].elx", "0");
+                	parameters.put("arg0.elements[1].elx", "1");
+                	parameters.put("arg0.elements[3].elx", "3");
                 	
-                	parameters.put("arg0.element[0]", "x0");
-                	parameters.put("arg0.element[1]", "x1");
-                	parameters.put("arg0.element[3]", "x3");
+                	parameters.put("arg0.elements[0].element", "x0");
+                	parameters.put("arg0.elements[1].element", "x1");
+                	parameters.put("arg0.elements[3].element", "x3");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -216,13 +205,8 @@ public class KeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0]", "VALUE1");
-                	parameters.put("arg0.key[1]", "VALUE2");
-                	parameters.put("arg0.key[3]", "VALUE3");
-                	
-                	parameters.put("arg0.element[0]", "xVALUE1");
-                	parameters.put("arg0.element[1]", "xVALUE2");
-                	parameters.put("arg0.element[3]", "xVALUE3");
+                	parameters.put("arg0.VALUE1", "xVALUE1");
+                	parameters.put("arg0.VALUE2", "xVALUE2");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -265,15 +249,14 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0]", "0");
-                	parameters.put("arg0.key[1]", "1");
-                	parameters.put("arg0.key[3]", "3");
+                	parameters.put("arg0.0", "x0");
+                	parameters.put("arg0.1", "x1");
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.element[0]", "x0");
-                	parameters.put("arg0.element[1]", "x1");
-                	parameters.put("arg0.element[3]", "x3");
+                	//parameters.put("arg0.element[0]", "x0");
+                	//parameters.put("arg0.element[1]", "x1");
+                	//parameters.put("arg0.element[3]", "x3");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -319,13 +302,8 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0]", "01-01-2015");
-                	parameters.put("arg0.key[1]", "02-01-2015");
-                	parameters.put("arg0.key[3]", "03-01-2015");
-                	
-                	parameters.put("arg0.element[0]", "x01-01-2015");
-                	parameters.put("arg0.element[1]", "x02-01-2015");
-                	parameters.put("arg0.element[3]", "x03-01-2015");
+                	parameters.put("arg0.01-01-2015", "x01-01-2015");
+                	parameters.put("arg0.02-01-2015", "x02-01-2015");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -376,13 +354,8 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0]", "0");
-                	parameters.put("arg0.key[1]", "1");
-                	parameters.put("arg0.key[3]", "3");
-                	
-                	parameters.put("arg0.element[0]", "x0");
-                	parameters.put("arg0.element[1]", "x1");
-                	parameters.put("arg0.element[3]", "x3");
+                	parameters.put("arg0.0", "x0");
+                	parameters.put("arg0.1", "x1");
                 }
                 
 				public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -428,13 +401,8 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0]", "0");
-                	parameters.put("arg0.key[1]", "1");
-                	parameters.put("arg0.key[3]", "3");
-                	
-                	parameters.put("arg0.element[0]", "x0");
-                	parameters.put("arg0.element[1]", "x1");
-                	parameters.put("arg0.element[3]", "x3");
+                	parameters.put("arg0.0", "x0");
+                	parameters.put("arg0.1", "x1");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -480,13 +448,8 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0]", "0");
-                	parameters.put("arg0.key[1]", "1");
-                	parameters.put("arg0.key[3]", "3");
-                	
-                	parameters.put("arg0.element[0]", "x0");
-                	parameters.put("arg0.element[1]", "x1");
-                	parameters.put("arg0.element[3]", "x3");
+                	parameters.put("arg0.0", "x0");
+                	parameters.put("arg0.1", "x1");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -532,13 +495,11 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0].property", "0");
-                	parameters.put("arg0.key[1].property", "1");
-                	parameters.put("arg0.key[3].property", "3");
+                	parameters.put("arg0.elements[0].key.property", "0");
+                	parameters.put("arg0.elements[1].key.property", "1");
                 	
-                	parameters.put("arg0.element[0]", "x0");
-                	parameters.put("arg0.element[1]", "x1");
-                	parameters.put("arg0.element[3]", "x3");
+                	parameters.put("arg0.elements[0].element", "x0");
+                	parameters.put("arg0.elements[1].element", "x1");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -584,13 +545,11 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0].property", "0");
-                	parameters.put("arg0.key[1].property", "1");
-                	parameters.put("arg0.key[3].property", "3");
+                	parameters.put("arg0.elements[0].type.property", "0");
+                	parameters.put("arg0.elements[1].type.property", "1");
                 	
-                	parameters.put("arg0.element[0]", "x0");
-                	parameters.put("arg0.element[1]", "x1");
-                	parameters.put("arg0.element[3]", "x3");
+                	parameters.put("arg0.elements[0].element", "x0");
+                	parameters.put("arg0.elements[1].element", "x1");
                 }
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -633,13 +592,8 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0]", "0");
-                	parameters.put("arg0.key[1]", "1");
-                	parameters.put("arg0.key[3]", "3");
-                	
-                	parameters.put("arg0.element[0]", "x0");
-                	parameters.put("arg0.element[1]", "x1");
-                	parameters.put("arg0.element[3]", "x3");
+                	parameters.put("arg0.0", "x0");
+                	parameters.put("arg0.1", "x1");
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
