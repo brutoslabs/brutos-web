@@ -37,6 +37,8 @@ import org.brandao.brutos.type.IntegerWrapperType;
 import org.brandao.brutos.type.StringType;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.brandao.brutos.validator.Validator;
+import org.brandao.brutos.web.RequestMethodType;
+import org.brandao.brutos.web.mapping.WebActionID;
 
 /**
  *
@@ -70,14 +72,13 @@ public class AnnotationApplicationContextActionTest
             controller.getActionByName( "/my");
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals("/my",action.getName());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest1controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction2() throws NoSuchMethodException{
@@ -128,13 +129,12 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("my"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest3controller/my/index.jsp",action.getView());
         assertEquals(clazz.getMethod("my").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction4() throws NoSuchMethodException{
@@ -162,13 +162,12 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest4controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction5() throws NoSuchMethodException{
@@ -197,8 +196,7 @@ public class AnnotationApplicationContextActionTest
         assertEquals("/WEB-INF/views/actiontest5controller/my/index.jsp",action.getView());
         assertEquals(clazz.getMethod("my").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction6() throws NoSuchMethodException{
@@ -228,8 +226,7 @@ public class AnnotationApplicationContextActionTest
         assertEquals("/WEB-INF/views/actiontest6controller/my/index.jsp",action.getView());
         assertEquals(clazz.getMethod("my").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         action = controller.getActionByName("/myaction3");
         
@@ -240,8 +237,7 @@ public class AnnotationApplicationContextActionTest
         assertEquals("/WEB-INF/views/actiontest6controller/my/index.jsp",action.getView());
         assertEquals(clazz.getMethod("my").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
     }
 
@@ -281,13 +277,12 @@ public class AnnotationApplicationContextActionTest
 
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest7controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction8() throws NoSuchMethodException{
@@ -326,13 +321,12 @@ public class AnnotationApplicationContextActionTest
 
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest8controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction9() throws NoSuchMethodException{
@@ -378,13 +372,12 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest9controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction10() throws NoSuchMethodException{
@@ -423,13 +416,12 @@ public class AnnotationApplicationContextActionTest
 
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest10controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction11() throws NoSuchMethodException{
@@ -464,13 +456,12 @@ public class AnnotationApplicationContextActionTest
 
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest11controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction12() throws NoSuchMethodException{
@@ -509,13 +500,12 @@ public class AnnotationApplicationContextActionTest
 
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest12controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction13() throws NoSuchMethodException{
@@ -547,13 +537,13 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest13controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(Object.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertEquals(Object.class,action.getResultAction().getType().getClassType());
+        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME, action.getResultAction().getName());
     }
 
     public void testAction14() throws NoSuchMethodException{
@@ -585,13 +575,13 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest14controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(Object.class,action.getReturnClass());
-        assertEquals("actionResult",action.getReturnIn());
+        assertEquals(Object.class,action.getResultAction().getType().getClassType());
+        assertEquals("actionResult", action.getResultAction().getName());
     }
 
     public void testAction15() throws NoSuchMethodException{
@@ -650,13 +640,12 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/controller/view.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction17() throws NoSuchMethodException{
@@ -688,13 +677,12 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(DispatcherType.REDIRECT,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertEquals("/controller/view.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction18() throws NoSuchMethodException{
@@ -726,13 +714,12 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction"),action.getMethod());
         assertNull(action.getView());
         assertEquals(clazz.getMethod("myAction").getName(),action.getExecutor());
         assertEquals(0,action.getParameters().size());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
     }
 
     public void testAction19() throws NoSuchMethodException{
@@ -790,12 +777,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction",int.class),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest20controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction",int.class).getName(),action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(1,action.getParameters().size());
         
@@ -839,12 +825,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction",Integer.class,String.class),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest21controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction",Integer.class,String.class).getName(),action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(2,action.getParameters().size());
         
@@ -899,12 +884,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction",Integer.class,String.class),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest22controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction",Integer.class,String.class).getName(),action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(2,action.getParameters().size());
         
@@ -959,12 +943,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction",EnumTest.class,EnumTest.class),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest23controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction",EnumTest.class,EnumTest.class).getName(),action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(2,action.getParameters().size());
         
@@ -1019,12 +1002,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction",String.class,int.class),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest24controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction",String.class,int.class).getName(),action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(2,action.getParameters().size());
         
@@ -1091,12 +1073,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction",String.class),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest25controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction",String.class).getName(),action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(1,action.getParameters().size());
         
@@ -1146,14 +1127,13 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction",
                 Date.class,Date.class,Calendar.class,Calendar.class),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest26controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction",
                 Date.class,Date.class,Calendar.class,Calendar.class).getName(),action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(4,action.getParameters().size());
         
@@ -1232,12 +1212,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertEquals(clazz.getMethod("myAction",int.class),action.getMethod());
         assertEquals("/WEB-INF/views/actiontest27controller/myaction/index.jsp",action.getView());
         assertEquals(clazz.getMethod("myAction",int.class).getName(),action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(1,action.getParameters().size());
         
@@ -1305,12 +1284,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertNull(action.getMethod());
         assertEquals("/my.jsp",action.getView());
         assertNull(action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(0,action.getParameters().size());
     }
@@ -1344,12 +1322,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertNull(action.getMethod());
         assertEquals("/index.jsp",action.getView());
         assertNull(action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(0,action.getParameters().size());
     }
@@ -1383,12 +1360,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertNull(action.getMethod());
         assertEquals("/my.jsp",action.getView());
         assertNull(action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(0,action.getParameters().size());
 
@@ -1397,12 +1373,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my2",action.getName());
-        assertEquals("/my2",action.getId());
+        assertEquals(new WebActionID("/my2", RequestMethodType.GET), action.getId());
         assertNull(action.getMethod());
         assertEquals("/my2.jsp",action.getView());
         assertNull(action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(0,action.getParameters().size());
         
@@ -1437,12 +1412,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertNull(action.getMethod());
         assertEquals("/my.jsp",action.getView());
         assertNull(action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(0,action.getParameters().size());
     }
@@ -1500,12 +1474,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my",action.getName());
-        assertEquals("/my",action.getId());
+        assertEquals(new WebActionID("/my", RequestMethodType.GET), action.getId());
         assertNull(action.getMethod());
         assertEquals("/my.jsp",action.getView());
         assertNull(action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(0,action.getParameters().size());
 
@@ -1514,12 +1487,11 @@ public class AnnotationApplicationContextActionTest
         
         assertEquals(BrutosConstants.DEFAULT_DISPATCHERTYPE,action.getDispatcherType());
         assertEquals("/my2",action.getName());
-        assertEquals("/my2",action.getId());
+        assertEquals(new WebActionID("/my2", RequestMethodType.GET), action.getId());
         assertNull(action.getMethod());
         assertEquals("/my2.jsp",action.getView());
         assertNull(action.getExecutor());
-        assertEquals(void.class,action.getReturnClass());
-        assertEquals(BrutosConstants.DEFAULT_RETURN_NAME,action.getReturnIn());
+        assertNull(action.getResultAction().getType());
         
         assertEquals(0,action.getParameters().size());
         
