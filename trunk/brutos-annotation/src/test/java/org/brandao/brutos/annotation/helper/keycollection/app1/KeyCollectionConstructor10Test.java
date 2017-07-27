@@ -12,7 +12,7 @@ public class KeyCollectionConstructor10Test {
 	private Map<KeyCollectionBeanTest0,String> entity;
 	
 	public KeyCollectionConstructor10Test(
-			@KeyCollection(mappingType=MappingTypes.COMPLEX)Map<KeyCollectionBeanTest0,String> entity){
+			@KeyCollection(bean="key", mappingType=MappingTypes.COMPLEX)Map<KeyCollectionBeanTest0,String> entity){
 		this.entity = entity;
 	}
 
