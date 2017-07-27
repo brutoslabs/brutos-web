@@ -67,11 +67,11 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property.element[0].key.propertyType", "decimal");
-                	parameters.put("property.element[0].key.name", "propName");
-                	parameters.put("property.element[0].key.length", "10");
-                	parameters.put("property.element[0].key.decimals", "2");
-                	parameters.put("property.element[0].element", "valuex");
+                	parameters.put("property.elements[0].key.propertyType", "decimal");
+                	parameters.put("property.elements[0].key.name", "propName");
+                	parameters.put("property.elements[0].key.length", "10");
+                	parameters.put("property.elements[0].key.decimals", "2");
+                	parameters.put("property.elements[0].element", "valuex");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -115,11 +115,11 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property.element[0].key.propertyType", "set");
-                	parameters.put("property.element[0].key.name", "propName");
-                	parameters.put("property.element[0].key.values[0]", "VALUE1");
-                	parameters.put("property.element[0].key.values[1]", "VALUE2");
-                	parameters.put("property.element[0].element", "valuex");
+                	parameters.put("property.elements[0].key.propertyType", "set");
+                	parameters.put("property.elements[0].key.name", "propName");
+                	parameters.put("property.elements[0].key.values[0]", "VALUE1");
+                	parameters.put("property.elements[0].key.values[1]", "VALUE2");
+                	parameters.put("property.elements[0].element", "valuex");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -163,11 +163,11 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property.element[0].key.propertyType", "DECIMAL");
-                	parameters.put("property.element[0].key.name", "propName");
-                	parameters.put("property.element[0].key.length", "10");
-                	parameters.put("property.element[0].key.decimals", "2");
-                	parameters.put("property.element[0].element", "valuex");
+                	parameters.put("property.elements[0].key.propertyType", "DECIMAL");
+                	parameters.put("property.elements[0].key.name", "propName");
+                	parameters.put("property.elements[0].key.length", "10");
+                	parameters.put("property.elements[0].key.decimals", "2");
+                	parameters.put("property.elements[0].element", "valuex");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -210,11 +210,11 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property.element[0].key.propertyType", "SET");
-                	parameters.put("property.element[0].key.name", "propName");
-                	parameters.put("property.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("property.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("property.element[0].element", "valuex");
+                	parameters.put("property.elements[0].key.propertyType", "SET");
+                	parameters.put("property.elements[0].key.name", "propName");
+                	parameters.put("property.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("property.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("property.elements[0].element", "valuex");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -257,11 +257,11 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property.element[0].key.propertyType", "0");
-                	parameters.put("property.element[0].key.name", "propName");
-                	parameters.put("property.element[0].key.length", "10");
-                	parameters.put("property.element[0].key.decimals", "2");
-                	parameters.put("property.element[0].element", "valuex");
+                	parameters.put("property.elements[0].key.propertyType", "0");
+                	parameters.put("property.elements[0].key.name", "propName");
+                	parameters.put("property.elements[0].key.length", "10");
+                	parameters.put("property.elements[0].key.decimals", "2");
+                	parameters.put("property.elements[0].element", "valuex");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -304,11 +304,11 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property.element[0].key.propertyType", "1");
-                	parameters.put("property.element[0].key.name", "propName");
-                	parameters.put("property.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("property.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("property.element[0].element", "valuex");
+                	parameters.put("property.elements[0].key.propertyType", "1");
+                	parameters.put("property.elements[0].key.name", "propName");
+                	parameters.put("property.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("property.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("property.elements[0].element", "valuex");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -351,11 +351,11 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property.element[0].key.propertyType", "2015-01-01");
-                	parameters.put("property.element[0].key.name", "propName");
-                	parameters.put("property.element[0].key.length", "10");
-                	parameters.put("property.element[0].key.decimals", "2");
-                	parameters.put("property.element[0].element", "valuex");
+                	parameters.put("property.elements[0].key.propertyType", "2015-01-01");
+                	parameters.put("property.elements[0].key.name", "propName");
+                	parameters.put("property.elements[0].key.length", "10");
+                	parameters.put("property.elements[0].key.decimals", "2");
+                	parameters.put("property.elements[0].element", "valuex");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -399,11 +399,11 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property.element[0].key.propertyType", "2015-01-02");
-                	parameters.put("property.element[0].key.name", "propName");
-                	parameters.put("property.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("property.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("property.element[0].element", "valuex");
+                	parameters.put("property.elements[0].key.propertyType", "2015-01-02");
+                	parameters.put("property.elements[0].key.name", "propName");
+                	parameters.put("property.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("property.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("property.elements[0].element", "valuex");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -446,17 +446,17 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("propertyA.element[0].key.propertyType", "decimal");
-                	parameters.put("propertyA.element[0].key.name", "propName");
-                	parameters.put("propertyA.element[0].key.length", "1");
-                	parameters.put("propertyA.element[0].key.decimals", "2");
-                	parameters.put("propertyA.element[0].element", "valuex");
+                	parameters.put("propertyA.elements[0].key.propertyType", "decimal");
+                	parameters.put("propertyA.elements[0].key.name", "propName");
+                	parameters.put("propertyA.elements[0].key.length", "1");
+                	parameters.put("propertyA.elements[0].key.decimals", "2");
+                	parameters.put("propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("propertyB.element[0].key.propertyType2", "decimal");
-                	parameters.put("propertyB.element[0].key.name", "propName");
-                	parameters.put("propertyB.element[0].key.length", "3");
-                	parameters.put("propertyB.element[0].key.decimals", "4");
-                	parameters.put("propertyB.element[0].element", "valuexx");
+                	parameters.put("propertyB.elements[0].key.propertyType2", "decimal");
+                	parameters.put("propertyB.elements[0].key.name", "propName");
+                	parameters.put("propertyB.elements[0].key.length", "3");
+                	parameters.put("propertyB.elements[0].key.decimals", "4");
+                	parameters.put("propertyB.elements[0].element", "valuexx");
                 	
                 }
 
@@ -507,19 +507,19 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("propertyA.element[0].key.propertyType", "set");
-                	parameters.put("propertyA.element[0].key.name", "propName");
-                	parameters.put("propertyA.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("propertyA.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("propertyA.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("propertyA.element[0].element", "valuex");
+                	parameters.put("propertyA.elements[0].key.propertyType", "set");
+                	parameters.put("propertyA.elements[0].key.name", "propName");
+                	parameters.put("propertyA.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("propertyA.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("propertyA.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("propertyB.element[0].key.propertyType2", "set");
-                	parameters.put("propertyB.element[0].key.name", "propName");
-                	parameters.put("propertyB.element[0].key.values.element[0]", "VALUE3");
-                	parameters.put("propertyB.element[0].key.values.element[1]", "VALUE4");
-                	parameters.put("propertyB.element[0].key.values.element[3]", "VALUEXX");
-                	parameters.put("propertyB.element[0].element", "valuexx");
+                	parameters.put("propertyB.elements[0].key.propertyType2", "set");
+                	parameters.put("propertyB.elements[0].key.name", "propName");
+                	parameters.put("propertyB.elements[0].key.values.element[0]", "VALUE3");
+                	parameters.put("propertyB.elements[0].key.values.element[1]", "VALUE4");
+                	parameters.put("propertyB.elements[0].key.values.element[3]", "VALUEXX");
+                	parameters.put("propertyB.elements[0].element", "valuexx");
                 	
                 }
 
@@ -570,17 +570,17 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("propertyA.element[0].key.propertyType", "DECIMAL");
-                	parameters.put("propertyA.element[0].key.name", "propName");
-                	parameters.put("propertyA.element[0].key.length", "1");
-                	parameters.put("propertyA.element[0].key.decimals", "2");
-                	parameters.put("propertyA.element[0].element", "valuex");
+                	parameters.put("propertyA.elements[0].key.propertyType", "DECIMAL");
+                	parameters.put("propertyA.elements[0].key.name", "propName");
+                	parameters.put("propertyA.elements[0].key.length", "1");
+                	parameters.put("propertyA.elements[0].key.decimals", "2");
+                	parameters.put("propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("propertyB.element[0].key.propertyType2", "DECIMAL");
-                	parameters.put("propertyB.element[0].key.name", "propName");
-                	parameters.put("propertyB.element[0].key.length", "3");
-                	parameters.put("propertyB.element[0].key.decimals", "4");
-                	parameters.put("propertyB.element[0].element", "valuexx");
+                	parameters.put("propertyB.elements[0].key.propertyType2", "DECIMAL");
+                	parameters.put("propertyB.elements[0].key.name", "propName");
+                	parameters.put("propertyB.elements[0].key.length", "3");
+                	parameters.put("propertyB.elements[0].key.decimals", "4");
+                	parameters.put("propertyB.elements[0].element", "valuexx");
                 	
                 }
 
@@ -631,19 +631,19 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("propertyA.element[0].key.propertyType", "SET");
-                	parameters.put("propertyA.element[0].key.name", "propName");
-                	parameters.put("propertyA.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("propertyA.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("propertyA.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("propertyA.element[0].element", "valuex");
+                	parameters.put("propertyA.elements[0].key.propertyType", "SET");
+                	parameters.put("propertyA.elements[0].key.name", "propName");
+                	parameters.put("propertyA.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("propertyA.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("propertyA.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("propertyB.element[0].key.propertyType2", "SET");
-                	parameters.put("propertyB.element[0].key.name", "propName");
-                	parameters.put("propertyB.element[0].key.values.element[0]", "VALUE3");
-                	parameters.put("propertyB.element[0].key.values.element[1]", "VALUE4");
-                	parameters.put("propertyB.element[0].key.values.element[3]", "VALUEXX");
-                	parameters.put("propertyB.element[0].element", "valuexx");
+                	parameters.put("propertyB.elements[0].key.propertyType2", "SET");
+                	parameters.put("propertyB.elements[0].key.name", "propName");
+                	parameters.put("propertyB.elements[0].key.values.element[0]", "VALUE3");
+                	parameters.put("propertyB.elements[0].key.values.element[1]", "VALUE4");
+                	parameters.put("propertyB.elements[0].key.values.element[3]", "VALUEXX");
+                	parameters.put("propertyB.elements[0].element", "valuexx");
                 	
                 }
 
@@ -695,17 +695,17 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("propertyA.element[0].key.propertyType", "0");
-                	parameters.put("propertyA.element[0].key.name", "propName");
-                	parameters.put("propertyA.element[0].key.length", "1");
-                	parameters.put("propertyA.element[0].key.decimals", "2");
-                	parameters.put("propertyA.element[0].element", "valuex");
+                	parameters.put("propertyA.elements[0].key.propertyType", "0");
+                	parameters.put("propertyA.elements[0].key.name", "propName");
+                	parameters.put("propertyA.elements[0].key.length", "1");
+                	parameters.put("propertyA.elements[0].key.decimals", "2");
+                	parameters.put("propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("propertyB.element[0].key.propertyType2", "0");
-                	parameters.put("propertyB.element[0].key.name", "propName");
-                	parameters.put("propertyB.element[0].key.length", "3");
-                	parameters.put("propertyB.element[0].key.decimals", "4");
-                	parameters.put("propertyB.element[0].element", "valuexx");
+                	parameters.put("propertyB.elements[0].key.propertyType2", "0");
+                	parameters.put("propertyB.elements[0].key.name", "propName");
+                	parameters.put("propertyB.elements[0].key.length", "3");
+                	parameters.put("propertyB.elements[0].key.decimals", "4");
+                	parameters.put("propertyB.elements[0].element", "valuexx");
                 	
                 }
 
@@ -756,19 +756,19 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("propertyA.element[0].key.propertyType", "1");
-                	parameters.put("propertyA.element[0].key.name", "propName");
-                	parameters.put("propertyA.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("propertyA.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("propertyA.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("propertyA.element[0].element", "valuex");
+                	parameters.put("propertyA.elements[0].key.propertyType", "1");
+                	parameters.put("propertyA.elements[0].key.name", "propName");
+                	parameters.put("propertyA.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("propertyA.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("propertyA.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("propertyB.element[0].key.propertyType2", "1");
-                	parameters.put("propertyB.element[0].key.name", "propName");
-                	parameters.put("propertyB.element[0].key.values.element[0]", "VALUE3");
-                	parameters.put("propertyB.element[0].key.values.element[1]", "VALUE4");
-                	parameters.put("propertyB.element[0].key.values.element[3]", "VALUEXX");
-                	parameters.put("propertyB.element[0].element", "valuexx");
+                	parameters.put("propertyB.elements[0].key.propertyType2", "1");
+                	parameters.put("propertyB.elements[0].key.name", "propName");
+                	parameters.put("propertyB.elements[0].key.values.element[0]", "VALUE3");
+                	parameters.put("propertyB.elements[0].key.values.element[1]", "VALUE4");
+                	parameters.put("propertyB.elements[0].key.values.element[3]", "VALUEXX");
+                	parameters.put("propertyB.elements[0].element", "valuexx");
                 	
                 }
 
@@ -819,17 +819,17 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("propertyA.element[0].key.propertyType", "2015-01-01");
-                	parameters.put("propertyA.element[0].key.name", "propName");
-                	parameters.put("propertyA.element[0].key.length", "1");
-                	parameters.put("propertyA.element[0].key.decimals", "2");
-                	parameters.put("propertyA.element[0].element", "valuex");
+                	parameters.put("propertyA.elements[0].key.propertyType", "2015-01-01");
+                	parameters.put("propertyA.elements[0].key.name", "propName");
+                	parameters.put("propertyA.elements[0].key.length", "1");
+                	parameters.put("propertyA.elements[0].key.decimals", "2");
+                	parameters.put("propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("propertyB.element[0].key.propertyType2", "2015-01-01");
-                	parameters.put("propertyB.element[0].key.name", "propName");
-                	parameters.put("propertyB.element[0].key.length", "3");
-                	parameters.put("propertyB.element[0].key.decimals", "4");
-                	parameters.put("propertyB.element[0].element", "valuexx");
+                	parameters.put("propertyB.elements[0].key.propertyType2", "2015-01-01");
+                	parameters.put("propertyB.elements[0].key.name", "propName");
+                	parameters.put("propertyB.elements[0].key.length", "3");
+                	parameters.put("propertyB.elements[0].key.decimals", "4");
+                	parameters.put("propertyB.elements[0].element", "valuexx");
                 	
                 }
 
@@ -880,19 +880,19 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("propertyA.element[0].key.propertyType", "2015-01-02");
-                	parameters.put("propertyA.element[0].key.name", "propName");
-                	parameters.put("propertyA.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("propertyA.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("propertyA.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("propertyA.element[0].element", "valuex");
+                	parameters.put("propertyA.elements[0].key.propertyType", "2015-01-02");
+                	parameters.put("propertyA.elements[0].key.name", "propName");
+                	parameters.put("propertyA.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("propertyA.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("propertyA.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("propertyB.element[0].key.propertyType2", "2015-01-02");
-                	parameters.put("propertyB.element[0].key.name", "propName");
-                	parameters.put("propertyB.element[0].key.values.element[0]", "VALUE3");
-                	parameters.put("propertyB.element[0].key.values.element[1]", "VALUE4");
-                	parameters.put("propertyB.element[0].key.values.element[3]", "VALUEXX");
-                	parameters.put("propertyB.element[0].element", "valuexx");
+                	parameters.put("propertyB.elements[0].key.propertyType2", "2015-01-02");
+                	parameters.put("propertyB.elements[0].key.name", "propName");
+                	parameters.put("propertyB.elements[0].key.values.element[0]", "VALUE3");
+                	parameters.put("propertyB.elements[0].key.values.element[1]", "VALUE4");
+                	parameters.put("propertyB.elements[0].key.values.element[3]", "VALUEXX");
+                	parameters.put("propertyB.elements[0].element", "valuexx");
                 	
                 }
 
@@ -943,23 +943,23 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property1.propertyA.element[0].key.propertyType", "decimal");
-                	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-                	parameters.put("property1.propertyA.element[0].key.length", "1");
-                	parameters.put("property1.propertyA.element[0].key.decimals", "2");
-                	parameters.put("property1.propertyA.element[0].element", "valuex");
+                	parameters.put("property1.propertyA.elements[0].key.propertyType", "decimal");
+                	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+                	parameters.put("property1.propertyA.elements[0].key.length", "1");
+                	parameters.put("property1.propertyA.elements[0].key.decimals", "2");
+                	parameters.put("property1.propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("property1.propertyB.element[0].key.propertyType2", "decimal");
-                	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-                	parameters.put("property1.propertyB.element[0].key.length", "3");
-                	parameters.put("property1.propertyB.element[0].key.decimals", "4");
-                	parameters.put("property1.propertyB.element[0].element", "valuexx");
+                	parameters.put("property1.propertyB.elements[0].key.propertyType2", "decimal");
+                	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+                	parameters.put("property1.propertyB.elements[0].key.length", "3");
+                	parameters.put("property1.propertyB.elements[0].key.decimals", "4");
+                	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 
-                	parameters.put("property1.propertyC.element[0].key.propertyType3", "decimal");
-                	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-                	parameters.put("property1.propertyC.element[0].key.length", "5");
-                	parameters.put("property1.propertyC.element[0].key.decimals", "6");
-                	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+                	parameters.put("property1.propertyC.elements[0].key.propertyType3", "decimal");
+                	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+                	parameters.put("property1.propertyC.elements[0].key.length", "5");
+                	parameters.put("property1.propertyC.elements[0].key.decimals", "6");
+                	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
                 	
                 }
 
@@ -1018,26 +1018,26 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property1.propertyA.element[0].key.propertyType", "set");
-                	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-                	parameters.put("property1.propertyA.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("property1.propertyA.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyA.element[0].element", "valuex");
+                	parameters.put("property1.propertyA.elements[0].key.propertyType", "set");
+                	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("property1.propertyB.element[0].key.propertyType2", "set");
-                	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-                	parameters.put("property1.propertyB.element[0].key.values.element[0]", "VALUE3");
-                	parameters.put("property1.propertyB.element[0].key.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyB.element[0].element", "valuexx");
+                	parameters.put("property1.propertyB.elements[0].key.propertyType2", "set");
+                	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 
-                	parameters.put("property1.propertyC.element[0].key.propertyType3", "set");
-                	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-                	parameters.put("property1.propertyC.element[0].key.values.element[0]", "VALUE5");
-                	parameters.put("property1.propertyC.element[0].key.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+                	parameters.put("property1.propertyC.elements[0].key.propertyType3", "set");
+                	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
                 	
                 }
 
@@ -1096,23 +1096,23 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property1.propertyA.element[0].key.propertyType", "DECIMAL");
-                	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-                	parameters.put("property1.propertyA.element[0].key.length", "1");
-                	parameters.put("property1.propertyA.element[0].key.decimals", "2");
-                	parameters.put("property1.propertyA.element[0].element", "valuex");
+                	parameters.put("property1.propertyA.elements[0].key.propertyType", "DECIMAL");
+                	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+                	parameters.put("property1.propertyA.elements[0].key.length", "1");
+                	parameters.put("property1.propertyA.elements[0].key.decimals", "2");
+                	parameters.put("property1.propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("property1.propertyB.element[0].key.propertyType2", "DECIMAL");
-                	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-                	parameters.put("property1.propertyB.element[0].key.length", "3");
-                	parameters.put("property1.propertyB.element[0].key.decimals", "4");
-                	parameters.put("property1.propertyB.element[0].element", "valuexx");
+                	parameters.put("property1.propertyB.elements[0].key.propertyType2", "DECIMAL");
+                	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+                	parameters.put("property1.propertyB.elements[0].key.length", "3");
+                	parameters.put("property1.propertyB.elements[0].key.decimals", "4");
+                	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 
-                	parameters.put("property1.propertyC.element[0].key.propertyType3", "DECIMAL");
-                	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-                	parameters.put("property1.propertyC.element[0].key.length", "5");
-                	parameters.put("property1.propertyC.element[0].key.decimals", "6");
-                	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+                	parameters.put("property1.propertyC.elements[0].key.propertyType3", "DECIMAL");
+                	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+                	parameters.put("property1.propertyC.elements[0].key.length", "5");
+                	parameters.put("property1.propertyC.elements[0].key.decimals", "6");
+                	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
                 	
                 }
 
@@ -1171,26 +1171,26 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property1.propertyA.element[0].key.propertyType", "SET");
-                	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-                	parameters.put("property1.propertyA.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("property1.propertyA.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyA.element[0].element", "valuex");
+                	parameters.put("property1.propertyA.elements[0].key.propertyType", "SET");
+                	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("property1.propertyB.element[0].key.propertyType2", "SET");
-                	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-                	parameters.put("property1.propertyB.element[0].key.values.element[0]", "VALUE3");
-                	parameters.put("property1.propertyB.element[0].key.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyB.element[0].element", "valuexx");
+                	parameters.put("property1.propertyB.elements[0].key.propertyType2", "SET");
+                	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 
-                	parameters.put("property1.propertyC.element[0].key.propertyType3", "SET");
-                	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-                	parameters.put("property1.propertyC.element[0].key.values.element[0]", "VALUE5");
-                	parameters.put("property1.propertyC.element[0].key.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+                	parameters.put("property1.propertyC.elements[0].key.propertyType3", "SET");
+                	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
                 	
                 }
 
@@ -1251,23 +1251,23 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property1.propertyA.element[0].key.propertyType", "0");
-                	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-                	parameters.put("property1.propertyA.element[0].key.length", "1");
-                	parameters.put("property1.propertyA.element[0].key.decimals", "2");
-                	parameters.put("property1.propertyA.element[0].element", "valuex");
+                	parameters.put("property1.propertyA.elements[0].key.propertyType", "0");
+                	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+                	parameters.put("property1.propertyA.elements[0].key.length", "1");
+                	parameters.put("property1.propertyA.elements[0].key.decimals", "2");
+                	parameters.put("property1.propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("property1.propertyB.element[0].key.propertyType2", "0");
-                	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-                	parameters.put("property1.propertyB.element[0].key.length", "3");
-                	parameters.put("property1.propertyB.element[0].key.decimals", "4");
-                	parameters.put("property1.propertyB.element[0].element", "valuexx");
+                	parameters.put("property1.propertyB.elements[0].key.propertyType2", "0");
+                	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+                	parameters.put("property1.propertyB.elements[0].key.length", "3");
+                	parameters.put("property1.propertyB.elements[0].key.decimals", "4");
+                	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 
-                	parameters.put("property1.propertyC.element[0].key.propertyType3", "0");
-                	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-                	parameters.put("property1.propertyC.element[0].key.length", "5");
-                	parameters.put("property1.propertyC.element[0].key.decimals", "6");
-                	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+                	parameters.put("property1.propertyC.elements[0].key.propertyType3", "0");
+                	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+                	parameters.put("property1.propertyC.elements[0].key.length", "5");
+                	parameters.put("property1.propertyC.elements[0].key.decimals", "6");
+                	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
                 	
                 }
 
@@ -1326,26 +1326,26 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property1.propertyA.element[0].key.propertyType", "1");
-                	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-                	parameters.put("property1.propertyA.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("property1.propertyA.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyA.element[0].element", "valuex");
+                	parameters.put("property1.propertyA.elements[0].key.propertyType", "1");
+                	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("property1.propertyB.element[0].key.propertyType2", "1");
-                	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-                	parameters.put("property1.propertyB.element[0].key.values.element[0]", "VALUE3");
-                	parameters.put("property1.propertyB.element[0].key.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyB.element[0].element", "valuexx");
+                	parameters.put("property1.propertyB.elements[0].key.propertyType2", "1");
+                	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 
-                	parameters.put("property1.propertyC.element[0].key.propertyType3", "1");
-                	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-                	parameters.put("property1.propertyC.element[0].key.values.element[0]", "VALUE5");
-                	parameters.put("property1.propertyC.element[0].key.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+                	parameters.put("property1.propertyC.elements[0].key.propertyType3", "1");
+                	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
                 	
                 }
 
@@ -1404,23 +1404,23 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property1.propertyA.element[0].key.propertyType", "2015-01-01");
-                	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-                	parameters.put("property1.propertyA.element[0].key.length", "1");
-                	parameters.put("property1.propertyA.element[0].key.decimals", "2");
-                	parameters.put("property1.propertyA.element[0].element", "valuex");
+                	parameters.put("property1.propertyA.elements[0].key.propertyType", "2015-01-01");
+                	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+                	parameters.put("property1.propertyA.elements[0].key.length", "1");
+                	parameters.put("property1.propertyA.elements[0].key.decimals", "2");
+                	parameters.put("property1.propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("property1.propertyB.element[0].key.propertyType2", "2015-01-01");
-                	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-                	parameters.put("property1.propertyB.element[0].key.length", "3");
-                	parameters.put("property1.propertyB.element[0].key.decimals", "4");
-                	parameters.put("property1.propertyB.element[0].element", "valuexx");
+                	parameters.put("property1.propertyB.elements[0].key.propertyType2", "2015-01-01");
+                	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+                	parameters.put("property1.propertyB.elements[0].key.length", "3");
+                	parameters.put("property1.propertyB.elements[0].key.decimals", "4");
+                	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 
-                	parameters.put("property1.propertyC.element[0].key.propertyType3", "2015-01-01");
-                	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-                	parameters.put("property1.propertyC.element[0].key.length", "5");
-                	parameters.put("property1.propertyC.element[0].key.decimals", "6");
-                	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+                	parameters.put("property1.propertyC.elements[0].key.propertyType3", "2015-01-01");
+                	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+                	parameters.put("property1.propertyC.elements[0].key.length", "5");
+                	parameters.put("property1.propertyC.elements[0].key.decimals", "6");
+                	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
                 	
                 }
 
@@ -1479,26 +1479,26 @@ public class AnyKeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("property1.propertyA.element[0].key.propertyType", "2015-01-02");
-                	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-                	parameters.put("property1.propertyA.element[0].key.values.element[0]", "VALUE1");
-                	parameters.put("property1.propertyA.element[0].key.values.element[1]", "VALUE2");
-                	parameters.put("property1.propertyA.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyA.element[0].element", "valuex");
+                	parameters.put("property1.propertyA.elements[0].key.propertyType", "2015-01-02");
+                	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[0]", "VALUE1");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[1]", "VALUE2");
+                	parameters.put("property1.propertyA.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyA.elements[0].element", "valuex");
                 	
-                	parameters.put("property1.propertyB.element[0].key.propertyType2", "2015-01-02");
-                	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-                	parameters.put("property1.propertyB.element[0].key.values.element[0]", "VALUE3");
-                	parameters.put("property1.propertyB.element[0].key.values.element[1]", "VALUE4");
-                	parameters.put("property1.propertyB.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyB.element[0].element", "valuexx");
+                	parameters.put("property1.propertyB.elements[0].key.propertyType2", "2015-01-02");
+                	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[0]", "VALUE3");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[1]", "VALUE4");
+                	parameters.put("property1.propertyB.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 
-                	parameters.put("property1.propertyC.element[0].key.propertyType3", "2015-01-02");
-                	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-                	parameters.put("property1.propertyC.element[0].key.values.element[0]", "VALUE5");
-                	parameters.put("property1.propertyC.element[0].key.values.element[1]", "VALUE6");
-                	parameters.put("property1.propertyC.element[0].key.values.element[3]", "VALUEX");
-                	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+                	parameters.put("property1.propertyC.elements[0].key.propertyType3", "2015-01-02");
+                	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[0]", "VALUE5");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[1]", "VALUE6");
+                	parameters.put("property1.propertyC.elements[0].key.values.element[3]", "VALUEX");
+                	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
                 	
                 }
 
@@ -1557,11 +1557,11 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property.element[0].key.propertyType", "decimal");
-	            	parameters.put("property.element[0].key.name", "propName");
-	            	parameters.put("property.element[0].key.length", "10");
-	            	parameters.put("property.element[0].key.decimals", "2");
-	            	parameters.put("property.element[0].element", "valuex");
+	            	parameters.put("property.elements[0].key.propertyType", "decimal");
+	            	parameters.put("property.elements[0].key.name", "propName");
+	            	parameters.put("property.elements[0].key.length", "10");
+	            	parameters.put("property.elements[0].key.decimals", "2");
+	            	parameters.put("property.elements[0].element", "valuex");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1604,11 +1604,11 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property.element[0].key.propertyType", "set");
-	            	parameters.put("property.element[0].key.name", "propName");
-	            	parameters.put("property.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("property.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("property.element[0].element", "valuex");
+	            	parameters.put("property.elements[0].key.propertyType", "set");
+	            	parameters.put("property.elements[0].key.name", "propName");
+	            	parameters.put("property.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("property.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("property.elements[0].element", "valuex");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1651,11 +1651,11 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property.element[0].key.propertyType", "DECIMAL");
-	            	parameters.put("property.element[0].key.name", "propName");
-	            	parameters.put("property.element[0].key.length", "10");
-	            	parameters.put("property.element[0].key.decimals", "2");
-	            	parameters.put("property.element[0].element", "valuex");
+	            	parameters.put("property.elements[0].key.propertyType", "DECIMAL");
+	            	parameters.put("property.elements[0].key.name", "propName");
+	            	parameters.put("property.elements[0].key.length", "10");
+	            	parameters.put("property.elements[0].key.decimals", "2");
+	            	parameters.put("property.elements[0].element", "valuex");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1698,11 +1698,11 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property.element[0].key.propertyType", "SET");
-	            	parameters.put("property.element[0].key.name", "propName");
-	            	parameters.put("property.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("property.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("property.element[0].element", "valuex");
+	            	parameters.put("property.elements[0].key.propertyType", "SET");
+	            	parameters.put("property.elements[0].key.name", "propName");
+	            	parameters.put("property.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("property.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("property.elements[0].element", "valuex");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1745,11 +1745,11 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property.element[0].key.propertyType", "0");
-	            	parameters.put("property.element[0].key.name", "propName");
-	            	parameters.put("property.element[0].key.length", "10");
-	            	parameters.put("property.element[0].key.decimals", "2");
-	            	parameters.put("property.element[0].element", "valuex");
+	            	parameters.put("property.elements[0].key.propertyType", "0");
+	            	parameters.put("property.elements[0].key.name", "propName");
+	            	parameters.put("property.elements[0].key.length", "10");
+	            	parameters.put("property.elements[0].key.decimals", "2");
+	            	parameters.put("property.elements[0].element", "valuex");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1793,11 +1793,11 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property.element[0].key.propertyType", "1");
-	            	parameters.put("property.element[0].key.name", "propName");
-	            	parameters.put("property.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("property.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("property.element[0].element", "valuex");
+	            	parameters.put("property.elements[0].key.propertyType", "1");
+	            	parameters.put("property.elements[0].key.name", "propName");
+	            	parameters.put("property.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("property.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("property.elements[0].element", "valuex");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1840,11 +1840,11 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property.element[0].key.propertyType", "2015-01-01");
-	            	parameters.put("property.element[0].key.name", "propName");
-	            	parameters.put("property.element[0].key.length", "10");
-	            	parameters.put("property.element[0].key.decimals", "2");
-	            	parameters.put("property.element[0].element", "valuex");
+	            	parameters.put("property.elements[0].key.propertyType", "2015-01-01");
+	            	parameters.put("property.elements[0].key.name", "propName");
+	            	parameters.put("property.elements[0].key.length", "10");
+	            	parameters.put("property.elements[0].key.decimals", "2");
+	            	parameters.put("property.elements[0].element", "valuex");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1887,11 +1887,11 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property.element[0].key.propertyType", "2015-01-02");
-	            	parameters.put("property.element[0].key.name", "propName");
-	            	parameters.put("property.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("property.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("property.element[0].element", "valuex");
+	            	parameters.put("property.elements[0].key.propertyType", "2015-01-02");
+	            	parameters.put("property.elements[0].key.name", "propName");
+	            	parameters.put("property.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("property.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("property.elements[0].element", "valuex");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -1934,17 +1934,17 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyA.element[0].key.propertyType", "decimal");
-	            	parameters.put("propertyA.element[0].key.name", "propName");
-	            	parameters.put("propertyA.element[0].key.length", "1");
-	            	parameters.put("propertyA.element[0].key.decimals", "2");
-	            	parameters.put("propertyA.element[0].element", "valuex");
+	            	parameters.put("propertyA.elements[0].key.propertyType", "decimal");
+	            	parameters.put("propertyA.elements[0].key.name", "propName");
+	            	parameters.put("propertyA.elements[0].key.length", "1");
+	            	parameters.put("propertyA.elements[0].key.decimals", "2");
+	            	parameters.put("propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("propertyB.element[0].key.propertyType2", "decimal");
-	            	parameters.put("propertyB.element[0].key.name", "propName");
-	            	parameters.put("propertyB.element[0].key.length", "3");
-	            	parameters.put("propertyB.element[0].key.decimals", "4");
-	            	parameters.put("propertyB.element[0].element", "valuexx");
+	            	parameters.put("propertyB.elements[0].key.propertyType2", "decimal");
+	            	parameters.put("propertyB.elements[0].key.name", "propName");
+	            	parameters.put("propertyB.elements[0].key.length", "3");
+	            	parameters.put("propertyB.elements[0].key.decimals", "4");
+	            	parameters.put("propertyB.elements[0].element", "valuexx");
 	            	
 	            }
 	
@@ -1995,19 +1995,19 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyA.element[0].key.propertyType", "set");
-	            	parameters.put("propertyA.element[0].key.name", "propName");
-	            	parameters.put("propertyA.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("propertyA.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("propertyA.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("propertyA.element[0].element", "valuex");
+	            	parameters.put("propertyA.elements[0].key.propertyType", "set");
+	            	parameters.put("propertyA.elements[0].key.name", "propName");
+	            	parameters.put("propertyA.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("propertyB.element[0].key.propertyType2", "set");
-	            	parameters.put("propertyB.element[0].key.name", "propName");
-	            	parameters.put("propertyB.element[0].key.values.element[0]", "VALUE3");
-	            	parameters.put("propertyB.element[0].key.values.element[1]", "VALUE4");
-	            	parameters.put("propertyB.element[0].key.values.element[3]", "VALUEXX");
-	            	parameters.put("propertyB.element[0].element", "valuexx");
+	            	parameters.put("propertyB.elements[0].key.propertyType2", "set");
+	            	parameters.put("propertyB.elements[0].key.name", "propName");
+	            	parameters.put("propertyB.elements[0].key.values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.elements[0].key.values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.elements[0].key.values.element[3]", "VALUEXX");
+	            	parameters.put("propertyB.elements[0].element", "valuexx");
 	            	
 	            }
 	
@@ -2058,17 +2058,17 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyA.element[0].key.propertyType", "DECIMAL");
-	            	parameters.put("propertyA.element[0].key.name", "propName");
-	            	parameters.put("propertyA.element[0].key.length", "1");
-	            	parameters.put("propertyA.element[0].key.decimals", "2");
-	            	parameters.put("propertyA.element[0].element", "valuex");
+	            	parameters.put("propertyA.elements[0].key.propertyType", "DECIMAL");
+	            	parameters.put("propertyA.elements[0].key.name", "propName");
+	            	parameters.put("propertyA.elements[0].key.length", "1");
+	            	parameters.put("propertyA.elements[0].key.decimals", "2");
+	            	parameters.put("propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("propertyB.element[0].key.propertyType2", "DECIMAL");
-	            	parameters.put("propertyB.element[0].key.name", "propName");
-	            	parameters.put("propertyB.element[0].key.length", "3");
-	            	parameters.put("propertyB.element[0].key.decimals", "4");
-	            	parameters.put("propertyB.element[0].element", "valuexx");
+	            	parameters.put("propertyB.elements[0].key.propertyType2", "DECIMAL");
+	            	parameters.put("propertyB.elements[0].key.name", "propName");
+	            	parameters.put("propertyB.elements[0].key.length", "3");
+	            	parameters.put("propertyB.elements[0].key.decimals", "4");
+	            	parameters.put("propertyB.elements[0].element", "valuexx");
 	            	
 	            }
 	
@@ -2119,19 +2119,19 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyA.element[0].key.propertyType", "SET");
-	            	parameters.put("propertyA.element[0].key.name", "propName");
-	            	parameters.put("propertyA.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("propertyA.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("propertyA.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("propertyA.element[0].element", "valuex");
+	            	parameters.put("propertyA.elements[0].key.propertyType", "SET");
+	            	parameters.put("propertyA.elements[0].key.name", "propName");
+	            	parameters.put("propertyA.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("propertyB.element[0].key.propertyType2", "SET");
-	            	parameters.put("propertyB.element[0].key.name", "propName");
-	            	parameters.put("propertyB.element[0].key.values.element[0]", "VALUE3");
-	            	parameters.put("propertyB.element[0].key.values.element[1]", "VALUE4");
-	            	parameters.put("propertyB.element[0].key.values.element[3]", "VALUEXX");
-	            	parameters.put("propertyB.element[0].element", "valuexx");
+	            	parameters.put("propertyB.elements[0].key.propertyType2", "SET");
+	            	parameters.put("propertyB.elements[0].key.name", "propName");
+	            	parameters.put("propertyB.elements[0].key.values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.elements[0].key.values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.elements[0].key.values.element[3]", "VALUEXX");
+	            	parameters.put("propertyB.elements[0].element", "valuexx");
 	            	
 	            }
 	
@@ -2182,17 +2182,17 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyA.element[0].key.propertyType", "0");
-	            	parameters.put("propertyA.element[0].key.name", "propName");
-	            	parameters.put("propertyA.element[0].key.length", "1");
-	            	parameters.put("propertyA.element[0].key.decimals", "2");
-	            	parameters.put("propertyA.element[0].element", "valuex");
+	            	parameters.put("propertyA.elements[0].key.propertyType", "0");
+	            	parameters.put("propertyA.elements[0].key.name", "propName");
+	            	parameters.put("propertyA.elements[0].key.length", "1");
+	            	parameters.put("propertyA.elements[0].key.decimals", "2");
+	            	parameters.put("propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("propertyB.element[0].key.propertyType2", "0");
-	            	parameters.put("propertyB.element[0].key.name", "propName");
-	            	parameters.put("propertyB.element[0].key.length", "3");
-	            	parameters.put("propertyB.element[0].key.decimals", "4");
-	            	parameters.put("propertyB.element[0].element", "valuexx");
+	            	parameters.put("propertyB.elements[0].key.propertyType2", "0");
+	            	parameters.put("propertyB.elements[0].key.name", "propName");
+	            	parameters.put("propertyB.elements[0].key.length", "3");
+	            	parameters.put("propertyB.elements[0].key.decimals", "4");
+	            	parameters.put("propertyB.elements[0].element", "valuexx");
 	            	
 	            }
 	
@@ -2244,19 +2244,19 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyA.element[0].key.propertyType", "1");
-	            	parameters.put("propertyA.element[0].key.name", "propName");
-	            	parameters.put("propertyA.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("propertyA.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("propertyA.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("propertyA.element[0].element", "valuex");
+	            	parameters.put("propertyA.elements[0].key.propertyType", "1");
+	            	parameters.put("propertyA.elements[0].key.name", "propName");
+	            	parameters.put("propertyA.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("propertyB.element[0].key.propertyType2", "1");
-	            	parameters.put("propertyB.element[0].key.name", "propName");
-	            	parameters.put("propertyB.element[0].key.values.element[0]", "VALUE3");
-	            	parameters.put("propertyB.element[0].key.values.element[1]", "VALUE4");
-	            	parameters.put("propertyB.element[0].key.values.element[3]", "VALUEXX");
-	            	parameters.put("propertyB.element[0].element", "valuexx");
+	            	parameters.put("propertyB.elements[0].key.propertyType2", "1");
+	            	parameters.put("propertyB.elements[0].key.name", "propName");
+	            	parameters.put("propertyB.elements[0].key.values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.elements[0].key.values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.elements[0].key.values.element[3]", "VALUEXX");
+	            	parameters.put("propertyB.elements[0].element", "valuexx");
 	            	
 	            }
 	
@@ -2307,17 +2307,17 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyA.element[0].key.propertyType", "2015-01-01");
-	            	parameters.put("propertyA.element[0].key.name", "propName");
-	            	parameters.put("propertyA.element[0].key.length", "1");
-	            	parameters.put("propertyA.element[0].key.decimals", "2");
-	            	parameters.put("propertyA.element[0].element", "valuex");
+	            	parameters.put("propertyA.elements[0].key.propertyType", "2015-01-01");
+	            	parameters.put("propertyA.elements[0].key.name", "propName");
+	            	parameters.put("propertyA.elements[0].key.length", "1");
+	            	parameters.put("propertyA.elements[0].key.decimals", "2");
+	            	parameters.put("propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("propertyB.element[0].key.propertyType2", "2015-01-01");
-	            	parameters.put("propertyB.element[0].key.name", "propName");
-	            	parameters.put("propertyB.element[0].key.length", "3");
-	            	parameters.put("propertyB.element[0].key.decimals", "4");
-	            	parameters.put("propertyB.element[0].element", "valuexx");
+	            	parameters.put("propertyB.elements[0].key.propertyType2", "2015-01-01");
+	            	parameters.put("propertyB.elements[0].key.name", "propName");
+	            	parameters.put("propertyB.elements[0].key.length", "3");
+	            	parameters.put("propertyB.elements[0].key.decimals", "4");
+	            	parameters.put("propertyB.elements[0].element", "valuexx");
 	            	
 	            }
 	
@@ -2368,19 +2368,19 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("propertyA.element[0].key.propertyType", "2015-01-02");
-	            	parameters.put("propertyA.element[0].key.name", "propName");
-	            	parameters.put("propertyA.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("propertyA.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("propertyA.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("propertyA.element[0].element", "valuex");
+	            	parameters.put("propertyA.elements[0].key.propertyType", "2015-01-02");
+	            	parameters.put("propertyA.elements[0].key.name", "propName");
+	            	parameters.put("propertyA.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("propertyA.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("propertyA.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("propertyB.element[0].key.propertyType2", "2015-01-02");
-	            	parameters.put("propertyB.element[0].key.name", "propName");
-	            	parameters.put("propertyB.element[0].key.values.element[0]", "VALUE3");
-	            	parameters.put("propertyB.element[0].key.values.element[1]", "VALUE4");
-	            	parameters.put("propertyB.element[0].key.values.element[3]", "VALUEXX");
-	            	parameters.put("propertyB.element[0].element", "valuexx");
+	            	parameters.put("propertyB.elements[0].key.propertyType2", "2015-01-02");
+	            	parameters.put("propertyB.elements[0].key.name", "propName");
+	            	parameters.put("propertyB.elements[0].key.values.element[0]", "VALUE3");
+	            	parameters.put("propertyB.elements[0].key.values.element[1]", "VALUE4");
+	            	parameters.put("propertyB.elements[0].key.values.element[3]", "VALUEXX");
+	            	parameters.put("propertyB.elements[0].element", "valuexx");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -2430,23 +2430,23 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.propertyA.element[0].key.propertyType", "decimal");
-	            	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].key.length", "1");
-	            	parameters.put("property1.propertyA.element[0].key.decimals", "2");
-	            	parameters.put("property1.propertyA.element[0].element", "valuex");
+	            	parameters.put("property1.propertyA.elements[0].key.propertyType", "decimal");
+	            	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+	            	parameters.put("property1.propertyA.elements[0].key.length", "1");
+	            	parameters.put("property1.propertyA.elements[0].key.decimals", "2");
+	            	parameters.put("property1.propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("property1.propertyB.element[0].key.propertyType2", "decimal");
-	            	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].key.length", "3");
-	            	parameters.put("property1.propertyB.element[0].key.decimals", "4");
-	            	parameters.put("property1.propertyB.element[0].element", "valuexx");
+	            	parameters.put("property1.propertyB.elements[0].key.propertyType2", "decimal");
+	            	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+	            	parameters.put("property1.propertyB.elements[0].key.length", "3");
+	            	parameters.put("property1.propertyB.elements[0].key.decimals", "4");
+	            	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 	
-	            	parameters.put("property1.propertyC.element[0].key.propertyType3", "decimal");
-	            	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].key.length", "5");
-	            	parameters.put("property1.propertyC.element[0].key.decimals", "6");
-	            	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+	            	parameters.put("property1.propertyC.elements[0].key.propertyType3", "decimal");
+	            	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+	            	parameters.put("property1.propertyC.elements[0].key.length", "5");
+	            	parameters.put("property1.propertyC.elements[0].key.decimals", "6");
+	            	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
 	            	
 	            }
 	
@@ -2505,26 +2505,26 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.propertyA.element[0].key.propertyType", "set");
-	            	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyA.element[0].element", "valuex");
+	            	parameters.put("property1.propertyA.elements[0].key.propertyType", "set");
+	            	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("property1.propertyB.element[0].key.propertyType2", "set");
-	            	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyB.element[0].element", "valuexx");
+	            	parameters.put("property1.propertyB.elements[0].key.propertyType2", "set");
+	            	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 	
-	            	parameters.put("property1.propertyC.element[0].key.propertyType3", "set");
-	            	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+	            	parameters.put("property1.propertyC.elements[0].key.propertyType3", "set");
+	            	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
 	            	
 	            }
 	
@@ -2583,23 +2583,23 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.propertyA.element[0].key.propertyType", "DECIMAL");
-	            	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].key.length", "1");
-	            	parameters.put("property1.propertyA.element[0].key.decimals", "2");
-	            	parameters.put("property1.propertyA.element[0].element", "valuex");
+	            	parameters.put("property1.propertyA.elements[0].key.propertyType", "DECIMAL");
+	            	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+	            	parameters.put("property1.propertyA.elements[0].key.length", "1");
+	            	parameters.put("property1.propertyA.elements[0].key.decimals", "2");
+	            	parameters.put("property1.propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("property1.propertyB.element[0].key.propertyType2", "DECIMAL");
-	            	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].key.length", "3");
-	            	parameters.put("property1.propertyB.element[0].key.decimals", "4");
-	            	parameters.put("property1.propertyB.element[0].element", "valuexx");
+	            	parameters.put("property1.propertyB.elements[0].key.propertyType2", "DECIMAL");
+	            	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+	            	parameters.put("property1.propertyB.elements[0].key.length", "3");
+	            	parameters.put("property1.propertyB.elements[0].key.decimals", "4");
+	            	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 	
-	            	parameters.put("property1.propertyC.element[0].key.propertyType3", "DECIMAL");
-	            	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].key.length", "5");
-	            	parameters.put("property1.propertyC.element[0].key.decimals", "6");
-	            	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+	            	parameters.put("property1.propertyC.elements[0].key.propertyType3", "DECIMAL");
+	            	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+	            	parameters.put("property1.propertyC.elements[0].key.length", "5");
+	            	parameters.put("property1.propertyC.elements[0].key.decimals", "6");
+	            	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
 	            	
 	            }
 	
@@ -2658,26 +2658,26 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.propertyA.element[0].key.propertyType", "SET");
-	            	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyA.element[0].element", "valuex");
+	            	parameters.put("property1.propertyA.elements[0].key.propertyType", "SET");
+	            	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("property1.propertyB.element[0].key.propertyType2", "SET");
-	            	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyB.element[0].element", "valuexx");
+	            	parameters.put("property1.propertyB.elements[0].key.propertyType2", "SET");
+	            	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 	
-	            	parameters.put("property1.propertyC.element[0].key.propertyType3", "SET");
-	            	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+	            	parameters.put("property1.propertyC.elements[0].key.propertyType3", "SET");
+	            	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
 	            	
 	            }
 	
@@ -2736,23 +2736,23 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.propertyA.element[0].key.propertyType", "0");
-	            	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].key.length", "1");
-	            	parameters.put("property1.propertyA.element[0].key.decimals", "2");
-	            	parameters.put("property1.propertyA.element[0].element", "valuex");
+	            	parameters.put("property1.propertyA.elements[0].key.propertyType", "0");
+	            	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+	            	parameters.put("property1.propertyA.elements[0].key.length", "1");
+	            	parameters.put("property1.propertyA.elements[0].key.decimals", "2");
+	            	parameters.put("property1.propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("property1.propertyB.element[0].key.propertyType2", "0");
-	            	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].key.length", "3");
-	            	parameters.put("property1.propertyB.element[0].key.decimals", "4");
-	            	parameters.put("property1.propertyB.element[0].element", "valuexx");
+	            	parameters.put("property1.propertyB.elements[0].key.propertyType2", "0");
+	            	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+	            	parameters.put("property1.propertyB.elements[0].key.length", "3");
+	            	parameters.put("property1.propertyB.elements[0].key.decimals", "4");
+	            	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 	
-	            	parameters.put("property1.propertyC.element[0].key.propertyType3", "0");
-	            	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].key.length", "5");
-	            	parameters.put("property1.propertyC.element[0].key.decimals", "6");
-	            	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+	            	parameters.put("property1.propertyC.elements[0].key.propertyType3", "0");
+	            	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+	            	parameters.put("property1.propertyC.elements[0].key.length", "5");
+	            	parameters.put("property1.propertyC.elements[0].key.decimals", "6");
+	            	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
 	            	
 	            }
 	
@@ -2811,26 +2811,26 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.propertyA.element[0].key.propertyType", "1");
-	            	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyA.element[0].element", "valuex");
+	            	parameters.put("property1.propertyA.elements[0].key.propertyType", "1");
+	            	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("property1.propertyB.element[0].key.propertyType2", "1");
-	            	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyB.element[0].element", "valuexx");
+	            	parameters.put("property1.propertyB.elements[0].key.propertyType2", "1");
+	            	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 	
-	            	parameters.put("property1.propertyC.element[0].key.propertyType3", "1");
-	            	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+	            	parameters.put("property1.propertyC.elements[0].key.propertyType3", "1");
+	            	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
 	            	
 	            }
 	
@@ -2889,23 +2889,23 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.propertyA.element[0].key.propertyType", "2015-01-01");
-	            	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].key.length", "1");
-	            	parameters.put("property1.propertyA.element[0].key.decimals", "2");
-	            	parameters.put("property1.propertyA.element[0].element", "valuex");
+	            	parameters.put("property1.propertyA.elements[0].key.propertyType", "2015-01-01");
+	            	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+	            	parameters.put("property1.propertyA.elements[0].key.length", "1");
+	            	parameters.put("property1.propertyA.elements[0].key.decimals", "2");
+	            	parameters.put("property1.propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("property1.propertyB.element[0].key.propertyType2", "2015-01-01");
-	            	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].key.length", "3");
-	            	parameters.put("property1.propertyB.element[0].key.decimals", "4");
-	            	parameters.put("property1.propertyB.element[0].element", "valuexx");
+	            	parameters.put("property1.propertyB.elements[0].key.propertyType2", "2015-01-01");
+	            	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+	            	parameters.put("property1.propertyB.elements[0].key.length", "3");
+	            	parameters.put("property1.propertyB.elements[0].key.decimals", "4");
+	            	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 	
-	            	parameters.put("property1.propertyC.element[0].key.propertyType3", "2015-01-01");
-	            	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].key.length", "5");
-	            	parameters.put("property1.propertyC.element[0].key.decimals", "6");
-	            	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+	            	parameters.put("property1.propertyC.elements[0].key.propertyType3", "2015-01-01");
+	            	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+	            	parameters.put("property1.propertyC.elements[0].key.length", "5");
+	            	parameters.put("property1.propertyC.elements[0].key.decimals", "6");
+	            	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
 	            	
 	            }
 	
@@ -2964,26 +2964,26 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.propertyA.element[0].key.propertyType", "2015-01-02");
-	            	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyA.element[0].element", "valuex");
+	            	parameters.put("property1.propertyA.elements[0].key.propertyType", "2015-01-02");
+	            	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("property1.propertyB.element[0].key.propertyType2", "2015-01-02");
-	            	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyB.element[0].element", "valuexx");
+	            	parameters.put("property1.propertyB.elements[0].key.propertyType2", "2015-01-02");
+	            	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 	
-	            	parameters.put("property1.propertyC.element[0].key.propertyType3", "2015-01-02");
-	            	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+	            	parameters.put("property1.propertyC.elements[0].key.propertyType3", "2015-01-02");
+	            	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
 	            	
 	            }
 	
@@ -3042,40 +3042,40 @@ public class AnyKeyCollectionTest extends TestCase{
 	            }
 	            
 	            public void prepareRequest(Map<String, String> parameters) {
-	            	parameters.put("property1.propertyA.element[0].key.propertyType", "set");
-	            	parameters.put("property1.propertyA.element[0].key.name", "propName1");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[0]", "VALUE1");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[1]", "VALUE2");
-	            	parameters.put("property1.propertyA.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyA.element[0].element", "valuex");
+	            	parameters.put("property1.propertyA.elements[0].key.propertyType", "set");
+	            	parameters.put("property1.propertyA.elements[0].key.name", "propName1");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[0]", "VALUE1");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[1]", "VALUE2");
+	            	parameters.put("property1.propertyA.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyA.elements[0].element", "valuex");
 	            	
-	            	parameters.put("property1.propertyB.element[0].key.propertyType2", "set");
-	            	parameters.put("property1.propertyB.element[0].key.name", "propName2");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[0]", "VALUE3");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[1]", "VALUE4");
-	            	parameters.put("property1.propertyB.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyB.element[0].element", "valuexx");
+	            	parameters.put("property1.propertyB.elements[0].key.propertyType2", "set");
+	            	parameters.put("property1.propertyB.elements[0].key.name", "propName2");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[0]", "VALUE3");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[1]", "VALUE4");
+	            	parameters.put("property1.propertyB.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyB.elements[0].element", "valuexx");
 	
-	            	parameters.put("property1.propertyC.element[0].key.propertyType3", "set");
-	            	parameters.put("property1.propertyC.element[0].key.name", "propName3");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[0]", "VALUE5");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[1]", "VALUE6");
-	            	parameters.put("property1.propertyC.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("property1.propertyC.element[0].element", "valuexxx");
+	            	parameters.put("property1.propertyC.elements[0].key.propertyType3", "set");
+	            	parameters.put("property1.propertyC.elements[0].key.name", "propName3");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[0]", "VALUE5");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[1]", "VALUE6");
+	            	parameters.put("property1.propertyC.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("property1.propertyC.elements[0].element", "valuexxx");
 
-	            	parameters.put("propertyD.element[0].key.propertyType4", "set");
-	            	parameters.put("propertyD.element[0].key.name", "propName4");
-	            	parameters.put("propertyD.element[0].key.values.element[0]", "VALUE7");
-	            	parameters.put("propertyD.element[0].key.values.element[1]", "VALUE8");
-	            	parameters.put("propertyD.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("propertyD.element[0].element", "valuexxxx");
+	            	parameters.put("propertyD.elements[0].key.propertyType4", "set");
+	            	parameters.put("propertyD.elements[0].key.name", "propName4");
+	            	parameters.put("propertyD.elements[0].key.values.element[0]", "VALUE7");
+	            	parameters.put("propertyD.elements[0].key.values.element[1]", "VALUE8");
+	            	parameters.put("propertyD.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("propertyD.elements[0].element", "valuexxxx");
 	            	
-	            	parameters.put("propertyE.element[0].key.propertyType5", "set");
-	            	parameters.put("propertyE.element[0].key.name", "propName5");
-	            	parameters.put("propertyE.element[0].key.values.element[0]", "VALUE9");
-	            	parameters.put("propertyE.element[0].key.values.element[1]", "VALUE10");
-	            	parameters.put("propertyE.element[0].key.values.element[3]", "VALUEX");
-	            	parameters.put("propertyE.element[0].element", "valuexxxxx");
+	            	parameters.put("propertyE.elements[0].key.propertyType5", "set");
+	            	parameters.put("propertyE.elements[0].key.name", "propName5");
+	            	parameters.put("propertyE.elements[0].key.values.element[0]", "VALUE9");
+	            	parameters.put("propertyE.elements[0].key.values.element[1]", "VALUE10");
+	            	parameters.put("propertyE.elements[0].key.values.element[3]", "VALUEX");
+	            	parameters.put("propertyE.elements[0].element", "valuexxxxx");
 	            }
 	
 	            public void checkResult(HttpServletRequest request, HttpServletResponse response, 

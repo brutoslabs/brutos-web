@@ -69,61 +69,61 @@ public class ParametersBuilder extends RestrictionBuilder {
 
 	public ParameterBuilder addParameter(String name, ScopeType scope,
 			String temporalProperty, Class<?> classType) {
-		return addParameter(name, scope, EnumerationType.ORDINAL,
+		return addParameter(name, scope, null,
 				temporalProperty, null, null, null, false, classType);
 	}
 
 	public ParameterBuilder addParameter(String name, ScopeType scope,
 			Type typeDef) {
-		return addParameter(name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
+		return addParameter(name, scope, null, null,
 				null, typeDef, null, false, typeDef.getClassType());
 	}
 
 	public ParameterBuilder addParameter(String name,
 			EnumerationType enumProperty, Class<?> classType) {
-		return addParameter(name, ScopeType.PARAM, enumProperty, null, null,
+		return addParameter(name, null, enumProperty, null, null,
 				null, null, false, classType);
 	}
 
 	public ParameterBuilder addParameter(String name, ScopeType scope,
 			Class<?> classType) {
-		return addParameter(name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
+		return addParameter(name, scope, null, null,
 				null, null, null, false, classType);
 	}
 
 	public ParameterBuilder addParameter(String name, String temporalProperty,
 			Class<?> classType) {
-		return addParameter(name, ScopeType.PARAM, EnumerationType.ORDINAL,
+		return addParameter(name, null, null,
 				temporalProperty, null, null, null, false, classType);
 	}
 
 	public ParameterBuilder addParameter(String name, Type typeDef) {
-		return addParameter(name, ScopeType.PARAM, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", null, typeDef, null, false,
+		return addParameter(name, null, null,
+				null, null, typeDef, null, false,
 				typeDef.getClassType());
 	}
 
 	public ParameterBuilder addParameterMapping(String mapping,
 			Class<?> classType) {
-		return addParameter(null, ScopeType.PARAM, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", mapping, null, null, false, classType);
+		return addParameter(null, null, null,
+				null, mapping, null, null, false, classType);
 	}
 
 	public ParameterBuilder addParameterMapping(String name, String mapping,
 			Class<?> classType) {
-		return addParameter(name, ScopeType.PARAM, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", mapping, null, null, false, classType);
+		return addParameter(name, null, null,
+				null, mapping, null, null, false, classType);
 	}
 
 	public ParameterBuilder addParameterMapping(String name, String mapping,
 			ScopeType scope, Class<?> classType) {
-		return addParameter(name, scope, EnumerationType.ORDINAL, "dd/MM/yyyy",
+		return addParameter(name, scope, null, null,
 				mapping, null, null, false, classType);
 	}
 
 	public ParameterBuilder addParameter(String name, Class<?> classType) {
-		return addParameter(name, ScopeType.PARAM, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", null, null, null, false, classType);
+		return addParameter(name, null, null,
+				null, null, null, null, false, classType);
 	}
 
 	public BeanBuilder buildParameter(Class<?> classType) {
@@ -168,8 +168,8 @@ public class ParametersBuilder extends RestrictionBuilder {
 	}
 
 	public ParameterBuilder addStaticParameter(Class<?> classType, Object value) {
-		return addParameter(null, ScopeType.PARAM, EnumerationType.ORDINAL,
-				"dd/MM/yyyy", null, null, value, false, classType);
+		return addParameter(null, null, null,
+				null, null, null, value, false, classType);
 	}
 
 	public ParameterBuilder addParameter(String name, ScopeType scope,
@@ -181,16 +181,15 @@ public class ParametersBuilder extends RestrictionBuilder {
 	}
 
 	public ParameterBuilder addGenericParameter(String name, Class<?> classType) {
-		return this.addParameter(name, BrutosConstants.DEFAULT_SCOPETYPE,
-				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, null, null,
+		return this.addParameter(name, null,
+				null, null, null, null, null,
 				false, true, classType);
 	}
 
 	public ParameterBuilder addGenericParameter(String name) {
-		return this.addParameter(name, BrutosConstants.DEFAULT_SCOPETYPE,
-				BrutosConstants.DEFAULT_ENUMERATIONTYPE,
-				BrutosConstants.DEFAULT_TEMPORALPROPERTY, null, null, null,
+		return this.addParameter(name, null,
+				null,
+				null, null, null, null,
 				false, true, null);
 	}
 
@@ -207,9 +206,11 @@ public class ParametersBuilder extends RestrictionBuilder {
 			String mapping, Type typeDef, Object value, boolean nullable,
 			boolean generic, Object classType) {
 
-		name = StringUtil.adjust(name);
-		temporalProperty = StringUtil.adjust(temporalProperty);
-		mapping = StringUtil.adjust(mapping);
+		name             = StringUtil.adjust(name);
+		enumProperty     = enumProperty == null? this.applicationContext.getEnumerationType() : enumProperty;
+		temporalProperty = StringUtil.isEmpty(temporalProperty)? this.applicationContext.getTemporalProperty() : temporalProperty;
+		scope            = scope == null? this.applicationContext.getScopeType() : scope;
+		mapping          = StringUtil.adjust(mapping);
 		Class<?> rawType = TypeUtil.getRawType(classType);
 
 		if (StringUtil.isEmpty(name)
