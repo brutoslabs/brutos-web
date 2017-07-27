@@ -9,8 +9,6 @@ import org.brandao.brutos.MutableMvcResponse;
 import org.brandao.brutos.MvcRequest;
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.ResourceAction;
-import org.brandao.brutos.StackRequestElement;
-import org.brandao.brutos.mapping.Action;
 
 public class InterceptorHandlerImp 
 	implements ConfigurableInterceptorHandler {
@@ -19,13 +17,13 @@ public class InterceptorHandlerImp
 
 	private MutableMvcResponse response;
 
-	private Object[] params;
+	//private Object[] params;
 	
 	public InterceptorHandlerImp(MutableMvcRequest request,
 			MutableMvcResponse response) {
 		this.request  = request;
 		this.response = response;
-		this.params   = null;
+		//this.params   = null;
 	}
 
 	public ResourceAction getResourceAction() {
@@ -51,6 +49,8 @@ public class InterceptorHandlerImp
 	public Object[] getParameters() throws InstantiationException,
 			IllegalAccessException, ParseException {
 		
+		return request.getParameters();
+		/*
 		this.params = request.getParameters();
 		
 		if (params == null) {
@@ -64,8 +64,9 @@ public class InterceptorHandlerImp
 						.getParameterValues(request.getResource(), stackRequestElement.getParameters());
 			}
 		}
-
+		
 		return this.params;
+		*/
 	}
 
 	public Object getResult() {
