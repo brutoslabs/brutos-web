@@ -1,7 +1,5 @@
 package org.brandao.brutos.annotation.helper.keycollection.app1;
 
-import java.io.IOException;
-
 import org.brandao.brutos.MvcResponse;
 import org.brandao.brutos.type.Type;
 
@@ -17,16 +15,11 @@ public class KeyCollectionBeanTest0Type implements Type{
 		}
 	}
 
-	public void show(MvcResponse response, Object value) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Class getClassType() {
+	public Class<?> getClassType() {
 		return KeyCollectionBeanTest0.class;
 	}
 
-	public void setClassType(Class value) {
+	public void setClassType(Class<?> value) {
 	}
 
 	public boolean isAlwaysRender() {
@@ -34,8 +27,12 @@ public class KeyCollectionBeanTest0Type implements Type{
 	}
 
 	public String toString(Object value) {
+		return (String)value;
+	}
+
+	public void show(MvcResponse response, Object value) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 }
