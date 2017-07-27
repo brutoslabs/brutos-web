@@ -13,6 +13,7 @@ import org.brandao.brutos.annotation.Transient;
 import org.brandao.brutos.annotation.helper.EnumTest;
 
 @Controller("/controller")
+@SuppressWarnings("rawtypes")
 public class ControllerKeyCollectionActionTest {
 
 	@Transient
@@ -145,7 +146,7 @@ public class ControllerKeyCollectionActionTest {
 	}
 
     
-	public void property10Action(@KeyCollection(mappingType=MappingTypes.COMPLEX) Map<KeyCollectionBeanTest0,String> property10) {
+	public void property10Action(@KeyCollection(bean="key", mappingType=MappingTypes.COMPLEX) Map<KeyCollectionBeanTest0,String> property10) {
 		this.property10 = property10;
 	}
 
@@ -153,7 +154,7 @@ public class ControllerKeyCollectionActionTest {
 		return property11;
 	}
 
-	public void property11Action(Map<KeyCollectionBeanTest0,String> property11) {
+	public void property11Action(@KeyCollection(bean="key") Map<KeyCollectionBeanTest0,String> property11) {
 		this.property11 = property11;
 	}
 
