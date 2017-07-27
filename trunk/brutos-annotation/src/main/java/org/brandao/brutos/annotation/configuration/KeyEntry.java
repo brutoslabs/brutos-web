@@ -63,7 +63,7 @@ public class KeyEntry implements BeanEntry {
 		this.genericType = genericType;
 		if (definition != null) {
 			this.name = StringUtil.adjust(definition.bean());
-			this.scopeType = StringUtil.isEmpty(definition.scope()) ? BrutosConstants.DEFAULT_SCOPETYPE
+			this.scopeType = StringUtil.isEmpty(definition.scope()) ? null
 					: ScopeType.valueOf(definition.scope());
 
 			this.mappingType = definition.mappingType();
@@ -80,7 +80,7 @@ public class KeyEntry implements BeanEntry {
 					: definition.type();
 		} else {
 			this.name = null;
-			this.scopeType = BrutosConstants.DEFAULT_SCOPETYPE;
+			this.scopeType = null;
 			this.mappingType = null;
 			this.target = null;
 			this.enumerated = EnumerationType

@@ -80,7 +80,7 @@ public class ElementEntry implements BeanEntry {
 					: definition.type();
 		} else {
 			this.name = null;
-			this.scopeType = BrutosConstants.DEFAULT_SCOPETYPE;
+			this.scopeType = null;
 			this.mappingType = null;
 			this.target = null;
 			this.enumerated = EnumerationType
