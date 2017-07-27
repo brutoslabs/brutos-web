@@ -120,23 +120,18 @@ public class WWWFormUrlEncodedBeanDecoder
 		return null;
 	}	
 
-	public Object getValue(MetaBean metaBean, String prefix, long index) {
-		String key;
+	public Object getValue(MetaBean entity, String prefix, long index) {
+		String newPrefix = 
+				this.getPerfixWithStartObject(
+					prefix, entity.getSeparator(), entity.getName());
 		
-		if(prefix == null){
-			key = metaBean.getName();
-		}
-		else{
-			key = prefix + metaBean.getName();
-		}
-		
-		Object metaValue = metaBean.getScope().get(key);
-		metaValue = metaBean.getType().convert(metaValue);
+		Object metaValue = entity.getScope().get(newPrefix);
+		metaValue = entity.getType().convert(metaValue);
 
 		if (metaValue == null)
 			return null;
 
-		DependencyBean bean = metaBean.getMetaValues().get(metaValue);
+		DependencyBean bean = entity.getMetaValues().get(metaValue);
 
 		if (bean == null){
 			throw new MappingException("bean not found: " + metaValue);
@@ -307,18 +302,9 @@ public class WWWFormUrlEncodedBeanDecoder
 		
 		Collection<Object> destValue = (Collection<Object>)this.getValueBean(entity, prefix, index);
 	
-		String newPrefix = null;
-		
-		if(StringUtil.isEmpty(prefix)){
-			newPrefix = e.getParameterName();
-		}
-		else
-		if(!prefix.endsWith(entity.getSeparator())){
-			newPrefix = prefix + entity.getSeparator() + e.getParameterName();
-		}
-		else{
-			newPrefix = prefix + e.getParameterName();
-		}
+		String newPrefix = 
+				this.getPerfixWithStartObject(
+					prefix, entity.getSeparator(), e.getParameterName());
 		
 		int max = entity.getMaxItens() + 1;
 		
@@ -437,18 +423,9 @@ public class WWWFormUrlEncodedBeanDecoder
 		Element e = (Element)entity.getCollection();
 		int max   = entity.getMaxItens() + 1;
 		
-		String newPrefix = null;
-		
-		if(StringUtil.isEmpty(prefix)){
-			newPrefix = e.getParameterName();
-		}
-		else
-		if(!prefix.endsWith(entity.getSeparator())){
-			newPrefix = prefix + entity.getSeparator() + e.getParameterName();
-		}
-		else{
-			newPrefix = prefix + e.getParameterName();
-		}
+		String newPrefix = 
+				this.getPerfixWithStartObject(
+					prefix, entity.getSeparator(), e.getParameterName());
 		
 		for(int i=0;i<max;i++){
 			String indexPrefix = 
@@ -460,7 +437,7 @@ public class WWWFormUrlEncodedBeanDecoder
 					entity.getSeparator() +
 					k.getParameterName();
 			
-			Object key = this.getValue(k, FetchType.EAGER, kPrefix, -1, true);
+			Object key = this.getValue(k, FetchType.EAGER, kPrefix, -1, false);
 			
 			if(key == null){
 				break;
@@ -471,7 +448,7 @@ public class WWWFormUrlEncodedBeanDecoder
 				entity.getSeparator() +
 				e.getParameterName();
 			
-			Object element = this.getValue(e, FetchType.EAGER, ePrefix, -1, true);
+			Object element = this.getValue(e, FetchType.EAGER, ePrefix, -1, false);
 			
 			destValue.put(key, element);
 		}
@@ -665,4 +642,16 @@ public class WWWFormUrlEncodedBeanDecoder
 		return prefix;
 	}
 
+	public String getPerfixWithStartObject(String prefix, String separator, String name){
+		if(StringUtil.isEmpty(prefix)){
+			return name;
+		}
+		else
+		if(!prefix.endsWith(separator)){
+			return prefix + separator + name;
+		}
+		else{
+			return prefix + name;
+		}
+	}
 }

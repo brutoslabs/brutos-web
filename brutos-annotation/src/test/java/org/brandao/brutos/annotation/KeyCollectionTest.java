@@ -9,7 +9,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.brandao.brutos.annotation.helper.EnumTest;
@@ -33,6 +32,7 @@ import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.test.BasicWebApplicationTester;
 import org.brandao.brutos.web.test.WebApplicationContextTester;
 
+@SuppressWarnings({"rawtypes","unchecked"})
 public class KeyCollectionTest extends TestCase{
     
 	private SimpleDateFormat sdf = new SimpleDateFormat("mm-dd-yyyy");
@@ -58,14 +58,13 @@ public class KeyCollectionTest extends TestCase{
                 }
                 
                 public void prepareRequest(Map<String, String> parameters) {
-                	parameters.put("arg0.key[0]", "0");
-                	parameters.put("arg0.key[1]", "1");
-                	parameters.put("arg0.key[3]", "3");
+                	parameters.put("arg0.element[0].key", "0");
+                	parameters.put("arg0.element[1].key", "1");
+                	parameters.put("arg0.element[3].key", "3");
                 	
-                	parameters.put("arg0.element[0]", "x0");
-                	parameters.put("arg0.element[1]", "x1");
-                	parameters.put("arg0.element[3]", "x3");
-                	
+                	parameters.put("arg0.element[0].element", "x0");
+                	parameters.put("arg0.element[1].element", "x1");
+                	parameters.put("arg0.element[3].element", "x3");
                 }
 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
@@ -84,6 +83,7 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void checkException(Throwable e) {
+                	e.printStackTrace();
                     fail(e.toString());
                 }
             },
@@ -385,7 +385,7 @@ public class KeyCollectionTest extends TestCase{
                 	parameters.put("arg0.element[3]", "x3");
                 }
                 
-                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+				public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
                 	ControllerKeyCollectionActionTest controller = 
@@ -824,7 +824,7 @@ public class KeyCollectionTest extends TestCase{
                 	parameters.put("property2.property5.key[1]", "1");
                 }
                 
-                public void checkResult(HttpServletRequest request, HttpServletResponse response, 
+				public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {
 
                 	ControllerKeyCollectionBeanTest controller = 
