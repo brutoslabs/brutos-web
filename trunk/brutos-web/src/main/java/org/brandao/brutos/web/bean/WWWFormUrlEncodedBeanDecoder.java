@@ -425,7 +425,7 @@ public class WWWFormUrlEncodedBeanDecoder
 		
 		String newPrefix = 
 				this.getPerfixWithStartObject(
-					prefix, entity.getSeparator(), e.getParameterName());
+					prefix, entity.getSeparator(), "elements");//e.getParameterName());
 		
 		for(int i=0;i<max;i++){
 			String indexPrefix = 
@@ -513,7 +513,7 @@ public class WWWFormUrlEncodedBeanDecoder
 				int endKeyName = key.indexOf(".", 1);
 				
 				if(endKeyName != -1){
-					key = key.substring(1, endKeyName - 1);
+					key = key.substring(1, endKeyName);
 				}
 				else{
 					key = key.substring(1);

@@ -311,7 +311,7 @@ public class Invoker {
 			this.parseRequest(request, response);
 		}
 		catch(Throwable e){
-			element.setObjectThrow(e);
+			request.setThrowable(e);
 		}
 
 		this.resolveTypes(request, response);
