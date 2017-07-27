@@ -1182,55 +1182,45 @@ public class KeyCollectionTest extends TestCase{
 
                 public void prepareRequest(Map<String, String> parameters) {
                 	
-                	parameters.put("property.key[0].subKey[0]", "1");
-                	parameters.put("property.key[0].subKey[1]", "2");
-                	parameters.put("property.key[0].subKey[2]", "3");
-                	parameters.put("property.key[0].element[0]", "x1");
-                	parameters.put("property.key[0].element[1]", "x2");
-                	parameters.put("property.key[0].element[2]", "x3");
-                	parameters.put("property.element[0]", "xx0");
-                	
-                	parameters.put("property.key[1].subKey[0]", "4");
-                	parameters.put("property.key[1].subKey[1]", "5");
-                	parameters.put("property.key[1].subKey[2]", "6");
-                	parameters.put("property.key[1].element[0]", "x4");
-                	parameters.put("property.key[1].element[1]", "x5");
-                	parameters.put("property.key[1].element[2]", "x6");
-                	parameters.put("property.element[1]", "xx1");
-                	
-                	parameters.put("property.key[2].subKey[0]", "7");
-                	parameters.put("property.key[2].subKey[1]", "8");
-                	parameters.put("property.key[2].subKey[3]", "9");
-                	parameters.put("property.key[2].element[0]", "x7");
-                	parameters.put("property.key[2].element[1]", "x8");
-                	parameters.put("property.key[2].element[3]", "x9");
-                	parameters.put("property.element[2]", "xx2");
+                	parameters.put("property.elements[0].key.elements[0].subKey", "1");
+                	parameters.put("property.elements[0].key.elements[1].subKey", "2");
+                	parameters.put("property.elements[0].key.elements[2].subKey", "3");
+                	parameters.put("property.elements[0].key.elements[0].element", "x1");
+                	parameters.put("property.elements[0].key.elements[1].element", "x2");
+                	parameters.put("property.elements[0].key.elements[2].element", "x3");
+                	parameters.put("property.elements[0].element", "xx0");
+
+                	parameters.put("property.elements[1].key.elements[0].subKey", "4");
+                	parameters.put("property.elements[1].key.elements[1].subKey", "5");
+                	parameters.put("property.elements[1].key.elements[2].subKey", "6");
+                	parameters.put("property.elements[1].key.elements[0].element", "x4");
+                	parameters.put("property.elements[1].key.elements[1].element", "x5");
+                	parameters.put("property.elements[1].key.elements[2].element", "x6");
+                	parameters.put("property.elements[1].element", "xx1");
+
+                	parameters.put("property.elements[2].key.elements[0].subKey", "7");
+                	parameters.put("property.elements[2].key.elements[1].subKey", "8");
+                	parameters.put("property.elements[2].key.elements[3].subKey", "9");
+                	parameters.put("property.elements[2].key.elements[0].element", "x7");
+                	parameters.put("property.elements[2].key.elements[1].element", "x8");
+                	parameters.put("property.elements[2].key.elements[3].element", "x9");
+                	parameters.put("property.elements[2].element", "xx2");
                 	
                 	//Property2
                 	
-                	parameters.put("property2.key[0].key[0]", "10");
-                	parameters.put("property2.key[0].key[1]", "11");
-                	parameters.put("property2.key[0].key[2]", "12");
-                	parameters.put("property2.key[0].element[0]", "x10");
-                	parameters.put("property2.key[0].element[1]", "x11");
-                	parameters.put("property2.key[0].element[2]", "x12");
-                	parameters.put("property2.element[0]", "xx3");
-                	
-                	parameters.put("property2.key[1].key[0]", "13");
-                	parameters.put("property2.key[1].key[1]", "14");
-                	parameters.put("property2.key[1].key[2]", "15");
-                	parameters.put("property2.key[1].element[0]", "x13");
-                	parameters.put("property2.key[1].element[1]", "x14");
-                	parameters.put("property2.key[1].element[2]", "x15");
-                	parameters.put("property2.element[1]", "xx4");
-                	
-                	parameters.put("property2.key[2].key[0]", "16");
-                	parameters.put("property2.key[2].key[1]", "17");
-                	parameters.put("property2.key[2].key[3]", "18");
-                	parameters.put("property2.key[2].element[0]", "x16");
-                	parameters.put("property2.key[2].element[1]", "x17");
-                	parameters.put("property2.key[2].element[3]", "x18");
-                	parameters.put("property2.element[2]", "xx5");
+                	parameters.put("property2.elements[0].key.10", "x10");
+                	parameters.put("property2.elements[0].key.11", "x11");
+                	parameters.put("property2.elements[0].key.12", "x12");
+                	parameters.put("property2.elements[0].element", "xx3");
+
+                	parameters.put("property2.elements[1].key.13", "x13");
+                	parameters.put("property2.elements[1].key.14", "x14");
+                	parameters.put("property2.elements[1].key.15", "x15");
+                	parameters.put("property2.elements[1].element", "xx4");
+
+                	parameters.put("property2.elements[2].key.16", "x16");
+                	parameters.put("property2.elements[2].key.17", "x17");
+                	parameters.put("property2.elements[2].element", "xx5");
                 }
 
                 public void prepareSession(Map<String, String> parameters) {
@@ -1289,6 +1279,7 @@ public class KeyCollectionTest extends TestCase{
                 }
 
                 public void checkException(Throwable e) {
+                	e.printStackTrace();
                     fail(e.toString());
                 }
             },
