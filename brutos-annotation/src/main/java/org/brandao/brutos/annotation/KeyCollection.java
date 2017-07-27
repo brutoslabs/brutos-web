@@ -55,7 +55,7 @@ public @interface KeyCollection {
 	 * Escopo da entidade. Os escopos estão descritos em {@link ScopeType}
 	 * 
 	 */
-	String scope() default "param";
+	String scope() default "";
 
 	/**
 	 * Tipo do mapeamento da entidade. Os tipos estão descritos em
