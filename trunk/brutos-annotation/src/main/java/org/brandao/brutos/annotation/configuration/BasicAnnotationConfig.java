@@ -45,6 +45,7 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 						.isAnnotationPresent(Transient.class));
 
 		applicable = applicable || source instanceof ConstructorArgEntry;
+		applicable = applicable || source instanceof ResultActionEntry;
 
 		return applicable;
 	}
