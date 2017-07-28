@@ -116,6 +116,12 @@ public class ParametersBuilder extends RestrictionBuilder {
 	}
 
 	public ParameterBuilder addParameterMapping(String name, String mapping,
+			Class<?> classType, FetchType fetchType) {
+		return this.addParameter(name, null, null, null, mapping, null, null, 
+				false, false, fetchType, classType);
+	}
+	
+	public ParameterBuilder addParameterMapping(String name, String mapping,
 			ScopeType scope, Class<?> classType) {
 		return addParameter(name, scope, null, null,
 				mapping, null, null, false, classType);

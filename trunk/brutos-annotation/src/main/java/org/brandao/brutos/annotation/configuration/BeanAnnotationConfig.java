@@ -280,7 +280,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 		builder.addParameterMapping(
 				actionParam.getName(),
 				beanBuilder != null ? beanBuilder.getName() : AnnotationUtil
-						.getBeanName(classType), classType);
+						.getBeanName(classType), classType, actionParam.getFetchType());
 
 		// BeanBuilder beanBuilder =
 		// builder.buildParameter(actionParam.getName(), classType);
