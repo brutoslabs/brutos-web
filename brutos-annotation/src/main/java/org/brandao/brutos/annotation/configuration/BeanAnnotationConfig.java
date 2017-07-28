@@ -332,7 +332,8 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 				source.getName(),
 				AnnotationUtil.getBeanName(source),
 				beanBuilder != null ? beanBuilder.getName() : AnnotationUtil
-						.getBeanName(classType));
+						.getBeanName(classType),
+				source.getFetchType());
 
 		if (beanBuilder != null) {
 			createBean(beanBuilder, componentRegistry, source.getGenericType(),
@@ -352,7 +353,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 				builder.getControllerBuilder(), classType);
 		builder.addMappedProperty(AnnotationUtil.getBeanName(source), source
 				.getName(), beanBuilder != null ? beanBuilder.getName()
-				: AnnotationUtil.getBeanName(classType));
+				: AnnotationUtil.getBeanName(classType), source.getFetchType());
 
 		// BeanBuilder beanBuilder =
 		// builder.buildProperty(source.getName(), classType);

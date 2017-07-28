@@ -489,6 +489,12 @@ public class ControllerBuilder {
 				null);
 	}
 
+	public PropertyBuilder addPropertyMapping(String propertyName, String id,
+			String mapping, FetchType fetchType) {
+		return this.addProperty(propertyName, id, null, null, null, 
+				mapping, null, false, false, null, fetchType, null);
+	}
+	
 	public PropertyBuilder addProperty(String propertyName, String id) {
 		return addProperty(propertyName, id, null,
 				null, null, null, null, false, null);

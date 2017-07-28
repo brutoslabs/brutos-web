@@ -31,7 +31,7 @@ public class BeanEntryProperty extends BeanPropertyAnnotationWrapper implements
 		super(value);
 	}
 
-	public Class getBeanType() {
+	public Class<?> getBeanType() {
 		return super.getType();
 	}
 

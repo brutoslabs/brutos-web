@@ -24,7 +24,7 @@ public class JsonBeanDecoderTest extends TestCase{
     public void testIntProperty() throws Throwable{
         WebApplicationContextTester.run(
             "/controller", 
-            new BasicWebApplicationTester() {
+            new LocalWebApplicationTester() {
 
                 public void prepareRequest(MockHttpServletRequest request){
                 	try{
@@ -38,9 +38,15 @@ public class JsonBeanDecoderTest extends TestCase{
 	                	request.setHeader("Accept", "*/*");
                 	}
                 	catch(Throwable ex){
+                		ex.printStackTrace();
                 		fail(ex.toString());
                 	}
                 }
+                
+            	public void checkException(Throwable e){
+            		e.printStackTrace();
+            		fail(e.toString());
+            	}
                 
                 public void checkResult(HttpServletRequest request, HttpServletResponse response, 
                         ServletContext context, ConfigurableWebApplicationContext applicationContext) {

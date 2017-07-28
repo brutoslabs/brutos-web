@@ -107,6 +107,12 @@ public class BeanBuilder {
 		return addProperty(name, propertyName, null, null, mapping, null, null, false, null);
 	}
 
+	public PropertyBuilder addMappedProperty(String name, String propertyName,
+			String mapping, FetchType fetchType) {
+		return this.addProperty(name, propertyName, null, null, 
+				mapping, null, null, false, false, null, fetchType, null);
+	}
+	
 	public PropertyBuilder addMappedProperty(String propertyName, String mapping) {
 		return addProperty(null, propertyName, null, null, mapping, null, null, false, null);
 	}
