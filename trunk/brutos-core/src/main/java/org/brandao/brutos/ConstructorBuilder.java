@@ -117,6 +117,12 @@ public class ConstructorBuilder extends RestrictionBuilder {
 				(Object) type);
 	}
 
+	public ConstructorArgBuilder addMappedContructorArg(String name,
+			String mapping, Class<?> type, FetchType fetchType) {
+		return this.addContructorArg(name, null, null, 
+				mapping, null, null, false, false, null, fetchType, null);
+	}
+	
 	public ConstructorArgBuilder addContructorArg(String name) {
 		return addContructorArg(name, null, null,
 				null, null, null, false, null, null);

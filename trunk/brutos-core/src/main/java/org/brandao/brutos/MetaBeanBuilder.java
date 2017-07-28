@@ -97,7 +97,7 @@ public class MetaBeanBuilder {
 
 		DependencyBean dependency = MappingBeanUtil.createMetaBeanValue(
 				enumProperty, temporalProperty, mapping, scope, null, false,
-				false, typeDef, type, this.metaBean, this.validatorFactory,
+				false, typeDef, type, this.metaBean, FetchType.EAGER, this.validatorFactory,
 				this.controller.controller);
 
 		Object metaValue = this.metaBean.getType().convert(value);

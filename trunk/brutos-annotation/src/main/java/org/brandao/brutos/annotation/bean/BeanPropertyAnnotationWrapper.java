@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.bean;
 import java.lang.annotation.Annotation;
 
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanPropertyWrapper;
 import org.brandao.brutos.type.Type;
@@ -63,6 +64,10 @@ public class BeanPropertyAnnotationWrapper extends BeanPropertyWrapper
 
 	public ScopeType getScope() {
 		return ((BeanPropertyAnnotation) super.beanProperty).getScope();
+	}
+
+	public FetchType getFetchType() {
+		return ((BeanPropertyAnnotation) super.beanProperty).getFetchType();
 	}
 
 }
