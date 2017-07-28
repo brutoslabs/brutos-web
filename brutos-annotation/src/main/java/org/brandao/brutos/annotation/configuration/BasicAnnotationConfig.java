@@ -237,7 +237,7 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 			if (builder instanceof BeanBuilder) {
 				return ((BeanBuilder) builder).addGenericProperty(name,
 						propertyName,
-						TypeUtil.getRawType(property.getGenericType()));
+						TypeUtil.getRawType(property.getGenericType()), fetchType);
 			} else {
 				return ((ControllerBuilder) builder).addGenericProperty(
 						propertyName, name,
@@ -245,9 +245,10 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 			}
 		} else {
 			if (builder instanceof BeanBuilder) {
-				return ((BeanBuilder) builder).addProperty(name, propertyName,
-						enumProperty, temporalProperty, null, scope, null,
-						false, property.getGenericType(), type);
+				return ((BeanBuilder) builder)
+						.addProperty(name, propertyName, enumProperty, 
+							temporalProperty, null, scope, null, false, 
+							property.getGenericType(), null, fetchType, type);
 			} else {
 				return ((ControllerBuilder) builder)
 						.addProperty(propertyName,
