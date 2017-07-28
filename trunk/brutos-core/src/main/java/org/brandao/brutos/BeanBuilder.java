@@ -460,18 +460,28 @@ public class BeanBuilder {
 			EnumerationType enumProperty, String temporalProperty,
 			String mapping, ScopeType scope, Object value, boolean nullable,
 			boolean generic, Object classType, Type type) {
+	
+		return this.addProperty(name, propertyName, enumProperty, 
+				temporalProperty, mapping, scope, value, nullable, generic, 
+				classType, null, type);
+	}
+	
+	public PropertyBuilder addProperty(String name, String propertyName,
+			EnumerationType enumProperty, String temporalProperty,
+			String mapping, ScopeType scope, Object value, boolean nullable,
+			boolean generic, Object classType, FetchType fetchType, Type type) {
 
 		name             = StringUtil.adjust(name);
 		name             = StringUtil.isEmpty(name) ? propertyName : name;
 		enumProperty     = enumProperty == null? this.applicationContext.getEnumerationType() : enumProperty;
 		temporalProperty = StringUtil.isEmpty(temporalProperty)? this.applicationContext.getTemporalProperty() : temporalProperty;
 		scope            = scope == null? this.applicationContext.getScopeType() : scope;
-		
+		fetchType        = fetchType == null? this.applicationContext.getFetchType() : fetchType;
 		
 		PropertyBean propertyBean = (PropertyBean) MappingBeanUtil
 				.createProperty(name, propertyName, enumProperty,
 						temporalProperty, mapping, scope, value, nullable,
-						generic, type, classType, this.mappingBean,
+						generic, type, classType, this.mappingBean, fetchType,
 						this.validatorFactory, this.controller);
 
 		getLogger().info(

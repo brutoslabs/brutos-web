@@ -21,6 +21,7 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Configuration;
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.bean.BeanInstance;
@@ -46,7 +47,7 @@ public final class MappingBeanUtil {
 			String propertyName, EnumerationType enumProperty,
 			String temporalProperty, String mapping, ScopeType scope,
 			Object value, boolean nullable, boolean generic, Type typeDef,
-			Object classType, Bean mappingBean,
+			Object classType, Bean mappingBean, FetchType fetchType,
 			ValidatorFactory validatorFactory, Controller controller) {
 
 		PropertyBean dependencyBean = new PropertyBean(mappingBean);
@@ -75,14 +76,14 @@ public final class MappingBeanUtil {
 
 		return createDependencyBean(name, enumProperty, temporalProperty,
 				mapping, scope, value, nullable, generic, typeDef, classType,
-				dependencyBean, mappingBean, validatorFactory, controller);
+				dependencyBean, mappingBean, fetchType, validatorFactory, controller);
 	}
 
 	public static DependencyBean createConstructorArg(String name,
 			EnumerationType enumProperty, String temporalProperty,
 			String mapping, ScopeType scope, Object value, boolean nullable,
 			boolean generic, Type typeDef, Object classType, Bean mappingBean,
-			ValidatorFactory validatorFactory, Controller controller) {
+			FetchType fetchType, ValidatorFactory validatorFactory, Controller controller) {
 
 		ConstructorArgBean dependencyBean = new ConstructorArgBean(mappingBean);
 
@@ -91,66 +92,66 @@ public final class MappingBeanUtil {
 
 		return createDependencyBean(name, enumProperty, temporalProperty,
 				mapping, scope, value, nullable, generic, typeDef, classType,
-				dependencyBean, mappingBean, validatorFactory, controller);
+				dependencyBean, mappingBean, fetchType, validatorFactory, controller);
 	}
 
 	public static DependencyBean createMetaBeanValue(
 			EnumerationType enumProperty, String temporalProperty,
 			String mapping, ScopeType scope, Object value, boolean nullable,
 			boolean generic, Type typeDef, Object classType, Bean mappingBean,
-			ValidatorFactory validatorFactory, Controller controller) {
+			FetchType fetchType, ValidatorFactory validatorFactory, Controller controller) {
 
 		ConstructorArgBean dependencyBean = new ConstructorArgBean(mappingBean);
 
 		return createDependencyBean(null, enumProperty, temporalProperty,
 				mapping, scope, value, nullable, generic, typeDef, classType,
-				dependencyBean, mappingBean, validatorFactory, controller);
+				dependencyBean, mappingBean, fetchType, validatorFactory, controller);
 	}
 
 	public static DependencyBean createDependencyBean(String name,
 			EnumerationType enumProperty, String temporalProperty,
 			String mapping, ScopeType scope, Object value, boolean nullable,
 			boolean generic, Type typeDef, Object classType, Bean mappingBean,
-			ValidatorFactory validatorFactory, Controller controller) {
+			FetchType fetchType, ValidatorFactory validatorFactory, Controller controller) {
 
 		InnerBean dependencyBean = new InnerBean(mappingBean);
 
 		return createDependencyBean(name, enumProperty, temporalProperty,
 				mapping, scope, value, nullable, generic, typeDef, classType,
-				dependencyBean, mappingBean, validatorFactory, controller);
+				dependencyBean, mappingBean, fetchType, validatorFactory, controller);
 	}
 
 	public static DependencyBean createElementBean(String name,
 			EnumerationType enumProperty, String temporalProperty,
 			String mapping, ScopeType scope, Object value, boolean nullable,
 			boolean generic, Type typeDef, Object classType, Bean mappingBean,
-			ValidatorFactory validatorFactory, Controller controller) {
+			FetchType fetchType, ValidatorFactory validatorFactory, Controller controller) {
 
 		Element dependencyBean = new Element(mappingBean);
 
 		return createDependencyBean(name, enumProperty, temporalProperty,
 				mapping, scope, value, nullable, generic, typeDef, classType,
-				dependencyBean, mappingBean, validatorFactory, controller);
+				dependencyBean, mappingBean, fetchType, validatorFactory, controller);
 	}
 
 	public static DependencyBean createKeyBean(String name,
 			EnumerationType enumProperty, String temporalProperty,
 			String mapping, ScopeType scope, Object value, boolean nullable,
 			boolean generic, Type typeDef, Object classType, Bean mappingBean,
-			ValidatorFactory validatorFactory, Controller controller) {
+			FetchType fetchType, ValidatorFactory validatorFactory, Controller controller) {
 
 		Key dependencyBean = new Key(mappingBean);
 
 		return createDependencyBean(name, enumProperty, temporalProperty,
 				mapping, scope, value, nullable, generic, typeDef, classType,
-				dependencyBean, mappingBean, validatorFactory, controller);
+				dependencyBean, mappingBean, fetchType, validatorFactory, controller);
 	}
 	
 	private static DependencyBean createDependencyBean(String name,
 			EnumerationType enumProperty, String temporalProperty,
 			String mapping, ScopeType scope, Object value, boolean nullable,
 			boolean generic, Type typeDef, Object classType,
-			DependencyBean dependencyBean, Bean mappingBean,
+			DependencyBean dependencyBean, Bean mappingBean, FetchType fetchType,
 			ValidatorFactory validatorFactory, Controller controller) {
 
 		name = StringUtil.adjust(name);
