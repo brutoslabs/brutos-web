@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.bean;
 import java.lang.annotation.Annotation;
 
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.bean.BeanProperty;
 
@@ -34,6 +35,8 @@ public interface BeanPropertyAnnotation extends BeanProperty {
 	boolean isAnnotationPresent(Class<? extends Annotation> annotation);
 
 	org.brandao.brutos.type.Type getTypeInstance();
+	
+	FetchType getFetchType();
 	
 	String getTemporalProperty();
 	

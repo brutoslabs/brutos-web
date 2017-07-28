@@ -532,6 +532,15 @@ public class ControllerBuilder {
 			ScopeType scope, EnumerationType enumProperty,
 			String temporalProperty, String mapping, Object value,
 			boolean nullable, boolean generic, Object classType, Type type) {
+		
+		return this.addProperty(propertyName, id, scope, enumProperty, 
+				temporalProperty, mapping, value, nullable, null, type);
+	}
+	
+	public PropertyBuilder addProperty(String propertyName, String id,
+			ScopeType scope, EnumerationType enumProperty,
+			String temporalProperty, String mapping, Object value,
+			boolean nullable, boolean generic, Object classType, FetchType fetchType, Type type) {
 
 		propertyName = StringUtil.adjust(propertyName);
 		
@@ -550,6 +559,10 @@ public class ControllerBuilder {
 		enumProperty = enumProperty == null?
 				this.applicationContext.getEnumerationType() :
 				enumProperty;
+				
+		fetchType = fetchType == null?
+				this.applicationContext.getFetchType() :
+				fetchType;
 				
 		mapping = StringUtil.adjust(mapping);
 		
