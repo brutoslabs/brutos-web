@@ -510,9 +510,15 @@ public class ControllerBuilder {
 	public PropertyBuilder addGenericProperty(String propertyName, String id,
 			Class<?> classType) {
 		return this.addProperty(propertyName, id,
-				null, null, null, null, null, false, true, classType, null);
+				null, null, null, null, null, false, true, classType, null, null);
 	}
 
+	public PropertyBuilder addGenericProperty(String propertyName, String id,
+			Class<?> classType, FetchType fetchType) {
+		return this.addProperty(propertyName, id,
+				null, null, null, null, null, false, true, classType, fetchType, null);
+	}
+	
 	public PropertyBuilder addGenericProperty(String propertyName, String id) {
 		return this.addProperty(propertyName, id,
 				null, null, null, null, null, false,
@@ -532,7 +538,6 @@ public class ControllerBuilder {
 			ScopeType scope, EnumerationType enumProperty,
 			String temporalProperty, String mapping, Object value,
 			boolean nullable, boolean generic, Object classType, Type type) {
-		
 		return this.addProperty(propertyName, id, scope, enumProperty, 
 				temporalProperty, mapping, value, nullable, null, type);
 	}
@@ -588,6 +593,7 @@ public class ControllerBuilder {
 
 		PropertyController property = new PropertyController();
 		property.setName(id);
+		property.setFetchType(fetchType);
 		property.setScopeType(scope);
 		property.setValidate(this.validatorFactory
 				.getValidator(new Configuration()));

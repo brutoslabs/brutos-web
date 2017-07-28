@@ -241,7 +241,7 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 			} else {
 				return ((ControllerBuilder) builder).addGenericProperty(
 						propertyName, name,
-						TypeUtil.getRawType(property.getGenericType()));
+						TypeUtil.getRawType(property.getGenericType()), fetchType);
 			}
 		} else {
 			if (builder instanceof BeanBuilder) {
