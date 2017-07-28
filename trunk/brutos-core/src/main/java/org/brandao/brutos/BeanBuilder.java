@@ -213,7 +213,7 @@ public class BeanBuilder {
 		
 		DependencyBean key = MappingBeanUtil.createKeyBean(name,
 				enumProperty, temporalProperty, mapping, scope, value, false,
-				generic, typeDef, type, this.mappingBean,
+				generic, typeDef, type, this.mappingBean, FetchType.EAGER,
 				this.validatorFactory, this.controller);
 
 		((MapBean) mappingBean).setKey(key);
@@ -370,7 +370,7 @@ public class BeanBuilder {
 		
 		DependencyBean collection = MappingBeanUtil.createElementBean(name,
 				enumProperty, temporalProperty, mapping, scope, value,
-				nullable, generic, typeDef, type, this.mappingBean,
+				nullable, generic, typeDef, type, this.mappingBean, FetchType.EAGER,
 				this.validatorFactory, this.controller);
 
 		((CollectionBean) mappingBean).setCollection(collection);
@@ -442,6 +442,12 @@ public class BeanBuilder {
 				null, false, true, classType, null);
 	}
 
+	public PropertyBuilder addGenericProperty(String name, String propertyName,
+			Class<?> classType, FetchType fetchType) {
+		return this.addProperty(propertyName, propertyName, null, 
+				null, null, null, null, false, true, classType, fetchType, null);
+	}
+	
 	public PropertyBuilder addGenericProperty(String name, String propertyName) {
 		return this.addProperty(name, propertyName, null, null, null, null, null, 
 				false, true, null, null);
