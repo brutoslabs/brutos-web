@@ -75,6 +75,24 @@ public class PropertyBuilder extends RestrictionBuilder implements
 		return super.setMessage(message);
 	}
 
+	public void setFetchType(FetchType value){
+		if(this.propertyBean instanceof PropertyBean){
+			((PropertyBean)this.propertyBean).setFetchType(value);
+		}
+		else{
+			((PropertyController)this.propertyBean).setFetchType(value);
+		}
+	}
+	
+	public FetchType getFetchType(){
+		if(this.propertyBean instanceof PropertyBean){
+			return ((PropertyBean)this.propertyBean).getFetchType();
+		}
+		else{
+			return ((PropertyController)this.propertyBean).getFetchType();
+		}
+	}
+	
 	public MetaBeanBuilder buildMetaBean(String name, Class<?> classType) {
 		return this.buildMetaBean(name, ScopeType.PARAM,
 				BrutosConstants.DEFAULT_ENUMERATIONTYPE,

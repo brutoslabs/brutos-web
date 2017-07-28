@@ -21,6 +21,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 import org.brandao.brutos.EnumerationType;
+import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.DetachedName;
@@ -145,6 +146,11 @@ public class ConstructorArgEntry {
 
 	public org.brandao.brutos.type.Type getTypeInstance(){
 		return AnnotationUtil.getTypeInstance(this.getAnnotation(org.brandao.brutos.annotation.Type.class));
+	}
+
+	public FetchType getFetchType(){
+		Basic basic = this.getAnnotation(Basic.class);
+		return basic == null? null : FetchType.valueOf(basic.fetchType().name().toLowerCase());
 	}
 	
 	public String getTemporalProperty(){
