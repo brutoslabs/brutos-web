@@ -186,6 +186,12 @@ public class ParametersBuilder extends RestrictionBuilder {
 				false, true, classType);
 	}
 
+	public ParameterBuilder addGenericParameter(String name, Class<?> classType, FetchType fetchType) {
+		return this.addParameter(name, null,
+				null, null, null, null, null,
+				false, true, fetchType, classType);
+	}
+	
 	public ParameterBuilder addGenericParameter(String name) {
 		return this.addParameter(name, null,
 				null,
@@ -205,12 +211,23 @@ public class ParametersBuilder extends RestrictionBuilder {
 			EnumerationType enumProperty, String temporalProperty,
 			String mapping, Type typeDef, Object value, boolean nullable,
 			boolean generic, Object classType) {
+		
+		return this.addParameter(name, scope, enumProperty, temporalProperty, 
+				mapping, typeDef, value, nullable, generic, null, classType);
+	}
+	
+	public ParameterBuilder addParameter(String name, ScopeType scope,
+			EnumerationType enumProperty, String temporalProperty,
+			String mapping, Type typeDef, Object value, boolean nullable,
+			boolean generic, FetchType fetchType, Object classType) {
 
 		name             = StringUtil.adjust(name);
 		enumProperty     = enumProperty == null? this.applicationContext.getEnumerationType() : enumProperty;
 		temporalProperty = StringUtil.isEmpty(temporalProperty)? this.applicationContext.getTemporalProperty() : temporalProperty;
 		scope            = scope == null? this.applicationContext.getScopeType() : scope;
 		mapping          = StringUtil.adjust(mapping);
+		fetchType        = fetchType == null? this.applicationContext.getFetchType() : fetchType;
+		
 		Class<?> rawType = TypeUtil.getRawType(classType);
 
 		if (StringUtil.isEmpty(name)

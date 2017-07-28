@@ -200,14 +200,14 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 		EnumerationType enumProperty      = source.getEnumProperty();
 		String temporalProperty           = source.getTemporalProperty();
 		org.brandao.brutos.type.Type type = source.getTypeInstance();
+		FetchType fetchType               = source.getFetchType();
 
 		if (source.isAnnotationPresent(Any.class)) {
 			return builder.addGenericContructorArg(name,
-					TypeUtil.getRawType(source.getGenericType()));
+					TypeUtil.getRawType(source.getGenericType()), fetchType);
 		} else {
-			return builder.addContructorArg(name, enumProperty,
-					temporalProperty, null, scope, null, false, false, type,
-					source.getGenericType());
+			return builder.addContructorArg(name, enumProperty, temporalProperty, 
+					null, scope, null, false, false, source.getGenericType(), fetchType);
 		}
 
 	}
@@ -288,15 +288,15 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 		EnumerationType enumProperty      = source.getEnumProperty();
 		String temporalProperty           = source.getTemporalProperty();
 		org.brandao.brutos.type.Type type = source.getTypeInstance();
+		FetchType fetchType               = source.getFetchType();
 
 		if (source.isAnnotationPresent(Any.class)) {
 			return builder.addGenericParameter(name,
-					TypeUtil.getRawType(source.getGenericType()));
+					TypeUtil.getRawType(source.getGenericType()), fetchType);
 		}
 		else{
-			return builder.addParameter(name, scope, enumProperty,
-					temporalProperty, null, type, null, false,
-					source.getGenericType());
+			return builder.addParameter(name, scope, enumProperty, temporalProperty, 
+					null, type, null, false, false, fetchType, source.getGenericType());
 		}
 		
 	}
