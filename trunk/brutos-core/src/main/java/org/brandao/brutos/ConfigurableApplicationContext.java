@@ -63,6 +63,8 @@ public interface ConfigurableApplicationContext extends ApplicationContext {
 	
 	void setSeparator(String value);
     
+	void setFetchType(FetchType value);
+	
 	void setInvoker(Invoker value);
 
 	void setConfiguration(Properties config);

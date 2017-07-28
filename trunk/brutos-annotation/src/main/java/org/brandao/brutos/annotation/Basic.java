@@ -101,6 +101,8 @@ public @interface Basic {
 	 */
 	String scope() default ScopeType.PARAM;
 
+	FetchTypes fetchType() default FetchTypes.EAGER;
+	
 	/**
 	 * Tipo do mapeamento da entidade. Os tipos estão descritos em
 	 * {@link MappingTypes}

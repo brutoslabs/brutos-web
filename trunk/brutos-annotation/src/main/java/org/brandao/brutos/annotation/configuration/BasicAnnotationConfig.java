@@ -24,6 +24,7 @@ import org.brandao.brutos.*;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.annotation.*;
 import org.brandao.brutos.annotation.bean.BeanPropertyAnnotation;
+import org.brandao.brutos.type.Type;
 import org.brandao.brutos.type.TypeFactory;
 import org.brandao.brutos.type.TypeUtil;
 
@@ -230,6 +231,7 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 		EnumerationType enumProperty      = property.getEnumProperty();
 		String temporalProperty           = property.getTemporalProperty();
 		org.brandao.brutos.type.Type type = property.getTypeInstance();
+		FetchType fetchType               = property.getFetchType();
 
 		if (property.isAnnotationPresent(Any.class)) {
 			if (builder instanceof BeanBuilder) {
@@ -247,9 +249,10 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 						enumProperty, temporalProperty, null, scope, null,
 						false, property.getGenericType(), type);
 			} else {
-				return ((ControllerBuilder) builder).addProperty(propertyName,
+				return ((ControllerBuilder) builder)
+						.addProperty(propertyName,
 						name, scope, enumProperty, temporalProperty, null,
-						null, false, property.getGenericType(), type);
+						null, false, property.getGenericType(), null, fetchType, type);
 			}
 		}
 

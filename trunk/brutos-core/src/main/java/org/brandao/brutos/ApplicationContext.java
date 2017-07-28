@@ -49,6 +49,8 @@ public interface ApplicationContext {
 	
     ScopeType getScopeType();
 	
+    FetchType getFetchType();
+    
 	String getViewPrefix();
 
 	String getViewSuffix();

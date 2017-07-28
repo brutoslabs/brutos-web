@@ -89,6 +89,8 @@ public interface BrutosConstants {
 
 	final EnumerationType DEFAULT_ENUMERATIONTYPE = EnumerationType.ORDINAL;
 
+	final String FETCH_TYPE = "org.brandao.brutos.fetch_type";
+	
 	final String ACTION_TYPE = "org.brandao.brutos.action_strategy";
 
 	final String CONTROLLER_MANAGER_CLASS = "org.brandao.brutos.manager.controller";
@@ -170,6 +172,8 @@ public interface BrutosConstants {
 
 	final String DEFAULT_ACTION_TYPE_NAME = "parameter";
 
+	final String DEFAULT_FETCH_TYPE_NAME = "eager";
+	
 	final String DEFAULT_ACTION_PARAMETER_NAME = "invoke";
 	
 	final String DEFAULT_SEPARATOR = "-";

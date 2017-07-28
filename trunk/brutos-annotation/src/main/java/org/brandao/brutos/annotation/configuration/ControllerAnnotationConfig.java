@@ -200,7 +200,6 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 				null, view);
 	}
 
-	@SuppressWarnings("unchecked")
 	protected void addProperties(ControllerBuilder controllerBuilder,
 			ComponentRegistry componentRegistry, Class<?> clazz) {
 

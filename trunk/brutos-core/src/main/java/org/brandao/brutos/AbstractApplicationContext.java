@@ -92,6 +92,8 @@ public abstract class AbstractApplicationContext
     protected String actionParameterName;
 	
     protected ActionType actionType;
+
+    protected FetchType fetchType;
     
 	public AbstractApplicationContext() {
 		this(null);
@@ -132,6 +134,7 @@ public abstract class AbstractApplicationContext
 		this.automaticViewResolver          = this.getInitAutomaticViewResolver();
 		this.actionParameterName            = this.getInitActionParameterName();
 		this.actionType                     = this.getInitActionType();
+		this.fetchType                      = this.getInitFetchType();
 		this.invoker						= this.getNewInvoker();
 	}
 
@@ -645,6 +648,20 @@ public abstract class AbstractApplicationContext
         }
     }
     
+    protected FetchType getInitFetchType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.FETCH_TYPE,
+            		BrutosConstants.DEFAULT_FETCH_TYPE_NAME);
+
+            return FetchType.valueOf(value);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }    
 	public void destroy() {
 		this.objectFactory.destroy();
 		this.codeGenerator.destroy();
@@ -837,6 +854,10 @@ public abstract class AbstractApplicationContext
 		return this.interceptorManager;
 	}
 
+	public FetchType getFetchType(){
+		return this.fetchType;
+	}
+	
 	public ControllerManager getControllerManager() {
 		return this.controllerManager;
 	}
@@ -861,6 +882,10 @@ public abstract class AbstractApplicationContext
 		this.codeGenerator = codeGenerator;
 	}
 
+	public void setFetchType(FetchType value){
+		this.fetchType = value;
+	}
+	
 	public ViewResolver getViewResolver() {
 		return viewResolver;
 	}
