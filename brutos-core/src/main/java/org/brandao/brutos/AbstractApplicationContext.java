@@ -122,8 +122,8 @@ public abstract class AbstractApplicationContext
 		this.viewResolver 					= this.getNewViewResolver();
 		this.controllerManager 				= this.getNewControllerManager();
 		this.renderView 					= this.getNewRenderView();
-		this.requestParser                  = this.getInitRequestParser();
 		this.codeGenerator 					= this.getNewCodeGenerator();
+		this.requestParser                  = this.getInitRequestParser();
 		this.typeManager 					= this.getNewTypeManager();
 		this.requestParserListenerFactory	= this.getRequestParserListenerFactory();
 		this.dispatcherType                 = this.getInitDispatcherType();
@@ -448,6 +448,7 @@ public abstract class AbstractApplicationContext
             ConfigurableRequestParser instance =
             		(ConfigurableRequestParser)ClassUtil.getInstance(ulfClass);
             instance.setDefaultParserType(this.getInitRequestType());
+            instance.setCodeGenerator(this.codeGenerator);
             return instance;
         }
         catch( Exception e ){

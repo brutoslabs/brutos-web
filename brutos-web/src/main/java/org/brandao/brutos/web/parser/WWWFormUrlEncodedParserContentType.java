@@ -20,9 +20,11 @@ package org.brandao.brutos.web.parser;
 import java.util.Properties;
 
 import org.brandao.brutos.AbstractParserContentType;
+import org.brandao.brutos.CodeGenerator;
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.MutableRequestParserEvent;
 import org.brandao.brutos.RequestParserException;
+import org.brandao.brutos.mapping.BeanDecoder;
 import org.brandao.brutos.web.bean.WWWFormUrlEncodedBeanDecoder;
 
 /**
@@ -34,16 +36,15 @@ public class WWWFormUrlEncodedParserContentType
 	extends AbstractParserContentType{
 	
 	
-	public WWWFormUrlEncodedParserContentType(){
-		super.beanDecoder = new WWWFormUrlEncodedBeanDecoder();
-	}
-	
 	public void parserContentType(MutableMvcRequest request,
-			MutableRequestParserEvent requestParserInfo, Properties config)
+			MutableRequestParserEvent requestParserInfo, 
+			CodeGenerator codeGenerator, Properties config)
 			throws RequestParserException {
 	
         try{
-            super.parser(request, requestParserInfo, config, null);
+        	BeanDecoder beanDecoder = new WWWFormUrlEncodedBeanDecoder();
+        	beanDecoder.setCodeGenerator(codeGenerator);
+            super.parser(request, requestParserInfo, beanDecoder, config, null);
         }
         catch(Throwable e){
         	throw new org.brandao.brutos.RequestParserException(e);

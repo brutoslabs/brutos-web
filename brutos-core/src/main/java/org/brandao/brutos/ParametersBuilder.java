@@ -252,6 +252,7 @@ public class ParametersBuilder extends RestrictionBuilder {
 		ParameterAction parameter = new ParameterAction(this.action);
 
 		parameter.setName(name);
+		parameter.setFetchType(fetchType);
 		parameter.setScopeType(scope);
 		parameter.setValidate(this.validatorFactory
 				.getValidator(validatorConfig));
