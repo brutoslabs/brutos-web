@@ -13,11 +13,9 @@ import org.brandao.brutos.mapping.PropertyController;
 
 public abstract class AbstractParserContentType implements ParserContentType{
 
-	protected BeanDecoder beanDecoder;
-	
 	public void parser(MutableMvcRequest request,
 			MutableRequestParserEvent requestParserInfo, 
-			Properties config, Object data) throws BeanDecoderException, 
+			BeanDecoder beanDecoder, Properties config, Object data) throws BeanDecoderException, 
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
         ResourceAction resourceAction = request.getResourceAction();
@@ -32,7 +30,7 @@ public abstract class AbstractParserContentType implements ParserContentType{
         		continue;
         	}
         	
-        	Object propValue = prop.decode(this.beanDecoder, data);
+        	Object propValue = prop.decode(beanDecoder, data);
         	prop.setValueInSource(resource, propValue);
         }
         
@@ -41,7 +39,7 @@ public abstract class AbstractParserContentType implements ParserContentType{
         	Object[] args = new Object[actionArgs.size()];
         	int index     = 0; 
         	for(ParameterAction arg: actionArgs){
-        		args[index++] = arg.decode(this.beanDecoder, data);
+        		args[index++] = arg.decode(beanDecoder, data);
         	}
 	        request.setParameters(args);
         }

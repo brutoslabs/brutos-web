@@ -32,12 +32,15 @@ public abstract class AbstractRequestParser
 
 	protected DataType defaultDataType;
 	
+	protected CodeGenerator codeGenerator;
+	
 	public AbstractRequestParser(){
 		this.parsers = new HashMap<DataType, ParserContentType>();
 	}
 	
 	public void parserContentType(MutableMvcRequest request, DataType dataType,
-			Properties config, MutableRequestParserEvent requestParserInfo)
+			Properties config, MutableRequestParserEvent requestParserInfo,
+			CodeGenerator codeGenerator)
 			throws RequestParserException {
 		
 		if(dataType == null){
@@ -50,8 +53,7 @@ public abstract class AbstractRequestParser
 			throw new RequestParserException("not found: " + dataType.getName());
 		}
 		
-		parser.parserContentType(request, requestParserInfo, config);
-		
+		parser.parserContentType(request, requestParserInfo, this.codeGenerator, config);
 	}
 	
 	public synchronized void registryParser(DataType dataType, 
@@ -85,5 +87,13 @@ public abstract class AbstractRequestParser
 	public DataType getDefaultParserType() throws RequestParserException{
 		return this.defaultDataType;
 	}
-		
+
+	public void setCodeGenerator(CodeGenerator value){
+		this.codeGenerator = value;
+	}
+
+	public CodeGenerator getCodeGenerator(){
+		return this.codeGenerator;
+	}
+	
 }

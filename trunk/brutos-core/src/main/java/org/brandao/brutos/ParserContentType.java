@@ -27,6 +27,7 @@ import java.util.Properties;
 public interface ParserContentType {
 
     void parserContentType(MutableMvcRequest request, 
-    		MutableRequestParserEvent requestParserInfo, Properties config) throws RequestParserException;
+    		MutableRequestParserEvent requestParserInfo, 
+			CodeGenerator codeGenerator, Properties config) throws RequestParserException;
 	
 }

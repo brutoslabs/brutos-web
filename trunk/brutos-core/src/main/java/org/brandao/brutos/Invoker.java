@@ -58,6 +58,16 @@ public class Invoker {
 	
 	protected RequestParserListener requestParserListener;
 	
+	protected CodeGenerator codeGenerator;
+	
+	public CodeGenerator getCodeGenerator() {
+		return codeGenerator;
+	}
+
+	public void setCodeGenerator(CodeGenerator codeGenerator) {
+		this.codeGenerator = codeGenerator;
+	}
+
 	public ObjectFactory getObjectFactory() {
 		return objectFactory;
 	}
@@ -155,26 +165,20 @@ public class Invoker {
 	}
 	
 	protected void parseRequest(MutableMvcRequest request, MutableMvcResponse response){
+		MutableRequestParserEvent event = new MutableRequestParserEventImp();
+		event.setRequest(request);
+		event.setResponse(response);
+		
 		try{
-			currentApp.set(this.applicationContext);
-			
-			MutableRequestParserEvent event = new MutableRequestParserEventImp();
-			event.setRequest(request);
-			event.setResponse(response);
-			
-			try{
-				this.requestParserListener.started(event);
-				this.requestParser.parserContentType(request, 
-						request.getType(), 
-						this.applicationContext.getConfiguration(), event);
-			}
-			finally{
-				this.requestParserListener.finished(event);
-			}
+			this.requestParserListener.started(event);
+			this.requestParser.parserContentType(request, 
+					request.getType(), 
+					this.applicationContext.getConfiguration(), event, 
+					this.codeGenerator);
 		}
 		finally{
-			currentApp.remove();
-		}		
+			this.requestParserListener.finished(event);
+		}
 	}
 	
 	protected void updateRequest(MutableMvcRequest request, Controller controller, Object resource) 
@@ -266,6 +270,8 @@ public class Invoker {
 		MvcResponse oldresponse       = null;
 		
 		try{
+			currentApp.set(this.applicationContext);
+			
 			StackRequestElement element = createStackRequestElement();
 			oldRequest                  = RequestProvider.init(request);
 			oldresponse                 = ResponseProvider.init(response);
@@ -293,6 +299,8 @@ public class Invoker {
 			if(pushStackRequest){
 				stackRequest.pop();
 			}
+			
+			currentApp.remove();			
 		}
 	}
 

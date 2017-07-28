@@ -36,5 +36,9 @@ public interface ConfigurableRequestParser
 			throws RequestParserException;
 
 	DataType getDefaultParserType() throws RequestParserException;
+
+	void setCodeGenerator(CodeGenerator value);
+
+	CodeGenerator getCodeGenerator();
 	
 }

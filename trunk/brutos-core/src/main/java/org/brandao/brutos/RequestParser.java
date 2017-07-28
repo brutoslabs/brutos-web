@@ -28,6 +28,7 @@ public interface RequestParser {
 
     void parserContentType(MutableMvcRequest request, 
     		DataType dataType, Properties config,
-    		MutableRequestParserEvent requestParserInfo) throws RequestParserException;
+    		MutableRequestParserEvent requestParserInfo,
+    		CodeGenerator codeGenerator) throws RequestParserException;
 	
 }

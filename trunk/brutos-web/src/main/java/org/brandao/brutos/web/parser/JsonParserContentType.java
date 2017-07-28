@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.brandao.brutos.AbstractParserContentType;
+import org.brandao.brutos.CodeGenerator;
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.MutableRequestParserEvent;
 import org.brandao.brutos.web.bean.JsonBeanDecoder;
@@ -34,14 +35,10 @@ import org.brandao.jbrgates.JSONDecoder;
  */
 public class JsonParserContentType extends AbstractParserContentType{
 
-	public JsonParserContentType(){
-		super.beanDecoder = new JsonBeanDecoder();
-	}
-	
 	@SuppressWarnings("unchecked")
 	public void parserContentType(MutableMvcRequest request, 
     		MutableRequestParserEvent requestParserInfo, 
-    		Properties config) throws org.brandao.brutos.RequestParserException {
+    		CodeGenerator codeGenerator, Properties config) throws org.brandao.brutos.RequestParserException {
 		
 		try{
 			InputStream stream = request.getStream();
@@ -55,7 +52,9 @@ public class JsonParserContentType extends AbstractParserContentType{
 	            }
 	        }
 	        
-	        super.parser(request, requestParserInfo, config, data);
+	        JsonBeanDecoder beanDecoder = new JsonBeanDecoder();
+	        beanDecoder.setCodeGenerator(codeGenerator);
+	        super.parser(request, requestParserInfo, beanDecoder, config, data);
 		}
 		catch(Throwable e){
 			throw new org.brandao.brutos.RequestParserException(e);

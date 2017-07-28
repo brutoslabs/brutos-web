@@ -37,30 +37,28 @@ public abstract class BeanHandlerImp implements ActionHandler {
 	
 	private volatile Object value;
 	
-	private volatile boolean loaded;
-	
 	private BeanDecoder decoder;
 	
 	public BeanHandlerImp(Object metadata, Object data, 
 			BeanDecoder decoder) {
 		this.metadata = metadata;
 		this.decoder  = decoder;
-		this.loaded   = false;
+		this.value    = null;
 	}
 
 	public Object invoke(Object self, Method thisMethod, Method proceed,
 			Object[] args) throws Throwable {
 		
-		if(this.loaded){
+		if(this.value == null){
 			this.load();	
 		}
 		
-		return proceed.invoke(this.value, args);
+		return thisMethod.invoke(this.value, args);
 	}
 	
 	private synchronized void load() throws BeanDecoderException{
 		
-		if(this.loaded){
+		if(this.value != null){
 			return;
 		}
 		
@@ -73,7 +71,6 @@ public abstract class BeanHandlerImp implements ActionHandler {
 		}
 		else
 			throw new IllegalStateException(String.valueOf(this.metadata));
-		
 	}
 	
 }
