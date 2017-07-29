@@ -74,8 +74,7 @@ public class WWWFormUrlEncodedBeanDecoder
 						entity.getMetaBean(),
 						entity.getName() == null ? 
 							null : 
-							entity.getName() + entity.getMetaBean().getSeparator(),
-						-1
+							entity.getName() + entity.getMetaBean().getSeparator()
 					);
 				
 				return entity.getType().convert(value);
@@ -87,8 +86,8 @@ public class WWWFormUrlEncodedBeanDecoder
 						entity.getMapping(),
 						entity.getName() == null?
 							null :
-							entity.getName() + entity.getMapping().getSeparator(),
-						-1);
+							entity.getName() + entity.getMapping().getSeparator()
+					);
 					
 						
 				return entity.getType().convert(value);
@@ -120,7 +119,7 @@ public class WWWFormUrlEncodedBeanDecoder
 		return null;
 	}	
 
-	public Object getValue(MetaBean entity, String prefix, long index) {
+	public Object getValue(MetaBean entity, String prefix) {
 		String newPrefix = 
 				this.getPerfixWithStartObject(
 					prefix, entity.getSeparator(), entity.getName());
@@ -137,7 +136,7 @@ public class WWWFormUrlEncodedBeanDecoder
 			throw new MappingException("bean not found: " + metaValue);
 		}
 
-		return this.getValue(bean, null, prefix, index, true);
+		return this.getValue(bean, null, prefix, true);
 	}
 	
 	
@@ -151,7 +150,6 @@ public class WWWFormUrlEncodedBeanDecoder
 			return this.getValue(
 				dependencyBean, fetchType, 
 				(String)dta.get("prefix"), 
-				(Integer)dta.get("index"),
 				(Boolean)dta.get("updatePrefix"));
 		}
 		catch(Throwable e){
@@ -160,7 +158,7 @@ public class WWWFormUrlEncodedBeanDecoder
 	}
 
 	private Object getValue(DependencyBean entity, FetchType fetchType, 
-			String prefix, long index, boolean updatePrefix) {
+			String prefix, boolean updatePrefix) {
 		
 		if(fetchType == null){
 			fetchType = entity.getFetchType();
@@ -169,7 +167,6 @@ public class WWWFormUrlEncodedBeanDecoder
 		if(fetchType.equals(FetchType.LAZY)){
 			Map<String,Object> data = new HashMap<String, Object>();
 			data.put("prefix",       prefix);
-			data.put("index",        index);
 			data.put("updatePrefix", updatePrefix);
 			
 			ProxyFactory proxyFactory = 
@@ -190,7 +187,7 @@ public class WWWFormUrlEncodedBeanDecoder
 				prefix = this.getNewPrefix(entity, prefix, true);
 			}
 			
-			Object value = this.getValue(dependencyBean, prefix, -1);
+			Object value = this.getValue(dependencyBean, prefix);
 			return entity.getType().convert(value);
 		}
 		else
@@ -215,7 +212,7 @@ public class WWWFormUrlEncodedBeanDecoder
 			if(updatePrefix){
 				prefix = this.getNewPrefix(entity, prefix, true);
 			}
-			result = this.getValue(entity.getMetaBean(), prefix, -1);
+			result = this.getValue(entity.getMetaBean(), prefix);
 			return entity.getType().convert(result);
 		}
 		
@@ -223,24 +220,24 @@ public class WWWFormUrlEncodedBeanDecoder
 	
 	/* bean */
 	
-	private Object getValue(Bean entity, String prefix, long index) {
+	private Object getValue(Bean entity, String prefix) {
 		
 		if(entity.isCollection()){
-			return this.getValueCollection((CollectionBean)entity, prefix, index);
+			return this.getValueCollection((CollectionBean)entity, prefix);
 		}
 		else
 		if(entity.isMap()){
-			return this.getValueMap((MapBean)entity, prefix, index);
+			return this.getValueMap((MapBean)entity, prefix);
 		}
 		else{
-			return this.getValueBean(entity, prefix, index);
+			return this.getValueBean(entity, prefix);
 		}
 	}
 
-	private Object getValueBean(Bean entity, String prefix, long index) {
+	private Object getValueBean(Bean entity, String prefix) {
 		
 		ConstructorBean constructorBean = entity.getConstructor();
-		Object value = this.getInstance(constructorBean, prefix, index);
+		Object value = this.getInstance(constructorBean, prefix);
 		
 		if(value == null){
 			return null;
@@ -259,7 +256,7 @@ public class WWWFormUrlEncodedBeanDecoder
 					continue;
 				}
 				
-				Object p = this.getValue(prop, null, prefix, index, true);
+				Object p = this.getValue(prop, null, prefix, true);
 				
 				if(p != null){
 					exist = true;
@@ -276,31 +273,22 @@ public class WWWFormUrlEncodedBeanDecoder
 	
 	/* collection */
 	
-	private Object getValueCollection(CollectionBean entity, String prefix, long index) {
+	private Object getValueCollection(CollectionBean entity, String prefix) {
 		Element e = (Element)entity.getCollection();
 		
 		if(e.getParameterName() != null){
-			return this.getValueCollectionObject(entity, e, prefix, index);
+			return this.getValueCollectionObject(entity, e, prefix);
 		}
 		else{
-			return this.getValueCollectionSimple(entity, e, prefix, index);
+			return this.getValueCollectionSimple(entity, e, prefix);
 		}
 	}
 
-	/*
-	 * root.bean.element[0]           = <value>
-	 * root.bean.property             = <value>
-	 * root.bean.property2            = <value>
-	 * root.bean.element[0].property1 = <value>
-	 * root.bean.element[1].property1 = <value>
-	 * root.bean.element[2].property1 = <value>
-	 * 
-	 * */
 	@SuppressWarnings("unchecked")
 	public Object getValueCollectionObject(CollectionBean entity, Element e,
-			String prefix, long index) {
+			String prefix) {
 		
-		Collection<Object> destValue = (Collection<Object>)this.getValueBean(entity, prefix, index);
+		Collection<Object> destValue = (Collection<Object>)this.getValueBean(entity, prefix);
 	
 		String newPrefix = 
 				this.getPerfixWithStartObject(
@@ -313,13 +301,7 @@ public class WWWFormUrlEncodedBeanDecoder
 				newPrefix + 
 				entity.getIndexFormat().replace("$index", String.valueOf(i));
 			
-			/*
-			if(e.getMapping() != null || e.getMetaBean() != null){
-				ePreifx += entity.getSeparator();
-			}
-			*/
-			
-			Object element = this.getValue(e, FetchType.EAGER, ePreifx, -1, false);
+			Object element = this.getValue(e, FetchType.EAGER, ePreifx, false);
 			
 			if(element != null){
 				destValue.add(element);
@@ -336,19 +318,12 @@ public class WWWFormUrlEncodedBeanDecoder
 		return destValue.isEmpty()? null : destValue;
 	}
 	
-	/*
-	 * root.bean[0]           = <value>
-	 * root.bean[0].property1 = <value>
-	 * root.bean[1].property1 = <value>
-	 * root.bean[2].property1 = <value>
-	 * 
-	 * */
 	@SuppressWarnings("unchecked")
 	public Object getValueCollectionSimple(CollectionBean entity, Element e,
-			String prefix, long index) {
+			String prefix) {
 		
 		Collection<Object> destValue = 
-				(Collection<Object>)this.getValueBean(entity, prefix, index);
+				(Collection<Object>)this.getValueBean(entity, prefix);
 	
 		String newPrefix;
 		
@@ -365,14 +340,8 @@ public class WWWFormUrlEncodedBeanDecoder
 			String ePreifx = 
 				newPrefix + 
 				entity.getIndexFormat().replace("$index", String.valueOf(i));
-				
-			/*
-			if(e.getMapping() != null || e.getMetaBean() != null){
-				ePreifx += entity.getSeparator();
-			}
-			*/
 			
-			Object element = this.getValue(e, FetchType.EAGER, ePreifx, -1, false);
+			Object element = this.getValue(e, FetchType.EAGER, ePreifx, false);
 			
 			if(element != null){
 				destValue.add(element);
@@ -391,34 +360,23 @@ public class WWWFormUrlEncodedBeanDecoder
 
 	/* map */
 	
-	private Object getValueMap(MapBean entity, String prefix, long index) {
+	private Object getValueMap(MapBean entity, String prefix) {
 		
 		Key k = (Key)entity.getKey();
 		
 		if(k.getParameterName() != null){
-			return this.getValueMapObject(entity, k, prefix, index);
+			return this.getValueMapObject(entity, k, prefix);
 		}
 		else{
-			return this.getValueMapSimple(entity, k, prefix, index);
+			return this.getValueMapSimple(entity, k, prefix);
 		}
 	}
 
-	/*
-	 * <prefixo>.(<property>|<elements>).(<element> | <key>) = value
-	 * 
-	 *  ex:
-	 *  prefixo.prop1 = ?
-	 *  prefixo.prop2 = ?
-	 *  prefixo.element[0].element = ?
-	 *  prefixo.element[0].element.prop = ?
-	 *  prefixo.element[0].key = ?
-	 *  prefixo.element[0].key.prop = ?
-	 */
 	@SuppressWarnings("unchecked")
-	public Object getValueMapObject(MapBean entity, Key k, String prefix, long index){
+	public Object getValueMapObject(MapBean entity, Key k, String prefix){
 		
 		Map<Object,Object> destValue = 
-				(Map<Object,Object>)this.getValueBean(entity, prefix, index);
+				(Map<Object,Object>)this.getValueBean(entity, prefix);
 
 		Element e = (Element)entity.getCollection();
 		int max   = entity.getMaxItens() + 1;
@@ -437,7 +395,7 @@ public class WWWFormUrlEncodedBeanDecoder
 					entity.getSeparator() +
 					k.getParameterName();
 			
-			Object key = this.getValue(k, FetchType.EAGER, kPrefix, -1, false);
+			Object key = this.getValue(k, FetchType.EAGER, kPrefix, false);
 			
 			if(key == null){
 				break;
@@ -448,7 +406,7 @@ public class WWWFormUrlEncodedBeanDecoder
 				entity.getSeparator() +
 				e.getParameterName();
 			
-			Object element = this.getValue(e, FetchType.EAGER, ePrefix, -1, false);
+			Object element = this.getValue(e, FetchType.EAGER, ePrefix, false);
 			
 			destValue.put(key, element);
 		}
@@ -460,13 +418,10 @@ public class WWWFormUrlEncodedBeanDecoder
 		return destValue.isEmpty()? null : destValue;
 	}
 
-	/*
-	 * <prefixo>.<key>[.<property>] = <value> 
-	 */
 	@SuppressWarnings("unchecked")
-	public Object getValueMapSimple(MapBean entity, Key k, String prefix, long index){
+	public Object getValueMapSimple(MapBean entity, Key k, String prefix){
 		Map<Object,Object> destValue = 
-				(Map<Object,Object>)this.getValueBean(entity, prefix, index);
+				(Map<Object,Object>)this.getValueBean(entity, prefix);
 
 		Element e         = (Element)entity.getCollection();
 		
@@ -493,7 +448,7 @@ public class WWWFormUrlEncodedBeanDecoder
 		for(SimpleKeyMap keyValue: keys){
 			Object keyObject = k.convert(keyValue.getName());
 			String ePreifx   = itemPrefix + keyValue.getPrefix();
-			Object element   = this.getValue(e, FetchType.EAGER, ePreifx, -1, false);
+			Object element   = this.getValue(e, FetchType.EAGER, ePreifx, false);
 			
 			destValue.put(keyObject, element);
 		}
@@ -552,11 +507,11 @@ public class WWWFormUrlEncodedBeanDecoder
 	
 	/* constructor */
 	
-	private Object getInstance(ConstructorBean constructor, String prefix, long index){
+	private Object getInstance(ConstructorBean constructor, String prefix){
 		try{
 			return constructor.isConstructor()? 
-				this.getInstanceByConstructor(constructor, prefix, index) :
-				this.getInstanceByFactory(constructor, prefix, index);
+				this.getInstanceByConstructor(constructor, prefix) :
+				this.getInstanceByFactory(constructor, prefix);
 		}
 		catch(Throwable e){
 			throw new DependencyException("create instance failed: " + constructor.getBean().getName());
@@ -564,11 +519,11 @@ public class WWWFormUrlEncodedBeanDecoder
 	}
 	
 	private Object getInstanceByConstructor(ConstructorBean constructor,
-			String prefix, long index) throws InstantiationException, 
+			String prefix) throws InstantiationException, 
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
 		Constructor<?> insCons = constructor.getContructor();
-		Object[] args          = this.getArgs(constructor, prefix, index);
+		Object[] args          = this.getArgs(constructor, prefix);
 		
 		if(args == null){
 			return null;
@@ -577,7 +532,7 @@ public class WWWFormUrlEncodedBeanDecoder
 		return insCons.newInstance(args);
 	}
 
-	private Object getInstanceByFactory(ConstructorBean constructor, String prefix, long index) 
+	private Object getInstanceByFactory(ConstructorBean constructor, String prefix) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
 		String factory = constructor.getMethodFactory();
@@ -590,7 +545,7 @@ public class WWWFormUrlEncodedBeanDecoder
 				throw new IllegalStateException("bean factory not found: " + factory);
 			}
 			
-			factoryInstance = this.getValue(factoryBean, prefix, index);
+			factoryInstance = this.getValue(factoryBean, prefix);
 			
 		}
 		else{
@@ -603,12 +558,12 @@ public class WWWFormUrlEncodedBeanDecoder
 			throw new MappingException("infinite loop detected: "
 					+ constructor.getBean().getName());
 		
-		Object[] args  = this.getArgs(constructor, prefix, index);
+		Object[] args  = this.getArgs(constructor, prefix);
 		
 		return method.invoke(factoryInstance, args);
 	}
 	
-	private Object[] getArgs(ConstructorBean constructor, String prefix, long index) 
+	private Object[] getArgs(ConstructorBean constructor, String prefix) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 
 		List<ConstructorArgBean> argsList = constructor.getConstructorArgs();
@@ -618,7 +573,7 @@ public class WWWFormUrlEncodedBeanDecoder
 		boolean exist = argsList.size() < 1;
 		
 		for(ConstructorArgBean arg: constructor.getConstructorArgs()){
-			args[i] = this.getValue(arg, null, prefix, index, true);
+			args[i] = this.getValue(arg, null, prefix, true);
 			if(!exist){
 				exist = exist || args[i] != null || arg.isNullable();
 			}
@@ -632,6 +587,7 @@ public class WWWFormUrlEncodedBeanDecoder
 	/* util */
 
 	private String getNewPrefix(DependencyBean entity, String prefix, boolean hasNext){
+
 		
 		if(entity.getParent().isHierarchy()){
 			String parameterName = entity.getParameterName();
@@ -648,11 +604,21 @@ public class WWWFormUrlEncodedBeanDecoder
 			}
 			
 			if(hasNext && !prefix.endsWith(entity.getParent().getSeparator())){
-				prefix +=entity.getParent().getSeparator();
+				prefix += entity.getParent().getSeparator();
 			}
+			
+			return prefix;
+		}
+		else{
+			String parameterName = entity.getParameterName();
+			
+			if(parameterName != null && hasNext){
+				parameterName += entity.getParent().getSeparator();
+			}
+			
+			return parameterName;
 		}
 		
-		return prefix;
 	}
 
 	public String getPerfixWithStartObject(String prefix, String separator, String name){
