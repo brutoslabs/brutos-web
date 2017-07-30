@@ -20,10 +20,17 @@ import org.brandao.brutos.web.WebMvcRequest;
 import org.brandao.brutos.web.WebMvcResponse;
 import org.brandao.brutos.web.bean.JsonBeanEncoder;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
-import org.brandao.jbrgates.JSONEncoder;
+import org.brandao.jbrgates.DefaultJSONContext;
+import org.brandao.jbrgates.JSONContext;
 
 public class JsonRenderView implements RenderViewType{
 
+	private JSONContext jsonContext;
+	
+	public JsonRenderView(){
+		this.jsonContext = new DefaultJSONContext();
+	}
+	
 	public void configure(Properties properties) {
 	}
 
@@ -46,15 +53,10 @@ public class JsonRenderView implements RenderViewType{
 			WebThrowableSafeData t = 
 				(WebThrowableSafeData)element.getThrowableSafeData();
 			try{
-				servletResponse.setStatus(t.getResponseError());
-				
-				JSONEncoder encoder = new JSONEncoder(servletResponse.getOutputStream(), null);
 				Map<String,Object> dta = new HashMap<String, Object>();
 				dta.put("message", request.getThrowable().getMessage());
-				encoder.encode(dta);
-				//servletResponse.getOutputStream()
-				//.write(
-				//	("{ \"message\": \"" + request.getThrowable().getMessage() + "\"}").getBytes("UTF-8"));
+				servletResponse.setStatus(t.getResponseError());
+				this.jsonContext.encode(dta, servletResponse.getOutputStream());
 			}
 			catch(Throwable e){
 				throw new RenderViewException(e);
