@@ -587,13 +587,18 @@ public class JsonBeanDecoder implements BeanDecoder{
 	/* util */
 	
 	public Object getScopedValue(String name, ScopeType scopeType, Map<String, Object> params){
-		if(scopeType.toString().equals("param")){
-			return params.get(name);
+		if(params != null && scopeType.toString().equals("param")){
+			
+			Object param = params.get(name);
+			
+			if(param != null){
+				return param == null;
+			}
 		}
-		else{
-			Scope scope = Scopes.getCurrentScope(scopeType);
-			return scope.get(name);
-		}
+		
+		Scope scope = Scopes.getCurrentScope(scopeType);
+		return scope.get(name);
+		
 	}
 
 	public Object getScopedCollection(String name, ScopeType scopeType, Map<String, Object> params){
