@@ -593,13 +593,13 @@ public class WWWFormUrlEncodedBeanDecoder
 			String parameterName = entity.getParameterName();
 			
 			if(parameterName != null){
-				if(!prefix.endsWith(entity.getParent().getSeparator())){
+				if(prefix != null && !prefix.endsWith(entity.getParent().getSeparator())){
 					prefix += entity.getParent().getSeparator();
 				}
 				
 				prefix = 
 					prefix == null?
-						parameterName + entity.getParent().getSeparator() :
+						parameterName :
 						prefix + parameterName;
 			}
 			

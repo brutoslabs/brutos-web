@@ -1,5 +1,7 @@
 package org.brandao.brutos.web.http.view;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletResponse;
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MvcRequest;
 import org.brandao.brutos.MvcResponse;
+import org.brandao.brutos.RenderViewException;
 import org.brandao.brutos.RenderViewType;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.StackRequest;
@@ -16,6 +19,8 @@ import org.brandao.brutos.web.MediaType;
 import org.brandao.brutos.web.WebMvcRequest;
 import org.brandao.brutos.web.WebMvcResponse;
 import org.brandao.brutos.web.bean.JsonBeanEncoder;
+import org.brandao.brutos.web.mapping.WebThrowableSafeData;
+import org.brandao.jbrgates.JSONEncoder;
 
 public class JsonRenderView implements RenderViewType{
 
@@ -27,6 +32,7 @@ public class JsonRenderView implements RenderViewType{
 		RequestInstrument requestInstrument = request.getRequestInstrument();
         StackRequest stackRequest           = requestInstrument.getStackRequest();
         StackRequestElement first           = stackRequest.getFirst();
+        StackRequestElement element         = request.getStackRequestElement();
         
         WebMvcRequest mvcRequest     = (WebMvcRequest)first.getRequest();
         WebMvcResponse mvcResponse   = (WebMvcResponse)first.getResponse();
@@ -36,6 +42,24 @@ public class JsonRenderView implements RenderViewType{
 		servletResponse.setContentType(MediaType.APPLICATION_JSON.getName());
 		servletResponse.setCharacterEncoding("UTF-8");
 		
+		if(element.getThrowableSafeData() != null){
+			WebThrowableSafeData t = 
+				(WebThrowableSafeData)element.getThrowableSafeData();
+			try{
+				servletResponse.setStatus(t.getResponseError());
+				
+				JSONEncoder encoder = new JSONEncoder(servletResponse.getOutputStream(), null);
+				Map<String,Object> dta = new HashMap<String, Object>();
+				dta.put("message", request.getThrowable().getMessage());
+				encoder.encode(dta);
+				//servletResponse.getOutputStream()
+				//.write(
+				//	("{ \"message\": \"" + request.getThrowable().getMessage() + "\"}").getBytes("UTF-8"));
+			}
+			catch(Throwable e){
+				throw new RenderViewException(e);
+			}
+		}
 		Object result = mvcResponse.getResult();
 		
 		if(result != null){
