@@ -107,25 +107,13 @@ public class JsonBeanDecoder implements BeanDecoder{
 		
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Object getMetaBean(UseBeanData entity, Object requestData) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
-		if(requestData != null && !this.isObject(requestData)){
-			String format = 
-					  "{ \r\n"
-					+ "    \"<metaProperty>\": <object> | <value>, \r\n"
-					+ "    \"<property>\": <object> | <value>, \r\n"
-					+ "    ..., \r\n"
-					+ "}";
-			throw new DependencyException("expected: " + format);
-		}
-		
-		Map<String, Object> mapRequestData = (Map<String, Object>)requestData;
 		MetaBean metaBean        = entity.getMetaBean();
 		String parameterName     = metaBean.getName();
 		ScopeType scopeType      = entity.getScopeType();
-		Object value             = this.getScopedValue(parameterName, scopeType, mapRequestData);
+		Object value             = this.getScopedValue(parameterName, scopeType, requestData);
 		Type type                = entity.getType();
 		value                    = type.convert(value);
 		
@@ -139,7 +127,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 			throw new MappingException("bean not found: " + value);
 		}
 
-		return entity.getType().convert(this.getValue(bean, null, mapRequestData));			
+		return entity.getType().convert(this.getValue(bean, null, requestData));			
 	}
 
 	public Object getBean(UseBeanData entity, Object requestData) 
@@ -150,29 +138,17 @@ public class JsonBeanDecoder implements BeanDecoder{
 		return entity.getType().convert(value);		
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Object getCollectionValue(UseBeanData entity, Object requestData) {
 		
-		if(requestData != null || !this.isObject(requestData)){
-			throw new DependencyException("expected: <value>");
-		}
-		
-		Map<String, Object> mapRequestData = (Map<String, Object>) requestData;
 		ScopeType scopeType      = entity.getScopeType();
-		Object value             = this.getScopedCollection(entity.getName(), scopeType, mapRequestData);
+		Object value             = this.getScopedCollection(entity.getName(), scopeType, requestData);
 		return entity.getType().convert(value);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Object getSimpleValue(UseBeanData entity, Object requestData) {
 		
-		if(requestData != null && !this.isObject(requestData)){
-			throw new DependencyException("expected: <value>");
-		}
-		
-		Map<String, Object> mapRequestData = (Map<String, Object>) requestData;
 		ScopeType scopeType      = entity.getScopeType();
-		Object value             = this.getScopedValue(entity.getName(), scopeType, mapRequestData);
+		Object value             = this.getScopedValue(entity.getName(), scopeType, requestData);
 		return entity.getType().convert(value);
 	}
 	
@@ -241,25 +217,13 @@ public class JsonBeanDecoder implements BeanDecoder{
 		return type.convert(data);		
 	}
 
-	@SuppressWarnings("unchecked")
 	public Object getMetaBean(DependencyBean dependencyBean, Object requestData) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		if(requestData != null && !this.isObject(requestData)){
-			String format = 
-					  "{ \r\n"
-					+ "    \"<metaProperty>\": <object> | <value>, \r\n"
-					+ "    \"<property>\": <object> | <value>, \r\n"
-					+ "    ..., \r\n"
-					+ "}";
-			throw new DependencyException("expected: " + format);
-		}
-		
-		Map<String,Object> mapRequestData = (Map<String, Object>) requestData;
 		MetaBean metaBean    = dependencyBean.getMetaBean();
 		String parameterName = metaBean.getName();
 		ScopeType scopeType  = dependencyBean.getScopeType();
-		Object value         = this.getScopedValue(parameterName, scopeType, mapRequestData);
+		Object value         = this.getScopedValue(parameterName, scopeType, requestData);
 		Type type            = dependencyBean.getType();
 		value                = type.convert(value);
 		
@@ -273,7 +237,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 			throw new MappingException("bean not found: " + value);
 		}
 		
-		return this.getValue(bean, null, mapRequestData);		
+		return this.getValue(bean, null, requestData);		
 	}
 	
 	/* bean */
@@ -294,21 +258,10 @@ public class JsonBeanDecoder implements BeanDecoder{
 	}
 			
 	
-	@SuppressWarnings("unchecked")
 	public Object getValueBean(Bean bean, Object requestData) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 
-		if(requestData != null && !this.isObject(requestData)){
-			String format = 
-					  "{ \r\n"
-					+ "    \"<property>\": <object | value>, \r\n"
-					+ "    ..., \r\n"
-					+ "}";
-			throw new DependencyException("expected: " + format);
-		}
-		
-		Map<String, Object> mapRequestdata = (Map<String, Object>)requestData;
-		Object value             = this.getInstance(bean.getConstructor(), mapRequestdata);
+		Object value = this.getInstance(bean.getConstructor(), requestData);
 		
 		if(value == null){
 			return null;
@@ -328,7 +281,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 					continue;
 				}
 				
-				Object fieldData = this.getScopedValue(prop.getName(), prop.getScopeType(), mapRequestdata);
+				Object fieldData = this.getScopedValue(prop.getName(), prop.getScopeType(), requestData);
 				Object p         = this.getValue(prop, null, fieldData);
 				exist = exist || p != null;
 				prop.setValueInSource(value, p);
@@ -379,22 +332,8 @@ public class JsonBeanDecoder implements BeanDecoder{
 	public Object getValueCollectionObject(CollectionBean entity, Element e,  Object requestData) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
-		if(requestData != null && !this.isObject(requestData)){
-			String format = 
-					  "{ \r\n"
-					+ "    \"<property>\": (<object> | <value>), \r\n"
-					+ "    ..., \r\n"
-					+ "    \"elements\": [\r\n"
-					+ "        (<object> | <value>),\r\n"
-					+ "        ..."
-					+ "    ]\r\n"
-					+ "}";
-			throw new DependencyException("expected: " + format);
-		}
-		
-		Map<String,Object> mapRequestData = (Map<String,Object>)requestData;
-		Object destValue        = this.getValueBean(entity, mapRequestData);
-		Object originValue      = this.getScopedValue(e.getParameterName(), e.getScopeType(), mapRequestData);
+		Object destValue        = this.getValueBean(entity, requestData);
+		Object originValue      = this.getScopedValue(e.getParameterName(), e.getScopeType(), requestData);
 		
 		if(destValue == null){
 			return null;
@@ -417,7 +356,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 			throw new DependencyException("expected: " + format);
 		}
 		
-		Collection<Object> originElements = (Collection<Object>)this.getScopedValue("elements", e.getScopeType(), mapRequestData);
+		Collection<Object> originElements = (Collection<Object>)this.getScopedValue("elements", e.getScopeType(), requestData);
 		Collection<Object> destElements   = (Collection<Object>)destValue;
 		
 		if(originElements == null){
@@ -451,22 +390,18 @@ public class JsonBeanDecoder implements BeanDecoder{
 	@SuppressWarnings("unchecked")
 	public Object getValueCollectionSimple(CollectionBean entity, Element e, Object requestData) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		
+
 		if(requestData == null){
 			return null;
 		}
 		
 		if(!this.isArray(requestData)){
-			String format = 
-					" [\r\n"
-					+ "    <object | value>,\r\n"
-					+ "    ..."
-					+ "]";
+			String format = " [ <object> | <value>, ... ]";
 			throw new DependencyException("expected: " + format);
 		}
 		
-		Collection<Object> data         = (Collection<Object>)requestData;
-		Object destValue                = this.getValueBean(entity, null);
+		Collection<Object> data = (Collection<Object>)requestData;
+		Object destValue        = this.getValueBean(entity, null);
 		
 		if(!(destValue instanceof Collection)){
 			throw new DependencyException("expected a collection type");
@@ -526,26 +461,9 @@ public class JsonBeanDecoder implements BeanDecoder{
 	private Object getValueMapObject(MapBean entity, Key k, Object requestData) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		if(requestData != null && !this.isObject(requestData)){
-			String format = 
-					  "{ \r\n"
-					+ "    \"<property>\": <object | value>, \r\n"
-					+ "    ..., \r\n"
-					+ "    \"elements\": [\r\n"
-					+ "        { \r\n"
-					+ "            \"<keyName>\": <keyObject | keyValue>, \r\n"
-					+ "            \"<elementName>\": <elementObject | elementValue> \r\n"
-					+ "        }, \r\n"
-					+ "        ...\r\n"
-					+ "    ]\r\n"
-					+ "}";
-			throw new DependencyException("expected: " + format);
-		}
-		
-		Map<String,Object> mapRequestData = (Map<String,Object>)requestData;
 		Element e               = (Element)entity.getCollection();
-		Object destValue        = this.getValueBean(entity, mapRequestData);
-		Object originValue      = this.getScopedValue("elements", e.getScopeType(), mapRequestData);
+		Object destValue        = this.getValueBean(entity, requestData);
+		Object originValue      = this.getScopedValue("elements", e.getScopeType(), requestData);
 		
 		if(destValue == null){
 			return null;
@@ -649,7 +567,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 	
 	/* constructor */
 	
-	private Object getInstance(ConstructorBean constructor, Map<String, Object> data){
+	private Object getInstance(ConstructorBean constructor, Object data){
 		try{
 			return constructor.isConstructor()? 
 				this.getInstanceByConstructor(constructor, data) :
@@ -661,7 +579,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 	}
 	
 	private Object getInstanceByConstructor(ConstructorBean constructor,
-			Map<String, Object> data) throws InstantiationException, 
+			Object data) throws InstantiationException, 
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
 		Constructor<?> insCons = constructor.getContructor();
@@ -674,7 +592,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 		return insCons.newInstance(args);
 	}
 
-	private Object getInstanceByFactory(ConstructorBean constructor, Map<String, Object> data) 
+	private Object getInstanceByFactory(ConstructorBean constructor, Object data) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
 		String factory = constructor.getMethodFactory();
@@ -705,7 +623,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 		return method.invoke(factoryInstance, args);
 	}
 	
-	private Object[] getArgs(ConstructorBean constructor, Map<String, Object> data) 
+	private Object[] getArgs(ConstructorBean constructor, Object data) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 
 		List<ConstructorArgBean> argsList = constructor.getConstructorArgs();
@@ -730,10 +648,12 @@ public class JsonBeanDecoder implements BeanDecoder{
 	
 	/* util */
 	
-	public Object getScopedValue(String name, ScopeType scopeType, Map<String, Object> params){
+	@SuppressWarnings("unchecked")
+	public Object getScopedValue(String name, ScopeType scopeType, Object params){
 		if(params != null && scopeType.toString().equals("param")){
 			
-			Object param = params.get(name);
+			Map<String, Object> paramsMap = (Map<String, Object>) params;
+			Object param = paramsMap.get(name);
 			
 			if(param != null){
 				return param;
@@ -744,10 +664,12 @@ public class JsonBeanDecoder implements BeanDecoder{
 		return scope.get(name);
 	}
 
-	public Object getScopedCollection(String name, ScopeType scopeType, Map<String, Object> params){
+	@SuppressWarnings("unchecked")
+	public Object getScopedCollection(String name, ScopeType scopeType, Object params){
 		if(params != null && scopeType.toString().equals("param")){
 			
-			Object param = params.get(name);
+			Map<String, Object> paramsMap = (Map<String, Object>) params;
+			Object param = paramsMap.get(name);
 			
 			if(param != null){
 				return param;

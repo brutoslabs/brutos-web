@@ -264,6 +264,7 @@ public class InterceptorProcess implements InterceptorStack {
 		}
 
 		if(tdata != null) {
+			stackRequestElement.getRequest().setThrowable(e);
 			stackRequestElement.setObjectThrow(e);
 			stackRequestElement.setThrowableSafeData(tdata);
 		}
