@@ -35,7 +35,6 @@ import org.brandao.jbrgates.JSONDecoder;
  */
 public class JsonParserContentType extends AbstractParserContentType{
 
-	@SuppressWarnings("unchecked")
 	public void parserContentType(MutableMvcRequest request, 
     		MutableRequestParserEvent requestParserInfo, 
     		CodeGenerator codeGenerator, Properties config) throws org.brandao.brutos.RequestParserException {
@@ -43,39 +42,30 @@ public class JsonParserContentType extends AbstractParserContentType{
 		try{
 			InputStream stream = request.getStream();
 			//String charset = params.get("charset");
-	        JSONDecoder decoder     = new JSONDecoder(stream);
-	        Map<String,Object> data = (Map<String,Object>)decoder.decode();
+	        JSONDecoder decoder = new JSONDecoder(stream);
+	        Object data         = decoder.decode();
+
+	        /*
+	        if(!(data instanceof Map)){
+	        	String message = "expected: {\"<property>\" : <object> | <value>, ...}";
+				throw new org.brandao.brutos.RequestParserException(message);
+	        }
+	        */
 	        
+	        /*
 	        if(data != null){
 	            for(String p: data.keySet()){
 	            	request.setParameter(p, data.get(p) );
 	            }
 	        }
+	        */
 	        
 	        JsonBeanDecoder beanDecoder = new JsonBeanDecoder();
 	        beanDecoder.setCodeGenerator(codeGenerator);
 	        super.parser(request, requestParserInfo, beanDecoder, config, data);
 		}
-		catch(Throwable e){
-			throw new org.brandao.brutos.RequestParserException(e);
-		}
-		
-	}
-	/*
-	public void parserContentType(MutableMvcRequest request, 
-    		MutableRequestParserEvent requestParserInfo, 
-    		Properties config) throws org.brandao.brutos.RequestParserException {
-		try{
-			InputStream stream = request.getStream();
-			//String charset = params.get("charset");
-			
-	        JSONDecoder decoder = new JSONDecoder(stream);
-	        
-	        Map<String, Object> data = (Map<String, Object>)decoder.decode();
-	        
-	        if( data != null ){
-	        	addValues((MutableMvcRequest)request, null, data);
-	        }
+		catch(org.brandao.brutos.RequestParserException e){
+			throw e;
 		}
 		catch(Throwable e){
 			throw new org.brandao.brutos.RequestParserException(e);
@@ -83,35 +73,4 @@ public class JsonParserContentType extends AbstractParserContentType{
 		
 	}
 	
-	private void addValues(MutableMvcRequest request, String prefix, Map<String, Object> data){
-		for(String fieldName: data.keySet()){
-			
-			String fullFieldName = 
-					prefix == null? 
-							fieldName : 
-							prefix + "." + fieldName;
-			
-			Object value = data.get(fieldName);
-			this.addValue(request, fullFieldName, value);
-		}
-	}
-
-	private void addValue(MutableMvcRequest request, String fullFieldName, Object value){
-		if(value instanceof Map){
-			addValues(request, fullFieldName, (Map<String, Object>)value);
-		}
-		else
-		if(value instanceof List){
-			List<Object> list = (List<Object>)value;
-			int index = 0;
-			for(Object i: list){
-				addValue(request, fullFieldName + "[" + index++ + "]", i);
-			}
-		}
-		else
-		if(value != null){
-			request.setParameter(fullFieldName, String.valueOf(value));
-		}
-	}
-	*/
 }
