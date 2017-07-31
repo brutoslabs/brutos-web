@@ -44,6 +44,7 @@ public abstract class BeanHandlerImp implements ActionHandler {
 		this.metadata = metadata;
 		this.decoder  = decoder;
 		this.value    = null;
+		this.data     = data;
 	}
 
 	public Object invoke(Object self, Method thisMethod, Method proceed,

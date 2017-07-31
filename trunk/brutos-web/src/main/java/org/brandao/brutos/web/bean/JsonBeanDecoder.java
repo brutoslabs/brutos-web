@@ -281,7 +281,7 @@ public class JsonBeanDecoder implements BeanDecoder{
 					continue;
 				}
 				
-				Object fieldData = this.getScopedValue(prop.getName(), prop.getScopeType(), requestData);
+				Object fieldData = this.getScopedValue(prop.getParameterName(), prop.getScopeType(), requestData);
 				Object p         = this.getValue(prop, null, fieldData);
 				exist = exist || p != null;
 				prop.setValueInSource(value, p);
