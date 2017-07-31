@@ -18,7 +18,6 @@
 package org.brandao.brutos.web.parser;
 
 import java.io.InputStream;
-import java.util.Map;
 import java.util.Properties;
 
 import org.brandao.brutos.AbstractParserContentType;
@@ -45,21 +44,6 @@ public class JsonParserContentType extends AbstractParserContentType{
 	        JSONDecoder decoder = new JSONDecoder(stream);
 	        Object data         = decoder.decode();
 
-	        /*
-	        if(!(data instanceof Map)){
-	        	String message = "expected: {\"<property>\" : <object> | <value>, ...}";
-				throw new org.brandao.brutos.RequestParserException(message);
-	        }
-	        */
-	        
-	        /*
-	        if(data != null){
-	            for(String p: data.keySet()){
-	            	request.setParameter(p, data.get(p) );
-	            }
-	        }
-	        */
-	        
 	        JsonBeanDecoder beanDecoder = new JsonBeanDecoder();
 	        beanDecoder.setCodeGenerator(codeGenerator);
 	        super.parser(request, requestParserInfo, beanDecoder, config, data);
