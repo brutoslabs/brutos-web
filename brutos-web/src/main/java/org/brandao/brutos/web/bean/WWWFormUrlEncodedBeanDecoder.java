@@ -602,8 +602,8 @@ public class WWWFormUrlEncodedBeanDecoder
 						parameterName :
 						prefix + parameterName;
 			}
-			
-			if(hasNext && !prefix.endsWith(entity.getParent().getSeparator())){
+
+			if(hasNext && prefix != null && !prefix.endsWith(entity.getParent().getSeparator())){
 				prefix += entity.getParent().getSeparator();
 			}
 			
