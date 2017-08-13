@@ -315,14 +315,14 @@ public class Invoker {
 			return false;
 		}
 			
+		this.resolveTypes(request, response);
+		
 		try{
 			this.parseRequest(request, response);
 		}
 		catch(Throwable e){
 			request.setThrowable(e);
 		}
-
-		this.resolveTypes(request, response);
 		
 		element.setAction(request.getResourceAction());
 		element.setController(request.getResourceAction().getController());
@@ -350,9 +350,10 @@ public class Invoker {
     	DataTypeMap supportedRequestTypes = action.getRequestTypes();
     	
     	if(supportedRequestTypes.isEmpty()){
-    		return 
-				request.getType() == null ||
-				this.requestParser.getDefaultParserType().equals(request.getType());
+    		return true;
+    		//return 
+			//	request.getType() == null ||
+			//	this.requestParser.getDefaultParserType().equals(request.getType());
     	}
     	else{
     		return supportedRequestTypes.accept(request.getType());
