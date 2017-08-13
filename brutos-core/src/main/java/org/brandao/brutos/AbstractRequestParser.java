@@ -47,6 +47,10 @@ public abstract class AbstractRequestParser
 			dataType = this.defaultDataType;
 		}
 		
+		if(dataType == null){
+			return;
+		}
+		
 		ParserContentType parser = this.parsers.get(dataType);
 		
 		if(parser == null){

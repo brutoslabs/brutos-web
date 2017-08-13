@@ -260,12 +260,12 @@ public abstract class AbstractWebApplicationContext
         config.put(BrutosConstants.REQUEST_PARSER,
                     tmp);
 
-        tmp = config
-                .getProperty(BrutosConstants.REQUEST_TYPE,
-                              MediaType.APPLICATION_X_WWW_FORM_URLENCODED.toString() );
+        //tmp = config
+        //        .getProperty(BrutosConstants.REQUEST_TYPE,
+        //                      MediaType.APPLICATION_X_WWW_FORM_URLENCODED.toString() );
         
-        config.put(BrutosConstants.REQUEST_TYPE,
-                    tmp);
+        //config.put(BrutosConstants.REQUEST_TYPE,
+        //            tmp);
 
         tmp = config
                 .getProperty(BrutosConstants.RESPONSE_TYPE,
@@ -326,8 +326,8 @@ public abstract class AbstractWebApplicationContext
             Properties config = this.getConfiguration();
             String value =
                 config.getProperty(
-            		BrutosWebConstants.REQUEST_TYPE,
-            		BrutosWebConstants.DEFAULT_REQUEST_TYPE.getName());
+            		BrutosWebConstants.REQUEST_TYPE/*,
+            		BrutosWebConstants.DEFAULT_REQUEST_TYPE.getName()*/);
 
             return MediaType.valueOf(value);
         }
