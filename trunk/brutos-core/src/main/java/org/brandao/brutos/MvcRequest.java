@@ -38,6 +38,8 @@ public interface MvcRequest {
     
 	RequestParser getRequestParser();
 	
+	String getEncoding();
+	
 	String getRequestId();
 	
 	Throwable getThrowable();

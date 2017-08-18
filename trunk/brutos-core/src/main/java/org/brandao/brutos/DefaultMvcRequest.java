@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +32,8 @@ import java.util.Set;
  */
 public class DefaultMvcRequest implements MutableMvcRequest {
 
+	protected String encoding;
+	
     protected Set<String> propertyNames;
     
     protected Map<String, List<Object>> properties;
@@ -70,11 +72,11 @@ public class DefaultMvcRequest implements MutableMvcRequest {
     
     public DefaultMvcRequest(){
 		this.header         = new HashMap<String, List<Object>>();
-		this.headerNames    = new HashSet<String>();
+		this.headerNames    = new LinkedHashSet<String>();
 		this.properties     = new HashMap<String, List<Object>>();
-		this.propertyNames  = new HashSet<String>();
+		this.propertyNames  = new LinkedHashSet<String>();
 		this.parameters     = new HashMap<String, List<Object>>();
-		this.parameterNames = new HashSet<String>();
+		this.parameterNames = new LinkedHashSet<String>();
 		this.acceptResponse = new ArrayList<DataType>();
     }
     
@@ -104,6 +106,14 @@ public class DefaultMvcRequest implements MutableMvcRequest {
 
 	public InputStream getStream() throws IOException {
 		return null;
+	}
+
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
 	}
 
 	public Set<String> getPropertiesNames(){
