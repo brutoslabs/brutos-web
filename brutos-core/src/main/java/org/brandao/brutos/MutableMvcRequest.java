@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface MutableMvcRequest extends MvcRequest{
 
+	void setEncoding(String value);
+	
 	void setRequestId(String requestId);
 	
     void setRequestParserInfo(RequestParserEvent value);
