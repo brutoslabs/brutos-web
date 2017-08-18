@@ -37,7 +37,7 @@ import org.brandao.brutos.web.bean.WWWFormUrlEncodedBeanDecoder;
  * @author Brandao
  *
  */
-public class WWWFormUrlEncodedParserContentType 
+public class AllParserContentType 
 	extends AbstractParserContentType{
 	
 	private static final String DEFAULT_CHARSET         = "ISO8859-1";

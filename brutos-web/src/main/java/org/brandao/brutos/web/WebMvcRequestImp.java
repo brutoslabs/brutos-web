@@ -70,7 +70,6 @@ public class WebMvcRequestImp
     }
     
 	private List<DataType> parseAcceptResponse(){
-    	
     	List<DataType> result = new ArrayList<DataType>();
     	
     	String accept = this._getRequest().getHeader("Accept");
@@ -366,6 +365,18 @@ public class WebMvcRequestImp
 	@Override
 	public void setAttribute(String name, Object o) {
 		this.request.setProperty(name, o);
+	}
+
+	public void setEncoding(String value) {
+		this.request.setEncoding(value);
+	}
+
+	public String getEncoding() {
+		if(this.request.getEncoding() == null){
+			this.request.setEncoding(this._getRequest().getCharacterEncoding());
+		}
+		
+		return this.request.getEncoding();
 	}
 
 	/*
