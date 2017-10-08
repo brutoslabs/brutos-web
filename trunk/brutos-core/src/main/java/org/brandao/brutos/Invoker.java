@@ -264,6 +264,10 @@ public class Invoker {
 
 	public boolean invoke(MutableMvcRequest request, MutableMvcResponse response) throws InvokerException{
 
+		if(!this.resolveAction(request, response)){
+			return false;
+		}
+		
 		boolean pushStackRequest      = false;
 		StackRequest stackRequest     = null;
 		MvcRequest oldRequest         = null;
@@ -311,9 +315,9 @@ public class Invoker {
 			RequestInstrument requestInstrument
 			) throws Throwable{
 
-		if(!this.resolveAction(request, response)){
-			return false;
-		}
+		//if(!this.resolveAction(request, response)){
+		//	return false;
+		//}
 			
 		this.resolveTypes(request, response);
 		
