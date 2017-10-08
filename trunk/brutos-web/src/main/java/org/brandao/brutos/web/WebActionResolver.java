@@ -17,10 +17,12 @@
 
 package org.brandao.brutos.web;
 
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -53,12 +55,15 @@ public class WebActionResolver extends AbstractActionResolver{
     
 	private RequestMappingNode root;
 	
+	private SimpleResourceCache cache;
+	
     public WebActionResolver(){
     	super();
     	this.root = new RequestMappingNode();
     	this.addActionTypeResolver(WebActionType.PARAMETER,  new ParamActionTypeResolver());
     	this.addActionTypeResolver(WebActionType.HIERARCHY,  new HierarchyActionTypeResolver());
     	this.addActionTypeResolver(WebActionType.DETACHED,   new DetachedActionTypeResolver());
+    	this.cache = new SimpleResourceCache(1000);
     }
     
 	public ResourceAction getResourceAction(ControllerManager controllerManager,
@@ -66,23 +71,34 @@ public class WebActionResolver extends AbstractActionResolver{
 		
 		try{
 			WebMvcRequest webRequest = (WebMvcRequest)request; 
-			String id = request.getRequestId();
+			String id                    = request.getRequestId();
+			RequestMethodType methodType = webRequest.getRequestMethodType();
+			ResourceKey key = new ResourceKey(id, methodType);
+			
+			WebResourceAction resourceAction = this.cache.get(key);
+			
+			if(resourceAction != null){
+				return resourceAction instanceof EmptyWebResourceAction? null : resourceAction;
+			}
+			
 			RequestMappingEntry entry = this.get(request.getRequestId(), webRequest.getRequestMethodType(), request);
 			
 			if(entry != null){
 				if(entry.getAction() == null){
 					ActionTypeResolver resolver = 
 							this.actionTypeResolver.get(entry.getController().getActionType());
-					return resolver.getResourceAction(entry.getController(), request);
+					resourceAction = (WebResourceAction)resolver.getResourceAction(entry.getController(), request);
 				}
-				else
-					return new WebResourceAction(
+				else{
+					resourceAction = new WebResourceAction(
 							entry.getRequestMethodType(),
 							(WebController)entry.getController(), 
 							(WebAction)entry.getAction() );
+				}
 			}
 			
-			return null;
+			this.cache.put(key, resourceAction == null? emptyWebResourceAction : resourceAction);
+			return resourceAction;
 		}
 		catch(Throwable e){
 			throw new ActionResolverException(e);			
@@ -255,4 +271,80 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     }
     
+    /* cache */
+    
+    private static final EmptyWebResourceAction emptyWebResourceAction = new EmptyWebResourceAction();
+    
+    private static class EmptyWebResourceAction extends WebResourceAction {
+
+		public EmptyWebResourceAction() {
+			super(null, null, null);
+		}
+    	    	
+    }
+    
+    private static class SimpleResourceCache extends LinkedHashMap<ResourceKey, WebResourceAction>{
+        
+		private static final long serialVersionUID = 7702944317773359399L;
+		
+		private int maxSize;
+        
+    	public SimpleResourceCache(int capacity) {
+            super(capacity, 0.75f, true);
+            this.maxSize = capacity;
+        }
+
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<ResourceKey, WebResourceAction> eldest) {
+            return super.size() > maxSize;
+        }
+    }
+    
+    private static class ResourceKey implements Serializable{
+    	
+		private static final long serialVersionUID = -5567615660615057030L;
+
+		public String resource;
+    	
+    	public RequestMethodType methodType;
+
+		public ResourceKey(String resource, RequestMethodType methodType) {
+			this.resource = resource;
+			this.methodType = methodType;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result
+					+ ((methodType == null) ? 0 : methodType.hashCode());
+			result = prime * result
+					+ ((resource == null) ? 0 : resource.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			ResourceKey other = (ResourceKey) obj;
+			if (methodType == null) {
+				if (other.methodType != null)
+					return false;
+			} else if (!methodType.equals(other.methodType))
+				return false;
+			if (resource == null) {
+				if (other.resource != null)
+					return false;
+			} else if (!resource.equals(other.resource))
+				return false;
+			return true;
+		}
+    	
+    }
 }
