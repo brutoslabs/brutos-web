@@ -39,6 +39,7 @@ import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.ControllerID;
+import org.brandao.brutos.web.mapping.RequestEntry;
 import org.brandao.brutos.web.mapping.RequestMappingEntry;
 import org.brandao.brutos.web.mapping.RequestMappingNode;
 import org.brandao.brutos.web.mapping.WebAction;
@@ -70,35 +71,54 @@ public class WebActionResolver extends AbstractActionResolver{
 			MutableMvcRequest request) throws ActionResolverException{
 		
 		try{
-			WebMvcRequest webRequest = (WebMvcRequest)request; 
+			WebMvcRequest webRequest     = (WebMvcRequest)request; 
 			String id                    = request.getRequestId();
 			RequestMethodType methodType = webRequest.getRequestMethodType();
-			ResourceKey key = new ResourceKey(id, methodType);
+			ResourceKey key              = new ResourceKey(id, methodType);
 			
-			WebResourceAction resourceAction = this.cache.get(key);
-			
-			if(resourceAction != null){
-				return resourceAction instanceof EmptyWebResourceAction? null : resourceAction;
-			}
-			
-			RequestMappingEntry entry = this.get(request.getRequestId(), webRequest.getRequestMethodType(), request);
+			RequestEntry entry = this.cache.get(key);
 			
 			if(entry != null){
-				if(entry.getAction() == null){
+				
+				if(entry instanceof EmptyWebResourceAction){
+					return null;
+				}
+				
+			}
+			else{
+				entry = this.get(request.getRequestId(), webRequest.getRequestMethodType(), request);
+				this.cache.put(key, entry == null? emptyWebResourceAction : entry);
+			}
+			
+			if(entry != null){
+				
+				Map<String, List<String>> params = entry.getParameters();
+				
+				if(params != null){
+			        for(String k: params.keySet() ){
+			        	for(String v: params.get(k)){
+			        		request.setParameter(k, v);
+			        	}
+			        }
+				}
+				
+				if(entry.getRequestMappingEntry().getAction() == null){
 					ActionTypeResolver resolver = 
-							this.actionTypeResolver.get(entry.getController().getActionType());
-					resourceAction = (WebResourceAction)resolver.getResourceAction(entry.getController(), request);
+						this.actionTypeResolver.get(
+						entry.getRequestMappingEntry().getController().getActionType());
+					return
+						resolver.getResourceAction(
+								entry.getRequestMappingEntry().getController(), request);
 				}
 				else{
-					resourceAction = new WebResourceAction(
-							entry.getRequestMethodType(),
-							(WebController)entry.getController(), 
-							(WebAction)entry.getAction() );
+					return new WebResourceAction(
+							entry.getRequestMappingEntry().getRequestMethodType(),
+							(WebController)entry.getRequestMappingEntry().getController(), 
+							(WebAction)entry.getRequestMappingEntry().getAction() );
 				}
 			}
 			
-			this.cache.put(key, resourceAction == null? emptyWebResourceAction : resourceAction);
-			return resourceAction;
+			return null;
 		}
 		catch(Throwable e){
 			throw new ActionResolverException(e);			
@@ -151,13 +171,13 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     }
 
-    public RequestMappingEntry get(String value, RequestMethodType methodType, 
+    public RequestEntry get(String value, RequestMethodType methodType, 
     		MutableMvcRequest request) throws MalformedURLException{
     	
     	String[] parts = WebUtil.parserURI(value, false).toArray(new String[0]);
     	
     	if(parts.length == 0){
-        	return this.root.getRequestEntry(methodType);
+        	return new RequestEntry(this.root.getRequestEntry(methodType), null);
     	}
     	else{
     		return this.getNode(this.root, methodType, request, parts, 0);
@@ -215,15 +235,15 @@ public class WebActionResolver extends AbstractActionResolver{
     	
     }
 
-    private RequestMappingEntry getNode(RequestMappingNode node, 
+    private RequestEntry getNode(RequestMappingNode node, 
     		 RequestMethodType methodType, MutableMvcRequest request, String[] parts, int index) throws MalformedURLException{
     	
     	if(index == 0 && parts.length == 0){
-    		return node.getRequestEntry(methodType);
+    		return new RequestEntry(node.getRequestEntry(methodType), null);
     	}
     	else
     	if(index == parts.length){
-    		return node.getRequestEntry(methodType);
+    		return new RequestEntry(node.getRequestEntry(methodType), null);
     	}
     	else{
     		RequestMappingNode next = node.getNext(parts[index]);
@@ -232,10 +252,11 @@ public class WebActionResolver extends AbstractActionResolver{
     			return null;
     		}
     		
-    		RequestMappingEntry e = this.getNode(next, methodType, request, parts, index + 1);
+    		RequestEntry e = this.getNode(next, methodType, request, parts, index + 1);
     		
     		if(e != null && !next.isStaticValue()){
-    			next.updateRequest(request, parts[index]);
+    			e.setParameters(next.getRequestParameters(request, parts[index]));
+    			//next.updateRequest(request, parts[index]);
     		}
     		
     		return e;
@@ -275,15 +296,15 @@ public class WebActionResolver extends AbstractActionResolver{
     
     private static final EmptyWebResourceAction emptyWebResourceAction = new EmptyWebResourceAction();
     
-    private static class EmptyWebResourceAction extends WebResourceAction {
+    private static class EmptyWebResourceAction extends RequestEntry {
 
 		public EmptyWebResourceAction() {
-			super(null, null, null);
+			super(null, null);
 		}
     	    	
     }
     
-    private static class SimpleResourceCache extends LinkedHashMap<ResourceKey, WebResourceAction>{
+    private static class SimpleResourceCache extends LinkedHashMap<ResourceKey, RequestEntry>{
         
 		private static final long serialVersionUID = 7702944317773359399L;
 		
@@ -295,7 +316,7 @@ public class WebActionResolver extends AbstractActionResolver{
         }
 
         @Override
-        protected boolean removeEldestEntry(Map.Entry<ResourceKey, WebResourceAction> eldest) {
+        protected boolean removeEldestEntry(Map.Entry<ResourceKey, RequestEntry> eldest) {
             return super.size() > maxSize;
         }
     }

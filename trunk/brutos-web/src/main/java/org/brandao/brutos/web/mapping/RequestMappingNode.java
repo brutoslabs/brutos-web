@@ -48,15 +48,16 @@ public class RequestMappingNode{
 		this.pattern     = null;
 	}
 	
-	public void updateRequest(MutableMvcRequest request, String value){
-		Map<String,List<String>> params = this.pattern.getParameters(value);
+	public Map<String,List<String>> getRequestParameters(MutableMvcRequest request, String value){
+		return this.pattern.getParameters(value);
 
+		/*
         for(String key: params.keySet() ){
         	for(String v: params.get(key)){
         		request.setParameter(key, v);
         	}
         }
-		
+		*/
 	}
 	
 	public RequestMappingNode add(String value, 
