@@ -64,7 +64,7 @@ public class WebActionResolver extends AbstractActionResolver{
     	this.addActionTypeResolver(WebActionType.PARAMETER,  new ParamActionTypeResolver());
     	this.addActionTypeResolver(WebActionType.HIERARCHY,  new HierarchyActionTypeResolver());
     	this.addActionTypeResolver(WebActionType.DETACHED,   new DetachedActionTypeResolver());
-    	this.cache = new SimpleResourceCache(1000);
+    	this.cache = new SimpleResourceCache(300);
     }
     
 	public ResourceAction getResourceAction(ControllerManager controllerManager,
@@ -239,11 +239,21 @@ public class WebActionResolver extends AbstractActionResolver{
     		 RequestMethodType methodType, MutableMvcRequest request, String[] parts, int index) throws MalformedURLException{
     	
     	if(index == 0 && parts.length == 0){
-    		return new RequestEntry(node.getRequestEntry(methodType), null);
+    		RequestMappingEntry rme = node.getRequestEntry(methodType);
+    		return rme == null? 
+    				null :
+					new RequestEntry(
+						node.getRequestEntry(methodType), 
+						node.getRequestParameters(request, parts[index-1]));
     	}
     	else
     	if(index == parts.length){
-    		return new RequestEntry(node.getRequestEntry(methodType), null);
+    		RequestMappingEntry rme = node.getRequestEntry(methodType);
+    		return rme == null? 
+    				null : 
+					new RequestEntry(
+							node.getRequestEntry(methodType), 
+							node.getRequestParameters(request, parts[index-1]));
     	}
     	else{
     		RequestMappingNode next = node.getNext(parts[index]);
@@ -255,7 +265,22 @@ public class WebActionResolver extends AbstractActionResolver{
     		RequestEntry e = this.getNode(next, methodType, request, parts, index + 1);
     		
     		if(e != null && !next.isStaticValue()){
-    			e.setParameters(next.getRequestParameters(request, parts[index]));
+    			Map<String, List<String>> params     =  e.getParameters();
+    			Map<String, List<String>> nodeParams = node.getRequestParameters(request, parts[index-1]);
+    			
+    			if(params != null){
+    				
+    				if(nodeParams != null){
+    					params.putAll(nodeParams);
+    				}
+    				
+    			}
+    			else
+    			if(nodeParams != null){
+    				e.setParameters(nodeParams);
+    			}
+    			
+    			//e.setParameters(next.getRequestParameters(request, parts[index]));
     			//next.updateRequest(request, parts[index]);
     		}
     		

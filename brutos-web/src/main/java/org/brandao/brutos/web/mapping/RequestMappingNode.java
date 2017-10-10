@@ -49,7 +49,7 @@ public class RequestMappingNode{
 	}
 	
 	public Map<String,List<String>> getRequestParameters(MutableMvcRequest request, String value){
-		return this.pattern.getParameters(value);
+		return this.pattern == null? null : this.pattern.getParameters(value);
 
 		/*
         for(String key: params.keySet() ){
