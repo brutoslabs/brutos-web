@@ -109,14 +109,18 @@ public class MediaType extends DataType{
 	}
 	
 	public static MediaType valueOf(String value){
-		
-		if(value == null){
-			return null;
+		try{
+			if(value == null){
+				return null;
+			}
+			
+			MediaType r = defaultTypes.get(value);
+	
+			return r == null? create(value) : r;
 		}
-		
-		MediaType r = defaultTypes.get(value);
-
-		return r == null? create(value) : r;
+		catch(Throwable e){
+			throw new IllegalStateException("can't parse media type: " + value, e);
+		}
 	}
 	
 	private static MediaType create(String value){
