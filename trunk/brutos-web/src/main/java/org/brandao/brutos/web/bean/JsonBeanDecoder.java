@@ -117,9 +117,9 @@ public class JsonBeanDecoder implements BeanDecoder{
 		Type type                = entity.getType();
 		value                    = type.convert(value);
 		
-		if (value == null){
-			return null;
-		}
+		//if (value == null){
+		//	return null;
+		//}
 
 		DependencyBean bean = metaBean.getMetaValues().get(value);
 

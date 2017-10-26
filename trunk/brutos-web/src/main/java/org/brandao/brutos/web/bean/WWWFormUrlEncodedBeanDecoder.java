@@ -127,8 +127,8 @@ public class WWWFormUrlEncodedBeanDecoder
 		Object metaValue = entity.getScope().get(newPrefix);
 		metaValue = entity.getType().convert(metaValue);
 
-		if (metaValue == null)
-			return null;
+		//if (metaValue == null)
+		//	return null;
 
 		DependencyBean bean = entity.getMetaValues().get(metaValue);
 
