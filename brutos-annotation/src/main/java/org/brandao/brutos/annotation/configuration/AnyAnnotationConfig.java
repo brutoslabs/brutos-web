@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.annotation.configuration;
 
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 import org.brandao.brutos.BrutosException;
@@ -257,11 +258,28 @@ public class AnyAnnotationConfig extends AbstractAnnotationConfig {
 			ComponentRegistry componentRegistry) throws InstantiationException,
 			IllegalAccessException {
 
+		//Obtém a lista de tipos a partir da anotação
 		if (any.metaValuesDefinition() == MetaValuesDefinition.class) {
 
-			if (any.metaValues().length == 0)
-				throw new MappingException("meta values is required");
-
+			//Verifica se o tipo do bean é elegivel como opção
+			Class<?> beanType = metaBeanBuilder.getClassType();
+			
+			if(Modifier.isAbstract(beanType.getModifiers()) || beanType.isInterface()){
+				if (any.metaValues().length == 0){
+					throw new MappingException("meta values is required");
+				}
+			}
+			else{
+				if (controllerBuilder.getBean(AnnotationUtil.getBeanName(beanType)) == null) {
+					super.applyInternalConfiguration(
+							new ImportBeanEntry(beanType),
+							controllerBuilder, componentRegistry);
+				}
+				
+				metaBeanBuilder.addMetaValue(null,
+						AnnotationUtil.getBeanName(beanType));
+			}
+			
 			for (MetaValue value : any.metaValues()) {
 				if (controllerBuilder.getBean(AnnotationUtil.getBeanName(value
 						.target())) == null) {
