@@ -102,13 +102,13 @@ public class MetaBeanBuilder {
 
 		Object metaValue = this.metaBean.getType().convert(value);
 
-		if (metaValue == null)
-			throw new MappingException("invalid meta value: " + value);
+		//if (metaValue == null)
+		//	throw new MappingException("invalid meta value: " + value);
 
 		this.metaBean.putMetaValue(metaValue, dependency);
 		return this;
 	}
-
+	
 	public MetaBeanBuilder removeMetaValue(String value) {
 		this.metaBean.removeMetaValue(value);
 		return this;
