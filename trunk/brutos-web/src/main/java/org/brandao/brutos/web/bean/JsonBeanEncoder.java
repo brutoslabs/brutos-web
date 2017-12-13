@@ -53,6 +53,8 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 
 	//protected static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.sss'Z'");
 
+	private static final String NULL = "null";
+	
 	protected OutputStream originalStream;
 	
 	protected String charsetName;
@@ -77,6 +79,10 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 	
 	public void innerEncode(UseBeanData entity, Object value) throws Throwable{
 		
+		if(value == null){
+			writer.append(NULL);
+		}
+		else
 		if(entity.getMetaBean() != null){
 			
 			//if(entity.getName() != null){
@@ -166,6 +172,15 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 	
 	private void encode(Object parent, int fieldIndex, DependencyBean entity, Object value) throws Throwable{
 		
+		if(value == null){
+			if(entity.getParameterName() != null){
+				writer.append("\"").append(entity.getParameterName()).append("\": ").append(NULL);
+			}
+			else{
+				writer.append(NULL);
+			}
+		}
+		else
 		if(entity.getMetaBean() != null){
 			
 			if(entity.getParameterName() != null){
@@ -233,15 +248,24 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 			}
 			
 			String name = null;
-			
-			/*if(parent instanceof UseBeanData){
-				name = ((UseBeanData)parent).getName();
+
+			if(!(parent instanceof UseBeanData)){
+				
+				if(!(parent instanceof Element) && !(parent instanceof Key)){
+					name = ((DependencyBean)parent).getParameterName();
+				}
+				
 			}
-			else*/
+			
+			/*
+			//if(parent instanceof UseBeanData){
+			//	name = ((UseBeanData)parent).getName();
+			//}
+			//else
 			if(!(parent instanceof Element) && !(parent instanceof Key)){
 				name = ((DependencyBean)parent).getParameterName();
 			}
-		
+			*/
 
 			int currentFieldIndex = fieldIndex;
 			
@@ -336,6 +360,10 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 
 	private void encode(Object parent, int fieldIndex, int indexElement, Element entity, Object value) throws Throwable{
 		
+		if(value == null){
+			writer.append(NULL);
+		}
+		else
 		if(entity.getMetaBean() != null){
 			writer.append("{ ");
 			this.encode(entity, fieldIndex, entity.getMetaBean(), value);
@@ -369,6 +397,10 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 	
 	private void encode(Object parent, int fieldIndex, int indexElement, Key entity, Object value) throws Throwable{
 		
+		if(value == null){
+			writer.append(NULL);
+		}
+		else
 		if(entity.getMetaBean() != null){
 			writer.append("{ ");
 			this.encode(entity, fieldIndex, entity.getMetaBean(), value);
