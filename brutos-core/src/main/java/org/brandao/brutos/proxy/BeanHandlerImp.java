@@ -18,7 +18,12 @@
 package org.brandao.brutos.proxy;
 
 import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 
+import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.FetchType;
 import org.brandao.brutos.mapping.BeanDecoder;
 import org.brandao.brutos.mapping.BeanDecoderException;
@@ -50,28 +55,74 @@ public abstract class BeanHandlerImp implements ActionHandler {
 	public Object invoke(Object self, Method thisMethod, Method proceed,
 			Object[] args) throws Throwable {
 		
-		if(this.value == null){
-			this.load();	
+		try{
+			if(this.value == null){
+				this.load();	
+			}
+			
+			if(this.value == null){
+				throw new LazyLoadException("can't load entity");
+			}
+			
+			return thisMethod.invoke(this.value, args);
 		}
-		
-		return thisMethod.invoke(this.value, args);
+		catch(LazyLoadException e){
+			throw e;	
+		}
+		catch(Throwable e){
+			throw new LazyLoadException(e);	
+		}
+		 
 	}
 	
-	private synchronized void load() throws BeanDecoderException{
+	private synchronized void load() 
+			throws BeanDecoderException, InstantiationException, IllegalAccessException{
 		
 		if(this.value != null){
 			return;
 		}
 		
 		if(this.metadata instanceof UseBeanData){
-			this.value = this.decoder.decode((UseBeanData)this.metadata, FetchType.EAGER, data);	
+			UseBeanData m = (UseBeanData)this.metadata;
+			this.value = this.decoder.decode(m, FetchType.EAGER, data);
+			
+			if(this.value == null){
+				this.value = this.getDefaultInstance(m.getClassType());
+			}
 		}
 		else
 		if(this.metadata instanceof DependencyBean){
-			this.value = this.decoder.decode((DependencyBean)this.metadata, FetchType.EAGER, data);	
+			DependencyBean m = (DependencyBean)this.metadata;
+			this.value       = this.decoder.decode(m, FetchType.EAGER, data);
+			
+			if(this.value == null){
+				this.value = this.getDefaultInstance(m.getClassType());
+			}
 		}
 		else
 			throw new IllegalStateException(String.valueOf(this.metadata));
+		
 	}
 	
+	private Object getDefaultInstance(Class<?> type) throws InstantiationException, IllegalAccessException{
+		
+		if(List.class.isAssignableFrom(type)){
+			return ClassUtil.getInstance(ClassUtil.getInstantiableClass(List.class));
+		}
+		else
+		if(Set.class.isAssignableFrom(type)){
+			return ClassUtil.getInstance(ClassUtil.getInstantiableClass(Set.class));
+		}
+		else
+		if(Map.class.isAssignableFrom(type)){
+			return ClassUtil.getInstance(ClassUtil.getInstantiableClass(Map.class));
+		}
+		else
+		if(ConcurrentMap.class.isAssignableFrom(type)){
+			return ClassUtil.getInstance(ClassUtil.getInstantiableClass(ConcurrentMap.class));
+		}
+		else{
+			return null;
+		}
+	}
 }
