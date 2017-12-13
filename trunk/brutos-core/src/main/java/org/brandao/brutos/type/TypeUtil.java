@@ -24,6 +24,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.brandao.brutos.BrutosException;
 
 /**
@@ -37,11 +39,14 @@ public final class TypeUtil {
 	private static Class defaultSetType;
 
 	private static Class defaultMapType;
+	
+	private static Class defaultConcurrentMapType;
 
 	static {
-		defaultListType = ArrayList.class;
-		defaultSetType = HashSet.class;
-		defaultMapType = HashMap.class;
+		defaultListType 			= ArrayList.class;
+		defaultSetType 				= HashSet.class;
+		defaultMapType 				= HashMap.class;
+		defaultConcurrentMapType 	= ConcurrentHashMap.class;
 	}
 
 	public static Class getRawType(Object type) {
@@ -153,4 +158,12 @@ public final class TypeUtil {
 		defaultMapType = aDefaultMapType;
 	}
 
+	public static Class getDefaultConcurrentMapType() {
+		return defaultConcurrentMapType;
+	}
+
+	public static void setDefaultConcurrentMapType(Class aDefaultConcurrentMapType) {
+		defaultConcurrentMapType = aDefaultConcurrentMapType;
+	}
+	
 }

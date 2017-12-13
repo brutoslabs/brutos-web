@@ -21,6 +21,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 
 import org.brandao.brutos.type.TypeUtil;
 
@@ -102,6 +103,11 @@ public final class ClassUtil {
 		return (List<?>) getInstance(TypeUtil.getDefaultListType());
 	}
 
+	public static ConcurrentMap<?,?> getConcurrentMapInstance() throws ClassNotFoundException,
+		InstantiationException, IllegalAccessException {
+		return (ConcurrentMap<?,?>) getInstance(TypeUtil.getDefaultConcurrentMapType());
+	}
+
 	public static Map<?,?> getMapInstance() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException {
 		return (Map<?,?>) getInstance(TypeUtil.getDefaultMapType());
@@ -114,6 +120,9 @@ public final class ClassUtil {
 
 	public static Class<?> getInstantiableClass(Class<?> clazz) {
 
+		if (clazz == ConcurrentMap.class)
+			return TypeUtil.getDefaultConcurrentMapType();
+		else
 		if (clazz == Map.class)
 			return TypeUtil.getDefaultMapType();
 		else if (clazz == List.class)
