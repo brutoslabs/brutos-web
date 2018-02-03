@@ -21,13 +21,13 @@ import javassist.util.proxy.MethodHandler;
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
-import org.brandao.brutos.proxy.EntityProxyHandlerImp;
+import org.brandao.brutos.proxy.ActionEntityProxyHandler;
 
 /**
  * 
  * @author Brandao
  */
-public class JavassistEntityProxyHandlerImp extends EntityProxyHandlerImp implements
+public class JavassistEntityProxyHandlerImp extends ActionEntityProxyHandler implements
 		MethodHandler {
 
 	public JavassistEntityProxyHandlerImp(Object resource, Controller form,

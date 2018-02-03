@@ -28,30 +28,35 @@ import org.brandao.brutos.mapping.Action;
  * 
  * @author Brandao
  */
-public abstract class EntityProxyHandlerImp implements EntityProxyHandler {
+public abstract class ActionEntityProxyHandler extends AbstractEntityProxyHandler {
 
 	private Object resource;
+	
 	private Controller controller;
+	
 	private ConfigurableApplicationContext context;
+	
 	private Invoker invoker;
 
-	public EntityProxyHandlerImp(Object resource, Controller controller,
+	public ActionEntityProxyHandler(Object resource, Controller controller,
 			ConfigurableApplicationContext context, Invoker invoker) {
-		this.resource = resource;
-		this.context = context;
+		this.resource   = resource;
+		this.context    = context;
 		this.controller = controller;
-		this.invoker = invoker;
+		this.invoker    = invoker;
+		super.target    = resource;
 	}
 
 	public Object invoke(Object self, Method thisMethod, Method proceed,
 			Object[] args) throws Throwable {
+		
+		if(super.isGetEntityProxyHandlerMethod(thisMethod)){
+			return this;
+		}
+		
 		Action action = controller.getMethod(thisMethod);
 		return invoker.invoke(controller, context.getActionResolver()
 				.getResourceAction(action), resource, args);
-	}
-	
-	public Object getTarget(){
-		return resource;
 	}
 	
 }
