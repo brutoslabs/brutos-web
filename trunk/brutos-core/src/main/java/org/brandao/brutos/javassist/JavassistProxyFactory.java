@@ -30,6 +30,7 @@ import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.BeanDecoder;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.proxy.AbstractProxyFactory;
+import org.brandao.brutos.proxy.EntityProxy;
 
 /**
  * 
@@ -55,7 +56,7 @@ public class JavassistProxyFactory extends AbstractProxyFactory {
 			throws BrutosException {
 
 		MethodHandler handler = 
-				new JavassistActionHandler(resource, form, context, invoker);
+				new JavassistEntityProxyHandlerImp(resource, form, context, invoker);
 
 		try {
 			ProxyObject instance = (ProxyObject) ClassUtil
@@ -73,7 +74,7 @@ public class JavassistProxyFactory extends AbstractProxyFactory {
 
 		try{
 			MethodHandler handler = 
-					new JavassistBeanHandler(metadata, data, decoder);
+					new JavassistBeanEntityProxyHandler(metadata, data, decoder);
 			ProxyObject instance = (ProxyObject) ClassUtil.getInstance(proxyClass);
 			instance.setHandler(handler);
 			return instance;
@@ -86,6 +87,7 @@ public class JavassistProxyFactory extends AbstractProxyFactory {
 	private Class<?> createProxyClass(Class<?> clazz) throws Exception {
 		factory = new ProxyFactory();
 		factory.setSuperclass(clazz);
+		factory.setInterfaces(new Class[]{EntityProxy.class});
 		return factory.createClass();
 	}
 

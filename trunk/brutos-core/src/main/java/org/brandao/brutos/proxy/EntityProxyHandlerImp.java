@@ -18,6 +18,7 @@
 package org.brandao.brutos.proxy;
 
 import java.lang.reflect.Method;
+
 import org.brandao.brutos.ConfigurableApplicationContext;
 import org.brandao.brutos.Invoker;
 import org.brandao.brutos.mapping.Controller;
@@ -27,14 +28,14 @@ import org.brandao.brutos.mapping.Action;
  * 
  * @author Brandao
  */
-public abstract class ActionHandlerImp implements ActionHandler {
+public abstract class EntityProxyHandlerImp implements EntityProxyHandler {
 
 	private Object resource;
 	private Controller controller;
 	private ConfigurableApplicationContext context;
 	private Invoker invoker;
 
-	public ActionHandlerImp(Object resource, Controller controller,
+	public EntityProxyHandlerImp(Object resource, Controller controller,
 			ConfigurableApplicationContext context, Invoker invoker) {
 		this.resource = resource;
 		this.context = context;
@@ -48,4 +49,9 @@ public abstract class ActionHandlerImp implements ActionHandler {
 		return invoker.invoke(controller, context.getActionResolver()
 				.getResourceAction(action), resource, args);
 	}
+	
+	public Object getTarget(){
+		return resource;
+	}
+	
 }
