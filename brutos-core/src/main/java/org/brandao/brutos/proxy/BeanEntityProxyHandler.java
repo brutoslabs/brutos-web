@@ -34,7 +34,7 @@ import org.brandao.brutos.mapping.UseBeanData;
  * 
  * @author Brandao
  */
-public abstract class BeanHandlerImp implements ActionHandler {
+public abstract class BeanEntityProxyHandler implements EntityProxyHandler {
 
 	private Object metadata;
 	
@@ -44,7 +44,7 @@ public abstract class BeanHandlerImp implements ActionHandler {
 	
 	private BeanDecoder decoder;
 	
-	public BeanHandlerImp(Object metadata, Object data, 
+	public BeanEntityProxyHandler(Object metadata, Object data, 
 			BeanDecoder decoder) {
 		this.metadata = metadata;
 		this.decoder  = decoder;
@@ -56,6 +56,10 @@ public abstract class BeanHandlerImp implements ActionHandler {
 			Object[] args) throws Throwable {
 		
 		try{
+			if(thisMethod.getDeclaringClass() == EntityProxy.class && thisMethod.getName().equals("getEntityProxyHandler")){
+				return this;
+			}
+			
 			if(this.value == null){
 				this.load();	
 			}
@@ -73,6 +77,21 @@ public abstract class BeanHandlerImp implements ActionHandler {
 			throw new LazyLoadException(e);	
 		}
 		 
+	}
+	
+	public Object getTarget(){
+		try{
+			if(this.value == null){
+				this.load();	
+			}
+			return this.value;
+		}
+		catch(LazyLoadException e){
+			throw e;	
+		}
+		catch(Throwable e){
+			throw new LazyLoadException(e);	
+		}
 	}
 	
 	private synchronized void load() 

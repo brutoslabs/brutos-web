@@ -23,9 +23,11 @@ import java.lang.reflect.Method;
  * 
  * @author Brandao
  */
-public interface ActionHandler {
+public interface EntityProxyHandler {
 
 	Object invoke(Object self, Method thisMethod, Method proceed, Object[] args)
 			throws Throwable;
 
+	Object getTarget();
+	
 }
