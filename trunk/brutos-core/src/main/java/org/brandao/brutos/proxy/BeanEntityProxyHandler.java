@@ -34,7 +34,8 @@ import org.brandao.brutos.mapping.UseBeanData;
  * 
  * @author Brandao
  */
-public abstract class BeanEntityProxyHandler implements EntityProxyHandler {
+public abstract class BeanEntityProxyHandler 
+	extends AbstractEntityProxyHandler {
 
 	private Object metadata;
 	
@@ -50,13 +51,14 @@ public abstract class BeanEntityProxyHandler implements EntityProxyHandler {
 		this.decoder  = decoder;
 		this.value    = null;
 		this.data     = data;
+		super.target  = null;
 	}
 
 	public Object invoke(Object self, Method thisMethod, Method proceed,
 			Object[] args) throws Throwable {
 		
 		try{
-			if(thisMethod.getDeclaringClass() == EntityProxy.class && thisMethod.getName().equals("getEntityProxyHandler")){
+			if(super.isGetEntityProxyHandlerMethod(thisMethod)){
 				return this;
 			}
 			
@@ -84,7 +86,7 @@ public abstract class BeanEntityProxyHandler implements EntityProxyHandler {
 			if(this.value == null){
 				this.load();	
 			}
-			return this.value;
+			return super.getTarget();
 		}
 		catch(LazyLoadException e){
 			throw e;	
@@ -121,6 +123,7 @@ public abstract class BeanEntityProxyHandler implements EntityProxyHandler {
 		else
 			throw new IllegalStateException(String.valueOf(this.metadata));
 		
+		super.target = this.value;
 	}
 	
 	private Object getDefaultInstance(Class<?> type) throws InstantiationException, IllegalAccessException{
