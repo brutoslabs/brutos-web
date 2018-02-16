@@ -6,8 +6,13 @@
 	<packaging>jar</packaging>
 	<version>2.0-rc2</version>
 	<name>brutos-core</name>
-	<description>Brutos Application Framework.</description>
+	<description>Brutos core.</description>
 	<url>http://www.brutosframework.com.br/</url>
+
+	<issueManagement>
+		<url>https://github.com/brandaof/brutos-mvc/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
 
 	<licenses>
 		<license>
@@ -18,11 +23,20 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:svn:http://svn.code.sf.net/p/brutos/code/trunk brutos-code</connection>
-		<developerConnection>scm:svn:http://svn.code.sf.net/p/brutos/code/trunk brutos-code</developerConnection>
-		<url>http://sourceforge.net/p/brutos/code/HEAD/tree/trunk/</url>
+		<url>https://github.com/brandaof/brutos-mvc</url>
+		<connection>scm:git:https://github.com/brandaof/brutos-mvc.git</connection>
+		<developerConnection>scm:git:git@github.com:brandaof/brutos-mvc.git</developerConnection>
 	</scm>
-
+	
+	<developers>
+		<developer>
+			<name>Afonso Brandao</name>
+			<email>afonso.rbn@gmail.com</email>
+			<organization>Brandao</organization>
+			<organizationUrl>http://brandao.org/</organizationUrl>
+		</developer>
+	</developers>
+	
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
@@ -33,15 +47,6 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-
-	<developers>
-		<developer>
-			<name>Afonso Brandao</name>
-			<email>afonso.rbn@gmail.com</email>
-			<organization>Brandao</organization>
-			<organizationUrl>http://brandao.org/</organizationUrl>
-		</developer>
-	</developers>
 
 	<build>
 		<plugins>
