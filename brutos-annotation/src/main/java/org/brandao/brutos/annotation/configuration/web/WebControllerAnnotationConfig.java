@@ -47,7 +47,7 @@ public class WebControllerAnnotationConfig
 		String name                         = null;
 		String actionID                     = null;
 		String defaultActionName            = null;
-		ActionType actionType               = strategy == null ? null : WebActionType.valueOf(strategy.value().name());
+		ActionType actionType               = strategy == null ? null : WebActionType.valueOf(strategy.value());
 		
 		ResponseStatus responseStatus       = source.getAnnotation(ResponseStatus.class);
 		boolean resolved                    = viewAnnotation == null ? false : viewAnnotation.resolved();

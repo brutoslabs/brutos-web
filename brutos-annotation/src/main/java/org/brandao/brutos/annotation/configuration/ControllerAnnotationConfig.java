@@ -61,7 +61,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 		String name                     = null;
 		String actionID                 = null;
 		String defaultActionName        = null;
-		ActionType actionType           = strategy == null ? null : ActionType.valueOf(strategy.value().name());
+		ActionType actionType           = strategy == null ? null : ActionType.valueOf(strategy.value());
 		boolean resolved                = viewAnnotation == null ? false : viewAnnotation.resolved();
 		boolean rendered                = viewAnnotation == null ? true : viewAnnotation.rendered();
 		

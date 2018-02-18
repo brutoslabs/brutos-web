@@ -110,7 +110,7 @@ public class ActionType {
 		throw new UnsupportedOperationException();
 	}
 	
-	/**
+	/*
 	 * Verifica se a identificação é composta pelo controlador e a ação.
 	 * @return Verdadeiro se a identificação é composta. Caso contrário, falso.
 	 */
@@ -118,7 +118,7 @@ public class ActionType {
 	//	throw new UnsupportedOperationException();
 	//}
 
-	/**
+	/*
 	 * Verifica se a resolução da ação é delegada ao controlador.
 	 * @return Verdadeiro se a resolução da ação é delagada ao controladora. Caso contrário, falso.
 	 */

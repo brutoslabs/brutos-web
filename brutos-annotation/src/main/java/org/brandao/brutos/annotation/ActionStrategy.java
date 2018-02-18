@@ -36,6 +36,6 @@ public @interface ActionStrategy {
 	 * Estratégia de mapeamento da ação. Os valores estão descritos em
 	 * {@link ActionStrategyType}.
 	 */
-	ActionStrategyType value();
+	String value();
 
 }
