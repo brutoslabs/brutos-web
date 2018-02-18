@@ -145,6 +145,10 @@ public class WebActionResolver extends AbstractActionResolver{
 				controller.getActionType()
 				.getIDs(controllerID, controller, actionID, action);
 	
+	    	if(list == null){
+	    		return;
+	    	}
+	    	
 	    	for(ActionID aID: list){
 	    		WebActionID aWID = (WebActionID)aID;
 		    	String[] parts   = WebUtil.parserURI(aWID.getId(), true).toArray(new String[0]);

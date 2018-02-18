@@ -296,6 +296,7 @@ public class WebActionType extends ActionType{
 		defaultTypes.put(PARAMETER.id(),	PARAMETER);
 		defaultTypes.put(HIERARCHY.id(),	HIERARCHY);
 		defaultTypes.put(DETACHED.id(),		DETACHED);
+		defaultTypes.put(HEADER.id(),		HEADER);
 	}
 
 	public static WebActionType valueOf(String value) {
