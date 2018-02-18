@@ -56,6 +56,7 @@ public class ActionType {
 			return actionName;
 		}
 		
+		/*
 		public boolean isComposite(){
 			return true;
 		}
@@ -63,6 +64,7 @@ public class ActionType {
 		public boolean isDelegate(){
 			return false;
 		}
+		*/
 		
 		public boolean isValidControllerId(String value){
 			return value != null;
@@ -112,17 +114,17 @@ public class ActionType {
 	 * Verifica se a identificação é composta pelo controlador e a ação.
 	 * @return Verdadeiro se a identificação é composta. Caso contrário, falso.
 	 */
-	public boolean isComposite(){
-		throw new UnsupportedOperationException();
-	}
+	//public boolean isComposite(){
+	//	throw new UnsupportedOperationException();
+	//}
 
 	/**
 	 * Verifica se a resolução da ação é delegada ao controlador.
 	 * @return Verdadeiro se a resolução da ação é delagada ao controladora. Caso contrário, falso.
 	 */
-	public boolean isDelegate(){
-		throw new UnsupportedOperationException();
-	}
+	//public boolean isDelegate(){
+	//	throw new UnsupportedOperationException();
+	//}
 	
 	/**
 	 * Obtém a identificação do controlador em um formato válido.

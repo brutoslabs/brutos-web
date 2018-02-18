@@ -132,9 +132,10 @@ public class WebControllerBuilder extends ControllerBuilder{
 		executor             = StringUtil.adjust(executor);
 
 		if(StringUtil.isEmpty(id) && !StringUtil.isEmpty(executor)){
-			if(type.isDelegate() || type.isComposite()){
-	    		id = type.getActionID(executor.replaceAll("Action$", ""));
-			}
+			//if(type.isDelegate() || type.isComposite()){
+	    	//	id = type.getActionID(executor.replaceAll("Action$", ""));
+			//}
+			id = type.getActionID(executor);
 		}
 		
 		requestMethodType    = 

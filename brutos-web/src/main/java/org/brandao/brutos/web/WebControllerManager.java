@@ -89,9 +89,14 @@ public class WebControllerManager extends ControllerManagerImp{
 		
 		id = StringUtil.adjust(id);
 		
-        id = StringUtil.isEmpty(id) && (actionType.isDelegate() || actionType.isComposite())?
-    		actionType.getControllerID(classType.getSimpleName().toLowerCase()) :
-    		id;
+        //id = 
+    	//	StringUtil.isEmpty(id) && (actionType.isDelegate() || actionType.isComposite())?
+    	//			actionType.getControllerID(classType.getSimpleName().toLowerCase()) :
+    	//			id;
+        id = 
+    		StringUtil.isEmpty(id)?
+				actionType.getControllerID(classType.getSimpleName()) :
+				id;
 				
 		if (classType == null){
 			throw new MappingException("invalid class type: "

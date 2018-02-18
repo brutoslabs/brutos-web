@@ -29,13 +29,15 @@ public class WebActionType extends ActionType{
 		}
 		
 		public String getControllerID(String className){
-			return "/" + className;
+			return "/" + className.toLowerCase().replaceAll("controller$", "");
 		}
 
 		public String getActionID(String actionName){
-			return "/" + actionName;
+			//return "/" + actionName;
+			return actionName.toLowerCase().replaceAll("action$", "");
 		}
 		
+		/*
 		public boolean isComposite(){
 			return false;
 		}
@@ -43,6 +45,7 @@ public class WebActionType extends ActionType{
 		public boolean isDelegate(){
 			return true;
 		}
+		*/
 		
 		public boolean isValidControllerId(String value){
 			try{
@@ -82,13 +85,15 @@ public class WebActionType extends ActionType{
 		}
 		
 		public String getControllerID(String className){
-			return "/" + className;
+			return "/" + className.toLowerCase().replaceAll("controller$", "");
 		}
 
 		public String getActionID(String actionName){
-			return "/" + actionName;
+			//return "/" + actionName;
+			return actionName.toLowerCase().replaceAll("action$", "");
 		}
 		
+		/*
 		public boolean isComposite(){
 			return false;
 		}
@@ -96,6 +101,7 @@ public class WebActionType extends ActionType{
 		public boolean isDelegate(){
 			return true;
 		}
+		*/
 		
 		public boolean isValidControllerId(String value){
 			try{
@@ -130,13 +136,14 @@ public class WebActionType extends ActionType{
 		}
 
 		public String getControllerID(String className){
-			return "/" + className;
+			return "/" + className.toLowerCase().replaceAll("controller$", "");
 		}
 
 		public String getActionID(String actionName){
-			return "/" + actionName;
+			return "/" + actionName.toLowerCase().replaceAll("action$", "");
 		}
 		
+		/*
 		public boolean isComposite(){
 			return true;
 		}
@@ -144,6 +151,7 @@ public class WebActionType extends ActionType{
 		public boolean isDelegate(){
 			return false;
 		}
+		*/
 		
 		public boolean isValidControllerId(String value){
 			try{
@@ -221,13 +229,14 @@ public class WebActionType extends ActionType{
 		}
 
 		public String getControllerID(String className){
-			throw new UnsupportedOperationException();
+			//throw new UnsupportedOperationException();
+			return null;
 		}
 
 		public String getActionID(String actionName){
-			return "/" + actionName;
+			return "/" + actionName.toLowerCase().replaceAll("action$", "");
 		}
-		
+		/*
 		public boolean isComposite(){
 			return false;
 		}
@@ -235,6 +244,7 @@ public class WebActionType extends ActionType{
 		public boolean isDelegate(){
 			return false;
 		}
+		*/
 		
 		public boolean isValidControllerId(String value){
 			return value == null;
