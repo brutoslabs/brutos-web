@@ -236,7 +236,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		DispatcherType dispatcher 			= DispatcherType.valueOf(parseUtil.getAttribute(controller, "dispatcher"));
 		String view 						= parseUtil.getAttribute(controller, "view");
 		boolean resolvedView				= Boolean.valueOf(parseUtil.getAttribute(controller, "resolved-view"));
-		boolean renderedView				= Boolean.valueOf(parseUtil.getAttribute(controller, "resolved-view"));
+		boolean renderedView				= Boolean.valueOf(parseUtil.getAttribute(controller, "rendered-view"));
 		String name 						= parseUtil.getAttribute(controller, "name");
 		String clazzName 					= parseUtil.getAttribute(controller, "class");
 		String actionId 					= parseUtil.getAttribute(controller, "action-id");
@@ -964,30 +964,40 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 	protected void addAction(Element actionNode,
 			ControllerBuilder controllerBuilder) {
 
-		String id = parseUtil.getAttribute(actionNode, "id");
-		String executor = parseUtil.getAttribute(actionNode, "executor");
-		String result = parseUtil.getAttribute(actionNode, "result");
-		String resultRendered = parseUtil.getAttribute(actionNode,
-				"result-rendered");
-		String view = parseUtil.getAttribute(actionNode, "view");
-		DispatcherType dispatcher = DispatcherType.valueOf(parseUtil
-				.getAttribute(actionNode, "dispatcher"));
-		boolean resolved = Boolean.valueOf(
-				parseUtil.getAttribute(actionNode, "view-resolved"))
-				.booleanValue();
+		String id 					= parseUtil.getAttribute(actionNode, "id");
+		String executor 			= parseUtil.getAttribute(actionNode, "executor");
+		String result 				= parseUtil.getAttribute(actionNode, "result");
+		String resultRendered 		= parseUtil.getAttribute(actionNode, "result-rendered");
+		String view 				= parseUtil.getAttribute(actionNode, "view");
+		boolean resolvedView		= Boolean.valueOf(parseUtil.getAttribute(actionNode, "resolved-view"));
+		boolean renderedView		= Boolean.valueOf(parseUtil.getAttribute(actionNode, "rendered-view"));
+		DispatcherType dispatcher 	= DispatcherType.valueOf(parseUtil.getAttribute(actionNode, "dispatcher"));
 
-		ActionBuilder actionBuilder = controllerBuilder.addAction(id, result,
-				Boolean.parseBoolean(resultRendered), view, dispatcher,
-				resolved, executor);
+		ActionBuilder actionBuilder = 
+				controllerBuilder.addAction(
+					id, 
+					result,
+					Boolean.parseBoolean(resultRendered), 
+					renderedView? view : null, 
+					dispatcher,
+					renderedView? resolvedView : true, 
+					executor
+				);
 
-		addParametersAction(parseUtil.getElements(actionNode,
-				XMLBrutosConstants.XML_BRUTOS_PARAMETER), actionBuilder);
-
-		addThrowSafe(parseUtil.getElements(actionNode,
-				XMLBrutosConstants.XML_BRUTOS_THROWS), actionBuilder);
+		this.loadActionDependencies(actionNode, actionBuilder);
 
 	}
 
+	protected void loadActionDependencies(Element actionNode, ActionBuilder builder){
+		
+		addParametersAction(parseUtil.getElements(actionNode,
+				XMLBrutosConstants.XML_BRUTOS_PARAMETER), builder);
+
+		addThrowSafe(parseUtil.getElements(actionNode,
+				XMLBrutosConstants.XML_BRUTOS_THROWS), builder);
+		
+	}
+	
 	protected void addParametersAction(NodeList params,
 			ActionBuilder actionBuilder) {
 
@@ -1177,7 +1187,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	protected Class<?> getClass(String clazzName){
 		try{
-			return ClassUtil.get(clazzName);
+			return clazzName == null? null : ClassUtil.get(clazzName);
 		} 
 		catch (Exception ex) {
 			throw new BrutosException(ex);

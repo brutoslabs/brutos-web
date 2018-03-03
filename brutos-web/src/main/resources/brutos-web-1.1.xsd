@@ -46,27 +46,21 @@
 
 	<!-- /Controller and actions attributes -->
 	
-	<!-- accept-request-types -->
+	<!-- accept-request-type -->
 	
-    <xsd:complexType name="accept-request-types">
-        <xsd:sequence>
-            <xsd:element name="accept-request-type" minOccurs="0" type="media-type" maxOccurs="unbounded"/>
-        </xsd:sequence>
-    </xsd:complexType>
-
-	<!-- /accept-request-types -->
-
-	<!-- response-types -->
+	<xsd:element name="accept-request-type" type="media-type"/>
 	
-    <xsd:complexType name="response-types">
-        <xsd:sequence>
-            <xsd:element name="response-type" minOccurs="0" type="media-type" maxOccurs="unbounded"/>
-        </xsd:sequence>
-    </xsd:complexType>
+	<!-- /accept-request-type -->
 
-	<!-- /response-types -->
+	<!-- response-type -->
+	
+	<xsd:element name="response-type" type="media-type"/>
+
+	<!-- /response-type -->
 
 	<!-- response-errors -->
+	
+	<xsd:element name="response-errors" type="response-errors"/>
 	
     <xsd:complexType name="response-errors">
         <xsd:sequence>
@@ -79,7 +73,7 @@
         <xsd:attribute name="dispatcher" type="con:dispatcher" default="forward"/>
         <xsd:attribute name="resolved-view" type="xsd:boolean" default="false"/>
         <xsd:attribute name="rendered-view" type="xsd:boolean" default="true"/>
-        <xsd:attribute name="enabled" type="xsd:boolean" default="true"/>
+        <!-- <xsd:attribute name="enabled" type="xsd:boolean" default="true"/> -->
     </xsd:complexType>
 
 
@@ -92,7 +86,7 @@
         <xsd:attribute name="dispatcher" type="con:dispatcher" default="forward"/>
         <xsd:attribute name="resolved-view" type="xsd:boolean" default="false"/>
         <xsd:attribute name="rendered-view" type="xsd:boolean" default="true"/>
-        <xsd:attribute name="enabled" type="xsd:boolean" default="true"/>
+        <!-- <xsd:attribute name="enabled" type="xsd:boolean" default="true"/> -->
     </xsd:complexType>
 
 	<!-- /response-errors -->
