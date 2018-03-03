@@ -231,21 +231,29 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	protected void loadController(Element controller) {
 
-		String id 					= parseUtil.getAttribute(controller, "id");
-		ActionType actionType 		= ActionType.valueOf(parseUtil.getAttribute(controller, "action-type"));
-		DispatcherType dispatcher 	= DispatcherType.valueOf(parseUtil.getAttribute(controller, "dispatcher"));
-		String view 				= parseUtil.getAttribute(controller, "view");
-		String name 				= parseUtil.getAttribute(controller, "name");
-		String clazzName 			= parseUtil.getAttribute(controller, "class");
-		String actionId 			= parseUtil.getAttribute(controller, "action-id");
-		String defaultAction 		= parseUtil.getAttribute(controller, "default-action");
-		boolean viewresolved 		= Boolean.valueOf(parseUtil.getAttribute(controller, "view-resolved")).booleanValue();
-		Class<?> clazz 				= this.getClass(clazzName);
+		String id 							= parseUtil.getAttribute(controller, "id");
+		ActionType actionType 				= ActionType.valueOf(parseUtil.getAttribute(controller, "action-type"));
+		DispatcherType dispatcher 			= DispatcherType.valueOf(parseUtil.getAttribute(controller, "dispatcher"));
+		String view 						= parseUtil.getAttribute(controller, "view");
+		boolean resolvedView				= Boolean.valueOf(parseUtil.getAttribute(controller, "resolved-view"));
+		boolean renderedView				= Boolean.valueOf(parseUtil.getAttribute(controller, "resolved-view"));
+		String name 						= parseUtil.getAttribute(controller, "name");
+		String clazzName 					= parseUtil.getAttribute(controller, "class");
+		String actionId 					= parseUtil.getAttribute(controller, "action-id");
+		String defaultAction 				= parseUtil.getAttribute(controller, "default-action");
+		Class<?> clazz 						= this.getClass(clazzName);
 		
 		ControllerBuilder controllerBuilder = 
-				componentRegistry
-				.registerController(id, view, dispatcher, viewresolved, name,
-						clazz, actionId, actionType);
+				componentRegistry.registerController(
+						id, 
+						renderedView? view : null, 
+						dispatcher, 
+						renderedView? resolvedView : true, 
+						name,
+						clazz, 
+						actionId, 
+						actionType
+				);
 
 		if (defaultAction != null){
 			controllerBuilder.setDefaultAction(defaultAction);

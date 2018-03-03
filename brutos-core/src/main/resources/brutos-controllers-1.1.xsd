@@ -53,7 +53,8 @@
         <xsd:attribute name="id" type="xsd:string"/>
         <xsd:attribute name="dispatcher" type="dispatcher" default="forward"/>
         <xsd:attribute name="view" type="xsd:string"/>
-        <xsd:attribute name="view-resolved" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="rendered-view" type="xsd:boolean" default="true"/>
+        <xsd:attribute name="resolved-view" type="xsd:boolean" default="false"/>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="class" type="xsd:string"/>
         <xsd:attribute name="action-id" type="xsd:string" default="invoke"/>
@@ -73,16 +74,19 @@
         <xsd:attribute name="result" type="xsd:string"/>
         <xsd:attribute name="result-rendered" type="xsd:boolean" default="false"/>
         <xsd:attribute name="view" type="xsd:string"/>
-        <xsd:attribute name="view-resolved" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="resolved-view" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="rendered-view" type="xsd:boolean" default="true"/>
         <xsd:attribute name="dispatcher" type="dispatcher" default="forward"/>
     </xsd:complexType>
 
     <xsd:complexType name="throw-safe">
         <xsd:attribute name="view" type="xsd:string"/>
-        <xsd:attribute name="view-resolved" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="resolved-view" type="xsd:boolean" default="false"/>
+        <xsd:attribute name="rendered-view" type="xsd:boolean" default="true"/>
         <xsd:attribute name="target" type="xsd:string" use="required"/>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="dispatcher" type="dispatcher" default="forward"/>
+        <xsd:attribute name="enabled" type="xsd:boolean" default="true"/>
     </xsd:complexType>
 
     <xsd:complexType name="mapping-bean">
@@ -105,7 +109,7 @@
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
         </xsd:sequence>
         <xsd:attribute name="bean" type="xsd:string"/>
-        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="enum-property" type="enum" default="auto"/>
         <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="mapping" type="xsd:boolean" default="false"/>
@@ -143,6 +147,15 @@
 
   <!-- *************************************************************** -->
 
+    <xsd:simpleType name="fetch-type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="eager"/>
+            <xsd:enumeration value="lazy"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+  <!-- *************************************************************** -->
+  
     <xsd:simpleType name="actionType">
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="parameter"/>
@@ -177,6 +190,7 @@
 
     <xsd:simpleType name="enum">
         <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="auto"/>
             <xsd:enumeration value="ordinal"/>
             <xsd:enumeration value="string"/>
         </xsd:restriction>
@@ -194,8 +208,9 @@
             <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
         <xsd:attribute name="name" type="xsd:string" use="required"/>
+        <xsd:attribute name="fetch-type" type="fetch-type" default="eager"/>
         <xsd:attribute name="value" type="xsd:string"/>
-        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="enum-property" type="enum" default="auto"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="scope" type="xsd:string" default="param"/>
         <xsd:attribute name="type-def" type="xsd:string"/>
@@ -214,8 +229,9 @@
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
-        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="enum-property" type="enum" default="auto"/>
         <xsd:attribute name="value" type="xsd:string"/>
+        <xsd:attribute name="fetch-type" type="fetch-type" default="eager"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="bean" type="xsd:string"/>
         <xsd:attribute name="mapping" type="xsd:boolean" default="false"/>
@@ -236,7 +252,7 @@
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
-        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="enum-property" type="enum" default="auto"/>
         <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="bean" type="xsd:string"/>
@@ -256,7 +272,7 @@
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
-        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="enum-property" type="enum" default="auto"/>
         <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="bean" type="xsd:string"/>
@@ -294,7 +310,8 @@
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
         <xsd:attribute name="property-name" type="xsd:string" use="required"/>
-        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="fetch-type" type="fetch-type" default="eager"/>
+        <xsd:attribute name="enum-property" type="enum" default="auto"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="bean" type="xsd:string"/>
         <xsd:attribute name="mapping" type="xsd:boolean"/>
@@ -313,7 +330,8 @@
             <xsd:element name="validator" type="validator" minOccurs="0" maxOccurs="1"/>
             <xsd:element name="null" minOccurs="0" maxOccurs="1"/>
         </xsd:choice>
-        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="enum-property" type="enum" default="auto"/>
+        <xsd:attribute name="fetch-type" type="fetch-type" default="eager"/>
         <xsd:attribute name="value" type="xsd:string"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="bean" type="xsd:string"/>
@@ -414,7 +432,7 @@
         <xsd:sequence>
 	        <xsd:element name="meta-value" type="meta-value" minOccurs="1" maxOccurs="unbounded"/>
         </xsd:sequence>
-        <xsd:attribute name="enum-property" type="enum" default="ordinal"/>
+        <xsd:attribute name="enum-property" type="enum" default="auto"/>
         <xsd:attribute name="temporal-property" type="xsd:string" default="dd/MM/yyyy"/>
         <xsd:attribute name="bean" type="xsd:string" use="required"/>
         <xsd:attribute name="scope" type="xsd:string" default="param"/>
