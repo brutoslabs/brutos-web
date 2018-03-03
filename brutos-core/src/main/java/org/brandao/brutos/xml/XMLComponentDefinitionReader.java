@@ -1097,27 +1097,23 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 	protected void addThrowSafe(Element throwSafeNode,
 			ControllerBuilder controllerBuilder) {
 
-		String view = parseUtil.getAttribute(throwSafeNode, "view");
-		boolean resolved = Boolean.valueOf(
-				parseUtil.getAttribute(throwSafeNode, "view-resolved"))
-				.booleanValue();
-		String target = parseUtil.getAttribute(throwSafeNode, "target");
-		String name = parseUtil.getAttribute(throwSafeNode, "name");
-		DispatcherType dispatcher = DispatcherType.valueOf(parseUtil
-				.getAttribute(throwSafeNode, "dispatcher"));
-		Class<?> targetClass;
-
-		try {
-			targetClass = Class.forName(target, true, Thread.currentThread()
-					.getContextClassLoader());
-		} catch (BrutosException ex) {
-			throw ex;
-		} catch (Exception ex) {
-			throw new BrutosException(ex);
-		}
-
-		controllerBuilder.addThrowable(targetClass, view, name, dispatcher,
-				resolved);
+		String view 				= parseUtil.getAttribute(throwSafeNode, "view");
+		boolean resolvedView		= Boolean.valueOf(parseUtil.getAttribute(throwSafeNode, "resolved-view"));
+		boolean renderedView		= Boolean.valueOf(parseUtil.getAttribute(throwSafeNode, "rendered-view"));
+		//boolean enabled				= Boolean.valueOf(parseUtil.getAttribute(throwSafeNode, "enabled"));
+		String target 				= parseUtil.getAttribute(throwSafeNode, "target");
+		String name 				= parseUtil.getAttribute(throwSafeNode, "name");
+		DispatcherType dispatcher 	= DispatcherType.valueOf(parseUtil.getAttribute(throwSafeNode, "dispatcher"));
+		Class<?> targetClass 		= this.getClass(target);
+		
+		controllerBuilder
+			.addThrowable(
+				targetClass, 
+				renderedView? view : null, 
+				name, 
+				dispatcher,
+				renderedView? resolvedView : true
+			);
 	}
 
 	protected void addThrowSafe(NodeList throwSafeNodeList,
@@ -1131,27 +1127,25 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	protected void addThrowSafe(Element throwSafeNode, ActionBuilder actionBuilder) {
 
-		String view = parseUtil.getAttribute(throwSafeNode, "view");
-		boolean viewresolved = Boolean.valueOf(
-				parseUtil.getAttribute(throwSafeNode, "view-resolved"))
-				.booleanValue();
-		String target = parseUtil.getAttribute(throwSafeNode, "target");
-		String name = parseUtil.getAttribute(throwSafeNode, "name");
-		DispatcherType dispatcher = DispatcherType.valueOf(parseUtil
-				.getAttribute(throwSafeNode, "dispatcher"));
-		Class<?> targetClass;
+		String view 				= parseUtil.getAttribute(throwSafeNode, "view");
+		boolean resolvedView		= Boolean.valueOf(parseUtil.getAttribute(throwSafeNode, "resolved-view"));
+		boolean renderedView		= Boolean.valueOf(parseUtil.getAttribute(throwSafeNode, "rendered-view"));
+		//boolean enabled				= Boolean.valueOf(parseUtil.getAttribute(throwSafeNode, "enabled"));
+		String target 				= parseUtil.getAttribute(throwSafeNode, "target");
+		String name 				= parseUtil.getAttribute(throwSafeNode, "name");
+		DispatcherType dispatcher 	= DispatcherType.valueOf(parseUtil.getAttribute(throwSafeNode, "dispatcher"));
+		Class<?> targetClass 		= this.getClass(target);
 
-		try {
-			targetClass = Class.forName(target, true, Thread.currentThread()
-					.getContextClassLoader());
-		} catch (BrutosException ex) {
-			throw ex;
-		} catch (Exception ex) {
-			throw new BrutosException(ex);
-		}
-
-		actionBuilder.addThrowable(targetClass, view, name, dispatcher,
-				viewresolved);
+		//if(enabled){
+			actionBuilder
+				.addThrowable(
+					targetClass, 
+					renderedView? view : null, 
+					name, 
+					dispatcher,
+					renderedView? resolvedView : true
+				);
+		//}
 	}
 
 	protected void addValidator(Element validatorNode,

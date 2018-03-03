@@ -86,7 +86,7 @@
         <xsd:attribute name="target" type="xsd:string" use="required"/>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="dispatcher" type="dispatcher" default="forward"/>
-        <xsd:attribute name="enabled" type="xsd:boolean" default="true"/>
+        <!-- <xsd:attribute name="enabled" type="xsd:boolean" default="true"/> -->
     </xsd:complexType>
 
     <xsd:complexType name="mapping-bean">
