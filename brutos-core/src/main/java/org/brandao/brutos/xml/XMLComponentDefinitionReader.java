@@ -19,6 +19,7 @@ package org.brandao.brutos.xml;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
@@ -33,9 +34,9 @@ import org.w3c.dom.NodeList;
  */
 public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
-	private final List<Resource> blackList;
+	protected final List<Resource> blackList;
 
-	private final XMLParseUtil parseUtil;
+	protected final XMLParseUtil parseUtil;
 
 	public XMLComponentDefinitionReader(ComponentRegistry componenetRegistry) {
 		super(componenetRegistry);
@@ -70,7 +71,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void loadImporters(NodeList list, Resource resource) {
+	protected void loadImporters(NodeList list, Resource resource) {
 
 		for (int i = 0; i < list.getLength(); i++) {
 			Element c = (Element) list.item(i);
@@ -102,7 +103,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		}
 	}
 
-	private void loadInterceptors(Element e) {
+	protected void loadInterceptors(Element e) {
 
 		if (e == null)
 			return;
@@ -119,7 +120,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void loadInterceptor(NodeList list) {
+	protected void loadInterceptor(NodeList list) {
 
 		if (list == null)
 			return;
@@ -161,7 +162,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		}
 	}
 
-	private void loadInterceptorStack(NodeList list) {
+	protected void loadInterceptorStack(NodeList list) {
 
 		if (list == null)
 			return;
@@ -210,7 +211,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		}
 	}
 
-	private void loadControllers(Element controllersNode) {
+	protected void loadControllers(Element controllersNode) {
 
 		if (controllersNode == null)
 			return;
@@ -221,44 +222,41 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		loadControllers(controllers);
 	}
 
-	private void loadControllers(NodeList controllers) {
+	protected void loadControllers(NodeList controllers) {
 		for (int i = 0; i < controllers.getLength(); i++) {
 			Element controllerNode = (Element) controllers.item(i);
 			loadController(controllerNode);
 		}
 	}
 
-	private void loadController(Element controller) {
+	protected void loadController(Element controller) {
 
-		String id = parseUtil.getAttribute(controller, "id");
-
-		ActionType actionType = ActionType.valueOf(parseUtil.getAttribute(
-				controller, "action-type"));
-
-		DispatcherType dispatcher = DispatcherType.valueOf(parseUtil
-				.getAttribute(controller, "dispatcher"));
-		String view = parseUtil.getAttribute(controller, "view");
-		String name = parseUtil.getAttribute(controller, "name");
-		String clazzName = parseUtil.getAttribute(controller, "class");
-		// ScopeType scope =
-		// ScopeType.valueOf( controller.parseUtil.getAttribute(c, "scope" ) );
-		String actionId = parseUtil.getAttribute(controller, "action-id");
-		String defaultAction = parseUtil.getAttribute(controller,
-				"default-action");
-		boolean viewresolved = Boolean.valueOf(
-				parseUtil.getAttribute(controller, "view-resolved"))
-				.booleanValue();
-
-		Class<?> clazz = null;
-		try {
-			clazz = ClassUtil.get(clazzName);
-		} catch (Exception ex) {
-			throw new BrutosException(ex);
-		}
-		ControllerBuilder controllerBuilder = componentRegistry
+		String id 					= parseUtil.getAttribute(controller, "id");
+		ActionType actionType 		= ActionType.valueOf(parseUtil.getAttribute(controller, "action-type"));
+		DispatcherType dispatcher 	= DispatcherType.valueOf(parseUtil.getAttribute(controller, "dispatcher"));
+		String view 				= parseUtil.getAttribute(controller, "view");
+		String name 				= parseUtil.getAttribute(controller, "name");
+		String clazzName 			= parseUtil.getAttribute(controller, "class");
+		String actionId 			= parseUtil.getAttribute(controller, "action-id");
+		String defaultAction 		= parseUtil.getAttribute(controller, "default-action");
+		boolean viewresolved 		= Boolean.valueOf(parseUtil.getAttribute(controller, "view-resolved")).booleanValue();
+		Class<?> clazz 				= this.getClass(clazzName);
+		
+		ControllerBuilder controllerBuilder = 
+				componentRegistry
 				.registerController(id, view, dispatcher, viewresolved, name,
 						clazz, actionId, actionType);
 
+		if (defaultAction != null){
+			controllerBuilder.setDefaultAction(defaultAction);
+		}
+
+		this.loadControllerDependencies(controller, controllerBuilder);
+
+	}
+
+	protected void loadControllerDependencies(Element controller, ControllerBuilder controllerBuilder){
+		
 		loadAliasController(parseUtil.getElements(controller,
 				XMLBrutosConstants.XML_BRUTOS_ALIAS), controllerBuilder);
 
@@ -279,12 +277,9 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		addThrowSafe(parseUtil.getElements(controller,
 				XMLBrutosConstants.XML_BRUTOS_THROWS), controllerBuilder);
 
-		if (defaultAction != null)
-			controllerBuilder.setDefaultAction(defaultAction);
-
 	}
-
-	private void loadAliasController(NodeList aliasNode,
+	
+	protected void loadAliasController(NodeList aliasNode,
 			ControllerBuilder controllerBuilder) {
 
 		for (int i = 0; i < aliasNode.getLength(); i++) {
@@ -294,7 +289,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void addInterceptorController(NodeList interceptorList,
+	protected void addInterceptorController(NodeList interceptorList,
 			ControllerBuilder controllerBuilder) {
 
 		for (int j = 0; j < interceptorList.getLength(); j++) {
@@ -323,7 +318,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		}
 	}
 
-	private void addBeans(NodeList beanList, ControllerBuilder controllerBuilder) {
+	protected void addBeans(NodeList beanList, ControllerBuilder controllerBuilder) {
 
 		for (int k = 0; k < beanList.getLength(); k++) {
 			Element beanNode = (Element) beanList.item(k);
@@ -332,7 +327,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void addBean(Element beanNode, ControllerBuilder controllerBuilder,
+	protected void addBean(Element beanNode, ControllerBuilder controllerBuilder,
 			String propertyName) {
 
 		String name = parseUtil.getAttribute(beanNode, "name");
@@ -364,7 +359,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void addBean(Element beanNode, BeanBuilder bean,
+	protected void addBean(Element beanNode, BeanBuilder bean,
 			ConstructorBuilder constructorBuilder, String name,
 			String propertyName, boolean key, String keyName, boolean element,
 			String elementName) {
@@ -405,7 +400,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void addBean(String name, Element beanNode,
+	protected void addBean(String name, Element beanNode,
 			ParametersBuilder parametersBuilder, Class<?> paramType) {
 
 		String separator = parseUtil.getAttribute(beanNode, "separator");
@@ -434,7 +429,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void buildBean(Element beanNode, BeanBuilder beanBuilder) {
+	protected void buildBean(Element beanNode, BeanBuilder beanBuilder) {
 		buildConstructorBean(parseUtil.getElements(beanNode,
 				XMLBrutosConstants.XML_BRUTOS_BEAN_CONSTRUCTOR_ARG),
 				beanBuilder);
@@ -456,7 +451,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void buildAny(Element anyNode, GenericBuilder builder) {
+	protected void buildAny(Element anyNode, GenericBuilder builder) {
 
 		String enumPropertyName = parseUtil.getAttribute(anyNode,
 				"enum-property");
@@ -499,7 +494,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void buildMetaBean(Element metaValue,
+	protected void buildMetaBean(Element metaValue,
 			MetaBeanBuilder metaBeanBuilder) {
 
 		String bean = parseUtil.getAttribute(metaValue, "bean");
@@ -544,7 +539,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void addBean(Object value, Element beanNode,
+	protected void addBean(Object value, Element beanNode,
 			MetaBeanBuilder metaBeanBuilder) {
 
 		String separator = parseUtil.getAttribute(beanNode, "separator");
@@ -572,7 +567,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		buildBean(beanNode, beanBuilder);
 	}
 
-	private void buildConstructorBean(NodeList consList, BeanBuilder beanBuilder) {
+	protected void buildConstructorBean(NodeList consList, BeanBuilder beanBuilder) {
 
 		ConstructorBuilder constructor = beanBuilder.buildConstructor();
 
@@ -654,7 +649,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void buildPropertiesBean(NodeList consList, BeanBuilder beanBuilder) {
+	protected void buildPropertiesBean(NodeList consList, BeanBuilder beanBuilder) {
 
 		for (int k = 0; k < consList.getLength(); k++) {
 			Element propNode = (Element) consList.item(k);
@@ -723,7 +718,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		}
 	}
 
-	private void addProperties(NodeList properrties,
+	protected void addProperties(NodeList properrties,
 			ControllerBuilder controllerBuilder) {
 
 		for (int k = 0; k < properrties.getLength(); k++) {
@@ -732,7 +727,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		}
 	}
 
-	private void buildPropertyController(Element propNode,
+	protected void buildPropertyController(Element propNode,
 			ControllerBuilder controllerBuilder) {
 
 		String propertyName = parseUtil.getAttribute(propNode, "name");
@@ -798,7 +793,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void buildKeyCollection(Element conNode, BeanBuilder beanBuilder) {
+	protected void buildKeyCollection(Element conNode, BeanBuilder beanBuilder) {
 
 		String enumPropertyName = parseUtil.getAttribute(conNode,
 				"enum-property");
@@ -874,7 +869,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void buildElementCollection(Element conNode, BeanBuilder beanBuilder) {
+	protected void buildElementCollection(Element conNode, BeanBuilder beanBuilder) {
 
 		String enumPropertyName = parseUtil.getAttribute(conNode,
 				"enum-property");
@@ -949,7 +944,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void addActions(NodeList actionList,
+	protected void addActions(NodeList actionList,
 			ControllerBuilder controllerBuilder) {
 
 		for (int k = 0; k < actionList.getLength(); k++) {
@@ -958,7 +953,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		}
 	}
 
-	private void addAction(Element actionNode,
+	protected void addAction(Element actionNode,
 			ControllerBuilder controllerBuilder) {
 
 		String id = parseUtil.getAttribute(actionNode, "id");
@@ -985,7 +980,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void addParametersAction(NodeList params,
+	protected void addParametersAction(NodeList params,
 			ActionBuilder actionBuilder) {
 
 		ParametersBuilder parametersBuilder = actionBuilder.buildParameters();
@@ -997,7 +992,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void addParameterAction(Element paramNode,
+	protected void addParameterAction(Element paramNode,
 			ParametersBuilder parametersBuilder) {
 
 		EnumerationType enumProperty = EnumerationType.valueOf(parseUtil
@@ -1072,7 +1067,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
-	private void addThrowSafe(NodeList throwSafeNodeList,
+	protected void addThrowSafe(NodeList throwSafeNodeList,
 			ControllerBuilder controllerBuilder) {
 
 		for (int i = 0; i < throwSafeNodeList.getLength(); i++) {
@@ -1081,7 +1076,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		}
 	}
 
-	private void addThrowSafe(Element throwSafeNode,
+	protected void addThrowSafe(Element throwSafeNode,
 			ControllerBuilder controllerBuilder) {
 
 		String view = parseUtil.getAttribute(throwSafeNode, "view");
@@ -1107,7 +1102,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 				resolved);
 	}
 
-	private void addThrowSafe(NodeList throwSafeNodeList,
+	protected void addThrowSafe(NodeList throwSafeNodeList,
 			ActionBuilder actionBuilder) {
 
 		for (int i = 0; i < throwSafeNodeList.getLength(); i++) {
@@ -1116,7 +1111,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		}
 	}
 
-	private void addThrowSafe(Element throwSafeNode, ActionBuilder actionBuilder) {
+	protected void addThrowSafe(Element throwSafeNode, ActionBuilder actionBuilder) {
 
 		String view = parseUtil.getAttribute(throwSafeNode, "view");
 		boolean viewresolved = Boolean.valueOf(
@@ -1141,7 +1136,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 				viewresolved);
 	}
 
-	private void addValidator(Element validatorNode,
+	protected void addValidator(Element validatorNode,
 			RestrictionBuilder restrictionBuilder) {
 
 		if (validatorNode == null)
@@ -1172,4 +1167,12 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
+	protected Class<?> getClass(String clazzName){
+		try{
+			return ClassUtil.get(clazzName);
+		} 
+		catch (Exception ex) {
+			throw new BrutosException(ex);
+		}
+	}
 }

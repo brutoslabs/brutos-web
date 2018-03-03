@@ -24,6 +24,8 @@ import org.brandao.brutos.MutableMvcRequest;
 public interface MutableWebMvcRequest 
 	extends MutableMvcRequest, WebMvcRequest{
 
+	public static String ACCEPT_REQUEST_HEADER = "Accept";
+	
 	void setServletRequest(ServletRequest value);
 	
 }

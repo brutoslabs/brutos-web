@@ -72,7 +72,7 @@ public class WebMvcRequestImp
 	private List<DataType> parseAcceptResponse(){
     	List<DataType> result = new ArrayList<DataType>();
     	
-    	String accept = this._getRequest().getHeader("Accept");
+    	String accept = this._getRequest().getHeader(ACCEPT_REQUEST_HEADER);
     	
     	if(accept == null){
     		return result;
