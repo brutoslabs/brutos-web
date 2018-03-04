@@ -582,57 +582,56 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		for (int k = 0; k < consList.getLength(); k++) {
 			Element conNode = (Element) consList.item(k);
 
-			String enumPropertyName = parseUtil.getAttribute(conNode,
-					"enum-property");
-			EnumerationType enumProperty = EnumerationType
-					.valueOf(enumPropertyName);
-			String value = parseUtil.getAttribute(conNode, "value");
-			String temporalProperty = parseUtil.getAttribute(conNode,
-					"temporal-property");
-			String bean = parseUtil.getAttribute(conNode, "bean");
-			boolean mapping = Boolean.valueOf(
-					parseUtil.getAttribute(conNode, "mapping")).booleanValue();
+			String enumPropertyName 		= parseUtil.getAttribute(conNode, "enum-property");
+			EnumerationType enumProperty 	= EnumerationType.valueOf(enumPropertyName);
+			String value 					= parseUtil.getAttribute(conNode, "value");
+			String temporalProperty 		= parseUtil.getAttribute(conNode, "temporal-property");
+			String bean 					= parseUtil.getAttribute(conNode, "bean");
+			boolean mapping 				= Boolean.valueOf(parseUtil.getAttribute(conNode, "mapping"));
 
-			String scopeName = parseUtil.getAttribute(conNode, "scope");
-			ScopeType scope = ScopeType.valueOf(scopeName);
-			String factoryName = parseUtil.getAttribute(conNode, "type-def");
-			String typeName = parseUtil.getAttribute(conNode, "type");
-			Type factory = null;
-			boolean nullable = false;
-			Class<?> type = null;
+			String scopeName 				= parseUtil.getAttribute(conNode, "scope");
+			ScopeType scope 				= ScopeType.valueOf(scopeName);
+			String factoryName 				= parseUtil.getAttribute(conNode, "type-def");
+			String typeName 				= parseUtil.getAttribute(conNode, "type");
+			FetchType fetchType				= FetchType.valueOf(parseUtil.getAttribute(conNode, "fetch-type"));
+			Type factory 					= null;
+			boolean nullable 				= false;
+			Class<?> type 					= null;
 
-			Element anyNode = parseUtil.getElement(conNode, "any");
-			Element mappingRef = parseUtil.getElement(conNode, "ref");
-			Element beanNode = parseUtil.getElement(conNode, "bean");
-			Element valueNode = parseUtil.getElement(conNode, "value");
-			Element validatorNode = parseUtil.getElement(conNode, "validator");
-			Element nullNode = parseUtil.getElement(conNode, "null");
+			Element anyNode 		= parseUtil.getElement(conNode, "any");
+			Element mappingRef 		= parseUtil.getElement(conNode, "ref");
+			Element beanNode 		= parseUtil.getElement(conNode, "bean");
+			Element valueNode 		= parseUtil.getElement(conNode, "value");
+			Element validatorNode 	= parseUtil.getElement(conNode, "validator");
+			Element nullNode 		= parseUtil.getElement(conNode, "null");
+			
 			if (mappingRef != null) {
-				enumProperty = EnumerationType.valueOf(parseUtil.getAttribute(
-						mappingRef, "enum-property"));
-
-				value = parseUtil.getAttribute(mappingRef, "value");
-				temporalProperty = parseUtil.getAttribute(mappingRef,
-						"temporal-property");
-				bean = parseUtil.getAttribute(mappingRef, "bean");
-				mapping = Boolean.valueOf(
-						parseUtil.getAttribute(mappingRef, "mapping"))
-						.booleanValue();
-				scope = ScopeType.valueOf(parseUtil.getAttribute(mappingRef,
-						"scope"));
-				factoryName = parseUtil.getAttribute(mappingRef, "type-def");
-				validatorNode = parseUtil.getElement(mappingRef, "validator");
-			} else if (beanNode != null) {
+				enumProperty 		= EnumerationType.valueOf(parseUtil.getAttribute(mappingRef, "enum-property"));
+				value 				= parseUtil.getAttribute(mappingRef, "value");
+				temporalProperty 	= parseUtil.getAttribute(mappingRef, "temporal-property");
+				bean 				= parseUtil.getAttribute(mappingRef, "bean");
+				mapping 			= Boolean.valueOf(parseUtil.getAttribute(mappingRef, "mapping"));
+				scope 				= ScopeType.valueOf(parseUtil.getAttribute(mappingRef, "scope"));
+				factoryName 		= parseUtil.getAttribute(mappingRef, "type-def");
+				validatorNode 		= parseUtil.getElement(mappingRef, "validator");
+				
+			}
+			else
+			if(beanNode != null){
 				addBean(beanNode, beanBuilder, constructor, bean, null, false,
 						null, false, null);
 				continue;
-			} else if (valueNode != null) {
+			}
+			else
+			if(valueNode != null){
 				value = valueNode.getTextContent();
-			} else if (nullNode != null)
+			}
+			else
+			if(nullNode != null)
 				nullable = true;
 
-			try {
-				if (factoryName != null) {
+			try{
+				if(factoryName != null) {
 					factory = (Type) ClassUtil.getInstance(ClassUtil
 							.get(factoryName));
 				}
@@ -649,6 +648,8 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 							mapping ? bean : null, scope, value, nullable,
 							anyNode != null, factory, type);
 
+			constructorBuilder.setFetchType(fetchType);
+			
 			if (anyNode != null)
 				this.buildAny(anyNode, constructorBuilder);
 
@@ -662,55 +663,55 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		for (int k = 0; k < consList.getLength(); k++) {
 			Element propNode = (Element) consList.item(k);
 
-			String propertyName = parseUtil.getAttribute(propNode, "name");
-			EnumerationType enumProperty = EnumerationType.valueOf(parseUtil
-					.getAttribute(propNode, "enum-property"));
-			String value = parseUtil.getAttribute(propNode, "value");
-			String temporalProperty = parseUtil.getAttribute(propNode,
-					"temporal-property");
-			String bean = parseUtil.getAttribute(propNode, "bean");
-			boolean mapping = Boolean.valueOf(
-					parseUtil.getAttribute(propNode, "mapping")).booleanValue();
-			ScopeType scope = ScopeType.valueOf(parseUtil.getAttribute(
-					propNode, "scope"));
-			String factoryName = parseUtil.getAttribute(propNode, "type-def");
-			Type factory = null;
-			boolean nullable = false;
+			String propertyName 			= parseUtil.getAttribute(propNode, "name");
+			EnumerationType enumProperty	= EnumerationType.valueOf(parseUtil.getAttribute(propNode, "enum-property"));
+			String value 					= parseUtil.getAttribute(propNode, "value");
+			String temporalProperty 		= parseUtil.getAttribute(propNode, "temporal-property");
+			String bean 					= parseUtil.getAttribute(propNode, "bean");
+			boolean mapping 				= Boolean.valueOf(parseUtil.getAttribute(propNode, "mapping"));
+			ScopeType scope 				= ScopeType.valueOf(parseUtil.getAttribute(propNode, "scope"));
+			String factoryName 				= parseUtil.getAttribute(propNode, "type-def");
+			FetchType fetchType				= FetchType.valueOf(parseUtil.getAttribute(propNode, "fetch-type"));
+			Type factory 					= null;
+			boolean nullable 				= false;
 
-			Element anyNode = parseUtil.getElement(propNode, "any");
-			Element mappingRef = parseUtil.getElement(propNode, "ref");
-			Element beanNode = parseUtil.getElement(propNode, "bean");
-			Element valueNode = parseUtil.getElement(propNode, "value");
-			Element validatorNode = parseUtil.getElement(propNode, "validator");
-			Element nullNode = parseUtil.getElement(propNode, "null");
-			if (mappingRef != null) {
-				enumProperty = EnumerationType.valueOf(parseUtil.getAttribute(
-						mappingRef, "enum-property"));
-				value = parseUtil.getAttribute(mappingRef, "value");
-				temporalProperty = parseUtil.getAttribute(mappingRef,
-						"temporal-property");
-				bean = parseUtil.getAttribute(mappingRef, "bean");
-				mapping = Boolean.valueOf(
-						parseUtil.getAttribute(mappingRef, "mapping"))
-						.booleanValue();
-				scope = ScopeType.valueOf(parseUtil.getAttribute(mappingRef,
-						"scope"));
-				factoryName = parseUtil.getAttribute(mappingRef, "type-def");
-				validatorNode = parseUtil.getElement(mappingRef, "validator");
-			} else if (beanNode != null) {
+			Element anyNode 		= parseUtil.getElement(propNode, "any");
+			Element mappingRef		= parseUtil.getElement(propNode, "ref");
+			Element beanNode 		= parseUtil.getElement(propNode, "bean");
+			Element valueNode 		= parseUtil.getElement(propNode, "value");
+			Element validatorNode	= parseUtil.getElement(propNode, "validator");
+			Element nullNode 		= parseUtil.getElement(propNode, "null");
+			
+			if(mappingRef != null){
+				enumProperty 		= EnumerationType.valueOf(parseUtil.getAttribute(mappingRef, "enum-property"));
+				value				= parseUtil.getAttribute(mappingRef, "value");
+				temporalProperty	= parseUtil.getAttribute(mappingRef, "temporal-property");
+				bean 				= parseUtil.getAttribute(mappingRef, "bean");
+				mapping 			= Boolean.valueOf(parseUtil.getAttribute(mappingRef, "mapping"));
+				scope 				= ScopeType.valueOf(parseUtil.getAttribute(mappingRef, "scope"));
+				factoryName 		= parseUtil.getAttribute(mappingRef, "type-def");
+				validatorNode 		= parseUtil.getElement(mappingRef, "validator");
+			}
+			else
+			if(beanNode != null){
 				addBean(beanNode, beanBuilder, null, bean, propertyName, false,
 						null, false, null);
 				continue;
-			} else if (valueNode != null) {
+			}
+			else
+			if(valueNode != null){
 				value = valueNode.getTextContent();
-			} else if (nullNode != null)
+			}
+			else
+			if(nullNode != null)
 				nullable = true;
 
-			try {
+			try{
 				if (factoryName != null)
 					factory = (Type) ClassUtil.getInstance(ClassUtil
 							.get(factoryName));
-			} catch (Exception ex) {
+			}
+			catch (Exception ex) {
 				throw new BrutosException(ex);
 			}
 
@@ -719,6 +720,8 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 					mapping ? bean : null, scope, value, nullable,
 					anyNode != null, null, factory);
 
+			propertyBuilder.setFetchType(fetchType);
+			
 			if (anyNode != null)
 				this.buildAny(anyNode, propertyBuilder);
 
@@ -738,54 +741,53 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 	protected void buildPropertyController(Element propNode,
 			ControllerBuilder controllerBuilder) {
 
-		String propertyName = parseUtil.getAttribute(propNode, "name");
-		EnumerationType enumProperty = EnumerationType.valueOf(parseUtil
-				.getAttribute(propNode, "enum-property"));
-		String value = parseUtil.getAttribute(propNode, "value");
-		String temporalProperty = parseUtil.getAttribute(propNode,
-				"temporal-property");
-		String bean = parseUtil.getAttribute(propNode, "bean");
-		boolean mapping = Boolean.valueOf(
-				parseUtil.getAttribute(propNode, "mapping")).booleanValue();
-		ScopeType scope = ScopeType.valueOf(parseUtil.getAttribute(propNode,
-				"scope"));
-		String factoryName = parseUtil.getAttribute(propNode, "type-def");
-		Type factory = null;
-		boolean nullable = false;
+		String propertyName 			= parseUtil.getAttribute(propNode, "name");
+		EnumerationType enumProperty	= EnumerationType.valueOf(parseUtil.getAttribute(propNode, "enum-property"));
+		String value 					= parseUtil.getAttribute(propNode, "value");
+		String temporalProperty 		= parseUtil.getAttribute(propNode, "temporal-property");
+		String bean 					= parseUtil.getAttribute(propNode, "bean");
+		boolean mapping 				= Boolean.valueOf(parseUtil.getAttribute(propNode, "mapping"));
+		ScopeType scope 				= ScopeType.valueOf(parseUtil.getAttribute(propNode, "scope"));
+		String factoryName 				= parseUtil.getAttribute(propNode, "type-def");
+		FetchType fetchType				= FetchType.valueOf(parseUtil.getAttribute(propNode, "fetch-type"));
+		Type factory 					= null;
+		boolean nullable 				= false;
 
-		Element anyNode = parseUtil.getElement(propNode, "any");
-		Element mappingRef = parseUtil.getElement(propNode, "ref");
-		Element beanNode = parseUtil.getElement(propNode, "bean");
-		Element valueNode = parseUtil.getElement(propNode, "value");
-		Element validatorNode = parseUtil.getElement(propNode, "validator");
-		Element nullNode = parseUtil.getElement(propNode, "null");
+		Element anyNode 		= parseUtil.getElement(propNode, "any");
+		Element mappingRef 		= parseUtil.getElement(propNode, "ref");
+		Element beanNode 		= parseUtil.getElement(propNode, "bean");
+		Element valueNode 		= parseUtil.getElement(propNode, "value");
+		Element validatorNode 	= parseUtil.getElement(propNode, "validator");
+		Element nullNode 		= parseUtil.getElement(propNode, "null");
+		
 		if (mappingRef != null) {
-			enumProperty = EnumerationType.valueOf(parseUtil.getAttribute(
-					mappingRef, "enum-property"));
+			enumProperty = EnumerationType.valueOf(parseUtil.getAttribute(mappingRef, "enum-property"));
 			value = parseUtil.getAttribute(mappingRef, "value");
-			temporalProperty = parseUtil.getAttribute(mappingRef,
-					"temporal-property");
+			temporalProperty = parseUtil.getAttribute(mappingRef,"temporal-property");
 			bean = parseUtil.getAttribute(mappingRef, "bean");
-			mapping = Boolean.valueOf(
-					parseUtil.getAttribute(mappingRef, "mapping"))
-					.booleanValue();
-			scope = ScopeType.valueOf(parseUtil.getAttribute(mappingRef,
-					"scope"));
+			mapping = Boolean.valueOf(parseUtil.getAttribute(mappingRef, "mapping"));
+			scope = ScopeType.valueOf(parseUtil.getAttribute(mappingRef, "scope"));
 			factoryName = parseUtil.getAttribute(mappingRef, "type-def");
 			validatorNode = parseUtil.getElement(mappingRef, "validator");
-		} else if (beanNode != null) {
+		}
+		else
+		if(beanNode != null){
 			addBean(beanNode, controllerBuilder, propertyName);
 			return;
-		} else if (valueNode != null) {
+		}
+		else
+		if(valueNode != null){
 			value = valueNode.getTextContent();
-		} else if (nullNode != null)
+		}
+		else
+		if (nullNode != null)
 			nullable = true;
 
-		try {
-			if (factoryName != null)
-				factory = (Type) ClassUtil.getInstance(ClassUtil
-						.get(factoryName));
-		} catch (Exception ex) {
+		try{
+			if(factoryName != null)
+				factory = (Type) ClassUtil.getInstance(ClassUtil.get(factoryName));
+		}
+		catch(Exception ex) {
 			throw new BrutosException(ex);
 		}
 
@@ -794,8 +796,11 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 				mapping ? bean : null, value, nullable, anyNode != null, null,
 				factory);
 
-		if (anyNode != null)
+		propertyBuilder.setFetchType(fetchType);
+		
+		if (anyNode != null){
 			this.buildAny(anyNode, propertyBuilder);
+		}
 
 		addValidator(validatorNode, propertyBuilder);
 
@@ -1013,64 +1018,66 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 	protected void addParameterAction(Element paramNode,
 			ParametersBuilder parametersBuilder) {
 
-		EnumerationType enumProperty = EnumerationType.valueOf(parseUtil
-				.getAttribute(paramNode, "enum-property"));
-		String value = parseUtil.getAttribute(paramNode, "value");
-		String temporalProperty = parseUtil.getAttribute(paramNode,
-				"temporal-property");
-		String bean = parseUtil.getAttribute(paramNode, "bean");
-		boolean mapping = Boolean.valueOf(
-				parseUtil.getAttribute(paramNode, "mapping")).booleanValue();
-		ScopeType scope = ScopeType.valueOf(parseUtil.getAttribute(paramNode,
-				"scope"));
-		String factoryName = parseUtil.getAttribute(paramNode, "type-def");
-		String type = parseUtil.getAttribute(paramNode, "type");
-		Type factory = null;
-		Class<?> typeClass = null;
-		boolean nullable = false;
+		EnumerationType enumProperty 	= EnumerationType.valueOf(parseUtil.getAttribute(paramNode, "enum-property"));
+		String value 					= parseUtil.getAttribute(paramNode, "value");
+		String temporalProperty 		= parseUtil.getAttribute(paramNode, "temporal-property");
+		String bean 					= parseUtil.getAttribute(paramNode, "bean");
+		boolean mapping 				= Boolean.valueOf(parseUtil.getAttribute(paramNode, "mapping"));
+		ScopeType scope 				= ScopeType.valueOf(parseUtil.getAttribute(paramNode, "scope"));
+		String factoryName 				= parseUtil.getAttribute(paramNode, "type-def");
+		String type 					= parseUtil.getAttribute(paramNode, "type");
+		FetchType fetchType				= FetchType.valueOf(parseUtil.getAttribute(paramNode, "fetch-type"));
+		Type factory 					= null;
+		Class<?> typeClass 				= null;
+		boolean nullable 				= false;
 
-		try {
-			if (type != null)
+		try{
+			if(type != null)
 				typeClass = ClassUtil.get(type);
-		} catch (Exception ex) {
+		}
+		catch(Exception ex) {
 			throw new BrutosException(ex);
 		}
 
-		Element anyNode = parseUtil.getElement(paramNode, "any");
-		Element mappingRef = parseUtil.getElement(paramNode, "ref");
-		Element beanNode = parseUtil.getElement(paramNode, "bean");
-		Element valueNode = parseUtil.getElement(paramNode, "value");
-		Element validatorNode = parseUtil.getElement(paramNode, "validator");
-		Element nullNode = parseUtil.getElement(paramNode, "null");
-		if (mappingRef != null) {
-			enumProperty = EnumerationType.valueOf(parseUtil.getAttribute(
-					mappingRef, "enum-property"));
-			value = parseUtil.getAttribute(mappingRef, "value");
-			temporalProperty = parseUtil.getAttribute(mappingRef,
-					"temporal-property");
-			bean = parseUtil.getAttribute(mappingRef, "bean");
-			mapping = Boolean.valueOf(
-					parseUtil.getAttribute(mappingRef, "mapping"))
-					.booleanValue();
-			scope = ScopeType.valueOf(parseUtil.getAttribute(mappingRef,
-					"scope"));
-			factoryName = parseUtil.getAttribute(mappingRef, "type-def");
-			validatorNode = parseUtil.getElement(mappingRef, "validator");
-		} else if (beanNode != null) {
+		Element anyNode 		= parseUtil.getElement(paramNode, "any");
+		Element mappingRef 		= parseUtil.getElement(paramNode, "ref");
+		Element beanNode 		= parseUtil.getElement(paramNode, "bean");
+		Element valueNode 		= parseUtil.getElement(paramNode, "value");
+		Element validatorNode 	= parseUtil.getElement(paramNode, "validator");
+		Element nullNode 		= parseUtil.getElement(paramNode, "null");
+		
+		if(mappingRef != null) {
+			enumProperty 		= EnumerationType.valueOf(parseUtil.getAttribute(mappingRef, "enum-property"));
+			value 				= parseUtil.getAttribute(mappingRef, "value");
+			temporalProperty 	= parseUtil.getAttribute(mappingRef, "temporal-property");
+			bean 				= parseUtil.getAttribute(mappingRef, "bean");
+			mapping 			= Boolean.valueOf(parseUtil.getAttribute(mappingRef, "mapping"));
+			scope 				= ScopeType.valueOf(parseUtil.getAttribute(mappingRef, "scope"));
+			factoryName 		= parseUtil.getAttribute(mappingRef, "type-def");
+			validatorNode 		= parseUtil.getElement(mappingRef, "validator");
+		}
+		else
+		if(beanNode != null){
 			addBean(bean, beanNode, parametersBuilder, typeClass);
 			return;
-		} else if (valueNode != null) {
+		}
+		else
+		if(valueNode != null){
 			value = valueNode.getTextContent();
-		} else if (nullNode != null)
+		}
+		else
+		if(nullNode != null)
 			nullable = true;
 
-		try {
-			if (factoryName != null)
+		try{
+			if(factoryName != null)
 				factory = (Type) ClassUtil.getInstance(ClassUtil
 						.get(factoryName));
-		} catch (BrutosException ex) {
+		}
+		catch(BrutosException ex) {
 			throw ex;
-		} catch (Exception ex) {
+		}
+		catch(Exception ex) {
 			throw new BrutosException(ex);
 		}
 
@@ -1079,8 +1086,12 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 						: null, factory, value, nullable, anyNode != null,
 				typeClass);
 
-		if (anyNode != null)
+		
+		parameterBuilder.setFetchType(fetchType);
+		
+		if(anyNode != null)
 			this.buildAny(anyNode, parameterBuilder);
+		
 		addValidator(validatorNode, parameterBuilder);
 
 	}

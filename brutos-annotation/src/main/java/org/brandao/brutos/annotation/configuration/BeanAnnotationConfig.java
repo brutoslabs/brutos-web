@@ -378,7 +378,7 @@ public class BeanAnnotationConfig extends AbstractAnnotationConfig {
 		builder.addMappedContructorArg(
 				source.getName(),
 				beanBuilder != null ? beanBuilder.getName() : AnnotationUtil
-						.getBeanName(classType), classType);
+						.getBeanName(classType), classType, source.getFetchType());
 
 		// BeanBuilder beanBuilder =
 		// builder.buildConstructorArg(source.getName(), classType);

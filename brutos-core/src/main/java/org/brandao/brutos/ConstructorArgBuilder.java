@@ -110,4 +110,12 @@ public class ConstructorArgBuilder extends RestrictionBuilder implements
 		return builder;
 	}
 
+	public void setFetchType(FetchType value){
+		this.arg.setFetchType(value);
+	}
+	
+	public FetchType getFetchType(){
+		return this.arg.getFetchType();
+	}
+	
 }

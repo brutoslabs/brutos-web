@@ -112,4 +112,12 @@ public class ParameterBuilder extends RestrictionBuilder implements
 		return builder;
 	}
 
+	public void setFetchType(FetchType value){
+		this.parameter.setFetchType(value);
+	}
+	
+	public FetchType getFetchType(){
+		return this.parameter.getFetchType();
+	}
+	
 }
