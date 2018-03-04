@@ -43,9 +43,10 @@ public interface WebApplicationTester {
 	
     void prepareContext(Map<String,String> parameters);
 
-    void prepareRequest(Map<String,String> parameters);
+    void prepareRequest(Map<String,String> parameters, 
+    		Map<String,String> header, Map<String,Object> properties);
     
-    void prepareSession(Map<String,String> parameters);
+    void prepareSession(Map<String,Object> parameters);
 
     void checkException(Throwable e);
     

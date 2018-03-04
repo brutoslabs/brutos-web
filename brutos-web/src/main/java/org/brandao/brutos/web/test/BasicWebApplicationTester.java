@@ -15,23 +15,6 @@ import com.mockrunner.mock.web.MockServletContext;
 public class BasicWebApplicationTester 
 	implements WebApplicationTester{
 
-	public void prepareContext(Map<String, String> parameters) {
-	}
-
-	public void prepareRequest(Map<String, String> parameters) {
-	}
-
-	public void prepareSession(Map<String, String> parameters) {
-	}
-
-	public void checkException(Throwable e){
-	}
-
-	public void checkResult(HttpServletRequest request,
-			HttpServletResponse response, ServletContext context,
-			ConfigurableWebApplicationContext applicationContext) {
-	}
-
 	public void prepareContext(MockServletContext servletContext) {
 	}
 
@@ -39,6 +22,24 @@ public class BasicWebApplicationTester
 	}
 
 	public void prepareSession(MockHttpSession session) {
+	}
+
+	public void prepareContext(Map<String, String> parameters) {
+	}
+
+	public void prepareRequest(Map<String, String> parameters,
+			Map<String, String> header, Map<String, Object> properties) {
+	}
+
+	public void prepareSession(Map<String, Object> parameters) {
+	}
+
+	public void checkException(Throwable e) {
+	}
+
+	public void checkResult(HttpServletRequest request,
+			HttpServletResponse response, ServletContext context,
+			ConfigurableWebApplicationContext applicationContext) {
 	}
 
 }

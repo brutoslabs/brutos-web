@@ -49,7 +49,7 @@ public class WebApplicationContextTester {
     
     public static void run(
             String uri, 
-            WebApplicationTester tester,Class<?>[] clazz){
+            WebApplicationTester tester, Class<?> ... clazz){
         run(uri, tester, clazz, null);
     }
 
@@ -66,18 +66,24 @@ public class WebApplicationContextTester {
     		contextConfig.append(r);
     	}
     	
-    	Map<String,String> requestParams = new HashMap<String,String>();
-        Map<String,String> contextParams = new HashMap<String,String>();
-        Map<String,String> sessionParams = new HashMap<String,String>();
+        Map<String,String> contextParams   = new HashMap<String, String>();
+        Map<String,Object> sessionParams   = new HashMap<String, Object>();
+        Map<String,String> requestParams   = new HashMap<String, String>();
+        Map<String,String> requestHeader   = new HashMap<String, String>();
+        Map<String,Object> requestProperty = new HashMap<String, Object>();
+        
         contextParams.put(MockXMLWebApplicationContext.contextConfigName, contextConfig.toString());
+        
         run(
             uri, 
             tester,
             contextParams,
             sessionParams,
-            requestParams);    	
+            requestParams,
+            requestHeader,
+            requestProperty);    	
 	}
-    
+
     public static void run(
             String uri, 
             WebApplicationTester tester, Class<?>[] clazz, String complement){
@@ -137,16 +143,22 @@ public class WebApplicationContextTester {
         
         xml +="</ns2:controllers>";
             
-        Map<String,String> requestParams = new HashMap<String,String>();
-        Map<String,String> contextParams = new HashMap<String,String>();
-        Map<String,String> sessionParams = new HashMap<String,String>();
+        Map<String,String> contextParams   = new HashMap<String, String>();
+        Map<String,Object> sessionParams   = new HashMap<String, Object>();
+        Map<String,String> requestParams   = new HashMap<String, String>();
+        Map<String,String> requestHeader   = new HashMap<String, String>();
+        Map<String,Object> requestProperty = new HashMap<String, Object>();
+        
         contextParams.put(MockXMLWebApplicationContext.XML_CONTENT, xml);
+        
         run(
             uri, 
             tester,
             contextParams,
             sessionParams,
-            requestParams);
+            requestParams,
+            requestHeader,
+            requestProperty);
     }
 
     public static void run(
@@ -156,16 +168,20 @@ public class WebApplicationContextTester {
             uri, 
             tester,
             new HashMap<String,String>(),
+            new HashMap<String,Object>(),
             new HashMap<String,String>(),
-            new HashMap<String,String>());
+            new HashMap<String,String>(),
+            new HashMap<String,Object>());
     }
     
     private synchronized static void run(
             String uri, 
             WebApplicationTester tester,
             Map<String,String> contextParams,
-            Map<String,String> sessionParams,
-            Map<String,String> requestParams){
+            Map<String,Object> sessionParams,
+            Map<String,String> requestParams,
+            Map<String,String> requestHeader,
+            Map<String,Object> requestProperty){
         
         MockServletContext servletContext = new MockServletContext();
         ServletContextEvent sce = new ServletContextEvent( servletContext );
@@ -207,10 +223,16 @@ public class WebApplicationContextTester {
                 
                 listener.sessionCreated(hse);
                 
-                tester.prepareRequest(requestParams);
+                tester.prepareRequest(requestParams, requestHeader, requestProperty);
                 
                 for(String key: requestParams.keySet())
                     request.setupAddParameter(key, requestParams.get(key));
+
+                for(String key: requestHeader.keySet())
+                    request.setHeader(key, requestHeader.get(key));
+                
+                for(String key: requestProperty.keySet())
+                    request.setAttribute(key, requestProperty.get(key));
                 
                 MockServletConfig config = new MockServletConfig();
                 config.setServletContext(servletContext);
