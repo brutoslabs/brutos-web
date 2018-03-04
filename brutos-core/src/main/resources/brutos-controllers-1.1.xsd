@@ -49,6 +49,8 @@
             <xsd:element name="property" type="property" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="action" type="action" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element name="throw-safe" minOccurs="0" type="throw-safe" maxOccurs="unbounded"/>
+			<xsd:element name="accept-request-type" minOccurs="0" type="data-type" maxOccurs="unbounded"/>
+			<xsd:element name="response-type" minOccurs="0" type="data-type" maxOccurs="unbounded"/>
             <xsd:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
         <xsd:attribute name="id" type="xsd:string"/>
@@ -68,6 +70,8 @@
         <xsd:sequence>
             <xsd:element name="parameter" minOccurs="0" type="parameter" maxOccurs="unbounded"/>
             <xsd:element name="throw-safe" minOccurs="0" type="throw-safe" maxOccurs="unbounded"/>
+			<xsd:element name="accept-request-type" minOccurs="0" type="data-type" maxOccurs="unbounded"/>
+			<xsd:element name="response-type" minOccurs="0" type="data-type" maxOccurs="unbounded"/>
             <xsd:any namespace="##other" processContents="strict" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
         <xsd:attribute name="id" type="xsd:string" use="required"/>
@@ -81,11 +85,19 @@
         <xsd:anyAttribute namespace="##any" processContents="strict"/>
    </xsd:complexType>
 
+    <xsd:complexType name="data-type">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="name" type="xsd:string" use="optional"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
     <xsd:complexType name="throw-safe">
         <xsd:attribute name="view" type="xsd:string"/>
         <xsd:attribute name="resolved-view" type="xsd:boolean" default="false"/>
         <xsd:attribute name="rendered-view" type="xsd:boolean" default="true"/>
-        <xsd:attribute name="target" type="xsd:string" use="required"/>
+        <xsd:attribute name="target" type="xsd:string" default="java.lang.Throwable"/>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="dispatcher" type="dispatcher" default="forward"/>
         <!-- <xsd:attribute name="enabled" type="xsd:boolean" default="true"/> -->

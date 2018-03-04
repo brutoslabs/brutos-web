@@ -23,21 +23,11 @@
             xmlns="http://www.brutosframework.com.br/schema/web"
            elementFormDefault="qualified">
 
+<!-- 
 	<xsd:import namespace="http://www.brutosframework.com.br/schema/controllers"
 		schemaLocation="http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd"/>
+-->
 		
-	<!-- types -->
-	
-    <xsd:complexType name="media-type">
-        <xsd:simpleContent>
-            <xsd:extension base="xsd:string">
-                <xsd:attribute name="name" type="xsd:string" use="optional"/>
-            </xsd:extension>
-        </xsd:simpleContent>
-    </xsd:complexType>
-    
-	<!-- /types -->
-	
 	<!-- Controller and actions attributes -->
 	
 	<xsd:attribute name="request-method" type="xsd:string"/>
@@ -45,50 +35,13 @@
 	<xsd:attribute name="response-status" type="xsd:int"/>
 
 	<!-- /Controller and actions attributes -->
-	
-	<!-- accept-request-type -->
-	
-	<xsd:element name="accept-request-type" type="media-type"/>
-	
-	<!-- /accept-request-type -->
 
-	<!-- response-type -->
+	<!-- throw-safe -->
 	
-	<xsd:element name="response-type" type="media-type"/>
-
-	<!-- /response-type -->
-
-	<!-- response-errors -->
+	<xsd:attribute name="code" type="xsd:int" default="500"/>
+        
+	<xsd:attribute name="reason" type="xsd:string" />
 	
-	<xsd:element name="response-errors" type="response-errors"/>
-	
-    <xsd:complexType name="response-errors">
-        <xsd:sequence>
-            <xsd:element name="response-error" minOccurs="0" type="response-error" maxOccurs="unbounded"/>
-        </xsd:sequence>
-        <xsd:attribute name="code" type="xsd:int" default="500"/>
-        <xsd:attribute name="reason" type="xsd:string" />
-        <xsd:attribute name="view" type="xsd:string"/>
-        <xsd:attribute name="name" type="xsd:string"/>
-        <xsd:attribute name="dispatcher" type="con:dispatcher" default="forward"/>
-        <xsd:attribute name="resolved-view" type="xsd:boolean" default="false"/>
-        <xsd:attribute name="rendered-view" type="xsd:boolean" default="true"/>
-        <!-- <xsd:attribute name="enabled" type="xsd:boolean" default="true"/> -->
-    </xsd:complexType>
-
-
-    <xsd:complexType name="response-error">
-        <xsd:attribute name="code" type="xsd:int" default="500"/>
-        <xsd:attribute name="target" type="xsd:string" use="required"/>
-        <xsd:attribute name="reason" type="xsd:string" />
-        <xsd:attribute name="view" type="xsd:string"/>
-        <xsd:attribute name="name" type="xsd:string"/>
-        <xsd:attribute name="dispatcher" type="con:dispatcher" default="forward"/>
-        <xsd:attribute name="resolved-view" type="xsd:boolean" default="false"/>
-        <xsd:attribute name="rendered-view" type="xsd:boolean" default="true"/>
-        <!-- <xsd:attribute name="enabled" type="xsd:boolean" default="true"/> -->
-    </xsd:complexType>
-
-	<!-- /response-errors -->
+	<!-- /throw-safe -->
 
 </xsd:schema>

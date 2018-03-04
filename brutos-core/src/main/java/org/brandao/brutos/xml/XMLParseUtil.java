@@ -18,7 +18,9 @@
 package org.brandao.brutos.xml;
 
 import java.util.ArrayList;
+
 import org.brandao.brutos.mapping.StringUtil;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -67,6 +69,36 @@ public class XMLParseUtil {
 		return list;
 	}
 
+	public boolean getBooleanAttribute(Element e, String name){
+		String value = this.getAttribute(e, name);
+		return value == null? false : Boolean.valueOf(value);
+	}
+	
+	public int getIntAttribute(Element e, String name){
+		String value = this.getAttribute(e, name);
+		return value == null? 0 : Integer.parseInt(value);
+	}
+
+	public double getDoubleAttribute(Element e, String name){
+		String value = this.getAttribute(e, name);
+		return value == null? 0.0 : Double.parseDouble(value);
+	}
+	
+	public float getFloatAttribute(Element e, String name){
+		String value = this.getAttribute(e, name);
+		return value == null? 0.0f : Float.parseFloat(value);
+	}
+	
+	public String getAttribute(Element e, String name) {
+		Attr value = e.getAttributeNodeNS(this.namespace == null ? "*" : this.namespace, name);
+
+		if (value == null || StringUtil.isEmpty(value.getValue()))
+			return null;
+		else
+			return value.getValue();
+	}
+	
+	/*
 	public String getAttribute(Element e, String name) {
 		String value = e.getAttribute(name);
 
@@ -75,8 +107,13 @@ public class XMLParseUtil {
 		else
 			return value;
 	}
+	*/
+	
+	private static class CustomNodeList 
+		extends ArrayList<Node> 
+		implements NodeList {
 
-	private static class CustomNodeList extends ArrayList implements NodeList {
+		private static final long serialVersionUID = -7936841936945433565L;
 
 		public Node item(int index) {
 			return (Node) get(index);

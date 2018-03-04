@@ -23,6 +23,7 @@ import java.util.List;
 import org.brandao.brutos.*;
 import org.brandao.brutos.io.Resource;
 import org.brandao.brutos.io.ResourceLoader;
+import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.RestrictionRules;
 import org.w3c.dom.Element;
@@ -282,6 +283,12 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		addActions(parseUtil.getElements(controller,
 				XMLBrutosConstants.XML_BRUTOS_ACTION), controllerBuilder);
 
+		loadAcceptRequestTypes(parseUtil.getElements(controller,
+				XMLBrutosConstants.XML_BRUTOS_ACCEPT_REQUEST_TYPE), controllerBuilder);
+
+		loadResponseTypes(parseUtil.getElements(controller,
+				XMLBrutosConstants.XML_BRUTOS_RESPONSE_TYPE), controllerBuilder);
+		
 		addThrowSafe(parseUtil.getElements(controller,
 				XMLBrutosConstants.XML_BRUTOS_THROWS), controllerBuilder);
 
@@ -998,6 +1005,12 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		addParametersAction(parseUtil.getElements(actionNode,
 				XMLBrutosConstants.XML_BRUTOS_PARAMETER), builder);
 
+		loadAcceptRequestTypes(parseUtil.getElements(actionNode,
+				XMLBrutosConstants.XML_BRUTOS_ACCEPT_REQUEST_TYPE), builder);
+
+		loadResponseTypes(parseUtil.getElements(actionNode,
+				XMLBrutosConstants.XML_BRUTOS_RESPONSE_TYPE), builder);
+		
 		addThrowSafe(parseUtil.getElements(actionNode,
 				XMLBrutosConstants.XML_BRUTOS_THROWS), builder);
 		
@@ -1096,6 +1109,67 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 
 	}
 
+	protected void loadAcceptRequestTypes(NodeList nodeList,
+			Object builder) {
+
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Element c = (Element) nodeList.item(i);
+			loadAcceptRequestType(c, builder);
+		}
+
+	}
+
+	protected void loadAcceptRequestType(Element element, Object builder) {
+		
+		String name 			= StringUtil.adjust(parseUtil.getAttribute(element, "name"));
+		String text 			= StringUtil.adjust(element.getTextContent());
+		String mediaTypeName	= name == null? text : name;
+		DataType dataType 	    = DataType.valueOf(mediaTypeName);
+		
+		if(dataType == null){
+			throw new BrutosException("invalid media type: " + mediaTypeName );
+		}
+		
+		if(builder instanceof ControllerBuilder){
+			((ControllerBuilder)builder).addRequestType(dataType);
+		}
+		
+		if(builder instanceof ActionBuilder){
+			((ActionBuilder)builder).addRequestType(dataType);
+		}
+		
+	}
+
+	protected void loadResponseTypes(NodeList nodeList,
+			Object builder) {
+
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Element c = (Element) nodeList.item(i);
+			loadResponseType(c, builder);
+		}
+
+	}
+
+	protected void loadResponseType(Element element, Object builder) {
+		
+		String name 			= StringUtil.adjust(parseUtil.getAttribute(element, "name"));
+		String text 			= StringUtil.adjust(element.getTextContent());
+		String mediaTypeName	= name == null? text : name;
+		DataType dataType 	    = DataType.valueOf(mediaTypeName);
+		
+		if(dataType == null){
+			throw new BrutosException("invalid media type: " + mediaTypeName );
+		}
+		
+		if(builder instanceof ControllerBuilder){
+			((ControllerBuilder)builder).addResponseType(dataType);
+		}
+		
+		if(builder instanceof ActionBuilder){
+			((ActionBuilder)builder).addResponseType(dataType);
+		}
+		
+	}	
 	protected void addThrowSafe(NodeList throwSafeNodeList,
 			ControllerBuilder controllerBuilder) {
 

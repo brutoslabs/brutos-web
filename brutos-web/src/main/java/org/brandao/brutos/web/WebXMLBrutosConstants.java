@@ -2,12 +2,8 @@ package org.brandao.brutos.web;
 
 public interface WebXMLBrutosConstants {
 
-	public static final String XML_BRUTOS_ACCEPT_REQUEST_TYPE = "accept-request-type";
+	public static final String XML_BRUTOS_SCHEMA 		= "brutos_web_1_1.xsd";
 
-	public static final String XML_BRUTOS_RESPONSE_TYPE = "response-type";
-
-	public static final String XML_BRUTOS_RESPONSE_ERRORS = "response-errors";
-
-	public static final String XML_BRUTOS_RESPONSE_ERROR = "response-error";
+	public static final String XML_BRUTOS_WEB_NAMESPACE	= "http://www.brutosframework.com.br/schema/web";
 	
 }
