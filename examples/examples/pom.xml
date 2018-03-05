@@ -6,6 +6,7 @@
 	<version>1.0.0</version>
 	<name>examples</name>
 	<url>http://maven.apache.org</url>
+	<packaging>war</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -48,5 +49,4 @@
 	<build>
 		<finalName>examples</finalName>
 	</build>
-	<packaging>war</packaging>
 </project>
