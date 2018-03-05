@@ -7,20 +7,5 @@
    http://www.brutosframework.com.br/schema/controllers http://www.brutosframework.com.br/schema/controllers/brutos-controllers-1.1.xsd
    http://www.brutosframework.com.br/schema/context http://www.brutosframework.com.br/schema/context/brutos-context-1.1.xsd
    http://www.brutosframework.com.br/schema/web http://www.brutosframework.com.br/schema/web/brutos-web-1.1.xsd'>
-
-	<controller id="/controllerex7" web:request-method="get" web:response-status="200"  
-		class="org.brandao.brutos.examples.controller.ControllerEx7">
-	
-		<action id="/action1" web:request-method="post" executor="action1">
-		</action>
-		
-	</controller>
-	
-	<controller class="Controller">
-	
-		<action id="/action1" web:request-method="post" executor="action1">
-		</action>
-		
-	</controller>
 	
 </controllers>

@@ -100,6 +100,7 @@
         <xsd:attribute name="target" type="xsd:string" default="java.lang.Throwable"/>
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="dispatcher" type="dispatcher" default="forward"/>
+        <xsd:anyAttribute namespace="##any" processContents="strict"/>
         <!-- <xsd:attribute name="enabled" type="xsd:boolean" default="true"/> -->
     </xsd:complexType>
 
