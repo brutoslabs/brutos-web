@@ -40,7 +40,7 @@ public class WebXMLComponentDefinitionReader
 		WebControllerRegistry webControllerRegistry = (WebControllerRegistry)componentRegistry;
 	
 		String id 							= parseUtil.getAttribute(controller, "id");
-		ActionType actionType 				= ActionType.valueOf(parseUtil.getAttribute(controller, "action-type"));
+		ActionType actionType 				= ActionType.valueOf(parseUtil.getAttribute(controller, "action-strategy"));
 		DispatcherType dispatcher 			= DispatcherType.valueOf(parseUtil.getAttribute(controller, "dispatcher"));
 		String requestMethodName   			= webParseUtil.getAttribute(controller, "request-method", "get");
 		String view 						= parseUtil.getAttribute(controller, "view");

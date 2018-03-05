@@ -233,7 +233,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 	protected void loadController(Element controller) {
 
 		String id 							= parseUtil.getAttribute(controller, "id");
-		ActionType actionType 				= ActionType.valueOf(parseUtil.getAttribute(controller, "action-type"));
+		ActionType actionType 				= ActionType.valueOf(parseUtil.getAttribute(controller, "action-strategy"));
 		DispatcherType dispatcher 			= DispatcherType.valueOf(parseUtil.getAttribute(controller, "dispatcher"));
 		String view 						= parseUtil.getAttribute(controller, "view");
 		boolean resolvedView				= parseUtil.getBooleanAttribute(controller, "resolved-view");

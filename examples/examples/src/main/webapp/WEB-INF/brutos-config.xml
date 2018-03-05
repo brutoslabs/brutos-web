@@ -15,4 +15,12 @@
 		</action>
 		
 	</controller>
+	
+	<controller class="Controller">
+	
+		<action id="/action1" web:request-method="post" executor="action1">
+		</action>
+		
+	</controller>
+	
 </controllers>
