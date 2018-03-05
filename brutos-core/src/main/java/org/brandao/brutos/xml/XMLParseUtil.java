@@ -70,30 +70,51 @@ public class XMLParseUtil {
 	}
 
 	public boolean getBooleanAttribute(Element e, String name){
+		return this.getBooleanAttribute(e, name, false);
+	}
+	
+	public boolean getBooleanAttribute(Element e, String name, boolean defaultValue){
 		String value = this.getAttribute(e, name);
-		return value == null? false : Boolean.valueOf(value);
+		return value == null? defaultValue : Boolean.valueOf(value);
 	}
 	
 	public int getIntAttribute(Element e, String name){
+		return this.getIntAttribute(e, name, 0);
+	}
+	
+	public int getIntAttribute(Element e, String name, int defaultValue){
 		String value = this.getAttribute(e, name);
-		return value == null? 0 : Integer.parseInt(value);
+		return value == null? defaultValue : Integer.parseInt(value);
 	}
 
 	public double getDoubleAttribute(Element e, String name){
+		return this.getDoubleAttribute(e, name, 0.0);
+	}
+	
+	public double getDoubleAttribute(Element e, String name, double defaultValue){
 		String value = this.getAttribute(e, name);
-		return value == null? 0.0 : Double.parseDouble(value);
+		return value == null? defaultValue : Double.parseDouble(value);
 	}
 	
 	public float getFloatAttribute(Element e, String name){
+		return this.getFloatAttribute(e, name, 0.0f);
+	}
+	
+	public float getFloatAttribute(Element e, String name, float defaultValue){
 		String value = this.getAttribute(e, name);
-		return value == null? 0.0f : Float.parseFloat(value);
+		return value == null? defaultValue : Float.parseFloat(value);
 	}
 	
 	public String getAttribute(Element e, String name) {
+		return this.getAttribute(e, name, null);
+	}
+	
+	public String getAttribute(Element e, String name, String defaultValue) {
 		Attr value = e.getAttributeNodeNS(this.namespace == null ? "*" : this.namespace, name);
+		value = value == null? e.getAttributeNode(name) : value;
 
 		if (value == null || StringUtil.isEmpty(value.getValue()))
-			return null;
+			return defaultValue;
 		else
 			return value.getValue();
 	}

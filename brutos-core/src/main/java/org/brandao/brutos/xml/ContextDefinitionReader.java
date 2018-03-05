@@ -20,6 +20,7 @@ package org.brandao.brutos.xml;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
@@ -105,7 +106,7 @@ public class ContextDefinitionReader extends AbstractXMLDefinitionReader {
 
 			value = value == null ? c.getTextContent() : value;
 
-			Class factory;
+			Class<?> factory;
 
 			try {
 				factory = ClassUtil.get(value);
@@ -134,7 +135,7 @@ public class ContextDefinitionReader extends AbstractXMLDefinitionReader {
 			className = className == null ? c.getTextContent() : className;
 
 			try {
-				Class scope = ClassUtil.get(className);
+				Class<?> scope = ClassUtil.get(className);
 				this.componentRegistry.registerScope(name,
 						(Scope) ClassUtil.getInstance(scope));
 			} catch (Exception e) {
@@ -169,7 +170,7 @@ public class ContextDefinitionReader extends AbstractXMLDefinitionReader {
 
 		NodeList list = parseUtil.getElements(element, "exclude-filter");
 
-		List excludeFilters = new ArrayList();
+		List<FilterEntity> excludeFilters = new ArrayList<FilterEntity>();
 
 		this.scannerEntity.setExcludeFilters(excludeFilters);
 
@@ -183,7 +184,7 @@ public class ContextDefinitionReader extends AbstractXMLDefinitionReader {
 
 		list = parseUtil.getElements(element, "include-filter");
 
-		List includeFilters = new ArrayList();
+		List<FilterEntity> includeFilters = new ArrayList<FilterEntity>();
 
 		this.scannerEntity.setIncludeFilters(includeFilters);
 

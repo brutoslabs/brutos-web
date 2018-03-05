@@ -38,9 +38,9 @@
 
 	<!-- throw-safe -->
 	
-	<xsd:attribute name="code" type="xsd:int" default="500"/>
+	<xsd:attribute name="code" type="xsd:int"/>
         
-	<xsd:attribute name="reason" type="xsd:string" />
+	<xsd:attribute name="reason" type="xsd:string"/>
 	
 	<!-- /throw-safe -->
 

@@ -29,15 +29,15 @@ import org.brandao.brutos.annotation.FilterType;
 import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
 import org.brandao.brutos.annotation.configuration.web.WebActionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.web.WebControllerAnnotationConfig;
+import org.brandao.brutos.web.WebXMLComponentDefinitionReader;
 import org.brandao.brutos.xml.FilterEntity;
 import org.brandao.brutos.xml.ScannerEntity;
-import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 
 /**
  *
  * @author Brandão
  */
-public class AnnotationDefinitionReader extends XMLComponentDefinitionReader {
+public class AnnotationDefinitionReader extends WebXMLComponentDefinitionReader {
 
 	private ConfigurableApplicationContext applicationContext;
 

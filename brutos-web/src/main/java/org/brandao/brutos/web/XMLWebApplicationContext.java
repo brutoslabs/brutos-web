@@ -18,7 +18,6 @@
 package org.brandao.brutos.web;
 
 import org.brandao.brutos.ComponentRegistry;
-import org.brandao.brutos.xml.XMLComponentDefinitionReader;
 
 /**
  * 
@@ -30,8 +29,8 @@ public class XMLWebApplicationContext
     @Override
     public void loadDefinitions(ComponentRegistry registry){
     
-        XMLComponentDefinitionReader definitionReader = 
-                new XMLComponentDefinitionReader(this);
+        WebXMLComponentDefinitionReader definitionReader = 
+                new WebXMLComponentDefinitionReader(this);
         
         if( super.resources != null)
             definitionReader.loadDefinitions(super.resources);

@@ -236,8 +236,8 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		ActionType actionType 				= ActionType.valueOf(parseUtil.getAttribute(controller, "action-type"));
 		DispatcherType dispatcher 			= DispatcherType.valueOf(parseUtil.getAttribute(controller, "dispatcher"));
 		String view 						= parseUtil.getAttribute(controller, "view");
-		boolean resolvedView				= Boolean.valueOf(parseUtil.getAttribute(controller, "resolved-view"));
-		boolean renderedView				= Boolean.valueOf(parseUtil.getAttribute(controller, "rendered-view"));
+		boolean resolvedView				= parseUtil.getBooleanAttribute(controller, "resolved-view");
+		boolean renderedView				= parseUtil.getBooleanAttribute(controller, "rendered-view");
 		String name 						= parseUtil.getAttribute(controller, "name");
 		String clazzName 					= parseUtil.getAttribute(controller, "class");
 		String actionId 					= parseUtil.getAttribute(controller, "action-id");
