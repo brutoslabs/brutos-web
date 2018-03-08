@@ -101,6 +101,10 @@ public @interface Basic {
 	 */
 	String scope() default ScopeType.PARAM;
 
+	/**
+	 * Define a estratégia a ser utilizada para obter os dados de uma solicitação. 
+	 * Os valores estão descritos em {@link FetchTypes}
+	 */
 	FetchTypes fetchType() default FetchTypes.EAGER;
 	
 	/**
