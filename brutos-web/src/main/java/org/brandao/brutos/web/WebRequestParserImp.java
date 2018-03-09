@@ -9,13 +9,13 @@ public class WebRequestParserImp
 	extends org.brandao.brutos.AbstractRequestParser{
 
 	public WebRequestParserImp(){
-		this.registryParser(
+		this.registerParser(
 			MediaType.ALL, new AllParserContentType());
-		this.registryParser(
+		this.registerParser(
 			MediaType.APPLICATION_JSON,	new JsonParserContentType());
-		this.registryParser(
+		this.registerParser(
 			MediaType.MULTIPART_FORM_DATA, new MultipartFormDataParserContentType());
-		this.registryParser(
+		this.registerParser(
 			MediaType.APPLICATION_X_WWW_FORM_URLENCODED, new WWWFormUrlEncodedParserContentType());
 	}
 	

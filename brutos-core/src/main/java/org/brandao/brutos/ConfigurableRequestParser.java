@@ -25,7 +25,7 @@ package org.brandao.brutos;
 public interface ConfigurableRequestParser 
 	extends RequestParser{
 
-	void registryParser(DataType dataType, 
+	void registerParser(DataType dataType, 
 			ParserContentType parser) throws RequestParserException;
 	
 	void removeParser(DataType dataType) throws RequestParserException;

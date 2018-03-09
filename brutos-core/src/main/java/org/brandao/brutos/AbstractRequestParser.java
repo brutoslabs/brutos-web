@@ -60,7 +60,7 @@ public abstract class AbstractRequestParser
 		parser.parserContentType(request, requestParserInfo, this.codeGenerator, config);
 	}
 	
-	public synchronized void registryParser(DataType dataType, 
+	public synchronized void registerParser(DataType dataType, 
 			ParserContentType parser) throws RequestParserException{
 		
 		if(this.parsers.containsKey(dataType)){
