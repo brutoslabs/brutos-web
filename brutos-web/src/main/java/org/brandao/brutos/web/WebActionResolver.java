@@ -64,6 +64,7 @@ public class WebActionResolver extends AbstractActionResolver{
     	this.addActionTypeResolver(WebActionType.PARAMETER,  new ParamActionTypeResolver());
     	this.addActionTypeResolver(WebActionType.HIERARCHY,  new HierarchyActionTypeResolver());
     	this.addActionTypeResolver(WebActionType.DETACHED,   new DetachedActionTypeResolver());
+    	this.addActionTypeResolver(WebActionType.HEADER,     new HeaderActionTypeResolver());
     	this.cache = new SimpleResourceCache(300);
     }
     
