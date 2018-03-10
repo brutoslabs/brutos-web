@@ -235,7 +235,7 @@ public class ControllerAnnotationConfig extends AbstractAnnotationConfig {
 
 	}
 
-	private void addActions(ControllerBuilder controllerBuilder,
+	protected void addActions(ControllerBuilder controllerBuilder,
 			ComponentRegistry componentRegistry, Class<?> clazz,
 			List<ActionEntry> actionList) {
 

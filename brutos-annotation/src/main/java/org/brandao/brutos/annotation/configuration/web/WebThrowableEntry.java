@@ -22,6 +22,7 @@ import org.brandao.brutos.annotation.configuration.ThrowableEntry;
 import org.brandao.brutos.annotation.web.ResponseError;
 import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.mapping.StringUtil;
+import org.brandao.brutos.web.WebDispatcherType;
 
 public class WebThrowableEntry extends ThrowableEntry{
 
@@ -47,7 +48,7 @@ public class WebThrowableEntry extends ThrowableEntry{
 				defaultValue != null?
 					(StringUtil.isEmpty(defaultValue.dispatcher())?
 						null :
-						DispatcherType.valueOf(StringUtil.adjust(defaultValue.dispatcher()))) :
+						WebDispatcherType.valueOf(StringUtil.adjust(defaultValue.dispatcher()))) :
 							
 					null
 		);

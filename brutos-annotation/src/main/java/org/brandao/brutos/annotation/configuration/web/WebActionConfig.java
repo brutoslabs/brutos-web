@@ -22,8 +22,10 @@ import java.util.List;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.DataType;
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.annotation.AcceptRequestType;
 import org.brandao.brutos.annotation.ResponseType;
+import org.brandao.brutos.annotation.View;
 import org.brandao.brutos.annotation.configuration.ActionConfig;
 import org.brandao.brutos.annotation.configuration.ActionEntry;
 import org.brandao.brutos.annotation.web.RequestMethod;
@@ -31,6 +33,7 @@ import org.brandao.brutos.annotation.web.ResponseStatus;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.MediaType;
 import org.brandao.brutos.web.RequestMethodType;
+import org.brandao.brutos.web.WebDispatcherType;
 
 public class WebActionConfig extends ActionConfig{
 
@@ -38,6 +41,14 @@ public class WebActionConfig extends ActionConfig{
 		super(actionEntry);
 	}
 
+	public DispatcherType getDispatcherType(){
+		View viewAnnotation = actionEntry.getAnnotation(View.class);
+		
+		return viewAnnotation == null? 
+				null : 
+				WebDispatcherType.valueOf(StringUtil.adjust(viewAnnotation.dispatcher()));
+	}
+	
 	public RequestMethodType getRequestMethodType(){
 		
 		RequestMethod requestMethod = 

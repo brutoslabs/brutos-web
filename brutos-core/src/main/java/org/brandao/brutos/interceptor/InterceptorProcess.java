@@ -128,35 +128,26 @@ public class InterceptorProcess implements InterceptorStack {
 
 	private void invoke(ConfigurableInterceptorHandler handler) {
 
-		//RequestInstrument requestInstrument = 
-		//		handler.getRequest().getRequestInstrument();
 		StackRequestElement stackRequestElement = 
 				handler.getRequest().getStackRequestElement();
 				
 		Throwable objectThrow = stackRequestElement.getObjectThrow();
-
-		if (objectThrow == null)
-			invoke0(handler, stackRequestElement);
-		else
-			processException(stackRequestElement, objectThrow,
-					stackRequestElement.getAction());
-
-		//show(requestInstrument, stackRequestElement);
-	}
-
-	/*
-	private void show(RequestInstrument requestInstrument,
-			StackRequestElement stackRequestElement) {
-		try {
-			requestInstrument.getRenderView().show(requestInstrument,
-					stackRequestElement);
-		} catch (BrutosException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new BrutosException(e);
+		Object resource       = handler.getResource();
+		
+		try{
+			this.preAction(resource, stackRequestElement);
+			
+			if (objectThrow == null)
+				invoke0(handler, stackRequestElement);
+			else
+				processException(stackRequestElement, objectThrow,
+						stackRequestElement.getAction());
+			}
+		finally{
+			this.postAction(resource, stackRequestElement);
 		}
+		
 	}
-    */
 	
 	private void executeAction(ConfigurableInterceptorHandler handler)
 			throws IllegalAccessException, IllegalArgumentException,
@@ -197,16 +188,7 @@ public class InterceptorProcess implements InterceptorStack {
 	public void invoke0(ConfigurableInterceptorHandler handler,
 			StackRequestElement stackRequestElement) {
 
-		//Scopes scopes = handler.getContext().getScopes();
-		//Scope requestScope = scopes.get(ScopeType.REQUEST.toString());
-		Object resource = handler.getResource();
-
 		try{
-			/* feito agora pelo invoker
-			DataInput input = new DataInput(requestScope);
-			input.read(form, resource);
-			*/
-			preAction(resource, stackRequestElement);
 			executeAction(handler);
 		}
 		catch(ValidatorException e) {
@@ -234,14 +216,6 @@ public class InterceptorProcess implements InterceptorStack {
 		}
 		catch (Throwable e) {
 			throw new BrutosException(e);
-		}
-		finally {
-			postAction(resource, stackRequestElement);
-			/* feito pelo invoker
-			DataOutput dataOutput = new DataOutput(
-					scopes.get(ScopeType.REQUEST));
-			dataOutput.write(form, stackRequestElement.getResource());
-			*/
 		}
 
 	}

@@ -93,7 +93,7 @@ public class Action {
 		this.parameters = new ArrayList<ParameterAction>();
 		this.parametersType 	= new ArrayList<Class<?>>();
 		this.throwsSafe 		= new HashMap<Class<?>, ThrowableSafeData>();
-		this.dispatcherType 	= DispatcherType.INCLUDE;
+		this.dispatcherType 	= DispatcherType.FORWARD;
 		this.resultAction       = new ResultAction(this);
 		//this.returnClass 		= void.class;
 		this.redirect 			= false;

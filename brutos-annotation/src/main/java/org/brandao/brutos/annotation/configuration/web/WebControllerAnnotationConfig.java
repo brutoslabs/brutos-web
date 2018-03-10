@@ -25,6 +25,7 @@ import org.brandao.brutos.web.RequestMethodType;
 import org.brandao.brutos.web.WebActionType;
 import org.brandao.brutos.web.WebComponentRegistry;
 import org.brandao.brutos.web.WebControllerBuilder;
+import org.brandao.brutos.web.WebDispatcherType;
 
 @Stereotype(
 	target = Controller.class,
@@ -82,7 +83,7 @@ public class WebControllerAnnotationConfig
 		org.brandao.brutos.DispatcherType dispatcher = 
 			viewAnnotation == null? 
 				null : 
-				org.brandao.brutos.DispatcherType.valueOf(StringUtil.adjust(viewAnnotation.dispatcher()));
+				WebDispatcherType.valueOf(StringUtil.adjust(viewAnnotation.dispatcher()));
 		
 		if (annotationController != null) {
 			name = annotationController.name();

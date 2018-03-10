@@ -41,7 +41,7 @@ public class WebXMLComponentDefinitionReader
 	
 		String id 							= parseUtil.getAttribute(controller, "id");
 		ActionType actionType 				= ActionType.valueOf(parseUtil.getAttribute(controller, "action-strategy"));
-		DispatcherType dispatcher 			= DispatcherType.valueOf(parseUtil.getAttribute(controller, "dispatcher"));
+		DispatcherType dispatcher 			= WebDispatcherType.valueOf(parseUtil.getAttribute(controller, "dispatcher"));
 		String requestMethodName   			= webParseUtil.getAttribute(controller, "request-method", "get");
 		String view 						= parseUtil.getAttribute(controller, "view");
 		boolean resolvedView				= parseUtil.getBooleanAttribute(controller, "resolved-view");
@@ -91,7 +91,7 @@ public class WebXMLComponentDefinitionReader
 		String result 						= parseUtil.getAttribute(actionNode, "result");
 		boolean resultRendered 				= parseUtil.getBooleanAttribute(actionNode, "result-rendered");
 		String view 						= parseUtil.getAttribute(actionNode, "view");
-		DispatcherType dispatcher 			= DispatcherType.valueOf(parseUtil.getAttribute(actionNode, "dispatcher"));
+		DispatcherType dispatcher 			= WebDispatcherType.valueOf(parseUtil.getAttribute(actionNode, "dispatcher"));
 		String requestMethodName   			= webParseUtil.getAttribute(actionNode, "request-method", "get");
 		boolean resolvedView				= Boolean.valueOf(parseUtil.getAttribute(actionNode, "resolved-view"));
 		boolean renderedView				= Boolean.valueOf(parseUtil.getAttribute(actionNode, "rendered-view"));
@@ -135,7 +135,7 @@ public class WebXMLComponentDefinitionReader
 		String reason 				= webParseUtil.getAttribute(element, "reason");
 		String view 				= parseUtil.getAttribute(element, "view");
 		String name 				= parseUtil.getAttribute(element, "name");
-		DispatcherType dispatcher 	= DispatcherType.valueOf(parseUtil.getAttribute(element, "dispatcher"));
+		DispatcherType dispatcher 	= WebDispatcherType.valueOf(parseUtil.getAttribute(element, "dispatcher"));
 		boolean resolved 			= parseUtil.getBooleanAttribute(element, "resolved-view");
 		boolean rendered 			= parseUtil.getBooleanAttribute(element, "rendered-view");
 		//boolean enabled 			= Boolean.valueOf(parseUtil.getAttribute(element, "enabled"));

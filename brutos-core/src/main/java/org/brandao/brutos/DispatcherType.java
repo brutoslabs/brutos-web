@@ -26,19 +26,13 @@ import java.util.Map;
  */
 public class DispatcherType {
 
-	public static final DispatcherType INCLUDE  = new DispatcherType("include");
-
 	public static final DispatcherType FORWARD  = new DispatcherType("forward");
 
-	public static final DispatcherType REDIRECT = new DispatcherType("redirect");
-
-	private static final Map<String, DispatcherType> defaultDispatcher = 
+	protected static final Map<String, DispatcherType> defaultDispatcher = 
 			new HashMap<String, DispatcherType>();
 
 	static {
-		defaultDispatcher.put(INCLUDE.toString(),  INCLUDE);
 		defaultDispatcher.put(FORWARD.toString(),  FORWARD);
-		defaultDispatcher.put(REDIRECT.toString(), REDIRECT);
 	}
 
 	private String name;

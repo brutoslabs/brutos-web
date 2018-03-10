@@ -33,6 +33,7 @@ import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.web.BrutosWebConstants;
+import org.brandao.brutos.web.WebDispatcherType;
 import org.brandao.brutos.web.WebMvcRequest;
 import org.brandao.brutos.web.WebMvcResponse;
 import org.brandao.brutos.web.mapping.WebAction;
@@ -71,24 +72,24 @@ public class JSPRenderView implements RenderViewType{
 			response.setStatus(responseStatus);
 			
 			if(dispatcherType == null){
-				dispatcherType = DispatcherType.FORWARD;
+				dispatcherType = WebDispatcherType.FORWARD;
 			}
 			
-	        if( dispatcherType == DispatcherType.FORWARD ){
+	        if( dispatcherType == WebDispatcherType.FORWARD ){
 	        	request.getRequestDispatcher(view)
 	                        .forward(
 	                        		request, 
 	                        		response);
 	        }
 	        else
-	        if( dispatcherType == DispatcherType.INCLUDE ){
+	        if( dispatcherType == WebDispatcherType.INCLUDE ){
 	        	request.getRequestDispatcher(view)
 	            .include(
 	            		request, 
 	            		response);
 	        }
 	        else
-	        if( dispatcherType == DispatcherType.REDIRECT ){
+	        if( dispatcherType == WebDispatcherType.REDIRECT ){
 	        	response.sendRedirect(view);
 	        }
 	        else

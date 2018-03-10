@@ -194,8 +194,9 @@ public class Invoker {
 			Object value = property.getValueFromSource(resource);
 			request.setProperty(property.getName(), value);
 		}
+		
 	}
-	
+
 	/* /new */
 
 	public Object invoke(Controller controller, ResourceAction action,
