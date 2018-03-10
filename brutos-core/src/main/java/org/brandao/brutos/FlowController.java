@@ -43,7 +43,7 @@ public class FlowController {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T> T getControllerInstance(Class<T> controllerClass) {
+	protected static <T> T getControllerInstance(Class<T> controllerClass) {
 		ApplicationContext context = Invoker.getCurrentApplicationContext();
 		return (T)context.getController(controllerClass);
 	}

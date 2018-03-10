@@ -5,6 +5,9 @@ import org.brandao.brutos.BrutosConstants;
 
 public interface BrutosWebConstants extends BrutosConstants{
 
+	final String REDIRECT_PARAMS = ApplicationContext.class
+			.getName() + ".web.redirect.params";
+	
 	final String WEB_SEPARATOR = "/";
 
 	final String WEB_APPLICATION_CLASS = ApplicationContext.class

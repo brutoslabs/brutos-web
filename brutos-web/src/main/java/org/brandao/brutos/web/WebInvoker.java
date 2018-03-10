@@ -20,6 +20,8 @@ package org.brandao.brutos.web;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -37,8 +39,10 @@ import org.brandao.brutos.RequestTypeException;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.ResponseProvider;
 import org.brandao.brutos.ResponseTypeException;
+import org.brandao.brutos.Scopes;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.DataTypeMap;
+import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.mapping.MediaTypeMap;
 import org.brandao.brutos.web.scope.HeaderScope;
 import org.brandao.brutos.web.scope.ParamScope;
@@ -124,10 +128,26 @@ public class WebInvoker extends Invoker{
     	webRequest.setResourceAction(action);
     	webRequest.setParameters(parameters);
 		
+    	this.updateRedirectVars(webRequest);
 		this.invoke(webRequest, webResponse);
+		
 		return webResponse.getResult();
 	}
     
+	@SuppressWarnings("unchecked")
+	protected void updateRedirectVars(MutableWebMvcRequest webRequest){
+		Scopes scopes 				= this.applicationContext.getScopes();
+		Scope scope 				= scopes.get(WebScopeType.FLASH);
+		Map<String,Object> vars     = (Map<String, Object>) scope.get(BrutosWebConstants.REDIRECT_PARAMS);
+		
+		if(vars != null){
+			for(Entry<String, Object> e: vars.entrySet()){
+				webRequest.setProperty(e.getKey(), e.getValue());
+			}
+		}
+		
+	}
+	
 	protected boolean resolveAction(MutableMvcRequest request, 
 			MutableMvcResponse response){
 		

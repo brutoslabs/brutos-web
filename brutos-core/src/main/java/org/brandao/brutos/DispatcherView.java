@@ -40,8 +40,4 @@ public class DispatcherView {
 		request.setView(value);
 	}
 
-	public void toRedirectNow(String value) {
-		throw new RedirectException(value, dispatcher);
-	}
-
 }
