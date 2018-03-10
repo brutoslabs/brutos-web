@@ -160,7 +160,7 @@ public class ControllerManagerImp implements ControllerManager, InternalUpdate {
 	protected Method getMethodAction(String methodName, Class<?> classe) {
 		try {
 			Method method = classe
-					.getDeclaredMethod(methodName, new Class[] {});
+					.getDeclaredMethod(methodName, new Class[] {StackRequestElement.class});
 			return method;
 		} catch (Exception e) {
 			return null;

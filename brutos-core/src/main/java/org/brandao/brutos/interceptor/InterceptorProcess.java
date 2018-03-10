@@ -206,7 +206,7 @@ public class InterceptorProcess implements InterceptorStack {
 			DataInput input = new DataInput(requestScope);
 			input.read(form, resource);
 			*/
-			preAction(resource);
+			preAction(resource, stackRequestElement);
 			executeAction(handler);
 		}
 		catch(ValidatorException e) {
@@ -236,7 +236,7 @@ public class InterceptorProcess implements InterceptorStack {
 			throw new BrutosException(e);
 		}
 		finally {
-			postAction(resource);
+			postAction(resource, stackRequestElement);
 			/* feito pelo invoker
 			DataOutput dataOutput = new DataOutput(
 					scopes.get(ScopeType.REQUEST));
@@ -277,24 +277,24 @@ public class InterceptorProcess implements InterceptorStack {
 		}
 	}
 
-	private void preAction(Object source) {
+	private void preAction(Object source, StackRequestElement element) {
 		try {
 			ActionListener action = this.form.getActionListener();
 			if (action.getPreAction() != null) {
 				action.getPreAction().setAccessible(true);
-				action.getPreAction().invoke(source, new Object[] {});
+				action.getPreAction().invoke(source, new Object[] {element});
 			}
 		} catch (Exception e) {
 			throw new BrutosException(e);
 		}
 	}
 
-	private void postAction(Object source) {
+	private void postAction(Object source, StackRequestElement element) {
 		try {
 			ActionListener action = this.form.getActionListener();
 			if (action.getPostAction() != null) {
 				action.getPostAction().setAccessible(true);
-				action.getPostAction().invoke(source, new Object[] {});
+				action.getPostAction().invoke(source, new Object[] {element});
 			}
 		} catch (Exception e) {
 			throw new BrutosException(e);
