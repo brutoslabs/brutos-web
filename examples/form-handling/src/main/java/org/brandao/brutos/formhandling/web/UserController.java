@@ -158,9 +158,4 @@ public class UserController {
 		return country;
 	}
 	
-	public boolean contains(List<Object> list, Object item){
-		return list.indexOf(item) != -1;
-		
-	}
-	
 }
