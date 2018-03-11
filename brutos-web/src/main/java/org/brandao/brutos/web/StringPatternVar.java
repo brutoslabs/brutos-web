@@ -50,6 +50,10 @@ public class StringPatternVar {
             this.regexSuffix = regexSuffix;
         }
 
+        public boolean isEmptyStart(){
+        	return start == null || start.isEmpty();
+        }
+        
 		public String getStart() {
 			return start;
 		}
@@ -58,6 +62,10 @@ public class StringPatternVar {
 			this.start = start;
 		}
 
+        public boolean isEmptyEnd(){
+        	return end == null || end.isEmpty();
+        }
+        
 		public String getEnd() {
 			return end;
 		}

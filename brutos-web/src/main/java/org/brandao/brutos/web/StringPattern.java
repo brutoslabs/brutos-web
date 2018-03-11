@@ -137,7 +137,8 @@ public class StringPattern {
             StringBuilder regexSuffix = new StringBuilder("");
             
             for(int k=0;k<=i;k++){
-                regexPrefix.append( frags.get(k) == null? "" : Pattern.quote(frags.get(k)) );
+            	String value = frags.get(k);
+                regexPrefix.append( value == null || value.isEmpty()? "" : Pattern.quote(value) );
                 
                 if(i>0 && k<i){
                    regexPrefix.append( regexs.get(k) );
@@ -150,7 +151,8 @@ public class StringPattern {
                     regexSuffix.append( regexs.get(k) );
                 }
                 
-                regexSuffix.append(frags.get(k+1) == null? "" : Pattern.quote(frags.get(k+1)) );
+                String value = frags.get(k+1);
+                regexSuffix.append(value == null || value.isEmpty()? "" : Pattern.quote(value) );
             }
             
             regexSuffix.append("$");
@@ -215,7 +217,7 @@ public class StringPattern {
     }
     
     private String createPattern(){
-        String value = null;
+        StringBuilder value = new StringBuilder();
         
         if(vars.isEmpty())
             return this.original;
@@ -223,24 +225,24 @@ public class StringPattern {
         for(int i=0;i<vars.size();i++ ){
             StringPatternVar p = vars.get(i);
             
-            if(i == 0 && p.getStart() != null){
-                value = p.getStart();
+            if(i == 0 && !p.isEmptyStart()){
+                value.append(p.getStart());
             }
 
-            value += "(" + p.getId() + ")";
+            value.append("(").append(p.getId()).append(")");
             
-            if(p.getEnd() != null){
-                value += p.getEnd();
+            if(!p.isEmptyEnd()){
+                value.append(p.getEnd());
             }
             
         }
         
-        return value;
+        return value.toString();
         
     }
     
     private String createRegex(){
-        String value = null;
+        StringBuilder value = new StringBuilder();
         
         if(vars.isEmpty())
             return this.original;
@@ -248,18 +250,19 @@ public class StringPattern {
         for(int i=0;i<vars.size();i++ ){
             StringPatternVar p = vars.get(i);
             
-            if(i == 0 && p.getStart() != null){
-            	value = Pattern.quote(p.getStart());
+            if(i == 0 && !p.isEmptyStart()){
+            	value.append(Pattern.quote(p.getStart()));
             }
-                value += p.getRegex();
             
-            if(p.getEnd() != null){
-                value += Pattern.quote(p.getEnd());
+            value.append(p.getRegex());
+            
+            if(!p.isEmptyEnd()){
+                value.append(Pattern.quote(p.getEnd()));
             }
             
         }
         
-        return value;
+        return value.toString();
         
     }
     

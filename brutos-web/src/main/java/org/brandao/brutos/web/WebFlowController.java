@@ -19,7 +19,7 @@ import org.brandao.brutos.scope.Scope;
  * 
  * Ex:
  * <pre>
- *     WebFlowController.redirectTo("/users");
+ * WebFlowController.redirectTo("/users");
  * </pre>
  * 
  * <p>A segunda é executando o método {@link #redirect()}. Este permite
@@ -27,10 +27,10 @@ import org.brandao.brutos.scope.Scope;
  * 
  * Ex:
  * <pre>
-		WebFlowController
-		.redirect()
-			.put("msg", "User added successfully!")
-		.to("/users/" + user.getId());
+ * WebFlowController
+ * .redirect()
+ *   .put("msg", "User added successfully!")
+ * .to("/users/" + user.getId());
  * </pre>
  * 
  * Ao executar o método {@link #redirectTo(String)} e {@link RedirectBuilder#to(String)}, 

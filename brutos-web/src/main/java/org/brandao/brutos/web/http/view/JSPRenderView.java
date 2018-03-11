@@ -90,7 +90,7 @@ public class JSPRenderView implements RenderViewType{
 	        }
 	        else
 	        if( dispatcherType == WebDispatcherType.REDIRECT ){
-	        	response.sendRedirect(view);
+	        	response.sendRedirect(request.getContextPath() + view);
 	        }
 	        else
 	            throw new RenderViewException( "invalid dispatcher type: " + dispatcherType );
