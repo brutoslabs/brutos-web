@@ -32,19 +32,19 @@
 						action="${pageContext.request.contextPath}/users">
 				
 				
-						<input type="hidden" name="${user.id}">
+						<input name="user.id" type="hidden" name="${user.id}">
 				
 						  <div class="form-group row ${!empty exception ? 'has-error' : ''}">
 							<label class="col-sm-2 control-label">Name</label>
 							<div class="col-sm-10">
-								<input name="name" type="text" value="${user.name}" class="form-control" placeholder="Name">
+								<input name="user.name" type="text" value="${user.name}" class="form-control" placeholder="Name">
 							</div>
 						  </div>
 				
 						  <div class="form-group row ${!empty exception ? 'has-error' : ''}">
 							<label class="col-sm-2 control-label">Email</label>
 							<div class="col-sm-10">
-								<input name="email" type="email" value="${user.email}" class="form-control">
+								<input name="user.email" type="email" value="${user.email}" class="form-control">
 							</div>
 						  </div>
 				
@@ -74,7 +74,7 @@
 							<div class="col-sm-10">
 								<div class="checkbox">
 								  <label>
-									<input type="checkbox" name="user.newsletter" ${user.newsletter? 'checked' : ''}>
+									<input type="checkbox" name="user.newsletter" value="true" ${user.newsletter? 'checked' : ''}>
 								  </label>
 								</div>
 							</div>
@@ -85,7 +85,7 @@
 							<div class="col-sm-10">
 			                   <c:forEach var="framework" items="${frameworksList}">
 			                   		<label class="checkbox-inline">
-										<input type="checkbox" name="user.newsletter" 
+										<input type="checkbox" name="user.newsletter" value="${framework}" 
 											${user.framework.contains(framework)? 'checked' : ''}>
 			                   			${framework}
 			                   		</label>
@@ -110,7 +110,7 @@
 							<div class="col-sm-10">
 			                   <c:forEach var="number" items="${numberList}">
 			                   		<label class="radio-inline">
-										<input type="radio" name="user.number" 
+										<input type="radio" name="user.number" value="${user.number}"
 											${number == user.number? 'checked' : ''}>
 										${number}
 									</label>
@@ -121,7 +121,7 @@
 						  <div class="form-group row ${!empty exception ? 'has-error' : ''}">
 							<label class="col-sm-2 control-label">Country</label>
 							<div class="col-sm-5">
-								<select name="country" class="form-control">
+								<select name="user.country" class="form-control">
 									<option value="">--- Select ---</option>
 				                   	<c:forEach var="country" items="${countryList}">
 										<option value="${country.key}" ${user.country == country.key? 'selected' : ''}>${country.value}</option>
@@ -134,7 +134,7 @@
 						  <div class="form-group row ${!empty exception ? 'has-error' : ''}">
 							<label class="col-sm-2 control-label">Java Skills</label>
 							<div class="col-sm-5">
-								<select name="skill" multiple size="5" class="form-control">
+								<select name="user.skill" multiple size="5" class="form-control">
 				                   <c:forEach var="skill" items="${javaSkillList}">
 									<option value="${skill.key}" ${user.skill.contains(skill.key)? 'selected' : ''}>${skill.value}</option>
 								  </c:forEach>
