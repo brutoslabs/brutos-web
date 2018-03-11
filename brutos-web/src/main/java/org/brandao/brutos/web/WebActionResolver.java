@@ -231,7 +231,7 @@ public class WebActionResolver extends AbstractActionResolver{
     		return node.putRequestEntry(value.getRequestMethodType(), value);
     	}
     	else{
-    		RequestMappingNode next = node.getNext(parts[index]);
+    		RequestMappingNode next = node.getNextToAdd(parts[index]);
     		if(next == null){
     			next = node.add(parts[index], null);
     		}
@@ -269,7 +269,7 @@ public class WebActionResolver extends AbstractActionResolver{
     		
     		RequestEntry e = this.getNode(next, methodType, request, parts, index + 1);
     		
-    		if(e != null && !next.isStaticValue()){
+    		if(e != null && !node.isStaticValue()){
     			Map<String, List<String>> params     =  e.getParameters();
     			Map<String, List<String>> nodeParams = node.getRequestParameters(request, parts[index-1]);
     			

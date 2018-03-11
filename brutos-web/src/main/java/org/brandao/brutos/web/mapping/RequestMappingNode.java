@@ -46,6 +46,7 @@ public class RequestMappingNode{
 		this.dynamicNext = new HashSet<RequestMappingNode>();
 		this.staticNext  = new HashMap<String, RequestMappingNode>();
 		this.pattern     = null;
+		this.staticValue = true;
 	}
 	
 	public Map<String,List<String>> getRequestParameters(MutableMvcRequest request, String value){
@@ -127,6 +128,24 @@ public class RequestMappingNode{
 		return null;
 	}
 
+	public RequestMappingNode getNextToAdd(String value){
+		
+		if(!this.staticNext.isEmpty()){
+			RequestMappingNode next = this.staticNext.get(value);
+			if(next != null){
+				return next;
+			}
+		}
+		
+		for(RequestMappingNode dynamicNode: this.dynamicNext){
+			if(dynamicNode.value.equals(value)){
+				return dynamicNode;
+			}
+		}
+		
+		return null;
+	}
+	
 	public boolean isEmpty(){
 		return this.dynamicNext.isEmpty() && this.staticNext.isEmpty();
 	}
