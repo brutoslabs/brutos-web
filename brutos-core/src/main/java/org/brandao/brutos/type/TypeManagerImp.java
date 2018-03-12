@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -78,8 +79,8 @@ public class TypeManagerImp implements TypeManager {
 				Long.class));
 		defaultTypes.add(new DefaultTypeFactory(ShortWrapperType.class,
 				Short.class));
-		// defaultTypes.add(new DefaultTypeFactory(ListType.class, List.class));
-		// defaultTypes.add(new DefaultTypeFactory(SetType.class, Set.class));
+		defaultTypes.add(new DefaultTypeFactory(ListType.class, List.class));
+		defaultTypes.add(new DefaultTypeFactory(SetType.class, Set.class));
 		defaultTypes.add(new DefaultTypeFactory(SerializableType.class,
 				Serializable.class));
 		defaultTypes.add(new DefaultTypeFactory(DefaultDateType.class,

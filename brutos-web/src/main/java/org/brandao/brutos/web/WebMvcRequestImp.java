@@ -322,6 +322,27 @@ public class WebMvcRequestImp
 		r = r == null? _getRequest().getParameter(name) : r;
 		return r == null? null : String.valueOf(r);
 	}
+
+	public List<Object> getParameters(String name) {
+		List<Object> r = this.request.getParameters(name);
+		
+		if(r == null){
+			
+			String[] values = _getRequest().getParameterValues(name);
+			
+			if(values == null){
+				return null;
+			}
+			
+			r = new ArrayList<Object>();
+			
+			for(String v: values){
+				r.add(v);
+			}
+		}
+		
+		return r;
+	}
 	
 	@Override
 	public Object getAttribute(String name) {
@@ -345,7 +366,7 @@ public class WebMvcRequestImp
 		Object[] values = this.request.getParameters();
 		
 		if(values == null){
-			return null;
+			return _getRequest().getParameterValues(name);
 		}
 		else{
 			String[] result = new String[values.length];

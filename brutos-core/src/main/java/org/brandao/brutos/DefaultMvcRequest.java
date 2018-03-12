@@ -100,6 +100,10 @@ public class DefaultMvcRequest implements MutableMvcRequest {
 		return this.getValue(name, this.parameters);
 	}
 
+	public List<Object> getParameters(String name) {
+		return this.getValues(name, this.parameters);
+	}
+	
 	public Object getProperty(String name) {
 		return this.getValue(name, this.properties);
 	}
@@ -250,11 +254,10 @@ public class DefaultMvcRequest implements MutableMvcRequest {
         return values == null || values.isEmpty()? null : values.get( 0 );
     }
 	
-    @SuppressWarnings("unused")
-	private Object[] getValues(String name, Map<String, List<Object>> map){
+	private List<Object> getValues(String name, Map<String, List<Object>> map){
         List<Object> values = (List<Object>) map.get( name );
         
-        return values == null || values.isEmpty()? null : values.toArray();
+        return values == null || values.isEmpty()? null : values;
     }
 
 	public void setAcceptResponse(List<DataType> value){

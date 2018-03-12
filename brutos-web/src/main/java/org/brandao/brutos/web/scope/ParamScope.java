@@ -18,7 +18,6 @@
 package org.brandao.brutos.web.scope;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -58,8 +57,8 @@ public class ParamScope implements Scope{
 
     public Object getCollection( String name ){
     	MutableMvcRequest request = currentRequest.get();
-        return new ParameterList(
-                Arrays.asList(request.getParameters()));
+    	List<Object> o = request.getParameters(name);
+        return o == null? null : new ParameterList(o);
     }
 
     public void remove( String name ){

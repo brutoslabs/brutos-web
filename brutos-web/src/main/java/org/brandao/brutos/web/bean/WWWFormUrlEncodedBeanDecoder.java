@@ -203,7 +203,14 @@ public class WWWFormUrlEncodedBeanDecoder
 				if(updatePrefix){
 					prefix = this.getNewPrefix(entity, prefix, false);
 				}
-				result = entity.getScope().get(prefix);
+				
+				Type type = entity.getType();
+				
+				result = 
+					type instanceof CollectionType? 
+						entity.getScope().getCollection(prefix) : 
+						entity.getScope().get(prefix);
+						
 				return entity.getType().convert(result);
 			}
 

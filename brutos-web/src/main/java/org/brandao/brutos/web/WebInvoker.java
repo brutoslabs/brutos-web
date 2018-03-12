@@ -103,6 +103,7 @@ public class WebInvoker extends Invoker{
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{	
 		
 		super.updateRequest(request, controller, resource);
+    	this.updateRedirectVars(request);
 		
 		WebMvcRequestImp webRequest = (WebMvcRequestImp)request;
 		webRequest.getServletRequest()
@@ -128,14 +129,13 @@ public class WebInvoker extends Invoker{
     	webRequest.setResourceAction(action);
     	webRequest.setParameters(parameters);
 		
-    	this.updateRedirectVars(webRequest);
 		this.invoke(webRequest, webResponse);
 		
 		return webResponse.getResult();
 	}
     
 	@SuppressWarnings("unchecked")
-	protected void updateRedirectVars(MutableWebMvcRequest webRequest){
+	protected void updateRedirectVars(MutableMvcRequest webRequest){
 		Scopes scopes 				= this.applicationContext.getScopes();
 		Scope scope 				= scopes.get(WebScopeType.FLASH);
 		Map<String,Object> vars     = (Map<String, Object>) scope.get(BrutosWebConstants.REDIRECT_PARAMS);

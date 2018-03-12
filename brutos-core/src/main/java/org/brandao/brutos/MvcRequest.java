@@ -48,6 +48,8 @@ public interface MvcRequest {
 	
 	Object getParameter(String name);
 
+	List<Object> getParameters(String name);
+	
 	Object getProperty(String name);
 
 	InputStream getStream() throws IOException;
