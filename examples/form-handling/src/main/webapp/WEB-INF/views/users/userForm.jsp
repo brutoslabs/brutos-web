@@ -110,7 +110,7 @@
 							<div class="col-sm-10">
 			                   <c:forEach var="number" items="${numberList}">
 			                   		<label class="radio-inline">
-										<input type="radio" name="user.number" value="${user.number}"
+										<input type="radio" name="user.number" value="${number}"
 											${number == user.number? 'checked' : ''}>
 										${number}
 									</label>

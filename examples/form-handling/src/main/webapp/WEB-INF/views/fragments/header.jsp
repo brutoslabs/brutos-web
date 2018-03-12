@@ -19,22 +19,17 @@
 			$.ajax({
 			    type: 'POST',
 			    url: contextPath + resource,
-			    success: function( data ) {
+			    success: function(data) {
 			    	document.write(data);
 			    	document.close();
-	            },			    
-			    complete: function (html) {
-			    	//if(reload){
-				    //    location.reload();
-			    	//}
-			    }
+	            }			    
 			});
 		}
 		
 	</script>
 	<style>
 		body {
-			padding-top: 54px;
+			padding-top: 56px;
 		}
 
 		section {
@@ -43,7 +38,7 @@
 		
 		@media ( min-width : 992px) {
 			body {
-				padding-top: 56px;
+				padding-top: 58px;
 			}
 		}
 	</style>
