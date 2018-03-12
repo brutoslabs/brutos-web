@@ -34,12 +34,14 @@ import org.brandao.brutos.Invoker;
 import org.brandao.brutos.InvokerException;
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.MutableMvcResponse;
+import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.RequestProvider;
 import org.brandao.brutos.RequestTypeException;
 import org.brandao.brutos.ResourceAction;
 import org.brandao.brutos.ResponseProvider;
 import org.brandao.brutos.ResponseTypeException;
 import org.brandao.brutos.Scopes;
+import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.DataTypeMap;
 import org.brandao.brutos.scope.Scope;
@@ -99,11 +101,18 @@ public class WebInvoker extends Invoker{
     	}
     }
 
+	protected boolean invokeApplication(MutableMvcRequest request, MutableMvcResponse response,
+			StackRequestElement element, RequestInstrument requestInstrument) throws Throwable{
+		
+    	this.updateRedirectVars(request);
+    	return super.invokeApplication(request, response, element, requestInstrument);
+    	
+	}
+    
 	protected void updateRequest(MutableMvcRequest request, Controller controller, Object resource) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{	
 		
 		super.updateRequest(request, controller, resource);
-    	this.updateRedirectVars(request);
 		
 		WebMvcRequestImp webRequest = (WebMvcRequestImp)request;
 		webRequest.getServletRequest()

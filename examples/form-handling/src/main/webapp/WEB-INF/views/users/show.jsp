@@ -12,7 +12,7 @@
 	
     <div class="container">
 
-		<c:if test="${not empty msg}">
+		<c:if test="${!empty msg}">
 			<div class="alert alert-${css} alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert"
 	                                aria-label="Close">

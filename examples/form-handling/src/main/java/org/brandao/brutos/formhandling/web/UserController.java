@@ -57,7 +57,8 @@ public class UserController {
 	
 	@Action("/users")
 	@RequestMethod(RequestMethodTypes.POST)
-	@ResponseErrors(code=200, view="users/userForm")
+	@ResponseErrors(enabled=false)
+	//@ResponseErrors(code=200, view="users/userForm")
 	public void registerUser(@Basic(bean="user")User user) throws ValidatorException{
 		
 		if(logger.isDebugEnabled()){
