@@ -19,10 +19,14 @@
 			$.ajax({
 			    type: 'POST',
 			    url: contextPath + resource,
-			    complete: function () {
-			    	if(reload){
-				        window.location.reload(true);
-			    	}
+			    success: function( data ) {
+			    	document.write(data);
+			    	document.close();
+	            },			    
+			    complete: function (html) {
+			    	//if(reload){
+				    //    location.reload();
+			    	//}
 			    }
 			});
 		}

@@ -54,7 +54,7 @@
 				  <button class="btn btn-primary"
                                           onclick="get('/users/${user.id}/update')">Update</button>
 				  <button class="btn btn-danger"
-                                          onclick="post('/users/${user.id}/delete')">Delete</button>
+                                          onclick="post('/users/${user.id}/delete', true)">Delete</button>
                                 </td>
 			    </tr>
 			</c:forEach>
