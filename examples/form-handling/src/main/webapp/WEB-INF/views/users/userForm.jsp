@@ -32,7 +32,7 @@
 						action="${pageContext.request.contextPath}/users">
 				
 				
-						<input name="user.id" type="hidden" name="${user.id}">
+						<input name="user.id" type="hidden" name="user.id" value="${user.id}">
 				
 						  <div class="form-group row ${!empty exception ? 'has-error' : ''}">
 							<label class="col-sm-2 control-label">Name</label>
@@ -85,7 +85,7 @@
 							<div class="col-sm-10">
 			                   <c:forEach var="framework" items="${frameworksList}">
 			                   		<label class="checkbox-inline">
-										<input type="checkbox" name="user.newsletter" value="${framework}" 
+										<input type="checkbox" name="user.framework" value="${framework}" 
 											${user.framework.contains(framework)? 'checked' : ''}>
 			                   			${framework}
 			                   		</label>
@@ -97,10 +97,10 @@
 							<label class="col-sm-2 control-label">Sex</label>
 							<div class="col-sm-10">
 								<label class="radio-inline">
-									<input type="radio" name="sex" ${user.sex == 'M'? 'checked' : ''} value="M"> Male
+									<input type="radio" name="user.sex" ${user.sex == 'M'? 'checked' : ''} value="M"> Male
 								</label>
 								<label class="radio-inline">
-									<input type="radio" name="sex" ${user.sex == 'F'? 'checked' : ''} value="F"> Female
+									<input type="radio" name="user.sex" ${user.sex == 'F'? 'checked' : ''} value="F"> Female
 								</label>
 							</div>
 						  </div>
