@@ -28,36 +28,34 @@ import java.util.Map;
  */
 public class RestrictionRules {
 
-	public static final RestrictionRules MIN = new RestrictionRules("min");
-	public static final RestrictionRules MINLENGTH = new RestrictionRules(
-			"minlength");
-	public static final RestrictionRules MAX = new RestrictionRules("max");
-	public static final RestrictionRules MAXLENGTH = new RestrictionRules(
-			"maxlength");
-	public static final RestrictionRules MATCHES = new RestrictionRules(
-			"matches");
-	public static final RestrictionRules REQUIRED = new RestrictionRules(
-			"required");
-	public static final RestrictionRules EQUAL = new RestrictionRules("equal");
-	public static final RestrictionRules CUSTOM = new RestrictionRules("custom");
+	public static final RestrictionRules MIN 		= new RestrictionRules("min");
+	
+	public static final RestrictionRules MINLENGTH 	= new RestrictionRules("minlength");
+	
+	public static final RestrictionRules MAX 		= new RestrictionRules("max");
+	
+	public static final RestrictionRules MAXLENGTH 	= new RestrictionRules("maxlength");
+	
+	public static final RestrictionRules MATCHES 	= new RestrictionRules("matches");
+	
+	public static final RestrictionRules REQUIRED 	= new RestrictionRules("required");
+	
+	public static final RestrictionRules EQUAL 		= new RestrictionRules("equal");
+	
+	public static final RestrictionRules CUSTOM 	= new RestrictionRules("custom");
 
-	private final static Map defaultRules = new HashMap();
+	private final static Map<String, RestrictionRules> defaultRules = 
+			new HashMap<String, RestrictionRules>();
 
 	static {
-		defaultRules.put(RestrictionRules.MIN.toString(), RestrictionRules.MIN);
-		defaultRules.put(RestrictionRules.MINLENGTH.toString(),
-				RestrictionRules.MINLENGTH);
-		defaultRules.put(RestrictionRules.MAX.toString(), RestrictionRules.MAX);
-		defaultRules.put(RestrictionRules.MAXLENGTH.toString(),
-				RestrictionRules.MAXLENGTH);
-		defaultRules.put(RestrictionRules.MATCHES.toString(),
-				RestrictionRules.MATCHES);
-		defaultRules.put(RestrictionRules.REQUIRED.toString(),
-				RestrictionRules.REQUIRED);
-		defaultRules.put(RestrictionRules.EQUAL.toString(),
-				RestrictionRules.EQUAL);
-		defaultRules.put(RestrictionRules.CUSTOM.toString(),
-				RestrictionRules.CUSTOM);
+		defaultRules.put(RestrictionRules.MIN.toString(), 		RestrictionRules.MIN);
+		defaultRules.put(RestrictionRules.MINLENGTH.toString(), RestrictionRules.MINLENGTH);
+		defaultRules.put(RestrictionRules.MAX.toString(), 		RestrictionRules.MAX);
+		defaultRules.put(RestrictionRules.MAXLENGTH.toString(), RestrictionRules.MAXLENGTH);
+		defaultRules.put(RestrictionRules.MATCHES.toString(), 	RestrictionRules.MATCHES);
+		defaultRules.put(RestrictionRules.REQUIRED.toString(), 	RestrictionRules.REQUIRED);
+		defaultRules.put(RestrictionRules.EQUAL.toString(), 	RestrictionRules.EQUAL);
+		defaultRules.put(RestrictionRules.CUSTOM.toString(), 	RestrictionRules.CUSTOM);
 	}
 
 	private String name;
@@ -66,8 +64,8 @@ public class RestrictionRules {
 		this.name = name;
 	}
 
-	public static List getRestrictionRules() {
-		return new ArrayList(defaultRules.values());
+	public static List<RestrictionRules> getRestrictionRules() {
+		return new ArrayList<RestrictionRules>(defaultRules.values());
 	}
 
 	public String toString() {

@@ -40,11 +40,14 @@ import org.brandao.brutos.mapping.ResultAction;
 public class DefaultValidator implements Validator {
 
 	private Properties config;
-	private Map mappedRules;
-	private Map rules;
+	
+	private Map<String, Class<? extends ValidationRule>> mappedRules;
+	
+	private Map<String, ValidationRule> rules;
+	
 	private boolean initialized;
 
-	public DefaultValidator(Map rules) {
+	public DefaultValidator(Map<String, Class<? extends ValidationRule>> rules) {
 		this.mappedRules = rules;
 	}
 
@@ -53,21 +56,24 @@ public class DefaultValidator implements Validator {
 		this.initialized = false;
 	}
 
+	@SuppressWarnings("unchecked")
 	private synchronized void init() {
 		try {
-			this.rules = new HashMap();
+			this.rules = new HashMap<String, ValidationRule>();
 
-			Iterator keys = config.stringPropertyNames().iterator();
+			Iterator<String> keys = config.stringPropertyNames().iterator();
 
 			while (keys.hasNext()) {
-				String key = (String) keys.next();
+				String key = keys.next();
 				if (!key.equals("message")) {
-					Class rule = key.equalsIgnoreCase(RestrictionRules.CUSTOM
-							.toString()) ? ClassUtil.get(config
-							.getProperty(key)) : (Class) mappedRules.get(key);
+					
+					Class<? extends ValidationRule> rule = 
+						key.equalsIgnoreCase(RestrictionRules.CUSTOM.toString())? 
+							(Class<? extends ValidationRule>)ClassUtil.get(config.getProperty(key)) : 
+							mappedRules.get(key);
 
 					if (rule != null) {
-						ValidationRule ruleInstance = getInstance(rule);
+						ValidationRule ruleInstance = ClassUtil.getInstance(rule);
 						ruleInstance.setConfiguration(this.config);
 						rules.put(key, ruleInstance);
 					}
@@ -79,21 +85,13 @@ public class DefaultValidator implements Validator {
 		}
 	}
 
-	private ValidationRule getInstance(Class clazz) {
-		try {
-			return (ValidationRule) ClassUtil.getInstance(clazz);
-		} catch (Exception e) {
-			throw new BrutosException(e);
-		}
-	}
-
 	protected String getMessage(Object value, Properties config) {
 		String message = config.getProperty("message");
 		if (message != null) {
-			Iterator r = rules.keySet().iterator();
+			Iterator<String> r = rules.keySet().iterator();
 
 			while (r.hasNext()) {
-				String key = (String) r.next();
+				String key = r.next();
 				String val = String.valueOf(config.get(key));
 				message = message.replace("${" + key + "}", val);
 			}
@@ -110,11 +108,11 @@ public class DefaultValidator implements Validator {
 		if (!this.initialized)
 			this.init();
 
-		Iterator c = rules.values().iterator();
+		Iterator<ValidationRule> c = rules.values().iterator();
 
 		try {
 			while (c.hasNext()) {
-				ValidationRule rule = (ValidationRule) c.next();
+				ValidationRule rule = c.next();
 				rule.validate(source, value);
 			}
 		} catch (ValidatorException e) {

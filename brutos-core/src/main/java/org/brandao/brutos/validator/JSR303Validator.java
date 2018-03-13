@@ -42,17 +42,17 @@ import org.brandao.brutos.mapping.ResultAction;
 public class JSR303Validator implements Validator {
 
 	private javax.validation.Validator objectValidator;
+	
 	private ExecutableValidator executableValidator;
+	
 	private Properties config;
-	private Class[] groups;
-
+	
 	public void configure(Properties config) {
 		ValidatorFactory validatorFactory = Validation
 				.buildDefaultValidatorFactory();
 		this.objectValidator = validatorFactory.getValidator();
 		this.executableValidator = this.objectValidator.forExecutables();
 		this.config = config;
-		this.groups = new Class[] {};
 	}
 
 	public Properties getConfiguration() {
@@ -65,44 +65,56 @@ public class JSR303Validator implements Validator {
 
 	public void validate(ConstructorBean source, Object factoryInstance,
 			Object[] value) throws ValidatorException {
+		
 		Method method = source.getMethod();
-		Set constraintViolations = method == null ? executableValidator
-				.validateConstructorParameters(source.getContructor(), value,
-						this.groups) : executableValidator.validateParameters(
-				factoryInstance, method, value, this.groups);
+		
+		Set<ConstraintViolation<Object>> constraintViolations = 
+			method == null ? 
+				executableValidator.validateConstructorParameters(source.getContructor(), value) : 
+				executableValidator.validateParameters(factoryInstance, method, value);
+				
 		throwException(constraintViolations);
+		
 	}
 
 	public void validate(ConstructorBean source, Object factoryInstance,
 			Object value) throws ValidatorException {
+		
 		Method method = source.getMethod();
-		Set constraintViolations = method == null ? executableValidator
-				.validateConstructorReturnValue(source.getContructor(), value,
-						this.groups) : executableValidator.validateReturnValue(
-				factoryInstance, method, value, this.groups);
+		
+		Set<ConstraintViolation<Object>> constraintViolations = 
+			method == null ? 
+				executableValidator.validateConstructorReturnValue(source.getContructor(), value) : 
+				executableValidator.validateReturnValue(factoryInstance, method, value);
+				
 		throwException(constraintViolations);
 	}
 
 	public void validate(PropertyBean source, Object beanInstance, Object value)
 			throws ValidatorException {
+		
+		/*
 		Method method = source.getBeanProperty().getSet();
 
 		if (method != null) {
-			Set constraintViolations = executableValidator.validateParameters(
-					beanInstance, method, new Object[] { value }, this.groups);
+			Set<ConstraintViolation<Object>> constraintViolations = 
+				executableValidator.validateParameters(beanInstance, method, new Object[] {value}, this.groups);
+			
 			throwException(constraintViolations);
 		}
-
+		*/
+		
 	}
 
 	public void validate(PropertyController source, Object controllerInstance,
 			Object value) throws ValidatorException {
+		
 		Method method = source.getBeanProperty().getSet();
 
 		if (method != null) {
-			Set constraintViolations = executableValidator.validateParameters(
-					controllerInstance, method, new Object[] { value },
-					this.groups);
+			Set<ConstraintViolation<Object>> constraintViolations = 
+					executableValidator.validateParameters(controllerInstance, method, new Object[] {value});
+			
 			throwException(constraintViolations);
 		}
 
@@ -115,10 +127,14 @@ public class JSR303Validator implements Validator {
 
 	public void validate(Action source, Object controller, Object[] value)
 			throws ValidatorException {
+		
 		Method method = source.getMethod();
+		
 		if (method != null) {
-			Set constraintViolations = executableValidator.validateParameters(
-					controller, method, value, this.groups);
+			
+			Set<ConstraintViolation<Object>> constraintViolations = 
+				executableValidator.validateParameters(controller, method, value);
+			
 			throwException(constraintViolations);
 		}
 	}
@@ -126,27 +142,24 @@ public class JSR303Validator implements Validator {
 	@Deprecated
 	public void validate(Action source, Object controller, Object value)
 			throws ValidatorException {
-		Method method = source.getMethod();
-
-		if (method != null) {
-			Set constraintViolations = executableValidator.validateReturnValue(
-					controller, method, value, this.groups);
-			throwException(constraintViolations);
-		}
 	}
 
 	public void validate(ResultAction source, Object controller, Object value)
 			throws ValidatorException {
+		
 		Method method = source.getAction().getMethod();
 
 		if (method != null) {
-			Set constraintViolations = executableValidator.validateReturnValue(
-					controller, method, value, this.groups);
+			
+			Set<ConstraintViolation<Object>> constraintViolations = 
+				executableValidator.validateReturnValue(controller, method, value);
+			
 			throwException(constraintViolations);
 		}
 	}
 	
-	protected void throwException(Set constraintViolations)
+	@SuppressWarnings("unchecked")
+	protected void throwException(Set<ConstraintViolation<Object>> constraintViolations)
 			throws ValidatorException {
 
 		if (!constraintViolations.isEmpty()) {
@@ -154,7 +167,7 @@ public class JSR303Validator implements Validator {
 
 			ValidatorException ex = new ValidatorException();
 			for (int i = 0; i < cvs.length; i++) {
-				ConstraintViolation cv = (ConstraintViolation) cvs[0];
+				ConstraintViolation<Object> cv = (ConstraintViolation<Object>) cvs[0];
 				String errMsg = MessageFormat.format(
 						cv.getMessage(),
 						new Object[] { cv.getRootBeanClass(),

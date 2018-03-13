@@ -87,7 +87,7 @@ public final class ClassUtil {
 		return cons.newInstance(values);
 	}
 
-	public static Object getInstance(Class<?> clazz)
+	public static <T> T getInstance(Class<T> clazz)
 			throws InstantiationException, IllegalAccessException {
 		return clazz.newInstance();
 	}
