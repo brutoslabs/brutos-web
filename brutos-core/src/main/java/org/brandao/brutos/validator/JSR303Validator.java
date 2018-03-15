@@ -18,14 +18,19 @@
 package org.brandao.brutos.validator;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Path;
 import javax.validation.ValidatorFactory;
 import javax.validation.Validation;
 import javax.validation.executable.ExecutableValidator;
 
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ConstructorArgBean;
 import org.brandao.brutos.mapping.ConstructorBean;
@@ -67,12 +72,24 @@ public class JSR303Validator implements Validator {
 		
 		Method method = source.getMethod();
 		
-		Set<ConstraintViolation<Object>> constraintViolations = 
-			method == null ? 
-				executableValidator.validateConstructorParameters(source.getContructor(), value) : 
+		if(method == null){
+			Set<ConstraintViolation<Object>> constraintViolations =
+				executableValidator.validateConstructorParameters(source.getContructor(), value);
+			
+			Map<String,String> map = new HashMap<String, String>();
+			
+			for(ConstructorArgBean arg: source.getConstructorArgs()){
+				map.put(arg.getRealName(), arg.getParameterName());
+			}
+			
+			throwException(true, map, constraintViolations);
+		}
+		else{
+			Set<ConstraintViolation<Object>> constraintViolations = 
 				executableValidator.validateParameters(factoryInstance, method, value);
-				
-		throwException(constraintViolations);
+			
+			throwException(true, null, constraintViolations);
+		}
 		
 	}
 
@@ -86,7 +103,13 @@ public class JSR303Validator implements Validator {
 				executableValidator.validateConstructorReturnValue(source.getContructor(), value) : 
 				executableValidator.validateReturnValue(factoryInstance, method, value);
 				
-		throwException(constraintViolations);
+		Map<String,String> map = new HashMap<String, String>();
+		
+		for(ConstructorArgBean arg: source.getConstructorArgs()){
+			map.put(arg.getRealName(), arg.getParameterName());
+		}
+		
+		throwException(true, map, constraintViolations);
 	}
 
 	public void validate(PropertyBean source, Object beanInstance, Object value)
@@ -115,7 +138,7 @@ public class JSR303Validator implements Validator {
 			Set<ConstraintViolation<Object>> constraintViolations = 
 					executableValidator.validateParameters(controllerInstance, method, new Object[] {value});
 			
-			throwException(constraintViolations);
+			throwException(false, null, constraintViolations);
 		}
 
 	}
@@ -135,7 +158,13 @@ public class JSR303Validator implements Validator {
 			Set<ConstraintViolation<Object>> constraintViolations = 
 				executableValidator.validateParameters(controller, method, value);
 			
-			throwException(constraintViolations);
+			Map<String,String> map = new HashMap<String, String>();
+			
+			for(ParameterAction param: source.getParameters()){
+				map.put(param.getRealName(), param.getName());
+			}
+			
+			throwException(true, map, constraintViolations);
 		}
 	}
 
@@ -154,12 +183,15 @@ public class JSR303Validator implements Validator {
 			Set<ConstraintViolation<Object>> constraintViolations = 
 				executableValidator.validateReturnValue(controller, method, value);
 			
-			throwException(constraintViolations);
+			Map<String,String> map = new HashMap<String, String>();
+			map.put(method.getName(), source.getName() == null? BrutosConstants.DEFAULT_RETURN_NAME : source.getName());
+			throwException(false, map, constraintViolations);
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected void throwException(Set<ConstraintViolation<Object>> constraintViolations)
+	protected void throwException(boolean ignoreRoot, Map<String,String> updateRoot,
+			Set<ConstraintViolation<Object>> constraintViolations)
 			throws ValidatorException {
 
 		if (!constraintViolations.isEmpty()) {
@@ -168,10 +200,41 @@ public class JSR303Validator implements Validator {
 			ValidatorException ex = new ValidatorException();
 			
 			for (ConstraintViolation<Object> cv: cvs) {
-				String path = cv.getPropertyPath().toString();
+				
+				Iterator<Path.Node> iterator = cv.getPropertyPath().iterator();
+				Path.Node node = iterator.next();
+				
+				if(ignoreRoot){
+					node = iterator.next();
+				}
+				
+				StringBuilder path = new StringBuilder();
+				
+				if(updateRoot != null){
+					String nodeName = updateRoot.get(node.getName());
+					
+					if(nodeName != null){
+						path.append(nodeName);
+					}
+					else{
+						path.append(node.getName());
+					}
+				}
+				
+				while(iterator.hasNext()){
+					node = iterator.next();
+					
+					if(path.length() != 0){
+						path.append(".");
+					}
+					
+					path.append(node.getName());
+				}
+				
+				String strPath = path.toString();
 				String message = cv.getMessage();
 				ValidatorException e = new ValidatorException(message);
-				ex.addCause(path, e);
+				ex.addCause(strPath, e);
 			}
 			
 			throw ex;

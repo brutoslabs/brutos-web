@@ -46,6 +46,7 @@ import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.DataTypeMap;
 import org.brandao.brutos.mapping.ParameterAction;
+import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.mapping.MediaTypeMap;
 import org.brandao.brutos.web.scope.HeaderScope;
@@ -127,6 +128,13 @@ public class WebInvoker extends Invoker{
 				resultName, 
 			response.getResult()
 		);
+
+		ThrowableSafeData throwData = 
+				request.getStackRequestElement().getThrowableSafeData();
+		
+		if(throwData != null){
+			request.setProperty(throwData.getParameterName(), request.getThrowable());
+		}
 		
 		List<ParameterAction> params = action.getParameters();
 		Object[] values = request.getParameters();

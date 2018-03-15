@@ -6,6 +6,8 @@
 	<title>Brutos MVC form handling example</title>
 	
 	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+	<link href="${pageContext.request.contextPath}/resources/css/bootstrapvalidator/bootstrapValidator.min.css" rel="stylesheet">
 	
 	<script type="text/javascript">
 		
