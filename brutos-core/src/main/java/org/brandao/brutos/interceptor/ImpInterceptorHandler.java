@@ -102,7 +102,8 @@ public class ImpInterceptorHandler implements ConfigurableInterceptorHandler {
 
 	public Object[] getParameters() throws InstantiationException,
 			IllegalAccessException, ParseException {
-
+		throw new UnsupportedOperationException();
+		/*
 		if (this.parameters == null) {
 			if (stackRequestElement.getParameters() == null) {
 				this.parameters = stackRequestElement.getAction()
@@ -117,6 +118,7 @@ public class ImpInterceptorHandler implements ConfigurableInterceptorHandler {
 		}
 
 		return this.parameters;
+		*/
 	}
 
 	public void setResult(Object value) {

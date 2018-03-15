@@ -102,13 +102,6 @@ public class PropertyController extends UseBeanData {
 		return this.beanProperty.canSet();
 	}
 	
-	@Deprecated
-	public void setValue(Object source) throws IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException {
-		Object value = super.getValue(source);
-		this.setValueInSource(source, value);
-	}
-
 	public Controller getController() {
 		return controller;
 	}

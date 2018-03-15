@@ -20,7 +20,6 @@ package org.brandao.brutos.web.http.view;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.MvcRequest;
 import org.brandao.brutos.MvcResponse;
@@ -165,13 +164,6 @@ public class JSPRenderView implements RenderViewType{
 				action.getResultAction();
 		
 		if (resultAction.getType() != null) {
-			String var = 
-					resultAction.getName() == null? 
-						BrutosConstants.DEFAULT_RETURN_NAME : 
-						resultAction.getName();
-			
-			requestScope.put(var, stackRequestElement.getResultAction());
-
 			if (action.isReturnRendered() || resultAction.getType().isAlwaysRender()) {
 				resultAction.getType().show(
 						stackRequestElement.getResponse(), 

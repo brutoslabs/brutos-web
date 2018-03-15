@@ -21,8 +21,6 @@ import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.type.ArrayType;
-import org.brandao.brutos.type.CollectionType;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
 
@@ -32,6 +30,8 @@ import org.brandao.brutos.validator.Validator;
  */
 public abstract class UseBeanData {
 
+	protected String realName;
+	
 	protected String name;
 
 	protected ScopeType scopeType;
@@ -52,6 +52,14 @@ public abstract class UseBeanData {
 	
 	public UseBeanData() {
 		this.fetchType = FetchType.EAGER;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 	public String getName() {
@@ -76,52 +84,6 @@ public abstract class UseBeanData {
 
 	public void setFetchType(FetchType fetchType) {
 		this.fetchType = fetchType;
-	}
-
-	public Object getValue(Object source) {
-
-		Object value = null;
-
-		if (!isNullable()) {
-			if(this.metaBean != null){
-				value = this.metaBean
-							.getValue(
-									this.name == null ? 
-										null : 
-										this.name + metaBean.getSeparator());
-				value = this.type.convert(value);
-			}
-			else
-			if(this.mapping != null) {
-				value = this.mapping
-							.getValue(
-									this.name == null ? 
-										null : 
-										this.name + mapping.getSeparator());
-				value = this.type.convert(value);
-			}
-			else
-			if(this.staticValue != null){
-				value = this.type.convert(this.staticValue);
-			}
-			else
-			if(this.type instanceof CollectionType || this.type instanceof ArrayType) {
-				value = this.name == null ? 
-						null : 
-						getScope().getCollection(this.name);
-				value = this.type.convert(value);
-			}
-			else{
-				value = this.name == null ? 
-						null : 
-						getScope().get(this.name);
-				value = this.type.convert(value);
-			}
-		}
-
-		this.validate(source, value);
-
-		return value;
 	}
 
 	public void encode(BeanEncoder encoder, Object value) throws BeanEncoderException{

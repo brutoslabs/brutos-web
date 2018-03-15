@@ -18,7 +18,6 @@
 package org.brandao.brutos.validator;
 
 import java.lang.reflect.Method;
-import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.Set;
 
@@ -50,9 +49,9 @@ public class JSR303Validator implements Validator {
 	public void configure(Properties config) {
 		ValidatorFactory validatorFactory = Validation
 				.buildDefaultValidatorFactory();
-		this.objectValidator = validatorFactory.getValidator();
-		this.executableValidator = this.objectValidator.forExecutables();
-		this.config = config;
+		this.objectValidator		= validatorFactory.getValidator();
+		this.executableValidator	= this.objectValidator.forExecutables();
+		this.config 				= config;
 	}
 
 	public Properties getConfiguration() {
@@ -109,6 +108,7 @@ public class JSR303Validator implements Validator {
 	public void validate(PropertyController source, Object controllerInstance,
 			Object value) throws ValidatorException {
 		
+		
 		Method method = source.getBeanProperty().getSet();
 
 		if (method != null) {
@@ -163,19 +163,17 @@ public class JSR303Validator implements Validator {
 			throws ValidatorException {
 
 		if (!constraintViolations.isEmpty()) {
-			Object[] cvs = constraintViolations.toArray(new Object[] {});
+			ConstraintViolation<Object>[] cvs = constraintViolations.toArray(new ConstraintViolation[0]);
 
 			ValidatorException ex = new ValidatorException();
-			for (int i = 0; i < cvs.length; i++) {
-				ConstraintViolation<Object> cv = (ConstraintViolation<Object>) cvs[0];
-				String errMsg = MessageFormat.format(
-						cv.getMessage(),
-						new Object[] { cv.getRootBeanClass(),
-								cv.getPropertyPath().toString(),
-								cv.getInvalidValue() });
-				ValidatorException e = new ValidatorException(errMsg);
-				ex.addCause(e);
+			
+			for (ConstraintViolation<Object> cv: cvs) {
+				String path = cv.getPropertyPath().toString();
+				String message = cv.getMessage();
+				ValidatorException e = new ValidatorException(message);
+				ex.addCause(path, e);
 			}
+			
 			throw ex;
 		}
 	}

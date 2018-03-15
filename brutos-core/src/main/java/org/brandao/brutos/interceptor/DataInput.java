@@ -38,6 +38,7 @@ public class DataInput {
 	}
 
 	public void read(Controller controller, Object object) {
+		/*
 		try {
 			List<PropertyController> fields = controller.getProperties();
 			
@@ -56,6 +57,7 @@ public class DataInput {
 		catch (Exception e) {
 			throw new BrutosException(e);
 		}
+		*/
 	}
 
 }

@@ -24,7 +24,6 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
-import org.brandao.brutos.validator.ValidatorException;
 
 /**
  * 
@@ -68,27 +67,6 @@ public class MetaBean extends Bean {
 
 	public Map<Object, DependencyBean> getMetaValues() {
 		return metaValues;
-	}
-
-	@Override
-	public Object getValue(Object instance, String prefix, long index,
-			ValidatorException exceptionHandler, boolean force) {
-
-		String pre = prefix != null ? prefix : "";
-		String key = pre + this.name;
-
-		Object metaValue = this.getScope().get(key);
-		metaValue = this.type.convert(metaValue);
-
-		if (metaValue == null)
-			return null;
-
-		DependencyBean bean = this.metaValues.get(metaValue);
-
-		if (bean == null)
-			throw new MappingException("bean not found: " + metaValue);
-
-		return bean.getValue(prefix, index, exceptionHandler, this, null);
 	}
 
 	public Scope getScope() {

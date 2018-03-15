@@ -320,6 +320,9 @@ public class Action {
 						ParameterAction arg = (ParameterAction) parameters
 								.get(k);
 
+						String parameterName = ParameterNameResolver.getName(m, k);
+						arg.setRealName(parameterName);
+						
 						if (arg.getType() == null) {
 							if (arg.getMetaBean() != null)
 								arg.setType(new AnyType(params[k]));
@@ -347,7 +350,7 @@ public class Action {
 
 		throw new BrutosException(msg);
 	}
-
+	
 	private boolean isCompatible(Method m, Class<?>[] classArgs) {
 		Class<?>[] params = m.getParameterTypes();
 		if (params.length == classArgs.length) {
@@ -375,6 +378,7 @@ public class Action {
 		return result;
 	}
 
+	/*
 	public Object[] getParameterValues(Object controllerInstance) {
 		int length = this.parameters.size();
 		Object[] values = new Object[length];
@@ -395,7 +399,8 @@ public class Action {
 		this.parametersValidator.validate(this, controllerInstance, values);
 		return values;
 	}
-
+*/
+	
 	public String getExecutor() {
 		return executor;
 	}

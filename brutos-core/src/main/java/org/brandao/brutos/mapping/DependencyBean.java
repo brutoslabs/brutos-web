@@ -17,7 +17,6 @@
 
 package org.brandao.brutos.mapping;
 
-import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ScopeType;
@@ -25,7 +24,6 @@ import org.brandao.brutos.Scopes;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.Type;
 import org.brandao.brutos.validator.Validator;
-import org.brandao.brutos.validator.ValidatorException;
 
 /**
  * 
@@ -33,6 +31,8 @@ import org.brandao.brutos.validator.ValidatorException;
  */
 public abstract class DependencyBean {
 
+	protected String realName;
+	
 	protected String parameterName;
 
 	protected Type type;
@@ -63,6 +63,14 @@ public abstract class DependencyBean {
 		this.parent = parent;
 		this.controller = parent.getController();
 		this.fetchType = FetchType.EAGER;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 	public String getParameterName() {
@@ -159,121 +167,10 @@ public abstract class DependencyBean {
 				.getClassType();
 	}
 
-	public Object getValue(String prefix, long index,
-			ValidatorException exceptionHandler, Object source) {
-		return getValue(prefix, index, exceptionHandler, source, null);
-	}
-
-	public Object getValue(String prefix, long index, 
-			ValidatorException exceptionHandler, Object source, Object value) {
-
-		try {
-			return getValue0(prefix, index, exceptionHandler, source, value);
-		} catch (ValidatorException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new DependencyException(String.format(
-					"problem to resolve dependency: %s",
-					new Object[] { this.getParameterName() }), e);
-		}
-
-	}
-
-	private Object getValue0(String prefix, long index, 
-			ValidatorException exceptionHandler, Object source, Object value) {
-
-		Object result;
-
-		if (this.mapping != null) {
-			Bean dependencyBean = controller.getBean(mapping);
-
-			if (dependencyBean == null)
-				throw new BrutosException("mapping not found: " + mapping);
-
-			String newPrefix = null;
-			
-			if (parent.isHierarchy()) {
-				String parameter = getParameterName();
-				
-				if (parameter != null){
-					newPrefix = parameter == null ? "" : parameter;
-				}
-			}
-
-			if (newPrefix != null) {
-				newPrefix += 
-						index < 0 ? "" : 
-						parent.getIndexFormat().replace("$index", String.valueOf(index));
-				
-				newPrefix += parent.getSeparator();
-			}
-
-			if (prefix != null) {
-				if (newPrefix != null)
-					newPrefix = prefix + newPrefix;
-				else
-					newPrefix = prefix;
-			}
-
-			result = dependencyBean.getValue(value, newPrefix, -1,
-					exceptionHandler, false);
-		}
-		else
-		if (this.metaBean == null) {
-			if (isStatic()){
-				result = getValue();
-			}
-			else
-			if(this.isNullable()){
-				result = null;
-			}
-			else {
-				String pre = prefix != null ? prefix : "";
-				String param = this.getParameterName() == null? "" : this.getParameterName();
-				String idx = 
-						index < 0 ? "" : 
-						parent.getIndexFormat().replace("$index", String.valueOf(index));
-				String key = pre + param + idx;
-
-				result = getScope().get(key);
-				result = type.convert(result);
-			}
-
-			//result = isNullable() ? null : type.convert(result);
-		}
-		else {
-			String pre   = prefix != null ? prefix : "";
-			String param = this.getParameterName() == null? "" : this.getParameterName();
-			String idx   = 
-					index < 0 ? "" : 
-					parent.getIndexFormat().replace("$index", String.valueOf(index));
-			String key   = pre + param + idx + parent.getSeparator();
-
-			result = this.metaBean.getValue(key);
-			result = type.convert(result);
-		}
-
-		try {
-			if (validator != null)
-				this.validate(source, result);
-		} catch (ValidatorException vex) {
-			if (exceptionHandler == null)
-				throw vex;
-			else {
-				exceptionHandler.addCause(vex);
-				return null;
-			}
-		}
-
-		return result;
-	}
-
 	public Object convert(Object value){
 		return this.type.convert(value);
 	}
 	
-	protected abstract void validate(Object source, Object value);
-
 	public boolean isNullable() {
 		return nullable;
 	}

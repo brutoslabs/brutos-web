@@ -1,4 +1,4 @@
-package org.brandao.brutos.web.bean;
+package org.brandao.brutos.mapping;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -13,52 +13,45 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.CodeGenerator;
 import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ProxyFactory;
-import org.brandao.brutos.mapping.AbstractBeanDecoder;
-import org.brandao.brutos.mapping.Bean;
-import org.brandao.brutos.mapping.BeanDecoder;
-import org.brandao.brutos.mapping.BeanDecoderException;
-import org.brandao.brutos.mapping.CollectionBean;
-import org.brandao.brutos.mapping.ConstructorArgBean;
-import org.brandao.brutos.mapping.ConstructorBean;
-import org.brandao.brutos.mapping.DependencyBean;
-import org.brandao.brutos.mapping.DependencyException;
-import org.brandao.brutos.mapping.Element;
-import org.brandao.brutos.mapping.Key;
-import org.brandao.brutos.mapping.MapBean;
-import org.brandao.brutos.mapping.MappingException;
-import org.brandao.brutos.mapping.MetaBean;
-import org.brandao.brutos.mapping.PropertyBean;
-import org.brandao.brutos.mapping.SimpleKeyMap;
-import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.mapping.UseBeanData;
 import org.brandao.brutos.type.ArrayType;
 import org.brandao.brutos.type.CollectionType;
 import org.brandao.brutos.type.Type;
 
-public class WWWFormUrlEncodedBeanDecoder
-extends AbstractBeanDecoder {
-	
-	//implements BeanDecoder{
+//o métododo que acessa o nó o cria.
+//o update prefix somente fica null na criação com índice
+public class AbstractBeanDecoder 
+	implements BeanDecoder{
 
-	/*
 	private CodeGenerator codeGenerator;
 
 	public void setCodeGenerator(CodeGenerator value) {
 		this.codeGenerator = value;
 	}
 	
+	/* useBeanData */
+	
 	public Object decode(UseBeanData entity, FetchType fetchType, Object data)
 			throws BeanDecoderException {
 		try{
-			return this.getValue(entity, fetchType, data);
+			return this.getValue(entity, fetchType, data, new StringBuilder(), new NodeBeanDecoder());
 		}
 		catch(Throwable e){
 			throw new BeanDecoderException(e);
 		}
 	}
 
-	public Object getValue(UseBeanData entity, FetchType fetchType, Object data) {
+	public Object getValue(UseBeanData entity, 
+			FetchType fetchType, Object data, StringBuilder path, NodeBeanDecoder parent) {
 
+		NodeBeanDecoder node = new NodeBeanDecoder();
+		node.setBeanPath(entity.getRealName());
+		node.setPath(entity.getName());
+		parent.addNode(entity.getRealName(), node);
+		
+		if(entity.getName() != null){
+			path.append(entity.getName());
+		}
+		
 		if(fetchType == null){
 			fetchType = entity.getFetchType();
 		}
@@ -71,27 +64,12 @@ extends AbstractBeanDecoder {
 		
 		if (!entity.isNullable()) {
 			if(entity.getMetaBean() != null){
-				Object value =
-					this.getValue(
-						entity.getMetaBean(),
-						entity.getName() == null ? 
-							null : 
-							entity.getName() + entity.getMetaBean().getSeparator()
-					);
-				
+				Object value = this.getValue(entity.getMetaBean(), path, node);
 				return entity.getType().convert(value);
 			}
 			else
 			if(entity.getMapping() != null) {
-				Object value =
-					this.getValue(
-						entity.getMapping(),
-						entity.getName() == null?
-							null :
-							entity.getName() + entity.getMapping().getSeparator()
-					);
-					
-						
+				Object value = this.getValue(entity.getMapping(), path, parent);
 				return entity.getType().convert(value);
 			}
 			else
@@ -106,13 +84,13 @@ extends AbstractBeanDecoder {
 					value = 
 						entity.getName() == null? 
 							null : 
-							entity.getScope().getCollection(entity.getName());
+							entity.getScope().getCollection(path.toString());
 				}
 				else{
 					value = 
 							entity.getName() == null? 
 								null : 
-								entity.getScope().get(entity.getName());
+								entity.getScope().get(path.toString());
 				}
 				return type.convert(value);
 			}
@@ -121,23 +99,31 @@ extends AbstractBeanDecoder {
 		return null;
 	}	
 
-	public Object getValue(MetaBean entity, String prefix) {
-		String newPrefix = 
-				this.getPerfixWithStartObject(
-					prefix, entity.getSeparator(), entity.getName());
+	public Object getValue(MetaBean entity, StringBuilder path, NodeBeanDecoder parent) {
 		
-		Object metaValue = entity.getScope().get(newPrefix);
+		int len = path.length();
+		
+		this.updatePath(path, entity.getSeparator(), entity.getName());
+		
+		Object metaValue = entity.getScope().get(path.toString());
 		metaValue = entity.getType().convert(metaValue);
 
+		path.setLength(len);
+		
 		DependencyBean bean = entity.getMetaValues().get(metaValue);
 
 		if (bean == null){
 			throw new MappingException("bean not found: " + metaValue);
 		}
 
-		return this.getValue(bean, null, prefix, true);
+		//metabean não tem nome
+		this.updatePath(path, entity.getSeparator(), entity.getName());
+		
+		return this.getValue(bean, null, path, parent);
 	}
 	
+	
+	/* dependencyBean */
 	
 	public Object decode(DependencyBean dependencyBean, FetchType fetchType,
 			Object data) throws BeanDecoderException {
@@ -146,8 +132,8 @@ extends AbstractBeanDecoder {
 			
 			return this.getValue(
 				dependencyBean, fetchType, 
-				(String)dta.get("prefix"), 
-				(Boolean)dta.get("updatePrefix"));
+				(StringBuilder)dta.get("path"), 
+				(NodeBeanDecoder)dta.get("parent"));
 		}
 		catch(Throwable e){
 			throw new BeanDecoderException(e);
@@ -155,7 +141,7 @@ extends AbstractBeanDecoder {
 	}
 
 	private Object getValue(DependencyBean entity, FetchType fetchType, 
-			String prefix, boolean updatePrefix) {
+			StringBuilder path, NodeBeanDecoder parent) {
 		
 		if(fetchType == null){
 			fetchType = entity.getFetchType();
@@ -163,8 +149,8 @@ extends AbstractBeanDecoder {
 		
 		if(fetchType.equals(FetchType.LAZY)){
 			Map<String,Object> data = new HashMap<String, Object>();
-			data.put("prefix",       prefix);
-			data.put("updatePrefix", updatePrefix);
+			data.put("path",   new StringBuilder(path));
+			data.put("parent", parent);
 			
 			ProxyFactory proxyFactory = 
 					this.codeGenerator.getProxyFactory(entity.getClassType());
@@ -180,11 +166,8 @@ extends AbstractBeanDecoder {
 				throw new BrutosException("mapping not found: " + entity.getMapping());
 			}
 
-			if(updatePrefix){
-				prefix = this.getNewPrefix(entity, prefix, true);
-			}
+			Object value = this.getValue(dependencyBean, path, parent);
 			
-			Object value = this.getValue(dependencyBean, prefix);
 			return entity.getType().convert(value);
 		}
 		else
@@ -197,49 +180,45 @@ extends AbstractBeanDecoder {
 				return null;
 			}
 			else{
-				if(updatePrefix){
-					prefix = this.getNewPrefix(entity, prefix, false);
-				}
 				
 				Type type = entity.getType();
 				
 				result = 
 					type instanceof CollectionType? 
-						entity.getScope().getCollection(prefix) : 
-						entity.getScope().get(prefix);
+						entity.getScope().getCollection(path.toString()) : 
+						entity.getScope().get(path.toString());
 						
 				return entity.getType().convert(result);
 			}
 
 		}
 		else{
-			if(updatePrefix){
-				prefix = this.getNewPrefix(entity, prefix, true);
-			}
-			result = this.getValue(entity.getMetaBean(), prefix);
+			result = this.getValue(entity.getMetaBean(), path, parent);
 			return entity.getType().convert(result);
 		}
 		
 	}
 	
-	private Object getValue(Bean entity, String prefix) {
+	/* bean */
+	
+	private Object getValue(Bean entity, StringBuilder path, NodeBeanDecoder parent) {
 		
 		if(entity.isCollection()){
-			return this.getValueCollection((CollectionBean)entity, prefix);
+			return this.getValueCollection((CollectionBean)entity, path, parent);
 		}
 		else
 		if(entity.isMap()){
-			return this.getValueMap((MapBean)entity, prefix);
+			return this.getValueMap((MapBean)entity, path, parent);
 		}
 		else{
-			return this.getValueBean(entity, prefix);
+			return this.getValueBean(entity, path, parent);
 		}
 	}
 
-	private Object getValueBean(Bean entity, String prefix) {
+	private Object getValueBean(Bean entity, StringBuilder path, NodeBeanDecoder parent) {
 		
 		ConstructorBean constructorBean = entity.getConstructor();
-		Object value = this.getInstance(constructorBean, prefix);
+		Object value = this.getInstance(constructorBean, path, parent);
 		
 		if(value == null){
 			return null;
@@ -258,12 +237,20 @@ extends AbstractBeanDecoder {
 					continue;
 				}
 				
-				Object p = this.getValue(prop, null, prefix, true);
+				int len = path.length();
+				this.updatePath(path, prop.getParent().getSeparator(), prop.getParameterName());
+				NodeBeanDecoder node = this.createNode(prop.getParameterName(), prop.getRealName());
+				parent.addNode(prop.getRealName(), node);
+				
+				Object p = this.getValue(prop, null, path, node);
 				
 				if(p != null){
 					exist = true;
 					prop.setValueInSource(value, p);
 				}
+				
+				path.setLength(len);
+				
 			}
 			catch(Throwable ex){
 				throw new DependencyException("fail parse property: " + prop.getName(), ex);
@@ -273,35 +260,40 @@ extends AbstractBeanDecoder {
 		return exist? value : null;
 	}
 	
-	private Object getValueCollection(CollectionBean entity, String prefix) {
+	/* collection */
+	
+	private Object getValueCollection(CollectionBean entity, StringBuilder path, NodeBeanDecoder parent) {
 		Element e = (Element)entity.getCollection();
 		
 		if(e.getParameterName() != null){
-			return this.getValueCollectionObject(entity, e, prefix);
+			return this.getValueCollectionObject(entity, e, path, parent);
 		}
 		else{
-			return this.getValueCollectionSimple(entity, e, prefix);
+			return this.getValueCollectionSimple(entity, e, path, parent);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	public Object getValueCollectionObject(CollectionBean entity, Element e,
-			String prefix) {
+			StringBuilder path, NodeBeanDecoder parent) {
 		
-		Collection<Object> destValue = (Collection<Object>)this.getValueBean(entity, prefix);
+		Collection<Object> destValue = (Collection<Object>)this.getValueBean(entity, path, parent);
 	
-		String newPrefix = 
-				this.getPerfixWithStartObject(
-					prefix, entity.getSeparator(), e.getParameterName());
+		int len = path.length();
+		this.updatePath(path, entity.getSeparator(), e.getParameterName());
+
+		NodeBeanDecoder node = this.createNode(e.getParameterName(), null);
+		parent.addNode(e.getParameterName(), node);
 		
 		int max = entity.getMaxItens() + 1;
 		
+		int lenEntity = path.length();
+		
 		for(int i=0;i<max;i++){
-			String ePreifx = 
-				newPrefix + 
-				entity.getIndexFormat().replace("$index", String.valueOf(i));
 			
-			Object element = this.getValue(e, FetchType.EAGER, ePreifx, false);
+			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i)));
+			
+			Object element = this.getValue(e, FetchType.EAGER, path, node);
 			
 			if(element != null){
 				destValue.add(element);
@@ -309,39 +301,35 @@ extends AbstractBeanDecoder {
 			else{
 				break;
 			}
+			
+			path.setLength(lenEntity);
 		}
 		
 		if(destValue.size() > max){
 			throw new DependencyException(destValue + " > " + max);
 		}
+		
+		path.setLength(len);
 		
 		return destValue.isEmpty()? null : destValue;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Object getValueCollectionSimple(CollectionBean entity, Element e,
-			String prefix) {
+			StringBuilder path, NodeBeanDecoder parent) {
 		
 		Collection<Object> destValue = 
-				(Collection<Object>)this.getValueBean(entity, prefix);
+				(Collection<Object>)this.getValueBean(entity, path, parent);
 	
-		String newPrefix;
-		
-		if(prefix.endsWith(entity.getSeparator())){
-			newPrefix = prefix.substring(0, prefix.length() - 1);
- 		}
-		else{
-			newPrefix = prefix;
-		}
-		
+		int len = path.length();
+
 		int max = entity.getMaxItens() + 1;
 		
 		for(int i=0;i<max;i++){
-			String ePreifx = 
-				newPrefix + 
-				entity.getIndexFormat().replace("$index", String.valueOf(i));
 			
-			Object element = this.getValue(e, FetchType.EAGER, ePreifx, false);
+			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i)));
+			
+			Object element = this.getValue(e, FetchType.EAGER, path, parent);
 			
 			if(element != null){
 				destValue.add(element);
@@ -349,62 +337,79 @@ extends AbstractBeanDecoder {
 			else{
 				break;
 			}
+			
+			path.setLength(len);
+			
 		}
 		
 		if(destValue.size() > max){
 			throw new DependencyException(destValue + " > " + max);
 		}
 		
+		path.setLength(len);
+		
 		return destValue.isEmpty()? null : destValue;
 	}	
 
-	private Object getValueMap(MapBean entity, String prefix) {
+	/* map */
+	
+	private Object getValueMap(MapBean entity, StringBuilder path, NodeBeanDecoder parent) {
 		
 		Key k = (Key)entity.getKey();
 		
 		if(k.getParameterName() != null){
-			return this.getValueMapObject(entity, k, prefix);
+			return this.getValueMapObject(entity, k, path, parent);
 		}
 		else{
-			return this.getValueMapSimple(entity, k, prefix);
+			return this.getValueMapSimple(entity, k, path, parent);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public Object getValueMapObject(MapBean entity, Key k, String prefix){
+	public Object getValueMapObject(MapBean entity, Key k, StringBuilder path, NodeBeanDecoder parent){
 		
 		Map<Object,Object> destValue = 
-				(Map<Object,Object>)this.getValueBean(entity, prefix);
+				(Map<Object,Object>)this.getValueBean(entity, path, parent);
 
-		Element e = (Element)entity.getCollection();
-		int max   = entity.getMaxItens() + 1;
+		int max = entity.getMaxItens() + 1;
+		int len = path.length();
 		
-		String newPrefix = 
-				this.getPerfixWithStartObject(
-					prefix, entity.getSeparator(), "elements");//e.getParameterName());
+		List<Object> keys = new ArrayList<Object>();
+		NodeBeanDecoder keyNode = this.createNode(k.getParameterName(), null);
+		parent.addNode(k.getParameterName(), keyNode);
+		
+		this.updatePath(path, entity.getSeparator(), k.getParameterName());
+		int keyLen = path.length();
 		
 		for(int i=0;i<max;i++){
-			String indexPrefix = 
-				newPrefix +
-				entity.getIndexFormat().replace("$index", String.valueOf(i));
 			
-			String kPrefix = 
-					indexPrefix + 
-					entity.getSeparator() +
-					k.getParameterName();
+			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i)));
 			
-			Object key = this.getValue(k, FetchType.EAGER, kPrefix, false);
+			Object key = this.getValue(k, FetchType.EAGER, path, keyNode);
 			
-			if(key == null){
-				break;
-			}
+			path.setLength(keyLen);
+			keys.add(key);
+		}
+
+		path.setLength(len);
+		
+		Element e = (Element)entity.getCollection();
+		
+		NodeBeanDecoder eNode = this.createNode(e.getParameterName(), null);
+		parent.addNode(e.getParameterName(), eNode);
+		
+		this.updatePath(path, entity.getSeparator(), k.getParameterName());
+		int eLen = path.length();
+		
+		int i=0;
+		
+		for(Object key: keys){
 			
-			String ePrefix =
-				indexPrefix + 
-				entity.getSeparator() +
-				e.getParameterName();
+			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i)));
 			
-			Object element = this.getValue(e, FetchType.EAGER, ePrefix, false);
+			Object element = this.getValue(e, FetchType.EAGER, path, keyNode);
+			
+			path.setLength(eLen);
 			
 			destValue.put(key, element);
 		}
@@ -417,38 +422,39 @@ extends AbstractBeanDecoder {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Object getValueMapSimple(MapBean entity, Key k, String prefix){
+	public Object getValueMapSimple(MapBean entity, Key k, StringBuilder path, NodeBeanDecoder parent){
+		
 		Map<Object,Object> destValue = 
-				(Map<Object,Object>)this.getValueBean(entity, prefix);
+				(Map<Object,Object>)this.getValueBean(entity, path, parent);
 
-		Element e         = (Element)entity.getCollection();
+		int len = path.length();
 		
-		String itemPrefix;
+		Element e = (Element)entity.getCollection();
 		
-		if(prefix.endsWith(entity.getSeparator())){
-			itemPrefix = prefix.substring(0, prefix.length() - 1);
- 		}
-		else{
-			itemPrefix = prefix;
-		}
+		String prefix = path.toString();
 		
 		List<String> itens = 
 				k.getScope()
-					.getNamesStartsWith(itemPrefix);
+					.getNamesStartsWith(prefix);
 
 		if(itens.size() > entity.getMaxItens()){
 			throw new DependencyException(itens.size() + " > " + entity.getMaxItens());
 		}
 		
 		List<SimpleKeyMap> keys = 
-				this.prepareKeysToSimpleMap(itens, itemPrefix);
+				this.prepareKeysToSimpleMap(itens, prefix);
 		
 		for(SimpleKeyMap keyValue: keys){
+			
 			Object keyObject = k.convert(keyValue.getName());
-			String ePreifx   = itemPrefix + keyValue.getPrefix();
-			Object element   = this.getValue(e, FetchType.EAGER, ePreifx, false);
+			
+			path.append(keyValue.getPrefix());
+			
+			Object element = this.getValue(e, FetchType.EAGER, path, parent);
 			
 			destValue.put(keyObject, element);
+			
+			path.setLength(len);
 		}
 		
 		return destValue.isEmpty()? null : destValue;	
@@ -503,11 +509,13 @@ extends AbstractBeanDecoder {
 		return result;
 	}	
 	
-	private Object getInstance(ConstructorBean constructor, String prefix){
+	/* constructor */
+	
+	private Object getInstance(ConstructorBean constructor, StringBuilder path, NodeBeanDecoder parent){
 		try{
 			return constructor.isConstructor()? 
-				this.getInstanceByConstructor(constructor, prefix) :
-				this.getInstanceByFactory(constructor, prefix);
+				this.getInstanceByConstructor(constructor, path, parent) :
+				this.getInstanceByFactory(constructor, path, parent);
 		}
 		catch(Throwable e){
 			throw new DependencyException("create instance failed: " + constructor.getBean().getName());
@@ -515,11 +523,11 @@ extends AbstractBeanDecoder {
 	}
 	
 	private Object getInstanceByConstructor(ConstructorBean constructor,
-			String prefix) throws InstantiationException, 
+			StringBuilder path, NodeBeanDecoder parent) throws InstantiationException, 
 			IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
 		Constructor<?> insCons = constructor.getContructor();
-		Object[] args          = this.getArgs(constructor, prefix);
+		Object[] args          = this.getArgs(constructor, path, parent);
 		
 		if(args == null){
 			return null;
@@ -528,7 +536,7 @@ extends AbstractBeanDecoder {
 		return insCons.newInstance(args);
 	}
 
-	private Object getInstanceByFactory(ConstructorBean constructor, String prefix) 
+	private Object getInstanceByFactory(ConstructorBean constructor, StringBuilder path, NodeBeanDecoder parent) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		
 		String factory = constructor.getMethodFactory();
@@ -541,7 +549,7 @@ extends AbstractBeanDecoder {
 				throw new IllegalStateException("bean factory not found: " + factory);
 			}
 			
-			factoryInstance = this.getValue(factoryBean, prefix);
+			factoryInstance = this.getValue(factoryBean, path, parent);
 			
 		}
 		else{
@@ -554,12 +562,12 @@ extends AbstractBeanDecoder {
 			throw new MappingException("infinite loop detected: "
 					+ constructor.getBean().getName());
 		
-		Object[] args  = this.getArgs(constructor, prefix);
+		Object[] args  = this.getArgs(constructor, path, parent);
 		
 		return method.invoke(factoryInstance, args);
 	}
 	
-	private Object[] getArgs(ConstructorBean constructor, String prefix) 
+	private Object[] getArgs(ConstructorBean constructor, StringBuilder path, NodeBeanDecoder parent) 
 			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 
 		List<ConstructorArgBean> argsList = constructor.getConstructorArgs();
@@ -569,10 +577,20 @@ extends AbstractBeanDecoder {
 		boolean exist = argsList.size() < 1;
 		
 		for(ConstructorArgBean arg: constructor.getConstructorArgs()){
-			args[i] = this.getValue(arg, null, prefix, true);
+			
+			int length = path.length();
+			
+			this.updatePath(path, arg.getParent().getSeparator(), arg.getParameterName());
+			NodeBeanDecoder node = this.createNode(arg.getParameterName(), arg.getRealName());
+			parent.addNode(arg.getRealName(), node);
+			
+			args[i] = this.getValue(arg, null, path, node);
+			
 			if(!exist){
 				exist = exist || args[i] != null || arg.isNullable();
 			}
+			
+			path.setLength(length);
 			
 			i++;
 		}
@@ -580,40 +598,7 @@ extends AbstractBeanDecoder {
 		return exist? args : null;
 	}
 
-	private String getNewPrefix(DependencyBean entity, String prefix, boolean hasNext){
-
-		
-		if(entity.getParent().isHierarchy()){
-			String parameterName = entity.getParameterName();
-			
-			if(parameterName != null){
-				if(prefix != null && !prefix.endsWith(entity.getParent().getSeparator())){
-					prefix += entity.getParent().getSeparator();
-				}
-				
-				prefix = 
-					prefix == null?
-						parameterName :
-						prefix + parameterName;
-			}
-
-			if(hasNext && prefix != null && !prefix.endsWith(entity.getParent().getSeparator())){
-				prefix += entity.getParent().getSeparator();
-			}
-			
-			return prefix;
-		}
-		else{
-			String parameterName = entity.getParameterName();
-			
-			if(parameterName != null && hasNext){
-				parameterName += entity.getParent().getSeparator();
-			}
-			
-			return parameterName;
-		}
-		
-	}
+	/* util */
 
 	public String getPerfixWithStartObject(String prefix, String separator, String name){
 		if(StringUtil.isEmpty(prefix)){
@@ -627,6 +612,25 @@ extends AbstractBeanDecoder {
 			return prefix + name;
 		}
 	}
+
+	public NodeBeanDecoder createNode(String path, String beanPath){
+		NodeBeanDecoder node = new NodeBeanDecoder();
+		node.setBeanPath(beanPath);
+		node.setPath(path);
+		return node;
+	}
 	
-	*/
+	public void updatePath(StringBuilder builder, String separator, String name){
+		
+		if(name != null){
+			if(builder.length() == 0){
+				builder.append(name);
+			}
+			else{
+				builder.append(separator).append(name);
+			}
+		}
+		
+	}
+	
 }

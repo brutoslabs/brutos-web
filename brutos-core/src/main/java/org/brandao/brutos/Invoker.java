@@ -291,8 +291,13 @@ public class Invoker {
 			stackRequest.push(element);
 			pushStackRequest = true;
 			
-			return this.invokeApplication(
-					request, response, element, requestInstrument);
+			this.invokeApplication(request, response, element, requestInstrument);
+			
+			if(!requestInstrument.isHasViewProcessed()){
+				this.renderView(requestInstrument, request, response, element);
+			}
+			
+			return true;
 		}
 		catch(Throwable e){
 			throw new InvokerException(e);
@@ -309,7 +314,7 @@ public class Invoker {
 		}
 	}
 
-	protected boolean invokeApplication(
+	protected void invokeApplication(
 			MutableMvcRequest request,
 			MutableMvcResponse response,
 			StackRequestElement element,
@@ -340,14 +345,18 @@ public class Invoker {
 		Controller controller = element.getController();
 		
 		controller.proccessBrutosAction(ih);
+	}
+	
+	protected void renderView(
+			RequestInstrument requestInstrument, MutableMvcRequest request, 
+			MutableMvcResponse response, StackRequestElement element) 
+					throws IllegalAccessException, IllegalArgumentException, 
+					InvocationTargetException{
 		
-		if(!requestInstrument.isHasViewProcessed()){
-			this.updateRequest(request, controller, element.getResource());
-			renderView.show(request, response);
-			requestInstrument.setHasViewProcessed(true);
-		}
+		this.updateRequest(request, element.getController(), element.getResource());
+		renderView.show(request, response);
+		requestInstrument.setHasViewProcessed(true);
 		
-		return true;
 	}
 	
 	protected boolean isSupportedRequestType(ResourceAction action, MutableMvcRequest request){

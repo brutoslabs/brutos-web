@@ -17,52 +17,32 @@
 
 package org.brandao.brutos.scope;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import org.brandao.brutos.Invoker;
-import org.brandao.brutos.mapping.Bean;
-import org.brandao.brutos.mapping.Controller;
 
 /**
  * 
  * @author Brandao
  */
+@Deprecated
 public class ControllerScope implements Scope {
 
 	public void put(String name, Object value) {
 	}
 
 	public Object get(String name) {
-		Controller controller = Invoker.getInstance().getStackRequestElement()
-				.getController();
-
-		Bean bean = controller.getBean(name);
-
-		return bean == null ? null : bean.getValue(name + bean.getSeparator());
+		throw new UnsupportedOperationException();
 	}
 
 	public Object getCollection(String name) {
-		return get(name);
+		throw new UnsupportedOperationException();
 	}
 
 	public void remove(String name) {
+		throw new UnsupportedOperationException();
 	}
 
 	public List<String> getNamesStartsWith(String value) {
-		Controller controller = Invoker.getInstance().getStackRequestElement()
-				.getController();
-
-		Map<String, Bean> values = controller.getBeans();
-		
-		List<String> result = new ArrayList<String>();
-		for(String k: values.keySet()){
-			if(k.startsWith(value)){
-				result.add(k);
-			}
-		}
-		return result;
+		throw new UnsupportedOperationException();
 	}
 	
 }

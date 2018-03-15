@@ -18,27 +18,21 @@
 package org.brandao.brutos.mapping;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
-import org.brandao.brutos.logger.Logger;
-import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.type.AnyType;
 import org.brandao.brutos.validator.Validator;
-import org.brandao.brutos.validator.ValidatorException;
 
 /**
  * 
  * @author Brandao
  */
 public class ConstructorBean {
-
-	private static final Logger logger = LoggerProvider
-			.getCurrentLoggerProvider().getLogger(Bean.class);
 
 	private List<ConstructorArgBean> args;
 
@@ -142,6 +136,12 @@ public class ConstructorBean {
 			if (isCompatible(con, classArgs)) {
 				Class<?>[] params = con.getParameterTypes();
 				for (int k = 0; k < params.length; k++) {
+					
+					ConstructorArgBean arg = getConstructorArg(k);
+					
+					String parameterName = ParameterNameResolver.getName(con, k);
+					arg.setRealName(parameterName);
+					
 					if (getConstructorArg(k).getType() == null) {
 						ConstructorArgBean argBean = getConstructorArg(k);
 
@@ -242,91 +242,7 @@ public class ConstructorBean {
 			return false;
 
 	}
-
-	public Object getInstance(String prefix, long index, Controller controller,
-			ValidatorException exceptionHandler, boolean force)
-			throws InstantiationException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException {
-
-		Object instance;
-
-		if (this.isConstructor()) {
-			Constructor<?> insCons = this.getContructor();
-			Object[] args = this.getValues(prefix, index, exceptionHandler,
-					force);
-
-			if (args == null)
-				return null;
-
-			if (this.validator != null)
-				this.validator.validate(this, null, args);
-
-			instance = insCons.newInstance(args);
-
-			if (this.validator != null)
-				this.validator.validate(this, null, instance);
-
-		} else {
-			String factoryName = bean.getFactory();
-			Bean factoryBean = factoryName != null ? controller
-					.getBean(factoryName) : null;
-
-			Object factoryInstance = null;
-
-			if (factoryName != null) {
-
-				if (factoryBean == null)
-					throw new MappingException("bean not found: " + factoryName);
-
-				factoryInstance = factoryBean.getValue(true);
-
-				if (factoryInstance == null)
-					return null;
-			}
-
-			Method method = this.getMethod(factoryInstance);
-
-			if (this.collection && this.size() == 0)
-				throw new MappingException("infinite loop detected: "
-						+ bean.getName());
-
-			if (this.validator != null)
-				this.validator.validate(this, factoryInstance, args);
-
-			instance = method.invoke(
-					factoryName == null ? this.bean.getClassType()
-							: factoryInstance,
-					getValues(prefix, index, exceptionHandler, true));
-
-			if (this.validator != null)
-				this.validator.validate(this, factoryInstance, instance);
-
-		}
-
-		return instance;
-	}
-
-	private Object[] getValues(String prefix, long index,
-			ValidatorException exceptionHandler, boolean force) {
-		int size = this.size();
-		Object[] values = new Object[size];
-
-		boolean exist = false;
-		for (int i = 0; i < size; i++) {
-			ConstructorArgBean arg = this.getConstructorArg(i);
-			values[i] = arg.getValue(prefix, index, exceptionHandler, null);
-
-			if (logger.isDebugEnabled())
-				logger.debug(String.format("binding %s to constructor arg: %s",
-						new Object[] { values[i], String.valueOf(i) }));
-
-			if (force || values[i] != null || arg.isNullable())
-				exist = true;
-		}
-
-		return exist || size == 0 ? values : null;
-	}
-
+	
 	public void setContructor(Constructor<?> contructor) {
 		this.contructor = contructor;
 	}

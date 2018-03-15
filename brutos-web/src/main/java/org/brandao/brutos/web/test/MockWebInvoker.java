@@ -37,14 +37,14 @@ public class MockWebInvoker extends WebInvoker{
     
     private Object response;
 
-	protected boolean invokeApplication(
+	protected void invokeApplication(
 			MutableMvcRequest request,
 			MutableMvcResponse response,
 			StackRequestElement element,
 			RequestInstrument requestInstrument
 			) throws Throwable{
 		this.element = element;
-		return super.invokeApplication(request, response, element, requestInstrument);
+		super.invokeApplication(request, response, element, requestInstrument);
 	}
 
     public StackRequestElement getElement() {

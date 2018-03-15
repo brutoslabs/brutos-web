@@ -18,8 +18,12 @@
 package org.brandao.brutos.validator;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.brandao.brutos.BrutosException;
 
 /**
@@ -28,8 +32,10 @@ import org.brandao.brutos.BrutosException;
  */
 public class ValidatorException extends BrutosException implements Serializable {
 
-	public List exceptions = new LinkedList();
-
+	private static final long serialVersionUID = -1590829351058138495L;
+	
+	public Map<String, List<ValidatorException>> mapExceptions = new HashMap<String, List<ValidatorException>>();
+	
 	public ValidatorException() {
 		super();
 	}
@@ -46,16 +52,44 @@ public class ValidatorException extends BrutosException implements Serializable 
 		super(cause);
 	}
 
-	public void addCause(ValidatorException vex) {
-		exceptions.add(vex);
+	public void addCause(String path, ValidatorException vex) {
+		this.addError(path, vex);
 	}
 
-	public void addCauses(List vex) {
-		exceptions.addAll(vex);
+	public void addCause(List<ValidatorException> vex) {
+		for(ValidatorException e: vex){
+			for(Entry<String,List<ValidatorException>> entry: e.mapExceptions.entrySet()){
+				this.addError(entry.getKey(), entry.getValue());
+			}
+		}
+	}
+	
+	public Map<String, List<ValidatorException>> getCauses() {
+		return this.mapExceptions;
 	}
 
-	public List getCauses() {
-		return this.exceptions;
+	protected void addError(String path, ValidatorException ex){
+		
+		List<ValidatorException> list = this.mapExceptions.get(path);
+		
+		if(list == null){
+			list = new ArrayList<ValidatorException>();
+			this.mapExceptions.put(path, list);
+		}
+		
+		list.add(ex);
 	}
-
+	
+	protected void addError(String path, List<ValidatorException> ex){
+		
+		List<ValidatorException> list = this.mapExceptions.get(path);
+		
+		if(list == null){
+			list = new ArrayList<ValidatorException>();
+			this.mapExceptions.put(path, list);
+		}
+		
+		list.addAll(ex);
+	}
+	
 }
