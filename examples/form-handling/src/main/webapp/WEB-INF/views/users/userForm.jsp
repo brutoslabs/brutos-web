@@ -49,7 +49,7 @@
 						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Email</label>
 							<div class="col-sm-10">
-								<input name="user.email" type="email" value="${user.email}" 
+								<input name="user.email" type="text" value="${user.email}" placeholder="Email"
 									class="form-control ${!empty exception.causes['user.email'] ? 'is-invalid' : ''}">
 								<c:forEach var="ex" items="${exception.causes['user.email']}">
 									<div class="text-danger"><small>${ex.message}</small></div>
@@ -60,7 +60,9 @@
 						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Address</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control ${!empty exception.causes['user.address'] ? 'is-invalid' : ''}" value="${user.address}" name="user.address">
+								<input type="text" name="user.address" placeholder="address" 
+									class="form-control ${!empty exception.causes['user.address'] ? 'is-invalid' : ''}" 
+									value="${user.address}">
 								<c:forEach var="ex" items="${exception.causes['user.address']}">
 									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
@@ -71,8 +73,9 @@
 							<label class="col-sm-2 control-label">Newsletter</label>
 							<div class="col-sm-10">
 			                   <div class="form-check form-check-inline">
-									<input type="checkbox" class="form-check-input ${!empty exception.causes['user.newsletter'] ? 'is-invalid' : ''}" 
-									name="user.newsletter" value="true" ${user.newsletter? 'checked' : ''}>
+									<input type="checkbox" name="user.newsletter" value="true" 
+										${user.newsletter? 'checked' : ''}
+										class="form-check-input ${!empty exception.causes['user.newsletter'] ? 'is-invalid' : ''}">
 								</div>
 								<c:forEach var="ex" items="${exception.causes['user.newsletter']}">
 									<div class="text-danger"><small>${ex.message}</small></div>
@@ -85,8 +88,9 @@
 							<div class="col-sm-10">
 			                   <c:forEach var="framework" items="${frameworksList}">
 								<div class="form-check form-check-inline">
-  									<input type="checkbox" class="form-check-input ${!empty exception.causes['user.framework'] ? 'is-invalid' : ''}"
-										 name="user.framework" value="${framework}" ${user.framework.contains(framework)? 'checked' : ''}>
+  									<input type="checkbox" name="user.framework" value="${framework}" 
+  										${user.framework.contains(framework)? 'checked' : ''} 
+  										class="form-check-input ${!empty exception.causes['user.framework'] ? 'is-invalid' : ''}">
 								  <label class="form-check-label">
 										 ${framework}
 								  </label>
@@ -102,12 +106,14 @@
 							<label class="col-sm-2 control-label">Sex</label>
 							<div class="col-sm-10">
 			                   <div class="form-check form-check-inline">
-									<input type="radio" name="user.sex" ${user.sex == 'M'? 'checked' : ''} value="M" 
+									<input type="radio" name="user.sex" value="M"
+										${user.sex == 'M'? 'checked' : ''} 
 										class="form-check-input ${!empty exception.causes['user.sex'] ? 'is-invalid' : ''}">
 									<label class="form-check-label"> Male</label>
 								</div>
 			                   <div class="form-check form-check-inline">
-									<input type="radio" name="user.sex" ${user.sex == 'F'? 'checked' : ''} value="F" 
+									<input type="radio" name="user.sex" value="F" 
+										${user.sex == 'F'? 'checked' : ''} 
 										class="form-check-input ${!empty exception.causes['user.sex'] ? 'is-invalid' : ''}">
 									<label class="form-check-label"> Female</label>
 								</div>
@@ -123,8 +129,8 @@
 			                   <c:forEach var="number" items="${numberList}">
 			                   <div class="form-check form-check-inline">
 									<input type="radio" name="user.number" value="${number}"
-										class="form-check-input ${!empty exception.causes['user.number'] ? 'is-invalid' : ''}"
-										${number == user.number? 'checked' : ''}>
+										${number == user.number? 'checked' : ''}
+										class="form-check-input ${!empty exception.causes['user.number'] ? 'is-invalid' : ''}">
 			                   		<label class="form-check-label">
 										${number}
 									</label>

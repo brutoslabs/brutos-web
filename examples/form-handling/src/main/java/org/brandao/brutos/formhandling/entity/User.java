@@ -2,7 +2,6 @@ package org.brandao.brutos.formhandling.entity;
 
 import java.util.List;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -18,7 +17,7 @@ public class User {
 	private String name;
 
 	@NotNull
-	@Email
+	@Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
 	private String email;
 
 	@NotNull
