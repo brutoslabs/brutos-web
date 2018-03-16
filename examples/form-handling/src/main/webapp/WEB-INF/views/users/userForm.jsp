@@ -41,7 +41,7 @@
 									class="form-control ${!empty exception.causes['user.name'] ? 'is-invalid' : ''}" 
 									placeholder="Name">
 								<c:forEach var="ex" items="${exception.causes['user.name']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 						  </div>
@@ -52,7 +52,7 @@
 								<input name="user.email" type="email" value="${user.email}" 
 									class="form-control ${!empty exception.causes['user.email'] ? 'is-invalid' : ''}">
 								<c:forEach var="ex" items="${exception.causes['user.email']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 						  </div>
@@ -62,7 +62,7 @@
 							<div class="col-sm-10">
 								<input type="password" class="form-control ${!empty exception.causes['user.password'] ? 'is-invalid' : ''}" name="user.password">				
 								<c:forEach var="ex" items="${exception.causes['user.password']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 						  </div>
@@ -72,7 +72,7 @@
 							<div class="col-sm-10">
 								<input type="password" class="form-control ${!empty exception ? 'is-invalid' : ''}" name="user.confirmPassword">				
 								<c:forEach var="ex" items="${exception.causes['user.confirmPassword']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 						  </div>
@@ -82,7 +82,7 @@
 							<div class="col-sm-10">
 								<input type="text" class="form-control ${!empty exception.causes['user.address'] ? 'is-invalid' : ''}" value="${user.address}" name="user.address">
 								<c:forEach var="ex" items="${exception.causes['user.address']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 						  </div>
@@ -91,10 +91,11 @@
 							<label class="col-sm-2 control-label">Newsletter</label>
 							<div class="col-sm-10">
 			                   <div class="form-check form-check-inline">
-									<input type="checkbox" class="form-check-input ${!empty exception.causes['user.newsletter'] ? 'is-invalid' : ''}" name="user.newsletter" value="true" ${user.newsletter? 'checked' : ''}>
+									<input type="checkbox" class="form-check-input ${!empty exception.causes['user.newsletter'] ? 'is-invalid' : ''}" 
+									name="user.newsletter" value="true" ${user.newsletter? 'checked' : ''}>
 								</div>
 								<c:forEach var="ex" items="${exception.causes['user.newsletter']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 						  </div>
@@ -103,16 +104,16 @@
 							<label class="col-sm-2 control-label">Web Frameworks</label>
 							<div class="col-sm-10">
 			                   <c:forEach var="framework" items="${frameworksList}">
-			                   <div class="form-check form-check-inline">
-									<input type="checkbox" class="form-check-input ${!empty exception.causes['user.framework'] ? 'is-invalid' : ''}"
+								<div class="form-check form-check-inline">
+  									<input type="checkbox" class="form-check-input ${!empty exception.causes['user.framework'] ? 'is-invalid' : ''}"
 										 name="user.framework" value="${framework}" ${user.framework.contains(framework)? 'checked' : ''}>
-			                   		<label class="form-check-label ${!empty exception ? 'is-invalid' : ''}">
-			                   			${framework}
-			                   		</label>
-		                   		</div>
+								  <label class="form-check-label">
+										 ${framework}
+								  </label>
+								</div>			                   
 							  </c:forEach>
 								<c:forEach var="ex" items="${exception.causes['user.framework']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 						  </div>
@@ -131,7 +132,7 @@
 									<label class="form-check-label"> Female</label>
 								</div>
 								<c:forEach var="ex" items="${exception.causes['user.sex']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 						  </div>
@@ -150,7 +151,7 @@
 								</div>
 							  </c:forEach>
 								<c:forEach var="ex" items="${exception.causes['user.number']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 						  </div>
@@ -165,7 +166,7 @@
 								  	</c:forEach>
 								</select>
 								<c:forEach var="ex" items="${exception.causes['user.country']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 							<div class="col-sm-5"></div>
@@ -180,7 +181,7 @@
 								  </c:forEach>
 								</select>
 								<c:forEach var="ex" items="${exception.causes['user.skill']}">
-									<small class="invalid-feedback">${ex.message}</small>
+									<div class="text-danger"><small>${ex.message}</small></div>
 								</c:forEach>
 							</div>
 							<div class="col-sm-5"></div>

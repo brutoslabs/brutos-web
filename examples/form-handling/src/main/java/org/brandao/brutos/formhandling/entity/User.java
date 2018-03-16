@@ -8,8 +8,10 @@ import javax.validation.constraints.Size;
 
 import org.brandao.brutos.formhandling.entity.validation.Save;
 import org.brandao.brutos.formhandling.entity.validation.Update;
+import org.brandao.brutos.formhandling.validation.Equals;
 import org.hibernate.validator.constraints.Length;
 
+@Equals(first="password", second="confirmPassword", groups={Save.class, Update.class})
 public class User {
 
 	@NotNull(groups=Update.class)
@@ -38,7 +40,7 @@ public class User {
 	private boolean newsletter;
 
 	@NotNull(groups={Save.class, Update.class})
-	@Size(min=1, groups={Save.class, Update.class})
+	@Size(min=1, max=7, groups={Save.class, Update.class})
 	private List<String> framework;
 
 	@NotNull(groups={Save.class, Update.class})
@@ -52,7 +54,7 @@ public class User {
 	private String country;
 
 	@NotNull(groups={Save.class, Update.class})
-	@Size(min=2, groups={Save.class, Update.class})
+	@Size(min=2, max=5, groups={Save.class, Update.class})
 	private List<String> skill;
 
 	public Integer getId() {
