@@ -37,8 +37,10 @@
 						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Name</label>
 							<div class="col-sm-10">
-								<input name="user.name" type="text" value="${user.name}" class="form-control ${!empty exception ? 'is-invalid' : ''}" placeholder="Name">
-								<c:forEach var="ex" items="${exception.causes['user.id']}">
+								<input name="user.name" type="text" value="${user.name}" 
+									class="form-control ${!empty exception.causes['user.name'] ? 'is-invalid' : ''}" 
+									placeholder="Name">
+								<c:forEach var="ex" items="${exception.causes['user.name']}">
 									<small class="invalid-feedback">${ex.message}</small>
 								</c:forEach>
 							</div>
@@ -47,7 +49,8 @@
 						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Email</label>
 							<div class="col-sm-10">
-								<input name="user.email" type="email" value="${user.email}" class="form-control ${!empty exception ? 'is-invalid' : ''}">
+								<input name="user.email" type="email" value="${user.email}" 
+									class="form-control ${!empty exception.causes['user.email'] ? 'is-invalid' : ''}">
 								<c:forEach var="ex" items="${exception.causes['user.email']}">
 									<small class="invalid-feedback">${ex.message}</small>
 								</c:forEach>
@@ -57,7 +60,7 @@
 						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Password</label>
 							<div class="col-sm-10">
-								<input type="password" class="form-control ${!empty exception ? 'is-invalid' : ''}" name="user.password">				
+								<input type="password" class="form-control ${!empty exception.causes['user.password'] ? 'is-invalid' : ''}" name="user.password">				
 								<c:forEach var="ex" items="${exception.causes['user.password']}">
 									<small class="invalid-feedback">${ex.message}</small>
 								</c:forEach>
@@ -77,18 +80,18 @@
 						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Address</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control ${!empty exception ? 'is-invalid' : ''}" value="${user.address}" name="user.address">
+								<input type="text" class="form-control ${!empty exception.causes['user.address'] ? 'is-invalid' : ''}" value="${user.address}" name="user.address">
 								<c:forEach var="ex" items="${exception.causes['user.address']}">
 									<small class="invalid-feedback">${ex.message}</small>
 								</c:forEach>
 							</div>
 						  </div>
 				
-						  <div class="form-group row ${!empty exception ? 'has-error' : ''}">
+						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Newsletter</label>
 							<div class="col-sm-10">
-								<div class="checkbox ${!empty exception ? 'is-invalid' : ''}">
-									<input type="checkbox" name="user.newsletter" value="true" ${user.newsletter? 'checked' : ''}>
+			                   <div class="form-check form-check-inline">
+									<input type="checkbox" class="form-check-input ${!empty exception.causes['user.newsletter'] ? 'is-invalid' : ''}" name="user.newsletter" value="true" ${user.newsletter? 'checked' : ''}>
 								</div>
 								<c:forEach var="ex" items="${exception.causes['user.newsletter']}">
 									<small class="invalid-feedback">${ex.message}</small>
@@ -100,11 +103,13 @@
 							<label class="col-sm-2 control-label">Web Frameworks</label>
 							<div class="col-sm-10">
 			                   <c:forEach var="framework" items="${frameworksList}">
-			                   		<label class="checkbox-inline ${!empty exception ? 'is-invalid' : ''}">
-										<input type="checkbox" name="user.framework" value="${framework}" 
-											${user.framework.contains(framework)? 'checked' : ''}>
+			                   <div class="form-check form-check-inline">
+									<input type="checkbox" class="form-check-input ${!empty exception.causes['user.framework'] ? 'is-invalid' : ''}"
+										 name="user.framework" value="${framework}" ${user.framework.contains(framework)? 'checked' : ''}>
+			                   		<label class="form-check-label ${!empty exception ? 'is-invalid' : ''}">
 			                   			${framework}
 			                   		</label>
+		                   		</div>
 							  </c:forEach>
 								<c:forEach var="ex" items="${exception.causes['user.framework']}">
 									<small class="invalid-feedback">${ex.message}</small>
@@ -112,15 +117,19 @@
 							</div>
 						  </div>
 				
-						  <div class="form-group row ${!empty exception ? 'has-error' : ''}">
+						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Sex</label>
 							<div class="col-sm-10">
-								<label class="radio-inline ${!empty exception ? 'is-invalid' : ''}">
-									<input type="radio" name="user.sex" ${user.sex == 'M'? 'checked' : ''} value="M"> Male
-								</label>
-								<label class="radio-inline ${!empty exception ? 'is-invalid' : ''}">
-									<input type="radio" name="user.sex" ${user.sex == 'F'? 'checked' : ''} value="F"> Female
-								</label>
+			                   <div class="form-check form-check-inline">
+									<input type="radio" name="user.sex" ${user.sex == 'M'? 'checked' : ''} value="M" 
+										class="form-check-input ${!empty exception.causes['user.sex'] ? 'is-invalid' : ''}">
+									<label class="form-check-label"> Male</label>
+								</div>
+			                   <div class="form-check form-check-inline">
+									<input type="radio" name="user.sex" ${user.sex == 'F'? 'checked' : ''} value="F" 
+										class="form-check-input ${!empty exception.causes['user.sex'] ? 'is-invalid' : ''}">
+									<label class="form-check-label"> Female</label>
+								</div>
 								<c:forEach var="ex" items="${exception.causes['user.sex']}">
 									<small class="invalid-feedback">${ex.message}</small>
 								</c:forEach>
@@ -131,11 +140,14 @@
 							<label class="col-sm-2 control-label">Number</label>
 							<div class="col-sm-10">
 			                   <c:forEach var="number" items="${numberList}">
-			                   		<label class="radio-inline ${!empty exception ? 'is-invalid' : ''}">
-										<input type="radio" name="user.number" value="${number}"
-											${number == user.number? 'checked' : ''}>
+			                   <div class="form-check form-check-inline">
+									<input type="radio" name="user.number" value="${number}"
+										class="form-check-input ${!empty exception.causes['user.number'] ? 'is-invalid' : ''}"
+										${number == user.number? 'checked' : ''}>
+			                   		<label class="form-check-label">
 										${number}
 									</label>
+								</div>
 							  </c:forEach>
 								<c:forEach var="ex" items="${exception.causes['user.number']}">
 									<small class="invalid-feedback">${ex.message}</small>
@@ -146,7 +158,7 @@
 						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Country</label>
 							<div class="col-sm-5">
-								<select name="user.country" class="form-control ${!empty exception ? 'is-invalid' : ''}">
+								<select name="user.country" class="form-control ${!empty exception.causes['user.country'] ? 'is-invalid' : ''}">
 									<option value="">--- Select ---</option>
 				                   	<c:forEach var="country" items="${countryList}">
 										<option value="${country.key}" ${user.country == country.key? 'selected' : ''}>${country.value}</option>
@@ -162,7 +174,7 @@
 						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Java Skills</label>
 							<div class="col-sm-5">
-								<select name="user.skill" multiple size="5" class="form-control ${!empty exception ? 'is-invalid' : ''}">
+								<select name="user.skill" multiple size="5" class="form-control ${!empty exception.causes['user.skill'] ? 'is-invalid' : ''}">
 				                   <c:forEach var="skill" items="${javaSkillList}">
 									<option value="${skill.key}" ${user.skill.contains(skill.key)? 'selected' : ''}>${skill.value}</option>
 								  </c:forEach>
