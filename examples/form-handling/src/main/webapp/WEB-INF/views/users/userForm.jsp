@@ -191,8 +191,6 @@
 			</form>	    	
     	</section>
     	
-		<jsp:include page="../fragments/footer-container.jsp"/>
-    	
     </div>
 
 	<jsp:include page="../fragments/footer.jsp"/>
