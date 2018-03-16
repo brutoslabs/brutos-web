@@ -598,6 +598,7 @@ public class ControllerBuilder {
 			throw new MappingException("invalid scope");
 
 		PropertyController property = new PropertyController();
+		property.setRealName(propertyName);
 		property.setName(id);
 		property.setFetchType(fetchType);
 		property.setScopeType(scope);

@@ -13,11 +13,8 @@ import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.CodeGenerator;
 import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ProxyFactory;
-import org.brandao.brutos.type.ArrayType;
-import org.brandao.brutos.type.CollectionType;
-import org.brandao.brutos.type.Type;
 
-public class AbstractBeanDecoder 
+public abstract class AbstractBeanDecoder 
 	implements BeanDecoder{
 
 	private CodeGenerator codeGenerator;
@@ -41,14 +38,7 @@ public class AbstractBeanDecoder
 	public Object getValue(UseBeanData entity, 
 			FetchType fetchType, Object data, StringBuilder path, NodeBeanDecoder parent) {
 
-		NodeBeanDecoder node = new NodeBeanDecoder();
-		node.setBeanPath(entity.getRealName());
-		node.setPath(entity.getName());
-		parent.addNode(entity.getRealName(), node);
-		
-		if(entity.getName() != null){
-			path.append(entity.getName());
-		}
+		NodeBeanDecoder node = this.getNextNode(entity, path, parent);
 		
 		if(fetchType == null){
 			fetchType = entity.getFetchType();
@@ -60,51 +50,32 @@ public class AbstractBeanDecoder
 			return proxyFactory.getNewProxy(entity, data, this);
 		}
 		
-		if (!entity.isNullable()) {
-			if(entity.getMetaBean() != null){
-				Object value = this.getValue(entity.getMetaBean(), path, node);
-				return entity.getType().convert(value);
-			}
-			else
-			if(entity.getMapping() != null) {
-				Object value = this.getValue(entity.getMapping(), path, parent);
-				return entity.getType().convert(value);
-			}
-			else
-			if(entity.getStaticValue() != null){
-				return entity.getType().convert(entity.getStaticValue());
-			}
-			else{
-				Type type = entity.getType();
-				Object value;
-				
-				if(type instanceof CollectionType || type instanceof ArrayType){
-					value = 
-						entity.getName() == null? 
-							null : 
-							entity.getScope().getCollection(path.toString());
-				}
-				else{
-					value = 
-							entity.getName() == null? 
-								null : 
-								entity.getScope().get(path.toString());
-				}
-				return type.convert(value);
-			}
+		if(entity.isNullable()){
+			return null;
 		}
-		
-		return null;
+		else
+		if(entity.getMetaBean() != null){
+			Object value = this.getValue(entity.getMetaBean(), data, path, node);
+			return entity.getType().convert(value);
+		}
+		else
+		if(entity.getMapping() != null) {
+			Object value = this.getValue(entity.getMapping(), path, node);
+			return entity.getType().convert(value);
+		}
+		else{
+			return this.getValue(entity, path, node);
+		}
+
 	}	
 
-	public Object getValue(MetaBean entity, StringBuilder path, NodeBeanDecoder parent) {
+	public Object getValue(MetaBean entity, Object data, StringBuilder path, NodeBeanDecoder parent) {
 		
 		int len = path.length();
 		
 		this.updatePath(path, entity.getSeparator(), entity.getName());
 		
-		Object metaValue = entity.getScope().get(path.toString());
-		metaValue = entity.getType().convert(metaValue);
+		Object metaValue = this.getValue(entity, path, parent);
 
 		path.setLength(len);
 		
@@ -114,7 +85,6 @@ public class AbstractBeanDecoder
 			throw new MappingException("bean not found: " + metaValue);
 		}
 
-		//metabean não tem nome
 		this.updatePath(path, entity.getSeparator(), entity.getName());
 		
 		return this.getValue(bean, null, path, parent);
@@ -139,60 +109,43 @@ public class AbstractBeanDecoder
 	}
 
 	private Object getValue(DependencyBean entity, FetchType fetchType, 
-			StringBuilder path, NodeBeanDecoder parent) {
+			StringBuilder path, NodeBeanDecoder node) {
 		
 		if(fetchType == null){
 			fetchType = entity.getFetchType();
 		}
 		
 		if(fetchType.equals(FetchType.LAZY)){
-			Map<String,Object> data = new HashMap<String, Object>();
-			data.put("path",   new StringBuilder(path));
-			data.put("parent", parent);
+			Map<String,Object> lazyData = new HashMap<String, Object>();
+			lazyData.put("path",   new StringBuilder(path));
+			lazyData.put("parent", node);
 			
 			ProxyFactory proxyFactory = 
 					this.codeGenerator.getProxyFactory(entity.getClassType());
-			return proxyFactory.getNewProxy(entity, data, this);
+			return proxyFactory.getNewProxy(entity, lazyData, this);
 		}
 		
-		Object result;
-
-		if (entity.getMapping() != null) {
+		if(entity.isNullable()){
+			return null;
+		}
+		else
+		if(entity.getMetaBean() != null){
+			Object value = this.getValue(entity.getMetaBean(), path, node);
+			return entity.getType().convert(value);
+		}
+		else
+		if(entity.getMapping() != null) {
 			Bean dependencyBean = entity.getController().getBean(entity.getMapping());
 
 			if (dependencyBean == null){
 				throw new BrutosException("mapping not found: " + entity.getMapping());
 			}
-
-			Object value = this.getValue(dependencyBean, path, parent);
 			
+			Object value = this.getValue(dependencyBean, path, node);
 			return entity.getType().convert(value);
 		}
-		else
-		if (entity.getMetaBean() == null) {
-			if (entity.isStatic()){
-				return entity.getValue();
-			}
-			else
-			if(entity.isNullable()){
-				return null;
-			}
-			else{
-				
-				Type type = entity.getType();
-				
-				result = 
-					type instanceof CollectionType? 
-						entity.getScope().getCollection(path.toString()) : 
-						entity.getScope().get(path.toString());
-						
-				return entity.getType().convert(result);
-			}
-
-		}
 		else{
-			result = this.getValue(entity.getMetaBean(), path, parent);
-			return entity.getType().convert(result);
+			return this.getValue(entity, path, node);
 		}
 		
 	}
@@ -236,9 +189,8 @@ public class AbstractBeanDecoder
 				}
 				
 				int len = path.length();
-				this.updatePath(path, prop.getParent().getSeparator(), prop.getParameterName());
-				NodeBeanDecoder node = this.createNode(prop.getParameterName(), prop.getRealName());
-				parent.addNode(prop.getRealName(), node);
+				
+				NodeBeanDecoder node = this.getNextNode(prop, path, parent);
 				
 				Object p = this.getValue(prop, null, path, node);
 				
@@ -278,10 +230,8 @@ public class AbstractBeanDecoder
 		Collection<Object> destValue = (Collection<Object>)this.getValueBean(entity, path, parent);
 	
 		int len = path.length();
-		this.updatePath(path, entity.getSeparator(), e.getParameterName());
-
-		NodeBeanDecoder node = this.createNode(e.getParameterName(), null);
-		parent.addNode(e.getParameterName(), node);
+		
+		NodeBeanDecoder node = this.getNextNode(e, path, parent);
 		
 		int max = entity.getMaxItens() + 1;
 		
@@ -373,10 +323,9 @@ public class AbstractBeanDecoder
 		int len = path.length();
 		
 		List<Object> keys = new ArrayList<Object>();
-		NodeBeanDecoder keyNode = this.createNode(k.getParameterName(), null);
-		parent.addNode(k.getParameterName(), keyNode);
 		
-		this.updatePath(path, entity.getSeparator(), k.getParameterName());
+		NodeBeanDecoder keyNode = this.getNextNode(k, path, parent);
+		
 		int keyLen = path.length();
 		
 		for(int i=0;i<max;i++){
@@ -393,10 +342,8 @@ public class AbstractBeanDecoder
 		
 		Element e = (Element)entity.getCollection();
 		
-		NodeBeanDecoder eNode = this.createNode(e.getParameterName(), null);
-		parent.addNode(e.getParameterName(), eNode);
+		NodeBeanDecoder eNode = this.getNextNode(k, path, parent);
 		
-		this.updatePath(path, entity.getSeparator(), k.getParameterName());
 		int eLen = path.length();
 		
 		int i=0;
@@ -405,7 +352,7 @@ public class AbstractBeanDecoder
 			
 			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i)));
 			
-			Object element = this.getValue(e, FetchType.EAGER, path, keyNode);
+			Object element = this.getValue(e, FetchType.EAGER, path, eNode);
 			
 			path.setLength(eLen);
 			
@@ -578,10 +525,8 @@ public class AbstractBeanDecoder
 			
 			int length = path.length();
 			
-			this.updatePath(path, arg.getParent().getSeparator(), arg.getParameterName());
-			NodeBeanDecoder node = this.createNode(arg.getParameterName(), arg.getRealName());
-			parent.addNode(arg.getRealName(), node);
-			
+			NodeBeanDecoder node = this.getNextNode(arg, path, parent);
+
 			args[i] = this.getValue(arg, null, path, node);
 			
 			if(!exist){
@@ -598,26 +543,6 @@ public class AbstractBeanDecoder
 
 	/* util */
 
-	public String getPerfixWithStartObject(String prefix, String separator, String name){
-		if(StringUtil.isEmpty(prefix)){
-			return name;
-		}
-		else
-		if(!prefix.endsWith(separator)){
-			return prefix + separator + name;
-		}
-		else{
-			return prefix + name;
-		}
-	}
-
-	public NodeBeanDecoder createNode(String path, String beanPath){
-		NodeBeanDecoder node = new NodeBeanDecoder();
-		node.setBeanPath(beanPath);
-		node.setPath(path);
-		return node;
-	}
-	
 	public void updatePath(StringBuilder builder, String separator, String name){
 		
 		if(name != null){
@@ -630,5 +555,58 @@ public class AbstractBeanDecoder
 		}
 		
 	}
+
+	/* Next Node */
 	
+	protected NodeBeanDecoder getNextNode(UseBeanData entity, StringBuilder path, NodeBeanDecoder current){
+		return this.getNextNode(entity.getRealName(), entity.getName(), path, current);
+	}
+
+	protected NodeBeanDecoder getNextNode(DependencyBean entity, StringBuilder path, NodeBeanDecoder current){
+		return this.getNextNode(entity.getRealName(), entity.getParameterName(), path, current);
+	}
+	
+	protected NodeBeanDecoder getNextNode(String beanPath, String pathName, 
+			StringBuilder path, NodeBeanDecoder current){
+		
+		Object data = current.getData();
+		
+		if(pathName != null){
+			
+			if(path.length() > 0 && !this.endsWith(path, ".")){
+				path.append(".");
+			}
+			
+			path.append(pathName);
+			
+			data = this.getNextDataLevel(pathName, current.getData());
+			
+		}
+
+		NodeBeanDecoder node = new NodeBeanDecoder();
+		node.setBeanPath(beanPath);
+		node.setPath(pathName);
+		node.setData(data);
+		current.addNode(beanPath, node);
+		
+		return node;
+	}
+	
+	/* implementation */
+	
+	protected abstract Object getNextDataLevel(String name, Object data);
+
+	protected abstract Object getValue(MetaBean entity, StringBuilder path, NodeBeanDecoder node);
+
+	protected abstract Object getValue(UseBeanData entity, StringBuilder path, NodeBeanDecoder node);
+	
+	protected abstract Object getValue(DependencyBean entity, StringBuilder path, NodeBeanDecoder node);
+	
+	/* util */
+	
+	private boolean endsWith(StringBuilder builder, String value){
+		return builder.length() < value.length() || builder.length() != value.length()?
+				false :
+				builder.substring(builder.length() - value.length()).equals(value);
+	}
 }

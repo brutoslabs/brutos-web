@@ -505,6 +505,7 @@ public class BeanBuilder {
 				.getValidator(validatorConfig));
 		propertyBean.setBeanProperty(mappingBean.getBeanInstance().getProperty(
 				propertyName));
+		propertyBean.setRealName(propertyName);
 		this.mappingBean.getFields().put(propertyName, propertyBean);
 
 		return new PropertyBuilder(propertyBean, this, this.validatorFactory);
