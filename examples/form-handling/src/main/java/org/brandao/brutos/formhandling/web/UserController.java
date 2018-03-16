@@ -8,8 +8,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.validation.Valid;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
 
 import org.brandao.brutos.annotation.Action;
 import org.brandao.brutos.annotation.Basic;
@@ -19,8 +17,6 @@ import org.brandao.brutos.annotation.View;
 import org.brandao.brutos.annotation.web.RequestMethod;
 import org.brandao.brutos.annotation.web.ResponseErrors;
 import org.brandao.brutos.formhandling.entity.User;
-import org.brandao.brutos.formhandling.entity.validation.Save;
-import org.brandao.brutos.formhandling.entity.validation.Update;
 import org.brandao.brutos.formhandling.registry.UserRegistry;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.RequestMethodTypes;
@@ -61,47 +57,24 @@ public class UserController {
 	}
 
 	@Action("/users")
-	@RequestMethod(RequestMethodTypes.PUT)
-	@ResponseErrors(enabled=false)
-	//@ResponseErrors(code=200, view="users/userForm")
-	public void saveUser(
-			@Valid
-			@ConvertGroup(from=Default.class, to=Save.class)
-			@Basic(bean="user")User user) throws ValidatorException{
-		
-		if(logger.isDebugEnabled()){
-			logger.debug("saveUser(): {}", user);
-		}
-		
-		this.userRegistry.registerUser(user);
-
-		WebFlowController
-		.redirect()
-			.put("css", "success")
-			.put("msg", "User added successfully!")
-		.to("/users/" + user.getId());
-		
-	}
-	
-	@Action("/users")
 	@RequestMethod(RequestMethodTypes.POST)
-	//@ResponseErrors(enabled=false)
 	@ResponseErrors(code=200, view="users/userForm")
 	public void updateUser(
 			@Valid
-			@ConvertGroup(from=Default.class, to=Update.class)
 			@Basic(bean="user")User user) throws ValidatorException{
 		
 		if(logger.isDebugEnabled()){
 			logger.debug("updateUser(): {}", user);
 		}
 		
+		boolean isNew = user.getId() == null;
+		
 		this.userRegistry.registerUser(user);
 
 		WebFlowController
 		.redirect()
 			.put("css", "success")
-			.put("msg", "User updated successfully!")
+			.put("msg", isNew? "User added successfully!" : "User updated successfully!")
 		.to("/users/" + user.getId());
 	}
 

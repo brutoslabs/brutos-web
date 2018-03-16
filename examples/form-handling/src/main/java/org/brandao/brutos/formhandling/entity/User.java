@@ -2,59 +2,47 @@ package org.brandao.brutos.formhandling.entity;
 
 import java.util.List;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.brandao.brutos.formhandling.entity.validation.Save;
-import org.brandao.brutos.formhandling.entity.validation.Update;
-import org.brandao.brutos.formhandling.validation.Equals;
 import org.hibernate.validator.constraints.Length;
 
-@Equals(first="password", second="confirmPassword", groups={Save.class, Update.class})
 public class User {
 
-	@NotNull(groups=Update.class)
 	private Integer id;
 
-	@NotNull(groups={Save.class, Update.class})
-	@Length(min=3, max=60, groups={Save.class, Update.class})
+	@NotNull
+	@Length(min=3, max=60)
 	private String name;
 
-	@NotNull(groups={Save.class, Update.class})
-	@Pattern(regexp="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", groups={Save.class, Update.class})
+	@NotNull
+	@Email
 	private String email;
 
-	@NotNull(groups={Save.class, Update.class})
-	@Length(min=5, max=60, groups={Save.class, Update.class})
+	@NotNull
+	@Length(min=5, max=60)
 	private String address;
-
-	@NotNull(groups={Save.class, Update.class})
-	@Length(min=5, max=60, groups={Save.class, Update.class})
-	private String password;
-
-	@NotNull(groups={Save.class, Update.class})
-	@Length(min=5, max=60, groups={Save.class, Update.class})
-	private String confirmPassword;
 
 	private boolean newsletter;
 
-	@NotNull(groups={Save.class, Update.class})
-	@Size(min=1, max=7, groups={Save.class, Update.class})
+	@NotNull
+	@Size(min=1, max=7)
 	private List<String> framework;
 
-	@NotNull(groups={Save.class, Update.class})
+	@NotNull
 	private Sex sex;
 
-	@NotNull(groups={Save.class, Update.class})
+	@NotNull
 	private Integer number;
 
-	@NotNull(groups={Save.class, Update.class})
-	@Pattern(regexp="^[A-Z]{2,2}$", groups={Save.class, Update.class})
+	@NotNull
+	@Pattern(regexp="^[A-Z]{2,2}$")
 	private String country;
 
-	@NotNull(groups={Save.class, Update.class})
-	@Size(min=2, max=5, groups={Save.class, Update.class})
+	@NotNull
+	@Size(min=2, max=5)
 	private List<String> skill;
 
 	public Integer getId() {
@@ -87,22 +75,6 @@ public class User {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
 	}
 
 	public boolean isNewsletter() {

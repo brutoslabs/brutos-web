@@ -58,26 +58,6 @@
 						  </div>
 				
 						  <div class="form-group row">
-							<label class="col-sm-2 control-label">Password</label>
-							<div class="col-sm-10">
-								<input type="password" class="form-control ${!empty exception.causes['user.password'] ? 'is-invalid' : ''}" name="user.password">				
-								<c:forEach var="ex" items="${exception.causes['user.password']}">
-									<div class="text-danger"><small>${ex.message}</small></div>
-								</c:forEach>
-							</div>
-						  </div>
-				
-						  <div class="form-group row">
-							<label class="col-sm-2 control-label">confirm Password</label>
-							<div class="col-sm-10">
-								<input type="password" class="form-control ${!empty exception ? 'is-invalid' : ''}" name="user.confirmPassword">				
-								<c:forEach var="ex" items="${exception.causes['user.confirmPassword']}">
-									<div class="text-danger"><small>${ex.message}</small></div>
-								</c:forEach>
-							</div>
-						  </div>
-				
-						  <div class="form-group row">
 							<label class="col-sm-2 control-label">Address</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control ${!empty exception.causes['user.address'] ? 'is-invalid' : ''}" value="${user.address}" name="user.address">
