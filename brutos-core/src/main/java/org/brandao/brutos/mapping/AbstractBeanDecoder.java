@@ -17,8 +17,6 @@ import org.brandao.brutos.type.ArrayType;
 import org.brandao.brutos.type.CollectionType;
 import org.brandao.brutos.type.Type;
 
-//o métododo que acessa o nó o cria.
-//o update prefix somente fica null na criação com índice
 public class AbstractBeanDecoder 
 	implements BeanDecoder{
 
