@@ -107,7 +107,7 @@
 							<div class="col-sm-10">
 			                   <div class="form-check form-check-inline">
 									<input type="radio" name="user.sex" value="M"
-										${user.sex == 'M'? 'checked' : ''} 
+										${empty user || user.sex == 'M'? 'checked' : ''} 
 										class="form-check-input ${!empty exception.causes['user.sex'] ? 'is-invalid' : ''}">
 									<label class="form-check-label"> Male</label>
 								</div>
