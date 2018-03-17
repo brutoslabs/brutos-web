@@ -24,6 +24,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpSessionEvent;
 
+import junit.framework.AssertionFailedError;
+
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
@@ -124,7 +126,7 @@ public class WebApplicationContextTester {
             xml +="<ns1:component-scan use-default-filters=\"false\">";
 
             for(Class<?> c: clazz){
-                xml +="        <ns1:include-filter type=\"regex\" expression=\""+c.getName().replace(".","\\.")+"\"/>";
+                xml +="        <ns1:include-filter type=\"regex\" expression=\""+c.getName().replace(".","\\.").replace("$","\\$")+"\"/>";
             }
 
             xml +="</ns1:component-scan>";
@@ -249,6 +251,9 @@ public class WebApplicationContextTester {
                 listener.requestDestroyed(sre);
                 listener.sessionDestroyed(hse);
             }
+        }
+        catch(AssertionFailedError e){
+            throw e;
         }
         catch(Throwable e){
             tester.checkException(e);
