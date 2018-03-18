@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,18 +15,52 @@ import org.brandao.brutos.annotation.web.WebActionStrategyType;
 
 public class WebAnnotationApplicationContextBeanTestHelper {
 
-	public static final Date testDate;
-	
-	static{
-		Calendar cal = GregorianCalendar.getInstance();
-		cal.set(Calendar.DAY_OF_YEAR, 1);
-		cal.set(Calendar.YEAR, 2000);
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
+	public static class Values{
+
+		public static final Integer otherIntegerValue 		= 2;
+			
+		public static final Integer integerValue 			= 1;
 		
-		testDate = cal.getTime();
+		public static final int otherIntValue 				= 2;
+		
+		public static final int intValue 					= 1;
+		
+		public static final EnumValues otherEnumValue 		= EnumValues.VALUE2;
+		
+		public static final EnumValues enumValue 			= EnumValues.VALUE1;
+		
+		public static final String otherStringValue 		= "2000-01-02";
+		
+		public static final String stringValue 				= "2000-01-01";
+
+		public static final String otherBRDateStringValue	= "02/01/2000";
+		
+		public static final String brDateStringValue 		= "01/01/2000";
+		
+		public static final Date dateValue;
+
+		public static final Date otherDateValue;
+		
+		public static final ConstructorTest constructorTestValue = new ConstructorTest(otherIntValue);
+		
+		public static final ConstructorTest otherConstructorTestValue = new ConstructorTest(intValue);
+		
+		static{
+			Calendar cal = GregorianCalendar.getInstance();
+			cal.set(Calendar.DAY_OF_YEAR, 1);
+			cal.set(Calendar.YEAR, 2000);
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);
+			
+			dateValue = cal.getTime();
+			
+			cal.set(Calendar.DAY_OF_YEAR, 2);
+			
+			otherDateValue = cal.getTime();
+		}
+		
 	}
 	
 	@ActionStrategy(WebActionStrategyType.DETACHED)
@@ -35,10 +70,10 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		public void fieldTestAction(@Basic(bean="fieldTest")FieldTest fieldTest){
 		}
 		
-		public void enumBeanTestAction(@Basic(bean="enumBeanTest")EnumBeanTest enumBeanTest){
+		public void enumTestAction(@Basic(bean="enumTest")EnumTest enumTest){
 		}
 		
-		public void dateBeanTestAction(@Basic(bean="dateBeanTest")DateBeanTest dateBeanTest){
+		public void dateTestAction(@Basic(bean="dateTest")DateTest dateTest){
 		}
 		
 		public void listTestAction(@Basic(bean="listTest")ListTest listTest){
@@ -70,34 +105,34 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		
 	}
 
-	public static class EnumBeanTest{
+	public static class EnumTest{
 
-		public EnumTest propertyA;
+		public EnumValues propertyA;
 		
 		@Enumerated(EnumerationType.ORDINAL)
-		public EnumTest propertyB;
+		public EnumValues propertyB;
 		
 		@Enumerated(EnumerationType.STRING)
-		public EnumTest propertyC;
+		public EnumValues propertyC;
 
 		@Basic(bean="property")
-		public EnumTest propertyD;
+		public EnumValues propertyD;
 		
-		@Basic(bean="property")
+		@Basic(bean="property2")
 		@Enumerated(EnumerationType.ORDINAL)
-		public EnumTest propertyE;
+		public EnumValues propertyE;
 		
 	}
 
-	public static class DateBeanTest{
+	public static class DateTest{
 
 		public Date propertyA;
 		
-		@Temporal(value="yyyy-MM-dd")
+		@Temporal(value="dd/MM/yyyy")
 		public Date propertyB;
 		
 		@Basic(bean="property")
-		@Temporal(value="yyyy-MM-dd")
+		@Temporal(value="dd/MM/yyyy")
 		public Date propertyC;
 		
 	}
@@ -109,16 +144,16 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@ElementCollection(bean="itens")
 		public List<Integer> propertyB;
 
-		public List<EnumTest> propertyC;
+		public List<EnumValues> propertyC;
 		
 		@ElementCollection(bean="itens")
-		public List<EnumTest> propertyD;
+		public List<EnumValues> propertyD;
 
 		@ElementCollection(enumerated=EnumerationType.ORDINAL)
-		public List<EnumTest> propertyE;
+		public List<EnumValues> propertyE;
 		
 		@ElementCollection(bean="itens", enumerated=EnumerationType.ORDINAL)
-		public List<EnumTest> propertyF;
+		public List<EnumValues> propertyF;
 		
 		public List<Date> propertyG;
 		
@@ -136,17 +171,19 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@ElementCollection(bean="itens")
 		public List<ConstructorTest> propertyL;
 
-		public List<CustomArrayList> propertyM;
+		//Não aplicável. Precisa do tipo CustomArrayList registrado.
+		//public List<CustomArrayList> propertyM;
 		
 		@ElementCollection(bean="itens")
 		public List<CustomArrayList> propertyN;
 
-		@Target(CustomArrayList.class)
-		public List<Integer> propertyO;
+		//Sem efeito. Target somente funciona com mapeamento e não com valor.
+		//@Target(LinkedList.class)
+		//public List<Integer> propertyO;
 		
-		@Target(CustomArrayList.class)
-		@ElementCollection(bean="itens")
-		public List<Integer> propertyP;
+		@Target(LinkedList.class)
+		@ElementCollection(bean="itens", target=Integer.class)
+		public List propertyP;
 		
 	}
 
@@ -157,16 +194,16 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@ElementCollection(bean="itens")
 		public Map<String, Integer> propertyB;
 
-		public Map<String, EnumTest> propertyC;
+		public Map<String, EnumValues> propertyC;
 		
 		@ElementCollection(bean="itens")
-		public Map<String, EnumTest> propertyD;
+		public Map<String, EnumValues> propertyD;
 
 		@ElementCollection(enumerated=EnumerationType.ORDINAL)
-		public Map<String, EnumTest> propertyE;
+		public Map<String, EnumValues> propertyE;
 		
 		@ElementCollection(bean="itens", enumerated=EnumerationType.ORDINAL)
-		public Map<String, EnumTest> propertyF;
+		public Map<String, EnumValues> propertyF;
 		
 		public Map<String, Date> propertyG;
 		
@@ -190,11 +227,11 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		public Map<String, CustomArrayList> propertyN;
 		
 		@Target(CustomMap.class)
-		public Map<String, BeanConstructorTest> propertyO;
+		public Map<String, ConstructorTest> propertyO;
 		
 		@Target(CustomMap.class)
 		@ElementCollection(bean="itens")
-		public Map<String, BeanConstructorTest> propertyP;
+		public Map<String, ConstructorTest> propertyP;
 		
 	}
 
@@ -205,16 +242,16 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@KeyCollection(bean="itens")
 		public Map<Integer, String> propertyB;
 
-		public Map<EnumTest, String> propertyC;
+		public Map<EnumValues, String> propertyC;
 		
 		@KeyCollection(bean="itens")
-		public Map<EnumTest, String> propertyD;
+		public Map<EnumValues, String> propertyD;
 
 		@KeyCollection(enumerated=EnumerationType.ORDINAL)
-		public Map<EnumTest,String> propertyE;
+		public Map<EnumValues,String> propertyE;
 		
 		@KeyCollection(bean="itens", enumerated=EnumerationType.ORDINAL)
-		public Map<EnumTest, String> propertyF;
+		public Map<EnumValues, String> propertyF;
 		
 		public Map<Date, String> propertyG;
 		
@@ -242,15 +279,15 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		public Map<CustomArrayList, String> propertyN;
 		
 		@Target(CustomMap.class)
-		public Map<String, BeanConstructorTest> propertyO;
+		public Map<String, ConstructorTest> propertyO;
 		
 		@Target(CustomMap.class)
 		@KeyCollection(bean="itens")
-		public Map<String, BeanConstructorTest> propertyP;
+		public Map<String, ConstructorTest> propertyP;
 		
 	}
 	
-	public enum EnumTest {
+	public enum EnumValues {
 
 	    VALUE1,
 	    
@@ -258,12 +295,12 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 	    
 	}
 	
-	public static class BeanConstructorTest {
+	public static class ConstructorTest {
 	    
 		@Transient
 		public int propertyA;
 		
-	    public BeanConstructorTest(@Basic(bean="property")int propertyA){
+	    public ConstructorTest(@Basic(bean="property")int propertyA){
 	    	this.propertyA = propertyA;
 	    }
 
@@ -274,11 +311,33 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		public void setPropertyA(int propertyA) {
 			this.propertyA = propertyA;
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + propertyA;
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			ConstructorTest other = (ConstructorTest) obj;
+			if (propertyA != other.propertyA)
+				return false;
+			return true;
+		}
 	    
 	}
 
 	@ElementCollection(bean="myElement",mappingType=MappingTypes.COMPLEX)
-	public static class CustomArrayList extends ArrayList<BeanConstructorTest>{
+	public static class CustomArrayList extends ArrayList<ConstructorTest>{
 		
 		private static final long serialVersionUID = -8645119830023527667L;
 
@@ -304,7 +363,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 	@KeyCollection(bean="keys")
 	@ElementCollection(bean="elements", mappingType=MappingTypes.COMPLEX)
 	public static class CustomMap 
-		extends HashMap<String, BeanConstructorTest>{
+		extends HashMap<String, ConstructorTest>{
 	
 		private static final long serialVersionUID = 7978559428377788179L;
 		
