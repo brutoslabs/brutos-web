@@ -1,10 +1,11 @@
 package org.brandao.brutos;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface MutableMvcRequest extends MvcRequest{
 
-	void setEncoding(String value);
+	void setEncoding(String value) throws UnsupportedEncodingException;
 	
 	void setRequestId(String requestId);
 	

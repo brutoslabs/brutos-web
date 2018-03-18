@@ -5,6 +5,12 @@ import org.brandao.brutos.BrutosConstants;
 
 public interface BrutosWebConstants extends BrutosConstants{
 
+	final String REQUEST = ApplicationContext.class
+			.getName() + ".request";
+	
+	final String RESPONSE = ApplicationContext.class
+			.getName() + ".response";
+	
 	final String REDIRECT_PARAMS = ApplicationContext.class
 			.getName() + ".web.redirect.params";
 	

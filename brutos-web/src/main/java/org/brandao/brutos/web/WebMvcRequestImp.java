@@ -19,7 +19,9 @@ package org.brandao.brutos.web;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -134,8 +136,9 @@ public class WebMvcRequestImp
 	}
 
 	public Object getProperty(String name) {
-		Object r = this.request.getProperty(name);
-		return r == null? _getRequest().getAttribute(name) : r;
+		return this._getRequest().getAttribute(name);
+		//Object r = this.request.getProperty(name);
+		//return r == null? _getRequest().getAttribute(name) : r;
 	}
 
 	public InputStream getStream() throws IOException {
@@ -144,7 +147,8 @@ public class WebMvcRequestImp
 
 	@SuppressWarnings("unchecked")
 	public Set<String> getPropertiesNames(){
-		Set<String> set = new HashSet<String>(this.request.getPropertiesNames());
+		//Set<String> set = new HashSet<String>(this.request.getPropertiesNames());
+		Set<String> set = new HashSet<String>();
 		Enumeration<String> names = this._getRequest().getAttributeNames();
 		while(names.hasMoreElements()){
 			String name = names.nextElement();
@@ -155,7 +159,8 @@ public class WebMvcRequestImp
 
 	@SuppressWarnings("unchecked")
 	public Set<String> getHeadersNames(){
-		Set<String> set = new HashSet<String>(this.request.getHeadersNames());
+		//Set<String> set = new HashSet<String>(this.request.getHeadersNames());
+		Set<String> set = new HashSet<String>();
 		Enumeration<String> names = this._getRequest().getHeaderNames();
 		while(names.hasMoreElements()){
 			String name = names.nextElement();
@@ -213,7 +218,7 @@ public class WebMvcRequestImp
 	}
 
 	public void setHeader(String name, Object value) {
-		this.request.setHeader(name, value);
+		throw new UnsupportedOperationException();
 	}
 
 	public void setParameter(String name, String value) {
@@ -237,7 +242,8 @@ public class WebMvcRequestImp
 	}
 
 	public void setProperty(String name, Object value) {
-		this.request.setProperty(name, value);
+		//this.request.setProperty(name, value);
+		this._getRequest().setAttribute(name, value);
 	}
 
 	public void setType(DataType value) {
@@ -296,14 +302,14 @@ public class WebMvcRequestImp
 	}
 
 	public void setServletRequest(ServletRequest value) {
-		super.setRequest((HttpServletRequest)request);
+		super.setRequest(value);
 	}
 
 	/* HttpServletRequestWrapper */
 	
 	@SuppressWarnings("rawtypes")
 	public Enumeration getHeaderNames(){
-		return Collections.enumeration(this.getHeadersNames());
+		return this._getRequest().getHeaderNames();
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -312,9 +318,7 @@ public class WebMvcRequestImp
 	}
 	
 	public String getHeader(String value) {
-		Object r = this.request.getHeader(value);
-		r = r == null? _getRequest().getHeader(value) : r;
-		return r == null? null : String.valueOf(r);
+		return this._getRequest().getHeader(value);
 	}
 
 	public String getParameter(String name) {
@@ -324,6 +328,7 @@ public class WebMvcRequestImp
 	}
 
 	public List<Object> getParameters(String name) {
+		
 		List<Object> r = this.request.getParameters(name);
 		
 		if(r == null){
@@ -334,11 +339,9 @@ public class WebMvcRequestImp
 				return null;
 			}
 			
-			r = new ArrayList<Object>();
-			
-			for(String v: values){
-				r.add(v);
-			}
+			Object[] objArray = new Object[values.length];
+			System.arraycopy(values, 0, objArray, 0, objArray.length);
+			r = Arrays.asList(objArray);
 		}
 		
 		return r;
@@ -380,30 +383,20 @@ public class WebMvcRequestImp
 
 	@Override
 	public void removeAttribute(String name) {
-		throw new UnsupportedOperationException();
+		this._getRequest().removeAttribute(name);
 	}
 
 	@Override
 	public void setAttribute(String name, Object o) {
-		this.request.setProperty(name, o);
+		this._getRequest().setAttribute(name, String.valueOf(o));
 	}
 
-	public void setEncoding(String value) {
-		this.request.setEncoding(value);
+	public void setEncoding(String value) throws UnsupportedEncodingException {
+		this._getRequest().setCharacterEncoding(value);
 	}
 
 	public String getEncoding() {
-		if(this.request.getEncoding() == null){
-			this.request.setEncoding(this._getRequest().getCharacterEncoding());
-		}
-		
 		return this.request.getEncoding();
 	}
-
-	/*
-	public void setRequest(ServletRequest request){
-		this.mvcRequest.setServletRequest(request);
-		super.setRequest(request);
-	}
-	*/	
+	
 }

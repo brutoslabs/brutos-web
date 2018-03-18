@@ -22,6 +22,7 @@ import java.io.OutputStream;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.brandao.brutos.*;
 
@@ -30,30 +31,66 @@ import org.brandao.brutos.*;
  * @author Brandao
  */
 public class WebMvcResponseImp
-	extends DefaultMvcResponse
+	extends HttpServletResponseWrapper
 	implements MutableWebMvcResponse {
 
-    private HttpServletResponse response;
+	private MutableMvcResponse response;
 
     public WebMvcResponseImp(HttpServletResponse response, MvcRequest request){
-        this.response = response;
-        this.request  = request;
+    	super(response);
+    	this.response = new DefaultMvcResponse();
+    	this.response.setRequest(request);
     }
 
+	/* HttpServletResponse methods */
+	
+	public void addHeader(String name, String value){
+		super.addHeader(name, value);
+	}
+	
 	public ServletResponse getServletResponse() {
-		return this.response;
+		return super.getResponse();
 	}
 
 	public OutputStream processStream() throws IOException {
-		return this.response.getOutputStream();
+		return super.getResponse().getOutputStream();
 	}
 	
-	public void setHeader(String name, Object value){
-		this.response.addHeader(name, String.valueOf(value));
+	public void setServletresponse(ServletResponse value) {
+		super.setResponse(value);
 	}
 
-	public void setServletresponse(ServletResponse value) {
-		this.response = (HttpServletResponse) value;
+	/* MutableWebMvcResponse methods */
+	
+	public void setResult(Object value) {
+		this.response.setResult(value);
+	}
+
+	public void setRequest(MvcRequest value) {
+		this.response.setRequest(value);
+	}
+
+	public MvcRequest getRequest() {
+		return this.response.getRequest();
+	}
+
+	public void process(Object object) {
+	}
+
+	public void setHeader(String name, Object value) {
+		super.addHeader(name, String.valueOf(value));
+	}
+
+	public void setType(DataType value) {
+		this.response.setType(value);
+	}
+
+	public DataType getType() {
+		return this.response.getType();
+	}
+
+	public Object getResult() {
+		return this.response.getResult();
 	}
 	
 }
