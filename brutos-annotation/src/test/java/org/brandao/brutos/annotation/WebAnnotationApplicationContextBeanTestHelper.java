@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -41,9 +42,9 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 
 		public static final Date otherDateValue;
 		
-		public static final ConstructorTest constructorTestValue = new ConstructorTest(otherIntValue);
+		public static final ConstructorTest otherConstructorTestValue = new ConstructorTest(otherIntValue);
 		
-		public static final ConstructorTest otherConstructorTestValue = new ConstructorTest(intValue);
+		public static final ConstructorTest constructorTestValue = new ConstructorTest(intValue);
 		
 		static{
 			Calendar cal = GregorianCalendar.getInstance();
@@ -181,6 +182,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		//@Target(LinkedList.class)
 		//public List<Integer> propertyO;
 		
+		@SuppressWarnings("rawtypes")
 		@Target(LinkedList.class)
 		@ElementCollection(bean="itens", target=Integer.class)
 		public List propertyP;
@@ -221,15 +223,17 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@ElementCollection(bean="itens")
 		public Map<String, ConstructorTest> propertyL;
 
-		public Map<String, CustomArrayList> propertyM;
+		//CustomArrayList tem que ser um tipo
+		//public Map<String, CustomArrayList> propertyM;
 		
 		@ElementCollection(bean="itens")
 		public Map<String, CustomArrayList> propertyN;
 		
-		@Target(CustomMap.class)
-		public Map<String, ConstructorTest> propertyO;
+		//Sem efeito. Target somente funciona com mapeamento e não com valor.
+		//@Target(CustomMap.class)
+		//public Map<String, ConstructorTest> propertyO;
 		
-		@Target(CustomMap.class)
+		@Target(LinkedHashMap.class)
 		@ElementCollection(bean="itens")
 		public Map<String, ConstructorTest> propertyP;
 		
