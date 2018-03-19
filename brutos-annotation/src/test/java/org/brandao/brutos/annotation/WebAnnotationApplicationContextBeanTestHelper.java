@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -183,10 +181,9 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		//public List<Integer> propertyO;
 		
 		@SuppressWarnings("rawtypes")
-		@Target(LinkedList.class)
 		@ElementCollection(bean="itens", target=Integer.class)
 		public List propertyP;
-		
+
 	}
 
 	public static class MapElementTest{
@@ -233,7 +230,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		//@Target(CustomMap.class)
 		//public Map<String, ConstructorTest> propertyO;
 		
-		@Target(LinkedHashMap.class)
+		@Target(CustomMap.class)
 		@ElementCollection(bean="itens")
 		public Map<String, ConstructorTest> propertyP;
 		
@@ -243,51 +240,51 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 
 		public Map<Integer, String> propertyA;
 		
-		@KeyCollection(bean="itens")
+		@KeyCollection(bean="chaves")
 		public Map<Integer, String> propertyB;
 
 		public Map<EnumValues, String> propertyC;
 		
-		@KeyCollection(bean="itens")
+		@KeyCollection(bean="chaves")
 		public Map<EnumValues, String> propertyD;
 
 		@KeyCollection(enumerated=EnumerationType.ORDINAL)
 		public Map<EnumValues,String> propertyE;
 		
-		@KeyCollection(bean="itens", enumerated=EnumerationType.ORDINAL)
+		@KeyCollection(bean="chaves", enumerated=EnumerationType.ORDINAL)
 		public Map<EnumValues, String> propertyF;
 		
 		public Map<Date, String> propertyG;
 		
-		@KeyCollection(bean="itens")
+		@KeyCollection(bean="chaves")
 		public Map<Date, String> propertyH;
 
 		@KeyCollection(temporal="dd/MM/yyyy")
 		public Map<Date, String> propertyI;
 		
-		@KeyCollection(bean="itens", temporal="dd/MM/yyyy")
+		@KeyCollection(bean="chaves", temporal="dd/MM/yyyy")
 		public Map<Date, String> propertyJ;
 		
 		//Não aplicável
 		//@KeyCollection.bean é obrigatório
 		//public Map<ConstructorTest, String> propertyK;
 		
-		@KeyCollection(bean="itens")
+		@KeyCollection(bean="chaves")
 		public Map<ConstructorTest, String> propertyL;
 
 		//Não aplicável
 		//@KeyCollection.bean é obrigatório
 		//public Map<CustomArrayList, String> propertyM;
 		
-		@KeyCollection(bean="itens")
+		@KeyCollection(bean="chaves")
 		public Map<CustomArrayList, String> propertyN;
 		
-		@Target(CustomMap.class)
-		public Map<String, ConstructorTest> propertyO;
+		//@Target(LinkedHashMap.class)
+		//public Map<ConstructorTest, String> propertyO;
 		
 		@Target(CustomMap.class)
-		@KeyCollection(bean="itens")
-		public Map<String, ConstructorTest> propertyP;
+		@KeyCollection(bean="chaves")
+		public Map<ConstructorTest, String> propertyP;
 		
 	}
 	
