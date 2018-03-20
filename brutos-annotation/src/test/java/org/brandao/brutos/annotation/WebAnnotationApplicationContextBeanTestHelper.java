@@ -140,33 +140,40 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 
 		public List<Integer> propertyA;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
 		public List<Integer> propertyB;
 
 		public List<EnumValues> propertyC;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
 		public List<EnumValues> propertyD;
 
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(enumerated=EnumerationType.ORDINAL)
 		public List<EnumValues> propertyE;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens", enumerated=EnumerationType.ORDINAL)
 		public List<EnumValues> propertyF;
 		
 		public List<Date> propertyG;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
 		public List<Date> propertyH;
 
 		@ElementCollection(temporal="dd/MM/yyyy")
 		public List<Date> propertyI;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens", temporal="dd/MM/yyyy")
 		public List<Date> propertyJ;
 		
 		public List<ConstructorTest> propertyK;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
 		public List<ConstructorTest> propertyL;
 
@@ -180,6 +187,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		//@Target(LinkedList.class)
 		//public List<Integer> propertyO;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@SuppressWarnings("rawtypes")
 		@ElementCollection(bean="itens", target=Integer.class)
 		public List propertyP;

@@ -218,7 +218,7 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             				new String[]{
 	            				String.valueOf(Values.enumValue.ordinal()), 
 	            				String.valueOf(Values.otherEnumValue.ordinal()), 
-	            				String.valueOf(Values.otherEnumValue.ordinal())
+	            				String.valueOf(Values.enumValue.ordinal())
 		            		}
             		);
             		
@@ -230,7 +230,7 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             				new String[]{
 	            				String.valueOf(Values.enumValue.ordinal()), 
 	            				String.valueOf(Values.otherEnumValue.ordinal()), 
-	            				String.valueOf(Values.otherEnumValue.ordinal())
+	            				String.valueOf(Values.enumValue.ordinal())
 		            		}
             		);
             		

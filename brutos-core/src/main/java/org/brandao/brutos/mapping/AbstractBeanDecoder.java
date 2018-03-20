@@ -463,7 +463,7 @@ public abstract class AbstractBeanDecoder
 				this.getInstanceByFactory(constructor, path, parent);
 		}
 		catch(Throwable e){
-			throw new DependencyException("create instance failed: " + constructor.getBean().getName());
+			throw new DependencyException("create instance failed: " + constructor.getBean().getName(), e);
 		}
 	}
 	

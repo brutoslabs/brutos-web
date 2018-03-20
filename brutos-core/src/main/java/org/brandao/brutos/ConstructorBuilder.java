@@ -200,6 +200,10 @@ public class ConstructorBuilder extends RestrictionBuilder {
 						type, this.mappingBean, fetchType, this.validatorFactory,
 						this.controller);
 
+		if(type == null){
+			arg.setType(null);
+		}
+		
 		getLogger().info(
 				String.format(
 						"%s added constructor arg %s",
