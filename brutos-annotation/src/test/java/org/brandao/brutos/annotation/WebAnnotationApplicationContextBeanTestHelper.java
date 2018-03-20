@@ -337,7 +337,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 	    
 	}
 
-	@ElementCollection(bean="myElement",mappingType=MappingTypes.COMPLEX)
+	@ElementCollection(bean="myElement",mappingType=MappingTypes.OBJECT)
 	public static class CustomArrayList extends ArrayList<ConstructorTest>{
 		
 		private static final long serialVersionUID = -8645119830023527667L;
@@ -362,7 +362,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 	
 	@SuppressWarnings("rawtypes")
 	@KeyCollection(bean="keys")
-	@ElementCollection(bean="elements", mappingType=MappingTypes.COMPLEX)
+	@ElementCollection(bean="elements", mappingType=MappingTypes.OBJECT)
 	public static class CustomMap 
 		extends HashMap<String, ConstructorTest>{
 	

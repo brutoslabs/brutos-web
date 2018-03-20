@@ -52,13 +52,22 @@ public class ElementCollectionAnnotationConfig extends AbstractAnnotationConfig 
 
 		ElementEntry element = (ElementEntry) source;
 
+		if (AnnotationUtil.isObject(element, componentRegistry)){
+			buildElement(element, builder, componentRegistry);
+		}
+		else{
+			addElement(element, (BeanBuilder) builder, componentRegistry);
+		}
+		
+		/*
 		if (!element.isAnnotationPresent(Any.class)
 				&& AnnotationUtil.isBuildEntity(componentRegistry,
 						element.getMappingType(), element.getClassType()))
 			buildElement(element, builder, componentRegistry);
 		else
 			addElement(element, (BeanBuilder) builder, componentRegistry);
-
+		 */
+		
 		return builder;
 	}
 

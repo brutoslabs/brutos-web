@@ -30,13 +30,13 @@ public enum MappingTypes {
 	AUTO,
 
 	/**
-	 * É um valor primitivo ou equivalente.
+	 * É um valor.
 	 */
-	SIMPLE,
+	VALUE,
 
 	/**
 	 * É um objeto.
 	 */
-	COMPLEX;
+	OBJECT;
 
 }

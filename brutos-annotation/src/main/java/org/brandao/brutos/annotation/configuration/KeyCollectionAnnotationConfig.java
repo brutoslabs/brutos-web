@@ -52,13 +52,22 @@ public class KeyCollectionAnnotationConfig extends AbstractAnnotationConfig {
 
 		KeyEntry key = (KeyEntry) source;
 
+		if (AnnotationUtil.isObject(key, componentRegistry)){
+			buildKey(key, builder, componentRegistry);
+		}
+		else{
+			addKey(key, (BeanBuilder) builder, componentRegistry);
+		}
+		
+		/*
 		if (!key.isAnnotationPresent(Any.class)
 				&& AnnotationUtil.isBuildEntity(componentRegistry,
 						key.getMappingType(), key.getClassType()))
 			buildKey(key, builder, componentRegistry);
 		else
 			addKey(key, (BeanBuilder) builder, componentRegistry);
-
+		 */
+		
 		return builder;
 	}
 

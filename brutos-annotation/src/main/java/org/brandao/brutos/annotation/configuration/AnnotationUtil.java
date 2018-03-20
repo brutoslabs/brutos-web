@@ -179,7 +179,7 @@ public class AnnotationUtil {
 			MappingTypes mappingType, Class<?> type) {
 		return isBuildEntity(typeRegistry,
 				mappingType == null || mappingType == MappingTypes.AUTO ? null
-						: mappingType.equals(MappingTypes.COMPLEX), type);
+						: mappingType.equals(MappingTypes.OBJECT), type);
 	}
 
 	public static boolean isComplexBean(Class<?> type) {
@@ -196,7 +196,7 @@ public class AnnotationUtil {
 		return isBuildEntity(
 				typeRegistry,
 				identify == null || identify.mappingType() == MappingTypes.AUTO ? null
-						: identify.mappingType().equals(MappingTypes.COMPLEX),
+						: identify.mappingType().equals(MappingTypes.OBJECT),
 				type);
 	}
 
@@ -205,7 +205,7 @@ public class AnnotationUtil {
 		return isBuildEntity(
 				typeRegistry,
 				identify == null || identify.mappingType() == MappingTypes.AUTO ? null
-						: identify.mappingType().equals(MappingTypes.COMPLEX),
+						: identify.mappingType().equals(MappingTypes.OBJECT),
 				type);
 	}
 
@@ -214,7 +214,7 @@ public class AnnotationUtil {
 		return isBuildEntity(
 				typeRegistry,
 				identify == null || identify.mappingType() == MappingTypes.AUTO ? null
-						: identify.mappingType().equals(MappingTypes.COMPLEX),
+						: identify.mappingType().equals(MappingTypes.OBJECT),
 				type);
 	}
 
@@ -614,4 +614,15 @@ public class AnnotationUtil {
 
 		return hasAny;
 	}
+	
+	public static boolean isObject(ElementEntry element, ComponentRegistry componentRegistry){
+		return !element.isAnnotationPresent(Any.class) && 
+				AnnotationUtil.isBuildEntity(componentRegistry,element.getMappingType(), element.getClassType());		
+	}
+	
+	public static boolean isObject(KeyEntry element, ComponentRegistry componentRegistry){
+		return !element.isAnnotationPresent(Any.class) && 
+				AnnotationUtil.isBuildEntity(componentRegistry,element.getMappingType(), element.getClassType());		
+	}
+	
 }
