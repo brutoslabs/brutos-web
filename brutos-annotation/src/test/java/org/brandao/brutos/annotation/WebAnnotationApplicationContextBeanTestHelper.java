@@ -150,8 +150,9 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@ElementCollection(bean="itens")
 		public List<EnumValues> propertyD;
 
-		@Basic(mappingType=MappingTypes.OBJECT)
-		@ElementCollection(enumerated=EnumerationType.ORDINAL)
+		//@Basic(mappingType=MappingTypes.OBJECT)
+		//@ElementCollection(enumerated=EnumerationType.ORDINAL)
+		//ElementCollection não se aplica somente a um mapeamento
 		public List<EnumValues> propertyE;
 		
 		@Basic(mappingType=MappingTypes.OBJECT)
