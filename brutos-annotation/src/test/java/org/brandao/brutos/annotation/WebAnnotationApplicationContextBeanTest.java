@@ -226,13 +226,10 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             		request.setupAddParameter("listTest.propertyD.itens[1]", Values.otherEnumValue.name());
             		request.setupAddParameter("listTest.propertyD.itens[2]", Values.enumValue.name());
             		
-            		request.setupAddParameter("listTest.propertyE", 
-            				new String[]{
-	            				String.valueOf(Values.enumValue.ordinal()), 
-	            				String.valueOf(Values.otherEnumValue.ordinal()), 
-	            				String.valueOf(Values.enumValue.ordinal())
-		            		}
-            		);
+
+            		request.setupAddParameter("listTest.propertyE[0]", String.valueOf(Values.enumValue.ordinal()));
+            		request.setupAddParameter("listTest.propertyE[1]", String.valueOf(Values.otherEnumValue.ordinal()));
+            		request.setupAddParameter("listTest.propertyE[2]", String.valueOf(Values.enumValue.ordinal()));
             		
             		request.setupAddParameter("listTest.propertyF.itens[0]", String.valueOf(Values.enumValue.ordinal()));
             		request.setupAddParameter("listTest.propertyF.itens[1]", String.valueOf(Values.otherEnumValue.ordinal()));
@@ -250,37 +247,25 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             		request.setupAddParameter("listTest.propertyH.itens[1]", Values.otherStringValue);
             		request.setupAddParameter("listTest.propertyH.itens[2]", Values.stringValue);
 
-            		request.setupAddParameter("listTest.propertyI", 
-            				new String[]{
-	            				Values.brDateStringValue, 
-	            				Values.otherBRDateStringValue, 
-	            				Values.brDateStringValue
-		            		}
-            		);
+            		request.setupAddParameter("listTest.propertyI[0]", Values.brDateStringValue);
+            		request.setupAddParameter("listTest.propertyI[1]", Values.otherBRDateStringValue);
+            		request.setupAddParameter("listTest.propertyI[2]", Values.brDateStringValue);
             		
             		request.setupAddParameter("listTest.propertyJ.itens[0]", Values.brDateStringValue);
             		request.setupAddParameter("listTest.propertyJ.itens[1]", Values.otherBRDateStringValue);
             		request.setupAddParameter("listTest.propertyJ.itens[2]", Values.brDateStringValue);
 
-            		request.setupAddParameter("listTest.propertyK.property", 
-            				new String[]{
-	            				String.valueOf(Values.intValue), 
-	            				String.valueOf(Values.otherIntValue), 
-	            				String.valueOf(Values.intValue)
-		            		}
-            		);
-
+            		request.setupAddParameter("listTest.propertyK[0].property", String.valueOf(Values.intValue));
+            		request.setupAddParameter("listTest.propertyK[1].property", String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("listTest.propertyK[2].property", String.valueOf(Values.intValue));
+            		
             		request.setupAddParameter("listTest.propertyL.itens[0].property", String.valueOf(Values.intValue));
             		request.setupAddParameter("listTest.propertyL.itens[1].property", String.valueOf(Values.otherIntValue));
             		request.setupAddParameter("listTest.propertyL.itens[2].property", String.valueOf(Values.intValue));
 
-            		request.setupAddParameter("listTest.propertyN.itens[0].myElement[0].property", 
-            				new String[]{
-	            				String.valueOf(Values.intValue), 
-	            				String.valueOf(Values.otherIntValue), 
-	            				String.valueOf(Values.intValue)
-		            		}
-            		);
+            		request.setupAddParameter("listTest.propertyN.itens[0].myElement[0].property", String.valueOf(Values.intValue));
+            		request.setupAddParameter("listTest.propertyN.itens[1].myElement[0].property", String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("listTest.propertyN.itens[2].myElement[0].property", String.valueOf(Values.intValue));
             		
             		request.setupAddParameter("listTest.propertyP.itens[0]", String.valueOf(Values.intValue));
             		request.setupAddParameter("listTest.propertyP.itens[1]", String.valueOf(Values.otherIntValue));
@@ -336,10 +321,14 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 					assertEquals(Arrays.asList(Values.constructorTestValue, Values.otherConstructorTestValue, Values.constructorTestValue),
 							bean.propertyL);
             		
-					assertEquals(Arrays.asList(Values.constructorTestValue, Values.otherConstructorTestValue, Values.constructorTestValue),
+					assertEquals(
+							Arrays.asList(
+								Arrays.asList(Values.constructorTestValue), 
+								Arrays.asList(Values.otherConstructorTestValue), 
+								Arrays.asList(Values.constructorTestValue)),
 							bean.propertyN);
 					
-					assertEquals(Arrays.asList(Values.constructorTestValue, Values.otherConstructorTestValue, Values.constructorTestValue),
+					assertEquals(Arrays.asList(Values.intValue, Values.otherIntValue, Values.intValue),
 							bean.propertyP);
 					
 				}

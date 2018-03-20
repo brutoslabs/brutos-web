@@ -30,6 +30,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.ResultAction;
 import org.brandao.brutos.TypeManager;
@@ -155,7 +156,7 @@ public class TypeManagerImp implements TypeManager {
 	}
 
 	public Type getType(Object classType) {
-		return getType(classType, EnumerationType.ORDINAL, "dd/MM/yyyy");
+		return getType(classType, BrutosConstants.DEFAULT_ENUMERATIONTYPE, BrutosConstants.DEFAULT_TEMPORALPROPERTY);
 	}
 
 	public TypeFactory getTypeFactory(Object classType) {

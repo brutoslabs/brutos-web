@@ -150,8 +150,8 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@ElementCollection(bean="itens")
 		public List<EnumValues> propertyD;
 
-		//@Basic(mappingType=MappingTypes.OBJECT)
-		//@ElementCollection(enumerated=EnumerationType.ORDINAL)
+		@Basic(mappingType=MappingTypes.OBJECT)
+		@ElementCollection(enumerated=EnumerationType.ORDINAL)
 		//ElementCollection não se aplica somente a um mapeamento
 		public List<EnumValues> propertyE;
 		
@@ -165,6 +165,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@ElementCollection(bean="itens")
 		public List<Date> propertyH;
 
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(temporal="dd/MM/yyyy")
 		public List<Date> propertyI;
 		
@@ -172,6 +173,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@ElementCollection(bean="itens", temporal="dd/MM/yyyy")
 		public List<Date> propertyJ;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		public List<ConstructorTest> propertyK;
 		
 		@Basic(mappingType=MappingTypes.OBJECT)
@@ -181,6 +183,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		//Não aplicável. Precisa do tipo CustomArrayList registrado.
 		//public List<CustomArrayList> propertyM;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
 		public List<CustomArrayList> propertyN;
 
@@ -342,6 +345,11 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 			if (propertyA != other.propertyA)
 				return false;
 			return true;
+		}
+
+		@Override
+		public String toString() {
+			return "ConstructorTest [propertyA=" + propertyA + "]";
 		}
 	    
 	}
