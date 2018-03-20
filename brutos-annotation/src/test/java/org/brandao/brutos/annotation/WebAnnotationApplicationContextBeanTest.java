@@ -277,6 +277,7 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 				public void prepareSession(Map<String, Object> parameters) {
 				}
 				
+				@SuppressWarnings("unchecked")
 				public void checkResult(HttpServletRequest request,
 						HttpServletResponse response, ServletContext context,
 						ConfigurableWebApplicationContext applicationContext) {
@@ -360,21 +361,21 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
                 }
 				
             	public void prepareRequest(MockHttpServletRequest request) {
-            		request.setupAddParameter("mapElementTest.propertyA." + Values.intValue, 		String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapElementTest.propertyA." + Values.otherIntValue, String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyA." + Values.intValue,		String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyA." + Values.otherIntValue,	String.valueOf(Values.otherIntValue));
             		
-            		request.setupAddParameter("mapElementTest.propertyB.key[0]", 		String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapElementTest.propertyB.key[1]", 		String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyB.key[0]", 	String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyB.key[1]", 	String.valueOf(Values.otherIntValue));
             		request.setupAddParameter("mapElementTest.propertyB.itens[0]",	String.valueOf(Values.intValue));
             		request.setupAddParameter("mapElementTest.propertyB.itens[1]",	String.valueOf(Values.otherIntValue));
             		
             		request.setupAddParameter("mapElementTest.propertyC." + Values.enumValue.ordinal(), 		String.valueOf(Values.enumValue.ordinal()));
             		request.setupAddParameter("mapElementTest.propertyC." + Values.otherEnumValue.ordinal(),	String.valueOf(Values.otherEnumValue.ordinal()));
             		
-            		request.setupAddParameter("mapElementTest.propertyD.key[0]", Values.enumValue.name());
-            		request.setupAddParameter("mapElementTest.propertyD.key[1]", Values.otherEnumValue.name());
-            		request.setupAddParameter("mapElementTest.propertyD.itens[0]", Values.enumValue.name());
-            		request.setupAddParameter("mapElementTest.propertyD.itens[1]", Values.otherEnumValue.name());
+            		request.setupAddParameter("mapElementTest.propertyD.key[0]",	Values.enumValue.name());
+            		request.setupAddParameter("mapElementTest.propertyD.key[1]",	Values.otherEnumValue.name());
+            		request.setupAddParameter("mapElementTest.propertyD.itens[0]",	Values.enumValue.name());
+            		request.setupAddParameter("mapElementTest.propertyD.itens[1]",	Values.otherEnumValue.name());
             		
             		request.setupAddParameter("mapElementTest.propertyE." + Values.enumValue.ordinal(), 		String.valueOf(Values.enumValue.ordinal()));
             		request.setupAddParameter("mapElementTest.propertyE." + Values.otherEnumValue.ordinal(),	String.valueOf(Values.otherEnumValue.ordinal()));

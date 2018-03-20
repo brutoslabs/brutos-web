@@ -279,13 +279,11 @@ public abstract class AbstractBeanDecoder
 			
 			Object element = this.getValue(e, FetchType.EAGER, path, parent);
 			
-			if(element != null){
-				destValue.add(element);
-			}
-			else{
+			if(element == null){
 				break;
 			}
 			
+			destValue.add(element);
 			path.setLength(len);
 			
 		}
@@ -335,6 +333,11 @@ public abstract class AbstractBeanDecoder
 			Object key = this.getValue(k, FetchType.EAGER, path, keyNode);
 			
 			path.setLength(keyLen);
+			
+			if(key == null){
+				break;
+			}
+			
 			keys.add(key);
 		}
 
@@ -342,7 +345,7 @@ public abstract class AbstractBeanDecoder
 		
 		Element e = (Element)entity.getCollection();
 		
-		NodeBeanDecoder eNode = this.getNextNode(k, path, parent);
+		NodeBeanDecoder eNode = this.getNextNode(e, path, parent);
 		
 		int eLen = path.length();
 		
@@ -350,7 +353,7 @@ public abstract class AbstractBeanDecoder
 		
 		for(Object key: keys){
 			
-			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i)));
+			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i++)));
 			
 			Object element = this.getValue(e, FetchType.EAGER, path, eNode);
 			
