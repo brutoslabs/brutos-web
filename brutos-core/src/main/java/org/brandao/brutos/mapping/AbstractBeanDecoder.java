@@ -396,7 +396,7 @@ public abstract class AbstractBeanDecoder
 			
 			Object keyObject = k.convert(keyValue.getName());
 			
-			path.append(keyValue.getPrefix());
+			path.append(entity.getSeparator()).append(keyValue.getName());
 			
 			Object element = this.getValue(e, FetchType.EAGER, path, parent);
 			
