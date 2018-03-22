@@ -47,6 +47,21 @@ public class BrutosTestCase extends TestCase{
 		return m;
 	}
 
+	public static <K,V,L extends Map<K,V>> L toMap(Class<L> type, Entry<K,V> ... values){
+		try{
+			L m = ClassUtil.getInstance(type);
+			
+			for(Entry<K,V> v: values){
+				m.put(v.getKey(), v.getValue());
+			}
+			
+			return m;
+		}
+		catch(Throwable e){
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public static <T,L extends List<T>> L toList(Class<L> type, T ... values){
 		try{
 			L l = ClassUtil.getInstance(type);
@@ -60,4 +75,5 @@ public class BrutosTestCase extends TestCase{
 			throw new RuntimeException(e);
 		}
 	}
+	
 }

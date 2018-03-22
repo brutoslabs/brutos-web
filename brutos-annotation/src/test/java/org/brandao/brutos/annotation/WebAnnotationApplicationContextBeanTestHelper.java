@@ -1,14 +1,10 @@
 package org.brandao.brutos.annotation;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.brandao.brutos.annotation.web.WebActionStrategyType;
 
@@ -185,7 +181,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		
 		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
-		public List<CustomArrayList> propertyN;
+		public List<ConstructorTestArrayList> propertyN;
 
 		//Sem efeito. Target somente funciona com mapeamento e não com valor.
 		//@Target(LinkedList.class)
@@ -202,49 +198,65 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 
 		public Map<String, Integer> propertyA;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
 		public Map<String, Integer> propertyB;
 
 		public Map<String, EnumValues> propertyC;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
 		public Map<String, EnumValues> propertyD;
 
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(enumerated=EnumerationType.ORDINAL)
 		public Map<String, EnumValues> propertyE;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens", enumerated=EnumerationType.ORDINAL)
 		public Map<String, EnumValues> propertyF;
 		
 		public Map<String, Date> propertyG;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
 		public Map<String, Date> propertyH;
 
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(temporal="dd/MM/yyyy")
 		public Map<String, Date> propertyI;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens", temporal="dd/MM/yyyy")
 		public Map<String, Date> propertyJ;
 		
 		public Map<String, ConstructorTest> propertyK;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
 		public Map<String, ConstructorTest> propertyL;
 
 		//CustomArrayList tem que ser um tipo
 		//public Map<String, CustomArrayList> propertyM;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
-		public Map<String, CustomArrayList> propertyN;
+		public Map<String, ConstructorTestArrayList> propertyN;
 		
 		//Sem efeito. Target somente funciona com mapeamento e não com valor.
 		//@Target(CustomMap.class)
 		//public Map<String, ConstructorTest> propertyO;
 		
-		@Target(CustomMap.class)
-		@ElementCollection(bean="itens")
-		public Map<String, ConstructorTest> propertyP;
+		@Basic(mappingType=MappingTypes.OBJECT)
+		@Target(ConstructorTestMap.class)
+		@ElementCollection(bean="itens", target=ConstructorTest.class)
+		public Map<String, Object> propertyP;
+
+		@Basic(mappingType=MappingTypes.OBJECT)
+		public Map<String, ConstructorTestMap> propertyQ;
+
+		@Basic(mappingType=MappingTypes.OBJECT)
+		public Map<String, Map<String, ConstructorTest>> propertyR;
 		
 	}
 
@@ -289,12 +301,12 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		//public Map<CustomArrayList, String> propertyM;
 		
 		@KeyCollection(bean="chaves")
-		public Map<CustomArrayList, String> propertyN;
+		public Map<ConstructorTestArrayList, String> propertyN;
 		
 		//@Target(LinkedHashMap.class)
 		//public Map<ConstructorTest, String> propertyO;
 		
-		@Target(CustomMap.class)
+		@Target(ConstructorTestMap.class)
 		@KeyCollection(bean="chaves")
 		public Map<ConstructorTest, String> propertyP;
 		
@@ -355,87 +367,50 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 	}
 
 	@ElementCollection(bean="myElement",mappingType=MappingTypes.OBJECT)
-	public static class CustomArrayList extends ArrayList<ConstructorTest>{
+	public static class ConstructorTestArrayList extends ArrayList<ConstructorTest>{
 		
 		private static final long serialVersionUID = -8645119830023527667L;
 
-		@Transient
-		public Object[] elementData;
-		
-		@Transient
-		public boolean empty;
-		
-		@Transient
-		public int size;
-		
-		@Transient
-		public int modCount;
-		
-		public CustomArrayList(){
-			super();
+		protected static String[] getTransientProperties(){
+			return new String[]{"elementData", "empty", "size", "modCount"};
 		}
 		
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@KeyCollection(bean="keys")
 	@ElementCollection(bean="elements", mappingType=MappingTypes.OBJECT)
-	public static class CustomMap 
+	public static class ConstructorTestMap 
 		extends HashMap<String, ConstructorTest>{
 	
 		private static final long serialVersionUID = 7978559428377788179L;
 		
-		@Transient
-		public boolean isEmpty(){
-			return super.isEmpty();
+		protected static String[] getTransientProperties(){
+			return new String[]{"size", "threshold", "modCount", "table", 
+					"keySet", "empty", "entrySet", "useAltHashing", "values"};
+		}
+
+	}
+
+	public static class ArrayList<V> extends java.util.ArrayList<V>{
+		
+		private static final long serialVersionUID = -8645119830023527667L;
+
+		protected static String[] getTransientProperties(){
+			return new String[]{"elementData", "empty", "size", "modCount"};
 		}
 		
-		@Override
-		public boolean equals(Object arg0){
-			return super.equals(arg0);
-		}
-		
-		@Override
-		public int hashCode(){
-			return super.hashCode();
-		}
-		
-		@Transient
-		public void setValues(Collection v){
-		}
+	}
 	
-		@Transient
-		public void setUseAltHashing(boolean v){
-		}
-		
-		@Transient
-		public void setEntrySet(Set v){
-		}
-		
-		@Transient
-		public void setEmpty(boolean v){
-		}
+	public static class HashMap<K,V> 
+		extends java.util.HashMap<K, V>{
 	
-		@Transient
-		public void setKeySet(Set v){
-		}
-	
-		@Transient
-		public void setTable(java.util.Map.Entry<Object, Object>[] e){
+		private static final long serialVersionUID = 7978559428377788179L;
+		
+		protected static String[] getTransientProperties(){
+			return new String[]{"size", "threshold", "modCount", "table", 
+					"keySet", "empty", "entrySet", "useAltHashing", "values"};
 		}
 		
-		@Transient
-		public void setModCount(int v){
-		}
-		
-		@Transient
-		public void setThreshold(int v){
-			
-		}
-		@Transient
-		public void setSize(int v){
-			
-		}
 	}
 	
 }

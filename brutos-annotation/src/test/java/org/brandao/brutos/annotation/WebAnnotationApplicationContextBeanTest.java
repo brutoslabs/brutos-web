@@ -8,7 +8,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.CustomArrayList;
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTest;
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTestArrayList;
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTestMap;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.DateTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.EnumTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.EnumValues;
@@ -418,6 +420,24 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             		request.setupAddParameter("mapElementTest.propertyP.keys[1]", 				String.valueOf(Values.otherIntValue));
             		request.setupAddParameter("mapElementTest.propertyP.itens[0].property", 	String.valueOf(Values.intValue));
             		request.setupAddParameter("mapElementTest.propertyP.itens[1].property", 	String.valueOf(Values.otherIntValue));
+
+            		request.setupAddParameter("mapElementTest.propertyQ.keys[0]", 						String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyQ.keys[1]", 						String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyQ.itens[0].key[0]", 				String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyQ.itens[0],key[1]",				String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyQ.itens[0].itens[0].property", 	String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyQ.itens[0].itens[1].property", 	String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyQ.itens[1].key[0]", 				String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyQ.itens[1],key[1]",				String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyQ.itens[1].itens[0].property", 	String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyQ.itens[1].itens[1].property", 	String.valueOf(Values.otherIntValue));
+
+            		request.setupAddParameter("mapElementTest.propertyR.keys[0]", 															String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyR.keys[1]", 															String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[0]." + String.valueOf(Values.intValue) + ".property", 		String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[0]." + String.valueOf(Values.otherIntValue) + ".property", 	String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[1]." + String.valueOf(Values.intValue) + ".property", 		String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[1]." + String.valueOf(Values.otherIntValue) + ".property", 	String.valueOf(Values.otherIntValue));
             		
             	}
             	
@@ -506,32 +526,70 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 					
 					assertEquals(
 							toMap(
-								new Entry<String, org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
-								new Entry<String, org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+								new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+								new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
 							),
 							bean.propertyK);
 
 					assertEquals(
 							toMap(
-								new Entry<String, org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
-								new Entry<String, org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+								new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+								new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
 							),
 							bean.propertyL);
 					
 					assertEquals(
 							toMap(
-								new Entry<String, CustomArrayList>(String.valueOf(Values.intValue), 		toList(CustomArrayList.class, Values.constructorTestValue)),
-								new Entry<String, CustomArrayList>(String.valueOf(Values.otherIntValue),	toList(CustomArrayList.class, Values.otherConstructorTestValue))
+								new Entry<String, ConstructorTestArrayList>(String.valueOf(Values.intValue), 		toList(ConstructorTestArrayList.class, Values.constructorTestValue)),
+								new Entry<String, ConstructorTestArrayList>(String.valueOf(Values.otherIntValue),	toList(ConstructorTestArrayList.class, Values.otherConstructorTestValue))
 							),
 							bean.propertyN);
 					
 					assertEquals(
 							toMap(
-								new Entry<String, org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
-								new Entry<String, org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+								new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+								new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
 							),
 							bean.propertyP);
 
+					assertEquals(
+							toMap(
+								new Entry<String, ConstructorTestMap>(
+										String.valueOf(Values.intValue),
+										toMap(ConstructorTestMap.class,
+												new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+												new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+											)
+								),
+								new Entry<String, ConstructorTestMap>(
+										String.valueOf(Values.otherIntValue),	
+										toMap(ConstructorTestMap.class,
+												new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+												new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+											)
+								)
+							),
+							bean.propertyQ);
+
+					assertEquals(
+							toMap(
+								new Entry<String, Map<String, ConstructorTest>>(
+										String.valueOf(Values.intValue),
+										toMap(
+												new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+												new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+											)
+								),
+								new Entry<String, Map<String, ConstructorTest>>(
+										String.valueOf(Values.otherIntValue),	
+										toMap(
+												new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+												new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+											)
+								)
+							),
+							bean.propertyR);
+					
 				}
 				
 				public void checkException(Throwable e) {
@@ -722,15 +780,15 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 					
 					assertEquals(
 							toMap(
-								new Entry<CustomArrayList, Integer>(toList(CustomArrayList.class, Values.constructorTestValue), Values.intValue),
-								new Entry<CustomArrayList, Integer>(toList(CustomArrayList.class, Values.otherConstructorTestValue), Values.otherIntValue)
+								new Entry<ConstructorTestArrayList, Integer>(toList(ConstructorTestArrayList.class, Values.constructorTestValue), Values.intValue),
+								new Entry<ConstructorTestArrayList, Integer>(toList(ConstructorTestArrayList.class, Values.otherConstructorTestValue), Values.otherIntValue)
 							),
 							bean.propertyN);
 					
 					assertEquals(
 							toMap(
-								new Entry<CustomArrayList, Integer>(toList(CustomArrayList.class, Values.constructorTestValue), Values.intValue),
-								new Entry<CustomArrayList, Integer>(toList(CustomArrayList.class, Values.otherConstructorTestValue), Values.otherIntValue)
+								new Entry<ConstructorTestArrayList, Integer>(toList(ConstructorTestArrayList.class, Values.constructorTestValue), Values.intValue),
+								new Entry<ConstructorTestArrayList, Integer>(toList(ConstructorTestArrayList.class, Values.otherConstructorTestValue), Values.otherIntValue)
 							),
 							bean.propertyP);
 

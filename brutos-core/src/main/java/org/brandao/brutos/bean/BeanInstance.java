@@ -21,10 +21,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
@@ -110,12 +113,12 @@ public class BeanInstance {
 	}
 	 */
 	
-	private void loadFields(BeanData data, Class<?> clazz){
+	private void loadFields(BeanData data, Set<String> transientMethods, Class<?> clazz){
 		
 		Class<?> superClass = clazz.getSuperclass();
 		
 		if(superClass != null && superClass != Object.class){
-			loadFields(data, superClass);
+			loadFields(data, transientMethods, superClass);
 		}
 		
 		Field[] fields = clazz.getDeclaredFields();
@@ -128,88 +131,42 @@ public class BeanInstance {
 				continue;
 			}
 			
-			data.addProperty(f.getName(), new BeanPropertyImp(f, null,
-					null, f.getName()));
-			data.getSetter().put(f.getName(), f);
-			data.getGetter().put(f.getName(), f);
-		}
-		
-	}
-	
-	/*
-	private void loadMethods(BeanData data, Class<?> clazz){
-		
-		Method[] methods = clazz.getMethods();
-
-		for (int i = 0; i < methods.length; i++) {
+			if(!transientMethods.contains(f.getName())){
+				data.addProperty(f.getName(), new BeanPropertyImp(f, null,
+						null, f.getName()));
+				data.getSetter().put(f.getName(), f);
+				data.getGetter().put(f.getName(), f);
+			}
 			
-			Method method = methods[i];
-			String methodName = method.getName();
-
-			if (methodName.equals("getClass")){
-				continue;
-			}
-
-			if (methodName.startsWith("set")
-					&& method.getParameterTypes().length == 1) {
-				String id = methodName.substring(3, methodName.length());
-
-				id = Character.toLowerCase(id.charAt(0))
-						+ id.substring(1, id.length());
-
-				if (data.getProperty(id) != null){
-					data.getProperty(id).setSet(method);
-				}
-				else{
-					data.addProperty(
-						id, 
-						new BeanPropertyImp(null, method, null, id));
-				}
-
-				data.getSetter().put(id, method);
-			}
-			else
-			if (methodName.startsWith("get") && 
-				method.getParameterTypes().length == 0 &&
-				method.getReturnType() != void.class) {
-				
-				String id = methodName.substring(3, methodName.length());
-
-				id = Character.toLowerCase(id.charAt(0))
-						+ id.substring(1, id.length());
-
-				if (data.getProperty(id) != null)
-					data.getProperty(id).setGet(method);
-				else
-					data.addProperty(id, new BeanPropertyImp(null, null,
-							method, id));
-
-				data.getGetter().put(id, method);
-			}
-			else
-			if (methodName.startsWith("is") &&
-				method.getParameterTypes().length == 0 &&
-				ClassUtil.getWrapper(method.getReturnType()) == Boolean.class){
-				
-				String id = methodName.substring(2, methodName.length());
-
-				id = Character.toLowerCase(id.charAt(0))
-						+ id.substring(1, id.length());
-
-				if (data.getProperty(id) != null)
-					data.getProperty(id).setGet(method);
-				else
-					data.addProperty(id, new BeanPropertyImp(null, null,
-							method, id));
-
-				data.getGetter().put(id, method);
-			}
 		}
 		
 	}
-	*/
 	
-	private void loadMethods(BeanData data, Class<?> clazz){
+	private Set<String> getTransientProperties(Class<?> clazz){
+		Set<String> result = new HashSet<String>();
+		
+		try{
+			Method method = clazz.getDeclaredMethod("getTransientProperties");
+			if(Modifier.isStatic(method.getModifiers()) && Modifier.isProtected(method.getModifiers())){
+				method.setAccessible(true);
+				String[] properties = (String[]) method.invoke(clazz);
+				if(properties != null){
+					Collections.addAll(result, properties);
+				}
+			}
+			
+			return result;
+		}
+		catch(InvocationTargetException e){
+			throw new BrutosException(e.getTargetException());
+		}
+		catch(Throwable e){
+			return result;
+		}
+		
+	}
+	
+	private void loadMethods(BeanData data, Set<String> transientMethods, Class<?> clazz){
 		
 		Method[] methods = clazz.getMethods();
 
@@ -224,7 +181,7 @@ public class BeanInstance {
 
 			String propertyName = this.getPropertyName(method);
 			
-			if(propertyName  == null){
+			if(propertyName == null || transientMethods.contains(propertyName)){
 				continue;
 			}
 			
@@ -323,8 +280,9 @@ public class BeanInstance {
 		BeanData data = new BeanData();
 		data.setClassType(clazz);
 		
-		this.loadFields(data, clazz);
-		this.loadMethods(data, clazz);
+		Set<String> transientMethods = this.getTransientProperties(clazz);
+		this.loadFields(data, transientMethods, clazz);
+		this.loadMethods(data, transientMethods, clazz);
 		
 		cache.put(clazz, data);
 		return data;
