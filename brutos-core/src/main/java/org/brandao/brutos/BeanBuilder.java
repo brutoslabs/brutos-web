@@ -220,16 +220,6 @@ public class BeanBuilder {
 			
 		}
 		
-		//Verifica se o elemento já foi mapeado.
-		if(e != null){
-			//Se o elemento foi mapeado e possui nome, a chave obrigatoriamente 
-			//tem que possuir nome.
-			if(e.getParameterName() != null && name == null){
-				//throw new MappingException("key must have a name");
-				name = BrutosConstants.DEFAULT_ELEMENT_NAME;
-			}
-		}
-		
 		if(name == null && (mapping != null || generic)){
 			throw new MappingException("key must have a name");
 		}

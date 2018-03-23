@@ -272,51 +272,80 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 
 		public Map<Integer, String> propertyA;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(bean="chaves")
 		public Map<Integer, String> propertyB;
 
 		public Map<EnumValues, String> propertyC;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(bean="chaves")
 		public Map<EnumValues, String> propertyD;
 
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(enumerated=EnumerationType.ORDINAL)
-		public Map<EnumValues,String> propertyE;
+		public Map<EnumValues, String> propertyE;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(bean="chaves", enumerated=EnumerationType.ORDINAL)
 		public Map<EnumValues, String> propertyF;
 		
 		public Map<Date, String> propertyG;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(bean="chaves")
 		public Map<Date, String> propertyH;
 
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(temporal="dd/MM/yyyy")
 		public Map<Date, String> propertyI;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(bean="chaves", temporal="dd/MM/yyyy")
 		public Map<Date, String> propertyJ;
 		
-		//Não aplicável
-		//@KeyCollection.bean é obrigatório
+		//Não aplicável. Se chave é um objeto , ele tem que ter nome ou tipo registrado
+		//Elemento não precisa.
 		//public Map<ConstructorTest, String> propertyK;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(bean="chaves")
 		public Map<ConstructorTest, String> propertyL;
 
-		//Não aplicável
-		//@KeyCollection.bean é obrigatório
-		//public Map<CustomArrayList, String> propertyM;
+		//CustomArrayList tem que ser um tipo
+		//public Map<String, CustomArrayList> propertyM;
 		
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(bean="chaves")
 		public Map<ConstructorTestArrayList, String> propertyN;
 		
-		//@Target(LinkedHashMap.class)
-		//public Map<ConstructorTest, String> propertyO;
+		//Sem efeito. Target somente funciona com mapeamento e não com valor.
+		//@Target(CustomMap.class)
+		//public Map<String, ConstructorTest> propertyO;
 		
-		@Target(ConstructorTestMap.class)
+		@Basic(mappingType=MappingTypes.OBJECT)
+		@Target(ConstructorKeyTestMap.class)
+		@KeyCollection(bean="chaves", target=ConstructorTest.class)
+		public Map<Object, String> propertyP;
+
+		//Não aplicável. Se chave é um objeto , ele tem que ter nome ou tipo registrado
+		//Elemento não precisa.
+		//@Basic(mappingType=MappingTypes.OBJECT)
+		//public Map<ConstructorTestMap, String> propertyQ;
+
+		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(bean="chaves")
-		public Map<ConstructorTest, String> propertyP;
+		public Map<ConstructorTestMap, String> propertyR;
+		
+		//Não aplicável. Se chave é um objeto , ele tem que ter nome ou tipo registrado
+		//Elemento não precisa.
+		//@Basic(mappingType=MappingTypes.OBJECT)
+		//public Map<Map<ConstructorTest, String>, String> propertyS;
+		
+		//Igual ao R
+		//@Basic(mappingType=MappingTypes.OBJECT)
+		//@KeyCollection(bean="chaves")
+		//public Map<Map<ConstructorTest, String>, String> propertyT;
 		
 	}
 	
@@ -399,6 +428,20 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 
 	}
 
+	@KeyCollection(bean="keys")
+	@ElementCollection(bean="elements", mappingType=MappingTypes.OBJECT)
+	public static class ConstructorKeyTestMap 
+		extends HashMap<ConstructorTest, String>{
+	
+		private static final long serialVersionUID = 7978559428377788179L;
+		
+		protected static String[] getTransientProperties(){
+			return new String[]{"size", "threshold", "modCount", "table", 
+					"keySet", "empty", "entrySet", "useAltHashing", "values"};
+		}
+
+	}
+	
 	public static class ArrayList<V> extends java.util.ArrayList<V>{
 		
 		private static final long serialVersionUID = -8645119830023527667L;
