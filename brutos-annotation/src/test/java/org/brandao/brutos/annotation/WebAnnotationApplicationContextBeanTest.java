@@ -441,15 +441,19 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             		request.setupAddParameter("mapElementTest.propertyR.itens[1].keys[1]",				String.valueOf(Values.otherIntValue));
             		request.setupAddParameter("mapElementTest.propertyR.itens[1].elements[0].property", String.valueOf(Values.intValue));
             		request.setupAddParameter("mapElementTest.propertyR.itens[1].elements[1].property", String.valueOf(Values.otherIntValue));
+
+            		request.setupAddParameter("mapElementTest.propertyS." + String.valueOf(Values.intValue) + "." + String.valueOf(Values.intValue) + ".property", 				String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyS." + String.valueOf(Values.intValue) + "." + String.valueOf(Values.otherIntValue) + ".property", 		String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyS." + String.valueOf(Values.otherIntValue) + "." + String.valueOf(Values.intValue) + ".property", 		String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyS." + String.valueOf(Values.otherIntValue) + "." + String.valueOf(Values.otherIntValue) + ".property", 	String.valueOf(Values.otherIntValue));
+
+            		request.setupAddParameter("mapElementTest.propertyT.key[0]", 						String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyT.key[1]", 						String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyT.itens[0]." + String.valueOf(Values.intValue) + ".property", 				String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyT.itens[0]." + String.valueOf(Values.otherIntValue) + ".property", 		String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyT.itens[1]." + String.valueOf(Values.intValue) + ".property", 		String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyT.itens[1]." + String.valueOf(Values.otherIntValue) + ".property", 	String.valueOf(Values.otherIntValue));
             		
-            		/*
-            		request.setupAddParameter("mapElementTest.propertyR.keys[0]", 															String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapElementTest.propertyR.keys[1]", 															String.valueOf(Values.otherIntValue));
-            		request.setupAddParameter("mapElementTest.propertyR.itens[0]." + String.valueOf(Values.intValue) + ".property", 		String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapElementTest.propertyR.itens[0]." + String.valueOf(Values.otherIntValue) + ".property", 	String.valueOf(Values.otherIntValue));
-            		request.setupAddParameter("mapElementTest.propertyR.itens[1]." + String.valueOf(Values.intValue) + ".property", 		String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapElementTest.propertyR.itens[1]." + String.valueOf(Values.otherIntValue) + ".property", 	String.valueOf(Values.otherIntValue));
-            		*/
             	}
             	
 				
@@ -600,6 +604,25 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 								)
 							),
 							bean.propertyR);
+
+					assertEquals(
+							toMap(
+								new Entry<String, Map<String, ConstructorTest>>(
+										String.valueOf(Values.intValue),
+										toMap(
+												new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+												new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+											)
+								),
+								new Entry<String, Map<String, ConstructorTest>>(
+										String.valueOf(Values.otherIntValue),	
+										toMap(
+												new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+												new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+											)
+								)
+							),
+							bean.propertyS);
 					
 				}
 				
