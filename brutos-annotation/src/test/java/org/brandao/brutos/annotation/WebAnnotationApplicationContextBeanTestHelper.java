@@ -335,7 +335,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 
 		@Basic(mappingType=MappingTypes.OBJECT)
 		@KeyCollection(bean="chaves")
-		public Map<ConstructorTestMap, String> propertyR;
+		public Map<ConstructorKeyTestMap, String> propertyR;
 		
 		//Não aplicável. Se chave é um objeto , ele tem que ter nome ou tipo registrado
 		//Elemento não precisa.
@@ -428,8 +428,8 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 
 	}
 
-	@KeyCollection(bean="keys")
-	@ElementCollection(bean="elements")
+	@KeyCollection(bean="chaves")
+	@ElementCollection(bean="itens")
 	public static class ConstructorKeyTestMap 
 		extends HashMap<ConstructorTest, String>{
 	

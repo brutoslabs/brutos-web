@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorKeyTestMap;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTestArrayList;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.ConstructorTestMap;
@@ -708,8 +709,19 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             		
             		request.setupAddParameter("mapKeyTest.propertyP.chaves[0].property",	String.valueOf(Values.intValue));
             		request.setupAddParameter("mapKeyTest.propertyP.chaves[1].property",	String.valueOf(Values.otherIntValue));
-            		request.setupAddParameter("mapKeyTest.propertyP.elements[0]", 			String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapKeyTest.propertyP.elements[1]", 			String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapKeyTest.propertyP.itens[0]", 				String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapKeyTest.propertyP.itens[1]", 				String.valueOf(Values.otherIntValue));
+            		
+            		request.setupAddParameter("mapKeyTest.propertyR.chaves[0].chaves[0].property", 	String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapKeyTest.propertyR.chaves[0].chaves[1].property",	String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapKeyTest.propertyR.chaves[0].itens[0]", 			String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapKeyTest.propertyR.chaves[0].itens[1]",			String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapKeyTest.propertyR.chaves[1].chaves[0].property", 	String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapKeyTest.propertyR.chaves[1].chaves[1].property",	String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapKeyTest.propertyR.chaves[1].itens[0]",			String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapKeyTest.propertyR.chaves[1].itens[1]",			String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapKeyTest.propertyR.element[0]", 					String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapKeyTest.propertyR.element[1]", 					String.valueOf(Values.otherIntValue));
             		
             	}
             	
@@ -825,6 +837,26 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 								new Entry<ConstructorTest, String>(Values.otherConstructorTestValue, String.valueOf(Values.otherIntValue))
 							),
 							bean.propertyP);
+					
+					assertEquals(
+							toMap(
+								new Entry<ConstructorKeyTestMap, String>(
+										toMap(ConstructorKeyTestMap.class,
+												new Entry<ConstructorTest, String>(Values.constructorTestValue, 		String.valueOf(Values.intValue)),
+												new Entry<ConstructorTest, String>(Values.otherConstructorTestValue, 	String.valueOf(Values.otherIntValue))
+										),
+										String.valueOf(Values.intValue)
+								),
+								new Entry<ConstructorKeyTestMap, String>(
+										toMap(ConstructorKeyTestMap.class,
+												new Entry<ConstructorTest, String>(Values.constructorTestValue, 		String.valueOf(Values.intValue)),
+												new Entry<ConstructorTest, String>(Values.otherConstructorTestValue, 	String.valueOf(Values.otherIntValue))
+										),
+										String.valueOf(Values.otherIntValue)
+								)
+							),
+							bean.propertyR);
+					
 
 				}
 				
