@@ -708,8 +708,8 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             		
             		request.setupAddParameter("mapKeyTest.propertyP.chaves[0].property",	String.valueOf(Values.intValue));
             		request.setupAddParameter("mapKeyTest.propertyP.chaves[1].property",	String.valueOf(Values.otherIntValue));
-            		request.setupAddParameter("mapKeyTest.propertyP.element[0]", 			String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapKeyTest.propertyP.element[1]", 			String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapKeyTest.propertyP.elements[0]", 			String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapKeyTest.propertyP.elements[1]", 			String.valueOf(Values.otherIntValue));
             		
             	}
             	

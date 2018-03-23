@@ -429,7 +429,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 	}
 
 	@KeyCollection(bean="keys")
-	@ElementCollection(bean="elements", mappingType=MappingTypes.OBJECT)
+	@ElementCollection(bean="elements")
 	public static class ConstructorKeyTestMap 
 		extends HashMap<ConstructorTest, String>{
 	

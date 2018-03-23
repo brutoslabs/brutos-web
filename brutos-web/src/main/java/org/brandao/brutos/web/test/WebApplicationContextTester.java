@@ -24,8 +24,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.http.HttpSessionEvent;
 
-import junit.framework.AssertionFailedError;
-
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.ContextLoaderListener;
@@ -251,9 +249,6 @@ public class WebApplicationContextTester {
                 listener.requestDestroyed(sre);
                 listener.sessionDestroyed(hse);
             }
-        }
-        catch(AssertionFailedError e){
-            throw e;
         }
         catch(Throwable e){
             tester.checkException(e);
