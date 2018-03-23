@@ -421,24 +421,35 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             		request.setupAddParameter("mapElementTest.propertyP.itens[0].property", 	String.valueOf(Values.intValue));
             		request.setupAddParameter("mapElementTest.propertyP.itens[1].property", 	String.valueOf(Values.otherIntValue));
 
-            		request.setupAddParameter("mapElementTest.propertyQ.keys[0]", 						String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapElementTest.propertyQ.keys[1]", 						String.valueOf(Values.otherIntValue));
-            		request.setupAddParameter("mapElementTest.propertyQ.itens[0].key[0]", 				String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapElementTest.propertyQ.itens[0],key[1]",				String.valueOf(Values.otherIntValue));
-            		request.setupAddParameter("mapElementTest.propertyQ.itens[0].itens[0].property", 	String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapElementTest.propertyQ.itens[0].itens[1].property", 	String.valueOf(Values.otherIntValue));
-            		request.setupAddParameter("mapElementTest.propertyQ.itens[1].key[0]", 				String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapElementTest.propertyQ.itens[1],key[1]",				String.valueOf(Values.otherIntValue));
-            		request.setupAddParameter("mapElementTest.propertyQ.itens[1].itens[0].property", 	String.valueOf(Values.intValue));
-            		request.setupAddParameter("mapElementTest.propertyQ.itens[1].itens[1].property", 	String.valueOf(Values.otherIntValue));
+            		
+            		request.setupAddParameter("mapElementTest.propertyQ." + String.valueOf(Values.intValue) + ".keys[0]", 					String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyQ." + String.valueOf(Values.intValue) + ".keys[1]",					String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyQ." + String.valueOf(Values.intValue) + ".elements[0].property", 		String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyQ." + String.valueOf(Values.intValue) + ".elements[1].property", 		String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyQ." + String.valueOf(Values.otherIntValue) + ".keys[0]", 				String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyQ." + String.valueOf(Values.otherIntValue) + ".keys[1]",				String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyQ." + String.valueOf(Values.otherIntValue) + ".elements[0].property", String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyQ." + String.valueOf(Values.otherIntValue) + ".elements[1].property", String.valueOf(Values.otherIntValue));
 
+            		request.setupAddParameter("mapElementTest.propertyR.key[0]", 						String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyR.key[1]", 						String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[0].keys[0]", 				String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[0].keys[1]",				String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[0].elements[0].property", String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[0].elements[1].property", String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[1].keys[0]", 				String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[1].keys[1]",				String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[1].elements[0].property", String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyR.itens[1].elements[1].property", String.valueOf(Values.otherIntValue));
+            		
+            		/*
             		request.setupAddParameter("mapElementTest.propertyR.keys[0]", 															String.valueOf(Values.intValue));
             		request.setupAddParameter("mapElementTest.propertyR.keys[1]", 															String.valueOf(Values.otherIntValue));
             		request.setupAddParameter("mapElementTest.propertyR.itens[0]." + String.valueOf(Values.intValue) + ".property", 		String.valueOf(Values.intValue));
             		request.setupAddParameter("mapElementTest.propertyR.itens[0]." + String.valueOf(Values.otherIntValue) + ".property", 	String.valueOf(Values.otherIntValue));
             		request.setupAddParameter("mapElementTest.propertyR.itens[1]." + String.valueOf(Values.intValue) + ".property", 		String.valueOf(Values.intValue));
             		request.setupAddParameter("mapElementTest.propertyR.itens[1]." + String.valueOf(Values.otherIntValue) + ".property", 	String.valueOf(Values.otherIntValue));
-            		
+            		*/
             	}
             	
 				

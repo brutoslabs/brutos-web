@@ -256,7 +256,15 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		public Map<String, ConstructorTestMap> propertyQ;
 
 		@Basic(mappingType=MappingTypes.OBJECT)
-		public Map<String, Map<String, ConstructorTest>> propertyR;
+		@ElementCollection(bean="itens")
+		public Map<String, ConstructorTestMap> propertyR;
+		
+		@Basic(mappingType=MappingTypes.OBJECT)
+		public Map<String, Map<String, ConstructorTest>> propertyS;
+		
+		@Basic(mappingType=MappingTypes.OBJECT)
+		@ElementCollection(bean="itens")
+		public Map<String, Map<String, ConstructorTest>> propertyT;
 		
 	}
 
