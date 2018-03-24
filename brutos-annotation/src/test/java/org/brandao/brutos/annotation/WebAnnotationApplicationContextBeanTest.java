@@ -21,6 +21,7 @@ import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelp
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.MapKeyTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextBeanTestHelper.Values;
 import org.brandao.brutos.annotation.web.test.MockAnnotationWebApplicationContext;
+import org.brandao.brutos.proxy.EntityProxy;
 import org.brandao.brutos.web.ConfigurableWebApplicationContext;
 import org.brandao.brutos.web.ContextLoader;
 import org.brandao.brutos.web.test.BasicWebApplicationTester;
@@ -55,6 +56,7 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 					parameters.put("fieldTest.propertyC", "2000-01-01");
 					parameters.put("fieldTest.propertyD", "2");
 					parameters.put("fieldTest.property",  "3");
+					parameters.put("fieldTest.propertyG.property",  "100");
 				}
 				
 				public void prepareSession(Map<String, Object> parameters) {
@@ -73,6 +75,8 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 					assertEquals(Values.dateValue, bean.propertyC);
 					assertEquals(new Integer(2), bean.propertyD);
 					assertEquals(new Integer(3), bean.propertyE);
+					assertTrue(bean.propertyG instanceof EntityProxy);
+					assertEquals(100, bean.propertyG.getPropertyA());
 				}
 				
 				public void checkException(Throwable e) {
@@ -125,6 +129,7 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 					assertEquals(EnumValues.VALUE1, bean.propertyB);
 					assertEquals(EnumValues.VALUE2, bean.propertyC);
 					assertEquals(EnumValues.VALUE2, bean.propertyD);
+					assertEquals(EnumValues.VALUE1, bean.propertyE);
 					assertEquals(EnumValues.VALUE1, bean.propertyE);
 				}
 				

@@ -63,6 +63,7 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 	public static class ControllerTest{
 	
 		public void fieldTestAction(@Basic(bean="fieldTest")FieldTest fieldTest){
+			fieldTest.propertyG.getPropertyA();
 		}
 		
 		public void enumTestAction(@Basic(bean="enumTest")EnumTest enumTest){
@@ -97,6 +98,9 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		
 		@Basic(bean="proprty", scope=ScopeType.SESSION)
 		public Integer propertyF;
+		
+		@Basic(fetchType=FetchTypes.LAZY)
+		public ConstructorTest propertyG;
 		
 	}
 
@@ -362,6 +366,10 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@Transient
 		public int propertyA;
 		
+		public ConstructorTest(){
+		}
+		
+		@Constructor
 	    public ConstructorTest(@Basic(bean="property")int propertyA){
 	    	this.propertyA = propertyA;
 	    }

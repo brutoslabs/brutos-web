@@ -5,7 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +27,15 @@ public abstract class AbstractBeanDecoder
 	public Object decode(UseBeanData entity, FetchType fetchType, Object data)
 			throws BeanDecoderException {
 		try{
-			return this.getValue(entity, fetchType, data, new StringBuilder(), new NodeBeanDecoder());
+			if(data instanceof BeanLoadInfo){
+				BeanLoadInfo info = (BeanLoadInfo)data;
+					return this.getValue(
+							entity, fetchType, info.getData().getData(), info.getPath(), info.getData());
+			}
+			else{
+				return this.getValue(
+						entity, fetchType, data, new StringBuilder(), new NodeBeanDecoder());
+			}
 		}
 		catch(Throwable e){
 			throw new BeanDecoderException(e);
@@ -96,12 +103,19 @@ public abstract class AbstractBeanDecoder
 	public Object decode(DependencyBean dependencyBean, FetchType fetchType,
 			Object data) throws BeanDecoderException {
 		try{
-			Map<String,Object> dta = new HashMap<String, Object>();
-			
-			return this.getValue(
-				dependencyBean, fetchType, 
-				(StringBuilder)dta.get("path"), 
-				(NodeBeanDecoder)dta.get("parent"));
+			if(data instanceof BeanLoadInfo){
+				BeanLoadInfo info = (BeanLoadInfo)data;
+					return this.getValue(
+						dependencyBean, fetchType, 
+						info.getPath(), 
+						info.getData());
+			}
+			else{
+				return this.getValue(
+						dependencyBean, fetchType, 
+						new StringBuilder(), 
+						new NodeBeanDecoder());
+			}
 		}
 		catch(Throwable e){
 			throw new BeanDecoderException(e);
@@ -116,13 +130,10 @@ public abstract class AbstractBeanDecoder
 		}
 		
 		if(fetchType.equals(FetchType.LAZY)){
-			Map<String,Object> lazyData = new HashMap<String, Object>();
-			lazyData.put("path",   new StringBuilder(path));
-			lazyData.put("parent", node);
-			
+			BeanLoadInfo info = new BeanLoadInfo(new StringBuilder(path), node);
 			ProxyFactory proxyFactory = 
 					this.codeGenerator.getProxyFactory(entity.getClassType());
-			return proxyFactory.getNewProxy(entity, lazyData, this);
+			return proxyFactory.getNewProxy(entity, info, this);
 		}
 		
 		if(entity.isNullable()){

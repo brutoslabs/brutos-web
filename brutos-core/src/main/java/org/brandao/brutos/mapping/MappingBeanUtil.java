@@ -181,7 +181,8 @@ public final class MappingBeanUtil {
 		dependencyBean.setTemporalType(temporalProperty);
 		dependencyBean.setValue(value);
 		dependencyBean.setScopeType(scope);
-
+		dependencyBean.setFetchType(fetchType);
+		
 		if (typeDef == null) {
 			if(nullable){
 				if (classType == null){
