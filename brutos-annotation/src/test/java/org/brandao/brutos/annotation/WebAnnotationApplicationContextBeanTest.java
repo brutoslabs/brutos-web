@@ -210,6 +210,7 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
                 }
 				
             	public void prepareRequest(MockHttpServletRequest request) {
+            		
             		request.setupAddParameter("listTest.propertyA", 
             				new String[]{
 	            				String.valueOf(Values.intValue), 
@@ -279,6 +280,18 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             		request.setupAddParameter("listTest.propertyP.itens[1]", String.valueOf(Values.otherIntValue));
             		request.setupAddParameter("listTest.propertyP.itens[2]", String.valueOf(Values.intValue));
             		
+            		request.setupAddParameter("listTest.propertyQ", 
+            				new String[]{
+	            				String.valueOf(Values.intValue), 
+			            		String.valueOf(Values.otherIntValue), 
+			            		String.valueOf(Values.intValue)
+		            		}
+            		);
+
+            		request.setupAddParameter("listTest.propertyR.itens[0].myElement[0].property", String.valueOf(Values.intValue));
+            		request.setupAddParameter("listTest.propertyR.itens[1].myElement[0].property", String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("listTest.propertyR.itens[2].myElement[0].property", String.valueOf(Values.intValue));
+            		
             	}
             	
 				
@@ -339,6 +352,21 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 					
 					assertEquals(Arrays.asList(Values.intValue, Values.otherIntValue, Values.intValue),
 							bean.propertyP);
+					
+					assertTrue(bean.propertyQ instanceof EntityProxy);
+					
+					assertEquals(
+							Arrays.asList(Values.intValue, Values.otherIntValue, Values.intValue),
+							bean.propertyQ);
+					
+					assertTrue(bean.propertyR instanceof EntityProxy);
+					
+					assertEquals(
+							Arrays.asList(
+								Arrays.asList(Values.constructorTestValue), 
+								Arrays.asList(Values.otherConstructorTestValue), 
+								Arrays.asList(Values.constructorTestValue)),
+							bean.propertyR);
 					
 				}
 				

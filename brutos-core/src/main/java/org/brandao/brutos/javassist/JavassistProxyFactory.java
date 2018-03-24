@@ -86,7 +86,7 @@ public class JavassistProxyFactory extends AbstractProxyFactory {
 	
 	private Class<?> createProxyClass(Class<?> clazz) throws Exception {
 		factory = new ProxyFactory();
-		factory.setSuperclass(clazz);
+		factory.setSuperclass(ClassUtil.getInstantiableClass(clazz));
 		factory.setInterfaces(new Class[]{EntityProxy.class});
 		return factory.createClass();
 	}

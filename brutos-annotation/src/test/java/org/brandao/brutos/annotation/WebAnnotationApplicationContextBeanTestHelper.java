@@ -73,6 +73,8 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		}
 		
 		public void listTestAction(@Basic(bean="listTest")ListTest listTest){
+			listTest.propertyQ.size();
+			listTest.propertyR.size();
 		}
 
 		public void mapElementTestAction(@Basic(bean="mapElementTest")MapElementTest mapElementTest){
@@ -196,6 +198,13 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@ElementCollection(bean="itens", target=Integer.class)
 		public List propertyP;
 
+		@Basic(fetchType=FetchTypes.LAZY)
+		public List<Integer> propertyQ;
+
+		@Basic(mappingType=MappingTypes.OBJECT, fetchType=FetchTypes.LAZY)
+		@ElementCollection(bean="itens")
+		public List<ConstructorTestArrayList> propertyR;
+		
 	}
 
 	public static class MapElementTest{
