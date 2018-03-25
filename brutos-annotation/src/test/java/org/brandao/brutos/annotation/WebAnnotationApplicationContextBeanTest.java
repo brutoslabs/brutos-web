@@ -672,12 +672,16 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 							),
 							bean.propertyS);
 					
+					assertTrue(bean.propertyU instanceof EntityProxy);
+					
 					assertEquals(
 							toMap(
 								new Entry<String, Integer>(String.valueOf(Values.intValue),Values.intValue),
 								new Entry<String, Integer>(String.valueOf(Values.otherIntValue),Values.otherIntValue)
 							),
 							bean.propertyU);
+					
+					assertTrue(bean.propertyV instanceof EntityProxy);
 					
 					assertEquals(
 							toMap(
