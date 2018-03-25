@@ -78,6 +78,8 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		}
 
 		public void mapElementTestAction(@Basic(bean="mapElementTest")MapElementTest mapElementTest){
+			mapElementTest.propertyU.size();
+			mapElementTest.propertyV.size();
 		}
 		
 		public void mapKeyTestAction(@Basic(bean="mapKeyTest")MapKeyTest mapKeyTest){
@@ -278,6 +280,13 @@ public class WebAnnotationApplicationContextBeanTestHelper {
 		@Basic(mappingType=MappingTypes.OBJECT)
 		@ElementCollection(bean="itens")
 		public Map<String, Map<String, ConstructorTest>> propertyT;
+		
+		@Basic(fetchType=FetchTypes.LAZY)
+		public Map<String, Integer> propertyU;
+
+		@Basic(mappingType=MappingTypes.OBJECT, fetchType=FetchTypes.LAZY)
+		@ElementCollection(bean="itens")
+		public Map<String, ConstructorTestMap> propertyV;
 		
 	}
 

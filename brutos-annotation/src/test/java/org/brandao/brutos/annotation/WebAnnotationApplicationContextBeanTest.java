@@ -487,6 +487,20 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
             		request.setupAddParameter("mapElementTest.propertyT.itens[0]." + String.valueOf(Values.otherIntValue) + ".property", 	String.valueOf(Values.otherIntValue));
             		request.setupAddParameter("mapElementTest.propertyT.itens[1]." + String.valueOf(Values.intValue) + ".property", 		String.valueOf(Values.intValue));
             		request.setupAddParameter("mapElementTest.propertyT.itens[1]." + String.valueOf(Values.otherIntValue) + ".property", 	String.valueOf(Values.otherIntValue));
+            	
+            		request.setupAddParameter("mapElementTest.propertyU." + Values.intValue,		String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyU." + Values.otherIntValue,	String.valueOf(Values.otherIntValue));
+
+            		request.setupAddParameter("mapElementTest.propertyV.key[0]", 						String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyV.key[1]", 						String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyV.itens[0].keys[0]", 				String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyV.itens[0].keys[1]",				String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyV.itens[0].elements[0].property", String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyV.itens[0].elements[1].property", String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyV.itens[1].keys[0]", 				String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyV.itens[1].keys[1]",				String.valueOf(Values.otherIntValue));
+            		request.setupAddParameter("mapElementTest.propertyV.itens[1].elements[0].property", String.valueOf(Values.intValue));
+            		request.setupAddParameter("mapElementTest.propertyV.itens[1].elements[1].property", String.valueOf(Values.otherIntValue));
             		
             	}
             	
@@ -657,6 +671,32 @@ public class WebAnnotationApplicationContextBeanTest extends BrutosTestCase{
 								)
 							),
 							bean.propertyS);
+					
+					assertEquals(
+							toMap(
+								new Entry<String, Integer>(String.valueOf(Values.intValue),Values.intValue),
+								new Entry<String, Integer>(String.valueOf(Values.otherIntValue),Values.otherIntValue)
+							),
+							bean.propertyU);
+					
+					assertEquals(
+							toMap(
+								new Entry<String, Map<String, ConstructorTest>>(
+										String.valueOf(Values.intValue),
+										toMap(
+												new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+												new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+											)
+								),
+								new Entry<String, Map<String, ConstructorTest>>(
+										String.valueOf(Values.otherIntValue),	
+										toMap(
+												new Entry<String, ConstructorTest>(String.valueOf(Values.intValue), 		Values.constructorTestValue),
+												new Entry<String, ConstructorTest>(String.valueOf(Values.otherIntValue),	Values.otherConstructorTestValue)
+											)
+								)
+							),
+							bean.propertyV);
 					
 				}
 				
