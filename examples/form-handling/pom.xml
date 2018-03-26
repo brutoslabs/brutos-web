@@ -7,6 +7,15 @@
 	<name>form-handling</name>
 	<url>http://maven.apache.org</url>
 	<packaging>war</packaging>
+
+	<repositories>
+		<repository>
+			<id>brutos-mvc</id>
+			<name>Brutos framework</name>
+			<url>http://www.brutosframework.com.br/maven/2</url>
+		</repository>
+	</repositories>
+	
 	<dependencies>
 		<!-- Brutos -->
 		<dependency>
@@ -50,7 +59,7 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -66,5 +75,5 @@
 			</plugin>
 		</plugins>
 	</build>
-		
+
 </project>
