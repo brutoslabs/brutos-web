@@ -224,6 +224,10 @@ public class JSR303Validator implements Validator {
 				while(iterator.hasNext()){
 					node = iterator.next();
 					
+					if(node.getName() == null){
+						continue;
+					}
+					
 					if(path.length() != 0){
 						path.append(".");
 					}
