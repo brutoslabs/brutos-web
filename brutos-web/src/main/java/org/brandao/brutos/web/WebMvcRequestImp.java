@@ -388,7 +388,7 @@ public class WebMvcRequestImp
 
 	@Override
 	public void setAttribute(String name, Object o) {
-		this._getRequest().setAttribute(name, String.valueOf(o));
+		this._getRequest().setAttribute(name, o);
 	}
 
 	public void setEncoding(String value) throws UnsupportedEncodingException {
