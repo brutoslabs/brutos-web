@@ -237,6 +237,20 @@ public class BeanBuilder {
 		return buildKey(null, type);
 	}
 
+	public BeanBuilder setMaxItens(int value){
+		
+		if(value < 2){
+			throw new MappingException(value + " < 2");
+		}
+		
+		if(this.mappingBean.isCollection() || this.mappingBean.isMap()){
+			((CollectionBean)this.mappingBean).setMaxItens(value);
+			return this;
+		}
+		
+		throw new MappingException("bean type is not a collection");
+	}
+	
 	public BeanBuilder buildKey(String name, Class<?> type) {
 
 		if (!this.mappingBean.isMap())

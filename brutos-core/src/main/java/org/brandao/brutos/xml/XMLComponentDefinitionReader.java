@@ -382,6 +382,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		// String name = parseUtil.getAttribute(beanNode,"name" );
 		String separator = parseUtil.getAttribute(beanNode, "separator");
 		String indexFormat = parseUtil.getAttribute(beanNode, "index-format");
+		int maxItens     = parseUtil.getIntAttribute(beanNode, "max-itens");
 		String factory = parseUtil.getAttribute(beanNode, "factory");
 		String methodFactory = parseUtil.getAttribute(beanNode,
 				"method-factory");
@@ -411,6 +412,10 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		beanBuilder.setSeparator(separator);
 		beanBuilder.setIndexFormat(indexFormat);
 
+		if(maxItens >= 0){
+			beanBuilder.setMaxItens(maxItens);
+		}
+		
 		buildBean(beanNode, beanBuilder);
 
 	}
@@ -419,6 +424,7 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 			ParametersBuilder parametersBuilder, Class<?> paramType) {
 
 		String separator = parseUtil.getAttribute(beanNode, "separator");
+		int maxItens     = parseUtil.getIntAttribute(beanNode, "max-itens");
 		String indexFormat = parseUtil.getAttribute(beanNode, "index-format");
 		String factory = parseUtil.getAttribute(beanNode, "factory");
 		String methodFactory = parseUtil.getAttribute(beanNode,
@@ -439,7 +445,11 @@ public class XMLComponentDefinitionReader extends ContextDefinitionReader {
 		beanBuilder.setMethodfactory(methodFactory);
 		beanBuilder.setSeparator(separator);
 		beanBuilder.setIndexFormat(indexFormat);
-
+		
+		if(maxItens >= 0){
+			beanBuilder.setMaxItens(maxItens);
+		}
+		
 		buildBean(beanNode, beanBuilder);
 
 	}

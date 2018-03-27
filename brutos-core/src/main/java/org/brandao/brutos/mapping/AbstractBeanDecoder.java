@@ -244,9 +244,8 @@ public abstract class AbstractBeanDecoder
 		
 		NodeBeanDecoder node = this.getNextNode(e, path, parent);
 		
-		int max = entity.getMaxItens() + 1;
-		
-		int lenEntity = path.length();
+		int max       		= entity.getMaxItens();
+		int lenEntity 		= path.length();
 		
 		for(int i=0;i<max;i++){
 			
@@ -257,20 +256,13 @@ public abstract class AbstractBeanDecoder
 			if(element != null){
 				destValue.add(element);
 			}
-			else{
-				break;
-			}
 			
 			path.setLength(lenEntity);
 		}
 		
-		if(destValue.size() > max){
-			throw new DependencyException(destValue + " > " + max);
-		}
-		
 		path.setLength(len);
 		
-		return destValue.isEmpty()? null : destValue;
+		return destValue.size() == 0? null : destValue;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -280,9 +272,8 @@ public abstract class AbstractBeanDecoder
 		Collection<Object> destValue = 
 				(Collection<Object>)this.getValueBean(entity, path, parent);
 	
-		int len = path.length();
-
-		int max = entity.getMaxItens() + 1;
+		int len 			= path.length();
+		int max 			= entity.getMaxItens();
 		
 		for(int i=0;i<max;i++){
 			
@@ -290,13 +281,11 @@ public abstract class AbstractBeanDecoder
 			
 			Object element = this.getValue(e, FetchType.EAGER, path, parent);
 			
-			if(element == null){
-				break;
+			if(element != null){
+				destValue.add(element);
 			}
 			
-			destValue.add(element);
 			path.setLength(len);
-			
 		}
 		
 		if(destValue.size() > max){
@@ -305,7 +294,7 @@ public abstract class AbstractBeanDecoder
 		
 		path.setLength(len);
 		
-		return destValue.isEmpty()? null : destValue;
+		return destValue.size() == 0? null : destValue;
 	}	
 
 	/* map */
@@ -328,10 +317,9 @@ public abstract class AbstractBeanDecoder
 		Map<Object,Object> destValue = 
 				(Map<Object,Object>)this.getValueBean(entity, path, parent);
 
-		int max = entity.getMaxItens() + 1;
-		int len = path.length();
-		
-		List<Object> keys = new ArrayList<Object>();
+		int max 				= entity.getMaxItens();
+		int len 				= path.length();
+		List<Object> keysBuffer = new ArrayList<Object>();
 		
 		NodeBeanDecoder keyNode = this.getNextNode(k, path, parent);
 		
@@ -345,11 +333,7 @@ public abstract class AbstractBeanDecoder
 			
 			path.setLength(keyLen);
 			
-			if(key == null){
-				break;
-			}
-			
-			keys.add(key);
+			keysBuffer.add(key);
 		}
 
 		path.setLength(len);
@@ -360,9 +344,9 @@ public abstract class AbstractBeanDecoder
 		
 		int eLen = path.length();
 		
-		int i=0;
-		
-		for(Object key: keys){
+		int i = 0;
+
+		for(Object key: keysBuffer){
 			
 			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i++)));
 			
@@ -370,12 +354,12 @@ public abstract class AbstractBeanDecoder
 			
 			path.setLength(eLen);
 			
-			destValue.put(key, element);
+			if(key != null && element != null){
+				destValue.put(key, element);
+			}
 		}
 		
-		if(destValue.size() > max){
-			throw new DependencyException(destValue + " > " + max);
-		}
+		path.setLength(len);
 		
 		return destValue.isEmpty()? null : destValue;
 	}
