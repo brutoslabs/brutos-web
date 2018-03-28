@@ -54,6 +54,8 @@ public interface BrutosConstants {
 	final String REDIRECT = ApplicationContext.class.getName()
 			+ ".REDIRECT";
 
+	final String EMPTY_ARGNAME = ".";
+	
 	final String EXCEPTION_DATA = ApplicationContext.class.getName()
 			+ ".EXCEPTION_DATA";
 

@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ScopeType;
@@ -117,11 +118,8 @@ public class ConstructorArgEntry {
 
 		}
 
-		return this.getDefaultName();
-	}
-
-	public String getDefaultName() {
-		return "arg" + index;
+		//return this.getDefaultName();
+		return BrutosConstants.EMPTY_ARGNAME;
 	}
 
 	public void setName(String name) {

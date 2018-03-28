@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.DispatcherType;
@@ -322,6 +323,10 @@ public class Action {
 
 						String parameterName = ParameterNameResolver.getName(m, k);
 						arg.setRealName(parameterName);
+						
+						if(BrutosConstants.EMPTY_ARGNAME.equals(arg.getName())){
+							arg.setName(parameterName);	
+						}
 						
 						if (arg.getType() == null) {
 							if (arg.getMetaBean() != null)

@@ -22,6 +22,7 @@ import java.util.List;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.ClassUtil;
 import org.brandao.brutos.ConfigurableApplicationContext;
@@ -141,6 +142,10 @@ public class ConstructorBean {
 					
 					String parameterName = ParameterNameResolver.getName(con, k);
 					arg.setRealName(parameterName);
+					
+					if(BrutosConstants.EMPTY_ARGNAME.equals(arg.getParameterName())){
+						arg.setParameterName(parameterName);	
+					}
 					
 					if (getConstructorArg(k).getType() == null) {
 						ConstructorArgBean argBean = getConstructorArg(k);

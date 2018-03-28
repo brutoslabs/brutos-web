@@ -20,6 +20,7 @@ package org.brandao.brutos.annotation.configuration;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
+import org.brandao.brutos.BrutosConstants;
 import org.brandao.brutos.EnumerationType;
 import org.brandao.brutos.FetchType;
 import org.brandao.brutos.ScopeType;
@@ -125,7 +126,8 @@ public class ActionParamEntry {
 
 		}
 
-		return "arg" + index;
+		//return "arg" + index;
+		return BrutosConstants.EMPTY_ARGNAME;
 	}
 
 	public org.brandao.brutos.type.Type getTypeInstance(){
