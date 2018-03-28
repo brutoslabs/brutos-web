@@ -1,10 +1,27 @@
 package org.brandao.brutos.web.bean;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.brandao.brutos.FetchType;
 import org.brandao.brutos.mapping.AbstractBeanDecoder;
+import org.brandao.brutos.mapping.CollectionBean;
 import org.brandao.brutos.mapping.DependencyBean;
+import org.brandao.brutos.mapping.DependencyException;
+import org.brandao.brutos.mapping.Element;
+import org.brandao.brutos.mapping.Key;
+import org.brandao.brutos.mapping.MapBean;
+import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.MetaBean;
 import org.brandao.brutos.mapping.NodeBeanDecoder;
 import org.brandao.brutos.mapping.UseBeanData;
+import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.ArrayType;
 import org.brandao.brutos.type.CollectionType;
 import org.brandao.brutos.type.Type;
@@ -73,6 +90,232 @@ public class WWWFormUrlEncodedBeanDecoder
 		}
 		
 		return type.convert(value);		
+	}
+	
+	/* collection */
+	
+	@SuppressWarnings("unchecked")
+	protected Object getValueCollectionObject(CollectionBean entity, Element e,
+			StringBuilder path, NodeBeanDecoder parent) {
+		
+		Collection<Object> destValue = (Collection<Object>)this.getValueBean(entity, path, parent);
+	
+		int len 				= path.length();
+		NodeBeanDecoder node	= this.getNextNode(e, path, parent);
+		int[] idx				= this.getIndex(path.toString(), e.getScope());
+		int lenEntity 			= path.length();
+		
+		for(int i: idx){
+			
+			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i)));
+			
+			Object element = this.getValue(e, FetchType.EAGER, path, node);
+			
+			if(element != null){
+				destValue.add(element);
+			}
+			
+			path.setLength(lenEntity);
+		}
+		
+		path.setLength(len);
+		
+		return destValue.size() == 0? null : destValue;
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected Object getValueCollectionSimple(CollectionBean entity, Element e,
+			StringBuilder path, NodeBeanDecoder parent) {
+		
+		Collection<Object> destValue = (Collection<Object>)this.getValueBean(entity, path, parent);
+		
+		int[] idx     = this.getIndex(path.toString(), e.getScope());
+		int len       = path.length();
+		
+		for(int i: idx){
+			
+			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i)));
+			
+			Object element = this.getValue(e, FetchType.EAGER, path, parent);
+			
+			if(element != null){
+				destValue.add(element);
+			}
+			
+			path.setLength(len);
+		}
+		
+		path.setLength(len);
+		
+		return destValue.size() == 0? null : destValue;
+		
+	}	
+
+	/* map */
+	
+	@SuppressWarnings("unchecked")
+	protected Object getValueMapObject(MapBean entity, Key k, StringBuilder path, NodeBeanDecoder parent){
+		
+		Map<Object,Object> destValue = 
+				(Map<Object,Object>)this.getValueBean(entity, path, parent);
+
+		int len							= path.length();
+		Map<Integer,Object> keysBuffer 	= new HashMap<Integer, Object>();
+		NodeBeanDecoder keyNode 		= this.getNextNode(k, path, parent);
+		int[] idx     					= this.getIndex(path.toString(), k.getScope());
+		
+		int keyLen = path.length();
+		
+		for(int i: idx){
+			
+			path.append(entity.getIndexFormat().replace("$index", String.valueOf(i)));
+			
+			Object element = this.getValue(k, FetchType.EAGER, path, keyNode);
+			
+			if(element != null){
+				keysBuffer.put(i, element);
+			}
+			
+			path.setLength(keyLen);
+		}
+		
+		path.setLength(len);
+		
+		Element e 				= (Element)entity.getCollection();
+		NodeBeanDecoder eNode	= this.getNextNode(e, path, parent);
+		int eLen 				= path.length();
+		
+		for(Entry<Integer, Object> entry: keysBuffer.entrySet()){
+			
+			path.append(entity.getIndexFormat().replace("$index", String.valueOf(entry.getKey())));
+			
+			Object element = this.getValue(e, FetchType.EAGER, path, eNode);
+			
+			if(element != null && entry.getValue() != null){
+				destValue.put(entry.getValue(), element);
+			}
+			
+			path.setLength(eLen);
+		}
+		
+		path.setLength(len);
+		
+		return destValue.isEmpty()? null : destValue;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected Object getValueMapSimple(MapBean entity, Key k, StringBuilder path, NodeBeanDecoder parent){
+		
+		Map<Object,Object> destValue = 
+				(Map<Object,Object>)this.getValueBean(entity, path, parent);
+
+		int len = path.length();
+		
+		Element e = (Element)entity.getCollection();
+		
+		String prefix = path.toString();
+		
+		List<String> itens = 
+				k.getScope()
+					.getNamesStartsWith(prefix);
+
+		if(itens.size() > entity.getMaxItens()){
+			throw new DependencyException(itens.size() + " > " + entity.getMaxItens());
+		}
+		
+		Set<String> keys = this.getKeys(itens, prefix);
+		
+		for(String keyValue: keys){
+			
+			Object keyObject = k.convert(keyValue);
+			
+			path.append(entity.getSeparator()).append(keyValue);
+			
+			Object element = this.getValue(e, FetchType.EAGER, path, parent);
+			
+			destValue.put(keyObject, element);
+			
+			path.setLength(len);
+		}
+		
+		return destValue.isEmpty()? null : destValue;	
+	}
+	
+	/* util */
+	
+	private int[] getIndex(String prefix, Scope scope){
+		
+		List<String> itens = 
+				scope
+					.getNamesStartsWith(prefix);
+		
+		Set<String> keysSTR = 
+				this.getKeys(itens, prefix);
+		
+		int[] idx = new int[keysSTR.size()];
+		int k     = 0;
+		
+		for(String key: keysSTR){
+			idx[k++] = Integer.parseInt(key);
+		}
+		
+		Arrays.sort(idx);
+		return idx;
+	}
+	
+	private Set<String> getKeys(List<String> itens, String prefix){
+		
+		Set<String> result = new HashSet<String>();
+		 
+		for(String item: itens){
+			if(!this.checkPrefix(prefix, item)){
+				continue;
+			}
+			String keyPrefix = item.substring(prefix.length());
+			String key = keyPrefix;
+			
+			if(key.startsWith(".")){
+				int endKeyName = key.indexOf(".", 1);
+				
+				if(endKeyName != -1){
+					key = key.substring(1, endKeyName);
+				}
+				else{
+					key = key.substring(1);
+				}
+			}
+			else
+			if(key.startsWith("[")){
+				int endKeyName = key.indexOf("]");
+				
+				if(endKeyName != -1){
+					key = key.substring(1, endKeyName);
+				}
+				else{
+					throw new MappingException("expected ']' in " + item);
+				}
+			}
+			
+			result.add(key);
+		}
+		
+		return result;
+	}
+	
+	private boolean checkPrefix(String prefix, String key){
+		int nextDot = key.indexOf(".", prefix.length());
+		int index   = key.indexOf("[", prefix.length());
+		int limit   = nextDot;
+		
+		if(nextDot == -1 || (index != -1 && index < nextDot)){
+			limit = index;
+		}
+		
+		if(limit != -1){
+			key = key.substring(0, limit);
+		}
+		
+		return prefix.equals(key);
 	}
 	
 }
