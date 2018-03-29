@@ -39,7 +39,7 @@ public class ContactController {
 	public void updateUser(
 			@Basic(mappingType=MappingTypes.OBJECT)
 			List<Contact> contacts){
-		//registry the contacts
+		//...
 	}
 	
 }
