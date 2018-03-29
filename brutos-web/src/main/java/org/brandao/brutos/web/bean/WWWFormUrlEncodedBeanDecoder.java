@@ -120,6 +120,10 @@ public class WWWFormUrlEncodedBeanDecoder
 		
 		path.setLength(len);
 		
+		if(destValue.size() > entity.getMaxItens()){
+			throw new MappingException(destValue.size() + " > " + entity.getMaxItens());
+		}
+		
 		return destValue.size() == 0? null : destValue;
 	}
 	
@@ -146,6 +150,10 @@ public class WWWFormUrlEncodedBeanDecoder
 		}
 		
 		path.setLength(len);
+		
+		if(destValue.size() > entity.getMaxItens()){
+			throw new MappingException(destValue.size() + " > " + entity.getMaxItens());
+		}
 		
 		return destValue.size() == 0? null : destValue;
 		
@@ -200,6 +208,10 @@ public class WWWFormUrlEncodedBeanDecoder
 		
 		path.setLength(len);
 		
+		if(destValue.size() > entity.getMaxItens()){
+			throw new MappingException(destValue.size() + " > " + entity.getMaxItens());
+		}
+		
 		return destValue.isEmpty()? null : destValue;
 	}
 
@@ -236,6 +248,10 @@ public class WWWFormUrlEncodedBeanDecoder
 			destValue.put(keyObject, element);
 			
 			path.setLength(len);
+		}
+		
+		if(destValue.size() > entity.getMaxItens()){
+			throw new MappingException(destValue.size() + " > " + entity.getMaxItens());
 		}
 		
 		return destValue.isEmpty()? null : destValue;	
