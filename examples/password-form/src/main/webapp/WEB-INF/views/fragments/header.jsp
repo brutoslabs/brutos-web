@@ -3,7 +3,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	
-	<title>Brutos MVC form handling example</title>
+	<title>Brutos MVC password form</title>
 	
 	<link href="${pageContext.request.contextPath}/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
