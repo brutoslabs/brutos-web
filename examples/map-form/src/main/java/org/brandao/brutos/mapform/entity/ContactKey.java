@@ -1,4 +1,4 @@
-package org.brandao.brutos.formhandling.entity;
+package org.brandao.brutos.mapform.entity;
 
 public class ContactKey {
 

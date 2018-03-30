@@ -1,4 +1,4 @@
-package org.brandao.brutos.formhandling.web;
+package org.brandao.brutos.multiplerowform.web;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.brandao.brutos.annotation.Result;
 import org.brandao.brutos.annotation.View;
 import org.brandao.brutos.annotation.web.RequestMethod;
 import org.brandao.brutos.annotation.web.ResponseErrors;
-import org.brandao.brutos.formhandling.entity.Contact;
+import org.brandao.brutos.multiplerowform.entity.Contact;
 import org.brandao.brutos.web.RequestMethodTypes;
 import org.brandao.brutos.web.WebFlowController;
 

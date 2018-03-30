@@ -1,4 +1,4 @@
-package org.brandao.brutos.formhandling.web;
+package org.brandao.brutos.passwordform.web;
 
 import javax.inject.Singleton;
 import javax.validation.Valid;
@@ -9,7 +9,7 @@ import org.brandao.brutos.annotation.Basic;
 import org.brandao.brutos.annotation.View;
 import org.brandao.brutos.annotation.web.RequestMethod;
 import org.brandao.brutos.annotation.web.ResponseErrors;
-import org.brandao.brutos.formhandling.entity.User;
+import org.brandao.brutos.passwordform.entity.User;
 import org.brandao.brutos.validator.ValidatorException;
 import org.brandao.brutos.web.RequestMethodTypes;
 

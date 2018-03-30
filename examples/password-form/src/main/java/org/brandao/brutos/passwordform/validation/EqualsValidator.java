@@ -1,4 +1,4 @@
-package org.brandao.brutos.formhandling.validation;
+package org.brandao.brutos.passwordform.validation;
 
 import java.lang.reflect.Field;
 

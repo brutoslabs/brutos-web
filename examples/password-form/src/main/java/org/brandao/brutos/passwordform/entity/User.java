@@ -1,8 +1,8 @@
-package org.brandao.brutos.formhandling.entity;
+package org.brandao.brutos.passwordform.entity;
 
 import javax.validation.constraints.NotNull;
 
-import org.brandao.brutos.formhandling.validation.Equals;
+import org.brandao.brutos.passwordform.validation.Equals;
 import org.hibernate.validator.constraints.Length;
 
 @Equals(first="confirmPassword", second="password")

@@ -1,4 +1,4 @@
-package org.brandao.brutos.formhandling.entity;
+package org.brandao.brutos.multiplerowform.entity;
 
 public class Contact {
 
