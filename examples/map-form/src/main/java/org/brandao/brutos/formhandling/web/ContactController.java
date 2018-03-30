@@ -39,7 +39,7 @@ public class ContactController {
 	@Action("/contacts")
 	@View("contacts/form")
 	@RequestMethod(RequestMethodTypes.POST)
-	public void updateUser(
+	public void updateContacts(
 			@Basic(mappingType=MappingTypes.OBJECT)
 			@KeyCollection(bean="itens")
 			@ElementCollection(bean="itens")
