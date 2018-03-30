@@ -131,7 +131,8 @@ public class BasicAnnotationConfig extends AbstractAnnotationConfig {
 
 		ResultActionBuilder newBuilder;
 
-		Basic basic = source.getAnnotation(Basic.class);
+		//Basic basic = source.getAnnotation(Basic.class);
+		Result basic = source.getAnnotation(Result.class);
 
 		TypeFactory typeFactory = 
 				componentRegistry.getRegistredType(source.getType());

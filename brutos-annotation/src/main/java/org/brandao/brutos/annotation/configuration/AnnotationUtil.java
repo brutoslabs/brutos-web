@@ -218,6 +218,15 @@ public class AnnotationUtil {
 				type);
 	}
 
+	public static boolean isBuildEntity(TypeRegistry typeRegistry,
+			Result resultAction, Class<?> type) {
+		return isBuildEntity(
+				typeRegistry,
+				resultAction == null || resultAction.mappingType() == MappingTypes.AUTO ? null
+						: resultAction.mappingType().equals(MappingTypes.OBJECT),
+				type);
+	}
+	
 	public static Object getKeyType(Object type) {
 
 		if (type == null)

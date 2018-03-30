@@ -22,6 +22,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.brandao.brutos.BrutosConstants;
+
 /**
  * Nomeia o resultado de uma ação. Se omitido, será usado <code>result</code>.
  * 
@@ -49,6 +51,12 @@ public @interface Result {
 	/**
 	 * Nome.
 	 */
-	String value();
+	String value() default BrutosConstants.DEFAULT_RETURN_NAME;
 
+	/**
+	 * Tipo do mapeamento da entidade. Os tipos estão descritos em
+	 * {@link MappingTypes}
+	 */
+	MappingTypes mappingType() default MappingTypes.AUTO;
+	
 }
