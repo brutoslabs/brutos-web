@@ -19,22 +19,15 @@
 					<h1>Contact</h1>
                 </div>
 	    	</div>
-	    	
-			<form class="form-horizontal" 
-						method="post" 
-						action="${pageContext.request.contextPath}/contacts">
-				
-				<c:forEach items="${contactForm}" var="contactForm">
-					  <div class="form-group row">
-						<label class="col-sm-2 control-label">${contactForm.key}</label>
-						<div class="col-sm-10">
-							${contactForm.value}
-						</div>
-					  </div>
-				
-				</c:forEach>
-
-			</form>	    	
+			<c:forEach items="${contactForm}" var="contactForm">
+				  <div class="form-group row">
+					<label class="col-sm-2 control-label">${contactForm.key}</label>
+					<div class="col-sm-10">
+						${contactForm.value}
+					</div>
+				  </div>
+			
+			</c:forEach>
     	</section>
     	
     </div>

@@ -26,15 +26,18 @@
 				
 				  <div class="form-group row">
 						<div class="col-sm-3">
-							<input name="contactForm[firstname]" type="text" value="Afonso"
+							<input name="contactForm[firstname]" type="text" 
+								value="Afonso"
 								class="form-control" placeholder="First name">
 						</div>
 						<div class="col-sm-3">
-							<input name="contactForm[lastname]" type="text"  value="Brandao"
+							<input name="contactForm[lastname]" type="text"  
+								value="Brandao"
 								class="form-control" placeholder="Last name">
 						</div>
 						<div class="col-sm-3">
-							<input name="contactForm[email]" type="text"  value="afonso@brutosframework.com.br"
+							<input name="contactForm[email]" type="text"  
+								value="afonso@brutosframework.com.br"
 								class="form-control" placeholder="Email">
 						</div>
 						<div class="col-sm-3">
