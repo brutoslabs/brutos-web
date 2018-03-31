@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionNameTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamListObjectTest;
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamObjectTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamValueTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionResultValueMapTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.Entity;
@@ -161,6 +162,49 @@ public class WebAnnotationApplicationContextActionTest extends BrutosTestCase{
 		);
 	}
 
+	public void testActionParamObject(){
+		WebApplicationContextTester.run(
+			"/action", 
+			new BasicWebApplicationTester(){
+				
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+				
+            	public void prepareRequest(MockHttpServletRequest request) {
+            		
+            		request.setupAddParameter("arg0.property", Values.A);
+            		
+            	}
+            	
+				public void checkResult(HttpServletRequest request,
+						HttpServletResponse response, ServletContext context,
+						ConfigurableWebApplicationContext applicationContext) {
+					
+					Entity value =
+							(Entity) request.getAttribute("arg0");
+
+					assertEquals(Values.A, value.property);
+				}
+				
+				public void checkException(Throwable e) {
+					throw new RuntimeException(e);
+				}
+				
+			}, 
+			new Class[]{ActionParamObjectTest.class}
+		);
+	}
+	
 	public void testActionName(){
 		WebApplicationContextTester.run(
 			"/test", 

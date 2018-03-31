@@ -71,6 +71,15 @@ public class WebAnnotationApplicationContextActionTestHelper {
 	
 	@ActionStrategy(WebActionStrategyType.DETACHED)
 	@Controller
+	public static class ActionParamObjectTest{
+	
+		public void actionAction(Entity value){
+		}
+		
+	}
+	
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
 	public static class ActionNameTest{
 	
 		@Action("/test")
