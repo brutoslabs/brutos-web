@@ -100,6 +100,30 @@ public class WebAnnotationApplicationContextActionTestHelper {
 
 	@ActionStrategy(WebActionStrategyType.DETACHED)
 	@Controller
+	public static class ActionParamMapSimpleKeyIndexTest{
+	
+		public void actionAction(
+				@Basic(mappingType=MappingTypes.OBJECT)
+				Map<String,String> map){
+			map.size();
+		}
+		
+	}
+
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
+	public static class ActionParamMapSimpleKeyTest{
+	
+		public void actionAction(
+				@Basic(mappingType=MappingTypes.OBJECT)
+				Map<String,String> map){
+			map.size();
+		}
+		
+	}
+	
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
 	public static class ActionResultValueMapTest{
 	
 		@Result(mappingType=MappingTypes.VALUE)
