@@ -13,7 +13,6 @@ import org.brandao.brutos.FetchType;
 import org.brandao.brutos.mapping.AbstractBeanDecoder;
 import org.brandao.brutos.mapping.CollectionBean;
 import org.brandao.brutos.mapping.DependencyBean;
-import org.brandao.brutos.mapping.DependencyException;
 import org.brandao.brutos.mapping.Element;
 import org.brandao.brutos.mapping.Key;
 import org.brandao.brutos.mapping.MapBean;
@@ -231,17 +230,13 @@ public class WWWFormUrlEncodedBeanDecoder
 				k.getScope()
 					.getNamesStartsWith(prefix);
 
-		if(itens.size() > entity.getMaxItens()){
-			throw new DependencyException(itens.size() + " > " + entity.getMaxItens());
-		}
+		Set<IndexField> keys = this.getKeys(itens, prefix);
 		
-		Set<String> keys = this.getKeys(itens, prefix);
-		
-		for(String keyValue: keys){
+		for(IndexField keyValue: keys){
 			
-			Object keyObject = k.convert(keyValue);
+			Object keyObject = k.convert(keyValue.index);
 			
-			path.append(entity.getSeparator()).append(keyValue);
+			path.append(keyValue.indexLiteral);
 			
 			Object element = this.getValue(e, FetchType.EAGER, path, parent);
 			
@@ -265,29 +260,35 @@ public class WWWFormUrlEncodedBeanDecoder
 				scope
 					.getNamesStartsWith(prefix);
 		
-		Set<String> keysSTR = 
+		Set<IndexField> keys = 
 				this.getKeys(itens, prefix);
 		
-		int[] idx = new int[keysSTR.size()];
+		int[] idx = new int[keys.size()];
 		int k     = 0;
 		
-		for(String key: keysSTR){
-			idx[k++] = Integer.parseInt(key);
+		for(IndexField key: keys){
+			idx[k++] = Integer.parseInt(key.index);
 		}
 		
 		Arrays.sort(idx);
 		return idx;
 	}
 	
-	private Set<String> getKeys(List<String> itens, String prefix){
+	private Set<IndexField> getKeys(List<String> itens, String prefix){
 		
-		Set<String> result = new HashSet<String>();
+		Set<IndexField> result = new HashSet<IndexField>();
 		 
 		for(String item: itens){
-			if(!this.checkPrefix(prefix, item)){
+			
+			int end = this.getEndPosition(prefix, item);
+			
+			if(end == -1){
 				continue;
 			}
-			String keyPrefix = item.substring(prefix.length());
+			
+			int startIndex = this.getStartIndex(prefix, item, end);
+			
+			String keyPrefix = item.substring(startIndex, end);
 			String key = keyPrefix;
 			
 			if(key.startsWith(".")){
@@ -312,12 +313,13 @@ public class WWWFormUrlEncodedBeanDecoder
 				}
 			}
 			
-			result.add(key);
+			result.add(new IndexField(key, keyPrefix));
 		}
 		
 		return result;
 	}
 	
+	/*
 	private boolean checkPrefix(String prefix, String key){
 		int nextDot = key.indexOf(".", prefix.length());
 		int index   = key.indexOf("[", prefix.length());
@@ -333,5 +335,55 @@ public class WWWFormUrlEncodedBeanDecoder
 		
 		return prefix.equals(key);
 	}
+	*/
 	
+	private int getEndPosition(String prefix, String key){
+		int nextDot = key.indexOf(".", prefix.length() + 1);
+		return nextDot == -1? key.length() : nextDot;
+	}
+	
+	private int getStartIndex(String prefix, String key, int endPosition){
+		int index = key.indexOf("[", prefix.length());
+		return index == -1 || index > endPosition? prefix.length() : index;
+	}
+	
+	private static class IndexField{
+		
+		public String index;
+		
+		public String indexLiteral;
+
+		public IndexField(String index, String indexLiteral) {
+			super();
+			this.index = index;
+			this.indexLiteral = indexLiteral;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result
+					+ ((indexLiteral == null) ? 0 : indexLiteral.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			IndexField other = (IndexField) obj;
+			if (indexLiteral == null) {
+				if (other.indexLiteral != null)
+					return false;
+			} else if (!indexLiteral.equals(other.indexLiteral))
+				return false;
+			return true;
+		}
+		
+	}
 }

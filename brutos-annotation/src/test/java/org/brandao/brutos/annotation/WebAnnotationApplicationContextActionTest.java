@@ -8,7 +8,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionNameTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamListObjectTest;
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamMapSimpleKeyIndexTest;
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamMapSimpleKeyTest;
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamObjectTest;
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamValueTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionResultValueMapTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.Entity;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.Values;
@@ -113,6 +118,233 @@ public class WebAnnotationApplicationContextActionTest extends BrutosTestCase{
 				
 			}, 
 			new Class[]{ActionResultValueMapTest.class}
+		);
+	}
+	
+	public void testActionParamValue(){
+		WebApplicationContextTester.run(
+			"/action", 
+			new BasicWebApplicationTester(){
+				
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+				
+            	public void prepareRequest(MockHttpServletRequest request) {
+            		
+            		request.setupAddParameter("value", "1");
+            		
+            	}
+            	
+				public void checkResult(HttpServletRequest request,
+						HttpServletResponse response, ServletContext context,
+						ConfigurableWebApplicationContext applicationContext) {
+					
+					Integer value =
+							(Integer) request.getAttribute("value");
+
+					assertEquals(new Integer(1), value);
+				}
+				
+				public void checkException(Throwable e) {
+					throw new RuntimeException(e);
+				}
+				
+			}, 
+			new Class[]{ActionParamValueTest.class}
+		);
+	}
+
+	public void testActionParamObject(){
+		WebApplicationContextTester.run(
+			"/action", 
+			new BasicWebApplicationTester(){
+				
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+				
+            	public void prepareRequest(MockHttpServletRequest request) {
+            		
+            		request.setupAddParameter("arg0.property", Values.A);
+            		
+            	}
+            	
+				public void checkResult(HttpServletRequest request,
+						HttpServletResponse response, ServletContext context,
+						ConfigurableWebApplicationContext applicationContext) {
+					
+					Entity value =
+							(Entity) request.getAttribute("arg0");
+
+					assertEquals(Values.A, value.property);
+				}
+				
+				public void checkException(Throwable e) {
+					throw new RuntimeException(e);
+				}
+				
+			}, 
+			new Class[]{ActionParamObjectTest.class}
+		);
+	}
+	
+	public void testActionName(){
+		WebApplicationContextTester.run(
+			"/test", 
+			new BasicWebApplicationTester(){
+				
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+				
+            	public void prepareRequest(MockHttpServletRequest request) {
+            		
+            		request.setupAddParameter("value", "1");
+            		
+            	}
+            	
+				public void checkResult(HttpServletRequest request,
+						HttpServletResponse response, ServletContext context,
+						ConfigurableWebApplicationContext applicationContext) {
+					
+					Integer value =
+							(Integer) request.getAttribute("value");
+
+					assertEquals(new Integer(1), value);
+				}
+				
+				public void checkException(Throwable e) {
+					throw new RuntimeException(e);
+				}
+				
+			}, 
+			new Class[]{ActionNameTest.class}
+		);
+	}
+
+	public void testActionParamMapSimpleKeyIndex(){
+		WebApplicationContextTester.run(
+			"/action", 
+			new BasicWebApplicationTester(){
+				
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+				
+            	public void prepareRequest(MockHttpServletRequest request) {
+            		
+            		request.setupAddParameter("arg0[A]", Values.A);
+            		request.setupAddParameter("arg0[B]", Values.B);
+            		
+            	}
+            	
+				@SuppressWarnings("unchecked")
+				public void checkResult(HttpServletRequest request,
+						HttpServletResponse response, ServletContext context,
+						ConfigurableWebApplicationContext applicationContext) {
+					
+					Map<String,String> value =
+							(Map<String,String>) request.getAttribute("arg0");
+
+					assertEquals(
+							toMap(
+								new Entry<String, String>(Values.A, Values.A),
+								new Entry<String, String>(Values.B, Values.B)),
+							value);
+				}
+				
+				public void checkException(Throwable e) {
+					throw new RuntimeException(e);
+				}
+				
+			}, 
+			new Class[]{ActionParamMapSimpleKeyIndexTest.class}
+		);
+	}
+	
+	public void testActionParamMapSimpleKey(){
+		WebApplicationContextTester.run(
+			"/action", 
+			new BasicWebApplicationTester(){
+				
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+				
+            	public void prepareRequest(MockHttpServletRequest request) {
+            		
+            		request.setupAddParameter("arg0.A", Values.A);
+            		request.setupAddParameter("arg0.B", Values.B);
+            		
+            	}
+            	
+				@SuppressWarnings("unchecked")
+				public void checkResult(HttpServletRequest request,
+						HttpServletResponse response, ServletContext context,
+						ConfigurableWebApplicationContext applicationContext) {
+					
+					Map<String,String> value =
+							(Map<String,String>) request.getAttribute("arg0");
+
+					assertEquals(
+							toMap(
+								new Entry<String, String>(Values.A, Values.A),
+								new Entry<String, String>(Values.B, Values.B)),
+							value);
+				}
+				
+				public void checkException(Throwable e) {
+					throw new RuntimeException(e);
+				}
+				
+			}, 
+			new Class[]{ActionParamMapSimpleKeyTest.class}
 		);
 	}
 	

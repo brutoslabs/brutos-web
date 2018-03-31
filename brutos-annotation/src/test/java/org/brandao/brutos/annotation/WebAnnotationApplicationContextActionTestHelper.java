@@ -59,6 +59,34 @@ public class WebAnnotationApplicationContextActionTestHelper {
 		}
 		
 	}
+
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
+	public static class ActionParamValueTest{
+	
+		public void actionAction(@Basic(bean="value")Integer value){
+		}
+		
+	}
+	
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
+	public static class ActionParamObjectTest{
+	
+		public void actionAction(Entity value){
+		}
+		
+	}
+	
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
+	public static class ActionNameTest{
+	
+		@Action("/test")
+		public void actionAction(@Basic(bean="value")Integer value){
+		}
+		
+	}
 	
 	@ActionStrategy(WebActionStrategyType.DETACHED)
 	@Controller
@@ -70,6 +98,30 @@ public class WebAnnotationApplicationContextActionTestHelper {
 		
 	}
 
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
+	public static class ActionParamMapSimpleKeyIndexTest{
+	
+		public void actionAction(
+				@Basic(mappingType=MappingTypes.OBJECT)
+				Map<String,String> map){
+			map.size();
+		}
+		
+	}
+
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
+	public static class ActionParamMapSimpleKeyTest{
+	
+		public void actionAction(
+				@Basic(mappingType=MappingTypes.OBJECT)
+				Map<String,String> map){
+			map.size();
+		}
+		
+	}
+	
 	@ActionStrategy(WebActionStrategyType.DETACHED)
 	@Controller
 	public static class ActionResultValueMapTest{
