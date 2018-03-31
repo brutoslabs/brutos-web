@@ -8,7 +8,9 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionNameTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamListObjectTest;
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamValueTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionResultValueMapTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.Entity;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.Values;
@@ -113,6 +115,92 @@ public class WebAnnotationApplicationContextActionTest extends BrutosTestCase{
 				
 			}, 
 			new Class[]{ActionResultValueMapTest.class}
+		);
+	}
+	
+	public void testActionParamValue(){
+		WebApplicationContextTester.run(
+			"/action", 
+			new BasicWebApplicationTester(){
+				
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+				
+            	public void prepareRequest(MockHttpServletRequest request) {
+            		
+            		request.setupAddParameter("value", "1");
+            		
+            	}
+            	
+				public void checkResult(HttpServletRequest request,
+						HttpServletResponse response, ServletContext context,
+						ConfigurableWebApplicationContext applicationContext) {
+					
+					Integer value =
+							(Integer) request.getAttribute("value");
+
+					assertEquals(new Integer(1), value);
+				}
+				
+				public void checkException(Throwable e) {
+					throw new RuntimeException(e);
+				}
+				
+			}, 
+			new Class[]{ActionParamValueTest.class}
+		);
+	}
+
+	public void testActionName(){
+		WebApplicationContextTester.run(
+			"/test", 
+			new BasicWebApplicationTester(){
+				
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                    
+                }
+				
+            	public void prepareRequest(MockHttpServletRequest request) {
+            		
+            		request.setupAddParameter("value", "1");
+            		
+            	}
+            	
+				public void checkResult(HttpServletRequest request,
+						HttpServletResponse response, ServletContext context,
+						ConfigurableWebApplicationContext applicationContext) {
+					
+					Integer value =
+							(Integer) request.getAttribute("value");
+
+					assertEquals(new Integer(1), value);
+				}
+				
+				public void checkException(Throwable e) {
+					throw new RuntimeException(e);
+				}
+				
+			}, 
+			new Class[]{ActionNameTest.class}
 		);
 	}
 	

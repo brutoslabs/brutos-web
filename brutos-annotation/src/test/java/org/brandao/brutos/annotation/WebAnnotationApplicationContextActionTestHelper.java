@@ -59,6 +59,25 @@ public class WebAnnotationApplicationContextActionTestHelper {
 		}
 		
 	}
+
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
+	public static class ActionParamValueTest{
+	
+		public void actionAction(@Basic(bean="value")Integer value){
+		}
+		
+	}
+	
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
+	public static class ActionNameTest{
+	
+		@Action("/test")
+		public void actionAction(@Basic(bean="value")Integer value){
+		}
+		
+	}
 	
 	@ActionStrategy(WebActionStrategyType.DETACHED)
 	@Controller
