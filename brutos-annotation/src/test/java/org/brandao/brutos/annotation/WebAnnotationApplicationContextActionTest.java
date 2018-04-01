@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionNameTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamListObjectTest;
+import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamListValueTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamMapSimpleKeyIndexTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamMapSimpleKeyTest;
 import org.brandao.brutos.annotation.WebAnnotationApplicationContextActionTestHelper.ActionParamObjectTest;
@@ -345,6 +346,56 @@ public class WebAnnotationApplicationContextActionTest extends BrutosTestCase{
 				
 			}, 
 			new Class[]{ActionParamMapSimpleKeyTest.class}
+		);
+	}
+
+	public void testActionParamListValue(){
+		WebApplicationContextTester.run(
+			"/action", 
+			new BasicWebApplicationTester(){
+				
+                public void prepareContext(Map<String, String> parameters) {
+                    parameters.put(
+                            ContextLoader.CONTEXT_CLASS,
+                            MockAnnotationWebApplicationContext.class.getName()
+                    );
+
+                    parameters.put(
+                            MockAnnotationWebApplicationContext.IGNORE_RESOURCES,
+                            "true"
+                    );
+                }
+				
+            	public void prepareRequest(MockHttpServletRequest request) {
+            		
+            		request.setupAddParameter("arg0", new String[]{"1", "2"});
+            		
+            	}
+            	
+				
+				public void prepareSession(Map<String, Object> parameters) {
+				}
+				
+				@SuppressWarnings("unchecked")
+				public void checkResult(HttpServletRequest request,
+						HttpServletResponse response, ServletContext context,
+						ConfigurableWebApplicationContext applicationContext) {
+					
+					List<Integer> bean =
+							(List<Integer>) request.getAttribute("arg0");
+					
+					assertEquals(
+							Arrays.asList(1,2),
+							bean);
+					
+				}
+				
+				public void checkException(Throwable e) {
+					throw new RuntimeException(e);
+				}
+				
+			}, 
+			new Class[]{ActionParamListValueTest.class}
 		);
 	}
 	

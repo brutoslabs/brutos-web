@@ -100,6 +100,15 @@ public class WebAnnotationApplicationContextActionTestHelper {
 
 	@ActionStrategy(WebActionStrategyType.DETACHED)
 	@Controller
+	public static class ActionParamListValueTest{
+	
+		public void actionAction(List<Integer> list){
+		}
+		
+	}
+	
+	@ActionStrategy(WebActionStrategyType.DETACHED)
+	@Controller
 	public static class ActionParamMapSimpleKeyIndexTest{
 	
 		public void actionAction(
