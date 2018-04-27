@@ -90,7 +90,7 @@ public abstract class AbstractBeanDecoder
 			throw new MappingException("bean not found: " + metaValue);
 		}
 
-		this.updatePath(path, entity.getSeparator(), entity.getName());
+		//this.updatePath(path, entity.getSeparator(), entity.getName());
 		
 		return this.getValue(bean, null, path, parent);
 	}
