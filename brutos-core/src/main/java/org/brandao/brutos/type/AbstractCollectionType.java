@@ -94,13 +94,14 @@ public abstract class AbstractCollectionType
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public String toString(Object value) {
 
 		try {
-			ParameterList list = (ParameterList) value;
+			Collection<Object> collection = (Collection<Object>) value;
 			int i = 0;
 			StringBuilder r = new StringBuilder("[ ");
-			for (Object o: list) {
+			for (Object o: collection) {
 				
 				if(i++ > 0){
 					r.append(", ");
