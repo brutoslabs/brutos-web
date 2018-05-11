@@ -216,14 +216,14 @@ public class MultipartContentParser {
     private File getFile( String dir, String file ) throws IOException{
         java.io.File arquivo;
 
-        if( dir != null ){
+        /*if( dir != null ){
             arquivo = new File( new File(dir), file );
             arquivo.createNewFile();
         }
-        else{
+        else{*/
             arquivo = File.createTempFile(PREFIX_TMP_FILE_NAME, SUFFIX_TMP_FILE_NAME);
             arquivo.deleteOnExit();
-        }
+        //}
         return arquivo;
     }
 
