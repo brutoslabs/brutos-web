@@ -90,4 +90,8 @@ public class FileType
 		}
 	}
 
+	public boolean isAlwaysRender() {
+		return true;
+	}
+	
 }

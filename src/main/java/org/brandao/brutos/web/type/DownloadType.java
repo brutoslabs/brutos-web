@@ -33,7 +33,8 @@ import org.brandao.brutos.web.http.Download;
  * @author Brandao
  */
 public class DownloadType 
-	extends AbstractType implements Type {
+	extends AbstractType 
+	implements Type {
 
 	public DownloadType() {
 	}
@@ -76,4 +77,9 @@ public class DownloadType
 			}
 		}
 	}
+	
+	public boolean isAlwaysRender() {
+		return true;
+	}
+	
 }

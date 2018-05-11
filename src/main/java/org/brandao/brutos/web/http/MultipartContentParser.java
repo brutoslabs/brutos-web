@@ -26,6 +26,7 @@ import javax.servlet.ServletRequest;
 
 import org.brandao.brutos.BrutosException;
 import org.brandao.brutos.MutableRequestParserEvent;
+import org.brandao.brutos.web.MediaType;
 import org.brandao.brutos.web.WebMvcRequest;
 
 /**
@@ -71,7 +72,11 @@ public class MultipartContentParser {
         this.buffer          = new byte[ 8192 ];
         this.noFields        = false;
         this.event           = event;
-        this.boundary        = "--" + request.getHeader(BOUNDARY);
+        this.boundary        = (String)request.getHeader(BOUNDARY);
+        
+        if(this.boundary == null){
+        	this.boundary = ((MediaType)request.getType()).getParams().get(BOUNDARY);
+        }
     }
 
     private int readData( byte[] buf, ServletInputStream in ) throws IOException{

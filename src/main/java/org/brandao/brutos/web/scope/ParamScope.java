@@ -52,7 +52,7 @@ public class ParamScope implements Scope{
 
     public Object get(String name) {
     	MutableMvcRequest request = currentRequest.get();
-        return request.getParameter(name);
+        return request.getParameterObject(name);
     }
 
     public Object getCollection( String name ){

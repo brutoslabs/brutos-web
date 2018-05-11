@@ -39,11 +39,11 @@ public class MultipartFormDataParserContentType extends AbstractParserContentTyp
 
 	private static final String MAX_LENGTH_PROPERTY	= "org.brandao.brutos.request.max_length";
 
-	private static final String DEFAULT_MAX_LENGTH	= "0";
+	private static final String DEFAULT_MAX_LENGTH	= "3145728";
 
 	private static final String PATH_PROPERTY		= "org.brandao.brutos.request.path";
 
-	private static final String DEFAULT_PATH		= null;
+	private static final String DEFAULT_PATH		= System.getProperty("java.io.tmpdir");
 	
 	public void parserContentType(MutableMvcRequest request,
 			MutableRequestParserEvent requestParserInfo, 

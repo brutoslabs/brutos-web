@@ -327,6 +327,12 @@ public class WebMvcRequestImp
 		return r == null? null : String.valueOf(r);
 	}
 
+	public Object getParameterObject(String name) {
+		Object r = this.request.getParameterObject(name);
+		r = r == null? _getRequest().getParameter(name) : r;
+		return r;
+	}
+	
 	public List<Object> getParameters(String name) {
 		
 		List<Object> r = this.request.getParameters(name);
