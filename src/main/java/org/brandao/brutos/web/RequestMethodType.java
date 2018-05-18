@@ -4,19 +4,19 @@ import java.util.HashMap;
 
 public class RequestMethodType {
 
-	public static final RequestMethodType DELETE	= new RequestMethodType("DELETE",	"delete"); 
+	public static final RequestMethodType DELETE	= new RequestMethodType("delete",	"delete"); 
     
-	public static final RequestMethodType GET		= new RequestMethodType("GET",		"get");
+	public static final RequestMethodType GET		= new RequestMethodType("get",		"get");
 	           
-	public static final RequestMethodType HEAD		= new RequestMethodType("HEAD",		"head");
+	public static final RequestMethodType HEAD		= new RequestMethodType("head",		"head");
 	           
-	public static final RequestMethodType OPTIONS	= new RequestMethodType("OPTIONS",	"options");
+	public static final RequestMethodType OPTIONS	= new RequestMethodType("options",	"options");
 	           
-	public static final RequestMethodType POST		= new RequestMethodType("POST",		"post");
+	public static final RequestMethodType POST		= new RequestMethodType("post",		"post");
 	           
-	public static final RequestMethodType PUT		= new RequestMethodType("PUT",		"put");
+	public static final RequestMethodType PUT		= new RequestMethodType("put",		"put");
 	           
-	public static final RequestMethodType TRACE		= new RequestMethodType("TRACE",	"trace");
+	public static final RequestMethodType TRACE		= new RequestMethodType("trace",	"trace");
 	
 	private static final HashMap<String, RequestMethodType> defaultTypes =
 		new HashMap<String, RequestMethodType>();
@@ -37,8 +37,10 @@ public class RequestMethodType {
 			return null;
 		}
 		
+		value = value.toLowerCase();
+		
 		RequestMethodType r = defaultTypes.get(value);
-		return r == null? new RequestMethodType(value, value.toLowerCase()) : r;
+		return r == null? new RequestMethodType(value, value) : r;
 	}
 	
 	private final String id;

@@ -62,6 +62,7 @@ public class JsonRenderView implements RenderViewType{
 				throw new RenderViewException(e);
 			}
 		}
+		
 		Object result = mvcResponse.getResult();
 		
 		if(result != null){

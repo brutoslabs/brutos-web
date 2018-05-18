@@ -22,10 +22,12 @@ import javax.servlet.ServletRequest;
 import org.brandao.brutos.MutableMvcRequest;
 
 public interface MutableWebMvcRequest 
-	extends MutableMvcRequest, WebMvcRequest{
+	extends MutableMvcRequest, WebMvcRequest {
 
 	public static String ACCEPT_REQUEST_HEADER = "Accept";
 	
 	void setServletRequest(ServletRequest value);
+
+	void setRequestMethodType(RequestMethodType requestMethodType);
 	
 }

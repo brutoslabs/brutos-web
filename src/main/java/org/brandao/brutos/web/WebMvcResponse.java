@@ -18,6 +18,7 @@
 package org.brandao.brutos.web;
 
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.*;
 
@@ -25,7 +26,8 @@ import org.brandao.brutos.*;
  * 
  * @author Brandao
  */
-public interface WebMvcResponse extends MvcResponse{
+public interface WebMvcResponse 
+	extends MvcResponse, HttpServletResponse{
 
     ServletResponse getServletResponse();
     

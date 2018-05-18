@@ -37,6 +37,7 @@ import org.brandao.brutos.web.bean.WWWFormUrlEncodedBeanDecoder;
  * @author Brandao
  *
  */
+@Deprecated
 public class AllParserContentType 
 	extends AbstractParserContentType{
 	

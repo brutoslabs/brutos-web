@@ -57,9 +57,18 @@ public class WebMvcRequestImp
     
     private MutableMvcRequest request;
     
+    private boolean acceptResponseLoaded;
+    
+    private boolean typeLoaded;
+    
+    private boolean requestMethodTypeLoaded;
+    
 	public WebMvcRequestImp(HttpServletRequest request){
     	super(request);
-	    this.request        = new DefaultMvcRequest();
+	    this.request                 = new DefaultMvcRequest();
+	    this.acceptResponseLoaded    = false;
+	    this.typeLoaded              = false;
+	    this.requestMethodTypeLoaded = false;
 	    this.request.setAcceptResponse(null);
     }
 
@@ -105,12 +114,19 @@ public class WebMvcRequestImp
     }
     
 	/* MutableWebMvcRequest */
+
+	public void setRequestMethodType(RequestMethodType requestMethodType) {
+		this.requestMethodType = requestMethodType;
+		this.requestMethodTypeLoaded = true;
+	}
 	
 	public RequestMethodType getRequestMethodType() {
-		if(this.requestMethodType == null){
+		if(!this.requestMethodTypeLoaded){
 			this.requestMethodType = 
-					RequestMethodType.valueOf(this._getRequest().getMethod().toUpperCase());
+					RequestMethodType.valueOf(this._getRequest().getMethod());
+			this.requestMethodTypeLoaded = true;
 		}
+		
 		return this.requestMethodType;
 	}
 
@@ -181,12 +197,13 @@ public class WebMvcRequestImp
 	}
 	
 	public DataType getType() {
-		DataType type = this.request.getType();
-		if(type == null){
-			type = MediaType.valueOf(this._getRequest().getContentType());
+		if(!this.typeLoaded){
+			DataType type = MediaType.valueOf(this._getRequest().getContentType());
 			this.request.setType(type);
+			this.typeLoaded = true;
 		}
-		return type;
+		
+		return this.request.getType();
 	}
 
 	public ResourceAction getResourceAction() {
@@ -248,6 +265,7 @@ public class WebMvcRequestImp
 
 	public void setType(DataType value) {
 		this.request.setType(value);
+		this.typeLoaded = true;
 	}
 
 	public void setResourceAction(ResourceAction value) {
@@ -288,12 +306,15 @@ public class WebMvcRequestImp
 	
 	public void setAcceptResponse(List<DataType> value){
 		this.request.setAcceptResponse(value);
+		this.acceptResponseLoaded = true;
 	}
     
 	public List<DataType> getAcceptResponse() {
-		if(this.request.getAcceptResponse() == null){
+		if(!this.acceptResponseLoaded){
 			this.request.setAcceptResponse(this.parseAcceptResponse());
+			this.acceptResponseLoaded = true;
 		}
+		
 		return this.request.getAcceptResponse();
 	}
 

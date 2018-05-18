@@ -30,8 +30,8 @@ import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.scope.Scope;
-import org.brandao.brutos.type.Type;
 import org.brandao.brutos.web.BrutosWebConstants;
+import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebDispatcherType;
 import org.brandao.brutos.web.WebMvcRequest;
 import org.brandao.brutos.web.WebMvcResponse;
@@ -50,8 +50,6 @@ public class JSPRenderView implements RenderViewType{
 			WebMvcResponse webResponse,
 			String view, DispatcherType dispatcherType){
 
-		//HttpServletRequest request   = new HttpServletRequestWrapper(new ServletRequestWrapper(webRequest));
-		//HttpServletRequest request   = (HttpServletRequest)webRequest.getServletRequest();
 		HttpServletRequest request   = (HttpServletRequest) webRequest;
 		HttpServletResponse response = (HttpServletResponse)webResponse.getServletResponse();
 		
@@ -104,57 +102,48 @@ public class JSPRenderView implements RenderViewType{
 	}
     
 	protected void show(
-			WebThrowableSafeData throwableSafeData, 
-			StackRequestElement stackRequestElement, 
+			WebApplicationContext context, StackRequestElement stackRequestElement, 
+			WebThrowableSafeData throwableSafeData, WebAction action, WebController controller, 
 			Scope requestScope){
-		Object objectThrow = stackRequestElement.getObjectThrow();
-		
-		if (throwableSafeData.getParameterName() != null){
-			requestScope
-				.put(
-					throwableSafeData.getParameterName(),
-					objectThrow);
-		}
 
-		if (throwableSafeData.getView() != null || throwableSafeData.getReason() != null) {
+		WebMvcRequest webMvcRequest   = (WebMvcRequest)stackRequestElement.getRequest();
+		WebMvcResponse webMvcResponse = (WebMvcResponse)stackRequestElement.getResponse();
+		String reason                 = null;
+
+		if(stackRequestElement.getView() != null){
 			this.show(
-					throwableSafeData.getResponseError(), 
-					throwableSafeData.getReason(),
-					(WebMvcRequest)stackRequestElement.getRequest(),
-					(WebMvcResponse)stackRequestElement.getResponse(),
-					throwableSafeData.getView(),
-					throwableSafeData.getDispatcher());
-			return;
+					BrutosWebConstants.DEFAULT_RESPONSE_STATUS, 
+					reason,
+					webMvcRequest,
+					webMvcResponse,
+					stackRequestElement.getView(),
+					stackRequestElement.getDispatcherType());
 		}
-		
-		WebAction action = (WebAction)stackRequestElement.getAction().getMethodForm();
-		
-		if(action.getView() != null){
+		else{
+			if(throwableSafeData != null){
+				reason             = throwableSafeData.getReason();
+				Object objectThrow = stackRequestElement.getObjectThrow();
+				
+				if (throwableSafeData.getParameterName() != null){
+					requestScope
+						.put(
+							throwableSafeData.getParameterName(),
+							objectThrow);
+				}
+			}
+			
 			this.show(
-					action.getResponseStatus(), 
-					null,
-					(WebMvcRequest)stackRequestElement.getRequest(),
-					(WebMvcResponse)stackRequestElement.getResponse(),
-					action.getView(),
-					action.getDispatcherType());
-			return;
-		}
-		
-		WebController controller = (WebController)action.getController();
-		
-		if(controller.getView() != null){
-			this.show(
-					controller.getResponseStatus(), 
-					null,
-					(WebMvcRequest)stackRequestElement.getRequest(),
-					(WebMvcResponse)stackRequestElement.getResponse(),
-					controller.getView(),
-					controller.getDispatcherType());
-			return;
+					this.getResponseCode(context, throwableSafeData, action, controller), 
+					reason,
+					webMvcRequest,
+					webMvcResponse,
+					this.getView(throwableSafeData, action, controller),
+					this.getDispatcherType(context, throwableSafeData, action, controller));
 		}
 		
 	}
 	
+	/*
 	protected void show(
 			WebAction action, 
 			StackRequestElement stackRequestElement, 
@@ -221,17 +210,20 @@ public class JSPRenderView implements RenderViewType{
 		}
 		
 	}
-
+	 */
+	
 	public void show(MvcRequest request, MvcResponse response){
 		
 		RequestInstrument requestInstrument     = request.getRequestInstrument();
 		StackRequestElement stackRequestElement = request.getStackRequestElement();
 
-		if (requestInstrument.isHasViewProcessed())
+		if (requestInstrument.isHasViewProcessed()){
 			return;
+		}
 
-		Scopes scopes = requestInstrument.getContext().getScopes();
-		Scope requestScope = scopes.get(ScopeType.REQUEST.toString());
+		WebApplicationContext context = (WebApplicationContext) requestInstrument.getContext();
+		Scopes scopes                 = context.getScopes();
+		Scope requestScope            = scopes.get(ScopeType.REQUEST.toString());
 
 		if (stackRequestElement.getView() != null) {
 			this.show(
@@ -244,9 +236,13 @@ public class JSPRenderView implements RenderViewType{
 			return;
 		}
 
-		WebThrowableSafeData throwableSafeData = 
-				(WebThrowableSafeData)stackRequestElement.getThrowableSafeData();
+		WebThrowableSafeData throwableSafeData = (WebThrowableSafeData)stackRequestElement.getThrowableSafeData();
+		WebAction action                       = (WebAction)stackRequestElement.getAction().getMethodForm();
+		WebController controller               = (WebController)stackRequestElement.getController();
 		
+		this.show(context, stackRequestElement, throwableSafeData, action, controller, requestScope);
+		
+		/*
 		if (throwableSafeData != null) {
 			this.show(throwableSafeData, stackRequestElement, requestScope);
 			return;
@@ -268,7 +264,87 @@ public class JSPRenderView implements RenderViewType{
 						requestScope);
 			}
 		}
+		*/
 
 	}
 
+	private String getView(WebThrowableSafeData throwableSafeData, WebAction action, 
+			WebController controller){
+		
+		String view = null;
+		
+		if(throwableSafeData != null){
+			view = throwableSafeData.getView();
+		}
+		
+		if(view == null && action != null){
+			view = action.getView();
+		}
+
+		if(view == null && controller != null){
+			view = controller.getView();
+		}
+		
+		return view;
+	}
+
+	private int getResponseCode(
+			WebApplicationContext context, WebThrowableSafeData throwableSafeData, 
+			WebAction action, WebController controller){
+		
+		int responseStatus = 0;
+		
+		if(throwableSafeData != null){
+			responseStatus = throwableSafeData.getResponseError();
+			
+			if(responseStatus <= 0 ){
+				return context.getResponseError();
+			}
+			else{
+				return responseStatus;
+			}
+			
+		}
+		
+		if(responseStatus <= 0 && action != null){
+			responseStatus = action.getResponseStatus();
+		}
+
+		if(responseStatus <= 0 && controller != null){
+			responseStatus = controller.getResponseStatus();
+		}
+		
+		if(responseStatus <= 0){
+			responseStatus = context.getResponseStatus();
+		}
+		
+		return responseStatus;
+	}
+	
+	private DispatcherType getDispatcherType(
+			WebApplicationContext context, WebThrowableSafeData throwableSafeData, 
+			WebAction action, WebController controller){
+		
+		DispatcherType dispatcherType = null;
+		
+		if(throwableSafeData != null){
+			dispatcherType = throwableSafeData.getDispatcher();
+		}
+		
+		if(dispatcherType == null && action != null){
+			dispatcherType = action.getDispatcherType();
+		}
+
+		if(dispatcherType == null && controller != null){
+			dispatcherType = controller.getDispatcherType();
+		}
+		
+		if(dispatcherType == null){
+			dispatcherType = context.getDispatcherType();
+		}
+		
+		return dispatcherType;
+		
+	}
+	
 }

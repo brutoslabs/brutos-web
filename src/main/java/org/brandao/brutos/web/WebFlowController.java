@@ -53,6 +53,21 @@ public class WebFlowController extends FlowController{
 	}
 
 	/**
+	 * Executa uma ação de um determinado controlador.
+	 * @param clazz Classe do controlador.
+	 * @param requestMethodType Tipo da requisição.
+	 * @param actionName Ação.
+	 * @return Resultado da execução da ação.
+	 */
+	public static Object execute(Class<?> clazz, String requestMethodType, String actionName) {
+		return ((WebInvoker)Invoker.getInstance()).invoke(
+					clazz, 
+					RequestMethodType.valueOf(requestMethodType), 
+					actionName
+				);
+	}
+	
+	/**
 	 * Redireciona a execução para uma determinada URI.
 	 * @param value URI que será redirecionado. 
 	 */

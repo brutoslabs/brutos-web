@@ -49,6 +49,7 @@ import org.brandao.brutos.mapping.ParameterAction;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.mapping.MediaTypeMap;
+import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.scope.HeaderScope;
 import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
@@ -168,6 +169,44 @@ public class WebInvoker extends Invoker{
 			.setAttribute(BrutosConstants.CONTROLLER_PROPERTY, request.getResource());
 	}
 	
+	public Object invoke(Class<?> controllerClass, String actionId) {
+		return this.invoke(controllerClass, null, actionId);
+	}
+	
+	public Object invoke(Class<?> controllerClass, RequestMethodType requestMethodType, String actionId) {
+		Controller controller = 
+				applicationContext
+				.getControllerManager()
+				.getController(controllerClass);
+
+		ResourceAction resourceAction;
+		
+		if(requestMethodType == null){
+			resourceAction = 
+					actionResolver
+						.getResourceAction(
+								controller, 
+								actionId, 
+								(MutableMvcRequest)RequestProvider.getRequest());
+		}
+		else{
+			resourceAction = 
+					((WebActionResolver)actionResolver)
+						.getResourceAction(
+								controller, 
+								requestMethodType, 
+								actionId, 
+								(MutableMvcRequest)RequestProvider.getRequest());
+		}
+		
+		if(resourceAction == null){
+			return false;
+		}
+		else{
+			return this.invoke(controller, resourceAction, null);
+		}
+	}
+	
 	public Object invoke(Controller controller, ResourceAction action,
 			Object resource, Object[] parameters) throws InvokerException{
 
@@ -180,15 +219,16 @@ public class WebInvoker extends Invoker{
 		MutableWebMvcRequest webRequest   = (MutableWebMvcRequest) RequestProvider.getRequest();
 		MutableWebMvcResponse webResponse = (MutableWebMvcResponse) ResponseProvider.getResponse();
 		
-    	webRequest   = new WebMvcRequestImp((HttpServletRequest)webRequest.getServletRequest());
-    	webResponse = new WebMvcResponseImp((HttpServletResponse)webResponse.getServletResponse(), webRequest);
+    	webRequest   = new WebMvcRequestImp(webRequest);
+    	webResponse  = new WebMvcResponseImp(webResponse, webRequest);
 		
     	webRequest.setResource(resource);
     	webRequest.setResourceAction(action);
     	webRequest.setParameters(parameters);
-		
+    	webRequest.setRequestMethodType(action == null? null : ((WebAction)action.getMethodForm()).getRequestMethod());
+    	webRequest.setType(null);
+    	
 		this.invoke(webRequest, webResponse);
-		
 		return webResponse.getResult();
 	}
     

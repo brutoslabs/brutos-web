@@ -139,13 +139,15 @@ public class WebControllerBuilder extends ControllerBuilder{
 		}
 		
 		requestMethodType    = 
-			requestMethodType == null? 
-				this.webApplicationContext.getRequestMethod() : 
+			requestMethodType == null?
+				((WebController)this.controller).getRequestMethod() :
+				//this.webApplicationContext.getRequestMethod() : 
 				requestMethodType;
 
-		dispatcher = dispatcher == null? 
-				this.webApplicationContext.getDispatcherType() :
-					dispatcher;
+		dispatcher = dispatcher == null?
+				this.controller.getDispatcherType() :
+				//this.webApplicationContext.getDispatcherType() :
+				dispatcher;
 				
 		WebActionID actionId = new WebActionID(id, requestMethodType);
 				

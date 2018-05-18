@@ -129,6 +129,16 @@ public class WebActionResolver extends AbstractActionResolver{
 	public ResourceAction getResourceAction(Controller controller,
 			String actionId, MutableMvcRequest request)
 			throws ActionResolverException {
+	
+		WebApplicationContext context = 
+				(WebApplicationContext)request.getApplicationContext();
+		
+		return this.getResourceAction(controller, context.getRequestMethod(), actionId, request);
+	}
+	
+	public ResourceAction getResourceAction(Controller controller,
+			RequestMethodType requestMethodType, String actionId, MutableMvcRequest request)
+			throws ActionResolverException {
 		
 		WebApplicationContext context = 
 				(WebApplicationContext)request.getApplicationContext();

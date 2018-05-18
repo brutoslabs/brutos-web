@@ -18,6 +18,7 @@
 package org.brandao.brutos.web;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.brandao.brutos.*;
 
@@ -26,7 +27,7 @@ import org.brandao.brutos.*;
  * @author Brandao
  */
 public interface WebMvcRequest 
-	extends MvcRequest{
+	extends MvcRequest, HttpServletRequest{
 
 	RequestMethodType getRequestMethodType();
 	
