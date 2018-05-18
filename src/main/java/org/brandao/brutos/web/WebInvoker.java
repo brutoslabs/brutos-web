@@ -114,7 +114,11 @@ public class WebInvoker extends Invoker{
     	
 		ResourceAction action = request.getResourceAction();
 		if(action != null){
-			this.updateActionResult(request, response, action.getMethodForm());
+			Action mr = action.getMethodForm();
+			
+			if(mr != null){
+				this.updateActionResult(request, response, action.getMethodForm());
+			}
 		}
 		
 	}
