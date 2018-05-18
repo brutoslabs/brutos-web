@@ -135,7 +135,13 @@ public class WebActionResolver extends AbstractActionResolver{
 		
 		WebActionID wID = new WebActionID(actionId, context.getRequestMethod());
 		Action action = controller.getAction(wID);
-		return action == null? null : new DefaultResourceAction(controller, action);
+		return 
+			action == null? 
+				null : 
+				new WebResourceAction(
+						wID.getRequestMethodType(), 
+						(WebController)controller, 
+						(WebAction)action);
 	}
 	
     public void registry(ControllerID controllerID, Controller controller, 
