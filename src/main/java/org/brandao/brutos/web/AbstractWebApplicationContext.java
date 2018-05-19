@@ -260,14 +260,13 @@ public abstract class AbstractWebApplicationContext
         config.put(BrutosConstants.REQUEST_PARSER,
                     tmp);
 
-        /*
+        
         tmp = config
                 .getProperty(BrutosConstants.REQUEST_TYPE,
                               MediaType.ALL.toString() );
         
         config.put(BrutosConstants.REQUEST_TYPE,
                     tmp);
-         */
         
         tmp = config
                 .getProperty(BrutosConstants.RESPONSE_TYPE,
