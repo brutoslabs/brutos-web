@@ -79,9 +79,9 @@ public class WebControllerManager extends ControllerManagerImp{
 				this.webApplicationContext.getRequestMethod() :
 				requestMethodType;
 				
-		dispatcherType = dispatcherType == null? 
-				this.webApplicationContext.getDispatcherType() :
-					dispatcherType;
+		//dispatcherType = dispatcherType == null? 
+		//		this.webApplicationContext.getDispatcherType() :
+		//			dispatcherType;
 
 		actionType = actionType == null? 
 				this.webApplicationContext.getActionType() :

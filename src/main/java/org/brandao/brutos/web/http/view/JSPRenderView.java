@@ -296,14 +296,6 @@ public class JSPRenderView implements RenderViewType{
 		
 		if(throwableSafeData != null){
 			responseStatus = throwableSafeData.getResponseError();
-			
-			if(responseStatus <= 0 ){
-				return context.getResponseError();
-			}
-			else{
-				return responseStatus;
-			}
-			
 		}
 		
 		if(responseStatus <= 0 && action != null){
@@ -315,7 +307,10 @@ public class JSPRenderView implements RenderViewType{
 		}
 		
 		if(responseStatus <= 0){
-			responseStatus = context.getResponseStatus();
+			responseStatus = 
+				throwableSafeData != null? 
+					context.getResponseError() : 
+					context.getResponseStatus();
 		}
 		
 		return responseStatus;

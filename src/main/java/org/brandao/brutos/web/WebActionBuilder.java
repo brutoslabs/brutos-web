@@ -130,13 +130,13 @@ public class WebActionBuilder extends ActionBuilder{
 				view : 
 				webApplicationContext.getViewResolver().getView(this.controllerBuilder, this, target, view);
 
-		responseError = responseError <= 0? 
-				this.webApplicationContext.getResponseError() :
-				responseError;
+		//responseError = responseError <= 0? 
+		//		this.webApplicationContext.getResponseError() :
+		//		responseError;
 			
-		dispatcher = dispatcher == null? 
-				this.webApplicationContext.getDispatcherType() :
-				dispatcher;
+		//dispatcher = dispatcher == null? 
+		//		this.webApplicationContext.getDispatcherType() :
+		//		dispatcher;
 
         WebUtil.checkURI(view, resolvedView && view != null);
 				
