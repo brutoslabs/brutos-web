@@ -230,7 +230,7 @@ public class WebActionType extends ActionType{
 
 		public String getControllerID(String className){
 			//throw new UnsupportedOperationException();
-			return null;
+			return "/" + className.toLowerCase();
 		}
 
 		public String getActionID(String actionName){
@@ -247,7 +247,7 @@ public class WebActionType extends ActionType{
 		*/
 		
 		public boolean isValidControllerId(String value){
-			return value == null;
+			return true;
 		}
 		
 		public boolean isValidActionId(String value){
