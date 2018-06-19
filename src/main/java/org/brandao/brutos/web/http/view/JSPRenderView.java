@@ -131,6 +131,21 @@ public class JSPRenderView implements RenderViewType{
 							objectThrow);
 				}
 			}
+			else{
+				org.brandao.brutos.mapping.ResultAction resultAction =
+						action.getResultAction();
+				
+				if (resultAction.getType() != null) {
+					if (action.isReturnRendered() || resultAction.getType().isAlwaysRender()) {
+						resultAction.getType().show(
+								stackRequestElement.getResponse(), 
+								stackRequestElement.getResultAction());
+						return;
+					}
+				}
+				
+			}
+				
 			
 			this.show(
 					this.getResponseCode(context, throwableSafeData, action, controller), 
