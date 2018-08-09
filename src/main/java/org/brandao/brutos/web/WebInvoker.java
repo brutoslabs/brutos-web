@@ -159,11 +159,10 @@ public class WebInvoker extends Invoker{
 		
 	}
 	
-	protected void updateRequest(MutableMvcRequest request, Controller controller, Object resource) 
-			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{	
-		
-		super.updateRequest(request, controller, resource);
-		
+	protected void updateRequest(Controller controller, Object resource,
+			MutableMvcRequest request) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+
+		super.updateRequest(controller, resource, request);
 		WebMvcRequestImp webRequest = (WebMvcRequestImp)request;
 		webRequest.getServletRequest()
 			.setAttribute(BrutosConstants.CONTROLLER_PROPERTY, request.getResource());
