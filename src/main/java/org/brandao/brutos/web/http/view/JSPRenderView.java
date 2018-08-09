@@ -146,7 +146,68 @@ public class JSPRenderView implements RenderViewType{
 				
 			}
 				
+			String view                   = null;
+			DispatcherType dispatcherType = null;
+			int responseCode              = 0;
 			
+			if(throwableSafeData != null){
+				view = throwableSafeData.getView();
+				if(view != null){
+					responseCode   = throwableSafeData.getResponseError();
+					dispatcherType = throwableSafeData.getDispatcher();
+					
+					if(responseCode == 0){
+						responseCode = context.getResponseError();
+					}
+					
+					if(dispatcherType == null){
+						dispatcherType = context.getDispatcherType();
+					}
+					
+				}
+			}
+			
+			if(view == null && action != null){
+				view = action.getView();
+				if(view != null){
+					responseCode   = action.getResponseStatus();
+					dispatcherType = action.getDispatcherType();
+					
+					if(responseCode == 0){
+						responseCode = context.getResponseStatus();
+					}
+					
+					if(dispatcherType == null){
+						dispatcherType = context.getDispatcherType();
+					}
+				}
+			}
+
+			if(view == null && controller != null){
+				view = controller.getView();
+				if(view != null){
+					responseCode   = controller.getResponseStatus();
+					dispatcherType = controller.getDispatcherType();
+					
+					if(responseCode == 0){
+						responseCode = context.getResponseStatus();
+					}
+					
+					if(dispatcherType == null){
+						dispatcherType = context.getDispatcherType();
+					}
+				}
+			}
+
+			this.show(
+					responseCode, 
+					reason,
+					webMvcRequest,
+					webMvcResponse,
+					view,
+					dispatcherType);
+			
+			/*
 			this.show(
 					this.getResponseCode(context, throwableSafeData, action, controller), 
 					reason,
@@ -154,78 +215,10 @@ public class JSPRenderView implements RenderViewType{
 					webMvcResponse,
 					this.getView(throwableSafeData, action, controller),
 					this.getDispatcherType(context, throwableSafeData, action, controller));
+			*/
 		}
 		
 	}
-	
-	/*
-	protected void show(
-			WebAction action, 
-			StackRequestElement stackRequestElement, 
-			Scope requestScope){
-		
-		org.brandao.brutos.mapping.ResultAction resultAction =
-				action.getResultAction();
-		
-		if (resultAction.getType() != null) {
-			if (action.isReturnRendered() || resultAction.getType().isAlwaysRender()) {
-				resultAction.getType().show(
-						stackRequestElement.getResponse(), 
-						stackRequestElement.getResultAction());
-				return;
-			}
-		}
-
-		if (action.getView() != null){
-			this.show(
-					action.getResponseStatus(), 
-					null,
-					(WebMvcRequest)stackRequestElement.getRequest(),
-					(WebMvcResponse)stackRequestElement.getResponse(),
-					action.getView(),
-					action.getDispatcherType());
-			return;
-		}
-		
-		WebController controller = (WebController)action.getController();
-		
-		if(controller.getView() != null){
-			this.show(
-					controller.getResponseStatus(), 
-					null,
-					(WebMvcRequest)stackRequestElement.getRequest(),
-					(WebMvcResponse)stackRequestElement.getResponse(),
-					controller.getView(),
-					controller.getDispatcherType());
-			return;
-		}
-		
-		Type type = action.getResultAction().getType();
-		
-		if(type != null){
-			type.show(
-				stackRequestElement.getResponse(), 
-				stackRequestElement.getResultAction());
-		}
-		
-	}
-	
-	protected void show(WebController controller, 
-			StackRequestElement stackRequestElement, 
-			Scope requestScope){
-		
-		if(controller.getView() != null){
-			this.show(
-					controller.getResponseStatus(), 
-					null,
-					(WebMvcRequest)stackRequestElement.getRequest(),
-					(WebMvcResponse)stackRequestElement.getResponse(),
-					controller.getView(),
-					controller.getDispatcherType());
-		}
-		
-	}
-	 */
 	
 	public void show(MvcRequest request, MvcResponse response){
 		
@@ -256,31 +249,6 @@ public class JSPRenderView implements RenderViewType{
 		WebController controller               = (WebController)stackRequestElement.getController();
 		
 		this.show(context, stackRequestElement, throwableSafeData, action, controller, requestScope);
-		
-		/*
-		if (throwableSafeData != null) {
-			this.show(throwableSafeData, stackRequestElement, requestScope);
-			return;
-		}
-		else{
-			WebAction action = 
-					(WebAction)stackRequestElement.getAction().getMethodForm();
-	
-			if (action != null) {
-				this.show(
-						action, 
-						stackRequestElement, 
-						requestScope);
-			}
-			else{
-				this.show(
-						(WebController)stackRequestElement.getController(), 
-						stackRequestElement, 
-						requestScope);
-			}
-		}
-		*/
-
 	}
 
 	private String getView(WebThrowableSafeData throwableSafeData, WebAction action, 
@@ -309,15 +277,15 @@ public class JSPRenderView implements RenderViewType{
 		
 		int responseStatus = 0;
 		
-		if(throwableSafeData != null){
+		if(throwableSafeData != null && throwableSafeData.getView() != null){
 			responseStatus = throwableSafeData.getResponseError();
 		}
 		
-		if(responseStatus <= 0 && action != null){
+		if(responseStatus <= 0 && action != null && action.getView() != null){
 			responseStatus = action.getResponseStatus();
 		}
 
-		if(responseStatus <= 0 && controller != null){
+		if(responseStatus <= 0 && controller != null && controller.getView() != null){
 			responseStatus = controller.getResponseStatus();
 		}
 		

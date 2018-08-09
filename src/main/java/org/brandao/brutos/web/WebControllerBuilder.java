@@ -180,7 +180,8 @@ public class WebControllerBuilder extends ControllerBuilder{
 		WebAction action = new WebAction();
 		action.setId(actionId);
 		action.setCode(Action.getNextId());
-		action.setResponseStatus(this.webApplicationContext.getResponseStatus());
+		//action.setResponseStatus(this.webApplicationContext.getResponseStatus());
+		action.setResponseStatus(0);
 		action.setName(id);
 		action.setController(controller);
 		action.setResultValidator(validatorFactory.getValidator(new Configuration()));
