@@ -29,6 +29,7 @@ import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.InterceptorManager;
 import org.brandao.brutos.ValidatorFactory;
 import org.brandao.brutos.mapping.Action;
+import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
@@ -215,37 +216,49 @@ public class WebControllerBuilder extends ControllerBuilder{
 		return actionBuilder;    	
     }
     
-    public ControllerBuilder addThrowable( Class<?> target, String view, String id, 
+    public WebThrowSafeBuilder addThrowable( Class<?> target, String view, String id, 
             DispatcherType dispatcher, boolean resolvedView ){
     	return this.addThrowable(0, null, 
     			target, view, id, dispatcher, resolvedView);
     }
 
-    public ControllerBuilder addThrowable(int responseError, String reason,
+    public WebThrowSafeBuilder addThrowable(int responseError, String reason,
     		Class<?> target, String view, String id, 
             DispatcherType dispatcher, boolean resolvedView ){
+    	return this.addThrowable(target, null, responseError, 
+    			reason, view, dispatcher, resolvedView, null, false);
+    }
+    
+    public WebThrowSafeBuilder addThrowable(Class<?> target, String executor, 
+			int responseError, String reason, String view, DispatcherType dispatcher, 
+			boolean resolvedView, String resultId, boolean resultRendered){
     	
-		view = StringUtil.adjust(view);
-
-		view = resolvedView? 
-			view : 
-			webApplicationContext.getViewResolver().getView(this, null, target, view);
+		executor = StringUtil.adjust(executor);
+		view     = StringUtil.adjust(view);
+		resultId = StringUtil.isEmpty(resultId)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(resultId);
+		reason   = StringUtil.adjust(reason);
+		view     = resolvedView ? 
+				view : 
+				webApplicationContext.getViewResolver().getView(this, null, target, view);
 		
-		responseError = responseError <= 0? 
-			this.webApplicationContext.getResponseError() :
-			responseError;
+		//responseError = responseError <= 0? 
+		//	this.webApplicationContext.getResponseError() :
+		//	responseError;
 		
-		dispatcher = dispatcher == null? 
-				this.webApplicationContext.getDispatcherType() :
-				dispatcher;
-
-		id = StringUtil.isEmpty(id)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(id);
+		//dispatcher = dispatcher == null? 
+		//		this.webApplicationContext.getDispatcherType() :
+		//		dispatcher;
 
 		if (target == null){
 			throw new MappingException("target is required: "
 					+ controller.getClassType().getSimpleName());
 		}
 
+		if (StringUtil.isEmpty(view) && StringUtil.isEmpty(executor)){
+			throw new MappingException(
+					"view must be informed: " + target);
+		}
+		
 		if (!Throwable.class.isAssignableFrom(target)){
 			throw new MappingException("target is not allowed: "
 					+ target.getSimpleName());
@@ -259,14 +272,22 @@ public class WebControllerBuilder extends ControllerBuilder{
 
         WebUtil.checkURI(view, resolvedView && view != null);
 
-		WebThrowableSafeData thr = new WebThrowableSafeData();
-		thr.setParameterName(id);
+		WebThrowableSafeData thr = new WebThrowableSafeData(null);
+		thr.getAction().setId(new ActionID(target.getSimpleName()));
+		thr.getAction().setCode(Action.getNextId());
+		thr.getAction().setName(target.getSimpleName());
+		thr.getAction().setController(controller);
+		thr.getAction().setResultValidator(validatorFactory.getValidator(new Configuration()));
+		thr.getAction().setParametersValidator(validatorFactory.getValidator(new Configuration()));
+		thr.getAction().setView(view);
+		thr.getAction().setResolvedView(resolvedView);
+		thr.getAction().setDispatcherType(dispatcher);
+		thr.getAction().setReturnRendered(resultRendered);
+		thr.getAction().getResultAction().setName(resultId);
+		((WebAction)thr.getAction()).setResponseStatus(responseError);
 		thr.setTarget(target);
-		thr.setView(view);
 		thr.setRedirect(false);
-		thr.setDispatcher(dispatcher);
-		thr.setReason(reason);
-		thr.setResponseError(responseError);
+        thr.setReason(reason);
 		this.controller.setThrowsSafe(thr);
 		
 		getLogger().info(
@@ -274,7 +295,8 @@ public class WebControllerBuilder extends ControllerBuilder{
 						new Object[] { target.getSimpleName(),
 								controller.getClassType().getSimpleName() }));
 		
-		return this;    	
+		return new WebThrowSafeBuilder(thr, controller, validatorFactory, this, null, 
+				webApplicationContext);    	
     }
     
     public ControllerBuilder setDefaultAction(String id){

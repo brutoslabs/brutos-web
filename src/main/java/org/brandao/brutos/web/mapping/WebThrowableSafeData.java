@@ -1,21 +1,17 @@
 package org.brandao.brutos.web.mapping;
 
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ThrowableSafeData;
 
 public class WebThrowableSafeData 
 	extends ThrowableSafeData{
 
-	private int responseError;
-	
+	public WebThrowableSafeData(Action action) {
+		super(action);
+		super.action = new WebAction();
+	}
+
 	private String reason;
-
-	public int getResponseError() {
-		return responseError;
-	}
-
-	public void setResponseError(int responseError) {
-		this.responseError = responseError;
-	}
 
 	public String getReason() {
 		return reason;

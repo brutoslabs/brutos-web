@@ -22,7 +22,6 @@ public class WebResourceAction extends DefaultResourceAction{
 
 	public RequestMethodType getRequestMethod(){
 		return this.requestMethod;
-		//return this.action == null? this.controller.getRequestMethod() : action.getRequestMethod();
 	}
 	
 }
