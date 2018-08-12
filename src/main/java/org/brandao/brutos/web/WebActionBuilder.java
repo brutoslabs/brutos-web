@@ -151,17 +151,12 @@ public class WebActionBuilder extends ActionBuilder{
 					+ controller.getClassType().getName());
 		}
 
-		if (StringUtil.isEmpty(view) && StringUtil.isEmpty(executor)){
-			throw new MappingException(
-					"view must be informed: " + target);
-		}
-		
 		if (!Throwable.class.isAssignableFrom(target)){
 			throw new MappingException("target is not allowed: "
 					+ target.getName());
 		}
 
-		if (this.action.getThrowsSafeOnAction(target) != null){
+		if (this.action.getThrowsSafe().containsKey(target)){
 			throw new MappingException(
 					"the exception has been added on action: "
 							+ target.getSimpleName());
@@ -179,6 +174,7 @@ public class WebActionBuilder extends ActionBuilder{
 		thr.getAction().setDispatcherType(dispatcher);
 		thr.getAction().setReturnRendered(resultRendered);
 		thr.getAction().getResultAction().setName(resultId);
+		thr.getAction().setExecutor(executor);
 		thr.setTarget(target);
 		thr.setRedirect(false);
         thr.setReason(reason);

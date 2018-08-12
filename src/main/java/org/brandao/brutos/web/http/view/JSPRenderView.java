@@ -147,6 +147,49 @@ public class JSPRenderView implements RenderViewType{
 			DispatcherType dispatcherType = null;
 			int responseCode              = 0;
 			
+			if(controller != null){
+				view           = controller.getView();
+				responseCode   = controller.getResponseStatus();
+				dispatcherType = controller.getDispatcherType();
+			}
+
+			if(action != null){
+				
+				if(action.getView() != null){
+					dispatcherType = action.getDispatcherType();
+					view           = action.getView();
+				}
+				
+				if(action.getResponseStatus() != 0){
+					responseCode = action.getResponseStatus();
+				}
+
+			}
+			
+			if(throwableSafeData != null){
+				
+				reason = throwableSafeData.getReason();
+				
+				if(throwableSafeData.getAction().getView() != null){
+					dispatcherType = throwableSafeData.getAction().getDispatcherType();
+					view           = throwableSafeData.getAction().getView();
+				}
+				
+				if(((WebAction)throwableSafeData.getAction()).getResponseStatus() != 0){
+					responseCode = ((WebAction)throwableSafeData.getAction()).getResponseStatus();
+				}
+				
+			}
+			
+			if(responseCode == 0){
+				responseCode = context.getResponseStatus();
+			}
+			
+			if(dispatcherType == null){
+				dispatcherType = context.getDispatcherType();
+			}
+
+			/*
 			if(throwableSafeData != null){
 				view = throwableSafeData.getAction().getView();
 				if(view != null){
@@ -195,7 +238,8 @@ public class JSPRenderView implements RenderViewType{
 					}
 				}
 			}
-
+            */
+			
 			this.show(
 					responseCode, 
 					reason,
@@ -203,16 +247,6 @@ public class JSPRenderView implements RenderViewType{
 					webMvcResponse,
 					view,
 					dispatcherType);
-			
-			/*
-			this.show(
-					this.getResponseCode(context, throwableSafeData, action, controller), 
-					reason,
-					webMvcRequest,
-					webMvcResponse,
-					this.getView(throwableSafeData, action, controller),
-					this.getDispatcherType(context, throwableSafeData, action, controller));
-			*/
 		}
 		
 	}

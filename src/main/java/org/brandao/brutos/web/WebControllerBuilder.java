@@ -254,17 +254,12 @@ public class WebControllerBuilder extends ControllerBuilder{
 					+ controller.getClassType().getSimpleName());
 		}
 
-		if (StringUtil.isEmpty(view) && StringUtil.isEmpty(executor)){
-			throw new MappingException(
-					"view must be informed: " + target);
-		}
-		
 		if (!Throwable.class.isAssignableFrom(target)){
 			throw new MappingException("target is not allowed: "
 					+ target.getSimpleName());
 		}
 
-		if (this.controller.getThrowsSafe(target) != null){
+		if (this.controller.getThrowsSafe().containsKey(target)){
 			throw new MappingException(
 					"the exception has been added on controller: "
 							+ target.getSimpleName());
@@ -284,6 +279,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 		thr.getAction().setDispatcherType(dispatcher);
 		thr.getAction().setReturnRendered(resultRendered);
 		thr.getAction().getResultAction().setName(resultId);
+		thr.getAction().setExecutor(executor);
 		((WebAction)thr.getAction()).setResponseStatus(responseError);
 		thr.setTarget(target);
 		thr.setRedirect(false);
