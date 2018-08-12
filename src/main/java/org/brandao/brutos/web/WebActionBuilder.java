@@ -175,6 +175,7 @@ public class WebActionBuilder extends ActionBuilder{
 		thr.getAction().setReturnRendered(resultRendered);
 		thr.getAction().getResultAction().setName(resultId);
 		thr.getAction().setExecutor(executor);
+		((WebAction)thr.getAction()).setResponseStatus(responseError);
 		thr.setTarget(target);
 		thr.setRedirect(false);
         thr.setReason(reason);
