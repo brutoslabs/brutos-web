@@ -140,7 +140,7 @@ public class WebInvoker extends Invoker{
 				request.getStackRequestElement().getThrowableSafeData();
 		
 		if(throwData != null){
-			request.setProperty(throwData.getParameterName(), request.getThrowable());
+			request.setProperty(throwData.getAction().getResultAction().getName(), request.getThrowable());
 		}
 		
 		List<ParameterAction> params = action.getParameters();

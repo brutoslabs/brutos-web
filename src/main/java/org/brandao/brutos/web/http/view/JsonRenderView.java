@@ -19,6 +19,7 @@ import org.brandao.brutos.web.MediaType;
 import org.brandao.brutos.web.WebMvcRequest;
 import org.brandao.brutos.web.WebMvcResponse;
 import org.brandao.brutos.web.bean.JsonBeanEncoder;
+import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
 import org.brandao.jbrgates.DefaultJSONContext;
 import org.brandao.jbrgates.JSONContext;
@@ -55,7 +56,7 @@ public class JsonRenderView implements RenderViewType{
 			try{
 				Map<String,Object> dta = new HashMap<String, Object>();
 				dta.put("message", request.getThrowable().getMessage());
-				servletResponse.setStatus(t.getResponseError());
+				servletResponse.setStatus(((WebAction)t.getAction()).getResponseStatus());
 				this.jsonContext.encode(dta, servletResponse.getOutputStream());
 			}
 			catch(Throwable e){

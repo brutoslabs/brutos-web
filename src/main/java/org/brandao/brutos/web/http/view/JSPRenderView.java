@@ -123,12 +123,9 @@ public class JSPRenderView implements RenderViewType{
 			if(throwableSafeData != null){
 				reason             = throwableSafeData.getReason();
 				Object objectThrow = stackRequestElement.getObjectThrow();
-				
-				if (throwableSafeData.getParameterName() != null){
-					requestScope
-						.put(
-							throwableSafeData.getParameterName(),
-							objectThrow);
+				String name        = throwableSafeData.getAction().getResultAction().getName();
+				if (name != null){
+					requestScope.put(name, objectThrow);
 				}
 			}
 			else{
@@ -151,10 +148,10 @@ public class JSPRenderView implements RenderViewType{
 			int responseCode              = 0;
 			
 			if(throwableSafeData != null){
-				view = throwableSafeData.getView();
+				view = throwableSafeData.getAction().getView();
 				if(view != null){
-					responseCode   = throwableSafeData.getResponseError();
-					dispatcherType = throwableSafeData.getDispatcher();
+					responseCode   = ((WebAction)throwableSafeData.getAction()).getResponseStatus();
+					dispatcherType = throwableSafeData.getAction().getDispatcherType();
 					
 					if(responseCode == 0){
 						responseCode = context.getResponseError();
@@ -249,80 +246,6 @@ public class JSPRenderView implements RenderViewType{
 		WebController controller               = (WebController)stackRequestElement.getController();
 		
 		this.show(context, stackRequestElement, throwableSafeData, action, controller, requestScope);
-	}
-
-	private String getView(WebThrowableSafeData throwableSafeData, WebAction action, 
-			WebController controller){
-		
-		String view = null;
-		
-		if(throwableSafeData != null){
-			view = throwableSafeData.getView();
-		}
-		
-		if(view == null && action != null){
-			view = action.getView();
-		}
-
-		if(view == null && controller != null){
-			view = controller.getView();
-		}
-		
-		return view;
-	}
-
-	private int getResponseCode(
-			WebApplicationContext context, WebThrowableSafeData throwableSafeData, 
-			WebAction action, WebController controller){
-		
-		int responseStatus = 0;
-		
-		if(throwableSafeData != null && throwableSafeData.getView() != null){
-			responseStatus = throwableSafeData.getResponseError();
-		}
-		
-		if(responseStatus <= 0 && action != null && action.getView() != null){
-			responseStatus = action.getResponseStatus();
-		}
-
-		if(responseStatus <= 0 && controller != null && controller.getView() != null){
-			responseStatus = controller.getResponseStatus();
-		}
-		
-		if(responseStatus <= 0){
-			responseStatus = 
-				throwableSafeData != null? 
-					context.getResponseError() : 
-					context.getResponseStatus();
-		}
-		
-		return responseStatus;
-	}
-	
-	private DispatcherType getDispatcherType(
-			WebApplicationContext context, WebThrowableSafeData throwableSafeData, 
-			WebAction action, WebController controller){
-		
-		DispatcherType dispatcherType = null;
-		
-		if(throwableSafeData != null){
-			dispatcherType = throwableSafeData.getDispatcher();
-		}
-		
-		if(dispatcherType == null && action != null){
-			dispatcherType = action.getDispatcherType();
-		}
-
-		if(dispatcherType == null && controller != null){
-			dispatcherType = controller.getDispatcherType();
-		}
-		
-		if(dispatcherType == null){
-			dispatcherType = context.getDispatcherType();
-		}
-		
-		return dispatcherType;
-		
 	}
 	
 }
