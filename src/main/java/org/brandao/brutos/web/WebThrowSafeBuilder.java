@@ -6,6 +6,7 @@ import org.brandao.brutos.ControllerBuilder;
 import org.brandao.brutos.DataType;
 import org.brandao.brutos.ThrowSafeBuilder;
 import org.brandao.brutos.ValidatorFactory;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.ThrowableSafeData;
@@ -20,10 +21,10 @@ public class WebThrowSafeBuilder
 	}
 
 	public WebThrowSafeBuilder(ThrowableSafeData throwSafe,
-			Controller controller, ValidatorFactory validatorFactory,
+			Controller controller, Action action, ValidatorFactory validatorFactory,
 			ControllerBuilder controllerBuilder, ActionBuilder actionBuilder,
 			ConfigurableApplicationContext applicationContext) {
-		super(throwSafe, controller, validatorFactory, controllerBuilder, 
+		super(throwSafe, controller, action, validatorFactory, controllerBuilder, 
 				actionBuilder, applicationContext);
 	}
 	

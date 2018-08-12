@@ -295,7 +295,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 						new Object[] { target.getSimpleName(),
 								controller.getClassType().getSimpleName() }));
 		
-		return new WebThrowSafeBuilder(thr, controller, validatorFactory, this, null, 
+		return new WebThrowSafeBuilder(thr, controller, null, validatorFactory, this, null, 
 				webApplicationContext);    	
     }
     

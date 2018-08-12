@@ -185,7 +185,7 @@ public class WebActionBuilder extends ActionBuilder{
         
 		this.action.setThrowsSafe(thr);
 		
-		return new WebThrowSafeBuilder(thr, controller, validatorFactory, controllerBuilder, 
+		return new WebThrowSafeBuilder(thr, controller, this.action, validatorFactory, controllerBuilder, 
 				this, webApplicationContext);    	
     }
     
