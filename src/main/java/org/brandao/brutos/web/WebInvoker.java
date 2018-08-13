@@ -174,7 +174,8 @@ public class WebInvoker extends Invoker{
     	webRequest.setResource(resource);
     	webRequest.setResourceAction(action);
     	webRequest.setParameters(parameters);
-    	webRequest.setRequestMethodType(action == null? null : ((WebAction)action.getMethodForm()).getRequestMethod());
+    	//webRequest.setRequestMethodType(action == null? null : ((WebAction)action.getMethodForm()).getRequestMethod());
+    	webRequest.setRequestMethodType(action == null? null : ((WebResourceAction)action).getRequestMethod());
     	webRequest.setType(null);
     	
 		this.invoke(webRequest, webResponse);

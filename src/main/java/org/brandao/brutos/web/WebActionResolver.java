@@ -68,8 +68,14 @@ public class WebActionResolver extends AbstractActionResolver{
     	this.cache = new SimpleResourceCache(300);
     }
     
-	public ResourceAction getResourceAction(Action action) throws ActionResolverException {
-		return new WebResourceAction(null, (WebController)action.getController(), (WebAction)action);
+	public ResourceAction getResourceAction(Action action, MutableMvcRequest request) throws ActionResolverException {
+		WebAction webAction = (WebAction)action;
+		WebController webController = (WebController)action.getController();
+		return new WebResourceAction(
+					webAction.getRequestMethod(), 
+					webController, 
+					webAction
+				);
 	}
     
 	public ResourceAction getResourceAction(ControllerManager controllerManager,

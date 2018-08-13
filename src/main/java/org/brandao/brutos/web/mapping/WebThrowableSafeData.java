@@ -8,7 +8,7 @@ public class WebThrowableSafeData
 
 	public WebThrowableSafeData(Action action) {
 		super(action);
-		super.action = new WebAction();
+		super.action = new ThrowWebAction();
 	}
 
 	private String reason;

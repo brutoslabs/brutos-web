@@ -159,7 +159,7 @@ public class WebControllerResolver implements ControllerResolver{
                 context.getActionResolver();
 
         ResourceAction resourceAction = 
-                actionResolver.getResourceAction(action);
+                actionResolver.getResourceAction(action, null);
 
         //handler.setResourceAction(resourceAction);
     }
