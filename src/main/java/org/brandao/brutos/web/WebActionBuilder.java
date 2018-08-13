@@ -31,7 +31,6 @@ import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
-import org.brandao.brutos.web.mapping.CurrentRequestMethodType;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
