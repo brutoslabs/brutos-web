@@ -42,11 +42,8 @@ import org.brandao.brutos.ResponseProvider;
 import org.brandao.brutos.ResponseTypeException;
 import org.brandao.brutos.Scopes;
 import org.brandao.brutos.StackRequestElement;
-import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.DataTypeMap;
-import org.brandao.brutos.mapping.ParameterAction;
-import org.brandao.brutos.mapping.ThrowableSafeData;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.mapping.MediaTypeMap;
 import org.brandao.brutos.web.mapping.WebAction;
@@ -109,54 +106,8 @@ public class WebInvoker extends Invoker{
 
 	protected void invokeApplication(MutableMvcRequest request, MutableMvcResponse response,
 			StackRequestElement element, RequestInstrument requestInstrument) throws Throwable{
-		
     	this.updateRedirectVars(request);
     	super.invokeApplication(request, response, element, requestInstrument);
-    	
-		ResourceAction action = request.getResourceAction();
-		if(action != null){
-			Action mr = action.getMethodForm();
-			
-			if(mr != null){
-				this.updateActionResult(request, response, action.getMethodForm());
-			}
-		}
-		
-	}
-
-	protected void updateActionResult(MutableMvcRequest request, 
-			MutableMvcResponse response, Action action){
-		
-		String resultName = action.getResultAction().getName();
-		
-		request.setProperty(
-			resultName == null? 
-				BrutosConstants.DEFAULT_RETURN_NAME : 
-				resultName, 
-			response.getResult()
-		);
-
-		ThrowableSafeData throwData = 
-				request.getStackRequestElement().getThrowableSafeData();
-		
-		if(throwData != null){
-			request.setProperty(throwData.getAction().getResultAction().getName(), request.getThrowable());
-		}
-		
-		List<ParameterAction> params = action.getParameters();
-		Object[] values = request.getParameters();
-		
-		int i=0;
-		
-		for(ParameterAction param: params){
-			request.setProperty(
-				param.getName() == null? 
-					param.getRealName() : 
-					param.getName(), 
-				values[i++]
-			);
-		}
-		
 	}
 	
 	protected void updateRequest(Controller controller, Object resource,
@@ -164,8 +115,7 @@ public class WebInvoker extends Invoker{
 
 		super.updateRequest(controller, resource, request);
 		WebMvcRequestImp webRequest = (WebMvcRequestImp)request;
-		webRequest.getServletRequest()
-			.setAttribute(BrutosConstants.CONTROLLER_PROPERTY, request.getResource());
+		webRequest.getServletRequest().setAttribute(BrutosConstants.CONTROLLER_PROPERTY, request.getResource());
 	}
 	
 	public Object invoke(Class<?> controllerClass, String actionId) {
