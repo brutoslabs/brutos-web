@@ -10,6 +10,38 @@ import org.brandao.brutos.web.WebMvcRequest;
 public class ThrowWebAction 
 	extends WebAction{
 
+	public boolean isResolvedView() {
+		if(super.getView() != null){
+			return super.isResolvedView();
+		}
+		
+		StackRequestElement sre = 
+				Invoker.getInstance()
+					.getStackRequestElement()
+					.getPreviousStackRequestElement();		
+		
+		return
+			sre == null?
+				super.isResolvedView() :
+			sre.getAction().getMethodForm().isResolvedView();
+	}
+
+	public String getView(){
+		if(super.getView() != null){
+			return super.getView();
+		}
+		
+		StackRequestElement sre = 
+				Invoker.getInstance()
+					.getStackRequestElement()
+					.getPreviousStackRequestElement();		
+		
+		return
+			sre == null?
+			super.getView() :
+			sre.getAction().getMethodForm().getView();
+	}
+	
 	public RequestMethodType getRequestMethod() {
 		StackRequestElement sre = 
 				Invoker.getInstance()
