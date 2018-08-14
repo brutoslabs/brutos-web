@@ -46,7 +46,6 @@ import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.mapping.DataTypeMap;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.mapping.MediaTypeMap;
-import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.scope.HeaderScope;
 import org.brandao.brutos.web.scope.ParamScope;
 import org.brandao.brutos.web.scope.RequestScope;
@@ -104,6 +103,10 @@ public class WebInvoker extends Invoker{
     	}
     }
 
+	protected StackRequestElement createStackRequestElement() {
+		return new WebStackRequestElementImp();
+	}
+    
 	protected void invokeApplication(MutableMvcRequest request, MutableMvcResponse response,
 			StackRequestElement element, RequestInstrument requestInstrument) throws Throwable{
     	this.updateRedirectVars(request);

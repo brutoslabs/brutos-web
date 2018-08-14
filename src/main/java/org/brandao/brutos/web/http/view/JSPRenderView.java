@@ -28,13 +28,13 @@ import org.brandao.brutos.RenderViewType;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.StackRequestElement;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.WebApplicationContext;
 import org.brandao.brutos.web.WebDispatcherType;
 import org.brandao.brutos.web.WebMvcRequest;
 import org.brandao.brutos.web.WebMvcResponse;
+import org.brandao.brutos.web.WebStackRequestElement;
 import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
@@ -102,7 +102,7 @@ public class JSPRenderView implements RenderViewType{
 	}
     
 	protected void show(
-			WebApplicationContext context, StackRequestElement stackRequestElement, 
+			WebApplicationContext context, WebStackRequestElement stackRequestElement, 
 			WebThrowableSafeData throwableSafeData, WebAction action, WebController controller, 
 			Scope requestScope){
 
@@ -110,16 +110,20 @@ public class JSPRenderView implements RenderViewType{
 		WebMvcResponse webMvcResponse = (WebMvcResponse)stackRequestElement.getResponse();
 		String reason                 = null;
 
+		/*
 		if(stackRequestElement.getView() != null){
 			this.show(
-					BrutosWebConstants.DEFAULT_RESPONSE_STATUS, 
-					reason,
+					stackRequestElement.getResponseStatus() == 0? 
+							BrutosWebConstants.DEFAULT_RESPONSE_STATUS : 
+							stackRequestElement.getResponseStatus(), 
+					stackRequestElement.getReason(),
 					webMvcRequest,
 					webMvcResponse,
 					stackRequestElement.getView(),
 					stackRequestElement.getDispatcherType());
 		}
 		else{
+		*/
 			if(throwableSafeData != null){
 				reason             = throwableSafeData.getReason();
 				Object objectThrow = stackRequestElement.getObjectThrow();
@@ -247,14 +251,14 @@ public class JSPRenderView implements RenderViewType{
 					webMvcResponse,
 					view,
 					dispatcherType);
-		}
+		/*}*/
 		
 	}
 	
 	public void show(MvcRequest request, MvcResponse response){
 		
 		RequestInstrument requestInstrument     = request.getRequestInstrument();
-		StackRequestElement stackRequestElement = request.getStackRequestElement();
+		WebStackRequestElement stackRequestElement = (WebStackRequestElement) request.getStackRequestElement();
 
 		if (requestInstrument.isHasViewProcessed()){
 			return;
@@ -266,8 +270,10 @@ public class JSPRenderView implements RenderViewType{
 
 		if (stackRequestElement.getView() != null) {
 			this.show(
-					BrutosWebConstants.DEFAULT_RESPONSE_STATUS,
-					null,
+					stackRequestElement.getResponseStatus() == 0? 
+							BrutosWebConstants.DEFAULT_RESPONSE_STATUS : 
+							stackRequestElement.getResponseStatus(), 
+					stackRequestElement.getReason(),
 					(WebMvcRequest)stackRequestElement.getRequest(),
 					(WebMvcResponse)stackRequestElement.getResponse(),
 					stackRequestElement.getView(),
