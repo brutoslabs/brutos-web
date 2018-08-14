@@ -127,7 +127,7 @@ public class JSPRenderView implements RenderViewType{
 			if(throwableSafeData != null){
 				reason             = throwableSafeData.getReason();
 				Object objectThrow = stackRequestElement.getObjectThrow();
-				String name        = throwableSafeData.getAction().getResultAction().getName();
+				String name        = throwableSafeData.getParameterName();
 				if (name != null){
 					requestScope.put(name, objectThrow);
 				}
