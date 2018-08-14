@@ -4,13 +4,13 @@
 	<groupId>org.brandao</groupId>
 	<artifactId>brutos-web</artifactId>
 	<packaging>jar</packaging>
-	<version>2.0-rc2</version>
+	<version>2.0-rc3</version>
 	<name>brutos-web</name>
 	<description>Brutos web. This artifact depends on the brutos-core.</description>
 	<url>http://www.brutosframework.com.br/</url>
 
 	<issueManagement>
-		<url>https://github.com/brandaof/brutos-mvc/issues</url>
+		<url>https://github.com/brandaof/brutos-web/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
 
@@ -23,9 +23,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/brandaof/brutos-mvc</url>
-		<connection>scm:git:https://github.com/brandaof/brutos-mvc.git</connection>
-		<developerConnection>scm:git:git@github.com:brandaof/brutos-mvc.git</developerConnection>
+		<url>https://github.com/brandaof/brutos-web</url>
+		<connection>scm:git:https://github.com/brandaof/brutos-web.git</connection>
+		<developerConnection>scm:git:git@github.com:brandaof/brutos-web.git</developerConnection>
 	</scm>
 	
 	<developers>
@@ -146,7 +146,7 @@
 		<dependency>
 			<groupId>org.brandao</groupId>
 			<artifactId>brutos-core</artifactId>
-			<version>2.0-rc2</version>
+			<version>2.0-rc3</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- JBRGates -->
@@ -169,4 +169,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<!-- <additionalparam>-Xdoclint:none</additionalparam> -->
 	</properties>
+	<organization>
+		<name>Brandao</name>
+		<url>http://www.brandao.org/</url>
+	</organization>
 </project>
