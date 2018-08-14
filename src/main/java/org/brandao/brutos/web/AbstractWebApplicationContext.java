@@ -55,6 +55,7 @@ import org.brandao.brutos.web.type.DownloadType;
 import org.brandao.brutos.web.type.FileType;
 import org.brandao.brutos.web.type.JSONType;
 import org.brandao.brutos.web.type.UploadedFileType;
+import org.brandao.brutos.web.type.WebResultActionType;
 
 /**
  * 
@@ -141,6 +142,7 @@ public abstract class AbstractWebApplicationContext
         this.typeManager.register(new DefaultTypeFactory(DownloadType.class, Download.class));
         this.typeManager.register(new DefaultTypeFactory(UploadedFileType.class, UploadedFile.class));
         this.typeManager.register(new DefaultTypeFactory(FileType.class, File.class));
+		this.typeManager.register(new DefaultTypeFactory(WebResultActionType.class, WebResultAction.class));
     }
     
     protected void initScopes(){
