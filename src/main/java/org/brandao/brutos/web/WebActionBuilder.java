@@ -173,7 +173,8 @@ public class WebActionBuilder extends ActionBuilder{
 		thr.getAction().setResolvedView(resolvedView);
 		thr.getAction().setDispatcherType(dispatcher);
 		thr.getAction().setReturnRendered(resultRendered);
-		thr.getAction().getResultAction().setName(resultId);
+		//thr.getAction().getResultAction().setName(resultId);
+		thr.setParameterName(resultId);
 		thr.getAction().setExecutor(executor);
 		((WebAction)thr.getAction()).setResponseStatus(responseError);
 		//((WebAction)thr.getAction()).setRequestMethod(new CurrentRequestMethodType());
