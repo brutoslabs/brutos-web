@@ -18,7 +18,7 @@
 package org.brandao.brutos.annotation.web;
 
 /**
- * Descreve os tipos MIME. 
+ * Descreve os tipos de mídia. 
 */
 public interface MediaTypes {
 	
