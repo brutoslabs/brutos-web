@@ -18,6 +18,7 @@
 package org.brandao.brutos.web;
 
 /**
+ * Descreve os status HTTP de uma ação.
  * 
  * @author Brandao
  *

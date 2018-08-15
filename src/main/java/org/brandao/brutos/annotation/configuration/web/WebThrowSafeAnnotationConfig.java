@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.brandao.brutos.annotation.web;
+package org.brandao.brutos.annotation.configuration.web;
 
 import org.brandao.brutos.ActionBuilder;
 import org.brandao.brutos.BrutosException;
@@ -28,10 +28,6 @@ import org.brandao.brutos.annotation.Stereotype;
 import org.brandao.brutos.annotation.ThrowSafe;
 import org.brandao.brutos.annotation.configuration.ActionEntry;
 import org.brandao.brutos.annotation.configuration.ThrowableEntry;
-import org.brandao.brutos.annotation.configuration.web.WebActionAnnotationConfig;
-import org.brandao.brutos.annotation.configuration.web.WebAnnotationUtil;
-import org.brandao.brutos.annotation.configuration.web.WebThrowActionConfig;
-import org.brandao.brutos.annotation.configuration.web.WebThrowableEntry;
 import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.web.WebActionBuilder;
 import org.brandao.brutos.web.WebControllerBuilder;

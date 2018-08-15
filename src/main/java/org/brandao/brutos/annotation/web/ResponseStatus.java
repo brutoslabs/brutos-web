@@ -22,10 +22,21 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.brandao.brutos.web.HttpStatus;
+
+/**
+ * Define o status da resposta de uma ação. 
+ * 
+ * @author Brandao
+ *
+ */
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ResponseStatus {
 
+	/**
+	 * O status da ação. Os valores estão descritos em {@link HttpStatus} 
+	 */
 	int	value();
 	
 }

@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.brandao.brutos.annotation.DispatcherType;
 
 /**
+ * Especifica o mapeamento de uma exceção.
  * 
  * @author Brandao
  *
@@ -48,11 +49,7 @@ public @interface ResponseError {
 	String	reason() default "";
 	
     /**
-     * Visão da exceção. Se não for informada,
-     * será PREFIX_VIEW + CONTROLLER_NAME + SEPARATOR_VIEW
-     * [+ ACTION_NAME + SEPARATOR_VIEW] + EXCEPTION_NAME. 
-     * Somente será usado o ACTION_NAME se for especificada 
-     * na ação.
+     * Visão da exceção.
      */
     String view() default "";
     
@@ -62,7 +59,7 @@ public @interface ResponseError {
     Class<? extends Throwable>[] target() default {};
 
     /**
-     * pseudônimo do {@link ResponseError#target()}
+     * Pseudônimo do {@link ResponseError#target()}
      */
     Class<? extends Throwable>[] value() default {};
     
@@ -79,7 +76,7 @@ public @interface ResponseError {
     String dispatcher() default "";
     
     /**
-     * Determina a renderização, ou não, da vista. 
+     * Determina a renderização ou não da vista. 
      * Se verdadeiro a visão será renderizada, caso contrário não.
      */
     boolean rendered() default false;

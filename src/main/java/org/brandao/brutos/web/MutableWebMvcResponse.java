@@ -21,6 +21,11 @@ import javax.servlet.ServletResponse;
 
 import org.brandao.brutos.MutableMvcResponse;
 
+/**
+ * 
+ * @author Brandao
+ *
+ */
 public interface MutableWebMvcResponse 
 	extends MutableMvcResponse, WebMvcResponse{
 

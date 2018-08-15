@@ -21,6 +21,11 @@ import org.brandao.brutos.ConfigurableRenderViewImp;
 import org.brandao.brutos.web.http.view.JSPRenderView;
 import org.brandao.brutos.web.http.view.JsonRenderView;
 
+/**
+ * 
+ * @author Brandao
+ *
+ */
 public class WebConfigurableRenderViewImp extends ConfigurableRenderViewImp{
 
 	public WebConfigurableRenderViewImp(){

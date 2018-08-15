@@ -29,6 +29,7 @@ import org.brandao.brutos.annotation.FilterType;
 import org.brandao.brutos.annotation.configuration.ConfigurationEntry;
 import org.brandao.brutos.annotation.configuration.web.WebActionAnnotationConfig;
 import org.brandao.brutos.annotation.configuration.web.WebControllerAnnotationConfig;
+import org.brandao.brutos.annotation.configuration.web.WebThrowSafeAnnotationConfig;
 import org.brandao.brutos.web.WebXMLComponentDefinitionReader;
 import org.brandao.brutos.xml.FilterEntity;
 import org.brandao.brutos.xml.ScannerEntity;

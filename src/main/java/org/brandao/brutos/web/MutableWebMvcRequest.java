@@ -21,6 +21,11 @@ import javax.servlet.ServletRequest;
 
 import org.brandao.brutos.MutableMvcRequest;
 
+/**
+ * 
+ * @author Brandao
+ *
+ */
 public interface MutableWebMvcRequest 
 	extends MutableMvcRequest, WebMvcRequest {
 
