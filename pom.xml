@@ -6,7 +6,7 @@
 	<packaging>jar</packaging>
 	<version>2.0-rc3</version>
 	<name>brutos-web</name>
-	<description>Brutos web. This artifact depends on the brutos-core.</description>
+	<description>Brutos web. This artifact depends on the brutos-core and brutos-annotation.</description>
 	<url>http://www.brutosframework.com.br/</url>
 
 	<issueManagement>
