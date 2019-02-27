@@ -30,9 +30,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 
 import org.brandao.brutos.ApplicationContext;
 import org.brandao.brutos.DataType;
@@ -134,9 +136,19 @@ public class WebMvcRequestImp
 		String id = this.request.getRequestId();
 		
 		if(id == null){
-			id = this.parseRequestId(
-					this._getRequest().getRequestURI(), 
-					this._getRequest().getContextPath());
+			HttpServletRequest r = this._getRequest();
+			String include = (String) r.getAttribute("javax.servlet.include.request_uri");
+			
+			if(include != null) {
+				id = this.parseRequestId(
+						include, 
+						(String)r.getAttribute("javax.servlet.include.context_path"));
+			}
+			else {
+				id = this.parseRequestId(
+						this._getRequest().getRequestURI(), 
+						this._getRequest().getContextPath());
+			}
 			this.request.setRequestId(id);
 		}
 		

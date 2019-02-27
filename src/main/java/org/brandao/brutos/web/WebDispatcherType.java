@@ -39,6 +39,10 @@ public class WebDispatcherType extends DispatcherType{
 		super(name);
 	}
 
+	public static DispatcherType valueOf(String value) {
+		return DispatcherType.valueOf(value);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -382,7 +382,23 @@ public abstract class AbstractWebApplicationContext
         catch( Exception e ){
             throw new BrutosException( e );
         }
-    }    
+    }
+    
+    protected DispatcherType getInitDispatcherType(){
+        try{
+            Properties config = this.getConfiguration();
+            String value =
+                config.getProperty(
+            		BrutosConstants.DISPATCHER_TYPE,
+            		WebDispatcherType.FORWARD.toString());
+
+            return WebDispatcherType.valueOf(value);
+        }
+        catch( Exception e ){
+            throw new BrutosException( e );
+        }
+    }
+    
     public void setActionParameterName(String name){
     	this.actionParameterName = name;
     }
