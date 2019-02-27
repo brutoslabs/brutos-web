@@ -31,6 +31,7 @@ public class ActionTest extends BrutosTestCase{
 
 	@SuppressWarnings("unchecked")
 	public void testActionParamListObject(){
+		
 		WebApplicationContextTester.run(
 			"/listtest", 
 			new BasicWebApplicationTester(){
