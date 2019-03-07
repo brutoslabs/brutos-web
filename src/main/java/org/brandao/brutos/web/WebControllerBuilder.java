@@ -226,7 +226,7 @@ public class WebControllerBuilder extends ControllerBuilder{
     		Class<?> target, String view, String id, 
             DispatcherType dispatcher, boolean resolvedView ){
     	return this.addThrowable(target, null, responseError, 
-    			reason, view, dispatcher, resolvedView, null, false);
+    			reason, view, dispatcher, resolvedView, id, false);
     }
     
     public WebThrowSafeBuilder addThrowable(Class<?> target, String executor, 

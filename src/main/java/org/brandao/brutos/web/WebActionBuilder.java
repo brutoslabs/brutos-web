@@ -120,7 +120,7 @@ public class WebActionBuilder extends ActionBuilder{
     		Class<?> target, String view, String id, DispatcherType dispatcher, 
     		boolean resolvedView ){
     	return this.addThrowable(target, null, responseError, reason, view, 
-    			dispatcher, resolvedView, null, false);
+    			dispatcher, resolvedView, id, false);
     }
     
     public WebThrowSafeBuilder addThrowable(Class<?> target, String executor, 
