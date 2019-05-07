@@ -1,1 +1,0 @@
-org.brandao.brutos.applicationcontext=BrutosApplicationContext, org.brandao.brutos.annotation.AnnotationApplicationContext, org.brandao.brutos.xml.XMLApplicationContext

@@ -1,1 +1,0 @@
-<jsp:forward page="/layout/login.jsp"/>
