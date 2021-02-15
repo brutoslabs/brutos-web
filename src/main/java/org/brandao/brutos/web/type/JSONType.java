@@ -70,4 +70,8 @@ public class JSONType extends SerializableType {
         out.flush();
     }
 
+	public String toString(Object value) {
+		return value == null? null : jsonContext.encode(value);
+	}
+	
 }
