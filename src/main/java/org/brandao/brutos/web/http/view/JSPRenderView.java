@@ -132,7 +132,8 @@ public class JSPRenderView implements RenderViewType{
 					requestScope.put(name, objectThrow);
 				}
 			}
-			else{
+			else
+			if(action != null){
 				org.brandao.brutos.mapping.ResultAction resultAction =
 						action.getResultAction();
 				
