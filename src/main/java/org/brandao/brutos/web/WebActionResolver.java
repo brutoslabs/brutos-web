@@ -58,6 +58,8 @@ public class WebActionResolver extends AbstractActionResolver{
 	
 	private SimpleResourceCache cache;
 	
+	private Set<RequestMappingEntry> matches;
+	
     public WebActionResolver(){
     	super();
     	this.root = new RequestMappingNode();
@@ -66,6 +68,7 @@ public class WebActionResolver extends AbstractActionResolver{
     	this.addActionTypeResolver(WebActionType.DETACHED,   new DetachedActionTypeResolver());
     	this.addActionTypeResolver(WebActionType.HEADER,     new HeaderActionTypeResolver());
     	this.cache = new SimpleResourceCache(300);
+    	this.matches = new HashSet<RequestMappingEntry>();
     }
     
 	public ResourceAction getResourceAction(Action action, MutableMvcRequest request) throws ActionResolverException {
@@ -180,13 +183,28 @@ public class WebActionResolver extends AbstractActionResolver{
 	    		WebActionID aWID = (WebActionID)aID;
 		    	String[] parts   = WebUtil.parserURI(aWID.getId(), true).toArray(new String[0]);
 		    	
-		    	boolean added =
-		    			this.addNode(
-	    					this.root, 
-	    					new RequestMappingEntry(
-	    							aWID.getRequestMethodType(), 
-	    							controller, action),
-							parts, 0);
+		    	boolean added = false;
+		    	
+		    	RequestMappingEntry rme = 
+	    			new RequestMappingEntry(
+						aWID.getId(),
+						aWID.getRequestMethodType(), 
+						controller, action,
+						new StringPattern(aWID.getId())
+					);
+		    	
+		    	if(parts.length == 1 && aWID.isDynamic()) {
+		    		if(!matches.contains(rme)) {
+		    			matches.add(rme);
+		    			added = true;
+		    		}
+		    	}
+		    	else {
+	    			added = this.addNode(
+    					this.root, 
+    					rme,
+						parts, 0);
+		    	}
 		    	
 		    	if(!added){
 		    		throw new ActionResolverException("action has been added: " + aWID);
@@ -211,7 +229,17 @@ public class WebActionResolver extends AbstractActionResolver{
         	return new RequestEntry(this.root.getRequestEntry(methodType), null);
     	}
     	else{
-    		return this.getNode(this.root, methodType, request, parts, 0);
+    		RequestEntry r = this.getNode(this.root, methodType, request, parts, 0);
+    		
+    		if(r == null) {
+	        	for(RequestMappingEntry e: matches) {
+	        		if(e.getRequestMethodType().equals(methodType) && e.matches(value)) {
+	        			return new RequestEntry(e, e.getRequestParameters(request, value));
+	        		}
+	        	}
+    		}
+
+    		return r;
     	}
     }
     
@@ -226,14 +254,29 @@ public class WebActionResolver extends AbstractActionResolver{
 	    	for(ActionID aID: list){
 	    		WebActionID aWID = (WebActionID)aID;
 		    	String[] parts   = WebUtil.parserURI(aWID.getId(), true).toArray(new String[0]);
-		    	boolean removed =
-	    			this.removeNode(
-	    					this.root, 
-	    					new RequestMappingEntry(
-	    							aWID.getRequestMethodType(), 
-	    							controller, 
-	    							action),
-							parts, 0);
+		    	
+		    	boolean removed = false;
+		    	
+		    	RequestMappingEntry rme = 
+	    			new RequestMappingEntry(
+						aWID.getId(),
+						aWID.getRequestMethodType(), 
+						controller, action,
+						new StringPattern(aWID.getId())
+					);
+		    	
+		    	if(parts.length == 1 && aWID.isDynamic()) {
+		    		if(matches.contains(rme)) {
+		    			matches.remove(rme);
+		    			removed = true;
+		    		}
+		    	}
+		    	else {
+		    		removed = this.removeNode(
+    					this.root, 
+    					rme,
+						parts, 0);
+		    	}
 		    	
 		    	if(!removed){
 		    		throw new ActionResolverException("action not found: " + aWID);

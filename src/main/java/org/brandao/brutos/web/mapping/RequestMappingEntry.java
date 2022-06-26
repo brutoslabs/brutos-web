@@ -17,11 +17,18 @@
 
 package org.brandao.brutos.web.mapping;
 
+import java.util.List;
+import java.util.Map;
+
+import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.Controller;
 import org.brandao.brutos.web.RequestMethodType;
+import org.brandao.brutos.web.StringPattern;
 
 public class RequestMappingEntry{
+	
+	private String id;
 	
 	private RequestMethodType requestMethodType;
 	
@@ -29,11 +36,15 @@ public class RequestMappingEntry{
 	
 	private Action action;
 	
-	public RequestMappingEntry(RequestMethodType requestMethodType, 
-			Controller controller, Action action) {
+	private StringPattern pattern;
+	
+	public RequestMappingEntry(String id, RequestMethodType requestMethodType, 
+			Controller controller, Action action, StringPattern pattern) {
+		this.id = id;
 		this.controller = controller;
 		this.action = action;
 		this.requestMethodType = requestMethodType;
+		this.pattern = pattern;
 	}
 
 	public Controller getController() {
@@ -46,6 +57,49 @@ public class RequestMappingEntry{
 
 	public RequestMethodType getRequestMethodType() {
 		return requestMethodType;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public Map<String,List<String>> getRequestParameters(MutableMvcRequest request, String value){
+		return this.pattern == null? null : this.pattern.getParameters(value);
+	}
+	
+	public boolean matches(String value) {
+		return pattern == null? false : pattern.matches(value);
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((requestMethodType == null) ? 0 : requestMethodType.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RequestMappingEntry other = (RequestMappingEntry) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (requestMethodType == null) {
+			if (other.requestMethodType != null)
+				return false;
+		} else if (!requestMethodType.equals(other.requestMethodType))
+			return false;
+		return true;
 	}
 
 }

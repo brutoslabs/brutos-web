@@ -58,8 +58,8 @@ public class WebUtil {
                     return;
             }
             
-            if(!value.startsWith("/"))
-                throw new MalformedURLException("expected starts with \"/\": " + value);
+            //if(!value.startsWith("/"))
+            //    throw new MalformedURLException("expected starts with \"/\": " + value);
 
             StringPattern map = new StringPattern( value );
             

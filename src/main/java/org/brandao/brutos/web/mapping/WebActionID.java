@@ -25,4 +25,8 @@ public class WebActionID extends ActionID{
 		return requestMethodType;
 	}
 
+	public boolean isDynamic() {
+		return id.indexOf("{") != -1;
+	}
+	
 }
