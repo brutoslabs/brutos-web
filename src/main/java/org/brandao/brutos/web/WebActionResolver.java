@@ -223,7 +223,7 @@ public class WebActionResolver extends AbstractActionResolver{
     public RequestEntry get(String value, RequestMethodType methodType, 
     		MutableMvcRequest request) throws MalformedURLException{
     	
-    	String[] parts = WebUtil.parserURI(value, false).toArray(new String[0]);
+    	String[] parts = WebUtil.parserURI(value, false).toArray(new String[0]); 
     	
     	if(parts.length == 0){
         	return new RequestEntry(this.root.getRequestEntry(methodType), null);
