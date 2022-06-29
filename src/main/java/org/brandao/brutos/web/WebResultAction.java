@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.web;
 
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ResultAction;
 
 /**
@@ -27,6 +28,8 @@ import org.brandao.brutos.ResultAction;
 public interface WebResultAction 
 	extends ResultAction{
 
+	WebResultAction setDispatcher(DispatcherType value);
+	
 	WebResultAction setView(String view);
 
 	WebResultAction setView(String view, boolean resolved);

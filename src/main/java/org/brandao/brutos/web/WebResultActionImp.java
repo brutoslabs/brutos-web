@@ -20,6 +20,7 @@ package org.brandao.brutos.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.brandao.brutos.DispatcherType;
 import org.brandao.brutos.ResultActionImp;
 
 /**
@@ -35,10 +36,21 @@ public class WebResultActionImp
 	
 	private String reason;
 	
+	private DispatcherType dispatcher;
+
 	private Map<String,String> header;
 	
 	public WebResultActionImp(){
 		this.header = new HashMap<String, String>();
+	}
+
+	public WebResultAction setDispatcher(DispatcherType value) {
+		this.dispatcher = value;
+		return this;
+	}
+
+	public DispatcherType getDispatcher() {
+		return dispatcher;
 	}
 	
 	public WebResultAction setView(String view) {
@@ -96,6 +108,5 @@ public class WebResultActionImp
 	public String getReason() {
 		return reason;
 	}
-
 
 }

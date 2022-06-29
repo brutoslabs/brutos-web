@@ -58,7 +58,14 @@ public class WebResultActionType
 				throw new BrutosException(e);
 			}
 		}
+
+		WebStackRequestElement stackRequestElement = 
+				(WebStackRequestElement) request.getStackRequestElement();
+		stackRequestElement.setResponseStatus(responseStatus);
+		stackRequestElement.setReason(reason == null || reason.trim().length() != 0? null : reason);
+		stackRequestElement.setDispatcherType(resultAction.getDispatcher());
 		
+		/*
 		if(resultAction.getContent() == null){
 			WebStackRequestElement stackRequestElement = 
 					(WebStackRequestElement) request.getStackRequestElement();
@@ -69,6 +76,7 @@ public class WebResultActionType
 		if(responseStatus != 0){
 			response.setStatus(responseStatus);			
 		}
+		*/
 		
 		for (String key : header.keySet()) {
 			response.setHeader(key, header.get(key));

@@ -20,6 +20,7 @@ package org.brandao.brutos.web;
 import java.util.Map;
 
 import org.brandao.brutos.ConfigurableResultAction;
+import org.brandao.brutos.DispatcherType;
 
 /**
  * 
@@ -29,6 +30,7 @@ import org.brandao.brutos.ConfigurableResultAction;
 public interface ConfigurableWebResultAction 
 	extends WebResultAction, ConfigurableResultAction{
 
+	
 	Map<String, String> getHeader();
 
 	void setHeader(Map<String, String> header);
@@ -37,4 +39,5 @@ public interface ConfigurableWebResultAction
 
 	String getReason();
 	
+	DispatcherType getDispatcher();
 }
