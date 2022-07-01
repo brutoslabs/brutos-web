@@ -37,6 +37,25 @@ public class WebUtil {
 
 	public static final String INDEX_REQUEST = "";
 	
+	public static ViewContext toViewContext(String value) {
+		
+		if(value == null || value.trim().length() == 0) {
+			return null;
+		}
+		
+		String[] split = value.split("\\:");
+		
+		if(split.length == 1) {
+			return new ViewContext(null, split[0]);
+		}
+		else
+		if(split.length == 2) {
+			return new ViewContext(split[0], split[1]);
+		}
+		
+		return null;
+	}
+	
     public static String fixURI(String uri){
         
         if(StringUtil.isEmpty(uri))
@@ -161,4 +180,24 @@ public class WebUtil {
 		
 	}
     
+	public static class ViewContext {
+		
+		private String context;
+		
+		private String view;
+
+		public ViewContext(String context, String view) {
+			this.context = context;
+			this.view = view;
+		}
+
+		public String getContext() {
+			return context;
+		}
+
+		public String getView() {
+			return view;
+		}
+		
+	}
 }

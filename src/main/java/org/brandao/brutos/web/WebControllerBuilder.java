@@ -39,6 +39,7 @@ import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.mapping.WebControllerID;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
+import org.brandao.brutos.web.util.WebUtil.ViewContext;
 
 /**
  * 
@@ -124,10 +125,13 @@ public class WebControllerBuilder extends ControllerBuilder{
     	//tratamento de variáveis
         ActionType type      = this.controller.getActionType();
         
+    	ViewContext viewContext = WebUtil.toViewContext(view);
+        
         id                   = StringUtil.adjust(id);
 		
         resultId             = StringUtil.adjust(resultId);
 		
+		view                 = viewContext == null? null : viewContext.getView();
 		view                 = StringUtil.adjust(view);
 		
 		executor             = StringUtil.adjust(executor);
@@ -202,8 +206,10 @@ public class WebControllerBuilder extends ControllerBuilder{
 			.setDispatcherType(dispatcher)
 			.setExecutor(executor)
 			.setResult(resultId)
-			.setResultRendered(resultRendered)
-			.setView(view, resolvedView);
+			.setResultRendered(resultRendered);
+		
+			((WebActionBuilder)actionBuilder).setView(viewContext.getContext(), view, resolvedView);
+			
 
 		getLogger()
 				.info(String
@@ -233,21 +239,16 @@ public class WebControllerBuilder extends ControllerBuilder{
 			int responseError, String reason, String view, DispatcherType dispatcher, 
 			boolean resolvedView, String resultId, boolean resultRendered){
     	
+    	ViewContext viewContext = WebUtil.toViewContext(view);
+    	
 		executor = StringUtil.adjust(executor);
 		view     = StringUtil.adjust(view);
 		resultId = StringUtil.isEmpty(resultId)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(resultId);
 		reason   = StringUtil.adjust(reason);
+		view     = viewContext == null? null : viewContext.getView();
 		view     = resolvedView ? 
 				view : 
 				webApplicationContext.getViewResolver().getView(this, null, target, view);
-		
-		//responseError = responseError <= 0? 
-		//	this.webApplicationContext.getResponseError() :
-		//	responseError;
-		
-		//dispatcher = dispatcher == null? 
-		//		this.webApplicationContext.getDispatcherType() :
-		//		dispatcher;
 
 		if (target == null){
 			throw new MappingException("target is required: "
@@ -274,6 +275,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 		thr.getAction().setController(controller);
 		thr.getAction().setResultValidator(validatorFactory.getValidator(new Configuration()));
 		thr.getAction().setParametersValidator(validatorFactory.getValidator(new Configuration()));
+		((WebAction)thr.getAction()).setContextView(viewContext == null? null : viewContext.getView());
 		thr.getAction().setView(view);
 		thr.getAction().setResolvedView(resolvedView);
 		thr.getAction().setDispatcherType(dispatcher);

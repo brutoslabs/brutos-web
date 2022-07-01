@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.web.http.view;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,6 +29,7 @@ import org.brandao.brutos.RenderViewType;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
+import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.WebApplicationContext;
@@ -48,7 +50,7 @@ public class JSPRenderView implements RenderViewType{
 	protected void show(int responseStatus, String reason,
 			WebMvcRequest webRequest,
 			WebMvcResponse webResponse,
-			String view, DispatcherType dispatcherType){
+			String view, ServletContext servletContext, DispatcherType dispatcherType){
 
 		HttpServletRequest request   = (HttpServletRequest) webRequest;
 		HttpServletResponse response = (HttpServletResponse)webResponse.getServletResponse();
@@ -108,8 +110,9 @@ public class JSPRenderView implements RenderViewType{
 
 		WebMvcRequest webMvcRequest   = (WebMvcRequest)stackRequestElement.getRequest();
 		WebMvcResponse webMvcResponse = (WebMvcResponse)stackRequestElement.getResponse();
+		ServletContext servletContext = context.getContext();
 		String reason                 = null;
-
+		
 		/*
 		if(stackRequestElement.getView() != null){
 			this.show(
@@ -149,10 +152,16 @@ public class JSPRenderView implements RenderViewType{
 			}
 				
 			String view                   = null;
+			ServletContext contextView    = servletContext;
 			DispatcherType dispatcherType = null;
 			int responseCode              = 0;
 			
 			if(controller != null){
+				
+				if(controller.getContextView() != null && !contextView.getContextPath().equals(controller.getContextView())) {
+					contextView = servletContext.getContext(controller.getContextView());
+				}
+				
 				view           = controller.getView();
 				responseCode   = controller.getResponseStatus();
 				dispatcherType = controller.getDispatcherType();
@@ -161,6 +170,11 @@ public class JSPRenderView implements RenderViewType{
 			if(action != null){
 				
 				if(action.getView() != null){
+					
+					if(action.getContextView() != null && !contextView.getContextPath().equals(action.getContextView())) {
+						contextView = servletContext.getContext(action.getContextView());
+					}
+					
 					dispatcherType = action.getDispatcherType();
 					view           = action.getView();
 				}
@@ -174,10 +188,16 @@ public class JSPRenderView implements RenderViewType{
 			if(throwableSafeData != null){
 				
 				reason = throwableSafeData.getReason();
+				WebAction twAction = (WebAction) throwableSafeData.getAction();
 				
-				if(throwableSafeData.getAction().getView() != null){
-					dispatcherType = throwableSafeData.getAction().getDispatcherType();
-					view           = throwableSafeData.getAction().getView();
+				if(twAction.getView() != null){
+					
+					if(twAction.getContextView() != null && !contextView.getContextPath().equals(twAction.getContextView())) {
+						contextView = servletContext.getContext(twAction.getContextView());
+					}
+					
+					dispatcherType = twAction.getDispatcherType();
+					view           = twAction.getView();
 				}
 				
 				if(((WebAction)throwableSafeData.getAction()).getResponseStatus() != 0){
@@ -194,63 +214,13 @@ public class JSPRenderView implements RenderViewType{
 				dispatcherType = context.getDispatcherType();
 			}
 
-			/*
-			if(throwableSafeData != null){
-				view = throwableSafeData.getAction().getView();
-				if(view != null){
-					responseCode   = ((WebAction)throwableSafeData.getAction()).getResponseStatus();
-					dispatcherType = throwableSafeData.getAction().getDispatcherType();
-					
-					if(responseCode == 0){
-						responseCode = context.getResponseError();
-					}
-					
-					if(dispatcherType == null){
-						dispatcherType = context.getDispatcherType();
-					}
-					
-				}
-			}
-			
-			if(view == null && action != null){
-				view = action.getView();
-				if(view != null){
-					responseCode   = action.getResponseStatus();
-					dispatcherType = action.getDispatcherType();
-					
-					if(responseCode == 0){
-						responseCode = context.getResponseStatus();
-					}
-					
-					if(dispatcherType == null){
-						dispatcherType = context.getDispatcherType();
-					}
-				}
-			}
-
-			if(view == null && controller != null){
-				view = controller.getView();
-				if(view != null){
-					responseCode   = controller.getResponseStatus();
-					dispatcherType = controller.getDispatcherType();
-					
-					if(responseCode == 0){
-						responseCode = context.getResponseStatus();
-					}
-					
-					if(dispatcherType == null){
-						dispatcherType = context.getDispatcherType();
-					}
-				}
-			}
-            */
-			
 			this.show(
 					responseCode, 
 					reason,
 					webMvcRequest,
 					webMvcResponse,
 					view,
+					contextView,
 					dispatcherType);
 		/*}*/
 		

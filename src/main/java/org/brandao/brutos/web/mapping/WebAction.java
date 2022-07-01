@@ -31,6 +31,8 @@ public class WebAction extends Action{
 	
 	private Map<Class<?>, Integer> responseErrors;
 	
+	private String contextView;
+	
 	public WebAction(){
 		super();
 		super.setRequestTypes(new MediaTypeMap());
@@ -38,6 +40,14 @@ public class WebAction extends Action{
 		this.responseErrors = new HashMap<Class<?>, Integer>();
 	}
 	
+	public String getContextView() {
+		return contextView;
+	}
+
+	public void setContextView(String contextView) {
+		this.contextView = contextView;
+	}
+
 	public RequestMethodType getRequestMethod() {
 		return requestMethod;
 	}

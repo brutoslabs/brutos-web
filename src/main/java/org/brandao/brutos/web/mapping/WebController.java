@@ -34,6 +34,8 @@ public class WebController extends Controller{
 	
 	private RequestMethodType requestMethod;
 	
+	private String contextView;
+	
 	public WebController(ConfigurableApplicationContext context) {
 		super(context);
 		super.setRequestTypes(new MediaTypeMap());
@@ -46,6 +48,14 @@ public class WebController extends Controller{
 		super.getActions().put(wid, method);
 		super.getContext().getActionResolver()
 			.registry(wcid, method.getController(), wid, method);
+	}
+
+	public String getContextView() {
+		return contextView;
+	}
+
+	public void setContextView(String contextView) {
+		this.contextView = contextView;
 	}
 
 	public Action getActionByName(String name){

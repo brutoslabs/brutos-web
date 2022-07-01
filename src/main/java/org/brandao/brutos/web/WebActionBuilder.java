@@ -35,6 +35,7 @@ import org.brandao.brutos.web.mapping.WebAction;
 import org.brandao.brutos.web.mapping.WebActionID;
 import org.brandao.brutos.web.mapping.WebThrowableSafeData;
 import org.brandao.brutos.web.util.WebUtil;
+import org.brandao.brutos.web.util.WebUtil.ViewContext;
 
 /**
  * 
@@ -58,6 +59,20 @@ public class WebActionBuilder extends ActionBuilder{
                 controllerBuilder, applicationContext);
         this.webApplicationContext = (ConfigurableWebApplicationContext)applicationContext;
     }
+
+	public ActionBuilder setView(String context, String view, boolean resolvedView) {
+
+		view = 
+			resolvedView ? 
+				view : 
+				applicationContext.getViewResolver().getView(this.controllerBuilder, this, null, view);
+
+		((WebAction)this.action).setContextView(context);
+		this.action.setView(view);
+		this.action.setResolvedView(resolvedView);
+		
+		return this;
+	}
     
 	public ActionBuilder addAlias(String id) {
 		return this.addAlias(id, null);
@@ -127,11 +142,14 @@ public class WebActionBuilder extends ActionBuilder{
 			int responseError, String reason, String view, DispatcherType dispatcher, 
 			boolean resolvedView, String resultId, boolean resultRendered){
     	
+    	ViewContext viewContext = WebUtil.toViewContext(view);
+    	
 		executor = StringUtil.adjust(executor);
 		view     = StringUtil.adjust(view);
 		resultId = StringUtil.isEmpty(resultId)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(resultId);
 		reason   = StringUtil.adjust(reason);
 		resultId = StringUtil.adjust(resultId);
+		view     = viewContext == null? null : viewContext.getView();
 		view     = resolvedView ? 
 				view : 
 				webApplicationContext.getViewResolver().getView(this.controllerBuilder, this, target, view);
@@ -170,6 +188,7 @@ public class WebActionBuilder extends ActionBuilder{
 		thr.getAction().setResultValidator(validatorFactory.getValidator(new Configuration()));
 		thr.getAction().setParametersValidator(validatorFactory.getValidator(new Configuration()));
 		thr.getAction().setView(view);
+		((WebAction)thr.getAction()).setContextView(viewContext == null? null : viewContext.getView());
 		thr.getAction().setResolvedView(resolvedView);
 		thr.getAction().setDispatcherType(dispatcher);
 		thr.getAction().setReturnRendered(resultRendered);
