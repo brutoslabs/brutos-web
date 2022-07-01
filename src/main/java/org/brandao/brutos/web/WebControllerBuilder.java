@@ -252,7 +252,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 
 		if (target == null){
 			throw new MappingException("target is required: "
-					+ controller.getClassType().getSimpleName());
+					+ controller.getClassType().getSimpleName()); 
 		}
 
 		if (!Throwable.class.isAssignableFrom(target)){
