@@ -27,6 +27,8 @@ import org.brandao.brutos.web.MutableWebMvcRequest;
 import org.brandao.brutos.web.MutableWebMvcResponse;
 import org.brandao.brutos.web.WebResultActionImp;
 import org.brandao.brutos.web.WebStackRequestElement;
+import org.brandao.brutos.web.util.WebUtil;
+import org.brandao.brutos.web.util.WebUtil.ViewContext;
 
 /**
  * 
@@ -48,6 +50,8 @@ public class WebResultActionType
 		Map<String, String> header               = resultAction.getHeader();
 		int responseStatus                       = resultAction.getResponseStatus();
 		String reason                            = resultAction.getReason();
+		String view                              = resultAction.getView();
+		String viewContext                       = null;
 		
 		if(responseStatus != 0 && reason != null){
 			try{
@@ -59,8 +63,16 @@ public class WebResultActionType
 			}
 		}
 
+    	ViewContext vc = WebUtil.toViewContext(view);
+    	
+		view = vc == null? null : vc.getView();
+		viewContext = vc == null? null : vc.getContext();
+		
+		resultAction.setView(view);
+		
 		WebStackRequestElement stackRequestElement = 
 				(WebStackRequestElement) request.getStackRequestElement();
+		stackRequestElement.setViewContext(viewContext);
 		stackRequestElement.setResponseStatus(responseStatus);
 		stackRequestElement.setReason(reason == null || reason.trim().length() != 0? null : reason);
 		stackRequestElement.setDispatcherType(resultAction.getDispatcher());

@@ -152,8 +152,8 @@ public class JSPRenderView implements RenderViewType{
 			
 			if(controller != null){
 				
-				if(controller.getContextView() != null && !controller.getContextView().equals(viewContext)) {
-					viewContext = controller.getContextView();
+				if(controller.getViewContext() != null && !controller.getViewContext().equals(viewContext)) {
+					viewContext = controller.getViewContext();
 				}
 				
 				view           = controller.getView();

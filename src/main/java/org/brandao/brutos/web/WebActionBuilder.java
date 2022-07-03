@@ -159,7 +159,7 @@ public class WebActionBuilder extends ActionBuilder{
 					webApplicationContext.getViewResolver().getView(this.controllerBuilder, this, target, view);
 		
         WebUtil.checkURI(view, resolvedView && view != null);
-        WebUtil.checkURI(viewContext.getContext(), false);
+        WebUtil.checkURI(context, false);
 		
 		WebThrowableSafeData thr = new WebThrowableSafeData(this.action);
 		thr.getAction().setId(new ActionID(target.getSimpleName()));

@@ -34,7 +34,7 @@ public class WebController extends Controller{
 	
 	private RequestMethodType requestMethod;
 	
-	private String contextView;
+	private String viewContext;
 	
 	public WebController(ConfigurableApplicationContext context) {
 		super(context);
@@ -50,12 +50,13 @@ public class WebController extends Controller{
 			.registry(wcid, method.getController(), wid, method);
 	}
 
-	public String getContextView() {
-		return contextView;
+
+	public String getViewContext() {
+		return viewContext;
 	}
 
-	public void setContextView(String contextView) {
-		this.contextView = contextView;
+	public void setViewContext(String viewContext) {
+		this.viewContext = viewContext;
 	}
 
 	public Action getActionByName(String name){

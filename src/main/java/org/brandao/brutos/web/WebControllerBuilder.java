@@ -55,6 +55,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 	
     public WebControllerBuilder(ControllerBuilder builder, ControllerManager.InternalUpdate internalUpdate){
         super( builder, internalUpdate );
+        this.webApplicationContext = (ConfigurableWebApplicationContext)applicationContext;
     }
     
     public WebControllerBuilder( Controller controller, ControllerManager controllerManager,
@@ -254,14 +255,14 @@ public class WebControllerBuilder extends ControllerBuilder{
 
     	ViewContext viewContext = WebUtil.toViewContext(view);
     	String context = viewContext == null? null : viewContext.getContext();
-    	
 		view = viewContext == null? null : viewContext.getView();
+		
 		view = resolvedView ? 
 				view : 
 				webApplicationContext.getViewResolver().getView(this, null, target, view);
 		
         WebUtil.checkURI(view, resolvedView && view != null);
-        WebUtil.checkURI(viewContext.getContext(), false);
+        WebUtil.checkURI(context, false);
 
 		WebThrowableSafeData thr = new WebThrowableSafeData(null);
 		thr.getAction().setId(new ActionID(target.getSimpleName()));
@@ -351,7 +352,7 @@ public class WebControllerBuilder extends ControllerBuilder{
         
     	WebUtil.checkURI(context, false);
         
-        this.controller.setViewContext(context);
+        ((WebController)this.controller).setViewContext(context);
         return super.setView(view, resolvedView);
     }
     

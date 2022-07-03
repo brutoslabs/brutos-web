@@ -32,6 +32,8 @@ public class WebStackRequestElementImp
 	
 	private String reason;
 	
+	private String viewContext;
+	
 	public void setResponseStatus(int value) {
 		this.responseStatus = value; 
 	}
@@ -46,6 +48,14 @@ public class WebStackRequestElementImp
 
 	public String getReason() {
 		return this.reason;
+	}
+
+	public String getViewContext() {
+		return viewContext;
+	}
+
+	public void setViewContext(String value) {
+		this.viewContext = value;
 	}
 
 }
