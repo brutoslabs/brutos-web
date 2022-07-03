@@ -83,14 +83,14 @@ public class JSPRenderView implements RenderViewType{
 			}
 			
 	        if( dispatcherType == WebDispatcherType.FORWARD ){
-	        	request.getRequestDispatcher(view)
+	        	servletContext.getRequestDispatcher(view)
 	                        .forward(
 	                        		request, 
 	                        		response);
 	        }
 	        else
 	        if( dispatcherType == WebDispatcherType.INCLUDE ){
-	        	request.getRequestDispatcher(view)
+	        	servletContext.getRequestDispatcher(view)
 	            .include(
 	            		request, 
 	            		response);
@@ -208,7 +208,7 @@ public class JSPRenderView implements RenderViewType{
 				dispatcherType = context.getDispatcherType();
 			}
 
-			this.show(
+			show(
 					responseCode, 
 					reason,
 					webMvcRequest,
@@ -252,7 +252,7 @@ public class JSPRenderView implements RenderViewType{
 		WebAction action                       = (WebAction)stackRequestElement.getAction().getMethodForm();
 		WebController controller               = (WebController)stackRequestElement.getController();
 		
-		this.show(context, stackRequestElement, throwableSafeData, action, controller, requestScope);
+		show(context, stackRequestElement, throwableSafeData, action, controller, requestScope);
 	}
 	
 }
