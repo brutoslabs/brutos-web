@@ -35,4 +35,8 @@ public interface WebStackRequestElement
 
 	String getReason();
 	
+	String getViewContext();
+	
+	void setViewContext(String value);
+	
 }

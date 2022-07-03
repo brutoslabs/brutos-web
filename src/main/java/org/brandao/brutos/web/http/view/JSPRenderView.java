@@ -29,7 +29,6 @@ import org.brandao.brutos.RenderViewType;
 import org.brandao.brutos.RequestInstrument;
 import org.brandao.brutos.ScopeType;
 import org.brandao.brutos.Scopes;
-import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.web.BrutosWebConstants;
 import org.brandao.brutos.web.WebApplicationContext;
@@ -50,10 +49,19 @@ public class JSPRenderView implements RenderViewType{
 	protected void show(int responseStatus, String reason,
 			WebMvcRequest webRequest,
 			WebMvcResponse webResponse,
-			String view, ServletContext servletContext, DispatcherType dispatcherType){
+			String view, String context, DispatcherType dispatcherType, WebApplicationContext webApplicationContext){
 
 		HttpServletRequest request   = (HttpServletRequest) webRequest;
 		HttpServletResponse response = (HttpServletResponse)webResponse.getServletResponse();
+		
+		ServletContext servletContext = webApplicationContext.getContext();
+		if(context != null && !servletContext.getContextPath().equals(context)) {
+			servletContext = servletContext.getContext(context);
+		}
+		
+		if(servletContext == null) {
+			throw new NullPointerException(context);
+		}
 		
 		try{
 			if(reason != null){
@@ -110,23 +118,9 @@ public class JSPRenderView implements RenderViewType{
 
 		WebMvcRequest webMvcRequest   = (WebMvcRequest)stackRequestElement.getRequest();
 		WebMvcResponse webMvcResponse = (WebMvcResponse)stackRequestElement.getResponse();
-		ServletContext servletContext = context.getContext();
+		
 		String reason                 = null;
 		
-		/*
-		if(stackRequestElement.getView() != null){
-			this.show(
-					stackRequestElement.getResponseStatus() == 0? 
-							BrutosWebConstants.DEFAULT_RESPONSE_STATUS : 
-							stackRequestElement.getResponseStatus(), 
-					stackRequestElement.getReason(),
-					webMvcRequest,
-					webMvcResponse,
-					stackRequestElement.getView(),
-					stackRequestElement.getDispatcherType());
-		}
-		else{
-		*/
 			if(throwableSafeData != null){
 				reason             = throwableSafeData.getReason();
 				Object objectThrow = stackRequestElement.getObjectThrow();
@@ -152,14 +146,14 @@ public class JSPRenderView implements RenderViewType{
 			}
 				
 			String view                   = null;
-			ServletContext contextView    = servletContext;
+			String viewContext            = null;
 			DispatcherType dispatcherType = null;
 			int responseCode              = 0;
 			
 			if(controller != null){
 				
-				if(controller.getContextView() != null && !contextView.getContextPath().equals(controller.getContextView())) {
-					contextView = servletContext.getContext(controller.getContextView());
+				if(controller.getContextView() != null && !controller.getContextView().equals(viewContext)) {
+					viewContext = controller.getContextView();
 				}
 				
 				view           = controller.getView();
@@ -171,8 +165,8 @@ public class JSPRenderView implements RenderViewType{
 				
 				if(action.getView() != null){
 					
-					if(action.getContextView() != null && !contextView.getContextPath().equals(action.getContextView())) {
-						contextView = servletContext.getContext(action.getContextView());
+					if(action.getContextView() != null && !action.getContextView().equals(viewContext)) {
+						viewContext = action.getContextView();
 					}
 					
 					dispatcherType = action.getDispatcherType();
@@ -192,8 +186,8 @@ public class JSPRenderView implements RenderViewType{
 				
 				if(twAction.getView() != null){
 					
-					if(twAction.getContextView() != null && !contextView.getContextPath().equals(twAction.getContextView())) {
-						contextView = servletContext.getContext(twAction.getContextView());
+					if(twAction.getContextView() != null && !twAction.getContextView().equals(viewContext)) {
+						viewContext = twAction.getContextView();
 					}
 					
 					dispatcherType = twAction.getDispatcherType();
@@ -220,9 +214,8 @@ public class JSPRenderView implements RenderViewType{
 					webMvcRequest,
 					webMvcResponse,
 					view,
-					contextView,
-					dispatcherType);
-		/*}*/
+					viewContext,
+					dispatcherType, context);
 		
 	}
 	
@@ -240,6 +233,7 @@ public class JSPRenderView implements RenderViewType{
 		Scope requestScope            = scopes.get(ScopeType.REQUEST.toString());
 
 		if (stackRequestElement.getView() != null) {
+			
 			this.show(
 					stackRequestElement.getResponseStatus() == 0? 
 							BrutosWebConstants.DEFAULT_RESPONSE_STATUS : 
@@ -248,7 +242,9 @@ public class JSPRenderView implements RenderViewType{
 					(WebMvcRequest)stackRequestElement.getRequest(),
 					(WebMvcResponse)stackRequestElement.getResponse(),
 					stackRequestElement.getView(),
-					stackRequestElement.getDispatcherType());
+					stackRequestElement.getViewContext(),
+					stackRequestElement.getDispatcherType(),
+					context);
 			return;
 		}
 

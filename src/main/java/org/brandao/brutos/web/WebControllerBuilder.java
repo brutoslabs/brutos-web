@@ -124,16 +124,9 @@ public class WebControllerBuilder extends ControllerBuilder{
     	
     	//tratamento de variáveis
         ActionType type      = this.controller.getActionType();
-        
-    	ViewContext viewContext = WebUtil.toViewContext(view);
-        
         id                   = StringUtil.adjust(id);
-		
         resultId             = StringUtil.adjust(resultId);
-		
-		view                 = viewContext == null? null : viewContext.getView();
 		view                 = StringUtil.adjust(view);
-		
 		executor             = StringUtil.adjust(executor);
 
 		if(StringUtil.isEmpty(id) && !StringUtil.isEmpty(executor)){
@@ -207,8 +200,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 			.setExecutor(executor)
 			.setResult(resultId)
 			.setResultRendered(resultRendered);
-		
-			((WebActionBuilder)actionBuilder).setView(viewContext.getContext(), view, resolvedView);
+			((WebActionBuilder)actionBuilder).setView(view, resolvedView);
 			
 
 		getLogger()
@@ -239,16 +231,10 @@ public class WebControllerBuilder extends ControllerBuilder{
 			int responseError, String reason, String view, DispatcherType dispatcher, 
 			boolean resolvedView, String resultId, boolean resultRendered){
     	
-    	ViewContext viewContext = WebUtil.toViewContext(view);
-    	
 		executor = StringUtil.adjust(executor);
 		view     = StringUtil.adjust(view);
 		resultId = StringUtil.isEmpty(resultId)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(resultId);
 		reason   = StringUtil.adjust(reason);
-		view     = viewContext == null? null : viewContext.getView();
-		view     = resolvedView ? 
-				view : 
-				webApplicationContext.getViewResolver().getView(this, null, target, view);
 
 		if (target == null){
 			throw new MappingException("target is required: "
@@ -266,7 +252,16 @@ public class WebControllerBuilder extends ControllerBuilder{
 							+ target.getSimpleName());
 		}
 
+    	ViewContext viewContext = WebUtil.toViewContext(view);
+    	String context = viewContext == null? null : viewContext.getContext();
+    	
+		view = viewContext == null? null : viewContext.getView();
+		view = resolvedView ? 
+				view : 
+				webApplicationContext.getViewResolver().getView(this, null, target, view);
+		
         WebUtil.checkURI(view, resolvedView && view != null);
+        WebUtil.checkURI(viewContext.getContext(), false);
 
 		WebThrowableSafeData thr = new WebThrowableSafeData(null);
 		thr.getAction().setId(new ActionID(target.getSimpleName()));
@@ -275,7 +270,7 @@ public class WebControllerBuilder extends ControllerBuilder{
 		thr.getAction().setController(controller);
 		thr.getAction().setResultValidator(validatorFactory.getValidator(new Configuration()));
 		thr.getAction().setParametersValidator(validatorFactory.getValidator(new Configuration()));
-		((WebAction)thr.getAction()).setContextView(viewContext == null? null : viewContext.getView());
+		((WebAction)thr.getAction()).setContextView(context);
 		thr.getAction().setView(view);
 		thr.getAction().setResolvedView(resolvedView);
 		thr.getAction().setDispatcherType(dispatcher);
@@ -341,10 +336,23 @@ public class WebControllerBuilder extends ControllerBuilder{
 	}
     
     public ControllerBuilder setView(String value, boolean resolvedView){
+    	
+    	ViewContext viewContext = WebUtil.toViewContext(value);
+    	
+		String view = viewContext == null? null : viewContext.getView();
+		String context = viewContext == null? null : viewContext.getContext();
+
+		view = StringUtil.adjust(view);
+		context = StringUtil.adjust(context);
+
         if(resolvedView){
-        	WebUtil.checkURI(value, resolvedView && value != null);
+        	WebUtil.checkURI(view, resolvedView && view != null);
         }
-        return super.setView(value, resolvedView);
+        
+    	WebUtil.checkURI(context, false);
+        
+        this.controller.setViewContext(context);
+        return super.setView(view, resolvedView);
     }
     
 	public ControllerBuilder addRequestType(DataType value){

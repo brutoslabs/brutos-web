@@ -60,20 +60,6 @@ public class WebActionBuilder extends ActionBuilder{
         this.webApplicationContext = (ConfigurableWebApplicationContext)applicationContext;
     }
 
-	public ActionBuilder setView(String context, String view, boolean resolvedView) {
-
-		view = 
-			resolvedView ? 
-				view : 
-				applicationContext.getViewResolver().getView(this.controllerBuilder, this, null, view);
-
-		((WebAction)this.action).setContextView(context);
-		this.action.setView(view);
-		this.action.setResolvedView(resolvedView);
-		
-		return this;
-	}
-    
 	public ActionBuilder addAlias(String id) {
 		return this.addAlias(id, null);
 	}
@@ -142,28 +128,12 @@ public class WebActionBuilder extends ActionBuilder{
 			int responseError, String reason, String view, DispatcherType dispatcher, 
 			boolean resolvedView, String resultId, boolean resultRendered){
     	
-    	ViewContext viewContext = WebUtil.toViewContext(view);
-    	
 		executor = StringUtil.adjust(executor);
 		view     = StringUtil.adjust(view);
 		resultId = StringUtil.isEmpty(resultId)? BrutosConstants.DEFAULT_EXCEPTION_NAME : StringUtil.adjust(resultId);
 		reason   = StringUtil.adjust(reason);
 		resultId = StringUtil.adjust(resultId);
-		view     = viewContext == null? null : viewContext.getView();
-		view     = resolvedView ? 
-				view : 
-				webApplicationContext.getViewResolver().getView(this.controllerBuilder, this, target, view);
 
-		//responseError = responseError <= 0? 
-		//		this.webApplicationContext.getResponseError() :
-		//		responseError;
-			
-		//dispatcher = dispatcher == null? 
-		//		this.webApplicationContext.getDispatcherType() :
-		//		dispatcher;
-
-        WebUtil.checkURI(view, resolvedView && view != null);
-				
 		if (target == null){
 			throw new MappingException("target is required: "
 					+ controller.getClassType().getName());
@@ -180,6 +150,17 @@ public class WebActionBuilder extends ActionBuilder{
 							+ target.getSimpleName());
 		}
 
+    	ViewContext viewContext = WebUtil.toViewContext(view);
+    	String context = viewContext == null? null : viewContext.getContext();
+    	
+		view = viewContext == null? null : viewContext.getView();
+		view = resolvedView ? 
+				view : 
+					webApplicationContext.getViewResolver().getView(this.controllerBuilder, this, target, view);
+		
+        WebUtil.checkURI(view, resolvedView && view != null);
+        WebUtil.checkURI(viewContext.getContext(), false);
+		
 		WebThrowableSafeData thr = new WebThrowableSafeData(this.action);
 		thr.getAction().setId(new ActionID(target.getSimpleName()));
 		thr.getAction().setCode(Action.getNextId());
@@ -188,7 +169,7 @@ public class WebActionBuilder extends ActionBuilder{
 		thr.getAction().setResultValidator(validatorFactory.getValidator(new Configuration()));
 		thr.getAction().setParametersValidator(validatorFactory.getValidator(new Configuration()));
 		thr.getAction().setView(view);
-		((WebAction)thr.getAction()).setContextView(viewContext == null? null : viewContext.getView());
+		((WebAction)thr.getAction()).setContextView(context);
 		thr.getAction().setResolvedView(resolvedView);
 		thr.getAction().setDispatcherType(dispatcher);
 		thr.getAction().setReturnRendered(resultRendered);
@@ -227,10 +208,23 @@ public class WebActionBuilder extends ActionBuilder{
     }
     
     public ActionBuilder setView(String value, boolean viewResolved){
+    	
+    	ViewContext viewContext = WebUtil.toViewContext(value);
+    	
+    	String view = viewContext == null? null : viewContext.getView();
+    	String context = viewContext == null? null : viewContext.getContext();
+    	
+		view = StringUtil.adjust(view);
+		context = StringUtil.adjust(context);
+    	
         if(viewResolved){
-        	WebUtil.checkURI(value, viewResolved && value != null);
+        	WebUtil.checkURI(view, viewResolved && view != null);
         }
-        return super.setView(value, viewResolved);
+        
+        WebUtil.checkURI(context, false);
+		((WebAction)this.action).setContextView(context);
+        
+        return super.setView(view, viewResolved);
     }
     
 	public ActionBuilder addRequestType(DataType value){

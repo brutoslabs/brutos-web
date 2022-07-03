@@ -27,7 +27,6 @@ import org.brandao.brutos.mapping.MappingException;
 import org.brandao.brutos.mapping.StringUtil;
 import org.brandao.brutos.web.mapping.WebController;
 import org.brandao.brutos.web.mapping.WebControllerID;
-import org.brandao.brutos.web.util.WebUtil;
 
 /**
  * 
@@ -106,9 +105,6 @@ public class WebControllerManager extends ControllerManagerImp{
 		if (actionType == null) {
 			throw new MappingException("action type is required");
 		}
-		
-        if(resolvedView && view != null)
-            WebUtil.checkURI(view, true);
 		
     	if(!actionType.isValidControllerId(id)){
     		throw new MappingException("invalid controller id: " + id);
