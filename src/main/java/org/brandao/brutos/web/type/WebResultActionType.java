@@ -50,6 +50,7 @@ public class WebResultActionType
 		Map<String, String> header               = resultAction.getHeader();
 		int responseStatus                       = resultAction.getResponseStatus();
 		String reason                            = resultAction.getReason();
+		boolean resolvedView						 = resultAction.isResolvedView();
 		String view                              = resultAction.getView();
 		String viewContext                       = null;
 		
@@ -68,7 +69,7 @@ public class WebResultActionType
 		view = vc == null? null : vc.getView();
 		viewContext = vc == null? null : vc.getContext();
 		
-		resultAction.setView(view);
+		resultAction.setView(view, resolvedView);
 		
 		WebStackRequestElement stackRequestElement = 
 				(WebStackRequestElement) request.getStackRequestElement();
