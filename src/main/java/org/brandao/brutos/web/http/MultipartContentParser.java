@@ -234,7 +234,8 @@ public class MultipartContentParser {
         this.len = this.readData( this.buffer, in );
         String s = new String( this.buffer, 0, this.len-2 );
 
-        while( !s.equals( boundary ) && !s.equals( boundary + "--" ) ){
+        //while( !s.equals( boundary ) && !s.equals( boundary + "--" ) ){
+        while( !s.endsWith( boundary ) && !s.endsWith( boundary + "--" ) ){
             if( s.length() != 0 )
                 value += ( value.length() == 0 )? s : s + "\n";
 

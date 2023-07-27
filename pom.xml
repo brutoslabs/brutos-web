@@ -4,7 +4,7 @@
 	<groupId>org.brandao</groupId>
 	<artifactId>brutos-web</artifactId>
 	<packaging>jar</packaging>
-	<version>2.0-rc3</version>
+	<version>3.0-b1</version>
 	<name>brutos-web</name>
 	<description>Brutos web. This artifact depends on the brutos-core and brutos-annotation.</description>
 	<url>http://www.brutosframework.com.br/</url>
@@ -74,6 +74,7 @@
 					</execution>
 				</executions>
 			</plugin>
+<!--			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -101,12 +102,12 @@
 								 
 								 ]]>
 							</header>
-							<doctitle>Brutos Application Framework ${project.version}</doctitle> <!-- Used by javadoc:javadoc goal -->
-							<windowtitle>Brutos Application Framework ${project.version}</windowtitle> <!-- Used by javadoc:javadoc goal -->
+							<doctitle>Brutos Application Framework ${project.version}</doctitle> 
+							<windowtitle>Brutos Application Framework ${project.version}</windowtitle>
 
-							<testDoctitle>Brutos Application Framework ${project.version}</testDoctitle> <!-- Used by javadoc:test-javadoc goal -->
+							<testDoctitle>Brutos Application Framework ${project.version}</testDoctitle>
 							<testWindowtitle>Brutos Application Framework
-								${project.version}</testWindowtitle> <!-- Used by javadoc:test-javadoc goal -->
+								${project.version}</testWindowtitle> 
 
 							<includeDependencySources>true</includeDependencySources>
 							<dependencySourceIncludes>
@@ -116,6 +117,7 @@
 					</execution>
 				</executions>
 			</plugin>
+-->			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
@@ -135,8 +137,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.0.2</version>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
 				</configuration>
@@ -175,7 +177,7 @@
 		<dependency>
 			<groupId>org.brandao</groupId>
 			<artifactId>brutos-core</artifactId>
-			<version>2.0-rc3</version>
+			<version>3.0-b1</version>
 		</dependency>
 		<!-- JBRGates -->
 		<dependency>
@@ -193,7 +195,7 @@
 		<dependency>
 			<groupId>org.brandao</groupId>
 			<artifactId>brutos-annotation</artifactId>
-			<version>2.0-rc3</version>
+			<version>3.0-b1</version>
 		</dependency>
 	</dependencies>
 
