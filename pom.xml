@@ -158,7 +158,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -170,7 +170,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>5.1.3.Final</version>
+			<version>5.2.4.Final</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- Brutos -->
@@ -187,9 +187,9 @@
 		</dependency>
 		<!-- Spring -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>4.3.5.RELEASE</version>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-core</artifactId>
+		    <version>6.0.11</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
