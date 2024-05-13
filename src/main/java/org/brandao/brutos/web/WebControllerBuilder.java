@@ -204,14 +204,16 @@ public class WebControllerBuilder extends ControllerBuilder{
 			((WebActionBuilder)actionBuilder).setView(view, resolvedView);
 			
 
-		getLogger()
-				.info(String
+		if(logger.isTraceEnabled()) {
+			logger
+				.trace(String
 						.format("adding action %s on controller %s",
 								new Object[] {
 										action.getId(),
 										this.controller.getClassType()
 												.getSimpleName() }));
-
+		}
+		
 		return actionBuilder;    	
     }
     
@@ -286,10 +288,12 @@ public class WebControllerBuilder extends ControllerBuilder{
         thr.setReason(reason);
 		this.controller.setThrowsSafe(thr);
 		
-		getLogger().info(
-				String.format("added exception %s on controller %s",
-						new Object[] { target.getSimpleName(),
-								controller.getClassType().getSimpleName() }));
+		if(logger.isTraceEnabled()) {
+			logger.trace(
+					String.format("added exception %s on controller %s",
+							new Object[] { target.getSimpleName(),
+									controller.getClassType().getSimpleName() }));
+		}
 		
 		return new WebThrowSafeBuilder(thr, controller, null, validatorFactory, this, null, 
 				webApplicationContext);    	
@@ -324,14 +328,16 @@ public class WebControllerBuilder extends ControllerBuilder{
 			throw new MappingException("action not found: \"" + id + "\"");
 
 		controller.setDefaultAction(actionID);
-		getLogger()
-				.info(String
+		
+		if(logger.isTraceEnabled()) {
+			logger
+				.trace(String
 						.format("adding default action %s on controller %s",
 								new Object[] {
 										id,
 										controller.getClassType()
 												.getSimpleName() }));
-
+		}
 		
 		return this;
 	}

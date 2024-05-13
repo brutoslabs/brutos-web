@@ -32,7 +32,8 @@ import org.brandao.brutos.web.mapping.WebControllerID;
  * 
  * @author Brandao
  */
-public class WebControllerManager extends ControllerManagerImp{
+public class WebControllerManager 
+	extends ControllerManagerImp {
  
 	private ConfigurableWebApplicationContext webApplicationContext;
 	
@@ -138,9 +139,11 @@ public class WebControllerManager extends ControllerManagerImp{
 
 		addController(controller.getId(), controller);
 
-		this.getLogger().info(
+		if(logger.isTraceEnabled()) {
+			logger.trace(
 				String.format("added controller %s",
 						new Object[] { classType.getSimpleName() }));
+		}
 		
 		return this.getCurrent();
 	}    
