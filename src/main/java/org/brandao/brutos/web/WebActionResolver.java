@@ -19,8 +19,6 @@ package org.brandao.brutos.web;
 
 import java.io.Serializable;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,10 +29,10 @@ import org.brandao.brutos.AbstractActionResolver;
 import org.brandao.brutos.ActionResolverException;
 import org.brandao.brutos.ActionTypeResolver;
 import org.brandao.brutos.ControllerManager;
-import org.brandao.brutos.DefaultMvcRequest;
-import org.brandao.brutos.DefaultResourceAction;
 import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.ResourceAction;
+import org.brandao.brutos.logger.Logger;
+import org.brandao.brutos.logger.LoggerProvider;
 import org.brandao.brutos.mapping.Action;
 import org.brandao.brutos.mapping.ActionID;
 import org.brandao.brutos.mapping.Controller;
@@ -54,6 +52,9 @@ import org.brandao.brutos.web.util.WebUtil;
 @SuppressWarnings("unused")
 public class WebActionResolver extends AbstractActionResolver{
     
+	private Logger logger = LoggerProvider.getCurrentLoggerProvider()
+			.getLogger(WebActionResolver.class.getName());
+	
 	private RequestMappingNode root;
 	
 	private SimpleResourceCache cache;
@@ -90,17 +91,40 @@ public class WebActionResolver extends AbstractActionResolver{
 			RequestMethodType methodType = webRequest.getRequestMethodType();
 			ResourceKey key              = new ResourceKey(id, methodType);
 			
+			if(logger.isTraceEnabled()) {
+				logger.trace("action: " + id + "[" + methodType + "]");
+			}
+			
 			RequestEntry entry = this.cache.get(key);
 			
 			if(entry != null){
+
 				
 				if(entry instanceof EmptyWebResourceAction){
+					
+					if(logger.isTraceEnabled()) {
+						logger.trace("selected empty action");
+					}
+					
 					return null;
+				}
+				
+				if(logger.isTraceEnabled()) {
+					logger.trace("selected cached action: " + 
+							entry.getRequestMappingEntry().getId() + 
+							"[" + entry.getRequestMappingEntry().getRequestMethodType() + "]");
 				}
 				
 			}
 			else{
 				entry = this.get(request.getRequestId(), webRequest.getRequestMethodType(), request);
+				
+				if(logger.isTraceEnabled()) {
+					logger.trace("selected action: " + 
+							entry.getRequestMappingEntry().getId() + 
+							"[" + entry.getRequestMappingEntry().getRequestMethodType() + "]");
+				}
+				
 				this.cache.put(key, entry == null? emptyWebResourceAction : entry);
 			}
 			
@@ -112,6 +136,12 @@ public class WebActionResolver extends AbstractActionResolver{
 			        for(String k: params.keySet() ){
 			        	for(String v: params.get(k)){
 			        		request.setParameter(k, v);
+			        		
+							if(logger.isTraceEnabled()) {
+								logger.trace("action parameter detected: " + 
+										k + "[" + v + "]");
+							}
+			        		
 			        	}
 			        }
 				}
