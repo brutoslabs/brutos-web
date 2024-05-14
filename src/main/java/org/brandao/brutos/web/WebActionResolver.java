@@ -91,77 +91,70 @@ public class WebActionResolver extends AbstractActionResolver{
 			RequestMethodType methodType = webRequest.getRequestMethodType();
 			ResourceKey key              = new ResourceKey(id, methodType);
 			
-			if(logger.isTraceEnabled()) {
-				logger.trace("action: " + id + "[" + methodType + "]");
-			}
-			
 			RequestEntry entry = this.cache.get(key);
-			
-			if(entry != null){
-
-				
-				if(entry instanceof EmptyWebResourceAction){
-					
-					if(logger.isTraceEnabled()) {
-						logger.trace("selected empty action");
-					}
-					
-					return null;
-				}
-				
-				if(logger.isTraceEnabled()) {
-					logger.trace("selected cached action: " + 
-							entry.getRequestMappingEntry().getId() + 
-							"[" + entry.getRequestMappingEntry().getRequestMethodType() + "]");
-				}
-				
-			}
-			else{
+			boolean cached     = true;
+			if(entry == null){
 				entry = this.get(request.getRequestId(), webRequest.getRequestMethodType(), request);
-				
-				if(logger.isTraceEnabled()) {
-					logger.trace("selected action: " + 
-							entry.getRequestMappingEntry().getId() + 
-							"[" + entry.getRequestMappingEntry().getRequestMethodType() + "]");
-				}
-				
 				this.cache.put(key, entry == null? emptyWebResourceAction : entry);
+				cached = false;
 			}
 			
-			if(entry != null){
+			if(entry != null && !(entry instanceof EmptyWebResourceAction)){
+				
+				ResourceAction action;
+				
+				if(entry.getRequestMappingEntry().getAction() == null){
+					ActionTypeResolver resolver = 
+						this.actionTypeResolver.get(
+						entry.getRequestMappingEntry().getController().getActionType());
+					action =
+						resolver.getResourceAction(
+								entry.getRequestMappingEntry().getController(), request);
+				}
+				else{
+					action = 
+						new WebResourceAction(
+							entry.getRequestMappingEntry().getRequestMethodType(),
+							(WebController)entry.getRequestMappingEntry().getController(), 
+							(WebAction)entry.getRequestMappingEntry().getAction() );
+				}
+
+				logger.trace("selected " + (cached? "cached " : "") + "action: " + 
+						entry.getRequestMappingEntry().getId() + 
+						"[" + entry.getRequestMappingEntry().getRequestMethodType() + "] -> " +
+						(action.getMethodForm() == null?
+								action.getController().getClassType().getName() :
+								action.getMethod()
+						)
+				);
 				
 				Map<String, List<String>> params = entry.getParameters();
 				
 				if(params != null){
-			        for(String k: params.keySet() ){
-			        	for(String v: params.get(k)){
+					
+					params.entrySet().stream().forEach((e)->{
+						String k = e.getKey();
+						e.getValue().stream().forEach((v)->{
 			        		request.setParameter(k, v);
 			        		
 							if(logger.isTraceEnabled()) {
 								logger.trace("action parameter detected: " + 
 										k + "[" + v + "]");
 							}
-			        		
-			        	}
-			        }
+							
+						});
+						
+					});
+					
 				}
 				
-				if(entry.getRequestMappingEntry().getAction() == null){
-					ActionTypeResolver resolver = 
-						this.actionTypeResolver.get(
-						entry.getRequestMappingEntry().getController().getActionType());
-					return
-						resolver.getResourceAction(
-								entry.getRequestMappingEntry().getController(), request);
-				}
-				else{
-					return new WebResourceAction(
-							entry.getRequestMappingEntry().getRequestMethodType(),
-							(WebController)entry.getRequestMappingEntry().getController(), 
-							(WebAction)entry.getRequestMappingEntry().getAction() );
-				}
+				return action;
 			}
 			
+			logger.trace("action not found: " + 
+					request.getRequestId() + 
+					"[" + webRequest.getRequestMethodType() + "]");
+
 			return null;
 		}
 		catch(Throwable e){
