@@ -45,8 +45,9 @@ public class WebActionBuilder extends ActionBuilder{
     
 	private ConfigurableWebApplicationContext webApplicationContext;
 	
-    public WebActionBuilder(ActionBuilder builder){
+    public WebActionBuilder(ActionBuilder builder, ConfigurableApplicationContext applicationContext){
         super(builder);
+        this.webApplicationContext = (ConfigurableWebApplicationContext) applicationContext;
     }
     
     public WebActionBuilder(
