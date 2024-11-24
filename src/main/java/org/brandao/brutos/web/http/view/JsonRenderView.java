@@ -48,7 +48,7 @@ public class JsonRenderView implements RenderViewType{
 				(HttpServletResponse) mvcResponse.getServletResponse();
 		
 		servletResponse.setContentType(MediaType.APPLICATION_JSON.getName());
-		servletResponse.setCharacterEncoding("UTF-8");
+		//servletResponse.setCharacterEncoding("UTF-8");
 		
 		if(element.getThrowableSafeData() != null){
 			WebThrowableSafeData t = 
