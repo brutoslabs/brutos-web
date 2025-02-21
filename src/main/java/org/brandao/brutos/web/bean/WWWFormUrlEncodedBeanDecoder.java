@@ -1,5 +1,6 @@
 package org.brandao.brutos.web.bean;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.brandao.brutos.FetchType;
 import org.brandao.brutos.mapping.AbstractBeanDecoder;
@@ -24,6 +26,7 @@ import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.ArrayType;
 import org.brandao.brutos.type.CollectionType;
 import org.brandao.brutos.type.Type;
+import org.brandao.brutos.web.mapping.MapStringToMapMap;
 
 public class WWWFormUrlEncodedBeanDecoder
 	extends AbstractBeanDecoder {
@@ -225,6 +228,31 @@ public class WWWFormUrlEncodedBeanDecoder
 		Element e = (Element)entity.getCollection();
 		
 		String prefix = path.toString();
+		
+		if(e.getMapping() == null && e.getType().getClassType() == Object.class) {
+			List<String> itens = 
+					k.getScope()
+						.getNamesStartsWith(prefix);
+
+			List<String[]> keysMap = itens.stream().map((x)->new String[] {x, x.substring(prefix.length() + 1, x.length())}).collect(Collectors.toList());
+			List<String> keys = new ArrayList<>();
+			Map<String,String> values = new HashMap<>();
+			Scope scope = e.getScope();
+			
+			for(String[] id: keysMap) {
+				values.put(id[1], String.valueOf(scope.get(id[0])));
+				keys.add(id[1]);
+			}
+			
+			Map<String,Object> map = MapStringToMapMap.toMap(values, keys);
+		
+			if(map != null) {
+				for(Entry<String,Object> x: map.entrySet()) {
+					destValue.put(k.convert(x.getKey()), x.getValue());
+				}
+			}
+			return destValue;
+		}
 		
 		List<String> itens = 
 				k.getScope()
