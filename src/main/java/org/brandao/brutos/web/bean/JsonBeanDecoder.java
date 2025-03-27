@@ -1,5 +1,6 @@
 package org.brandao.brutos.web.bean;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -214,7 +215,18 @@ public class JsonBeanDecoder implements BeanDecoder{
 
 	public Object getSimpleValue(DependencyBean dependencyBean, Object data) {
 		Type type = dependencyBean.getType();
-		return type.convert(data);		
+		
+		if(data instanceof Collection) {
+			Collection<?> c = (Collection<?>)data;
+			return c.isEmpty()? type.convert(null) : type.convert(c.iterator().next()); 
+		}
+		else
+		if(data != null && data.getClass().isArray()) {
+			return Array.getLength(data) <= 0? type.convert(null) : type.convert(Array.get(data, 0)); 
+		}
+		else {
+			return type.convert(data);
+		}
 	}
 
 	public Object getMetaBean(DependencyBean dependencyBean, Object requestData) 
