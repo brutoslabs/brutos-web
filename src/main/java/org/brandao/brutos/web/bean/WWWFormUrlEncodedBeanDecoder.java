@@ -251,7 +251,7 @@ public class WWWFormUrlEncodedBeanDecoder
 					destValue.put(k.convert(x.getKey()), x.getValue());
 				}
 			}
-			return destValue;
+			return destValue.isEmpty()? null : destValue;
 		}
 		
 		List<String> itens = 
