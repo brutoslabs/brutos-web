@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ import org.brandao.brutos.scope.Scope;
 import org.brandao.brutos.type.ArrayType;
 import org.brandao.brutos.type.CollectionType;
 import org.brandao.brutos.type.Type;
+import org.brandao.brutos.web.http.ParameterList;
 
 public class JsonBeanDecoder implements BeanDecoder{
 	
@@ -217,15 +219,32 @@ public class JsonBeanDecoder implements BeanDecoder{
 		Type type = dependencyBean.getType();
 		
 		if(data instanceof Collection) {
+			
 			Collection<?> c = (Collection<?>)data;
-			return c.isEmpty()? type.convert(null) : type.convert(c.iterator().next()); 
+			
+			if(type instanceof CollectionType || type instanceof ArrayType) {
+				return type.convert(new ParameterList(c));
+			}
+			else {
+				return c.isEmpty()? type.convert(null) : type.convert(c.iterator().next());
+			}
+			
 		}
 		else
 		if(data != null && data.getClass().isArray()) {
-			return Array.getLength(data) <= 0? type.convert(null) : type.convert(Array.get(data, 0)); 
+			
+			if(type instanceof CollectionType || type instanceof ArrayType) {
+				return type.convert(new ParameterList(Arrays.asList((Object[])data)));
+			}
+			else {
+				return Array.getLength(data) <= 0? type.convert(null) : type.convert(Array.get(data, 0)); 
+			}
+			
 		}
 		else {
+			
 			return type.convert(data);
+			
 		}
 	}
 
