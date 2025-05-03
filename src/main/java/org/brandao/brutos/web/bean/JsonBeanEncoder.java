@@ -554,7 +554,17 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 		if(type.getClassType() == String.class || 
 			type instanceof DateTimeType || 
 			type.getClass() == AnyType.class ){
-			return "\"" + type.toString(value) + "\"";
+			return "\"" + 
+					String.valueOf(type.toString(value))
+						.replace("\\", "\\\\")
+						.replace("\b", "\\b")
+					    .replace("\f", "\\f")
+					    .replace("\n", "\\n")
+					    .replace("\r", "\\r")
+					    .replace("\t", "\\t")						
+						.replace("\'", "\\'") 
+						.replace("\"", "\\\"") 
+					+ "\"";
 		}
 		else
 		if(type instanceof EnumType){
