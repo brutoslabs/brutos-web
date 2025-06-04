@@ -101,12 +101,13 @@ public class WebUtil {
     	char[] chars = value.toCharArray();
 
     	for(int i=0;i<chars.length;i++){
+    		
     		char c = chars[i];
     				
-    		if(c == '/'){
-    			int start = i + 1;
+    		if(c == '/' || c == '{'){
+    			int start = i + (c == '{'? 0 : 1);
     			int end   = -1;
-    			int region = 0;
+    			int region = (c == '{'? 1 : 0);
     			
     			if(hasVars){
 	    			for(i = i+1;i<value.length();i++){
@@ -133,6 +134,7 @@ public class WebUtil {
     			if(end > start){
     				result.add(value.substring(start, end));
     			}
+    			
     		}
     		
     	}
