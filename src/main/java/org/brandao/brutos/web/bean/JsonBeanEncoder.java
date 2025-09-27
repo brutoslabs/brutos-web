@@ -562,7 +562,7 @@ public class JsonBeanEncoder extends AbstractBeanEncoder{
 					    .replace("\n", "\\n")
 					    .replace("\r", "\\r")
 					    .replace("\t", "\\t")						
-						.replace("\'", "\\'") 
+						//.replace("\'", "\\'") 
 						.replace("\"", "\\\"") 
 					+ "\"";
 		}
