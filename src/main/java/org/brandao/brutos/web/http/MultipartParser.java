@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,30 +16,45 @@ public class MultipartParser {
 	private static final String PREFIX_TMP_FILE_NAME	= "multpart";
 	
 	private static final String SUFFIX_TMP_FILE_NAME	= ".tmp";
+
+	private static final byte[] boundaryEndMark = new byte[] {'-','-'};
+	
+	private Line line;
 	
 	private InputStream in;
 	
 	private String charset;
 	
 	private byte[] boundary;
+
+	private byte[] boundaryEnd;
 	
 	public MultipartParser(InputStream in, String charset, String boundary) {
 		this.boundary = boundary.getBytes();
 		this.in = in;
 		this.charset = charset;
+        this.line =  new Line(new byte[8192], 0, 0);
+		this.boundaryEnd = Arrays.copyOf(this.boundary, this.boundary.length + boundaryEndMark.length);
+		System.arraycopy(boundaryEndMark, 0, this.boundaryEnd, this.boundary.length, boundaryEndMark.length);
 	}
 	
-	private Field parseField() throws IOException {
+    public boolean hasMoreElements() throws IOException{
+    	Line line = readLineBytes();
+    	return line != null && startsWith(line, boundary) && !startsWith(line, boundaryEnd);
+    }
+	
+	public Field nextElement() throws IOException {
 		Field field = new Field();
 		loadHeader(field);
 		loadData(field);
+		return field;
 	}
 	
-	private void loadHeader(Field field) throws UnsupportedEncodingException {
+	private void loadHeader(Field field) throws IOException {
 		
 		String line;
 		
-		while(!(line = readLine()).isEmpty()) {
+		while((line = readLine()) != null) {
 			FieldHeader header = parseFieldHeader(line);
 			field.getHeader().put(header.getName().toLowerCase(), header);
 		}
@@ -58,9 +74,9 @@ public class MultipartParser {
 		
 	}
 
-	private void loadValue(Field field) throws UnsupportedEncodingException {
+	private void loadValue(Field field) throws IOException {
 		
-		byte[] line;
+		Line line;
 		StringBuilder builder = new StringBuilder();
 		
 		while( (line = readLineBytes()) != null && !startsWith(line, boundary) ) {
@@ -72,7 +88,7 @@ public class MultipartParser {
 
 	private void loadFile(Field field) throws IOException {
 		
-		byte[] line;
+		Line line;
         UploadedFile f = null;
 		FieldHeader contentDisposition = field.getHeader().get("content-disposition");
 		Map<String,String> contentDispositionParams = contentDisposition.getParams(); 
@@ -85,7 +101,7 @@ public class MultipartParser {
         try(FileOutputStream fout = new FileOutputStream(file)){
         	
     		while( (line = readLineBytes()) != null && !startsWith(line, boundary) ) {
-                fout.write( line, 0, line.length );
+                fout.write( line.data, 0, line.len );
     		}
         	
         }
@@ -115,45 +131,81 @@ public class MultipartParser {
 		return fh;
 	}
 
-	private String toString(byte[] line) throws UnsupportedEncodingException {
+	private String toString(Line line) throws UnsupportedEncodingException {
 		return toString(line, true);
 	}
 	
-	private String toString(byte[] line, boolean withoutMarks) throws UnsupportedEncodingException {
+	private String toString(Line line, boolean withoutMarks) throws UnsupportedEncodingException {
 		
-		if(line == null || line.length == 0) {
+		if(line == null || line.len == 0) {
 			return new String();
 		}
 		
-		int max = line.length;
+		int max = line.len;
 		
 		if(withoutMarks) {
-			if(max > 0 && line[max - 1] == '\n') {
+			if(max > 0 && line.data[max - 1] == '\n') {
 				max--;
 			}
 			
-			if(max > 0 && line[max - 1] == '\r') {
+			if(max > 0 && line.data[max - 1] == '\r') {
 				max--;
 			}
 		}
 		
-		return new String(line, 0, max, charset);
+		return new String(line.data, 0, max, charset);
 	}
 
-	private String readLine() throws UnsupportedEncodingException {
-		byte[] lineData = readLineBytes();
-		return toString(lineData);
+	private String readLine() throws IOException {
+		Line line = readLineBytes();
+		return toString(line);
 	}
 	
-	private byte[] readLineBytes() {
-		return null;
-	}
-	
-	private boolean startsWith(byte[] value, byte[] a) {
+	private Line readLineBytes() throws IOException {
 		
-		if(value == null || value.length < a.length) {
+		if(line.len > 0) {
+			int len = line.maxLen - line.len;
+			
+			if(len > 0) {
+				System.arraycopy(line.data, line.len, line.data, 0, len);
+			}
+			
+			line.maxLen = len;
+			line.len = 0;
+		}
+		
+		while(line.maxLen < line.data.length){
+			
+			for(int i=0;i<line.maxLen;i++) {
+				if(line.data[i] == '\n') {
+					line.len = i;
+					break;
+				}
+			}
+			
+			int r = in.read(line.data, line.maxLen, line.data.length - line.maxLen);
+			
+			if(r < 0) {
+				break;
+			}
+			
+			line.maxLen += r;
+		}
+		
+		if(line.len == 0) {
+			line.len = line.maxLen;
+		}
+		
+		return line.len == line.maxLen && line.len == 0? null : line;
+	}
+	
+	private boolean startsWith(Line line, byte[] a) {
+		
+		if(line == null || line.len < a.length) {
 			return false;
 		}
+		
+		byte[] value = line.data;
 		
 		for(int i=0;i<a.length;i++) {
 			if(a[i] != value[i]) {
@@ -162,6 +214,22 @@ public class MultipartParser {
 		}
 		
 		return true;
+	}
+	
+	public class Line {
+		
+		public byte[] data;
+		
+		public int len;
+
+		public int maxLen;
+		
+		public Line(byte[] data, int len, int maxLen) {
+			this.data = data;
+			this.len = len;
+			this.maxLen = maxLen;
+		}
+		
 	}
 	
 	public class Field {
