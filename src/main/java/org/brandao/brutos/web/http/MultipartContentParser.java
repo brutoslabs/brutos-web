@@ -34,6 +34,7 @@ import org.brandao.brutos.web.WebMvcRequest;
  * @author Brandao
  *
  */
+@Deprecated
 public class MultipartContentParser {
 
 	private static final String BOUNDARY				= "boundary";

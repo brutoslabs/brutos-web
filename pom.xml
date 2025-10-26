@@ -140,7 +140,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
-					<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
+					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
 			</plugin>
 			<plugin>
