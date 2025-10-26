@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.brandao.brutos.mapping.StringUtil;
 
-public class MultipartParser {
+public class MultipartFormDataParser {
 
 	private static final String PREFIX_TMP_FILE_NAME	= "multpart";
 	
@@ -29,7 +29,7 @@ public class MultipartParser {
 
 	private byte[] boundaryEnd;
 	
-	public MultipartParser(InputStream in, String charset, String boundary) {
+	public MultipartFormDataParser(InputStream in, String charset, String boundary) {
 		this.boundary = boundary.getBytes();
 		this.in = in;
 		this.charset = charset;
