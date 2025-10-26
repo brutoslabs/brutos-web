@@ -1,3 +1,20 @@
+/*
+ * Brutos Web MVC http://www.brutosframework.com.br/
+ * Copyright (C) 2009-2025 Afonso Brandao. (afonso.rbn@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.brandao.brutos.web.http;
 
 import java.io.File;
@@ -9,6 +26,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.brandao.brutos.MutableRequestParserEvent;
 import org.brandao.brutos.mapping.StringUtil;
 
 public class MultipartFormDataParser {
@@ -29,17 +47,23 @@ public class MultipartFormDataParser {
 
 	private byte[] boundaryEnd;
 	
-	public MultipartFormDataParser(InputStream in, String charset, String boundary) {
+	private MutableRequestParserEvent event;
+	
+	private long maxLength;
+	
+	public MultipartFormDataParser(InputStream in, String charset, String boundary, long maxLength, MutableRequestParserEvent event) {
 		this.boundary = boundary.getBytes();
 		this.in = in;
 		this.charset = charset;
-        this.line =  new Line(new byte[8192], 0, 0);
+		this.event = event;
+		this.maxLength = maxLength;
+        this.line =  new Line(new byte[8192], 0, 0, 0);
 		this.boundaryEnd = Arrays.copyOf(this.boundary, this.boundary.length + boundaryEndMark.length);
 		System.arraycopy(boundaryEndMark, 0, this.boundaryEnd, this.boundary.length, boundaryEndMark.length);
 	}
 	
     public boolean hasMoreElements() throws IOException{
-    	Line line = readLineBytes();
+    	Line line = event.getBytesRead() == 0? readLineBytes() : this.line;
     	return line != null && startsWith(line, boundary) && !startsWith(line, boundaryEnd);
     }
 	
@@ -80,7 +104,13 @@ public class MultipartFormDataParser {
 		StringBuilder builder = new StringBuilder();
 		
 		while( (line = readLineBytes()) != null && !startsWith(line, boundary) ) {
-			builder.append(toString(line, false));
+			
+			if(builder.length() > 0) {
+				builder.append(System.getProperty("line.separator"));
+			}
+			
+			builder.append(toString(line));
+			
 		}
 		
 		field.setValue(builder.toString());
@@ -101,7 +131,7 @@ public class MultipartFormDataParser {
         try(FileOutputStream fout = new FileOutputStream(file)){
         	
     		while( (line = readLineBytes()) != null && !startsWith(line, boundary) ) {
-                fout.write( line.data, 0, line.len );
+                fout.write( line.data, line.start, line.end );
     		}
         	
         }
@@ -122,7 +152,7 @@ public class MultipartFormDataParser {
 		FieldHeader fh = new FieldHeader(name, value, params);
 		
 		for(int i=1;i<parts.length;i++) {
-			f = parts[0].split("\\=");
+			f = parts[i].split("\\=");
 			name = StringUtil.adjust(f[0]);
 			value = f[1].substring(1, f[1].length() - 1);
 			params.put(name, value);
@@ -137,23 +167,27 @@ public class MultipartFormDataParser {
 	
 	private String toString(Line line, boolean withoutMarks) throws UnsupportedEncodingException {
 		
-		if(line == null || line.len == 0) {
+		int len = 1 + (line.end - line.start);
+		
+		if(line == null || line.end - line.start == 0) {
 			return new String();
 		}
 		
-		int max = line.len;
+		int max = line.end;
 		
 		if(withoutMarks) {
-			if(max > 0 && line.data[max - 1] == '\n') {
+			if(max > 0 && line.data[max] == '\n') {
 				max--;
 			}
 			
-			if(max > 0 && line.data[max - 1] == '\r') {
+			if(max > 0 && line.data[max] == '\r') {
 				max--;
 			}
 		}
 		
-		return new String(line.data, 0, max, charset);
+		len = 1 + (max - line.start);
+		
+		return len <= 0? null : new String(line.data, line.start, len, charset);
 	}
 
 	private String readLine() throws IOException {
@@ -163,54 +197,74 @@ public class MultipartFormDataParser {
 	
 	private Line readLineBytes() throws IOException {
 		
-		if(line.len > 0) {
-			int len = line.maxLen - line.len;
-			
-			if(len > 0) {
-				System.arraycopy(line.data, line.len, line.data, 0, len);
-			}
-			
-			line.maxLen = len;
-			line.len = 0;
-		}
+		line.start = line.end == 0? 0 : line.end + 1;
+		line.end = line.start;
 		
-		while(line.maxLen < line.data.length){
+		while(line.maxLen < line.data.length || line.end - line.start == 0){
 			
-			for(int i=0;i<line.maxLen;i++) {
-				if(line.data[i] == '\n') {
-					line.len = i;
-					break;
-				}
-			}
+			int mark = getLineMark(line);
 			
-			int r = in.read(line.data, line.maxLen, line.data.length - line.maxLen);
-			
-			if(r < 0) {
+			if(mark > 0) {
+				line.end = mark;
 				break;
 			}
 			
-			line.maxLen += r;
+			if(line.data.length == line.maxLen) {
+				line.start = 0;
+				line.end = 0;
+				line.maxLen = 0;
+			}
+			
+			int maxRead = line.data.length - line.maxLen;
+			
+			int read = in.read(line.data, line.maxLen, maxRead);
+			
+			if(read <= 0) {
+				break;
+			}
+			
+	        event.addBytesRead(read);
+
+	        if(this.maxLength > 0 && event.getBytesRead() > this.maxLength)
+	            throw new IOException( "data too large" );
+			
+			line.maxLen += read;
 		}
 		
-		if(line.len == 0) {
-			line.len = line.maxLen;
+		if(line.start == line.end) {
+			line.end = line.maxLen;
 		}
 		
-		return line.len == line.maxLen && line.len == 0? null : line;
+		return line.end == line.maxLen && line.end == 0? null : line;
+	}
+	
+	private int getLineMark(Line line) {
+		
+		for(int i=line.start;i<line.maxLen;i++) {
+			if(line.data[i] == '\n') {
+				return i;
+			}
+		}
+		
+		return -1;
 	}
 	
 	private boolean startsWith(Line line, byte[] a) {
 		
-		if(line == null || line.len < a.length) {
+		if(line == null || line.end - line.start < a.length) {
 			return false;
 		}
 		
 		byte[] value = line.data;
+		int startLine = line.start;
 		
 		for(int i=0;i<a.length;i++) {
-			if(a[i] != value[i]) {
+			
+			if(a[i] != value[startLine]) {
 				return false;
 			}
+			
+			startLine++;
 		}
 		
 		return true;
@@ -220,13 +274,16 @@ public class MultipartFormDataParser {
 		
 		public byte[] data;
 		
-		public int len;
+		public int start;
 
+		public int end;
+		
 		public int maxLen;
 		
-		public Line(byte[] data, int len, int maxLen) {
+		public Line(byte[] data, int start, int end, int maxLen) {
 			this.data = data;
-			this.len = len;
+			this.start = start;
+			this.end = end;
 			this.maxLen = maxLen;
 		}
 		
@@ -238,6 +295,10 @@ public class MultipartFormDataParser {
 		
 		private Object value;
 
+		public Field() {
+			this.header = new HashMap<>();
+		}
+		
 		public Map<String, FieldHeader> getHeader() {
 			return header;
 		}

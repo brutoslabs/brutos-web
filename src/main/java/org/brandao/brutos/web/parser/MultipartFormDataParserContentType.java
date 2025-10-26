@@ -17,6 +17,8 @@
 
 package org.brandao.brutos.web.parser;
 
+import java.io.InputStream;
+import java.util.Map;
 import java.util.Properties;
 
 import org.brandao.brutos.AbstractParserContentType;
@@ -25,10 +27,10 @@ import org.brandao.brutos.MutableMvcRequest;
 import org.brandao.brutos.MutableRequestParserEvent;
 import org.brandao.brutos.RequestParserException;
 import org.brandao.brutos.mapping.BeanDecoder;
-import org.brandao.brutos.web.WebMvcRequest;
+import org.brandao.brutos.web.MediaType;
 import org.brandao.brutos.web.bean.MultipartFormDataBeanDecoder;
-import org.brandao.brutos.web.http.MultipartContentParser;
-import org.brandao.brutos.web.http.MultipartContentParser.Input;
+import org.brandao.brutos.web.http.MultipartFormDataParser;
+import org.brandao.brutos.web.http.MultipartFormDataParser.Field;
 
 /**
  * 
@@ -37,26 +39,43 @@ import org.brandao.brutos.web.http.MultipartContentParser.Input;
  */
 public class MultipartFormDataParserContentType extends AbstractParserContentType{
 
+	private static final String BOUNDARY			= "boundary";
+	
+	private static final String DEFAULT_CHARSET     = "ISO8859-1";
+	
 	private static final String MAX_LENGTH_PROPERTY	= "org.brandao.brutos.request.max_length";
 
 	private static final String DEFAULT_MAX_LENGTH	= "3145728";
 
-	private static final String PATH_PROPERTY		= "org.brandao.brutos.request.path";
+	//private static final String PATH_PROPERTY		= "org.brandao.brutos.request.path";
 
-	private static final String DEFAULT_PATH		= System.getProperty("java.io.tmpdir");
+	//private static final String DEFAULT_PATH		= System.getProperty("java.io.tmpdir");
 	
 	public void parserContentType(MutableMvcRequest request,
 			MutableRequestParserEvent requestParserInfo, 
 			CodeGenerator codeGenerator, Properties config) throws RequestParserException {
 		
         try{
-            Long maxLength =
-                Long.parseLong(config.getProperty(MAX_LENGTH_PROPERTY, DEFAULT_MAX_LENGTH));
-
-            String path = 
-        		config.getProperty(PATH_PROPERTY, DEFAULT_PATH);
+        	MediaType requestDataType = (MediaType)request.getType();
+        	Map<String,String> vars   = requestDataType == null? null : requestDataType.getParams();
+        	String charsetName        = vars != null? vars.get("charset") : DEFAULT_CHARSET;
+        	charsetName               = charsetName == null? request.getEncoding() : charsetName;
+        	charsetName               = charsetName == null? DEFAULT_CHARSET : charsetName;
+            String boundary           = (String)request.getHeader(BOUNDARY);
+            boundary                  = boundary == null? ((MediaType)request.getType()).getParams().get(BOUNDARY) : boundary;
+        	InputStream stream        = request.getStream();
+            Long maxLength            = Long.parseLong(config.getProperty(MAX_LENGTH_PROPERTY, DEFAULT_MAX_LENGTH));
+            //String path               = config.getProperty(PATH_PROPERTY, DEFAULT_PATH);
                 
             
+            MultipartFormDataParser mpfdp = new MultipartFormDataParser(stream, charsetName, boundary, maxLength, requestParserInfo);
+
+            while(mpfdp.hasMoreElements()){
+                Field field = mpfdp.nextElement();
+                request.setParameter(field.getHeader().get("content-disposition").getParams().get("name"), field.getValue());
+            }
+            
+            /*
         	MultipartContentParser mpcp = 
         			new MultipartContentParser((WebMvcRequest)request, requestParserInfo);
         	mpcp.setMaxLength(maxLength);
@@ -67,10 +86,11 @@ public class MultipartFormDataParserContentType extends AbstractParserContentTyp
                 Input input = mpcp.nextElement();
                 request.setParameter(input.getName(), input.getValue() );
             }
-         
+            */
+            
         	BeanDecoder beanDecoder = new MultipartFormDataBeanDecoder();
         	beanDecoder.setCodeGenerator(codeGenerator);
-            super.parser(request, requestParserInfo, beanDecoder, config, mpcp);
+            super.parser(request, requestParserInfo, beanDecoder, config, null);
         }
         catch(Throwable e){
         	throw new org.brandao.brutos.RequestParserException(e);
