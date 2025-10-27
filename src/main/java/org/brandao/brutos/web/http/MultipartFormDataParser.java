@@ -113,17 +113,17 @@ public class MultipartFormDataParser {
 		MultipartFormDataParserLine line;
 		StringBuilder builder = new StringBuilder();
 		
-		while( (line = readLineBytes()) != null && !line.startsWith(boundaryStart) ) {
+		while((line = readLineBytes()) != null) {
 			
-			if(builder.length() > 0) {
-				builder.append(System.getProperty("line.separator"));
+			if(line.startsWith(boundaryStart)) {
+				break;
 			}
 			
-			builder.append(line.toString());
+			builder.append(line.toString(false));
 			
 		}
 		
-		field.setValue(builder.toString());
+		field.setValue(builder.substring(0, builder.length() - 2));
 	}
 
 	private void loadFile(Field field) throws IOException {

@@ -124,7 +124,9 @@ public class MultipartFormDataParserLine {
 	
 	public boolean startsWith(byte[] a) {
 		
-		if(end - start < a.length) {
+		int len = 1 + (end-start);
+		
+		if(len < a.length) {
 			return false;
 		}
 		
