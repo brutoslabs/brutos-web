@@ -107,12 +107,18 @@ public class MultipartFormDataParserLine {
 	}
 	
 	public void write(RandomAccessFile raf) throws IOException {
-		raf.write(data, start, 1 + (end - start));
+		int len = 1 + (end - start);
+		try {
+			raf.write(data, start, len);
+		}
+		catch(Throwable ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void adjustEndToMaxLengthData() {
 		if(start == end) {
-			end = maxLen;
+			end = maxLen - 1;
 		}
 	}
 	

@@ -84,6 +84,11 @@ public class MultipartFormDataParser {
 		String line;
 		
 		while((line = readLine()) != null) {
+			
+	        if(line.length() > 2048) {
+	            throw new IOException( "header line too large: " + line );
+	        }
+			
 			FieldHeader header = parseFieldHeader(line);
 			field.getHeader().put(header.getName().toLowerCase(), header);
 		}
@@ -135,8 +140,14 @@ public class MultipartFormDataParser {
 
         try(RandomAccessFile raf = new RandomAccessFile(file, "rw")){
 
-    		while( (line = readLineBytes()) != null && !line.startsWith(boundaryStart) ) {
+    		while((line = readLineBytes()) != null) {
+    			
+    			if(line.startsWith(boundaryStart)) {
+    				break;
+    			}
+    			
     			line.write(raf);
+    			
     		}
     		
         	raf.setLength(raf.length() - 2);
@@ -170,7 +181,7 @@ public class MultipartFormDataParser {
 
 	private String readLine() throws IOException {
 		MultipartFormDataParserLine line = readLineBytes();
-		return line.toString(true);
+		return line == null? null : line.toString(true);
 	}
 	
 	private MultipartFormDataParserLine readLineBytes() throws IOException {
@@ -184,7 +195,7 @@ public class MultipartFormDataParser {
 				break;
 			}
 			
-			line.resetLineBuffer();
+			line.adjustMinLengthLine();
 			
 			if(line.read(in, event) <= 0) {
 				break;
