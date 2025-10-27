@@ -1,0 +1,148 @@
+package org.brandao.brutos.web.http;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.io.UnsupportedEncodingException;
+
+import org.brandao.brutos.MutableRequestParserEvent;
+
+public class MultipartFormDataParserLine {
+	
+	private byte[] data;
+	
+	private int start;
+
+	private int end;
+	
+	private int maxLen;
+	
+	private int minLineLength;
+	
+	private String charset;
+	
+	public MultipartFormDataParserLine(byte[] data, int start, int end, int maxLen, int minLineLength, String charset) {
+		this.data = data;
+		this.start = start;
+		this.end = end;
+		this.maxLen = maxLen;
+		this.charset = charset;
+		this.minLineLength = minLineLength + 2;
+		
+		if(this.data.length < this.minLineLength * 4) {
+			throw new IllegalArgumentException("data.length < minLineLength * 4");
+		}
+		
+	}
+	
+	public boolean foundLine() {
+		return !(end == maxLen && end == 0);			
+	}
+	
+	public void adjustMinLengthLine() {
+		
+		if(data.length - start <= minLineLength ) {
+			System.arraycopy(data, start, data, 0, data.length - start);
+			maxLen = maxLen - start;
+			end = end - start;
+			start = 0;
+		}
+		
+	}
+	
+	public boolean isNeededMoreDataToMakeLine() {
+		return maxLen < data.length || end - start == 0;			
+	}
+	
+	public boolean existNewLine() {
+		
+		for(int i=start;i<maxLen;i++) {
+			if(data[i] == '\n') {
+				end = i;
+				return true;
+			}
+		}
+	
+		return false;
+	}
+	
+	public void adjustToNextLine() {
+		start = end == 0? 0 : end + 1;
+		end = start;
+	}
+
+	public void resetLineBuffer() {
+		start = 0;
+		end = 0;
+		maxLen = 0;
+	}
+	
+	public int read(InputStream in, MutableRequestParserEvent event) throws IOException {
+		int maxRead = data.length - maxLen;
+		int read = in.read(data, maxLen, maxRead);
+		
+		if(read > 0) {
+			maxLen += read;
+	        event.addBytesRead(read);
+		}
+		
+        return read;
+	}
+	
+	public void write(RandomAccessFile raf) throws IOException {
+		raf.write(data, start, 1 + (end - start));
+	}
+	
+	public void adjustEndToMaxLengthData() {
+		if(start == end) {
+			end = maxLen;
+		}
+	}
+	
+	public boolean startsWith(byte[] a) {
+		
+		if(end - start < a.length) {
+			return false;
+		}
+		
+		byte[] value = data;
+		int startLine = start;
+		
+		for(int i=0;i<a.length;i++) {
+			
+			if(a[i] != value[startLine]) {
+				return false;
+			}
+			
+			startLine++;
+		}
+		
+		return true;
+	}
+	
+	public String toString(boolean withoutMarks) throws UnsupportedEncodingException {
+		
+		int len = 1 + (end - start);
+		
+		if(end - start == 0) {
+			return new String();
+		}
+		
+		int max = end;
+		
+		if(withoutMarks) {
+			if(max > 0 && data[max] == '\n') {
+				max--;
+			}
+			
+			if(max > 0 && data[max] == '\r') {
+				max--;
+			}
+		}
+		
+		len = 1 + (max - start);
+		
+		return len <= 0? null : new String(data, start, len, charset);
+	}
+		
+}
