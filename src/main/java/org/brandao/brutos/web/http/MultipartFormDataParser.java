@@ -18,9 +18,9 @@
 package org.brandao.brutos.web.http;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public class MultipartFormDataParser {
 	
 	private static final String SUFFIX_TMP_FILE_NAME	= ".tmp";
 
-	private static final byte[] boundaryEndMark = new byte[] {'-','-'};
+	private static final byte[] boundaryMark = new byte[] {'-','-'};
 	
 	private Line line;
 	
@@ -45,6 +45,8 @@ public class MultipartFormDataParser {
 	
 	private byte[] boundary;
 
+	private byte[] boundaryStart;
+	
 	private byte[] boundaryEnd;
 	
 	private MutableRequestParserEvent event;
@@ -58,13 +60,18 @@ public class MultipartFormDataParser {
 		this.event = event;
 		this.maxLength = maxLength;
         this.line =  new Line(new byte[8192], 0, 0, 0);
-		this.boundaryEnd = Arrays.copyOf(this.boundary, this.boundary.length + boundaryEndMark.length);
-		System.arraycopy(boundaryEndMark, 0, this.boundaryEnd, this.boundary.length, boundaryEndMark.length);
+        
+		this.boundaryStart = new byte[this.boundary.length + 2];
+		System.arraycopy(boundaryMark,  0, this.boundaryStart,                   0, boundaryMark.length);
+		System.arraycopy(this.boundary, 0, this.boundaryStart, boundaryMark.length, this.boundary.length);
+        
+		this.boundaryEnd = Arrays.copyOf(this.boundaryStart, this.boundaryStart.length + boundaryMark.length);
+		System.arraycopy(boundaryMark, 0, this.boundaryEnd, this.boundaryStart.length, boundaryMark.length);
 	}
 	
     public boolean hasMoreElements() throws IOException{
     	Line line = event.getBytesRead() == 0? readLineBytes() : this.line;
-    	return line != null && startsWith(line, boundary) && !startsWith(line, boundaryEnd);
+    	return line != null && (!startsWith(line, boundaryEnd) && startsWith(line, boundaryStart));
     }
 	
 	public Field nextElement() throws IOException {
@@ -103,7 +110,7 @@ public class MultipartFormDataParser {
 		Line line;
 		StringBuilder builder = new StringBuilder();
 		
-		while( (line = readLineBytes()) != null && !startsWith(line, boundary) ) {
+		while( (line = readLineBytes()) != null && !startsWith(line, boundaryStart) ) {
 			
 			if(builder.length() > 0) {
 				builder.append(System.getProperty("line.separator"));
@@ -118,24 +125,28 @@ public class MultipartFormDataParser {
 
 	private void loadFile(Field field) throws IOException {
 		
-		Line line;
+		Line line = null;
         UploadedFile f = null;
 		FieldHeader contentDisposition = field.getHeader().get("content-disposition");
 		Map<String,String> contentDispositionParams = contentDisposition.getParams(); 
 
         File file = File.createTempFile(PREFIX_TMP_FILE_NAME, SUFFIX_TMP_FILE_NAME);
         file.deleteOnExit();
-        f= new UploadedFileImp(file);
+        f = new UploadedFileImp(file);
         f.setFileName(contentDispositionParams.get("filename"));
 
-        try(FileOutputStream fout = new FileOutputStream(file)){
-        	
-    		while( (line = readLineBytes()) != null && !startsWith(line, boundary) ) {
-                fout.write( line.data, line.start, line.end );
+        try(RandomAccessFile raf = new RandomAccessFile(file, "rw")){
+
+    		while( (line = readLineBytes()) != null && !startsWith(line, boundaryStart) ) {
+    			System.out.print(new String(line.data, line.start, 1 + (line.end - line.start)));
+                //fout.write( line.data, line.start, 1 + (line.end - line.start) );
+    			raf.write(line.data, line.start, 1 + (line.end - line.start));
     		}
+    		
+        	raf.setLength(raf.length() - 2);
         	
         }
-		
+
         field.setValue(f);
         
 	}
@@ -223,6 +234,8 @@ public class MultipartFormDataParser {
 				break;
 			}
 			
+			System.out.println(new String(line.data, line.maxLen, read));
+			
 	        event.addBytesRead(read);
 
 	        if(this.maxLength > 0 && event.getBytesRead() > this.maxLength)
@@ -257,6 +270,9 @@ public class MultipartFormDataParser {
 		
 		byte[] value = line.data;
 		int startLine = line.start;
+		
+		//System.out.println(new String(line.data, line.start, a.length));
+		//System.out.println(new String(a, 0, a.length));
 		
 		for(int i=0;i<a.length;i++) {
 			
