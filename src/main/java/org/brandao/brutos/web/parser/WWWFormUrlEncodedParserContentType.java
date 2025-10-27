@@ -44,8 +44,7 @@ public class WWWFormUrlEncodedParserContentType
 	
 	private static final String BUFFER_LENGTH_VAR		= "org.brandao.brutos.request.buffer_length";
 
-	private static final String DEFAULT_BUFFER_LENGTH	= "1024";
-	
+	private static final String DEFAULT_BUFFER_LENGTH	= "8192";
 	
 	public void parserContentType(MutableMvcRequest request,
 			MutableRequestParserEvent requestParserInfo, 

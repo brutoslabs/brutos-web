@@ -48,14 +48,27 @@ public class MultipartFormDataParser {
 	
 	private MutableRequestParserEvent event;
 	
-	private long maxLength;
+	private long maxRequestBodyLength;
 	
-	public MultipartFormDataParser(InputStream in, String charset, String boundary, long maxLength, MutableRequestParserEvent event) {
-		this.boundary = boundary.getBytes();
+	private int maxHeaderLineLength;
+	
+	public MultipartFormDataParser(InputStream in, String charset, String boundary, long maxRequestBodyLength, int bufferLength, MutableRequestParserEvent event) {
+		
+		if(bufferLength < boundary.length()*2) {
+			throw new IllegalArgumentException("bufferLength: bufferLength < boundary.length*2");
+		}
+
+		if(bufferLength/2 < 256) {
+			throw new IllegalArgumentException("maxHeaderLineLength: bufferLength/2 < 256");
+		}
+		
 		this.in = in;
 		this.event = event;
-		this.maxLength = maxLength;
-        
+		this.maxRequestBodyLength = maxRequestBodyLength;
+		
+		this.boundary = boundary.getBytes();
+		this.maxHeaderLineLength = bufferLength/2;
+		
 		this.boundaryStart = new byte[this.boundary.length + 2];
 		System.arraycopy(boundaryMark,  0, this.boundaryStart,                   0, boundaryMark.length);
 		System.arraycopy(this.boundary, 0, this.boundaryStart, boundaryMark.length, this.boundary.length);
@@ -63,7 +76,7 @@ public class MultipartFormDataParser {
 		this.boundaryEnd = Arrays.copyOf(this.boundaryStart, this.boundaryStart.length + boundaryMark.length);
 		System.arraycopy(boundaryMark, 0, this.boundaryEnd, this.boundaryStart.length, boundaryMark.length);
 		
-        this.line =  new MultipartFormDataParserLine(new byte[8192], 0, 0, 0, this.boundaryEnd.length, charset);
+        this.line =  new MultipartFormDataParserLine(new byte[bufferLength], 0, 0, 0, this.boundaryEnd.length, charset);
 		
 	}
 	
@@ -85,7 +98,7 @@ public class MultipartFormDataParser {
 		
 		while((line = readLine()) != null) {
 			
-	        if(line.length() > 2048) {
+	        if(line.length() > maxHeaderLineLength) {
 	            throw new IOException( "header line too large: " + line );
 	        }
 			
@@ -201,7 +214,7 @@ public class MultipartFormDataParser {
 				break;
 			}
 			
-	        if(this.maxLength > 0 && event.getBytesRead() > this.maxLength)
+	        if(this.maxRequestBodyLength > 0 && event.getBytesRead() > this.maxRequestBodyLength)
 	            throw new IOException( "data too large" );
 			
 		}

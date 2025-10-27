@@ -39,14 +39,18 @@ import org.brandao.brutos.web.http.MultipartFormDataParser.Field;
  */
 public class MultipartFormDataParserContentType extends AbstractParserContentType{
 
-	private static final String BOUNDARY			= "boundary";
+	private static final String BOUNDARY				= "boundary";
 	
-	private static final String DEFAULT_CHARSET     = "ISO8859-1";
+	private static final String DEFAULT_CHARSET     	= "ISO8859-1";
 	
-	private static final String MAX_LENGTH_PROPERTY	= "org.brandao.brutos.request.max_length";
+	private static final String MAX_LENGTH_PROPERTY		= "org.brandao.brutos.request.max_length";
 
-	private static final String DEFAULT_MAX_LENGTH	= "3145728";
+	private static final String DEFAULT_MAX_LENGTH		= "3145728";
 
+	private static final String BUFFER_LENGTH_VAR		= "org.brandao.brutos.request.buffer_length";
+
+	private static final String DEFAULT_BUFFER_LENGTH	= "8192";
+	
 	//private static final String PATH_PROPERTY		= "org.brandao.brutos.request.path";
 
 	//private static final String DEFAULT_PATH		= System.getProperty("java.io.tmpdir");
@@ -64,29 +68,16 @@ public class MultipartFormDataParserContentType extends AbstractParserContentTyp
             String boundary           = (String)request.getHeader(BOUNDARY);
             boundary                  = boundary == null? ((MediaType)request.getType()).getParams().get(BOUNDARY) : boundary;
         	InputStream stream        = request.getStream();
-            Long maxLength            = Long.parseLong(config.getProperty(MAX_LENGTH_PROPERTY, DEFAULT_MAX_LENGTH));
+            Long maxRequestBodyLength = Long.parseLong(config.getProperty(MAX_LENGTH_PROPERTY, DEFAULT_MAX_LENGTH));
+            Integer bufferLength      = Integer.parseInt(config.getProperty(BUFFER_LENGTH_VAR, DEFAULT_BUFFER_LENGTH));
             //String path               = config.getProperty(PATH_PROPERTY, DEFAULT_PATH);
                 
-            
-            MultipartFormDataParser mpfdp = new MultipartFormDataParser(stream, charsetName, boundary, maxLength, requestParserInfo);
+            MultipartFormDataParser mpfdp = new MultipartFormDataParser(stream, charsetName, boundary, maxRequestBodyLength, bufferLength, requestParserInfo);
 
             while(mpfdp.hasMoreElements()){
                 Field field = mpfdp.nextElement();
                 request.setParameter(field.getHeader().get("content-disposition").getParams().get("name"), field.getValue());
             }
-            
-            /*
-        	MultipartContentParser mpcp = 
-        			new MultipartContentParser((WebMvcRequest)request, requestParserInfo);
-        	mpcp.setMaxLength(maxLength);
-        	mpcp.setPath(path);
-        	mpcp.start();
-        	
-            while(mpcp.hasMoreElements()){
-                Input input = mpcp.nextElement();
-                request.setParameter(input.getName(), input.getValue() );
-            }
-            */
             
         	BeanDecoder beanDecoder = new MultipartFormDataBeanDecoder();
         	beanDecoder.setCodeGenerator(codeGenerator);

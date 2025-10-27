@@ -16,7 +16,7 @@ public class MultipartFormDataParserTest {
 	@Test
 	public void testEndFile() throws IOException {
 		try(InputStream in = getClass().getClassLoader().getResourceAsStream("org/brandao/brutos/web/http/multipart_formdata_parser/multipart-end-file.txt")) {
-			MultipartFormDataParser mp = new MultipartFormDataParser(in, "UTF-8", "--abcde12345", 8*1024*1024, new MutableRequestParserEventImp());
+			MultipartFormDataParser mp = new MultipartFormDataParser(in, "UTF-8", "--abcde12345", 8*1024*1024, 4096, new MutableRequestParserEventImp());
 			
 			assertTrue(mp.hasMoreElements());
 			Field f = mp.nextElement();
