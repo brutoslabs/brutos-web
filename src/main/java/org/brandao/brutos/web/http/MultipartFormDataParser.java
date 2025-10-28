@@ -214,8 +214,9 @@ public class MultipartFormDataParser {
 				break;
 			}
 			
-	        if(this.maxRequestBodyLength > 0 && event.getBytesRead() > this.maxRequestBodyLength)
+	        if(this.maxRequestBodyLength > 0 && event.getBytesRead() > this.maxRequestBodyLength) {
 	            throw new IOException( "data too large" );
+	        }
 			
 		}
 		

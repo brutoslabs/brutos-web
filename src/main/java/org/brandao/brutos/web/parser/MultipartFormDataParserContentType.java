@@ -84,7 +84,7 @@ public class MultipartFormDataParserContentType extends AbstractParserContentTyp
             super.parser(request, requestParserInfo, beanDecoder, config, null);
         }
         catch(Throwable e){
-        	throw new org.brandao.brutos.RequestParserException(e);
+        	throw new RequestParserException(e);
         }
 		
 	}
