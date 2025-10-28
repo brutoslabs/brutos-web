@@ -72,7 +72,7 @@ public class JsonParserContentType extends AbstractParserContentType {
 		        data = (Map<String, Object>) decoder.decode();
 			}
 
-			data.put(RequestBody.REQUEST_BODY_PROPERTY, new RequestBody(streamCache, charsetName));
+			data.put(RequestBody.REQUEST_BODY_PROPERTY, new RequestBody(streamCache, requestParserInfo.getBytesRead(), charsetName));
 			
 	        JsonBeanDecoder beanDecoder = new JsonBeanDecoder();
 	        beanDecoder.setCodeGenerator(codeGenerator);

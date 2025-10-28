@@ -7,15 +7,17 @@ import java.io.InputStreamReader;
 
 public class RequestBody {
 
-	public static final String REQUEST_BODY_PROPERTY = "@RequestBody:CONTENT";
+	public static final String REQUEST_BODY_PROPERTY = "@Request:CONTENT";
 	
 	private StreamCache streamCache;
 
 	private String charset;
 	
-	public RequestBody(StreamCache streamCache, String charset) {
+	private long lenght;
+	public RequestBody(StreamCache streamCache, long lenght, String charset) {
 		this.streamCache = streamCache;
 		this.charset = charset;
+		this.lenght = lenght;
 	}
 	
 	public String toString() {
@@ -35,6 +37,10 @@ public class RequestBody {
 		return sb.toString();
 	}
 	
+	public long getLenght() {
+		return lenght;
+	}
+
 	public InputStream getInputStream() throws IOException {
 		return streamCache.getInputStream();
 	}
