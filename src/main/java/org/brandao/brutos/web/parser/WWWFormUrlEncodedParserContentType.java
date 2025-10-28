@@ -28,6 +28,9 @@ import org.brandao.brutos.MutableRequestParserEvent;
 import org.brandao.brutos.RequestParserException;
 import org.brandao.brutos.mapping.BeanDecoder;
 import org.brandao.brutos.web.MediaType;
+import org.brandao.brutos.web.RequestBody;
+import org.brandao.brutos.web.RequestBodyInputStream;
+import org.brandao.brutos.web.StreamCache;
 import org.brandao.brutos.web.bean.WWWFormUrlEncodedBeanDecoder;
 import org.brandao.brutos.web.http.WWWFormUrlEncodedParser;
 import org.brandao.brutos.web.http.WWWFormUrlEncodedParser.Field;
@@ -56,21 +59,26 @@ public class WWWFormUrlEncodedParserContentType
 			throws RequestParserException {
 	
         try{
-        	MediaType requestDataType = (MediaType)request.getType();
-        	Map<String,String> vars   = requestDataType == null? null : requestDataType.getParams();
-        	String charsetName        = vars != null? vars.get("charset") : DEFAULT_CHARSET;
-        	charsetName               = charsetName == null? request.getEncoding() : charsetName;
-        	charsetName               = charsetName == null? DEFAULT_CHARSET : charsetName;
-        	InputStream stream        = request.getStream();
-        	Long maxRequestBodyLength = Long.parseLong(config.getProperty(MAX_LENGTH_PROPERTY, DEFAULT_MAX_LENGTH));
-            Integer bufferLength      = Integer.parseInt(config.getProperty(BUFFER_LENGTH_VAR, DEFAULT_BUFFER_LENGTH));
-        	
-            WWWFormUrlEncodedParser wfuep = new WWWFormUrlEncodedParser(stream, charsetName, maxRequestBodyLength, bufferLength, requestParserInfo);
+        	MediaType requestDataType                     = (MediaType)request.getType();
+        	Map<String,String> vars                       = requestDataType == null? null : requestDataType.getParams();
+        	Long maxRequestBodyLength                     = Long.parseLong(config.getProperty(MAX_LENGTH_PROPERTY, DEFAULT_MAX_LENGTH));
+            Integer bufferLength                          = Integer.parseInt(config.getProperty(BUFFER_LENGTH_VAR, DEFAULT_BUFFER_LENGTH));
+        	String charsetName                            = vars != null? vars.get("charset") : DEFAULT_CHARSET;
+        	charsetName                                   = charsetName == null? request.getEncoding() : charsetName;
+        	charsetName                                   = charsetName == null? DEFAULT_CHARSET : charsetName;
+        	InputStream stream                            = request.getStream();
+			StreamCache streamCache                       = new StreamCache(bufferLength);
+			RequestBodyInputStream requestBodyInputStream = new RequestBodyInputStream(stream, streamCache);
+			
+            try(WWWFormUrlEncodedParser wfuep = new WWWFormUrlEncodedParser(requestBodyInputStream, charsetName, maxRequestBodyLength, bufferLength, requestParserInfo)){
             
-            while(wfuep.hasMoreElements()){
-                Field field = wfuep.nextElement();
-                request.setParameter(field.getName(), field.getValue());
+	            while(wfuep.hasMoreElements()){
+	                Field field = wfuep.nextElement();
+	                request.setParameter(field.getName(), field.getValue());
+	            }
             }
+            
+			request.setParameter(RequestBody.REQUEST_BODY_PROPERTY, new RequestBody(streamCache, charsetName));
             
         	BeanDecoder beanDecoder = new WWWFormUrlEncodedBeanDecoder();
         	beanDecoder.setCodeGenerator(codeGenerator);

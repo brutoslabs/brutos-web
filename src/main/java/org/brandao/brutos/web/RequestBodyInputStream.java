@@ -9,8 +9,9 @@ public class RequestBodyInputStream extends InputStream {
 	
 	private StreamCache streamCache;
 	
-	public RequestBodyInputStream(StreamCache streamCache) {
+	public RequestBodyInputStream(InputStream stream, StreamCache streamCache) {
 		this.streamCache = streamCache;
+		this.stream = stream;
 	}
 	
 	@Override
@@ -23,8 +24,17 @@ public class RequestBodyInputStream extends InputStream {
 	@Override
 	public int read() throws IOException {
 		int read = stream.read();
-		streamCache	.append(read);
+		streamCache.append(read);
 		return read;
+	}
+	
+	public void close() throws IOException {
+		try {
+			streamCache.flush();
+		}
+		finally {
+			stream.close();
+		}
 	}
 	
 }

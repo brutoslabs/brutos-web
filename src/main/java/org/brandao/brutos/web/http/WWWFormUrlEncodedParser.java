@@ -1,5 +1,6 @@
 package org.brandao.brutos.web.http;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -7,7 +8,7 @@ import java.net.URLDecoder;
 
 import org.brandao.brutos.MutableRequestParserEvent;
 
-public class WWWFormUrlEncodedParser {
+public class WWWFormUrlEncodedParser implements Closeable{
 
 	private InputStream in;
 	
@@ -111,4 +112,10 @@ public class WWWFormUrlEncodedParser {
 		
 		
 	}
+
+	@Override
+	public void close() throws IOException {
+		in.close();
+	}
+	
 }

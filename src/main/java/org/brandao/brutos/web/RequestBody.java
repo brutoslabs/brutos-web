@@ -7,12 +7,15 @@ import java.io.InputStreamReader;
 
 public class RequestBody {
 
+	public static final String REQUEST_BODY_PROPERTY = "@RequestBody:CONTENT";
+	
 	private StreamCache streamCache;
 
 	private String charset;
 	
 	public RequestBody(StreamCache streamCache, String charset) {
 		this.streamCache = streamCache;
+		this.charset = charset;
 	}
 	
 	public String toString() {

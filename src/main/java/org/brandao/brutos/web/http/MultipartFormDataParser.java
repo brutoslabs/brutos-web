@@ -17,6 +17,7 @@
 
 package org.brandao.brutos.web.http;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +29,7 @@ import java.util.Map;
 import org.brandao.brutos.MutableRequestParserEvent;
 import org.brandao.brutos.mapping.StringUtil;
 
-public class MultipartFormDataParser {
+public class MultipartFormDataParser implements Closeable{
 
 	private static final String PREFIX_TMP_FILE_NAME	= "multpart";
 	
@@ -280,4 +281,10 @@ public class MultipartFormDataParser {
 		}
 		
 	}
+
+	@Override
+	public void close() throws IOException {
+		in.close();
+	}
+	
 }

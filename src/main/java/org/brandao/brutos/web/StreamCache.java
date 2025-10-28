@@ -81,4 +81,8 @@ public class StreamCache {
 			return new ByteArrayInputStream(cache, 0, length);
 		}	
 	}
+	
+	public void flush() throws IOException {
+		appendCacheToFile();
+	}
 }

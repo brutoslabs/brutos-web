@@ -28,6 +28,9 @@ import org.brandao.brutos.MutableRequestParserEvent;
 import org.brandao.brutos.RequestParserException;
 import org.brandao.brutos.mapping.BeanDecoder;
 import org.brandao.brutos.web.MediaType;
+import org.brandao.brutos.web.RequestBody;
+import org.brandao.brutos.web.RequestBodyInputStream;
+import org.brandao.brutos.web.StreamCache;
 import org.brandao.brutos.web.bean.MultipartFormDataBeanDecoder;
 import org.brandao.brutos.web.http.MultipartFormDataParser;
 import org.brandao.brutos.web.http.MultipartFormDataParser.Field;
@@ -60,24 +63,30 @@ public class MultipartFormDataParserContentType extends AbstractParserContentTyp
 			CodeGenerator codeGenerator, Properties config) throws RequestParserException {
 		
         try{
-        	MediaType requestDataType = (MediaType)request.getType();
-        	Map<String,String> vars   = requestDataType == null? null : requestDataType.getParams();
-        	String charsetName        = vars != null? vars.get("charset") : DEFAULT_CHARSET;
-        	charsetName               = charsetName == null? request.getEncoding() : charsetName;
-        	charsetName               = charsetName == null? DEFAULT_CHARSET : charsetName;
-            String boundary           = (String)request.getHeader(BOUNDARY);
-            boundary                  = boundary == null? ((MediaType)request.getType()).getParams().get(BOUNDARY) : boundary;
-        	InputStream stream        = request.getStream();
-            Long maxRequestBodyLength = Long.parseLong(config.getProperty(MAX_LENGTH_PROPERTY, DEFAULT_MAX_LENGTH));
-            Integer bufferLength      = Integer.parseInt(config.getProperty(BUFFER_LENGTH_VAR, DEFAULT_BUFFER_LENGTH));
+        	MediaType requestDataType                     = (MediaType)request.getType();
+        	Map<String,String> vars                       = requestDataType == null? null : requestDataType.getParams();
+            Long maxRequestBodyLength                     = Long.parseLong(config.getProperty(MAX_LENGTH_PROPERTY, DEFAULT_MAX_LENGTH));
+            Integer bufferLength                          = Integer.parseInt(config.getProperty(BUFFER_LENGTH_VAR, DEFAULT_BUFFER_LENGTH));
+        	String charsetName                            = vars != null? vars.get("charset") : DEFAULT_CHARSET;
+        	charsetName                                   = charsetName == null? request.getEncoding() : charsetName;
+        	charsetName                                   = charsetName == null? DEFAULT_CHARSET : charsetName;
+            String boundary                               = (String)request.getHeader(BOUNDARY);
+            boundary                                      = boundary == null? ((MediaType)request.getType()).getParams().get(BOUNDARY) : boundary;
+        	InputStream stream                            = request.getStream();
+			StreamCache streamCache                       = new StreamCache(bufferLength);
+			RequestBodyInputStream requestBodyInputStream = new RequestBodyInputStream(stream, streamCache);
             //String path               = config.getProperty(PATH_PROPERTY, DEFAULT_PATH);
                 
-            MultipartFormDataParser mpfdp = new MultipartFormDataParser(stream, charsetName, boundary, maxRequestBodyLength, bufferLength, requestParserInfo);
+            try(MultipartFormDataParser mpfdp = new MultipartFormDataParser(requestBodyInputStream, charsetName, boundary, maxRequestBodyLength, bufferLength, requestParserInfo)){
 
-            while(mpfdp.hasMoreElements()){
-                Field field = mpfdp.nextElement();
-                request.setParameter(field.getHeader().get("content-disposition").getParams().get("name"), field.getValue());
+	            while(mpfdp.hasMoreElements()){
+	                Field field = mpfdp.nextElement();
+	                request.setParameter(field.getHeader().get("content-disposition").getParams().get("name"), field.getValue());
+	            }
+	            
             }
+            
+			request.setParameter(RequestBody.REQUEST_BODY_PROPERTY, new RequestBody(streamCache, charsetName));
             
         	BeanDecoder beanDecoder = new MultipartFormDataBeanDecoder();
         	beanDecoder.setCodeGenerator(codeGenerator);
