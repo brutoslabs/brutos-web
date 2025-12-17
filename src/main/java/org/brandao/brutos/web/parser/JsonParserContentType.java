@@ -18,6 +18,7 @@
 package org.brandao.brutos.web.parser;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -70,6 +71,11 @@ public class JsonParserContentType extends AbstractParserContentType {
 			try(RequestBodyInputStream requestBodyInputStream = new RequestBodyInputStream(stream, streamCache)){
 		        JSONDecoder decoder = new JSONDecoder(requestBodyInputStream);
 		        data = (Map<String, Object>) decoder.decode();
+		        
+		        if(data == null) {
+		        	data = new HashMap<>();
+		        }
+		        
 			}
 
 			data.put(RequestBody.REQUEST_BODY_PROPERTY, new RequestBody(streamCache, requestParserInfo.getBytesRead(), charsetName));

@@ -36,6 +36,10 @@ public class StreamCache {
 	
 	public void append(byte[] b, int o, int l) throws IOException {
 		
+		if(l <= 0) {
+			return;
+		}
+		
 		l = o + l > b.length? b.length - o : l;
 		
 		if(l > cache.length) {
