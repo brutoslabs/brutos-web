@@ -86,7 +86,7 @@ public class MultipartFormDataParserContentType extends AbstractParserContentTyp
 	            
             }
             
-			request.setParameter(RequestBody.REQUEST_BODY_PROPERTY, new RequestBody(streamCache, requestParserInfo.getBytesRead(), charsetName));
+			request.setProperty(RequestBody.REQUEST_BODY_PROPERTY, new RequestBody(streamCache, requestParserInfo.getBytesRead(), charsetName));
             
         	BeanDecoder beanDecoder = new MultipartFormDataBeanDecoder();
         	beanDecoder.setCodeGenerator(codeGenerator);

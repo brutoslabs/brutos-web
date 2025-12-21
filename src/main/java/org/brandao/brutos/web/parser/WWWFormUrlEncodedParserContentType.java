@@ -78,7 +78,7 @@ public class WWWFormUrlEncodedParserContentType
 	            }
             }
             
-			request.setParameter(RequestBody.REQUEST_BODY_PROPERTY, new RequestBody(streamCache, requestParserInfo.getBytesRead(), charsetName));
+			request.setProperty(RequestBody.REQUEST_BODY_PROPERTY, new RequestBody(streamCache, requestParserInfo.getBytesRead(), charsetName));
             
         	BeanDecoder beanDecoder = new WWWFormUrlEncodedBeanDecoder();
         	beanDecoder.setCodeGenerator(codeGenerator);
