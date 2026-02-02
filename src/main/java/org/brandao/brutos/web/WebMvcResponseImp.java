@@ -75,6 +75,13 @@ public class WebMvcResponseImp
 	}
 
 	public void process(Object object) {
+		try {
+			super.getResponse().getWriter().append(String.valueOf(object));
+			super.getResponse().getWriter().flush();
+		}
+		catch (IOException e) {
+			throw new BrutosException(e);
+		}
 	}
 
 	public void setHeader(String name, Object value) {

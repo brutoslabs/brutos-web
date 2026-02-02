@@ -69,10 +69,13 @@ public class WebResultActionType
 		view = vc == null? null : vc.getView();
 		viewContext = vc == null? null : vc.getContext();
 		
-		resultAction.setView(view, resolvedView);
+		if(view != null) {
+			resultAction.setView(view, resolvedView);
+		}
 		
 		WebStackRequestElement stackRequestElement = 
 				(WebStackRequestElement) request.getStackRequestElement();
+		
 		stackRequestElement.setViewContext(viewContext);
 		stackRequestElement.setResponseStatus(responseStatus);
 		stackRequestElement.setReason(reason == null || reason.trim().length() != 0? null : reason);
