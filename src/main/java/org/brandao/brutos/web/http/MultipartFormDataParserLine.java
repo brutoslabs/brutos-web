@@ -56,9 +56,9 @@ public class MultipartFormDataParserLine {
 		return !(end == maxLen && end == 0);			
 	}
 	
-	public void adjustMinLengthLine() {
+	public void adjustMinLengthLine(boolean force) {
 		
-		if(data.length - start <= minLineLength ) {
+		if(force || (data.length - start <= minLineLength)) {
 			System.arraycopy(data, start, data, 0, data.length - start);
 			maxLen = maxLen - start;
 			end = end - start;
@@ -156,11 +156,11 @@ public class MultipartFormDataParserLine {
 		int max = end;
 		
 		if(withoutMarks) {
-			if(max > 0 && data[max] == '\n') {
+			if(max >= 0 && data[max] == '\n') {
 				max--;
 			}
 			
-			if(max > 0 && data[max] == '\r') {
+			if(max >= 0 && data[max] == '\r') {
 				max--;
 			}
 		}

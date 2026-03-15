@@ -201,7 +201,7 @@ public class MultipartFormDataParser implements Closeable{
 	private MultipartFormDataParserLine readLineBytes() throws IOException {
 
 		line.adjustToNextLine();
-		line.adjustMinLengthLine();
+		line.adjustMinLengthLine(false);
 		
 		while(line.isNeededMoreDataToMakeLine()){
 			
@@ -209,7 +209,7 @@ public class MultipartFormDataParser implements Closeable{
 				break;
 			}
 			
-			line.adjustMinLengthLine();
+			line.adjustMinLengthLine(true);
 			
 			if(line.read(in, event) <= 0) {
 				break;
