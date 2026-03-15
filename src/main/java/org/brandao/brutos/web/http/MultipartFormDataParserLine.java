@@ -167,7 +167,7 @@ public class MultipartFormDataParserLine {
 		
 		len = 1 + (max - start);
 		
-		return len <= 0? null : new String(data, start, len, charset);
+		return len <= 0? null : (charset == null? new String(data, start, len) : new String(data, start, len, charset));
 	}
 		
 }

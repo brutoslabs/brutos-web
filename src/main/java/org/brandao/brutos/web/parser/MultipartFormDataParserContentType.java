@@ -69,7 +69,7 @@ public class MultipartFormDataParserContentType extends AbstractParserContentTyp
             Integer bufferLength                          = Integer.parseInt(config.getProperty(BUFFER_LENGTH_VAR, DEFAULT_BUFFER_LENGTH));
         	String charsetName                            = vars != null? vars.get("charset") : DEFAULT_CHARSET;
         	charsetName                                   = charsetName == null? request.getEncoding() : charsetName;
-        	charsetName                                   = charsetName == null? DEFAULT_CHARSET : charsetName;
+        	//charsetName                                   = charsetName == null? DEFAULT_CHARSET : charsetName;
             String boundary                               = (String)request.getHeader(BOUNDARY);
             boundary                                      = boundary == null? ((MediaType)request.getType()).getParams().get(BOUNDARY) : boundary;
         	InputStream stream                            = request.getStream();
