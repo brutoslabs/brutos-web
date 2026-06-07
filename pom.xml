@@ -4,13 +4,13 @@
 	<groupId>org.brandao</groupId>
 	<artifactId>brutos-web</artifactId>
 	<packaging>jar</packaging>
-	<version>2.0-rc3</version>
+	<version>2.0.final</version>
 	<name>brutos-web</name>
 	<description>Brutos web. This artifact depends on the brutos-core.</description>
 	<url>http://www.brutosframework.com.br/</url>
 
 	<issueManagement>
-		<url>https://github.com/brandaof/brutos-web/issues</url>
+		<url>https://github.com/brutoslabs/brutos-web/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
 
@@ -23,17 +23,15 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/brandaof/brutos-web</url>
-		<connection>scm:git:https://github.com/brandaof/brutos-web.git</connection>
-		<developerConnection>scm:git:git@github.com:brandaof/brutos-web.git</developerConnection>
+		<url>https://github.com/brutoslabs/brutos-web</url>
+		<connection>scm:git:https://github.com/brutoslabs/brutos-web.git</connection>
+		<developerConnection>scm:git:git@github.com:brutoslabs/brutos-web.git</developerConnection>
 	</scm>
 	
 	<developers>
 		<developer>
 			<name>Afonso Brandao</name>
 			<email>afonso.rbn@gmail.com</email>
-			<organization>Brandao</organization>
-			<organizationUrl>http://brandao.org/</organizationUrl>
 		</developer>
 	</developers>
 
@@ -135,8 +133,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.0.2</version>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
 				</configuration>
@@ -160,6 +158,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jboss-vfs</artifactId>
+			<version>3.2.12.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.mockrunner</groupId>
 			<artifactId>mockrunner-servlet</artifactId>
 			<version>1.1.2</version>
@@ -175,7 +179,7 @@
 		<dependency>
 			<groupId>org.brandao</groupId>
 			<artifactId>brutos-core</artifactId>
-			<version>2.0-rc3</version>
+			<version>2.0.final</version>
 		</dependency>
 		<!-- JBRGates -->
 		<dependency>
@@ -185,25 +189,31 @@
 		</dependency>
 		<!-- Spring -->
 		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-core</artifactId>
+		    <version>5.0.20.RELEASE</version>
+		    <scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>4.3.5.RELEASE</version>
+			<artifactId>spring-context</artifactId>
+		    <version>5.0.20.RELEASE</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.brandao</groupId>
 			<artifactId>brutos-annotation</artifactId>
-			<version>2.0-rc3</version>
+			<version>2.0.final</version>
 		</dependency>
 	</dependencies>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<additionalparam>--allow-script-in-comments</additionalparam>
 		<!-- <additionalparam>-Xdoclint:none</additionalparam> -->
 	</properties>
 	<organization>
 		<name>Brandao</name>
-		<url>http://www.brandao.org/</url>
 	</organization>
 </project>

@@ -63,7 +63,6 @@ public class WebFlowController extends FlowController{
 	 * Redireciona a execução para um determinado URI permitindo
 	 * disponibilizar valores que podem ser acessados no URI que 
 	 * será redirecionado.
-	 * @param value URI que será redirecionado. 
 	 */
 	public static RedirectBuilder redirect(){
 		return new RedirectBuilder();

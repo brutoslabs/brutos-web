@@ -320,12 +320,10 @@ public class JsonBeanDecoder implements BeanDecoder{
      * }
 	 * </pre>
 	 * @param entity Mapeamento da entidade.
-	 * @param k Mapeamento dos elementos.
 	 * @param requestData Dados da requisição.
 	 * @throws IllegalAccessException Lançada se ocorrer uma falha ao tentar criar a instância do {@link java.util.Collection}.
 	 * @throws IllegalArgumentException Lançada se ocorrer uma falha ao tentar criar a instância do {@link java.util.Collection}.
 	 * @throws InvocationTargetException Lançada se ocorrer uma falha ao tentar criar a instância do {@link java.util.Collection}.
-	 * @throws DependencyException Lançada se os dados da solicitação não forem o esperado.
 	 * @return Instância da classe {@link java.util.Collection}.
 	 */	
 	@SuppressWarnings("unchecked")
@@ -379,12 +377,10 @@ public class JsonBeanDecoder implements BeanDecoder{
      * [ &lt;object&gt; | &lt;value&gt;, ... ]
 	 * </pre>
 	 * @param entity Mapeamento da entidade.
-	 * @param k Mapeamento dos elementos.
 	 * @param requestData Dados da requisição.
 	 * @throws IllegalAccessException Lançada se ocorrer uma falha ao tentar criar a instância do {@link java.util.Collection}.
 	 * @throws IllegalArgumentException Lançada se ocorrer uma falha ao tentar criar a instância do {@link java.util.Collection}.
 	 * @throws InvocationTargetException Lançada se ocorrer uma falha ao tentar criar a instância do {@link java.util.Collection}.
-	 * @throws DependencyException Lançada se os dados da solicitação não forem o esperado.
 	 * @return Instância da classe {@link java.util.Collection}.
 	 */	
 	@SuppressWarnings("unchecked")
