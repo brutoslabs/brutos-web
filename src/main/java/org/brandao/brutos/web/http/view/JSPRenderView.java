@@ -56,6 +56,7 @@ public class JSPRenderView implements RenderViewType{
 		
 		ServletContext servletContext = webApplicationContext.getContext();
 		if(context != null && !servletContext.getContextPath().equals(context)) {
+			context = context.isEmpty()? "/" : context;
 			servletContext = servletContext.getContext(context);
 		}
 		
